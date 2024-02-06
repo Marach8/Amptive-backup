@@ -18,10 +18,19 @@ abstract final class AmpColors {
 
   static const gray3 = Color(0xFF5C5C5C);
 
+  static const strokeGray = Color(0xFF838383);
+
   static const dotActive = Color(0xFFD9D9D9);
 
   static const dotInActive = Color(0xFF5B5B5B);
 
 
+}
 
+
+class Pair<T, U> {
+  final T first;
+  final U second;
+
+  Pair(this.first, this.second);
 }
