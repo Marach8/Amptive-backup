@@ -1,4 +1,5 @@
 import 'package:amptive/screens/PreferenceScreen.dart';
+import 'package:amptive/screens/emailAuthScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -24,7 +25,7 @@ class AmptiveApp extends StatelessWidget {
             ),
             home: child);
       },
-      child: const PreferenceScreen(),
+      child: const EmailAuthScreen(),
     );
   }
 }

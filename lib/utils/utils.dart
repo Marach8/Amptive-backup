@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 abstract final class AmpColors {
-
   static const Color transparent = Colors.transparent;
 
   static const Color white = Colors.white;
@@ -24,9 +23,8 @@ abstract final class AmpColors {
 
   static const dotInActive = Color(0xFF5B5B5B);
 
-
+  static const textRed = Color(0xFFD93535);
 }
-
 
 class Pair<T, U> {
   final T first;
