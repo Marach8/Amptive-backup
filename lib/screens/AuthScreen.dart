@@ -1,19 +1,29 @@
+import 'package:amptive/routers/amptive_routes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../utils/utils.dart';
 
 class AuthScreen extends StatefulWidget {
-  const AuthScreen({super.key});
+  const AuthScreen({super.key, required this.isLogin});
+
+  final bool isLogin;
 
   @override
   State<AuthScreen> createState() => _AuthScreenState();
 }
 
 class _AuthScreenState extends State<AuthScreen> {
-  final _isLogin = false;
+  bool _isLogin = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _isLogin = widget.isLogin;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +42,12 @@ class _AuthScreenState extends State<AuthScreen> {
               SizedBox(
                 height: 48.h,
                 child: TextButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    if(!_isLogin){
+                      //sign up
+                      context.goNamed(AmptiveRoutes.emailAuth);
+                    }
+                  },
                   style: TextButton.styleFrom(
                     foregroundColor: AmpColors.white,
                     backgroundColor: AmpColors.brandBlue,

@@ -1,6 +1,8 @@
+import 'package:amptive/routers/amptive_routes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../utils/utils.dart';
@@ -17,7 +19,6 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-
     return SafeArea(
         child: Scaffold(
       backgroundColor: AmpColors.brandBlack,
@@ -40,15 +41,15 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const AudioCreator( assetName: "assets/welcomeAvatar2.jpeg"),
+                const AudioCreator(assetName: "assets/welcomeAvatar2.jpeg"),
                 SizedBox(
                   width: 22.w,
                 ),
-                const AudioCreator( assetName: "assets/welcomeAvatar1.jpeg"),
+                const AudioCreator(assetName: "assets/welcomeAvatar1.jpeg"),
                 SizedBox(
                   width: 22.w,
                 ),
-                const AudioCreator( assetName: "assets/welcomeAvatar3.jpeg"),
+                const AudioCreator(assetName: "assets/welcomeAvatar3.jpeg"),
               ],
             ),
             Container(
@@ -72,7 +73,9 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                   SizedBox(
                     height: 50.h,
                     child: TextButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        context.goNamed(AmptiveRoutes.authScreen, extra: false);
+                      },
                       style: TextButton.styleFrom(
                         foregroundColor: AmpColors.white,
                         backgroundColor: AmpColors.brandBlue,
@@ -97,7 +100,10 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                   SizedBox(
                     height: 50.h,
                     child: TextButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        context.goNamed(AmptiveRoutes.authScreen, extra: true);
+
+                      },
                       style: TextButton.styleFrom(
                         foregroundColor: AmpColors.white,
                         padding: EdgeInsets.symmetric(vertical: 8.h),
