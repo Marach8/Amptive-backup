@@ -30,7 +30,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
               child: Container(
                 width: 67.w,
                 height: 67.h,
-                padding: EdgeInsets.all(8.h),
+                padding: EdgeInsets.symmetric(horizontal: 14.w, vertical: 15.h),
                 margin: EdgeInsets.only(bottom: 87.h, top: 11.25.h),
                 child: SvgPicture.asset(
                   "assets/Logo.svg",
@@ -54,14 +54,15 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
             ),
             Container(
               margin: EdgeInsets.only(bottom: 42.h, top: 109.07.h),
+              alignment: Alignment.center,
               width: 257.w,
               height: 80.h,
               child: Text("Create or Listen to Live Audio Events",
+                  textAlign: TextAlign.center,
                   style: GoogleFonts.bricolageGrotesque(
                     color: AmpColors.white,
                     fontWeight: FontWeight.w700,
                     fontSize: 25.sp,
-                    letterSpacing: 0.4.sp,
                   )),
             ),
             Container(
@@ -102,7 +103,6 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                     child: TextButton(
                       onPressed: () {
                         context.goNamed(AmptiveRoutes.authScreen, extra: true);
-
                       },
                       style: TextButton.styleFrom(
                         foregroundColor: AmpColors.white,
@@ -159,7 +159,7 @@ class AudioCreator extends StatelessWidget {
           width: 62.99.w,
           height: 62.99.h,
           child: CircleAvatar(
-            radius: 169.814.h,
+            radius: 169.814.r,
             backgroundImage: AssetImage(
               assetName,
             ),

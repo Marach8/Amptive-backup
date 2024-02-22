@@ -45,7 +45,7 @@ class _AuthScreenState extends State<AuthScreen> {
                   onPressed: () {
                     if(!_isLogin){
                       //sign up
-                      context.goNamed(AmptiveRoutes.emailAuth);
+                      context.pushNamed(AmptiveRoutes.emailAuth);
                     }
                   },
                   style: TextButton.styleFrom(
