@@ -1,24 +1,25 @@
 import 'package:amptive/providers/form_providers.dart';
 import 'package:amptive/routers/amptive_routes.dart';
-import 'package:amptive/validators/Validator.dart';
+import 'package:bottom_picker/bottom_picker.dart';
+import 'package:bottom_picker/resources/arrays.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
 import '../utils/utils.dart';
 
-class EmailAuthScreen extends StatefulWidget {
-  const EmailAuthScreen({super.key});
+class DateOfBirthScreen extends StatefulWidget {
+  const DateOfBirthScreen({super.key});
 
   @override
-  State<EmailAuthScreen> createState() => _EmailAuthScreenState();
+  State<DateOfBirthScreen> createState() => _DateOfBirthScreenState();
 }
 
-class _EmailAuthScreenState extends State<EmailAuthScreen> {
-  TextEditingController textController = TextEditingController();
+class _DateOfBirthScreenState extends State<DateOfBirthScreen> {
+  TextEditingController _dobController = TextEditingController();
   late FormProvider _formProvider;
 
   final _formKey = GlobalKey<FormState>();
@@ -38,7 +39,7 @@ class _EmailAuthScreenState extends State<EmailAuthScreen> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  "What is your email?",
+                  "What is your date of birth?",
                   style: GoogleFonts.inter(
                     color: AmpColors.white,
                     fontSize: 17.sp,
@@ -49,16 +50,17 @@ class _EmailAuthScreenState extends State<EmailAuthScreen> {
                   height: 11.h,
                 ),
                 TextFormField(
-                  controller: textController,
-                  onChanged: _formProvider.validateEmail,
+                  controller: _dobController,
+                  onChanged: _formProvider.validateDOB,
+                  onTap: () {
+                    _selectDate();
+                    FocusScope.of(context).requestFocus(FocusNode());
+                  },
                   maxLines: 1,
                   autovalidateMode: AutovalidateMode.onUserInteraction,
-                  keyboardType: TextInputType.emailAddress,
-                  cursorColor: _formProvider.email.error == null
-                      ? AmpColors.brandBlue
-                      : AmpColors.textRed,
+                  keyboardType: TextInputType.none,
+                  cursorColor: AmpColors.brandBlue,
                   decoration: InputDecoration(
-                    errorText: _formProvider.email.error,
                     errorStyle: GoogleFonts.inter(
                       color: AmpColors.textRed,
                       fontSize: 12.sp,
@@ -69,9 +71,7 @@ class _EmailAuthScreenState extends State<EmailAuthScreen> {
                     focusedBorder: OutlineInputBorder(
                       borderSide: BorderSide(
                         width: 2.w,
-                        color: _formProvider.email.error == null
-                            ? AmpColors.brandBlue
-                            : AmpColors.textRed,
+                        color: AmpColors.brandBlue,
                       ),
                       borderRadius: BorderRadius.circular(30.r),
                     ),
@@ -88,22 +88,6 @@ class _EmailAuthScreenState extends State<EmailAuthScreen> {
                       fontSize: 16.sp,
                       color: AmpColors.white),
                 ),
-                Consumer<FormProvider>(builder: (context, model, _) {
-                  var height =
-                      model.customEmailStatus.value != null ? 20.h : 0.h;
-                  return Container(
-                    height: height,
-                    margin: EdgeInsets.symmetric(vertical: 11.h),
-                    child: Text(
-                      model.customEmailStatus.value ?? "",
-                      style: GoogleFonts.inter(
-                        color: AmpColors.white,
-                        fontWeight: FontWeight.normal,
-                        fontSize: 12.sp,
-                      ),
-                    ),
-                  );
-                }),
                 Expanded(
                   child: SizedBox(
                     height: 1.h,
@@ -118,8 +102,8 @@ class _EmailAuthScreenState extends State<EmailAuthScreen> {
                       onPressed: () {
                         // Validate returns true if the form is valid, or false otherwise.
                         if (_formKey.currentState!.validate() &&
-                            model.isEmailValid) {
-                          context.goNamed(AmptiveRoutes.passwordAuth);
+                            model.isDOBValid) {
+                          context.goNamed(AmptiveRoutes.preference);
                         }
                       },
                       style: ElevatedButton.styleFrom(
@@ -127,7 +111,7 @@ class _EmailAuthScreenState extends State<EmailAuthScreen> {
                               ? AmpColors.brandBlue
                               : const Color(0xFF2F2F2F)),
                       child: Text(
-                        "Verify Email",
+                        "Next",
                         style: GoogleFonts.inter(
                             fontWeight: FontWeight.w600,
                             fontSize: 18.sp,
@@ -144,5 +128,34 @@ class _EmailAuthScreenState extends State<EmailAuthScreen> {
         ),
       ),
     );
+  }
+
+  void _selectDate() {
+    BottomPicker.date(
+      layoutOrientation: LayoutOrientation.rtl,
+        dateOrder: DatePickerDateOrder.mdy,
+        displayCloseIcon: false,
+        displaySubmitButton: false,
+        dismissable: true,
+        title:  "Done",
+        titleStyle: GoogleFonts.inter(
+          backgroundColor: const Color(0xFF434343),
+            color: AmpColors.white,
+            fontWeight: FontWeight.normal,
+            fontSize: 16.sp
+        ),
+        pickerTextStyle: GoogleFonts.inter(
+          color: AmpColors.white,
+          fontWeight: FontWeight.normal,
+          fontSize: 24.sp
+        ),
+        backgroundColor: AmpColors.brandBlack,
+        onChange: (index) {
+          setState(() {
+            _dobController.text = index.toString();
+          });
+        },
+        bottomPickerTheme:  BottomPickerTheme.temptingAzure
+    ).show(context);
   }
 }

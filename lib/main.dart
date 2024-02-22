@@ -1,9 +1,11 @@
 import 'package:amptive/providers/form_providers.dart';
 import 'package:amptive/routers/amptive_routes.dart';
 import 'package:amptive/screens/AuthScreen.dart';
+import 'package:amptive/screens/DoBScreen.dart';
 import 'package:amptive/screens/PreferenceScreen.dart';
 import 'package:amptive/screens/emailAuthScreen.dart';
 import 'package:amptive/screens/onboarding.dart';
+import 'package:amptive/screens/passwordAuthScreen.dart';
 import 'package:amptive/screens/splash.dart';
 import 'package:amptive/screens/welcome.dart';
 import 'package:flutter/material.dart';
@@ -56,6 +58,22 @@ final GoRouter _router = GoRouter(
       path: "/email-route",
       builder: (BuildContext context, GoRouterState state) =>
           const EmailAuthScreen(),
+      routes: [
+        GoRoute(
+          name: AmptiveRoutes.passwordAuth,
+          path: "password",
+          builder: (BuildContext context, GoRouterState state) =>
+          const PasswordAuthScreen(),
+          routes: [
+            GoRoute(
+              name: AmptiveRoutes.dobAuth,
+              path: "dob",
+              builder: (BuildContext context, GoRouterState state) =>
+              const DateOfBirthScreen(),
+            ),
+          ]
+        ),
+      ]
     ),
     GoRoute(
       name: AmptiveRoutes.preference,

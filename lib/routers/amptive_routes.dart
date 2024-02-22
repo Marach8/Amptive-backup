@@ -5,4 +5,6 @@ class AmptiveRoutes {
   static String emailAuth = "emailAuth";
   static String preference = "preference";
   static String authScreen = "AuthenticationScreen";
+  static String passwordAuth = "passwordAuth";
+  static String dobAuth = "dobAuth";
 }
