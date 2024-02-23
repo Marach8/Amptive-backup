@@ -25,8 +25,8 @@ void main() => runApp(
 
 /// The route configuration.
 final GoRouter _router = GoRouter(
-  // initialLocation: AmptiveRoutes.index,
-  initialLocation: "/email-route/otp",
+  initialLocation: AmptiveRoutes.index,
+  // initialLocation: "/email-route/otp",
   routes: <RouteBase>[
     GoRoute(
       path: AmptiveRoutes.index,

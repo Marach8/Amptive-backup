@@ -12,6 +12,8 @@ class FormProvider extends ChangeNotifier {
 
   DateTime? _dob;
 
+  OTPModel otpModel = OTPModel();
+
   ValidationModel get email => _email;
 
   DateTime? get dob => _dob;
@@ -67,11 +69,6 @@ class FormProvider extends ChangeNotifier {
   }
 
   bool get isEmailValid {
-    // return _email.value != null &&
-    //     _password.value != null &&
-    //     _phone.value != null &&
-    //     _name.value != null;
-
     return _email.value != null;
   }
 
@@ -80,6 +77,31 @@ class FormProvider extends ChangeNotifier {
   }
 
   bool get isDOBValid => _dob != null;
+
+  bool get isOTPValid {
+    return otpModel.pin1 != null &&
+        otpModel.pin2 != null &&
+        otpModel.pin3 != null &&
+        otpModel.pin4 != null &&
+        otpModel.pin1!.isNotEmpty &&
+        otpModel.pin2!.isNotEmpty &&
+        otpModel.pin3!.isNotEmpty &&
+        otpModel.pin4!.isNotEmpty;
+  }
+
+  void setOtp(String pin, int index) {
+    if (index == 0) {
+      otpModel.pin1 = pin;
+    } else if (index == 1) {
+      otpModel.pin2 = pin;
+    } else if (index == 2) {
+      otpModel.pin3 = pin;
+    } else if (index == 3) {
+      otpModel.pin4 = pin;
+    }
+
+    notifyListeners();
+  }
 }
 
 class ValidationModel {
@@ -87,4 +109,11 @@ class ValidationModel {
   String? error;
 
   ValidationModel(this.value, this.error);
+}
+
+class OTPModel {
+  String? pin1;
+  String? pin2;
+  String? pin3;
+  String? pin4;
 }

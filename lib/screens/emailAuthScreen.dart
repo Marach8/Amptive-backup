@@ -123,7 +123,7 @@ class _EmailAuthScreenState extends State<EmailAuthScreen> {
                         // Validate returns true if the form is valid, or false otherwise.
                         if (_formKey.currentState!.validate() &&
                             model.isEmailValid) {
-                          context.goNamed(AmptiveRoutes.passwordAuth);
+                          context.goNamed(AmptiveRoutes.otp);
                         }
                       },
                       style: ElevatedButton.styleFrom(
