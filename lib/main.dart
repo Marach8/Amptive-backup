@@ -5,6 +5,7 @@ import 'package:amptive/screens/DoBScreen.dart';
 import 'package:amptive/screens/PreferenceScreen.dart';
 import 'package:amptive/screens/emailAuthScreen.dart';
 import 'package:amptive/screens/onboarding.dart';
+import 'package:amptive/screens/otpScreen.dart';
 import 'package:amptive/screens/passwordAuthScreen.dart';
 import 'package:amptive/screens/splash.dart';
 import 'package:amptive/screens/welcome.dart';
@@ -24,8 +25,8 @@ void main() => runApp(
 
 /// The route configuration.
 final GoRouter _router = GoRouter(
-  initialLocation: AmptiveRoutes.index,
-  // initialLocation: "/email-route",
+  // initialLocation: AmptiveRoutes.index,
+  initialLocation: "/email-route/otp",
   routes: <RouteBase>[
     GoRoute(
       path: AmptiveRoutes.index,
@@ -60,21 +61,27 @@ final GoRouter _router = GoRouter(
           const EmailAuthScreen(),
       routes: [
         GoRoute(
-          name: AmptiveRoutes.passwordAuth,
-          path: "password",
+          name: AmptiveRoutes.otp,
+          path: "otp",
           builder: (BuildContext context, GoRouterState state) =>
-          const PasswordAuthScreen(),
-          routes: [
-            GoRoute(
-              name: AmptiveRoutes.dobAuth,
-              path: "dob",
-              builder: (BuildContext context, GoRouterState state) =>
-              const DateOfBirthScreen(),
-            ),
-          ]
+          const OTPScreen(),
         ),
       ]
     ),
+    GoRoute(
+        name: AmptiveRoutes.passwordAuth,
+        path: "/password",
+        builder: (BuildContext context, GoRouterState state) =>
+        const PasswordAuthScreen(),
+    ),
+
+    GoRoute(
+      name: AmptiveRoutes.dobAuth,
+      path: "/dob",
+      builder: (BuildContext context, GoRouterState state) =>
+      const DateOfBirthScreen(),
+    ),
+
     GoRoute(
       name: AmptiveRoutes.preference,
       path: "/preference-route",

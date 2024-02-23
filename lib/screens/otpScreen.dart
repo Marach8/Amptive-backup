@@ -25,22 +25,7 @@ class _OTPScreenState extends State<OTPScreen> {
               SizedBox(
                 height: 64.h,
                 width: 68.w,
-                child: TextFormField(
-                  autofocus: true,
-                  onSaved: (pin1) {},
-                  onChanged: (value) {
-                    if (value.length == 1) {
-                      FocusScope.of(context).nextFocus();
-                    }
-                  },
-                  keyboardType: TextInputType.number,
-                  maxLength: 1,
-                  decoration: const InputDecoration(
-                    counterText: "",
-                  ),
-                  textAlign: TextAlign.center,
-                  style: Theme.of(context).textTheme.titleLarge,
-                ),
+                child: OTPTextFormField(),
               ),
               SizedBox(
                 height: 64.h,
@@ -106,6 +91,32 @@ class _OTPScreenState extends State<OTPScreen> {
           ),
         ),
       ),
+    );
+  }
+}
+
+class OTPTextFormField extends StatelessWidget {
+  const OTPTextFormField({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return TextFormField(
+      autofocus: true,
+      onSaved: (pin1) {},
+      onChanged: (value) {
+        if (value.length == 1) {
+          FocusScope.of(context).nextFocus();
+        }
+      },
+      keyboardType: TextInputType.number,
+      maxLength: 1,
+      decoration: const InputDecoration(
+        counterText: "",
+      ),
+      textAlign: TextAlign.center,
+      style: Theme.of(context).textTheme.titleLarge,
     );
   }
 }

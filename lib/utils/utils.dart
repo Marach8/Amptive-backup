@@ -24,6 +24,8 @@ abstract final class AmpColors {
   static const dotInActive = Color(0xFF5B5B5B);
 
   static const textRed = Color(0xFFD93535);
+
+  static const authHintColor =  Color(0xFFB6B6B6);
 }
 
 class Pair<T, U> {

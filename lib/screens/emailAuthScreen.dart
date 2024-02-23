@@ -1,9 +1,7 @@
 import 'package:amptive/providers/form_providers.dart';
 import 'package:amptive/routers/amptive_routes.dart';
-import 'package:amptive/validators/Validator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
@@ -58,6 +56,12 @@ class _EmailAuthScreenState extends State<EmailAuthScreen> {
                       ? AmpColors.brandBlue
                       : AmpColors.textRed,
                   decoration: InputDecoration(
+                    hintText: "Enter your email",
+                    hintStyle: GoogleFonts.inter(
+                      fontSize: 16.sp,
+                      color: AmpColors.authHintColor,
+                      fontWeight: FontWeight.normal,
+                    ),
                     errorText: _formProvider.email.error,
                     errorStyle: GoogleFonts.inter(
                       color: AmpColors.textRed,

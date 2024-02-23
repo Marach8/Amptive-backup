@@ -55,6 +55,12 @@ class _PasswordAuthScreenState extends State<PasswordAuthScreen> {
                   keyboardType: TextInputType.visiblePassword,
                   cursorColor: AmpColors.brandBlue,
                   decoration: InputDecoration(
+                      hintText: "Enter your password",
+                      hintStyle: GoogleFonts.inter(
+                        fontSize: 16.sp,
+                        color: AmpColors.authHintColor,
+                        fontWeight: FontWeight.normal,
+                      ),
                       filled: true,
                       fillColor: const Color(0xFF9E9E9E).withOpacity(0.3),
                       focusedBorder: buildOutlineInputBorder(),

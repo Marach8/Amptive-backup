@@ -7,4 +7,5 @@ class AmptiveRoutes {
   static String authScreen = "AuthenticationScreen";
   static String passwordAuth = "passwordAuth";
   static String dobAuth = "dobAuth";
+  static String otp = "otp";
 }

@@ -1,12 +1,11 @@
 import 'package:amptive/providers/form_providers.dart';
 import 'package:amptive/routers/amptive_routes.dart';
-import 'package:bottom_picker/bottom_picker.dart';
-import 'package:bottom_picker/resources/arrays.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 import '../utils/utils.dart';
@@ -19,14 +18,16 @@ class DateOfBirthScreen extends StatefulWidget {
 }
 
 class _DateOfBirthScreenState extends State<DateOfBirthScreen> {
-  TextEditingController _dobController = TextEditingController();
-  late FormProvider _formProvider;
-
+  final TextEditingController _dobController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
+  late FormProvider _formProvider;
+  bool _isBottomSheetOpened = false;
+  DateTime? _selectedDate;
 
   @override
   Widget build(BuildContext context) {
     _formProvider = Provider.of<FormProvider>(context);
+    var bottomSheetHeight = 232.h;
 
     return SafeArea(
       child: Scaffold(
@@ -51,16 +52,21 @@ class _DateOfBirthScreenState extends State<DateOfBirthScreen> {
                 ),
                 TextFormField(
                   controller: _dobController,
-                  onChanged: _formProvider.validateDOB,
+                  readOnly: true,
                   onTap: () {
-                    _selectDate();
-                    FocusScope.of(context).requestFocus(FocusNode());
+                    _selectDate(bottomSheetHeight);
                   },
                   maxLines: 1,
                   autovalidateMode: AutovalidateMode.onUserInteraction,
                   keyboardType: TextInputType.none,
                   cursorColor: AmpColors.brandBlue,
                   decoration: InputDecoration(
+                    hintText: "Select Date",
+                    hintStyle: GoogleFonts.inter(
+                      fontSize: 16.sp,
+                      color: AmpColors.authHintColor,
+                      fontWeight: FontWeight.normal,
+                    ),
                     errorStyle: GoogleFonts.inter(
                       color: AmpColors.textRed,
                       fontSize: 12.sp,
@@ -97,17 +103,19 @@ class _DateOfBirthScreenState extends State<DateOfBirthScreen> {
                   return Container(
                     width: 350.w,
                     height: 50.w,
-                    margin: EdgeInsets.only(bottom: 29.h),
+                    margin: EdgeInsets.only(
+                        bottom: _isBottomSheetOpened
+                            ? bottomSheetHeight + 29.h
+                            : 29.h),
                     child: ElevatedButton(
                       onPressed: () {
                         // Validate returns true if the form is valid, or false otherwise.
-                        if (_formKey.currentState!.validate() &&
-                            model.isDOBValid) {
+                        if (model.isDOBValid) {
                           context.goNamed(AmptiveRoutes.preference);
                         }
                       },
                       style: ElevatedButton.styleFrom(
-                          backgroundColor: model.isEmailValid
+                          backgroundColor: model.dob != null
                               ? AmpColors.brandBlue
                               : const Color(0xFF2F2F2F)),
                       child: Text(
@@ -130,32 +138,87 @@ class _DateOfBirthScreenState extends State<DateOfBirthScreen> {
     );
   }
 
-  void _selectDate() {
-    BottomPicker.date(
-      layoutOrientation: LayoutOrientation.rtl,
-        dateOrder: DatePickerDateOrder.mdy,
-        displayCloseIcon: false,
-        displaySubmitButton: false,
-        dismissable: true,
-        title:  "Done",
-        titleStyle: GoogleFonts.inter(
-          backgroundColor: const Color(0xFF434343),
-            color: AmpColors.white,
-            fontWeight: FontWeight.normal,
-            fontSize: 16.sp
-        ),
-        pickerTextStyle: GoogleFonts.inter(
-          color: AmpColors.white,
-          fontWeight: FontWeight.normal,
-          fontSize: 24.sp
-        ),
-        backgroundColor: AmpColors.brandBlack,
-        onChange: (index) {
-          setState(() {
-            _dobController.text = index.toString();
-          });
-        },
-        bottomPickerTheme:  BottomPickerTheme.temptingAzure
-    ).show(context);
+  _selectDate(bottomSheetHeight) async {
+    _onBottomSheetOpened();
+
+    DateTime? pickedDate = await showModalBottomSheet<DateTime>(
+      context: context,
+      builder: (context) {
+        DateTime tempPickedDate = DateTime.now();
+        return SizedBox(
+          height: bottomSheetHeight,
+          child: Column(
+            children: <Widget>[
+              Container(
+                color: const Color(0xFF434343),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: <Widget>[
+                    CupertinoButton(
+                      child: Text(
+                        'Done',
+                        style: GoogleFonts.inter(
+                            color: AmpColors.white,
+                            fontWeight: FontWeight.normal,
+                            fontSize: 16.sp),
+                      ),
+                      onPressed: () {
+                        Navigator.of(context).pop(tempPickedDate);
+                      },
+                    ),
+                  ],
+                ),
+              ),
+              Divider(
+                color: AmpColors.brandBlack,
+                height: 0.h,
+                thickness: 1.h,
+              ),
+              Expanded(
+                child: Container(
+                  color: AmpColors.brandBlack,
+                  child: CupertinoTheme(
+                    data: const CupertinoThemeData(
+                      brightness: Brightness.dark,
+                    ),
+                    child: CupertinoDatePicker(
+                      mode: CupertinoDatePickerMode.date,
+                      onDateTimeChanged: (DateTime dateTime) {
+                        tempPickedDate = dateTime;
+                      },
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        );
+      },
+    ).whenComplete(() => _onBottomSheetClosed());
+
+    if (pickedDate != null && pickedDate != _selectedDate) {
+      setState(() {
+        _selectedDate = pickedDate;
+        _dobController.text = _formatDate(pickedDate);
+      });
+
+      _formProvider.setDOB(_selectedDate);
+    }
+  }
+
+  void _onBottomSheetClosed() {
+    setState(() {
+      _isBottomSheetOpened = false;
+    });
+  }
+
+  void _onBottomSheetOpened() {
+    setState(() {
+      _isBottomSheetOpened = true;
+    });
+  }
+
+  String _formatDate(DateTime pickedDate) {
+    return "${DateFormat("MMMM", "en_US").format(pickedDate)} ${pickedDate.day} ${pickedDate.year}";
   }
 }

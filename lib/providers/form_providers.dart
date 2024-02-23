@@ -9,18 +9,18 @@ class FormProvider extends ChangeNotifier {
   ValidationModel _password =
       ValidationModel(null, "Your password should be at least 8 characters.");
   ValidationModel _name = ValidationModel(null, null);
-  ValidationModel _dob = ValidationModel(null, null);
+
+  DateTime? _dob;
 
   ValidationModel get email => _email;
 
-  ValidationModel get dob => _dob;
+  DateTime? get dob => _dob;
 
   ValidationModel get customEmailStatus => _customEmailStatus;
 
   ValidationModel get password => _password;
 
   ValidationModel get name => _name;
-
 
   void validateEmail(String? val) {
     if (val != null && val.isValidEmail) {
@@ -52,12 +52,8 @@ class FormProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  void validateDOB(String? val) {
-    if (val != null) {
-      _name = ValidationModel(val, null);
-    } else {
-      _name = ValidationModel(null, null);
-    }
+  void setDOB(DateTime? val) {
+    _dob = val;
     notifyListeners();
   }
 
@@ -83,8 +79,7 @@ class FormProvider extends ChangeNotifier {
     return _password.value != null;
   }
 
-  bool get isDOBValid => _dob.value != null;
-
+  bool get isDOBValid => _dob != null;
 }
 
 class ValidationModel {
