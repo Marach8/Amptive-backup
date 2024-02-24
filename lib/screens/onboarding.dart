@@ -97,14 +97,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                 right: 38.w,
                 child: ElevatedButton(
                   onPressed: () {
-                    if (_currentPage > 1) {
-                      context.pushReplacementNamed(AmptiveRoutes.welcome);
-                    } else {
-                      controller.nextPage(
-                        duration: const Duration(milliseconds: 500),
-                        curve: Curves.ease,
-                      );
-                    }
+                    context.pushReplacementNamed(AmptiveRoutes.welcome);
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: AmpColors.brandBlue,

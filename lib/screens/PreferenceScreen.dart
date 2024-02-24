@@ -36,6 +36,30 @@ class _PreferenceScreenState extends State<PreferenceScreen> {
           padding: EdgeInsets.symmetric(horizontal: 22.w),
           child: Column(
             children: [
+              Container(
+                margin: EdgeInsets.only(top: 20.h, bottom: 11.h),
+                alignment: Alignment.centerLeft,
+                child: Text(
+                  "Select 5 communities you find interest in.",
+                  style: GoogleFonts.inter(
+                    color: AmpColors.white,
+                    fontSize: 22.sp,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+              Container(
+                margin: EdgeInsets.only( bottom: 30.h),
+                alignment: Alignment.centerLeft,
+                child: Text(
+                  "Your selected interests will be used to personalize you Amptive experience.",
+                  style: GoogleFonts.inter(
+                    color: const Color(0xFFCDCDCD),
+                    fontSize: 14.sp,
+                    fontWeight: FontWeight.normal,
+                  ),
+                ),
+              ),
               Expanded(
                 child: GridView.builder(
                   shrinkWrap: true,

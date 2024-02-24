@@ -8,16 +8,17 @@ import 'package:provider/provider.dart';
 
 import '../utils/utils.dart';
 
-class EmailAuthScreen extends StatefulWidget {
-  const EmailAuthScreen({super.key});
+class PasswordAuthScreen extends StatefulWidget {
+  const PasswordAuthScreen({super.key});
 
   @override
-  State<EmailAuthScreen> createState() => _EmailAuthScreenState();
+  State<PasswordAuthScreen> createState() => _PasswordAuthScreenState();
 }
 
-class _EmailAuthScreenState extends State<EmailAuthScreen> {
-  TextEditingController textController = TextEditingController();
+class _PasswordAuthScreenState extends State<PasswordAuthScreen> {
   late FormProvider _formProvider;
+  bool _passwordVisible = false;
+  TextEditingController passwordController = TextEditingController();
 
   final _formKey = GlobalKey<FormState>();
 
@@ -36,7 +37,7 @@ class _EmailAuthScreenState extends State<EmailAuthScreen> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  "What is your email?",
+                  "Create a password for your account",
                   style: GoogleFonts.inter(
                     color: AmpColors.white,
                     fontSize: 17.sp,
@@ -47,59 +48,54 @@ class _EmailAuthScreenState extends State<EmailAuthScreen> {
                   height: 11.h,
                 ),
                 TextFormField(
-                  controller: textController,
-                  onChanged: _formProvider.validateEmail,
+                  controller: passwordController,
+                  onChanged: _formProvider.validatePassword,
                   maxLines: 1,
-                  autovalidateMode: AutovalidateMode.onUserInteraction,
-                  keyboardType: TextInputType.emailAddress,
-                  cursorColor: _formProvider.email.error == null
-                      ? AmpColors.brandBlue
-                      : AmpColors.textRed,
+                  obscureText: !_passwordVisible,
+                  keyboardType: TextInputType.visiblePassword,
+                  cursorColor: AmpColors.brandBlue,
                   decoration: InputDecoration(
-                    hintText: "Enter your email",
-                    hintStyle: GoogleFonts.inter(
-                      fontSize: 16.sp,
-                      color: AmpColors.authHintColor,
-                      fontWeight: FontWeight.normal,
-                    ),
-                    errorText: _formProvider.email.error,
-                    errorStyle: GoogleFonts.inter(
-                      color: AmpColors.textRed,
-                      fontSize: 12.sp,
-                      fontWeight: FontWeight.normal,
-                    ),
-                    filled: true,
-                    fillColor: const Color(0xFF9E9E9E).withOpacity(0.3),
-                    focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(
-                        width: 2.w,
-                        color: _formProvider.email.error == null
-                            ? AmpColors.brandBlue
-                            : AmpColors.textRed,
+                      hintText: "Enter your password",
+                      hintStyle: GoogleFonts.inter(
+                        fontSize: 16.sp,
+                        color: AmpColors.authHintColor,
+                        fontWeight: FontWeight.normal,
                       ),
-                      borderRadius: BorderRadius.circular(30.r),
-                    ),
-                    border: OutlineInputBorder(
-                      borderSide: BorderSide(
-                        width: 2.w,
-                        color: AmpColors.transparent,
+                      filled: true,
+                      fillColor: const Color(0xFF9E9E9E).withOpacity(0.3),
+                      focusedBorder: buildOutlineInputBorder(),
+                      border: OutlineInputBorder(
+                        borderSide: BorderSide(
+                          width: 2.w,
+                          color: AmpColors.transparent,
+                        ),
+                        borderRadius: BorderRadius.circular(30.r),
                       ),
-                      borderRadius: BorderRadius.circular(30.r),
-                    ),
-                  ),
+                      suffixIcon: IconButton(
+                        icon: Icon(
+                          _passwordVisible
+                              ? Icons.visibility_off
+                              : Icons.visibility,
+                          color: AmpColors.white,
+                        ), onPressed: () {
+                          setState(() {
+                            _passwordVisible = !_passwordVisible;
+                          });
+                      },
+                      )),
                   style: GoogleFonts.inter(
-                      fontWeight: FontWeight.normal,
-                      fontSize: 16.sp,
-                      color: AmpColors.white),
+                    fontWeight: FontWeight.normal,
+                    fontSize: 16.sp,
+                    color: AmpColors.white,
+                  ),
                 ),
                 Consumer<FormProvider>(builder: (context, model, _) {
-                  var height =
-                      model.customEmailStatus.value != null ? 20.h : 0.h;
+                  var height = model.password.error != null ? 20.h : 0.h;
                   return Container(
                     height: height,
                     margin: EdgeInsets.symmetric(vertical: 11.h),
                     child: Text(
-                      model.customEmailStatus.value ?? "",
+                      model.password.error ?? "",
                       style: GoogleFonts.inter(
                         color: AmpColors.white,
                         fontWeight: FontWeight.normal,
@@ -121,21 +117,20 @@ class _EmailAuthScreenState extends State<EmailAuthScreen> {
                     child: ElevatedButton(
                       onPressed: () {
                         // Validate returns true if the form is valid, or false otherwise.
-                        if (_formKey.currentState!.validate() &&
-                            model.isEmailValid) {
-                          context.goNamed(AmptiveRoutes.otp);
+                        if (model.isPasswordValid) {
+                          context.goNamed(AmptiveRoutes.dobAuth);
                         }
                       },
                       style: ElevatedButton.styleFrom(
-                          backgroundColor: model.isEmailValid
+                          backgroundColor: model.isPasswordValid
                               ? AmpColors.brandBlue
                               : const Color(0xFF2F2F2F)),
                       child: Text(
-                        "Verify Email",
+                        "Next",
                         style: GoogleFonts.inter(
                             fontWeight: FontWeight.w600,
                             fontSize: 18.sp,
-                            color: model.isEmailValid
+                            color: model.isPasswordValid
                                 ? AmpColors.white
                                 : const Color(0xFF666666)),
                       ),
@@ -147,6 +142,13 @@ class _EmailAuthScreenState extends State<EmailAuthScreen> {
           ),
         ),
       ),
+    );
+  }
+
+  OutlineInputBorder buildOutlineInputBorder() {
+    return OutlineInputBorder(
+      borderSide: BorderSide(width: 2.w, color: AmpColors.brandBlue),
+      borderRadius: BorderRadius.circular(30.r),
     );
   }
 }
