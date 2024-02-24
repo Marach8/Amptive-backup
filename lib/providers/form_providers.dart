@@ -78,16 +78,9 @@ class FormProvider extends ChangeNotifier {
 
   bool get isDOBValid => _dob != null;
 
-  bool get isOTPValid {
-    return otpModel.pin1 != null &&
-        otpModel.pin2 != null &&
-        otpModel.pin3 != null &&
-        otpModel.pin4 != null &&
-        otpModel.pin1!.isNotEmpty &&
-        otpModel.pin2!.isNotEmpty &&
-        otpModel.pin3!.isNotEmpty &&
-        otpModel.pin4!.isNotEmpty;
-  }
+  bool get isNameValid => name.value != null;
+
+  bool get isOTPValid => otpModel.isOTPValid;
 
   void setOtp(String pin, int index) {
     if (index == 0) {
@@ -116,4 +109,24 @@ class OTPModel {
   String? pin2;
   String? pin3;
   String? pin4;
+
+  bool get isOTPValid {
+    return pin1 != null &&
+        pin2 != null &&
+        pin3 != null &&
+        pin4 != null &&
+        pin1!.isNotEmpty &&
+        pin2!.isNotEmpty &&
+        pin3!.isNotEmpty &&
+        pin4!.isNotEmpty;
+  }
+
+  int getOTP() {
+    if (isOTPValid) {
+      String temp = pin1! + pin2! + pin3! + pin4!;
+      return int.parse(temp);
+    }
+
+    return -1;
+  }
 }

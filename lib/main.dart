@@ -4,6 +4,7 @@ import 'package:amptive/screens/AuthScreen.dart';
 import 'package:amptive/screens/DoBScreen.dart';
 import 'package:amptive/screens/PreferenceScreen.dart';
 import 'package:amptive/screens/emailAuthScreen.dart';
+import 'package:amptive/screens/nameAuthScreen.dart';
 import 'package:amptive/screens/onboarding.dart';
 import 'package:amptive/screens/otpScreen.dart';
 import 'package:amptive/screens/passwordAuthScreen.dart';
@@ -80,6 +81,21 @@ final GoRouter _router = GoRouter(
       path: "/dob",
       builder: (BuildContext context, GoRouterState state) =>
       const DateOfBirthScreen(),
+    ),
+
+    // todo uncomment when implemented
+    // GoRoute(
+    //   name: AmptiveRoutes.addUsername,
+    //   path: "/username-add",
+    //   builder: (BuildContext context, GoRouterState state) =>
+    //   const UserNameAuthScreen(),
+    // ),
+
+    GoRoute(
+      name: AmptiveRoutes.addName,
+      path: "/name-add",
+      builder: (BuildContext context, GoRouterState state) =>
+      const NameAuthScreen(),
     ),
 
     GoRoute(
