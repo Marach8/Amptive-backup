@@ -9,6 +9,7 @@ class FormProvider extends ChangeNotifier {
   ValidationModel _password =
       ValidationModel(null, "Your password should be at least 8 characters.");
   ValidationModel _name = ValidationModel(null, null);
+  ValidationModel _username = ValidationModel(null, null);
 
   DateTime? _dob;
 
@@ -23,6 +24,8 @@ class FormProvider extends ChangeNotifier {
   ValidationModel get password => _password;
 
   ValidationModel get name => _name;
+
+  ValidationModel get username => _username;
 
   void validateEmail(String? val) {
     if (val != null && val.isValidEmail) {
@@ -60,10 +63,19 @@ class FormProvider extends ChangeNotifier {
   }
 
   void validateName(String? val) {
-    if (val != null && val.isValidName) {
+    if (val != null && val.isNotEmpty) {
       _name = ValidationModel(val, null);
     } else {
-      _name = ValidationModel(null, 'Please enter a valid name');
+      _name = ValidationModel(null, '');
+    }
+    notifyListeners();
+  }
+
+  void validateUsername(String? val) {
+    if (val != null && val.isNotEmpty) {
+      _username = ValidationModel(val, null);
+    } else {
+      _username = ValidationModel(null, 'Please enter valid username');
     }
     notifyListeners();
   }
@@ -78,7 +90,9 @@ class FormProvider extends ChangeNotifier {
 
   bool get isDOBValid => _dob != null;
 
-  bool get isNameValid => name.value != null;
+  bool get isNameValid => _name.value != null;
+
+  bool get isUsernameValid => _username.value != null;
 
   bool get isOTPValid => otpModel.isOTPValid;
 

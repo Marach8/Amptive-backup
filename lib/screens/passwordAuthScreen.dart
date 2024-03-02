@@ -55,6 +55,7 @@ class _PasswordAuthScreenState extends State<PasswordAuthScreen> {
                   keyboardType: TextInputType.visiblePassword,
                   cursorColor: AmpColors.brandBlue,
                   decoration: InputDecoration(
+                      contentPadding: EdgeInsets.symmetric(vertical: 22.h, horizontal: 8.w),
                       hintText: "Enter your password",
                       hintStyle: GoogleFonts.inter(
                         fontSize: 16.sp,
@@ -72,11 +73,14 @@ class _PasswordAuthScreenState extends State<PasswordAuthScreen> {
                         borderRadius: BorderRadius.circular(30.r),
                       ),
                       suffixIcon: IconButton(
-                        icon: Icon(
-                          _passwordVisible
-                              ? Icons.visibility_off
-                              : Icons.visibility,
-                          color: AmpColors.white,
+                        icon: Padding(
+                          padding:  EdgeInsets.only(right: 16.0.w),
+                          child: Icon(
+                            _passwordVisible
+                                ? Icons.visibility_off
+                                : Icons.visibility,
+                            color: AmpColors.white,
+                          ),
                         ), onPressed: () {
                           setState(() {
                             _passwordVisible = !_passwordVisible;

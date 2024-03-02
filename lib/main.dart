@@ -9,6 +9,7 @@ import 'package:amptive/screens/onboarding.dart';
 import 'package:amptive/screens/otpScreen.dart';
 import 'package:amptive/screens/passwordAuthScreen.dart';
 import 'package:amptive/screens/splash.dart';
+import 'package:amptive/screens/usernameAuthScreen.dart';
 import 'package:amptive/screens/welcome.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -56,48 +57,42 @@ final GoRouter _router = GoRouter(
           const OnboardingScreen(),
     ),
     GoRoute(
-      name: AmptiveRoutes.emailAuth,
-      path: "/email-route",
-      builder: (BuildContext context, GoRouterState state) =>
-          const EmailAuthScreen(),
-      routes: [
-        GoRoute(
-          name: AmptiveRoutes.otp,
-          path: "otp",
-          builder: (BuildContext context, GoRouterState state) =>
-          const OTPScreen(),
-        ),
-      ]
-    ),
-    GoRoute(
-        name: AmptiveRoutes.passwordAuth,
-        path: "/password",
+        name: AmptiveRoutes.emailAuth,
+        path: "/email-route",
         builder: (BuildContext context, GoRouterState state) =>
-        const PasswordAuthScreen(),
+            const EmailAuthScreen(),
+        routes: [
+          GoRoute(
+            name: AmptiveRoutes.otp,
+            path: "otp",
+            builder: (BuildContext context, GoRouterState state) =>
+                const OTPScreen(),
+          ),
+        ]),
+    GoRoute(
+      name: AmptiveRoutes.passwordAuth,
+      path: "/password",
+      builder: (BuildContext context, GoRouterState state) =>
+          const PasswordAuthScreen(),
     ),
-
     GoRoute(
       name: AmptiveRoutes.dobAuth,
       path: "/dob",
       builder: (BuildContext context, GoRouterState state) =>
-      const DateOfBirthScreen(),
+          const DateOfBirthScreen(),
     ),
-
-    // todo uncomment when implemented
-    // GoRoute(
-    //   name: AmptiveRoutes.addUsername,
-    //   path: "/username-add",
-    //   builder: (BuildContext context, GoRouterState state) =>
-    //   const UserNameAuthScreen(),
-    // ),
-
+    GoRoute(
+      name: AmptiveRoutes.addUsername,
+      path: "/username-add",
+      builder: (BuildContext context, GoRouterState state) =>
+          const UserNameAuthScreen(),
+    ),
     GoRoute(
       name: AmptiveRoutes.addName,
       path: "/name-add",
       builder: (BuildContext context, GoRouterState state) =>
-      const NameAuthScreen(),
+          const NameAuthScreen(),
     ),
-
     GoRoute(
       name: AmptiveRoutes.preference,
       path: "/preference-route",

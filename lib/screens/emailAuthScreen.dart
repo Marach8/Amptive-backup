@@ -56,6 +56,7 @@ class _EmailAuthScreenState extends State<EmailAuthScreen> {
                       ? AmpColors.brandBlue
                       : AmpColors.textRed,
                   decoration: InputDecoration(
+                    contentPadding: EdgeInsets.symmetric(vertical: 12.h, horizontal: 16.w),
                     hintText: "Enter your email",
                     hintStyle: GoogleFonts.inter(
                       fontSize: 16.sp,
@@ -77,20 +78,21 @@ class _EmailAuthScreenState extends State<EmailAuthScreen> {
                             ? AmpColors.brandBlue
                             : AmpColors.textRed,
                       ),
-                      borderRadius: BorderRadius.circular(30.r),
+                      borderRadius: BorderRadius.circular(14.r),
                     ),
                     border: OutlineInputBorder(
                       borderSide: BorderSide(
                         width: 2.w,
                         color: AmpColors.transparent,
                       ),
-                      borderRadius: BorderRadius.circular(30.r),
+                      borderRadius: BorderRadius.circular(14.r),
                     ),
                   ),
                   style: GoogleFonts.inter(
-                      fontWeight: FontWeight.normal,
-                      fontSize: 16.sp,
-                      color: AmpColors.white),
+                    fontWeight: FontWeight.normal,
+                    fontSize: 18.sp,
+                    color: AmpColors.white,
+                  ),
                 ),
                 Consumer<FormProvider>(builder: (context, model, _) {
                   var height =

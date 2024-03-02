@@ -55,16 +55,11 @@ class _NameAuthScreenState extends State<NameAuthScreen> {
                       ? AmpColors.brandBlue
                       : AmpColors.textRed,
                   decoration: InputDecoration(
+                    contentPadding: EdgeInsets.symmetric(vertical: 22.h, horizontal: 16.w),
                     hintText: "Enter your name",
                     hintStyle: GoogleFonts.inter(
                       fontSize: 16.sp,
                       color: AmpColors.authHintColor,
-                      fontWeight: FontWeight.normal,
-                    ),
-                    errorText: _formProvider.name.error,
-                    errorStyle: GoogleFonts.inter(
-                      color: AmpColors.textRed,
-                      fontSize: 12.sp,
                       fontWeight: FontWeight.normal,
                     ),
                     filled: true,
@@ -93,7 +88,7 @@ class _NameAuthScreenState extends State<NameAuthScreen> {
                 ),
                 Container(
                   height: 17.h,
-                  margin: EdgeInsets.symmetric(vertical: 11.h),
+                  margin: EdgeInsets.symmetric(vertical: 11.h,),
                   child: Text(
                     "Note that this will appear on your profile.",
                     style: GoogleFonts.inter(
@@ -133,9 +128,10 @@ class _NameAuthScreenState extends State<NameAuthScreen> {
                         ),
                       ],
                       style: GoogleFonts.inter(
-                        fontSize: 12.sp,
+                        fontSize: 11.sp,
                         color: AmpColors.white,
                         fontWeight: FontWeight.normal,
+                        height: 2
                       ),
                     ),
                   ),

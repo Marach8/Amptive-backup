@@ -1,33 +1,29 @@
 import 'package:amptive/providers/form_providers.dart';
 import 'package:amptive/routers/amptive_routes.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 import '../utils/utils.dart';
 
-class DateOfBirthScreen extends StatefulWidget {
-  const DateOfBirthScreen({super.key});
+class UserNameAuthScreen extends StatefulWidget {
+  const UserNameAuthScreen({super.key});
 
   @override
-  State<DateOfBirthScreen> createState() => _DateOfBirthScreenState();
+  State<UserNameAuthScreen> createState() => _UserNameAuthScreenState();
 }
 
-class _DateOfBirthScreenState extends State<DateOfBirthScreen> {
-  final TextEditingController _dobController = TextEditingController();
-  final _formKey = GlobalKey<FormState>();
+class _UserNameAuthScreenState extends State<UserNameAuthScreen> {
+  TextEditingController usernameController = TextEditingController();
   late FormProvider _formProvider;
-  bool _isBottomSheetOpened = false;
-  DateTime? _selectedDate;
+
+  final _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
     _formProvider = Provider.of<FormProvider>(context);
-    var bottomSheetHeight = 232.h;
 
     return SafeArea(
       child: Scaffold(
@@ -40,7 +36,7 @@ class _DateOfBirthScreenState extends State<DateOfBirthScreen> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  "What is your date of birth?",
+                  "What should we call you?",
                   style: GoogleFonts.inter(
                     color: AmpColors.white,
                     fontSize: 17.sp,
@@ -51,23 +47,32 @@ class _DateOfBirthScreenState extends State<DateOfBirthScreen> {
                   height: 11.h,
                 ),
                 TextFormField(
-                  controller: _dobController,
-                  readOnly: true,
-                  onTap: () {
-                    _selectDate(bottomSheetHeight);
-                  },
+                  controller: usernameController,
+                  onChanged: _formProvider.validateUsername,
                   maxLines: 1,
                   autovalidateMode: AutovalidateMode.onUserInteraction,
-                  keyboardType: TextInputType.none,
-                  cursorColor: AmpColors.brandBlue,
+                  keyboardType: TextInputType.text,
+                  cursorColor: _formProvider.username.error == null
+                      ? AmpColors.brandBlue
+                      : AmpColors.textRed,
                   decoration: InputDecoration(
                     contentPadding: EdgeInsets.symmetric(vertical: 22.h, horizontal: 16.w),
-                    hintText: "Select Date",
+                    prefixIcon: Container(
+                      padding: EdgeInsets.symmetric(vertical: 5.h, horizontal: 16.h),
+                      child: Text("@", style: GoogleFonts.inter(
+                        fontWeight: FontWeight.bold,
+                        color: AmpColors.white,
+                        fontSize: 18.sp,
+                        height: 3.h
+                      ),),
+                    ),
+                    hintText: "username",
                     hintStyle: GoogleFonts.inter(
                       fontSize: 16.sp,
                       color: AmpColors.authHintColor,
                       fontWeight: FontWeight.normal,
                     ),
+                    errorText: _formProvider.username.error,
                     errorStyle: GoogleFonts.inter(
                       color: AmpColors.textRed,
                       fontSize: 12.sp,
@@ -78,7 +83,9 @@ class _DateOfBirthScreenState extends State<DateOfBirthScreen> {
                     focusedBorder: OutlineInputBorder(
                       borderSide: BorderSide(
                         width: 2.w,
-                        color: AmpColors.brandBlue,
+                        color: _formProvider.username.error == null
+                            ? AmpColors.brandBlue
+                            : AmpColors.textRed,
                       ),
                       borderRadius: BorderRadius.circular(30.r),
                     ),
@@ -104,19 +111,16 @@ class _DateOfBirthScreenState extends State<DateOfBirthScreen> {
                   return Container(
                     width: 350.w,
                     height: 50.w,
-                    margin: EdgeInsets.only(
-                        bottom: _isBottomSheetOpened
-                            ? bottomSheetHeight + 29.h
-                            : 29.h),
+                    margin: EdgeInsets.only(bottom: 29.h),
                     child: ElevatedButton(
                       onPressed: () {
                         // Validate returns true if the form is valid, or false otherwise.
-                        if (model.isDOBValid) {
-                          context.goNamed(AmptiveRoutes.addUsername);
+                        if (model.isUsernameValid) {
+                          context.goNamed(AmptiveRoutes.addName);
                         }
                       },
                       style: ElevatedButton.styleFrom(
-                          backgroundColor: model.dob != null
+                          backgroundColor: model.isUsernameValid
                               ? AmpColors.brandBlue
                               : const Color(0xFF2F2F2F)),
                       child: Text(
@@ -124,7 +128,7 @@ class _DateOfBirthScreenState extends State<DateOfBirthScreen> {
                         style: GoogleFonts.inter(
                             fontWeight: FontWeight.w600,
                             fontSize: 18.sp,
-                            color: model.isEmailValid
+                            color: model.isUsernameValid
                                 ? AmpColors.white
                                 : const Color(0xFF666666)),
                       ),
@@ -137,89 +141,5 @@ class _DateOfBirthScreenState extends State<DateOfBirthScreen> {
         ),
       ),
     );
-  }
-
-  _selectDate(bottomSheetHeight) async {
-    _onBottomSheetOpened();
-
-    DateTime? pickedDate = await showModalBottomSheet<DateTime>(
-      context: context,
-      builder: (context) {
-        DateTime tempPickedDate = DateTime.now();
-        return SizedBox(
-          height: bottomSheetHeight,
-          child: Column(
-            children: <Widget>[
-              Container(
-                color: const Color(0xFF434343),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: <Widget>[
-                    CupertinoButton(
-                      child: Text(
-                        'Done',
-                        style: GoogleFonts.inter(
-                            color: AmpColors.white,
-                            fontWeight: FontWeight.normal,
-                            fontSize: 16.sp),
-                      ),
-                      onPressed: () {
-                        Navigator.of(context).pop(tempPickedDate);
-                      },
-                    ),
-                  ],
-                ),
-              ),
-              Divider(
-                color: AmpColors.brandBlack,
-                height: 0.h,
-                thickness: 1.h,
-              ),
-              Expanded(
-                child: Container(
-                  color: AmpColors.brandBlack,
-                  child: CupertinoTheme(
-                    data: const CupertinoThemeData(
-                      brightness: Brightness.dark,
-                    ),
-                    child: CupertinoDatePicker(
-                      mode: CupertinoDatePickerMode.date,
-                      onDateTimeChanged: (DateTime dateTime) {
-                        tempPickedDate = dateTime;
-                      },
-                    ),
-                  ),
-                ),
-              ),
-            ],
-          ),
-        );
-      },
-    ).whenComplete(() => _onBottomSheetClosed());
-
-    if (pickedDate != null && pickedDate != _selectedDate) {
-      setState(() {
-        _selectedDate = pickedDate;
-        _dobController.text = _formatDate(pickedDate);
-      });
-
-      _formProvider.setDOB(_selectedDate);
-    }
-  }
-
-  void _onBottomSheetClosed() {
-    setState(() {
-      _isBottomSheetOpened = false;
-    });
-  }
-
-  void _onBottomSheetOpened() {
-    setState(() {
-      _isBottomSheetOpened = true;
-    });
-  }
-
-  String _formatDate(DateTime pickedDate) {
-    return "${DateFormat("MMMM", "en_US").format(pickedDate)} ${pickedDate.day} ${pickedDate.year}";
   }
 }
