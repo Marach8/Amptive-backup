@@ -3,6 +3,7 @@ import 'package:amptive/routers/amptive_routes.dart';
 import 'package:amptive/screens/AuthScreen.dart';
 import 'package:amptive/screens/DoBScreen.dart';
 import 'package:amptive/screens/PreferenceScreen.dart';
+import 'package:amptive/screens/add_phone.dart';
 import 'package:amptive/screens/emailAuthScreen.dart';
 import 'package:amptive/screens/nameAuthScreen.dart';
 import 'package:amptive/screens/onboarding.dart';
@@ -35,7 +36,7 @@ final GoRouter _router = GoRouter(
       path: AmptiveRoutes.index,
       builder: (BuildContext context, GoRouterState state) {
         // return const SplashScreen();
-        return const PostRegistrationScreen();
+        return const AddPhoneScreen();
       },
     ),
     GoRoute(

@@ -1,4 +1,6 @@
 import 'package:amptive/utils/utils.dart';
+import 'package:country_pickers/country.dart';
+import 'package:country_pickers/utils/utils.dart';
 import 'package:flutter/material.dart';
 
 class FormProvider extends ChangeNotifier {
@@ -10,14 +12,19 @@ class FormProvider extends ChangeNotifier {
       ValidationModel(null, "Your password should be at least 8 characters.");
   ValidationModel _name = ValidationModel(null, null);
   ValidationModel _username = ValidationModel(null, null);
+  ValidationModel _phoneNo = ValidationModel(null, null);
 
   DateTime? _dob;
+
+  Country _country = CountryPickerUtils.getCountryByIsoCode('NG');
 
   OTPModel otpModel = OTPModel();
 
   ValidationModel get email => _email;
 
   DateTime? get dob => _dob;
+
+  Country get country => _country;
 
   ValidationModel get customEmailStatus => _customEmailStatus;
 
@@ -26,6 +33,8 @@ class FormProvider extends ChangeNotifier {
   ValidationModel get name => _name;
 
   ValidationModel get username => _username;
+
+  ValidationModel get phoneNo => _phoneNo;
 
   void validateEmail(String? val) {
     if (val != null && val.isValidEmail) {
@@ -57,8 +66,12 @@ class FormProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  void setDOB(DateTime? val) {
-    _dob = val;
+  void validatePhoneNumber(String? val) {
+    if (val != null && val.length >= 10) {
+      _phoneNo = ValidationModel(val, null);
+    } else {
+      _phoneNo = ValidationModel(null, '');
+    }
     notifyListeners();
   }
 
@@ -90,6 +103,8 @@ class FormProvider extends ChangeNotifier {
 
   bool get isDOBValid => _dob != null;
 
+  bool get isPhoneValid => _country != null && _phoneNo.value != null;
+
   bool get isNameValid => _name.value != null;
 
   bool get isUsernameValid => _username.value != null;
@@ -109,6 +124,19 @@ class FormProvider extends ChangeNotifier {
 
     notifyListeners();
   }
+
+
+  void setDOB(DateTime? val) {
+    _dob = val;
+    notifyListeners();
+  }
+
+
+  void setCountry(Country c) {
+    _country = c;
+    notifyListeners();
+  }
+
 }
 
 class ValidationModel {

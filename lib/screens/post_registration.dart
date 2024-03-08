@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -12,7 +14,18 @@ class PostRegistrationScreen extends StatefulWidget {
 }
 
 class _PostRegistrationScreenState extends State<PostRegistrationScreen> {
-  bool _isLoading = false;
+  bool _isLoading = true;
+
+  @override
+  void initState() {
+    super.initState();
+    Timer(
+      const Duration(seconds: 5),
+      () => setState(() {
+        _isLoading = false;
+      }),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -21,114 +34,114 @@ class _PostRegistrationScreenState extends State<PostRegistrationScreen> {
       backgroundColor: AmpColors.brandBlack,
       body: Padding(
         padding: EdgeInsets.only(left: 25.w, right: 25.w, top: 20.w),
-        child: _isLoading? const LoadingAccount() : _addPicture(),
+        child: _isLoading ? const LoadingAccount() : _addPicture(),
       ),
     ));
   }
 
   Widget _addPicture() {
     return Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            "Add a profile picture",
-            textAlign: TextAlign.start,
-            style: GoogleFonts.inter(
-              color: AmpColors.white,
-              fontSize: 22.sp,
-              fontWeight: FontWeight.w600,
-            ),
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          "Add a profile picture",
+          textAlign: TextAlign.start,
+          style: GoogleFonts.inter(
+            color: AmpColors.white,
+            fontSize: 22.sp,
+            fontWeight: FontWeight.w600,
           ),
-          SizedBox(
-            height: 4.h,
+        ),
+        SizedBox(
+          height: 4.h,
+        ),
+        Text(
+          "Use one of your favourite image or selfie",
+          textAlign: TextAlign.start,
+          style: GoogleFonts.inter(
+            color: const Color(0xFFCDCDCD),
+            fontSize: 14.sp,
+            fontWeight: FontWeight.normal,
           ),
-          Text(
-            "Use one of your favourite image or selfie",
-            textAlign: TextAlign.start,
-            style: GoogleFonts.inter(
-              color: const Color(0xFFCDCDCD),
-              fontSize: 14.sp,
-              fontWeight: FontWeight.normal,
-            ),
-          ),
-          Container(
-            margin: EdgeInsets.only(top: 79.h, left: 105.w),
-            height: 153.h,
-            width: 132.h,
-            child: Stack(
-              children: [
-                SizedBox(
-                    height: 132.h,
-                    width: 132.w,
-                    child: Image.asset(
-                      "assets/no_avatar_image.png",
-                      height: 110.h,
-                      width: 84.w,
-                      fit: BoxFit.contain,
-                    )),
-                Positioned(
-                  top: 111.h,
-                  left: 38.w,
-                  child: SizedBox(
-                    width: 41.25.w,
-                    height: 41.25.h,
-                    child: RawMaterialButton(
-                      onPressed: () {},
-                      elevation: 2.0,
-                      fillColor: AmpColors.brandBlue,
-                      shape: const CircleBorder(),
-                      child: Icon(
-                        Icons.add,
-                        size: 35.0.w,
-                        color: AmpColors.white,
-                      ),
+        ),
+        Container(
+          margin: EdgeInsets.only(top: 79.h, left: 105.w),
+          height: 153.h,
+          width: 132.h,
+          child: Stack(
+            children: [
+              SizedBox(
+                  height: 132.h,
+                  width: 132.w,
+                  child: Image.asset(
+                    "assets/no_avatar_image.png",
+                    height: 110.h,
+                    width: 84.w,
+                    fit: BoxFit.contain,
+                  )),
+              Positioned(
+                top: 111.h,
+                left: 38.w,
+                child: SizedBox(
+                  width: 41.25.w,
+                  height: 41.25.h,
+                  child: RawMaterialButton(
+                    onPressed: () {},
+                    elevation: 2.0,
+                    fillColor: AmpColors.brandBlue,
+                    shape: const CircleBorder(),
+                    child: Icon(
+                      Icons.add,
+                      size: 35.0.w,
+                      color: AmpColors.white,
                     ),
                   ),
                 ),
-              ],
+              ),
+            ],
+          ),
+        ),
+        Expanded(
+          child: SizedBox(
+            height: 1.h,
+          ),
+        ),
+        Container(
+          margin: EdgeInsets.only(bottom: 20.h),
+          padding: EdgeInsets.symmetric(vertical: 7.h),
+          alignment: Alignment.center,
+          child: GestureDetector(
+            onTap: () {},
+            child: Text(
+              "Skip for now",
+              textAlign: TextAlign.center,
+              style: GoogleFonts.inter(
+                color: AmpColors.white,
+                fontSize: 18.sp,
+                fontWeight: FontWeight.w600,
+              ),
             ),
           ),
-          Expanded(
-            child: SizedBox(
-              height: 1.h,
-            ),
-          ),
-          Container(
-            margin: EdgeInsets.only(bottom: 20.h),
-            padding: EdgeInsets.symmetric(vertical: 7.h),
-            alignment: Alignment.center,
-            child: GestureDetector(
-              onTap: () {},
-              child: Text(
-                "Skip for now",
-                textAlign: TextAlign.center,
-                style: GoogleFonts.inter(
-                  color: AmpColors.white,
-                  fontSize: 18.sp,
+        ),
+        Container(
+          width: 350.w,
+          height: 50.w,
+          margin: EdgeInsets.only(bottom: 29.h),
+          child: ElevatedButton(
+            onPressed: () {},
+            style:
+                ElevatedButton.styleFrom(backgroundColor: AmpColors.brandBlue),
+            child: Text(
+              "Next",
+              style: GoogleFonts.inter(
                   fontWeight: FontWeight.w600,
-                ),
-              ),
+                  fontSize: 18.sp,
+                  color: AmpColors.white),
             ),
           ),
-          Container(
-            width: 350.w,
-            height: 50.w,
-            margin: EdgeInsets.only(bottom: 29.h),
-            child: ElevatedButton(
-              onPressed: () {},
-              style: ElevatedButton.styleFrom(
-                  backgroundColor: AmpColors.brandBlue),
-              child: Text(
-                "Next",
-                style: GoogleFonts.inter(
-                    fontWeight: FontWeight.w600,
-                    fontSize: 18.sp,
-                    color: AmpColors.white),
-              ),
-            ),
-          ),
-        ],
-      );
+        ),
+      ],
+    );
   }
 }
 
