@@ -35,8 +35,7 @@ final GoRouter _router = GoRouter(
     GoRoute(
       path: AmptiveRoutes.index,
       builder: (BuildContext context, GoRouterState state) {
-        // return const SplashScreen();
-        return const AddPhoneScreen();
+        return const SplashScreen();
       },
     ),
     GoRoute(
@@ -64,14 +63,30 @@ final GoRouter _router = GoRouter(
         path: "/email-route",
         builder: (BuildContext context, GoRouterState state) =>
             const EmailAuthScreen(),
-        routes: [
-          GoRoute(
-            name: AmptiveRoutes.otp,
-            path: "otp",
-            builder: (BuildContext context, GoRouterState state) =>
-                const OTPScreen(),
-          ),
-        ]),
+      ),
+
+    GoRoute(
+      name: AmptiveRoutes.otp,
+      path: "/otp",
+      builder: (BuildContext context, GoRouterState state) =>
+      const OTPScreen(),
+    ),
+
+
+    GoRoute(
+      name: AmptiveRoutes.addPhone,
+      path: "/add-phone",
+      builder: (BuildContext context, GoRouterState state) =>
+      const AddPhoneScreen(),
+    ),
+
+    GoRoute(
+      name: AmptiveRoutes.addProfilePic,
+      path: "/add-profile-pic",
+      builder: (BuildContext context, GoRouterState state) =>
+      const PostRegistrationScreen(),
+    ),
+
     GoRoute(
       name: AmptiveRoutes.passwordAuth,
       path: "/password",

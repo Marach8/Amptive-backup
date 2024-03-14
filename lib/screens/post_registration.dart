@@ -2,8 +2,10 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import '../routers/amptive_routes.dart';
 import '../utils/utils.dart';
 
 class PostRegistrationScreen extends StatefulWidget {
@@ -111,7 +113,9 @@ class _PostRegistrationScreenState extends State<PostRegistrationScreen> {
           padding: EdgeInsets.symmetric(vertical: 7.h),
           alignment: Alignment.center,
           child: GestureDetector(
-            onTap: () {},
+            onTap: () {
+                context.goNamed(AmptiveRoutes.preference);
+            },
             child: Text(
               "Skip for now",
               textAlign: TextAlign.center,
@@ -170,7 +174,7 @@ class LoadingAccount extends StatelessWidget {
         Container(
           margin: EdgeInsets.only(top: 17.h),
           width: 32.w,
-          height: 35.h,
+          height: 32.h,
           child: CircularProgressIndicator(
             color: AmpColors.brandBlue,
             backgroundColor: AmpColors.brandBlue.withOpacity(0.5),

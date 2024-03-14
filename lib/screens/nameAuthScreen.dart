@@ -145,7 +145,7 @@ class _NameAuthScreenState extends State<NameAuthScreen> {
                       onPressed: () {
                         // Validate returns true if the form is valid, or false otherwise.
                         if (model.isNameValid) {
-                          context.goNamed(AmptiveRoutes.preference);
+                          context.goNamed(AmptiveRoutes.addProfilePic);
                         }
                       },
                       style: ElevatedButton.styleFrom(

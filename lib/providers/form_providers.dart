@@ -3,7 +3,12 @@ import 'package:country_pickers/country.dart';
 import 'package:country_pickers/utils/utils.dart';
 import 'package:flutter/material.dart';
 
+import '../service/authentication_service.dart';
+
 class FormProvider extends ChangeNotifier {
+  final AuthenticationService _service = AuthenticationService();
+
+  // validation model for authentication form fields
   ValidationModel _email = ValidationModel(null, null);
   ValidationModel _customEmailStatus =
       ValidationModel("This email will be verified in the next step.", null);
@@ -19,6 +24,8 @@ class FormProvider extends ChangeNotifier {
   Country _country = CountryPickerUtils.getCountryByIsoCode('NG');
 
   OTPModel otpModel = OTPModel();
+
+  AuthenticationService get service => _service;
 
   ValidationModel get email => _email;
 
@@ -36,12 +43,20 @@ class FormProvider extends ChangeNotifier {
 
   ValidationModel get phoneNo => _phoneNo;
 
-  void validateEmail(String? val) {
+
+  Future<void> validateEmail(String? val) async {
     if (val != null && val.isValidEmail) {
-      //todo: check network before this
-      _email = ValidationModel(val, null);
-      _customEmailStatus = ValidationModel(
-          "This email will be verified in the next step.", null);
+      // check if email exist
+      if(await _service.checkUniqueEmail(val)){
+        _email = ValidationModel(null, null);
+        _customEmailStatus = ValidationModel(
+            "This email already exist!.", null);
+      }else{
+        _email = ValidationModel(val, null);
+        _customEmailStatus = ValidationModel(
+            "This email will be verified in the next step.", null);
+      }
+
     } else if (val == null || val.isEmpty) {
       _email = ValidationModel(null, 'Required');
       _customEmailStatus = ValidationModel(null, null);

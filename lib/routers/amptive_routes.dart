@@ -10,4 +10,6 @@ class AmptiveRoutes {
   static String otp = "otp";
   static String addName = "nameAuth";
   static String addUsername = "usernameAuth ";
+  static String addProfilePic = "addProfilePic";
+  static String addPhone = "addPhoneAuth ";
 }

@@ -5,6 +5,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+import 'package:rounded_loading_button/rounded_loading_button.dart';
 
 import '../utils/utils.dart';
 
@@ -20,6 +21,8 @@ class _EmailAuthScreenState extends State<EmailAuthScreen> {
   late FormProvider _formProvider;
 
   final _formKey = GlobalKey<FormState>();
+  final RoundedLoadingButtonController _btnController1 =
+      RoundedLoadingButtonController();
 
   @override
   Widget build(BuildContext context) {
@@ -56,7 +59,8 @@ class _EmailAuthScreenState extends State<EmailAuthScreen> {
                       ? AmpColors.brandBlue
                       : AmpColors.textRed,
                   decoration: InputDecoration(
-                    contentPadding: EdgeInsets.symmetric(vertical: 12.h, horizontal: 16.w),
+                    contentPadding:
+                        EdgeInsets.symmetric(vertical: 12.h, horizontal: 16.w),
                     hintText: "Enter your email",
                     hintStyle: GoogleFonts.inter(
                       fontSize: 16.sp,
@@ -120,7 +124,7 @@ class _EmailAuthScreenState extends State<EmailAuthScreen> {
                     width: 350.w,
                     height: 50.w,
                     margin: EdgeInsets.only(bottom: 29.h),
-                    child: ElevatedButton(
+                    child: RoundedLoadingButton(
                       onPressed: () {
                         // Validate returns true if the form is valid, or false otherwise.
                         if (_formKey.currentState!.validate() &&
@@ -128,10 +132,11 @@ class _EmailAuthScreenState extends State<EmailAuthScreen> {
                           context.goNamed(AmptiveRoutes.otp);
                         }
                       },
-                      style: ElevatedButton.styleFrom(
-                          backgroundColor: model.isEmailValid
-                              ? AmpColors.brandBlue
-                              : const Color(0xFF2F2F2F)),
+                      borderRadius: 14.r,
+                      color: model.isEmailValid
+                          ? AmpColors.brandBlue
+                          : const Color(0xFF2F2F2F),
+                      controller: _btnController1,
                       child: Text(
                         "Verify Email",
                         style: GoogleFonts.inter(

@@ -71,7 +71,9 @@ class _AuthScreenState extends State<AuthScreen> {
               SizedBox(
                 height: 48.h,
                 child: TextButton(
-                  onPressed: () {},
+                  onPressed: () {
+                      context.goNamed(AmptiveRoutes.addPhone);
+                  },
                   style: TextButton.styleFrom(
                     foregroundColor: AmpColors.white,
                     padding: EdgeInsets.symmetric(vertical: 8.h),
