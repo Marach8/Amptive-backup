@@ -60,4 +60,8 @@ class AuthenticationService {
     bool exist = await _apiHandler.checkEmailExists(email);
     return exist;
   }
+
+  Future<void> sendOTP(String email) async {
+    await Future.delayed(const Duration(seconds: 5));
+  }
 }

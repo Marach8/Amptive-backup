@@ -279,7 +279,7 @@ class _AddPhoneScreenState extends State<AddPhoneScreen> {
                     color: AmpColors.brandBlack,
                     child: CountryPickerCupertino(
                       backgroundColor: AmpColors.brandBlack,
-                      diameterRatio: 30.r,
+                      diameterRatio: 3.r,
                       pickerItemHeight: 65.h,
                       itemBuilder: _buildCupertinoSelectedItem,
                       onValuePicked: (Country country) {

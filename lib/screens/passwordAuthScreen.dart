@@ -1,5 +1,6 @@
 import 'package:amptive/providers/form_providers.dart';
 import 'package:amptive/routers/amptive_routes.dart';
+import 'package:amptive/utils/common_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
@@ -55,7 +56,8 @@ class _PasswordAuthScreenState extends State<PasswordAuthScreen> {
                   keyboardType: TextInputType.visiblePassword,
                   cursorColor: AmpColors.brandBlue,
                   decoration: InputDecoration(
-                      contentPadding: EdgeInsets.symmetric(vertical: 22.h, horizontal: 8.w),
+                      contentPadding:
+                          EdgeInsets.symmetric(vertical: 22.h, horizontal: 8.w),
                       hintText: "Enter your password",
                       hintStyle: GoogleFonts.inter(
                         fontSize: 16.sp,
@@ -74,18 +76,19 @@ class _PasswordAuthScreenState extends State<PasswordAuthScreen> {
                       ),
                       suffixIcon: IconButton(
                         icon: Padding(
-                          padding:  EdgeInsets.only(right: 16.0.w),
+                          padding: EdgeInsets.only(right: 16.0.w),
                           child: Icon(
                             _passwordVisible
                                 ? Icons.visibility_off
                                 : Icons.visibility,
                             color: AmpColors.white,
                           ),
-                        ), onPressed: () {
+                        ),
+                        onPressed: () {
                           setState(() {
                             _passwordVisible = !_passwordVisible;
                           });
-                      },
+                        },
                       )),
                   style: GoogleFonts.inter(
                     fontWeight: FontWeight.normal,
@@ -115,29 +118,19 @@ class _PasswordAuthScreenState extends State<PasswordAuthScreen> {
                 ),
                 Consumer<FormProvider>(builder: (context, model, _) {
                   return Container(
-                    width: 350.w,
-                    height: 50.w,
                     margin: EdgeInsets.only(bottom: 29.h),
-                    child: ElevatedButton(
-                      onPressed: () {
+                    child: CustomLoaderButton(
+                      width: 350.w,
+                      height: 50.w,
+                      borderRadius: 100.r,
+                      onTap: (start, stop, state) async {
                         // Validate returns true if the form is valid, or false otherwise.
                         if (model.isPasswordValid) {
-                          context.goNamed(AmptiveRoutes.dobAuth);
+                          context.pushNamed(AmptiveRoutes.dobAuth);
                         }
                       },
-                      style: ElevatedButton.styleFrom(
-                          backgroundColor: model.isPasswordValid
-                              ? AmpColors.brandBlue
-                              : const Color(0xFF2F2F2F)),
-                      child: Text(
-                        "Next",
-                        style: GoogleFonts.inter(
-                            fontWeight: FontWeight.w600,
-                            fontSize: 18.sp,
-                            color: model.isPasswordValid
-                                ? AmpColors.white
-                                : const Color(0xFF666666)),
-                      ),
+                      validCondition: model.isPasswordValid,
+                      childText: "Next",
                     ),
                   );
                 }),

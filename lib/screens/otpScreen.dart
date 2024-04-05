@@ -1,7 +1,9 @@
+import 'package:amptive/utils/common_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:loading_btn/loading_btn.dart';
 import 'package:provider/provider.dart';
 
 import '../providers/form_providers.dart';
@@ -95,30 +97,23 @@ class _OTPScreenState extends State<OTPScreen> {
                 ),
                 Consumer<FormProvider>(builder: (context, model, _) {
                   return Container(
-                    width: 350.w,
-                    height: 50.w,
                     margin: EdgeInsets.only(bottom: 29.h),
-                    child: ElevatedButton(
-                      onPressed: () {
-                        // Validate returns true if the form is valid, or false otherwise.
-                        if (model.isOTPValid) {
-                          context.goNamed(AmptiveRoutes.passwordAuth);
-                        }
-                      },
-                      style: ElevatedButton.styleFrom(
-                          backgroundColor: model.isOTPValid
-                              ? AmpColors.brandBlue
-                              : const Color(0xFF2F2F2F)),
-                      child: Text(
-                        "Next",
-                        style: GoogleFonts.inter(
-                            fontWeight: FontWeight.w600,
-                            fontSize: 18.sp,
-                            color: model.isOTPValid
-                                ? AmpColors.white
-                                : const Color(0xFF666666)),
-                      ),
-                    ),
+                    child: CustomLoaderButton(
+                        width: 350.w,
+                        height: 50.w,
+                        borderRadius: 100.r,
+                        onTap: (start, stop, state) async {
+                          // Validate returns true if the form is valid, or false otherwise.
+                          if (state == ButtonState.idle) {
+                            start();
+                            if (model.isOTPValid) {
+                              context.pushNamed(AmptiveRoutes.passwordAuth);
+                            }
+                            stop();
+                          }
+                        },
+                        validCondition: model.isOTPValid,
+                        childText: "Next"),
                   );
                 }),
               ],

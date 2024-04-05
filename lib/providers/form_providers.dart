@@ -43,20 +43,24 @@ class FormProvider extends ChangeNotifier {
 
   ValidationModel get phoneNo => _phoneNo;
 
+  Future<bool> processEmail() async {
+    if (await _service.checkUniqueEmail(_email.value!)) {
+      _customEmailStatus = ValidationModel("This email already exist!.", null);
+      _email = ValidationModel(null, null);
+      notifyListeners();
+      return false;
+    } else {
+      // send otp
+      await _service.sendOTP(_email.value!);
+      return true;
+    }
+  }
 
-  Future<void> validateEmail(String? val) async {
+  void validateEmail(String? val) {
     if (val != null && val.isValidEmail) {
-      // check if email exist
-      if(await _service.checkUniqueEmail(val)){
-        _email = ValidationModel(null, null);
-        _customEmailStatus = ValidationModel(
-            "This email already exist!.", null);
-      }else{
-        _email = ValidationModel(val, null);
-        _customEmailStatus = ValidationModel(
-            "This email will be verified in the next step.", null);
-      }
-
+      _email = ValidationModel(val, null);
+      _customEmailStatus = ValidationModel(
+          "This email will be verified in the next step.", null);
     } else if (val == null || val.isEmpty) {
       _email = ValidationModel(null, 'Required');
       _customEmailStatus = ValidationModel(null, null);
@@ -140,18 +144,15 @@ class FormProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-
   void setDOB(DateTime? val) {
     _dob = val;
     notifyListeners();
   }
 
-
   void setCountry(Country c) {
     _country = c;
     notifyListeners();
   }
-
 }
 
 class ValidationModel {

@@ -4,9 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:loading_btn/loading_btn.dart';
 import 'package:provider/provider.dart';
-import 'package:rounded_loading_button/rounded_loading_button.dart';
-
+import '../utils/common_widgets.dart';
 import '../utils/utils.dart';
 
 class EmailAuthScreen extends StatefulWidget {
@@ -21,8 +21,6 @@ class _EmailAuthScreenState extends State<EmailAuthScreen> {
   late FormProvider _formProvider;
 
   final _formKey = GlobalKey<FormState>();
-  final RoundedLoadingButtonController _btnController1 =
-      RoundedLoadingButtonController();
 
   @override
   Widget build(BuildContext context) {
@@ -121,32 +119,32 @@ class _EmailAuthScreenState extends State<EmailAuthScreen> {
                 ),
                 Consumer<FormProvider>(builder: (context, model, _) {
                   return Container(
-                    width: 350.w,
-                    height: 50.w,
                     margin: EdgeInsets.only(bottom: 29.h),
-                    child: RoundedLoadingButton(
-                      onPressed: () {
+                    child: CustomLoaderButton(
+                      width: 500.w,
+                      height: 50.w,
+                      borderRadius: 100.r,
+                      onTap: (start, stop, state) async {
                         // Validate returns true if the form is valid, or false otherwise.
-                        if (_formKey.currentState!.validate() &&
-                            model.isEmailValid) {
-                          context.goNamed(AmptiveRoutes.otp);
+                        if (state == ButtonState.idle) {
+                          start();
+
+                          if (_formKey.currentState!.validate() &&
+                              model.isEmailValid) {
+                            // call api
+                            bool isUniqueEmail = await model.processEmail();
+
+                            if (isUniqueEmail && context.mounted) {
+                              context.pushNamed(AmptiveRoutes.otp);
+                            }
+                          }
+
+                          stop();
                         }
                       },
-                      borderRadius: 14.r,
-                      color: model.isEmailValid
-                          ? AmpColors.brandBlue
-                          : const Color(0xFF2F2F2F),
-                      controller: _btnController1,
-                      child: Text(
-                        "Verify Email",
-                        style: GoogleFonts.inter(
-                            fontWeight: FontWeight.w600,
-                            fontSize: 18.sp,
-                            color: model.isEmailValid
-                                ? AmpColors.white
-                                : const Color(0xFF666666)),
+                      validCondition: model.isEmailValid,
+                      childText: "Verify Email" ,
                       ),
-                    ),
                   );
                 }),
               ],
@@ -157,3 +155,4 @@ class _EmailAuthScreenState extends State<EmailAuthScreen> {
     );
   }
 }
+
