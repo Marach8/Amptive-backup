@@ -1,5 +1,6 @@
 import 'package:amptive/providers/form_providers.dart';
 import 'package:amptive/routers/amptive_routes.dart';
+import 'package:amptive/utils/common_widgets.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -32,6 +33,7 @@ class _DateOfBirthScreenState extends State<DateOfBirthScreen> {
     return SafeArea(
       child: Scaffold(
         backgroundColor: AmpColors.brandBlack,
+        appBar: BuildAppBar(),
         body: Padding(
           padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 20.h),
           child: Form(
@@ -61,7 +63,7 @@ class _DateOfBirthScreenState extends State<DateOfBirthScreen> {
                   keyboardType: TextInputType.none,
                   cursorColor: AmpColors.brandBlue,
                   decoration: InputDecoration(
-                    contentPadding: EdgeInsets.symmetric(vertical: 22.h, horizontal: 16.w),
+                    contentPadding: EdgeInsets.symmetric(vertical: 12.h, horizontal: 16.w),
                     hintText: "Select Date",
                     hintStyle: GoogleFonts.inter(
                       fontSize: 16.sp,
@@ -80,14 +82,14 @@ class _DateOfBirthScreenState extends State<DateOfBirthScreen> {
                         width: 2.w,
                         color: AmpColors.brandBlue,
                       ),
-                      borderRadius: BorderRadius.circular(30.r),
+                      borderRadius: BorderRadius.circular(14.r),
                     ),
                     border: OutlineInputBorder(
                       borderSide: BorderSide(
                         width: 2.w,
                         color: AmpColors.transparent,
                       ),
-                      borderRadius: BorderRadius.circular(30.r),
+                      borderRadius: BorderRadius.circular(14.r),
                     ),
                   ),
                   style: GoogleFonts.inter(
@@ -106,13 +108,13 @@ class _DateOfBirthScreenState extends State<DateOfBirthScreen> {
                     height: 50.w,
                     margin: EdgeInsets.only(
                         bottom: _isBottomSheetOpened
-                            ? bottomSheetHeight + 29.h
+                            ? bottomSheetHeight + 0.h
                             : 29.h),
                     child: ElevatedButton(
                       onPressed: () {
                         // Validate returns true if the form is valid, or false otherwise.
                         if (model.isDOBValid) {
-                          context.goNamed(AmptiveRoutes.addUsername);
+                          context.pushNamed(AmptiveRoutes.addUsername);
                         }
                       },
                       style: ElevatedButton.styleFrom(

@@ -1,10 +1,12 @@
 import 'package:amptive/routers/amptive_routes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import '../utils/common_widgets.dart';
 import '../utils/utils.dart';
 
 class AuthScreen extends StatefulWidget {
@@ -29,6 +31,15 @@ class _AuthScreenState extends State<AuthScreen> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
+        appBar: BuildAppBar(
+          titleWidget: Container(
+            margin: EdgeInsets.symmetric(vertical: 12.55.h),
+            child: SvgPicture.asset(
+              "assets/amptive_logotype.svg",
+              semanticsLabel: 'Amptive Logo',
+            ),
+          ),
+        ),
         backgroundColor: AmpColors.brandBlack,
         body: Container(
           padding: EdgeInsets.symmetric(horizontal: 24.w),
@@ -43,7 +54,7 @@ class _AuthScreenState extends State<AuthScreen> {
                 height: 48.h,
                 child: TextButton(
                   onPressed: () {
-                    if(!_isLogin){
+                    if (!_isLogin) {
                       //sign up
                       context.pushNamed(AmptiveRoutes.emailAuth);
                     }
@@ -72,7 +83,7 @@ class _AuthScreenState extends State<AuthScreen> {
                 height: 48.h,
                 child: TextButton(
                   onPressed: () {
-                      context.goNamed(AmptiveRoutes.addPhone);
+                    context.pushNamed(AmptiveRoutes.addPhone);
                   },
                   style: TextButton.styleFrom(
                     foregroundColor: AmpColors.white,
@@ -109,7 +120,10 @@ class _AuthScreenState extends State<AuthScreen> {
               BrandButton(
                 isLogin: _isLogin,
                 brand: "Facebook",
-                image: Image.asset("assets/facebook.png",scale: 22.5.h,),
+                image: Image.asset(
+                  "assets/facebook.png",
+                  scale: 22.5.h,
+                ),
               ),
               SizedBox(
                 height: 17.h,
@@ -128,7 +142,10 @@ class _AuthScreenState extends State<AuthScreen> {
               BrandButton(
                 isLogin: _isLogin,
                 brand: "Google",
-                image: Image.asset('assets/google_icon.png', scale: 22.5.h,),
+                image: Image.asset(
+                  'assets/google_icon.png',
+                  scale: 22.5.h,
+                ),
               ),
             ],
           ),
@@ -137,6 +154,7 @@ class _AuthScreenState extends State<AuthScreen> {
     );
   }
 }
+
 
 class BrandButton extends StatelessWidget {
   const BrandButton({

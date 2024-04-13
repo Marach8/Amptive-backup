@@ -29,6 +29,7 @@ class _EmailAuthScreenState extends State<EmailAuthScreen> {
     return SafeArea(
       child: Scaffold(
         backgroundColor: AmpColors.brandBlack,
+        appBar: BuildAppBar(),
         body: Padding(
           padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 20.h),
           child: Form(
@@ -143,8 +144,8 @@ class _EmailAuthScreenState extends State<EmailAuthScreen> {
                         }
                       },
                       validCondition: model.isEmailValid,
-                      childText: "Verify Email" ,
-                      ),
+                      childText: "Verify Email",
+                    ),
                   );
                 }),
               ],
@@ -155,4 +156,3 @@ class _EmailAuthScreenState extends State<EmailAuthScreen> {
     );
   }
 }
-

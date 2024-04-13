@@ -1,5 +1,6 @@
 import 'package:amptive/providers/form_providers.dart';
 import 'package:amptive/routers/amptive_routes.dart';
+import 'package:amptive/utils/common_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
@@ -27,6 +28,7 @@ class _NameAuthScreenState extends State<NameAuthScreen> {
     return SafeArea(
       child: Scaffold(
         backgroundColor: AmpColors.brandBlack,
+        appBar: BuildAppBar(),
         body: Padding(
           padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 20.h),
           child: Form(
@@ -55,7 +57,7 @@ class _NameAuthScreenState extends State<NameAuthScreen> {
                       ? AmpColors.brandBlue
                       : AmpColors.textRed,
                   decoration: InputDecoration(
-                    contentPadding: EdgeInsets.symmetric(vertical: 22.h, horizontal: 16.w),
+                    contentPadding: EdgeInsets.symmetric(vertical: 12.h, horizontal: 16.w),
                     hintText: "Enter your name",
                     hintStyle: GoogleFonts.inter(
                       fontSize: 16.sp,
@@ -71,14 +73,14 @@ class _NameAuthScreenState extends State<NameAuthScreen> {
                             ? AmpColors.brandBlue
                             : AmpColors.textRed,
                       ),
-                      borderRadius: BorderRadius.circular(30.r),
+                      borderRadius: BorderRadius.circular(14.r),
                     ),
                     border: OutlineInputBorder(
                       borderSide: BorderSide(
                         width: 2.w,
                         color: AmpColors.transparent,
                       ),
-                      borderRadius: BorderRadius.circular(30.r),
+                      borderRadius: BorderRadius.circular(14.r),
                     ),
                   ),
                   style: GoogleFonts.inter(

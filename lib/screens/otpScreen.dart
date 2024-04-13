@@ -27,6 +27,7 @@ class _OTPScreenState extends State<OTPScreen> {
     return SafeArea(
       child: Scaffold(
         backgroundColor: AmpColors.brandBlack,
+        appBar: BuildAppBar(),
         body: Container(
           padding: EdgeInsets.symmetric(horizontal: 20.w),
           child: Form(
@@ -142,7 +143,7 @@ class OTPTextFormField extends StatelessWidget {
       width: 56.83.w,
       child: TextFormField(
         autofocus: true,
-        textInputAction: TextInputAction.previous,
+        // textInputAction: TextInputAction.previous,
         onChanged: (value) {
           provider.setOtp(value, index);
           if (value.length == 1 && index != 3) {

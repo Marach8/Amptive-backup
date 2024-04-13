@@ -1,5 +1,6 @@
 import 'package:amptive/providers/form_providers.dart';
 import 'package:amptive/routers/amptive_routes.dart';
+import 'package:amptive/utils/common_widgets.dart';
 import 'package:country_pickers/country.dart';
 import 'package:country_pickers/country_picker_cupertino.dart';
 import 'package:country_pickers/utils/utils.dart';
@@ -44,6 +45,7 @@ class _AddPhoneScreenState extends State<AddPhoneScreen> {
     return SafeArea(
       child: Scaffold(
         backgroundColor: AmpColors.brandBlack,
+        appBar: BuildAppBar(),
         body: Padding(
           padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 20.h),
           child: Form(
@@ -72,7 +74,7 @@ class _AddPhoneScreenState extends State<AddPhoneScreen> {
                         },
                         child: Container(
                           padding: EdgeInsets.symmetric(
-                              vertical: 12.5.h, horizontal: 16.w),
+                              vertical: 0.h, horizontal: 16.w),
                           decoration: BoxDecoration(
                             color: const Color(0xFF9E9E9E).withOpacity(0.3),
                             border: Border.all(
@@ -147,7 +149,7 @@ class _AddPhoneScreenState extends State<AddPhoneScreen> {
                         onChanged: _formProvider.validatePhoneNumber,
                         decoration: InputDecoration(
                           contentPadding: EdgeInsets.symmetric(
-                              vertical: 22.h, horizontal: 16.w),
+                              vertical: 12.h, horizontal: 16.w),
                           hintText: "Phone number",
                           hintStyle: GoogleFonts.inter(
                             fontSize: 16.sp,
@@ -201,7 +203,7 @@ class _AddPhoneScreenState extends State<AddPhoneScreen> {
                     height: 50.w,
                     margin: EdgeInsets.only(
                         bottom: _isBottomSheetOpened
-                            ? bottomSheetHeight + 29.h
+                            ? bottomSheetHeight
                             : 29.h),
                     child: ElevatedButton(
                       onPressed: () {

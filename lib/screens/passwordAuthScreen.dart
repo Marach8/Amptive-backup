@@ -30,6 +30,7 @@ class _PasswordAuthScreenState extends State<PasswordAuthScreen> {
     return SafeArea(
       child: Scaffold(
         backgroundColor: AmpColors.brandBlack,
+        appBar: BuildAppBar(),
         body: Padding(
           padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 20.h),
           child: Form(
@@ -57,7 +58,7 @@ class _PasswordAuthScreenState extends State<PasswordAuthScreen> {
                   cursorColor: AmpColors.brandBlue,
                   decoration: InputDecoration(
                       contentPadding:
-                          EdgeInsets.symmetric(vertical: 22.h, horizontal: 8.w),
+                          EdgeInsets.symmetric(vertical: 12.h, horizontal: 16.w),
                       hintText: "Enter your password",
                       hintStyle: GoogleFonts.inter(
                         fontSize: 16.sp,
@@ -72,7 +73,7 @@ class _PasswordAuthScreenState extends State<PasswordAuthScreen> {
                           width: 2.w,
                           color: AmpColors.transparent,
                         ),
-                        borderRadius: BorderRadius.circular(30.r),
+                        borderRadius: BorderRadius.circular(14.r),
                       ),
                       suffixIcon: IconButton(
                         icon: Padding(
@@ -145,7 +146,7 @@ class _PasswordAuthScreenState extends State<PasswordAuthScreen> {
   OutlineInputBorder buildOutlineInputBorder() {
     return OutlineInputBorder(
       borderSide: BorderSide(width: 2.w, color: AmpColors.brandBlue),
-      borderRadius: BorderRadius.circular(30.r),
+      borderRadius: BorderRadius.circular(14.r),
     );
   }
 }

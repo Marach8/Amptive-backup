@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:amptive/utils/common_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
@@ -34,6 +35,7 @@ class _PostRegistrationScreenState extends State<PostRegistrationScreen> {
     return SafeArea(
         child: Scaffold(
       backgroundColor: AmpColors.brandBlack,
+      appBar: BuildAppBar(),
       body: Padding(
         padding: EdgeInsets.only(left: 25.w, right: 25.w, top: 20.w),
         child: _isLoading ? const LoadingAccount() : _addPicture(),
@@ -83,7 +85,7 @@ class _PostRegistrationScreenState extends State<PostRegistrationScreen> {
                   )),
               Positioned(
                 top: 111.h,
-                left: 38.w,
+                left: 45.w,
                 child: SizedBox(
                   width: 41.25.w,
                   height: 41.25.h,
@@ -114,7 +116,7 @@ class _PostRegistrationScreenState extends State<PostRegistrationScreen> {
           alignment: Alignment.center,
           child: GestureDetector(
             onTap: () {
-                context.goNamed(AmptiveRoutes.preference);
+              context.pushNamed(AmptiveRoutes.preference);
             },
             child: Text(
               "Skip for now",

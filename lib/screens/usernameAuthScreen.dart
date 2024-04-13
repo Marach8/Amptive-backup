@@ -1,5 +1,6 @@
 import 'package:amptive/providers/form_providers.dart';
 import 'package:amptive/routers/amptive_routes.dart';
+import 'package:amptive/utils/common_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
@@ -28,6 +29,7 @@ class _UserNameAuthScreenState extends State<UserNameAuthScreen> {
     return SafeArea(
       child: Scaffold(
         backgroundColor: AmpColors.brandBlack,
+        appBar: BuildAppBar(),
         body: Padding(
           padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 20.h),
           child: Form(
@@ -56,14 +58,13 @@ class _UserNameAuthScreenState extends State<UserNameAuthScreen> {
                       ? AmpColors.brandBlue
                       : AmpColors.textRed,
                   decoration: InputDecoration(
-                    contentPadding: EdgeInsets.symmetric(vertical: 22.h, horizontal: 16.w),
+                    contentPadding: EdgeInsets.symmetric(vertical: 12.h, horizontal: 16.w),
                     prefixIcon: Container(
-                      padding: EdgeInsets.symmetric(vertical: 5.h, horizontal: 16.h),
+                      padding: EdgeInsets.symmetric(vertical: 12.h, horizontal: 16.w),
                       child: Text("@", style: GoogleFonts.inter(
                         fontWeight: FontWeight.bold,
                         color: AmpColors.white,
                         fontSize: 18.sp,
-                        height: 3.h
                       ),),
                     ),
                     hintText: "username",
@@ -87,14 +88,14 @@ class _UserNameAuthScreenState extends State<UserNameAuthScreen> {
                             ? AmpColors.brandBlue
                             : AmpColors.textRed,
                       ),
-                      borderRadius: BorderRadius.circular(30.r),
+                      borderRadius: BorderRadius.circular(14.r),
                     ),
                     border: OutlineInputBorder(
                       borderSide: BorderSide(
                         width: 2.w,
                         color: AmpColors.transparent,
                       ),
-                      borderRadius: BorderRadius.circular(30.r),
+                      borderRadius: BorderRadius.circular(14.r),
                     ),
                   ),
                   style: GoogleFonts.inter(
