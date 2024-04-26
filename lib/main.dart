@@ -1,9 +1,12 @@
+import 'dart:io';
+
 import 'package:amptive/providers/form_providers.dart';
 import 'package:amptive/routers/amptive_routes.dart';
 import 'package:amptive/screens/AuthScreen.dart';
 import 'package:amptive/screens/DoBScreen.dart';
 import 'package:amptive/screens/PreferenceScreen.dart';
 import 'package:amptive/screens/add_phone.dart';
+import 'package:amptive/screens/crop_image_screen.dart';
 import 'package:amptive/screens/emailAuthScreen.dart';
 import 'package:amptive/screens/nameAuthScreen.dart';
 import 'package:amptive/screens/onboarding.dart';
@@ -35,8 +38,10 @@ final GoRouter _router = GoRouter(
     GoRoute(
       path: AmptiveRoutes.index,
       builder: (BuildContext context, GoRouterState state) {
-        return const SplashScreen();
+        // return const SplashScreen();
+        return const PostRegistrationScreen();
       },
+
     ),
     GoRoute(
         name: AmptiveRoutes.welcome,
@@ -85,6 +90,16 @@ final GoRouter _router = GoRouter(
       path: "/add-profile-pic",
       builder: (BuildContext context, GoRouterState state) =>
       const PostRegistrationScreen(),
+      routes: <RouteBase> [
+        GoRoute(
+          name: AmptiveRoutes.cropImage,
+          path: "crop-image",
+          builder: (BuildContext context, GoRouterState state) {
+            File imageFile = state.extra as File;
+            return CropPage(title: "Cropper", imageFile: imageFile,);
+          }
+        ),
+      ]
     ),
 
     GoRoute(
@@ -117,6 +132,8 @@ final GoRouter _router = GoRouter(
       builder: (BuildContext context, GoRouterState state) =>
           const PreferenceScreen(),
     ),
+
+
   ],
 );
 

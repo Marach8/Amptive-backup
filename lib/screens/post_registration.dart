@@ -1,10 +1,14 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:amptive/utils/common_widgets.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:image_cropper/image_cropper.dart';
+import 'package:image_picker/image_picker.dart';
 
 import '../routers/amptive_routes.dart';
 import '../utils/utils.dart';
@@ -18,6 +22,8 @@ class PostRegistrationScreen extends StatefulWidget {
 
 class _PostRegistrationScreenState extends State<PostRegistrationScreen> {
   bool _isLoading = true;
+  final ImagePicker _picker = ImagePicker();
+  late File _image;
 
   @override
   void initState() {
@@ -28,6 +34,93 @@ class _PostRegistrationScreenState extends State<PostRegistrationScreen> {
         _isLoading = false;
       }),
     );
+  }
+
+  Future showOptions() async {
+    showCupertinoModalPopup(
+      context: context,
+      builder: (context) => CupertinoActionSheet(
+        actions: [
+          CupertinoActionSheetAction(
+            child: Text('Photo Gallery'),
+            onPressed: () {
+              // close the options modal
+              Navigator.of(context).pop();
+              // get image from gallery
+              getImageFromGallery();
+            },
+          ),
+          CupertinoActionSheetAction(
+            child: Text('Camera'),
+            onPressed: () {
+              // close the options modal
+              Navigator.of(context).pop();
+              // get image from camera
+              getImageFromCamera();
+            },
+          ),
+        ],
+      ),
+    );
+  }
+
+  //Image Picker function to get image from gallery
+  Future getImageFromGallery() async {
+    final pickedFile = await _picker.pickImage(source: ImageSource.gallery);
+
+    if (pickedFile != null) {
+      _image = File(pickedFile.path);
+    }
+
+    // var croppedFile = await _cropImage(_image);
+
+    // setState(() {
+    //   _image = croppedFile!;
+    // });
+
+    MemoryImage? img = await context.pushNamed(AmptiveRoutes.cropImage, extra: _image);
+
+
+  }
+
+//Image Picker function to get image from camera
+  Future getImageFromCamera() async {
+    final pickedFile = await _picker.pickImage(source: ImageSource.camera);
+
+    setState(() {
+      if (pickedFile != null) {
+        _image = File(pickedFile.path);
+      }
+    });
+  }
+
+  // Function to crop the selected image using the image_cropper package
+  Future<File?> _cropImage(File pickedFile) async {
+    final croppedFile = await ImageCropper().cropImage(
+      cropStyle: CropStyle.circle,
+      sourcePath: pickedFile.path,
+      compressFormat: ImageCompressFormat.jpg,
+      compressQuality: 100,
+      uiSettings: [
+        AndroidUiSettings(
+          toolbarTitle: 'Cropper',
+          initAspectRatio: CropAspectRatioPreset.original,
+          lockAspectRatio: false,
+        ),
+        IOSUiSettings(
+          title: 'Cropper',
+          doneButtonTitle: "done",
+          cancelButtonTitle: "cancel",
+        ),
+      ],
+    );
+
+    // Returning the edited/cropped image if available, otherwise the original image
+    if (croppedFile != null) {
+      return File(croppedFile.path);
+    } else {
+      return File(pickedFile.path);
+    }
   }
 
   @override
@@ -90,7 +183,9 @@ class _PostRegistrationScreenState extends State<PostRegistrationScreen> {
                   width: 41.25.w,
                   height: 41.25.h,
                   child: RawMaterialButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      showOptions();
+                    },
                     elevation: 2.0,
                     fillColor: AmpColors.brandBlue,
                     shape: const CircleBorder(),
