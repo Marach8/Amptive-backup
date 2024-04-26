@@ -1,6 +1,5 @@
 import 'dart:io';
 
-import 'package:amptive/utils/common_widgets.dart';
 import 'package:amptive/utils/utils.dart';
 import 'package:custom_image_crop/custom_image_crop.dart';
 import 'package:flutter/material.dart';
@@ -73,25 +72,40 @@ class _CropPageState extends State<CropPage> {
                       ),
                     ),
                   ),
-                  Expanded(
-                    child: SizedBox(
-                      width: 1.w,
-                    ),
-                  ),
-                  ElevatedButton(
-                    onPressed: () {},
-                    child: Text(
-                      "Apply",
-                      style: GoogleFonts.inter(
-                        color: AmpColors.white,
-                        fontSize: 14.sp,
-                        fontWeight: FontWeight.w400,
-                      ),
-                    ),
-                  )
                 ],
               ),
             ),
+          ),
+
+
+          title: Row(
+            children: [
+              Expanded(
+                child: SizedBox(
+                  width: 1.w,
+                ),
+              ),
+              ElevatedButton(
+                onPressed: () async {
+                  final image = await controller.onCropImage();
+                  if (image != null && mounted) {
+                    // Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext context) => ResultScreen(image: image)));
+                    context.pop(image);
+                  }
+                },
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: AmpColors.brandBlue,
+                ),
+                child: Text(
+                  "Apply",
+                  style: GoogleFonts.inter(
+                    color: AmpColors.white,
+                    fontSize: 14.sp,
+                    fontWeight: FontWeight.w400,
+                  ),
+                ),
+              )
+            ],
           ),
         ),
         backgroundColor: AmpColors.brandBlack,
@@ -119,16 +133,7 @@ class _CropPageState extends State<CropPage> {
                         controller.addTransition(CropImageData(scale: 0.75))),
                 // IconButton(icon: const Icon(Icons.rotate_left), onPressed: () => controller.addTransition(CropImageData(angle: -pi / 4))),
                 // IconButton(icon: const Icon(Icons.rotate_right), onPressed: () => controller.addTransition(CropImageData(angle: pi / 4))),
-                IconButton(
-                  icon: const Icon(Icons.crop),
-                  onPressed: () async {
-                    final image = await controller.onCropImage();
-                    if (image != null && mounted) {
-                      // Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext context) => ResultScreen(image: image)));
-                      context.pop(image);
-                    }
-                  },
-                ),
+
               ],
             ),
             SizedBox(height: MediaQuery.of(context).padding.bottom),
@@ -138,7 +143,7 @@ class _CropPageState extends State<CropPage> {
     );
   }
 
-  static CustomPaint drawCropPath(Path path, {Paint? pathPaint}) {
+  CustomPaint drawCropPath(Path path, {Paint? pathPaint}) {
     if (pathPaint != null) {
       return CustomPaint(
         painter: SolidCropPathPainter(path, pathPaint),

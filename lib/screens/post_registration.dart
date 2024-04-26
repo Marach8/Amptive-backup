@@ -7,7 +7,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 
 import '../routers/amptive_routes.dart';
@@ -68,8 +67,9 @@ class _PostRegistrationScreenState extends State<PostRegistrationScreen> {
   Future getImageFromGallery() async {
     final pickedFile = await _picker.pickImage(source: ImageSource.gallery);
 
-    if (pickedFile != null) {
+    if (pickedFile != null && mounted) {
       _image = File(pickedFile.path);
+      MemoryImage? img = await context.pushNamed(AmptiveRoutes.cropImage, extra: _image);
     }
 
     // var croppedFile = await _cropImage(_image);
@@ -78,7 +78,6 @@ class _PostRegistrationScreenState extends State<PostRegistrationScreen> {
     //   _image = croppedFile!;
     // });
 
-    MemoryImage? img = await context.pushNamed(AmptiveRoutes.cropImage, extra: _image);
 
 
   }
@@ -94,34 +93,6 @@ class _PostRegistrationScreenState extends State<PostRegistrationScreen> {
     });
   }
 
-  // Function to crop the selected image using the image_cropper package
-  Future<File?> _cropImage(File pickedFile) async {
-    final croppedFile = await ImageCropper().cropImage(
-      cropStyle: CropStyle.circle,
-      sourcePath: pickedFile.path,
-      compressFormat: ImageCompressFormat.jpg,
-      compressQuality: 100,
-      uiSettings: [
-        AndroidUiSettings(
-          toolbarTitle: 'Cropper',
-          initAspectRatio: CropAspectRatioPreset.original,
-          lockAspectRatio: false,
-        ),
-        IOSUiSettings(
-          title: 'Cropper',
-          doneButtonTitle: "done",
-          cancelButtonTitle: "cancel",
-        ),
-      ],
-    );
-
-    // Returning the edited/cropped image if available, otherwise the original image
-    if (croppedFile != null) {
-      return File(croppedFile.path);
-    } else {
-      return File(pickedFile.path);
-    }
-  }
 
   @override
   Widget build(BuildContext context) {

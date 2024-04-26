@@ -52,7 +52,6 @@ dependencies:
   http: ^1.1.0
   loading_btn: ^1.0.3
   image_picker: ^1.0.8
-  image_cropper: ^5.0.1
   custom_image_crop: ^0.0.13
 
 
