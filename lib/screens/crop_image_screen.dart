@@ -100,8 +100,8 @@ class _CropPageState extends State<CropPage> {
                   "Apply",
                   style: GoogleFonts.inter(
                     color: AmpColors.white,
-                    fontSize: 14.sp,
-                    fontWeight: FontWeight.w400,
+                    fontSize: 16.sp,
+                    fontWeight: FontWeight.w600,
                   ),
                 ),
               )
@@ -118,25 +118,6 @@ class _CropPageState extends State<CropPage> {
                   drawPath: drawCropPath,
                   image: FileImage(widget.imageFile)),
             ),
-            Row(
-              children: [
-                IconButton(
-                    icon: const Icon(Icons.refresh),
-                    onPressed: controller.reset),
-                IconButton(
-                    icon: const Icon(Icons.zoom_in),
-                    onPressed: () =>
-                        controller.addTransition(CropImageData(scale: 1.33))),
-                IconButton(
-                    icon: const Icon(Icons.zoom_out),
-                    onPressed: () =>
-                        controller.addTransition(CropImageData(scale: 0.75))),
-                // IconButton(icon: const Icon(Icons.rotate_left), onPressed: () => controller.addTransition(CropImageData(angle: -pi / 4))),
-                // IconButton(icon: const Icon(Icons.rotate_right), onPressed: () => controller.addTransition(CropImageData(angle: pi / 4))),
-
-              ],
-            ),
-            SizedBox(height: MediaQuery.of(context).padding.bottom),
           ],
         ),
       ),

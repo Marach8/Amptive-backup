@@ -21,8 +21,9 @@ class PostRegistrationScreen extends StatefulWidget {
 
 class _PostRegistrationScreenState extends State<PostRegistrationScreen> {
   bool _isLoading = true;
+  bool _isProfilePicAdded = false;
   final ImagePicker _picker = ImagePicker();
-  late File _image;
+  late MemoryImage _image;
 
   @override
   void initState() {
@@ -39,6 +40,7 @@ class _PostRegistrationScreenState extends State<PostRegistrationScreen> {
     showCupertinoModalPopup(
       context: context,
       builder: (context) => CupertinoActionSheet(
+
         actions: [
           CupertinoActionSheetAction(
             child: Text('Photo Gallery'),
@@ -68,38 +70,29 @@ class _PostRegistrationScreenState extends State<PostRegistrationScreen> {
     final pickedFile = await _picker.pickImage(source: ImageSource.gallery);
 
     if (pickedFile != null && mounted) {
-      _image = File(pickedFile.path);
-      MemoryImage? img = await context.pushNamed(AmptiveRoutes.cropImage, extra: _image);
+      File image = File(pickedFile.path);
+      MemoryImage? img =
+          await context.pushNamed(AmptiveRoutes.cropImage, extra: image);
+
+      setState(() {
+        _image = img!;
+        _isProfilePicAdded = true;
+      });
     }
 
     // var croppedFile = await _cropImage(_image);
-
-    // setState(() {
-    //   _image = croppedFile!;
-    // });
-
-
-
   }
 
 //Image Picker function to get image from camera
   Future getImageFromCamera() async {
     final pickedFile = await _picker.pickImage(source: ImageSource.camera);
-
-    setState(() {
-      if (pickedFile != null) {
-        _image = File(pickedFile.path);
-      }
-    });
   }
-
 
   @override
   Widget build(BuildContext context) {
     return SafeArea(
         child: Scaffold(
       backgroundColor: AmpColors.brandBlack,
-      appBar: BuildAppBar(),
       body: Padding(
         padding: EdgeInsets.only(left: 25.w, right: 25.w, top: 20.w),
         child: _isLoading ? const LoadingAccount() : _addPicture(),
@@ -139,31 +132,58 @@ class _PostRegistrationScreenState extends State<PostRegistrationScreen> {
           child: Stack(
             children: [
               SizedBox(
-                  height: 132.h,
-                  width: 132.w,
-                  child: Image.asset(
-                    "assets/no_avatar_image.png",
-                    height: 110.h,
-                    width: 84.w,
-                    fit: BoxFit.contain,
-                  )),
+                height: 132.h,
+                width: 132.w,
+                child: CircleAvatar(
+                  child: SizedBox(
+                    height: 132.h,
+                    width: 132.w,
+                    child: _isProfilePicAdded
+                        ? Image.memory(
+                            _image.bytes,
+                            height: 110.h,
+                            width: 84.w,
+                            fit: BoxFit.contain,
+                          )
+                        : Image.asset(
+                            "assets/no_avatar_image.png",
+                            height: 110.h,
+                            width: 84.w,
+                            fit: BoxFit.contain,
+                          ),
+                  ),
+                ),
+              ),
               Positioned(
                 top: 111.h,
-                left: 45.w,
-                child: SizedBox(
-                  width: 41.25.w,
-                  height: 41.25.h,
-                  child: RawMaterialButton(
-                    onPressed: () {
-                      showOptions();
-                    },
-                    elevation: 2.0,
-                    fillColor: AmpColors.brandBlue,
-                    shape: const CircleBorder(),
-                    child: Icon(
-                      Icons.add,
-                      size: 35.0.w,
-                      color: AmpColors.white,
+                left: 49.w,
+                child: CircleAvatar(
+                  backgroundColor: _isProfilePicAdded
+                      ? AmpColors.textRed
+                      : AmpColors.brandBlue,
+                  child: SizedBox(
+                    child: IconButton(
+                      style: IconButton.styleFrom(),
+                      onPressed: () {
+                        if (_isProfilePicAdded) {
+                          setState(() {
+                            _isProfilePicAdded = false;
+                          });
+                        } else {
+                          showOptions();
+                        }
+                      },
+                      icon: SizedBox(
+                        width: 41.25.w,
+                        height: 41.25.h,
+                        child: Icon(
+                          _isProfilePicAdded
+                              ? Icons.close
+                              : Icons.add,
+                          color: AmpColors.white,
+                          opticalSize: 50.h,
+                        ),
+                      ),
                     ),
                   ),
                 ),
