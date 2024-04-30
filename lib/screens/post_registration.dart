@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'dart:io';
+import 'dart:math';
 
-import 'package:amptive/utils/common_widgets.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -29,7 +29,7 @@ class _PostRegistrationScreenState extends State<PostRegistrationScreen> {
   void initState() {
     super.initState();
     Timer(
-      const Duration(seconds: 5),
+      const Duration(seconds: 15),
       () => setState(() {
         _isLoading = false;
       }),
@@ -40,10 +40,17 @@ class _PostRegistrationScreenState extends State<PostRegistrationScreen> {
     showCupertinoModalPopup(
       context: context,
       builder: (context) => CupertinoActionSheet(
-
         actions: [
           CupertinoActionSheetAction(
-            child: Text('Photo Gallery'),
+            child: Text(
+              'Photo Gallery',
+              textAlign: TextAlign.center,
+              style: GoogleFonts.inter(
+                color: AmpColors.brandBlue,
+                fontSize: 22.sp,
+                fontWeight: FontWeight.w600,
+              ),
+            ),
             onPressed: () {
               // close the options modal
               Navigator.of(context).pop();
@@ -52,7 +59,15 @@ class _PostRegistrationScreenState extends State<PostRegistrationScreen> {
             },
           ),
           CupertinoActionSheetAction(
-            child: Text('Camera'),
+            child: Text(
+              'Camera',
+              textAlign: TextAlign.center,
+              style: GoogleFonts.inter(
+                color: AmpColors.brandBlue,
+                fontSize: 22.sp,
+                fontWeight: FontWeight.w600,
+              ),
+            ),
             onPressed: () {
               // close the options modal
               Navigator.of(context).pop();
@@ -94,9 +109,10 @@ class _PostRegistrationScreenState extends State<PostRegistrationScreen> {
         child: Scaffold(
       backgroundColor: AmpColors.brandBlack,
       body: Padding(
-        padding: EdgeInsets.only(left: 25.w, right: 25.w, top: 20.w),
-        child: _isLoading ? const LoadingAccount() : _addPicture(),
-      ),
+          padding: EdgeInsets.only(left: 25.w, right: 25.w, top: 20.w),
+          child:
+              SineWaveImplementer() //_isLoading ? const LoadingAccount() : _addPicture(),
+          ),
     ));
   }
 
@@ -177,9 +193,7 @@ class _PostRegistrationScreenState extends State<PostRegistrationScreen> {
                         width: 41.25.w,
                         height: 41.25.h,
                         child: Icon(
-                          _isProfilePicAdded
-                              ? Icons.close
-                              : Icons.add,
+                          _isProfilePicAdded ? Icons.close : Icons.add,
                           color: AmpColors.white,
                           opticalSize: 50.h,
                         ),
@@ -237,10 +251,40 @@ class _PostRegistrationScreenState extends State<PostRegistrationScreen> {
   }
 }
 
-class LoadingAccount extends StatelessWidget {
+class LoadingAccount extends StatefulWidget {
   const LoadingAccount({
     super.key,
   });
+
+  @override
+  State<LoadingAccount> createState() => _LoadingAccountState();
+}
+
+class _LoadingAccountState extends State<LoadingAccount> {
+  late String text;
+
+  var textList = [
+    "We are creating your account",
+    "Join or create live audio events",
+    "Subscribe and support creators"
+  ];
+
+  int textListCounter = 1;
+
+  @override
+  void initState() {
+    super.initState();
+    text = textList[0];
+
+    Timer.periodic(const Duration(seconds: 4), (_) {
+      if (mounted) {
+        setState(() {
+          text = textList[textListCounter % textList.length];
+          textListCounter++;
+        });
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -249,14 +293,84 @@ class LoadingAccount extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         Center(
-          child: Text(
-            "We are creating your account",
-            textAlign: TextAlign.center,
-            style: GoogleFonts.inter(
-              color: AmpColors.white,
-              fontSize: 17.sp,
-              fontWeight: FontWeight.w600,
-            ),
+          child: AnimatedSwitcher(
+            duration: const Duration(milliseconds: 300),
+            transitionBuilder: (Widget child, Animation<double> animation) {
+              final inAnimation = TweenSequence([
+                TweenSequenceItem(
+                    tween: ConstantTween(const Offset(0.0, 1.0)), weight: 2),
+                TweenSequenceItem(
+                    tween: Tween<Offset>(
+                      begin: const Offset(0.0, 1.0),
+                      end: const Offset(0.0, 0.0),
+                    ),
+                    weight: 1),
+              ]).animate(animation);
+
+              final outAnimation = TweenSequence([
+                TweenSequenceItem(
+                    tween: ConstantTween(const Offset(0.0, 1.0)), weight: 1),
+                TweenSequenceItem(
+                    tween: Tween<Offset>(
+                      begin: const Offset(0.0, 1.0),
+                      end: const Offset(0.0, 0.0),
+                    ),
+                    weight: 1),
+              ]).animate(animation);
+
+              if (child.key == ValueKey(text)) {
+                return ClipRect(
+                  child: SlideTransition(
+                    position: inAnimation,
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: child,
+                    ),
+                  ),
+                );
+              } else {
+                return ClipRect(
+                  child: SlideTransition(
+                    position: outAnimation,
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: child,
+                    ),
+                  ),
+                );
+              }
+
+              // return SlideTransition(
+              //   position: TweenSequence([
+              //     TweenSequenceItem(
+              //         tween: Tween<Offset>(
+              //           begin: const Offset(0.0, 1.0),
+              //           end: const Offset(0.0, 0.0),
+              //         ),
+              //         weight: 1),
+              //
+              //     TweenSequenceItem(
+              //         tween: Tween<Offset>(
+              //           begin: const Offset(0.0, 0.0),
+              //           end: const Offset(0.0, -1.0),
+              //         ),
+              //         weight: 1)
+              //   ]).animate(animation),
+              //   child: child,
+              // );
+            },
+            // layoutBuilder:
+            //     (Widget? currentChild, List<Widget> previousChildren) {
+            //   return currentChild!;
+            // },
+            child: Text(text,
+                key: ValueKey<String>(text),
+                textAlign: TextAlign.center,
+                style: GoogleFonts.inter(
+                  color: AmpColors.white,
+                  fontSize: 17.sp,
+                  fontWeight: FontWeight.w600,
+                )),
           ),
         ),
         Container(
@@ -271,5 +385,112 @@ class LoadingAccount extends StatelessWidget {
         )
       ],
     );
+  }
+}
+
+class SineWaveImplementer extends StatefulWidget {
+  const SineWaveImplementer({Key? key}) : super(key: key);
+
+  @override
+  State<SineWaveImplementer> createState() => _SineWaveImplementerState();
+}
+
+class _SineWaveImplementerState extends State<SineWaveImplementer>
+    with SingleTickerProviderStateMixin {
+  late AnimationController _sineController;
+  late Animation _sineAnimation;
+
+  @override
+  void initState() {
+    _sineController =
+        AnimationController(vsync: this, duration: const Duration(seconds: 1));
+
+    _sineAnimation = Tween<double>(begin: 0, end: 1).animate(
+        CurvedAnimation(parent: _sineController, curve: Curves.linear));
+
+    _sineController.forward(from: 0);
+    _sineController.repeat();
+
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: AmpColors.white,
+      body: AnimatedBuilder(
+        builder: (context, child) {
+          return CustomPaint(
+            painter: SinePainter(_sineController),
+            size: const Size(double.infinity, 200),
+            child: Container(),
+          );
+        },
+        animation: _sineAnimation,
+      ),
+    );
+  }
+}
+
+class SinePainter extends CustomPainter {
+  final AnimationController controller;
+
+  SinePainter(this.controller);
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    var paint = Paint()
+      ..color = AmpColors.brandBlue
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = 2.0;
+
+    double width = size.width;
+    double height = size.height;
+    double centerY = height / 2;
+
+    var originalArray = [20, 80, 120, 160, 250, 20, 80, 120, 160, 250]; // Define 5 amplitude values
+    List<int> amplitudeValues = shuffleArray(originalArray);
+
+    final index = (controller.value * (amplitudeValues.length - 1)).round();
+    var temp = amplitudeValues[index];
+
+    double period = width / 1.75; // Adjust the period of the sine wave
+    double amplitude = ( height / temp); // Adjust the amplitude of the sine wave
+
+    Path path = Path();
+    path.moveTo(0, centerY);
+
+
+    for (double x = 0; x <= width; x += 4) {
+      double y =
+          centerY + sin((x / period) * 2 * pi) * -amplitude ;
+      path.lineTo(x, y);
+    }
+
+    // for (int i = 1; i <= pointsNumber; i++) {
+    //   path.lineTo(i * size.width / pointsNumber,
+    //       (size.height / 2) + sin(controller.value + i * pi / 15) * 20);
+    // }
+
+    // path.lineTo(size.width, size.height / 2);
+
+    canvas.drawPath(path, paint);
+  }
+
+  @override
+  bool shouldRepaint(covariant CustomPainter oldDelegate) {
+    return true;
+  }
+
+
+  List<int> shuffleArray(List<int> array) {
+    Random random = Random();
+    for (int i = array.length - 1; i > 0; i--) {
+      int j = random.nextInt(i + 1);
+      int temp = array[i];
+      array[i] = array[j];
+      array[j] = temp;
+    }
+    return array;
   }
 }
