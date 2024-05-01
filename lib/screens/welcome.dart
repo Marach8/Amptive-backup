@@ -180,18 +180,20 @@ class AudioCreator extends StatefulWidget {
 class _AudioCreatorState extends State<AudioCreator>
     with SingleTickerProviderStateMixin {
   late AnimationController _animationController;
-  bool _isBorderColored = true;
+  bool _isBorderColored = false;
+  bool _micMuted = true;
   int repeater = 0;
 
   @override
   void initState() {
     _animationController =
-        AnimationController(vsync: this, duration: const Duration(milliseconds: 500));
+        AnimationController(vsync: this, duration: const Duration(milliseconds: 1000));
 
 
     _animationController.addListener(() {
       setState(() {
         _isBorderColored = _animationController.value <= 0.5;
+        _micMuted = _animationController.value >= 0.75;
       });
     });
 
@@ -216,8 +218,6 @@ class _AudioCreatorState extends State<AudioCreator>
     });
 
     _animationController.forward(from: 0);
-    // _animationController.repeat();
-
 
     super.initState();
   }
@@ -254,6 +254,23 @@ class _AudioCreatorState extends State<AudioCreator>
             ),
           ),
         ),
+
+        Visibility(
+          visible: _micMuted,
+          child: Positioned(
+            top: 50.h,
+            left: 50.w,
+            child: CircleAvatar(
+              radius: 12.r,
+              backgroundColor: AmpColors.white,
+              child: Icon(
+                Icons.mic_off,
+                color: AmpColors.brandBlack,
+                size: 19.h,
+              ),
+            ),
+          ),
+        )
       ],
     );
   }
