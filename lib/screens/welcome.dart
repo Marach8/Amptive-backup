@@ -44,24 +44,30 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                 Positioned(
                   child: SizedBox(
                     height: 100.h,
-                      child: const SineWaveImplementer(),
+                    child: const SineWaveImplementer(),
                   ),
                 ),
                 Positioned(
                   top: 12.h,
-                  left: 72.w,
+                  left: 66.w,
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      const AudioCreator(assetName: "assets/welcomeAvatar2.jpeg"),
+                      const AudioCreator(
+                          assetName: "assets/welcomeAvatar2.jpeg",
+                      delay: Duration(seconds: 1),),
                       SizedBox(
                         width: 22.w,
                       ),
-                      const AudioCreator(assetName: "assets/welcomeAvatar1.jpeg"),
+                      const AudioCreator(
+                          assetName: "assets/welcomeAvatar1.jpeg",
+                        delay: Duration(seconds: 2),),
                       SizedBox(
                         width: 22.w,
                       ),
-                      const AudioCreator(assetName: "assets/welcomeAvatar3.jpeg"),
+                      const AudioCreator(
+                          assetName: "assets/welcomeAvatar3.jpeg",
+                        delay: Duration(seconds: 3),),
                     ],
                   ),
                 ),
@@ -161,22 +167,90 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
   }
 }
 
-class AudioCreator extends StatelessWidget {
-  const AudioCreator({super.key, required this.assetName});
+class AudioCreator extends StatefulWidget {
+  const AudioCreator({super.key, required this.assetName, required this.delay});
 
   final String assetName;
+  final Duration delay;
+
+  @override
+  State<AudioCreator> createState() => _AudioCreatorState();
+}
+
+class _AudioCreatorState extends State<AudioCreator>
+    with SingleTickerProviderStateMixin {
+  late AnimationController _animationController;
+  bool _isBorderColored = true;
+  int repeater = 0;
+
+  @override
+  void initState() {
+    _animationController =
+        AnimationController(vsync: this, duration: const Duration(milliseconds: 500));
+
+
+    _animationController.addListener(() {
+      setState(() {
+        _isBorderColored = _animationController.value <= 0.5;
+      });
+    });
+
+    _animationController.addStatusListener((status) {
+      if (status == AnimationStatus.completed) {
+         if(repeater >= 2){
+           Future.delayed(widget.delay, () {
+             repeater = 0;
+             _animationController.reverse();
+
+           });
+
+         }else{
+           repeater++;
+           _animationController.reverse();
+
+         }
+
+      }else if (status == AnimationStatus.dismissed) {
+        _animationController.forward();
+      }
+    });
+
+    _animationController.forward(from: 0);
+    // _animationController.repeat();
+
+
+    super.initState();
+  }
+
+
+
+  @override
+  void dispose() {
+    _animationController.dispose();
+    super.dispose();
+  }
+
+
 
   @override
   Widget build(BuildContext context) {
     return Stack(
       children: [
         SizedBox(
-          width: 62.99.w,
-          height: 62.99.h,
+          width: 74.99.w,
+          height: 74.99.h,
           child: CircleAvatar(
-            radius: 169.814.r,
-            backgroundImage: AssetImage(
-              assetName,
+            radius: 36.5.r,
+            backgroundColor:_isBorderColored ? AmpColors.brandBlue : AmpColors.transparent,
+            child: CircleAvatar(
+              radius: 33.814.r,
+              backgroundColor: AmpColors.brandBlack,
+              child: CircleAvatar(
+                radius: 31.0.r,
+                backgroundImage: AssetImage(
+                  widget.assetName,
+                ),
+              ),
             ),
           ),
         ),
