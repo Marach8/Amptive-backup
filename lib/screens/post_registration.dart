@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'dart:io';
-import 'dart:math';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -111,7 +110,7 @@ class _PostRegistrationScreenState extends State<PostRegistrationScreen> {
       body: Padding(
           padding: EdgeInsets.only(left: 25.w, right: 25.w, top: 20.w),
           child:
-              SineWaveImplementer() //_isLoading ? const LoadingAccount() : _addPicture(),
+             _isLoading ? const LoadingAccount() : _addPicture(),
           ),
     ));
   }
@@ -388,109 +387,3 @@ class _LoadingAccountState extends State<LoadingAccount> {
   }
 }
 
-class SineWaveImplementer extends StatefulWidget {
-  const SineWaveImplementer({Key? key}) : super(key: key);
-
-  @override
-  State<SineWaveImplementer> createState() => _SineWaveImplementerState();
-}
-
-class _SineWaveImplementerState extends State<SineWaveImplementer>
-    with SingleTickerProviderStateMixin {
-  late AnimationController _sineController;
-  late Animation _sineAnimation;
-
-  @override
-  void initState() {
-    _sineController =
-        AnimationController(vsync: this, duration: const Duration(seconds: 1));
-
-    _sineAnimation = Tween<double>(begin: 0, end: 1).animate(
-        CurvedAnimation(parent: _sineController, curve: Curves.linear));
-
-    _sineController.forward(from: 0);
-    _sineController.repeat();
-
-    super.initState();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: AmpColors.white,
-      body: AnimatedBuilder(
-        builder: (context, child) {
-          return CustomPaint(
-            painter: SinePainter(_sineController),
-            size: const Size(double.infinity, 200),
-            child: Container(),
-          );
-        },
-        animation: _sineAnimation,
-      ),
-    );
-  }
-}
-
-class SinePainter extends CustomPainter {
-  final AnimationController controller;
-
-  SinePainter(this.controller);
-
-  @override
-  void paint(Canvas canvas, Size size) {
-    var paint = Paint()
-      ..color = AmpColors.brandBlue
-      ..style = PaintingStyle.stroke
-      ..strokeWidth = 2.0;
-
-    double width = size.width;
-    double height = size.height;
-    double centerY = height / 2;
-
-    var originalArray = [20, 80, 120, 160, 250, 20, 80, 120, 160, 250]; // Define 5 amplitude values
-    List<int> amplitudeValues = shuffleArray(originalArray);
-
-    final index = (controller.value * (amplitudeValues.length - 1)).round();
-    var temp = amplitudeValues[index];
-
-    double period = width / 1.75; // Adjust the period of the sine wave
-    double amplitude = ( height / temp); // Adjust the amplitude of the sine wave
-
-    Path path = Path();
-    path.moveTo(0, centerY);
-
-
-    for (double x = 0; x <= width; x += 4) {
-      double y =
-          centerY + sin((x / period) * 2 * pi) * -amplitude ;
-      path.lineTo(x, y);
-    }
-
-    // for (int i = 1; i <= pointsNumber; i++) {
-    //   path.lineTo(i * size.width / pointsNumber,
-    //       (size.height / 2) + sin(controller.value + i * pi / 15) * 20);
-    // }
-
-    // path.lineTo(size.width, size.height / 2);
-
-    canvas.drawPath(path, paint);
-  }
-
-  @override
-  bool shouldRepaint(covariant CustomPainter oldDelegate) {
-    return true;
-  }
-
-
-  List<int> shuffleArray(List<int> array) {
-    Random random = Random();
-    for (int i = array.length - 1; i > 0; i--) {
-      int j = random.nextInt(i + 1);
-      int temp = array[i];
-      array[i] = array[j];
-      array[j] = temp;
-    }
-    return array;
-  }
-}

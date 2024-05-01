@@ -1,4 +1,5 @@
 import 'package:amptive/routers/amptive_routes.dart';
+import 'package:amptive/utils/sine_animation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
@@ -38,18 +39,32 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                 ),
               ),
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
+            Stack(
               children: [
-                const AudioCreator(assetName: "assets/welcomeAvatar2.jpeg"),
-                SizedBox(
-                  width: 22.w,
+                Positioned(
+                  child: SizedBox(
+                    height: 100.h,
+                      child: const SineWaveImplementer(),
+                  ),
                 ),
-                const AudioCreator(assetName: "assets/welcomeAvatar1.jpeg"),
-                SizedBox(
-                  width: 22.w,
+                Positioned(
+                  top: 12.h,
+                  left: 72.w,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const AudioCreator(assetName: "assets/welcomeAvatar2.jpeg"),
+                      SizedBox(
+                        width: 22.w,
+                      ),
+                      const AudioCreator(assetName: "assets/welcomeAvatar1.jpeg"),
+                      SizedBox(
+                        width: 22.w,
+                      ),
+                      const AudioCreator(assetName: "assets/welcomeAvatar3.jpeg"),
+                    ],
+                  ),
                 ),
-                const AudioCreator(assetName: "assets/welcomeAvatar3.jpeg"),
               ],
             ),
             Container(

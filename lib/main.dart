@@ -39,7 +39,7 @@ final GoRouter _router = GoRouter(
       path: AmptiveRoutes.index,
       builder: (BuildContext context, GoRouterState state) {
         // return const SplashScreen();
-        return const PostRegistrationScreen();
+        return const WelcomeScreen();
       },
 
     ),
