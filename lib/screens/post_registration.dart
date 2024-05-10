@@ -288,88 +288,70 @@ class _LoadingAccountState extends State<LoadingAccount> {
   @override
   Widget build(BuildContext context) {
     return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
+      mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        Center(
-          child: AnimatedSwitcher(
-            duration: const Duration(milliseconds: 300),
-            transitionBuilder: (Widget child, Animation<double> animation) {
-              final inAnimation = TweenSequence([
-                TweenSequenceItem(
-                    tween: ConstantTween(const Offset(0.0, 1.0)), weight: 2),
-                TweenSequenceItem(
-                    tween: Tween<Offset>(
-                      begin: const Offset(0.0, 1.0),
-                      end: const Offset(0.0, 0.0),
-                    ),
-                    weight: 1),
-              ]).animate(animation);
+        Container(
+          margin: EdgeInsets.only(top: 270.h),
+          child: Center(
+            child: AnimatedSwitcher(
+              duration: const Duration(milliseconds: 300),
+              transitionBuilder: (Widget child, Animation<double> animation) {
+                final inAnimation = TweenSequence([
+                  TweenSequenceItem(
+                      tween: ConstantTween(const Offset(0.0, 1.0)), weight: 2),
+                  TweenSequenceItem(
+                      tween: Tween<Offset>(
+                        begin: const Offset(0.0, 1.0),
+                        end: const Offset(0.0, 0.0),
+                      ),
+                      weight: 1),
+                ]).animate(animation);
 
-              final outAnimation = TweenSequence([
-                TweenSequenceItem(
-                    tween: ConstantTween(const Offset(0.0, 1.0)), weight: 1),
-                TweenSequenceItem(
-                    tween: Tween<Offset>(
-                      begin: const Offset(0.0, 1.0),
-                      end: const Offset(0.0, 0.0),
-                    ),
-                    weight: 1),
-              ]).animate(animation);
+                final outAnimation = TweenSequence([
+                  TweenSequenceItem(
+                      tween: ConstantTween(const Offset(0.0, 1.0)), weight: 1),
+                  TweenSequenceItem(
+                      tween: Tween<Offset>(
+                        begin: const Offset(0.0, 1.0),
+                        end: const Offset(0.0, 0.0),
+                      ),
+                      weight: 1),
+                ]).animate(animation);
 
-              if (child.key == ValueKey(text)) {
-                return ClipRect(
-                  child: SlideTransition(
-                    position: inAnimation,
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: child,
+                if (child.key == ValueKey(text)) {
+                  return ClipRect(
+                    child: SlideTransition(
+                      position: inAnimation,
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: child,
+                      ),
                     ),
-                  ),
-                );
-              } else {
-                return ClipRect(
-                  child: SlideTransition(
-                    position: outAnimation,
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: child,
+                  );
+                } else {
+                  return ClipRect(
+                    child: SlideTransition(
+                      position: outAnimation,
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: child,
+                      ),
                     ),
-                  ),
-                );
-              }
+                  );
+                }
 
-              // return SlideTransition(
-              //   position: TweenSequence([
-              //     TweenSequenceItem(
-              //         tween: Tween<Offset>(
-              //           begin: const Offset(0.0, 1.0),
-              //           end: const Offset(0.0, 0.0),
-              //         ),
-              //         weight: 1),
-              //
-              //     TweenSequenceItem(
-              //         tween: Tween<Offset>(
-              //           begin: const Offset(0.0, 0.0),
-              //           end: const Offset(0.0, -1.0),
-              //         ),
-              //         weight: 1)
-              //   ]).animate(animation),
-              //   child: child,
-              // );
-            },
-            // layoutBuilder:
-            //     (Widget? currentChild, List<Widget> previousChildren) {
-            //   return currentChild!;
-            // },
-            child: Text(text,
-                key: ValueKey<String>(text),
-                textAlign: TextAlign.center,
-                style: GoogleFonts.inter(
-                  color: AmpColors.white,
-                  fontSize: 17.sp,
-                  fontWeight: FontWeight.w600,
-                )),
+              },
+
+              child: Text(text,
+                  key: ValueKey<String>(text),
+                  textAlign: TextAlign.center,
+                  style: GoogleFonts.inter(
+                    color: AmpColors.white,
+                    fontSize: 17.sp,
+                    fontWeight: FontWeight.w600,
+                  )),
+            ),
           ),
         ),
         Container(
@@ -386,4 +368,20 @@ class _LoadingAccountState extends State<LoadingAccount> {
     );
   }
 }
+
+
+class TempState extends StatefulWidget {
+  const TempState({Key? key}) : super(key: key);
+
+  @override
+  State<TempState> createState() => _TempStateState();
+}
+
+class _TempStateState extends State<TempState> {
+  @override
+  Widget build(BuildContext context) {
+    return const Placeholder();
+  }
+}
+
 
