@@ -1,13 +1,13 @@
 import 'dart:async';
 import 'dart:io';
 
+import 'package:amptive/screens/PreferenceScreen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
-
 import '../routers/amptive_routes.dart';
 import '../utils/utils.dart';
 
@@ -110,7 +110,7 @@ class _PostRegistrationScreenState extends State<PostRegistrationScreen> {
       body: Padding(
           padding: EdgeInsets.only(left: 25.w, right: 25.w, top: 20.w),
           child:
-             _isLoading ? const LoadingAccount() : _addPicture(),
+              _isLoading ? const LoadingAccount() : _addPicture(),
           ),
     ));
   }
@@ -370,18 +370,5 @@ class _LoadingAccountState extends State<LoadingAccount> {
 }
 
 
-class TempState extends StatefulWidget {
-  const TempState({Key? key}) : super(key: key);
-
-  @override
-  State<TempState> createState() => _TempStateState();
-}
-
-class _TempStateState extends State<TempState> {
-  @override
-  Widget build(BuildContext context) {
-    return const Placeholder();
-  }
-}
 
 
