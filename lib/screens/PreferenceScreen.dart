@@ -233,7 +233,7 @@ class CommunityCardCommon extends StatelessWidget {
       child: Stack(
         children: [
           Positioned(
-            top: 86.h,
+            top: 80.h,
             left: 16.w,
             child: Text(
               preference.name,

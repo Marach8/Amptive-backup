@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:amptive/utils/common_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -10,6 +12,8 @@ import '../providers/form_providers.dart';
 import '../routers/amptive_routes.dart';
 import '../utils/utils.dart';
 
+int TIMER_LIMIT = 10;
+
 class OTPScreen extends StatefulWidget {
   const OTPScreen({super.key, required this.from});
 
@@ -21,6 +25,44 @@ class OTPScreen extends StatefulWidget {
 
 class _OTPScreenState extends State<OTPScreen> {
   late FormProvider _formProvider;
+  int _start = TIMER_LIMIT;
+  late Timer _timer;
+  bool _resendButtonEnabled = false;
+
+  @override
+  void initState() {
+    super.initState();
+    startTimer();
+  }
+
+  @override
+  void dispose() {
+    _timer.cancel();
+    super.dispose();
+  }
+
+  void startTimer() {
+    _timer = Timer.periodic(Duration(seconds: 1), (Timer timer) {
+      if (_start == 0) {
+        setState(() {
+          _resendButtonEnabled = true;
+          _timer.cancel();
+        });
+      } else {
+        setState(() {
+          _start--;
+        });
+      }
+    });
+  }
+
+  void resetTimer() {
+    setState(() {
+      _start = TIMER_LIMIT;
+      _resendButtonEnabled = false;
+    });
+    startTimer();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -75,23 +117,44 @@ class _OTPScreenState extends State<OTPScreen> {
                 Container(
                   margin: EdgeInsets.only(top: 11.h),
                   alignment: Alignment.centerLeft,
-                  child: RichText(
-                    text: TextSpan(
-                      text: "Didn't get the code? ",
-                      children: [
-                        TextSpan(
-                          text: "Send again",
-                          style: GoogleFonts.inter(
-                              decoration: TextDecoration.underline),
+                  child: _resendButtonEnabled
+                      ? RichText(
+                          text: TextSpan(
+                            text: "Didn't get the code? ",
+                            children: [
+                              WidgetSpan(
+                                child: GestureDetector(
+                                  onTap: (){
+                                    resetTimer();
+                                  },
+                                  child: Text(
+                                    "Send again",
+                                    style: GoogleFonts.inter(
+                                      decoration: TextDecoration.underline,
+                                      decorationColor: AmpColors.white,
+                                      fontSize: 12.sp,
+                                      color: AmpColors.white,
+                                      fontWeight: FontWeight.normal,
+                                    ),
+                                  ),
+                                ),
+                              )
+                            ],
+                            style: GoogleFonts.inter(
+                              fontSize: 12.sp,
+                              color: AmpColors.white,
+                              fontWeight: FontWeight.normal,
+                            ),
+                          ),
                         )
-                      ],
-                      style: GoogleFonts.inter(
-                        fontSize: 12.sp,
-                        color: AmpColors.white,
-                        fontWeight: FontWeight.normal,
-                      ),
-                    ),
-                  ),
+                      : Text(
+                          "Code has been sent. You can send another in $_start",
+                          style: GoogleFonts.inter(
+                            fontSize: 12.sp,
+                            color: AmpColors.white,
+                            fontWeight: FontWeight.normal,
+                          ),
+                        ),
                 ),
                 Expanded(
                   child: SizedBox(
@@ -158,14 +221,15 @@ class OTPTextFormField extends StatelessWidget {
         maxLength: 1,
         textAlignVertical: TextAlignVertical.center,
         decoration: InputDecoration(
-          contentPadding: EdgeInsets.zero,
+          contentPadding:
+              EdgeInsets.symmetric(horizontal: 16.w, vertical: 12.w),
           floatingLabelBehavior: FloatingLabelBehavior.never,
           counterText: "",
           label: const Center(
             child: Text("-"),
           ),
           labelStyle: GoogleFonts.inter(
-            fontSize: 16.sp,
+            fontSize: 18.sp,
             color: AmpColors.authHintColor,
             fontWeight: FontWeight.normal,
           ),
@@ -187,9 +251,10 @@ class OTPTextFormField extends StatelessWidget {
           ),
         ),
         style: GoogleFonts.inter(
-            fontWeight: FontWeight.normal,
-            fontSize: 16.sp,
-            color: AmpColors.white),
+          fontWeight: FontWeight.normal,
+          fontSize: 18.sp,
+          color: AmpColors.white,
+        ),
         textAlign: TextAlign.center,
       ),
     );

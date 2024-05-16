@@ -126,7 +126,7 @@ class _DateOfBirthScreenState extends State<DateOfBirthScreen> {
                         style: GoogleFonts.inter(
                             fontWeight: FontWeight.w600,
                             fontSize: 18.sp,
-                            color: model.isEmailValid
+                            color: model.dob != null
                                 ? AmpColors.white
                                 : const Color(0xFF666666)),
                       ),
