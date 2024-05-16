@@ -172,9 +172,11 @@ class _AudioCreatorState extends State<AudioCreator>
   @override
   void initState() {
     Timer.periodic(Duration(seconds: widget.delay), (_) {
-      setState(() {
+      if(mounted) {
+        setState(() {
         _isBorderColored = !_isBorderColored;
       });
+      }
 
     });
 

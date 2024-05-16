@@ -4,8 +4,13 @@ import 'package:amptive/utils/common_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 
+import '../providers/preference_provider.dart';
 import '../utils/utils.dart';
+
+const int MAX_NUMBER_COMMUNITIES = 5;
+
 
 class PreferenceScreen extends StatefulWidget {
   const PreferenceScreen({super.key});
@@ -15,75 +20,108 @@ class PreferenceScreen extends StatefulWidget {
 }
 
 class _PreferenceScreenState extends State<PreferenceScreen> {
-  final List<Pair<String, List<Color>>> _list = [
-    Pair("Music", const [Color(0xFFEF8C62), Color(0xFFEF6262)]),
-    Pair("Art", const [Color(0xFFD95335), Color(0xFFD93535)]),
-    Pair("Society", const [Color(0xFFF9C407), Color(0xFFD9550C)]),
-    Pair("Technology", const [Color(0xFFD9550C), Color(0xFFD93535)]),
-    Pair("Sports", const [Color(0xFF009C51), Color(0xFF009C80)]),
-    Pair("True Crime", const [Color(0xFF005A9C), Color(0xFF00249C)]),
-    Pair("Business", const [Color(0xFFE14C1D), Color(0xFFE1721D)]),
-    Pair("Spirituality", const [Color(0xFFEF8C62), Color(0xFFEF6262)]),
-    Pair("Relationship", const [Color(0xFFD95335), Color(0xFFD93535)]),
-    Pair("Science", const [Color(0xFF792166), Color(0xFF722179)]),
-    Pair("Comedy", const [Color(0xFF7B0054), Color(0xFF7B003B)]),
-    Pair("News", const [Color(0xFF307FE2), Color(0xFF306DE2)]),
-  ];
+  bool isPreferenceSelected = false;
 
   @override
   Widget build(BuildContext context) {
+    var model = Provider.of<PreferenceModel>(context, listen: true);
+    var len = model.items.length;
+    var isOpaque = model.getSelected().length == MAX_NUMBER_COMMUNITIES;
     return SafeArea(
       child: Scaffold(
         backgroundColor: AmpColors.brandBlack,
-        appBar: BuildAppBar(),
-        body: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 22.w),
-          child: Column(
-            children: [
-              Container(
-                margin: EdgeInsets.only(top: 20.h, bottom: 11.h),
-                alignment: Alignment.centerLeft,
-                child: Text(
-                  "Select 5 communities you find interest in.",
-                  style: GoogleFonts.inter(
-                    color: AmpColors.white,
-                    fontSize: 22.sp,
-                    fontWeight: FontWeight.bold,
-                  ),
+        appBar: isPreferenceSelected ? null : BuildAppBar(),
+        body: isPreferenceSelected
+            ? const ProcessingPreference()
+            : Padding(
+                padding: EdgeInsets.symmetric(horizontal: 22.w),
+                child: Column(
+                  children: [
+                    Container(
+                      margin: EdgeInsets.only(top: 20.h, bottom: 11.h),
+                      alignment: Alignment.centerLeft,
+                      child: Text(
+                        "Select 5 communities you find interest in.",
+                        style: GoogleFonts.inter(
+                          color: AmpColors.white,
+                          fontSize: 22.sp,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                    Container(
+                      margin: EdgeInsets.only(bottom: 30.h),
+                      alignment: Alignment.centerLeft,
+                      child: Text(
+                        "Your selected interests will be used to personalize you Amptive experience.",
+                        style: GoogleFonts.inter(
+                          color: const Color(0xFFCDCDCD),
+                          fontSize: 14.sp,
+                          fontWeight: FontWeight.normal,
+                        ),
+                      ),
+                    ),
+                    Expanded(
+                      child: Stack(
+                        children: [
+                          GridView.builder(
+                            // shrinkWrap: true,
+                            gridDelegate:
+                                SliverGridDelegateWithFixedCrossAxisCount(
+                                    crossAxisSpacing: 4.w,
+                                    mainAxisSpacing: 4.h,
+                                    crossAxisCount: 2,
+                                    childAspectRatio: 169.w / 122.h),
+                            itemBuilder: (_, index) => CommunityCardPreference(
+                              width: 169.w,
+                              height: 122.h,
+                              index: index,
+                              isOpaque: isOpaque,
+                            ),
+                            itemCount: len,
+                          ),
+                          Visibility(
+                            visible: isOpaque,
+                            child: Positioned(
+                              left: 0.0,
+                              right: 0.0,
+                              bottom: 0.0,
+                              child: Container(
+                                width: 340.w,
+                                height: 50.h,
+                                padding: EdgeInsets.symmetric(horizontal: 25.w),
+                                margin: EdgeInsets.only(bottom: 16.h),
+                                child: ElevatedButton(
+                                  onPressed: () {
+                                    setState(() {
+                                      isPreferenceSelected = true;
+                                    });
+                                  },
+                                  style: ElevatedButton.styleFrom(
+                                    backgroundColor: AmpColors.brandBlue,
+                                    padding:
+                                        EdgeInsets.symmetric(vertical: 11.5.h),
+                                  ),
+                                  child: Text(
+                                    'Next',
+                                    textAlign: TextAlign.center,
+                                    style: GoogleFonts.inter(
+                                      color: Colors.white,
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.w600,
+                                      height: 0.08,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                  ],
                 ),
               ),
-              Container(
-                margin: EdgeInsets.only(bottom: 30.h),
-                alignment: Alignment.centerLeft,
-                child: Text(
-                  "Your selected interests will be used to personalize you Amptive experience.",
-                  style: GoogleFonts.inter(
-                    color: const Color(0xFFCDCDCD),
-                    fontSize: 14.sp,
-                    fontWeight: FontWeight.normal,
-                  ),
-                ),
-              ),
-              Expanded(
-                child: GridView.builder(
-                  // shrinkWrap: true,
-                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisSpacing: 4.w,
-                      mainAxisSpacing: 4.h,
-                      crossAxisCount: 2,
-                      childAspectRatio: 169.w / 122.h),
-                  itemBuilder: (_, index) => CommunityCardPreference(
-                    width: 169.w,
-                    height: 122.h,
-                    pair: _list[index],
-                    index: index,
-                  ),
-                  itemCount: _list.length,
-                ),
-              ),
-            ],
-          ),
-        ),
       ),
     );
   }
@@ -92,52 +130,67 @@ class _PreferenceScreenState extends State<PreferenceScreen> {
 class CommunityCardPreference extends StatelessWidget {
   CommunityCardPreference({
     super.key,
-    required Pair<String, List<Color>> pair,
     required this.index,
     required this.height,
     required this.width,
-  }) : _pair = pair;
+    required this.isOpaque,
+  });
 
-  final Pair<String, List<Color>> _pair;
   final int index;
   double height;
   double width;
+  final bool isOpaque;
 
   @override
   Widget build(BuildContext context) {
     var isSelected = true;
-    return Stack(
-      children: [
-        CommunityCardCommon(
-          height: height,
-          width: width,
-          pair: _pair,
-          index: index,
-          showCheckBox: isSelected,
-        ),
-        Visibility(
-          visible: isSelected,
-          child: Positioned(
-            left: 2.w,
-            top: 2.h,
-            child: Container(
-              width: 166.w,
-              height: 119.h,
-              decoration: ShapeDecoration(
-                shape: RoundedRectangleBorder(
-                  side: BorderSide(
-                    width: 2.w,
-                    strokeAlign: BorderSide.strokeAlignCenter,
-                    color: AmpColors.brandBlue,
+    return Consumer<PreferenceModel>(builder: (context, pref, child) {
+      return Opacity(
+        opacity: !pref.items[index].isSelected && isOpaque ? 0.6 : 1.0,
+        child: GestureDetector(
+          onTap: () {
+            if( !pref.items[index].isSelected && isOpaque ){
+              return;
+            }
+
+            pref.toggleSelectedByIndex(index);
+
+          },
+          child: Stack(
+            children: [
+              CommunityCardCommon(
+                height: height,
+                width: width,
+                index: index,
+                preference: pref.items[index],
+                showCheckBox: pref.items[index].isSelected,
+              ),
+              Visibility(
+                visible: pref.items[index].isSelected,
+                child: Positioned(
+                  left: 2.w,
+                  top: 2.h,
+                  child: Container(
+                    width: 166.w,
+                    height: 119.h,
+                    decoration: ShapeDecoration(
+                      shape: RoundedRectangleBorder(
+                        side: BorderSide(
+                          width: 2.w,
+                          strokeAlign: BorderSide.strokeAlignCenter,
+                          color: AmpColors.brandBlue,
+                        ),
+                        borderRadius: BorderRadius.circular(6.r),
+                      ),
+                    ),
                   ),
-                  borderRadius: BorderRadius.circular(6.r),
                 ),
               ),
-            ),
+            ],
           ),
         ),
-      ],
-    );
+      );
+    });
   }
 }
 
@@ -146,15 +199,15 @@ class CommunityCardCommon extends StatelessWidget {
     super.key,
     required this.height,
     required this.width,
-    required Pair<String, List<Color>> pair,
     required this.index,
     this.showCheckBox = false,
-  }) : _pair = pair;
+    required this.preference,
+  });
 
   final double height;
   final double width;
-  final Pair<String, List<Color>> _pair;
   final int index;
+  final Preferences preference;
   bool showCheckBox = false;
 
   @override
@@ -164,12 +217,12 @@ class CommunityCardCommon extends StatelessWidget {
       width: width,
       clipBehavior: Clip.antiAlias,
       decoration: BoxDecoration(
-        color: _pair.second[0],
+        color: preference.primary,
         borderRadius: BorderRadius.circular(5.h),
         gradient: LinearGradient(
             begin: const Alignment(0.00, -1.00),
             end: const Alignment(0, 1),
-            colors: [_pair.second[0], _pair.second[1]]),
+            colors: [preference.primary, preference.secondary]),
       ),
       margin: EdgeInsets.only(
         top: 4.h,
@@ -183,7 +236,7 @@ class CommunityCardCommon extends StatelessWidget {
             top: 86.h,
             left: 16.w,
             child: Text(
-              _pair.first,
+              preference.name,
               style: GoogleFonts.inter(
                 color: AmpColors.white,
                 fontSize: 14.sp,
@@ -229,38 +282,34 @@ class CommunityCardCommon extends StatelessWidget {
   }
 }
 
-class LoadingPreference extends StatefulWidget {
-  const LoadingPreference({
+class ProcessingPreference extends StatefulWidget {
+  const ProcessingPreference({
     super.key,
   });
 
   @override
-  State<LoadingPreference> createState() => _LoadingPreferenceState();
+  State<ProcessingPreference> createState() => _ProcessingPreferenceState();
 }
 
-class _LoadingPreferenceState extends State<LoadingPreference> {
+class _ProcessingPreferenceState extends State<ProcessingPreference> {
   late String text;
 
-  final List<Pair<String, List<Color>>> _list = [
-    Pair("Music", const [Color(0xFFEF8C62), Color(0xFFEF6262)]),
-    Pair("Art", const [Color(0xFFD95335), Color(0xFFD93535)]),
-    Pair("Society", const [Color(0xFFF9C407), Color(0xFFD9550C)]),
-    Pair("Technology", const [Color(0xFFD9550C), Color(0xFFD93535)]),
-  ];
-
+  late List<Preferences> _list;
   int textListCounter = 1;
   int currentIndex = 0;
 
   @override
   void initState() {
     super.initState();
-    text = _list[0].first;
+
+    _list = Provider.of<PreferenceModel>(context, listen: false).getSelected();
+    text = _list[0].name;
 
     Timer.periodic(const Duration(seconds: 3), (_) {
       if (mounted) {
         setState(() {
           currentIndex = textListCounter % _list.length;
-          text = _list[currentIndex].first;
+          text = _list[currentIndex].name;
           textListCounter++;
         });
       }
@@ -269,6 +318,9 @@ class _LoadingPreferenceState extends State<LoadingPreference> {
 
   @override
   Widget build(BuildContext context) {
+    var preference =
+        Provider.of<PreferenceModel>(context, listen: false).getSelected();
+
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.center,
@@ -330,8 +382,8 @@ class _LoadingPreferenceState extends State<LoadingPreference> {
                 child: CommunityCardCommon(
                   height: 103.23.h,
                   width: 143.w,
-                  pair: _list[currentIndex],
                   index: 0,
+                  preference: _list[currentIndex],
                 ),
               ),
             ),
@@ -350,99 +402,6 @@ class _LoadingPreferenceState extends State<LoadingPreference> {
           ),
         )
       ],
-    );
-  }
-}
-
-class Templ extends StatelessWidget {
-  const Templ({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-      width: 169.w,
-      height: 122.h,
-      child: Stack(
-        children: [
-          Positioned(
-            left: 2.w,
-            top: 2.h,
-            child: Container(
-              width: 165.w,
-              height: 118.h,
-              clipBehavior: Clip.antiAlias,
-              decoration: ShapeDecoration(
-                gradient: const LinearGradient(
-                  begin: Alignment(0.00, -1.00),
-                  end: Alignment(0, 1),
-                  colors: [Color(0xFF009C51), Color(0xC1009C7F)],
-                ),
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(6.r)),
-              ),
-              child: Stack(
-                children: [
-                  Positioned(
-                    left: 16.w,
-                    top: 86.h,
-                    child: Text(
-                      'Sports',
-                      style: GoogleFonts.inter(
-                        color: Colors.white,
-                        fontSize: 14,
-                        fontWeight: FontWeight.w600,
-                        height: 0.11,
-                      ),
-                    ),
-                  ),
-                  Positioned(
-                    left: 127.w,
-                    top: 9.h,
-                    child: Container(
-                      width: 28.w,
-                      height: 28.h,
-                      child: Stack(
-                        children: [
-                          Positioned(
-                            left: 0,
-                            top: 0,
-                            child: Container(
-                              width: 28.h,
-                              height: 28.h,
-                              decoration: ShapeDecoration(
-                                color: Colors.white,
-                                shape: OvalBorder(),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
-          Positioned(
-            left: 0,
-            top: 0,
-            child: Container(
-              width: 169.w,
-              height: 122.h,
-              decoration: ShapeDecoration(
-                shape: RoundedRectangleBorder(
-                  side: BorderSide(
-                    width: 2.w,
-                    strokeAlign: BorderSide.strokeAlignCenter,
-                    color: Color(0xFF307FE2),
-                  ),
-                  borderRadius: BorderRadius.circular(6.r),
-                ),
-              ),
-            ),
-          ),
-        ],
-      ),
     );
   }
 }

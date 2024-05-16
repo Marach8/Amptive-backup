@@ -136,7 +136,7 @@ class _EmailAuthScreenState extends State<EmailAuthScreen> {
                             bool isUniqueEmail = await model.processEmail();
 
                             if (isUniqueEmail && context.mounted) {
-                              context.pushNamed(AmptiveRoutes.otp);
+                              context.pushNamed(AmptiveRoutes.otp, extra: "email");
                             }
                           }
 

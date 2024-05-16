@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:amptive/providers/form_providers.dart';
+import 'package:amptive/providers/preference_provider.dart';
 import 'package:amptive/routers/amptive_routes.dart';
 import 'package:amptive/screens/AuthScreen.dart';
 import 'package:amptive/screens/DoBScreen.dart';
@@ -25,6 +26,7 @@ void main() => runApp(
       MultiProvider(
         providers: [
           ChangeNotifierProvider(create: (_) => FormProvider()),
+          ChangeNotifierProvider(create: (_) => PreferenceModel()),
         ],
         child: const AmptiveApp(),
       ),
@@ -38,8 +40,7 @@ final GoRouter _router = GoRouter(
     GoRoute(
       path: AmptiveRoutes.index,
       builder: (BuildContext context, GoRouterState state) {
-        // return const SplashScreen();
-        return const PostRegistrationScreen();
+        return const SplashScreen();
       },
 
     ),
@@ -73,8 +74,11 @@ final GoRouter _router = GoRouter(
     GoRoute(
       name: AmptiveRoutes.otp,
       path: "/otp",
-      builder: (BuildContext context, GoRouterState state) =>
-      const OTPScreen(),
+      builder: (BuildContext context, GoRouterState state) {
+        String where = state.extra as String;
+        return OTPScreen(from: where);
+
+      }
     ),
 
 

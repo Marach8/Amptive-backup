@@ -11,7 +11,9 @@ import '../routers/amptive_routes.dart';
 import '../utils/utils.dart';
 
 class OTPScreen extends StatefulWidget {
-  const OTPScreen({super.key});
+  const OTPScreen({super.key, required this.from});
+
+  final String from;
 
   @override
   State<OTPScreen> createState() => _OTPScreenState();
@@ -38,7 +40,7 @@ class _OTPScreenState extends State<OTPScreen> {
                   margin: EdgeInsets.only(top: 20.h),
                   width: 297.w,
                   child: Text(
-                    "Enter the 4 digit code we just sent to your email",
+                    "Enter the 4 digit code we just sent to your ${widget.from}",
                     textAlign: TextAlign.start,
                     style: GoogleFonts.inter(
                       fontWeight: FontWeight.bold,
