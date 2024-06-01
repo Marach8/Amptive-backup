@@ -97,6 +97,21 @@ class _DateOfBirthScreenState extends State<DateOfBirthScreen> {
                       fontSize: 16.sp,
                       color: AmpColors.white),
                 ),
+              Container(
+                height: 20.h,
+                margin: EdgeInsets.symmetric(vertical: 11.h),
+                child: Text(
+                 "Only users 13 and older may use this app",
+                  style: GoogleFonts.inter(
+                    color: AmpColors.white,
+                    fontWeight: FontWeight.w400,
+                    fontSize: 11.sp,
+                    height: 0.14,
+                  ),
+                ),
+              ),
+
+
                 Expanded(
                   child: SizedBox(
                     height: 1.h,
@@ -148,6 +163,9 @@ class _DateOfBirthScreenState extends State<DateOfBirthScreen> {
       context: context,
       builder: (context) {
         DateTime tempPickedDate = DateTime.now();
+        var now = DateTime.now();
+        var maxDate = DateTime(now.year - 13, now.month, now.day);
+
         return SizedBox(
           height: bottomSheetHeight,
           child: Column(
@@ -185,6 +203,8 @@ class _DateOfBirthScreenState extends State<DateOfBirthScreen> {
                       brightness: Brightness.dark,
                     ),
                     child: CupertinoDatePicker(
+                      maximumDate: maxDate,
+                      initialDateTime: maxDate,
                       mode: CupertinoDatePickerMode.date,
                       onDateTimeChanged: (DateTime dateTime) {
                         tempPickedDate = dateTime;

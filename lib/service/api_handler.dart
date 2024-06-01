@@ -31,7 +31,7 @@ class APIHandler extends BaseAPI {
     // http.Response response = await http.post(super.customersPath as Uri,
     //     headers: super.headers, body: body);
 
-    return await Future.delayed(const Duration(seconds: 10), () {
+    return await Future.delayed(const Duration(seconds: 5), () {
       var temp = RegisterResponse();
       temp.id = 452;
       temp.username = username;
@@ -43,7 +43,7 @@ class APIHandler extends BaseAPI {
   Future<LoginResponse?> login(String email, String password) async {
     // todo: call api with login details
 
-    return await Future.delayed(const Duration(seconds: 5), () {
+    return await Future.delayed(const Duration(seconds: 3), () {
       var temp = LoginResponse();
       temp.id = 101;
       temp.username = "James";
@@ -59,7 +59,7 @@ class APIHandler extends BaseAPI {
       "magnus@gmail.com",
     ];
 
-    return await Future.delayed(const Duration(seconds: 5), () {
+    return await Future.delayed(const Duration(seconds: 3), () {
       return dummyEmailList.contains(email);
     });
 

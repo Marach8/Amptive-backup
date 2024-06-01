@@ -20,11 +20,10 @@ class FormProvider extends ChangeNotifier {
   ValidationModel _phoneNo = ValidationModel(null, null);
 
   DateTime? _dob;
-
   Country _country = CountryPickerUtils.getCountryByIsoCode('NG');
-
   OTPModel otpModel = OTPModel();
 
+  // fields getter
   AuthenticationService get service => _service;
 
   ValidationModel get email => _email;
@@ -43,6 +42,11 @@ class FormProvider extends ChangeNotifier {
 
   ValidationModel get phoneNo => _phoneNo;
 
+  bool get isEmailValid => _email.value != null;
+
+  bool get isPasswordValid => _password.value != null;
+
+  // process fields
   Future<bool> processEmail() async {
     if (await _service.checkUniqueEmail(_email.value!)) {
       _customEmailStatus = ValidationModel("This email already exist!.", null);
@@ -103,33 +107,28 @@ class FormProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  void validateUsername(String? val) {
-    if (val != null && val.isNotEmpty) {
+  Future<bool> validateUsername(String? val) async {
+    if (val != null && !val.isValidUsername) {
+      _username = ValidationModel(null, 'Username must contain only small cap letters, numbers, periods, and underscores.');
+      notifyListeners();
+      return false;
+    } else if (val != null && val.isNotEmpty) {
+      if (await _service.checkUniqueUsername(val)) {
+        _username = ValidationModel(null, 'Username is taken');
+        notifyListeners();
+        return false;
+      }
       _username = ValidationModel(val, null);
+      notifyListeners();
+      return true;
     } else {
       _username = ValidationModel(null, 'Please enter valid username');
+      notifyListeners();
+      return false;
     }
-    notifyListeners();
   }
 
-  bool get isEmailValid {
-    return _email.value != null;
-  }
-
-  bool get isPasswordValid {
-    return _password.value != null;
-  }
-
-  bool get isDOBValid => _dob != null;
-
-  bool get isPhoneValid => _country != null && _phoneNo.value != null;
-
-  bool get isNameValid => _name.value != null;
-
-  bool get isUsernameValid => _username.value != null;
-
-  bool get isOTPValid => otpModel.isOTPValid;
-
+  // fields setter
   void setOtp(String pin, int index) {
     if (index == 0) {
       otpModel.pin1 = pin;
@@ -153,6 +152,19 @@ class FormProvider extends ChangeNotifier {
     _country = c;
     notifyListeners();
   }
+
+  // fields valid checker
+  bool get isDOBValid => _dob != null;
+
+  bool get isPhoneValid => _country != null && _phoneNo.value != null;
+
+  bool get isNameValid => _name.value != null;
+
+  bool get isUsernameValid => _username.value != null;
+
+  bool get isUsernameInvalid => _username.error != null;
+
+  bool get isOTPValid => otpModel.isOTPValid;
 }
 
 class ValidationModel {

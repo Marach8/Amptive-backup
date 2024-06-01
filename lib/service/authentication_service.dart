@@ -64,4 +64,9 @@ class AuthenticationService {
   Future<void> sendOTP(String email) async {
     await Future.delayed(const Duration(seconds: 5));
   }
+
+  Future<bool> checkUniqueUsername(String usr) async {
+    await Future.delayed(const Duration(seconds: 3));
+    return usr == "peter";
+  }
 }

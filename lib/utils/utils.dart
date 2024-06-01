@@ -26,6 +26,8 @@ abstract final class AmpColors {
   static const textRed = Color(0xFFD93535);
 
   static const authHintColor =  Color(0xFFB6B6B6);
+
+  static const success = Color(0xFF54C981);
 }
 
 class Pair<T, U> {
@@ -61,6 +63,12 @@ extension extString on String {
   bool get isValidPhone{
     final phoneRegExp = RegExp(r"^\+?0[0-9]{10}$");
     return phoneRegExp.hasMatch(this);
+  }
+
+  bool get isValidUsername {
+    // Regular expression to match only letters, numbers, periods, and underscores
+    final validCharacters = RegExp(r'^[a-z0-9._]+$');
+    return validCharacters.hasMatch(this);
   }
 
 }

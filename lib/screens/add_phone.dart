@@ -209,7 +209,7 @@ class _AddPhoneScreenState extends State<AddPhoneScreen> {
                       onPressed: () {
                         // Validate returns true if the form is valid, or false otherwise.
                         if (model.isPhoneValid) {
-                          context.pushNamed(AmptiveRoutes.otp, extra: "phone");
+                          context.pushNamed(AmptiveRoutes.otp, extra: "phone number");
                         }
                       },
                       style: ElevatedButton.styleFrom(

@@ -220,6 +220,7 @@ class OTPTextFormField extends StatelessWidget {
         keyboardType: TextInputType.number,
         maxLength: 1,
         textAlignVertical: TextAlignVertical.center,
+        cursorColor: AmpColors.brandBlue,
         decoration: InputDecoration(
           contentPadding:
               EdgeInsets.symmetric(horizontal: 16.w, vertical: 12.w),
@@ -233,6 +234,7 @@ class OTPTextFormField extends StatelessWidget {
             color: AmpColors.authHintColor,
             fontWeight: FontWeight.normal,
           ),
+
           filled: true,
           fillColor: const Color(0xFF9E9E9E).withOpacity(0.3),
           focusedBorder: OutlineInputBorder(

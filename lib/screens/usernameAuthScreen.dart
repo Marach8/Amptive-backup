@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:amptive/providers/form_providers.dart';
 import 'package:amptive/routers/amptive_routes.dart';
 import 'package:amptive/utils/common_widgets.dart';
@@ -17,10 +19,19 @@ class UserNameAuthScreen extends StatefulWidget {
 }
 
 class _UserNameAuthScreenState extends State<UserNameAuthScreen> {
-  TextEditingController usernameController = TextEditingController();
   late FormProvider _formProvider;
 
+  TextEditingController usernameController = TextEditingController();
+  Timer? _typingTimer;
+  bool _isLoading = false;
+
   final _formKey = GlobalKey<FormState>();
+
+  setLoading(bool val) {
+    setState(() {
+      _isLoading = val;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -50,7 +61,17 @@ class _UserNameAuthScreenState extends State<UserNameAuthScreen> {
                 ),
                 TextFormField(
                   controller: usernameController,
-                  onChanged: _formProvider.validateUsername,
+                  onChanged: (val) {
+                    if (_typingTimer?.isActive ?? false) {
+                      setLoading(false);
+                      _typingTimer!.cancel();
+                    }
+                    _typingTimer = Timer(const Duration(seconds: 1), () async {
+                      setLoading(true);
+                      await _formProvider.validateUsername(val);
+                      setLoading(false);
+                    });
+                  },
                   maxLines: 1,
                   autovalidateMode: AutovalidateMode.onUserInteraction,
                   keyboardType: TextInputType.text,
@@ -58,25 +79,57 @@ class _UserNameAuthScreenState extends State<UserNameAuthScreen> {
                       ? AmpColors.brandBlue
                       : AmpColors.textRed,
                   decoration: InputDecoration(
-                    contentPadding: EdgeInsets.symmetric(vertical: 12.h, horizontal: 16.w),
+                    contentPadding:
+                        EdgeInsets.symmetric(vertical: 12.h, horizontal: 16.w),
                     prefixIcon: Container(
-                      padding: EdgeInsets.symmetric(vertical: 12.h, horizontal: 16.w),
-                      child: Text("@", style: GoogleFonts.inter(
-                        fontWeight: FontWeight.bold,
-                        color: AmpColors.white,
-                        fontSize: 18.sp,
-                      ),),
+                      padding: EdgeInsets.symmetric(
+                          vertical: 12.h, horizontal: 16.w),
+                      child: Text(
+                        "@",
+                        style: GoogleFonts.inter(
+                          fontWeight: FontWeight.bold,
+                          color: AmpColors.white,
+                          fontSize: 18.sp,
+                        ),
+                      ),
                     ),
+                    suffix: _isLoading
+                        ? SizedBox(
+                            width: 18,
+                            height: 18,
+                            child: CircularProgressIndicator(
+                              color: AmpColors.brandBlue,
+                              backgroundColor:
+                                  AmpColors.brandBlue.withOpacity(0.5),
+                              strokeWidth: 3.w,
+                            ),
+                          )
+                        : null,
+                    suffixIcon: _isLoading
+                        ? null
+                        : _formProvider.isUsernameValid
+                            ? Container(
+                                alignment: Alignment.center,
+                                width: 20,
+                                height: 20,
+                                child: const Icon(
+                                  Icons.check,
+                                  color: AmpColors.success,
+                                ),
+                              )
+                            : _formProvider.isUsernameInvalid? Container(
+                                alignment: Alignment.center,
+                                width: 20,
+                                height: 20,
+                                child: const Icon(
+                                  Icons.close,
+                                  color: AmpColors.textRed,
+                                ),
+                              ): null,
                     hintText: "username",
                     hintStyle: GoogleFonts.inter(
                       fontSize: 16.sp,
                       color: AmpColors.authHintColor,
-                      fontWeight: FontWeight.normal,
-                    ),
-                    errorText: _formProvider.username.error,
-                    errorStyle: GoogleFonts.inter(
-                      color: AmpColors.textRed,
-                      fontSize: 12.sp,
                       fontWeight: FontWeight.normal,
                     ),
                     filled: true,
@@ -102,6 +155,51 @@ class _UserNameAuthScreenState extends State<UserNameAuthScreen> {
                       fontWeight: FontWeight.normal,
                       fontSize: 16.sp,
                       color: AmpColors.white),
+                ),
+                Visibility(
+                  visible: _isLoading,
+                  child: Container(
+                    height: 20.h,
+                    margin: EdgeInsets.symmetric(vertical: 11.h),
+                    child: Text(
+                      "Checker is loading...",
+                      style: GoogleFonts.inter(
+                        color: AmpColors.white,
+                        fontWeight: FontWeight.w500,
+                        fontSize: 11.sp,
+                        height: 0.14,
+                      ),
+                    ),
+                  ),
+                ),
+                Visibility(
+                  visible: !_isLoading && _formProvider.isUsernameValid,
+                  child: Container(
+                    margin: EdgeInsets.symmetric(vertical: 11.h),
+                    child: Text(
+                      "Username is available",
+                      style: GoogleFonts.inter(
+                        color: AmpColors.success,
+                        fontWeight: FontWeight.w400,
+                        fontSize: 11.sp,
+                        height: 0.14,
+                      ),
+                    ),
+                  ),
+                ),
+                Visibility(
+                  visible: !_isLoading && !_formProvider.isUsernameValid,
+                  child: Container(
+                    margin: EdgeInsets.symmetric(vertical: 11.h),
+                    child: Text(
+                      _formProvider.username.error ?? "",
+                      style: GoogleFonts.inter(
+                        color: AmpColors.textRed,
+                        fontWeight: FontWeight.w400,
+                        fontSize: 11.sp,
+                      ),
+                    ),
+                  ),
                 ),
                 Expanded(
                   child: SizedBox(

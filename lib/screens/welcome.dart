@@ -65,16 +65,18 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
             ],
           ),
           Container(
-            margin: EdgeInsets.only(bottom: 42.h, top: 109.07.h),
+            margin: EdgeInsets.only(bottom: 32.h, top: 109.07.h),
             alignment: Alignment.center,
-            width: 257.w,
+            width: 333.w,
             height: 80.h,
-            child: Text("Create or Listen to Live Audio Events",
+            child: Text(
+                "Monetizable Live Audio Shows & Events ",
                 textAlign: TextAlign.center,
-                style: GoogleFonts.bricolageGrotesque(
+                style: GoogleFonts.inter(
                   color: AmpColors.white,
                   fontWeight: FontWeight.w700,
                   fontSize: 25.sp,
+                  letterSpacing: 0.10
                 )),
           ),
           Container(
