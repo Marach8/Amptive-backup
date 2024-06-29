@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -11,6 +13,24 @@ class CardData {
   CardData(this.title, this.description, this.pics);
 }
 
+List<CardData> _removedItems = [];
+
+final List<CardData> _notifies = [
+  CardData(
+      "The HonestBunch is live now!",
+      "Join the live show happening now:\nFrom Ghetto To Glory Featuring Daddy Showkey. Tap to listen and engage.",
+      ""),
+  CardData(
+      "New Subscriber!", "joseph has just subscribed to your channel!", ""),
+  CardData(
+      "New Payment for The Rest is Football show",
+      "dubhem has just paid for access to your event The Rest is Football show.",
+      ""),
+  CardData("New Follower!", "nonye is now following you. ", ""),
+  CardData(
+      "New Subscriber!", "joseph has just subscribed to your channel!", ""),
+];
+
 class PreHomePage extends StatefulWidget {
   const PreHomePage({Key? key}) : super(key: key);
 
@@ -20,22 +40,24 @@ class PreHomePage extends StatefulWidget {
 
 class _PreHomePageState extends State<PreHomePage> {
   final GlobalKey<AnimatedListState> _listKey = GlobalKey<AnimatedListState>();
+  late Timer _timerRemove;
 
-  final List<CardData> _notifies = [
-    CardData(
-        "The HonestBunch is live now!",
-        "Join the live show happening now:\nFrom Ghetto To Glory Featuring Daddy Showkey. Tap to listen and engage.",
-        ""),
-    CardData(
-        "New Subscriber!", "joseph has just subscribed to your channel!", ""),
-    CardData(
-        "New Payment for The Rest is Football show",
-        "dubhem has just paid for access to your event The Rest is Football show.",
-        ""),
-    CardData("New Follower!", "nonye is now following you. ", ""),
-    CardData(
-        "New Subscriber!", "joseph has just subscribed to your channel!", ""),
-  ];
+  @override
+  void initState() {
+    super.initState();
+    _timerRemove =
+        Timer.periodic(const Duration(seconds: 9), (Timer timer) async {
+      await _removeAllItems();
+      await Future.delayed(Duration(milliseconds: 500)); // Small buffer time
+      await _addAllItems();
+    });
+  }
+
+  @override
+  void dispose() {
+    _timerRemove.cancel();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -57,7 +79,7 @@ class _PreHomePageState extends State<PreHomePage> {
           ),
           SizedBox(height: 20),
           ElevatedButton(
-            onPressed: () => _removeTopNotification(),
+            onPressed: () => _addAllItems(),
             child: Text('Remove Top Notification'),
           ),
           SizedBox(height: 20),
@@ -87,16 +109,37 @@ class _PreHomePageState extends State<PreHomePage> {
     );
   }
 
+  Future<void> _removeAllItems() async {
+    for (int i = _notifies.length - 1; i >= 0; i--) {
+      _removeTopNotification();
+      await Future.delayed(Duration(milliseconds: 1000));
+    }
+  }
+
   void _removeTopNotification() {
     if (_notifies.isNotEmpty) {
-      final int removeIndex = 0;
+      const int removeIndex = 0;
       CardData removedItem = _notifies.removeAt(removeIndex);
+      _removedItems.add(removedItem);
       _listKey.currentState?.removeItem(
         removeIndex,
         (context, animation) => _buildItem(removedItem, animation, removeIndex),
-        duration: Duration(milliseconds: 600),
+        duration: const Duration(milliseconds: 600),
       );
     }
+  }
+
+  Future<void> _addAllItems() async {
+    for (int i = 0; i < _removedItems.length; i++) {
+      _addItem(_removedItems[i], i);
+      await Future.delayed(Duration(milliseconds: 300));
+    }
+    _removedItems.clear();
+  }
+
+  void _addItem(CardData removedItem, int i) {
+    _notifies.insert(i, removedItem);
+    _listKey.currentState?.insertItem(i);
   }
 }
 
@@ -108,12 +151,11 @@ class CardWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    double sf = itemWidth / 298;
+    double sf = itemWidth / 300;
     return Container(
-      width: 288 * sf,
-      padding: EdgeInsets.symmetric(horizontal: 11*sf, vertical: 10.h),
+      padding: EdgeInsets.symmetric(horizontal: 11 * sf, vertical: 10.h),
       decoration: ShapeDecoration(
-        color: Color(0xE5242424),
+        color: const Color(0xE5242424),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(14.r),
         ),
@@ -125,14 +167,16 @@ class CardWidget extends StatelessWidget {
           Container(
             width: 30 * sf,
             height: 30.w,
-            margin: EdgeInsets.only(right: 8*sf),
-            clipBehavior: Clip.antiAlias,
+            margin: EdgeInsets.only(right: 8 * sf),
+            padding: EdgeInsets.all(5 * sf),
             decoration: ShapeDecoration(
               color: Colors.black,
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(7.r)),
             ),
-            child: SvgPicture.asset("assets/Logo1.svg", fit: BoxFit.contain, width: 10*sf, height: 10.h,clipBehavior: Clip.antiAlias,),
+            child: SvgPicture.asset(
+              "assets/Logo1.svg",
+            ),
           ),
           Expanded(
             child: Container(
@@ -146,7 +190,7 @@ class CardWidget extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         SizedBox(
-                          width: 175*sf,
+                          width: 175 * sf,
                           child: Text(
                             item.title,
                             style: GoogleFonts.inter(
@@ -175,7 +219,7 @@ class CardWidget extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       SizedBox(
-                        width: 177*sf,
+                        width: 177 * sf,
                         child: Text(
                           item.description,
                           style: GoogleFonts.inter(
@@ -188,7 +232,7 @@ class CardWidget extends StatelessWidget {
                       ),
                       Expanded(child: SizedBox(width: 1.w)),
                       Container(
-                        width: 21*sf,
+                        width: 21 * sf,
                         height: 21.w,
                         decoration: ShapeDecoration(
                           image: const DecorationImage(
