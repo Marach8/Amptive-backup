@@ -1,19 +1,27 @@
 
+import 'dart:async';
+
 import 'package:amptive/utils/utils.dart';
 import 'package:flutter/material.dart';
 
-class TempList extends StatefulWidget {
-  const TempList({Key? key}) : super(key: key);
+class PreHomePageBackground extends StatefulWidget {
+  final Color color;
+  final double angle;
+  const PreHomePageBackground({Key? key, this.color = AmpColors.brandBlue, this.angle = 0.0}) : super(key: key);
+
 
   @override
-  State<TempList> createState() => _TempListState();
+  State<PreHomePageBackground> createState() => _PreHomePageBackgroundState();
 }
 
-class _TempListState extends State<TempList>
+class _PreHomePageBackgroundState extends State<PreHomePageBackground>
     with SingleTickerProviderStateMixin {
   late AnimationController _controller;
   late Animation<double> _animation;
+  late Timer _timer;
   bool isStretched = false;
+
+
 
   @override
   void initState() {
@@ -23,11 +31,16 @@ class _TempListState extends State<TempList>
       vsync: this,
     );
     _animation = Tween<double>(begin: 0, end: 1).animate(_controller);
+
+    _timer = Timer.periodic(const Duration(seconds: 5), (Timer timer)  {
+      _toggleMoon();
+    });
   }
 
   @override
   void dispose() {
     _controller.dispose();
+    _timer.cancel();
     super.dispose();
   }
 
@@ -44,36 +57,29 @@ class _TempListState extends State<TempList>
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Moon Animation'),
-      ),
-      body: Center(
-        child: GestureDetector(
-          onTap: _toggleMoon,
-          child: Transform(
-            transform: Matrix4.identity()..rotateZ(0.3),
-            child: AnimatedContainer(
-              duration: Duration(seconds: 2),
-              width: 294.0,
-              height: 291,
-              child: CustomPaint(
-                painter: HalfMoonPainter(
-                    animation: _animation, stretchedMode: isStretched),
-              ),
+    return  Center(
+        child: Transform.rotate(
+          angle: widget.angle,
+          child: AnimatedContainer(
+            duration: const Duration(seconds: 2),
+            width: 294.0,
+            height: 291,
+            child: CustomPaint(
+              painter: HalfMoonPainter(
+                  animation: _animation, stretchedMode: isStretched, color: widget.color),
             ),
           ),
         ),
-      ),
-    );
+      );
   }
 }
 
 class HalfMoonPainter extends CustomPainter {
   final Animation<double> animation;
   final bool stretchedMode;
+  final Color color;
 
-  HalfMoonPainter({required this.animation, required this.stretchedMode})
+  HalfMoonPainter({required this.animation, required this.stretchedMode, required this.color})
       : super(repaint: animation);
 
   @override
@@ -82,10 +88,10 @@ class HalfMoonPainter extends CustomPainter {
     var h = size.height;
 
     final paint = Paint()
-      ..color = AmpColors.brandBlue
+      ..color = color
       ..style = PaintingStyle.fill
       ..maskFilter =
-          MaskFilter.blur(BlurStyle.normal, convertRadiusToSigma(80));
+          MaskFilter.blur(BlurStyle.normal, convertRadiusToSigma(100));
 
     final path = Path();
 
@@ -99,7 +105,7 @@ class HalfMoonPainter extends CustomPainter {
         ),
         radius: Radius.circular(w * 0.5));
     if (stretchedMode) {
-      double controlPointY = animation.value * -w * 0.5;
+      double controlPointY = animation.value * -w * 0.6;
       path.quadraticBezierTo(w * 0.6, controlPointY, w * 0.75, 0);
     }else{
       if(animation.value != 0) {

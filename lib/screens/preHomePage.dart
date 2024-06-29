@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:amptive/screens/notificationAnimation.dart';
+import 'package:amptive/screens/preHomePageBackground.dart';
 import 'package:amptive/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -69,61 +70,26 @@ class _PreHomePageState extends State<PreHomePage>
         body: Stack(
           children: [
             Positioned(
-              top: 57.h,
-              left: -108.w,
+              top: 154.h,
+              left: -178.w,
               child: Container(
                   width: 390.13.w,
                   height: 375.95.h,
                   decoration: const ShapeDecoration(
                     shape: OvalBorder(),
                   ),
-                  child: AnimatedBuilder(
-                    animation: _animation,
-                    builder: (child, animation) {
-                      return Opacity(
-                        opacity: _animation.value,
-                        child: _isFirstImage
-                            ? Image.asset(
-                                'assets/movAnimate.png',
-                                key: const ValueKey(1),
-                                fit: BoxFit.fill,
-                              )
-                            : Image.asset(
-                                'assets/movAnimate2.png',
-                                key: const ValueKey(2),
-                                fit: BoxFit.fill,
-                              ),
-                      );
-                    },
-                  )),
+                  child: const PreHomePageBackground(color: Color(0xC100249C), angle: 0.52,)
+              ),
             ),
             Positioned(
-              top: 124.42.h,
+              top: 200.42.h,
               right: -41.3.w,
               child: Container(
                   width: 249.w,
                   height: 291.h,
-                  clipBehavior: Clip.antiAlias,
                   decoration: const ShapeDecoration(shape: OvalBorder()),
-                  child: AnimatedBuilder(
-                    animation: _animation,
-                    builder: (child, animation) {
-                      return Opacity(
-                        opacity: _animation.value,
-                        child: _isFirstImage
-                            ? Image.asset(
-                                'assets/whiteAnimate.png',
-                                key: const ValueKey(1),
-                                fit: BoxFit.fill,
-                              )
-                            : Image.asset(
-                                'assets/whiteAnimate2.png',
-                                key: const ValueKey(2),
-                                fit: BoxFit.fill,
-                              ),
-                      );
-                    },
-                  )),
+                  child: const PreHomePageBackground(color: Color(0xFFCACBCB), angle: 3.8,),
+              ),
             ),
             Container(
               padding: EdgeInsets.symmetric(horizontal: 35.w),
