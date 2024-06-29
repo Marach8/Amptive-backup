@@ -14,9 +14,9 @@ import 'package:amptive/screens/onboarding.dart';
 import 'package:amptive/screens/otpScreen.dart';
 import 'package:amptive/screens/passwordAuthScreen.dart';
 import 'package:amptive/screens/post_registration.dart';
-import 'package:amptive/screens/preHomePage.dart';
+import 'package:amptive/screens/notificationAnimation.dart';
 import 'package:amptive/screens/splash.dart';
-import 'package:amptive/screens/temp.dart';
+import 'package:amptive/screens/preHomePage.dart';
 import 'package:amptive/screens/tempList.dart';
 import 'package:amptive/screens/templ.dart';
 import 'package:amptive/screens/usernameAuthScreen.dart';
@@ -44,7 +44,7 @@ final GoRouter _router = GoRouter(
     GoRoute(
       path: AmptiveRoutes.index,
       builder: (BuildContext context, GoRouterState state) {
-        return const Temp();
+        return const PreHomePage();
       },
 
     ),

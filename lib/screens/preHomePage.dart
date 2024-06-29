@@ -1,35 +1,10 @@
 import 'dart:async';
 
+import 'package:amptive/screens/notificationAnimation.dart';
+import 'package:amptive/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
-
-class CardData {
-  late String title;
-  late String description;
-  late String pics;
-
-  CardData(this.title, this.description, this.pics);
-}
-
-List<CardData> _removedItems = [];
-
-final List<CardData> _notifies = [
-  CardData(
-      "The HonestBunch is live now!",
-      "Join the live show happening now:\nFrom Ghetto To Glory Featuring Daddy Showkey. Tap to listen and engage.",
-      ""),
-  CardData(
-      "New Subscriber!", "joseph has just subscribed to your channel!", ""),
-  CardData(
-      "New Payment for The Rest is Football show",
-      "dubhem has just paid for access to your event The Rest is Football show.",
-      ""),
-  CardData("New Follower!", "nonye is now following you. ", ""),
-  CardData(
-      "New Subscriber!", "joseph has just subscribed to your channel!", ""),
-];
 
 class PreHomePage extends StatefulWidget {
   const PreHomePage({Key? key}) : super(key: key);
@@ -38,218 +13,272 @@ class PreHomePage extends StatefulWidget {
   State<PreHomePage> createState() => _PreHomePageState();
 }
 
-class _PreHomePageState extends State<PreHomePage> {
-  final GlobalKey<AnimatedListState> _listKey = GlobalKey<AnimatedListState>();
-  late Timer _timerRemove;
+class _PreHomePageState extends State<PreHomePage>
+    with SingleTickerProviderStateMixin {
+  bool _isFirstImage = true;
+  late Timer _initialDelayTimer;
+  late Timer _periodicTimer;
+  late AnimationController _controller;
+  late Animation<double> _animation;
 
   @override
   void initState() {
     super.initState();
-    _timerRemove =
-        Timer.periodic(const Duration(seconds: 9), (Timer timer) async {
-      await _removeAllItems();
-      await Future.delayed(Duration(milliseconds: 500)); // Small buffer time
-      await _addAllItems();
+
+    // Initialize the AnimationController
+    _controller = AnimationController(
+      duration: const Duration(milliseconds: 1000),
+      vsync: this,
+    );
+
+    // Initialize the Animation with a linear curve
+    _animation = CurvedAnimation(
+      parent: _controller,
+      curve: Curves.linear,
+    );
+
+    // Start the initial delay timer (5000ms)
+    _initialDelayTimer = Timer(Duration(milliseconds: 5000), () {
+      setState(() {
+        // Start the periodic timer after the initial delay
+        _periodicTimer =
+            Timer.periodic(const Duration(milliseconds: 5000), (Timer timer) {
+          setState(() {
+            _isFirstImage = !_isFirstImage;
+            _controller.reset();
+            _controller.forward();
+          });
+        });
+      });
     });
   }
 
   @override
   void dispose() {
-    _timerRemove.cancel();
+    _initialDelayTimer.cancel();
+    _periodicTimer.cancel();
+    _controller.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Notification Cards'),
-      ),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Expanded(
-            child: AnimatedList(
-              key: _listKey,
-              initialItemCount: _notifies.length,
-              itemBuilder: (context, index, animation) {
-                return _buildItem(_notifies[index], animation, index);
-              },
+    return SafeArea(
+      child: Scaffold(
+        backgroundColor: AmpColors.brandBlack,
+        body: Stack(
+          children: [
+            Positioned(
+              top: 57.h,
+              left: -108.w,
+              child: Container(
+                  width: 390.13.w,
+                  height: 375.95.h,
+                  decoration: const ShapeDecoration(
+                    shape: OvalBorder(),
+                  ),
+                  child: AnimatedBuilder(
+                    animation: _animation,
+                    builder: (child, animation) {
+                      return Opacity(
+                        opacity: _animation.value,
+                        child: _isFirstImage
+                            ? Image.asset(
+                                'assets/movAnimate.png',
+                                key: const ValueKey(1),
+                                fit: BoxFit.fill,
+                              )
+                            : Image.asset(
+                                'assets/movAnimate2.png',
+                                key: const ValueKey(2),
+                                fit: BoxFit.fill,
+                              ),
+                      );
+                    },
+                  )),
             ),
-          ),
-          SizedBox(height: 20),
-          ElevatedButton(
-            onPressed: () => _addAllItems(),
-            child: Text('Remove Top Notification'),
-          ),
-          SizedBox(height: 20),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildItem(CardData item, Animation<double> animation, int index) {
-    double baseWidth = 300.0; // Fixed width for the top card
-    double widthReductionFactor =
-        20.0; // Reduction in width for each subsequent card
-
-    double width = (index == 0)
-        ? baseWidth
-        : baseWidth - (index * widthReductionFactor).clamp(0, baseWidth - 50);
-
-    return SizeTransition(
-      sizeFactor: animation,
-      axis: Axis.vertical,
-      child: Center(
-        child: Container(
-            width: width.w,
-            margin: EdgeInsets.symmetric(vertical: 5.h),
-            child: CardWidget(item, width.w)),
-      ),
-    );
-  }
-
-  Future<void> _removeAllItems() async {
-    for (int i = _notifies.length - 1; i >= 0; i--) {
-      _removeTopNotification();
-      await Future.delayed(Duration(milliseconds: 1000));
-    }
-  }
-
-  void _removeTopNotification() {
-    if (_notifies.isNotEmpty) {
-      const int removeIndex = 0;
-      CardData removedItem = _notifies.removeAt(removeIndex);
-      _removedItems.add(removedItem);
-      _listKey.currentState?.removeItem(
-        removeIndex,
-        (context, animation) => _buildItem(removedItem, animation, removeIndex),
-        duration: const Duration(milliseconds: 600),
-      );
-    }
-  }
-
-  Future<void> _addAllItems() async {
-    for (int i = 0; i < _removedItems.length; i++) {
-      _addItem(_removedItems[i], i);
-      await Future.delayed(Duration(milliseconds: 300));
-    }
-    _removedItems.clear();
-  }
-
-  void _addItem(CardData removedItem, int i) {
-    _notifies.insert(i, removedItem);
-    _listKey.currentState?.insertItem(i);
-  }
-}
-
-class CardWidget extends StatelessWidget {
-  final CardData item;
-  final double itemWidth;
-
-  const CardWidget(this.item, this.itemWidth, {super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    double sf = itemWidth / 300;
-    return Container(
-      padding: EdgeInsets.symmetric(horizontal: 11 * sf, vertical: 10.h),
-      decoration: ShapeDecoration(
-        color: const Color(0xE5242424),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(14.r),
-        ),
-      ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Container(
-            width: 30 * sf,
-            height: 30.w,
-            margin: EdgeInsets.only(right: 8 * sf),
-            padding: EdgeInsets.all(5 * sf),
-            decoration: ShapeDecoration(
-              color: Colors.black,
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(7.r)),
+            Positioned(
+              top: 124.42.h,
+              right: -41.3.w,
+              child: Container(
+                  width: 249.w,
+                  height: 291.h,
+                  clipBehavior: Clip.antiAlias,
+                  decoration: const ShapeDecoration(shape: OvalBorder()),
+                  child: AnimatedBuilder(
+                    animation: _animation,
+                    builder: (child, animation) {
+                      return Opacity(
+                        opacity: _animation.value,
+                        child: _isFirstImage
+                            ? Image.asset(
+                                'assets/whiteAnimate.png',
+                                key: const ValueKey(1),
+                                fit: BoxFit.fill,
+                              )
+                            : Image.asset(
+                                'assets/whiteAnimate2.png',
+                                key: const ValueKey(2),
+                                fit: BoxFit.fill,
+                              ),
+                      );
+                    },
+                  )),
             ),
-            child: SvgPicture.asset(
-              "assets/Logo1.svg",
-            ),
-          ),
-          Expanded(
-            child: Container(
+            Container(
+              padding: EdgeInsets.symmetric(horizontal: 35.w),
               child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Container(
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        SizedBox(
-                          width: 175 * sf,
-                          child: Text(
-                            item.title,
-                            style: GoogleFonts.inter(
-                              color: Colors.white,
-                              fontSize: 11.49.sp,
-                              fontWeight: FontWeight.w600,
-                              letterSpacing: -0.31,
-                            ),
-                          ),
-                        ),
-                        Expanded(child: SizedBox(width: 1.w)),
-                        Text(
-                          'Just now',
-                          textAlign: TextAlign.right,
-                          style: GoogleFonts.inter(
-                            color: Color(0xFFC2C2C2),
-                            fontSize: 9.96.sp,
-                            fontWeight: FontWeight.w400,
-                          ),
-                        ),
-                      ],
+                  SizedBox(
+                    height: 73.h,
+                  ),
+                  SizedBox(
+                    width: 261.w,
+                    child: Text(
+                      'STAY ON THE LOOP',
+                      textAlign: TextAlign.center,
+                      style: GoogleFonts.inter(
+                        color: AmpColors.white,
+                        fontSize: 45.sp,
+                        fontWeight: FontWeight.w800,
+                      ),
                     ),
                   ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      SizedBox(
-                        width: 177 * sf,
-                        child: Text(
-                          item.description,
-                          style: GoogleFonts.inter(
-                            color: Colors.white,
-                            fontSize: 11.49.sp,
-                            fontWeight: FontWeight.w400,
-                            letterSpacing: -0.31,
-                          ),
-                        ),
-                      ),
-                      Expanded(child: SizedBox(width: 1.w)),
-                      Container(
-                        width: 21 * sf,
-                        height: 21.w,
-                        decoration: ShapeDecoration(
-                          image: const DecorationImage(
-                            image: AssetImage("assets/no_avatar_image.png"),
-                            fit: BoxFit.fill,
-                          ),
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(5.r)),
-                        ),
-                      ),
-                    ],
+                  SizedBox(
+                    height: 8.h,
                   ),
+                  SizedBox(
+                    width: 282.w,
+                    child: Text(
+                      'Allow Amptive to send notifications of live audio shows & events ',
+                      textAlign: TextAlign.center,
+                      style: GoogleFonts.inter(
+                        color: AmpColors.white,
+                        fontSize: 14.sp,
+                        fontWeight: FontWeight.w500,
+                        letterSpacing: 0.28,
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 24.h,
+                  ),
+                  Container(
+                      width: 320.w,
+                      height: 517.h,
+                      padding:
+                          const EdgeInsets.only(top: 27, left: 15, right: 15),
+                      clipBehavior: Clip.antiAlias,
+                      decoration: ShapeDecoration(
+                        color: const Color(0xB50C0C0C),
+                        shape: RoundedRectangleBorder(
+                          side: BorderSide(
+                              width: 5.w, color: const Color(0x4C323033)),
+                          borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(40.r),
+                            topRight: Radius.circular(40.r),
+                          ),
+                        ),
+                        shadows: [
+                          BoxShadow(
+                            color: const Color(0x3F000000),
+                            blurRadius: 4.r,
+                            offset: Offset(0, 4.h),
+                            spreadRadius: 0,
+                          )
+                        ],
+                      ),
+                      child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Container(
+                              width: 60.w,
+                              height: 18.h,
+                              decoration: ShapeDecoration(
+                                color: const Color(0xFF2F2F2F),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(100),
+                                ),
+                              ),
+                            ),
+                            Expanded(
+                                child: Container(
+                              padding: EdgeInsets.only(
+                                top: 70.h,
+                              ),
+                              child: const NotificationAnimation(),
+                            ))
+                          ])),
                 ],
               ),
             ),
-          ),
-        ],
+            Positioned(
+              bottom: 0,
+              child: Container(
+                width: MediaQuery.of(context).size.width,
+                color: AmpColors.brandBlack,
+                padding: EdgeInsets.only(left: 25.w),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    SizedBox(
+                      height: 22.h,
+                    ),
+                    SizedBox(
+                      width: 340.w,
+                      height: 50.w,
+                      child: ElevatedButton(
+                        onPressed: () {},
+                        style: ElevatedButton.styleFrom(
+                            backgroundColor: AmpColors.brandBlue),
+                        child: Container(
+                          padding: EdgeInsets.symmetric(vertical: 11.h),
+                          child: Text(
+                            "Allow",
+                            style: GoogleFonts.inter(
+                              color: AmpColors.white,
+                              fontSize: 18.sp,
+                              fontWeight: FontWeight.w600,
+                              height: 0.08,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      height: 20.h,
+                    ),
+                    SizedBox(
+                      width: 321.w,
+                      height: 37.h,
+                      child: GestureDetector(
+                        onTap: () {},
+                        child: Container(
+                          padding: EdgeInsets.symmetric(vertical: 11.h),
+                          child: Text(
+                            "No Thanks",
+                            textAlign: TextAlign.center,
+                            style: GoogleFonts.inter(
+                              color: AmpColors.white,
+                              fontSize: 18.sp,
+                              fontWeight: FontWeight.w600,
+                              height: 0.18,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      height: 11.h,
+                    ),
+                  ],
+                ),
+              ),
+            )
+          ],
+        ),
       ),
     );
   }
