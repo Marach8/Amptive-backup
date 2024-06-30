@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:ui';
 
+import 'package:amptive/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -47,7 +48,7 @@ class _NotificationAnimationState extends State<NotificationAnimation> {
   void initState() {
     super.initState();
     _timerRemove =
-        Timer.periodic(const Duration(seconds: 8), (Timer timer) async {
+        Timer.periodic(const Duration(seconds: 7), (Timer timer) async {
       await _removeAllItems();
       await Future.delayed(Duration(milliseconds: 500)); // Small buffer time
       await _addAllItems();
@@ -87,12 +88,13 @@ class _NotificationAnimationState extends State<NotificationAnimation> {
         ? baseWidth
         : baseWidth - (index * widthReductionFactor).clamp(0, baseWidth - 50);
 
-    double blurAmount = index * 0.5; // Increase blur by 2 for each item
+    double blurAmount = index * 0.8; // Increase blur by 0.8 for each item
+
+    Tween<Offset> _offset = Tween(begin: Offset(0, -1), end: Offset(0, 0));
 
 
-    return SizeTransition(
-      sizeFactor: animation,
-      axis: Axis.vertical,
+    return SlideTransition(
+      position: animation.drive(_offset),
       child: Center(
         child: ClipRect(
           child: ImageFiltered(
@@ -105,6 +107,7 @@ class _NotificationAnimationState extends State<NotificationAnimation> {
                 decoration: index == 0 ?const BoxDecoration(
                   boxShadow: [
                     BoxShadow(
+                      color: AmpColors.transparent,
                       spreadRadius: 10,
                       blurRadius: 7,
                       offset: Offset(0, 3), // changes position of shadow
@@ -141,8 +144,8 @@ class _NotificationAnimationState extends State<NotificationAnimation> {
 
   Future<void> _addAllItems() async {
     for (int i = 0; i < _removedItems.length; i++) {
-      _addItem(_removedItems[i], i);
-      await Future.delayed(const Duration(milliseconds: 100));
+      _addItem(_removedItems[_removedItems.length - i - 1], 0);
+      await Future.delayed(const Duration(milliseconds: 10));
     }
     _removedItems.clear();
   }

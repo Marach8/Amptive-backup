@@ -70,7 +70,7 @@ class _PreHomePageState extends State<PreHomePage>
         body: Stack(
           children: [
             Positioned(
-              top: 154.h,
+              top: 104.h,
               left: -178.w,
               child: Container(
                   width: 390.13.w,
@@ -78,7 +78,7 @@ class _PreHomePageState extends State<PreHomePage>
                   decoration: const ShapeDecoration(
                     shape: OvalBorder(),
                   ),
-                  child: const PreHomePageBackground(color: Color(0xC100249C), angle: 0.52,)
+                  child: const PreHomePageBackground(color: Color(0xAA00249C), angle: 0.52,)
               ),
             ),
             Positioned(
@@ -129,54 +129,56 @@ class _PreHomePageState extends State<PreHomePage>
                   SizedBox(
                     height: 24.h,
                   ),
-                  Container(
-                      width: 320.w,
-                      height: 517.h,
-                      padding:
-                          const EdgeInsets.only(top: 27, left: 15, right: 15),
-                      clipBehavior: Clip.antiAlias,
-                      decoration: ShapeDecoration(
-                        color: const Color(0xB50C0C0C),
-                        shape: RoundedRectangleBorder(
-                          side: BorderSide(
-                              width: 5.w, color: const Color(0x4C323033)),
-                          borderRadius: BorderRadius.only(
-                            topLeft: Radius.circular(40.r),
-                            topRight: Radius.circular(40.r),
+                  Expanded(
+                    child: Container(
+                        width: 320.w,
+                        height: 517.h,
+                        padding:
+                            const EdgeInsets.only(top: 27, left: 15, right: 15),
+                        clipBehavior: Clip.antiAlias,
+                        decoration: ShapeDecoration(
+                          color: const Color(0xB50C0C0C),
+                          shape: RoundedRectangleBorder(
+                            side: BorderSide(
+                                width: 5.w, color: const Color(0x4C323033)),
+                            borderRadius: BorderRadius.only(
+                              topLeft: Radius.circular(40.r),
+                              topRight: Radius.circular(40.r),
+                            ),
                           ),
+                          shadows: [
+                            BoxShadow(
+                              color: const Color(0x3F000000),
+                              blurRadius: 4.r,
+                              offset: Offset(0, 4.h),
+                              spreadRadius: 0,
+                            )
+                          ],
                         ),
-                        shadows: [
-                          BoxShadow(
-                            color: const Color(0x3F000000),
-                            blurRadius: 4.r,
-                            offset: Offset(0, 4.h),
-                            spreadRadius: 0,
-                          )
-                        ],
-                      ),
-                      child: Column(
-                          mainAxisSize: MainAxisSize.min,
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Container(
-                              width: 60.w,
-                              height: 18.h,
-                              decoration: ShapeDecoration(
-                                color: const Color(0xFF2F2F2F),
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(100),
+                        child: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Container(
+                                width: 60.w,
+                                height: 18.h,
+                                decoration: ShapeDecoration(
+                                  color: const Color(0xFF2F2F2F),
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(100),
+                                  ),
                                 ),
                               ),
-                            ),
-                            Expanded(
-                                child: Container(
-                              padding: EdgeInsets.only(
-                                top: 70.h,
-                              ),
-                              child: const NotificationAnimation(),
-                            ))
-                          ])),
+                              Expanded(
+                                  child: Container(
+                                padding: EdgeInsets.only(
+                                  top: 70.h,
+                                ),
+                                child: const NotificationAnimation(),
+                              ))
+                            ])),
+                  ),
                 ],
               ),
             ),

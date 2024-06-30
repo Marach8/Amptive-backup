@@ -91,7 +91,7 @@ class HalfMoonPainter extends CustomPainter {
       ..color = color
       ..style = PaintingStyle.fill
       ..maskFilter =
-          MaskFilter.blur(BlurStyle.normal, convertRadiusToSigma(100));
+          MaskFilter.blur(BlurStyle.normal, convertRadiusToSigma(1000));
 
     final path = Path();
 
