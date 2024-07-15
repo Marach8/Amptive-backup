@@ -31,9 +31,12 @@ class _SplashScreenState extends State<SplashScreen> {
       body: Stack(
         children: [
           Center(
-            child: SvgPicture.asset(
-              "assets/Logo.svg",
-              semanticsLabel: 'Amptive Logo',
+            child: SizedBox(
+              width: 78.w,
+              child: SvgPicture.asset(
+                "assets/Logo1.svg",
+                semanticsLabel: 'Amptive Logo',
+              ),
             ),
           ),
           Positioned(

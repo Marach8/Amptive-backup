@@ -41,18 +41,18 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   Widget build(BuildContext context) {
     final pages = [
       const OnboardingPage(
-        title: "Onboarding Title One",
-        description: "Onboarding brief description",
+        title: "Go Live, Like Never Before",
+        description: "Readily monetize your live audio shows and events according to your unique taste while also creating the best for your subscribers.",
         pictureColor: AmpColors.gray1,
       ),
       const OnboardingPage(
-        title: "Onboarding Title Two",
-        description: "Onboarding brief description",
+        title: "Experience it Uniquely",
+        description: "Join the larger audience in experiencing, enjoying and supporting live audio shows and event.",
         pictureColor: AmpColors.gray2,
       ),
       const OnboardingPage(
-        title: "Onboarding Title Three",
-        description: "Onboarding brief description",
+        title: "Live Audio Shows and Events in One Place",
+        description: "Tune into live audio shows and events.",
         pictureColor: AmpColors.gray3,
       )
     ];
@@ -69,7 +69,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                       allowImplicitScrolling: false,
                       itemCount: pages.length,
                       controller: controller,
-                      // itemCount: pages.length,
+                      padEnds: false,
                       itemBuilder: (_, index) {
                         return pages[index];
                       },
@@ -81,12 +81,11 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                   child: SmoothPageIndicator(
                     controller: controller,
                     count: pages.length,
-                    effect: WormEffect(
+                    effect: ExpandingDotsEffect(
                       dotHeight: 10.h,
                       dotWidth: 10.w,
                       activeDotColor: AmpColors.dotActive,
                       dotColor: AmpColors.dotInActive,
-                      type: WormType.thinUnderground,
                     ),
                   ),
                 ),
@@ -167,26 +166,34 @@ class DescriptionPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          title,
-          style: GoogleFonts.bricolageGrotesque(
-            fontSize: 24.sp,
-            fontWeight: FontWeight.w700,
-            color: AmpColors.white,
-            height: 37.sp / 24.sp,
+        SizedBox(
+          width: 333.w,
+          child: Text(
+            title,
+            style: GoogleFonts.inter(
+              fontSize: 24.sp,
+              fontWeight: FontWeight.w700,
+              color: AmpColors.white,
+              letterSpacing: 0.10
+            ),
+            textAlign: TextAlign.left,
           ),
-          textAlign: TextAlign.left,
         ),
-        Text(
-          description,
-          style: GoogleFonts.inter(
-            fontSize: 17.sp,
-            fontWeight: FontWeight.w500,
-            color: const Color(0xffcdcdcd),
-            height: 37.sp / 17.sp,
+        SizedBox(height: 8.h,),
+        SizedBox(
+          width: 307.w,
+          child: Text(
+            description,
+            style: GoogleFonts.inter(
+              fontSize: 16.sp,
+              fontWeight: FontWeight.w400,
+              color: const Color(0xffcdcdcd),
+              letterSpacing: -0.04
+            ),
+            textAlign: TextAlign.left,
           ),
-          textAlign: TextAlign.left,
         )
       ],
     );

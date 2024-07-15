@@ -4,8 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:loading_btn/loading_btn.dart';
 import 'package:provider/provider.dart';
-
+import '../utils/common_widgets.dart';
 import '../utils/utils.dart';
 
 class EmailAuthScreen extends StatefulWidget {
@@ -28,6 +29,7 @@ class _EmailAuthScreenState extends State<EmailAuthScreen> {
     return SafeArea(
       child: Scaffold(
         backgroundColor: AmpColors.brandBlack,
+        appBar: BuildAppBar(),
         body: Padding(
           padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 20.h),
           child: Form(
@@ -56,6 +58,8 @@ class _EmailAuthScreenState extends State<EmailAuthScreen> {
                       ? AmpColors.brandBlue
                       : AmpColors.textRed,
                   decoration: InputDecoration(
+                    contentPadding:
+                        EdgeInsets.symmetric(vertical: 12.h, horizontal: 16.w),
                     hintText: "Enter your email",
                     hintStyle: GoogleFonts.inter(
                       fontSize: 16.sp,
@@ -77,20 +81,21 @@ class _EmailAuthScreenState extends State<EmailAuthScreen> {
                             ? AmpColors.brandBlue
                             : AmpColors.textRed,
                       ),
-                      borderRadius: BorderRadius.circular(30.r),
+                      borderRadius: BorderRadius.circular(14.r),
                     ),
                     border: OutlineInputBorder(
                       borderSide: BorderSide(
                         width: 2.w,
                         color: AmpColors.transparent,
                       ),
-                      borderRadius: BorderRadius.circular(30.r),
+                      borderRadius: BorderRadius.circular(14.r),
                     ),
                   ),
                   style: GoogleFonts.inter(
-                      fontWeight: FontWeight.normal,
-                      fontSize: 16.sp,
-                      color: AmpColors.white),
+                    fontWeight: FontWeight.normal,
+                    fontSize: 18.sp,
+                    color: AmpColors.white,
+                  ),
                 ),
                 Consumer<FormProvider>(builder: (context, model, _) {
                   var height =
@@ -115,30 +120,31 @@ class _EmailAuthScreenState extends State<EmailAuthScreen> {
                 ),
                 Consumer<FormProvider>(builder: (context, model, _) {
                   return Container(
-                    width: 350.w,
-                    height: 50.w,
                     margin: EdgeInsets.only(bottom: 29.h),
-                    child: ElevatedButton(
-                      onPressed: () {
+                    child: CustomLoaderButton(
+                      width: 500.w,
+                      height: 50.w,
+                      borderRadius: 100.r,
+                      onTap: (start, stop, state) async {
                         // Validate returns true if the form is valid, or false otherwise.
-                        if (_formKey.currentState!.validate() &&
-                            model.isEmailValid) {
-                          context.goNamed(AmptiveRoutes.otp);
+                        if (state == ButtonState.idle) {
+                          start();
+
+                          if (_formKey.currentState!.validate() &&
+                              model.isEmailValid) {
+                            // call api
+                            bool isUniqueEmail = await model.processEmail();
+
+                            if (isUniqueEmail && context.mounted) {
+                              context.pushNamed(AmptiveRoutes.otp, extra: "email");
+                            }
+                          }
+
+                          stop();
                         }
                       },
-                      style: ElevatedButton.styleFrom(
-                          backgroundColor: model.isEmailValid
-                              ? AmpColors.brandBlue
-                              : const Color(0xFF2F2F2F)),
-                      child: Text(
-                        "Verify Email",
-                        style: GoogleFonts.inter(
-                            fontWeight: FontWeight.w600,
-                            fontSize: 18.sp,
-                            color: model.isEmailValid
-                                ? AmpColors.white
-                                : const Color(0xFF666666)),
-                      ),
+                      validCondition: model.isEmailValid,
+                      childText: "Verify Email",
                     ),
                   );
                 }),
