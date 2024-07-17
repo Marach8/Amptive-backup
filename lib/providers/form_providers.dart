@@ -1,9 +1,9 @@
-import 'package:amptive/utils/utils.dart';
+import 'package:amptive/src/utils/utils.dart';
 import 'package:country_pickers/country.dart';
 import 'package:country_pickers/utils/utils.dart';
 import 'package:flutter/material.dart';
 
-import '../service/authentication_service.dart';
+import '../src/service/authentication_service.dart';
 
 class FormProvider extends ChangeNotifier {
   final AuthenticationService _service = AuthenticationService();
