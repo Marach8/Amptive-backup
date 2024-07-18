@@ -40,7 +40,7 @@ final GoRouter _router = GoRouter(
     GoRoute(
       path: AmptiveRoutes.index,
       builder: (BuildContext context, GoRouterState state) {
-        return const PreHomePage();
+        return const OnboardingScreen();
       },
 
     ),
