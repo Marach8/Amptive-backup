@@ -30,8 +30,8 @@ class _PreferenceScreenState extends State<PreferenceScreen> {
     var isOpaque = model.getSelected().length == MAX_NUMBER_COMMUNITIES;
     return SafeArea(
       child: Scaffold(
-        backgroundColor: AmpColors.brandBlack,
-        appBar: isPreferenceSelected ? null : BuildAppBar(),
+        backgroundColor: AmptiveColors.brandBlackColor,
+        appBar: isPreferenceSelected ? null : const BuildAppBar(),
         body: isPreferenceSelected
             ? const ProcessingPreference()
             : Padding(
@@ -44,7 +44,7 @@ class _PreferenceScreenState extends State<PreferenceScreen> {
                       child: Text(
                         "Select 5 communities you find interest in.",
                         style: GoogleFonts.inter(
-                          color: AmpColors.white,
+                          color: AmptiveColors.whiteColor,
                           fontSize: 22.sp,
                           fontWeight: FontWeight.bold,
                         ),
@@ -99,7 +99,7 @@ class _PreferenceScreenState extends State<PreferenceScreen> {
                                     });
                                   },
                                   style: ElevatedButton.styleFrom(
-                                    backgroundColor: AmpColors.brandBlue,
+                                    backgroundColor: AmptiveColors.brandBlueColor,
                                     padding:
                                         EdgeInsets.symmetric(vertical: 11.5.h),
                                   ),
@@ -179,7 +179,7 @@ class CommunityCardPreference extends StatelessWidget {
                         side: BorderSide(
                           width: 2.w,
                           strokeAlign: BorderSide.strokeAlignCenter,
-                          color: AmpColors.brandBlue,
+                          color: AmptiveColors.brandBlueColor,
                         ),
                         borderRadius: BorderRadius.circular(6.r),
                       ),
@@ -239,7 +239,7 @@ class CommunityCardCommon extends StatelessWidget {
             child: Text(
               preference.name,
               style: GoogleFonts.inter(
-                color: AmpColors.white,
+                color: AmptiveColors.whiteColor,
                 fontSize: 14.sp,
                 fontWeight: FontWeight.w600,
               ),
@@ -395,7 +395,7 @@ class _ProcessingPreferenceState extends State<ProcessingPreference> {
           child: Text(
             "Personalizing your experience...",
             style: GoogleFonts.inter(
-              color: AmpColors.white,
+              color: AmptiveColors.whiteColor,
               fontSize: 17,
               fontWeight: FontWeight.w600,
               height: 0.09,

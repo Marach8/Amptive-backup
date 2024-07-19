@@ -6,7 +6,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:loading_btn/loading_btn.dart';
 
 class CustomLoaderButton extends StatelessWidget {
-  CustomLoaderButton({
+  const CustomLoaderButton({
     super.key,
     required this.width,
     required this.onTap,
@@ -23,7 +23,7 @@ class CustomLoaderButton extends StatelessWidget {
   final Color? color;
   final String childText;
   final Future<void> Function(dynamic start, dynamic stop, dynamic state) onTap;
-  bool validCondition = false;
+  final bool? validCondition;
 
   @override
   Widget build(BuildContext context) {
@@ -33,13 +33,13 @@ class CustomLoaderButton extends StatelessWidget {
       borderRadius: borderRadius,
       onTap: onTap,
       color: color ??
-          (validCondition ? AmpColors.brandBlue : const Color(0xFF2F2F2F)),
+          (validCondition ?? false ? AmptiveColors.brandBlueColor : const Color(0xFF2F2F2F)),
       loader: SizedBox(
         width: 25.w,
         height: 25.w,
         child: CircularProgressIndicator(
-          color: AmpColors.white,
-          backgroundColor: AmpColors.white.withOpacity(0.5),
+          color: AmptiveColors.whiteColor,
+          backgroundColor: AmptiveColors.whiteColor.withOpacity(0.5),
           strokeWidth: 3.w,
         ),
       ),
@@ -48,7 +48,7 @@ class CustomLoaderButton extends StatelessWidget {
         style: GoogleFonts.inter(
           fontWeight: FontWeight.w600,
           fontSize: 18.sp,
-          color: validCondition ? AmpColors.white : const Color(0xFF666666),
+          color: validCondition ?? false? AmptiveColors.whiteColor : const Color(0xFF666666),
         ),
       ),
     );
@@ -57,17 +57,17 @@ class CustomLoaderButton extends StatelessWidget {
 
 
 class BuildAppBar extends StatelessWidget implements PreferredSizeWidget {
-  BuildAppBar({
+  const BuildAppBar({
     super.key,
     this.titleWidget,
   });
 
-  Widget? titleWidget;
+  final Widget? titleWidget;
 
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      backgroundColor: AmpColors.brandBlack,
+      backgroundColor: AmptiveColors.brandBlackColor,
       elevation: 0.0,
       leadingWidth: 90.w,
       leading: GestureDetector(
@@ -81,9 +81,9 @@ class BuildAppBar extends StatelessWidget implements PreferredSizeWidget {
                 margin: EdgeInsets.only(left: 8.w),
                 width: 20.h,
                 height: 20.h,
-                child: const Icon(
+                child: Icon(
                   Icons.arrow_back_ios,
-                  color: AmpColors.white,
+                  color: AmptiveColors.whiteColor,
                 ),
               ),
               Container(
@@ -92,7 +92,7 @@ class BuildAppBar extends StatelessWidget implements PreferredSizeWidget {
                 child: Text(
                   "Back",
                   style: GoogleFonts.inter(
-                    color: AmpColors.white,
+                    color: AmptiveColors.whiteColor,
                     fontSize: 14.sp,
                     fontWeight: FontWeight.w400,
                   ),

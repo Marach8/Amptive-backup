@@ -45,7 +45,7 @@ class _PostRegistrationScreenState extends State<PostRegistrationScreen> {
               'Photo Gallery',
               textAlign: TextAlign.center,
               style: GoogleFonts.inter(
-                color: AmpColors.brandBlue,
+                color: AmptiveColors.brandBlueColor,
                 fontSize: 22.sp,
                 fontWeight: FontWeight.w600,
               ),
@@ -62,7 +62,7 @@ class _PostRegistrationScreenState extends State<PostRegistrationScreen> {
               'Camera',
               textAlign: TextAlign.center,
               style: GoogleFonts.inter(
-                color: AmpColors.brandBlue,
+                color: AmptiveColors.brandBlueColor,
                 fontSize: 22.sp,
                 fontWeight: FontWeight.w600,
               ),
@@ -106,7 +106,7 @@ class _PostRegistrationScreenState extends State<PostRegistrationScreen> {
   Widget build(BuildContext context) {
     return SafeArea(
         child: Scaffold(
-      backgroundColor: AmpColors.brandBlack,
+      backgroundColor: AmptiveColors.brandBlackColor,
       body: Padding(
           padding: EdgeInsets.only(left: 25.w, right: 25.w, top: 20.w),
           child:
@@ -123,7 +123,7 @@ class _PostRegistrationScreenState extends State<PostRegistrationScreen> {
           "Add a profile picture",
           textAlign: TextAlign.start,
           style: GoogleFonts.inter(
-            color: AmpColors.white,
+            color: AmptiveColors.whiteColor,
             fontSize: 22.sp,
             fontWeight: FontWeight.w600,
           ),
@@ -174,8 +174,8 @@ class _PostRegistrationScreenState extends State<PostRegistrationScreen> {
                 left: 49.w,
                 child: CircleAvatar(
                   backgroundColor: _isProfilePicAdded
-                      ? AmpColors.textRed
-                      : AmpColors.brandBlue,
+                      ? AmptiveColors.textRedColor
+                      : AmptiveColors.brandBlueColor,
                   child: SizedBox(
                     child: IconButton(
                       style: IconButton.styleFrom(),
@@ -193,7 +193,7 @@ class _PostRegistrationScreenState extends State<PostRegistrationScreen> {
                         height: 41.25.h,
                         child: Icon(
                           _isProfilePicAdded ? Icons.close : Icons.add,
-                          color: AmpColors.white,
+                          color: AmptiveColors.whiteColor,
                           opticalSize: 50.h,
                         ),
                       ),
@@ -221,7 +221,7 @@ class _PostRegistrationScreenState extends State<PostRegistrationScreen> {
               "Skip for now",
               textAlign: TextAlign.center,
               style: GoogleFonts.inter(
-                color: AmpColors.white,
+                color: AmptiveColors.whiteColor,
                 fontSize: 18.sp,
                 fontWeight: FontWeight.w600,
               ),
@@ -235,13 +235,13 @@ class _PostRegistrationScreenState extends State<PostRegistrationScreen> {
           child: ElevatedButton(
             onPressed: () {},
             style:
-                ElevatedButton.styleFrom(backgroundColor: AmpColors.brandBlue),
+                ElevatedButton.styleFrom(backgroundColor: AmptiveColors.brandBlueColor),
             child: Text(
               "Next",
               style: GoogleFonts.inter(
                   fontWeight: FontWeight.w600,
                   fontSize: 18.sp,
-                  color: AmpColors.white),
+                  color: AmptiveColors.whiteColor),
             ),
           ),
         ),
@@ -347,7 +347,7 @@ class _LoadingAccountState extends State<LoadingAccount> {
                   key: ValueKey<String>(text),
                   textAlign: TextAlign.center,
                   style: GoogleFonts.inter(
-                    color: AmpColors.white,
+                    color: AmptiveColors.whiteColor,
                     fontSize: 17.sp,
                     fontWeight: FontWeight.w600,
                   )),
@@ -359,8 +359,8 @@ class _LoadingAccountState extends State<LoadingAccount> {
           width: 32.w,
           height: 32.h,
           child: CircularProgressIndicator(
-            color: AmpColors.brandBlue,
-            backgroundColor: AmpColors.brandBlue.withOpacity(0.5),
+            color: AmptiveColors.brandBlueColor,
+            backgroundColor: AmptiveColors.brandBlueColor.withOpacity(0.5),
             strokeWidth: 5.w,
           ),
         )

@@ -29,8 +29,8 @@ class _PasswordAuthScreenState extends State<PasswordAuthScreen> {
 
     return SafeArea(
       child: Scaffold(
-        backgroundColor: AmpColors.brandBlack,
-        appBar: BuildAppBar(),
+        backgroundColor: AmptiveColors.brandBlackColor,
+        appBar: const BuildAppBar(),
         body: Padding(
           padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 20.h),
           child: Form(
@@ -41,7 +41,7 @@ class _PasswordAuthScreenState extends State<PasswordAuthScreen> {
                 Text(
                   "Create a password for your account",
                   style: GoogleFonts.inter(
-                    color: AmpColors.white,
+                    color: AmptiveColors.whiteColor,
                     fontSize: 17.sp,
                     fontWeight: FontWeight.bold,
                   ),
@@ -55,14 +55,14 @@ class _PasswordAuthScreenState extends State<PasswordAuthScreen> {
                   maxLines: 1,
                   obscureText: !_passwordVisible,
                   keyboardType: TextInputType.visiblePassword,
-                  cursorColor: AmpColors.brandBlue,
+                  cursorColor: AmptiveColors.brandBlueColor,
                   decoration: InputDecoration(
                       contentPadding:
                           EdgeInsets.symmetric(vertical: 12.h, horizontal: 16.w),
                       hintText: "Enter your password",
                       hintStyle: GoogleFonts.inter(
                         fontSize: 16.sp,
-                        color: AmpColors.authHintColor,
+                        color: AmptiveColors.authHintColor,
                         fontWeight: FontWeight.normal,
                       ),
                       filled: true,
@@ -71,7 +71,7 @@ class _PasswordAuthScreenState extends State<PasswordAuthScreen> {
                       border: OutlineInputBorder(
                         borderSide: BorderSide(
                           width: 2.w,
-                          color: AmpColors.transparent,
+                          color: AmptiveColors.transparentColor,
                         ),
                         borderRadius: BorderRadius.circular(14.r),
                       ),
@@ -82,7 +82,7 @@ class _PasswordAuthScreenState extends State<PasswordAuthScreen> {
                             _passwordVisible
                                 ? Icons.visibility_off
                                 : Icons.visibility,
-                            color: AmpColors.white,
+                            color: AmptiveColors.whiteColor,
                           ),
                         ),
                         onPressed: () {
@@ -94,7 +94,7 @@ class _PasswordAuthScreenState extends State<PasswordAuthScreen> {
                   style: GoogleFonts.inter(
                     fontWeight: FontWeight.normal,
                     fontSize: 16.sp,
-                    color: AmpColors.white,
+                    color: AmptiveColors.whiteColor,
                   ),
                 ),
                 Consumer<FormProvider>(builder: (context, model, _) {
@@ -105,7 +105,7 @@ class _PasswordAuthScreenState extends State<PasswordAuthScreen> {
                     child: Text(
                       model.password.error ?? "",
                       style: GoogleFonts.inter(
-                        color: AmpColors.white,
+                        color: AmptiveColors.whiteColor,
                         fontWeight: FontWeight.normal,
                         fontSize: 12.sp,
                       ),
@@ -145,7 +145,7 @@ class _PasswordAuthScreenState extends State<PasswordAuthScreen> {
 
   OutlineInputBorder buildOutlineInputBorder() {
     return OutlineInputBorder(
-      borderSide: BorderSide(width: 2.w, color: AmpColors.brandBlue),
+      borderSide: BorderSide(width: 2.w, color: AmptiveColors.brandBlueColor),
       borderRadius: BorderRadius.circular(14.r),
     );
   }

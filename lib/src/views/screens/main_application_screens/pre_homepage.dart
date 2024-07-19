@@ -66,7 +66,7 @@ class _PreHomePageState extends State<PreHomePage>
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        backgroundColor: AmpColors.brandBlack,
+        backgroundColor: AmptiveColors.brandBlackColor,
         body: Stack(
           children: [
             Positioned(
@@ -104,7 +104,7 @@ class _PreHomePageState extends State<PreHomePage>
                       'STAY ON THE LOOP',
                       textAlign: TextAlign.center,
                       style: GoogleFonts.inter(
-                        color: AmpColors.white,
+                        color: AmptiveColors.whiteColor,
                         fontSize: 45.sp,
                         fontWeight: FontWeight.w800,
                       ),
@@ -119,7 +119,7 @@ class _PreHomePageState extends State<PreHomePage>
                       'Allow Amptive to send notifications of live audio shows & events ',
                       textAlign: TextAlign.center,
                       style: GoogleFonts.inter(
-                        color: AmpColors.white,
+                        color: AmptiveColors.whiteColor,
                         fontSize: 14.sp,
                         fontWeight: FontWeight.w500,
                         letterSpacing: 0.28,
@@ -175,7 +175,7 @@ class _PreHomePageState extends State<PreHomePage>
                                 padding: EdgeInsets.only(
                                   top: 70.h,
                                 ),
-                                child: const NotificationAnimation(),
+                                child: const AmptiveNotificationAnimationWidget(),
                               ))
                             ])),
                   ),
@@ -186,7 +186,7 @@ class _PreHomePageState extends State<PreHomePage>
               bottom: 0,
               child: Container(
                 width: MediaQuery.of(context).size.width,
-                color: AmpColors.brandBlack,
+                color: AmptiveColors.brandBlackColor,
                 padding: EdgeInsets.only(left: 25.w),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
@@ -200,13 +200,13 @@ class _PreHomePageState extends State<PreHomePage>
                       child: ElevatedButton(
                         onPressed: () {},
                         style: ElevatedButton.styleFrom(
-                            backgroundColor: AmpColors.brandBlue),
+                            backgroundColor: AmptiveColors.brandBlueColor),
                         child: Container(
                           padding: EdgeInsets.symmetric(vertical: 11.h),
                           child: Text(
                             "Allow",
                             style: GoogleFonts.inter(
-                              color: AmpColors.white,
+                              color: AmptiveColors.whiteColor,
                               fontSize: 18.sp,
                               fontWeight: FontWeight.w600,
                               height: 0.08,
@@ -229,7 +229,7 @@ class _PreHomePageState extends State<PreHomePage>
                             "No Thanks",
                             textAlign: TextAlign.center,
                             style: GoogleFonts.inter(
-                              color: AmpColors.white,
+                              color: AmptiveColors.whiteColor,
                               fontSize: 18.sp,
                               fontWeight: FontWeight.w600,
                               height: 0.18,

@@ -24,7 +24,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
   Widget build(BuildContext context) {
     return SafeArea(
         child: Scaffold(
-      backgroundColor: AmpColors.brandBlack,
+      backgroundColor: AmptiveColors.brandBlackColor,
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
@@ -72,7 +72,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                 "Monetizable Live Audio Shows & Events ",
                 textAlign: TextAlign.center,
                 style: GoogleFonts.inter(
-                  color: AmpColors.white,
+                  color: AmptiveColors.whiteColor,
                   fontWeight: FontWeight.w700,
                   fontSize: 25.sp,
                   letterSpacing: 0.10
@@ -91,8 +91,8 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                       context.goNamed(AmptiveRoutes.authScreen, extra: false);
                     },
                     style: TextButton.styleFrom(
-                      foregroundColor: AmpColors.white,
-                      backgroundColor: AmpColors.brandBlue,
+                      foregroundColor: AmptiveColors.whiteColor,
+                      backgroundColor: AmptiveColors.brandBlueColor,
                       padding: EdgeInsets.symmetric(vertical: 8.h),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.all(Radius.circular(100.h)),
@@ -117,11 +117,11 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                       context.goNamed(AmptiveRoutes.authScreen, extra: true);
                     },
                     style: TextButton.styleFrom(
-                      foregroundColor: AmpColors.white,
+                      foregroundColor: AmptiveColors.whiteColor,
                       padding: EdgeInsets.symmetric(vertical: 8.h),
                       shape: RoundedRectangleBorder(
                         side:
-                            BorderSide(color: AmpColors.strokeGray, width: 1.h),
+                            BorderSide(color: AmptiveColors.strokeGreyColor, width: 1.h),
                         borderRadius: BorderRadius.all(Radius.circular(100.h)),
                       ),
                     ),
@@ -141,7 +141,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                   child: Text(
                     "Attend as guest",
                     style: GoogleFonts.inter(
-                        color: AmpColors.white,
+                        color: AmptiveColors.whiteColor,
                         fontSize: 16.sp,
                         fontWeight: FontWeight.w600,
                         letterSpacing: -0.26.sp),
@@ -209,10 +209,10 @@ class _AudioCreatorState extends State<AudioCreator>
           height: 74.99.h,
           child: CircleAvatar(
             radius: 36.5.r,
-            backgroundColor:_isBorderColored ? AmpColors.brandBlue : AmpColors.transparent,
+            backgroundColor:_isBorderColored ? AmptiveColors.brandBlueColor : AmptiveColors.transparentColor,
             child: CircleAvatar(
               radius: 34.814.r,
-              backgroundColor: AmpColors.brandBlack,
+              backgroundColor: AmptiveColors.brandBlackColor,
               child: CircleAvatar(
                 radius: 33.0.r,
                 backgroundImage: AssetImage(
@@ -229,10 +229,10 @@ class _AudioCreatorState extends State<AudioCreator>
             left: 55.w,
             child: CircleAvatar(
               radius: 12.r,
-              backgroundColor: AmpColors.white,
+              backgroundColor: AmptiveColors.whiteColor,
               child: Icon(
                 Icons.mic_off,
-                color: AmpColors.brandBlack,
+                color: AmptiveColors.brandBlackColor,
                 size: 19.h,
               ),
             ),

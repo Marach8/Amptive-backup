@@ -43,8 +43,8 @@ class _AddPhoneScreenState extends State<AddPhoneScreen> {
 
     return SafeArea(
       child: Scaffold(
-        backgroundColor: AmpColors.brandBlack,
-        appBar: BuildAppBar(),
+        backgroundColor: AmptiveColors.brandBlackColor,
+        appBar: const BuildAppBar(),
         body: Padding(
           padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 20.h),
           child: Form(
@@ -55,7 +55,7 @@ class _AddPhoneScreenState extends State<AddPhoneScreen> {
                 Text(
                   "What is your phone number?",
                   style: GoogleFonts.inter(
-                    color: AmpColors.white,
+                    color: AmptiveColors.whiteColor,
                     fontSize: 17.sp,
                     fontWeight: FontWeight.bold,
                   ),
@@ -78,8 +78,8 @@ class _AddPhoneScreenState extends State<AddPhoneScreen> {
                             color: const Color(0xFF9E9E9E).withOpacity(0.3),
                             border: Border.all(
                               color: _isBottomSheetOpened
-                                  ? AmpColors.brandBlue
-                                  : AmpColors.transparent,
+                                  ? AmptiveColors.brandBlueColor
+                                  : AmptiveColors.transparentColor,
                               width: 2.w,
                             ),
                             borderRadius: SmoothBorderRadius(
@@ -110,7 +110,7 @@ class _AddPhoneScreenState extends State<AddPhoneScreen> {
                                 style: GoogleFonts.inter(
                                     fontWeight: FontWeight.normal,
                                     fontSize: 16.sp,
-                                    color: AmpColors.white),
+                                    color: AmptiveColors.whiteColor),
                               ),
                               Padding(
                                 padding: EdgeInsets.only(
@@ -125,7 +125,7 @@ class _AddPhoneScreenState extends State<AddPhoneScreen> {
                                     _isBottomSheetOpened
                                         ? Icons.arrow_back_ios
                                         : Icons.arrow_forward_ios_rounded,
-                                    color: AmpColors.white,
+                                    color: AmptiveColors.whiteColor,
                                     size: 22.13.h,
                                   ),
                                 ),
@@ -144,7 +144,7 @@ class _AddPhoneScreenState extends State<AddPhoneScreen> {
                         maxLines: 1,
                         autovalidateMode: AutovalidateMode.onUserInteraction,
                         keyboardType: TextInputType.number,
-                        cursorColor: AmpColors.brandBlue,
+                        cursorColor: AmptiveColors.brandBlueColor,
                         onChanged: _formProvider.validatePhoneNumber,
                         decoration: InputDecoration(
                           contentPadding: EdgeInsets.symmetric(
@@ -152,11 +152,11 @@ class _AddPhoneScreenState extends State<AddPhoneScreen> {
                           hintText: "Phone number",
                           hintStyle: GoogleFonts.inter(
                             fontSize: 16.sp,
-                            color: AmpColors.authHintColor,
+                            color: AmptiveColors.authHintColor,
                             fontWeight: FontWeight.normal,
                           ),
                           errorStyle: GoogleFonts.inter(
-                            color: AmpColors.textRed,
+                            color: AmptiveColors.textRedColor,
                             fontSize: 12.sp,
                             fontWeight: FontWeight.normal,
                           ),
@@ -165,7 +165,7 @@ class _AddPhoneScreenState extends State<AddPhoneScreen> {
                           focusedBorder: OutlineInputBorder(
                             borderSide: BorderSide(
                               width: 2.w,
-                              color: AmpColors.brandBlue,
+                              color: AmptiveColors.brandBlueColor,
                             ),
                             borderRadius: SmoothBorderRadius(
                               cornerRadius: 14.r,
@@ -175,7 +175,7 @@ class _AddPhoneScreenState extends State<AddPhoneScreen> {
                           border: OutlineInputBorder(
                             borderSide: BorderSide(
                               width: 2.w,
-                              color: AmpColors.transparent,
+                              color: AmptiveColors.transparentColor,
                             ),
                             borderRadius: SmoothBorderRadius(
                               cornerRadius: 14.r,
@@ -186,7 +186,7 @@ class _AddPhoneScreenState extends State<AddPhoneScreen> {
                         style: GoogleFonts.inter(
                             fontWeight: FontWeight.normal,
                             fontSize: 16.sp,
-                            color: AmpColors.white),
+                            color: AmptiveColors.whiteColor),
                       ),
                     ),
                   ],
@@ -213,7 +213,7 @@ class _AddPhoneScreenState extends State<AddPhoneScreen> {
                       },
                       style: ElevatedButton.styleFrom(
                           backgroundColor: model.isPhoneValid
-                              ? AmpColors.brandBlue
+                              ? AmptiveColors.brandBlueColor
                               : const Color(0xFF2F2F2F)),
                       child: Text(
                         "Verify phone number",
@@ -221,7 +221,7 @@ class _AddPhoneScreenState extends State<AddPhoneScreen> {
                             fontWeight: FontWeight.w600,
                             fontSize: 18.sp,
                             color: model.isPhoneValid
-                                ? AmpColors.white
+                                ? AmptiveColors.whiteColor
                                 : const Color(0xFF666666)),
                       ),
                     ),
@@ -255,7 +255,7 @@ class _AddPhoneScreenState extends State<AddPhoneScreen> {
                       child: Text(
                         'Done',
                         style: GoogleFonts.inter(
-                            color: AmpColors.white,
+                            color: AmptiveColors.whiteColor,
                             fontWeight: FontWeight.w500,
                             fontSize: 16.sp),
                       ),
@@ -267,7 +267,7 @@ class _AddPhoneScreenState extends State<AddPhoneScreen> {
                 ),
               ),
               Divider(
-                color: AmpColors.brandBlack,
+                color: AmptiveColors.brandBlackColor,
                 height: 0.h,
                 thickness: 1.h,
               ),
@@ -277,9 +277,9 @@ class _AddPhoneScreenState extends State<AddPhoneScreen> {
                     brightness: Brightness.dark,
                   ),
                   child: Container(
-                    color: AmpColors.brandBlack,
+                    color: AmptiveColors.brandBlackColor,
                     child: CountryPickerCupertino(
-                      backgroundColor: AmpColors.brandBlack,
+                      backgroundColor: AmptiveColors.brandBlackColor,
                       diameterRatio: 3.r,
                       pickerItemHeight: 65.h,
                       itemBuilder: _buildCupertinoSelectedItem,

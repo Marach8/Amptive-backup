@@ -33,14 +33,14 @@ final List<CardData> _notifies = [
       "New Subscriber!", "joseph has just subscribed to your channel!", ""),
 ];
 
-class NotificationAnimation extends StatefulWidget {
-  const NotificationAnimation({super.key});
+class AmptiveNotificationAnimationWidget extends StatefulWidget {
+  const AmptiveNotificationAnimationWidget({super.key});
 
   @override
-  State<NotificationAnimation> createState() => _NotificationAnimationState();
+  State<AmptiveNotificationAnimationWidget> createState() => _AmptiveNotificationAnimationWidgetState();
 }
 
-class _NotificationAnimationState extends State<NotificationAnimation> {
+class _AmptiveNotificationAnimationWidgetState extends State<AmptiveNotificationAnimationWidget> {
   final GlobalKey<AnimatedListState> _listKey = GlobalKey<AnimatedListState>();
   late Timer _timerRemove;
 
@@ -104,13 +104,13 @@ class _NotificationAnimationState extends State<NotificationAnimation> {
             ),
             child: Container(
                 width: width.w,
-                decoration: index == 0 ?const BoxDecoration(
+                decoration: index == 0 ? BoxDecoration(
                   boxShadow: [
                     BoxShadow(
-                      color: AmpColors.transparent,
+                      color: AmptiveColors.transparentColor,
                       spreadRadius: 10,
                       blurRadius: 7,
-                      offset: Offset(0, 3), // changes position of shadow
+                      offset: const Offset(0, 3), // changes position of shadow
                     ),
                   ],
                 ): null,

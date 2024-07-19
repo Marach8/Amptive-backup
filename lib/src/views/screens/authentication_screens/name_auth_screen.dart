@@ -27,8 +27,8 @@ class _NameAuthScreenState extends State<NameAuthScreen> {
 
     return SafeArea(
       child: Scaffold(
-        backgroundColor: AmpColors.brandBlack,
-        appBar: BuildAppBar(),
+        backgroundColor: AmptiveColors.brandBlackColor,
+        appBar: const BuildAppBar(),
         body: Padding(
           padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 20.h),
           child: Form(
@@ -39,7 +39,7 @@ class _NameAuthScreenState extends State<NameAuthScreen> {
                 Text(
                   "What is your name?",
                   style: GoogleFonts.inter(
-                    color: AmpColors.white,
+                    color: AmptiveColors.whiteColor,
                     fontSize: 17.sp,
                     fontWeight: FontWeight.bold,
                   ),
@@ -54,14 +54,14 @@ class _NameAuthScreenState extends State<NameAuthScreen> {
                   autovalidateMode: AutovalidateMode.onUserInteraction,
                   keyboardType: TextInputType.text,
                   cursorColor: _formProvider.name.error == null
-                      ? AmpColors.brandBlue
-                      : AmpColors.textRed,
+                      ? AmptiveColors.brandBlueColor
+                      : AmptiveColors.textRedColor,
                   decoration: InputDecoration(
                     contentPadding: EdgeInsets.symmetric(vertical: 12.h, horizontal: 16.w),
                     hintText: "Enter your name",
                     hintStyle: GoogleFonts.inter(
                       fontSize: 16.sp,
-                      color: AmpColors.authHintColor,
+                      color: AmptiveColors.authHintColor,
                       fontWeight: FontWeight.normal,
                     ),
                     filled: true,
@@ -70,15 +70,15 @@ class _NameAuthScreenState extends State<NameAuthScreen> {
                       borderSide: BorderSide(
                         width: 2.w,
                         color: _formProvider.name.error == null
-                            ? AmpColors.brandBlue
-                            : AmpColors.textRed,
+                            ? AmptiveColors.brandBlueColor
+                            : AmptiveColors.textRedColor,
                       ),
                       borderRadius: BorderRadius.circular(14.r),
                     ),
                     border: OutlineInputBorder(
                       borderSide: BorderSide(
                         width: 2.w,
-                        color: AmpColors.transparent,
+                        color: AmptiveColors.transparentColor,
                       ),
                       borderRadius: BorderRadius.circular(14.r),
                     ),
@@ -86,7 +86,7 @@ class _NameAuthScreenState extends State<NameAuthScreen> {
                   style: GoogleFonts.inter(
                       fontWeight: FontWeight.normal,
                       fontSize: 16.sp,
-                      color: AmpColors.white),
+                      color: AmptiveColors.whiteColor),
                 ),
                 Container(
                   height: 17.h,
@@ -94,7 +94,7 @@ class _NameAuthScreenState extends State<NameAuthScreen> {
                   child: Text(
                     "Note that this will appear on your profile.",
                     style: GoogleFonts.inter(
-                      color: AmpColors.white,
+                      color: AmptiveColors.whiteColor,
                       fontWeight: FontWeight.normal,
                       fontSize: 11.sp,
                     ),
@@ -131,7 +131,7 @@ class _NameAuthScreenState extends State<NameAuthScreen> {
                       ],
                       style: GoogleFonts.inter(
                         fontSize: 11.sp,
-                        color: AmpColors.white,
+                        color: AmptiveColors.whiteColor,
                         fontWeight: FontWeight.normal,
                         height: 2
                       ),
@@ -152,7 +152,7 @@ class _NameAuthScreenState extends State<NameAuthScreen> {
                       },
                       style: ElevatedButton.styleFrom(
                           backgroundColor: model.isNameValid
-                              ? AmpColors.brandBlue
+                              ? AmptiveColors.brandBlueColor
                               : const Color(0xFF2F2F2F)),
                       child: Text(
                         "Create account",
@@ -160,7 +160,7 @@ class _NameAuthScreenState extends State<NameAuthScreen> {
                             fontWeight: FontWeight.w600,
                             fontSize: 18.sp,
                             color: model.isNameValid
-                                ? AmpColors.white
+                                ? AmptiveColors.whiteColor
                                 : const Color(0xFF666666)),
                       ),
                     ),

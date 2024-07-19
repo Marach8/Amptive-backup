@@ -5,9 +5,14 @@ import 'package:amptive/src/utils/constants/colors.dart';
 import 'package:flutter/material.dart';
 
 class PreHomePageBackground extends StatefulWidget {
-  final Color color;
+  final Color? color;
   final double angle;
-  const PreHomePageBackground({super.key, this.color = AmpColors.brandBlue, this.angle = 0.0});
+  
+  const PreHomePageBackground({
+    super.key,
+    this.color,
+    this.angle = 0.0
+  });
 
 
   @override
@@ -66,7 +71,10 @@ class _PreHomePageBackgroundState extends State<PreHomePageBackground>
             height: 291,
             child: CustomPaint(
               painter: HalfMoonPainter(
-                  animation: _animation, stretchedMode: isStretched, color: widget.color),
+                animation: _animation,
+                stretchedMode: isStretched,
+                color: widget.color ?? AmptiveColors.brandBlueColor,
+              ),
             ),
           ),
         ),

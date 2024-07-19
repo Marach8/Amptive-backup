@@ -71,8 +71,8 @@ class _OTPScreenState extends State<OTPScreen> {
 
     return SafeArea(
       child: Scaffold(
-        backgroundColor: AmpColors.brandBlack,
-        appBar: BuildAppBar(),
+        backgroundColor: AmptiveColors.brandBlackColor,
+        appBar: const BuildAppBar(),
         body: Container(
           padding: EdgeInsets.symmetric(horizontal: 20.w),
           child: Form(
@@ -88,7 +88,7 @@ class _OTPScreenState extends State<OTPScreen> {
                     style: GoogleFonts.inter(
                       fontWeight: FontWeight.bold,
                       fontSize: 17.sp,
-                      color: AmpColors.white,
+                      color: AmptiveColors.whiteColor,
                     ),
                   ),
                 ),
@@ -132,9 +132,9 @@ class _OTPScreenState extends State<OTPScreen> {
                                     "Send again",
                                     style: GoogleFonts.inter(
                                       decoration: TextDecoration.underline,
-                                      decorationColor: AmpColors.white,
+                                      decorationColor: AmptiveColors.whiteColor,
                                       fontSize: 12.sp,
-                                      color: AmpColors.white,
+                                      color: AmptiveColors.whiteColor,
                                       fontWeight: FontWeight.normal,
                                     ),
                                   ),
@@ -143,7 +143,7 @@ class _OTPScreenState extends State<OTPScreen> {
                             ],
                             style: GoogleFonts.inter(
                               fontSize: 12.sp,
-                              color: AmpColors.white,
+                              color: AmptiveColors.whiteColor,
                               fontWeight: FontWeight.normal,
                             ),
                           ),
@@ -152,7 +152,7 @@ class _OTPScreenState extends State<OTPScreen> {
                           "Code has been sent. You can send another in $_start",
                           style: GoogleFonts.inter(
                             fontSize: 12.sp,
-                            color: AmpColors.white,
+                            color: AmptiveColors.whiteColor,
                             fontWeight: FontWeight.normal,
                           ),
                         ),
@@ -221,7 +221,7 @@ class OTPTextFormField extends StatelessWidget {
         keyboardType: TextInputType.number,
         maxLength: 1,
         textAlignVertical: TextAlignVertical.center,
-        cursorColor: AmpColors.brandBlue,
+        cursorColor: AmptiveColors.brandBlueColor,
         decoration: InputDecoration(
           contentPadding:
               EdgeInsets.symmetric(horizontal: 16.w, vertical: 12.w),
@@ -232,7 +232,7 @@ class OTPTextFormField extends StatelessWidget {
           ),
           labelStyle: GoogleFonts.inter(
             fontSize: 18.sp,
-            color: AmpColors.authHintColor,
+            color: AmptiveColors.authHintColor,
             fontWeight: FontWeight.normal,
           ),
 
@@ -241,14 +241,14 @@ class OTPTextFormField extends StatelessWidget {
           focusedBorder: OutlineInputBorder(
             borderSide: BorderSide(
               width: 2.w,
-              color: AmpColors.brandBlue,
+              color: AmptiveColors.brandBlueColor,
             ),
             borderRadius: BorderRadius.circular(14.r),
           ),
           border: OutlineInputBorder(
             borderSide: BorderSide(
               width: 2.w,
-              color: AmpColors.transparent,
+              color: AmptiveColors.transparentColor,
             ),
             borderRadius: BorderRadius.circular(14.r),
           ),
@@ -256,7 +256,7 @@ class OTPTextFormField extends StatelessWidget {
         style: GoogleFonts.inter(
           fontWeight: FontWeight.normal,
           fontSize: 18.sp,
-          color: AmpColors.white,
+          color: AmptiveColors.whiteColor,
         ),
         textAlign: TextAlign.center,
       ),

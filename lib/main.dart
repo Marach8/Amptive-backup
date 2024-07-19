@@ -1,8 +1,9 @@
 import 'dart:io';
-
+import 'package:amptive/src/bloc/onboarding_bloc/onboarding_bloc.dart';
 import 'package:amptive/src/providers/form_providers.dart';
 import 'package:amptive/src/providers/preference_provider.dart';
 import 'package:amptive/src/utils/constants/strings/route_strings.dart';
+import 'package:amptive/src/utils/themes/app_theme_data.dart';
 import 'package:amptive/src/views/screens/authentication_screens/auth_screen.dart';
 import 'package:amptive/src/views/screens/authentication_screens/dob_screen.dart';
 import 'package:amptive/src/views/screens/main_application_screens/preference_screen.dart';
@@ -14,23 +15,22 @@ import 'package:amptive/src/views/screens/onboarding_screens/onboarding.dart';
 import 'package:amptive/src/views/screens/authentication_screens/otp_screen.dart';
 import 'package:amptive/src/views/screens/authentication_screens/password_auth_screen.dart';
 import 'package:amptive/src/views/screens/authentication_screens/post_registration.dart';
-import 'package:amptive/src/views/screens/main_application_screens/pre_homepage.dart';
 import 'package:amptive/src/views/screens/authentication_screens/username_auth_screen.dart';
 import 'package:amptive/src/views/screens/onboarding_screens/welcome.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
 void main() => runApp(
-      MultiProvider(
-        providers: [
-          ChangeNotifierProvider(create: (_) => FormProvider()),
-          ChangeNotifierProvider(create: (_) => PreferenceModel()),
-        ],
-        child: const AmptiveApp(),
-      ),
-    );
+  MultiBlocProvider(
+    providers: [
+      BlocProvider(create: (_) => AmptiveOnboardingBloc())
+    ],
+    child: const AmptiveApp(),
+  ),
+);
 
 /// The route configuration.
 final GoRouter _router = GoRouter(
@@ -40,29 +40,30 @@ final GoRouter _router = GoRouter(
     GoRoute(
       path: AmptiveRoutes.index,
       builder: (BuildContext context, GoRouterState state) {
-        return const OnboardingScreen();
+        return const AmptiveOnboardingScreen();
       },
 
     ),
     GoRoute(
-        name: AmptiveRoutes.welcome,
-        path: "/welcome-route",
-        builder: (BuildContext context, GoRouterState state) =>
-            const WelcomeScreen(),
-        routes: <RouteBase>[
-          GoRoute(
-            name: AmptiveRoutes.authScreen,
-            path: "auth-route",
-            builder: (BuildContext context, GoRouterState state) => AuthScreen(
-              isLogin: state.extra as bool,
-            ),
+      name: AmptiveRoutes.welcome,
+      path: "/welcome-route",
+      builder: (BuildContext context, GoRouterState state) =>
+          const WelcomeScreen(),
+      routes: <RouteBase>[
+        GoRoute(
+          name: AmptiveRoutes.authScreen,
+          path: "auth-route",
+          builder: (BuildContext context, GoRouterState state) => AuthScreen(
+            isLogin: state.extra as bool,
           ),
-        ]),
+        ),
+      ]
+    ),
     GoRoute(
       name: AmptiveRoutes.onboarding,
       path: "/onboarding-route",
       builder: (BuildContext context, GoRouterState state) =>
-          const OnboardingScreen(),
+          const AmptiveOnboardingScreen(),
     ),
     GoRoute(
         name: AmptiveRoutes.emailAuth,
@@ -134,12 +135,15 @@ final GoRouter _router = GoRouter(
       name: AmptiveRoutes.preference,
       path: "/preference-route",
       builder: (BuildContext context, GoRouterState state) =>
-          const PreferenceScreen(),
+        const PreferenceScreen(),
     ),
 
 
   ],
 );
+
+
+
 
 class AmptiveApp extends StatelessWidget {
   const AmptiveApp({super.key});
@@ -153,12 +157,11 @@ class AmptiveApp extends StatelessWidget {
       splitScreenMode: true,
       builder: (_, child) {
         return MaterialApp.router(
-            debugShowCheckedModeBanner: false,
-            theme: ThemeData(
-              colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-              useMaterial3: true,
-            ),
-            routerConfig: _router);
+          debugShowCheckedModeBanner: false,
+          themeMode: ThemeMode.dark,
+          darkTheme: AmptiveThemeData.darkTheme,
+          routerConfig: _router,
+        );
       },
     );
   }

@@ -29,8 +29,8 @@ class _EmailAuthScreenState extends State<EmailAuthScreen> {
 
     return SafeArea(
       child: Scaffold(
-        backgroundColor: AmpColors.brandBlack,
-        appBar: BuildAppBar(),
+        backgroundColor: AmptiveColors.brandBlackColor,
+        appBar: const BuildAppBar(),
         body: Padding(
           padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 20.h),
           child: Form(
@@ -41,7 +41,7 @@ class _EmailAuthScreenState extends State<EmailAuthScreen> {
                 Text(
                   "What is your email?",
                   style: GoogleFonts.inter(
-                    color: AmpColors.white,
+                    color: AmptiveColors.whiteColor,
                     fontSize: 17.sp,
                     fontWeight: FontWeight.bold,
                   ),
@@ -56,20 +56,20 @@ class _EmailAuthScreenState extends State<EmailAuthScreen> {
                   autovalidateMode: AutovalidateMode.onUserInteraction,
                   keyboardType: TextInputType.emailAddress,
                   cursorColor: _formProvider.email.error == null
-                      ? AmpColors.brandBlue
-                      : AmpColors.textRed,
+                      ? AmptiveColors.brandBlueColor
+                      : AmptiveColors.textRedColor,
                   decoration: InputDecoration(
                     contentPadding:
                         EdgeInsets.symmetric(vertical: 12.h, horizontal: 16.w),
                     hintText: "Enter your email",
                     hintStyle: GoogleFonts.inter(
                       fontSize: 16.sp,
-                      color: AmpColors.authHintColor,
+                      color: AmptiveColors.authHintColor,
                       fontWeight: FontWeight.normal,
                     ),
                     errorText: _formProvider.email.error,
                     errorStyle: GoogleFonts.inter(
-                      color: AmpColors.textRed,
+                      color: AmptiveColors.textRedColor,
                       fontSize: 12.sp,
                       fontWeight: FontWeight.normal,
                     ),
@@ -79,15 +79,15 @@ class _EmailAuthScreenState extends State<EmailAuthScreen> {
                       borderSide: BorderSide(
                         width: 2.w,
                         color: _formProvider.email.error == null
-                            ? AmpColors.brandBlue
-                            : AmpColors.textRed,
+                            ? AmptiveColors.brandBlueColor
+                            : AmptiveColors.textRedColor,
                       ),
                       borderRadius: BorderRadius.circular(14.r),
                     ),
                     border: OutlineInputBorder(
                       borderSide: BorderSide(
                         width: 2.w,
-                        color: AmpColors.transparent,
+                        color: AmptiveColors.transparentColor,
                       ),
                       borderRadius: BorderRadius.circular(14.r),
                     ),
@@ -95,7 +95,7 @@ class _EmailAuthScreenState extends State<EmailAuthScreen> {
                   style: GoogleFonts.inter(
                     fontWeight: FontWeight.normal,
                     fontSize: 18.sp,
-                    color: AmpColors.white,
+                    color: AmptiveColors.whiteColor,
                   ),
                 ),
                 Consumer<FormProvider>(builder: (context, model, _) {
@@ -107,7 +107,7 @@ class _EmailAuthScreenState extends State<EmailAuthScreen> {
                     child: Text(
                       model.customEmailStatus.value ?? "",
                       style: GoogleFonts.inter(
-                        color: AmpColors.white,
+                        color: AmptiveColors.whiteColor,
                         fontWeight: FontWeight.normal,
                         fontSize: 12.sp,
                       ),

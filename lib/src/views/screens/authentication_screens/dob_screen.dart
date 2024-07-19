@@ -31,8 +31,8 @@ class _DateOfBirthScreenState extends State<DateOfBirthScreen> {
 
     return SafeArea(
       child: Scaffold(
-        backgroundColor: AmpColors.brandBlack,
-        appBar: BuildAppBar(),
+        backgroundColor: AmptiveColors.brandBlackColor,
+        appBar: const BuildAppBar(),
         body: Padding(
           padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 20.h),
           child: Form(
@@ -43,7 +43,7 @@ class _DateOfBirthScreenState extends State<DateOfBirthScreen> {
                 Text(
                   "What is your date of birth?",
                   style: GoogleFonts.inter(
-                    color: AmpColors.white,
+                    color: AmptiveColors.whiteColor,
                     fontSize: 17.sp,
                     fontWeight: FontWeight.bold,
                   ),
@@ -60,17 +60,17 @@ class _DateOfBirthScreenState extends State<DateOfBirthScreen> {
                   maxLines: 1,
                   autovalidateMode: AutovalidateMode.onUserInteraction,
                   keyboardType: TextInputType.none,
-                  cursorColor: AmpColors.brandBlue,
+                  cursorColor: AmptiveColors.brandBlueColor,
                   decoration: InputDecoration(
                     contentPadding: EdgeInsets.symmetric(vertical: 12.h, horizontal: 16.w),
                     hintText: "Select Date",
                     hintStyle: GoogleFonts.inter(
                       fontSize: 16.sp,
-                      color: AmpColors.authHintColor,
+                      color: AmptiveColors.authHintColor,
                       fontWeight: FontWeight.normal,
                     ),
                     errorStyle: GoogleFonts.inter(
-                      color: AmpColors.textRed,
+                      color: AmptiveColors.textRedColor,
                       fontSize: 12.sp,
                       fontWeight: FontWeight.normal,
                     ),
@@ -79,14 +79,14 @@ class _DateOfBirthScreenState extends State<DateOfBirthScreen> {
                     focusedBorder: OutlineInputBorder(
                       borderSide: BorderSide(
                         width: 2.w,
-                        color: AmpColors.brandBlue,
+                        color: AmptiveColors.brandBlueColor,
                       ),
                       borderRadius: BorderRadius.circular(14.r),
                     ),
                     border: OutlineInputBorder(
                       borderSide: BorderSide(
                         width: 2.w,
-                        color: AmpColors.transparent,
+                        color: AmptiveColors.transparentColor,
                       ),
                       borderRadius: BorderRadius.circular(14.r),
                     ),
@@ -94,7 +94,7 @@ class _DateOfBirthScreenState extends State<DateOfBirthScreen> {
                   style: GoogleFonts.inter(
                       fontWeight: FontWeight.normal,
                       fontSize: 16.sp,
-                      color: AmpColors.white),
+                      color: AmptiveColors.whiteColor),
                 ),
               Container(
                 height: 20.h,
@@ -102,7 +102,7 @@ class _DateOfBirthScreenState extends State<DateOfBirthScreen> {
                 child: Text(
                  "Only users 13 and older may use this app",
                   style: GoogleFonts.inter(
-                    color: AmpColors.white,
+                    color: AmptiveColors.whiteColor,
                     fontWeight: FontWeight.w400,
                     fontSize: 11.sp,
                     height: 0.14,
@@ -133,7 +133,7 @@ class _DateOfBirthScreenState extends State<DateOfBirthScreen> {
                       },
                       style: ElevatedButton.styleFrom(
                           backgroundColor: model.dob != null
-                              ? AmpColors.brandBlue
+                              ? AmptiveColors.brandBlueColor
                               : const Color(0xFF2F2F2F)),
                       child: Text(
                         "Next",
@@ -141,7 +141,7 @@ class _DateOfBirthScreenState extends State<DateOfBirthScreen> {
                             fontWeight: FontWeight.w600,
                             fontSize: 18.sp,
                             color: model.dob != null
-                                ? AmpColors.white
+                                ? AmptiveColors.whiteColor
                                 : const Color(0xFF666666)),
                       ),
                     ),
@@ -178,7 +178,7 @@ class _DateOfBirthScreenState extends State<DateOfBirthScreen> {
                       child: Text(
                         'Done',
                         style: GoogleFonts.inter(
-                            color: AmpColors.white,
+                            color: AmptiveColors.whiteColor,
                             fontWeight: FontWeight.normal,
                             fontSize: 16.sp),
                       ),
@@ -190,13 +190,13 @@ class _DateOfBirthScreenState extends State<DateOfBirthScreen> {
                 ),
               ),
               Divider(
-                color: AmpColors.brandBlack,
+                color: AmptiveColors.brandBlackColor,
                 height: 0.h,
                 thickness: 1.h,
               ),
               Expanded(
                 child: Container(
-                  color: AmpColors.brandBlack,
+                  color: AmptiveColors.brandBlackColor,
                   child: CupertinoTheme(
                     data: const CupertinoThemeData(
                       brightness: Brightness.dark,

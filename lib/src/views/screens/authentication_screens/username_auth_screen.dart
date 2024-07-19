@@ -39,8 +39,8 @@ class _UserNameAuthScreenState extends State<UserNameAuthScreen> {
 
     return SafeArea(
       child: Scaffold(
-        backgroundColor: AmpColors.brandBlack,
-        appBar: BuildAppBar(),
+        backgroundColor: AmptiveColors.brandBlackColor,
+        appBar: const BuildAppBar(),
         body: Padding(
           padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 20.h),
           child: Form(
@@ -51,7 +51,7 @@ class _UserNameAuthScreenState extends State<UserNameAuthScreen> {
                 Text(
                   "What should we call you?",
                   style: GoogleFonts.inter(
-                    color: AmpColors.white,
+                    color: AmptiveColors.whiteColor,
                     fontSize: 17.sp,
                     fontWeight: FontWeight.bold,
                   ),
@@ -76,8 +76,8 @@ class _UserNameAuthScreenState extends State<UserNameAuthScreen> {
                   autovalidateMode: AutovalidateMode.onUserInteraction,
                   keyboardType: TextInputType.text,
                   cursorColor: _formProvider.username.error == null
-                      ? AmpColors.brandBlue
-                      : AmpColors.textRed,
+                      ? AmptiveColors.brandBlueColor
+                      : AmptiveColors.textRedColor,
                   decoration: InputDecoration(
                     contentPadding:
                         EdgeInsets.symmetric(vertical: 12.h, horizontal: 16.w),
@@ -88,7 +88,7 @@ class _UserNameAuthScreenState extends State<UserNameAuthScreen> {
                         "@",
                         style: GoogleFonts.inter(
                           fontWeight: FontWeight.bold,
-                          color: AmpColors.white,
+                          color: AmptiveColors.whiteColor,
                           fontSize: 18.sp,
                         ),
                       ),
@@ -98,9 +98,9 @@ class _UserNameAuthScreenState extends State<UserNameAuthScreen> {
                             width: 18,
                             height: 18,
                             child: CircularProgressIndicator(
-                              color: AmpColors.brandBlue,
+                              color: AmptiveColors.brandBlueColor,
                               backgroundColor:
-                                  AmpColors.brandBlue.withOpacity(0.5),
+                                  AmptiveColors.brandBlueColor.withOpacity(0.5),
                               strokeWidth: 3.w,
                             ),
                           )
@@ -112,24 +112,24 @@ class _UserNameAuthScreenState extends State<UserNameAuthScreen> {
                                 alignment: Alignment.center,
                                 width: 20,
                                 height: 20,
-                                child: const Icon(
+                                child: Icon(
                                   Icons.check,
-                                  color: AmpColors.success,
+                                  color: AmptiveColors.successColor,
                                 ),
                               )
                             : _formProvider.isUsernameInvalid? Container(
                                 alignment: Alignment.center,
                                 width: 20,
                                 height: 20,
-                                child: const Icon(
+                                child: Icon(
                                   Icons.close,
-                                  color: AmpColors.textRed,
+                                  color: AmptiveColors.textRedColor,
                                 ),
                               ): null,
                     hintText: "username",
                     hintStyle: GoogleFonts.inter(
                       fontSize: 16.sp,
-                      color: AmpColors.authHintColor,
+                      color: AmptiveColors.authHintColor,
                       fontWeight: FontWeight.normal,
                     ),
                     filled: true,
@@ -138,15 +138,15 @@ class _UserNameAuthScreenState extends State<UserNameAuthScreen> {
                       borderSide: BorderSide(
                         width: 2.w,
                         color: _formProvider.username.error == null
-                            ? AmpColors.brandBlue
-                            : AmpColors.textRed,
+                            ? AmptiveColors.brandBlueColor
+                            : AmptiveColors.textRedColor,
                       ),
                       borderRadius: BorderRadius.circular(14.r),
                     ),
                     border: OutlineInputBorder(
                       borderSide: BorderSide(
                         width: 2.w,
-                        color: AmpColors.transparent,
+                        color: AmptiveColors.transparentColor,
                       ),
                       borderRadius: BorderRadius.circular(14.r),
                     ),
@@ -154,7 +154,7 @@ class _UserNameAuthScreenState extends State<UserNameAuthScreen> {
                   style: GoogleFonts.inter(
                       fontWeight: FontWeight.normal,
                       fontSize: 16.sp,
-                      color: AmpColors.white),
+                      color: AmptiveColors.whiteColor),
                 ),
                 Visibility(
                   visible: _isLoading,
@@ -164,7 +164,7 @@ class _UserNameAuthScreenState extends State<UserNameAuthScreen> {
                     child: Text(
                       "Checker is loading...",
                       style: GoogleFonts.inter(
-                        color: AmpColors.white,
+                        color: AmptiveColors.whiteColor,
                         fontWeight: FontWeight.w500,
                         fontSize: 11.sp,
                         height: 0.14,
@@ -179,7 +179,7 @@ class _UserNameAuthScreenState extends State<UserNameAuthScreen> {
                     child: Text(
                       "Username is available",
                       style: GoogleFonts.inter(
-                        color: AmpColors.success,
+                        color: AmptiveColors.successColor,
                         fontWeight: FontWeight.w400,
                         fontSize: 11.sp,
                         height: 0.14,
@@ -194,7 +194,7 @@ class _UserNameAuthScreenState extends State<UserNameAuthScreen> {
                     child: Text(
                       _formProvider.username.error ?? "",
                       style: GoogleFonts.inter(
-                        color: AmpColors.textRed,
+                        color: AmptiveColors.textRedColor,
                         fontWeight: FontWeight.w400,
                         fontSize: 11.sp,
                       ),
@@ -220,7 +220,7 @@ class _UserNameAuthScreenState extends State<UserNameAuthScreen> {
                       },
                       style: ElevatedButton.styleFrom(
                           backgroundColor: model.isUsernameValid
-                              ? AmpColors.brandBlue
+                              ? AmptiveColors.brandBlueColor
                               : const Color(0xFF2F2F2F)),
                       child: Text(
                         "Next",
@@ -228,7 +228,7 @@ class _UserNameAuthScreenState extends State<UserNameAuthScreen> {
                             fontWeight: FontWeight.w600,
                             fontSize: 18.sp,
                             color: model.isUsernameValid
-                                ? AmpColors.white
+                                ? AmptiveColors.whiteColor
                                 : const Color(0xFF666666)),
                       ),
                     ),

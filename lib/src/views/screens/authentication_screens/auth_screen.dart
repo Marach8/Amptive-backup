@@ -40,7 +40,7 @@ class _AuthScreenState extends State<AuthScreen> {
             ),
           ),
         ),
-        backgroundColor: AmpColors.brandBlack,
+        backgroundColor: AmptiveColors.brandBlackColor,
         body: Container(
           padding: EdgeInsets.symmetric(horizontal: 24.w),
           margin: EdgeInsets.only(top: 141.h),
@@ -60,8 +60,8 @@ class _AuthScreenState extends State<AuthScreen> {
                     }
                   },
                   style: TextButton.styleFrom(
-                    foregroundColor: AmpColors.white,
-                    backgroundColor: AmpColors.brandBlue,
+                    foregroundColor: AmptiveColors.whiteColor,
+                    backgroundColor: AmptiveColors.brandBlueColor,
                     padding: EdgeInsets.symmetric(vertical: 8.h),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.all(Radius.circular(100.h)),
@@ -86,10 +86,10 @@ class _AuthScreenState extends State<AuthScreen> {
                     context.pushNamed(AmptiveRoutes.addPhone);
                   },
                   style: TextButton.styleFrom(
-                    foregroundColor: AmpColors.white,
+                    foregroundColor: AmptiveColors.whiteColor,
                     padding: EdgeInsets.symmetric(vertical: 8.h),
                     shape: RoundedRectangleBorder(
-                      side: BorderSide(color: AmpColors.strokeGray, width: 1.h),
+                      side: BorderSide(color: AmptiveColors.strokeGreyColor, width: 1.h),
                       borderRadius: BorderRadius.all(Radius.circular(100.h)),
                     ),
                   ),
@@ -111,7 +111,7 @@ class _AuthScreenState extends State<AuthScreen> {
                 child: Text(
                   "or",
                   style: GoogleFonts.inter(
-                      color: AmpColors.white,
+                      color: AmptiveColors.whiteColor,
                       fontSize: 18.sp,
                       fontWeight: FontWeight.w600,
                       letterSpacing: -0.26.sp),
@@ -175,10 +175,10 @@ class BrandButton extends StatelessWidget {
       child: TextButton.icon(
         onPressed: () {},
         style: TextButton.styleFrom(
-          foregroundColor: AmpColors.white,
+          foregroundColor: AmptiveColors.whiteColor,
           padding: EdgeInsets.symmetric(vertical: 8.h),
           shape: RoundedRectangleBorder(
-            side: BorderSide(color: AmpColors.strokeGray, width: 1.h),
+            side: BorderSide(color: AmptiveColors.strokeGreyColor, width: 1.h),
             borderRadius: BorderRadius.all(Radius.circular(100.h)),
           ),
         ),
