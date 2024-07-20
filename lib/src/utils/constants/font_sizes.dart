@@ -15,7 +15,7 @@ class AmptiveFontSizes{
 
   static double size20 = 20.0.sp;
 
-  static double size24 = 24.0.sp;
+  static double size25 = 25.0.sp;
   
   static double size30 = 30.0.sp;
 }

@@ -3,7 +3,9 @@
 import 'package:amptive/src/utils/constants/colors.dart';
 import 'package:amptive/src/utils/constants/strings/other_strings.dart';
 import 'package:amptive/src/utils/themes/widget_themes/elevated_button_theme.dart';
+import 'package:amptive/src/utils/themes/widget_themes/outlined_button_theme.dart';
 import 'package:amptive/src/utils/themes/widget_themes/text_theme.dart';
+import 'package:amptive/src/utils/themes/widget_themes/textbutton_theme.dart';
 import 'package:flutter/material.dart';
 
 class AmptiveThemeData{
@@ -17,10 +19,11 @@ class AmptiveThemeData{
     // listTileTheme: AmptiveListTileTheme.darkListTileTheme,
     textTheme: AmptiveTextTheme.darkTextTheme,
     elevatedButtonTheme: AmptiveElevatedButtonTheme.darkElevatedButtonTheme,
+    textButtonTheme: AmptiveTextButtonTheme.darkTextButtonTheme,
     // appBarTheme: AmptiveAppBarTheme.darkAppBarTheme,
     // checkboxTheme: AmptiveCheckBoxTheme.darkCheckBoxTheme,
     // inputDecorationTheme: AmptiveInputDecorationTheme.darkInputDecorationTheme,
-    // outlinedButtonTheme: AmptiveOutlinedButtonTheme.darkOutlinedButtonTheme,
+    outlinedButtonTheme: AmptiveOutlinedButtonTheme.darkOutlinedButtonTheme,
     // datePickerTheme: AmptiveDatePickerTheme.darkDatePickerTheme
   );
 

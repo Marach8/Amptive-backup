@@ -1,7 +1,5 @@
 import 'dart:io';
 import 'package:amptive/src/bloc/onboarding_bloc/onboarding_bloc.dart';
-import 'package:amptive/src/providers/form_providers.dart';
-import 'package:amptive/src/providers/preference_provider.dart';
 import 'package:amptive/src/utils/constants/strings/route_strings.dart';
 import 'package:amptive/src/utils/themes/app_theme_data.dart';
 import 'package:amptive/src/views/screens/authentication_screens/auth_screen.dart';
@@ -11,17 +9,16 @@ import 'package:amptive/src/views/screens/authentication_screens/add_phone.dart'
 import 'package:amptive/src/views/screens/main_application_screens/crop_image_screen.dart';
 import 'package:amptive/src/views/screens/authentication_screens/email_auth_screen.dart';
 import 'package:amptive/src/views/screens/authentication_screens/name_auth_screen.dart';
-import 'package:amptive/src/views/screens/onboarding_screens/onboarding.dart';
+import 'package:amptive/src/views/screens/onboarding_screens/onboarding_page_view_screen.dart';
 import 'package:amptive/src/views/screens/authentication_screens/otp_screen.dart';
 import 'package:amptive/src/views/screens/authentication_screens/password_auth_screen.dart';
 import 'package:amptive/src/views/screens/authentication_screens/post_registration.dart';
 import 'package:amptive/src/views/screens/authentication_screens/username_auth_screen.dart';
-import 'package:amptive/src/views/screens/onboarding_screens/welcome.dart';
+import 'package:amptive/src/views/screens/onboarding_screens/welcome_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
-import 'package:provider/provider.dart';
 
 void main() => runApp(
   MultiBlocProvider(
@@ -40,7 +37,7 @@ final GoRouter _router = GoRouter(
     GoRoute(
       path: AmptiveRoutes.index,
       builder: (BuildContext context, GoRouterState state) {
-        return const AmptiveOnboardingScreen();
+        return const AmptiveWelcomeScreen();
       },
 
     ),
@@ -48,7 +45,7 @@ final GoRouter _router = GoRouter(
       name: AmptiveRoutes.welcome,
       path: "/welcome-route",
       builder: (BuildContext context, GoRouterState state) =>
-          const WelcomeScreen(),
+          const AmptiveWelcomeScreen(),
       routes: <RouteBase>[
         GoRoute(
           name: AmptiveRoutes.authScreen,

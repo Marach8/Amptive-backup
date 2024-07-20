@@ -10,8 +10,9 @@ class AmptiveTextTheme{
  
     displayMedium: TextStyle(
       color: AmptiveColors.whiteColor,
-      fontSize: AmptiveFontSizes.size24,
+      fontSize: AmptiveFontSizes.size25,
       fontWeight: AmptiveFontWeights.bold,
+      letterSpacing: 0.1
     ),
 
     headlineMedium: const TextStyle(
