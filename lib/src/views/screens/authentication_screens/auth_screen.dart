@@ -1,199 +1,84 @@
+import 'package:amptive/src/utils/constants/strings/image_strings.dart';
+import 'package:amptive/src/utils/constants/strings/other_strings.dart';
 import 'package:amptive/src/utils/constants/strings/route_strings.dart';
-import 'package:amptive/src/utils/constants/colors.dart';
+import 'package:amptive/src/views/widgets/common_widgets/annotated_region__widget.dart';
+import 'package:amptive/src/views/widgets/common_widgets/app_bar.dart';
+import 'package:amptive/src/views/widgets/common_widgets/elevated_button_widget.dart';
+import 'package:amptive/src/views/widgets/common_widgets/outlined_button_widget.dart';
+import 'package:amptive/src/views/widgets/common_widgets/outlined_button_with_leading_icon_widget.dart';
+import 'package:amptive/src/views/widgets/common_widgets/png_jpeg_asset_loader_widget.dart';
+import 'package:amptive/src/views/widgets/common_widgets/svg_asset_loader_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:gap/gap.dart';
 import 'package:go_router/go_router.dart';
-import 'package:google_fonts/google_fonts.dart';
 
-import '../../widgets/common_widgets/common_widgets.dart';
-
-class AuthScreen extends StatefulWidget {
-  const AuthScreen({super.key, required this.isLogin});
-
-  final bool isLogin;
-
-  @override
-  State<AuthScreen> createState() => _AuthScreenState();
-}
-
-class _AuthScreenState extends State<AuthScreen> {
-  bool _isLogin = false;
-
-  @override
-  void initState() {
-    super.initState();
-    _isLogin = widget.isLogin;
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        appBar: BuildAppBar(
-          titleWidget: Container(
-            margin: EdgeInsets.symmetric(vertical: 12.55.h),
-            child: SvgPicture.asset(
-              "assets/amptive_logotype.svg",
-              semanticsLabel: 'Amptive Logo',
-            ),
-          ),
-        ),
-        backgroundColor: AmptiveColors.brandBlackColor,
-        body: Container(
-          padding: EdgeInsets.symmetric(horizontal: 24.w),
-          margin: EdgeInsets.only(top: 141.h),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              SizedBox(
-                height: 18.h,
-              ),
-              SizedBox(
-                height: 48.h,
-                child: TextButton(
-                  onPressed: () {
-                    if (!_isLogin) {
-                      //sign up
-                      context.pushNamed(AmptiveRoutes.emailAuth);
-                    }
-                  },
-                  style: TextButton.styleFrom(
-                    foregroundColor: AmptiveColors.whiteColor,
-                    backgroundColor: AmptiveColors.brandBlueColor,
-                    padding: EdgeInsets.symmetric(vertical: 8.h),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(100.h)),
-                    ),
-                  ),
-                  child: Text(
-                    _isLogin ? "Sign in with Email" : "Sign up with Email",
-                    style: GoogleFonts.inter(
-                        fontSize: 16.sp,
-                        fontWeight: FontWeight.w600,
-                        letterSpacing: -0.26.sp),
-                  ),
-                ),
-              ),
-              SizedBox(
-                height: 18.h,
-              ),
-              SizedBox(
-                height: 48.h,
-                child: TextButton(
-                  onPressed: () {
-                    context.pushNamed(AmptiveRoutes.addPhone);
-                  },
-                  style: TextButton.styleFrom(
-                    foregroundColor: AmptiveColors.whiteColor,
-                    padding: EdgeInsets.symmetric(vertical: 8.h),
-                    shape: RoundedRectangleBorder(
-                      side: BorderSide(color: AmptiveColors.strokeGreyColor, width: 1.h),
-                      borderRadius: BorderRadius.all(Radius.circular(100.h)),
-                    ),
-                  ),
-                  child: Text(
-                    _isLogin
-                        ? "Sign in with Phone Number"
-                        : "Sign up with Phone Number",
-                    style: GoogleFonts.inter(
-                        fontSize: 16.sp,
-                        fontWeight: FontWeight.w600,
-                        letterSpacing: -0.26.sp),
-                  ),
-                ),
-              ),
-              Container(
-                alignment: Alignment.center,
-                height: 37.h,
-                margin: EdgeInsets.symmetric(vertical: 17.h),
-                child: Text(
-                  "or",
-                  style: GoogleFonts.inter(
-                      color: AmptiveColors.whiteColor,
-                      fontSize: 18.sp,
-                      fontWeight: FontWeight.w600,
-                      letterSpacing: -0.26.sp),
-                ),
-              ),
-              BrandButton(
-                isLogin: _isLogin,
-                brand: "Facebook",
-                image: Image.asset(
-                  "assets/facebook.png",
-                  scale: 22.5.h,
-                ),
-              ),
-              SizedBox(
-                height: 17.h,
-              ),
-              BrandButton(
-                isLogin: _isLogin,
-                brand: "X(Twitter)",
-                image: Icon(
-                  FontAwesomeIcons.xTwitter,
-                  size: 22.5.h,
-                ),
-              ),
-              SizedBox(
-                height: 17.h,
-              ),
-              BrandButton(
-                isLogin: _isLogin,
-                brand: "Google",
-                image: Image.asset(
-                  'assets/google_icon.png',
-                  scale: 22.5.h,
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-
-class BrandButton extends StatelessWidget {
-  const BrandButton({
+class AmptiveAuthScreen extends StatelessWidget {
+  const AmptiveAuthScreen({
     super.key,
-    required bool isLogin,
-    required this.brand,
-    required this.image,
-  }) : _isLogin = isLogin;
+    required this.userSignUp
+  });
 
-  final bool _isLogin;
-  final String brand;
-  final Widget image;
+  final bool userSignUp;
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: 48.h,
-      child: TextButton.icon(
-        onPressed: () {},
-        style: TextButton.styleFrom(
-          foregroundColor: AmptiveColors.whiteColor,
-          padding: EdgeInsets.symmetric(vertical: 8.h),
-          shape: RoundedRectangleBorder(
-            side: BorderSide(color: AmptiveColors.strokeGreyColor, width: 1.h),
-            borderRadius: BorderRadius.all(Radius.circular(100.h)),
-          ),
+    return AmptiveAnnotatedRegionWidget(
+      child: Scaffold(
+        appBar: const AmptiveAppBar(
+          title: AmptiveSvgAssetLoaderWidget(svgPath: AmptiveImageStrings.svgLogo2),
         ),
-        icon: Padding(
-          padding: EdgeInsets.only(left: 13.w),
-          child: image,
-        ),
-        label: Container(
-          alignment: Alignment.centerLeft,
-          padding: EdgeInsets.only(left: 39.5.w),
-          child: Text(
-            _isLogin ? "Sign in with $brand" : "Sign up with $brand",
-            style: GoogleFonts.inter(
-              fontSize: 16.sp,
-              fontWeight: FontWeight.w600,
+
+        body: Center(
+          child: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                
+                AmptiveElevatedButtonWidget(
+                  buttonTitle: (userSignUp ? AmptiveOtherStrings.signUpWith : AmptiveOtherStrings.signInWith) + AmptiveOtherStrings.email,
+                  onPressed: () => context.pushNamed(AmptiveRoutes.emailAuth)
+                ),
+                Gap(15.h),
+
+                AmptiveOutlinedButtonWidget(
+                  buttonTitle: (userSignUp ? AmptiveOtherStrings.signUpWith : AmptiveOtherStrings.signInWith) + AmptiveOtherStrings.phoneNumber,
+                  onPressed: (){}
+                ),
+                
+                Gap(20.h),
+                Text(
+                  AmptiveOtherStrings.or,
+                  style: Theme.of(context).textTheme.bodyMedium
+                ),
+                Gap(20.h),
+
+                AmptiveOutlinedButtonWithLeadingIconWidget(
+                  buttonTitle: (userSignUp ? AmptiveOtherStrings.signUpWith : AmptiveOtherStrings.signInWith) + AmptiveOtherStrings.facebook,
+                  onPressed: (){},
+                  leadingIcon: const AmptivePngAndJpegAssetLoaderWidget(
+                    pngOrJpegPath: AmptiveImageStrings.pngFacebookIcon,
+                  )
+                ),
+                Gap(15.h),
+                AmptiveOutlinedButtonWithLeadingIconWidget(
+                  buttonTitle: (userSignUp ? AmptiveOtherStrings.signUpWith : AmptiveOtherStrings.signInWith) + AmptiveOtherStrings.twitter,
+                  onPressed: (){},
+                  leadingIcon: const Padding(
+                    padding: EdgeInsets.only(left: 10),
+                    child: Icon(FontAwesomeIcons.xTwitter),
+                  )
+                ),
+                Gap(15.h),
+                AmptiveOutlinedButtonWithLeadingIconWidget(
+                  buttonTitle: (userSignUp ? AmptiveOtherStrings.signUpWith : AmptiveOtherStrings.signInWith) + AmptiveOtherStrings.google,
+                  onPressed: (){},
+                  leadingIcon: const AmptivePngAndJpegAssetLoaderWidget(
+                    pngOrJpegPath: AmptiveImageStrings.pngGoogleIcon,
+                  )
+                )
+              ],
             ),
           ),
         ),

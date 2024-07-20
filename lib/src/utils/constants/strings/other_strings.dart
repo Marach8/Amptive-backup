@@ -11,8 +11,18 @@ class AmptiveOtherStrings{
   static const tuneIntoLiveAudioShowsAndEvents = "Tune into live audio shows and events.";
   static const monetizeLiveAudioShowsAndEvents = "Monetizable Live Audio Shows & Events ";
   static const next = 'Next';
+  static const or = 'or';
   static const signUp = 'Sign up';
   static const signIn = 'Sign in';
   static const attendAsGuest = 'Attend as guest';
   static const skip = 'Skip';
+  static const back = 'Back';
+
+  static const signUpWith = 'Sign up with ';
+  static const signInWith = 'Sign in with ';
+  static const email = 'Email';
+  static const phoneNumber = 'Phone Number';
+  static const facebook = 'Facebook';
+  static const twitter = 'X(Twitter)';
+  static const google = 'Google';
 }

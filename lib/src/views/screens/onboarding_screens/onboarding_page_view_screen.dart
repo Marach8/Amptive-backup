@@ -85,7 +85,6 @@ class _AmptiveOnboardingScreenState extends State<AmptiveOnboardingScreen> {
                   ElevatedButton(
                     style: ElevatedButton.styleFrom(padding: EdgeInsets.zero),
                     onPressed: () => context.pushReplacementNamed(AmptiveRoutes.welcome),
-
                     child: BlocBuilder<AmptiveOnboardingBloc, AmptiveOnboardingState>(
                       builder: (_, state) {
                         final currentState = state as CurrentOnboardingPageViewIndexState;

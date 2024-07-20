@@ -36,38 +36,30 @@ final GoRouter _router = GoRouter(
   routes: <RouteBase>[
     GoRoute(
       path: AmptiveRoutes.index,
-      builder: (BuildContext context, GoRouterState state) {
-        return const AmptiveWelcomeScreen();
-      },
-
+      builder: (_, __) => const AmptiveOnboardingScreen()
     ),
     GoRoute(
       name: AmptiveRoutes.welcome,
       path: "/welcome-route",
-      builder: (BuildContext context, GoRouterState state) =>
-          const AmptiveWelcomeScreen(),
-      routes: <RouteBase>[
-        GoRoute(
-          name: AmptiveRoutes.authScreen,
-          path: "auth-route",
-          builder: (BuildContext context, GoRouterState state) => AuthScreen(
-            isLogin: state.extra as bool,
-          ),
-        ),
-      ]
+      builder: (_, __) => const AmptiveWelcomeScreen(),
+    ),
+    GoRoute(
+      name: AmptiveRoutes.authScreen,
+      path: "/auth-route",
+      builder: (_, GoRouterState state) => AmptiveAuthScreen(
+        userSignUp: state.extra as bool,
+      ),
     ),
     GoRoute(
       name: AmptiveRoutes.onboarding,
       path: "/onboarding-route",
-      builder: (BuildContext context, GoRouterState state) =>
-          const AmptiveOnboardingScreen(),
+      builder: (_, __) => const AmptiveOnboardingScreen(),
     ),
     GoRoute(
-        name: AmptiveRoutes.emailAuth,
-        path: "/email-route",
-        builder: (BuildContext context, GoRouterState state) =>
-            const EmailAuthScreen(),
-      ),
+      name: AmptiveRoutes.emailAuth,
+      path: "/email-route",
+      builder: (_, __) =>const AmptiveEmailAuthScreen()
+    ),
 
     GoRoute(
       name: AmptiveRoutes.otp,

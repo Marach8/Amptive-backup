@@ -4,6 +4,8 @@ import 'package:amptive/src/utils/constants/strings/other_strings.dart';
 import 'package:amptive/src/utils/constants/strings/route_strings.dart';
 import 'package:amptive/src/views/widgets/animation_widgets/common_animation_widgets/audio_creator_animation_widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/annotated_region__widget.dart';
+import 'package:amptive/src/views/widgets/common_widgets/elevated_button_widget.dart';
+import 'package:amptive/src/views/widgets/common_widgets/outlined_button_widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/svg_asset_loader_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -23,7 +25,7 @@ class AmptiveWelcomeScreen extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              const AmptiveSvgAssetLoaderWidget(svgPath: AmptiveImageStrings.svgLogo),
+              const AmptiveSvgAssetLoaderWidget(svgPath: AmptiveImageStrings.svgAmptiveLogo),
               Gap(80.h),
 
               const Padding(
@@ -31,15 +33,15 @@ class AmptiveWelcomeScreen extends StatelessWidget {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    AmptiveAudioCreator(
+                    AmptiveAudioCreatorWidget(
                       assetName: AmptiveImageStrings.jpeg2,
                       delay: 3,
                     ),                    
-                    AmptiveAudioCreator(
+                    AmptiveAudioCreatorWidget(
                       assetName: AmptiveImageStrings.jpeg1,
                       delay: 6,
                     ),                    
-                    AmptiveAudioCreator(
+                    AmptiveAudioCreatorWidget(
                       assetName: AmptiveImageStrings.jpeg3,
                       delay: 9,
                     ),
@@ -60,26 +62,16 @@ class AmptiveWelcomeScreen extends StatelessWidget {
 
               Gap(30.h),
 
-              Container(
-                padding: const EdgeInsets.symmetric(horizontal: 20),
-                width: double.infinity,
-                height: 50.h,
-                child: ElevatedButton(
-                  onPressed: () => context.push(AmptiveRoutes.authScreen, extra: false),
-                  child: const Text(AmptiveOtherStrings.signUp)
-                ),
+              AmptiveElevatedButtonWidget(
+                onPressed: () => context.pushNamed(AmptiveRoutes.authScreen, extra: true),
+                buttonTitle: AmptiveOtherStrings.signUp,
               ),
 
               Gap(15.h),
 
-              Container(
-                padding: const EdgeInsets.symmetric(horizontal: 20),
-                width: double.infinity,
-                height: 50.h,
-                child: OutlinedButton(
-                  onPressed: () => context.push(AmptiveRoutes.authScreen, extra: false),
-                  child: const Text(AmptiveOtherStrings.signIn)
-                ),
+              AmptiveOutlinedButtonWidget(
+                onPressed: () => context.pushNamed(AmptiveRoutes.authScreen, extra: false),
+                buttonTitle: AmptiveOtherStrings.signIn,
               ),
 
               Gap(10.h),

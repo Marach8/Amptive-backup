@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:amptive/src/providers/form_providers.dart';
 import 'package:amptive/src/utils/constants/strings/route_strings.dart';
 import 'package:amptive/src/utils/constants/colors.dart';
-import 'package:amptive/src/views/widgets/common_widgets/common_widgets.dart';
+import 'package:amptive/src/views/widgets/common_widgets/app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
@@ -40,7 +40,7 @@ class _UserNameAuthScreenState extends State<UserNameAuthScreen> {
     return SafeArea(
       child: Scaffold(
         backgroundColor: AmptiveColors.brandBlackColor,
-        appBar: const BuildAppBar(),
+        appBar: const AmptiveAppBar(),
         body: Padding(
           padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 20.h),
           child: Form(

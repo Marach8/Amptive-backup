@@ -21,10 +21,10 @@ class AmptiveTextTheme{
       fontWeight: AmptiveFontWeights.medium,
     ),
 
-    bodyMedium : const TextStyle(
-      // color: AmptiveColors.grey400Color,
-      // fontSize: AmptiveFontSizes.size14,
-      fontWeight: AmptiveFontWeights.medium,
+    bodyMedium : TextStyle(
+      color: AmptiveColors.whiteColor,
+      fontSize: AmptiveFontSizes.size16,
+      fontWeight: AmptiveFontWeights.semiBold,
     ), 
     
     labelMedium: TextStyle(
@@ -34,9 +34,9 @@ class AmptiveTextTheme{
     ),
 
     titleMedium: TextStyle(
-      //color: AmptiveColors.grey100Color,
-      fontSize: AmptiveFontSizes.size16,
-      fontWeight: AmptiveFontWeights.semiBold,
+      color: AmptiveColors.whiteColor,
+      fontSize: AmptiveFontSizes.size14,
+      fontWeight: AmptiveFontWeights.regular,
     ),
   );
 

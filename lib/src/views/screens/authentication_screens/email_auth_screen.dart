@@ -1,6 +1,7 @@
 import 'package:amptive/src/providers/form_providers.dart';
 import 'package:amptive/src/utils/constants/strings/route_strings.dart';
 import 'package:amptive/src/utils/constants/colors.dart';
+import 'package:amptive/src/views/widgets/common_widgets/app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
@@ -10,14 +11,14 @@ import 'package:provider/provider.dart';
 import '../../widgets/common_widgets/common_widgets.dart';
 
 
-class EmailAuthScreen extends StatefulWidget {
-  const EmailAuthScreen({super.key});
+class AmptiveEmailAuthScreen extends StatefulWidget {
+  const AmptiveEmailAuthScreen({super.key});
 
   @override
-  State<EmailAuthScreen> createState() => _EmailAuthScreenState();
+  State<AmptiveEmailAuthScreen> createState() => _AmptiveEmailAuthScreenState();
 }
 
-class _EmailAuthScreenState extends State<EmailAuthScreen> {
+class _AmptiveEmailAuthScreenState extends State<AmptiveEmailAuthScreen> {
   TextEditingController textController = TextEditingController();
   late FormProvider _formProvider;
 
@@ -30,7 +31,7 @@ class _EmailAuthScreenState extends State<EmailAuthScreen> {
     return SafeArea(
       child: Scaffold(
         backgroundColor: AmptiveColors.brandBlackColor,
-        appBar: const BuildAppBar(),
+        appBar: const AmptiveAppBar(),
         body: Padding(
           padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 20.h),
           child: Form(

@@ -5,8 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:lottie/lottie.dart';
 
-class AmptiveAudioCreator extends StatefulWidget {
-  const AmptiveAudioCreator({
+class AmptiveAudioCreatorWidget extends StatefulWidget {
+  const AmptiveAudioCreatorWidget({
     super.key,
     required this.assetName,
     required this.delay
@@ -16,10 +16,10 @@ class AmptiveAudioCreator extends StatefulWidget {
   final int delay;
 
   @override
-  State<AmptiveAudioCreator> createState() => _AmptiveAudioCreatorState();
+  State<AmptiveAudioCreatorWidget> createState() => _AmptiveAudioCreatorWidgetState();
 }
 
-class _AmptiveAudioCreatorState extends State<AmptiveAudioCreator>{
+class _AmptiveAudioCreatorWidgetState extends State<AmptiveAudioCreatorWidget>{
   bool _isBorderColored = false;
   late Timer _timer;
 

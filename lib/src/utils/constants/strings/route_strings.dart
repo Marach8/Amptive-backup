@@ -12,6 +12,5 @@ class AmptiveRoutes {
   static String addUsername = "usernameAuth ";
   static String addProfilePic = "addProfilePic";
   static String addPhone = "addPhoneAuth ";
-
   static String cropImage = "cropImage";
 }
