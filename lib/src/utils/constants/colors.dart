@@ -30,4 +30,6 @@ class AmptiveColors {
   static Color get authHintColor => const Color(0xFFB6B6B6);
 
   static Color get successColor => const Color(0xFF54C981);
+
+  static Color get textFormFieldFillColor => const Color(0xFF9E9E9E).withOpacity(0.3);
 }

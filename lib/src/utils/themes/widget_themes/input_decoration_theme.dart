@@ -1,36 +1,53 @@
 
-class ChariotInputDecorationTheme{
-  const ChariotInputDecorationTheme._();
+import 'package:amptive/src/utils/constants/colors.dart';
+import 'package:amptive/src/utils/constants/font_sizes.dart';
+import 'package:amptive/src/utils/constants/font_weights.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-  // static InputDecorationTheme lightInputDecorationTheme = InputDecorationTheme(
-  //   errorMaxLines: 2,
-  //   isDense: true,
-  //   prefixIconColor: ChariotColors.deepOrange,
-  //   suffixIconColor: ChariotColors.deepOrange,
-  //   //labelStyle: const TextStyle().copyWith(fontSize: ChariotFontSizes.size13),
-  //   hintStyle: const TextStyle(fontSize: ChariotFontSizes.size16),
-  //   contentPadding: const EdgeInsets.fromLTRB(15, 7, 15, 7),
+class AmptiveInputDecorationTheme{
+  const AmptiveInputDecorationTheme._();
 
-  //   //errorStyle: const TextStyle().copyWith(fontStyle: FontStyle.normal),
-  //   enabledBorder: const OutlineInputBorder().copyWith(
-  //     borderRadius: BorderRadius.circular(8),
-  //     borderSide: const BorderSide(width: 1,),
-  //   ),
-  //   focusedBorder: const OutlineInputBorder().copyWith(
-  //     borderRadius: BorderRadius.circular(8),
-  //     borderSide: BorderSide(width: 1, color: ChariotColors.deepOrange),
-  //   ),
-  //   errorBorder: const OutlineInputBorder().copyWith(
-  //     borderRadius: BorderRadius.circular(8),
-  //     borderSide: BorderSide(width: 1, color: ChariotColors.deepOrange),
-  //   ),
-  //   focusedErrorBorder: const OutlineInputBorder().copyWith(
-  //     borderRadius: BorderRadius.circular(8),
-  //     borderSide: BorderSide(width: 1, color: ChariotColors.deepOrange),
-  //   ),
-  //   disabledBorder: const OutlineInputBorder().copyWith(
-  //     borderRadius: BorderRadius.circular(8),
-  //     borderSide: BorderSide(color: ChariotColors.disabledColor, style: BorderStyle.none),
-  //   ),
-  // );
+  static InputDecorationTheme darkInputDecorationTheme = InputDecorationTheme(
+    errorMaxLines: 1,
+    //isDense: true,
+    filled: true,
+    fillColor: AmptiveColors.textFormFieldFillColor,
+    // prefixIconColor: AmptiveColors.deepOrange,
+    // suffixIconColor: AmptiveColors.deepOrange,
+    //labelStyle: const TextStyle().copyWith(fontSize: AmptiveFontSizes.size13),
+    hintStyle: TextStyle(
+      fontSize: AmptiveFontSizes.size16,
+      color: AmptiveColors.authHintColor,
+      fontWeight: AmptiveFontWeights.regular
+    ),
+    contentPadding: const EdgeInsets.fromLTRB(16, 12, 16, 12).r,
+    errorStyle: TextStyle(
+      color: AmptiveColors.textRedColor,
+      fontSize: AmptiveFontSizes.size12,
+      fontWeight: AmptiveFontWeights.regular
+    ),
+
+    enabledBorder: const OutlineInputBorder().copyWith(
+      borderRadius: BorderRadius.circular(14).r,
+      borderSide: BorderSide(width: 2.r,)
+    ),
+    focusedBorder: const OutlineInputBorder().copyWith(
+      borderRadius: BorderRadius.circular(14).r,
+      borderSide: BorderSide(width: 2.r, color: AmptiveColors.brandBlueColor),
+    ),
+    errorBorder: const OutlineInputBorder().copyWith(
+      borderRadius: BorderRadius.circular(14).r,
+      borderSide: BorderSide(width: 2.r, color: AmptiveColors.textRedColor),
+    ),
+    focusedErrorBorder: const OutlineInputBorder().copyWith(
+      borderRadius: BorderRadius.circular(14).r,
+      borderSide: BorderSide(width: 2.r, color: AmptiveColors.textRedColor),
+    ),
+
+    disabledBorder: const OutlineInputBorder().copyWith(
+      borderRadius: BorderRadius.circular(14).r,
+      borderSide: BorderSide(color: AmptiveColors.transparentColor),
+    ),
+  );
 }

@@ -1,4 +1,6 @@
-extension extString on String {
+import 'package:amptive/src/utils/constants/strings/other_strings.dart';
+
+extension ExtString on String {
   bool get isValidEmail {
     final emailRegExp = RegExp(r"^[a-zA-Z0-9.]+@[a-zA-Z0-9]+\.[a-zA-Z]+");
     return emailRegExp.hasMatch(this);
@@ -29,5 +31,8 @@ extension extString on String {
     final validCharacters = RegExp(r'^[a-z0-9._]+$');
     return validCharacters.hasMatch(this);
   }
+
+  
+  bool get emailContainsEmailSymbol => contains(AmptiveOtherStrings.emailSymbol);
 
 }

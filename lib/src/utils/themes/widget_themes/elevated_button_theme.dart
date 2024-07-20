@@ -14,7 +14,7 @@ class AmptiveElevatedButtonTheme{
       foregroundColor: AmptiveColors.whiteColor,
       backgroundColor: AmptiveColors.brandBlueColor,
       disabledForegroundColor: AmptiveColors.grey3Color,
-      disabledBackgroundColor: AmptiveColors.transparentColor,
+      disabledBackgroundColor: AmptiveColors.textFormFieldFillColor,
       textStyle: TextStyle(
         fontFamily: AmptiveOtherStrings.inter,
         fontSize: AmptiveFontSizes.size16,

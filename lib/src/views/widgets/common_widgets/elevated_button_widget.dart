@@ -3,7 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class AmptiveElevatedButtonWidget extends StatelessWidget {
   final String buttonTitle;
-  final void Function() onPressed;
+  final void Function()? onPressed;
 
   const AmptiveElevatedButtonWidget({
     super.key,
@@ -14,7 +14,7 @@ class AmptiveElevatedButtonWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 20),
+      margin: const EdgeInsets.symmetric(horizontal: 20),
       width: double.infinity,
       height: 50.h,
       child: ElevatedButton(

@@ -15,10 +15,10 @@ class AmptiveTextTheme{
       letterSpacing: 0.1
     ),
 
-    headlineMedium: const TextStyle(
-      // color: AmptiveColors.grey100Color,
-      // fontSize: AmptiveFontSizes.size14,
-      fontWeight: AmptiveFontWeights.medium,
+    headlineMedium: TextStyle(
+      color: AmptiveColors.whiteColor,
+      fontSize: AmptiveFontSizes.size18,
+      fontWeight: AmptiveFontWeights.bold,
     ),
 
     bodyMedium : TextStyle(
@@ -36,6 +36,12 @@ class AmptiveTextTheme{
     titleMedium: TextStyle(
       color: AmptiveColors.whiteColor,
       fontSize: AmptiveFontSizes.size14,
+      fontWeight: AmptiveFontWeights.regular,
+    ),
+
+    titleSmall: TextStyle(
+      color: AmptiveColors.whiteColor,
+      fontSize: AmptiveFontSizes.size12,
       fontWeight: AmptiveFontWeights.regular,
     ),
   );

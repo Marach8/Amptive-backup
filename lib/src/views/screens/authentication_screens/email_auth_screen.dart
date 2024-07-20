@@ -1,14 +1,16 @@
-import 'package:amptive/src/providers/form_providers.dart';
-import 'package:amptive/src/utils/constants/strings/route_strings.dart';
-import 'package:amptive/src/utils/constants/colors.dart';
+import 'package:amptive/src/bloc/authentication_bloc/auth_bloc.dart';
+import 'package:amptive/src/bloc/authentication_bloc/auth_events.dart';
+import 'package:amptive/src/bloc/authentication_bloc/auth_states.dart';
+import 'package:amptive/src/utils/constants/strings/other_strings.dart';
+import 'package:amptive/src/utils/helpers/extensions/extensions.dart';
+import 'package:amptive/src/views/widgets/common_widgets/annotated_region__widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/app_bar.dart';
+import 'package:amptive/src/views/widgets/common_widgets/elevated_button_widget.dart';
+import 'package:amptive/src/views/widgets/common_widgets/textformfield_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:go_router/go_router.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:loading_btn/loading_btn.dart';
-import 'package:provider/provider.dart';
-import '../../widgets/common_widgets/common_widgets.dart';
+import 'package:gap/gap.dart';
 
 
 class AmptiveEmailAuthScreen extends StatefulWidget {
@@ -19,139 +21,74 @@ class AmptiveEmailAuthScreen extends StatefulWidget {
 }
 
 class _AmptiveEmailAuthScreenState extends State<AmptiveEmailAuthScreen> {
-  TextEditingController textController = TextEditingController();
-  late FormProvider _formProvider;
+  late TextEditingController _controller;
+  late GlobalKey<FormState> _formKey;
 
-  final _formKey = GlobalKey<FormState>();
+  @override 
+  void initState(){
+    super.initState();
+    _controller = TextEditingController();
+    _formKey = GlobalKey<FormState>();
+  }
+
+  @override
+  void dispose(){
+    _controller.dispose();
+    super.dispose();
+  }
+
 
   @override
   Widget build(BuildContext context) {
-    _formProvider = Provider.of<FormProvider>(context);
 
-    return SafeArea(
+    return AmptiveAnnotatedRegionWidget(
       child: Scaffold(
-        backgroundColor: AmptiveColors.brandBlackColor,
         appBar: const AmptiveAppBar(),
+
         body: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 20.h),
-          child: Form(
-            key: _formKey,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  "What is your email?",
-                  style: GoogleFonts.inter(
-                    color: AmptiveColors.whiteColor,
-                    fontSize: 17.sp,
-                    fontWeight: FontWeight.bold,
+          padding: EdgeInsets.all(20.r),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                AmptiveOtherStrings.whatIsYourEmail,
+                style: Theme.of(context).textTheme.headlineMedium
+              ),
+              
+              Gap(10.h),
+              Form(
+                key: _formKey,
+                child: AmptiveTextFormFieldWidget(
+                  controller: _controller,
+                  hintText: AmptiveOtherStrings.enterYourEmail,
+                  onChanged: (currentText) => context.read<AmptiveAuthBloc>().add(
+                    GetTheCurrentTextEnteredByTheUserAuthEvent(
+                      currentTextEnteredByUser: currentText
+                    )
                   ),
                 ),
-                SizedBox(
-                  height: 11.h,
-                ),
-                TextFormField(
-                  controller: textController,
-                  onChanged: _formProvider.validateEmail,
-                  maxLines: 1,
-                  autovalidateMode: AutovalidateMode.onUserInteraction,
-                  keyboardType: TextInputType.emailAddress,
-                  cursorColor: _formProvider.email.error == null
-                      ? AmptiveColors.brandBlueColor
-                      : AmptiveColors.textRedColor,
-                  decoration: InputDecoration(
-                    contentPadding:
-                        EdgeInsets.symmetric(vertical: 12.h, horizontal: 16.w),
-                    hintText: "Enter your email",
-                    hintStyle: GoogleFonts.inter(
-                      fontSize: 16.sp,
-                      color: AmptiveColors.authHintColor,
-                      fontWeight: FontWeight.normal,
-                    ),
-                    errorText: _formProvider.email.error,
-                    errorStyle: GoogleFonts.inter(
-                      color: AmptiveColors.textRedColor,
-                      fontSize: 12.sp,
-                      fontWeight: FontWeight.normal,
-                    ),
-                    filled: true,
-                    fillColor: const Color(0xFF9E9E9E).withOpacity(0.3),
-                    focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(
-                        width: 2.w,
-                        color: _formProvider.email.error == null
-                            ? AmptiveColors.brandBlueColor
-                            : AmptiveColors.textRedColor,
-                      ),
-                      borderRadius: BorderRadius.circular(14.r),
-                    ),
-                    border: OutlineInputBorder(
-                      borderSide: BorderSide(
-                        width: 2.w,
-                        color: AmptiveColors.transparentColor,
-                      ),
-                      borderRadius: BorderRadius.circular(14.r),
-                    ),
-                  ),
-                  style: GoogleFonts.inter(
-                    fontWeight: FontWeight.normal,
-                    fontSize: 18.sp,
-                    color: AmptiveColors.whiteColor,
-                  ),
-                ),
-                Consumer<FormProvider>(builder: (context, model, _) {
-                  var height =
-                      model.customEmailStatus.value != null ? 20.h : 0.h;
-                  return Container(
-                    height: height,
-                    margin: EdgeInsets.symmetric(vertical: 11.h),
-                    child: Text(
-                      model.customEmailStatus.value ?? "",
-                      style: GoogleFonts.inter(
-                        color: AmptiveColors.whiteColor,
-                        fontWeight: FontWeight.normal,
-                        fontSize: 12.sp,
-                      ),
-                    ),
-                  );
-                }),
-                Expanded(
-                  child: SizedBox(
-                    height: 1.h,
-                  ),
-                ),
-                Consumer<FormProvider>(builder: (context, model, _) {
-                  return Container(
-                    margin: EdgeInsets.only(bottom: 29.h),
-                    child: CustomLoaderButton(
-                      width: 500.w,
-                      height: 50.w,
-                      borderRadius: 100.r,
-                      onTap: (start, stop, state) async {
-                        // Validate returns true if the form is valid, or false otherwise.
-                        if (state == ButtonState.idle) {
-                          start();
+              ),
+              Gap(10.h),
 
-                          if (_formKey.currentState!.validate() &&
-                              model.isEmailValid) {
-                            // call api
-                            bool isUniqueEmail = await model.processEmail();
+              Text(
+                AmptiveOtherStrings.thisEmailWillBeVerified,
+                style: Theme.of(context).textTheme.titleSmall,
+              )
+            ],
+          ),
+        ),
 
-                            if (isUniqueEmail && context.mounted) {
-                              context.pushNamed(AmptiveRoutes.otp, extra: "email");
-                            }
-                          }
-
-                          stop();
-                        }
-                      },
-                      validCondition: model.isEmailValid,
-                      childText: "Verify Email",
-                    ),
-                  );
-                }),
-              ],
-            ),
+        bottomSheet: Padding(
+          padding: const EdgeInsets.only(bottom: 20),
+          child: BlocBuilder<AmptiveAuthBloc, AmptiveAuthState>(
+            buildWhen: (previous, current) => previous.userEmail != current.userEmail,
+            builder: (_, state) {
+              final enableVerificationButton = state.userEmail?.emailContainsEmailSymbol ?? false;
+              return AmptiveElevatedButtonWidget(
+                buttonTitle: AmptiveOtherStrings.verifyEmail,
+                onPressed: enableVerificationButton ? (){} : null
+              );
+            }
           ),
         ),
       ),

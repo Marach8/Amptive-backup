@@ -14,7 +14,7 @@ class AmptiveOutlinedButtonWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 20),
+      margin: const EdgeInsets.symmetric(horizontal: 20),
       width: double.infinity,
       height: 50.h,
       child: OutlinedButton(

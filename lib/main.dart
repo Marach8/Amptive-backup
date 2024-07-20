@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:amptive/src/bloc/authentication_bloc/auth_bloc.dart';
 import 'package:amptive/src/bloc/onboarding_bloc/onboarding_bloc.dart';
 import 'package:amptive/src/utils/constants/strings/route_strings.dart';
 import 'package:amptive/src/utils/themes/app_theme_data.dart';
@@ -23,7 +24,8 @@ import 'package:go_router/go_router.dart';
 void main() => runApp(
   MultiBlocProvider(
     providers: [
-      BlocProvider(create: (_) => AmptiveOnboardingBloc())
+      BlocProvider(create: (_) => AmptiveOnboardingBloc()),
+      BlocProvider(create: (_) => AmptiveAuthBloc())
     ],
     child: const AmptiveApp(),
   ),

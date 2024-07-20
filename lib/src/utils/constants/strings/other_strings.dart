@@ -12,6 +12,7 @@ class AmptiveOtherStrings{
   static const monetizeLiveAudioShowsAndEvents = "Monetizable Live Audio Shows & Events ";
   static const next = 'Next';
   static const or = 'or';
+  static const emailSymbol = '@';
   static const signUp = 'Sign up';
   static const signIn = 'Sign in';
   static const attendAsGuest = 'Attend as guest';
@@ -25,4 +26,9 @@ class AmptiveOtherStrings{
   static const facebook = 'Facebook';
   static const twitter = 'X(Twitter)';
   static const google = 'Google';
+
+  static const whatIsYourEmail = 'What is your email?';
+  static const enterYourEmail = 'Enter your email...';
+  static const thisEmailWillBeVerified = 'This email will be verified in the next step';
+  static const verifyEmail = 'Verify email';
 }
