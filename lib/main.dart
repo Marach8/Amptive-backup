@@ -1,41 +1,35 @@
 import 'dart:io';
-
-import 'package:amptive/providers/form_providers.dart';
-import 'package:amptive/providers/preference_provider.dart';
-import 'package:amptive/routers/amptive_routes.dart';
-import 'package:amptive/screens/AuthScreen.dart';
-import 'package:amptive/screens/DoBScreen.dart';
-import 'package:amptive/screens/PreferenceScreen.dart';
-import 'package:amptive/screens/add_phone.dart';
-import 'package:amptive/screens/crop_image_screen.dart';
-import 'package:amptive/screens/emailAuthScreen.dart';
-import 'package:amptive/screens/nameAuthScreen.dart';
-import 'package:amptive/screens/onboarding.dart';
-import 'package:amptive/screens/otpScreen.dart';
-import 'package:amptive/screens/passwordAuthScreen.dart';
-import 'package:amptive/screens/post_registration.dart';
-import 'package:amptive/screens/notificationAnimation.dart';
-import 'package:amptive/screens/splash.dart';
-import 'package:amptive/screens/preHomePage.dart';
-import 'package:amptive/screens/preHomePageBackground.dart';
-import 'package:amptive/screens/templ.dart';
-import 'package:amptive/screens/usernameAuthScreen.dart';
-import 'package:amptive/screens/welcome.dart';
-import 'package:amptive/utils/utils.dart';
+import 'package:amptive/src/bloc/authentication_bloc/auth_bloc.dart';
+import 'package:amptive/src/bloc/onboarding_bloc/onboarding_bloc.dart';
+import 'package:amptive/src/utils/constants/strings/route_strings.dart';
+import 'package:amptive/src/utils/themes/app_theme_data.dart';
+import 'package:amptive/src/views/screens/authentication_screens/auth_screen.dart';
+import 'package:amptive/src/views/screens/authentication_screens/dob_screen.dart';
+import 'package:amptive/src/views/screens/main_application_screens/preference_screen.dart';
+import 'package:amptive/src/views/screens/authentication_screens/add_phone.dart';
+import 'package:amptive/src/views/screens/main_application_screens/crop_image_screen.dart';
+import 'package:amptive/src/views/screens/authentication_screens/email_auth_screen.dart';
+import 'package:amptive/src/views/screens/authentication_screens/name_auth_screen.dart';
+import 'package:amptive/src/views/screens/onboarding_screens/onboarding_page_view_screen.dart';
+import 'package:amptive/src/views/screens/authentication_screens/otp_screen.dart';
+import 'package:amptive/src/views/screens/authentication_screens/password_auth_screen.dart';
+import 'package:amptive/src/views/screens/authentication_screens/post_registration.dart';
+import 'package:amptive/src/views/screens/authentication_screens/username_auth_screen.dart';
+import 'package:amptive/src/views/screens/onboarding_screens/welcome_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
-import 'package:provider/provider.dart';
 
 void main() => runApp(
-      MultiProvider(
-        providers: [
-          ChangeNotifierProvider(create: (_) => FormProvider()),
-          ChangeNotifierProvider(create: (_) => PreferenceModel()),
-        ],
-        child: const AmptiveApp(),
-      ),
-    );
+  MultiBlocProvider(
+    providers: [
+      BlocProvider(create: (_) => AmptiveOnboardingBloc()),
+      BlocProvider(create: (_) => AmptiveAuthBloc())
+    ],
+    child: const AmptiveApp(),
+  ),
+);
 
 /// The route configuration.
 final GoRouter _router = GoRouter(
@@ -44,37 +38,30 @@ final GoRouter _router = GoRouter(
   routes: <RouteBase>[
     GoRoute(
       path: AmptiveRoutes.index,
-      builder: (BuildContext context, GoRouterState state) {
-        return const PreHomePage();
-      },
-
+      builder: (_, __) => const AmptiveOnboardingScreen()
     ),
     GoRoute(
-        name: AmptiveRoutes.welcome,
-        path: "/welcome-route",
-        builder: (BuildContext context, GoRouterState state) =>
-            const WelcomeScreen(),
-        routes: <RouteBase>[
-          GoRoute(
-            name: AmptiveRoutes.authScreen,
-            path: "auth-route",
-            builder: (BuildContext context, GoRouterState state) => AuthScreen(
-              isLogin: state.extra as bool,
-            ),
-          ),
-        ]),
+      name: AmptiveRoutes.welcome,
+      path: "/welcome-route",
+      builder: (_, __) => const AmptiveWelcomeScreen(),
+    ),
+    GoRoute(
+      name: AmptiveRoutes.authScreen,
+      path: "/auth-route",
+      builder: (_, GoRouterState state) => AmptiveAuthScreen(
+        userSignUp: state.extra as bool,
+      ),
+    ),
     GoRoute(
       name: AmptiveRoutes.onboarding,
       path: "/onboarding-route",
-      builder: (BuildContext context, GoRouterState state) =>
-          const OnboardingScreen(),
+      builder: (_, __) => const AmptiveOnboardingScreen(),
     ),
     GoRoute(
-        name: AmptiveRoutes.emailAuth,
-        path: "/email-route",
-        builder: (BuildContext context, GoRouterState state) =>
-            const EmailAuthScreen(),
-      ),
+      name: AmptiveRoutes.emailAuth,
+      path: "/email-route",
+      builder: (_, __) =>const AmptiveEmailAuthScreen()
+    ),
 
     GoRoute(
       name: AmptiveRoutes.otp,
@@ -139,12 +126,15 @@ final GoRouter _router = GoRouter(
       name: AmptiveRoutes.preference,
       path: "/preference-route",
       builder: (BuildContext context, GoRouterState state) =>
-          const PreferenceScreen(),
+        const PreferenceScreen(),
     ),
 
 
   ],
 );
+
+
+
 
 class AmptiveApp extends StatelessWidget {
   const AmptiveApp({super.key});
@@ -158,12 +148,11 @@ class AmptiveApp extends StatelessWidget {
       splitScreenMode: true,
       builder: (_, child) {
         return MaterialApp.router(
-            debugShowCheckedModeBanner: false,
-            theme: ThemeData(
-              colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-              useMaterial3: true,
-            ),
-            routerConfig: _router);
+          debugShowCheckedModeBanner: false,
+          themeMode: ThemeMode.dark,
+          darkTheme: AmptiveThemeData.darkTheme,
+          routerConfig: _router,
+        );
       },
     );
   }
