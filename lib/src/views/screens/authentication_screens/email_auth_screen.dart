@@ -62,8 +62,8 @@ class _AmptiveEmailAuthScreenState extends State<AmptiveEmailAuthScreen> {
                   controller: _controller,
                   hintText: AmptiveOtherStrings.enterYourEmail,
                   onChanged: (currentText) => context.read<AmptiveAuthBloc>().add(
-                    GetTheCurrentTextEnteredByTheUserAuthEvent(
-                      currentTextEnteredByUser: currentText
+                    GetTheCurrentTextOnTheEmailFieldAuthEvent(
+                      currentTextOnTheEmailField: currentText
                     )
                   ),
                 ),

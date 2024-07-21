@@ -38,7 +38,7 @@ final GoRouter _router = GoRouter(
   routes: <RouteBase>[
     GoRoute(
       path: AmptiveRoutes.index,
-      builder: (_, __) => const AmptiveOnboardingScreen()
+      builder: (_, __) => const AmptiveVerifyOTPScreen()
     ),
     GoRoute(
       name: AmptiveRoutes.welcome,
@@ -68,7 +68,7 @@ final GoRouter _router = GoRouter(
       path: "/otp",
       builder: (BuildContext context, GoRouterState state) {
         String where = state.extra as String;
-        return OTPScreen(from: where);
+        return const AmptiveVerifyOTPScreen();
 
       }
     ),

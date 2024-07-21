@@ -17,6 +17,11 @@ class AmptiveThemeData{
 
   static ThemeData darkTheme = ThemeData(
     useMaterial3: true,
+    colorScheme: ColorScheme.fromSwatch().copyWith(
+      primary: AmptiveColors.brandBlueColor,
+      brightness: Brightness.dark
+      //secondary: ChariotColors.deepOrange
+    ),
     fontFamily: AmptiveOtherStrings.inter,
     brightness: Brightness.dark,
     scaffoldBackgroundColor: AmptiveColors.brandBlackColor,
