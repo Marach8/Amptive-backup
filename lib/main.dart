@@ -3,7 +3,7 @@ import 'package:amptive/src/bloc/authentication_bloc/auth_bloc.dart';
 import 'package:amptive/src/bloc/onboarding_bloc/onboarding_bloc.dart';
 import 'package:amptive/src/utils/constants/strings/route_strings.dart';
 import 'package:amptive/src/utils/themes/app_theme_data.dart';
-import 'package:amptive/src/views/screens/authentication_screens/auth_screen.dart';
+import 'package:amptive/src/views/screens/authentication_screens/sign_in_or_sign_up_screen.dart';
 import 'package:amptive/src/views/screens/authentication_screens/dob_screen.dart';
 import 'package:amptive/src/views/screens/main_application_screens/preference_screen.dart';
 import 'package:amptive/src/views/screens/authentication_screens/add_phone.dart';
@@ -12,7 +12,7 @@ import 'package:amptive/src/views/screens/authentication_screens/email_auth_scre
 import 'package:amptive/src/views/screens/authentication_screens/name_auth_screen.dart';
 import 'package:amptive/src/views/screens/onboarding_screens/onboarding_page_view_screen.dart';
 import 'package:amptive/src/views/screens/authentication_screens/otp_screen.dart';
-import 'package:amptive/src/views/screens/authentication_screens/password_auth_screen.dart';
+import 'package:amptive/src/views/screens/authentication_screens/create_password_screen.dart';
 import 'package:amptive/src/views/screens/authentication_screens/post_registration.dart';
 import 'package:amptive/src/views/screens/authentication_screens/username_auth_screen.dart';
 import 'package:amptive/src/views/screens/onboarding_screens/welcome_screen.dart';
@@ -38,7 +38,7 @@ final GoRouter _router = GoRouter(
   routes: <RouteBase>[
     GoRoute(
       path: AmptiveRoutes.index,
-      builder: (_, __) => const AmptiveVerifyOTPScreen()
+      builder: (_, __) => const AmptiveCreatePasswordScreen()
     ),
     GoRoute(
       name: AmptiveRoutes.welcome,
@@ -102,7 +102,7 @@ final GoRouter _router = GoRouter(
       name: AmptiveRoutes.passwordAuth,
       path: "/password",
       builder: (BuildContext context, GoRouterState state) =>
-          const PasswordAuthScreen(),
+          const AmptiveCreatePasswordScreen(),
     ),
     GoRoute(
       name: AmptiveRoutes.dobAuth,

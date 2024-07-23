@@ -41,4 +41,7 @@ class AmptiveOtherStrings{
   static const codeHasBeenSentToYou = 'Code has been sent. You can request another in ';
   static const youEnteredInvalidCode = 'You entered an invalid code. ';
   static const resendCode = 'resend code';
+  static const createPasswordForYourAccount = "Create a password for your account";
+  static const enterYourPassword = 'Enter your password';
+  static const passwordMustBeAtleast8 = 'Your paassword must be at least 8 characters';
 }

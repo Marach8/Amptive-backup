@@ -20,3 +20,10 @@ class OTPFieldIsCompletedAuthEvent extends AmptiveAuthEvent{
   final String? otpInputFromUser;
   OTPFieldIsCompletedAuthEvent({this.otpInputFromUser});
 }
+
+class HideOrShowPasswordAuthEvent extends AmptiveAuthEvent{}
+
+class GetTheCurrentTextOnThePaaswordFieldAuthEvent extends AmptiveAuthEvent{
+  String? currentTextOnThePasswordField;
+  GetTheCurrentTextOnThePaaswordFieldAuthEvent({this.currentTextOnThePasswordField});
+}
