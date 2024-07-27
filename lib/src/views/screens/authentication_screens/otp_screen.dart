@@ -1,18 +1,23 @@
 import 'dart:async';
 
+import 'package:amptive/src/bloc/authentication_bloc/auth_events.dart';
+import 'package:amptive/src/services/auth/otp_service.dart';
 import 'package:amptive/src/utils/constants/colors.dart';
+import 'package:amptive/src/views/widgets/common_widgets/annotated_region__widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/app_bar.dart';
 import 'package:amptive/src/views/widgets/common_widgets/common_widgets.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:loading_btn/loading_btn.dart';
-import 'package:provider/provider.dart';
 
-import '../../../providers/form_providers.dart';
+import '../../../bloc/authentication_bloc/auth_bloc.dart';
+import '../../../bloc/authentication_bloc/auth_states.dart';
+import '../../../utils/constants/strings/other_strings.dart';
 import '../../../utils/constants/strings/route_strings.dart';
-
+import '../../widgets/common_widgets/elevated_button_widget.dart';
 
 int TIMER_LIMIT = 10;
 
@@ -26,7 +31,6 @@ class OTPScreen extends StatefulWidget {
 }
 
 class _OTPScreenState extends State<OTPScreen> {
-  late FormProvider _formProvider;
   int _start = TIMER_LIMIT;
   late Timer _timer;
   bool _resendButtonEnabled = false;
@@ -68,9 +72,7 @@ class _OTPScreenState extends State<OTPScreen> {
 
   @override
   Widget build(BuildContext context) {
-    _formProvider = Provider.of<FormProvider>(context);
-
-    return SafeArea(
+    return AmptiveAnnotatedRegionWidget(
       child: Scaffold(
         backgroundColor: AmptiveColors.brandBlackColor,
         appBar: const AmptiveAppBar(),
@@ -100,20 +102,19 @@ class _OTPScreenState extends State<OTPScreen> {
                   children: [
                     OTPTextFormField(
                       index: 0,
-                      provider: _formProvider,
                     ),
                     SizedBox(
                       width: 10.w,
                     ),
-                    OTPTextFormField(index: 1, provider: _formProvider),
+                    OTPTextFormField(index: 1),
                     SizedBox(
                       width: 10.w,
                     ),
-                    OTPTextFormField(index: 2, provider: _formProvider),
+                    OTPTextFormField(index: 2),
                     SizedBox(
                       width: 10.w,
                     ),
-                    OTPTextFormField(index: 3, provider: _formProvider),
+                    OTPTextFormField(index: 3),
                   ],
                 ),
                 Container(
@@ -126,7 +127,7 @@ class _OTPScreenState extends State<OTPScreen> {
                             children: [
                               WidgetSpan(
                                 child: GestureDetector(
-                                  onTap: (){
+                                  onTap: () {
                                     resetTimer();
                                   },
                                   child: Text(
@@ -163,27 +164,32 @@ class _OTPScreenState extends State<OTPScreen> {
                     height: 1.h,
                   ),
                 ),
-                Consumer<FormProvider>(builder: (context, model, _) {
-                  return Container(
-                    margin: EdgeInsets.only(bottom: 29.h),
-                    child: CustomLoaderButton(
-                        width: 350.w,
-                        height: 50.w,
-                        borderRadius: 100.r,
-                        onTap: (start, stop, state) async {
-                          // Validate returns true if the form is valid, or false otherwise.
-                          if (state == ButtonState.idle) {
-                            start();
-                            if (model.isOTPValid) {
-                              context.pushNamed(AmptiveRoutes.passwordAuth);
-                            }
-                            stop();
-                          }
-                        },
-                        validCondition: model.isOTPValid,
-                        childText: "Next"),
-                  );
-                }),
+                BlocListener<AmptiveAuthBloc, AmptiveAuthState>(
+                  listener: (context, state) {
+                    if (state is ValidAuthState && context.mounted) {
+                      context.pushNamed(AmptiveRoutes.passwordAuth);
+                    }
+                  },
+                  child: BlocBuilder<AmptiveAuthBloc, AmptiveAuthState>(
+                      builder: (context, state) {
+                    return state is LoadingAuthState && context.mounted
+                        ? AmptiveLoadingButtonWidget(
+                            margin: EdgeInsets.only(bottom: 29.h),
+                          )
+                        : AmptiveElevatedButtonWidget(
+                            margin: EdgeInsets.only(bottom: 29.h),
+                            height: 50.w,
+                            buttonTitle: AmptiveOtherStrings.next,
+                            onPressed: state is ValidOTPAuthState
+                                ? () {
+                                    context
+                                        .read<AmptiveAuthBloc>()
+                                        .add(VerifyOTPAuthEvent());
+                                  }
+                                : null,
+                          );
+                  }),
+                ),
               ],
             ),
           ),
@@ -194,14 +200,13 @@ class _OTPScreenState extends State<OTPScreen> {
 }
 
 class OTPTextFormField extends StatelessWidget {
-  const OTPTextFormField({
+  OTPTextFormField({
     super.key,
-    required this.provider,
     required this.index,
   });
 
   final int index;
-  final FormProvider provider;
+  final OtpService service = GetIt.I<OtpService>();
 
   @override
   Widget build(BuildContext context) {
@@ -212,7 +217,13 @@ class OTPTextFormField extends StatelessWidget {
         autofocus: true,
         // textInputAction: TextInputAction.previous,
         onChanged: (value) {
-          provider.setOtp(value, index);
+          service.setOtp(value, index);
+
+          // trigger otp changed event
+          context
+              .read<AmptiveAuthBloc>()
+              .add(OTPChangedAuthEvent(otpValid: service.isOTPValid));
+
           if (value.length == 1 && index != 3) {
             FocusScope.of(context).nextFocus();
           } else if (value.isEmpty && index != 0) {
@@ -236,7 +247,6 @@ class OTPTextFormField extends StatelessWidget {
             color: AmptiveColors.authHintColor,
             fontWeight: FontWeight.normal,
           ),
-
           filled: true,
           fillColor: const Color(0xFF9E9E9E).withOpacity(0.3),
           focusedBorder: OutlineInputBorder(

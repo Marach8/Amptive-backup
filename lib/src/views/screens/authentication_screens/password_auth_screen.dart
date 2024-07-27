@@ -1,14 +1,19 @@
-import 'package:amptive/src/providers/form_providers.dart';
+import 'package:amptive/src/bloc/authentication_bloc/auth_bloc.dart';
+import 'package:amptive/src/bloc/authentication_bloc/auth_states.dart';
+import 'package:amptive/src/services/auth/auth_field_service.dart';
 import 'package:amptive/src/utils/constants/strings/route_strings.dart';
 import 'package:amptive/src/utils/constants/colors.dart';
 import 'package:amptive/src/views/widgets/common_widgets/app_bar.dart';
-import 'package:amptive/src/views/widgets/common_widgets/common_widgets.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:provider/provider.dart';
 
+import '../../../bloc/authentication_bloc/auth_events.dart';
+import '../../../utils/constants/strings/other_strings.dart';
+import '../../widgets/common_widgets/elevated_button_widget.dart';
 
 class PasswordAuthScreen extends StatefulWidget {
   const PasswordAuthScreen({super.key});
@@ -18,7 +23,6 @@ class PasswordAuthScreen extends StatefulWidget {
 }
 
 class _PasswordAuthScreenState extends State<PasswordAuthScreen> {
-  late FormProvider _formProvider;
   bool _passwordVisible = false;
   TextEditingController passwordController = TextEditingController();
 
@@ -26,7 +30,7 @@ class _PasswordAuthScreenState extends State<PasswordAuthScreen> {
 
   @override
   Widget build(BuildContext context) {
-    _formProvider = Provider.of<FormProvider>(context);
+    var service = GetIt.I<AuthFieldService>();
 
     return SafeArea(
       child: Scaffold(
@@ -52,14 +56,21 @@ class _PasswordAuthScreenState extends State<PasswordAuthScreen> {
                 ),
                 TextFormField(
                   controller: passwordController,
-                  onChanged: _formProvider.validatePassword,
+                  onChanged: (value) {
+                    service.validatePassword(value);
+
+                    // trigger password changed event
+                    context
+                        .read<AmptiveAuthBloc>()
+                        .add(PasswordChangedAuthEvent());
+                  },
                   maxLines: 1,
                   obscureText: !_passwordVisible,
                   keyboardType: TextInputType.visiblePassword,
                   cursorColor: AmptiveColors.brandBlueColor,
                   decoration: InputDecoration(
-                      contentPadding:
-                          EdgeInsets.symmetric(vertical: 12.h, horizontal: 16.w),
+                      contentPadding: EdgeInsets.symmetric(
+                          vertical: 12.h, horizontal: 16.w),
                       hintText: "Enter your password",
                       hintStyle: GoogleFonts.inter(
                         fontSize: 16.sp,
@@ -98,13 +109,14 @@ class _PasswordAuthScreenState extends State<PasswordAuthScreen> {
                     color: AmptiveColors.whiteColor,
                   ),
                 ),
-                Consumer<FormProvider>(builder: (context, model, _) {
-                  var height = model.password.error != null ? 20.h : 0.h;
+                BlocBuilder<AmptiveAuthBloc, AmptiveAuthState>(
+                    builder: (_, state) {
+                  var height = service.password.error != null ? 20.h : 0.h;
                   return Container(
                     height: height,
                     margin: EdgeInsets.symmetric(vertical: 11.h),
                     child: Text(
-                      model.password.error ?? "",
+                      service.password.error ?? "",
                       style: GoogleFonts.inter(
                         color: AmptiveColors.whiteColor,
                         fontWeight: FontWeight.normal,
@@ -118,22 +130,17 @@ class _PasswordAuthScreenState extends State<PasswordAuthScreen> {
                     height: 1.h,
                   ),
                 ),
-                Consumer<FormProvider>(builder: (context, model, _) {
-                  return Container(
+                BlocBuilder<AmptiveAuthBloc, AmptiveAuthState>(
+                    builder: (context, state) {
+                  return AmptiveElevatedButtonWidget(
                     margin: EdgeInsets.only(bottom: 29.h),
-                    child: CustomLoaderButton(
-                      width: 350.w,
-                      height: 50.w,
-                      borderRadius: 100.r,
-                      onTap: (start, stop, state) async {
-                        // Validate returns true if the form is valid, or false otherwise.
-                        if (model.isPasswordValid) {
-                          context.pushNamed(AmptiveRoutes.dobAuth);
-                        }
-                      },
-                      validCondition: model.isPasswordValid,
-                      childText: "Next",
-                    ),
+                    height: 50.w,
+                    buttonTitle: AmptiveOtherStrings.next,
+                    onPressed: state is ValidPasswordAuthState
+                        ? () {
+                            context.pushNamed(AmptiveRoutes.dobAuth);
+                          }
+                        : null,
                   );
                 }),
               ],

@@ -1,14 +1,20 @@
-import 'package:amptive/src/providers/form_providers.dart';
+import 'package:amptive/src/bloc/authentication_bloc/auth_bloc.dart';
+import 'package:amptive/src/bloc/authentication_bloc/auth_states.dart';
+import 'package:amptive/src/services/auth/auth_field_service.dart';
+import 'package:amptive/src/utils/constants/font_sizes.dart';
+import 'package:amptive/src/utils/constants/font_weights.dart';
+import 'package:amptive/src/utils/constants/strings/other_strings.dart';
 import 'package:amptive/src/utils/constants/strings/route_strings.dart';
 import 'package:amptive/src/utils/constants/colors.dart';
 import 'package:amptive/src/views/widgets/common_widgets/app_bar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
-import 'package:provider/provider.dart';
 
 class DateOfBirthScreen extends StatefulWidget {
   const DateOfBirthScreen({super.key});
@@ -18,15 +24,20 @@ class DateOfBirthScreen extends StatefulWidget {
 }
 
 class _DateOfBirthScreenState extends State<DateOfBirthScreen> {
+  late final AuthFieldService service;
   final TextEditingController _dobController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
-  late FormProvider _formProvider;
   bool _isBottomSheetOpened = false;
   DateTime? _selectedDate;
 
   @override
+  void initState() {
+    service = GetIt.I<AuthFieldService>();
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    _formProvider = Provider.of<FormProvider>(context);
     var bottomSheetHeight = 232.h;
 
     return SafeArea(
@@ -62,7 +73,8 @@ class _DateOfBirthScreenState extends State<DateOfBirthScreen> {
                   keyboardType: TextInputType.none,
                   cursorColor: AmptiveColors.brandBlueColor,
                   decoration: InputDecoration(
-                    contentPadding: EdgeInsets.symmetric(vertical: 12.h, horizontal: 16.w),
+                    contentPadding:
+                        EdgeInsets.symmetric(vertical: 12.h, horizontal: 16.w),
                     hintText: "Select Date",
                     hintStyle: GoogleFonts.inter(
                       fontSize: 16.sp,
@@ -96,27 +108,26 @@ class _DateOfBirthScreenState extends State<DateOfBirthScreen> {
                       fontSize: 16.sp,
                       color: AmptiveColors.whiteColor),
                 ),
-              Container(
-                height: 20.h,
-                margin: EdgeInsets.symmetric(vertical: 11.h),
-                child: Text(
-                 "Only users 13 and older may use this app",
-                  style: GoogleFonts.inter(
-                    color: AmptiveColors.whiteColor,
-                    fontWeight: FontWeight.w400,
-                    fontSize: 11.sp,
-                    height: 0.14,
+                Container(
+                  height: 20.h,
+                  margin: EdgeInsets.symmetric(vertical: 11.h),
+                  child: Text(
+                    "Only users 13 and older may use this app",
+                    style: GoogleFonts.inter(
+                      color: AmptiveColors.whiteColor,
+                      fontWeight: FontWeight.w400,
+                      fontSize: 11.sp,
+                      height: 0.14,
+                    ),
                   ),
                 ),
-              ),
-
-
                 Expanded(
                   child: SizedBox(
                     height: 1.h,
                   ),
                 ),
-                Consumer<FormProvider>(builder: (context, model, _) {
+                BlocBuilder<AmptiveAuthBloc, AmptiveAuthState>(
+                    builder: (context, state) {
                   return Container(
                     width: 350.w,
                     height: 50.w,
@@ -127,20 +138,20 @@ class _DateOfBirthScreenState extends State<DateOfBirthScreen> {
                     child: ElevatedButton(
                       onPressed: () {
                         // Validate returns true if the form is valid, or false otherwise.
-                        if (model.isDOBValid) {
+                        if (service.isDOBValid) {
                           context.pushNamed(AmptiveRoutes.addUsername);
                         }
                       },
                       style: ElevatedButton.styleFrom(
-                          backgroundColor: model.dob != null
+                          backgroundColor: service.dob != null
                               ? AmptiveColors.brandBlueColor
                               : const Color(0xFF2F2F2F)),
                       child: Text(
-                        "Next",
+                        AmptiveOtherStrings.next,
                         style: GoogleFonts.inter(
-                            fontWeight: FontWeight.w600,
-                            fontSize: 18.sp,
-                            color: model.dob != null
+                            fontWeight: AmptiveFontWeights.semiBold,
+                            fontSize: AmptiveFontSizes.size18,
+                            color: service.dob != null
                                 ? AmptiveColors.whiteColor
                                 : const Color(0xFF666666)),
                       ),
@@ -224,7 +235,7 @@ class _DateOfBirthScreenState extends State<DateOfBirthScreen> {
         _dobController.text = _formatDate(pickedDate);
       });
 
-      _formProvider.setDOB(_selectedDate);
+      service.setDOB(_selectedDate);
     }
   }
 

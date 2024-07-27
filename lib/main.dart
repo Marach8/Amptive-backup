@@ -1,6 +1,9 @@
 import 'dart:io';
 import 'package:amptive/src/bloc/authentication_bloc/auth_bloc.dart';
 import 'package:amptive/src/bloc/onboarding_bloc/onboarding_bloc.dart';
+import 'package:amptive/src/services/auth/auth_field_service.dart';
+import 'package:amptive/src/services/authentication_service.dart';
+import 'package:amptive/src/services/auth/otp_service.dart';
 import 'package:amptive/src/utils/constants/strings/route_strings.dart';
 import 'package:amptive/src/utils/themes/app_theme_data.dart';
 import 'package:amptive/src/views/screens/authentication_screens/auth_screen.dart';
@@ -20,17 +23,29 @@ import 'package:amptive/src/views/screens/onboarding_screens/welcome_screen.dart
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
 
-void main() => runApp(
-  MultiBlocProvider(
-    providers: [
-      BlocProvider(create: (_) => AmptiveOnboardingBloc()),
-      BlocProvider(create: (_) => AmptiveAuthBloc())
-    ],
-    child: const AmptiveApp(),
-  ),
-);
+void main() {
+  setup();
+
+  runApp(
+    MultiBlocProvider(
+      providers: [
+        BlocProvider(create: (_) => AmptiveOnboardingBloc()),
+        BlocProvider(create: (_) => AmptiveAuthBloc())
+      ],
+      child: const AmptiveApp(),
+    ),
+  );
+}
+
+void setup() {
+  // setup: register services
+  GetIt.I.registerSingleton<OtpService>(OtpService());
+  GetIt.I.registerSingleton<AuthFieldService>(AuthFieldService());
+  GetIt.I.registerSingleton<AuthenticationService>(AuthenticationService());
+}
 
 /// The route configuration.
 final GoRouter _router = GoRouter(
@@ -38,9 +53,8 @@ final GoRouter _router = GoRouter(
   // initialLocation: "/email-route/otp",
   routes: <RouteBase>[
     GoRoute(
-      path: AmptiveRoutes.index,
-      builder: (_, __) => const AmptiveOnboardingScreen()
-    ),
+        path: AmptiveRoutes.index,
+        builder: (_, __) => const AmptiveOnboardingScreen()),
     GoRoute(
       name: AmptiveRoutes.welcome,
       path: "/welcome-route",
@@ -59,46 +73,39 @@ final GoRouter _router = GoRouter(
       builder: (_, __) => const AmptiveOnboardingScreen(),
     ),
     GoRoute(
-      name: AmptiveRoutes.emailAuth,
-      path: "/email-route",
-      builder: (_, __) =>const AmptiveEmailAuthScreen()
-    ),
-
+        name: AmptiveRoutes.emailAuth,
+        path: "/email-route",
+        builder: (_, __) => const AmptiveEmailAuthScreen()),
     GoRoute(
-      name: AmptiveRoutes.otp,
-      path: "/otp",
-      builder: (BuildContext context, GoRouterState state) {
-        String where = state.extra as String;
-        return OTPScreen(from: where);
-
-      }
-    ),
-
-
+        name: AmptiveRoutes.otp,
+        path: "/otp",
+        builder: (BuildContext context, GoRouterState state) {
+          String where = state.extra as String;
+          return OTPScreen(from: where);
+        }),
     GoRoute(
       name: AmptiveRoutes.addPhone,
       path: "/add-phone",
       builder: (BuildContext context, GoRouterState state) =>
-      const AddPhoneScreen(),
+          const AddPhoneScreen(),
     ),
-
     GoRoute(
-      name: AmptiveRoutes.addProfilePic,
-      path: "/add-profile-pic",
-      builder: (BuildContext context, GoRouterState state) =>
-      const PostRegistrationScreen(),
-      routes: <RouteBase> [
-        GoRoute(
-          name: AmptiveRoutes.cropImage,
-          path: "crop-image",
-          builder: (BuildContext context, GoRouterState state) {
-            File imageFile = state.extra as File;
-            return CropPage(title: "Cropper", imageFile: imageFile,);
-          }
-        ),
-      ]
-    ),
-
+        name: AmptiveRoutes.addProfilePic,
+        path: "/add-profile-pic",
+        builder: (BuildContext context, GoRouterState state) =>
+            const PostRegistrationScreen(),
+        routes: <RouteBase>[
+          GoRoute(
+              name: AmptiveRoutes.cropImage,
+              path: "crop-image",
+              builder: (BuildContext context, GoRouterState state) {
+                File imageFile = state.extra as File;
+                return CropPage(
+                  title: "Cropper",
+                  imageFile: imageFile,
+                );
+              }),
+        ]),
     GoRoute(
       name: AmptiveRoutes.passwordAuth,
       path: "/password",
@@ -127,15 +134,10 @@ final GoRouter _router = GoRouter(
       name: AmptiveRoutes.preference,
       path: "/preference-route",
       builder: (BuildContext context, GoRouterState state) =>
-        const PreferenceScreen(),
+          const PreferenceScreen(),
     ),
-
-
   ],
 );
-
-
-
 
 class AmptiveApp extends StatelessWidget {
   const AmptiveApp({super.key});

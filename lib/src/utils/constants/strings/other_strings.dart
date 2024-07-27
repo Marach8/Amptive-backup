@@ -1,8 +1,10 @@
 class AmptiveOtherStrings{
+
   const AmptiveOtherStrings._();
 
   static const inter = 'Inter';
 
+  static const empty = "";
   static const goLiveLikeNeverBefore = "Go Live, Like Never Before";
   static const monetizeYouLiveShowsAndEvents = "Readily monetize your live audio shows and events according to your unique taste while also creating the best for your subscribers.";
   static const experienceItUniquely = "Experience it Uniquely";

@@ -1,12 +1,21 @@
-abstract class AmptiveAuthEvent{}
+abstract class AmptiveAuthEvent {}
 
+class VerifyEmailAuthEvent extends AmptiveAuthEvent {}
 
-class VerifyEmailAuthEvent extends AmptiveAuthEvent{
-  final String userEmail;
-  VerifyEmailAuthEvent({required this.userEmail});
+class EmailFieldChangedAuthEvent extends AmptiveAuthEvent {
+  String? currentTextEntered;
+
+  EmailFieldChangedAuthEvent({this.currentTextEntered});
 }
 
-class GetTheCurrentTextEnteredByTheUserAuthEvent extends AmptiveAuthEvent{
-  String? currentTextEnteredByUser;
-  GetTheCurrentTextEnteredByTheUserAuthEvent({this.currentTextEnteredByUser});
+// otp auth events
+class OTPChangedAuthEvent extends AmptiveAuthEvent {
+  final bool otpValid;
+
+  OTPChangedAuthEvent({required this.otpValid});
 }
+
+class VerifyOTPAuthEvent extends AmptiveAuthEvent {}
+
+// password auth event
+class PasswordChangedAuthEvent extends AmptiveAuthEvent {}

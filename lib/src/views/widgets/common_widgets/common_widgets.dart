@@ -32,7 +32,9 @@ class CustomLoaderButton extends StatelessWidget {
       borderRadius: borderRadius,
       onTap: onTap,
       color: color ??
-          (validCondition ?? false ? AmptiveColors.brandBlueColor : const Color(0xFF2F2F2F)),
+          (validCondition ?? false
+              ? AmptiveColors.brandBlueColor
+              : const Color(0xFF2F2F2F)),
       loader: SizedBox(
         width: 25.w,
         height: 25.w,
@@ -47,7 +49,39 @@ class CustomLoaderButton extends StatelessWidget {
         style: GoogleFonts.inter(
           fontWeight: FontWeight.w600,
           fontSize: 18.sp,
-          color: validCondition ?? false? AmptiveColors.whiteColor : const Color(0xFF666666),
+          color: validCondition ?? false
+              ? AmptiveColors.whiteColor
+              : const Color(0xFF666666),
+        ),
+      ),
+    );
+  }
+}
+
+class AmptiveLoadingButtonWidget extends StatelessWidget {
+  const AmptiveLoadingButtonWidget({
+    super.key,
+    this.margin,
+  });
+
+  final EdgeInsetsGeometry? margin;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      margin: margin ?? EdgeInsets.symmetric(horizontal: 25.w),
+      width: double.infinity,
+      height: 50.w,
+      child: ElevatedButton(
+        onPressed: () {},
+        child: SizedBox(
+          width: 25.w,
+          height: 25.w,
+          child: CircularProgressIndicator(
+            color: AmptiveColors.whiteColor,
+            backgroundColor: AmptiveColors.whiteColor.withOpacity(0.5),
+            strokeWidth: 3.w,
+          ),
         ),
       ),
     );
