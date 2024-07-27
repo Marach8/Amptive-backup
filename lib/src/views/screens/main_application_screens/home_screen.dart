@@ -1,12 +1,12 @@
-import 'package:amptive/src/utils/constants/colors.dart';
-import 'package:amptive/src/utils/constants/font_weights.dart';
 import 'package:amptive/src/utils/constants/strings/image_strings.dart';
-import 'package:amptive/src/utils/constants/strings/other_strings.dart';
 import 'package:amptive/src/views/widgets/common_widgets/annotated_region__widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/app_bar.dart';
+import 'package:amptive/src/views/widgets/common_widgets/live_user_model_widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/png_jpeg_asset_loader_widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/svg_asset_loader_widget.dart';
 import 'package:amptive/src/views/widgets/other_widgets/main_application_widgets/appbar_pop_drop_down.dart';
+import 'package:amptive/src/views/widgets/other_widgets/main_application_widgets/song_or_video_data_model_widget.dart';
+import 'package:amptive/src/views/widgets/other_widgets/main_application_widgets/user_with_add_icon_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
@@ -21,7 +21,6 @@ class AmptiveHomeScreen extends StatelessWidget {
       child: Scaffold(
         appBar: AmptiveAppBar(
           centerTitle: false,
-          //hideLeading: true,
           leadingWidth: 150.w,
           leading: const Row(
             mainAxisSize: MainAxisSize.min,
@@ -52,106 +51,47 @@ class AmptiveHomeScreen extends StatelessWidget {
           ],
         ),
 
-        body: Padding(
-          padding: const EdgeInsets.all(20),
-          child: ListView(
-            scrollDirection: Axis.horizontal,
-            children: Iterable.generate(
-              50,
-              (index){
-                if(index == 0){
-                  return const AmptiveLiveUserWidget();
-                }
-                else{
-                  return Row(
-                    mainAxisSize: MainAxisSize.min,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Gap(20.w),
-                      const AmptiveLiveUserWidget()
-                    ],
-                  );
-                }
-              }
-            ).toList()
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-class AmptiveLiveUserWidget extends StatelessWidget {
-  const AmptiveLiveUserWidget({
-    super.key,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        Stack(
-          alignment: Alignment.center,
+        body: Column(
           children: [
+            Gap(5.h),
             Container(
-              padding: const EdgeInsets.all(1),
-              height: 70.h,
-              width: 70.w,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(35).r,
-                border: Border.all(
-                  color: AmptiveColors.orangeGradientColorB,
-                  width: 2,
-                )
-              ),
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(30),
-                child: AmptivePngAndJpegAssetLoaderWidget(
-                  pngOrJpegPath: AmptiveImageStrings.jpeg1,
-                  boxFit: BoxFit.cover,
-                  height: 60.h,
-                  width: 60.w,
-                ),
+              height: 105.h,
+              padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
+              child: ListView(
+                padding: EdgeInsets.zero,   
+                shrinkWrap: true,      
+                scrollDirection: Axis.horizontal,
+                children: [
+                  const AmptiveUserWithAddIconWidget(),
+                  ...Iterable.generate(
+                    50,
+                    (_) => Row(
+                      mainAxisSize: MainAxisSize.min,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Gap(20.w),
+                        const AmptiveLiveUserModelWidget()
+                      ],
+                    )
+                  )
+                ]
               ),
             ),
-            Positioned(
-              bottom: 0,
-              child: Container(
-                alignment: Alignment.center,
-                padding: const EdgeInsets.all(0),
-                height: 22.h,
-                width: 40.h,
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    colors: [
-                      AmptiveColors.orangeGradientColorA,
-                      AmptiveColors.orangeGradientColorB
-                    ]
-                  ),
-                  borderRadius: BorderRadius.circular(5).r,
-                  border: Border.all(
-                    color: AmptiveColors.brandBlackColor,
-                    width: 2,
-                  )
-                ),
-                child: Text(
-                  AmptiveOtherStrings.live.toUpperCase(),
-                  style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                    fontWeight: AmptiveFontWeights.semiBold
-                  )
-                ),
+        
+            const Divider(thickness: 0.7,),
+        
+            Expanded(
+              child: ListView(              
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                children: Iterable.generate(
+                  10,
+                  (_) => const AmptiveSongOrVideoDataModelWidget()
+                ).toList()
               ),
             )
           ],
         ),
-    
-        Gap(5.h),
-        Text(
-          'Emmanuel',
-          style: Theme.of(context).textTheme.titleSmall
-        ),
-      ],
+      ),
     );
   }
 }

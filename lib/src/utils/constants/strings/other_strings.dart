@@ -45,4 +45,7 @@ class AmptiveOtherStrings{
   static const createPasswordForYourAccount = "Create a password for your account";
   static const enterYourPassword = 'Enter your password';
   static const passwordMustBeAtleast8 = 'Your paassword must be at least 8 characters';
+
+  static const goLive = 'Go live';
+  static const paidShow = '\$paid show';
 }
