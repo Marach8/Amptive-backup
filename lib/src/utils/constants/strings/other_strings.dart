@@ -25,6 +25,7 @@ class AmptiveOtherStrings{
   static const signUpWith = 'Sign up with ';
   static const signInWith = 'Sign in with ';
   static const email = 'Email';
+  static const live = 'Live';
   static const phoneNumber = 'Phone Number';
   static const facebook = 'Facebook';
   static const twitter = 'X(Twitter)';

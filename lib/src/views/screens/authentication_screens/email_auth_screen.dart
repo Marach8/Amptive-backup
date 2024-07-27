@@ -71,6 +71,7 @@ class _AmptiveEmailAuthScreenState extends State<AmptiveEmailAuthScreen> {
             ],
           ),
         ),
+        
         bottomSheet: BlocListener<AmptiveAuthBloc, AmptiveAuthState>(
           listener: (context, state) {
             if (state is LoadedAuthState && context.mounted) {
@@ -90,7 +91,7 @@ class _AmptiveEmailAuthScreenState extends State<AmptiveEmailAuthScreen> {
                   return state is LoadingAuthState
                       ? ElevatedButton(
                           onPressed: () {},
-                          child: SizedBox(
+                          child: const SizedBox(
                             width: 24,
                             height: 24,
                             child: CircularProgressIndicator(

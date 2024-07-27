@@ -1,89 +1,157 @@
+import 'package:amptive/src/utils/constants/colors.dart';
+import 'package:amptive/src/utils/constants/font_weights.dart';
+import 'package:amptive/src/utils/constants/strings/image_strings.dart';
+import 'package:amptive/src/utils/constants/strings/other_strings.dart';
+import 'package:amptive/src/views/widgets/common_widgets/annotated_region__widget.dart';
+import 'package:amptive/src/views/widgets/common_widgets/app_bar.dart';
+import 'package:amptive/src/views/widgets/common_widgets/png_jpeg_asset_loader_widget.dart';
+import 'package:amptive/src/views/widgets/common_widgets/svg_asset_loader_widget.dart';
+import 'package:amptive/src/views/widgets/other_widgets/main_application_widgets/appbar_pop_drop_down.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:gap/gap.dart';
 
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
 
-  // This widget is the home page of your application. It is stateful, meaning
-  // that it has a State object (defined below) that contains fields that affect
-  // how it looks.
-
-  // This class is the configuration for the state. It holds the values (in this
-  // case the title) provided by the parent (in this case the App widget) and
-  // used by the build method of the State. Fields in a Widget subclass are
-  // always marked "final".
-
-  final String title;
-
-  @override
-  State<MyHomePage> createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      // This call to setState tells the Flutter framework that something has
-      // changed in this State, which causes it to rerun the build method below
-      // so that the display can reflect the updated values. If we changed
-      // _counter without calling setState(), then the build method would not be
-      // called again, and so nothing would appear to happen.
-      _counter++;
-    });
-  }
+class AmptiveHomeScreen extends StatelessWidget {
+  const AmptiveHomeScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    // This method is rerun every time setState is called, for instance as done
-    // by the _incrementCounter method above.
-    //
-    // The Flutter framework has been optimized to make rerunning build methods
-    // fast, so that you can just rebuild anything that needs updating rather
-    // than having to individually change instances of widgets.
-    return Scaffold(
-      appBar: AppBar(
-        // TRY THIS: Try changing the color here to a specific color (to
-        // Colors.amber, perhaps?) and trigger a hot reload to see the AppBar
-        // change color while the other colors stay the same.
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        // Here we take the value from the MyHomePage object that was created by
-        // the App.build method, and use it to set our appbar title.
-        title: Text(widget.title),
-      ),
-      body: Center(
-        // Center is a layout widget. It takes a single child and positions it
-        // in the middle of the parent.
-        child: Column(
-          // Column is also a layout widget. It takes a list of children and
-          // arranges them vertically. By default, it sizes itself to fit its
-          // children horizontally, and tries to be as tall as its parent.
-          //
-          // Column has various properties to control how it sizes itself and
-          // how it positions its children. Here we use mainAxisAlignment to
-          // center the children vertically; the main axis here is the vertical
-          // axis because Columns are vertical (the cross axis would be
-          // horizontal).
-          //
-          // TRY THIS: Invoke "debug painting" (choose the "Toggle Debug Paint"
-          // action in the IDE, or press "p" in the console), to see the
-          // wireframe for each widget.
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Text(
-              'You have pushed the button this many times:',
+    return AmptiveAnnotatedRegionWidget(
+      child: Scaffold(
+        appBar: AmptiveAppBar(
+          centerTitle: false,
+          //hideLeading: true,
+          leadingWidth: 150.w,
+          leading: const Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              AmptiveSvgAssetLoaderWidget(svgPath: AmptiveImageStrings.svgLogo2),
+              AmptiveAppBarDropDownWidget()
+            ],
+          ),
+
+          actions: [
+            GestureDetector(
+              onTap: (){},
+              child: const AmptiveSvgAssetLoaderWidget(svgPath: AmptiveImageStrings.svgWalletIcon)
             ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headlineMedium,
+            Gap(20.w),
+            GestureDetector(
+              onTap: (){},
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(15),
+                child: AmptivePngAndJpegAssetLoaderWidget(
+                  pngOrJpegPath: AmptiveImageStrings.jpeg1,
+                  boxFit: BoxFit.cover,
+                  height: 30.h,
+                  width: 30.w,
+                ),
+              ),
             ),
           ],
         ),
+
+        body: Padding(
+          padding: const EdgeInsets.all(20),
+          child: ListView(
+            scrollDirection: Axis.horizontal,
+            children: Iterable.generate(
+              50,
+              (index){
+                if(index == 0){
+                  return const AmptiveLiveUserWidget();
+                }
+                else{
+                  return Row(
+                    mainAxisSize: MainAxisSize.min,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Gap(20.w),
+                      const AmptiveLiveUserWidget()
+                    ],
+                  );
+                }
+              }
+            ).toList()
+          ),
+        ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
+    );
+  }
+}
+
+class AmptiveLiveUserWidget extends StatelessWidget {
+  const AmptiveLiveUserWidget({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Stack(
+          alignment: Alignment.center,
+          children: [
+            Container(
+              padding: const EdgeInsets.all(1),
+              height: 70.h,
+              width: 70.w,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(35).r,
+                border: Border.all(
+                  color: AmptiveColors.orangeGradientColorB,
+                  width: 2,
+                )
+              ),
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(30),
+                child: AmptivePngAndJpegAssetLoaderWidget(
+                  pngOrJpegPath: AmptiveImageStrings.jpeg1,
+                  boxFit: BoxFit.cover,
+                  height: 60.h,
+                  width: 60.w,
+                ),
+              ),
+            ),
+            Positioned(
+              bottom: 0,
+              child: Container(
+                alignment: Alignment.center,
+                padding: const EdgeInsets.all(0),
+                height: 22.h,
+                width: 40.h,
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    colors: [
+                      AmptiveColors.orangeGradientColorA,
+                      AmptiveColors.orangeGradientColorB
+                    ]
+                  ),
+                  borderRadius: BorderRadius.circular(5).r,
+                  border: Border.all(
+                    color: AmptiveColors.brandBlackColor,
+                    width: 2,
+                  )
+                ),
+                child: Text(
+                  AmptiveOtherStrings.live.toUpperCase(),
+                  style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                    fontWeight: AmptiveFontWeights.semiBold
+                  )
+                ),
+              ),
+            )
+          ],
+        ),
+    
+        Gap(5.h),
+        Text(
+          'Emmanuel',
+          style: Theme.of(context).textTheme.titleSmall
+        ),
+      ],
     );
   }
 }
