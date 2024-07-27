@@ -16,41 +16,39 @@ class AmptiveLiveUserModelWidget extends StatelessWidget {
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
-        SizedBox(
-          height: 73.h,
-          child: Stack(
-            alignment: Alignment.center,
-            children: [
-              Container(
-                padding: const EdgeInsets.all(2).r,
-                height: 70.h,
-                width: 70.w,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(35).r,
-                  border: Border.all(
-                    color: AmptiveColors.orangeGradientColorB,
-                    width: 2.w,
-                  )
-                ),
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(30),
-                  child: AmptivePngAndJpegAssetLoaderWidget(
-                    pngOrJpegPath: AmptiveImageStrings.jpeg1,
-                    boxFit: BoxFit.cover,
-                    height: 60.h,
-                    width: 60.w,
-                  ),
+        Stack(
+          clipBehavior: Clip.none,
+          alignment: Alignment.center,
+          children: [
+            Container(
+              padding: const EdgeInsets.all(2).r,
+              height: 70.h,
+              width: 70.w,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(35).r,
+                border: Border.all(
+                  color: AmptiveColors.orangeGradientColorB,
+                  width: 2.w,
+                )
+              ),
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(30),
+                child: AmptivePngAndJpegAssetLoaderWidget(
+                  pngOrJpegPath: AmptiveImageStrings.jpeg1,
+                  boxFit: BoxFit.cover,
+                  height: 60.h,
+                  width: 60.w,
                 ),
               ),
-              const Positioned(
-                bottom: 0,
-                child: AmptiveLiveIndicatorWidget(),
-              )
-            ],
-          ),
+            ),
+            const Positioned(
+              bottom: -4,
+              child: AmptiveLiveIndicatorWidget(),
+            )
+          ],
         ),
     
-        Gap(5.h),
+        Gap(10.h),
         Text(
           'Emmanuel',
           style: Theme.of(context).textTheme.titleSmall

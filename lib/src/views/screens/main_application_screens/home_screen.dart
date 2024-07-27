@@ -1,4 +1,5 @@
 import 'package:amptive/src/utils/constants/strings/image_strings.dart';
+import 'package:amptive/src/utils/constants/strings/other_strings.dart';
 import 'package:amptive/src/views/widgets/common_widgets/annotated_region__widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/app_bar.dart';
 import 'package:amptive/src/views/widgets/common_widgets/live_user_model_widget.dart';
@@ -51,46 +52,103 @@ class AmptiveHomeScreen extends StatelessWidget {
           ],
         ),
 
-        body: Column(
-          children: [
-            Gap(5.h),
-            Container(
-              height: 105.h,
-              padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
-              child: ListView(
-                padding: EdgeInsets.zero,   
-                shrinkWrap: true,      
-                scrollDirection: Axis.horizontal,
-                children: [
-                  const AmptiveUserWithAddIconWidget(),
-                  ...Iterable.generate(
-                    50,
-                    (_) => Row(
-                      mainAxisSize: MainAxisSize.min,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Gap(20.w),
-                        const AmptiveLiveUserModelWidget()
-                      ],
-                    )
-                  )
-                ]
-              ),
-            ),
-        
-            const Divider(thickness: 0.7,),
-        
-            Expanded(
-              child: ListView(              
-                padding: const EdgeInsets.symmetric(horizontal: 20),
-                children: Iterable.generate(
-                  10,
-                  (_) => const AmptiveSongOrVideoDataModelWidget()
-                ).toList()
-              ),
+
+
+        body: DefaultTabController(
+          length: 1,
+          child: NestedScrollView(                
+            headerSliverBuilder: (_, __) => [
+              SliverAppBar(
+                //pinned: true,
+                floating: true,
+                expandedHeight: 0,
+                  
+                flexibleSpace: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20).r,
+                  child: ListView(
+                    padding: EdgeInsets.zero,   
+                    shrinkWrap: true,      
+                    scrollDirection: Axis.horizontal,
+                    children: [
+                      const AmptiveUserWithAddIconWidget(),
+                      ...Iterable.generate(
+                        50,
+                        (_) => Row(
+                          mainAxisSize: MainAxisSize.min,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Gap(20.w),
+                            const AmptiveLiveUserModelWidget()
+                          ],
+                        )
+                      )
+                    ]
+                  ),
+                ),
+
+                bottom: const TabBar(
+                  tabs: [
+                    Tab(text: AmptiveOtherStrings.emptyString,)
+                  ],
+                ),
+                
+              )
+            ],
+            
+            body: TabBarView(
+              children: [
+                ListView(              
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  children: Iterable.generate(
+                    10,
+                    (_) => const AmptiveSongOrVideoDataModelWidget()
+                  ).toList()
+                ),
+              ],
             )
-          ],
-        ),
+          ),
+        )
+
+        // body: Column(
+        //   children: [
+        //     Gap(5.h),
+        //     Container(
+        //       height: 105.h,
+        //       padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
+        //       child: ListView(
+        //         padding: EdgeInsets.zero,   
+        //         shrinkWrap: true,      
+        //         scrollDirection: Axis.horizontal,
+        //         children: [
+        //           const AmptiveUserWithAddIconWidget(),
+        //           ...Iterable.generate(
+        //             50,
+        //             (_) => Row(
+        //               mainAxisSize: MainAxisSize.min,
+        //               crossAxisAlignment: CrossAxisAlignment.start,
+        //               children: [
+        //                 Gap(20.w),
+        //                 const AmptiveLiveUserModelWidget()
+        //               ],
+        //             )
+        //           )
+        //         ]
+        //       ),
+        //     ),
+        
+        //     const Divider(thickness: 0.7,),
+        
+        //     Expanded(
+        //       child: ListView(              
+        //         padding: const EdgeInsets.symmetric(horizontal: 20),
+        //         children: Iterable.generate(
+        //           10,
+        //           (_) => const AmptiveSongOrVideoDataModelWidget()
+        //         ).toList()
+        //       ),
+        //     )
+        //   ],
+        // ),
       ),
     );
   }
