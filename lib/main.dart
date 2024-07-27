@@ -5,6 +5,7 @@ import 'package:amptive/src/utils/constants/strings/route_strings.dart';
 import 'package:amptive/src/utils/themes/app_theme_data.dart';
 import 'package:amptive/src/views/screens/authentication_screens/auth_screen.dart';
 import 'package:amptive/src/views/screens/authentication_screens/dob_screen.dart';
+import 'package:amptive/src/views/screens/main_application_screens/pre_homepage.dart';
 import 'package:amptive/src/views/screens/main_application_screens/preference_screen.dart';
 import 'package:amptive/src/views/screens/authentication_screens/add_phone.dart';
 import 'package:amptive/src/views/screens/main_application_screens/crop_image_screen.dart';

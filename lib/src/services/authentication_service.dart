@@ -3,6 +3,11 @@ import 'package:amptive/src/models/user_model.dart';
 import 'api_handler.dart';
 
 class AuthenticationService {
+  AuthenticationService._();
+  static final AuthenticationService _instance = AuthenticationService._();
+  factory AuthenticationService() => _instance;
+
+
   final _apiHandler = APIHandler();
 
   Future<AmptiveUser?> registerUser({
@@ -68,5 +73,16 @@ class AuthenticationService {
   Future<bool> checkUniqueUsername(String usr) async {
     await Future.delayed(const Duration(seconds: 3));
     return usr == "peter";
+  }
+
+  // process fields
+  Future<bool> processEmail(String email) async {
+    if (await checkUniqueEmail(email)) {
+      return false;
+    } else {
+      // send otp
+      await sendOTP(email);
+      return true;
+    }
   }
 }
