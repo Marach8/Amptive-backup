@@ -33,25 +33,5 @@ abstract class AmptiveAuthState{
 class InitialAuthState extends AmptiveAuthState{}
 
 class MainAuthState extends AmptiveAuthState{
-  MainAuthState({
-    super.userEmail,
-    super.resendOTPCountDown,
-    super.otpInputFromUser,
-    super.hidePassword,
-    super.userPassword
-  });
-
-  MainAuthState copyWith({
-    String? userEmail,
-    int? resendOTPCountDown,
-    String? otpInputFromUser,
-    bool? hidePassword,
-    String? userPassword
-  }) => MainAuthState(
-    userEmail: userEmail ?? this.userEmail,
-    resendOTPCountDown: resendOTPCountDown ?? this.resendOTPCountDown,
-    otpInputFromUser: otpInputFromUser ?? this.otpInputFromUser,
-    hidePassword: hidePassword ?? this.hidePassword,
-    userPassword: userPassword ?? this.userPassword
-  );
+  MainAuthState({super.userEmail});
 }
