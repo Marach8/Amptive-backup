@@ -2,7 +2,7 @@ import 'package:amptive/src/bloc/authentication_bloc/auth_bloc.dart';
 import 'package:amptive/src/bloc/authentication_bloc/auth_events.dart';
 import 'package:amptive/src/bloc/authentication_bloc/auth_states.dart';
 import 'package:amptive/src/utils/constants/strings/other_strings.dart';
-import 'package:amptive/src/views/widgets/common_widgets/app_bar.dart';
+import 'package:amptive/src/views/widgets/common_widgets/app_bar_widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/elevated_button_widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/textformfield_widget.dart';
 import 'package:flutter/material.dart';

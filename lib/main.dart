@@ -5,10 +5,10 @@ import 'package:amptive/src/utils/constants/strings/route_strings.dart';
 import 'package:amptive/src/utils/themes/app_theme_data.dart';
 import 'package:amptive/src/views/screens/authentication_screens/sign_in_or_sign_up_screen.dart';
 import 'package:amptive/src/views/screens/authentication_screens/dob_screen.dart';
-import 'package:amptive/src/views/screens/main_application_screens/home_screen.dart';
-import 'package:amptive/src/views/screens/main_application_screens/preference_screen.dart';
+import 'package:amptive/src/views/screens/main_application_screens/dashboard_screen.dart';
+import 'package:amptive/src/views/screens/main_application_screens/sub_views/preference_screen.dart';
 import 'package:amptive/src/views/screens/authentication_screens/add_phone.dart';
-import 'package:amptive/src/views/screens/main_application_screens/crop_image_screen.dart';
+import 'package:amptive/src/views/screens/main_application_screens/sub_views/crop_image_screen.dart';
 import 'package:amptive/src/views/screens/authentication_screens/email_auth_screen.dart';
 import 'package:amptive/src/views/screens/authentication_screens/name_auth_screen.dart';
 import 'package:amptive/src/views/screens/onboarding_screens/onboarding_page_view_screen.dart';
@@ -39,13 +39,13 @@ final GoRouter _router = GoRouter(
   routes: <RouteBase>[
     GoRoute(
       path: AmptiveRoutes.index,
-      builder: (_, __) => const AmptiveHomeScreen()
+      builder: (_, __) => const AmptiveDashboardScreen()
     ),
 
     GoRoute(
       name: 'homescreen',
       path: "/home-screen",
-      builder: (_, __) => const AmptiveHomeScreen()
+      builder: (_, __) => const AmptiveDashboardScreen()
     ),
 
     GoRoute(

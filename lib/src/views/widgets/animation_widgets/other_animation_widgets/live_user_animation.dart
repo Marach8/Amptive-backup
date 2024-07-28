@@ -46,31 +46,28 @@ SingleTickerProviderStateMixin{
   }
 
   @override
-  Widget build(BuildContext context) {
-
-    return AnimatedBuilder(
-      animation: paddingAnimation,
-      builder: (_, __) => Container(
-        padding: EdgeInsets.all(paddingAnimation.value),
-        height: 70,
-        width: 70,
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(35),
-          border: Border.all(
-            color: AmptiveColors.orangeGradientColorA,
-            width: 2
-          )
-        ),
-        child: ClipRRect(
-          borderRadius: BorderRadius.circular(35),
-          child: AmptivePngAndJpegAssetLoaderWidget(
-            pngOrJpegPath: widget.imagePath,
-            boxFit: BoxFit.cover,
-            height: 60,
-            width: 60,
-          ),
+  Widget build(_) => AnimatedBuilder(
+    animation: paddingAnimation,
+    builder: (_, __) => Container(
+      padding: EdgeInsets.all(paddingAnimation.value),
+      height: 70,
+      width: 70,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(35),
+        border: Border.all(
+          color: AmptiveColors.orangeGradientColorA,
+          width: 2
+        )
+      ),
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(35),
+        child: AmptivePngAndJpegAssetLoaderWidget(
+          pngOrJpegPath: widget.imagePath,
+          boxFit: BoxFit.cover,
+          height: 60,
+          width: 60,
         ),
       ),
-    );
-  }
+    ),
+  );
 }

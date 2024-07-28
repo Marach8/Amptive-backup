@@ -1,11 +1,11 @@
 import 'dart:async';
 import 'package:amptive/src/utils/constants/colors.dart';
-import 'package:amptive/src/views/widgets/common_widgets/app_bar.dart';
+import 'package:amptive/src/views/widgets/common_widgets/app_bar_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
-import '../../../providers/preference_provider.dart';
+import '../../../../providers/preference_provider.dart';
 
 
 const int MAX_NUMBER_COMMUNITIES = 5;
