@@ -2,7 +2,7 @@ import 'package:amptive/src/utils/constants/strings/image_strings.dart';
 import 'package:amptive/src/utils/constants/strings/other_strings.dart';
 import 'package:amptive/src/views/widgets/common_widgets/annotated_region__widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/app_bar.dart';
-import 'package:amptive/src/views/widgets/common_widgets/container_with_picture_widget.dart';
+import 'package:amptive/src/views/widgets/common_widgets/circular_container_with_picture_widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/live_user_model_widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/svg_asset_loader_widget.dart';
 import 'package:amptive/src/views/widgets/other_widgets/main_application_widgets/appbar_pop_drop_down.dart';
@@ -39,7 +39,7 @@ class AmptiveHomeScreen extends StatelessWidget {
             const Gap(20),
             GestureDetector(
               onTap: (){},
-              child: const AmptiveCircularContainerWithPIctureWidget(
+              child: const AmptiveCircularContainerWithPictureWidget(
                 imagePath: AmptiveImageStrings.jpeg2,
               )
             ),

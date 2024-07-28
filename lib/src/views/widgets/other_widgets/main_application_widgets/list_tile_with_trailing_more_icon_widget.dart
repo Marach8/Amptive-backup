@@ -1,6 +1,6 @@
 import 'package:amptive/src/utils/constants/font_weights.dart';
 import 'package:amptive/src/utils/constants/strings/image_strings.dart';
-import 'package:amptive/src/views/widgets/common_widgets/container_with_picture_widget.dart';
+import 'package:amptive/src/views/widgets/common_widgets/circular_container_with_picture_widget.dart';
 import 'package:flutter/material.dart';
 
 class AmptiveListTileWithTrailingMoreIconWidget extends StatelessWidget {
@@ -17,7 +17,7 @@ class AmptiveListTileWithTrailingMoreIconWidget extends StatelessWidget {
         onTap: (){},
         child: const Icon(Icons.more_horiz)
       ),
-      leading: const AmptiveCircularContainerWithPIctureWidget(
+      leading: const AmptiveCircularContainerWithPictureWidget(
         imagePath: AmptiveImageStrings.jpeg3,
       ),
       title: Text(

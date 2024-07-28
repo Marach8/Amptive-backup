@@ -16,22 +16,18 @@ class AmptiveUserWithAddIconWidget extends StatelessWidget {
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
+        Gap(10.h),
         Stack(
           clipBehavior: Clip.none,
-          alignment: Alignment.center,
+          alignment: Alignment.bottomCenter,
           children: [
-            Container(
-              padding: const EdgeInsets.all(2),
-              height: 70,
-              width: 70,
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(30),
-                child: const AmptivePngAndJpegAssetLoaderWidget(
-                  pngOrJpegPath: AmptiveImageStrings.jpeg1,
-                  boxFit: BoxFit.cover,
-                  height: 60,
-                  width: 60,
-                ),
+            ClipRRect(
+              borderRadius: BorderRadius.circular(30),
+              child: const AmptivePngAndJpegAssetLoaderWidget(
+                pngOrJpegPath: AmptiveImageStrings.jpeg1,
+                boxFit: BoxFit.cover,
+                height: 60,
+                width: 60,
               ),
             ),
             Positioned(
