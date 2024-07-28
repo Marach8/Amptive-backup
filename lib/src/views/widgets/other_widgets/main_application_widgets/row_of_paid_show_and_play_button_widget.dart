@@ -3,7 +3,6 @@ import 'package:amptive/src/utils/constants/font_sizes.dart';
 import 'package:amptive/src/utils/constants/font_weights.dart';
 import 'package:amptive/src/utils/constants/strings/other_strings.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class AmptiveRowOfPaidShowAndPlayButtonWidget extends StatelessWidget {
   const AmptiveRowOfPaidShowAndPlayButtonWidget({
@@ -20,7 +19,7 @@ class AmptiveRowOfPaidShowAndPlayButtonWidget extends StatelessWidget {
           child: Container(
             padding: const EdgeInsets.all(5),                                
             decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(5).r,
+              borderRadius: BorderRadius.circular(5),
               color: AmptiveColors.brandBlackColor
             ),
             child: Text(

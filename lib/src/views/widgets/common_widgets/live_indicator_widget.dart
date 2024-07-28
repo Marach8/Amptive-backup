@@ -15,8 +15,8 @@ class AmptiveLiveIndicatorWidget extends StatelessWidget {
     return Container(
       alignment: Alignment.center,
       padding: const EdgeInsets.all(0),
-      height: 23.h,
-      width: 43.w,
+      height: 23,
+      width: 43,
       decoration: BoxDecoration(
         gradient: LinearGradient(
           colors: [
@@ -24,10 +24,10 @@ class AmptiveLiveIndicatorWidget extends StatelessWidget {
             AmptiveColors.orangeGradientColorB
           ]
         ),
-        borderRadius: BorderRadius.circular(5).r,
+        borderRadius: BorderRadius.circular(5),
         border: Border.all(
           color: AmptiveColors.brandBlackColor,
-          width: 2.w,
+          width: 2,
         )
       ),
       child: Row(

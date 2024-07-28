@@ -22,22 +22,22 @@ class AmptiveLiveUserModelWidget extends StatelessWidget {
           children: [
             Container(
               padding: const EdgeInsets.all(2).r,
-              height: 70.h,
-              width: 70.w,
+              height: 70,
+              width: 70,
               decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(35).r,
+                borderRadius: BorderRadius.circular(45).r,
                 border: Border.all(
                   color: AmptiveColors.orangeGradientColorB,
-                  width: 2.w,
+                  width: 2,
                 )
               ),
               child: ClipRRect(
-                borderRadius: BorderRadius.circular(30),
-                child: AmptivePngAndJpegAssetLoaderWidget(
+                borderRadius: BorderRadius.circular(40),
+                child: const AmptivePngAndJpegAssetLoaderWidget(
                   pngOrJpegPath: AmptiveImageStrings.jpeg1,
                   boxFit: BoxFit.cover,
-                  height: 60.h,
-                  width: 60.w,
+                  height: 60,
+                  width: 60,
                 ),
               ),
             ),

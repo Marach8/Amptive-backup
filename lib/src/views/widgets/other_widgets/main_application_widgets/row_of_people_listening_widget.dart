@@ -1,7 +1,7 @@
 import 'package:amptive/src/utils/constants/font_sizes.dart';
 import 'package:amptive/src/utils/constants/font_weights.dart';
 import 'package:amptive/src/utils/constants/strings/image_strings.dart';
-import 'package:amptive/src/views/widgets/common_widgets/png_jpeg_asset_loader_widget.dart';
+import 'package:amptive/src/views/widgets/common_widgets/container_with_picture_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -15,43 +15,25 @@ class AmptiveRowOfNumberOfPeopleListeningWidget extends StatelessWidget {
     return Row(
       children: [
         SizedBox(
-          width: 70.w,
-          child: Stack(
+          width: 90.w,
+          child: const Stack(
             alignment: Alignment.centerLeft,
             clipBehavior: Clip.none,
             children: [
-              ClipRRect(
-                borderRadius: BorderRadius.circular(15).r,
-                child: AmptivePngAndJpegAssetLoaderWidget(
-                  pngOrJpegPath: AmptiveImageStrings.jpeg1,
-                  boxFit: BoxFit.cover,
-                  height: 30.h,
-                  width: 30.w,
-                ),
+              AmptiveCircularContainerWithPIctureWidget(
+                imagePath: AmptiveImageStrings.jpeg1,
               ),
               Positioned(
-                left: 15.w,
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(15).r,
-                  child: AmptivePngAndJpegAssetLoaderWidget(
-                    pngOrJpegPath: AmptiveImageStrings.jpeg2,
-                    boxFit: BoxFit.cover,
-                    height: 30.h,
-                    width: 30.w,
-                  ),
-                ),
+                left: 20,
+                child: AmptiveCircularContainerWithPIctureWidget(
+                  imagePath: AmptiveImageStrings.jpeg2,
+                )
               ),
               Positioned(
-                left: 30.w,
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(15).r,
-                  child: AmptivePngAndJpegAssetLoaderWidget(
-                    pngOrJpegPath: AmptiveImageStrings.jpeg3,
-                    boxFit: BoxFit.cover,
-                    height: 30.h,
-                    width: 30.w,
-                  ),
-                ),
+                left: 40,
+                child:AmptiveCircularContainerWithPIctureWidget(
+                  imagePath: AmptiveImageStrings.jpeg3,
+                )
               ),
             ],
           ),

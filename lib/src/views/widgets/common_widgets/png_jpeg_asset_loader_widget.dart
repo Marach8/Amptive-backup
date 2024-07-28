@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class AmptivePngAndJpegAssetLoaderWidget extends StatelessWidget {
   final String pngOrJpegPath;
@@ -19,8 +18,8 @@ class AmptivePngAndJpegAssetLoaderWidget extends StatelessWidget {
     return Image.asset(
       pngOrJpegPath,
       fit: boxFit,
-      height: height?.h,
-      width: width?.w,
+      height: height,
+      width: width,
     );
   }
 }

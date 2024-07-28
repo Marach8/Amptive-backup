@@ -1,8 +1,7 @@
 import 'package:amptive/src/utils/constants/font_weights.dart';
 import 'package:amptive/src/utils/constants/strings/image_strings.dart';
-import 'package:amptive/src/views/widgets/common_widgets/png_jpeg_asset_loader_widget.dart';
+import 'package:amptive/src/views/widgets/common_widgets/container_with_picture_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class AmptiveListTileWithTrailingMoreIconWidget extends StatelessWidget {
   const AmptiveListTileWithTrailingMoreIconWidget({
@@ -18,14 +17,8 @@ class AmptiveListTileWithTrailingMoreIconWidget extends StatelessWidget {
         onTap: (){},
         child: const Icon(Icons.more_horiz)
       ),
-      leading: ClipRRect(
-        borderRadius: BorderRadius.circular(15),
-        child: AmptivePngAndJpegAssetLoaderWidget(
-          pngOrJpegPath: AmptiveImageStrings.jpeg1,
-          boxFit: BoxFit.cover,
-          height: 30.h,
-          width: 30.w,
-        ),
+      leading: const AmptiveCircularContainerWithPIctureWidget(
+        imagePath: AmptiveImageStrings.jpeg3,
       ),
       title: Text(
         'emmanuelnnanna',

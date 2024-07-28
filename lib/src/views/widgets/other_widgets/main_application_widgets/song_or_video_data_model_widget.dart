@@ -27,10 +27,10 @@ class AmptiveSongOrVideoDataModelWidget extends StatelessWidget {
           children: [
             Container(
               clipBehavior: Clip.hardEdge,
-              height: 420.h,
+              height: 420,
               width: AmptiveHelperFunctions.getScreenWidth(context),                                
               decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(15).r,
+                borderRadius: BorderRadius.circular(15),
               ),
               child: const AmptivePngAndJpegAssetLoaderWidget(
                 pngOrJpegPath: AmptiveImageStrings.jpeg2,
@@ -41,14 +41,12 @@ class AmptiveSongOrVideoDataModelWidget extends StatelessWidget {
             const AmptiveDarkColorGradientContainerWidget(),
     
             Padding(
-              padding: const EdgeInsets.all(15).r,
+              padding: const EdgeInsets.all(15),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisSize: MainAxisSize.min,
-                children: [
-    
-                  const AmptiveLiveIndicatorWidget(),
-    
+                children: [    
+                  const AmptiveLiveIndicatorWidget(),    
                   Gap(10.h),
                   Text(
                     maxLines: null,

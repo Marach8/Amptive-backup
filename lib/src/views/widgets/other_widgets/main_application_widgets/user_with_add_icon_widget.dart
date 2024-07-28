@@ -22,15 +22,15 @@ class AmptiveUserWithAddIconWidget extends StatelessWidget {
           children: [
             Container(
               padding: const EdgeInsets.all(2),
-              height: 70.h,
-              width: 70.w,
+              height: 70,
+              width: 70,
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(30),
-                child: AmptivePngAndJpegAssetLoaderWidget(
+                child: const AmptivePngAndJpegAssetLoaderWidget(
                   pngOrJpegPath: AmptiveImageStrings.jpeg1,
                   boxFit: BoxFit.cover,
-                  height: 60.h,
-                  width: 60.w,
+                  height: 60,
+                  width: 60,
                 ),
               ),
             ),
@@ -41,14 +41,14 @@ class AmptiveUserWithAddIconWidget extends StatelessWidget {
                 child: Container(
                   alignment: Alignment.center,
                   padding: const EdgeInsets.all(0),
-                  height: 20.h,
-                  width: 20.w,
+                  height: 20,
+                  width: 20,
                   decoration: BoxDecoration(
                     color: AmptiveColors.brandBlueColor,
-                    borderRadius: BorderRadius.circular(10).r,
+                    borderRadius: BorderRadius.circular(10),
                     border: Border.all(
                       color: AmptiveColors.brandBlackColor,
-                      width: 2.w,
+                      width: 2,
                     )
                   ),
                   child: const Icon(Icons.add, size: 15, applyTextScaling: true,),

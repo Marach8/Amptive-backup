@@ -2,8 +2,8 @@ import 'package:amptive/src/utils/constants/strings/image_strings.dart';
 import 'package:amptive/src/utils/constants/strings/other_strings.dart';
 import 'package:amptive/src/views/widgets/common_widgets/annotated_region__widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/app_bar.dart';
+import 'package:amptive/src/views/widgets/common_widgets/container_with_picture_widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/live_user_model_widget.dart';
-import 'package:amptive/src/views/widgets/common_widgets/png_jpeg_asset_loader_widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/svg_asset_loader_widget.dart';
 import 'package:amptive/src/views/widgets/other_widgets/main_application_widgets/appbar_pop_drop_down.dart';
 import 'package:amptive/src/views/widgets/other_widgets/main_application_widgets/song_or_video_data_model_widget.dart';
@@ -36,22 +36,15 @@ class AmptiveHomeScreen extends StatelessWidget {
               onTap: (){},
               child: const AmptiveSvgAssetLoaderWidget(svgPath: AmptiveImageStrings.svgWalletIcon)
             ),
-            Gap(20.w),
+            const Gap(20),
             GestureDetector(
               onTap: (){},
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(15),
-                child: AmptivePngAndJpegAssetLoaderWidget(
-                  pngOrJpegPath: AmptiveImageStrings.jpeg1,
-                  boxFit: BoxFit.cover,
-                  height: 30.h,
-                  width: 30.w,
-                ),
-              ),
+              child: const AmptiveCircularContainerWithPIctureWidget(
+                imagePath: AmptiveImageStrings.jpeg2,
+              )
             ),
           ],
         ),
-
 
 
         body: DefaultTabController(
@@ -59,12 +52,11 @@ class AmptiveHomeScreen extends StatelessWidget {
           child: NestedScrollView(                
             headerSliverBuilder: (_, __) => [
               SliverAppBar(
-                //pinned: true,
                 floating: true,
                 expandedHeight: 0,
                   
                 flexibleSpace: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 20).r,
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
                   child: ListView(
                     padding: EdgeInsets.zero,   
                     shrinkWrap: true,      
@@ -108,47 +100,6 @@ class AmptiveHomeScreen extends StatelessWidget {
             )
           ),
         )
-
-        // body: Column(
-        //   children: [
-        //     Gap(5.h),
-        //     Container(
-        //       height: 105.h,
-        //       padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
-        //       child: ListView(
-        //         padding: EdgeInsets.zero,   
-        //         shrinkWrap: true,      
-        //         scrollDirection: Axis.horizontal,
-        //         children: [
-        //           const AmptiveUserWithAddIconWidget(),
-        //           ...Iterable.generate(
-        //             50,
-        //             (_) => Row(
-        //               mainAxisSize: MainAxisSize.min,
-        //               crossAxisAlignment: CrossAxisAlignment.start,
-        //               children: [
-        //                 Gap(20.w),
-        //                 const AmptiveLiveUserModelWidget()
-        //               ],
-        //             )
-        //           )
-        //         ]
-        //       ),
-        //     ),
-        
-        //     const Divider(thickness: 0.7,),
-        
-        //     Expanded(
-        //       child: ListView(              
-        //         padding: const EdgeInsets.symmetric(horizontal: 20),
-        //         children: Iterable.generate(
-        //           10,
-        //           (_) => const AmptiveSongOrVideoDataModelWidget()
-        //         ).toList()
-        //       ),
-        //     )
-        //   ],
-        // ),
       ),
     );
   }
