@@ -18,7 +18,7 @@ class AmptiveElevatedButtonWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: margin ?? const EdgeInsets.symmetric(horizontal: 20),
+      margin: margin ?? EdgeInsets.symmetric(horizontal: 15.w, vertical: 16.h),
       width: double.infinity,
       height: height ?? 50.h,
       child: ElevatedButton(onPressed: onPressed, child: Text(buttonTitle)),

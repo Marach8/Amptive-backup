@@ -1,8 +1,10 @@
 import 'dart:async';
 
-import 'package:amptive/src/bloc/authentication_bloc/auth_events.dart';
+import 'package:amptive/src/bloc/authentication/otp/otp_auth_bloc.dart';
+import 'package:amptive/src/bloc/authentication/otp/otp_auth_states.dart';
 import 'package:amptive/src/services/auth/otp_service.dart';
 import 'package:amptive/src/utils/constants/colors.dart';
+import 'package:amptive/src/utils/constants/constants.dart';
 import 'package:amptive/src/views/widgets/common_widgets/annotated_region__widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/app_bar.dart';
 import 'package:amptive/src/views/widgets/common_widgets/common_widgets.dart';
@@ -13,13 +15,10 @@ import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-import '../../../bloc/authentication_bloc/auth_bloc.dart';
-import '../../../bloc/authentication_bloc/auth_states.dart';
+import '../../../bloc/authentication/otp/otp_auth_events.dart';
 import '../../../utils/constants/strings/other_strings.dart';
 import '../../../utils/constants/strings/route_strings.dart';
 import '../../widgets/common_widgets/elevated_button_widget.dart';
-
-int TIMER_LIMIT = 10;
 
 class OTPScreen extends StatefulWidget {
   const OTPScreen({super.key, required this.from});
@@ -31,7 +30,7 @@ class OTPScreen extends StatefulWidget {
 }
 
 class _OTPScreenState extends State<OTPScreen> {
-  int _start = TIMER_LIMIT;
+  int _start = Constants.TIMER_LIMIT;
   late Timer _timer;
   bool _resendButtonEnabled = false;
 
@@ -64,7 +63,7 @@ class _OTPScreenState extends State<OTPScreen> {
 
   void resetTimer() {
     setState(() {
-      _start = TIMER_LIMIT;
+      _start = Constants.TIMER_LIMIT;
       _resendButtonEnabled = false;
     });
     startTimer();
@@ -86,7 +85,8 @@ class _OTPScreenState extends State<OTPScreen> {
                   margin: EdgeInsets.only(top: 20.h),
                   width: 297.w,
                   child: Text(
-                    "Enter the 4 digit code we just sent to your ${widget.from}",
+                    AmptiveOtherStrings.enter4DigitSentFrom(
+                        widget.from.toLowerCase()),
                     textAlign: TextAlign.start,
                     style: GoogleFonts.inter(
                       fontWeight: FontWeight.bold,
@@ -123,7 +123,7 @@ class _OTPScreenState extends State<OTPScreen> {
                   child: _resendButtonEnabled
                       ? RichText(
                           text: TextSpan(
-                            text: "Didn't get the code? ",
+                            text: AmptiveOtherStrings.didNotGetCode,
                             children: [
                               WidgetSpan(
                                 child: GestureDetector(
@@ -131,7 +131,7 @@ class _OTPScreenState extends State<OTPScreen> {
                                     resetTimer();
                                   },
                                   child: Text(
-                                    "Send again",
+                                    AmptiveOtherStrings.sendAgain,
                                     style: GoogleFonts.inter(
                                       decoration: TextDecoration.underline,
                                       decorationColor: AmptiveColors.whiteColor,
@@ -151,7 +151,7 @@ class _OTPScreenState extends State<OTPScreen> {
                           ),
                         )
                       : Text(
-                          "Code has been sent. You can send another in $_start",
+                          AmptiveOtherStrings.codeHasBeenSentResendIn(_start),
                           style: GoogleFonts.inter(
                             fontSize: 12.sp,
                             color: AmptiveColors.whiteColor,
@@ -164,33 +164,34 @@ class _OTPScreenState extends State<OTPScreen> {
                     height: 1.h,
                   ),
                 ),
-                BlocListener<AmptiveAuthBloc, AmptiveAuthState>(
-                  listener: (context, state) {
-                    if (state is ValidAuthState && context.mounted) {
-                      context.pushNamed(AmptiveRoutes.passwordAuth);
-                    }
-                  },
-                  child: BlocBuilder<AmptiveAuthBloc, AmptiveAuthState>(
-                      builder: (context, state) {
-                    return state is LoadingAuthState && context.mounted
-                        ? AmptiveLoadingButtonWidget(
-                            margin: EdgeInsets.only(bottom: 29.h),
-                          )
-                        : AmptiveElevatedButtonWidget(
-                            margin: EdgeInsets.only(bottom: 29.h),
-                            height: 50.w,
-                            buttonTitle: AmptiveOtherStrings.next,
-                            onPressed: state is ValidOTPAuthState
-                                ? () {
-                                    context
-                                        .read<AmptiveAuthBloc>()
-                                        .add(VerifyOTPAuthEvent());
-                                  }
-                                : null,
-                          );
-                  }),
-                ),
               ],
+            ),
+          ),
+        ),
+        bottomSheet: Padding(
+          padding: EdgeInsets.only(bottom: 16.h),
+          child: BlocListener<AmptiveOTPAuthBloc, AmptiveOTPAuthState>(
+            listener: (context, state) {
+              if (state is VerifiedOTPAuthState && context.mounted) {
+                context.pushReplacementNamed(AmptiveRoutes.passwordAuth);
+              }
+            },
+            child: BlocBuilder<AmptiveOTPAuthBloc, AmptiveOTPAuthState>(
+              builder: (context, state) {
+                return state is LoadingAuthState && context.mounted
+                    ? const AmptiveLoadingButtonWidget()
+                    : AmptiveElevatedButtonWidget(
+                        height: 50.w,
+                        buttonTitle: AmptiveOtherStrings.next,
+                        onPressed: state is ValidOTPAuthState
+                            ? () {
+                                context
+                                    .read<AmptiveOTPAuthBloc>()
+                                    .add(VerifyOTPAuthEvent());
+                              }
+                            : null,
+                      );
+              },
             ),
           ),
         ),
@@ -221,7 +222,7 @@ class OTPTextFormField extends StatelessWidget {
 
           // trigger otp changed event
           context
-              .read<AmptiveAuthBloc>()
+              .read<AmptiveOTPAuthBloc>()
               .add(OTPChangedAuthEvent(otpValid: service.isOTPValid));
 
           if (value.length == 1 && index != 3) {
@@ -238,9 +239,9 @@ class OTPTextFormField extends StatelessWidget {
           contentPadding:
               EdgeInsets.symmetric(horizontal: 16.w, vertical: 12.w),
           floatingLabelBehavior: FloatingLabelBehavior.never,
-          counterText: "",
+          counterText: AmptiveOtherStrings.empty,
           label: const Center(
-            child: Text("-"),
+            child: Text(AmptiveOtherStrings.hyphen),
           ),
           labelStyle: GoogleFonts.inter(
             fontSize: 18.sp,
@@ -248,7 +249,7 @@ class OTPTextFormField extends StatelessWidget {
             fontWeight: FontWeight.normal,
           ),
           filled: true,
-          fillColor: const Color(0xFF9E9E9E).withOpacity(0.3),
+          fillColor: AmptiveColors.fillGreyColor.withOpacity(0.3),
           focusedBorder: OutlineInputBorder(
             borderSide: BorderSide(
               width: 2.w,

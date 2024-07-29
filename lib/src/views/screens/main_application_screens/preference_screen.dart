@@ -1,16 +1,21 @@
 import 'dart:async';
 
+import 'package:amptive/src/bloc/authentication/general/auth_bloc.dart';
+import 'package:amptive/src/bloc/authentication/general/auth_states.dart';
 import 'package:amptive/src/utils/constants/colors.dart';
+import 'package:amptive/src/utils/constants/constants.dart';
+import 'package:amptive/src/utils/constants/strings/other_strings.dart';
 import 'package:amptive/src/views/widgets/common_widgets/app_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get_it/get_it.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:provider/provider.dart';
 
-import '../../../providers/preference_provider.dart';
+import '../../../models/preferences.dart';
+import '../../../services/preference_service.dart';
 
 
-const int MAX_NUMBER_COMMUNITIES = 5;
 
 
 class PreferenceScreen extends StatefulWidget {
@@ -21,13 +26,20 @@ class PreferenceScreen extends StatefulWidget {
 }
 
 class _PreferenceScreenState extends State<PreferenceScreen> {
+  late PreferenceService service;
   bool isPreferenceSelected = false;
 
   @override
+  void initState() {
+    service = GetIt.I<PreferenceService>();
+
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    var model = Provider.of<PreferenceModel>(context, listen: true);
-    var len = model.items.length;
-    var isOpaque = model.getSelected().length == MAX_NUMBER_COMMUNITIES;
+    var len = service.items.length;
+    var isOpaque = service.getSelected().length == Constants.MAX_NUMBER_COMMUNITIES;
     return SafeArea(
       child: Scaffold(
         backgroundColor: AmptiveColors.brandBlackColor,
@@ -104,7 +116,7 @@ class _PreferenceScreenState extends State<PreferenceScreen> {
                                         EdgeInsets.symmetric(vertical: 11.5.h),
                                   ),
                                   child: Text(
-                                    'Next',
+                                    AmptiveOtherStrings.next,
                                     textAlign: TextAlign.center,
                                     style: GoogleFonts.inter(
                                       color: Colors.white,
@@ -145,7 +157,9 @@ class CommunityCardPreference extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var isSelected = true;
-    return Consumer<PreferenceModel>(builder: (context, pref, child) {
+    return BlocBuilder<AmptiveAuthBloc, AmptiveAuthState>(builder: (context, state) {
+      var pref = GetIt.I<PreferenceService>();
+
       return Opacity(
         opacity: !pref.items[index].isSelected && isOpaque ? 0.6 : 1.0,
         child: GestureDetector(
@@ -303,7 +317,7 @@ class _ProcessingPreferenceState extends State<ProcessingPreference> {
   void initState() {
     super.initState();
 
-    _list = Provider.of<PreferenceModel>(context, listen: false).getSelected();
+    _list = GetIt.I<PreferenceService>().getSelected();
     text = _list[0].name;
 
     Timer.periodic(const Duration(seconds: 3), (_) {
@@ -319,8 +333,7 @@ class _ProcessingPreferenceState extends State<ProcessingPreference> {
 
   @override
   Widget build(BuildContext context) {
-    var preference =
-        Provider.of<PreferenceModel>(context, listen: false).getSelected();
+    var preference =GetIt.I<PreferenceService>().getSelected();
 
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,

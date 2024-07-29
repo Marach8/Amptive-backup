@@ -69,7 +69,7 @@ class AmptiveLoadingButtonWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: margin ?? EdgeInsets.symmetric(horizontal: 25.w),
+      margin: margin ?? EdgeInsets.symmetric(horizontal: 15.w, vertical: 16.h),
       width: double.infinity,
       height: 50.w,
       child: ElevatedButton(

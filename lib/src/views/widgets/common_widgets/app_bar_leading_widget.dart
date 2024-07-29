@@ -13,7 +13,7 @@ class AmptiveAppBarLeadingWidget extends StatelessWidget {
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Icon(Icons.arrow_back_ios, size: 20.r,),
+          Expanded(child: Icon(Icons.arrow_back_ios, size: 20.r,)),
           Text(
             AmptiveOtherStrings.back,
             style: Theme.of(context).textTheme.titleMedium,

@@ -1,8 +1,8 @@
-import 'package:amptive/src/bloc/authentication_bloc/auth_bloc.dart';
-import 'package:amptive/src/bloc/authentication_bloc/auth_states.dart';
+import 'package:amptive/src/bloc/authentication/password/password_auth_states.dart';
 import 'package:amptive/src/services/auth/auth_field_service.dart';
 import 'package:amptive/src/utils/constants/strings/route_strings.dart';
 import 'package:amptive/src/utils/constants/colors.dart';
+import 'package:amptive/src/views/widgets/common_widgets/annotated_region__widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -11,7 +11,8 @@ import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-import '../../../bloc/authentication_bloc/auth_events.dart';
+import '../../../bloc/authentication/password/password_auth_bloc.dart';
+import '../../../bloc/authentication/password/password_auth_events.dart';
 import '../../../utils/constants/strings/other_strings.dart';
 import '../../widgets/common_widgets/elevated_button_widget.dart';
 
@@ -23,18 +24,22 @@ class PasswordAuthScreen extends StatefulWidget {
 }
 
 class _PasswordAuthScreenState extends State<PasswordAuthScreen> {
+  late AuthFieldService service;
   bool _passwordVisible = false;
   TextEditingController passwordController = TextEditingController();
 
   final _formKey = GlobalKey<FormState>();
 
   @override
-  Widget build(BuildContext context) {
-    var service = GetIt.I<AuthFieldService>();
+  void initState() {
+    service = GetIt.I<AuthFieldService>();
+    super.initState();
+  }
 
-    return SafeArea(
+  @override
+  Widget build(BuildContext context) {
+    return AmptiveAnnotatedRegionWidget(
       child: Scaffold(
-        backgroundColor: AmptiveColors.brandBlackColor,
         appBar: const AmptiveAppBar(),
         body: Padding(
           padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 20.h),
@@ -44,7 +49,7 @@ class _PasswordAuthScreenState extends State<PasswordAuthScreen> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  "Create a password for your account",
+                  AmptiveOtherStrings.createPasswordForAccount,
                   style: GoogleFonts.inter(
                     color: AmptiveColors.whiteColor,
                     fontSize: 17.sp,
@@ -61,7 +66,7 @@ class _PasswordAuthScreenState extends State<PasswordAuthScreen> {
 
                     // trigger password changed event
                     context
-                        .read<AmptiveAuthBloc>()
+                        .read<AmptivePasswordAuthBloc>()
                         .add(PasswordChangedAuthEvent());
                   },
                   maxLines: 1,
@@ -71,14 +76,14 @@ class _PasswordAuthScreenState extends State<PasswordAuthScreen> {
                   decoration: InputDecoration(
                       contentPadding: EdgeInsets.symmetric(
                           vertical: 12.h, horizontal: 16.w),
-                      hintText: "Enter your password",
+                      hintText: AmptiveOtherStrings.enterYourPassword,
                       hintStyle: GoogleFonts.inter(
                         fontSize: 16.sp,
                         color: AmptiveColors.authHintColor,
                         fontWeight: FontWeight.normal,
                       ),
                       filled: true,
-                      fillColor: const Color(0xFF9E9E9E).withOpacity(0.3),
+                      fillColor: AmptiveColors.fillGreyColor.withOpacity(0.3),
                       focusedBorder: buildOutlineInputBorder(),
                       border: OutlineInputBorder(
                         borderSide: BorderSide(
@@ -109,14 +114,14 @@ class _PasswordAuthScreenState extends State<PasswordAuthScreen> {
                     color: AmptiveColors.whiteColor,
                   ),
                 ),
-                BlocBuilder<AmptiveAuthBloc, AmptiveAuthState>(
+                BlocBuilder<AmptivePasswordAuthBloc, AmptivePasswordAuthState>(
                     builder: (_, state) {
                   var height = service.password.error != null ? 20.h : 0.h;
                   return Container(
                     height: height,
                     margin: EdgeInsets.symmetric(vertical: 11.h),
                     child: Text(
-                      service.password.error ?? "",
+                      service.password.error ?? AmptiveOtherStrings.empty,
                       style: GoogleFonts.inter(
                         color: AmptiveColors.whiteColor,
                         fontWeight: FontWeight.normal,
@@ -130,21 +135,24 @@ class _PasswordAuthScreenState extends State<PasswordAuthScreen> {
                     height: 1.h,
                   ),
                 ),
-                BlocBuilder<AmptiveAuthBloc, AmptiveAuthState>(
-                    builder: (context, state) {
-                  return AmptiveElevatedButtonWidget(
-                    margin: EdgeInsets.only(bottom: 29.h),
-                    height: 50.w,
-                    buttonTitle: AmptiveOtherStrings.next,
-                    onPressed: state is ValidPasswordAuthState
-                        ? () {
-                            context.pushNamed(AmptiveRoutes.dobAuth);
-                          }
-                        : null,
-                  );
-                }),
               ],
             ),
+          ),
+        ),
+        bottomSheet: Padding(
+          padding: EdgeInsets.only(bottom: 16.h),
+          child: BlocBuilder<AmptivePasswordAuthBloc, AmptivePasswordAuthState>(
+            builder: (context, state) {
+              return AmptiveElevatedButtonWidget(
+                height: 50.w,
+                buttonTitle: AmptiveOtherStrings.next,
+                onPressed: state is ValidPasswordAuthState
+                    ? () {
+                        context.pushNamed(AmptiveRoutes.dobAuth);
+                      }
+                    : null,
+              );
+            },
           ),
         ),
       ),

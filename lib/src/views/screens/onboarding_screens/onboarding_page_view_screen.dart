@@ -17,7 +17,8 @@ class AmptiveOnboardingScreen extends StatefulWidget {
   const AmptiveOnboardingScreen({super.key});
 
   @override
-  State<AmptiveOnboardingScreen> createState() => _AmptiveOnboardingScreenState();
+  State<AmptiveOnboardingScreen> createState() =>
+      _AmptiveOnboardingScreenState();
 }
 
 class _AmptiveOnboardingScreenState extends State<AmptiveOnboardingScreen> {
@@ -37,39 +38,41 @@ class _AmptiveOnboardingScreenState extends State<AmptiveOnboardingScreen> {
 
   @override
   Widget build(BuildContext context) {
-
     return AmptiveAnnotatedRegionWidget(
       child: Scaffold(
         body: Stack(
           children: [
-
             PageView(
               controller: _controller,
-              onPageChanged: (index) => context.read<AmptiveOnboardingBloc>().add(SwipeToAnotherPageOnboardingEvent(indexOfDestinationPage: index)),
+              onPageChanged: (index) => context
+                  .read<AmptiveOnboardingBloc>()
+                  .add(SwipeToAnotherPageOnboardingEvent(
+                      indexOfDestinationPage: index)),
               children: [
                 AmptiveCustomOnboardingPageViewSlideWidget(
-                  title: AmptiveOtherStrings.goLiveLikeNeverBefore, 
-                  description: AmptiveOtherStrings.monetizeYouLiveShowsAndEvents,
+                  title: AmptiveOtherStrings.goLiveLikeNeverBefore,
+                  description:
+                      AmptiveOtherStrings.monetizeYouLiveShowsAndEvents,
                   pictureBgColor: AmptiveColors.grey1Color,
                 ),
                 AmptiveCustomOnboardingPageViewSlideWidget(
-                  title: AmptiveOtherStrings.experienceItUniquely, 
+                  title: AmptiveOtherStrings.experienceItUniquely,
                   description: AmptiveOtherStrings.joinTheLargerAudience,
                   pictureBgColor: AmptiveColors.grey2Color,
                 ),
                 AmptiveCustomOnboardingPageViewSlideWidget(
                   title: AmptiveOtherStrings.liveAudioAndEventShows,
-                  description: AmptiveOtherStrings.tuneIntoLiveAudioShowsAndEvents,
+                  description:
+                      AmptiveOtherStrings.tuneIntoLiveAudioShowsAndEvents,
                   pictureBgColor: AmptiveColors.grey3Color,
                 ),
               ],
             ),
-
             Positioned(
-              bottom: 0,
+              bottom: 22.h,
               right: 20,
               child: Row(
-               mainAxisSize: MainAxisSize.min,
+                mainAxisSize: MainAxisSize.min,
                 children: [
                   SmoothPageIndicator(
                     controller: _controller,
@@ -82,16 +85,25 @@ class _AmptiveOnboardingScreenState extends State<AmptiveOnboardingScreen> {
                     ),
                   ),
                   Gap(80.r),
-                  ElevatedButton(
-                    style: ElevatedButton.styleFrom(padding: EdgeInsets.zero),
-                    onPressed: () => context.pushReplacementNamed(AmptiveRoutes.welcome),
-                    child: BlocBuilder<AmptiveOnboardingBloc, AmptiveOnboardingState>(
-                      builder: (_, state) {
-                        final currentState = state as CurrentOnboardingPageViewIndexState;
-                        final currentPageIndex = currentState.currentPageIndex;
-                        return Text(currentPageIndex > 1 ? AmptiveOtherStrings.next : AmptiveOtherStrings.skip);
-                      }
-                    )
+                  Container(
+                    margin: EdgeInsets.only(right: 10.w),
+                    child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          padding: EdgeInsets.symmetric(
+                              vertical: 4.h, horizontal: 12.w),
+                        ),
+                        onPressed: () =>
+                            context.pushReplacementNamed(AmptiveRoutes.welcome),
+                        child: BlocBuilder<AmptiveOnboardingBloc,
+                            AmptiveOnboardingState>(builder: (_, state) {
+                          final currentState =
+                              state as CurrentOnboardingPageViewIndexState;
+                          final currentPageIndex =
+                              currentState.currentPageIndex;
+                          return Text(currentPageIndex > 1
+                              ? AmptiveOtherStrings.next
+                              : AmptiveOtherStrings.skip);
+                        })),
                   )
                 ],
               ),

@@ -2,6 +2,8 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:amptive/src/utils/constants/colors.dart';
+import 'package:amptive/src/utils/constants/strings/image_strings.dart';
+import 'package:amptive/src/utils/constants/strings/other_strings.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -42,7 +44,7 @@ class _PostRegistrationScreenState extends State<PostRegistrationScreen> {
         actions: [
           CupertinoActionSheetAction(
             child: Text(
-              'Photo Gallery',
+              AmptiveOtherStrings.photoGallery,
               textAlign: TextAlign.center,
               style: GoogleFonts.inter(
                 color: AmptiveColors.brandBlueColor,
@@ -59,7 +61,7 @@ class _PostRegistrationScreenState extends State<PostRegistrationScreen> {
           ),
           CupertinoActionSheetAction(
             child: Text(
-              'Camera',
+              AmptiveOtherStrings.camera,
               textAlign: TextAlign.center,
               style: GoogleFonts.inter(
                 color: AmptiveColors.brandBlueColor,
@@ -110,7 +112,7 @@ class _PostRegistrationScreenState extends State<PostRegistrationScreen> {
       body: Padding(
           padding: EdgeInsets.only(left: 25.w, right: 25.w, top: 20.w),
           child:
-              _isLoading ? const LoadingAccount() : _addPicture(),
+              _isLoading ? const LoadingAccountWidget() : _addPicture(),
           ),
     ));
   }
@@ -120,7 +122,7 @@ class _PostRegistrationScreenState extends State<PostRegistrationScreen> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          "Add a profile picture",
+          AmptiveRoutes.addProfilePic,
           textAlign: TextAlign.start,
           style: GoogleFonts.inter(
             color: AmptiveColors.whiteColor,
@@ -132,7 +134,7 @@ class _PostRegistrationScreenState extends State<PostRegistrationScreen> {
           height: 4.h,
         ),
         Text(
-          "Use one of your favourite image or selfie",
+          AmptiveOtherStrings.useYOurFavImage,
           textAlign: TextAlign.start,
           style: GoogleFonts.inter(
             color: const Color(0xFFCDCDCD),
@@ -161,7 +163,7 @@ class _PostRegistrationScreenState extends State<PostRegistrationScreen> {
                             fit: BoxFit.contain,
                           )
                         : Image.asset(
-                            "assets/no_avatar_image.png",
+                            AmptiveImageStrings.noAvatarImage,
                             height: 110.h,
                             width: 84.w,
                             fit: BoxFit.contain,
@@ -218,7 +220,7 @@ class _PostRegistrationScreenState extends State<PostRegistrationScreen> {
               context.pushNamed(AmptiveRoutes.preference);
             },
             child: Text(
-              "Skip for now",
+              AmptiveOtherStrings.skipForNow,
               textAlign: TextAlign.center,
               style: GoogleFonts.inter(
                 color: AmptiveColors.whiteColor,
@@ -237,7 +239,7 @@ class _PostRegistrationScreenState extends State<PostRegistrationScreen> {
             style:
                 ElevatedButton.styleFrom(backgroundColor: AmptiveColors.brandBlueColor),
             child: Text(
-              "Next",
+              AmptiveOtherStrings.next,
               style: GoogleFonts.inter(
                   fontWeight: FontWeight.w600,
                   fontSize: 18.sp,
@@ -250,16 +252,16 @@ class _PostRegistrationScreenState extends State<PostRegistrationScreen> {
   }
 }
 
-class LoadingAccount extends StatefulWidget {
-  const LoadingAccount({
+class LoadingAccountWidget extends StatefulWidget {
+  const LoadingAccountWidget({
     super.key,
   });
 
   @override
-  State<LoadingAccount> createState() => _LoadingAccountState();
+  State<LoadingAccountWidget> createState() => _LoadingAccountWidgetState();
 }
 
-class _LoadingAccountState extends State<LoadingAccount> {
+class _LoadingAccountWidgetState extends State<LoadingAccountWidget> {
   late String text;
 
   var textList = [

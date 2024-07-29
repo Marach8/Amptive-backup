@@ -1,7 +1,5 @@
 import 'dart:async';
 
-import 'package:amptive/src/bloc/authentication_bloc/auth_bloc.dart';
-import 'package:amptive/src/bloc/authentication_bloc/auth_states.dart';
 import 'package:amptive/src/services/auth/auth_field_service.dart';
 import 'package:amptive/src/utils/constants/strings/other_strings.dart';
 import 'package:amptive/src/utils/constants/strings/route_strings.dart';
@@ -13,6 +11,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
+
+import '../../../bloc/authentication/general/auth_bloc.dart';
+import '../../../bloc/authentication/general/auth_states.dart';
 
 class UserNameAuthScreen extends StatefulWidget {
   const UserNameAuthScreen({super.key});
