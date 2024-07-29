@@ -6,7 +6,6 @@ import 'package:amptive/src/services/auth/otp_service.dart';
 import 'package:amptive/src/utils/constants/colors.dart';
 import 'package:amptive/src/utils/constants/constants.dart';
 import 'package:amptive/src/views/widgets/common_widgets/annotated_region__widget.dart';
-import 'package:amptive/src/views/widgets/common_widgets/app_bar.dart';
 import 'package:amptive/src/views/widgets/common_widgets/common_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -18,6 +17,7 @@ import 'package:google_fonts/google_fonts.dart';
 import '../../../bloc/authentication/otp/otp_auth_events.dart';
 import '../../../utils/constants/strings/other_strings.dart';
 import '../../../utils/constants/strings/route_strings.dart';
+import '../../widgets/common_widgets/app_bar_widget.dart';
 import '../../widgets/common_widgets/elevated_button_widget.dart';
 
 class OTPScreen extends StatefulWidget {

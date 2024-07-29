@@ -4,7 +4,6 @@ import 'package:amptive/src/utils/constants/strings/other_strings.dart';
 import 'package:amptive/src/utils/constants/strings/route_strings.dart';
 import 'package:amptive/src/utils/constants/colors.dart';
 import 'package:amptive/src/views/widgets/common_widgets/annotated_region__widget.dart';
-import 'package:amptive/src/views/widgets/common_widgets/app_bar.dart';
 import 'package:amptive/src/views/widgets/common_widgets/elevated_button_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -17,6 +16,7 @@ import 'package:intl/intl.dart';
 
 import '../../../bloc/authentication/general/auth_bloc.dart';
 import '../../../bloc/authentication/general/auth_states.dart';
+import '../../widgets/common_widgets/app_bar_widget.dart';
 
 class DateOfBirthScreen extends StatefulWidget {
   const DateOfBirthScreen({super.key});

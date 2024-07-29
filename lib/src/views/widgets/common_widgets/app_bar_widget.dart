@@ -7,11 +7,17 @@ class AmptiveAppBar extends StatelessWidget implements PreferredSizeWidget {
   const AmptiveAppBar({
     super.key,
     this.title,
-    this.centerTitle = true
+    this.leading,
+    this.hideLeading,
+    this.centerTitle = true,
+    this.actions,
+    this.leadingWidth
   });
 
-  final Widget? title;
-  final bool? centerTitle;
+  final Widget? title, leading;
+  final bool? centerTitle, hideLeading;
+  final List<Widget>? actions;
+  final double? leadingWidth;
 
   @override
   Widget build(BuildContext context) {
@@ -22,8 +28,10 @@ class AmptiveAppBar extends StatelessWidget implements PreferredSizeWidget {
         backgroundColor: AmptiveColors.brandBlackColor,
         elevation: 0.0,
         centerTitle: centerTitle,
-        leading: const AmptiveAppBarLeadingWidget(),
+        leading: hideLeading ?? false ? null : leading ?? const AmptiveAppBarLeadingWidget(),
         title: title,
+        leadingWidth: leadingWidth,
+        actions: actions
       ),
     );
   }

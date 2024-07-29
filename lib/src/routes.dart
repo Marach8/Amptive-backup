@@ -1,18 +1,18 @@
 import 'dart:io';
 
 import 'package:amptive/src/utils/constants/strings/route_strings.dart';
-import 'package:amptive/src/utils/helpers/helper_classes/navigator_observer.dart';
 import 'package:amptive/src/views/screens/authentication_screens/add_phone.dart';
-import 'package:amptive/src/views/screens/authentication_screens/auth_screen.dart';
 import 'package:amptive/src/views/screens/authentication_screens/dob_screen.dart';
 import 'package:amptive/src/views/screens/authentication_screens/email_auth_screen.dart';
 import 'package:amptive/src/views/screens/authentication_screens/name_auth_screen.dart';
 import 'package:amptive/src/views/screens/authentication_screens/otp_screen.dart';
 import 'package:amptive/src/views/screens/authentication_screens/password_auth_screen.dart';
 import 'package:amptive/src/views/screens/authentication_screens/post_registration.dart';
+import 'package:amptive/src/views/screens/authentication_screens/sign_in_or_sign_up_screen.dart';
 import 'package:amptive/src/views/screens/authentication_screens/username_auth_screen.dart';
-import 'package:amptive/src/views/screens/main_application_screens/crop_image_screen.dart';
-import 'package:amptive/src/views/screens/main_application_screens/preference_screen.dart';
+import 'package:amptive/src/views/screens/main_application_screens/dashboard_screen.dart';
+import 'package:amptive/src/views/screens/main_application_screens/sub_views/crop_image_screen.dart';
+import 'package:amptive/src/views/screens/main_application_screens/sub_views/preference_screen.dart';
 import 'package:amptive/src/views/screens/onboarding_screens/onboarding_page_view_screen.dart';
 import 'package:amptive/src/views/screens/onboarding_screens/welcome_screen.dart';
 import 'package:flutter/material.dart';
@@ -106,6 +106,11 @@ final GoRouter amptiveAppRouter = GoRouter(
       path: "/preference-route",
       builder: (BuildContext context, GoRouterState state) =>
           const AmptivePreferenceScreen(),
+    ),
+    GoRoute(
+        name: AmptiveRoutes.homeScreen,
+        path: "/home-screen",
+        builder: (_, __) => const AmptiveDashboardScreen()
     ),
   ],
   // observers: [LoggingNavigatorObserver()],

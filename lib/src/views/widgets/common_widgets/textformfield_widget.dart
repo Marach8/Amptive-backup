@@ -9,6 +9,10 @@ class AmptiveTextFormFieldWidget extends StatelessWidget {
   final String? Function(String?)? validator;
   final TextInputType? keyboardType;
   final String? hintText;
+  final TextAlign? textAlign;
+  final double? cursorHeight;
+  final Widget? suffixIcon;
+  final bool? obscureText;
   final Color? cursorColor;
 
   final InputDecoration? decoration;
@@ -18,23 +22,30 @@ class AmptiveTextFormFieldWidget extends StatelessWidget {
     required this.controller,
     this.validator,
     this.onChanged,
-    this.hintText,
     this.keyboardType,
+    this.textAlign,
+    this.cursorHeight,
+    this.hintText,
     this.cursorColor, this.decoration,
+    this.suffixIcon,
+    this.obscureText
   });
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
       controller: controller,
+      textAlign: textAlign ?? TextAlign.start,
       validator: validator,
       maxLines: 1,
       autovalidateMode: AutovalidateMode.onUserInteraction,
       onChanged: onChanged,
       cursorColor: cursorColor ?? AmptiveColors.brandBlueColor,
+      obscureText: obscureText ?? false,
+      cursorHeight: cursorHeight,
       cursorErrorColor: AmptiveColors.textRedColor,
       keyboardType: keyboardType,
-      decoration: decoration ??  InputDecoration(hintText: hintText),
+      decoration: decoration ??  InputDecoration(hintText: hintText, suffixIcon: suffixIcon),
       style: TextStyle(
         fontWeight: AmptiveFontWeights.regular,
         fontSize: AmptiveFontSizes.size18,

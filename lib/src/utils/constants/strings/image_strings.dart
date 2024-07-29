@@ -8,6 +8,7 @@ class AmptiveImageStrings{
   static const svgEmptyImage = '$generalSvgImagePath/empty_image.svg';
   static const svgAmptiveLogo = '$generalSvgImagePath/Logo.svg';
   static const svgLogo2 = '$generalSvgImagePath/amptive_logotype.svg';
+  static const svgWalletIcon = '$generalSvgImagePath/WALLET ICON.svg';
 
   static const jpeg2 = '$generalJpegImagePath/welcomeAvatar2.jpeg';
   static const jpeg1 = '$generalJpegImagePath/welcomeAvatar1.jpeg';

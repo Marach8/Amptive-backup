@@ -6,15 +6,16 @@ import 'package:amptive/src/utils/constants/colors.dart';
 import 'package:amptive/src/utils/constants/constants.dart';
 import 'package:amptive/src/utils/constants/strings/other_strings.dart';
 import 'package:amptive/src/views/widgets/common_widgets/annotated_region__widget.dart';
-import 'package:amptive/src/views/widgets/common_widgets/app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get_it/get_it.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-import '../../../models/preferences.dart';
-import '../../../services/preference_service.dart';
+import '../../../../models/preferences.dart';
+import '../../../../services/preference_service.dart';
+import '../../../widgets/common_widgets/app_bar_widget.dart';
+
 
 class AmptivePreferenceScreen extends StatefulWidget {
   const AmptivePreferenceScreen({super.key});

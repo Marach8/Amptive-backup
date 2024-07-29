@@ -1,0 +1,1 @@
+enum AmptiveHomeScreenPages{marach, emmanuel, nnanna}

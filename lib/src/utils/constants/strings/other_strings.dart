@@ -1,4 +1,4 @@
-class AmptiveOtherStrings {
+class AmptiveOtherStrings{
   const AmptiveOtherStrings._();
 
   static const inter = 'Inter';
@@ -6,6 +6,8 @@ class AmptiveOtherStrings {
   static const empty = "";
   static const hyphen = "-";
   static const space = ' ';
+  static const underscore = '_';
+
 
   static const goLiveLikeNeverBefore = "Go Live, Like Never Before";
   static const monetizeYouLiveShowsAndEvents =
@@ -32,6 +34,7 @@ class AmptiveOtherStrings {
   static const signUpWith = 'Sign up with ';
   static const signInWith = 'Sign in with ';
   static const email = 'Email';
+  static const live = 'Live';
   static const phoneNumber = 'Phone Number';
   static const facebook = 'Facebook';
   static const twitter = 'X(Twitter)';
@@ -43,6 +46,8 @@ class AmptiveOtherStrings {
       'This email will be verified in the next step';
   static const verifyEmail = 'Verify email';
 
+  static const youEnteredInvalidCode = 'You entered an invalid code. ';
+  static const passwordMustBeAtleast8 = 'Your password must be at least 8 characters';
   static const didNotGetCode = "Didn't get the code? ";
   static const sendAgain = 'Send again';
 
@@ -77,6 +82,9 @@ class AmptiveOtherStrings {
       "Your selected interests will be used to personalize you Amptive experience.";
 
   static const personalizingYourExperience = "Personalizing your experience...";
+
+  static const goLive = 'Go live';
+  static const paidShow = '\$paid show';
 
   // string methods
   static String enter4DigitSentFrom(String location) {

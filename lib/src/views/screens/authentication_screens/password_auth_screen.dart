@@ -3,7 +3,6 @@ import 'package:amptive/src/services/auth/auth_field_service.dart';
 import 'package:amptive/src/utils/constants/strings/route_strings.dart';
 import 'package:amptive/src/utils/constants/colors.dart';
 import 'package:amptive/src/views/widgets/common_widgets/annotated_region__widget.dart';
-import 'package:amptive/src/views/widgets/common_widgets/app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -14,6 +13,7 @@ import 'package:google_fonts/google_fonts.dart';
 import '../../../bloc/authentication/password/password_auth_bloc.dart';
 import '../../../bloc/authentication/password/password_auth_events.dart';
 import '../../../utils/constants/strings/other_strings.dart';
+import '../../widgets/common_widgets/app_bar_widget.dart';
 import '../../widgets/common_widgets/elevated_button_widget.dart';
 
 class PasswordAuthScreen extends StatefulWidget {
@@ -50,11 +50,7 @@ class _PasswordAuthScreenState extends State<PasswordAuthScreen> {
               children: [
                 Text(
                   AmptiveOtherStrings.createPasswordForAccount,
-                  style: GoogleFonts.inter(
-                    color: AmptiveColors.whiteColor,
-                    fontSize: 17.sp,
-                    fontWeight: FontWeight.bold,
-                  ),
+                  style: Theme.of(context).textTheme.headlineMedium,
                 ),
                 SizedBox(
                   height: 11.h,

@@ -5,7 +5,6 @@ import 'package:amptive/src/utils/constants/font_sizes.dart';
 import 'package:amptive/src/utils/constants/font_weights.dart';
 import 'package:amptive/src/utils/constants/strings/other_strings.dart';
 import 'package:amptive/src/views/widgets/common_widgets/annotated_region__widget.dart';
-import 'package:amptive/src/views/widgets/common_widgets/app_bar.dart';
 import 'package:amptive/src/views/widgets/common_widgets/elevated_button_widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/textformfield_widget.dart';
 import 'package:flutter/material.dart';
@@ -18,6 +17,7 @@ import 'package:go_router/go_router.dart';
 import '../../../bloc/authentication/email/email_auth_bloc.dart';
 import '../../../bloc/authentication/email/email_auth_events.dart';
 import '../../../utils/constants/strings/route_strings.dart';
+import '../../widgets/common_widgets/app_bar_widget.dart';
 import '../../widgets/common_widgets/common_widgets.dart';
 
 class AmptiveEmailAuthScreen extends StatefulWidget {
