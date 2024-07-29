@@ -7,6 +7,7 @@ class AmptiveCircularContainerWithPictureWidget extends StatelessWidget {
   final String imagePath;
   final double? diameter, picturePadding, borderWidth;
   final Color? borderColor;
+  final bool? addBorder;
 
   const AmptiveCircularContainerWithPictureWidget({
     super.key,
@@ -14,7 +15,8 @@ class AmptiveCircularContainerWithPictureWidget extends StatelessWidget {
     this.diameter,
     this.picturePadding, 
     this.borderWidth,
-    this.borderColor
+    this.borderColor,
+    this.addBorder
   });
 
   @override
@@ -25,10 +27,10 @@ class AmptiveCircularContainerWithPictureWidget extends StatelessWidget {
       width: diameter ?? 30,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular((diameter ?? 30)/2),
-        border: Border.all(
+        border: addBorder ?? false ? Border.all(
           color: borderColor ?? AmptiveColors.whiteColor,
           width: borderWidth ?? 0.5
-        )
+        ) : null
       ),
       child: ClipRRect(
         borderRadius: BorderRadius.circular((diameter ?? 30)/2),

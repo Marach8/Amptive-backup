@@ -1,7 +1,11 @@
+import 'package:amptive/src/utils/constants/colors.dart';
+import 'package:amptive/src/utils/constants/font_sizes.dart';
 import 'package:amptive/src/utils/constants/font_weights.dart';
 import 'package:amptive/src/utils/constants/strings/image_strings.dart';
 import 'package:amptive/src/views/widgets/common_widgets/circular_container_with_picture_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:gap/gap.dart';
 
 class AmptiveListTileWithTrailingMoreIconWidget extends StatelessWidget {
   const AmptiveListTileWithTrailingMoreIconWidget({
@@ -10,27 +14,41 @@ class AmptiveListTileWithTrailingMoreIconWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListTile(
-      dense: true,
-      contentPadding: EdgeInsets.zero,
-      trailing: GestureDetector(
-        onTap: (){},
-        child: const Icon(Icons.more_horiz)
-      ),
-      leading: const AmptiveCircularContainerWithPictureWidget(
-        imagePath: AmptiveImageStrings.jpeg3,
-      ),
-      title: Text(
-        'emmanuelnnanna',
-        style: Theme.of(context).textTheme.titleMedium?.copyWith(
-          fontWeight: AmptiveFontWeights.medium
-        ),
-      ),
-      subtitle: Text(
-        'emmanuelnnanna',
-        style: Theme.of(context).textTheme.titleSmall?.copyWith(
-          fontWeight: AmptiveFontWeights.medium
-        ),
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(0, 15, 0, 10),
+      child: Row(
+        children: [
+          const AmptiveCircularContainerWithPictureWidget(
+            imagePath: AmptiveImageStrings.jpeg3,
+            //diameter: 40,
+          ),
+          Gap(10.w),
+          Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                'emmanuelnnanna',
+                style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                  fontWeight: AmptiveFontWeights.medium
+                ),
+              ),
+              Text(
+                'emmanuelnnanna',
+                style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                  color: AmptiveColors.subtitleColor,
+                  fontWeight: AmptiveFontWeights.medium,
+                  fontSize: AmptiveFontSizes.size13
+                ),
+              ),
+            ],
+          ),
+          const Spacer(),
+          GestureDetector(
+            onTap: (){},
+            child: const Icon(Icons.more_horiz),
+          )
+        ],
       ),
     );
   }

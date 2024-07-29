@@ -1,6 +1,6 @@
 import 'package:amptive/src/utils/constants/strings/other_strings.dart';
 import 'package:amptive/src/views/widgets/common_widgets/live_user_model_widget.dart';
-import 'package:amptive/src/views/widgets/other_widgets/main_application_widgets/song_or_video_data_model_widget.dart';
+import 'package:amptive/src/views/widgets/common_widgets/song_or_video_data_model_widget.dart';
 import 'package:amptive/src/views/widgets/other_widgets/main_application_widgets/user_with_add_icon_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -48,8 +48,7 @@ class AmptiveHomeViewWidget extends StatelessWidget {
               tabs: [
                 Tab(text: AmptiveOtherStrings.emptyString,)
               ],
-            ),
-            
+            ),            
           )
         ],
         

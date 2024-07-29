@@ -1,6 +1,6 @@
 import 'package:amptive/src/utils/constants/strings/image_strings.dart';
 import 'package:amptive/src/utils/helpers/helper_functions/other_functions.dart';
-import 'package:amptive/src/views/widgets/common_widgets/live_indicator_widget.dart';
+import 'package:amptive/src/views/widgets/common_widgets/live_indicator_with_animating_dot_widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/png_jpeg_asset_loader_widget.dart';
 import 'package:amptive/src/views/widgets/other_widgets/main_application_widgets/dark_color_gradient_container_widget.dart';
 import 'package:amptive/src/views/widgets/other_widgets/main_application_widgets/list_tile_with_trailing_more_icon_widget.dart';
@@ -46,7 +46,7 @@ class AmptiveSongOrVideoDataModelWidget extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisSize: MainAxisSize.min,
                 children: [    
-                  const AmptiveLiveIndicatorWidget(),    
+                  const AmptiveLiveIndicatorWithAnimatingDotWidget(),    
                   Gap(10.h),
                   Text(
                     maxLines: null,

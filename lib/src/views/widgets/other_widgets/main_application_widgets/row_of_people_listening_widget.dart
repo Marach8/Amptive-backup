@@ -22,17 +22,20 @@ class AmptiveRowOfNumberOfPeopleListeningWidget extends StatelessWidget {
             children: [
               AmptiveCircularContainerWithPictureWidget(
                 imagePath: AmptiveImageStrings.jpeg1,
+                addBorder: true,
               ),
               Positioned(
                 left: 20,
                 child: AmptiveCircularContainerWithPictureWidget(
                   imagePath: AmptiveImageStrings.jpeg2,
+                  addBorder: true,
                 )
               ),
               Positioned(
                 left: 40,
                 child:AmptiveCircularContainerWithPictureWidget(
                   imagePath: AmptiveImageStrings.jpeg3,
+                  addBorder: true,
                 )
               ),
             ],
