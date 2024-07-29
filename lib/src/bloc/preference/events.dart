@@ -1,3 +1,3 @@
-abstract class PreferenceEvent {}
+abstract class AmptivePreferenceEvent {}
 
-class SelectPreferenceEvent extends PreferenceEvent {}
+class SelectPreferenceEvent extends AmptivePreferenceEvent {}

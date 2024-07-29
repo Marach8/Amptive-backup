@@ -16,14 +16,14 @@ import 'package:google_fonts/google_fonts.dart';
 import '../../../models/preferences.dart';
 import '../../../services/preference_service.dart';
 
-class PreferenceScreen extends StatefulWidget {
-  const PreferenceScreen({super.key});
+class AmptivePreferenceScreen extends StatefulWidget {
+  const AmptivePreferenceScreen({super.key});
 
   @override
-  State<PreferenceScreen> createState() => _PreferenceScreenState();
+  State<AmptivePreferenceScreen> createState() => _AmptivePreferenceScreenState();
 }
 
-class _PreferenceScreenState extends State<PreferenceScreen> {
+class _AmptivePreferenceScreenState extends State<AmptivePreferenceScreen> {
   late PreferenceService service;
   bool isPreferenceSelected = false;
 
@@ -157,7 +157,7 @@ class CommunityCardPreference extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var isSelected = true;
-    return BlocBuilder<PreferenceBloc, PreferenceState>(
+    return BlocBuilder<AmptivePreferenceBloc, AmptivePreferenceState>(
         builder: (context, state) {
       var pref = GetIt.I<PreferenceService>();
 

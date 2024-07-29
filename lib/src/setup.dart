@@ -1,3 +1,4 @@
+import 'package:amptive/src/bloc/preference/bloc.dart';
 import 'package:amptive/src/services/auth/auth_field_service.dart';
 import 'package:amptive/src/services/auth/otp_service.dart';
 import 'package:amptive/src/services/authentication_service.dart';
@@ -28,5 +29,6 @@ List<SingleChildWidget> providers() {
     BlocProvider(create: (_) => AmptiveEmailAuthBloc()),
     BlocProvider(create: (_) => AmptiveOTPAuthBloc()),
     BlocProvider(create: (_) => AmptivePasswordAuthBloc()),
+    BlocProvider(create: (_) => AmptivePreferenceBloc()),
   ];
 }

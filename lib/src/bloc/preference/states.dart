@@ -1,5 +1,5 @@
-abstract class PreferenceState {}
+abstract class AmptivePreferenceState {}
 
-class InitialState extends PreferenceState {}
+class InitialState extends AmptivePreferenceState {}
 
-class SelectPreferenceState extends PreferenceState {}
+class SelectPreferenceState extends AmptivePreferenceState {}

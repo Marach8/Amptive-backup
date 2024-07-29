@@ -25,7 +25,7 @@ final GoRouter amptiveAppRouter = GoRouter(
   routes: <RouteBase>[
     GoRoute(
         path: AmptiveRoutes.index,
-        builder: (_, __) => const PreferenceScreen()),
+        builder: (_, __) => const AmptivePreferenceScreen()),
     GoRoute(
       name: AmptiveRoutes.welcome,
       path: "/welcome-route",
@@ -105,7 +105,7 @@ final GoRouter amptiveAppRouter = GoRouter(
       name: AmptiveRoutes.preference,
       path: "/preference-route",
       builder: (BuildContext context, GoRouterState state) =>
-          const PreferenceScreen(),
+          const AmptivePreferenceScreen(),
     ),
   ],
   // observers: [LoggingNavigatorObserver()],

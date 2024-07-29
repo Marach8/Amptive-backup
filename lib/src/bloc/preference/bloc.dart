@@ -3,9 +3,9 @@ import 'package:bloc/bloc.dart';
 
 import 'events.dart';
 
-class PreferenceBloc
-    extends Bloc<PreferenceEvent, PreferenceState> {
-  PreferenceBloc() : super(InitialState()) {
+class AmptivePreferenceBloc
+    extends Bloc<AmptivePreferenceEvent, AmptivePreferenceState> {
+  AmptivePreferenceBloc() : super(InitialState()) {
     on<SelectPreferenceEvent>((event, emit) {
 
       emit(SelectPreferenceState());
