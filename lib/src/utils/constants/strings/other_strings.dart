@@ -7,7 +7,6 @@ class AmptiveOtherStrings {
   static const hyphen = "-";
   static const space = ' ';
 
-
   static const goLiveLikeNeverBefore = "Go Live, Like Never Before";
   static const monetizeYouLiveShowsAndEvents =
       "Readily monetize your live audio shows and events according to your unique taste while also creating the best for your subscribers.";
@@ -56,13 +55,15 @@ class AmptiveOtherStrings {
       "Only users 13 and older may use this app";
   static const done = 'Done';
 
-  static const noteAboutProfilePic = "Note that this will appear on your profile.";
+  static const noteAboutProfilePic =
+      "Note that this will appear on your profile.";
   static const termsOfService = "Terms of Service";
   static const enterYourName = 'Enter your name';
   static const whatIsYourName = 'What is your name?';
   static const createAccount = 'Create account';
   static const privacyPolicy = 'Privacy Policy.';
-  static const warningOnClickingCreate = 'By clicking on ‘Create account’, you agree to the';
+  static const warningOnClickingCreate =
+      'By clicking on ‘Create account’, you agree to the';
 
   static const addProfilePicture = "Add a profile picture";
   static const useYOurFavImage = "Use one of your favourite image or selfie";
@@ -70,6 +71,12 @@ class AmptiveOtherStrings {
   static const camera = 'Camera';
   static const skipForNow = 'Skip for now';
 
+  static const select5Communities =
+      "Select 5 communities you find interest in.";
+  static const selectedInterestNote =
+      "Your selected interests will be used to personalize you Amptive experience.";
+
+  static const personalizingYourExperience = "Personalizing your experience...";
 
   // string methods
   static String enter4DigitSentFrom(String location) {
