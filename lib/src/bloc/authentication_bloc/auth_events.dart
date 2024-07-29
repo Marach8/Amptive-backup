@@ -6,7 +6,24 @@ class VerifyEmailAuthEvent extends AmptiveAuthEvent{
   VerifyEmailAuthEvent({required this.userEmail});
 }
 
-class GetTheCurrentTextEnteredByTheUserAuthEvent extends AmptiveAuthEvent{
-  String? currentTextEnteredByUser;
-  GetTheCurrentTextEnteredByTheUserAuthEvent({this.currentTextEnteredByUser});
+class GetTheCurrentTextOnTheEmailFieldAuthEvent extends AmptiveAuthEvent{
+  String? currentTextOnTheEmailField;
+  GetTheCurrentTextOnTheEmailFieldAuthEvent({this.currentTextOnTheEmailField});
+}
+
+class ResendOTPCountDownTimerAuthEvent extends AmptiveAuthEvent{
+  final int? countDownTime;
+  ResendOTPCountDownTimerAuthEvent({this.countDownTime});
+}
+
+class OTPFieldIsCompletedAuthEvent extends AmptiveAuthEvent{
+  final String? otpInputFromUser;
+  OTPFieldIsCompletedAuthEvent({this.otpInputFromUser});
+}
+
+class HideOrShowPasswordAuthEvent extends AmptiveAuthEvent{}
+
+class GetTheCurrentTextOnThePaaswordFieldAuthEvent extends AmptiveAuthEvent{
+  String? currentTextOnThePasswordField;
+  GetTheCurrentTextOnThePaaswordFieldAuthEvent({this.currentTextOnThePasswordField});
 }

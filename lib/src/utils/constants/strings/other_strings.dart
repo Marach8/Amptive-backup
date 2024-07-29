@@ -13,15 +13,19 @@ class AmptiveOtherStrings{
   static const next = 'Next';
   static const or = 'or';
   static const emailSymbol = '@';
+  static const underscore = '_';
   static const signUp = 'Sign up';
   static const signIn = 'Sign in';
   static const attendAsGuest = 'Attend as guest';
   static const skip = 'Skip';
   static const back = 'Back';
+  static const emptyString = '';
+  static const spaceString = ' ';
 
   static const signUpWith = 'Sign up with ';
   static const signInWith = 'Sign in with ';
   static const email = 'Email';
+  static const live = 'Live';
   static const phoneNumber = 'Phone Number';
   static const facebook = 'Facebook';
   static const twitter = 'X(Twitter)';
@@ -31,4 +35,17 @@ class AmptiveOtherStrings{
   static const enterYourEmail = 'Enter your email...';
   static const thisEmailWillBeVerified = 'This email will be verified in the next step';
   static const verifyEmail = 'Verify email';
+
+  static const enterTheCodeSentToYou = 'Enter the 4 digit code we just sent to your email';
+  static const didNotGetTheCode = "Didn't get the code? ";
+  static const sendAgain = 'Send again';
+  static const codeHasBeenSentToYou = 'Code has been sent. You can request another in ';
+  static const youEnteredInvalidCode = 'You entered an invalid code. ';
+  static const resendCode = 'resend code';
+  static const createPasswordForYourAccount = "Create a password for your account";
+  static const enterYourPassword = 'Enter your password';
+  static const passwordMustBeAtleast8 = 'Your paassword must be at least 8 characters';
+
+  static const goLive = 'Go live';
+  static const paidShow = '\$paid show';
 }

@@ -5,8 +5,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 class AmptiveAuthBloc extends Bloc<AmptiveAuthEvent, AmptiveAuthState> {
   AmptiveAuthBloc() : super(InitialAuthState()) {
-    on<GetTheCurrentTextEnteredByTheUserAuthEvent>((event, emit) {
-      final currentTextEntered = event.currentTextEnteredByUser;
+    
+    on<GetTheCurrentTextOnTheEmailFieldAuthEvent>((event, emit) {
+      final currentTextEntered = event.currentTextOnTheEmailField;
 
       emit(MainAuthState(userEmail: currentTextEntered));
     });

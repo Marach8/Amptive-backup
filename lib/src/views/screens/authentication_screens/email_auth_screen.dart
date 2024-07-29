@@ -4,7 +4,7 @@ import 'package:amptive/src/bloc/authentication_bloc/auth_states.dart';
 import 'package:amptive/src/utils/constants/strings/other_strings.dart';
 import 'package:amptive/src/utils/helpers/extensions/extensions.dart';
 import 'package:amptive/src/views/widgets/common_widgets/annotated_region__widget.dart';
-import 'package:amptive/src/views/widgets/common_widgets/app_bar.dart';
+import 'package:amptive/src/views/widgets/common_widgets/app_bar_widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/elevated_button_widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/textformfield_widget.dart';
 import 'package:flutter/material.dart';
@@ -59,8 +59,8 @@ class _AmptiveEmailAuthScreenState extends State<AmptiveEmailAuthScreen> {
                   hintText: AmptiveOtherStrings.enterYourEmail,
                   onChanged: (currentText) => context
                       .read<AmptiveAuthBloc>()
-                      .add(GetTheCurrentTextEnteredByTheUserAuthEvent(
-                          currentTextEnteredByUser: currentText)),
+                      .add(GetTheCurrentTextOnTheEmailFieldAuthEvent(
+                          currentTextOnTheEmailField: currentText)),
                 ),
               ),
               Gap(10.h),
@@ -71,6 +71,7 @@ class _AmptiveEmailAuthScreenState extends State<AmptiveEmailAuthScreen> {
             ],
           ),
         ),
+        
         bottomSheet: BlocListener<AmptiveAuthBloc, AmptiveAuthState>(
           listener: (context, state) {
             if (state is LoadedAuthState && context.mounted) {
@@ -90,7 +91,7 @@ class _AmptiveEmailAuthScreenState extends State<AmptiveEmailAuthScreen> {
                   return state is LoadingAuthState
                       ? ElevatedButton(
                           onPressed: () {},
-                          child: SizedBox(
+                          child: const SizedBox(
                             width: 24,
                             height: 24,
                             child: CircularProgressIndicator(

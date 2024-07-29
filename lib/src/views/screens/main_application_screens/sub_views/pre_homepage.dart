@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:amptive/src/utils/constants/colors.dart';
 import 'package:amptive/src/views/widgets/animation_widgets/other_animation_widgets/notification_animation_widget.dart';
-import 'package:amptive/src/views/screens/main_application_screens/pre_hompage_background.dart';
+import 'package:amptive/src/views/screens/main_application_screens/sub_views/pre_hompage_background.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
