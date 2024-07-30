@@ -1,32 +1,46 @@
 import 'dart:async';
+
+import 'package:amptive/src/bloc/preference/bloc.dart';
+import 'package:amptive/src/bloc/preference/states.dart';
 import 'package:amptive/src/utils/constants/colors.dart';
-import 'package:amptive/src/views/widgets/common_widgets/app_bar_widget.dart';
+import 'package:amptive/src/utils/constants/constants.dart';
+import 'package:amptive/src/utils/constants/strings/other_strings.dart';
+import 'package:amptive/src/views/widgets/common_widgets/annotated_region__widget.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get_it/get_it.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:provider/provider.dart';
-import '../../../../providers/preference_provider.dart';
+
+import '../../../../models/preferences.dart';
+import '../../../../services/preference_service.dart';
+import '../../../widgets/common_widgets/app_bar_widget.dart';
 
 
-const int MAX_NUMBER_COMMUNITIES = 5;
-
-
-class PreferenceScreen extends StatefulWidget {
-  const PreferenceScreen({super.key});
+class AmptivePreferenceScreen extends StatefulWidget {
+  const AmptivePreferenceScreen({super.key});
 
   @override
-  State<PreferenceScreen> createState() => _PreferenceScreenState();
+  State<AmptivePreferenceScreen> createState() => _AmptivePreferenceScreenState();
 }
 
-class _PreferenceScreenState extends State<PreferenceScreen> {
+class _AmptivePreferenceScreenState extends State<AmptivePreferenceScreen> {
+  late PreferenceService service;
   bool isPreferenceSelected = false;
 
   @override
+  void initState() {
+    service = GetIt.I<PreferenceService>();
+
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    var model = Provider.of<PreferenceModel>(context, listen: true);
-    var len = model.items.length;
-    var isOpaque = model.getSelected().length == MAX_NUMBER_COMMUNITIES;
-    return SafeArea(
+    var len = service.items.length;
+    var isOpaque =
+        service.getSelected().length == Constants.MAX_NUMBER_COMMUNITIES;
+    return AmptiveAnnotatedRegionWidget(
       child: Scaffold(
         backgroundColor: AmptiveColors.brandBlackColor,
         appBar: isPreferenceSelected ? null : const AmptiveAppBar(),
@@ -40,7 +54,7 @@ class _PreferenceScreenState extends State<PreferenceScreen> {
                       margin: EdgeInsets.only(top: 20.h, bottom: 11.h),
                       alignment: Alignment.centerLeft,
                       child: Text(
-                        "Select 5 communities you find interest in.",
+                        AmptiveOtherStrings.select5Communities,
                         style: GoogleFonts.inter(
                           color: AmptiveColors.whiteColor,
                           fontSize: 22.sp,
@@ -52,7 +66,7 @@ class _PreferenceScreenState extends State<PreferenceScreen> {
                       margin: EdgeInsets.only(bottom: 30.h),
                       alignment: Alignment.centerLeft,
                       child: Text(
-                        "Your selected interests will be used to personalize you Amptive experience.",
+                        AmptiveOtherStrings.selectedInterestNote,
                         style: GoogleFonts.inter(
                           color: const Color(0xFFCDCDCD),
                           fontSize: 14.sp,
@@ -97,12 +111,13 @@ class _PreferenceScreenState extends State<PreferenceScreen> {
                                     });
                                   },
                                   style: ElevatedButton.styleFrom(
-                                    backgroundColor: AmptiveColors.brandBlueColor,
+                                    backgroundColor:
+                                        AmptiveColors.brandBlueColor,
                                     padding:
                                         EdgeInsets.symmetric(vertical: 11.5.h),
                                   ),
                                   child: Text(
-                                    'Next',
+                                    AmptiveOtherStrings.next,
                                     textAlign: TextAlign.center,
                                     style: GoogleFonts.inter(
                                       color: Colors.white,
@@ -143,17 +158,19 @@ class CommunityCardPreference extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var isSelected = true;
-    return Consumer<PreferenceModel>(builder: (context, pref, child) {
+    return BlocBuilder<AmptivePreferenceBloc, AmptivePreferenceState>(
+        builder: (context, state) {
+      var pref = GetIt.I<PreferenceService>();
+
       return Opacity(
         opacity: !pref.items[index].isSelected && isOpaque ? 0.6 : 1.0,
         child: GestureDetector(
           onTap: () {
-            if( !pref.items[index].isSelected && isOpaque ){
+            if (!pref.items[index].isSelected && isOpaque) {
               return;
             }
 
             pref.toggleSelectedByIndex(index);
-
           },
           child: Stack(
             children: [
@@ -301,7 +318,7 @@ class _ProcessingPreferenceState extends State<ProcessingPreference> {
   void initState() {
     super.initState();
 
-    _list = Provider.of<PreferenceModel>(context, listen: false).getSelected();
+    _list = GetIt.I<PreferenceService>().getSelected();
     text = _list[0].name;
 
     Timer.periodic(const Duration(seconds: 3), (_) {
@@ -317,8 +334,7 @@ class _ProcessingPreferenceState extends State<ProcessingPreference> {
 
   @override
   Widget build(BuildContext context) {
-    var preference =
-        Provider.of<PreferenceModel>(context, listen: false).getSelected();
+    var preference = GetIt.I<PreferenceService>().getSelected();
 
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
@@ -391,7 +407,7 @@ class _ProcessingPreferenceState extends State<ProcessingPreference> {
         Container(
           margin: EdgeInsets.only(top: 17.h),
           child: Text(
-            "Personalizing your experience...",
+            AmptiveOtherStrings.personalizingYourExperience,
             style: GoogleFonts.inter(
               color: AmptiveColors.whiteColor,
               fontSize: 17,

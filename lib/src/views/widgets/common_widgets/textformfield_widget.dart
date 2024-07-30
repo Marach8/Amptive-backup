@@ -13,6 +13,9 @@ class AmptiveTextFormFieldWidget extends StatelessWidget {
   final double? cursorHeight;
   final Widget? suffixIcon;
   final bool? obscureText;
+  final Color? cursorColor;
+
+  final InputDecoration? decoration;
 
   const AmptiveTextFormFieldWidget({
     super.key,
@@ -23,6 +26,7 @@ class AmptiveTextFormFieldWidget extends StatelessWidget {
     this.textAlign,
     this.cursorHeight,
     this.hintText,
+    this.cursorColor, this.decoration,
     this.suffixIcon,
     this.obscureText
   });
@@ -33,16 +37,15 @@ class AmptiveTextFormFieldWidget extends StatelessWidget {
       controller: controller,
       textAlign: textAlign ?? TextAlign.start,
       validator: validator,
+      maxLines: 1,
+      autovalidateMode: AutovalidateMode.onUserInteraction,
       onChanged: onChanged,
+      cursorColor: cursorColor ?? AmptiveColors.brandBlueColor,
       obscureText: obscureText ?? false,
       cursorHeight: cursorHeight,
-      cursorColor: AmptiveColors.brandBlueColor,
       cursorErrorColor: AmptiveColors.textRedColor,
       keyboardType: keyboardType,
-      decoration: InputDecoration(
-        hintText: hintText,
-        suffixIcon: suffixIcon
-      ),
+      decoration: decoration ??  InputDecoration(hintText: hintText, suffixIcon: suffixIcon),
       style: TextStyle(
         fontWeight: AmptiveFontWeights.regular,
         fontSize: AmptiveFontSizes.size18,

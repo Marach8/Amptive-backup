@@ -46,7 +46,7 @@ class AmptiveHomeViewWidget extends StatelessWidget {
     
             bottom: const TabBar(
               tabs: [
-                Tab(text: AmptiveOtherStrings.emptyString,)
+                Tab(text: AmptiveOtherStrings.empty,)
               ],
             ),            
           )

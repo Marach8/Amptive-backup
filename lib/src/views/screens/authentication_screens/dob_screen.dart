@@ -1,14 +1,22 @@
-import 'package:amptive/src/providers/form_providers.dart';
+import 'package:amptive/src/bloc/authentication/general/auth_events.dart';
+import 'package:amptive/src/services/auth/auth_field_service.dart';
+import 'package:amptive/src/utils/constants/strings/other_strings.dart';
 import 'package:amptive/src/utils/constants/strings/route_strings.dart';
 import 'package:amptive/src/utils/constants/colors.dart';
-import 'package:amptive/src/views/widgets/common_widgets/app_bar_widget.dart';
+import 'package:amptive/src/views/widgets/common_widgets/annotated_region__widget.dart';
+import 'package:amptive/src/views/widgets/common_widgets/elevated_button_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
-import 'package:provider/provider.dart';
+
+import '../../../bloc/authentication/general/auth_bloc.dart';
+import '../../../bloc/authentication/general/auth_states.dart';
+import '../../widgets/common_widgets/app_bar_widget.dart';
 
 class DateOfBirthScreen extends StatefulWidget {
   const DateOfBirthScreen({super.key});
@@ -18,18 +26,23 @@ class DateOfBirthScreen extends StatefulWidget {
 }
 
 class _DateOfBirthScreenState extends State<DateOfBirthScreen> {
+  late final AuthFieldService service;
   final TextEditingController _dobController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
-  late FormProvider _formProvider;
   bool _isBottomSheetOpened = false;
   DateTime? _selectedDate;
 
   @override
+  void initState() {
+    service = GetIt.I<AuthFieldService>();
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    _formProvider = Provider.of<FormProvider>(context);
     var bottomSheetHeight = 232.h;
 
-    return SafeArea(
+    return AmptiveAnnotatedRegionWidget(
       child: Scaffold(
         backgroundColor: AmptiveColors.brandBlackColor,
         appBar: const AmptiveAppBar(),
@@ -41,7 +54,7 @@ class _DateOfBirthScreenState extends State<DateOfBirthScreen> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  "What is your date of birth?",
+                  AmptiveOtherStrings.whatIsYourDateOfBirth,
                   style: GoogleFonts.inter(
                     color: AmptiveColors.whiteColor,
                     fontSize: 17.sp,
@@ -51,105 +64,101 @@ class _DateOfBirthScreenState extends State<DateOfBirthScreen> {
                 SizedBox(
                   height: 11.h,
                 ),
-                TextFormField(
-                  controller: _dobController,
-                  readOnly: true,
-                  onTap: () {
-                    _selectDate(bottomSheetHeight);
-                  },
-                  maxLines: 1,
-                  autovalidateMode: AutovalidateMode.onUserInteraction,
-                  keyboardType: TextInputType.none,
-                  cursorColor: AmptiveColors.brandBlueColor,
-                  decoration: InputDecoration(
-                    contentPadding: EdgeInsets.symmetric(vertical: 12.h, horizontal: 16.w),
-                    hintText: "Select Date",
-                    hintStyle: GoogleFonts.inter(
-                      fontSize: 16.sp,
-                      color: AmptiveColors.authHintColor,
-                      fontWeight: FontWeight.normal,
-                    ),
-                    errorStyle: GoogleFonts.inter(
-                      color: AmptiveColors.textRedColor,
-                      fontSize: 12.sp,
-                      fontWeight: FontWeight.normal,
-                    ),
-                    filled: true,
-                    fillColor: const Color(0xFF9E9E9E).withOpacity(0.3),
-                    focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(
-                        width: 2.w,
-                        color: AmptiveColors.brandBlueColor,
+                BlocBuilder<AmptiveAuthBloc, AmptiveAuthState>(
+                    buildWhen: (p, current) {
+                  return current is EditDOBAuthState;
+                }, builder: (_, state) {
+                  service.dob != null
+                      ? _dobController.text = _formatDate(service.dob!)
+                      : _dobController.clear();
+
+                  return TextFormField(
+                    controller: _dobController,
+                    readOnly: true,
+                    onTap: () {
+                      _selectDate(bottomSheetHeight);
+                    },
+                    maxLines: 1,
+                    autovalidateMode: AutovalidateMode.onUserInteraction,
+                    keyboardType: TextInputType.none,
+                    cursorColor: AmptiveColors.brandBlueColor,
+                    decoration: InputDecoration(
+                      contentPadding: EdgeInsets.symmetric(
+                          vertical: 12.h, horizontal: 16.w),
+                      hintText: AmptiveOtherStrings.selectDate,
+                      hintStyle: GoogleFonts.inter(
+                        fontSize: 16.sp,
+                        color: AmptiveColors.authHintColor,
+                        fontWeight: FontWeight.normal,
                       ),
-                      borderRadius: BorderRadius.circular(14.r),
-                    ),
-                    border: OutlineInputBorder(
-                      borderSide: BorderSide(
-                        width: 2.w,
-                        color: AmptiveColors.transparentColor,
+                      errorStyle: GoogleFonts.inter(
+                        color: AmptiveColors.textRedColor,
+                        fontSize: 12.sp,
+                        fontWeight: FontWeight.normal,
                       ),
-                      borderRadius: BorderRadius.circular(14.r),
+                      filled: true,
+                      fillColor: AmptiveColors.fillGreyColor.withOpacity(0.3),
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: BorderSide(
+                          width: 2.w,
+                          color: AmptiveColors.brandBlueColor,
+                        ),
+                        borderRadius: BorderRadius.circular(14.r),
+                      ),
+                      border: OutlineInputBorder(
+                        borderSide: BorderSide(
+                          width: 2.w,
+                          color: AmptiveColors.transparentColor,
+                        ),
+                        borderRadius: BorderRadius.circular(14.r),
+                      ),
+                    ),
+                    style: GoogleFonts.inter(
+                        fontWeight: FontWeight.normal,
+                        fontSize: 16.sp,
+                        color: AmptiveColors.whiteColor),
+                  );
+                }),
+                Container(
+                  height: 20.h,
+                  margin: EdgeInsets.symmetric(vertical: 11.h),
+                  child: Text(
+                    AmptiveOtherStrings.users13andOlderWarning,
+                    style: GoogleFonts.inter(
+                      color: AmptiveColors.whiteColor,
+                      fontWeight: FontWeight.w400,
+                      fontSize: 11.sp,
+                      height: 0.14,
                     ),
                   ),
-                  style: GoogleFonts.inter(
-                      fontWeight: FontWeight.normal,
-                      fontSize: 16.sp,
-                      color: AmptiveColors.whiteColor),
                 ),
-              Container(
-                height: 20.h,
-                margin: EdgeInsets.symmetric(vertical: 11.h),
-                child: Text(
-                 "Only users 13 and older may use this app",
-                  style: GoogleFonts.inter(
-                    color: AmptiveColors.whiteColor,
-                    fontWeight: FontWeight.w400,
-                    fontSize: 11.sp,
-                    height: 0.14,
-                  ),
-                ),
-              ),
-
-
                 Expanded(
                   child: SizedBox(
                     height: 1.h,
                   ),
                 ),
-                Consumer<FormProvider>(builder: (context, model, _) {
-                  return Container(
-                    width: 350.w,
-                    height: 50.w,
-                    margin: EdgeInsets.only(
-                        bottom: _isBottomSheetOpened
-                            ? bottomSheetHeight + 0.h
-                            : 29.h),
-                    child: ElevatedButton(
-                      onPressed: () {
-                        // Validate returns true if the form is valid, or false otherwise.
-                        if (model.isDOBValid) {
-                          context.pushNamed(AmptiveRoutes.addUsername);
-                        }
-                      },
-                      style: ElevatedButton.styleFrom(
-                          backgroundColor: model.dob != null
-                              ? AmptiveColors.brandBlueColor
-                              : const Color(0xFF2F2F2F)),
-                      child: Text(
-                        "Next",
-                        style: GoogleFonts.inter(
-                            fontWeight: FontWeight.w600,
-                            fontSize: 18.sp,
-                            color: model.dob != null
-                                ? AmptiveColors.whiteColor
-                                : const Color(0xFF666666)),
-                      ),
-                    ),
-                  );
-                }),
               ],
             ),
           ),
+        ),
+        bottomSheet: Padding(
+          padding: EdgeInsets.only(
+              bottom: _isBottomSheetOpened ? bottomSheetHeight : 16.h),
+          child: BlocBuilder<AmptiveAuthBloc, AmptiveAuthState>(
+              builder: (context, state) {
+            return AmptiveElevatedButtonWidget(
+              height: 50.w,
+              onPressed: service.dob != null
+                  ? () {
+                      // Validate returns true if the form is valid, or false otherwise.
+                      if (service.isDOBValid) {
+                        context.pushNamed(AmptiveRoutes.addUsername);
+                      }
+                    }
+                  : null,
+              buttonTitle: AmptiveOtherStrings.next,
+            );
+          }),
         ),
       ),
     );
@@ -170,13 +179,13 @@ class _DateOfBirthScreenState extends State<DateOfBirthScreen> {
           child: Column(
             children: <Widget>[
               Container(
-                color: const Color(0xFF434343),
+                color: AmptiveColors.grey2Color,
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: <Widget>[
                     CupertinoButton(
                       child: Text(
-                        'Done',
+                        AmptiveOtherStrings.done,
                         style: GoogleFonts.inter(
                             color: AmptiveColors.whiteColor,
                             fontWeight: FontWeight.normal,
@@ -219,24 +228,29 @@ class _DateOfBirthScreenState extends State<DateOfBirthScreen> {
     ).whenComplete(() => _onBottomSheetClosed());
 
     if (pickedDate != null && pickedDate != _selectedDate) {
-      setState(() {
-        _selectedDate = pickedDate;
-        _dobController.text = _formatDate(pickedDate);
-      });
+      _selectedDate = pickedDate;
+      service.setDOB(_selectedDate);
 
-      _formProvider.setDOB(_selectedDate);
+      if (mounted) {
+        context.read<AmptiveAuthBloc>().add(EditDOBAuthEvent());
+      }
     }
   }
 
   void _onBottomSheetClosed() {
-    setState(() {
-      _isBottomSheetOpened = false;
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      setState(() {
+        _isBottomSheetOpened = false;
+      });
     });
   }
 
   void _onBottomSheetOpened() {
-    setState(() {
-      _isBottomSheetOpened = true;
+    // todo fix bug when setstate is called
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      setState(() {
+        _isBottomSheetOpened = true;
+      });
     });
   }
 

@@ -31,7 +31,7 @@ class AmptiveBottomAppBarItem extends StatelessWidget {
           },
           child: AnimatedCrossFade(
             firstChild: Icon(icon, color: AmptiveColors.whiteColor),
-            secondChild: Icon(icon, color: AmptiveColors.textFormFieldFillColor,),
+            secondChild: Icon(icon, color: AmptiveColors.fillGreyColor.withOpacity(0.3),),
             crossFadeState: isSelected ? CrossFadeState.showFirst : CrossFadeState.showSecond,
             duration: const Duration(seconds: 1),
           ),

@@ -1,13 +1,19 @@
-import 'package:amptive/src/providers/form_providers.dart';
+import 'package:amptive/src/services/auth/auth_field_service.dart';
+import 'package:amptive/src/utils/constants/strings/other_strings.dart';
 import 'package:amptive/src/utils/constants/strings/route_strings.dart';
 import 'package:amptive/src/utils/constants/colors.dart';
-import 'package:amptive/src/views/widgets/common_widgets/app_bar_widget.dart';
+import 'package:amptive/src/views/widgets/common_widgets/annotated_region__widget.dart';
+import 'package:amptive/src/views/widgets/common_widgets/elevated_button_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:provider/provider.dart';
 
+import '../../../bloc/authentication/general/auth_bloc.dart';
+import '../../../bloc/authentication/general/auth_states.dart';
+import '../../widgets/common_widgets/app_bar_widget.dart';
 
 class NameAuthScreen extends StatefulWidget {
   const NameAuthScreen({super.key});
@@ -18,14 +24,18 @@ class NameAuthScreen extends StatefulWidget {
 
 class _NameAuthScreenState extends State<NameAuthScreen> {
   TextEditingController nameController = TextEditingController();
-  late FormProvider _formProvider;
+  late AuthFieldService service;
   final _formKey = GlobalKey<FormState>();
 
   @override
-  Widget build(BuildContext context) {
-    _formProvider = Provider.of<FormProvider>(context);
+  void initState() {
+    service = GetIt.I<AuthFieldService>();
+    super.initState();
+  }
 
-    return SafeArea(
+  @override
+  Widget build(BuildContext context) {
+    return AmptiveAnnotatedRegionWidget(
       child: Scaffold(
         backgroundColor: AmptiveColors.brandBlackColor,
         appBar: const AmptiveAppBar(),
@@ -37,7 +47,7 @@ class _NameAuthScreenState extends State<NameAuthScreen> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  "What is your name?",
+                  AmptiveOtherStrings.whatIsYourName,
                   style: GoogleFonts.inter(
                     color: AmptiveColors.whiteColor,
                     fontSize: 17.sp,
@@ -49,16 +59,23 @@ class _NameAuthScreenState extends State<NameAuthScreen> {
                 ),
                 TextFormField(
                   controller: nameController,
-                  onChanged: _formProvider.validateName,
+                  onChanged: (val){
+                    service.validateName(val);
+
+                    setState(() {
+
+                    });
+                  },
                   maxLines: 1,
                   autovalidateMode: AutovalidateMode.onUserInteraction,
                   keyboardType: TextInputType.text,
-                  cursorColor: _formProvider.name.error == null
+                  cursorColor: service.name.error == null
                       ? AmptiveColors.brandBlueColor
                       : AmptiveColors.textRedColor,
                   decoration: InputDecoration(
-                    contentPadding: EdgeInsets.symmetric(vertical: 12.h, horizontal: 16.w),
-                    hintText: "Enter your name",
+                    contentPadding:
+                        EdgeInsets.symmetric(vertical: 12.h, horizontal: 16.w),
+                    hintText: AmptiveOtherStrings.enterYourName,
                     hintStyle: GoogleFonts.inter(
                       fontSize: 16.sp,
                       color: AmptiveColors.authHintColor,
@@ -69,7 +86,7 @@ class _NameAuthScreenState extends State<NameAuthScreen> {
                     focusedBorder: OutlineInputBorder(
                       borderSide: BorderSide(
                         width: 2.w,
-                        color: _formProvider.name.error == null
+                        color: service.name.error == null
                             ? AmptiveColors.brandBlueColor
                             : AmptiveColors.textRedColor,
                       ),
@@ -90,9 +107,11 @@ class _NameAuthScreenState extends State<NameAuthScreen> {
                 ),
                 Container(
                   height: 17.h,
-                  margin: EdgeInsets.symmetric(vertical: 11.h,),
+                  margin: EdgeInsets.symmetric(
+                    vertical: 11.h,
+                  ),
                   child: Text(
-                    "Note that this will appear on your profile.",
+                    AmptiveOtherStrings.noteAboutProfilePic,
                     style: GoogleFonts.inter(
                       color: AmptiveColors.whiteColor,
                       fontWeight: FontWeight.normal,
@@ -110,66 +129,53 @@ class _NameAuthScreenState extends State<NameAuthScreen> {
                   alignment: Alignment.centerLeft,
                   child: RichText(
                     text: TextSpan(
-                      text:
-                          "By clicking on ‘Create account’, you agree to the  ",
+                      text: AmptiveOtherStrings.warningOnClickingCreate +
+                          AmptiveOtherStrings.space,
                       children: [
                         TextSpan(
-                          text: "Terms of Service ",
+                          text: AmptiveOtherStrings.termsOfService +
+                              AmptiveOtherStrings.space,
                           style: GoogleFonts.inter(
                             fontWeight: FontWeight.bold,
                           ),
                         ),
                         const TextSpan(
-                          text: "and ",
+                          text: AmptiveOtherStrings.and +
+                              AmptiveOtherStrings.space,
                         ),
                         TextSpan(
-                          text: "Privacy Policy.",
+                          text: AmptiveOtherStrings.privacyPolicy,
                           style: GoogleFonts.inter(
                             fontWeight: FontWeight.bold,
                           ),
                         ),
                       ],
                       style: GoogleFonts.inter(
-                        fontSize: 11.sp,
-                        color: AmptiveColors.whiteColor,
-                        fontWeight: FontWeight.normal,
-                        height: 2
-                      ),
+                          fontSize: 11.sp,
+                          color: AmptiveColors.whiteColor,
+                          fontWeight: FontWeight.normal,
+                          height: 2),
                     ),
                   ),
                 ),
-                Consumer<FormProvider>(builder: (context, model, _) {
-                  return Container(
-                    width: 350.w,
-                    height: 50.w,
-                    margin: EdgeInsets.only(bottom: 29.h),
-                    child: ElevatedButton(
-                      onPressed: () {
-                        // Validate returns true if the form is valid, or false otherwise.
-                        if (model.isNameValid) {
-                          context.goNamed(AmptiveRoutes.addProfilePic);
-                        }
-                      },
-                      style: ElevatedButton.styleFrom(
-                          backgroundColor: model.isNameValid
-                              ? AmptiveColors.brandBlueColor
-                              : const Color(0xFF2F2F2F)),
-                      child: Text(
-                        "Create account",
-                        style: GoogleFonts.inter(
-                            fontWeight: FontWeight.w600,
-                            fontSize: 18.sp,
-                            color: model.isNameValid
-                                ? AmptiveColors.whiteColor
-                                : const Color(0xFF666666)),
-                      ),
-                    ),
-                  );
-                }),
               ],
             ),
           ),
         ),
+        bottomSheet: BlocBuilder<AmptiveAuthBloc, AmptiveAuthState>(
+            builder: (context, state) {
+          return AmptiveElevatedButtonWidget(
+            height: 50.w,
+            margin: EdgeInsets.only(bottom: 29.h),
+            buttonTitle: AmptiveOtherStrings.createAccount,
+            onPressed: service.isNameValid
+                ? () {
+                    // Validate returns true if the form is valid, or false otherwise.
+                    context.goNamed(AmptiveRoutes.addProfilePic);
+                  }
+                : null,
+          );
+        }),
       ),
     );
   }

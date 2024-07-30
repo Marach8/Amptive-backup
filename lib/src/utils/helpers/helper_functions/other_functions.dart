@@ -1,9 +1,7 @@
 import 'dart:async';
 
-import 'package:amptive/src/bloc/authentication_bloc/auth_bloc.dart';
-import 'package:amptive/src/bloc/authentication_bloc/auth_events.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
+
 
 class AmptiveHelperFunctions{
   const AmptiveHelperFunctions._();
@@ -23,9 +21,9 @@ class AmptiveHelperFunctions{
       (timer) {
         if(timer.tick == 61){timer.cancel();}
         else{
-          context.read<AmptiveAuthBloc>().add(
-            ResendOTPCountDownTimerAuthEvent(countDownTime: timer.tick)
-          );
+          // context.read<AmptiveAuthBloc>().add(
+          //   ResendOTPCountDownTimerAuthEvent(countDownTime: timer.tick)
+          // );
         }
         
       }

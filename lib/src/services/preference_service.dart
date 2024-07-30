@@ -1,7 +1,8 @@
+import 'dart:ui';
 
-import 'package:flutter/material.dart';
+import '../models/preferences.dart';
 
-class PreferenceModel extends ChangeNotifier {
+class PreferenceService {
   final List<Preferences> _items = [
     Preferences.card("Music", const Color(0xFFEF8C62), const Color(0xFFEF6262)),
     Preferences.card("Art", const Color(0xFFD95335), const Color(0xFFD93535)),
@@ -21,7 +22,6 @@ class PreferenceModel extends ChangeNotifier {
 
   void toggleSelectedByIndex(int index) {
     _items[index].isSelected = !_items[index].isSelected;
-    notifyListeners();
   }
 
   List<Preferences> getSelected(){
@@ -31,11 +31,3 @@ class PreferenceModel extends ChangeNotifier {
 
 }
 
-class Preferences {
-  late String name;
-  late Color primary;
-  late Color secondary;
-  bool isSelected = false;
-
-  Preferences.card(this.name, this.primary, this.secondary);
-}

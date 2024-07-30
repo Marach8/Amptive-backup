@@ -1,15 +1,19 @@
 import 'dart:async';
 
-import 'package:amptive/src/providers/form_providers.dart';
+import 'package:amptive/src/services/auth/auth_field_service.dart';
+import 'package:amptive/src/utils/constants/strings/other_strings.dart';
 import 'package:amptive/src/utils/constants/strings/route_strings.dart';
 import 'package:amptive/src/utils/constants/colors.dart';
 import 'package:amptive/src/views/widgets/common_widgets/app_bar_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:provider/provider.dart';
 
+import '../../../bloc/authentication/general/auth_bloc.dart';
+import '../../../bloc/authentication/general/auth_states.dart';
 
 class UserNameAuthScreen extends StatefulWidget {
   const UserNameAuthScreen({super.key});
@@ -19,7 +23,7 @@ class UserNameAuthScreen extends StatefulWidget {
 }
 
 class _UserNameAuthScreenState extends State<UserNameAuthScreen> {
-  late FormProvider _formProvider;
+  late final AuthFieldService service;
 
   TextEditingController usernameController = TextEditingController();
   Timer? _typingTimer;
@@ -34,9 +38,13 @@ class _UserNameAuthScreenState extends State<UserNameAuthScreen> {
   }
 
   @override
-  Widget build(BuildContext context) {
-    _formProvider = Provider.of<FormProvider>(context);
+  void initState() {
+    service = GetIt.I<AuthFieldService>();
+    super.initState();
+  }
 
+  @override
+  Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
         backgroundColor: AmptiveColors.brandBlackColor,
@@ -68,14 +76,14 @@ class _UserNameAuthScreenState extends State<UserNameAuthScreen> {
                     }
                     _typingTimer = Timer(const Duration(seconds: 1), () async {
                       setLoading(true);
-                      await _formProvider.validateUsername(val);
+                      await service.validateUsername(val);
                       setLoading(false);
                     });
                   },
                   maxLines: 1,
                   autovalidateMode: AutovalidateMode.onUserInteraction,
                   keyboardType: TextInputType.text,
-                  cursorColor: _formProvider.username.error == null
+                  cursorColor: service.username.error == null
                       ? AmptiveColors.brandBlueColor
                       : AmptiveColors.textRedColor,
                   decoration: InputDecoration(
@@ -107,7 +115,7 @@ class _UserNameAuthScreenState extends State<UserNameAuthScreen> {
                         : null,
                     suffixIcon: _isLoading
                         ? null
-                        : _formProvider.isUsernameValid
+                        : service.isUsernameValid
                             ? Container(
                                 alignment: Alignment.center,
                                 width: 20,
@@ -117,15 +125,17 @@ class _UserNameAuthScreenState extends State<UserNameAuthScreen> {
                                   color: AmptiveColors.successColor,
                                 ),
                               )
-                            : _formProvider.isUsernameInvalid? Container(
-                                alignment: Alignment.center,
-                                width: 20,
-                                height: 20,
-                                child: Icon(
-                                  Icons.close,
-                                  color: AmptiveColors.textRedColor,
-                                ),
-                              ): null,
+                            : service.isUsernameInvalid
+                                ? Container(
+                                    alignment: Alignment.center,
+                                    width: 20,
+                                    height: 20,
+                                    child: Icon(
+                                      Icons.close,
+                                      color: AmptiveColors.textRedColor,
+                                    ),
+                                  )
+                                : null,
                     hintText: "username",
                     hintStyle: GoogleFonts.inter(
                       fontSize: 16.sp,
@@ -137,7 +147,7 @@ class _UserNameAuthScreenState extends State<UserNameAuthScreen> {
                     focusedBorder: OutlineInputBorder(
                       borderSide: BorderSide(
                         width: 2.w,
-                        color: _formProvider.username.error == null
+                        color: service.username.error == null
                             ? AmptiveColors.brandBlueColor
                             : AmptiveColors.textRedColor,
                       ),
@@ -173,7 +183,7 @@ class _UserNameAuthScreenState extends State<UserNameAuthScreen> {
                   ),
                 ),
                 Visibility(
-                  visible: !_isLoading && _formProvider.isUsernameValid,
+                  visible: !_isLoading && service.isUsernameValid,
                   child: Container(
                     margin: EdgeInsets.symmetric(vertical: 11.h),
                     child: Text(
@@ -188,11 +198,11 @@ class _UserNameAuthScreenState extends State<UserNameAuthScreen> {
                   ),
                 ),
                 Visibility(
-                  visible: !_isLoading && !_formProvider.isUsernameValid,
+                  visible: !_isLoading && !service.isUsernameValid,
                   child: Container(
                     margin: EdgeInsets.symmetric(vertical: 11.h),
                     child: Text(
-                      _formProvider.username.error ?? "",
+                      service.username.error ?? "",
                       style: GoogleFonts.inter(
                         color: AmptiveColors.textRedColor,
                         fontWeight: FontWeight.w400,
@@ -206,7 +216,8 @@ class _UserNameAuthScreenState extends State<UserNameAuthScreen> {
                     height: 1.h,
                   ),
                 ),
-                Consumer<FormProvider>(builder: (context, model, _) {
+                BlocBuilder<AmptiveAuthBloc, AmptiveAuthState>(
+                    builder: (context, state) {
                   return Container(
                     width: 350.w,
                     height: 50.w,
@@ -214,20 +225,20 @@ class _UserNameAuthScreenState extends State<UserNameAuthScreen> {
                     child: ElevatedButton(
                       onPressed: () {
                         // Validate returns true if the form is valid, or false otherwise.
-                        if (model.isUsernameValid) {
+                        if (service.isUsernameValid) {
                           context.goNamed(AmptiveRoutes.addName);
                         }
                       },
                       style: ElevatedButton.styleFrom(
-                          backgroundColor: model.isUsernameValid
+                          backgroundColor: service.isUsernameValid
                               ? AmptiveColors.brandBlueColor
                               : const Color(0xFF2F2F2F)),
                       child: Text(
-                        "Next",
+                        AmptiveOtherStrings.next,
                         style: GoogleFonts.inter(
                             fontWeight: FontWeight.w600,
                             fontSize: 18.sp,
-                            color: model.isUsernameValid
+                            color: service.isUsernameValid
                                 ? AmptiveColors.whiteColor
                                 : const Color(0xFF666666)),
                       ),

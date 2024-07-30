@@ -16,4 +16,7 @@ class AmptiveImageStrings{
 
   static const pngFacebookIcon = '$generalPngImagePath/facebook.png';
   static const pngGoogleIcon = '$generalPngImagePath/google_icon.png';
+
+  static const noAvatarImage = '$generalPngImagePath/no_avatar_image.png';
+
 }
