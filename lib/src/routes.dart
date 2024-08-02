@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:amptive/src/utils/constants/strings/other_strings.dart';
 import 'package:amptive/src/utils/constants/strings/route_strings.dart';
 import 'package:amptive/src/views/screens/authentication_screens/add_phone.dart';
 import 'package:amptive/src/views/screens/authentication_screens/dob_screen.dart';
@@ -25,7 +26,7 @@ final GoRouter amptiveAppRouter = GoRouter(
   routes: <RouteBase>[
     GoRoute(
         path: AmptiveRoutes.index,
-        builder: (_, __) => const AmptivePreferenceScreen()),
+        builder: (_, __) => const UserNameAuthScreen()),
     GoRoute(
       name: AmptiveRoutes.welcome,
       path: "/welcome-route",

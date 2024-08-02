@@ -1,15 +1,16 @@
+import 'package:amptive/src/bloc/authentication/general/auth_events.dart';
 import 'package:amptive/src/bloc/authentication/password/password_auth_states.dart';
-import 'package:amptive/src/services/auth/auth_field_service.dart';
 import 'package:amptive/src/utils/constants/strings/route_strings.dart';
 import 'package:amptive/src/utils/constants/colors.dart';
 import 'package:amptive/src/views/widgets/common_widgets/annotated_region__widget.dart';
+import 'package:amptive/src/views/widgets/common_widgets/textformfield_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
-import 'package:google_fonts/google_fonts.dart';
 
+import '../../../bloc/authentication/general/auth_bloc.dart';
+import '../../../bloc/authentication/general/auth_states.dart';
 import '../../../bloc/authentication/password/password_auth_bloc.dart';
 import '../../../bloc/authentication/password/password_auth_events.dart';
 import '../../../utils/constants/strings/other_strings.dart';
@@ -24,7 +25,6 @@ class PasswordAuthScreen extends StatefulWidget {
 }
 
 class _PasswordAuthScreenState extends State<PasswordAuthScreen> {
-  late AuthFieldService service;
   bool _passwordVisible = false;
   TextEditingController passwordController = TextEditingController();
 
@@ -32,7 +32,6 @@ class _PasswordAuthScreenState extends State<PasswordAuthScreen> {
 
   @override
   void initState() {
-    service = GetIt.I<AuthFieldService>();
     super.initState();
   }
 
@@ -55,74 +54,69 @@ class _PasswordAuthScreenState extends State<PasswordAuthScreen> {
                 SizedBox(
                   height: 11.h,
                 ),
-                TextFormField(
-                  controller: passwordController,
-                  onChanged: (value) {
-                    service.validatePassword(value);
-
-                    // trigger password changed event
-                    context
-                        .read<AmptivePasswordAuthBloc>()
-                        .add(PasswordChangedAuthEvent());
-                  },
-                  maxLines: 1,
-                  obscureText: !_passwordVisible,
-                  keyboardType: TextInputType.visiblePassword,
-                  cursorColor: AmptiveColors.brandBlueColor,
-                  decoration: InputDecoration(
-                      contentPadding: EdgeInsets.symmetric(
-                          vertical: 12.h, horizontal: 16.w),
-                      hintText: AmptiveOtherStrings.enterYourPassword,
-                      hintStyle: GoogleFonts.inter(
-                        fontSize: 16.sp,
-                        color: AmptiveColors.authHintColor,
-                        fontWeight: FontWeight.normal,
-                      ),
-                      filled: true,
-                      fillColor: AmptiveColors.fillGreyColor.withOpacity(0.3),
-                      focusedBorder: buildOutlineInputBorder(),
-                      border: OutlineInputBorder(
-                        borderSide: BorderSide(
-                          width: 2.w,
-                          color: AmptiveColors.transparentColor,
-                        ),
-                        borderRadius: BorderRadius.circular(14.r),
-                      ),
-                      suffixIcon: IconButton(
-                        icon: Padding(
-                          padding: EdgeInsets.only(right: 16.0.w),
-                          child: Icon(
-                            _passwordVisible
-                                ? Icons.visibility_off
-                                : Icons.visibility,
-                            color: AmptiveColors.whiteColor,
+                BlocBuilder<AmptiveAuthBloc, AmptiveAuthState>(
+                    buildWhen: (previous, current) =>
+                        current is HideOrShowPasswordAuthState,
+                    builder: (_, state) {
+                      if (state is HideOrShowPasswordAuthState) {
+                        // toggle password visibility
+                        _passwordVisible = !_passwordVisible;
+                      }
+                      return AmptiveTextFormFieldWidget(
+                        controller: passwordController,
+                        onChanged: (value) {
+                          // trigger password changed event
+                          context
+                              .read<AmptivePasswordAuthBloc>()
+                              .add(PasswordChangedAuthEvent(value: value));
+                        },
+                        obscureText: !_passwordVisible,
+                        keyboardType: TextInputType.visiblePassword,
+                        cursorColor: AmptiveColors.brandBlueColor,
+                        decoration: InputDecoration(
+                          contentPadding: EdgeInsets.symmetric(
+                              vertical: 12.h, horizontal: 16.w),
+                          hintText: AmptiveOtherStrings.enterYourPassword,
+                          hintStyle: Theme.of(context).textTheme.labelMedium,
+                          filled: true,
+                          fillColor:
+                              AmptiveColors.fillGreyColor.withOpacity(0.3),
+                          focusedBorder: buildOutlineInputBorder(),
+                          border: OutlineInputBorder(
+                            borderSide: BorderSide(
+                              width: 2.w,
+                              color: AmptiveColors.transparentColor,
+                            ),
+                            borderRadius: BorderRadius.circular(14.r),
+                          ),
+                          suffixIcon: IconButton(
+                            icon: Padding(
+                              padding: EdgeInsets.only(right: 16.0.w),
+                              child: Icon(
+                                _passwordVisible
+                                    ? Icons.visibility_off
+                                    : Icons.visibility,
+                                color: AmptiveColors.whiteColor,
+                              ),
+                            ),
+                            onPressed: () {
+                              context
+                                  .read<AmptiveAuthBloc>()
+                                  .add(HideOrShowPasswordAuthEvent());
+                            },
                           ),
                         ),
-                        onPressed: () {
-                          setState(() {
-                            _passwordVisible = !_passwordVisible;
-                          });
-                        },
-                      )),
-                  style: GoogleFonts.inter(
-                    fontWeight: FontWeight.normal,
-                    fontSize: 16.sp,
-                    color: AmptiveColors.whiteColor,
-                  ),
-                ),
+                      );
+                    }),
                 BlocBuilder<AmptivePasswordAuthBloc, AmptivePasswordAuthState>(
                     builder: (_, state) {
-                  var height = service.password.error != null ? 20.h : 0.h;
+                  var height = state.error != null ? 20.h : 0.h;
                   return Container(
                     height: height,
                     margin: EdgeInsets.symmetric(vertical: 11.h),
                     child: Text(
-                      service.password.error ?? AmptiveOtherStrings.empty,
-                      style: GoogleFonts.inter(
-                        color: AmptiveColors.whiteColor,
-                        fontWeight: FontWeight.normal,
-                        fontSize: 12.sp,
-                      ),
+                      state.error ?? AmptiveOtherStrings.empty,
+                      style: Theme.of(context).textTheme.titleSmall,
                     ),
                   );
                 }),

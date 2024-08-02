@@ -29,5 +29,10 @@ class AmptiveOTPAuthBloc extends Bloc<AmptiveOTPAuthEvent, AmptiveOTPAuthState> 
       }
     });
 
+    on<AmptiveOtpCountDownEvent>((event, emit) async {
+      emit(AmptiveOTPCounterState(timeLeft: event.secondsLeft));
+
+    });
+
   }
 }

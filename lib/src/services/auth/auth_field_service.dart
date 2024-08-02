@@ -1,6 +1,7 @@
 import 'package:amptive/src/utils/helpers/extensions/extensions.dart';
 import 'package:country_pickers/country.dart';
 import 'package:country_pickers/utils/utils.dart';
+import 'package:flutter/src/painting/image_provider.dart';
 
 import '../../models/validation_model.dart';
 import '../authentication_service.dart';
@@ -42,8 +43,6 @@ class AuthFieldService {
   ValidationModel get username => _username;
 
   ValidationModel get phoneNo => _phoneNo;
-
-  bool get isDOBValid => _dob != null;
 
   bool get isPhoneValid => _phoneNo.value != null;
 
@@ -109,6 +108,8 @@ class AuthFieldService {
   }
 
   Future<bool> validateUsername(String? val) async {
+    await authenticationService
+        .checkUniqueEmail("email@emmil.com"); // to be removed
     if (val != null && !val.isValidUsername) {
       _username = ValidationModel(null,
           'Username must contain only small cap letters, numbers, periods, and underscores.');
@@ -133,4 +134,8 @@ class AuthFieldService {
       _name = ValidationModel(null, '');
     }
   }
+
+  void setProfilePicture(MemoryImage image) {}
+
+  void clearProfilePicture() {}
 }

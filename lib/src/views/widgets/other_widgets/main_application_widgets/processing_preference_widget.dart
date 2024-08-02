@@ -1,77 +1,45 @@
 import 'dart:async';
 
-import 'package:amptive/src/utils/constants/colors.dart';
-import 'package:amptive/src/views/widgets/common_widgets/circular_progress_indicator.dart';
-import 'package:amptive/src/views/widgets/other_widgets/main_application_widgets/add_picture.dart';
+import 'package:amptive/src/utils/constants/font_sizes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get_it/get_it.dart';
 
-import '../../../utils/constants/font_sizes.dart';
+import '../../../../models/preferences.dart';
+import '../../../../services/preference_service.dart';
+import '../../../../utils/constants/strings/other_strings.dart';
+import '../../../screens/main_application_screens/sub_views/single_community_card.dart';
 
-class PostRegistrationScreen extends StatefulWidget {
-  const PostRegistrationScreen({super.key});
-
-  @override
-  State<PostRegistrationScreen> createState() => _PostRegistrationScreenState();
-}
-
-class _PostRegistrationScreenState extends State<PostRegistrationScreen> {
-  bool _isLoading = true;
-
-  @override
-  void initState() {
-    super.initState();
-    Timer(
-      const Duration(seconds: 10),
-      () => setState(() {
-        _isLoading = false;
-      }),
-    );
-  }
-
-
-  @override
-  Widget build(BuildContext context) {
-    return SafeArea(
-        child: Scaffold(
-      backgroundColor: AmptiveColors.brandBlackColor,
-      body: Padding(
-        padding: EdgeInsets.only(left: 25.w, right: 25.w, top: 20.w),
-        child: _isLoading ? const LoadingAccountWidget() : const AddPictureWidget(),
-      ),
-    ));
-  }
-}
-
-class LoadingAccountWidget extends StatefulWidget {
-  const LoadingAccountWidget({
+class ProcessingPreferenceWidget extends StatefulWidget {
+  const ProcessingPreferenceWidget({
     super.key,
   });
 
   @override
-  State<LoadingAccountWidget> createState() => _LoadingAccountWidgetState();
+  State<ProcessingPreferenceWidget> createState() =>
+      _ProcessingPreferenceWidgetState();
 }
 
-class _LoadingAccountWidgetState extends State<LoadingAccountWidget> {
+class _ProcessingPreferenceWidgetState
+    extends State<ProcessingPreferenceWidget> {
   late String text;
 
-  var textList = [
-    "We are creating your account",
-    "Join or create live audio events",
-    "Subscribe and support creators"
-  ];
-
+  late List<Preferences> _list;
   int textListCounter = 1;
+  int currentIndex = 0;
 
   @override
   void initState() {
     super.initState();
-    text = textList[0];
 
-    Timer.periodic(const Duration(seconds: 4), (_) {
+    _list = GetIt.I<PreferenceService>().getSelected();
+    text = _list[0].name;
+
+    Timer.periodic(const Duration(seconds: 3), (_) {
       if (mounted) {
         setState(() {
-          text = textList[textListCounter % textList.length];
+          currentIndex = textListCounter % _list.length;
+          text = _list[currentIndex].name;
           textListCounter++;
         });
       }
@@ -80,12 +48,14 @@ class _LoadingAccountWidgetState extends State<LoadingAccountWidget> {
 
   @override
   Widget build(BuildContext context) {
+    var preference = GetIt.I<PreferenceService>().getSelected();
+
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         Container(
-          margin: EdgeInsets.only(top: 270.h),
+          margin: EdgeInsets.only(top: 184.h),
           child: Center(
             child: AnimatedSwitcher(
               duration: const Duration(milliseconds: 300),
@@ -134,16 +104,30 @@ class _LoadingAccountWidgetState extends State<LoadingAccountWidget> {
                   );
                 }
               },
-              child: Text(text,
-                  key: ValueKey<String>(text),
-                  textAlign: TextAlign.center,
-                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                        fontSize: AmptiveFontSizes.size17,
-                      )),
+              child: SizedBox(
+                key: ValueKey<String>(text),
+                height: 114.23.w,
+                width: 143.w,
+                child: SingleCommunityCardWidget(
+                  height: 103.23.h,
+                  width: 143.w,
+                  index: 0,
+                  preference: _list[currentIndex],
+                ),
+              ),
             ),
           ),
         ),
-        const AmptiveCircularProgressIndicatorWidget(),
+        Container(
+          margin: EdgeInsets.only(top: 17.h),
+          child: Text(
+            AmptiveOtherStrings.personalizingYourExperience,
+            style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                  fontSize: AmptiveFontSizes.size17,
+                  height: 0.09,
+                ),
+          ),
+        )
       ],
     );
   }

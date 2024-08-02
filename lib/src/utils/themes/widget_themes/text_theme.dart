@@ -15,6 +15,12 @@ class AmptiveTextTheme{
       letterSpacing: 0.1
     ),
 
+    headlineLarge: TextStyle(
+      color: AmptiveColors.whiteColor,
+      fontSize: AmptiveFontSizes.size22,
+      fontWeight: AmptiveFontWeights.bold,
+    ),
+
     headlineMedium: TextStyle(
       color: AmptiveColors.whiteColor,
       fontSize: AmptiveFontSizes.size18,

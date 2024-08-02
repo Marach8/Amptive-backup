@@ -10,3 +10,9 @@ class OTPChangedAuthEvent extends AmptiveOTPAuthEvent {
 
 class VerifyOTPAuthEvent extends AmptiveOTPAuthEvent {}
 
+class AmptiveOtpCountDownEvent extends AmptiveOTPAuthEvent {
+  final int secondsLeft;
+
+  AmptiveOtpCountDownEvent({required this.secondsLeft});
+}
+

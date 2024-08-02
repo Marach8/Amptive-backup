@@ -1,0 +1,250 @@
+import 'dart:io';
+import 'dart:typed_data';
+
+import 'package:amptive/src/bloc/authentication/general/auth_bloc.dart';
+import 'package:amptive/src/bloc/authentication/general/auth_states.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
+import 'package:image_picker/image_picker.dart';
+
+import '../../../../bloc/authentication/general/auth_events.dart';
+import '../../../../utils/constants/colors.dart';
+import '../../../../utils/constants/font_weights.dart';
+import '../../../../utils/constants/strings/image_strings.dart';
+import '../../../../utils/constants/strings/other_strings.dart';
+import '../../../../utils/constants/strings/route_strings.dart';
+
+class AddPictureWidget extends StatefulWidget {
+  const AddPictureWidget({super.key});
+
+  @override
+  State<AddPictureWidget> createState() => _AddPictureWidgetState();
+}
+
+class _AddPictureWidgetState extends State<AddPictureWidget> {
+  bool _isProfilePictureAdded = false;
+  final ImagePicker _picker = ImagePicker();
+  late Uint8List _image;
+
+  //Image Picker function to get image from gallery
+  Future getImageFromGallery() async {
+    final pickedFile = await _picker.pickImage(source: ImageSource.gallery);
+
+    await handlePickedFile(pickedFile);
+
+    // var croppedFile = await _cropImage(_image);
+  }
+
+  Future<void> handlePickedFile(XFile? pickedFile) async {
+    if (pickedFile != null && mounted) {
+      File image = File(pickedFile.path);
+      MemoryImage? img =
+          await context.pushNamed(AmptiveRoutes.cropImage, extra: image);
+
+      if (img != null && mounted) {
+        context
+            .read<AmptiveAuthBloc>()
+            .add(ProfilePictureAddedEvent(image: img));
+      }
+    }
+  }
+
+//Image Picker function to get image from camera
+  Future getImageFromCamera() async {
+    final pickedFile = await _picker.pickImage(source: ImageSource.camera);
+    await handlePickedFile(pickedFile);
+
+  }
+
+  Future showOptions() async {
+    showCupertinoModalPopup(
+      context: context,
+      builder: (context) => CupertinoActionSheet(
+        actions: [
+          CupertinoActionSheetAction(
+            child: Text(
+              AmptiveOtherStrings.photoGallery,
+              textAlign: TextAlign.center,
+              style: Theme.of(context).textTheme.headlineLarge?.copyWith(
+                    color: AmptiveColors.brandBlueColor,
+                    fontWeight: AmptiveFontWeights.semiBold,
+                  ),
+            ),
+            onPressed: () {
+              // close the options modal
+              Navigator.of(context).pop();
+              // get image from gallery
+              getImageFromGallery();
+            },
+          ),
+          CupertinoActionSheetAction(
+            child: Text(
+              AmptiveOtherStrings.camera,
+              textAlign: TextAlign.center,
+              style: Theme.of(context).textTheme.headlineLarge?.copyWith(
+                    color: AmptiveColors.brandBlueColor,
+                    fontWeight: AmptiveFontWeights.semiBold,
+                  ),
+            ),
+            onPressed: () {
+              // close the options modal
+              Navigator.of(context).pop();
+              // get image from camera
+              getImageFromCamera();
+            },
+          ),
+        ],
+      ),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocListener<AmptiveAuthBloc, AmptiveAuthState>(
+      listener: (context, state) {
+        if (state is AddProfilePictureState) {
+          showOptions();
+        } else if (state is ProfilePictureAddedState) {
+          if (state.image != null) {
+            _image = state.image!;
+            _isProfilePictureAdded = true;
+          } else {
+            _isProfilePictureAdded = false;
+          }
+        }
+      },
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            AmptiveOtherStrings.addProfilePicture,
+            textAlign: TextAlign.start,
+            style: Theme.of(context).textTheme.headlineLarge?.copyWith(
+                  fontWeight: AmptiveFontWeights.semiBold,
+                ),
+          ),
+          SizedBox(
+            height: 4.h,
+          ),
+          Text(
+            AmptiveOtherStrings.useYOurFavImage,
+            textAlign: TextAlign.start,
+            style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                  color: AmptiveColors.authHintColor2,
+                ),
+          ),
+          BlocBuilder<AmptiveAuthBloc, AmptiveAuthState>(
+              builder: (context, state) {
+            return Container(
+              margin: EdgeInsets.only(top: 79.h, left: 105.w),
+              height: 153.h,
+              width: 132.h,
+              child: Stack(
+                children: [
+                  SizedBox(
+                    height: 132.h,
+                    width: 132.w,
+                    child: CircleAvatar(
+                      child: SizedBox(
+                        height: 132.h,
+                        width: 132.w,
+                        child: _isProfilePictureAdded
+                            ? Image.memory(
+                                _image,
+                                height: 110.h,
+                                width: 84.w,
+                                fit: BoxFit.contain,
+                              )
+                            : Image.asset(
+                                AmptiveImageStrings.noAvatarImage,
+                                height: 110.h,
+                                width: 84.w,
+                                fit: BoxFit.contain,
+                              ),
+                      ),
+                    ),
+                  ),
+                  Positioned(
+                    top: 111.h,
+                    left: 49.w,
+                    child: CircleAvatar(
+                      backgroundColor: _isProfilePictureAdded
+                          ? AmptiveColors.textRedColor
+                          : AmptiveColors.brandBlueColor,
+                      child: SizedBox(
+                        child: IconButton(
+                          style: IconButton.styleFrom(),
+                          onPressed: () {
+                            context.read<AmptiveAuthBloc>().add(
+                                AddProfilePictureEvent(
+                                    cancel: _isProfilePictureAdded));
+                          },
+                          icon: SizedBox(
+                            width: 41.25.w,
+                            height: 41.25.h,
+                            child: Icon(
+                              _isProfilePictureAdded ? Icons.close : Icons.add,
+                              color: AmptiveColors.whiteColor,
+                              opticalSize: 50.h,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            );
+          }),
+          Expanded(
+            child: SizedBox(
+              height: 1.h,
+            ),
+          ),
+          Container(
+            margin: EdgeInsets.only(bottom: 20.h),
+            padding: EdgeInsets.symmetric(vertical: 7.h),
+            alignment: Alignment.center,
+            child: GestureDetector(
+              onTap: () {
+                context.pushNamed(AmptiveRoutes.preference);
+              },
+              child: Text(
+                AmptiveOtherStrings.skipForNow,
+                textAlign: TextAlign.center,
+                style: Theme.of(context).textTheme.headlineMedium?.copyWith(
+                      fontWeight: AmptiveFontWeights.semiBold,
+                    ),
+              ),
+            ),
+          ),
+          BlocBuilder<AmptiveAuthBloc, AmptiveAuthState>(
+              builder: (context, state) {
+            return Container(
+              width: 350.w,
+              height: 50.w,
+              margin: EdgeInsets.only(bottom: 29.h),
+              child: ElevatedButton(
+                onPressed:
+                    state is ProfilePictureAddedState && state.image != null
+                        ? () => context.pushNamed(AmptiveRoutes.preference)
+                        : null,
+                style: ElevatedButton.styleFrom(
+                    backgroundColor: AmptiveColors.brandBlueColor),
+                child: Text(
+                  AmptiveOtherStrings.next,
+                  style: Theme.of(context).textTheme.headlineMedium?.copyWith(
+                        fontWeight: AmptiveFontWeights.semiBold,
+                      ),
+                ),
+              ),
+            );
+          }),
+        ],
+      ),
+    );
+  }
+}

@@ -70,6 +70,13 @@ class AmptiveOtherStrings{
   static const warningOnClickingCreate =
       'By clicking on ‘Create account’, you agree to the';
 
+
+  static const username = "username";
+  static const checkerIsLoading = "Checker is loading...";
+  static const usernameIsAvailable ="Username is available";
+  static const whatShouldWeCallYou ="What should we call you?";
+
+
   static const addProfilePicture = "Add a profile picture";
   static const useYOurFavImage = "Use one of your favourite image or selfie";
   static const photoGallery = 'Photo Gallery';
