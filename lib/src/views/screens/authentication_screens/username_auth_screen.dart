@@ -1,4 +1,6 @@
 import 'package:amptive/src/services/auth/auth_field_service.dart';
+import 'package:amptive/src/utils/constants/font_sizes.dart';
+import 'package:amptive/src/utils/constants/font_weights.dart';
 import 'package:amptive/src/utils/constants/strings/other_strings.dart';
 import 'package:amptive/src/utils/constants/strings/route_strings.dart';
 import 'package:amptive/src/utils/constants/colors.dart';
@@ -11,7 +13,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 import '../../../bloc/authentication/general/auth_bloc.dart';
 import '../../../bloc/authentication/general/auth_events.dart';
@@ -61,11 +62,9 @@ class _UserNameAuthScreenState extends State<UserNameAuthScreen> {
                 children: [
                   Text(
                     AmptiveOtherStrings.whatShouldWeCallYou,
-                    style: GoogleFonts.inter(
-                      color: AmptiveColors.whiteColor,
-                      fontSize: 17.sp,
-                      fontWeight: FontWeight.bold,
-                    ),
+                    style: Theme.of(context).textTheme.headlineMedium?.copyWith(
+                          fontSize: AmptiveFontSizes.size17,
+                        ),
                   ),
                   SizedBox(
                     height: 11.h,
@@ -93,11 +92,7 @@ class _UserNameAuthScreenState extends State<UserNameAuthScreen> {
                               vertical: 12.h, horizontal: 16.w),
                           child: Text(
                             AmptiveOtherStrings.emailSymbol,
-                            style: GoogleFonts.inter(
-                              fontWeight: FontWeight.bold,
-                              color: AmptiveColors.whiteColor,
-                              fontSize: 18.sp,
-                            ),
+                            style: Theme.of(context).textTheme.headlineMedium,
                           ),
                         ),
                         suffix: _isLoading
@@ -136,11 +131,7 @@ class _UserNameAuthScreenState extends State<UserNameAuthScreen> {
                                       )
                                     : null,
                         hintText: AmptiveOtherStrings.username,
-                        hintStyle: GoogleFonts.inter(
-                          fontSize: 16.sp,
-                          color: AmptiveColors.authHintColor,
-                          fontWeight: FontWeight.normal,
-                        ),
+                        hintStyle: Theme.of(context).textTheme.labelMedium,
                         filled: true,
                         fillColor: AmptiveColors.fillGreyColor.withOpacity(0.3),
                         focusedBorder: OutlineInputBorder(
@@ -169,12 +160,9 @@ class _UserNameAuthScreenState extends State<UserNameAuthScreen> {
                       margin: EdgeInsets.symmetric(vertical: 11.h),
                       child: Text(
                         AmptiveOtherStrings.checkerIsLoading,
-                        style: GoogleFonts.inter(
-                          color: AmptiveColors.whiteColor,
-                          fontWeight: FontWeight.w500,
-                          fontSize: 11.sp,
-                          height: 0.14,
-                        ),
+                        style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                              fontWeight: AmptiveFontWeights.medium,
+                            ),
                       ),
                     ),
                   ),
@@ -184,12 +172,9 @@ class _UserNameAuthScreenState extends State<UserNameAuthScreen> {
                       margin: EdgeInsets.symmetric(vertical: 11.h),
                       child: Text(
                         AmptiveOtherStrings.usernameIsAvailable,
-                        style: GoogleFonts.inter(
-                          color: AmptiveColors.successColor,
-                          fontWeight: FontWeight.w400,
-                          fontSize: 11.sp,
-                          height: 0.14,
-                        ),
+                        style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                              color: AmptiveColors.successColor,
+                            ),
                       ),
                     ),
                   ),
@@ -199,11 +184,9 @@ class _UserNameAuthScreenState extends State<UserNameAuthScreen> {
                       margin: EdgeInsets.symmetric(vertical: 11.h),
                       child: Text(
                         service.username.error ?? AmptiveOtherStrings.empty,
-                        style: GoogleFonts.inter(
-                          color: AmptiveColors.textRedColor,
-                          fontWeight: FontWeight.w400,
-                          fontSize: 11.sp,
-                        ),
+                        style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                              color: AmptiveColors.textRedColor,
+                            ),
                       ),
                     ),
                   ),

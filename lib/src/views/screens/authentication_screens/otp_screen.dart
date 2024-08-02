@@ -4,7 +4,6 @@ import 'package:amptive/src/bloc/authentication/otp/otp_auth_bloc.dart';
 import 'package:amptive/src/bloc/authentication/otp/otp_auth_states.dart';
 import 'package:amptive/src/services/auth/otp_service.dart';
 import 'package:amptive/src/utils/constants/colors.dart';
-import 'package:amptive/src/utils/constants/constants.dart';
 import 'package:amptive/src/utils/constants/font_sizes.dart';
 import 'package:amptive/src/views/widgets/common_widgets/annotated_region__widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/common_widgets.dart';
@@ -33,7 +32,7 @@ class OTPScreen extends StatefulWidget {
 
 class _OTPScreenState extends State<OTPScreen> {
   late TapGestureRecognizer _tapGestureRecognizer;
-  late Timer _timer;
+  // late Timer _timer;
   bool _resendButtonEnabled = false;
 
   @override
@@ -47,36 +46,36 @@ class _OTPScreenState extends State<OTPScreen> {
 
   @override
   void dispose() {
-    _timer.cancel();
+    // _timer.cancel();
     super.dispose();
   }
 
-  void startTimer(BuildContext context) {
-    _timer = Timer.periodic(const Duration(seconds: 1), (Timer timer) {
-      final currentState = BlocProvider.of<AmptiveOTPAuthBloc>(context).state;
-
-      if (currentState is AmptiveOTPCounterState) {
-        int timeLeft = currentState.timeLeft;
-
-        if (timeLeft <= 1) {
-          _resendButtonEnabled = true;
-          _timer.cancel();
-        }
-
-        context
-            .read<AmptiveOTPAuthBloc>()
-            .add(AmptiveOtpCountDownEvent(secondsLeft: timeLeft - 1));
-      }
-    });
-  }
+  // void startTimer(BuildContext context) {
+  //   _timer = Timer.periodic(const Duration(seconds: 1), (Timer timer) {
+  //     final currentState = BlocProvider.of<AmptiveOTPAuthBloc>(context).state;
+  //
+  //     if (currentState is AmptiveOTPCounterState) {
+  //       int timeLeft = currentState.timeLeft;
+  //
+  //       if (timeLeft <= 1) {
+  //         _resendButtonEnabled = true;
+  //         _timer.cancel();
+  //       }
+  //
+  //       context
+  //           .read<AmptiveOTPAuthBloc>()
+  //           .add(AmptiveOtpCountDownEvent(secondsLeft: timeLeft - 1));
+  //     }
+  //   });
+  // }
 
   void resetTimer(BuildContext context) {
     context
         .read<AmptiveOTPAuthBloc>()
-        .add(AmptiveOtpCountDownEvent(secondsLeft: Constants.TIMER_LIMIT));
+        .add(AmptiveOtpCountDownStartEvent());
     _resendButtonEnabled = false;
 
-    startTimer(context);
+    // startTimer(context);
   }
 
   @override
@@ -130,6 +129,9 @@ class _OTPScreenState extends State<OTPScreen> {
                   return curr is AmptiveOTPCounterState;
                 }, builder: (context, state) {
                       debugPrint(state.toString());
+                      if (state is AmptiveOTPCounterState && state.timeLeft <= 0) {
+                        _resendButtonEnabled = true;
+                      }
                   if (state is AmptiveOTPCounterState) {
                     return Container(
                       margin: EdgeInsets.only(top: 11.h),
@@ -187,6 +189,7 @@ class _OTPScreenState extends State<OTPScreen> {
               }
             },
             child: BlocBuilder<AmptiveOTPAuthBloc, AmptiveOTPAuthState>(
+              buildWhen: (prev, curr) => curr is! AmptiveOTPCounterState,
               builder: (context, state) {
                 return state is LoadingAuthState && context.mounted
                     ? const AmptiveLoadingButtonWidget()

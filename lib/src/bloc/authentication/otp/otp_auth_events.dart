@@ -1,6 +1,5 @@
 abstract class AmptiveOTPAuthEvent {}
 
-
 // otp auth events
 class OTPChangedAuthEvent extends AmptiveOTPAuthEvent {
   final bool otpValid;
@@ -16,3 +15,4 @@ class AmptiveOtpCountDownEvent extends AmptiveOTPAuthEvent {
   AmptiveOtpCountDownEvent({required this.secondsLeft});
 }
 
+class AmptiveOtpCountDownStartEvent extends AmptiveOTPAuthEvent {}
