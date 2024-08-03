@@ -1,18 +1,27 @@
-import 'package:amptive/src/providers/form_providers.dart';
+import 'package:amptive/src/services/auth/auth_field_service.dart';
+import 'package:amptive/src/utils/constants/constants.dart';
+import 'package:amptive/src/utils/constants/font_sizes.dart';
+import 'package:amptive/src/utils/constants/font_weights.dart';
+import 'package:amptive/src/utils/constants/strings/other_strings.dart';
 import 'package:amptive/src/utils/constants/strings/route_strings.dart';
 import 'package:amptive/src/utils/constants/colors.dart';
+import 'package:amptive/src/views/widgets/common_widgets/annotated_region__widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/app_bar_widget.dart';
+import 'package:amptive/src/views/widgets/common_widgets/elevated_button_widget.dart';
 import 'package:country_pickers/country.dart';
 import 'package:country_pickers/country_picker_cupertino.dart';
 import 'package:country_pickers/utils/utils.dart';
 import 'package:figma_squircle/figma_squircle.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:provider/provider.dart';
 import 'dart:math' as math;
+
+import '../../../bloc/authentication/general/auth_bloc.dart';
+import '../../../bloc/authentication/general/auth_states.dart';
 
 class AddPhoneScreen extends StatefulWidget {
   const AddPhoneScreen({super.key});
@@ -26,22 +35,20 @@ class _AddPhoneScreenState extends State<AddPhoneScreen> {
   bool _isBottomSheetOpened = false;
   final TextEditingController _phoneController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
-
-  late FormProvider _formProvider;
+  late final AuthFieldService service;
 
   @override
   void initState() {
+    service = GetIt.I<AuthFieldService>();
     super.initState();
   }
 
-
   @override
   Widget build(BuildContext context) {
-    _formProvider = Provider.of<FormProvider>(context);
-    _selectedCountry = _formProvider.country;
+    _selectedCountry = service.country;
     var bottomSheetHeight = 252.h;
 
-    return SafeArea(
+    return AmptiveAnnotatedRegionWidget(
       child: Scaffold(
         backgroundColor: AmptiveColors.brandBlackColor,
         appBar: const AmptiveAppBar(),
@@ -53,12 +60,10 @@ class _AddPhoneScreenState extends State<AddPhoneScreen> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  "What is your phone number?",
-                  style: GoogleFonts.inter(
-                    color: AmptiveColors.whiteColor,
-                    fontSize: 17.sp,
-                    fontWeight: FontWeight.bold,
-                  ),
+                  AmptiveOtherStrings.whatIsYourPhoneNumber,
+                  style: Theme.of(context).textTheme.headlineMedium?.copyWith(
+                        fontSize: AmptiveFontSizes.size17,
+                      ),
                 ),
                 SizedBox(
                   height: 11.h,
@@ -75,7 +80,7 @@ class _AddPhoneScreenState extends State<AddPhoneScreen> {
                           padding: EdgeInsets.symmetric(
                               vertical: 0.h, horizontal: 16.w),
                           decoration: BoxDecoration(
-                            color: const Color(0xFF9E9E9E).withOpacity(0.3),
+                            color: AmptiveColors.fillGreyColor.withOpacity(0.3),
                             border: Border.all(
                               color: _isBottomSheetOpened
                                   ? AmptiveColors.brandBlueColor
@@ -99,25 +104,26 @@ class _AddPhoneScreenState extends State<AddPhoneScreen> {
                                   fit: BoxFit.fill,
                                   height: 12.75.h,
                                   width: 17.w,
-                                  package: "country_pickers",
+                                  package: AmptiveOtherStrings.countryPickers,
                                 ),
                               ),
                               SizedBox(
                                 width: 7.w,
                               ),
                               Text(
-                                "+${_selectedCountry.phoneCode}",
-                                style: GoogleFonts.inter(
-                                    fontWeight: FontWeight.normal,
-                                    fontSize: 16.sp,
-                                    color: AmptiveColors.whiteColor),
+                                AmptiveOtherStrings.plus +
+                                    _selectedCountry.phoneCode,
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .labelMedium
+                                    ?.copyWith(color: AmptiveColors.whiteColor),
                               ),
                               Padding(
                                 padding: EdgeInsets.only(
                                     left: 7.43.w,
                                     top: 10.4.h,
-                                    bottom: _isBottomSheetOpened ? 3.8.h : 12.4
-                                        .h),
+                                    bottom:
+                                        _isBottomSheetOpened ? 3.8.h : 12.4.h),
                                 // add padding to adjust icon
                                 child: Transform.rotate(
                                   angle: math.pi / 2,
@@ -145,23 +151,21 @@ class _AddPhoneScreenState extends State<AddPhoneScreen> {
                         autovalidateMode: AutovalidateMode.onUserInteraction,
                         keyboardType: TextInputType.number,
                         cursorColor: AmptiveColors.brandBlueColor,
-                        onChanged: _formProvider.validatePhoneNumber,
+                        onChanged: service.validatePhoneNumber,
                         decoration: InputDecoration(
                           contentPadding: EdgeInsets.symmetric(
                               vertical: 12.h, horizontal: 16.w),
-                          hintText: "Phone number",
-                          hintStyle: GoogleFonts.inter(
-                            fontSize: 16.sp,
-                            color: AmptiveColors.authHintColor,
-                            fontWeight: FontWeight.normal,
-                          ),
-                          errorStyle: GoogleFonts.inter(
-                            color: AmptiveColors.textRedColor,
-                            fontSize: 12.sp,
-                            fontWeight: FontWeight.normal,
-                          ),
+                          hintText: AmptiveOtherStrings.phoneNumber,
+                          hintStyle: Theme.of(context).textTheme.labelMedium,
+                          errorStyle: Theme.of(context)
+                              .textTheme
+                              .headlineMedium
+                              ?.copyWith(
+                                color: AmptiveColors.textRedColor,
+                              ),
                           filled: true,
-                          fillColor: const Color(0xFF9E9E9E).withOpacity(0.3),
+                          fillColor:
+                              AmptiveColors.fillGreyColor.withOpacity(0.3),
                           focusedBorder: OutlineInputBorder(
                             borderSide: BorderSide(
                               width: 2.w,
@@ -183,10 +187,10 @@ class _AddPhoneScreenState extends State<AddPhoneScreen> {
                             ),
                           ),
                         ),
-                        style: GoogleFonts.inter(
-                            fontWeight: FontWeight.normal,
-                            fontSize: 16.sp,
-                            color: AmptiveColors.whiteColor),
+                        style: Theme.of(context)
+                            .textTheme
+                            .labelMedium
+                            ?.copyWith(color: AmptiveColors.whiteColor),
                       ),
                     ),
                   ],
@@ -196,40 +200,26 @@ class _AddPhoneScreenState extends State<AddPhoneScreen> {
                     height: 1.h,
                   ),
                 ),
-                Consumer<FormProvider>(builder: (context, model, _) {
-                  return Container(
-                    width: 350.w,
-                    height: 50.w,
-                    margin: EdgeInsets.only(
-                        bottom: _isBottomSheetOpened
-                            ? bottomSheetHeight
-                            : 29.h),
-                    child: ElevatedButton(
-                      onPressed: () {
-                        // Validate returns true if the form is valid, or false otherwise.
-                        if (model.isPhoneValid) {
-                          context.pushNamed(AmptiveRoutes.otp, extra: "phone number");
-                        }
-                      },
-                      style: ElevatedButton.styleFrom(
-                          backgroundColor: model.isPhoneValid
-                              ? AmptiveColors.brandBlueColor
-                              : const Color(0xFF2F2F2F)),
-                      child: Text(
-                        "Verify phone number",
-                        style: GoogleFonts.inter(
-                            fontWeight: FontWeight.w600,
-                            fontSize: 18.sp,
-                            color: model.isPhoneValid
-                                ? AmptiveColors.whiteColor
-                                : const Color(0xFF666666)),
-                      ),
-                    ),
-                  );
-                }),
               ],
             ),
           ),
+        ),
+        bottomSheet: Padding(
+          padding: EdgeInsets.only(bottom: 16.h),
+          child: BlocBuilder<AmptiveAuthBloc, AmptiveAuthState>(
+              builder: (context, state) {
+            return AmptiveElevatedButtonWidget(
+              height: 50.w,
+              buttonTitle: AmptiveOtherStrings.verifyPhoneNumber,
+              onPressed: () {
+                // Validate returns true if the form is valid, or false otherwise.
+                if (service.isPhoneValid) {
+                  context.pushNamed(AmptiveRoutes.otp,
+                      extra: AmptiveOtherStrings.phoneNumber);
+                }
+              },
+            );
+          }),
         ),
       ),
     );
@@ -241,7 +231,8 @@ class _AddPhoneScreenState extends State<AddPhoneScreen> {
     Country? pickedCountry = await showModalBottomSheet<Country>(
       context: context,
       builder: (context) {
-        Country temp = CountryPickerUtils.getCountryByIsoCode('NG');
+        Country temp = CountryPickerUtils.getCountryByIsoCode(
+            Constants.kDefaultCountrySelected);
         return SizedBox(
           height: bottomSheetHeight,
           child: Column(
@@ -253,11 +244,10 @@ class _AddPhoneScreenState extends State<AddPhoneScreen> {
                   children: <Widget>[
                     CupertinoButton(
                       child: Text(
-                        'Done',
-                        style: GoogleFonts.inter(
-                            color: AmptiveColors.whiteColor,
-                            fontWeight: FontWeight.w500,
-                            fontSize: 16.sp),
+                        AmptiveOtherStrings.done,
+                        style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                              fontWeight: AmptiveFontWeights.medium,
+                            ),
                       ),
                       onPressed: () {
                         Navigator.of(context).pop(temp);
@@ -288,7 +278,7 @@ class _AddPhoneScreenState extends State<AddPhoneScreen> {
                       },
                       initialCountry: _selectedCountry,
                       itemFilter: (c) =>
-                          ['AR', 'DE', 'GB', 'NG', 'CN'].contains(c.isoCode),
+                          Constants.kCountryList.contains(c.isoCode),
                     ),
                   ),
                 ),
@@ -300,9 +290,8 @@ class _AddPhoneScreenState extends State<AddPhoneScreen> {
     ).whenComplete(() => _onBottomSheetClosed());
 
     if (pickedCountry != null && pickedCountry != _selectedCountry) {
-
       setState(() {});
-      _formProvider.setCountry(pickedCountry);
+      service.setCountry(pickedCountry);
     }
   }
 
@@ -317,23 +306,21 @@ class _AddPhoneScreenState extends State<AddPhoneScreen> {
             height: 30.0.h,
             width: 41.0.w,
             fit: BoxFit.fill,
-            package: "country_pickers",
+            package: AmptiveOtherStrings.countryPickers,
           ),
           SizedBox(width: 23.0.w),
           Text(
             country.name,
-            style: GoogleFonts.inter(
-              fontSize: 23.sp,
-              fontWeight: FontWeight.normal,
-            ),
+            style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                  fontSize: AmptiveFontSizes.size23,
+                ),
           ),
           Expanded(child: SizedBox(width: 8.0.w)),
           Text(
-            "+${country.phoneCode}",
-            style: GoogleFonts.inter(
-              fontSize: 23.sp,
-              fontWeight: FontWeight.normal,
-            ),
+            AmptiveOtherStrings.plus + country.phoneCode,
+            style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                  fontSize: AmptiveFontSizes.size23,
+                ),
           ),
         ],
       ),

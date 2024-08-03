@@ -44,7 +44,7 @@ class _AmptivePreferenceScreenState extends State<AmptivePreferenceScreen> {
         child: BlocBuilder<AmptivePreferenceBloc, AmptivePreferenceState>(
             builder: (context, state) {
           var isOpaque =
-              state.selectedItems.length == Constants.MAX_NUMBER_COMMUNITIES;
+              state.selectedItems.length == Constants.kMaxNumberCommunities;
 
           return Scaffold(
             backgroundColor: AmptiveColors.brandBlackColor,

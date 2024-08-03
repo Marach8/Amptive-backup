@@ -35,9 +35,9 @@ class AmptiveOTPAuthBloc extends Bloc<AmptiveOTPAuthEvent, AmptiveOTPAuthState> 
     });
 
     on<AmptiveOtpCountDownStartEvent>((event, emit)  {
-      emit(AmptiveOTPCounterState(timeLeft: Constants.TIMER_LIMIT));
+      emit(AmptiveOTPCounterState(timeLeft: Constants.kTimerLimit));
       _tickerSubscription?.cancel();
-      _tickerSubscription = _tick(Constants.TIMER_LIMIT).listen((duration){
+      _tickerSubscription = _tick(Constants.kTimerLimit).listen((duration){
         add(AmptiveOtpCountDownEvent(secondsLeft: duration));
       });
 

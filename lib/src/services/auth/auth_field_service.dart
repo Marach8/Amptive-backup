@@ -1,3 +1,4 @@
+import 'package:amptive/src/utils/constants/constants.dart';
 import 'package:amptive/src/utils/helpers/extensions/extensions.dart';
 import 'package:country_pickers/country.dart';
 import 'package:country_pickers/utils/utils.dart';
@@ -18,10 +19,11 @@ class AuthFieldService {
 
   ValidationModel _name = ValidationModel(null, null);
   ValidationModel _username = ValidationModel(null, null);
-  final ValidationModel _phoneNo = ValidationModel(null, null);
+  ValidationModel _phoneNo = ValidationModel(null, null);
 
   DateTime? _dob;
-  final Country _country = CountryPickerUtils.getCountryByIsoCode('NG');
+  Country _country =
+      CountryPickerUtils.getCountryByIsoCode(Constants.kDefaultCountrySelected);
 
   //getters
   ValidationModel get password => _password;
@@ -64,6 +66,10 @@ class AuthFieldService {
   // setters
   void setDOB(DateTime? val) {
     _dob = val;
+  }
+
+  void setCountry(Country c) {
+    _country = c;
   }
 
   // process fields
@@ -132,6 +138,14 @@ class AuthFieldService {
       _name = ValidationModel(val, null);
     } else {
       _name = ValidationModel(null, '');
+    }
+  }
+
+  void validatePhoneNumber(String? val) {
+    if (val != null && val.length >= 10) {
+      _phoneNo = ValidationModel(val, null);
+    } else {
+      _phoneNo = ValidationModel(null, '');
     }
   }
 

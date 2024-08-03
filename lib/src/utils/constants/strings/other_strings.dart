@@ -7,6 +7,7 @@ class AmptiveOtherStrings{
   static const hyphen = "-";
   static const space = ' ';
   static const underscore = '_';
+  static const plus  = '+';
 
 
   static const goLiveLikeNeverBefore = "Go Live, Like Never Before";
@@ -89,6 +90,12 @@ class AmptiveOtherStrings{
       "Your selected interests will be used to personalize you Amptive experience.";
 
   static const personalizingYourExperience = "Personalizing your experience...";
+
+
+  static const countryPickers  = 'country_pickers';
+  static const verifyPhoneNumber  = 'Verify phone number';
+  static const whatIsYourPhoneNumber = "What is your phone number?";
+
 
   static const goLive = 'Go live';
   static const paidShow = '\$paid show';
