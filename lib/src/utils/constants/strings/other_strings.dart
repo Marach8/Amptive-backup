@@ -7,6 +7,7 @@ class AmptiveOtherStrings{
   static const hyphen = "-";
   static const space = ' ';
   static const underscore = '_';
+  static const plus  = '+';
 
 
   static const goLiveLikeNeverBefore = "Go Live, Like Never Before";
@@ -70,6 +71,13 @@ class AmptiveOtherStrings{
   static const warningOnClickingCreate =
       'By clicking on ‘Create account’, you agree to the';
 
+
+  static const username = "username";
+  static const checkerIsLoading = "Checker is loading...";
+  static const usernameIsAvailable ="Username is available";
+  static const whatShouldWeCallYou ="What should we call you?";
+
+
   static const addProfilePicture = "Add a profile picture";
   static const useYOurFavImage = "Use one of your favourite image or selfie";
   static const photoGallery = 'Photo Gallery';
@@ -82,6 +90,12 @@ class AmptiveOtherStrings{
       "Your selected interests will be used to personalize you Amptive experience.";
 
   static const personalizingYourExperience = "Personalizing your experience...";
+
+
+  static const countryPickers  = 'country_pickers';
+  static const verifyPhoneNumber  = 'Verify phone number';
+  static const whatIsYourPhoneNumber = "What is your phone number?";
+
 
   static const goLive = 'Go live';
   static const paidShow = '\$paid show';

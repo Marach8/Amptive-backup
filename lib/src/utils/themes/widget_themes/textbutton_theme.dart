@@ -12,7 +12,7 @@ class AmptiveTextButtonTheme{
       elevation: 0,
       foregroundColor: AmptiveColors.whiteColor,
       backgroundColor: AmptiveColors.transparentColor,
-      disabledForegroundColor: AmptiveColors.grey3Color,
+      disabledForegroundColor: AmptiveColors.grey4Color,
       disabledBackgroundColor: AmptiveColors.transparentColor,
       textStyle: TextStyle(
         fontFamily: AmptiveOtherStrings.inter,
