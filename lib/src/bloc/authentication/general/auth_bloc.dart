@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
@@ -47,6 +46,20 @@ class AmptiveAuthBloc extends Bloc<AmptiveAuthEvent, AmptiveAuthState> {
     on<ProfilePictureAddedEvent>((event, emit) {
       service.setProfilePicture(event.image);
       emit(ProfilePictureAddedState(image: event.image.bytes));
+    });
+
+    on<AddPhoneNumberEvent>((event, emit) {
+      service.validatePhoneNumber(event.value);
+      emit(AddPhoneNumberState(isPhoneValid: service.isPhoneValid));
+    });
+
+    on<PickCountryCodeEvent>((event, emit) {
+      service.setCountry(event.country);
+      emit(PickCountryCodeState(selectedCountry: service.country));
+    });
+
+    on<OpenCountryBottomSheetEvent>((event, emit) {
+      emit(OpenCountryBottomSheetState(selectedCountry: service.country));
     });
   }
 }

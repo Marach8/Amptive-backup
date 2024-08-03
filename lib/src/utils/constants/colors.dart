@@ -11,7 +11,9 @@ class AmptiveColors {
 
   static Color get grey2Color => const Color(0xFF414141);
 
-  static Color get grey3Color => const Color(0xFF5C5C5C);
+  static Color get grey3Color => const Color(0xFF434343);
+
+  static Color get grey4Color => const Color(0xFF5C5C5C);
 
   static Color get inactiveDotColor => const Color(0xFF5B5B5B);
 

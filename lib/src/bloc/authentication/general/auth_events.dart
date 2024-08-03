@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:country_pickers/country.dart';
 import 'package:flutter/material.dart';
 
 abstract class AmptiveAuthEvent {
@@ -36,4 +37,16 @@ class AddProfilePictureEvent extends AmptiveAuthEvent {
   AddProfilePictureEvent({required this.cancel});
 }
 
-// class CancelProfilePictureEvent extends AmptiveAuthEvent {}
+class AddPhoneNumberEvent extends AmptiveAuthEvent {
+  final String? value;
+
+  AddPhoneNumberEvent({required this.value});
+}
+
+class PickCountryCodeEvent extends AmptiveAuthEvent {
+  final Country country;
+
+  PickCountryCodeEvent({required this.country});
+}
+
+class OpenCountryBottomSheetEvent extends AmptiveAuthEvent {}

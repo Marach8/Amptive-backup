@@ -64,7 +64,7 @@ class _AmptiveOnboardingScreenState extends State<AmptiveOnboardingScreen> {
                   title: AmptiveOtherStrings.liveAudioAndEventShows,
                   description:
                       AmptiveOtherStrings.tuneIntoLiveAudioShowsAndEvents,
-                  pictureBgColor: AmptiveColors.grey3Color,
+                  pictureBgColor: AmptiveColors.grey4Color,
                 ),
               ],
             ),
