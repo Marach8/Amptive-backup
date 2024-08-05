@@ -11,7 +11,7 @@ class AmptiveDarkColorGradientContainerWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 250.h,
+      height: 200.h,
       width: AmptiveHelperFunctions.getScreenWidth(context),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(15).r,

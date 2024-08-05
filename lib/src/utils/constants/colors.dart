@@ -7,6 +7,8 @@ class AmptiveColors {
 
   static Color get brandBlackColor => const Color(0xFF0D0D0D);
 
+  static Color get indicatorDark => const Color(0xFF252525);
+
   static Color get grey1Color => const Color(0xFF2D2D2D);
 
   static Color get grey2Color => const Color(0xFF414141);

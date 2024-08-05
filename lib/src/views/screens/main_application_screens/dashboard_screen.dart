@@ -22,21 +22,21 @@ class _AmptiveDashboardScreenState extends State<AmptiveDashboardScreen> {
   late PageController _pageController;
   late ValueNotifier<int> _pageIndexNotifier;
 
-  @override 
+  @override
   void initState(){
     super.initState();
     _pageController = PageController();
     _pageIndexNotifier = ValueNotifier<int>(0);
   }
 
-  @override 
+  @override
   void dispose(){
     _pageController.dispose();
     _pageIndexNotifier.dispose();
     super.dispose();
   }
 
-  
+
   @override
   Widget build(BuildContext context) {
     return AmptiveAnnotatedRegionWidget(
@@ -47,7 +47,8 @@ class _AmptiveDashboardScreenState extends State<AmptiveDashboardScreen> {
           leading: const Row(
             mainAxisSize: MainAxisSize.min,
             children: [
-              AmptiveSvgAssetLoaderWidget(svgPath: AmptiveImageStrings.svgLogo2),
+              AmptiveSvgAssetLoaderWidget(svgPath: AmptiveImageStrings.svgLogo2, height: 20.906, width: 86.32,),
+              Gap(4.0),
               AmptiveAppBarDropDownWidget()
             ],
           ),
@@ -55,9 +56,9 @@ class _AmptiveDashboardScreenState extends State<AmptiveDashboardScreen> {
           actions: [
             GestureDetector(
               onTap: (){},
-              child: const AmptiveSvgAssetLoaderWidget(svgPath: AmptiveImageStrings.svgWalletIcon)
+              child: const AmptiveSvgAssetLoaderWidget(svgPath: AmptiveImageStrings.svgWalletIcon, height: 30, width: 30,)
             ),
-            const Gap(20),
+            const Gap(24),
             GestureDetector(
               onTap: (){},
               child: const AmptiveCircularContainerWithPictureWidget(

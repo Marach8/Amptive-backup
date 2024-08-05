@@ -20,6 +20,7 @@ class AmptiveListTileWithTrailingMoreIconWidget extends StatelessWidget {
         children: [
           const AmptiveCircularContainerWithPictureWidget(
             imagePath: AmptiveImageStrings.jpeg3,
+            diameter: 40,
             //diameter: 40,
           ),
           Gap(10.w),
@@ -28,17 +29,19 @@ class AmptiveListTileWithTrailingMoreIconWidget extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                'emmanuelnnanna',
+                'glennodoyle',
                 style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                  fontWeight: AmptiveFontWeights.medium
+                  fontWeight: AmptiveFontWeights.medium,
+                  height: 1
                 ),
               ),
               Text(
-                'emmanuelnnanna',
+                'started a live show',
                 style: Theme.of(context).textTheme.titleSmall?.copyWith(
                   color: AmptiveColors.subtitleColor,
                   fontWeight: AmptiveFontWeights.medium,
-                  fontSize: AmptiveFontSizes.size13
+                  fontSize: AmptiveFontSizes.size13,
+                  height: 1.5
                 ),
               ),
             ],
@@ -46,7 +49,7 @@ class AmptiveListTileWithTrailingMoreIconWidget extends StatelessWidget {
           const Spacer(),
           GestureDetector(
             onTap: (){},
-            child: const Icon(Icons.more_horiz),
+            child: const Icon(Icons.more_horiz, size: 30,),
           )
         ],
       ),

@@ -24,7 +24,7 @@ class AmptiveAppBarDropDownWidget extends StatelessWidget {
         // ref.read(hintTextProvider.notifier).state = AgroMallTaskStrings.search + selectedSearchChoice;
         // ref.read(popupControllerProvider.notifier).state = 0;
       },
-      icon: const Icon(Icons.keyboard_arrow_down_outlined, size: 25,),
+      child: const Icon(Icons.keyboard_arrow_down_outlined, size: 25, ),
       // icon: AnimatedCrossFade(
       //   firstChild: const Icon(Icons.keyboard_arrow_down_outlined, size: 25),
       //   secondChild: const Icon(Icons.keyboard_arrow_up_outlined, size: 25),
