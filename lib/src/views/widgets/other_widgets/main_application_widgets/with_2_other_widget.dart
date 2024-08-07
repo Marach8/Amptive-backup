@@ -12,16 +12,18 @@ class AmptiveWith2OthersWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.fromLTRB(5, 3, 5, 3),                                
+      padding:  EdgeInsets.all(6.h),
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(5).r,
-        color: AmptiveColors.brandBlackColor.withOpacity(0.6)
+        borderRadius: BorderRadius.circular(6.r),
+        color: AmptiveColors.brandBlackColor.withOpacity(0.7)
       ),
       child: Text(
-        'With 2 others',
+        'with 2 others',
+        textAlign: TextAlign.center,
         style: Theme.of(context).textTheme.titleSmall?.copyWith(
           fontWeight: AmptiveFontWeights.medium,
-          fontSize: AmptiveFontSizes.size10
+          fontSize: AmptiveFontSizes.size13,
+          height: 1.sp,
         )
       )
     );

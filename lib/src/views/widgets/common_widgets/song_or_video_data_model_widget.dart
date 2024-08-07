@@ -1,7 +1,6 @@
 import 'package:amptive/src/utils/constants/font_sizes.dart';
 import 'package:amptive/src/utils/constants/font_weights.dart';
 import 'package:amptive/src/utils/constants/strings/image_strings.dart';
-import 'package:amptive/src/utils/helpers/helper_functions/other_functions.dart';
 import 'package:amptive/src/views/widgets/common_widgets/live_indicator_with_animating_dot_widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/png_jpeg_asset_loader_widget.dart';
 import 'package:amptive/src/views/widgets/other_widgets/main_application_widgets/dark_color_gradient_container_widget.dart';
@@ -26,11 +25,14 @@ class AmptiveSongOrVideoDataModelWidget extends StatelessWidget {
         SizedBox(
           height: 2.h,
         ),
-        SizedBox(
-          height: 400.h,
+        Container(
+          clipBehavior: Clip.hardEdge,
+          height: 455.h,
           width: 360.w,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(15.r),
+          ),
           child: Stack(
-            clipBehavior: Clip.none,
             children: [
               Positioned(
                 top: 0,
@@ -40,7 +42,7 @@ class AmptiveSongOrVideoDataModelWidget extends StatelessWidget {
                   height: 360.h,
                   width: 360.w,
                   decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(15),
+                    borderRadius: BorderRadius.circular(15.r),
                   ),
                   child: const AmptivePngAndJpegAssetLoaderWidget(
                     pngOrJpegPath: AmptiveImageStrings.weCanDoAllThingsJpg,
@@ -50,13 +52,18 @@ class AmptiveSongOrVideoDataModelWidget extends StatelessWidget {
               ),
               Positioned(
                 top: 227.h,
-                child: const AmptiveDarkColorGradientContainerWidget(),
+                right: 0,
+                left: 0,
+                child: SizedBox(
+                  width: 360.w,
+                    child: const AmptiveDarkColorGradientContainerWidget()),
               ),
               Positioned(
                 top: 227.h,
-                left: 0.w,
-                right: 0.w,
+                left: 0,
+                right: 0,
                 child: Container(
+                  width: 360.w,
                   margin: EdgeInsets.symmetric(horizontal: 17.w),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -74,22 +81,22 @@ class AmptiveSongOrVideoDataModelWidget extends StatelessWidget {
                             ?.copyWith(
                                 fontSize: AmptiveFontSizes.size24,
                                 fontWeight: AmptiveFontWeights.semiBold,
-                                fontFamily: "Bricolage Grotesque"),
+                          height: 1.25.sp,
+                               ),
                       ),
                       Gap(12.h),
                       const AmptiveRowOfNumberOfPeopleListeningWidget(),
                       Gap(10.h),
                       const AmptiveRowOfPaidShowAndPlayButtonWidget(),
                       Gap(15.h),
-
                     ],
                   ),
                 ),
               ),
-              const Positioned(
-                top: 10,
-                left: 15,
-                child: AmptiveWith2OthersWidget(),
+              Positioned(
+                top: 15.h,
+                left: 17.w,
+                child: const AmptiveWith2OthersWidget(),
               )
             ],
           ),
