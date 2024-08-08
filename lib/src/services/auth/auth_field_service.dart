@@ -1,7 +1,6 @@
 import 'package:amptive/src/utils/helpers/extensions/extensions.dart';
 import 'package:country_pickers/country.dart';
 import 'package:country_pickers/utils/utils.dart';
-
 import '../../models/validation_model.dart';
 import '../authentication_service.dart';
 
