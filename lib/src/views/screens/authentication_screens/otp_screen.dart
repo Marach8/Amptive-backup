@@ -4,17 +4,18 @@ import 'package:amptive/src/bloc/authentication/otp/otp_auth_bloc.dart';
 import 'package:amptive/src/bloc/authentication/otp/otp_auth_states.dart';
 import 'package:amptive/src/services/auth/otp_service.dart';
 import 'package:amptive/src/utils/constants/colors.dart';
-import 'package:amptive/src/utils/constants/constants.dart';
+import 'package:amptive/src/utils/constants/font_sizes.dart';
 import 'package:amptive/src/views/widgets/common_widgets/annotated_region__widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/common_widgets.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 import '../../../bloc/authentication/otp/otp_auth_events.dart';
+import '../../../utils/constants/font_weights.dart';
 import '../../../utils/constants/strings/other_strings.dart';
 import '../../../utils/constants/strings/route_strings.dart';
 import '../../widgets/common_widgets/app_bar_widget.dart';
@@ -30,43 +31,51 @@ class OTPScreen extends StatefulWidget {
 }
 
 class _OTPScreenState extends State<OTPScreen> {
-  int _start = Constants.TIMER_LIMIT;
-  late Timer _timer;
+  late TapGestureRecognizer _tapGestureRecognizer;
+  // late Timer _timer;
   bool _resendButtonEnabled = false;
 
   @override
   void initState() {
     super.initState();
-    startTimer();
+    resetTimer(context);
+
+    _tapGestureRecognizer = TapGestureRecognizer()
+      ..onTap = () => resetTimer(context);
   }
 
   @override
   void dispose() {
-    _timer.cancel();
+    // _timer.cancel();
     super.dispose();
   }
 
-  void startTimer() {
-    _timer = Timer.periodic(const Duration(seconds: 1), (Timer timer) {
-      if (_start == 0) {
-        setState(() {
-          _resendButtonEnabled = true;
-          _timer.cancel();
-        });
-      } else {
-        setState(() {
-          _start--;
-        });
-      }
-    });
-  }
+  // void startTimer(BuildContext context) {
+  //   _timer = Timer.periodic(const Duration(seconds: 1), (Timer timer) {
+  //     final currentState = BlocProvider.of<AmptiveOTPAuthBloc>(context).state;
+  //
+  //     if (currentState is AmptiveOTPCounterState) {
+  //       int timeLeft = currentState.timeLeft;
+  //
+  //       if (timeLeft <= 1) {
+  //         _resendButtonEnabled = true;
+  //         _timer.cancel();
+  //       }
+  //
+  //       context
+  //           .read<AmptiveOTPAuthBloc>()
+  //           .add(AmptiveOtpCountDownEvent(secondsLeft: timeLeft - 1));
+  //     }
+  //   });
+  // }
 
-  void resetTimer() {
-    setState(() {
-      _start = Constants.TIMER_LIMIT;
-      _resendButtonEnabled = false;
-    });
-    startTimer();
+  void resetTimer(BuildContext context) {
+    context
+        .read<AmptiveOTPAuthBloc>()
+        .add(AmptiveOtpCountDownStartEvent());
+    _resendButtonEnabled = false;
+
+    // startTimer(context);
   }
 
   @override
@@ -88,10 +97,8 @@ class _OTPScreenState extends State<OTPScreen> {
                     AmptiveOtherStrings.enter4DigitSentFrom(
                         widget.from.toLowerCase()),
                     textAlign: TextAlign.start,
-                    style: GoogleFonts.inter(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 17.sp,
-                      color: AmptiveColors.whiteColor,
+                    style: Theme.of(context).textTheme.headlineMedium?.copyWith(
+                      fontSize: AmptiveFontSizes.size17
                     ),
                   ),
                 ),
@@ -117,48 +124,53 @@ class _OTPScreenState extends State<OTPScreen> {
                     OTPTextFormField(index: 3),
                   ],
                 ),
-                Container(
-                  margin: EdgeInsets.only(top: 11.h),
-                  alignment: Alignment.centerLeft,
-                  child: _resendButtonEnabled
-                      ? RichText(
-                          text: TextSpan(
-                            text: AmptiveOtherStrings.didNotGetCode,
-                            children: [
-                              WidgetSpan(
-                                child: GestureDetector(
-                                  onTap: () {
-                                    resetTimer();
-                                  },
-                                  child: Text(
-                                    AmptiveOtherStrings.sendAgain,
-                                    style: GoogleFonts.inter(
-                                      decoration: TextDecoration.underline,
-                                      decorationColor: AmptiveColors.whiteColor,
-                                      fontSize: 12.sp,
-                                      color: AmptiveColors.whiteColor,
-                                      fontWeight: FontWeight.normal,
-                                    ),
+                BlocBuilder<AmptiveOTPAuthBloc, AmptiveOTPAuthState>(
+                    buildWhen: (prev, curr) {
+                  return curr is AmptiveOTPCounterState;
+                }, builder: (context, state) {
+                      debugPrint(state.toString());
+                      if (state is AmptiveOTPCounterState && state.timeLeft <= 0) {
+                        _resendButtonEnabled = true;
+                      }
+                  if (state is AmptiveOTPCounterState) {
+                    return Container(
+                      margin: EdgeInsets.only(top: 11.h),
+                      alignment: Alignment.centerLeft,
+                      child: _resendButtonEnabled
+                          ? RichText(
+                              text: TextSpan(
+                                children: [
+                                  TextSpan(
+                                      text: AmptiveOtherStrings.didNotGetCode,
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .titleSmall),
+                                  TextSpan(
+                                    text: AmptiveOtherStrings.sendAgain,
+                                    recognizer: _tapGestureRecognizer,
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .titleSmall
+                                        ?.copyWith(
+                                          decoration: TextDecoration.underline,
+                                          fontWeight:
+                                              AmptiveFontWeights.regular,
+                                          decorationColor:
+                                              AmptiveColors.whiteColor,
+                                        ),
                                   ),
-                                ),
-                              )
-                            ],
-                            style: GoogleFonts.inter(
-                              fontSize: 12.sp,
-                              color: AmptiveColors.whiteColor,
-                              fontWeight: FontWeight.normal,
+                                ],
+                              ),
+                            )
+                          : Text(
+                              AmptiveOtherStrings.codeHasBeenSentResendIn(
+                                  state.timeLeft),
+                              style: Theme.of(context).textTheme.titleSmall,
                             ),
-                          ),
-                        )
-                      : Text(
-                          AmptiveOtherStrings.codeHasBeenSentResendIn(_start),
-                          style: GoogleFonts.inter(
-                            fontSize: 12.sp,
-                            color: AmptiveColors.whiteColor,
-                            fontWeight: FontWeight.normal,
-                          ),
-                        ),
-                ),
+                    );
+                  }
+                  return Container();
+                }),
                 Expanded(
                   child: SizedBox(
                     height: 1.h,
@@ -177,6 +189,7 @@ class _OTPScreenState extends State<OTPScreen> {
               }
             },
             child: BlocBuilder<AmptiveOTPAuthBloc, AmptiveOTPAuthState>(
+              buildWhen: (prev, curr) => curr is! AmptiveOTPCounterState,
               builder: (context, state) {
                 return state is LoadingAuthState && context.mounted
                     ? const AmptiveLoadingButtonWidget()
@@ -243,11 +256,9 @@ class OTPTextFormField extends StatelessWidget {
           label: const Center(
             child: Text(AmptiveOtherStrings.hyphen),
           ),
-          labelStyle: GoogleFonts.inter(
-            fontSize: 18.sp,
-            color: AmptiveColors.authHintColor,
-            fontWeight: FontWeight.normal,
-          ),
+          labelStyle:Theme.of(context).textTheme.headlineMedium?.copyWith(
+          fontWeight: AmptiveFontWeights.regular,
+        ),
           filled: true,
           fillColor: AmptiveColors.fillGreyColor.withOpacity(0.3),
           focusedBorder: OutlineInputBorder(
@@ -265,10 +276,8 @@ class OTPTextFormField extends StatelessWidget {
             borderRadius: BorderRadius.circular(14.r),
           ),
         ),
-        style: GoogleFonts.inter(
-          fontWeight: FontWeight.normal,
-          fontSize: 18.sp,
-          color: AmptiveColors.whiteColor,
+        style:Theme.of(context).textTheme.headlineMedium?.copyWith(
+          fontWeight: AmptiveFontWeights.regular,
         ),
         textAlign: TextAlign.center,
       ),

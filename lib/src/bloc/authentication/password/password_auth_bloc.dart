@@ -11,12 +11,15 @@ class AmptivePasswordAuthBloc extends Bloc<AmptivePasswordAuthEvent, AmptivePass
 
     // password auth listeners
     on<PasswordChangedAuthEvent>((event, emit) {
-      final valid = GetIt.I<AuthFieldService>().isPasswordValid;
+      final service = GetIt.I<AuthFieldService>();
 
-      if (valid) {
-        emit(ValidPasswordAuthState());
+      service.validatePassword(event.value);
+
+
+      if (service.isPasswordValid) {
+        emit(ValidPasswordAuthState(error: service.password.error));
       } else {
-        emit(InValidPasswordAuthState());
+        emit(InValidPasswordAuthState(error: service.password.error));
       }
     });
   }

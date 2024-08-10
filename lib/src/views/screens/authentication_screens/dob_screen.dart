@@ -1,5 +1,4 @@
 import 'package:amptive/src/bloc/authentication/general/auth_events.dart';
-import 'package:amptive/src/services/auth/auth_field_service.dart';
 import 'package:amptive/src/utils/constants/strings/other_strings.dart';
 import 'package:amptive/src/utils/constants/strings/route_strings.dart';
 import 'package:amptive/src/utils/constants/colors.dart';
@@ -9,7 +8,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
@@ -26,17 +24,10 @@ class DateOfBirthScreen extends StatefulWidget {
 }
 
 class _DateOfBirthScreenState extends State<DateOfBirthScreen> {
-  late final AuthFieldService service;
   final TextEditingController _dobController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
   bool _isBottomSheetOpened = false;
   DateTime? _selectedDate;
-
-  @override
-  void initState() {
-    service = GetIt.I<AuthFieldService>();
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -68,8 +59,8 @@ class _DateOfBirthScreenState extends State<DateOfBirthScreen> {
                     buildWhen: (p, current) {
                   return current is EditDOBAuthState;
                 }, builder: (_, state) {
-                  service.dob != null
-                      ? _dobController.text = _formatDate(service.dob!)
+                  state is EditDOBAuthState && state.dob != null
+                      ? _dobController.text = _formatDate(state.dob!)
                       : _dobController.clear();
 
                   return TextFormField(
@@ -145,20 +136,18 @@ class _DateOfBirthScreenState extends State<DateOfBirthScreen> {
           padding: EdgeInsets.only(
               bottom: _isBottomSheetOpened ? bottomSheetHeight : 16.h),
           child: BlocBuilder<AmptiveAuthBloc, AmptiveAuthState>(
+              buildWhen: (prev, curr) => curr is EditDOBAuthState,
               builder: (context, state) {
-            return AmptiveElevatedButtonWidget(
-              height: 50.w,
-              onPressed: service.dob != null
-                  ? () {
-                      // Validate returns true if the form is valid, or false otherwise.
-                      if (service.isDOBValid) {
-                        context.pushNamed(AmptiveRoutes.addUsername);
-                      }
-                    }
-                  : null,
-              buttonTitle: AmptiveOtherStrings.next,
-            );
-          }),
+                return AmptiveElevatedButtonWidget(
+                  height: 50.w,
+                  onPressed: state is EditDOBAuthState && state.dob != null
+                      ? () {
+                          context.pushNamed(AmptiveRoutes.addUsername);
+                        }
+                      : null,
+                  buttonTitle: AmptiveOtherStrings.next,
+                );
+              }),
         ),
       ),
     );
@@ -229,10 +218,11 @@ class _DateOfBirthScreenState extends State<DateOfBirthScreen> {
 
     if (pickedDate != null && pickedDate != _selectedDate) {
       _selectedDate = pickedDate;
-      service.setDOB(_selectedDate);
 
       if (mounted) {
-        context.read<AmptiveAuthBloc>().add(EditDOBAuthEvent());
+        context
+            .read<AmptiveAuthBloc>()
+            .add(EditDOBAuthEvent(selectedDate: _selectedDate));
       }
     }
   }

@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:amptive/src/utils/constants/strings/route_strings.dart';
 import 'package:amptive/src/views/screens/authentication_screens/add_phone.dart';
 import 'package:amptive/src/views/screens/authentication_screens/dob_screen.dart';
@@ -15,7 +14,6 @@ import 'package:amptive/src/views/screens/main_application_screens/sub_views/cro
 import 'package:amptive/src/views/screens/main_application_screens/sub_views/preference_screen.dart';
 import 'package:amptive/src/views/screens/onboarding_screens/onboarding_page_view_screen.dart';
 import 'package:amptive/src/views/screens/onboarding_screens/welcome_screen.dart';
-import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 /// The route configuration.
@@ -25,12 +23,19 @@ final GoRouter amptiveAppRouter = GoRouter(
   routes: <RouteBase>[
     GoRoute(
         path: AmptiveRoutes.index,
-        builder: (_, __) => const AmptivePreferenceScreen()),
+        builder: (_, __) => const AmptiveOnboardingScreen()),
     GoRoute(
       name: AmptiveRoutes.welcome,
       path: "/welcome-route",
       builder: (_, __) => const AmptiveWelcomeScreen(),
     ),
+    GoRoute(
+      name: AmptiveRoutes.onboarding,
+      path: "/onboarding-route",
+      builder: (_, __) => const AmptiveOnboardingScreen(),
+    ),
+
+    //AUTHENTICATION SCREENS
     GoRoute(
       name: AmptiveRoutes.authScreen,
       path: "/auth-route",
@@ -39,78 +44,67 @@ final GoRouter amptiveAppRouter = GoRouter(
       ),
     ),
     GoRoute(
-      name: AmptiveRoutes.onboarding,
-      path: "/onboarding-route",
-      builder: (_, __) => const AmptiveOnboardingScreen(),
-    ),
-    GoRoute(
         name: AmptiveRoutes.emailAuth,
         path: "/email-route",
         builder: (_, __) => const AmptiveEmailAuthScreen()),
     GoRoute(
         name: AmptiveRoutes.otp,
         path: "/otp",
-        builder: (BuildContext context, GoRouterState state) {
+        builder: (_, GoRouterState state) {
           String where = state.extra as String;
           return OTPScreen(from: where);
         }),
     GoRoute(
       name: AmptiveRoutes.addPhone,
       path: "/add-phone",
-      builder: (BuildContext context, GoRouterState state) =>
-          const AddPhoneScreen(),
+      builder: (_, __) => const AddPhoneScreen(),
     ),
     GoRoute(
-        name: AmptiveRoutes.addProfilePic,
-        path: "/add-profile-pic",
-        builder: (BuildContext context, GoRouterState state) =>
-            const PostRegistrationScreen(),
-        routes: <RouteBase>[
-          GoRoute(
-              name: AmptiveRoutes.cropImage,
-              path: "crop-image",
-              builder: (BuildContext context, GoRouterState state) {
-                File imageFile = state.extra as File;
-                return CropPage(
-                  title: "Cropper",
-                  imageFile: imageFile,
-                );
-              }),
-        ]),
+      name: AmptiveRoutes.addProfilePic,
+      path: "/add-profile-pic",
+      builder: (_, __) => const PostRegistrationScreen(),
+      routes: <RouteBase>[
+        GoRoute(
+          name: AmptiveRoutes.cropImage,
+          path: "crop-image",
+          builder: (_, GoRouterState state) {
+            File imageFile = state.extra as File;
+            return CropPage(title: "Cropper", imageFile: imageFile,);
+          }
+        ),
+      ]
+    ),
     GoRoute(
       name: AmptiveRoutes.passwordAuth,
       path: "/password",
-      builder: (BuildContext context, GoRouterState state) =>
-          const PasswordAuthScreen(),
+      builder: (_, __) => const PasswordAuthScreen(),
     ),
     GoRoute(
       name: AmptiveRoutes.dobAuth,
       path: "/dob",
-      builder: (BuildContext context, GoRouterState state) =>
-          const DateOfBirthScreen(),
+      builder: (_, __) => const DateOfBirthScreen(),
     ),
     GoRoute(
       name: AmptiveRoutes.addUsername,
       path: "/username-add",
-      builder: (BuildContext context, GoRouterState state) =>
-          const UserNameAuthScreen(),
+      builder: (_, __) => const UserNameAuthScreen(),
     ),
     GoRoute(
       name: AmptiveRoutes.addName,
       path: "/name-add",
-      builder: (BuildContext context, GoRouterState state) =>
-          const NameAuthScreen(),
+      builder: (_, __) => const NameAuthScreen(),
     ),
     GoRoute(
       name: AmptiveRoutes.preference,
       path: "/preference-route",
-      builder: (BuildContext context, GoRouterState state) =>
-          const AmptivePreferenceScreen(),
+      builder: (_, __) => const AmptivePreferenceScreen(),
     ),
+
+    //MAIN APPLICATION SCREENS
     GoRoute(
-        name: AmptiveRoutes.homeScreen,
-        path: "/home-screen",
-        builder: (_, __) => const AmptiveDashboardScreen()
+      name: AmptiveRoutes.homeScreen,
+      path: "/home-screen",
+      builder: (_, __) => const AmptiveDashboardScreen()
     ),
   ],
   // observers: [LoggingNavigatorObserver()],

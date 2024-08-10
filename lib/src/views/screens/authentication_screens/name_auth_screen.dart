@@ -1,17 +1,20 @@
 import 'package:amptive/src/services/auth/auth_field_service.dart';
+import 'package:amptive/src/utils/constants/font_sizes.dart';
+import 'package:amptive/src/utils/constants/font_weights.dart';
 import 'package:amptive/src/utils/constants/strings/other_strings.dart';
 import 'package:amptive/src/utils/constants/strings/route_strings.dart';
 import 'package:amptive/src/utils/constants/colors.dart';
 import 'package:amptive/src/views/widgets/common_widgets/annotated_region__widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/elevated_button_widget.dart';
+import 'package:amptive/src/views/widgets/common_widgets/textformfield_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 import '../../../bloc/authentication/general/auth_bloc.dart';
+import '../../../bloc/authentication/general/auth_events.dart';
 import '../../../bloc/authentication/general/auth_states.dart';
 import '../../widgets/common_widgets/app_bar_widget.dart';
 
@@ -48,26 +51,19 @@ class _NameAuthScreenState extends State<NameAuthScreen> {
               children: [
                 Text(
                   AmptiveOtherStrings.whatIsYourName,
-                  style: GoogleFonts.inter(
-                    color: AmptiveColors.whiteColor,
-                    fontSize: 17.sp,
-                    fontWeight: FontWeight.bold,
-                  ),
+                  style: Theme.of(context).textTheme.headlineMedium?.copyWith(
+                        fontSize: AmptiveFontSizes.size17,
+                      ),
                 ),
                 SizedBox(
                   height: 11.h,
                 ),
-                TextFormField(
+                AmptiveTextFormFieldWidget(
                   controller: nameController,
-                  onChanged: (val){
+                  onChanged: (val) {
+                    context.read<AmptiveAuthBloc>().add(NameChangedEvent());
                     service.validateName(val);
-
-                    setState(() {
-
-                    });
                   },
-                  maxLines: 1,
-                  autovalidateMode: AutovalidateMode.onUserInteraction,
                   keyboardType: TextInputType.text,
                   cursorColor: service.name.error == null
                       ? AmptiveColors.brandBlueColor
@@ -76,11 +72,7 @@ class _NameAuthScreenState extends State<NameAuthScreen> {
                     contentPadding:
                         EdgeInsets.symmetric(vertical: 12.h, horizontal: 16.w),
                     hintText: AmptiveOtherStrings.enterYourName,
-                    hintStyle: GoogleFonts.inter(
-                      fontSize: 16.sp,
-                      color: AmptiveColors.authHintColor,
-                      fontWeight: FontWeight.normal,
-                    ),
+                    hintStyle: Theme.of(context).textTheme.labelMedium,
                     filled: true,
                     fillColor: const Color(0xFF9E9E9E).withOpacity(0.3),
                     focusedBorder: OutlineInputBorder(
@@ -100,10 +92,6 @@ class _NameAuthScreenState extends State<NameAuthScreen> {
                       borderRadius: BorderRadius.circular(14.r),
                     ),
                   ),
-                  style: GoogleFonts.inter(
-                      fontWeight: FontWeight.normal,
-                      fontSize: 16.sp,
-                      color: AmptiveColors.whiteColor),
                 ),
                 Container(
                   height: 17.h,
@@ -112,11 +100,7 @@ class _NameAuthScreenState extends State<NameAuthScreen> {
                   ),
                   child: Text(
                     AmptiveOtherStrings.noteAboutProfilePic,
-                    style: GoogleFonts.inter(
-                      color: AmptiveColors.whiteColor,
-                      fontWeight: FontWeight.normal,
-                      fontSize: 11.sp,
-                    ),
+                    style: Theme.of(context).textTheme.titleSmall,
                   ),
                 ),
                 Expanded(
@@ -135,9 +119,10 @@ class _NameAuthScreenState extends State<NameAuthScreen> {
                         TextSpan(
                           text: AmptiveOtherStrings.termsOfService +
                               AmptiveOtherStrings.space,
-                          style: GoogleFonts.inter(
-                            fontWeight: FontWeight.bold,
-                          ),
+                          style:
+                              Theme.of(context).textTheme.titleSmall?.copyWith(
+                                    fontWeight: AmptiveFontWeights.bold,
+                                  ),
                         ),
                         const TextSpan(
                           text: AmptiveOtherStrings.and +
@@ -145,16 +130,13 @@ class _NameAuthScreenState extends State<NameAuthScreen> {
                         ),
                         TextSpan(
                           text: AmptiveOtherStrings.privacyPolicy,
-                          style: GoogleFonts.inter(
-                            fontWeight: FontWeight.bold,
-                          ),
+                          style:
+                              Theme.of(context).textTheme.titleSmall?.copyWith(
+                                    fontWeight: AmptiveFontWeights.bold,
+                                  ),
                         ),
                       ],
-                      style: GoogleFonts.inter(
-                          fontSize: 11.sp,
-                          color: AmptiveColors.whiteColor,
-                          fontWeight: FontWeight.normal,
-                          height: 2),
+                      style: Theme.of(context).textTheme.titleSmall,
                     ),
                   ),
                 ),

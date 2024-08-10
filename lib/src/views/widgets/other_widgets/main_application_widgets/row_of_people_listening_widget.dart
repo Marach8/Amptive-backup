@@ -14,40 +14,40 @@ class AmptiveRowOfNumberOfPeopleListeningWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        SizedBox(
-          width: 90.w,
-          child: const Stack(
-            alignment: Alignment.centerLeft,
-            clipBehavior: Clip.none,
-            children: [
-              AmptiveCircularContainerWithPictureWidget(
-                imagePath: AmptiveImageStrings.jpeg1,
+        const Stack(
+          alignment: Alignment.centerLeft,
+          clipBehavior: Clip.none,
+          children: [
+            AmptiveCircularContainerWithPictureWidget(
+              imagePath: AmptiveImageStrings.jpeg1,
+              addBorder: true,
+            ),
+            Positioned(
+              left: 20,
+              child: AmptiveCircularContainerWithPictureWidget(
+                imagePath: AmptiveImageStrings.jpeg2,
                 addBorder: true,
-              ),
-              Positioned(
-                left: 20,
-                child: AmptiveCircularContainerWithPictureWidget(
-                  imagePath: AmptiveImageStrings.jpeg2,
-                  addBorder: true,
-                )
-              ),
-              Positioned(
-                left: 40,
-                child:AmptiveCircularContainerWithPictureWidget(
-                  imagePath: AmptiveImageStrings.jpeg3,
-                  addBorder: true,
-                )
-              ),
-            ],
-          ),
+              )
+            ),
+            Positioned(
+              left: 40,
+              child:AmptiveCircularContainerWithPictureWidget(
+                imagePath: AmptiveImageStrings.jpeg3,
+                addBorder: true,
+              )
+            ),
+          ],
         ),
     
-        Text(
-          '656 listening',
-          style: Theme.of(context).textTheme.titleSmall?.copyWith(
-            fontWeight: AmptiveFontWeights.medium,
-            fontSize: AmptiveFontSizes.size10
-          )
+        Container(
+          margin: EdgeInsets.only(left: 46.w),
+          child: Text(
+            '656 listening',
+            style: Theme.of(context).textTheme.titleSmall?.copyWith(
+              fontWeight: AmptiveFontWeights.medium,
+              fontSize: AmptiveFontSizes.size10
+            )
+          ),
         )
       ],
     );

@@ -13,6 +13,8 @@ class AmptiveImageStrings{
   static const jpeg2 = '$generalJpegImagePath/welcomeAvatar2.jpeg';
   static const jpeg1 = '$generalJpegImagePath/welcomeAvatar1.jpeg';
   static const jpeg3 = '$generalJpegImagePath/welcomeAvatar3.jpeg';
+  static const weCanDoAllThingsJpg = '$generalJpegImagePath/weCanDoAllThings.jpg';
+
 
   static const pngFacebookIcon = '$generalPngImagePath/facebook.png';
   static const pngGoogleIcon = '$generalPngImagePath/google_icon.png';

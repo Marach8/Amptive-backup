@@ -1,6 +1,8 @@
+import 'package:amptive/src/utils/constants/constants.dart';
 import 'package:amptive/src/utils/helpers/extensions/extensions.dart';
 import 'package:country_pickers/country.dart';
 import 'package:country_pickers/utils/utils.dart';
+import 'package:flutter/material.dart';
 import '../../models/validation_model.dart';
 import '../authentication_service.dart';
 
@@ -16,10 +18,11 @@ class AuthFieldService {
 
   ValidationModel _name = ValidationModel(null, null);
   ValidationModel _username = ValidationModel(null, null);
-  final ValidationModel _phoneNo = ValidationModel(null, null);
+  ValidationModel _phoneNo = ValidationModel(null, null);
 
   DateTime? _dob;
-  final Country _country = CountryPickerUtils.getCountryByIsoCode('NG');
+  Country _country =
+      CountryPickerUtils.getCountryByIsoCode(Constants.kDefaultCountrySelected);
 
   //getters
   ValidationModel get password => _password;
@@ -42,8 +45,6 @@ class AuthFieldService {
 
   ValidationModel get phoneNo => _phoneNo;
 
-  bool get isDOBValid => _dob != null;
-
   bool get isPhoneValid => _phoneNo.value != null;
 
   bool get isNameValid => _name.value != null;
@@ -64,6 +65,10 @@ class AuthFieldService {
   // setters
   void setDOB(DateTime? val) {
     _dob = val;
+  }
+
+  void setCountry(Country c) {
+    _country = c;
   }
 
   // process fields
@@ -108,6 +113,8 @@ class AuthFieldService {
   }
 
   Future<bool> validateUsername(String? val) async {
+    await authenticationService
+        .checkUniqueEmail("email@emmil.com"); // to be removed
     if (val != null && !val.isValidUsername) {
       _username = ValidationModel(null,
           'Username must contain only small cap letters, numbers, periods, and underscores.');
@@ -132,4 +139,16 @@ class AuthFieldService {
       _name = ValidationModel(null, '');
     }
   }
+
+  void validatePhoneNumber(String? val) {
+    if (val != null && val.length >= 10) {
+      _phoneNo = ValidationModel(val, null);
+    } else {
+      _phoneNo = ValidationModel(null, '');
+    }
+  }
+
+  void setProfilePicture(MemoryImage image) {}
+
+  void clearProfilePicture() {}
 }

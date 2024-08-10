@@ -35,7 +35,7 @@ class AmptiveAuthScreen extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                
+
                 AmptiveElevatedButtonWidget(
                   buttonTitle: (userSignUp ? AmptiveOtherStrings.signUpWith : AmptiveOtherStrings.signInWith) + AmptiveOtherStrings.email,
                   onPressed: () => context.pushNamed(AmptiveRoutes.emailAuth)
@@ -44,9 +44,9 @@ class AmptiveAuthScreen extends StatelessWidget {
 
                 AmptiveOutlinedButtonWidget(
                   buttonTitle: (userSignUp ? AmptiveOtherStrings.signUpWith : AmptiveOtherStrings.signInWith) + AmptiveOtherStrings.phoneNumber,
-                  onPressed: (){}
+                  onPressed: () => context.pushNamed(AmptiveRoutes.addPhone)
                 ),
-                
+
                 Gap(20.h),
                 Text(
                   AmptiveOtherStrings.or,
