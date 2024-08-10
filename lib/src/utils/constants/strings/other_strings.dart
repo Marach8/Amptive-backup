@@ -84,21 +84,23 @@ class AmptiveOtherStrings{
   static const camera = 'Camera';
   static const skipForNow = 'Skip for now';
 
-  static const select5Communities =
-      "Select 5 communities you find interest in.";
-  static const selectedInterestNote =
-      "Your selected interests will be used to personalize you Amptive experience.";
+  static const select5Communities = "Select 5 communities you find interest in.";
+  static const selectedInterestNote = "Your selected interests will be used to personalize you Amptive experience.";
 
   static const personalizingYourExperience = "Personalizing your experience...";
-
 
   static const countryPickers  = 'country_pickers';
   static const verifyPhoneNumber  = 'Verify phone number';
   static const whatIsYourPhoneNumber = "What is your phone number?";
 
-
+  static const society = 'Society';
   static const goLive = 'Go live';
   static const paidShow = '\$paid show';
+  static const hashtags = 'Hashtags';
+  static const hostedBy = 'Hosted by';
+  static const showLess = ' Show less';
+  static const showMore = 'Show more';
+  static const whispers = 'Whispers';
 
   // string methods
   static String enter4DigitSentFrom(String location) {

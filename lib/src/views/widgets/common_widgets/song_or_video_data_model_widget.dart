@@ -4,9 +4,9 @@ import 'package:amptive/src/utils/constants/strings/image_strings.dart';
 import 'package:amptive/src/views/widgets/common_widgets/live_indicator_with_animating_dot_widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/image_loader_widget.dart';
 import 'package:amptive/src/views/widgets/other_widgets/main_application_widgets/widgets_in_home_view/dark_color_gradient_container_widget.dart';
-import 'package:amptive/src/views/widgets/other_widgets/main_application_widgets/widgets_in_home_view/list_tile_with_trailing_more_icon_widget.dart';
+import 'package:amptive/src/views/widgets/common_widgets/list_tile_with_leading_picture_widget.dart';
 import 'package:amptive/src/views/widgets/other_widgets/main_application_widgets/widgets_in_home_view/row_of_paid_show_and_play_button_widget.dart';
-import 'package:amptive/src/views/widgets/other_widgets/main_application_widgets/widgets_in_home_view/row_of_people_listening_widget.dart';
+import 'package:amptive/src/views/widgets/common_widgets/row_of_people_listening_widget.dart';
 import 'package:amptive/src/views/widgets/other_widgets/main_application_widgets/widgets_in_home_view/with_2_others_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -21,7 +21,12 @@ class AmptiveSongOrVideoDataModelWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        const AmptiveListTileWithTrailingMoreIconWidget(),
+        AmptiveListTileWithLeadingPictureWidget(
+          leadingImagePath: AmptiveImageStrings.jpeg3,
+          trailingOnPressed: (){},
+          title: 'glennodoyle',
+          subtitle: 'Started a live show',
+        ),
         SizedBox(
           height: 2.h,
         ),
@@ -42,7 +47,7 @@ class AmptiveSongOrVideoDataModelWidget extends StatelessWidget {
                     borderRadius: BorderRadius.circular(15),
                   ),
                   child: const AmptiveImageLoaderWidget(
-                    imagePath: AmptiveImageStrings.weCanDoHardThingsBigPicture,
+                    imagePath: AmptiveImageStrings.weCanDoHardThingsBgImage,
                     boxFit: BoxFit.fill,
                   ),
                 ),
@@ -67,13 +72,11 @@ class AmptiveSongOrVideoDataModelWidget extends StatelessWidget {
                         maxLines: 2,
                         "Don't Forget Who You Are ft. Jacob Scipio",
                         overflow: TextOverflow.clip,
-                        style: Theme.of(context)
-                            .textTheme
-                            .displayMedium
-                            ?.copyWith(
-                                fontSize: AmptiveFontSizes.size24,
-                                fontWeight: AmptiveFontWeights.semiBold,
-                                fontFamily: "Bricolage Grotesque"),
+                        style: Theme.of(context).textTheme.displayMedium?.copyWith(
+                          fontSize: AmptiveFontSizes.size24,
+                          fontWeight: AmptiveFontWeights.semiBold,
+                          fontFamily: "Bricolage Grotesque"
+                        ),
                       ),
                       Gap(12.h),
                       const AmptiveRowOfNumberOfPeopleListeningWidget(),

@@ -3,13 +3,22 @@ import 'package:amptive/src/utils/constants/font_sizes.dart';
 import 'package:amptive/src/utils/constants/font_weights.dart';
 import 'package:amptive/src/utils/constants/strings/image_strings.dart';
 import 'package:amptive/src/views/widgets/common_widgets/circular_container_with_picture_widget.dart';
+import 'package:amptive/src/views/widgets/common_widgets/container_for_rendering_other_widgets.dart';
+import 'package:amptive/src/views/widgets/common_widgets/image_loader_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 
-class AmptiveListTileWithTrailingMoreIconWidget extends StatelessWidget {
-  const AmptiveListTileWithTrailingMoreIconWidget({
+class AmptiveListTileWithLeadingPictureWidget extends StatelessWidget {
+  final VoidCallback? trailingOnPressed;
+  final String title, subtitle, leadingImagePath;
+
+  const AmptiveListTileWithLeadingPictureWidget({
     super.key,
+    this.trailingOnPressed,
+    required this.title,
+    required this.subtitle,
+    required this.leadingImagePath
   });
 
   @override
@@ -18,10 +27,9 @@ class AmptiveListTileWithTrailingMoreIconWidget extends StatelessWidget {
       padding: const EdgeInsets.fromLTRB(0, 15, 0, 10),
       child: Row(
         children: [
-          const AmptiveCircularContainerWithPictureWidget(
-            imagePath: AmptiveImageStrings.jpeg3,
+          AmptiveCircularContainerWithPictureWidget(
+            imagePath: leadingImagePath,
             diameter: 40,
-            //diameter: 40,
           ),
           Gap(10.w),
           Column(
@@ -29,14 +37,14 @@ class AmptiveListTileWithTrailingMoreIconWidget extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                'glennodoyle',
+                title,
                 style: Theme.of(context).textTheme.titleMedium?.copyWith(
                   fontWeight: AmptiveFontWeights.medium,
                   height: 1
                 ),
               ),
               Text(
-                'started a live show',
+                subtitle,
                 style: Theme.of(context).textTheme.titleSmall?.copyWith(
                   color: AmptiveColors.subtitleColor,
                   fontWeight: AmptiveFontWeights.medium,
@@ -47,7 +55,7 @@ class AmptiveListTileWithTrailingMoreIconWidget extends StatelessWidget {
             ],
           ),
           const Spacer(),
-          GestureDetector(
+          trailingOnPressed == null ? const SizedBox.shrink() : GestureDetector(
             onTap: (){},
             child: const Icon(Icons.more_horiz, size: 30,),
           )

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 
 class AmptiveImageLoaderWidget extends StatelessWidget {
@@ -21,7 +20,7 @@ class AmptiveImageLoaderWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final imageExtension = imagePath.split('.').last;
 
-    if(imageExtension == 'jpg' || imageExtension == 'png'){
+    if(imageExtension == 'jpg' || imageExtension == 'png' || imageExtension == 'jpeg'){
       return Image.asset(
         imagePath,
         fit: boxFit,
@@ -33,12 +32,12 @@ class AmptiveImageLoaderWidget extends StatelessWidget {
 
     else if(imageExtension == 'svg'){
       return SvgPicture.asset(
-      imagePath, 
-      fit: boxFit,
-      height: height,
-      width: width,
-      package: package,
-    );
+        imagePath, 
+        fit: boxFit,
+        height: height,
+        width: width,
+        package: package,
+      );
     }
     //This should never happen
     else{
