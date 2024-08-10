@@ -7,7 +7,6 @@ import 'package:amptive/src/views/widgets/common_widgets/elevated_button_widget.
 import 'package:amptive/src/views/widgets/common_widgets/outlined_button_widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/outlined_button_with_leading_icon_widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/image_loader_widget.dart';
-import 'package:amptive/src/views/widgets/common_widgets/svg_asset_loader_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';

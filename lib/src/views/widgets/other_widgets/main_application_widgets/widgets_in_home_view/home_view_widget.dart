@@ -1,11 +1,13 @@
 import 'package:amptive/src/utils/constants/colors.dart';
 import 'package:amptive/src/utils/constants/strings/other_strings.dart';
+import 'package:amptive/src/utils/dialogs/full_audio_or_video_detail_snackbar_dialog.dart';
 import 'package:amptive/src/views/widgets/common_widgets/live_user_model_widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/song_or_video_data_model_widget.dart';
 import 'package:amptive/src/views/widgets/other_widgets/main_application_widgets/widgets_in_home_view/user_with_add_icon_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
+
 
 class AmptiveHomeViewWidget extends StatelessWidget {
   const AmptiveHomeViewWidget({
@@ -63,7 +65,10 @@ class AmptiveHomeViewWidget extends StatelessWidget {
                 10,
                 (_) => Container(
                   margin: EdgeInsets.only(bottom: 49.0.h),
-                  child: const AmptiveSongOrVideoDataModelWidget(),
+                  child: GestureDetector(
+                    onTap: () => showAudioOrVideoFullDetails(context),
+                    child: const AmptiveSongOrVideoDataModelWidget()
+                  ),
                 )
               ).toList()
             ),

@@ -6,6 +6,7 @@ class AmptiveElevatedButtonWidget extends StatelessWidget {
   final void Function()? onPressed;
   final EdgeInsetsGeometry? margin;
   final double? height;
+  final Color? bgColor, fgColor;
 
   const AmptiveElevatedButtonWidget({
     super.key,
@@ -13,6 +14,8 @@ class AmptiveElevatedButtonWidget extends StatelessWidget {
     required this.onPressed,
     this.margin,
     this.height,
+    this.bgColor,
+    this.fgColor
   });
 
   @override
@@ -21,7 +24,14 @@ class AmptiveElevatedButtonWidget extends StatelessWidget {
       margin: margin ?? EdgeInsets.symmetric(horizontal: 15.w, vertical: 16.h),
       width: double.infinity,
       height: height ?? 50.h,
-      child: ElevatedButton(onPressed: onPressed, child: Text(buttonTitle)),
+      child: ElevatedButton(
+        onPressed: onPressed,
+        style: ElevatedButton.styleFrom(
+          foregroundColor: fgColor,
+          backgroundColor: bgColor
+        ),
+        child: Text(buttonTitle)
+      ),
     );
   }
 }

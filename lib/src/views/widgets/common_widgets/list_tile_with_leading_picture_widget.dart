@@ -1,10 +1,7 @@
 import 'package:amptive/src/utils/constants/colors.dart';
 import 'package:amptive/src/utils/constants/font_sizes.dart';
 import 'package:amptive/src/utils/constants/font_weights.dart';
-import 'package:amptive/src/utils/constants/strings/image_strings.dart';
 import 'package:amptive/src/views/widgets/common_widgets/circular_container_with_picture_widget.dart';
-import 'package:amptive/src/views/widgets/common_widgets/container_for_rendering_other_widgets.dart';
-import 'package:amptive/src/views/widgets/common_widgets/image_loader_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
@@ -12,19 +9,21 @@ import 'package:gap/gap.dart';
 class AmptiveListTileWithLeadingPictureWidget extends StatelessWidget {
   final VoidCallback? trailingOnPressed;
   final String title, subtitle, leadingImagePath;
+  final EdgeInsetsGeometry? padding;
 
   const AmptiveListTileWithLeadingPictureWidget({
     super.key,
     this.trailingOnPressed,
     required this.title,
     required this.subtitle,
+    this.padding,
     required this.leadingImagePath
   });
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.fromLTRB(0, 15, 0, 10),
+      padding: padding ?? const EdgeInsets.fromLTRB(0, 15, 0, 10),
       child: Row(
         children: [
           AmptiveCircularContainerWithPictureWidget(

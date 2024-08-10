@@ -12,6 +12,10 @@ class AmptiveHelperFunctions{
   static double getScreenHeight(BuildContext context)
     => MediaQuery.of(context).size.height;
 
+
+  static void hideAnyMountedSnackbar(BuildContext context)
+    => ScaffoldMessenger.maybeOf(context)?.hideCurrentSnackBar();
+
   static startTimer({
     required Timer timer,
     required BuildContext context
