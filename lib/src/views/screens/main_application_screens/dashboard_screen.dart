@@ -1,4 +1,5 @@
 import 'package:amptive/src/utils/constants/strings/image_strings.dart';
+import 'package:amptive/src/utils/constants/strings/route_strings.dart';
 import 'package:amptive/src/views/widgets/common_widgets/annotated_region__widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/app_bar_widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/circular_container_with_picture_widget.dart';
@@ -9,6 +10,9 @@ import 'package:amptive/src/views/widgets/other_widgets/main_application_widgets
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
+import 'package:go_router/go_router.dart';
+
+import '../../widgets/common_widgets/image_loader_widget.dart';
 
 
 class AmptiveDashboardScreen extends StatefulWidget {
@@ -47,7 +51,7 @@ class _AmptiveDashboardScreenState extends State<AmptiveDashboardScreen> {
           leading: const Row(
             mainAxisSize: MainAxisSize.min,
             children: [
-              AmptiveSvgAssetLoaderWidget(svgPath: AmptiveImageStrings.svgLogo2, height: 20.906, width: 86.32,),
+              AmptiveImageLoaderWidget(imagePath: AmptiveImageStrings.logo2, height: 20.906, width: 86.32,),
               Gap(4.0),
               AmptiveAppBarDropDownWidget()
             ],
@@ -55,8 +59,10 @@ class _AmptiveDashboardScreenState extends State<AmptiveDashboardScreen> {
 
           actions: [
             GestureDetector(
-              onTap: (){},
-              child: const AmptiveSvgAssetLoaderWidget(svgPath: AmptiveImageStrings.svgWalletIcon, height: 30, width: 30,)
+              onTap: (){
+                context.pushNamed(AmptiveRoutes.newScreen);
+              },
+              child: const AmptiveImageLoaderWidget(imagePath: AmptiveImageStrings.walletIcon, height: 30, width: 30,)
             ),
             const Gap(24),
             GestureDetector(

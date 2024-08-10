@@ -32,7 +32,7 @@ class AmptiveHomeViewWidget extends StatelessWidget {
                   child: const AmptiveUserWithAddIconWidget(),
                 ),
                 ...Iterable.generate(
-                  10,
+                  20,
                   (_) => Row(
                     mainAxisSize: MainAxisSize.min,
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -45,7 +45,7 @@ class AmptiveHomeViewWidget extends StatelessWidget {
               ]
             ),
     
-            bottom:  TabBar(
+            bottom: TabBar(
               indicatorColor: AmptiveColors.indicatorDark,
               indicatorWeight: 1.h,
               tabs: const [
@@ -58,7 +58,7 @@ class AmptiveHomeViewWidget extends StatelessWidget {
         body: TabBarView(
           children: [
             ListView(              
-              padding: const EdgeInsets.only(left: 20, right: 20, top: 9),
+              padding: const EdgeInsets.fromLTRB(20, 9, 20, 0),
               children: Iterable.generate(
                 10,
                 (_) => Container(

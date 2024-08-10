@@ -16,6 +16,8 @@ import 'package:amptive/src/views/screens/onboarding_screens/onboarding_page_vie
 import 'package:amptive/src/views/screens/onboarding_screens/welcome_screen.dart';
 import 'package:go_router/go_router.dart';
 
+import 'views/screens/main_application_screens/sub_views/new_screen.dart';
+
 /// The route configuration.
 final GoRouter amptiveAppRouter = GoRouter(
   initialLocation: AmptiveRoutes.index,
@@ -107,7 +109,15 @@ final GoRouter amptiveAppRouter = GoRouter(
     GoRoute(
       name: AmptiveRoutes.homeScreen,
       path: "/home-screen",
-      builder: (_, __) => const AmptiveDashboardScreen()
+      builder: (_, __) => const AmptiveDashboardScreen(),
+      routes: [
+        GoRoute(
+          name: AmptiveRoutes.newScreen,
+          path: AmptiveRoutes.newScreen,
+          //path: "/new-screen",
+          builder: (_, __) => const NewScreen(),
+        ),
+      ]
     ),
   ],
   // observers: [LoggingNavigatorObserver()],

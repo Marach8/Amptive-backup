@@ -1,5 +1,5 @@
 import 'package:amptive/src/utils/constants/colors.dart';
-import 'package:amptive/src/views/widgets/common_widgets/png_jpeg_asset_loader_widget.dart';
+import 'package:amptive/src/views/widgets/common_widgets/image_loader_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -34,8 +34,8 @@ class AmptiveCircularContainerWithPictureWidget extends StatelessWidget {
       ),
       child: ClipRRect(
         borderRadius: BorderRadius.circular((diameter ?? 30)/2),
-        child: AmptivePngAndJpegAssetLoaderWidget(
-          pngOrJpegPath: imagePath,
+        child: AmptiveImageLoaderWidget(
+          imagePath: imagePath,
           boxFit: BoxFit.cover,
           height: diameter ?? 30,
           width: diameter ?? 30,

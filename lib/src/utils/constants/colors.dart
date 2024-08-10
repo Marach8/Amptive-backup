@@ -41,6 +41,8 @@ class AmptiveColors {
 
   static Color get orangeGradientColorA => const Color.fromRGBO(249, 24, 128, 1);
 
+  //static Color get orangeColorC => const Color(0xFFFF6482);
+
   static Color get orangeGradientColorB => const Color.fromRGBO(249, 32, 24, 1);
 
   static Color get containerGradientColorA => const Color.fromRGBO(26, 26, 26, 0);

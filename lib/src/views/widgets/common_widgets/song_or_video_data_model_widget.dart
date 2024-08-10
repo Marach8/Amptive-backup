@@ -2,7 +2,7 @@ import 'package:amptive/src/utils/constants/font_sizes.dart';
 import 'package:amptive/src/utils/constants/font_weights.dart';
 import 'package:amptive/src/utils/constants/strings/image_strings.dart';
 import 'package:amptive/src/views/widgets/common_widgets/live_indicator_with_animating_dot_widget.dart';
-import 'package:amptive/src/views/widgets/common_widgets/png_jpeg_asset_loader_widget.dart';
+import 'package:amptive/src/views/widgets/common_widgets/image_loader_widget.dart';
 import 'package:amptive/src/views/widgets/other_widgets/main_application_widgets/widgets_in_home_view/dark_color_gradient_container_widget.dart';
 import 'package:amptive/src/views/widgets/other_widgets/main_application_widgets/widgets_in_home_view/list_tile_with_trailing_more_icon_widget.dart';
 import 'package:amptive/src/views/widgets/other_widgets/main_application_widgets/widgets_in_home_view/row_of_paid_show_and_play_button_widget.dart';
@@ -41,8 +41,8 @@ class AmptiveSongOrVideoDataModelWidget extends StatelessWidget {
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(15),
                   ),
-                  child: const AmptivePngAndJpegAssetLoaderWidget(
-                    pngOrJpegPath: AmptiveImageStrings.weCanDoAllThingsJpg,
+                  child: const AmptiveImageLoaderWidget(
+                    imagePath: AmptiveImageStrings.weCanDoHardThingsBigPicture,
                     boxFit: BoxFit.fill,
                   ),
                 ),

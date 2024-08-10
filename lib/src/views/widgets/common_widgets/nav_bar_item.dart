@@ -27,7 +27,11 @@ class AmptiveBottomAppBarItem extends StatelessWidget {
             //if the user taps on a nav bar item, update the index of the controller
             //to be the index of the tapped item.
             pageIndexNotifier.value = itemIdentityIndex;
-            pageController.jumpToPage(itemIdentityIndex);
+            pageController.animateToPage(
+              itemIdentityIndex,
+              duration: const Duration(milliseconds: 1),
+              curve: Curves.easeIn
+            );
           },
           child: AnimatedCrossFade(
             firstChild: Icon(icon, color: AmptiveColors.whiteColor),

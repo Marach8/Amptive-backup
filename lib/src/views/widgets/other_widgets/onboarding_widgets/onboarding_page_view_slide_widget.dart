@@ -6,6 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 
+import '../../common_widgets/image_loader_widget.dart';
+
 class AmptiveCustomOnboardingPageViewSlideWidget extends StatelessWidget {
   final String title;
   final String description;
@@ -26,8 +28,8 @@ class AmptiveCustomOnboardingPageViewSlideWidget extends StatelessWidget {
           color: pictureBgColor,
           width: AmptiveHelperFunctions.getScreenWidth(context),
           height: AmptiveHelperFunctions.getScreenHeight(context) * 0.65,
-          child: const AmptiveSvgAssetLoaderWidget(
-            svgPath: AmptiveImageStrings.svgEmptyImage,
+          child: const AmptiveImageLoaderWidget(
+            imagePath: AmptiveImageStrings.emptyImage,
             boxFit: BoxFit.scaleDown,
           )
         ),
