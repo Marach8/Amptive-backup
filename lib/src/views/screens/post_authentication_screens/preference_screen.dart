@@ -11,11 +11,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../../../utils/constants/font_weights.dart';
-import '../../../widgets/common_widgets/app_bar_widget.dart';
-import '../../../widgets/common_widgets/circular_progress_indicator.dart';
-import '../../../widgets/other_widgets/main_application_widgets/community_card_preference.dart';
-import '../../../widgets/other_widgets/main_application_widgets/processing_preference_widget.dart';
+import '../../../utils/constants/font_weights.dart';
+import '../../widgets/common_widgets/app_bar_widget.dart';
+import '../../widgets/common_widgets/circular_progress_indicator.dart';
+import '../../widgets/other_widgets/post_authentication_widgets/community_card_preference.dart';
+import '../../widgets/other_widgets/post_authentication_widgets/processing_preference_widget.dart';
 
 class AmptivePreferenceScreen extends StatefulWidget {
   const AmptivePreferenceScreen({super.key});

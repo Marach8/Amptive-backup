@@ -6,7 +6,7 @@ import '../../../../bloc/preference/bloc.dart';
 import '../../../../bloc/preference/events.dart';
 import '../../../../bloc/preference/states.dart';
 import '../../../../utils/constants/colors.dart';
-import '../../../screens/main_application_screens/sub_views/single_community_card.dart';
+import '../../../screens/post_authentication_screens/single_community_card.dart';
 
 class CommunityCardPreferenceWidget extends StatelessWidget {
   const CommunityCardPreferenceWidget({

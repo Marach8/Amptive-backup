@@ -10,8 +10,8 @@ import 'package:amptive/src/views/screens/authentication_screens/post_registrati
 import 'package:amptive/src/views/screens/authentication_screens/sign_in_or_sign_up_screen.dart';
 import 'package:amptive/src/views/screens/authentication_screens/username_auth_screen.dart';
 import 'package:amptive/src/views/screens/main_application_screens/dashboard_screen.dart';
-import 'package:amptive/src/views/screens/main_application_screens/sub_views/crop_image_screen.dart';
-import 'package:amptive/src/views/screens/main_application_screens/sub_views/preference_screen.dart';
+import 'package:amptive/src/views/screens/post_authentication_screens/crop_image_screen.dart';
+import 'package:amptive/src/views/screens/post_authentication_screens/preference_screen.dart';
 import 'package:amptive/src/views/screens/onboarding_screens/onboarding_page_view_screen.dart';
 import 'package:amptive/src/views/screens/onboarding_screens/welcome_screen.dart';
 import 'package:go_router/go_router.dart';
@@ -22,8 +22,9 @@ final GoRouter amptiveAppRouter = GoRouter(
   // initialLocation: "/email-route/otp",
   routes: <RouteBase>[
     GoRoute(
-        path: AmptiveRoutes.index,
-        builder: (_, __) => const AmptiveOnboardingScreen()),
+      path: AmptiveRoutes.index,
+      builder: (_, __) => const AmptiveDashboardScreen()
+    ),
     GoRoute(
       name: AmptiveRoutes.welcome,
       path: "/welcome-route",
@@ -44,16 +45,18 @@ final GoRouter amptiveAppRouter = GoRouter(
       ),
     ),
     GoRoute(
-        name: AmptiveRoutes.emailAuth,
-        path: "/email-route",
-        builder: (_, __) => const AmptiveEmailAuthScreen()),
+      name: AmptiveRoutes.emailAuth,
+      path: "/email-route",
+      builder: (_, __) => const AmptiveEmailAuthScreen()
+    ),
     GoRoute(
-        name: AmptiveRoutes.otp,
-        path: "/otp",
-        builder: (_, GoRouterState state) {
-          String where = state.extra as String;
-          return OTPScreen(from: where);
-        }),
+      name: AmptiveRoutes.otp,
+      path: "/otp",
+      builder: (_, GoRouterState state) {
+        String where = state.extra as String;
+        return OTPScreen(from: where);
+      }
+    ),
     GoRoute(
       name: AmptiveRoutes.addPhone,
       path: "/add-phone",
