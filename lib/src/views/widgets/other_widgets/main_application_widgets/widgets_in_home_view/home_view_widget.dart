@@ -9,13 +9,46 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 
 
-class AmptiveHomeViewWidget extends StatelessWidget {
+class AmptiveHomeViewWidget extends StatefulWidget {
   const AmptiveHomeViewWidget({
     super.key,
   });
 
   @override
+  State<AmptiveHomeViewWidget> createState() => _AmptiveHomeViewWidgetState();
+}
+
+class _AmptiveHomeViewWidgetState extends State<AmptiveHomeViewWidget> with SingleTickerProviderStateMixin{
+  late AnimationController _animationController;
+  late Animation<double> _animation;
+
+  @override 
+  void initState(){
+    super.initState();
+    _animationController = AnimationController(
+      vsync: this,
+      duration: const Duration(seconds: 2)
+    );
+
+    _animation = Tween<double>(
+      begin: 0, end: 50
+    ).animate( //_animationController
+      CurvedAnimation(
+        parent: _animationController,
+        curve: Curves.easeIn
+      )
+    );
+  }
+
+  @override 
+  void dispose(){
+    _animationController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
+
     return DefaultTabController(
       length: 1,
       child: NestedScrollView(                
@@ -66,7 +99,11 @@ class AmptiveHomeViewWidget extends StatelessWidget {
                 (_) => Container(
                   margin: EdgeInsets.only(bottom: 49.0.h),
                   child: GestureDetector(
-                    onTap: () => showAudioOrVideoFullDetails(context),
+                    onTap: () => showAudioOrVideoFullDetails(
+                      context: context,
+                      snackBarAnimation: _animation,
+                      controller: _animationController
+                    ),
                     child: const AmptiveSongOrVideoDataModelWidget()
                   ),
                 )

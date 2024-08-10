@@ -3,9 +3,15 @@ import '../../views/screens/main_application_screens/sub_views/new_screen.dart';
 import '../constants/colors.dart';
 
 
-void showAudioOrVideoFullDetails(BuildContext context)
-  => ScaffoldMessenger.maybeOf(context)?.showSnackBar(
+void showAudioOrVideoFullDetails({
+  required BuildContext context,
+  required Animation<double> snackBarAnimation,
+  required AnimationController controller
+}) {
+  controller.forward();
+  ScaffoldMessenger.maybeOf(context)?.showSnackBar(
     SnackBar(
+      animation: snackBarAnimation,
       backgroundColor: AmptiveColors.brandBlackColor,
       elevation: 0,
       padding: EdgeInsets.zero,
@@ -13,3 +19,4 @@ void showAudioOrVideoFullDetails(BuildContext context)
       content: const NewScreen(),
     )
   );
+}
