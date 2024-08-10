@@ -4,6 +4,7 @@ import 'package:amptive/src/bloc/authentication/otp/otp_auth_states.dart';
 import 'package:amptive/src/services/auth/otp_service.dart';
 import 'package:amptive/src/utils/constants/colors.dart';
 import 'package:amptive/src/utils/constants/font_sizes.dart';
+import 'package:amptive/src/utils/helpers/helper_functions/other_functions.dart';
 import 'package:amptive/src/views/widgets/common_widgets/annotated_region__widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/common_widgets.dart';
 import 'package:flutter/gestures.dart';
@@ -93,7 +94,7 @@ class _OTPScreenState extends State<OTPScreen> {
                   margin: EdgeInsets.only(top: 20.h),
                   width: 297.w,
                   child: Text(
-                    AmptiveOtherStrings.enter4DigitSentFrom(widget.from.toLowerCase()),
+                    AmptiveHelperFunctions.enter4DigitSentFrom(widget.from.toLowerCase()),
                     textAlign: TextAlign.start,
                     style: Theme.of(context).textTheme.headlineMedium?.copyWith(
                       fontSize: AmptiveFontSizes.size17
@@ -143,7 +144,7 @@ class _OTPScreenState extends State<OTPScreen> {
                           ),
                         )
                         : Text(
-                          AmptiveOtherStrings.codeHasBeenSentResendIn(state.timeLeft),
+                          AmptiveHelperFunctions.codeHasBeenSentResendIn(state.timeLeft),
                           style: Theme.of(context).textTheme.titleSmall,
                         ),
                       );
