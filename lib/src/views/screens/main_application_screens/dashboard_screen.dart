@@ -1,15 +1,8 @@
-import 'package:amptive/src/utils/constants/strings/image_strings.dart';
 import 'package:amptive/src/views/widgets/common_widgets/annotated_region__widget.dart';
-import 'package:amptive/src/views/widgets/common_widgets/app_bar_widget.dart';
-import 'package:amptive/src/views/widgets/common_widgets/circular_container_with_picture_widget.dart';
-import 'package:amptive/src/views/widgets/other_widgets/main_application_widgets/widgets_in_home_view/appbar_pop_drop_down.dart';
 import 'package:amptive/src/views/widgets/other_widgets/main_application_widgets/dashboar_nav_bar_widget.dart';
 import 'package:amptive/src/views/widgets/other_widgets/main_application_widgets/widgets_in_home_view/home_view_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:gap/gap.dart';
 
-import '../../widgets/common_widgets/image_loader_widget.dart';
 
 
 class AmptiveDashboardScreen extends StatefulWidget {
@@ -42,35 +35,35 @@ class _AmptiveDashboardScreenState extends State<AmptiveDashboardScreen> {
   Widget build(BuildContext context) {
     return AmptiveAnnotatedRegionWidget(
       child: Scaffold(
-        appBar: AmptiveAppBar(
-          centerTitle: false,
-          leadingWidth: 150.w,
-          leading: const Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              AmptiveImageLoaderWidget(imagePath: AmptiveImageStrings.logo2, height: 20.906, width: 86.32,),
-              Gap(4.0),
-              AmptiveAppBarDropDownWidget()
-            ],
-          ),
+        // appBar: AmptiveAppBar(
+        //   centerTitle: false,
+        //   leadingWidth: 150.w,
+        //   leading: const Row(
+        //     mainAxisSize: MainAxisSize.min,
+        //     children: [
+        //       AmptiveImageLoaderWidget(imagePath: AmptiveImageStrings.logo2, height: 20.906, width: 86.32,),
+        //       Gap(4.0),
+        //       AmptiveAppBarDropDownWidget()
+        //     ],
+        //   ),
 
-          actions: [
-            GestureDetector(
-              onTap: (){
+        //   actions: [
+        //     GestureDetector(
+        //       onTap: (){
                 
-                //context.pushNamed(AmptiveRoutes.newScreen);
-              },
-              child: const AmptiveImageLoaderWidget(imagePath: AmptiveImageStrings.walletIcon, height: 30, width: 30,)
-            ),
-            const Gap(24),
-            GestureDetector(
-              onTap: (){},
-              child: const AmptiveCircularContainerWithPictureWidget(
-                imagePath: AmptiveImageStrings.jpeg2,
-              )
-            ),
-          ],
-        ),
+        //         //context.pushNamed(AmptiveRoutes.newScreen);
+        //       },
+        //       child: const AmptiveImageLoaderWidget(imagePath: AmptiveImageStrings.walletIcon, height: 30, width: 30,)
+        //     ),
+        //     const Gap(24),
+        //     GestureDetector(
+        //       onTap: (){},
+        //       child: const AmptiveCircularContainerWithPictureWidget(
+        //         imagePath: AmptiveImageStrings.jpeg2,
+        //       )
+        //     ),
+        //   ],
+        // ),
 
 
         body: PageView(

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../views/screens/main_application_screens/sub_views/new_screen.dart';
+import '../../views/widgets/other_widgets/main_application_widgets/widgets_in_home_view/audio_full_details_view.dart';
 import '../constants/colors.dart';
 
 
