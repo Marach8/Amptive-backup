@@ -1,9 +1,8 @@
 import 'package:amptive/src/utils/constants/font_sizes.dart';
 import 'package:amptive/src/utils/constants/font_weights.dart';
 import 'package:amptive/src/utils/constants/strings/image_strings.dart';
+import 'package:amptive/src/views/widgets/common_widgets/container_for_rendering_other_widgets.dart';
 import 'package:amptive/src/views/widgets/common_widgets/live_indicator_with_animating_dot_widget.dart';
-import 'package:amptive/src/views/widgets/common_widgets/image_loader_widget.dart';
-import 'package:amptive/src/views/widgets/other_widgets/main_application_widgets/widgets_in_home_view/dark_color_gradient_container_widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/list_tile_with_leading_picture_widget.dart';
 import 'package:amptive/src/views/widgets/other_widgets/main_application_widgets/widgets_in_home_view/row_of_paid_show_and_play_button_widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/row_of_people_listening_widget.dart';
@@ -11,6 +10,7 @@ import 'package:amptive/src/views/widgets/other_widgets/main_application_widgets
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
+import '../../../utils/constants/colors.dart';
 
 class AmptiveSongOrVideoDataModelWidget extends StatelessWidget {
   const AmptiveSongOrVideoDataModelWidget({
@@ -27,73 +27,52 @@ class AmptiveSongOrVideoDataModelWidget extends StatelessWidget {
           title: 'glennodoyle',
           subtitle: 'Started a live show',
         ),
-        SizedBox(
-          height: 2.h,
-        ),
-        SizedBox(
-          height: 400.h,
-          width: 360.w,
-          child: Stack(
-            clipBehavior: Clip.none,
-            children: [
-              Positioned(
-                top: 0,
-                left: 0,
-                child: Container(
-                  clipBehavior: Clip.hardEdge,
-                  height: 360.h,
-                  width: 360.w,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(15),
-                  ),
-                  child: const AmptiveImageLoaderWidget(
-                    imagePath: AmptiveImageStrings.weCanDoHardThingsBgImage,
-                    boxFit: BoxFit.fill,
-                  ),
-                ),
-              ),
-              Positioned(
-                top: 227.h,
-                child: const AmptiveDarkColorGradientContainerWidget(),
-              ),
-              Positioned(
-                top: 227.h,
-                left: 0.w,
-                right: 0.w,
-                child: Container(
-                  margin: EdgeInsets.symmetric(horizontal: 17.w),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      const AmptiveLiveIndicatorWithAnimatingDotWidget(),
-                      Gap(10.h),
-                      Text(
-                        maxLines: 2,
-                        "Don't Forget Who You Are ft. Jacob Scipio",
-                        overflow: TextOverflow.clip,
-                        style: Theme.of(context).textTheme.displayMedium?.copyWith(
-                          fontSize: AmptiveFontSizes.size24,
-                          fontWeight: AmptiveFontWeights.semiBold,
-                          fontFamily: "Bricolage Grotesque"
-                        ),
-                      ),
-                      Gap(12.h),
-                      const AmptiveRowOfNumberOfPeopleListeningWidget(),
-                      Gap(10.h),
-                      const AmptiveRowOfPaidShowAndPlayButtonWidget(),
-                      Gap(15.h),
-
-                    ],
+        Gap(2.h),
+        AmptiveCustomContainer(
+          decorationImagePath: AmptiveImageStrings.weCanDoHardThingsBgImage,
+          decorationImageFit: BoxFit.fill,
+          height: 432.h,
+          radius: 15.r,
+          child: AmptiveCustomContainer(
+            padding: const EdgeInsets.fromLTRB(15, 10, 15, 10),
+            radius: 15.r,
+            gradient: LinearGradient(
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+              colors: [
+                AmptiveColors.transparentColor,
+                AmptiveColors.transparentColor,
+                AmptiveColors.transparentColor,
+                AmptiveColors.transparentColor,
+                AmptiveColors.containerGradientColorB.withOpacity(0.5),
+                AmptiveColors.containerGradientColorB,
+                AmptiveColors.containerGradientColorB,
+                AmptiveColors.containerGradientColorB,
+              ]
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const AmptiveWith2OthersWidget(),
+                const Spacer(),
+                const AmptiveLiveIndicatorWithAnimatingDotWidget(),
+                Gap(10.h),
+                Text(
+                  maxLines: 2,
+                  "Don't Forget Who You Are ft. Jacob Scipio",
+                  overflow: TextOverflow.clip,
+                  style: Theme.of(context).textTheme.displayMedium?.copyWith(
+                    fontSize: AmptiveFontSizes.size24,
+                    fontWeight: AmptiveFontWeights.semiBold,
+                    fontFamily: "Bricolage Grotesque"
                   ),
                 ),
-              ),
-              const Positioned(
-                top: 10,
-                left: 15,
-                child: AmptiveWith2OthersWidget(),
-              )
-            ],
+                Gap(12.h),
+                const AmptiveRowOfNumberOfPeopleListeningWidget(),
+                Gap(10.h),
+                const AmptiveRowOfPaidShowAndPlayButtonWidget(),
+              ],
+            ),
           ),
         )
       ],

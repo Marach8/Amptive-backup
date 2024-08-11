@@ -1,14 +1,17 @@
 import 'package:amptive/src/utils/constants/strings/route_strings.dart';
 import 'package:amptive/src/views/widgets/common_widgets/song_or_video_data_model_widget.dart';
-import 'package:amptive/src/views/widgets/other_widgets/main_application_widgets/widgets_in_home_view/sliver_header.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 import 'package:go_router/go_router.dart';
+import '../../../../../utils/constants/colors.dart';
 import '../../../../../utils/constants/strings/image_strings.dart';
 import '../../../common_widgets/circular_container_with_picture_widget.dart';
+import '../../../common_widgets/container_for_rendering_other_widgets.dart';
 import '../../../common_widgets/image_loader_widget.dart';
+import '../../../common_widgets/live_user_model_widget.dart';
 import 'appbar_drop_down.dart';
+import 'user_with_add_icon_widget.dart';
 
 
 class AmptiveHomeViewWidget extends StatelessWidget {
@@ -59,24 +62,58 @@ class AmptiveHomeViewWidget extends StatelessWidget {
             ],      
           ),
 
-          SliverPersistentHeader(
-            pinned: true,
-            delegate: AmptiveSliverHeader()
-          )
+          // SliverPersistentHeader(
+          //   pinned: true,
+          //   delegate: AmptiveSliverHeader()
+          // )
         ],
          
         body: ListView(              
-          padding: const EdgeInsets.fromLTRB(20, 9, 20, 0),
-          children: Iterable.generate(
-            10,
-            (_) => Container(
-              margin: EdgeInsets.only(bottom: 49.0.h),
-              child: GestureDetector(
-                 onTap: () => context.pushNamed(AmptiveRoutes.newScreen),
-                child: const AmptiveSongOrVideoDataModelWidget()
+          padding: EdgeInsets.zero,
+          children: [
+            SizedBox(
+              height: 100,
+              child: ListView(
+                padding: EdgeInsets.zero,
+                shrinkWrap: true,
+                scrollDirection: Axis.horizontal,
+                children: [
+                  Padding(
+                    padding: EdgeInsets.only(left: 10.62.w),
+                    child: const AmptiveUserWithAddIconWidget(),
+                  ),
+                  ...Iterable.generate(
+                    20,
+                    (_) => Row(
+                      mainAxisSize: MainAxisSize.min,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Gap(14.w),
+                        const AmptiveLiveUserModelWidget()
+                      ],
+                    )
+                  ),
+                ]
               ),
+            ),
+            AmptiveCustomContainer(
+              color: AmptiveColors.whiteColor,
+              height: 0.15,
+              width: double.infinity,
+              child: const SizedBox.shrink(),
+            ),
+
+            ...Iterable.generate(
+              10,
+              (_) => Padding(
+                padding: const EdgeInsets.fromLTRB(20, 0, 20, 20),
+                child: GestureDetector(
+                  onTap: () => context.pushNamed(AmptiveRoutes.newScreen),
+                  child: const AmptiveSongOrVideoDataModelWidget()
+                ),
+              )
             )
-          ).toList()
+          ]
         )
       ),
     );
