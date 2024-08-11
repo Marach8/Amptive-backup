@@ -164,16 +164,16 @@ class AmptiveAudioOrVideoFullDetailsScreen extends StatelessWidget {
                 ),
               ),
               const AmptiveWhispersListViewWidget(),
-              AmptiveElevatedButtonWidget(
-                margin: const EdgeInsets.fromLTRB(20, 15, 20, 0),
-                bgColor: AmptiveColors.whiteColor,
-                fgColor: AmptiveColors.brandBlackColor,
-                buttonTitle: 'Subscrible N1,900/month',
-                onPressed: (){}
-              ),
-              const Gap(10)
+              const Gap(70)
             ],
           ),
+        ),
+        bottomSheet: AmptiveElevatedButtonWidget(
+          margin: const EdgeInsets.fromLTRB(20, 15, 20, 0),
+          bgColor: AmptiveColors.whiteColor,
+          fgColor: AmptiveColors.brandBlackColor,
+          buttonTitle: 'Subscrible N1,900/month',
+          onPressed: (){}
         ),
       ),
     );

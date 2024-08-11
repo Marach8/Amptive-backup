@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:amptive/src/utils/constants/maps.dart';
 import 'package:amptive/src/utils/helpers/helper_functions/other_functions.dart';
 import 'package:flutter/material.dart';
