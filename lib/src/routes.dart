@@ -14,8 +14,8 @@ import 'package:amptive/src/views/screens/post_authentication_screens/crop_image
 import 'package:amptive/src/views/screens/post_authentication_screens/preference_screen.dart';
 import 'package:amptive/src/views/screens/onboarding_screens/onboarding_page_view_screen.dart';
 import 'package:amptive/src/views/screens/onboarding_screens/welcome_screen.dart';
+import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-
 import 'views/widgets/other_widgets/main_application_widgets/widgets_in_home_view/audio_full_details_view.dart';
 
 /// The route configuration.
@@ -115,7 +115,32 @@ final GoRouter amptiveAppRouter = GoRouter(
           name: AmptiveRoutes.newScreen,
           path: AmptiveRoutes.newScreen,
           //path: "/new-screen",
-          builder: (_, __) => const NewScreen(),
+          //builder: (_, __) => const NewScreen(),
+          pageBuilder: (context, state) => CustomTransitionPage(
+            child: const NewScreen(),
+            transitionsBuilder: (context, animation, secondaryAnimation, child){
+              // const begin = Offset(0.0, 1.0);
+              // const end = Offset.zero;
+              // const curve = Curves.linear;
+
+              var tween = Tween(
+                begin: const Offset(0.0, 1.0),
+                end: Offset.zero
+              ).animate(
+                CurvedAnimation(
+                  parent: animation,
+                  curve: Curves.linear
+                ),
+              );
+
+              return SlideTransition(
+                position: tween,
+                child: child,
+              );
+            },
+            reverseTransitionDuration: const Duration(milliseconds: 700),
+            transitionDuration: const Duration(milliseconds: 700),
+          )
         ),
       ]
     ),

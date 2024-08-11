@@ -6,13 +6,13 @@ import '../../../common_widgets/container_for_rendering_other_widgets.dart';
 import '../../../common_widgets/live_user_model_widget.dart';
 import 'user_with_add_icon_widget.dart';
 
-class AmptiveLiveUsersListView extends StatelessWidget implements PreferredSizeWidget{
-  const AmptiveLiveUsersListView({super.key});
 
+class AmptiveSliverHeader extends SliverPersistentHeaderDelegate{
   @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-    height: 115.h,
+  Widget build(BuildContext context, double shrinkOffset, bool overlapsContent) {
+    return Container(
+      color: AmptiveColors.brandBlackColor,
+      height: 115.h,
       child: Column(
         children: [
           Expanded(
@@ -51,5 +51,12 @@ class AmptiveLiveUsersListView extends StatelessWidget implements PreferredSizeW
   }
 
   @override
-  Size get preferredSize => Size.fromHeight(120.h);
+  double get maxExtent => 112.h;
+
+  @override
+  double get minExtent => 110.h;
+
+  @override
+  bool shouldRebuild(covariant SliverPersistentHeaderDelegate oldDelegate) 
+    => false;
 }

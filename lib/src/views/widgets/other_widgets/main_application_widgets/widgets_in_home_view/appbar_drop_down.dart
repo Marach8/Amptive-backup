@@ -1,3 +1,4 @@
+import 'package:amptive/src/utils/constants/colors.dart';
 import 'package:amptive/src/utils/constants/strings/other_strings.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -18,8 +19,10 @@ class AmptiveAppBarDropDownWidget extends StatelessWidget {
       ),
       padding: EdgeInsets.zero,
       onSelected: (selectedSearchChoice){},
+      color: AmptiveColors.containerGradientColorB,
+      elevation: 0,
       child: const Icon(Icons.keyboard_arrow_down_outlined, size: 25,),
-      // icon: AnimatedCrossFade(
+      // child: AnimatedCrossFade(
       //   firstChild: const Icon(Icons.keyboard_arrow_down_outlined, size: 25),
       //   secondChild: const Icon(Icons.keyboard_arrow_up_outlined, size: 25),
       //   crossFadeState: emmanuel ? CrossFadeState.showFirst : CrossFadeState.showSecond,
