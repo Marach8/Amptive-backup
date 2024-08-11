@@ -24,6 +24,7 @@ class AmptiveHelperFunctions{
   static void hideAnyMountedSnackbar(BuildContext context)
     => ScaffoldMessenger.maybeOf(context)?.hideCurrentSnackBar();
 
+
   static startTimer({
     required Timer timer,
     required BuildContext context

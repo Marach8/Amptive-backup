@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:amptive/src/utils/constants/colors.dart';
 import 'package:amptive/src/utils/constants/strings/image_strings.dart';
 import 'package:amptive/src/utils/constants/strings/other_strings.dart';
+import 'package:amptive/src/utils/helpers/helper_functions/other_functions.dart';
 import 'package:amptive/src/views/widgets/common_widgets/annotated_region__widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/app_bar_widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/container_for_rendering_other_widgets.dart';
@@ -13,16 +14,16 @@ import 'package:go_router/go_router.dart';
 import 'package:readmore/readmore.dart';
 import '../../../../../utils/constants/font_sizes.dart';
 import '../../../../../utils/constants/font_weights.dart';
-import '../../../common_widgets/list_tile_with_leading_picture_widget.dart';
-import '../../../common_widgets/row_of_people_listening_widget.dart';
-import '../widgets_in_video_or_audio_details_view/audio_or_video_display_picture_widget.dart';
-import '../widgets_in_video_or_audio_details_view/hashtags_widget.dart';
-import '../widgets_in_video_or_audio_details_view/row_of_live_and_society_texts_widget.dart';
-import '../widgets_in_video_or_audio_details_view/row_of_subtitle_and_forward_icon_widget.dart';
-import '../widgets_in_video_or_audio_details_view/whispers_list_view_widget.dart';
+import '../../../../widgets/common_widgets/list_tile_with_leading_picture_widget.dart';
+import '../../../../widgets/common_widgets/row_of_people_listening_widget.dart';
+import '../../../../widgets/other_widgets/main_application_widgets/widgets_in_video_or_audio_details_view/audio_or_video_display_picture_widget.dart';
+import '../../../../widgets/other_widgets/main_application_widgets/widgets_in_video_or_audio_details_view/hashtags_widget.dart';
+import '../../../../widgets/other_widgets/main_application_widgets/widgets_in_video_or_audio_details_view/row_of_live_and_society_texts_widget.dart';
+import '../../../../widgets/other_widgets/main_application_widgets/widgets_in_video_or_audio_details_view/row_of_subtitle_and_forward_icon_widget.dart';
+import '../../../../widgets/other_widgets/main_application_widgets/widgets_in_video_or_audio_details_view/whispers_list_view_widget.dart';
 
-class NewScreen extends StatelessWidget {
-  const NewScreen({super.key});
+class AmptiveAudioOrVideoFullDetailsScreen extends StatelessWidget {
+  const AmptiveAudioOrVideoFullDetailsScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +33,10 @@ class NewScreen extends StatelessWidget {
           hideLeading: true,
           centerTitle: true,
           title: GestureDetector(
-            onTap: () => context.pop(),
+            onTap: () {
+              AmptiveHelperFunctions.hideAnyMountedSnackbar(context);
+              context.pop();
+            },
             child: Platform.isAndroid
               ? Icon(
                 Icons.keyboard_arrow_down,
@@ -100,6 +104,7 @@ class NewScreen extends StatelessWidget {
                         padding: const EdgeInsets.symmetric(vertical: 9).r,
                         title: 'Gerald',
                         subtitle: 'Host',
+                        diameter: 35,
                         leadingImagePath: AmptiveImageStrings.jpeg1,
                       )
                     ),

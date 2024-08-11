@@ -12,7 +12,7 @@ class AmptiveSliverHeader extends SliverPersistentHeaderDelegate{
   Widget build(BuildContext context, double shrinkOffset, bool overlapsContent) {
     return Container(
       color: AmptiveColors.brandBlackColor,
-      height: 115.h,
+      height: 105,
       child: Column(
         children: [
           Expanded(
@@ -51,10 +51,10 @@ class AmptiveSliverHeader extends SliverPersistentHeaderDelegate{
   }
 
   @override
-  double get maxExtent => 112.h;
+  double get maxExtent => 103;
 
   @override
-  double get minExtent => 110.h;
+  double get minExtent => 100;
 
   @override
   bool shouldRebuild(covariant SliverPersistentHeaderDelegate oldDelegate) 

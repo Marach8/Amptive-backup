@@ -16,9 +16,9 @@ import 'package:amptive/src/views/screens/onboarding_screens/onboarding_page_vie
 import 'package:amptive/src/views/screens/onboarding_screens/welcome_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'views/widgets/other_widgets/main_application_widgets/widgets_in_home_view/audio_full_details_view.dart';
+import 'views/screens/main_application_screens/sub_views/home_view/audio_or_video_full_details_screen.dart';
 
-/// The route configuration.
+// The route configuration.
 final GoRouter amptiveAppRouter = GoRouter(
   initialLocation: AmptiveRoutes.index,
   // initialLocation: "/email-route/otp",
@@ -114,14 +114,9 @@ final GoRouter amptiveAppRouter = GoRouter(
         GoRoute(
           name: AmptiveRoutes.newScreen,
           path: AmptiveRoutes.newScreen,
-          //path: "/new-screen",
-          //builder: (_, __) => const NewScreen(),
           pageBuilder: (context, state) => CustomTransitionPage(
-            child: const NewScreen(),
+            child: const AmptiveAudioOrVideoFullDetailsScreen(),
             transitionsBuilder: (context, animation, secondaryAnimation, child){
-              // const begin = Offset(0.0, 1.0);
-              // const end = Offset.zero;
-              // const curve = Curves.linear;
 
               var tween = Tween(
                 begin: const Offset(0.0, 1.0),
@@ -129,7 +124,7 @@ final GoRouter amptiveAppRouter = GoRouter(
               ).animate(
                 CurvedAnimation(
                   parent: animation,
-                  curve: Curves.linear
+                  curve: Curves.easeIn
                 ),
               );
 

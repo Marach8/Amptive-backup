@@ -10,6 +10,7 @@ class AmptiveListTileWithLeadingPictureWidget extends StatelessWidget {
   final VoidCallback? trailingOnPressed;
   final String title, subtitle, leadingImagePath;
   final EdgeInsetsGeometry? padding;
+  final double? diameter;
 
   const AmptiveListTileWithLeadingPictureWidget({
     super.key,
@@ -17,6 +18,7 @@ class AmptiveListTileWithLeadingPictureWidget extends StatelessWidget {
     required this.title,
     required this.subtitle,
     this.padding,
+    this.diameter,
     required this.leadingImagePath
   });
 
@@ -28,7 +30,7 @@ class AmptiveListTileWithLeadingPictureWidget extends StatelessWidget {
         children: [
           AmptiveCircularContainerWithPictureWidget(
             imagePath: leadingImagePath,
-            diameter: 40,
+            diameter: diameter ?? 40,
           ),
           Gap(10.w),
           Column(

@@ -14,7 +14,7 @@ class AmptiveHashtagsWidget extends StatelessWidget {
     return Wrap(
       children: [
         'Society', 'Climate Change', 'JACKSCIPIO', 'attackingjacob',
-        'Documentry'
+        'Documentry',
       ].map(
         (element) => Row(
           mainAxisSize: MainAxisSize.min,
@@ -30,7 +30,9 @@ class AmptiveHashtagsWidget extends StatelessWidget {
                   text1: '# ',
                   text2: element,
                   style1: Theme.of(context).textTheme.bodyMedium,
-                  style2: Theme.of(context).textTheme.bodySmall,
+                  style2: Theme.of(context).textTheme.bodySmall?.copyWith(
+                    color: AmptiveColors.grey5Color,
+                  ),
                 )
               ),
             ),
