@@ -20,6 +20,6 @@ class AmptiveRoutes {
   static String cropImage = "crop_image";
   
   //MAIN APPLICATION
-  static String homeScreen = "homescreen";
-  static String newScreen = "newscreen";
+  static String homeScreen = "home_screen";
+  static String newScreen = "new_screen";
 }

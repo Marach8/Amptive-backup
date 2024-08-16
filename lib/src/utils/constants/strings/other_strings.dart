@@ -99,4 +99,6 @@ class AmptiveOtherStrings{
   static const scheduled = 'Scheduled';
   static const subscribed = 'Subscribed';
   static const following = 'Following';
+
+  static const technology = 'Technology';
 }
