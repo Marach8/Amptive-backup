@@ -16,7 +16,7 @@ import 'package:amptive/src/views/screens/onboarding_screens/onboarding_page_vie
 import 'package:amptive/src/views/screens/onboarding_screens/welcome_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'views/screens/main_application_screens/sub_views/home_view/audio_or_video_full_details_screen.dart';
+import 'views/screens/main_application_screens/sub_views/home_view/show_detailed_screen.dart';
 
 // The route configuration.
 final GoRouter amptiveAppRouter = GoRouter(
