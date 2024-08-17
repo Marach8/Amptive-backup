@@ -7,9 +7,9 @@ import '../../../../../utils/constants/strings/image_strings.dart';
 import '../../../../../utils/constants/strings/other_strings.dart';
 import '../../../common_widgets/image_loader_widget.dart';
 
-class AmptiveRowOfLiveAndSocietyTextsWidget extends StatelessWidget {
+class AmptiveRowOfTwoIconsAndTwoTextsWidget extends StatelessWidget {
   final String? text2;
-  const AmptiveRowOfLiveAndSocietyTextsWidget({
+  const AmptiveRowOfTwoIconsAndTwoTextsWidget({
     super.key,
     this.text2
   });
@@ -35,7 +35,7 @@ class AmptiveRowOfLiveAndSocietyTextsWidget extends StatelessWidget {
         Icon(Icons.groups, color: AmptiveColors.grey5Color),
         const Gap(5),
         Text(
-          text2 ?? AmptiveOtherStrings.society.toUpperCase(),
+          text2?.toUpperCase() ?? AmptiveOtherStrings.society.toUpperCase(),
           style: Theme.of(context).textTheme.bodyMedium?.copyWith(
             color: AmptiveColors.grey5Color,
             fontSize: AmptiveFontSizes.size14

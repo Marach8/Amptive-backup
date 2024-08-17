@@ -108,7 +108,7 @@ class AmptiveHomeViewWidget extends StatelessWidget {
               (_) => Padding(
                 padding: const EdgeInsets.fromLTRB(20, 0, 20, 20),
                 child: GestureDetector(
-                  onTap: () => context.pushNamed(AmptiveRoutes.newScreen),
+                  onTap: () => context.pushNamed(AmptiveRoutes.showDetailedScreen),
                   child: const AmptiveSongOrVideoDataModelWidget()
                 ),
               )

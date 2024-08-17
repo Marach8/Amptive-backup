@@ -20,6 +20,10 @@ class AmptiveRoutes {
   static String cropImage = "crop_image";
   
   //MAIN APPLICATION
-  static String homeScreen = "home_screen";
-  static String newScreen = "new_screen";
+  static const homeScreen = "home_screen";
+  static const showDetailedScreen = "show_detailed_screen";
+  static const eventDetailedScreen = "event_detailed_screen";
+  static const scheduledEventsOrShowsScreen = 'scheduled_events_or_shows';
+  static const subscribedEventsOrShowsScreen = 'subscribed_events_or_shows';
+  static const followingEventsOrShowsScreen = 'following_events_or_shows';
 }

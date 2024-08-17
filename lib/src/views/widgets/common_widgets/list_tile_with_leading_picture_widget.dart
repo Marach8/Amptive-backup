@@ -57,7 +57,7 @@ class AmptiveListTileWithLeadingPictureWidget extends StatelessWidget {
           ),
           const Spacer(),
           trailingOnPressed == null ? const SizedBox.shrink() : GestureDetector(
-            onTap: (){},
+            onTap: trailingOnPressed,
             child: const Icon(Icons.more_horiz, size: 30,),
           )
         ],

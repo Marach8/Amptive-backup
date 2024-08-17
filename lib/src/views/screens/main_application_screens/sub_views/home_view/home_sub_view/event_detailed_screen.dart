@@ -1,29 +1,32 @@
 import 'dart:io';
-import 'package:amptive/src/utils/constants/colors.dart';
-import 'package:amptive/src/utils/constants/strings/image_strings.dart';
-import 'package:amptive/src/utils/constants/strings/other_strings.dart';
-import 'package:amptive/src/utils/helpers/helper_functions/other_functions.dart';
 import 'package:amptive/src/views/widgets/common_widgets/annotated_region__widget.dart';
-import 'package:amptive/src/views/widgets/common_widgets/app_bar_widget.dart';
-import 'package:amptive/src/views/widgets/common_widgets/container_for_rendering_other_widgets.dart';
-import 'package:amptive/src/views/widgets/common_widgets/elevated_button_widget.dart';
+import 'package:amptive/src/views/widgets/common_widgets/circular_progress_indicator.dart';
+import 'package:amptive/src/views/widgets/common_widgets/textformfield_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 import 'package:go_router/go_router.dart';
 import 'package:readmore/readmore.dart';
-import '../../../../../utils/constants/font_sizes.dart';
-import '../../../../../utils/constants/font_weights.dart';
-import '../../../../widgets/common_widgets/list_tile_with_leading_picture_widget.dart';
-import '../../../../widgets/common_widgets/row_of_people_listening_widget.dart';
-import '../../../../widgets/other_widgets/main_application_widgets/widgets_in_video_or_audio_details_view/audio_or_video_display_picture_widget.dart';
-import '../../../../widgets/other_widgets/main_application_widgets/widgets_in_video_or_audio_details_view/hashtags_widget.dart';
-import '../../../../widgets/other_widgets/main_application_widgets/widgets_in_video_or_audio_details_view/row_of_live_and_society_texts_widget.dart';
-import '../../../../widgets/other_widgets/main_application_widgets/widgets_in_video_or_audio_details_view/row_of_subtitle_and_forward_icon_widget.dart';
-import '../../../../widgets/other_widgets/main_application_widgets/widgets_in_video_or_audio_details_view/whispers_list_view_widget.dart';
+import '../../../../../../utils/constants/colors.dart';
+import '../../../../../../utils/constants/font_sizes.dart';
+import '../../../../../../utils/constants/font_weights.dart';
+import '../../../../../../utils/constants/strings/image_strings.dart';
+import '../../../../../../utils/constants/strings/other_strings.dart';
+import '../../../../../../utils/helpers/helper_functions/other_functions.dart';
+import '../../../../../widgets/common_widgets/app_bar_widget.dart';
+import '../../../../../widgets/common_widgets/container_for_rendering_other_widgets.dart';
+import '../../../../../widgets/common_widgets/elevated_button_widget.dart';
+import '../../../../../widgets/common_widgets/list_tile_with_leading_picture_widget.dart';
+import '../../../../../widgets/common_widgets/row_of_people_listening_widget.dart';
+import '../../../../../widgets/other_widgets/main_application_widgets/widgets_in_video_or_audio_details_view/audio_or_video_display_picture_widget.dart';
+import '../../../../../widgets/other_widgets/main_application_widgets/widgets_in_video_or_audio_details_view/hashtags_widget.dart';
+import '../../../../../widgets/other_widgets/main_application_widgets/widgets_in_video_or_audio_details_view/row_of_live_and_society_texts_widget.dart';
+import '../../../../../widgets/other_widgets/main_application_widgets/widgets_in_video_or_audio_details_view/whispers_list_view_widget.dart';
 
-class AmptiveAudioOrVideoFullDetailsScreen extends StatelessWidget {
-  const AmptiveAudioOrVideoFullDetailsScreen({super.key});
+class AmptiveEventDetailedScreen extends StatelessWidget {
+  const AmptiveEventDetailedScreen({
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -50,9 +53,10 @@ class AmptiveAudioOrVideoFullDetailsScreen extends StatelessWidget {
               ),
           ),
         ),
-
+        
         body: SingleChildScrollView(
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Padding(
                 padding: const EdgeInsets.fromLTRB(20, 0, 20, 5),
@@ -60,12 +64,10 @@ class AmptiveAudioOrVideoFullDetailsScreen extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     const AmptiveAudioOrVideoDisplayPictureWithMoreIconWidget(),
-                    Gap(30.h),
-                    const AmptiveRowOfSubtitleAndForwardIconWidget(),
                     Gap(15.h),
                     Text(
                       maxLines: 2,
-                      "Don't Forget Who You Are ft. Jacob Scipio",
+                      "Figma Confiq 2024",
                       overflow: TextOverflow.clip,
                       style: Theme.of(context).textTheme.displayMedium?.copyWith(
                         fontSize: AmptiveFontSizes.size24,
@@ -75,7 +77,9 @@ class AmptiveAudioOrVideoFullDetailsScreen extends StatelessWidget {
                     ),
               
                     Gap(20.h),
-                    const AmptiveRowOfLiveAndSocietyTextsWidget(),
+                    const AmptiveRowOfTwoIconsAndTwoTextsWidget(
+                      text2: AmptiveOtherStrings.technology,
+                    ),
               
                     Gap(30.h),
               
@@ -99,7 +103,7 @@ class AmptiveAudioOrVideoFullDetailsScreen extends StatelessWidget {
                     ),
                     Divider(color: AmptiveColors.whiteColor.withOpacity(0.1),),
                     ...List.generate(
-                      3,
+                      1,
                       (_) => AmptiveListTileWithLeadingPictureWidget(
                         padding: const EdgeInsets.symmetric(vertical: 9).r,
                         title: 'Gerald',
@@ -111,7 +115,7 @@ class AmptiveAudioOrVideoFullDetailsScreen extends StatelessWidget {
                     Gap(30.h),
               
                     Text(
-                      '656 Listening',
+                      '12528 Listening',
                       style: Theme.of(context).textTheme.bodySmall?.copyWith(
                         fontSize: AmptiveFontSizes.size17
                       ),  
@@ -132,7 +136,7 @@ class AmptiveAudioOrVideoFullDetailsScreen extends StatelessWidget {
                     Gap(35.h),
               
                     Text(
-                      'About Episode',
+                      'About Event',
                       style: Theme.of(context).textTheme.bodySmall?.copyWith(
                         fontSize: AmptiveFontSizes.size17
                       ),  
@@ -164,7 +168,47 @@ class AmptiveAudioOrVideoFullDetailsScreen extends StatelessWidget {
                 ),
               ),
               const AmptiveWhispersListViewWidget(),
-              const Gap(70)
+              Gap(30.h),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      AmptiveOtherStrings.gotATicketId,
+                      style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                        fontSize: AmptiveFontSizes.size17
+                      ),  
+                    ),
+                    Divider(color: AmptiveColors.whiteColor.withOpacity(0.1),),
+                    Gap(5.h),
+                    AmptiveTextFormFieldWidget(
+                      controller: TextEditingController(),
+                      hintText: 'Enter your Ticked ID',
+                      suffixIcon: const Padding(
+                        padding: EdgeInsets.only(right: 15),
+                        child: AmptiveCircularProgressIndicatorWidget(),
+                      ),
+                    ),
+                    Gap(10.h),
+                    ReadMoreText(
+                      'If you already paid for this event on our website, you should have received a Ticket ID. Kindly enter your Ticket Id in the input field about to access the event...',
+                      trimMode: TrimMode.Length,
+                      trimExpandedText: AmptiveOtherStrings.showLess,
+                      trimCollapsedText: 'Learn more about Ticked ID',
+                      colorClickableText: AmptiveColors.whiteColor,
+                      trimLength: 100,
+                      style: TextStyle(
+                        color: AmptiveColors.whiteColor.withOpacity(0.6),
+                        fontSize: AmptiveFontSizes.size14,
+                        fontWeight: AmptiveFontWeights.medium,
+                      ),
+                    ),
+                    Gap(100.h)
+                  ],
+                ),
+              ),
+              
             ],
           ),
         ),
@@ -172,7 +216,7 @@ class AmptiveAudioOrVideoFullDetailsScreen extends StatelessWidget {
           margin: const EdgeInsets.fromLTRB(20, 15, 20, 0),
           bgColor: AmptiveColors.whiteColor,
           fgColor: AmptiveColors.brandBlackColor,
-          buttonTitle: 'Subscrible N1,900/month',
+          text1: 'Pay', text2: 'N5,000',
           onPressed: (){}
         ),
       ),

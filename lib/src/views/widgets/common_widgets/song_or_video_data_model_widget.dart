@@ -10,11 +10,15 @@ import 'package:amptive/src/views/widgets/other_widgets/main_application_widgets
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
+import 'package:go_router/go_router.dart';
 import '../../../utils/constants/colors.dart';
+import '../../../utils/constants/strings/route_strings.dart';
 
 class AmptiveSongOrVideoDataModelWidget extends StatelessWidget {
+  final String? eventOrShowDate;
   const AmptiveSongOrVideoDataModelWidget({
     super.key,
+    this.eventOrShowDate
   });
 
   @override
@@ -23,7 +27,9 @@ class AmptiveSongOrVideoDataModelWidget extends StatelessWidget {
       children: [
         AmptiveListTileWithLeadingPictureWidget(
           leadingImagePath: AmptiveImageStrings.jpeg3,
-          trailingOnPressed: (){},
+          trailingOnPressed: (){
+            context.pushNamed(AmptiveRoutes.eventDetailedScreen);
+          },
           title: 'glennodoyle',
           subtitle: 'Started a live show',
         ),

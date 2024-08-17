@@ -101,4 +101,5 @@ class AmptiveOtherStrings{
   static const following = 'Following';
 
   static const technology = 'Technology';
+  static const gotATicketId = 'Got a Ticket ID? (coming soon)';
 }

@@ -4,6 +4,7 @@ import 'package:amptive/src/views/widgets/other_widgets/main_application_widgets
 import 'package:flutter/material.dart';
 
 
+
 class AmptiveDashboardScreen extends StatefulWidget {
   const AmptiveDashboardScreen({super.key});
 
@@ -29,6 +30,13 @@ class _AmptiveDashboardScreenState extends State<AmptiveDashboardScreen> {
     super.dispose();
   }
 
+  final _listOfPages = [
+    const AmptiveHomeViewWidget(),
+    Container(color: Colors.red,),
+    Container(color: Colors.blue,),
+    Container(color: Colors.green,),
+  ];
+
 
   @override
   Widget build(BuildContext context) {
@@ -37,12 +45,7 @@ class _AmptiveDashboardScreenState extends State<AmptiveDashboardScreen> {
         body: PageView(
           controller: _pageController,
           onPageChanged: (index) => _pageIndexNotifier.value = index,
-          children: [
-            const AmptiveHomeViewWidget(),
-            Container(color: Colors.red,),
-            Container(color: Colors.blue,),
-            Container(color: Colors.green,),
-          ],
+          children: _listOfPages
         ),
 
         bottomNavigationBar: AmptiveDashboardBottomNavBarWidget(

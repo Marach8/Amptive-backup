@@ -10,13 +10,17 @@ import 'package:amptive/src/views/screens/authentication_screens/post_registrati
 import 'package:amptive/src/views/screens/authentication_screens/sign_in_or_sign_up_screen.dart';
 import 'package:amptive/src/views/screens/authentication_screens/username_auth_screen.dart';
 import 'package:amptive/src/views/screens/main_application_screens/dashboard_screen.dart';
+import 'package:amptive/src/views/screens/main_application_screens/sub_views/home_view/home_sub_view/scheduled_screen.dart';
 import 'package:amptive/src/views/screens/post_authentication_screens/crop_image_screen.dart';
 import 'package:amptive/src/views/screens/post_authentication_screens/preference_screen.dart';
 import 'package:amptive/src/views/screens/onboarding_screens/onboarding_page_view_screen.dart';
 import 'package:amptive/src/views/screens/onboarding_screens/welcome_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'views/screens/main_application_screens/sub_views/home_view/show_detailed_screen.dart';
+import 'views/screens/main_application_screens/sub_views/home_view/home_sub_view/event_detailed_screen.dart';
+import 'views/screens/main_application_screens/sub_views/home_view/home_sub_view/following_screen.dart';
+import 'views/screens/main_application_screens/sub_views/home_view/home_sub_view/show_detailed_screen.dart';
+import 'views/screens/main_application_screens/sub_views/home_view/home_sub_view/subscribed_screen.dart';
 
 // The route configuration.
 final GoRouter amptiveAppRouter = GoRouter(
@@ -112,10 +116,10 @@ final GoRouter amptiveAppRouter = GoRouter(
       builder: (_, __) => const AmptiveDashboardScreen(),
       routes: [
         GoRoute(
-          name: AmptiveRoutes.newScreen,
-          path: AmptiveRoutes.newScreen,
+          name: AmptiveRoutes.showDetailedScreen,
+          path: AmptiveRoutes.showDetailedScreen,
           pageBuilder: (context, state) => CustomTransitionPage(
-            child: const AmptiveAudioOrVideoFullDetailsScreen(),
+            child: const AmptiveShowDetailedScreen(),
             transitionsBuilder: (context, animation, secondaryAnimation, child){
               var tween = Tween(
                 begin: const Offset(0.0, 1.0),
@@ -135,6 +139,50 @@ final GoRouter amptiveAppRouter = GoRouter(
             reverseTransitionDuration: const Duration(milliseconds: 700),
             transitionDuration: const Duration(milliseconds: 700),
           )
+        ),
+
+        GoRoute(
+          name: AmptiveRoutes.eventDetailedScreen,
+          path: AmptiveRoutes.eventDetailedScreen,
+          pageBuilder: (context, state) => CustomTransitionPage(
+            child: const AmptiveEventDetailedScreen(),
+            transitionsBuilder: (context, animation, secondaryAnimation, child){
+              var tween = Tween(
+                begin: const Offset(0.0, 1.0),
+                end: Offset.zero
+              ).animate(
+                CurvedAnimation(
+                  parent: animation,
+                  curve: Curves.easeIn
+                ),
+              );
+
+              return SlideTransition(
+                position: tween,
+                child: child,
+              );
+            },
+            reverseTransitionDuration: const Duration(milliseconds: 700),
+            transitionDuration: const Duration(milliseconds: 700),
+          )
+        ),
+
+        GoRoute(
+          name: AmptiveRoutes.scheduledEventsOrShowsScreen,
+          path: AmptiveRoutes.scheduledEventsOrShowsScreen,
+          builder: (_, __) => const AmptiveScheduledEventOrShowViewWidget(),
+        ),
+
+        GoRoute(
+          name: AmptiveRoutes.subscribedEventsOrShowsScreen,
+          path: AmptiveRoutes.subscribedEventsOrShowsScreen,
+          builder: (_, __) => const AmptiveSubscribedEventOrShowViewWidget(),
+        ),
+
+        GoRoute(
+          name: AmptiveRoutes.followingEventsOrShowsScreen,
+          path: AmptiveRoutes.followingEventsOrShowsScreen,
+          builder: (_, __) => const AmptiveFollowingEventOrShowViewWidget(),
         ),
       ]
     ),

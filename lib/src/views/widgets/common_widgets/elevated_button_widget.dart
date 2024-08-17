@@ -1,8 +1,11 @@
+import 'package:amptive/src/utils/constants/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:gap/gap.dart';
 
 class AmptiveElevatedButtonWidget extends StatelessWidget {
-  final String buttonTitle;
+  final String? buttonTitle,
+  text1, text2;
   final void Function()? onPressed;
   final EdgeInsetsGeometry? margin;
   final double? height;
@@ -10,16 +13,19 @@ class AmptiveElevatedButtonWidget extends StatelessWidget {
 
   const AmptiveElevatedButtonWidget({
     super.key,
-    required this.buttonTitle,
+    this.buttonTitle,
     required this.onPressed,
     this.margin,
     this.height,
     this.bgColor,
-    this.fgColor
+    this.fgColor,
+    this.text1,
+    this.text2
   });
 
   @override
   Widget build(BuildContext context) {
+    final shouldAddMiddleDot = text1 != null && text2 != null;
     return Container(
       margin: margin ?? EdgeInsets.symmetric(horizontal: 15.w, vertical: 16.h),
       width: double.infinity,
@@ -30,7 +36,26 @@ class AmptiveElevatedButtonWidget extends StatelessWidget {
           foregroundColor: fgColor,
           backgroundColor: bgColor
         ),
-        child: Text(buttonTitle)
+        child: shouldAddMiddleDot ? Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text(
+              text1!,
+              style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                color: AmptiveColors.brandBlackColor
+              )
+            ),
+            const Gap(5),
+            CircleAvatar(radius: 2, backgroundColor: AmptiveColors.brandBlackColor,),
+            const Gap(5),
+            Text(
+              text2!,
+              style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                color: AmptiveColors.brandBlackColor
+              )
+            ),
+          ],
+        ) : Text(buttonTitle!)
       ),
     );
   }

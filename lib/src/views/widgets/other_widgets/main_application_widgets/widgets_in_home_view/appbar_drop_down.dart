@@ -1,7 +1,9 @@
 import 'package:amptive/src/utils/constants/colors.dart';
 import 'package:amptive/src/utils/constants/strings/other_strings.dart';
+import 'package:amptive/src/utils/constants/strings/route_strings.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
 import 'package:iconsax/iconsax.dart';
 
 class AmptiveAppBarDropDownWidget extends StatelessWidget {
@@ -35,7 +37,9 @@ class AmptiveAppBarDropDownWidget extends StatelessWidget {
       itemBuilder: (_) => [
         PopupMenuItem<String>(
           height: 40.h,
-          onTap: (){},
+          onTap: (){
+            context.pushNamed(AmptiveRoutes.scheduledEventsOrShowsScreen);
+          },
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -49,7 +53,9 @@ class AmptiveAppBarDropDownWidget extends StatelessWidget {
         ),
         PopupMenuItem<String>(
           height: 40.h,
-          onTap: (){},
+          onTap: (){
+            context.pushNamed(AmptiveRoutes.subscribedEventsOrShowsScreen);
+          },
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -63,7 +69,9 @@ class AmptiveAppBarDropDownWidget extends StatelessWidget {
         ),
         PopupMenuItem<String>(
           height: 40.h,
-          onTap: (){},
+          onTap: (){
+            context.pushNamed(AmptiveRoutes.followingEventsOrShowsScreen);
+          },
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
