@@ -23,7 +23,7 @@ SingleTickerProviderStateMixin{
     super.initState();
     opacityController = AnimationController(
       vsync: this,
-      duration: const Duration(milliseconds: 400),
+      duration: const Duration(milliseconds: 1000),
     )..repeat(reverse: true);
 
     opacityAnimation = Tween<double> (
