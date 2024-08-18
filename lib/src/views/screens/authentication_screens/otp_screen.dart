@@ -1,10 +1,10 @@
-import 'dart:async';
 
 import 'package:amptive/src/bloc/authentication/otp/otp_auth_bloc.dart';
 import 'package:amptive/src/bloc/authentication/otp/otp_auth_states.dart';
 import 'package:amptive/src/services/auth/otp_service.dart';
 import 'package:amptive/src/utils/constants/colors.dart';
 import 'package:amptive/src/utils/constants/font_sizes.dart';
+import 'package:amptive/src/utils/helpers/helper_functions/other_functions.dart';
 import 'package:amptive/src/views/widgets/common_widgets/annotated_region__widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/common_widgets.dart';
 import 'package:flutter/gestures.dart';
@@ -94,88 +94,70 @@ class _OTPScreenState extends State<OTPScreen> {
                   margin: EdgeInsets.only(top: 20.h),
                   width: 297.w,
                   child: Text(
-                    AmptiveOtherStrings.enter4DigitSentFrom(
-                        widget.from.toLowerCase()),
+                    AmptiveHelperFunctions.enter4DigitSentFrom(widget.from.toLowerCase()),
                     textAlign: TextAlign.start,
                     style: Theme.of(context).textTheme.headlineMedium?.copyWith(
                       fontSize: AmptiveFontSizes.size17
                     ),
                   ),
                 ),
-                SizedBox(
-                  height: 11.h,
-                ),
+                SizedBox(height: 11.h,),
                 Row(
                   children: [
-                    OTPTextFormField(
-                      index: 0,
-                    ),
-                    SizedBox(
-                      width: 10.w,
-                    ),
+                    OTPTextFormField(index: 0,),
+                    SizedBox(width: 10.w,),
                     OTPTextFormField(index: 1),
-                    SizedBox(
-                      width: 10.w,
-                    ),
+                    SizedBox(width: 10.w,),
                     OTPTextFormField(index: 2),
-                    SizedBox(
-                      width: 10.w,
-                    ),
+                    SizedBox(width: 10.w,),
                     OTPTextFormField(index: 3),
                   ],
                 ),
                 BlocBuilder<AmptiveOTPAuthBloc, AmptiveOTPAuthState>(
-                    buildWhen: (prev, curr) {
-                  return curr is AmptiveOTPCounterState;
-                }, builder: (context, state) {
-                      debugPrint(state.toString());
-                      if (state is AmptiveOTPCounterState && state.timeLeft <= 0) {
-                        _resendButtonEnabled = true;
-                      }
-                  if (state is AmptiveOTPCounterState) {
-                    return Container(
-                      margin: EdgeInsets.only(top: 11.h),
-                      alignment: Alignment.centerLeft,
-                      child: _resendButtonEnabled
-                          ? RichText(
-                              text: TextSpan(
-                                children: [
-                                  TextSpan(
-                                      text: AmptiveOtherStrings.didNotGetCode,
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .titleSmall),
-                                  TextSpan(
-                                    text: AmptiveOtherStrings.sendAgain,
-                                    recognizer: _tapGestureRecognizer,
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .titleSmall
-                                        ?.copyWith(
-                                          decoration: TextDecoration.underline,
-                                          fontWeight:
-                                              AmptiveFontWeights.regular,
-                                          decorationColor:
-                                              AmptiveColors.whiteColor,
-                                        ),
-                                  ),
-                                ],
+                  buildWhen: (prev, curr) => curr is AmptiveOTPCounterState,
+                  builder: (context, state) {
+                    debugPrint(state.toString());
+                    if (state is AmptiveOTPCounterState && state.timeLeft <= 0) {
+                      _resendButtonEnabled = true;
+                    }
+                    if (state is AmptiveOTPCounterState) {
+                      return Container(
+                        margin: EdgeInsets.only(top: 11.h),
+                        alignment: Alignment.centerLeft,
+                        child: _resendButtonEnabled ? RichText(
+                          text: TextSpan(
+                            children: [
+                              TextSpan(
+                                text: AmptiveOtherStrings.didNotGetCode,
+                                style: Theme.of(context).textTheme.titleSmall
                               ),
-                            )
-                          : Text(
-                              AmptiveOtherStrings.codeHasBeenSentResendIn(
-                                  state.timeLeft),
-                              style: Theme.of(context).textTheme.titleSmall,
-                            ),
-                    );
+                              TextSpan(
+                                text: AmptiveOtherStrings.sendAgain,
+                                recognizer: _tapGestureRecognizer,
+                                style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                                  decoration: TextDecoration.underline,
+                                  fontWeight: AmptiveFontWeights.regular,
+                                  decorationColor: AmptiveColors.whiteColor,
+                                ),
+                              ),
+                            ],
+                          ),
+                        )
+                        : Text(
+                          AmptiveHelperFunctions.codeHasBeenSentResendIn(state.timeLeft),
+                          style: Theme.of(context).textTheme.titleSmall,
+                        ),
+                      );
+                    }
+                    return Container();
                   }
-                  return Container();
-                }),
-                Expanded(
-                  child: SizedBox(
-                    height: 1.h,
-                  ),
                 ),
+                const Spacer()
+                // Expanded(
+                //   child: SizedBox(
+                //     height: 1.h,
+                //   ),
+                // ),
               ],
             ),
           ),
@@ -192,18 +174,13 @@ class _OTPScreenState extends State<OTPScreen> {
               buildWhen: (prev, curr) => curr is! AmptiveOTPCounterState,
               builder: (context, state) {
                 return state is LoadingAuthState && context.mounted
-                    ? const AmptiveLoadingButtonWidget()
-                    : AmptiveElevatedButtonWidget(
-                        height: 50.w,
-                        buttonTitle: AmptiveOtherStrings.next,
-                        onPressed: state is ValidOTPAuthState
-                            ? () {
-                                context
-                                    .read<AmptiveOTPAuthBloc>()
-                                    .add(VerifyOTPAuthEvent());
-                              }
-                            : null,
-                      );
+                  ? const AmptiveLoadingButtonWidget()
+                  : AmptiveElevatedButtonWidget(
+                    height: 50.w,
+                    buttonTitle: AmptiveOtherStrings.next,
+                    onPressed: state is ValidOTPAuthState
+                      ? () => context.read<AmptiveOTPAuthBloc>().add(VerifyOTPAuthEvent()) : null,
+                  );
               },
             ),
           ),

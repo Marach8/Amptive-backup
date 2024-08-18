@@ -32,6 +32,12 @@ class AmptiveTextTheme{
       fontSize: AmptiveFontSizes.size16,
       fontWeight: AmptiveFontWeights.semiBold,
     ), 
+
+    bodySmall : TextStyle(
+      color: AmptiveColors.whiteColor,
+      fontSize: AmptiveFontSizes.size14,
+      fontWeight: AmptiveFontWeights.medium,
+    ),
     
     labelMedium: TextStyle(
       color: AmptiveColors.authHintColor,

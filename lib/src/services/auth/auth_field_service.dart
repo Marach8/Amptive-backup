@@ -2,8 +2,7 @@ import 'package:amptive/src/utils/constants/constants.dart';
 import 'package:amptive/src/utils/helpers/extensions/extensions.dart';
 import 'package:country_pickers/country.dart';
 import 'package:country_pickers/utils/utils.dart';
-import 'package:flutter/src/painting/image_provider.dart';
-
+import 'package:flutter/material.dart';
 import '../../models/validation_model.dart';
 import '../authentication_service.dart';
 

@@ -19,7 +19,7 @@ import 'dart:math' as math;
 import '../../../bloc/authentication/general/auth_bloc.dart';
 import '../../../bloc/authentication/general/auth_events.dart';
 import '../../../bloc/authentication/general/auth_states.dart';
-import '../../widgets/other_widgets/main_application_widgets/cupertino_phone_code_select.dart';
+import '../../widgets/other_widgets/post_authentication_widgets/cupertino_phone_code_select.dart';
 
 class AddPhoneScreen extends StatefulWidget {
   const AddPhoneScreen({super.key});

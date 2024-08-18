@@ -49,8 +49,8 @@ class CupertinoPhoneCodeSelectWidget extends StatelessWidget {
                               onPressed: () {
                                 Navigator.of(context).pop();
                                 context.read<AmptiveAuthBloc>().add(
-                                    PickCountryCodeEvent(
-                                        country: selectedCountry!));
+                                  PickCountryCodeEvent(country: selectedCountry!)
+                                );
                               },
                             ),
                           ],
@@ -115,8 +115,8 @@ class CupertinoPhoneCodeSelectWidget extends StatelessWidget {
           Text(
             AmptiveOtherStrings.plus + country.phoneCode,
             style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                  fontSize: AmptiveFontSizes.size23,
-                ),
+              fontSize: AmptiveFontSizes.size23,
+            ),
           ),
         ],
       ),

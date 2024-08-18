@@ -1,7 +1,7 @@
 import 'package:amptive/src/utils/constants/colors.dart';
 import 'package:amptive/src/utils/constants/strings/image_strings.dart';
 import 'package:amptive/src/utils/constants/strings/other_strings.dart';
-import 'package:amptive/src/views/widgets/common_widgets/png_jpeg_asset_loader_widget.dart';
+import 'package:amptive/src/views/widgets/common_widgets/image_loader_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
@@ -23,8 +23,8 @@ class AmptiveUserWithAddIconWidget extends StatelessWidget {
           children: [
             ClipRRect(
               borderRadius: BorderRadius.circular(30),
-              child: const AmptivePngAndJpegAssetLoaderWidget(
-                pngOrJpegPath: AmptiveImageStrings.jpeg1,
+              child: const AmptiveImageLoaderWidget(
+                imagePath: AmptiveImageStrings.jpeg1,
                 boxFit: BoxFit.cover,
                 height: 60,
                 width: 60,

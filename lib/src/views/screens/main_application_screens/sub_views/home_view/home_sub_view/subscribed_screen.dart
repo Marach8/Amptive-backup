@@ -1,0 +1,75 @@
+import 'package:amptive/src/utils/constants/font_sizes.dart';
+import 'package:amptive/src/utils/constants/strings/other_strings.dart';
+import 'package:amptive/src/utils/constants/strings/route_strings.dart';
+import 'package:amptive/src/views/widgets/common_widgets/annotated_region__widget.dart';
+import 'package:amptive/src/views/widgets/common_widgets/song_or_video_data_model_widget.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
+import '../../../../../../utils/constants/colors.dart';
+import '../../../../../widgets/common_widgets/app_bar_leading_widget.dart';
+import '../../../../../widgets/common_widgets/container_for_rendering_other_widgets.dart';
+
+
+class AmptiveSubscribedEventOrShowViewWidget extends StatelessWidget {
+  const AmptiveSubscribedEventOrShowViewWidget({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return AmptiveAnnotatedRegionWidget(
+      child: Scaffold(
+        body: NestedScrollView(
+          floatHeaderSlivers: true,
+          headerSliverBuilder: (_, __) => [
+            SliverAppBar(
+              floating: true,   
+              leadingWidth: 200.w,
+              leading: Padding(
+                padding: const EdgeInsets.only(left: 20),
+                child: AmptiveAppBarLeadingWidget(
+                  leadingText: AmptiveOtherStrings.subscribed,
+                  leadingStyle: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                    fontSize: AmptiveFontSizes.size23
+                  ),
+                )
+              ),
+              bottom: PreferredSize(
+                preferredSize: const Size.fromHeight(0),
+                child: AmptiveCustomContainer(
+                  color: AmptiveColors.whiteColor,
+                  height: 0.15,
+                  width: double.infinity,
+                  child: const SizedBox.shrink(),
+                ),
+              ),     
+            ),
+      
+            // SliverPersistentHeader(
+            //   pinned: true,
+            //   delegate: AmptiveSliverHeader()
+            // )
+          ],
+           
+          body: ListView(              
+            padding: EdgeInsets.zero,
+            children: [      
+              ...Iterable.generate(
+                10,
+                (_) => Padding(
+                  padding: const EdgeInsets.fromLTRB(20, 5, 20, 20),
+                  child: GestureDetector(
+                    onTap: () => context.pushNamed(AmptiveRoutes.showDetailedScreen),
+                    child: const AmptiveSongOrVideoDataModelWidget()
+                  ),
+                )
+              )
+            ]
+          )
+        ),
+      ),
+    );
+  }
+}
+

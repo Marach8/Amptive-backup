@@ -3,7 +3,7 @@ import 'package:amptive/src/utils/constants/font_weights.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import '../../../../models/preferences.dart';
+import '../../../models/preferences.dart';
 
 class SingleCommunityCardWidget extends StatelessWidget {
   const SingleCommunityCardWidget({

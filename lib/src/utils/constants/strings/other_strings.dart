@@ -43,8 +43,7 @@ class AmptiveOtherStrings{
 
   static const whatIsYourEmail = 'What is your email?';
   static const enterYourEmail = 'Enter your email...';
-  static const thisEmailWillBeVerified =
-      'This email will be verified in the next step';
+  static const thisEmailWillBeVerified = 'This email will be verified in the next step';
   static const verifyEmail = 'Verify email';
 
   static const youEnteredInvalidCode = 'You entered an invalid code. ';
@@ -57,20 +56,16 @@ class AmptiveOtherStrings{
 
   static const whatIsYourDateOfBirth = "What is your date of birth?";
   static const selectDate = "Select Date";
-  static const users13andOlderWarning =
-      "Only users 13 and older may use this app";
+  static const users13andOlderWarning = "Only users 13 and older may use this app";
   static const done = 'Done';
 
-  static const noteAboutProfilePic =
-      "Note that this will appear on your profile.";
+  static const noteAboutProfilePic = "Note that this will appear on your profile.";
   static const termsOfService = "Terms of Service";
   static const enterYourName = 'Enter your name';
   static const whatIsYourName = 'What is your name?';
   static const createAccount = 'Create account';
   static const privacyPolicy = 'Privacy Policy.';
-  static const warningOnClickingCreate =
-      'By clicking on ‘Create account’, you agree to the';
-
+  static const warningOnClickingCreate = 'By clicking on ‘Create account’, you agree to the';
 
   static const username = "username";
   static const checkerIsLoading = "Checker is loading...";
@@ -84,28 +79,27 @@ class AmptiveOtherStrings{
   static const camera = 'Camera';
   static const skipForNow = 'Skip for now';
 
-  static const select5Communities =
-      "Select 5 communities you find interest in.";
-  static const selectedInterestNote =
-      "Your selected interests will be used to personalize you Amptive experience.";
+  static const select5Communities = "Select 5 communities you find interest in.";
+  static const selectedInterestNote = "Your selected interests will be used to personalize you Amptive experience.";
 
   static const personalizingYourExperience = "Personalizing your experience...";
-
 
   static const countryPickers  = 'country_pickers';
   static const verifyPhoneNumber  = 'Verify phone number';
   static const whatIsYourPhoneNumber = "What is your phone number?";
 
-
+  static const society = 'Society';
   static const goLive = 'Go live';
   static const paidShow = '\$paid show';
+  static const hashtags = 'Hashtags';
+  static const hostedBy = 'Hosted by';
+  static const showLess = ' Show less';
+  static const showMore = 'Show more';
+  static const whispers = 'Whispers';
+  static const scheduled = 'Scheduled';
+  static const subscribed = 'Subscribed';
+  static const following = 'Following';
 
-  // string methods
-  static String enter4DigitSentFrom(String location) {
-    return "Enter the 4 digit code we just sent to your $location";
-  }
-
-  static String codeHasBeenSentResendIn(int time) {
-    return "Code has been sent. You can send another in $time";
-  }
+  static const technology = 'Technology';
+  static const gotATicketId = 'Got a Ticket ID? (coming soon)';
 }
