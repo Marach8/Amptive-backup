@@ -1,5 +1,5 @@
 import 'package:amptive/src/utils/constants/strings/route_strings.dart';
-import 'package:amptive/src/views/widgets/common_widgets/song_or_video_data_model_widget.dart';
+import 'package:amptive/src/views/widgets/common_widgets/show_or_event_data_model_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
@@ -7,7 +7,7 @@ import 'package:go_router/go_router.dart';
 import '../../../../../utils/constants/colors.dart';
 import '../../../../../utils/constants/strings/image_strings.dart';
 import '../../../common_widgets/circular_container_with_picture_widget.dart';
-import '../../../common_widgets/container_for_rendering_other_widgets.dart';
+import '../../../common_widgets/custom_container_widget.dart';
 import '../../../common_widgets/image_loader_widget.dart';
 import '../../../common_widgets/live_user_model_widget.dart';
 import 'appbar_drop_down.dart';
@@ -109,7 +109,7 @@ class AmptiveHomeViewWidget extends StatelessWidget {
                 padding: const EdgeInsets.fromLTRB(20, 0, 20, 20),
                 child: GestureDetector(
                   onTap: () => context.pushNamed(AmptiveRoutes.showDetailedScreen),
-                  child: const AmptiveSongOrVideoDataModelWidget()
+                  child: const AmptiveShowOrEventDataModelWidget()
                 ),
               )
             )

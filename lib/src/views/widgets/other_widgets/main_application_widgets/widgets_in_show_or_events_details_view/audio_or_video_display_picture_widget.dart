@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../../../utils/constants/colors.dart';
 import '../../../../../utils/constants/strings/image_strings.dart';
-import '../../../common_widgets/container_for_rendering_other_widgets.dart';
+import '../../../common_widgets/custom_container_widget.dart';
 
 class AmptiveAudioOrVideoDisplayPictureWithMoreIconWidget extends StatelessWidget {
   const AmptiveAudioOrVideoDisplayPictureWithMoreIconWidget({

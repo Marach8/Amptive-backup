@@ -102,4 +102,7 @@ class AmptiveOtherStrings{
 
   static const technology = 'Technology';
   static const gotATicketId = 'Got a Ticket ID? (coming soon)';
+  static const addedToCalender = 'Added to your calender';
+  static const removedFromCalender = 'Removed from your calender';
+  static const view = 'View';
 }

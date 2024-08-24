@@ -1,8 +1,9 @@
 import 'package:amptive/src/utils/constants/font_sizes.dart';
 import 'package:amptive/src/utils/constants/font_weights.dart';
 import 'package:amptive/src/utils/constants/strings/image_strings.dart';
-import 'package:amptive/src/views/widgets/common_widgets/container_for_rendering_other_widgets.dart';
-import 'package:amptive/src/views/widgets/common_widgets/live_indicator_with_animating_dot_widget.dart';
+import 'package:amptive/src/utils/constants/strings/other_strings.dart';
+import 'package:amptive/src/views/widgets/common_widgets/animated_crossfade_widget.dart';
+import 'package:amptive/src/views/widgets/common_widgets/custom_container_widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/list_tile_with_leading_picture_widget.dart';
 import 'package:amptive/src/views/widgets/other_widgets/main_application_widgets/widgets_in_home_view/row_of_paid_show_and_play_button_widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/row_of_people_listening_widget.dart';
@@ -11,15 +12,36 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 import 'package:go_router/go_router.dart';
-import '../../../utils/constants/colors.dart';
-import '../../../utils/constants/strings/route_strings.dart';
+import '../../../../../../utils/constants/colors.dart';
+import '../../../../../../utils/constants/strings/route_strings.dart';
+import '../../../../../../utils/dialogs/added_or_removed_from_calender_dialog.dart';
 
-class AmptiveSongOrVideoDataModelWidget extends StatelessWidget {
-  final String? eventOrShowDate;
-  const AmptiveSongOrVideoDataModelWidget({
+
+class AmptiveScheduledShowOrEventDataModelWidget extends StatefulWidget {
+  final String? scheduleDateAndTime;
+  const AmptiveScheduledShowOrEventDataModelWidget({
     super.key,
-    this.eventOrShowDate
+    this.scheduleDateAndTime
   });
+
+  @override
+  State<AmptiveScheduledShowOrEventDataModelWidget> createState() => _AmptiveScheduledShowOrEventDataModelWidgetState();
+}
+
+class _AmptiveScheduledShowOrEventDataModelWidgetState extends State<AmptiveScheduledShowOrEventDataModelWidget> {
+  late ValueNotifier<bool> _notifier;
+
+  @override 
+  void initState(){
+    super.initState();
+    _notifier = ValueNotifier(false);
+  }
+
+  @override
+  void dispose(){
+    _notifier.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -61,7 +83,12 @@ class AmptiveSongOrVideoDataModelWidget extends StatelessWidget {
               children: [
                 const AmptiveWith2OthersWidget(),
                 const Spacer(),
-                const AmptiveLiveIndicatorWithAnimatingDotWidget(),
+                Text(
+                  '15 Jul 2024 at 17:00',
+                  style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                    fontSize: AmptiveFontSizes.size16
+                  ),
+                ),
                 Gap(10.h),
                 Text(
                   maxLines: 2,
@@ -76,7 +103,30 @@ class AmptiveSongOrVideoDataModelWidget extends StatelessWidget {
                 Gap(12.h),
                 const AmptiveRowOfNumberOfPeopleListeningWidget(),
                 Gap(10.h),
-                const AmptiveRowOfPaidShowAndPlayButtonWidget(),
+                ValueListenableBuilder(
+                  valueListenable: _notifier,
+                  builder: (_, value, __) {
+                    return GestureDetector(
+                      onTap: (){
+                        _notifier.value = !value;
+                        showAddedOrRemovedSnackbar(
+                          context: context,
+                          content: value ? AmptiveOtherStrings.removedFromCalender 
+                            : AmptiveOtherStrings.addedToCalender
+                        );
+                      },
+                      child: AmptiveAnimatedCrossFadeWidget(
+                        condition: value,
+                        secondChild: const AmptiveRowOfPaidShowAndPlayButtonWidget(
+                          icon: Icons.add,
+                        ),
+                        firstChild: const AmptiveRowOfPaidShowAndPlayButtonWidget(
+                          icon: Icons.check,
+                        )
+                      ),
+                    );
+                  }
+                ),
               ],
             ),
           ),

@@ -182,7 +182,7 @@ final GoRouter amptiveAppRouter = GoRouter(
         GoRoute(
           name: AmptiveRoutes.followingEventsOrShowsScreen,
           path: AmptiveRoutes.followingEventsOrShowsScreen,
-          builder: (_, __) => const AmptiveFollowingEventOrShowViewWidget(),
+          builder: (_, __) => const AmptiveFollowingEvenstOrShowsViewWidget(),
         ),
       ]
     ),
