@@ -1,3 +1,5 @@
+// ignore_for_file: constant_identifier_names
+
 class AmptiveOtherStrings{
   const AmptiveOtherStrings._();
 
@@ -8,6 +10,7 @@ class AmptiveOtherStrings{
   static const space = ' ';
   static const underscore = '_';
   static const plus  = '+';
+  static const HASH = '#';
 
 
   static const goLiveLikeNeverBefore = "Go Live, Like Never Before";
@@ -100,9 +103,20 @@ class AmptiveOtherStrings{
   static const subscribed = 'Subscribed';
   static const following = 'Following';
 
-  static const technology = 'Technology';
+  static const TECHNOLOGY = 'Technology';
   static const gotATicketId = 'Got a Ticket ID? (coming soon)';
   static const addedToCalender = 'Added to your calender';
   static const removedFromCalender = 'Removed from your calender';
   static const view = 'View';
+
+  static const SEARCH_FOR_EVENTS_ND_SHOWS = 'Search for events, shows and more...';
+  static const CANCEL = 'Cancel';
+  static const TRENDING_HASHTAGS = 'Trending Hashtags';
+  static const SPORTS = 'Sports';
+  static const TRUE_CRIME = 'True Crime';
+  static const MORE_2_DISCOVER = 'More to Discover';
+  static const TOP_CREATORS = 'Top Creators';
+  static const SPOTLIGHT = 'Spotlight';
+  static const VIEW_ALL = 'View all';
+  static const SEE_COMMUNITIES = 'See communities on Amptive';
 }

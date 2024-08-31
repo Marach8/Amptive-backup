@@ -12,6 +12,7 @@ class AmptiveCustomContainer extends StatelessWidget {
   final AlignmentGeometry? alignment;
   final String? decorationImagePath;
   final BoxFit? decorationImageFit;
+  final Clip clipBehavior;
 
   const AmptiveCustomContainer({
     super.key,
@@ -28,6 +29,7 @@ class AmptiveCustomContainer extends StatelessWidget {
     this.alignment,
     this.decorationImageFit,
     this.decorationImagePath,
+    this.clipBehavior = Clip.none,
     required this.child
   });
 
@@ -36,6 +38,7 @@ class AmptiveCustomContainer extends StatelessWidget {
     return Container(
       alignment: alignment,
       margin: margin,
+      clipBehavior: clipBehavior,
       padding: padding,
       height: height,
       width: width,

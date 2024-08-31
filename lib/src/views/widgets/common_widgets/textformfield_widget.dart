@@ -11,7 +11,7 @@ class AmptiveTextFormFieldWidget extends StatelessWidget {
   final String? hintText;
   final TextAlign? textAlign;
   final double? cursorHeight;
-  final Widget? suffixIcon;
+  final Widget? suffixIcon, prefixIcon;
   final bool? obscureText;
   final Color? cursorColor;
   final BoxConstraints? suffixConstraints;
@@ -30,6 +30,7 @@ class AmptiveTextFormFieldWidget extends StatelessWidget {
     this.decoration,
     this.suffixIcon,
     this.obscureText,
+    this.prefixIcon,
     this.suffixConstraints
   });
 
@@ -48,7 +49,9 @@ class AmptiveTextFormFieldWidget extends StatelessWidget {
       cursorErrorColor: AmptiveColors.textRedColor,
       keyboardType: keyboardType,
       decoration: decoration ??  InputDecoration(        
-        hintText: hintText, suffixIcon: suffixIcon,
+        hintText: hintText, 
+        suffixIcon: suffixIcon,
+        prefixIcon: prefixIcon,
         suffixIconConstraints: suffixConstraints ?? const BoxConstraints(
           maxHeight: 20,
           maxWidth: 35

@@ -78,7 +78,7 @@ class AmptiveEventDetailedScreen extends StatelessWidget {
               
                     Gap(20.h),
                     const AmptiveRowOfTwoIconsAndTwoTextsWidget(
-                      text2: AmptiveOtherStrings.technology,
+                      text2: AmptiveOtherStrings.TECHNOLOGY,
                     ),
               
                     Gap(30.h),
