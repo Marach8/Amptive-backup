@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
-import '../../../../../utils/constants/colors.dart';
-import '../../../../../utils/constants/font_sizes.dart';
-import '../../../common_widgets/circle_avatar.dart';
-import '../../../common_widgets/custom_container_widget.dart';
-import '../../../common_widgets/image_loader_widget.dart';
+import '../../../../../../utils/constants/colors.dart';
+import '../../../../../../utils/constants/font_sizes.dart';
+import '../../../../common_widgets/circle_avatar.dart';
+import '../../../../common_widgets/custom_container_widget.dart';
+import '../../../../common_widgets/image_loader_widget.dart';
 
 class AmptiveTrendingHashtagModel extends StatelessWidget {
   final String trendingPicture;

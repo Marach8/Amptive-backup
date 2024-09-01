@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
-import '../../../../../utils/constants/colors.dart';
-import '../../../../../utils/constants/font_sizes.dart';
-import '../../../../../utils/constants/strings/other_strings.dart';
+import '../../../../../../utils/constants/colors.dart';
+import '../../../../../../utils/constants/font_sizes.dart';
+import '../../../../../../utils/constants/strings/other_strings.dart';
 
 class AmptiveRowOfTrendingHashTagTitle extends StatelessWidget {
   final String hashTagTitle,

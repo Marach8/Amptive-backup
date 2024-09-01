@@ -109,7 +109,7 @@ class AmptiveOtherStrings{
   static const removedFromCalender = 'Removed from your calender';
   static const view = 'View';
 
-  static const SEARCH_FOR_EVENTS_ND_SHOWS = 'Search for events, shows and more...';
+  static const SEARCH_FOR_EVENTS_ND_SHOWS = 'Search for events, shows and more';
   static const CANCEL = 'Cancel';
   static const TRENDING_HASHTAGS = 'Trending Hashtags';
   static const SPORTS = 'Sports';
@@ -119,4 +119,6 @@ class AmptiveOtherStrings{
   static const SPOTLIGHT = 'Spotlight';
   static const VIEW_ALL = 'View all';
   static const SEE_COMMUNITIES = 'See communities on Amptive';
+  static const RECENT_SEARCHES = 'Recent Searches';
+  static const CLEAR = 'Clear';
 }

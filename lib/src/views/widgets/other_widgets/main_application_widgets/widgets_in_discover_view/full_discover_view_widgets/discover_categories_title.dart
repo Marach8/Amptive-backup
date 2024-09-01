@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
-import '../../../../../utils/constants/colors.dart';
-import '../../../../../utils/constants/strings/image_strings.dart';
-import '../../../common_widgets/image_loader_widget.dart';
+import '../../../../../../utils/constants/colors.dart';
+import '../../../../../../utils/constants/strings/image_strings.dart';
+import '../../../../common_widgets/image_loader_widget.dart';
 
 class AmptiveDiscoverCategoriesTitleWidget extends StatelessWidget {
   final String categoryName;

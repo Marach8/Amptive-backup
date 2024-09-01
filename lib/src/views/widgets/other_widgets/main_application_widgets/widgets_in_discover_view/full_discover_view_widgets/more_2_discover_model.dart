@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../../common_widgets/image_loader_widget.dart';
+import '../../../../common_widgets/image_loader_widget.dart';
 
 class AmptiveMore2DiscoverModel extends StatelessWidget {
   final String picture;
