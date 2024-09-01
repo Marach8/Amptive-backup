@@ -7,59 +7,86 @@ import '../../../../../../utils/constants/strings/image_strings.dart';
 import '../../../../../../utils/constants/strings/other_strings.dart';
 
 class AmptiveRecentSearchesView extends StatelessWidget {
-  const AmptiveRecentSearchesView({super.key});
+  const AmptiveRecentSearchesView({
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 15),
-      child: Column(
-        children: [
-          Row(
-            children: [
-              Text(
-                AmptiveOtherStrings.RECENT_SEARCHES,
-                style: Theme.of(context).textTheme.bodyLarge
-              ),
-              const Spacer(),
-              Text(
-                AmptiveOtherStrings.CLEAR,
-                style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                  color: AmptiveColors.authHintColor
+      child: SingleChildScrollView(
+        child: Column(
+          children: [
+            Row(
+              children: [
+                Text(
+                  AmptiveOtherStrings.RECENT_SEARCHES,
+                  style: Theme.of(context).textTheme.bodyLarge
                 ),
-              ),
-            ],
-          ),
-          Gap(20.h),
-
-          const AmptiveRecentSearchesListTileWidget(
-            leadingImagePath: AmptiveImageStrings.officeLadied,
-            title: 'Glennon Doyle',
-            isCircular: true,
-          ),
-          const AmptiveRecentSearchesListTileWidget(
-            leadingImagePath: AmptiveImageStrings.jpeg3,
-            title: 'Former CIA Agent On Trump As many',
-          ),
-          const AmptiveRecentSearchesListTileWidget(
-            leadingImagePath: AmptiveImageStrings.weCanDoHardThingsBgImage,
-            title: 'Former CIA Agent On Trump As many',
-          ),
-          const AmptiveRecentSearchesListTileWidget(
-            leadingImagePath: AmptiveImageStrings.MAN_PHOTO,
-            title: 'Glennon Doyle',
-            isCircular: true,
-          ),
-          const AmptiveRecentSearchesListTileWidget(
-            leadingImagePath: AmptiveImageStrings.discoverPic1,
-            title: 'Former CIA Agent On Trump As many',
-          ),
-          const AmptiveRecentSearchesListTileWidget(
-            leadingImagePath: AmptiveImageStrings.JOE_POMP_SHOW,
-            title: 'Former CIA Agent On Trump As many',
-            isCircular: true,
-          ),
-        ],
+                const Spacer(),
+                Text(
+                  AmptiveOtherStrings.CLEAR,
+                  style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                    color: AmptiveColors.authHintColor
+                  ),
+                ),
+              ],
+            ),
+            Gap(20.h),
+            
+            const AmptiveRecentSearchesListTileWidget(
+              leadingImagePath: AmptiveImageStrings.officeLadied,
+              title: 'Glennon Doyle',
+              isCircular: true,
+            ),
+            const AmptiveRecentSearchesListTileWidget(
+              leadingImagePath: AmptiveImageStrings.jpeg3,
+              title: 'Former CIA Agent On Trump As many',
+            ),
+            const AmptiveRecentSearchesListTileWidget(
+              leadingImagePath: AmptiveImageStrings.weCanDoHardThingsBgImage,
+              title: 'Former CIA Agent On Trump As many',
+            ),
+            const AmptiveRecentSearchesListTileWidget(
+              leadingImagePath: AmptiveImageStrings.MAN_PHOTO,
+              title: 'Glennon Doyle',
+              isCircular: true,
+            ),
+            const AmptiveRecentSearchesListTileWidget(
+              leadingImagePath: AmptiveImageStrings.discoverPic1,
+              title: 'Former CIA Agent On Trump As many',
+            ),
+            const AmptiveRecentSearchesListTileWidget(
+              leadingImagePath: AmptiveImageStrings.JOE_POMP_SHOW,
+              title: 'Former CIA Agent On Trump As many',
+              isCircular: true,
+            ),
+            const AmptiveRecentSearchesListTileWidget(
+              leadingImagePath: AmptiveImageStrings.MAN_PHOTO,
+              title: 'Glennon Doyle',
+              isCircular: true,
+            ),
+            const AmptiveRecentSearchesListTileWidget(
+              leadingImagePath: AmptiveImageStrings.discoverPic1,
+              title: 'Former CIA Agent On Trump As many',
+            ),
+            const AmptiveRecentSearchesListTileWidget(
+              leadingImagePath: AmptiveImageStrings.JOE_POMP_SHOW,
+              title: 'Former CIA Agent On Trump As many',
+              isCircular: true,
+            ),
+            const AmptiveRecentSearchesListTileWidget(
+              leadingImagePath: AmptiveImageStrings.discoverPic1,
+              title: 'Former CIA Agent On Trump As many',
+            ),
+            const AmptiveRecentSearchesListTileWidget(
+              leadingImagePath: AmptiveImageStrings.JOE_POMP_SHOW,
+              title: 'Former CIA Agent On Trump As many',
+              isCircular: true,
+            ),
+          ],
+        ),
       ),
     );
   }

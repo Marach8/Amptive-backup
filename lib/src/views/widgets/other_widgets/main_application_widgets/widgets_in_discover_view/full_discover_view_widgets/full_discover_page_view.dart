@@ -77,9 +77,9 @@ class AmptiveFullDiscoverPageView extends StatelessWidget {
             ],
           ),
         ),
-
+    
         Gap(10.h),
-
+    
         const Padding(
           padding: EdgeInsets.symmetric(horizontal: 15),
           child: AmptiveRowOfTrendingHashTagTitle(
@@ -87,9 +87,9 @@ class AmptiveFullDiscoverPageView extends StatelessWidget {
             hashTagSubTitle: 'ankira22, glendonnor, and 15k other are live',
           ),
         ),
-
+    
         Gap(15.h),
-
+    
         SizedBox(
           height: 165,
           child: ListView(
@@ -102,9 +102,9 @@ class AmptiveFullDiscoverPageView extends StatelessWidget {
             ),
           ),
         ),
-
+    
         const Divider(indent: 15, endIndent: 15,),
-
+    
         Gap(40.h),
         const Padding(
           padding: EdgeInsets.symmetric(horizontal: 15),
@@ -113,9 +113,9 @@ class AmptiveFullDiscoverPageView extends StatelessWidget {
             hashTagSubTitle: 'emmanuel, nnanna and 205 others are live',
           ),
         ),
-
+    
         Gap(15.h),
-
+    
         SizedBox(
           height: 165,
           child: ListView(
@@ -128,9 +128,9 @@ class AmptiveFullDiscoverPageView extends StatelessWidget {
             ),
           ),
         ),
-
+    
         Gap(60.h),
-
+    
         const AmptiveDiscoverCategoriesTitleWidget(
           categoryName: AmptiveOtherStrings.TECHNOLOGY
         ),
@@ -147,9 +147,9 @@ class AmptiveFullDiscoverPageView extends StatelessWidget {
             ),
           ),
         ),
-
+    
         Gap(50.h),
-
+    
         const AmptiveDiscoverCategoriesTitleWidget(
           categoryName: AmptiveOtherStrings.SPORTS,
         ),
@@ -166,9 +166,9 @@ class AmptiveFullDiscoverPageView extends StatelessWidget {
             ),
           ),
         ),
-
+    
         Gap(50.h),
-
+    
         const AmptiveDiscoverCategoriesTitleWidget(
           categoryName: AmptiveOtherStrings.TRUE_CRIME,
         ),
@@ -185,9 +185,9 @@ class AmptiveFullDiscoverPageView extends StatelessWidget {
             ),
           ),
         ),
-
+    
         Gap(50.h),
-
+    
         const Padding(
           padding: EdgeInsets.symmetric(horizontal: 15),
           child: AmptiveMore2DiscoverTitle(),
@@ -206,9 +206,9 @@ class AmptiveFullDiscoverPageView extends StatelessWidget {
             ),
           ),
         ),
-
+    
         Gap(50.h),
-
+    
         AmptiveCustomContainer(
           padding: const EdgeInsets.only(left: 15),
           alignment: Alignment.centerLeft,
@@ -231,9 +231,9 @@ class AmptiveFullDiscoverPageView extends StatelessWidget {
             ),
           ),
         ),
-
+    
         Gap(50.h),
-
+    
         AmptiveCustomContainer(
           padding: const EdgeInsets.only(left: 15),
           alignment: Alignment.centerLeft,

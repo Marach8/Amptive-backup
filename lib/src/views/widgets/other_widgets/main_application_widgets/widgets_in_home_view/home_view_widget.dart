@@ -61,11 +61,6 @@ class AmptiveHomeViewWidget extends StatelessWidget {
               ),
             ],      
           ),
-
-          // SliverPersistentHeader(
-          //   pinned: true,
-          //   delegate: AmptiveSliverHeader()
-          // )
         ],
          
         body: ListView(              

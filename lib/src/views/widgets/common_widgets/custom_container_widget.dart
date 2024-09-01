@@ -35,7 +35,9 @@ class AmptiveCustomContainer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return AnimatedContainer(
+      duration: const Duration(milliseconds: 500),
+      curve: Curves.easeIn,
       alignment: alignment,
       margin: margin,
       clipBehavior: clipBehavior,

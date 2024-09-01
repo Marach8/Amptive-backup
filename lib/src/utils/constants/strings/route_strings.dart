@@ -26,4 +26,5 @@ class AmptiveRoutes {
   static const scheduledEventsOrShowsScreen = 'scheduled_events_or_shows';
   static const subscribedEventsOrShowsScreen = 'subscribed_events_or_shows';
   static const followingEventsOrShowsScreen = 'following_events_or_shows';
+  static const communityScreen = 'community_screen';
 }

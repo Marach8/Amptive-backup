@@ -1,11 +1,13 @@
+import 'package:amptive/src/utils/constants/strings/route_strings.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import '../../../../../../utils/constants/colors.dart';
 import '../../../../../../utils/constants/font_sizes.dart';
 import '../../../../../../utils/constants/strings/other_strings.dart';
 
 class AmptiveMore2DiscoverTitle extends StatelessWidget {
   const AmptiveMore2DiscoverTitle({
-    super.key,e
+    super.key,
   });
 
   @override
@@ -30,7 +32,9 @@ class AmptiveMore2DiscoverTitle extends StatelessWidget {
         ),
         const Spacer(),
         GestureDetector(
-          onTap: (){},
+          onTap: (){
+            context.pushNamed(AmptiveRoutes.communityScreen);
+          },
           child: Row(
             children: [
               Text(

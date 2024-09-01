@@ -2,19 +2,21 @@ import 'package:amptive/src/utils/constants/colors.dart';
 import 'package:amptive/src/utils/constants/font_sizes.dart';
 import 'package:amptive/src/utils/constants/font_weights.dart';
 import 'package:amptive/src/views/widgets/common_widgets/circle_avatar.dart';
+import 'package:amptive/src/views/widgets/common_widgets/custom_container_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
-import 'container_with_picture.dart';
+import '../recent_searches_widgets/container_with_picture.dart';
 
-class AmptiveRecentSearchesListTileWidget extends StatelessWidget {
+class AmptiveTabViewListTileWidget extends StatelessWidget {
   final String title, leadingImagePath;
-  final bool isCircular;
+  final bool isCircular, addPlayButton;
 
-  const AmptiveRecentSearchesListTileWidget({
+  const AmptiveTabViewListTileWidget({
     super.key,
     required this.title,
     required this.leadingImagePath,
-    this.isCircular = false
+    this.isCircular = false,
+    this.addPlayButton = false
   });
 
   @override
@@ -67,7 +69,14 @@ class AmptiveRecentSearchesListTileWidget extends StatelessWidget {
 
         trailing: GestureDetector(
           onTap: (){},
-          child: Icon(Icons.close, size: 14, color: AmptiveColors.authHintColor,),
+          child: addPlayButton 
+            ? AmptiveCustomContainer(
+              boxShape: BoxShape.circle,
+              height: 24, width: 24,
+              color: AmptiveColors.authHintColor,
+              child: Icon(Icons.play_arrow, size: 15, color: AmptiveColors.brandBlackColor,),
+            )
+            : Icon(Icons.keyboard_arrow_right, size: 24, color: AmptiveColors.authHintColor,) 
         )
       ),
     );

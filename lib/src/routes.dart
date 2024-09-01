@@ -17,6 +17,7 @@ import 'package:amptive/src/views/screens/onboarding_screens/onboarding_page_vie
 import 'package:amptive/src/views/screens/onboarding_screens/welcome_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'views/screens/main_application_screens/sub_views/discover/community_home_screen.dart';
 import 'views/screens/main_application_screens/sub_views/home_view/home_sub_view/event_detailed_screen.dart';
 import 'views/screens/main_application_screens/sub_views/home_view/home_sub_view/following_screen.dart';
 import 'views/screens/main_application_screens/sub_views/home_view/home_sub_view/show_detailed_screen.dart';
@@ -183,6 +184,12 @@ final GoRouter amptiveAppRouter = GoRouter(
           name: AmptiveRoutes.followingEventsOrShowsScreen,
           path: AmptiveRoutes.followingEventsOrShowsScreen,
           builder: (_, __) => const AmptiveFollowingEvenstOrShowsViewWidget(),
+        ),
+
+        GoRoute(
+          name: AmptiveRoutes.communityScreen,
+          path: AmptiveRoutes.communityScreen,
+          builder: (_, __) => const AmptiveCommunityScreen(),
         ),
       ]
     ),
