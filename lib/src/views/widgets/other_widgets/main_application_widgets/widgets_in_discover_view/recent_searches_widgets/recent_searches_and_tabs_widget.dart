@@ -50,7 +50,7 @@ class _AmptiveRecentSearchesAndTabsViewState extends State<AmptiveRecentSearches
           AmptiveDiscoverTabView(key: UniqueKey()),
         ];
 
-        return AmptiveScalingAnimatedSwitcherWidget(
+        return AmptiveFadingAnimatedSwitcherWidget(
           child: listOfWidgets.elementAt(index),
         );
       }

@@ -4,10 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 import 'package:go_router/go_router.dart';
-import '../../../../../utils/constants/colors.dart';
 import '../../../../../utils/constants/strings/image_strings.dart';
 import '../../../common_widgets/circular_container_with_picture_widget.dart';
-import '../../../common_widgets/custom_container_widget.dart';
+import '../../../common_widgets/divider_widget.dart';
 import '../../../common_widgets/image_loader_widget.dart';
 import '../../../common_widgets/live_user_model_widget.dart';
 import 'appbar_drop_down.dart';
@@ -63,12 +62,14 @@ class AmptiveHomeViewWidget extends StatelessWidget {
           ),
         ],
          
-        body: ListView(              
+        body: ListView( 
+          physics: const BouncingScrollPhysics(),             
           padding: EdgeInsets.zero,
           children: [
             SizedBox(
               height: 100,
               child: ListView(
+                physics: const BouncingScrollPhysics(),
                 padding: EdgeInsets.zero,
                 shrinkWrap: true,
                 scrollDirection: Axis.horizontal,
@@ -91,17 +92,12 @@ class AmptiveHomeViewWidget extends StatelessWidget {
                 ]
               ),
             ),
-            AmptiveCustomContainer(
-              color: AmptiveColors.whiteColor,
-              height: 0.15,
-              width: double.infinity,
-              child: const SizedBox.shrink(),
-            ),
+            const AmptiveDividerWidget(),
 
             ...Iterable.generate(
               10,
               (_) => Padding(
-                padding: const EdgeInsets.fromLTRB(20, 0, 20, 20),
+                padding: const EdgeInsets.fromLTRB(15, 0, 15, 30),
                 child: GestureDetector(
                   onTap: () => context.pushNamed(AmptiveRoutes.showDetailedScreen),
                   child: const AmptiveShowOrEventDataModelWidget()

@@ -1,7 +1,9 @@
 import 'package:amptive/src/utils/constants/font_sizes.dart';
 import 'package:amptive/src/utils/constants/font_weights.dart';
 import 'package:amptive/src/utils/constants/strings/image_strings.dart';
+import 'package:amptive/src/utils/helpers/helper_functions/other_functions.dart';
 import 'package:amptive/src/views/widgets/common_widgets/custom_container_widget.dart';
+import 'package:amptive/src/views/widgets/common_widgets/image_loader_widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/live_indicator_with_animating_dot_widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/list_tile_with_leading_picture_widget.dart';
 import 'package:amptive/src/views/widgets/other_widgets/main_application_widgets/widgets_in_home_view/row_of_paid_show_and_play_button_widget.dart';
@@ -33,53 +35,100 @@ class AmptiveShowOrEventDataModelWidget extends StatelessWidget {
         ),
         Gap(2.h),
         AmptiveCustomContainer(
-          decorationImagePath: AmptiveImageStrings.weCanDoHardThingsBgImage,
-          decorationImageFit: BoxFit.fill,
-          height: 432.h,
+          height: 425.h,
+          clipBehavior: Clip.hardEdge,
           radius: 15.r,
-          child: AmptiveCustomContainer(
-            padding: const EdgeInsets.fromLTRB(15, 10, 15, 10),
-            radius: 15.r,
-            gradient: LinearGradient(
-              begin: Alignment.topCenter,
-              end: Alignment.bottomCenter,
-              colors: [
-                AmptiveColors.transparentColor,
-                AmptiveColors.transparentColor,
-                AmptiveColors.transparentColor,
-                AmptiveColors.transparentColor,
-                AmptiveColors.containerGradientColorB.withOpacity(0.5),
-                AmptiveColors.containerGradientColorB,
-                AmptiveColors.containerGradientColorB,
-                AmptiveColors.containerGradientColorB,
-              ]
-            ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const AmptiveWith2OthersWidget(),
-                const Spacer(),
-                const AmptiveLiveIndicatorWithAnimatingDotWidget(),
-                Gap(10.h),
-                Text(
-                  maxLines: 2,
-                  "Don't Forget Who You Are ft. Jacob Scipio",
-                  overflow: TextOverflow.clip,
-                  style: Theme.of(context).textTheme.displayMedium?.copyWith(
-                    fontSize: AmptiveFontSizes.size24,
-                    fontWeight: AmptiveFontWeights.semiBold,
-                    fontFamily: "Bricolage Grotesque"
-                  ),
+          child: Stack(
+            children: [
+              const AmptiveImageLoaderWidget(imagePath: AmptiveImageStrings.weCanDoHardThingsBgImage),
+              AmptiveCustomContainer(
+                width: AmptiveHelperFunctions.getScreenWidth(context),
+                padding: const EdgeInsets.fromLTRB(15, 10, 15, 10),
+                radius: 15,
+                gradient: LinearGradient(
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
+                  colors: [
+                    AmptiveColors.transparentColor,
+                    AmptiveColors.transparentColor,
+                    AmptiveColors.transparentColor,
+                    AmptiveColors.transparentColor,
+                    AmptiveColors.containerGradientColorB.withOpacity(0.5),
+                    AmptiveColors.containerGradientColorB,
+                    AmptiveColors.containerGradientColorB,
+                    AmptiveColors.containerGradientColorB,
+                  ]
                 ),
-                Gap(12.h),
-                const AmptiveRowOfNumberOfPeopleListeningWidget(),
-                Gap(10.h),
-                const AmptiveRowOfPaidShowAndPlayButtonWidget(),
-              ],
-            ),
-          ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const AmptiveWith2OthersWidget(),
+                    const Spacer(),
+                    const AmptiveLiveIndicatorWithAnimatingDotWidget(),
+                    Gap(10.h),
+                    Text(
+                      maxLines: 2,
+                      "Don't Forget Who You Are ft. Jacob Scipio",
+                      style: Theme.of(context).textTheme.displayMedium?.copyWith(
+                        fontSize: AmptiveFontSizes.size24,
+                        fontWeight: AmptiveFontWeights.semiBold,
+                      ),
+                    ),
+                    Gap(12.h),
+                    const AmptiveRowOfNumberOfPeopleListeningWidget(),
+                    Gap(10.h),
+                    const AmptiveRowOfPaidShowAndPlayButtonWidget(),
+                  ],
+                ),
+              ),
+            ],
+          )
         )
       ],
     );
   }
 }
+
+
+
+// AmptiveCustomContainer(
+//             padding: const EdgeInsets.fromLTRB(15, 10, 15, 10),
+//             radius: 15.r,
+//             gradient: LinearGradient(
+//               begin: Alignment.topCenter,
+//               end: Alignment.bottomCenter,
+//               colors: [
+//                 AmptiveColors.transparentColor,
+//                 AmptiveColors.transparentColor,
+//                 AmptiveColors.transparentColor,
+//                 AmptiveColors.transparentColor,
+//                 AmptiveColors.containerGradientColorB.withOpacity(0.5),
+//                 AmptiveColors.containerGradientColorB,
+//                 AmptiveColors.containerGradientColorB,
+//                 AmptiveColors.containerGradientColorB,
+//               ]
+//             ),
+//             child: Column(
+//               crossAxisAlignment: CrossAxisAlignment.start,
+//               children: [
+//                 const AmptiveWith2OthersWidget(),
+//                 const Spacer(),
+//                 const AmptiveLiveIndicatorWithAnimatingDotWidget(),
+//                 Gap(10.h),
+//                 Text(
+//                   maxLines: 2,
+//                   "Don't Forget Who You Are ft. Jacob Scipio",
+//                   overflow: TextOverflow.clip,
+//                   style: Theme.of(context).textTheme.displayMedium?.copyWith(
+//                     fontSize: AmptiveFontSizes.size24,
+//                     fontWeight: AmptiveFontWeights.semiBold,
+//                     fontFamily: "Bricolage Grotesque"
+//                   ),
+//                 ),
+//                 Gap(12.h),
+//                 const AmptiveRowOfNumberOfPeopleListeningWidget(),
+//                 Gap(10.h),
+//                 const AmptiveRowOfPaidShowAndPlayButtonWidget(),
+//               ],
+//             ),
+//           ),

@@ -33,7 +33,7 @@ class AmptiveMore2DiscoverTitle extends StatelessWidget {
         const Spacer(),
         GestureDetector(
           onTap: (){
-            context.pushNamed(AmptiveRoutes.communityScreen);
+            context.pushNamed(AmptiveRoutes.COMMUNITY_SCREEN);
           },
           child: Row(
             children: [

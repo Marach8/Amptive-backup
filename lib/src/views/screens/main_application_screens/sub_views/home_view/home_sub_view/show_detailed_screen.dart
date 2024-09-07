@@ -16,11 +16,11 @@ import '../../../../../../utils/constants/font_sizes.dart';
 import '../../../../../../utils/constants/font_weights.dart';
 import '../../../../../widgets/common_widgets/list_tile_with_leading_picture_widget.dart';
 import '../../../../../widgets/common_widgets/row_of_people_listening_widget.dart';
-import '../../../../../widgets/other_widgets/main_application_widgets/widgets_in_show_or_events_details_view/audio_or_video_display_picture_widget.dart';
-import '../../../../../widgets/other_widgets/main_application_widgets/widgets_in_show_or_events_details_view/hashtags_widget.dart';
-import '../../../../../widgets/other_widgets/main_application_widgets/widgets_in_show_or_events_details_view/row_of_live_and_society_texts_widget.dart';
-import '../../../../../widgets/other_widgets/main_application_widgets/widgets_in_show_or_events_details_view/row_of_subtitle_and_forward_icon_widget.dart';
-import '../../../../../widgets/other_widgets/main_application_widgets/widgets_in_show_or_events_details_view/whispers_list_view_widget.dart';
+import '../../../../../widgets/other_widgets/main_application_widgets/widgets_in_show_or_event_full_details_view/audio_or_video_display_picture_widget.dart';
+import '../../../../../widgets/other_widgets/main_application_widgets/widgets_in_show_or_event_full_details_view/hashtags_widget.dart';
+import '../../../../../widgets/other_widgets/main_application_widgets/widgets_in_show_or_event_full_details_view/row_of_live_and_society_texts_widget.dart';
+import '../../../../../widgets/other_widgets/main_application_widgets/widgets_in_show_or_event_full_details_view/row_of_subtitle_and_forward_icon_widget.dart';
+import '../../../../../widgets/other_widgets/main_application_widgets/widgets_in_show_or_event_full_details_view/whispers_list_view_widget.dart';
 
 class AmptiveShowDetailedScreen extends StatelessWidget {
   const AmptiveShowDetailedScreen({super.key});

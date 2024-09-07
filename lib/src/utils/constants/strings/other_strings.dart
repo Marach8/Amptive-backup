@@ -91,9 +91,13 @@ class AmptiveOtherStrings{
   static const verifyPhoneNumber  = 'Verify phone number';
   static const whatIsYourPhoneNumber = "What is your phone number?";
 
-  static const society = 'Society';
+  static const SOCIETY = 'Society';
   static const goLive = 'Go live';
-  static const paidShow = '\$paid show';
+  static const PAID_SHOW = '\$paid show';
+  static const PAID_SHOWS = 'Paid Shows';
+  static const FREE_EVENTS = 'Free Events';
+  static const PAID_EVENTS = 'Paid Events';
+  static const FREE_SHOWS = 'Free Shows';
   static const hashtags = 'Hashtags';
   static const hostedBy = 'Hosted by';
   static const showLess = ' Show less';
@@ -112,13 +116,17 @@ class AmptiveOtherStrings{
   static const SEARCH_FOR_EVENTS_ND_SHOWS = 'Search for events, shows and more';
   static const CANCEL = 'Cancel';
   static const TRENDING_HASHTAGS = 'Trending Hashtags';
+  static const TRENDING = 'Trending';
   static const SPORTS = 'Sports';
   static const TRUE_CRIME = 'True Crime';
   static const MORE_2_DISCOVER = 'More to Discover';
   static const TOP_CREATORS = 'Top Creators';
+  static const POPULAR_CREATORS = 'Popular Creators';
   static const SPOTLIGHT = 'Spotlight';
   static const VIEW_ALL = 'View all';
   static const SEE_COMMUNITIES = 'See communities on Amptive';
   static const RECENT_SEARCHES = 'Recent Searches';
   static const CLEAR = 'Clear';
+
+  static const DISCOVER_COMMUNITIES = 'Discover communities with interesting shows and events';
 }

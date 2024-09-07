@@ -1,10 +1,14 @@
+import 'package:amptive/src/routes.dart';
+import 'package:amptive/src/utils/constants/strings/route_strings.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
+import 'package:go_router/go_router.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import '../../../../../../utils/constants/colors.dart';
 import '../../../../../../utils/constants/strings/image_strings.dart';
 import '../../../../../../utils/constants/strings/other_strings.dart';
+import '../row_of_title_with_view_all_trailing.dart';
 import 'discover_categories_title.dart';
 import 'more_2_discover_model.dart';
 import 'more_to_discover_title.dart';
@@ -53,37 +57,20 @@ class AmptiveFullDiscoverPageView extends StatelessWidget {
           ),
         ),
         Gap(30.h),
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 15),
-          child: Row(
-            children: [
-              Text(
-                AmptiveOtherStrings.TRENDING_HASHTAGS,
-                style: Theme.of(context).textTheme.bodyLarge 
-              ),
-              const Spacer(),
-              GestureDetector(
-                onTap: (){},
-                child: Row(
-                  children: [
-                    Text(
-                      AmptiveOtherStrings.VIEW_ALL,
-                      style: Theme.of(context).textTheme.labelMedium
-                    ),
-                    Icon(Icons.keyboard_arrow_right_sharp, color: AmptiveColors.authHintColor,)
-                  ],
-                ),
-              )
-            ],
-          ),
+        AmptiveRowOfTitleWithTrendingViewAll(
+          title: AmptiveOtherStrings.TRENDING_HASHTAGS,
+          viewAllOnpressed: (){
+            context.pushNamed(AmptiveRoutes.TRENDING_HASHTAGS_SCREEN);
+          },
         ),
     
         Gap(10.h),
     
-        const Padding(
-          padding: EdgeInsets.symmetric(horizontal: 15),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 15),
           child: AmptiveRowOfTrendingHashTagTitle(
-            hashTagTitle: AmptiveOtherStrings.society,
+            trailingOnpressed: () => context.pushNamed(AmptiveRoutes.SOCIETY_SCREEN),
+            hashTagTitle: AmptiveOtherStrings.SOCIETY,
             hashTagSubTitle: 'ankira22, glendonnor, and 15k other are live',
           ),
         ),
@@ -93,6 +80,7 @@ class AmptiveFullDiscoverPageView extends StatelessWidget {
         SizedBox(
           height: 165,
           child: ListView(
+            physics: const BouncingScrollPhysics(),
             scrollDirection: Axis.horizontal,
             children: List.generate(
               5,
@@ -106,9 +94,10 @@ class AmptiveFullDiscoverPageView extends StatelessWidget {
         const Divider(indent: 15, endIndent: 15,),
     
         Gap(40.h),
-        const Padding(
-          padding: EdgeInsets.symmetric(horizontal: 15),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 15),
           child: AmptiveRowOfTrendingHashTagTitle(
+            trailingOnpressed: (){},
             hashTagTitle: 'Katerinisback',
             hashTagSubTitle: 'emmanuel, nnanna and 205 others are live',
           ),
@@ -119,11 +108,12 @@ class AmptiveFullDiscoverPageView extends StatelessWidget {
         SizedBox(
           height: 165,
           child: ListView(
+            physics: const BouncingScrollPhysics(),
             scrollDirection: Axis.horizontal,
             children: List.generate(
               5,
               (_) => const AmptiveTrendingHashtagModel(
-                trendingPicture: AmptiveImageStrings.officeLadied
+                trendingPicture: AmptiveImageStrings.OFFICE_LADIES
               )
             ),
           ),
@@ -138,6 +128,7 @@ class AmptiveFullDiscoverPageView extends StatelessWidget {
         SizedBox(
           height: 300,
           child: ListView(
+            physics: const BouncingScrollPhysics(),
             scrollDirection: Axis.horizontal,
             children: List.generate(
               5,
@@ -157,6 +148,7 @@ class AmptiveFullDiscoverPageView extends StatelessWidget {
         SizedBox(
           height: 300,
           child: ListView(
+            physics: const BouncingScrollPhysics(),
             scrollDirection: Axis.horizontal,
             children: List.generate(
               5,
@@ -176,6 +168,7 @@ class AmptiveFullDiscoverPageView extends StatelessWidget {
         SizedBox(
           height: 300,
           child: ListView(
+            physics: const BouncingScrollPhysics(),
             scrollDirection: Axis.horizontal,
             children: List.generate(
               5,
@@ -251,7 +244,7 @@ class AmptiveFullDiscoverPageView extends StatelessWidget {
             children: List.generate(
               5,
               (_) => const AmptiveTrendingHashtagModel(
-                trendingPicture: AmptiveImageStrings.officeLadied
+                trendingPicture: AmptiveImageStrings.OFFICE_LADIES
               )
             ),
           ),

@@ -28,7 +28,7 @@ class AmptiveRowOfPaidShowAndPlayButtonWidget extends StatelessWidget {
                 color: AmptiveColors.brandBlackColor
               ),
               child: Text(
-                AmptiveOtherStrings.paidShow.toUpperCase(),
+                AmptiveOtherStrings.PAID_SHOW.toUpperCase(),
                 style: Theme.of(context).textTheme.titleSmall?.copyWith(
                   fontWeight: AmptiveFontWeights.medium,
                   fontSize: AmptiveFontSizes.size10

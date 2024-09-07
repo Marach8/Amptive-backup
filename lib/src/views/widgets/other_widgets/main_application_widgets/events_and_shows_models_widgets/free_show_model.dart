@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
-import '../../../../../../utils/constants/colors.dart';
-import '../../../../../../utils/constants/font_sizes.dart';
-import '../../../../common_widgets/circle_avatar.dart';
-import '../../../../common_widgets/custom_container_widget.dart';
-import '../../../../common_widgets/image_loader_widget.dart';
+import '../../../../../utils/constants/colors.dart';
+import '../../../../../utils/constants/font_sizes.dart';
+import '../../../common_widgets/circle_avatar.dart';
+import '../../../common_widgets/custom_container_widget.dart';
+import '../../../common_widgets/image_loader_widget.dart';
 
-class AmptiveTrendingHashtagModel extends StatelessWidget {
+
+class AmptiveFreeShowModel extends StatelessWidget {
   final String trendingPicture;
-  const AmptiveTrendingHashtagModel({
+  const AmptiveFreeShowModel({
     super.key,
     required this.trendingPicture
   });
@@ -36,44 +37,30 @@ class AmptiveTrendingHashtagModel extends StatelessWidget {
           ),
           Row(
             mainAxisSize: MainAxisSize.min,
-            children: [
-              AmptiveCustomContainer(
-                height: 12, width: 12,
-                color: AmptiveColors.authHintColor,
-                child: FittedBox(
-                  fit: BoxFit.scaleDown,
-                  child: Text(
-                    "P",
-                    style: Theme.of(context).textTheme.displayMedium?.copyWith(
-                      color: AmptiveColors.brandBlackColor
-                    ),
+            children: [              
+              Expanded(
+                child: Text(
+                  'figma',
+                  style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                    fontSize: AmptiveFontSizes.size13,
+                    color: AmptiveColors.grey5Color
                   ),
                 ),
               ),
               const Gap(2),
-              Flexible(
-                child: Text(
-                  'glendonnoyle',
-                  style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                    fontSize: AmptiveFontSizes.size13,
-                    color: AmptiveColors.grey5Color,
-                  ),
-                ),
-              ),
-              const Gap(5),
               
               Align(
                 alignment: Alignment.bottomCenter,
                 child: AmptiveCirceAvatarWidget(
                   diameter: 4,
-                  color: AmptiveColors.grey5Color,
+                  color: AmptiveColors.grey5Color
                 ),
               ),
-              const Gap(5),
+              const Gap(2),
               Text(
                 'LIVE',
                 style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                  color: AmptiveColors.grey5Color,
+                  color: AmptiveColors.grey5Color
                 ),
               ),
             ],

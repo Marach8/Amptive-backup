@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
-import '../../../../../../utils/constants/colors.dart';
-import '../../../../../../utils/constants/font_sizes.dart';
-import '../../../../common_widgets/circle_avatar.dart';
-import '../../../../common_widgets/custom_container_widget.dart';
-import '../../../../common_widgets/image_loader_widget.dart';
+import '../../../../../utils/constants/colors.dart';
+import '../../../../../utils/constants/font_sizes.dart';
+import '../../../common_widgets/circle_avatar.dart';
+import '../../../common_widgets/custom_container_widget.dart';
+import '../../../common_widgets/image_loader_widget.dart';
 
-class AmptiveTrendingHashtagModel extends StatelessWidget {
+
+class AmptivePaidShowModel extends StatelessWidget {
   final String trendingPicture;
-  const AmptiveTrendingHashtagModel({
+  const AmptivePaidShowModel({
     super.key,
     required this.trendingPicture
   });
@@ -35,7 +36,6 @@ class AmptiveTrendingHashtagModel extends StatelessWidget {
             ),
           ),
           Row(
-            mainAxisSize: MainAxisSize.min,
             children: [
               AmptiveCustomContainer(
                 height: 12, width: 12,
@@ -51,7 +51,7 @@ class AmptiveTrendingHashtagModel extends StatelessWidget {
                 ),
               ),
               const Gap(2),
-              Flexible(
+              Expanded(
                 child: Text(
                   'glendonnoyle',
                   style: Theme.of(context).textTheme.titleSmall?.copyWith(
@@ -69,7 +69,6 @@ class AmptiveTrendingHashtagModel extends StatelessWidget {
                   color: AmptiveColors.grey5Color,
                 ),
               ),
-              const Gap(5),
               Text(
                 'LIVE',
                 style: Theme.of(context).textTheme.titleSmall?.copyWith(

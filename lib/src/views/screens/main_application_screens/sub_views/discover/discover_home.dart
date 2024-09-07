@@ -1,7 +1,7 @@
 import 'package:amptive/src/views/widgets/animation_widgets/common_animation_widgets/animated_switcher.dart';
 import 'package:amptive/src/views/widgets/common_widgets/annotated_region__widget.dart';
 import 'package:amptive/src/views/widgets/other_widgets/main_application_widgets/widgets_in_discover_view/full_discover_view_widgets/full_discover_page_view.dart';
-import 'package:amptive/src/views/widgets/other_widgets/main_application_widgets/widgets_in_discover_view/full_discover_view_widgets/sliver_header.dart';
+import 'package:amptive/src/views/widgets/other_widgets/main_application_widgets/widgets_in_discover_view/full_discover_view_widgets/discover_sliver_header.dart';
 import 'package:amptive/src/views/widgets/other_widgets/main_application_widgets/widgets_in_discover_view/recent_searches_widgets/recent_searches_and_tabs_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -53,7 +53,7 @@ class _AmptiveDiscoverViewState extends State<AmptiveDiscoverView> {
               ),
               SliverPersistentHeader(
                 pinned: true,
-                delegate: AmptiveSliverHeader(
+                delegate: AmptiveDiscoverSliverHeader(
                   controller: controller,
                   focusNode: focusNode,
                   notifier: notifier
@@ -69,7 +69,7 @@ class _AmptiveDiscoverViewState extends State<AmptiveDiscoverView> {
                     int index = 0;
                     if(value) index = 1;
                     final listOfWidgets = [
-                      AmptiveFullDiscoverPageView(key: UniqueKey(),),
+                      AmptiveFullDiscoverPageView(key: UniqueKey()),
                       AmptiveRecentSearchesAndTabsView(
                         key: UniqueKey(),
                         controller: controller,

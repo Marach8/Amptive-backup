@@ -97,7 +97,7 @@ with SingleTickerProviderStateMixin{
                 children: List.generate(
                   10,
                   (_) => const AmptiveTabViewListTileWidget(
-                    leadingImagePath: AmptiveImageStrings.officeLadied,
+                    leadingImagePath: AmptiveImageStrings.OFFICE_LADIES,
                     isCircular: true,
                     addPlayButton: true,
                     title: 'We Can Do Hard Things',

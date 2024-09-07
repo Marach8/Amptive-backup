@@ -24,7 +24,7 @@ class AmptiveImageStrings{
 
   static const noAvatarImage = '$generalPngImagePath/no_avatar_image.png';
   static const discoverPic1 = '$generalPngImagePath/Frame 156.png';
-  static const officeLadied = '$generalPngImagePath/Frame 22.png';
+  static const OFFICE_LADIES = '$generalPngImagePath/Frame 22.png';
   static const endlessThread = '$generalPngImagePath/Frame 71.png';
   static const threePpl = '$generalPngImagePath/Group_fill.png';
   static const JOE_POMP_SHOW = '$generalPngImagePath/Frame 71 (1).png';

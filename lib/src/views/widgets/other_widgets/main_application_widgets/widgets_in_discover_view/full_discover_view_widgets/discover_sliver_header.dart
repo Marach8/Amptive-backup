@@ -3,19 +3,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 import 'package:iconsax/iconsax.dart';
-
 import '../../../../../../utils/constants/colors.dart';
 import '../../../../../../utils/constants/strings/other_strings.dart';
 import '../../../../animation_widgets/common_animation_widgets/animated_crossfade_widget.dart';
 import '../../../../common_widgets/textformfield_widget.dart';
 
 
-class AmptiveSliverHeader extends SliverPersistentHeaderDelegate{
+class AmptiveDiscoverSliverHeader extends SliverPersistentHeaderDelegate{
   final TextEditingController controller;
   final FocusNode focusNode;
   final ValueNotifier<bool> notifier;
 
-  AmptiveSliverHeader({
+  AmptiveDiscoverSliverHeader({
     required this.controller,
     required this.focusNode,
     required this.notifier,

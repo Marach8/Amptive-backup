@@ -1,8 +1,11 @@
+import 'package:amptive/src/utils/constants/colors.dart';
 import 'package:amptive/src/utils/constants/strings/image_strings.dart';
 import 'package:amptive/src/views/widgets/common_widgets/annotated_region__widget.dart';
 import 'package:amptive/src/views/widgets/other_widgets/main_application_widgets/widgets_in_discover_view/full_discover_view_widgets/more_2_discover_model.dart';
 import 'package:flutter/material.dart';
+import 'package:gap/gap.dart';
 import 'package:go_router/go_router.dart';
+import '../../../../../utils/constants/strings/other_strings.dart';
 
 class AmptiveCommunityScreen extends StatelessWidget {
   const AmptiveCommunityScreen({super.key});
@@ -25,6 +28,16 @@ class AmptiveCommunityScreen extends StatelessWidget {
                   child: const Icon(Icons.keyboard_arrow_left, size: 20)
                 ),
               ),
+              SliverToBoxAdapter(
+                child: Text(
+                  maxLines: 3,
+                  AmptiveOtherStrings.DISCOVER_COMMUNITIES,
+                  style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                    color: AmptiveColors.grey5Color
+                  ),
+                ),
+              ),
+              const SliverToBoxAdapter(child: Gap(10)),
               SliverGrid(
                 delegate: SliverChildListDelegate.fixed(
                   List.generate(

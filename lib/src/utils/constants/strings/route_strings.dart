@@ -1,3 +1,5 @@
+// ignore_for_file: constant_identifier_names
+
 class AmptiveRoutes {
   //WELCOME AND ONBOARDING
   static String index = "/";
@@ -26,5 +28,9 @@ class AmptiveRoutes {
   static const scheduledEventsOrShowsScreen = 'scheduled_events_or_shows';
   static const subscribedEventsOrShowsScreen = 'subscribed_events_or_shows';
   static const followingEventsOrShowsScreen = 'following_events_or_shows';
-  static const communityScreen = 'community_screen';
+  static const COMMUNITY_SCREEN = 'community_screen';
+  static const SOCIETY_SCREEN = 'society_screen';
+  static const TRENDING_SOCIETY_SCREEN = 'trending_society_screen';
+  static const TRENDING_HASHTAGS_SCREEN = 'trending_hashtags_screen';
+  static const TRENDING_HASHTAG_FULL_SCREEN = 'trending_hashtag_full_screen';
 }

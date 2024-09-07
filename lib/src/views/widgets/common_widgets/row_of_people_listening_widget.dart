@@ -30,14 +30,14 @@ class AmptiveRowOfNumberOfPeopleListeningWidget extends StatelessWidget {
               addBorder: true,
             ),
             const Positioned(
-              left: 20,
+              left: 18,
               child: AmptiveCircularContainerWithPictureWidget(
                 imagePath: AmptiveImageStrings.jpeg2,
                 addBorder: true,
               )
             ),
             const Positioned(
-              left: 40,
+              left: 36,
               child:AmptiveCircularContainerWithPictureWidget(
                 imagePath: AmptiveImageStrings.jpeg3,
                 addBorder: true,
@@ -45,7 +45,7 @@ class AmptiveRowOfNumberOfPeopleListeningWidget extends StatelessWidget {
             ),
 
             showNumberInsideContainer ? Positioned(
-              left: 60,
+              left: 52,
               child: AmptiveCustomContainer(
                 color: AmptiveColors.grey1Color,
                 alignment: Alignment.center,
@@ -55,7 +55,7 @@ class AmptiveRowOfNumberOfPeopleListeningWidget extends StatelessWidget {
                 child: Text(
                   '+652',
                   style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                    fontSize: AmptiveFontSizes.size10
+                    fontSize: AmptiveFontSizes.size13
                   )
                 ),
               )
@@ -64,12 +64,11 @@ class AmptiveRowOfNumberOfPeopleListeningWidget extends StatelessWidget {
         ),
     
         showNumberInsideContainer ? const SizedBox.shrink() : Container(
-          margin: EdgeInsets.only(left: 46.w),
+          margin: const EdgeInsets.only(left: 46),
           child: Text(
             '656 listening',
-            style: Theme.of(context).textTheme.bodySmall?.copyWith(
-              fontWeight: AmptiveFontWeights.medium,
-              fontSize: AmptiveFontSizes.size10
+            style: Theme.of(context).textTheme.titleMedium?.copyWith(
+              fontSize: AmptiveFontSizes.size13
             )
           ),
         )

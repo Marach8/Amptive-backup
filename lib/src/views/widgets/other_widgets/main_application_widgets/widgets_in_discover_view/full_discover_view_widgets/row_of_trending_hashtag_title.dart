@@ -8,10 +8,12 @@ import '../../../../../../utils/constants/strings/other_strings.dart';
 class AmptiveRowOfTrendingHashTagTitle extends StatelessWidget {
   final String hashTagTitle,
   hashTagSubTitle;
+  final VoidCallback trailingOnpressed;
   const AmptiveRowOfTrendingHashTagTitle({
     super.key,
     required this.hashTagTitle,
-    required this.hashTagSubTitle
+    required this.hashTagSubTitle,
+    required this.trailingOnpressed
   });
 
   @override
@@ -38,13 +40,16 @@ class AmptiveRowOfTrendingHashTagTitle extends StatelessWidget {
               hashTagSubTitle,
               style: Theme.of(context).textTheme.titleSmall?.copyWith(
                 fontSize: AmptiveFontSizes.size13,
-                color: AmptiveColors.authHintColor2
+                color: AmptiveColors.grey5Color
               ),
             ),
           ],
         ),
         const Spacer(),
-        Icon(Icons.keyboard_arrow_right_sharp, color: AmptiveColors.authHintColor,)
+        GestureDetector(
+          onTap: trailingOnpressed,
+          child: Icon(Icons.keyboard_arrow_right_sharp, color: AmptiveColors.authHintColor,)
+        )
       ],
     );
   }

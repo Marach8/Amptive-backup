@@ -18,6 +18,10 @@ import 'package:amptive/src/views/screens/onboarding_screens/welcome_screen.dart
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'views/screens/main_application_screens/sub_views/discover/community_home_screen.dart';
+import 'views/screens/main_application_screens/sub_views/discover/hashtag_full_screen.dart';
+import 'views/screens/main_application_screens/sub_views/discover/society_screen.dart';
+import 'views/screens/main_application_screens/sub_views/discover/trending_hashtags_screen.dart';
+import 'views/screens/main_application_screens/sub_views/discover/trending_society_screen.dart';
 import 'views/screens/main_application_screens/sub_views/home_view/home_sub_view/event_detailed_screen.dart';
 import 'views/screens/main_application_screens/sub_views/home_view/home_sub_view/following_screen.dart';
 import 'views/screens/main_application_screens/sub_views/home_view/home_sub_view/show_detailed_screen.dart';
@@ -187,9 +191,34 @@ final GoRouter amptiveAppRouter = GoRouter(
         ),
 
         GoRoute(
-          name: AmptiveRoutes.communityScreen,
-          path: AmptiveRoutes.communityScreen,
+          name: AmptiveRoutes.COMMUNITY_SCREEN,
+          path: AmptiveRoutes.COMMUNITY_SCREEN,
           builder: (_, __) => const AmptiveCommunityScreen(),
+        ),
+
+        GoRoute(
+          name: AmptiveRoutes.SOCIETY_SCREEN,
+          path: AmptiveRoutes.SOCIETY_SCREEN,
+          builder: (_, __) => const AmptiveSocietyScreen(),
+          routes: [
+            GoRoute(
+              name: AmptiveRoutes.TRENDING_SOCIETY_SCREEN,
+              path: AmptiveRoutes.TRENDING_SOCIETY_SCREEN,
+              builder: (_, __) => const AmptiveTrendingSocietyScreen(),
+            ),
+
+            GoRoute(
+              name: AmptiveRoutes.TRENDING_HASHTAGS_SCREEN,
+              path: AmptiveRoutes.TRENDING_HASHTAGS_SCREEN,
+              builder: (_, __) => const AmptiveTrendingHashTagsScreen(),
+            ),
+
+            GoRoute(
+              name: AmptiveRoutes.TRENDING_HASHTAG_FULL_SCREEN,
+              path: AmptiveRoutes.TRENDING_HASHTAG_FULL_SCREEN,
+              builder: (_, __) => const AmptiveTrendingHashTagFullScreen(),
+            ),
+          ]
         ),
       ]
     ),

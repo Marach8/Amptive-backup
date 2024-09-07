@@ -36,7 +36,7 @@ class AmptiveRecentSearchesView extends StatelessWidget {
             Gap(20.h),
             
             const AmptiveRecentSearchesListTileWidget(
-              leadingImagePath: AmptiveImageStrings.officeLadied,
+              leadingImagePath: AmptiveImageStrings.OFFICE_LADIES,
               title: 'Glennon Doyle',
               isCircular: true,
             ),
