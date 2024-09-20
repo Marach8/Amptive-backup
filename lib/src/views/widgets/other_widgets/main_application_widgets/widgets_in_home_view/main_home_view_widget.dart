@@ -10,7 +10,7 @@ import '../../../common_widgets/divider_widget.dart';
 import '../../../common_widgets/image_loader_widget.dart';
 import '../../../common_widgets/live_user_model_widget.dart';
 import 'appbar_drop_down.dart';
-import 'user_with_add_icon_widget.dart';
+import 'user_go_live_widget.dart';
 
 
 class AmptiveHomeViewWidget extends StatelessWidget {
@@ -76,7 +76,7 @@ class AmptiveHomeViewWidget extends StatelessWidget {
                 children: [
                   Padding(
                     padding: EdgeInsets.only(left: 10.62.w),
-                    child: const AmptiveUserWithAddIconWidget(),
+                    child: const AmptiveUserGoLiveWidget(),
                   ),
                   ...Iterable.generate(
                     20,

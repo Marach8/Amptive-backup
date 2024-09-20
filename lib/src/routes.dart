@@ -10,6 +10,7 @@ import 'package:amptive/src/views/screens/authentication_screens/post_registrati
 import 'package:amptive/src/views/screens/authentication_screens/sign_in_or_sign_up_screen.dart';
 import 'package:amptive/src/views/screens/authentication_screens/username_auth_screen.dart';
 import 'package:amptive/src/views/screens/main_application_screens/dashboard_screen.dart';
+import 'package:amptive/src/views/screens/main_application_screens/sub_views/home_view/home_sub_view/go_live_screen.dart';
 import 'package:amptive/src/views/screens/main_application_screens/sub_views/home_view/home_sub_view/scheduled_screen.dart';
 import 'package:amptive/src/views/screens/post_authentication_screens/crop_image_screen.dart';
 import 'package:amptive/src/views/screens/post_authentication_screens/preference_screen.dart';
@@ -147,8 +148,8 @@ final GoRouter amptiveAppRouter = GoRouter(
         ),
 
         GoRoute(
-          name: AmptiveRoutes.eventDetailedScreen,
-          path: AmptiveRoutes.eventDetailedScreen,
+          name: AmptiveRoutes.EVENT_DETAILED_SCREEN,
+          path: AmptiveRoutes.EVENT_DETAILED_SCREEN,
           pageBuilder: (context, state) => CustomTransitionPage(
             child: const AmptiveEventDetailedScreen(),
             transitionsBuilder: (context, animation, secondaryAnimation, child){
@@ -173,20 +174,26 @@ final GoRouter amptiveAppRouter = GoRouter(
         ),
 
         GoRoute(
-          name: AmptiveRoutes.scheduledEventsOrShowsScreen,
-          path: AmptiveRoutes.scheduledEventsOrShowsScreen,
+          name: AmptiveRoutes.GO_LIVE_SCREEN,
+          path: AmptiveRoutes.GO_LIVE_SCREEN,
+          builder: (_, __) => const AmptiveGoLiveScreen(),
+        ),
+
+        GoRoute(
+          name: AmptiveRoutes.SCHEDULED_EVENTS_OR_SHOWS_SCREEN,
+          path: AmptiveRoutes.SCHEDULED_EVENTS_OR_SHOWS_SCREEN,
           builder: (_, __) => const AmptiveScheduledEventOrShowViewWidget(),
         ),
 
         GoRoute(
-          name: AmptiveRoutes.subscribedEventsOrShowsScreen,
-          path: AmptiveRoutes.subscribedEventsOrShowsScreen,
+          name: AmptiveRoutes.SUBSCRIBED_EVENTS_OR_SHOWS_SCREEN,
+          path: AmptiveRoutes.SUBSCRIBED_EVENTS_OR_SHOWS_SCREEN,
           builder: (_, __) => const AmptiveSubscribedEventOrShowViewWidget(),
         ),
 
         GoRoute(
-          name: AmptiveRoutes.followingEventsOrShowsScreen,
-          path: AmptiveRoutes.followingEventsOrShowsScreen,
+          name: AmptiveRoutes.FOLLOWING_EVENTS_OR_SHOWS_SCREEN,
+          path: AmptiveRoutes.FOLLOWING_EVENTS_OR_SHOWS_SCREEN,
           builder: (_, __) => const AmptiveFollowingEvenstOrShowsViewWidget(),
         ),
 

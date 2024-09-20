@@ -12,8 +12,8 @@ class AmptiveFadingAnimatedSwitcherWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AnimatedSwitcher(
-      duration: Duration(seconds: duration ?? 1),
-      reverseDuration: Duration(seconds: duration ?? 1),
+      duration: Duration(milliseconds: duration ?? 1000),
+      reverseDuration: Duration(milliseconds: duration ?? 1000),
       switchInCurve: Curves.easeIn,
       switchOutCurve: Curves.easeIn,
       transitionBuilder: (child, animation) {

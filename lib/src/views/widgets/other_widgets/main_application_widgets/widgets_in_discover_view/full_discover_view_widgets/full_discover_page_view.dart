@@ -1,5 +1,8 @@
+import 'dart:async';
 import 'package:amptive/src/routes.dart';
 import 'package:amptive/src/utils/constants/strings/route_strings.dart';
+import 'package:amptive/src/utils/helpers/helper_functions/other_functions.dart';
+import 'package:amptive/src/views/widgets/common_widgets/custom_rebuilder_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
@@ -18,6 +21,7 @@ import 'top_creators_model.dart';
 import 'trending_hashtag_model.dart';
 import 'package:amptive/src/views/widgets/common_widgets/custom_container_widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/image_loader_widget.dart';
+import 'dart:developer' as marach show log;
 
 class AmptiveFullDiscoverPageView extends StatelessWidget {
   const AmptiveFullDiscoverPageView({super.key});
@@ -26,36 +30,7 @@ class AmptiveFullDiscoverPageView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        SizedBox(
-          height: 265,
-          child: Column(
-            children: [
-              SingleChildScrollView(
-                scrollDirection: Axis.horizontal,
-                child: Row(
-                  children: List.generate(
-                    3,
-                    (_) => const Padding(
-                      padding: EdgeInsets.only(left: 15),
-                      child: AmptiveImageLoaderWidget(imagePath: AmptiveImageStrings.discoverPic1),
-                    )
-                  )
-                ),
-              ),
-              const Spacer(),
-              SmoothPageIndicator(
-                controller: PageController(),
-                count: 3,
-                effect: ExpandingDotsEffect(
-                  activeDotColor: AmptiveColors.whiteColor,
-                  dotColor: AmptiveColors.inactiveDotColor,
-                  dotHeight: 8, dotWidth: 8,
-                  spacing: 4
-                ),
-              )
-            ],
-          ),
-        ),
+        const NewWidget(),
         Gap(30.h),
         AmptiveRowOfTitleWithTrendingViewAll(
           title: AmptiveOtherStrings.TRENDING_HASHTAGS,
@@ -253,3 +228,125 @@ class AmptiveFullDiscoverPageView extends StatelessWidget {
     );
   }
 }
+
+
+
+
+
+class NewWidget extends StatefulWidget {
+  const NewWidget({
+    super.key,
+  });
+
+  @override
+  State<NewWidget> createState() => _NewWidgetState();
+}
+
+class _NewWidgetState extends State<NewWidget> {
+  ValueNotifier<int> indexNotifier = ValueNotifier(0);
+  late ScrollController _scrollController;
+  late Timer _timer;
+  int _currentItemIndex = 0;
+  final int _itemCount = 3;
+
+  @override
+  void initState() {
+    super.initState();
+    _scrollController = ScrollController();
+    _scrollToNextItem();
+  }
+
+  void _scrollToNextItem() {
+    _timer = Timer.periodic(
+      const Duration(seconds: 5),
+      (_) async{
+        await _scrollController.animateTo(
+          _currentItemIndex * AmptiveHelperFunctions.getScreenWidth(context) * 0.9,
+          duration: const Duration(seconds: 2),
+          curve: Curves.easeInOut,
+        ).then(
+          (_) => indexNotifier.value = _currentItemIndex,
+        );
+        // marach.log(_currentItemIndex.toString());
+
+        _currentItemIndex++;
+        if (_currentItemIndex >= _itemCount) {
+          // Reset to the first item if we reach the end
+          _currentItemIndex = 0;
+          _scrollController.jumpTo(0.0);
+        }
+      }
+    );
+  }
+
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    _timer.cancel();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      height: 265,
+      child: Column(
+        children: [
+          SingleChildScrollView(
+            physics: const BouncingScrollPhysics(),
+            scrollDirection: Axis.horizontal,
+            controller: _scrollController,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: List.generate(
+                3,
+                (_) => const Padding(
+                  padding: EdgeInsets.only(left: 15),
+                  child: AmptiveImageLoaderWidget(imagePath: AmptiveImageStrings.discoverPic1),
+                )
+              )
+            ),
+          ),
+          const Spacer(),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 15),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: List.generate(
+                3,
+                (index){
+                  return ValueListenableBuilder(
+                    valueListenable: indexNotifier,
+                    builder: (_, value, __){
+                      //marach.log('this is the value $value');
+                      final isActive = index == value;
+                      return AmptiveCustomContainer(
+                        margin: const EdgeInsets.only(left: 3),
+                        radius: 8,
+                        color: isActive ? AmptiveColors.whiteColor : AmptiveColors.inactiveDotColor,
+                        height: 8, 
+                        width: isActive ? 25 : 8,
+                        child: const SizedBox.shrink()
+                      );
+                    }
+                  );
+                }
+              ),
+            ),
+          )
+        ],
+      ),
+    );
+  }
+}
+
+          // SmoothPageIndicator(
+          //   controller: PageController(),
+          //   count: 3,
+          //   effect: ExpandingDotsEffect(
+          //     activeDotColor: AmptiveColors.whiteColor,
+          //     dotColor: AmptiveColors.inactiveDotColor,
+          //     dotHeight: 8, dotWidth: 8,
+          //     spacing: 4
+          //   ),
+          // )

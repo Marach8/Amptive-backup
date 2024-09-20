@@ -34,6 +34,7 @@ class AmptiveOtherStrings{
   static const attendAsGuest = 'Attend as guest';
   static const skip = 'Skip';
   static const back = 'Back';
+  static const CONTINUE = 'Continue';
 
   static const signUpWith = 'Sign up with ';
   static const signInWith = 'Sign in with ';
@@ -92,7 +93,7 @@ class AmptiveOtherStrings{
   static const whatIsYourPhoneNumber = "What is your phone number?";
 
   static const SOCIETY = 'Society';
-  static const goLive = 'Go live';
+  static const GO_LIVE = 'Go live';
   static const PAID_SHOW = '\$paid show';
   static const PAID_SHOWS = 'Paid Shows';
   static const FREE_EVENTS = 'Free Events';
@@ -127,6 +128,12 @@ class AmptiveOtherStrings{
   static const SEE_COMMUNITIES = 'See communities on Amptive';
   static const RECENT_SEARCHES = 'Recent Searches';
   static const CLEAR = 'Clear';
-
   static const DISCOVER_COMMUNITIES = 'Discover communities with interesting shows and events';
+
+  static const CREATE_SHOW_OR_EVENT = 'Create Show or Event';
+  static const CHOOSE_2_CREATE_SHOW_OR_EVENT = "Choose whether you'd like to create a Show or an Event befor proceeding.";
+  static const CREATE_SHOW = 'Create Show';
+  static const CREATE_EVENT = 'Create Event';
+  static const CREATE_EVENT_DESC = 'For one-time live audio experience';
+  static const CREATE_SHOW_DESC = 'For live audio series with recurring episodes';
 }

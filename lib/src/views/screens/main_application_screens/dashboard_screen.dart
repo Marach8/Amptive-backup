@@ -1,7 +1,7 @@
 import 'package:amptive/src/views/screens/main_application_screens/sub_views/discover/discover_home.dart';
 import 'package:amptive/src/views/widgets/common_widgets/annotated_region__widget.dart';
 import 'package:amptive/src/views/widgets/other_widgets/main_application_widgets/dashboar_nav_bar_widget.dart';
-import 'package:amptive/src/views/widgets/other_widgets/main_application_widgets/widgets_in_home_view/home_view_widget.dart';
+import 'package:amptive/src/views/widgets/other_widgets/main_application_widgets/widgets_in_home_view/main_home_view_widget.dart';
 import 'package:flutter/material.dart';
 
 

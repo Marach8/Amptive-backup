@@ -26,7 +26,7 @@ class AmptiveSubscribedShowOrEventDataModelWidget extends StatelessWidget {
         AmptiveListTileWithLeadingPictureWidget(
           leadingImagePath: AmptiveImageStrings.jpeg3,
           trailingOnPressed: (){
-            context.pushNamed(AmptiveRoutes.eventDetailedScreen);
+            context.pushNamed(AmptiveRoutes.EVENT_DETAILED_SCREEN);
           },
           title: 'glennodoyle',
           subtitle: 'Started a live show',
