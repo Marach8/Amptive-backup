@@ -1,3 +1,5 @@
+// ignore_for_file: constant_identifier_names
+
 class AmptiveImageStrings{
   const AmptiveImageStrings._();
 
@@ -19,7 +21,17 @@ class AmptiveImageStrings{
 
   static const facebookIcon = '$generalPngImagePath/facebook.png';
   static const googleIcon = '$generalPngImagePath/google_icon.png';
-
   static const noAvatarImage = '$generalPngImagePath/no_avatar_image.png';
-
+  static const discoverPic1 = '$generalPngImagePath/Frame 156.png';
+  static const OFFICE_LADIES = '$generalPngImagePath/Frame 22.png';
+  static const endlessThread = '$generalPngImagePath/Frame 71.png';
+  static const threePpl = '$generalPngImagePath/Group_fill.png';
+  static const JOE_POMP_SHOW = '$generalPngImagePath/Frame 71 (1).png';
+  static const CRIMINAL = '$generalPngImagePath/Frame 71 (2).png';
+  static const COMMUNITY_CARD = '$generalPngImagePath/Community card 1.png';
+  static const MAN_PHOTO = '$generalPngImagePath/Pexels Photo by Key  Notez.png';
+  static const event1 = '$generalPngImagePath/Community card 11 (1).png';
+  static const event2 = '$generalPngImagePath/Community card 11.png';
+  static const event3 = '$generalPngImagePath/Community card 12 (1).png';
+  static const event4 = '$generalPngImagePath/Community card 12.png';
 }

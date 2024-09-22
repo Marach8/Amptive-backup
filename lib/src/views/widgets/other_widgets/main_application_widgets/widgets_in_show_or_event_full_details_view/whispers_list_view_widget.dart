@@ -3,7 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 import '../../../../../utils/constants/colors.dart';
 import '../../../../../utils/constants/strings/image_strings.dart';
-import '../../../common_widgets/container_for_rendering_other_widgets.dart';
+import '../../../common_widgets/custom_container_widget.dart';
 import '../../../common_widgets/list_tile_with_leading_picture_widget.dart';
 
 class AmptiveWhispersListViewWidget extends StatelessWidget {

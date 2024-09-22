@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import '../../../../../utils/constants/colors.dart';
-import '../../../common_widgets/container_for_rendering_other_widgets.dart';
+import '../../../common_widgets/custom_container_widget.dart';
 import '../../../common_widgets/two_texts_rich_text_widget.dart';
 
 class AmptiveHashtagsWidget extends StatelessWidget {

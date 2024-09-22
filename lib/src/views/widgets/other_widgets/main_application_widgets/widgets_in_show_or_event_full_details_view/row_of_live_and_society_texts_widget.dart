@@ -35,7 +35,7 @@ class AmptiveRowOfTwoIconsAndTwoTextsWidget extends StatelessWidget {
         Icon(Icons.groups, color: AmptiveColors.grey5Color),
         const Gap(5),
         Text(
-          text2?.toUpperCase() ?? AmptiveOtherStrings.society.toUpperCase(),
+          text2?.toUpperCase() ?? AmptiveOtherStrings.SOCIETY.toUpperCase(),
           style: Theme.of(context).textTheme.bodyMedium?.copyWith(
             color: AmptiveColors.grey5Color,
             fontSize: AmptiveFontSizes.size14
