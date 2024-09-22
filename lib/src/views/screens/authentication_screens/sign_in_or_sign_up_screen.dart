@@ -6,8 +6,7 @@ import 'package:amptive/src/views/widgets/common_widgets/app_bar_widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/elevated_button_widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/outlined_button_widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/outlined_button_with_leading_icon_widget.dart';
-import 'package:amptive/src/views/widgets/common_widgets/png_jpeg_asset_loader_widget.dart';
-import 'package:amptive/src/views/widgets/common_widgets/svg_asset_loader_widget.dart';
+import 'package:amptive/src/views/widgets/common_widgets/image_loader_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -27,7 +26,7 @@ class AmptiveAuthScreen extends StatelessWidget {
     return AmptiveAnnotatedRegionWidget(
       child: Scaffold(
         appBar: const AmptiveAppBar(
-          title: AmptiveSvgAssetLoaderWidget(svgPath: AmptiveImageStrings.svgLogo2),
+          title: AmptiveImageLoaderWidget(imagePath: AmptiveImageStrings.logo2),
         ),
 
         body: Center(
@@ -57,8 +56,8 @@ class AmptiveAuthScreen extends StatelessWidget {
                 AmptiveOutlinedButtonWithLeadingIconWidget(
                   buttonTitle: (userSignUp ? AmptiveOtherStrings.signUpWith : AmptiveOtherStrings.signInWith) + AmptiveOtherStrings.facebook,
                   onPressed: (){},
-                  leadingIcon: const AmptivePngAndJpegAssetLoaderWidget(
-                    pngOrJpegPath: AmptiveImageStrings.pngFacebookIcon,
+                  leadingIcon: const AmptiveImageLoaderWidget(
+                    imagePath: AmptiveImageStrings.facebookIcon,
                   )
                 ),
                 Gap(15.h),
@@ -74,8 +73,8 @@ class AmptiveAuthScreen extends StatelessWidget {
                 AmptiveOutlinedButtonWithLeadingIconWidget(
                   buttonTitle: (userSignUp ? AmptiveOtherStrings.signUpWith : AmptiveOtherStrings.signInWith) + AmptiveOtherStrings.google,
                   onPressed: (){},
-                  leadingIcon: const AmptivePngAndJpegAssetLoaderWidget(
-                    pngOrJpegPath: AmptiveImageStrings.pngGoogleIcon,
+                  leadingIcon: const AmptiveImageLoaderWidget(
+                    imagePath: AmptiveImageStrings.googleIcon,
                   )
                 )
               ],

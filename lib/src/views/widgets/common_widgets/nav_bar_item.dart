@@ -1,4 +1,5 @@
 import 'package:amptive/src/utils/constants/colors.dart';
+import 'package:amptive/src/utils/helpers/helper_functions/other_functions.dart';
 import 'package:flutter/material.dart';
 
 class AmptiveBottomAppBarItem extends StatelessWidget {
@@ -24,10 +25,15 @@ class AmptiveBottomAppBarItem extends StatelessWidget {
         final isSelected = itemIdentityIndex == value;
         return GestureDetector(
           onTap: (){
+            AmptiveHelperFunctions.hideAnyMountedSnackbar(context);
             //if the user taps on a nav bar item, update the index of the controller
             //to be the index of the tapped item.
             pageIndexNotifier.value = itemIdentityIndex;
-            pageController.jumpToPage(itemIdentityIndex);
+            pageController.animateToPage(
+              itemIdentityIndex,
+              duration: const Duration(milliseconds: 1),
+              curve: Curves.easeIn
+            );
           },
           child: AnimatedCrossFade(
             firstChild: Icon(icon, color: AmptiveColors.whiteColor),

@@ -1,4 +1,5 @@
 import 'package:amptive/src/utils/constants/colors.dart';
+import 'package:amptive/src/utils/constants/font_sizes.dart';
 import 'package:amptive/src/utils/constants/font_weights.dart';
 import 'package:amptive/src/utils/constants/strings/other_strings.dart';
 import 'package:amptive/src/views/widgets/animation_widgets/other_animation_widgets/opacity_animation.dart';
@@ -15,9 +16,8 @@ class AmptiveLiveIndicatorWithAnimatingDotWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       alignment: Alignment.center,
-      padding: const EdgeInsets.all(0),
-      height: 20,
-      width: 40,
+      padding: EdgeInsets.fromLTRB(8.44.h, 5.h, 8.44.h, 5.h),
+      width: 60.w,
       decoration: BoxDecoration(
         gradient: LinearGradient(
           colors: [
@@ -25,22 +25,26 @@ class AmptiveLiveIndicatorWithAnimatingDotWidget extends StatelessWidget {
             AmptiveColors.orangeGradientColorB
           ]
         ),
-        borderRadius: BorderRadius.circular(5),
+        borderRadius: BorderRadius.circular(5.r),
       ),
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           AmptiveAnimatedOpacityWidget(
             child: CircleAvatar(
-              radius: 3,
+              radius: 3.r,
               backgroundColor: AmptiveColors.whiteColor,
             ),
           ),
-          Gap(3.h),
+          Gap(4.w),
           Text(
             AmptiveOtherStrings.live.toUpperCase(),
+            textAlign: TextAlign.center,
             style: Theme.of(context).textTheme.titleSmall?.copyWith(
-              fontWeight: AmptiveFontWeights.semiBold
+              fontSize: AmptiveFontSizes.size14,
+              fontWeight: AmptiveFontWeights.semiBold,
+              height: 0,
             )
           ),
         ],

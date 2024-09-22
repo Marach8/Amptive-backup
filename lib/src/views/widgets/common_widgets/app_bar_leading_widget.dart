@@ -4,7 +4,13 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 
 class AmptiveAppBarLeadingWidget extends StatelessWidget {
-  const AmptiveAppBarLeadingWidget({super.key});
+  final String? leadingText;
+  final TextStyle? leadingStyle;
+  const AmptiveAppBarLeadingWidget({
+    super.key,
+    this.leadingText,
+    this.leadingStyle
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -13,10 +19,10 @@ class AmptiveAppBarLeadingWidget extends StatelessWidget {
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Expanded(child: Icon(Icons.arrow_back_ios, size: 20.r,)),
+          Icon(Icons.arrow_back_ios, size: 20.r,),
           Text(
-            AmptiveOtherStrings.back,
-            style: Theme.of(context).textTheme.titleMedium,
+            leadingText ?? AmptiveOtherStrings.back,
+            style: leadingStyle ?? Theme.of(context).textTheme.titleMedium,
           )
         ],
       ),

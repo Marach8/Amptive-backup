@@ -1,3 +1,5 @@
+// ignore_for_file: constant_identifier_names
+
 class AmptiveOtherStrings{
   const AmptiveOtherStrings._();
 
@@ -8,6 +10,7 @@ class AmptiveOtherStrings{
   static const space = ' ';
   static const underscore = '_';
   static const plus  = '+';
+  static const HASH = '#';
 
 
   static const goLiveLikeNeverBefore = "Go Live, Like Never Before";
@@ -31,6 +34,7 @@ class AmptiveOtherStrings{
   static const attendAsGuest = 'Attend as guest';
   static const skip = 'Skip';
   static const back = 'Back';
+  static const CONTINUE = 'Continue';
 
   static const signUpWith = 'Sign up with ';
   static const signInWith = 'Sign in with ';
@@ -43,8 +47,7 @@ class AmptiveOtherStrings{
 
   static const whatIsYourEmail = 'What is your email?';
   static const enterYourEmail = 'Enter your email...';
-  static const thisEmailWillBeVerified =
-      'This email will be verified in the next step';
+  static const thisEmailWillBeVerified = 'This email will be verified in the next step';
   static const verifyEmail = 'Verify email';
 
   static const youEnteredInvalidCode = 'You entered an invalid code. ';
@@ -57,20 +60,16 @@ class AmptiveOtherStrings{
 
   static const whatIsYourDateOfBirth = "What is your date of birth?";
   static const selectDate = "Select Date";
-  static const users13andOlderWarning =
-      "Only users 13 and older may use this app";
+  static const users13andOlderWarning = "Only users 13 and older may use this app";
   static const done = 'Done';
 
-  static const noteAboutProfilePic =
-      "Note that this will appear on your profile.";
+  static const noteAboutProfilePic = "Note that this will appear on your profile.";
   static const termsOfService = "Terms of Service";
   static const enterYourName = 'Enter your name';
   static const whatIsYourName = 'What is your name?';
   static const createAccount = 'Create account';
   static const privacyPolicy = 'Privacy Policy.';
-  static const warningOnClickingCreate =
-      'By clicking on ‘Create account’, you agree to the';
-
+  static const warningOnClickingCreate = 'By clicking on ‘Create account’, you agree to the';
 
   static const username = "username";
   static const checkerIsLoading = "Checker is loading...";
@@ -84,28 +83,57 @@ class AmptiveOtherStrings{
   static const camera = 'Camera';
   static const skipForNow = 'Skip for now';
 
-  static const select5Communities =
-      "Select 5 communities you find interest in.";
-  static const selectedInterestNote =
-      "Your selected interests will be used to personalize you Amptive experience.";
+  static const select5Communities = "Select 5 communities you find interest in.";
+  static const selectedInterestNote = "Your selected interests will be used to personalize you Amptive experience.";
 
   static const personalizingYourExperience = "Personalizing your experience...";
-
 
   static const countryPickers  = 'country_pickers';
   static const verifyPhoneNumber  = 'Verify phone number';
   static const whatIsYourPhoneNumber = "What is your phone number?";
 
+  static const SOCIETY = 'Society';
+  static const GO_LIVE = 'Go live';
+  static const PAID_SHOW = '\$paid show';
+  static const PAID_SHOWS = 'Paid Shows';
+  static const FREE_EVENTS = 'Free Events';
+  static const PAID_EVENTS = 'Paid Events';
+  static const FREE_SHOWS = 'Free Shows';
+  static const hashtags = 'Hashtags';
+  static const hostedBy = 'Hosted by';
+  static const showLess = ' Show less';
+  static const showMore = 'Show more';
+  static const whispers = 'Whispers';
+  static const scheduled = 'Scheduled';
+  static const subscribed = 'Subscribed';
+  static const following = 'Following';
 
-  static const goLive = 'Go live';
-  static const paidShow = '\$paid show';
+  static const TECHNOLOGY = 'Technology';
+  static const gotATicketId = 'Got a Ticket ID? (coming soon)';
+  static const addedToCalender = 'Added to your calender';
+  static const removedFromCalender = 'Removed from your calender';
+  static const view = 'View';
 
-  // string methods
-  static String enter4DigitSentFrom(String location) {
-    return "Enter the 4 digit code we just sent to your $location";
-  }
+  static const SEARCH_FOR_EVENTS_ND_SHOWS = 'Search for events, shows and more';
+  static const CANCEL = 'Cancel';
+  static const TRENDING_HASHTAGS = 'Trending Hashtags';
+  static const TRENDING = 'Trending';
+  static const SPORTS = 'Sports';
+  static const TRUE_CRIME = 'True Crime';
+  static const MORE_2_DISCOVER = 'More to Discover';
+  static const TOP_CREATORS = 'Top Creators';
+  static const POPULAR_CREATORS = 'Popular Creators';
+  static const SPOTLIGHT = 'Spotlight';
+  static const VIEW_ALL = 'View all';
+  static const SEE_COMMUNITIES = 'See communities on Amptive';
+  static const RECENT_SEARCHES = 'Recent Searches';
+  static const CLEAR = 'Clear';
+  static const DISCOVER_COMMUNITIES = 'Discover communities with interesting shows and events';
 
-  static String codeHasBeenSentResendIn(int time) {
-    return "Code has been sent. You can send another in $time";
-  }
+  static const CREATE_SHOW_OR_EVENT = 'Create Show or Event';
+  static const CHOOSE_2_CREATE_SHOW_OR_EVENT = "Choose whether you'd like to create a Show or an Event befor proceeding.";
+  static const CREATE_SHOW = 'Create Show';
+  static const CREATE_EVENT = 'Create Event';
+  static const CREATE_EVENT_DESC = 'For one-time live audio experience';
+  static const CREATE_SHOW_DESC = 'For live audio series with recurring episodes';
 }

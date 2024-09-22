@@ -5,11 +5,12 @@ import 'package:amptive/src/views/widgets/animation_widgets/common_animation_wid
 import 'package:amptive/src/views/widgets/common_widgets/annotated_region__widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/elevated_button_widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/outlined_button_widget.dart';
-import 'package:amptive/src/views/widgets/common_widgets/svg_asset_loader_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 import 'package:go_router/go_router.dart';
+
+import '../../widgets/common_widgets/image_loader_widget.dart';
 
 
 class AmptiveWelcomeScreen extends StatelessWidget {
@@ -24,7 +25,7 @@ class AmptiveWelcomeScreen extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              const AmptiveSvgAssetLoaderWidget(svgPath: AmptiveImageStrings.svgAmptiveLogo),
+              const AmptiveImageLoaderWidget(imagePath: AmptiveImageStrings.amptiveLogo),
               Gap(80.h),
 
               const Padding(

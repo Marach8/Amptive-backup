@@ -19,6 +19,9 @@ class AmptiveApp extends StatelessWidget {
           themeMode: ThemeMode.dark,
           darkTheme: AmptiveThemeData.darkTheme,
           routerConfig: amptiveAppRouter,
+          // routeInformationParser: amptiveAppRouter.routeInformationParser,
+          // routerDelegate: amptiveAppRouter.routerDelegate,
+          // routeInformationProvider: amptiveAppRouter.routeInformationProvider,
         );
       },
     );
