@@ -41,7 +41,6 @@ class AmptiveListTileWithLeadingPictureWidget extends StatelessWidget {
                 title,
                 style: Theme.of(context).textTheme.titleMedium?.copyWith(
                   fontWeight: AmptiveFontWeights.medium,
-                  height: 1
                 ),
               ),
               Text(

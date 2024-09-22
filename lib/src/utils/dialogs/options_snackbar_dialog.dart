@@ -3,7 +3,7 @@ import 'package:amptive/src/utils/constants/maps.dart';
 import 'package:amptive/src/utils/helpers/helper_functions/other_functions.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
-import '../../views/widgets/common_widgets/container_for_rendering_other_widgets.dart';
+import '../../views/widgets/common_widgets/custom_container_widget.dart';
 import '../constants/colors.dart';
 
 void showAudioOrVideoFullDetailsOptions(BuildContext context)

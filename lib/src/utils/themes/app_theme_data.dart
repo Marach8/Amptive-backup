@@ -1,5 +1,3 @@
-
-
 import 'package:amptive/src/utils/constants/colors.dart';
 import 'package:amptive/src/utils/constants/strings/other_strings.dart';
 import 'package:amptive/src/utils/themes/widget_themes/app_bar_theme.dart';
@@ -24,7 +22,7 @@ class AmptiveThemeData{
     // ),
     fontFamily: AmptiveOtherStrings.inter,
     brightness: Brightness.dark,
-    scaffoldBackgroundColor: AmptiveColors.brandBlackColor,
+    scaffoldBackgroundColor: AmptiveColors.black,
     // listTileTheme: AmptiveListTileTheme.darkListTileTheme,
     textTheme: AmptiveTextTheme.darkTextTheme,
     elevatedButtonTheme: AmptiveElevatedButtonTheme.darkElevatedButtonTheme,

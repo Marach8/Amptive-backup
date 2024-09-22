@@ -1,3 +1,5 @@
+// ignore_for_file: constant_identifier_names
+
 class AmptiveRoutes {
   //WELCOME AND ONBOARDING
   static String index = "/";
@@ -22,8 +24,14 @@ class AmptiveRoutes {
   //MAIN APPLICATION
   static const homeScreen = "home_screen";
   static const showDetailedScreen = "show_detailed_screen";
-  static const eventDetailedScreen = "event_detailed_screen";
-  static const scheduledEventsOrShowsScreen = 'scheduled_events_or_shows';
-  static const subscribedEventsOrShowsScreen = 'subscribed_events_or_shows';
-  static const followingEventsOrShowsScreen = 'following_events_or_shows';
+  static const EVENT_DETAILED_SCREEN = "event_detailed_screen";
+  static const SCHEDULED_EVENTS_OR_SHOWS_SCREEN = 'scheduled_events_or_shows';
+  static const SUBSCRIBED_EVENTS_OR_SHOWS_SCREEN = 'subscribed_events_or_shows';
+  static const FOLLOWING_EVENTS_OR_SHOWS_SCREEN = 'following_events_or_shows';
+  static const COMMUNITY_SCREEN = 'community_screen';
+  static const SOCIETY_SCREEN = 'society_screen';
+  static const TRENDING_SOCIETY_SCREEN = 'trending_society_screen';
+  static const TRENDING_HASHTAGS_SCREEN = 'trending_hashtags_screen';
+  static const TRENDING_HASHTAG_FULL_SCREEN = 'trending_hashtag_full_screen';
+  static const GO_LIVE_SCREEN = 'go_live';
 }

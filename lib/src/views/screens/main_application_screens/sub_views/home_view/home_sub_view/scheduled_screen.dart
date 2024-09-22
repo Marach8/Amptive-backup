@@ -2,13 +2,14 @@ import 'package:amptive/src/utils/constants/font_sizes.dart';
 import 'package:amptive/src/utils/constants/strings/other_strings.dart';
 import 'package:amptive/src/utils/constants/strings/route_strings.dart';
 import 'package:amptive/src/views/widgets/common_widgets/annotated_region__widget.dart';
-import 'package:amptive/src/views/widgets/common_widgets/song_or_video_data_model_widget.dart';
+import 'package:amptive/src/views/widgets/common_widgets/refresh_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import '../../../../../../utils/constants/colors.dart';
 import '../../../../../widgets/common_widgets/app_bar_leading_widget.dart';
-import '../../../../../widgets/common_widgets/container_for_rendering_other_widgets.dart';
+import '../../../../../widgets/common_widgets/custom_container_widget.dart';
+import '../../../../../widgets/other_widgets/main_application_widgets/widgets_in_home_view/widgets_in_scheduled/scheduled_show_or_event_model_widget.dart';
 
 
 class AmptiveScheduledEventOrShowViewWidget extends StatelessWidget {
@@ -52,20 +53,23 @@ class AmptiveScheduledEventOrShowViewWidget extends StatelessWidget {
             // )
           ],
            
-          body: ListView(              
-            padding: EdgeInsets.zero,
-            children: [      
-              ...Iterable.generate(
-                10,
-                (_) => Padding(
-                  padding: const EdgeInsets.fromLTRB(20, 5, 20, 20),
-                  child: GestureDetector(
-                    onTap: () => context.pushNamed(AmptiveRoutes.showDetailedScreen),
-                    child: const AmptiveSongOrVideoDataModelWidget()
-                  ),
+          body: AmptiveRefreshIndicatorWidget(
+            child: ListView( 
+              physics: const BouncingScrollPhysics(),             
+              padding: EdgeInsets.zero,
+              children: [      
+                ...Iterable.generate(
+                  10,
+                  (_) => Padding(
+                    padding: const EdgeInsets.fromLTRB(20, 5, 20, 20),
+                    child: GestureDetector(
+                      onTap: () => context.pushNamed(AmptiveRoutes.showDetailedScreen),
+                      child: const AmptiveScheduledShowOrEventDataModelWidget()
+                    ),
+                  )
                 )
-              )
-            ]
+              ]
+            ),
           )
         ),
       ),

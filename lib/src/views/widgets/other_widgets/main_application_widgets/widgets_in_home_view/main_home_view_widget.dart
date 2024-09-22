@@ -1,17 +1,16 @@
 import 'package:amptive/src/utils/constants/strings/route_strings.dart';
-import 'package:amptive/src/views/widgets/common_widgets/song_or_video_data_model_widget.dart';
+import 'package:amptive/src/views/widgets/common_widgets/show_or_event_data_model_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 import 'package:go_router/go_router.dart';
-import '../../../../../utils/constants/colors.dart';
 import '../../../../../utils/constants/strings/image_strings.dart';
 import '../../../common_widgets/circular_container_with_picture_widget.dart';
-import '../../../common_widgets/container_for_rendering_other_widgets.dart';
+import '../../../common_widgets/divider_widget.dart';
 import '../../../common_widgets/image_loader_widget.dart';
 import '../../../common_widgets/live_user_model_widget.dart';
 import 'appbar_drop_down.dart';
-import 'user_with_add_icon_widget.dart';
+import 'user_go_live_widget.dart';
 
 
 class AmptiveHomeViewWidget extends StatelessWidget {
@@ -61,26 +60,23 @@ class AmptiveHomeViewWidget extends StatelessWidget {
               ),
             ],      
           ),
-
-          // SliverPersistentHeader(
-          //   pinned: true,
-          //   delegate: AmptiveSliverHeader()
-          // )
         ],
          
-        body: ListView(              
+        body: ListView( 
+          physics: const BouncingScrollPhysics(),             
           padding: EdgeInsets.zero,
           children: [
             SizedBox(
               height: 100,
               child: ListView(
+                physics: const BouncingScrollPhysics(),
                 padding: EdgeInsets.zero,
                 shrinkWrap: true,
                 scrollDirection: Axis.horizontal,
                 children: [
                   Padding(
                     padding: EdgeInsets.only(left: 10.62.w),
-                    child: const AmptiveUserWithAddIconWidget(),
+                    child: const AmptiveUserGoLiveWidget(),
                   ),
                   ...Iterable.generate(
                     20,
@@ -96,20 +92,15 @@ class AmptiveHomeViewWidget extends StatelessWidget {
                 ]
               ),
             ),
-            AmptiveCustomContainer(
-              color: AmptiveColors.whiteColor,
-              height: 0.15,
-              width: double.infinity,
-              child: const SizedBox.shrink(),
-            ),
+            const AmptiveDividerWidget(),
 
             ...Iterable.generate(
               10,
               (_) => Padding(
-                padding: const EdgeInsets.fromLTRB(20, 0, 20, 20),
+                padding: const EdgeInsets.fromLTRB(15, 0, 15, 30),
                 child: GestureDetector(
                   onTap: () => context.pushNamed(AmptiveRoutes.showDetailedScreen),
-                  child: const AmptiveSongOrVideoDataModelWidget()
+                  child: const AmptiveShowOrEventDataModelWidget()
                 ),
               )
             )

@@ -6,8 +6,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class AmptiveRowOfPaidShowAndPlayButtonWidget extends StatelessWidget {
+  final IconData? icon;
   const AmptiveRowOfPaidShowAndPlayButtonWidget({
     super.key,
+    this.icon
   });
 
   @override
@@ -26,7 +28,7 @@ class AmptiveRowOfPaidShowAndPlayButtonWidget extends StatelessWidget {
                 color: AmptiveColors.brandBlackColor
               ),
               child: Text(
-                AmptiveOtherStrings.paidShow.toUpperCase(),
+                AmptiveOtherStrings.PAID_SHOW.toUpperCase(),
                 style: Theme.of(context).textTheme.titleSmall?.copyWith(
                   fontWeight: AmptiveFontWeights.medium,
                   fontSize: AmptiveFontSizes.size10
@@ -40,7 +42,7 @@ class AmptiveRowOfPaidShowAndPlayButtonWidget extends StatelessWidget {
           width: 45.w,
           child: CircleAvatar(
             backgroundColor: AmptiveColors.authHintColor,
-            child: Icon(Icons.play_arrow, color: AmptiveColors.brandBlackColor,
+            child: Icon(icon ?? Icons.play_arrow, color: AmptiveColors.brandBlackColor,
             size: 30.w,)
           ),
         )

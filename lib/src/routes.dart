@@ -10,6 +10,7 @@ import 'package:amptive/src/views/screens/authentication_screens/post_registrati
 import 'package:amptive/src/views/screens/authentication_screens/sign_in_or_sign_up_screen.dart';
 import 'package:amptive/src/views/screens/authentication_screens/username_auth_screen.dart';
 import 'package:amptive/src/views/screens/main_application_screens/dashboard_screen.dart';
+import 'package:amptive/src/views/screens/main_application_screens/sub_views/home_view/home_sub_view/go_live_screen.dart';
 import 'package:amptive/src/views/screens/main_application_screens/sub_views/home_view/home_sub_view/scheduled_screen.dart';
 import 'package:amptive/src/views/screens/post_authentication_screens/crop_image_screen.dart';
 import 'package:amptive/src/views/screens/post_authentication_screens/pre_homepage.dart';
@@ -18,6 +19,11 @@ import 'package:amptive/src/views/screens/onboarding_screens/onboarding_page_vie
 import 'package:amptive/src/views/screens/onboarding_screens/welcome_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'views/screens/main_application_screens/sub_views/discover/community_home_screen.dart';
+import 'views/screens/main_application_screens/sub_views/discover/hashtag_full_screen.dart';
+import 'views/screens/main_application_screens/sub_views/discover/society_screen.dart';
+import 'views/screens/main_application_screens/sub_views/discover/trending_hashtags_screen.dart';
+import 'views/screens/main_application_screens/sub_views/discover/trending_society_screen.dart';
 import 'views/screens/main_application_screens/sub_views/home_view/home_sub_view/event_detailed_screen.dart';
 import 'views/screens/main_application_screens/sub_views/home_view/home_sub_view/following_screen.dart';
 import 'views/screens/main_application_screens/sub_views/home_view/home_sub_view/show_detailed_screen.dart';
@@ -143,8 +149,8 @@ final GoRouter amptiveAppRouter = GoRouter(
         ),
 
         GoRoute(
-          name: AmptiveRoutes.eventDetailedScreen,
-          path: AmptiveRoutes.eventDetailedScreen,
+          name: AmptiveRoutes.EVENT_DETAILED_SCREEN,
+          path: AmptiveRoutes.EVENT_DETAILED_SCREEN,
           pageBuilder: (context, state) => CustomTransitionPage(
             child: const AmptiveEventDetailedScreen(),
             transitionsBuilder: (context, animation, secondaryAnimation, child){
@@ -169,21 +175,58 @@ final GoRouter amptiveAppRouter = GoRouter(
         ),
 
         GoRoute(
-          name: AmptiveRoutes.scheduledEventsOrShowsScreen,
-          path: AmptiveRoutes.scheduledEventsOrShowsScreen,
+          name: AmptiveRoutes.GO_LIVE_SCREEN,
+          path: AmptiveRoutes.GO_LIVE_SCREEN,
+          builder: (_, __) => const AmptiveGoLiveScreen(),
+        ),
+
+        GoRoute(
+          name: AmptiveRoutes.SCHEDULED_EVENTS_OR_SHOWS_SCREEN,
+          path: AmptiveRoutes.SCHEDULED_EVENTS_OR_SHOWS_SCREEN,
           builder: (_, __) => const AmptiveScheduledEventOrShowViewWidget(),
         ),
 
         GoRoute(
-          name: AmptiveRoutes.subscribedEventsOrShowsScreen,
-          path: AmptiveRoutes.subscribedEventsOrShowsScreen,
+          name: AmptiveRoutes.SUBSCRIBED_EVENTS_OR_SHOWS_SCREEN,
+          path: AmptiveRoutes.SUBSCRIBED_EVENTS_OR_SHOWS_SCREEN,
           builder: (_, __) => const AmptiveSubscribedEventOrShowViewWidget(),
         ),
 
         GoRoute(
-          name: AmptiveRoutes.followingEventsOrShowsScreen,
-          path: AmptiveRoutes.followingEventsOrShowsScreen,
-          builder: (_, __) => const AmptiveFollowingEventOrShowViewWidget(),
+          name: AmptiveRoutes.FOLLOWING_EVENTS_OR_SHOWS_SCREEN,
+          path: AmptiveRoutes.FOLLOWING_EVENTS_OR_SHOWS_SCREEN,
+          builder: (_, __) => const AmptiveFollowingEvenstOrShowsViewWidget(),
+        ),
+
+        GoRoute(
+          name: AmptiveRoutes.COMMUNITY_SCREEN,
+          path: AmptiveRoutes.COMMUNITY_SCREEN,
+          builder: (_, __) => const AmptiveCommunityScreen(),
+        ),
+
+        GoRoute(
+          name: AmptiveRoutes.SOCIETY_SCREEN,
+          path: AmptiveRoutes.SOCIETY_SCREEN,
+          builder: (_, __) => const AmptiveSocietyScreen(),
+          routes: [
+            GoRoute(
+              name: AmptiveRoutes.TRENDING_SOCIETY_SCREEN,
+              path: AmptiveRoutes.TRENDING_SOCIETY_SCREEN,
+              builder: (_, __) => const AmptiveTrendingSocietyScreen(),
+            ),
+
+            GoRoute(
+              name: AmptiveRoutes.TRENDING_HASHTAGS_SCREEN,
+              path: AmptiveRoutes.TRENDING_HASHTAGS_SCREEN,
+              builder: (_, __) => const AmptiveTrendingHashTagsScreen(),
+            ),
+
+            GoRoute(
+              name: AmptiveRoutes.TRENDING_HASHTAG_FULL_SCREEN,
+              path: AmptiveRoutes.TRENDING_HASHTAG_FULL_SCREEN,
+              builder: (_, __) => const AmptiveTrendingHashTagFullScreen(),
+            ),
+          ]
         ),
       ]
     ),

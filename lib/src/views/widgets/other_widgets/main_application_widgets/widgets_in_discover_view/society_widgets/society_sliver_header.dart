@@ -1,0 +1,70 @@
+import 'package:flutter/material.dart';
+
+import '../../../../../../utils/constants/colors.dart';
+import '../../../../common_widgets/custom_container_widget.dart';
+
+class AmptiveSocietySliverHeader extends SliverPersistentHeaderDelegate{
+  final TabController tabController;
+  final ValueNotifier<int> notifier;
+  final TabBar? tabBar;
+
+  AmptiveSocietySliverHeader({
+    required this.tabController,
+    required this.notifier,
+    this.tabBar
+  });
+
+  @override
+  Widget build(BuildContext context, double shrinkOffset, bool overlapsContent) {
+    return AmptiveCustomContainer(
+      color: AmptiveColors.brandBlackColor,
+      height: kToolbarHeight,
+      child: TabBar(
+        controller: tabController,
+        physics: const BouncingScrollPhysics(),
+        splashFactory: NoSplash.splashFactory,
+        tabAlignment: TabAlignment.start,
+        labelPadding: EdgeInsets.zero,
+        indicatorColor: AmptiveColors.transparentColor,
+        padding: const EdgeInsets.only(left: 15),
+        isScrollable: true,
+        dividerColor: AmptiveColors.brandBlackColor,
+        tabs: ['All', 'Shows', 'Events'].asMap().entries.map(
+          (tab){              
+            return Tab(
+              child: ValueListenableBuilder(
+              valueListenable: notifier,
+              builder: (_, value, __) {
+                final isSelected = tab.key == value;
+                  return AmptiveCustomContainer(
+                    radius: 20,
+                    margin: const EdgeInsets.only(right: 10),
+                    color: isSelected ? 
+                      AmptiveColors.whiteColor : AmptiveColors.fillGreyColor.withOpacity(0.3),
+                    padding: const EdgeInsets.fromLTRB(15, 8, 15, 8),
+                    child: Text(
+                      tab.value,
+                      style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                        color: isSelected ? AmptiveColors.brandBlackColor : AmptiveColors.whiteColor                           
+                      ),
+                    ),
+                  );
+                }
+              ),
+            );
+          }
+        ).toList()
+      ),
+    );
+  }
+
+  @override
+  double get maxExtent => kToolbarHeight;
+
+  @override
+  double get minExtent => kToolbarHeight;
+
+  @override
+  bool shouldRebuild(covariant SliverPersistentHeaderDelegate oldDelegate) 
+    => false;
+}

@@ -5,6 +5,8 @@ class AmptiveColors {
 
   static Color get transparentColor => Colors.transparent;
 
+  static Color get black => Colors.black;
+
   static Color get brandBlackColor => const Color(0xFF0D0D0D);
 
   static Color get indicatorDark => const Color(0xFF252525);
@@ -52,6 +54,8 @@ class AmptiveColors {
   static Color get subtitleColor => const Color(0XFFC2C2C2);
 
   static Color get grey5Color => const Color(0xFFA8A8A8);
+  
   static Color get dimWhiteColor1 => const Color(0xFFF2F2F2);
-  //static Color get circleAvatarBgColor => const Color.fromRGBO(220, 207, 209, 1);
+
+  static Color get snackBarBgColor => const Color.fromRGBO(48, 52, 57, 1);
 }
