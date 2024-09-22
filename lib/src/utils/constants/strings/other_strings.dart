@@ -88,6 +88,12 @@ class AmptiveOtherStrings{
   static const verifyPhoneNumber  = 'Verify phone number';
   static const whatIsYourPhoneNumber = "What is your phone number?";
 
+
+  static const allow = 'Allow';
+  static const noThanks = 'No Thanks';
+
+
+
   static const society = 'Society';
   static const goLive = 'Go live';
   static const paidShow = '\$paid show';

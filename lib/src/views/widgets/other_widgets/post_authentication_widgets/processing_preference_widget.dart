@@ -48,8 +48,6 @@ class _ProcessingPreferenceWidgetState
 
   @override
   Widget build(BuildContext context) {
-    var preference = GetIt.I<PreferenceService>().getSelected();
-
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.center,

@@ -36,7 +36,7 @@ class AmptiveSongOrVideoDataModelWidget extends StatelessWidget {
         Gap(2.h),
         AmptiveCustomContainer(
           decorationImagePath: AmptiveImageStrings.weCanDoHardThingsBgImage,
-          decorationImageFit: BoxFit.fill,
+          decorationImageFit: BoxFit.contain,
           height: 432.h,
           radius: 15.r,
           child: AmptiveCustomContainer(

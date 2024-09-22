@@ -12,6 +12,7 @@ import 'package:amptive/src/views/screens/authentication_screens/username_auth_s
 import 'package:amptive/src/views/screens/main_application_screens/dashboard_screen.dart';
 import 'package:amptive/src/views/screens/main_application_screens/sub_views/home_view/home_sub_view/scheduled_screen.dart';
 import 'package:amptive/src/views/screens/post_authentication_screens/crop_image_screen.dart';
+import 'package:amptive/src/views/screens/post_authentication_screens/pre_homepage.dart';
 import 'package:amptive/src/views/screens/post_authentication_screens/preference_screen.dart';
 import 'package:amptive/src/views/screens/onboarding_screens/onboarding_page_view_screen.dart';
 import 'package:amptive/src/views/screens/onboarding_screens/welcome_screen.dart';
@@ -29,7 +30,7 @@ final GoRouter amptiveAppRouter = GoRouter(
   routes: <RouteBase>[
     GoRoute(
       path: AmptiveRoutes.index,
-      builder: (_, __) => const AmptiveDashboardScreen()
+      builder: (_, __) => const PreHomePage()
     ),
     GoRoute(
       name: AmptiveRoutes.welcome,
