@@ -11,7 +11,7 @@ class AmptiveAppBar extends StatelessWidget implements PreferredSizeWidget {
     this.hideLeading,
     this.centerTitle = true,
     this.actions,
-    this.leadingWidth
+    this.leadingWidth = 60.0
   });
 
   final Widget? title, leading;

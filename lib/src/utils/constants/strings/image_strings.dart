@@ -34,4 +34,6 @@ class AmptiveImageStrings{
   static const event2 = '$generalPngImagePath/Community card 11.png';
   static const event3 = '$generalPngImagePath/Community card 12 (1).png';
   static const event4 = '$generalPngImagePath/Community card 12.png';
+  static const createShowPlaceholderImage = '$generalPngImagePath/create-show-placeholder.png';
+
 }

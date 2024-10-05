@@ -63,11 +63,11 @@ class AmptiveHomeViewWidget extends StatelessWidget {
         ],
          
         body: ListView( 
-          physics: const BouncingScrollPhysics(),             
+          physics: const BouncingScrollPhysics(),
           padding: EdgeInsets.zero,
           children: [
             SizedBox(
-              height: 100,
+              height: 100.h,
               child: ListView(
                 physics: const BouncingScrollPhysics(),
                 padding: EdgeInsets.zero,
