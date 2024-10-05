@@ -1,5 +1,6 @@
 import 'package:amptive/src/utils/constants/strings/image_strings.dart';
 import 'package:amptive/src/utils/constants/strings/other_strings.dart';
+import 'package:amptive/src/utils/constants/strings/route_strings.dart';
 import 'package:amptive/src/views/widgets/common_widgets/annotated_region__widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/app_bar_widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/custom_rebuilder_widget.dart';
@@ -8,8 +9,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 import 'package:go_router/go_router.dart';
-import '../../../../../../utils/constants/colors.dart';
-import '../../../../../widgets/other_widgets/main_application_widgets/widgets_in_home_view/widgets_in_go_live/create_show_or_event_selection_widget.dart';
+import '../../../../../../../utils/constants/colors.dart';
+import '../../../../../../widgets/other_widgets/main_application_widgets/widgets_in_home_view/widgets_in_go_live/create_show_or_event_selection_widget.dart';
 
 class AmptiveGoLiveScreen extends StatefulWidget {
   const AmptiveGoLiveScreen({super.key});
@@ -96,7 +97,7 @@ class _AmptiveGoLiveScreenState extends State<AmptiveGoLiveScreen> {
         bottomNavigationBar: AmptiveRebuilderWidget(
           notifier: activateButton,
           builder: (_, activate, __) => AmptiveElevatedButtonWidget(
-            onPressed: activate ? (){} : null,
+            onPressed: activate ? () => context.pushNamed(AmptiveRoutes.CHOOSE_OR_CREATE_SHOW_SCREEN) : null,
             buttonTitle: AmptiveOtherStrings.CONTINUE,
             bgColor: AmptiveColors.whiteColor,
             fgColor: AmptiveColors.black,

@@ -101,7 +101,7 @@ class _AmptiveOnboardingScreenState extends State<AmptiveOnboardingScreen> {
                           final currentPageIndex =
                               currentState.currentPageIndex;
                           return Text(currentPageIndex > 1
-                              ? AmptiveOtherStrings.next
+                              ? AmptiveOtherStrings.NEXT
                               : AmptiveOtherStrings.skip);
                         })),
                   )

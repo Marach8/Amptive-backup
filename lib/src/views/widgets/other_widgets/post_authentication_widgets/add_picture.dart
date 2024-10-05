@@ -235,7 +235,7 @@ class _AddPictureWidgetState extends State<AddPictureWidget> {
                 style: ElevatedButton.styleFrom(
                     backgroundColor: AmptiveColors.brandBlueColor),
                 child: Text(
-                  AmptiveOtherStrings.next,
+                  AmptiveOtherStrings.NEXT,
                   style: Theme.of(context).textTheme.headlineMedium?.copyWith(
                         fontWeight: AmptiveFontWeights.semiBold,
                       ),

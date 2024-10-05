@@ -14,6 +14,7 @@ class AmptiveCustomContainer extends StatelessWidget {
   final BoxFit? decorationImageFit;
   final Clip clipBehavior;
   final int? duration;
+  final VoidCallback? onTap;
 
   const AmptiveCustomContainer({
     super.key,
@@ -32,33 +33,37 @@ class AmptiveCustomContainer extends StatelessWidget {
     this.decorationImagePath,
     this.clipBehavior = Clip.none,
     this.duration,
+    this.onTap,
     required this.child
   });
 
   @override
   Widget build(BuildContext context) {
-    return AnimatedContainer(
-      duration: Duration(milliseconds: duration ?? 500),
-      curve: Curves.easeIn,
-      alignment: alignment,
-      margin: margin,
-      clipBehavior: clipBehavior,
-      padding: padding,
-      height: height,
-      width: width,
-      constraints: constraints,
-      decoration: BoxDecoration(
-        image: decorationImagePath != null ? DecorationImage(
-          fit: decorationImageFit ?? BoxFit.cover,
-          image: AssetImage(decorationImagePath!)
-        ) : null,
-        gradient: gradient,
-        shape: boxShape ?? BoxShape.rectangle,
-        color: color,
-        border: border,
-        borderRadius: boxShape == null ? BorderRadius.circular(radius ?? 0) : null
+    return GestureDetector(
+      onTap: onTap,
+      child: AnimatedContainer(
+        duration: Duration(milliseconds: duration ?? 500),
+        curve: Curves.easeIn,
+        alignment: alignment,
+        margin: margin,
+        clipBehavior: clipBehavior,
+        padding: padding,
+        height: height,
+        width: width,
+        constraints: constraints,
+        decoration: BoxDecoration(
+          image: decorationImagePath != null ? DecorationImage(
+            fit: decorationImageFit ?? BoxFit.cover,
+            image: AssetImage(decorationImagePath!)
+          ) : null,
+          gradient: gradient,
+          shape: boxShape ?? BoxShape.rectangle,
+          color: color,
+          border: border,
+          borderRadius: boxShape == null ? BorderRadius.circular(radius ?? 0) : null
+        ),
+        child: child,
       ),
-      child: child,
     );
   }
 }
