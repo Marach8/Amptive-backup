@@ -5,7 +5,6 @@ import 'package:amptive/src/views/widgets/other_widgets/main_application_widgets
 import 'package:flutter/material.dart';
 
 
-
 class AmptiveDashboardScreen extends StatefulWidget {
   const AmptiveDashboardScreen({super.key});
 
@@ -33,7 +32,7 @@ class _AmptiveDashboardScreenState extends State<AmptiveDashboardScreen> {
 
   final _listOfPages = [
     const AmptiveHomeViewWidget(),
-    const AmptiveDiscoverView(),
+    const AmptiveDiscoverViewWidget(),
     Container(color: Colors.blue,),
     Container(color: Colors.green,),
   ];

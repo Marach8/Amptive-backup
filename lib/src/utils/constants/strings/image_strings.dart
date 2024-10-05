@@ -30,8 +30,8 @@ class AmptiveImageStrings{
   static const CRIMINAL = '$generalPngImagePath/Frame 71 (2).png';
   static const COMMUNITY_CARD = '$generalPngImagePath/Community card 1.png';
   static const MAN_PHOTO = '$generalPngImagePath/Pexels Photo by Key  Notez.png';
-  static const event1 = '$generalPngImagePath/Community card 11 (1).png';
-  static const event2 = '$generalPngImagePath/Community card 11.png';
-  static const event3 = '$generalPngImagePath/Community card 12 (1).png';
-  static const event4 = '$generalPngImagePath/Community card 12.png';
+  static const CREATE_EVENT_ICON = '$generalPngImagePath/cube tiny (1).png';
+  static const event2 = '$generalPngImagePath/cube tiny.png';
+  static const CREATE_SHOW_ICON = '$generalPngImagePath/Group 31 (1).png';
+  static const event4 = '$generalPngImagePath/Group 31.png';
 }

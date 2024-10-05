@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 
-import '../../../utils/helpers/helper_functions/other_functions.dart';
-
 class AmptiveRebuilderWidget<T> extends StatefulWidget {
   final ValueNotifier<T> notifier;
   final Widget Function(BuildContext, T, Widget?) builder;
@@ -29,7 +27,7 @@ class _AmptiveRebuilderWidgetState<T> extends State<AmptiveRebuilderWidget<T>> {
 
   @override
   void dispose() {
-    notifier.dispose();
+    //notifier.dispose();
     super.dispose();
   }
 

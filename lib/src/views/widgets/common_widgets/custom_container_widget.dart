@@ -13,6 +13,7 @@ class AmptiveCustomContainer extends StatelessWidget {
   final String? decorationImagePath;
   final BoxFit? decorationImageFit;
   final Clip clipBehavior;
+  final int? duration;
 
   const AmptiveCustomContainer({
     super.key,
@@ -30,13 +31,14 @@ class AmptiveCustomContainer extends StatelessWidget {
     this.decorationImageFit,
     this.decorationImagePath,
     this.clipBehavior = Clip.none,
+    this.duration,
     required this.child
   });
 
   @override
   Widget build(BuildContext context) {
     return AnimatedContainer(
-      duration: const Duration(milliseconds: 500),
+      duration: Duration(milliseconds: duration ?? 500),
       curve: Curves.easeIn,
       alignment: alignment,
       margin: margin,
