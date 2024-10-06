@@ -9,13 +9,17 @@ import 'package:amptive/src/views/screens/authentication_screens/password_auth_s
 import 'package:amptive/src/views/screens/authentication_screens/post_registration.dart';
 import 'package:amptive/src/views/screens/authentication_screens/sign_in_or_sign_up_screen.dart';
 import 'package:amptive/src/views/screens/authentication_screens/username_auth_screen.dart';
+import 'package:amptive/src/views/screens/main_application_screens/create_show_screen.dart';
 import 'package:amptive/src/views/screens/main_application_screens/dashboard_screen.dart';
 import 'package:amptive/src/views/screens/main_application_screens/sub_views/home_view/home_sub_view/go_live_views/main_go_live_screen.dart';
 import 'package:amptive/src/views/screens/main_application_screens/sub_views/home_view/home_sub_view/scheduled_screen.dart';
+import 'package:amptive/src/views/screens/onboarding_screens/splash.dart';
 import 'package:amptive/src/views/screens/post_authentication_screens/crop_image_screen.dart';
+import 'package:amptive/src/views/screens/post_authentication_screens/pre_homepage.dart';
 import 'package:amptive/src/views/screens/post_authentication_screens/preference_screen.dart';
 import 'package:amptive/src/views/screens/onboarding_screens/onboarding_page_view_screen.dart';
 import 'package:amptive/src/views/screens/onboarding_screens/welcome_screen.dart';
+import 'package:amptive/src/views/widgets/other_widgets/main_application_widgets/widgets_in_home_view/main_home_view_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'views/screens/main_application_screens/sub_views/discover/community_home_screen.dart';
@@ -36,7 +40,7 @@ final GoRouter amptiveAppRouter = GoRouter(
   routes: <RouteBase>[
     GoRoute(
       path: AmptiveRoutes.index,
-      builder: (_, __) => const AmptiveDashboardScreen()
+      builder: (_, __) => const SplashScreen()
     ),
     GoRoute(
       name: AmptiveRoutes.welcome,
@@ -116,6 +120,12 @@ final GoRouter amptiveAppRouter = GoRouter(
       builder: (_, __) => const AmptivePreferenceScreen(),
     ),
 
+    GoRoute(
+      name: AmptiveRoutes.preHomepage,
+      path: "/pre-homepage",
+      builder: (_, __) => const PreHomePage(),
+    ),
+
     //MAIN APPLICATION SCREENS
     GoRoute(
       name: AmptiveRoutes.homeScreen,
@@ -178,6 +188,12 @@ final GoRouter amptiveAppRouter = GoRouter(
           name: AmptiveRoutes.CHOOSE_OR_CREATE_SHOW_SCREEN,
           path: AmptiveRoutes.CHOOSE_OR_CREATE_SHOW_SCREEN,
           builder: (_, __) => const AmptiveChooseOrCreateShowScreen(),
+        ),
+
+        GoRoute(
+          name: AmptiveRoutes.createShowForm,
+          path: AmptiveRoutes.createShowForm,
+          builder: (_, __) => const CreateShowScreen(),
         ),
 
         GoRoute(

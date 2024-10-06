@@ -34,4 +34,6 @@ class AmptiveImageStrings{
   static const event2 = '$generalPngImagePath/cube tiny.png';
   static const CREATE_SHOW_ICON = '$generalPngImagePath/Group 31 (1).png';
   static const event4 = '$generalPngImagePath/Group 31.png';
+  static const createShowPlaceholderImage = '$generalPngImagePath/create-show-placeholder.png';
+
 }

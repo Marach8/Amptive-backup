@@ -15,6 +15,7 @@ import 'package:go_router/go_router.dart';
 import '../../../../../../utils/constants/colors.dart';
 import '../../../../../../utils/constants/strings/route_strings.dart';
 import '../../../../../../utils/dialogs/added_or_removed_from_calender_dialog.dart';
+import '../../../../common_widgets/image_loader_widget.dart';
 
 
 class AmptiveScheduledShowOrEventDataModelWidget extends StatefulWidget {
@@ -57,78 +58,82 @@ class _AmptiveScheduledShowOrEventDataModelWidgetState extends State<AmptiveSche
         ),
         Gap(2.h),
         AmptiveCustomContainer(
-          decorationImagePath: AmptiveImageStrings.weCanDoHardThingsBgImage,
-          decorationImageFit: BoxFit.fill,
-          height: 432.h,
+          height: 425.h,
+          clipBehavior: Clip.hardEdge,
           radius: 15.r,
-          child: AmptiveCustomContainer(
-            padding: const EdgeInsets.fromLTRB(15, 10, 15, 10),
-            radius: 15.r,
-            gradient: LinearGradient(
-              begin: Alignment.topCenter,
-              end: Alignment.bottomCenter,
-              colors: [
-                AmptiveColors.transparentColor,
-                AmptiveColors.transparentColor,
-                AmptiveColors.transparentColor,
-                AmptiveColors.transparentColor,
-                AmptiveColors.containerGradientColorB.withOpacity(0.5),
-                AmptiveColors.containerGradientColorB,
-                AmptiveColors.containerGradientColorB,
-                AmptiveColors.containerGradientColorB,
-              ]
-            ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const AmptiveWith2OthersWidget(),
-                const Spacer(),
-                Text(
-                  '15 Jul 2024 at 17:00',
-                  style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                    fontSize: AmptiveFontSizes.size16
-                  ),
+          child: Stack(
+            children: [
+              const AmptiveImageLoaderWidget(imagePath: AmptiveImageStrings.weCanDoHardThingsBgImage),
+              AmptiveCustomContainer(
+                padding: const EdgeInsets.fromLTRB(15, 10, 15, 10),
+                radius: 15.r,
+                gradient: LinearGradient(
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
+                  colors: [
+                    AmptiveColors.transparentColor,
+                    AmptiveColors.transparentColor,
+                    AmptiveColors.transparentColor,
+                    AmptiveColors.transparentColor,
+                    AmptiveColors.containerGradientColorB.withOpacity(0.5),
+                    AmptiveColors.containerGradientColorB,
+                    AmptiveColors.containerGradientColorB,
+                    AmptiveColors.containerGradientColorB,
+                  ]
                 ),
-                Gap(10.h),
-                Text(
-                  maxLines: 2,
-                  "Don't Forget Who You Are ft. Jacob Scipio",
-                  overflow: TextOverflow.clip,
-                  style: Theme.of(context).textTheme.displayMedium?.copyWith(
-                    fontSize: AmptiveFontSizes.size24,
-                    fontWeight: AmptiveFontWeights.semiBold,
-                    fontFamily: "Bricolage Grotesque"
-                  ),
-                ),
-                Gap(12.h),
-                const AmptiveRowOfNumberOfPeopleListeningWidget(),
-                Gap(10.h),
-                ValueListenableBuilder(
-                  valueListenable: _notifier,
-                  builder: (_, value, __) {
-                    return GestureDetector(
-                      onTap: (){
-                        _notifier.value = !value;
-                        showAddedOrRemovedSnackbar(
-                          context: context,
-                          content: value ? AmptiveOtherStrings.removedFromCalender 
-                            : AmptiveOtherStrings.addedToCalender
-                        );
-                      },
-                      child: AmptiveAnimatedCrossFadeWidget(
-                        condition: value,
-                        secondChild: const AmptiveRowOfPaidShowAndPlayButtonWidget(
-                          icon: Icons.add,
-                        ),
-                        firstChild: const AmptiveRowOfPaidShowAndPlayButtonWidget(
-                          icon: Icons.check,
-                        )
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const AmptiveWith2OthersWidget(),
+                    const Spacer(),
+                    Text(
+                      '15 Jul 2024 at 17:00',
+                      style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                        fontSize: AmptiveFontSizes.size16
                       ),
-                    );
-                  }
+                    ),
+                    Gap(10.h),
+                    Text(
+                      maxLines: 2,
+                      "Don't Forget Who You Are ft. Jacob Scipio",
+                      overflow: TextOverflow.clip,
+                      style: Theme.of(context).textTheme.displayMedium?.copyWith(
+                        fontSize: AmptiveFontSizes.size24,
+                        fontWeight: AmptiveFontWeights.semiBold,
+                        fontFamily: "Bricolage Grotesque"
+                      ),
+                    ),
+                    Gap(12.h),
+                    const AmptiveRowOfNumberOfPeopleListeningWidget(),
+                    Gap(10.h),
+                    ValueListenableBuilder(
+                      valueListenable: _notifier,
+                      builder: (_, value, __) {
+                        return GestureDetector(
+                          onTap: (){
+                            _notifier.value = !value;
+                            showAddedOrRemovedSnackbar(
+                              context: context,
+                              content: value ? AmptiveOtherStrings.removedFromCalender
+                                : AmptiveOtherStrings.addedToCalender
+                            );
+                          },
+                          child: AmptiveAnimatedCrossFadeWidget(
+                            condition: value,
+                            secondChild: const AmptiveRowOfPaidShowAndPlayButtonWidget(
+                              icon: Icons.add,
+                            ),
+                            firstChild: const AmptiveRowOfPaidShowAndPlayButtonWidget(
+                              icon: Icons.check,
+                            )
+                          ),
+                        );
+                      }
+                    ),
+                  ],
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
         )
       ],

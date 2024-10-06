@@ -1,11 +1,17 @@
 import 'dart:async';
 
 import 'package:amptive/src/utils/constants/colors.dart';
+import 'package:amptive/src/utils/constants/strings/other_strings.dart';
 import 'package:amptive/src/views/widgets/animation_widgets/other_animation_widgets/notification_animation_widget.dart';
 import 'package:amptive/src/views/screens/post_authentication_screens/pre_hompage_background.dart';
+import 'package:amptive/src/views/widgets/common_widgets/annotated_region__widget.dart';
+import 'package:amptive/src/views/widgets/common_widgets/elevated_button_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
+
+import '../../../utils/constants/strings/route_strings.dart';
 
 class PreHomePage extends StatefulWidget {
   const PreHomePage({super.key});
@@ -64,7 +70,7 @@ class _PreHomePageState extends State<PreHomePage>
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
+    return AmptiveAnnotatedRegionWidget(
       child: Scaffold(
         backgroundColor: AmptiveColors.brandBlackColor,
         body: Stack(
@@ -194,26 +200,14 @@ class _PreHomePageState extends State<PreHomePage>
                     SizedBox(
                       height: 22.h,
                     ),
-                    SizedBox(
-                      width: 340.w,
+                    AmptiveElevatedButtonWidget(
                       height: 50.w,
-                      child: ElevatedButton(
-                        onPressed: () {},
-                        style: ElevatedButton.styleFrom(
-                            backgroundColor: AmptiveColors.brandBlueColor),
-                        child: Container(
-                          padding: EdgeInsets.symmetric(vertical: 11.h),
-                          child: Text(
-                            "Allow",
-                            style: GoogleFonts.inter(
-                              color: AmptiveColors.whiteColor,
-                              fontSize: 18.sp,
-                              fontWeight: FontWeight.w600,
-                              height: 0.08,
-                            ),
-                          ),
-                        ),
-                      ),
+                      buttonTitle: AmptiveOtherStrings.allow,
+                      onPressed: () {
+                        context.goNamed(AmptiveRoutes.homeScreen);
+
+
+                      },
                     ),
                     SizedBox(
                       height: 20.h,
@@ -222,11 +216,13 @@ class _PreHomePageState extends State<PreHomePage>
                       width: 321.w,
                       height: 37.h,
                       child: GestureDetector(
-                        onTap: () {},
+                        onTap: () {
+                          context.goNamed(AmptiveRoutes.homeScreen);
+                        },
                         child: Container(
                           padding: EdgeInsets.symmetric(vertical: 11.h),
                           child: Text(
-                            "No Thanks",
+                            AmptiveOtherStrings.noThanks,
                             textAlign: TextAlign.center,
                             style: GoogleFonts.inter(
                               color: AmptiveColors.whiteColor,

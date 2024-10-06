@@ -92,6 +92,9 @@ class AmptiveOtherStrings{
   static const verifyPhoneNumber  = 'Verify phone number';
   static const whatIsYourPhoneNumber = "What is your phone number?";
 
+  static const allow  = 'Allow';
+  static const noThanks = "No thanks";
+
   static const SOCIETY = 'Society';
   static const GO_LIVE = 'Go live';
   static const PAID_SHOW = '\$paid show';

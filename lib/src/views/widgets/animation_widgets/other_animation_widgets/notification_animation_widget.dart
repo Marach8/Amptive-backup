@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:ui';
 
 import 'package:amptive/src/utils/constants/colors.dart';
+import 'package:amptive/src/utils/constants/strings/image_strings.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -188,7 +189,7 @@ class CardWidget extends StatelessWidget {
                   borderRadius: BorderRadius.circular(7.r)),
             ),
             child: SvgPicture.asset(
-              "assets/Logo1.svg",
+              AmptiveImageStrings.logo2,
             ),
           ),
           Expanded(
@@ -249,7 +250,7 @@ class CardWidget extends StatelessWidget {
                         height: 21.w,
                         decoration: ShapeDecoration(
                           image: const DecorationImage(
-                            image: AssetImage("assets/no_avatar_image.png"),
+                            image: AssetImage(AmptiveImageStrings.noAvatarImage),
                             fit: BoxFit.fill,
                           ),
                           shape: RoundedRectangleBorder(
