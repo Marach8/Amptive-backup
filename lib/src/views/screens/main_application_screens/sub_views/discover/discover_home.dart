@@ -8,14 +8,14 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 
 
-class AmptiveDiscoverView extends StatefulWidget {
-  const AmptiveDiscoverView({super.key});
+class AmptiveDiscoverViewWidget extends StatefulWidget {
+  const AmptiveDiscoverViewWidget({super.key});
 
   @override
-  State<AmptiveDiscoverView> createState() => _AmptiveDiscoverViewState();
+  State<AmptiveDiscoverViewWidget> createState() => _AmptiveDiscoverViewWidgetState();
 }
 
-class _AmptiveDiscoverViewState extends State<AmptiveDiscoverView> {
+class _AmptiveDiscoverViewWidgetState extends State<AmptiveDiscoverViewWidget> {
   late ValueNotifier<bool> notifier;
   late FocusNode focusNode;
   late TextEditingController controller;

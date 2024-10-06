@@ -135,7 +135,7 @@ class _PasswordAuthScreenState extends State<PasswordAuthScreen> {
             builder: (context, state) {
               return AmptiveElevatedButtonWidget(
                 height: 50.w,
-                buttonTitle: AmptiveOtherStrings.next,
+                buttonTitle: AmptiveOtherStrings.NEXT,
                 onPressed: state is ValidPasswordAuthState
                     ? () {
                         context.pushNamed(AmptiveRoutes.dobAuth);

@@ -128,7 +128,7 @@ class _AmptivePreferenceScreenState extends State<AmptivePreferenceScreen> {
                                                 vertical: 11.5.h),
                                           ),
                                           child: Text(
-                                            AmptiveOtherStrings.next,
+                                            AmptiveOtherStrings.NEXT,
                                             textAlign: TextAlign.center,
                                             style: Theme.of(context)
                                                 .textTheme

@@ -177,7 +177,7 @@ class _OTPScreenState extends State<OTPScreen> {
                   ? const AmptiveLoadingButtonWidget()
                   : AmptiveElevatedButtonWidget(
                     height: 50.w,
-                    buttonTitle: AmptiveOtherStrings.next,
+                    buttonTitle: AmptiveOtherStrings.NEXT,
                     onPressed: state is ValidOTPAuthState
                       ? () => context.read<AmptiveOTPAuthBloc>().add(VerifyOTPAuthEvent()) : null,
                   );
