@@ -149,56 +149,144 @@ class _CreateShowScreenState extends State<CreateShowScreen> {
                         ),
                       ),
                     ),
-                    Row(
-                      children: [
-                        Text(
-                          "Title",
-                          style: Theme.of(context)
-                              .textTheme
-                              .bodySmall
-                              ?.copyWith(fontSize: AmptiveFontSizes.size15),
-                        ),
-                        Expanded(
-                            child: SizedBox(
-                          width: 1.w,
-                        )),
-                        Text(
-                          "140 remaining",
-                          style: Theme.of(context)
-                              .textTheme
-                              .titleSmall
-                              ?.copyWith(
-                                  color: AmptiveColors.whiteColor
-                                      .withOpacity(0.4)),
-                        ),
-                      ],
+                    const CreateShowTextFieldTitle(
+                      title: "Title",
+                      otherInfo: "140 remaining",
                     ),
                     SizedBox(height: 11.5.h),
-                    TextFormField(
+                    CreateShowTextFormField(
                       controller: _titleController,
-                      decoration: InputDecoration(
-                        contentPadding: EdgeInsets.symmetric(
-                            vertical: 12.h, horizontal: 16.w),
-                        hintText: 'What is the title of your show?',
-                        hintStyle: TextStyle(
-                          fontSize: AmptiveFontSizes.size14,
-                          color: AmptiveColors.whiteColor.withOpacity(0.4),
-                          fontWeight: AmptiveFontWeights.medium,
-                        ),
-
-                        filled: true,
-                        fillColor: AmptiveColors.whiteColor.withOpacity(0.1),
-                        focusedBorder: OutlineInputBorder(
-                          borderSide: BorderSide(
-                            width: 2.w,
-                            color: AmptiveColors.transparentColor,
-                          ),
-                          borderRadius: BorderRadius.circular(14.r),
-                        ),
-                      ),
-
+                      hintText: "What is the title of your show?",
                     ),
                     SizedBox(height: 33.5.h),
+
+                    const CreateShowTextFieldTitle(
+                      title: "Description",
+                      otherInfo: "4000 remaining",
+                    ),
+                    SizedBox(height: 11.5.h),
+                    CreateShowTextFormField(
+                      controller: _titleController,
+                      hintText: "Tell your listeners what your show is about",
+                      suffixIcon: Icon(
+                        Icons.arrow_forward_ios,
+                        size: 20.w,
+                        color: AmptiveColors.whiteColor.withOpacity(0.4),
+                      ),
+                    ),
+                    SizedBox(height: 33.5.h),
+                    const CreateShowTextFieldTitle(
+                      title: "Community",
+                    ),
+                    SizedBox(height: 11.5.h),
+                    CreateShowTextFormField(
+                      controller: _titleController,
+                      hintText: "Select a community for your show",
+                      suffixIcon: Icon(
+                        Icons.arrow_forward_ios,
+                        size: 20.w,
+                        color: AmptiveColors.whiteColor.withOpacity(0.4),
+                      ),
+                    ),
+                    Container(
+                      margin: EdgeInsets.only(top: 8.h),
+                      child: Text(
+                        "Communities will help your Shows and Events reach more listeners. Listeners can also use communities to find your Shows and Events, easily. Learn more",
+                        overflow: TextOverflow.visible,
+                        style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                          fontWeight: AmptiveFontWeights.medium,
+                          color: AmptiveColors.whiteColor.withOpacity(0.4),
+                        ),
+                      ),
+                    ),
+                    SizedBox(height: 30.h),
+
+                    // add widget here
+
+                    const CreateShowTextFieldTitle(
+                      title: "Add Co-hosts",
+                      otherInfo: "5 max",
+                    ),
+                    SizedBox(height: 11.5.h),
+                    CreateShowTextFormField(
+                      controller: _titleController,
+                      hintText: "Search and add co-hosts for your show",
+                      prefixIcon: Icon(
+                        Icons.search,
+                        size: 20.w,
+                        color: AmptiveColors.whiteColor.withOpacity(0.4),
+                      ),
+                    ),
+                    Container(
+                      margin: EdgeInsets.only(top: 8.h),
+                      child: Text(
+                        "Added users must accept your invitation before they are added as your co-hosts.",
+                        overflow: TextOverflow.visible,
+                        style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                          fontWeight: AmptiveFontWeights.medium,
+                          color: AmptiveColors.whiteColor.withOpacity(0.4),
+                        ),
+                      ),
+                    ),
+                    SizedBox(height: 30.h),
+
+                    const CreateShowTextFieldTitle(
+                      title: "Hashtags",
+                    ),
+                    SizedBox(height: 11.5.h),
+                    CreateShowTextFormField(
+                      controller: _titleController,
+                      hintText: "Enter your own hashtag",
+                      suffixIcon: Icon(
+                        Icons.arrow_forward_ios,
+                        size: 20.w,
+                        color: AmptiveColors.whiteColor.withOpacity(0.4),
+                      ),
+                    ),
+                    Container(
+                      margin: EdgeInsets.only(top: 8.h),
+                      child: Text(
+                        "You can add up to 5 hashtags, with each hashtag being up to 25 characters long and free of spaces or special characters.",
+                        overflow: TextOverflow.visible,
+                        style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                              fontWeight: AmptiveFontWeights.medium,
+                              color: AmptiveColors.whiteColor.withOpacity(0.4),
+                            ),
+                      ),
+                    ),
+                    SizedBox(height: 30.h),
+
+                    const CreateShowTextFieldTitle(
+                      title: "Audience Access",
+                    ),
+                    SizedBox(height: 11.5.h),
+                    CreateShowTextFormField(
+                      controller: _titleController,
+                      hintText: "Select who can access this show",
+                      suffixIcon: Icon(
+                        Icons.arrow_forward_ios,
+                        size: 20.w,
+                        color: AmptiveColors.whiteColor.withOpacity(0.4),
+                      ),
+                    ),
+                    Container(
+                      margin: EdgeInsets.only(top: 8.h),
+                      width: 360.w,
+                      child: Text(
+                        "You will be prompted to setup your subscription plan, if you haven't set it up yet.  ",
+                        overflow: TextOverflow.visible,
+                        style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                          fontWeight: AmptiveFontWeights.medium,
+                          color: AmptiveColors.whiteColor.withOpacity(0.4),
+                        ),
+                      ),
+                    ),
+                    SizedBox(height: 30.h),
+
+                    Divider(
+                      height: 1.h,
+                      color: AmptiveColors.brandBlackColor.withOpacity(0.10),
+                    )
                   ],
                 ),
               ),
@@ -211,5 +299,86 @@ class _CreateShowScreenState extends State<CreateShowScreen> {
 
   _imageSelected() {
     return _selectedImage != null;
+  }
+}
+
+class CreateShowTextFieldTitle extends StatelessWidget {
+  final String title;
+  final String? otherInfo;
+
+  const CreateShowTextFieldTitle({
+    super.key,
+    required this.title,
+    this.otherInfo,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        Text(
+          title,
+          style: Theme.of(context)
+              .textTheme
+              .bodySmall
+              ?.copyWith(fontSize: AmptiveFontSizes.size15),
+        ),
+        Expanded(
+            child: SizedBox(
+          width: 1.w,
+        )),
+        Text(
+          otherInfo ?? "",
+          style: Theme.of(context)
+              .textTheme
+              .titleSmall
+              ?.copyWith(color: AmptiveColors.whiteColor.withOpacity(0.4)),
+        ),
+      ],
+    );
+  }
+}
+
+class CreateShowTextFormField extends AmptiveTextFormFieldWidget {
+  const CreateShowTextFormField({
+    super.key,
+    required super.controller,
+    super.hintText,
+    super.prefixIcon,
+    super.suffixIcon,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return TextFormField(
+      controller: controller,
+      decoration: InputDecoration(
+        contentPadding: EdgeInsets.symmetric(vertical: 12.h, horizontal: 16.w),
+        hintText: hintText,
+        hintStyle: TextStyle(
+          fontSize: AmptiveFontSizes.size14,
+          color: AmptiveColors.whiteColor.withOpacity(0.4),
+          fontWeight: AmptiveFontWeights.medium,
+        ),
+        suffixIcon: suffixIcon,
+        prefixIcon: prefixIcon,
+        filled: true,
+        fillColor: AmptiveColors.whiteColor.withOpacity(0.1),
+        focusedBorder: OutlineInputBorder(
+          borderSide: BorderSide(
+            width: 2.w,
+            color: AmptiveColors.transparentColor,
+          ),
+          borderRadius: BorderRadius.circular(14.r),
+        ),
+        enabledBorder: OutlineInputBorder(
+          borderSide: BorderSide(
+            width: 1.w,
+            color: AmptiveColors.transparentColor,
+          ),
+          borderRadius: BorderRadius.circular(14.r),
+        ), // Removes the border when not focused
+      ),
+    );
   }
 }
