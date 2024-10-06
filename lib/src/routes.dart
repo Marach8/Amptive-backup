@@ -11,7 +11,7 @@ import 'package:amptive/src/views/screens/authentication_screens/sign_in_or_sign
 import 'package:amptive/src/views/screens/authentication_screens/username_auth_screen.dart';
 import 'package:amptive/src/views/screens/main_application_screens/create_show_screen.dart';
 import 'package:amptive/src/views/screens/main_application_screens/dashboard_screen.dart';
-import 'package:amptive/src/views/screens/main_application_screens/sub_views/home_view/home_sub_view/go_live_screen.dart';
+import 'package:amptive/src/views/screens/main_application_screens/sub_views/home_view/home_sub_view/go_live_views/main_go_live_screen.dart';
 import 'package:amptive/src/views/screens/main_application_screens/sub_views/home_view/home_sub_view/scheduled_screen.dart';
 import 'package:amptive/src/views/screens/onboarding_screens/splash.dart';
 import 'package:amptive/src/views/screens/post_authentication_screens/crop_image_screen.dart';
@@ -29,6 +29,7 @@ import 'views/screens/main_application_screens/sub_views/discover/trending_hasht
 import 'views/screens/main_application_screens/sub_views/discover/trending_society_screen.dart';
 import 'views/screens/main_application_screens/sub_views/home_view/home_sub_view/event_detailed_screen.dart';
 import 'views/screens/main_application_screens/sub_views/home_view/home_sub_view/following_screen.dart';
+import 'views/screens/main_application_screens/sub_views/home_view/home_sub_view/go_live_views/choose_show_screen.dart';
 import 'views/screens/main_application_screens/sub_views/home_view/home_sub_view/show_detailed_screen.dart';
 import 'views/screens/main_application_screens/sub_views/home_view/home_sub_view/subscribed_screen.dart';
 
@@ -175,6 +176,12 @@ final GoRouter amptiveAppRouter = GoRouter(
             reverseTransitionDuration: const Duration(milliseconds: 700),
             transitionDuration: const Duration(milliseconds: 700),
           )
+        ),
+
+        GoRoute(
+          name: AmptiveRoutes.CHOOSE_OR_CREATE_SHOW_SCREEN,
+          path: AmptiveRoutes.CHOOSE_OR_CREATE_SHOW_SCREEN,
+          builder: (_, __) => const AmptiveChooseOrCreateShowScreen(),
         ),
 
         GoRoute(

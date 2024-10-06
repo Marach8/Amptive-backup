@@ -211,7 +211,7 @@ class _UserNameAuthScreenState extends State<UserNameAuthScreen> {
                       context.pushNamed(AmptiveRoutes.addName);
                     }
                   : null,
-              buttonTitle: AmptiveOtherStrings.next,
+              buttonTitle: AmptiveOtherStrings.NEXT,
             );
           }),
         ),

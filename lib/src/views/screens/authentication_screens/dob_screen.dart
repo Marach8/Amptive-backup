@@ -145,7 +145,7 @@ class _DateOfBirthScreenState extends State<DateOfBirthScreen> {
                           context.pushNamed(AmptiveRoutes.addUsername);
                         }
                       : null,
-                  buttonTitle: AmptiveOtherStrings.next,
+                  buttonTitle: AmptiveOtherStrings.NEXT,
                 );
               }),
         ),

@@ -25,7 +25,7 @@ class AmptiveOtherStrings{
       "Tune into live audio shows and events.";
   static const monetizeLiveAudioShowsAndEvents =
       "Monetizable Live Audio Shows & Events ";
-  static const next = 'Next';
+  static const NEXT = 'Next';
   static const or = 'or';
   static const and = 'and';
   static const emailSymbol = '@';
@@ -139,4 +139,9 @@ class AmptiveOtherStrings{
   static const CREATE_EVENT = 'Create Event';
   static const CREATE_EVENT_DESC = 'For one-time live audio experience';
   static const CREATE_SHOW_DESC = 'For live audio series with recurring episodes';
+  static const CHOOSE_OR_CREATE_SHOW = 'Continue from your already running show or create a new one';
+  static const CREATE_NEW_SHOW = 'Create new show';
+  static const CHOOSE_SHOW = 'Choose Show';
+  static const ADD_COMMUNITY = 'Add Community';
+  static const ADD_COMMUNITY_DESC = 'Communities will help your Shows and Events reach more listeners. They can also use communites to find your Shows and Events easily. kfkjkajdjkjadjfjakjka';
 }
