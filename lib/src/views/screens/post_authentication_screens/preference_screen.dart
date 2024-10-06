@@ -38,7 +38,9 @@ class _AmptivePreferenceScreenState extends State<AmptivePreferenceScreen> {
       child: BlocListener<AmptivePreferenceBloc, AmptivePreferenceState>(
         listener: (context, state) {
           if (state is PreferencePersonalizedState) {
-            context.goNamed(AmptiveRoutes.homeScreen);
+            // context.goNamed(AmptiveRoutes.homeScreen);
+            context.goNamed(AmptiveRoutes.preHomepage);
+
           }
         },
         child: BlocBuilder<AmptivePreferenceBloc, AmptivePreferenceState>(

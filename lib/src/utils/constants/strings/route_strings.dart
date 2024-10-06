@@ -20,7 +20,10 @@ class AmptiveRoutes {
   //POST AUTHENTICATION
   static String addProfilePic = "add_profile_pic";
   static String cropImage = "crop_image";
-  
+  static String preHomepage = "pre-homepage";
+  static String createShowForm = "create-show-form";
+
+
   //MAIN APPLICATION
   static const homeScreen = "home_screen";
   static const showDetailedScreen = "show_detailed_screen";
@@ -35,4 +38,6 @@ class AmptiveRoutes {
   static const TRENDING_HASHTAG_FULL_SCREEN = 'trending_hashtag_full_screen';
   static const GO_LIVE_SCREEN = 'go_live';
   static const CHOOSE_OR_CREATE_SHOW_SCREEN = 'choose_or_create_show';
+
+
 }

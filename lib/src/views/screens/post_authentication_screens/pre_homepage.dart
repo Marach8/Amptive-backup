@@ -206,6 +206,7 @@ class _PreHomePageState extends State<PreHomePage>
                       onPressed: () {
                         context.goNamed(AmptiveRoutes.homeScreen);
 
+
                       },
                     ),
                     SizedBox(

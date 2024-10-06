@@ -40,7 +40,7 @@ final GoRouter amptiveAppRouter = GoRouter(
   routes: <RouteBase>[
     GoRoute(
       path: AmptiveRoutes.index,
-      builder: (_, __) => const CreateShowScreen()
+      builder: (_, __) => const SplashScreen()
     ),
     GoRoute(
       name: AmptiveRoutes.welcome,
@@ -120,6 +120,12 @@ final GoRouter amptiveAppRouter = GoRouter(
       builder: (_, __) => const AmptivePreferenceScreen(),
     ),
 
+    GoRoute(
+      name: AmptiveRoutes.preHomepage,
+      path: "/pre-homepage",
+      builder: (_, __) => const PreHomePage(),
+    ),
+
     //MAIN APPLICATION SCREENS
     GoRoute(
       name: AmptiveRoutes.homeScreen,
@@ -182,6 +188,12 @@ final GoRouter amptiveAppRouter = GoRouter(
           name: AmptiveRoutes.CHOOSE_OR_CREATE_SHOW_SCREEN,
           path: AmptiveRoutes.CHOOSE_OR_CREATE_SHOW_SCREEN,
           builder: (_, __) => const AmptiveChooseOrCreateShowScreen(),
+        ),
+
+        GoRoute(
+          name: AmptiveRoutes.createShowForm,
+          path: AmptiveRoutes.createShowForm,
+          builder: (_, __) => const CreateShowScreen(),
         ),
 
         GoRoute(

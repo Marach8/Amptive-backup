@@ -1,5 +1,6 @@
 import 'package:amptive/src/utils/constants/strings/image_strings.dart';
 import 'package:amptive/src/utils/constants/strings/other_strings.dart';
+import 'package:amptive/src/utils/constants/strings/route_strings.dart';
 import 'package:amptive/src/views/widgets/common_widgets/annotated_region__widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/custom_container_widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/custom_rebuilder_widget.dart';
@@ -167,7 +168,8 @@ class _AmptiveChooseOrCreateShowScreenState extends State<AmptiveChooseOrCreateS
           notifier: activateButton,
           builder: (_, activate, __) => AmptiveElevatedButtonWidget(
             onPressed: activate ? (){
-              showAddCommunitiesDialog(context);
+              // showAddCommunitiesDialog(context);
+              context.pushNamed(AmptiveRoutes.createShowForm);
             } : null,
             buttonTitle: AmptiveOtherStrings.NEXT,
             bgColor: AmptiveColors.whiteColor,

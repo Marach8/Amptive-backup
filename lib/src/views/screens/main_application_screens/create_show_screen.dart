@@ -11,6 +11,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:image_picker/image_picker.dart';
 
 import '../../../utils/constants/font_weights.dart';
+import '../../../utils/dialogs/add_communities_dialog.dart';
 
 class CreateShowScreen extends StatefulWidget {
   const CreateShowScreen({super.key});
@@ -89,7 +90,7 @@ class _CreateShowScreenState extends State<CreateShowScreen> {
             ),
             Positioned.fill(
               child: Container(
-                color: Colors.black.withOpacity(0.5),
+                color: AmptiveColors.black.withOpacity(0.6),
                 child: BackdropFilter(
                   filter: ImageFilter.blur(sigmaX: 150.0, sigmaY: 150.0),
                   child: Container(),
@@ -97,7 +98,6 @@ class _CreateShowScreenState extends State<CreateShowScreen> {
               ),
             ),
 
-            // Box containing the icon or the selected image
             SingleChildScrollView(
               child: Padding(
                 padding: EdgeInsets.symmetric(horizontal: 15.w),
@@ -175,8 +175,13 @@ class _CreateShowScreenState extends State<CreateShowScreen> {
                       ),
                     ),
                     SizedBox(height: 33.5.h),
-                    const CreateShowTextFieldTitle(
-                      title: "Community",
+                    GestureDetector(
+                      onTap: (){
+                        showAddCommunitiesDialog(context);
+                      },
+                      child: const CreateShowTextFieldTitle(
+                        title: "Community",
+                      ),
                     ),
                     SizedBox(height: 11.5.h),
                     CreateShowTextFormField(
@@ -194,9 +199,9 @@ class _CreateShowScreenState extends State<CreateShowScreen> {
                         "Communities will help your Shows and Events reach more listeners. Listeners can also use communities to find your Shows and Events, easily. Learn more",
                         overflow: TextOverflow.visible,
                         style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                          fontWeight: AmptiveFontWeights.medium,
-                          color: AmptiveColors.whiteColor.withOpacity(0.4),
-                        ),
+                              fontWeight: AmptiveFontWeights.medium,
+                              color: AmptiveColors.whiteColor.withOpacity(0.4),
+                            ),
                       ),
                     ),
                     SizedBox(height: 30.h),
@@ -223,9 +228,9 @@ class _CreateShowScreenState extends State<CreateShowScreen> {
                         "Added users must accept your invitation before they are added as your co-hosts.",
                         overflow: TextOverflow.visible,
                         style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                          fontWeight: AmptiveFontWeights.medium,
-                          color: AmptiveColors.whiteColor.withOpacity(0.4),
-                        ),
+                              fontWeight: AmptiveFontWeights.medium,
+                              color: AmptiveColors.whiteColor.withOpacity(0.4),
+                            ),
                       ),
                     ),
                     SizedBox(height: 30.h),
@@ -276,9 +281,9 @@ class _CreateShowScreenState extends State<CreateShowScreen> {
                         "You will be prompted to setup your subscription plan, if you haven't set it up yet.  ",
                         overflow: TextOverflow.visible,
                         style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                          fontWeight: AmptiveFontWeights.medium,
-                          color: AmptiveColors.whiteColor.withOpacity(0.4),
-                        ),
+                              fontWeight: AmptiveFontWeights.medium,
+                              color: AmptiveColors.whiteColor.withOpacity(0.4),
+                            ),
                       ),
                     ),
                     SizedBox(height: 30.h),
