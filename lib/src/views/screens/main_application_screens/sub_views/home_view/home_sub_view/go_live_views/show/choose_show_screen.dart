@@ -1,19 +1,23 @@
 import 'package:amptive/src/utils/constants/strings/image_strings.dart';
 import 'package:amptive/src/utils/constants/strings/other_strings.dart';
 import 'package:amptive/src/utils/constants/strings/route_strings.dart';
+import 'package:amptive/src/utils/dialogs/select_audience_access_for_shows_dialog.dart';
 import 'package:amptive/src/views/widgets/common_widgets/annotated_region__widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/custom_container_widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/custom_rebuilder_widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/elevated_button_widget.dart';
-import 'package:amptive/src/views/widgets/other_widgets/main_application_widgets/widgets_in_home_view/widgets_in_go_live/shows/existing_show_model.dart';
+import 'package:amptive/src/views/widgets/other_widgets/main_application_widgets/widgets_in_home_view/widgets_in_go_live/shows/existing_show_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 import 'package:go_router/go_router.dart';
-import '../../../../../../../utils/constants/colors.dart';
+import '../../../../../../../../utils/constants/colors.dart';
 import 'dart:developer' as marach show log;
 
-import '../../../../../../../utils/dialogs/add_communities_dialog.dart';
+import '../../../../../../../../utils/dialogs/add_co_host_dialog.dart';
+import '../../../../../../../../utils/dialogs/add_communities_dialog.dart';
+import '../../../../../../../../utils/dialogs/add_hastags_dialog.dart';
+import '../../../../../../../../utils/dialogs/select_hand_raising_dialog.dart';
 
 class AmptiveChooseOrCreateShowScreen extends StatefulWidget {
   const AmptiveChooseOrCreateShowScreen({super.key});
@@ -74,7 +78,7 @@ class _AmptiveChooseOrCreateShowScreenState extends State<AmptiveChooseOrCreateS
               floating: true,
               leading: GestureDetector(
                 onTap: (){context.pop();},
-                child: const Icon(Icons.arrow_back_ios_new_outlined, size: 20,)
+                child: const Icon(Icons.arrow_back_ios_new_outlined, size: 17,)
               ),
               centerTitle: true,
               leadingWidth: 40,
@@ -95,6 +99,7 @@ class _AmptiveChooseOrCreateShowScreenState extends State<AmptiveChooseOrCreateS
                 ),
               ),
             ),
+
             SliverPadding(
               padding: const EdgeInsets.symmetric(horizontal: 15),
               sliver: SliverGrid(
@@ -108,15 +113,17 @@ class _AmptiveChooseOrCreateShowScreenState extends State<AmptiveChooseOrCreateS
                             children: [
                               AmptiveCustomContainer(
                                 onTap: (){
+                                  activateButton.value = false;
                                   if(selectedIndex != null){
-                                    listOfValueNotifiers.elementAt(selectedIndex!).value = false;
+                                    listOfValueNotifiers.elementAt(selectedIndex!).value = false;                                    
                                   }
+                                  context.pushNamed(AmptiveRoutes.CREATE_SHOW_FORM);
                                 },
                                 radius: 5.r,
                                 color: AmptiveColors.grey1Color,
                                 width: constraints.maxWidth,
                                 height: constraints.maxHeight * 0.7,
-                                child: Icon(Icons.add, size: 100.w,),
+                                child: Icon(Icons.add, size: 100.w),
                               ),
                               const Gap(5),
                               Text(
@@ -128,7 +135,7 @@ class _AmptiveChooseOrCreateShowScreenState extends State<AmptiveChooseOrCreateS
                         }
 
                         final eachNotifier = listOfValueNotifiers.elementAt(gridIndex);
-                        return AmptiveExistingShowModel(
+                        return AmptiveExistingShowWidget(
                           eachButtonNotifier: eachNotifier,
                           onTap: (isSelected){
                             //Toggle the border of the tapped item
@@ -167,9 +174,12 @@ class _AmptiveChooseOrCreateShowScreenState extends State<AmptiveChooseOrCreateS
         bottomNavigationBar: AmptiveRebuilderWidget(
           notifier: activateButton,
           builder: (_, activate, __) => AmptiveElevatedButtonWidget(
-            onPressed: activate ? (){
-              // showAddCommunitiesDialog(context);
-              context.pushNamed(AmptiveRoutes.createShowForm);
+            onPressed: activate ? () async{
+              //await showAddCoHostDialog(context);
+              await showAddHashtagDialog(context);
+              //await showHandRaisingDialog(context);
+              //showAddCommunitiesDialog(context);
+              //context.pushNamed(AmptiveRoutes.CREATE_SHOW_SUCCESS);
             } : null,
             buttonTitle: AmptiveOtherStrings.NEXT,
             bgColor: AmptiveColors.whiteColor,

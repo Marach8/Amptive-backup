@@ -8,12 +8,12 @@ import '../../../../../common_widgets/circle_avatar.dart';
 import '../../../../../common_widgets/image_loader_widget.dart';
 
 
-class AmptiveExistingShowModel extends StatelessWidget {
+class AmptiveExistingEventWidget extends StatelessWidget {
   final String trendingPicture;
   final double imageHeight, imageWidth;
   final ValueNotifier<bool> eachButtonNotifier;
   final void Function(bool) onTap;
-  const AmptiveExistingShowModel({
+  const AmptiveExistingEventWidget({
     super.key,
     required this.trendingPicture,
     required this.imageHeight,

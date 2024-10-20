@@ -202,7 +202,7 @@ class _PreHomePageState extends State<PreHomePage>
                     ),
                     AmptiveElevatedButtonWidget(
                       height: 50.w,
-                      buttonTitle: AmptiveOtherStrings.allow,
+                      buttonTitle: AmptiveOtherStrings.ALLOW,
                       onPressed: () {
                         context.goNamed(AmptiveRoutes.homeScreen);
 
