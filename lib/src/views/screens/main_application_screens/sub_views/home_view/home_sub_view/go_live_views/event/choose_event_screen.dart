@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:amptive/src/utils/constants/strings/image_strings.dart';
 import 'package:amptive/src/utils/constants/strings/other_strings.dart';
 import 'package:amptive/src/utils/constants/strings/route_strings.dart';
@@ -21,6 +23,7 @@ import '../../../../../../../../utils/dialogs/select_audience_access_for_events_
 import '../../../../../../../../utils/dialogs/select_capacity_for_events_dialog.dart';
 import '../../../../../../../../utils/dialogs/select_hand_raising_dialog.dart';
 import '../../../../../../../../utils/dialogs/select_whispers_dialog.dart';
+import '../../../../../../../widgets/common_widgets/image_loader_widget.dart';
 import '../../../../../../../widgets/other_widgets/main_application_widgets/widgets_in_home_view/widgets_in_go_live/events/existing_event_widget.dart';
 
 class AmptiveChooseOrCreateEventScreen extends StatefulWidget {
@@ -32,6 +35,7 @@ class AmptiveChooseOrCreateEventScreen extends StatefulWidget {
 
 class _AmptiveChooseOrCreateEventScreenState extends State<AmptiveChooseOrCreateEventScreen> {
   ValueNotifier<bool> activateButton = ValueNotifier(false);
+  ValueNotifier<String> selectedImage = ValueNotifier('');
   int? selectedIndex;
 
   late List<ValueNotifier<bool>> listOfValueNotifiers;
@@ -54,6 +58,10 @@ class _AmptiveChooseOrCreateEventScreenState extends State<AmptiveChooseOrCreate
       listOfImageStrings.length,
       (index) => ValueNotifier(false)
     );
+
+    activateButton.addListener(
+      () => !activateButton.value ? selectedImage.value = '' : {}
+    );
   }
   
   @override 
@@ -68,108 +76,130 @@ class _AmptiveChooseOrCreateEventScreenState extends State<AmptiveChooseOrCreate
 
   @override
   Widget build(context) {
-
-    String? selectedImagePath;
-
     return AmptiveAnnotatedRegionWidget(
       child: Scaffold(
-        body: CustomScrollView(
-          physics: const BouncingScrollPhysics(),
-          slivers: [
-            SliverAppBar(
-              floating: true,
-              leading: GestureDetector(
-                onTap: (){context.pop();},
-                child: const Icon(Icons.arrow_back_ios_new_outlined, size: 17,)
-              ),
-              centerTitle: true,
-              leadingWidth: 40,
-              title: Text(
-                AmptiveOtherStrings.CHOOSE_EVENT,
-                style: Theme.of(context).textTheme.bodyMedium,
+        body: Stack(
+          children: [
+            Positioned.fill(
+              child: AmptiveRebuilderWidget(
+                notifier: selectedImage,
+                builder: (_, value, __) {
+                  return AmptiveImageLoaderWidget(
+                    imagePath: value,
+                    boxFit: BoxFit.cover,
+                  );
+                }
               ),
             ),
-            SliverToBoxAdapter(
-              child: Padding(
-                padding: const EdgeInsets.fromLTRB(15, 10, 15, 20),
-                child: Text(
-                  maxLines: 3,
-                  AmptiveOtherStrings.CHOOSE_OR_CREATE_EVENT,
-                  style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                    color: AmptiveColors.subtitleColor
+            Positioned.fill(
+              child: AmptiveCustomContainer(
+                color: AmptiveColors.black.withOpacity(0.6),
+                child: BackdropFilter(
+                  filter: ImageFilter.blur(sigmaX: 100.0, sigmaY: 100.0),
+                  child: const SizedBox.shrink(),
+                ),
+              ),
+            ),
+            CustomScrollView(
+              physics: const BouncingScrollPhysics(),
+              slivers: [
+                SliverAppBar(
+                  backgroundColor: AmptiveColors.brandBlackColor.withOpacity(0.8),
+                  floating: true,
+                  leading: GestureDetector(
+                    onTap: (){context.pop();},
+                    child: const Icon(Icons.arrow_back_ios_new_outlined, size: 17,)
+                  ),
+                  centerTitle: true,
+                  leadingWidth: 40,
+                  title: Text(
+                    AmptiveOtherStrings.CHOOSE_EVENT,
+                    style: Theme.of(context).textTheme.bodyMedium,
                   ),
                 ),
-              ),
-            ),
-
-            SliverPadding(
-              padding: const EdgeInsets.symmetric(horizontal: 15),
-              sliver: SliverGrid(
-                delegate: SliverChildBuilderDelegate(
-                  (_, gridIndex){
-                    return LayoutBuilder(
-                      builder: (_, constraints) {
-                        if(gridIndex == listOfImageStrings.length - 1){
-                          return Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              AmptiveCustomContainer(
-                                onTap: (){
-                                  activateButton.value = false;
-                                  if(selectedIndex != null){
-                                    listOfValueNotifiers.elementAt(selectedIndex!).value = false;                                    
-                                  }
-                                  // context.pushNamed(AmptiveRoutes.CREATE_SHOW_FORM);
-                                },
-                                radius: 5.r,
-                                color: AmptiveColors.grey1Color,
-                                width: constraints.maxWidth,
-                                height: constraints.maxHeight * 0.7,
-                                child: Icon(Icons.add, size: 100.w),
-                              ),
-                              const Gap(5),
-                              Text(
-                                AmptiveOtherStrings.CREATE_NEW_EVENT,
-                                style: Theme.of(context).textTheme.bodyMedium,
-                              ),
-                            ],
-                          );
-                        }
-
-                        final eachNotifier = listOfValueNotifiers.elementAt(gridIndex);
-                        return AmptiveExistingEventWidget(
-                          eachButtonNotifier: eachNotifier,
-                          onTap: (isSelected){
-                            //Toggle the border of the tapped item
-                            eachNotifier.value = !isSelected;                           
-                            //Set this variable to get hold of a property of the selected show
-                            selectedImagePath = listOfImageStrings.elementAt(gridIndex);
-                            //Unselect the previous selected show
-                            if(selectedIndex != null && selectedIndex != gridIndex){
-                              listOfValueNotifiers.elementAt(selectedIndex!).value = false;
+                SliverToBoxAdapter(
+                  child: Padding(
+                    padding: const EdgeInsets.fromLTRB(15, 10, 15, 20),
+                    child: Text(
+                      maxLines: 3,
+                      AmptiveOtherStrings.CHOOSE_OR_CREATE_EVENT,
+                      style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                        color: AmptiveColors.subtitleColor
+                      ),
+                    ),
+                  ),
+                ),
+            
+                SliverPadding(
+                  padding: const EdgeInsets.symmetric(horizontal: 15),
+                  sliver: SliverGrid(
+                    delegate: SliverChildBuilderDelegate(
+                      (_, gridIndex){
+                        return LayoutBuilder(
+                          builder: (_, constraints) {
+                            if(gridIndex == listOfImageStrings.length - 1){
+                              return Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  AmptiveCustomContainer(
+                                    onTap: (){
+                                      activateButton.value = false;
+                                      if(selectedIndex != null){
+                                        listOfValueNotifiers.elementAt(selectedIndex!).value = false;                                    
+                                      }
+                                      // context.pushNamed(AmptiveRoutes.CREATE_SHOW_FORM);
+                                    },
+                                    radius: 5.r,
+                                    color: AmptiveColors.grey1Color,
+                                    width: constraints.maxWidth,
+                                    height: constraints.maxHeight * 0.7,
+                                    child: Icon(Icons.add, size: 100.w),
+                                  ),
+                                  const Gap(5),
+                                  Text(
+                                    AmptiveOtherStrings.CREATE_NEW_EVENT,
+                                    style: Theme.of(context).textTheme.bodyMedium,
+                                  ),
+                                ],
+                              );
                             }
-                            //Set the index to the index of the currently tapped show prior to next tap
-                            selectedIndex = gridIndex;
-                            //Toggle the activeness of the "Next" button
-                            activateButton.value = !isSelected;
-                          },
-                          imageWidth: constraints.maxWidth,
-                          imageHeight: constraints.maxHeight * 0.7,
-                          trendingPicture: listOfImageStrings.elementAt(gridIndex)
-                        );
-                      }
-                    );                    
-                  },
-                  childCount: listOfImageStrings.length
-                ),
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2,
-                  childAspectRatio: 0.65,
-                  crossAxisSpacing: 10,
-                  mainAxisSpacing: 10
-                ),
-              ),
-            )
+            
+                            final eachNotifier = listOfValueNotifiers.elementAt(gridIndex);
+                            return AmptiveExistingEventWidget(
+                              eachButtonNotifier: eachNotifier,
+                              onTap: (isSelected){
+                                //Toggle the border of the tapped item
+                                eachNotifier.value = !isSelected;                           
+                                //Set this variable to get hold of a property of the selected show
+                                selectedImage.value = listOfImageStrings.elementAt(gridIndex);
+                                //Unselect the previous selected show
+                                if(selectedIndex != null && selectedIndex != gridIndex){
+                                  listOfValueNotifiers.elementAt(selectedIndex!).value = false;
+                                }
+                                //Set the index to the index of the currently tapped show prior to next tap
+                                selectedIndex = gridIndex;
+                                //Toggle the activeness of the "Next" button
+                                activateButton.value = !isSelected;
+                              },
+                              imageWidth: constraints.maxWidth,
+                              imageHeight: constraints.maxHeight * 0.7,
+                              trendingPicture: listOfImageStrings.elementAt(gridIndex)
+                            );
+                          }
+                        );                    
+                      },
+                      childCount: listOfImageStrings.length
+                    ),
+                    gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 2,
+                      childAspectRatio: 0.65,
+                      crossAxisSpacing: 10,
+                      mainAxisSpacing: 10
+                    ),
+                  ),
+                )
+              ],
+            ),
           ],
         ),
         
@@ -179,10 +209,9 @@ class _AmptiveChooseOrCreateEventScreenState extends State<AmptiveChooseOrCreate
             onPressed: activate ? () async{
               //await showAddCoHostDialog(context);
               //await showAddHashtagDialog(context);
-              //await showHandRaisingDialog(context);
               //showAddCommunitiesDialog(context);
-              //showSelectAudienceAccessForEventsDialog(context);
-              showWhispersDialog(context);
+              showSelectAudienceAccessForEventsDialog(context);
+              //showWhispersDialog(context);
               //await showEventCapacitySelectionDialog(context: context);
               //context.pushNamed(AmptiveRoutes.CREATE_SHOW_SUCCESS);
             } : null,

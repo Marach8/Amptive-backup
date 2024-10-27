@@ -12,8 +12,6 @@ import '../../views/widgets/common_widgets/custom_rebuilder_widget.dart';
 import '../../views/widgets/common_widgets/elevated_button_widget.dart';
 import '../constants/strings/other_strings.dart';
 
-import 'dart:developer' as marach show log;
-
 Future<void> showSelectAudienceAccessForEventsDialog(BuildContext context)async{
   final freeAccesNotifier = ValueNotifier(false);
   final paidAccessNotifier = ValueNotifier(false);
@@ -40,8 +38,7 @@ Future<void> showSelectAudienceAccessForEventsDialog(BuildContext context)async{
                   ? Icon(
                     Icons.keyboard_arrow_down,
                     color: AmptiveColors.whiteColor.withOpacity(0.6),
-                  )
-                  : AmptiveCustomContainer(
+                  ) : AmptiveCustomContainer(
                     margin: const EdgeInsets.symmetric(vertical: 10),
                     radius: 5, height: 4, width: 30,
                     color: AmptiveColors.whiteColor.withOpacity(0.6),
@@ -86,7 +83,7 @@ Future<void> showSelectAudienceAccessForEventsDialog(BuildContext context)async{
                   ),
                   child: Row(
                     children: [
-                      const AmptiveImageLoaderWidget(imagePath: AmptiveImageStrings.sIcon),
+                      const AmptiveImageLoaderWidget(imagePath: AmptiveImageStrings.PEOPLE),
                       const Gap(10),
                       Expanded(
                         child: Column(
@@ -149,7 +146,7 @@ Future<void> showSelectAudienceAccessForEventsDialog(BuildContext context)async{
                     children: [
                       Row(
                         children: [
-                          const AmptiveImageLoaderWidget(imagePath: AmptiveImageStrings.sIcon),
+                          const AmptiveImageLoaderWidget(imagePath: AmptiveImageStrings.PADLOCK),
                           const Gap(10),
                           Expanded(
                             child: Column(
@@ -191,6 +188,8 @@ Future<void> showSelectAudienceAccessForEventsDialog(BuildContext context)async{
                         children: [
                           AmptiveCustomContainer(
                             onTap: ()async{
+                              freeAccesNotifier.value = false;
+                              paidAccessNotifier.value = true;
                               await showEventPaymentFeeDialog(context: context, notifier: subAmntNotifier);
                             },
                             padding: const EdgeInsets.fromLTRB(10, 5, 10, 5),

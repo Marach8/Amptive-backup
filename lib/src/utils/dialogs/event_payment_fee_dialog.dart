@@ -49,8 +49,7 @@ Future<void> showEventPaymentFeeDialog({
                   ? Icon(
                     Icons.keyboard_arrow_down,
                     color: AmptiveColors.whiteColor.withOpacity(0.6),
-                  )
-                  : AmptiveCustomContainer(
+                  ) : AmptiveCustomContainer(
                     margin: const EdgeInsets.symmetric(vertical: 10),
                     radius: 5, height: 4, width: 30,
                     color: AmptiveColors.whiteColor.withOpacity(0.6),
@@ -58,6 +57,13 @@ Future<void> showEventPaymentFeeDialog({
                   ),
               ),
             ),
+            const Gap(5),
+            const Align(
+              alignment: Alignment.center,
+              child: AmptiveImageLoaderWidget(imagePath: AmptiveImageStrings.PADLOCK)
+            ),
+            const Gap(10),
+
             Align(
               alignment: Alignment.center,
               child: Text(

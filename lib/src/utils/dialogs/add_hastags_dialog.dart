@@ -1,6 +1,5 @@
 import 'dart:io';
 import 'dart:ui';
-
 import 'package:amptive/src/utils/constants/colors.dart';
 import 'package:amptive/src/utils/constants/font_sizes.dart';
 import 'package:amptive/src/utils/constants/strings/image_strings.dart';
@@ -63,7 +62,11 @@ Future<void> showAddHashtagDialog(BuildContext context)async{
     builder: (_){
       final selectedHashTagTitlesNotifier = ValueNotifier<List<String>>([]);
       selectedHashTagTitlesNotifier.addListener(
-        () => noOfSelectedTitlesNotifier.value = selectedHashTagTitlesNotifier.value.length
+        () {
+          noOfSelectedTitlesNotifier.value = selectedHashTagTitlesNotifier.value.length;
+          selectedHashTagTitlesNotifier.value.isEmpty ? activateBtnNotifier.value = false
+            : activateBtnNotifier.value = true;
+        }
       );
       
       return Stack(
@@ -134,6 +137,7 @@ Future<void> showAddHashtagDialog(BuildContext context)async{
                   Padding(
                     padding: const EdgeInsets.fromLTRB(15, 0, 15, 20),
                     child: AmptiveTextFormFieldWidget(
+                      disableBlueBorder: true,
                       controller: controller,
                       focusNode: focusNode,
                       onChanged: (text){
@@ -171,63 +175,66 @@ Future<void> showAddHashtagDialog(BuildContext context)async{
             
                   //Row of selected Hashtags
             
-                  AmptiveRebuilderWidget(
-                    notifier: selectedHashTagTitlesNotifier,
-                    shouldDispose: true,
-                    builder: (_, value, __){
-                      return AmptiveAnimatedCrossFadeWidget(
-                        condition: value.isEmpty,
-                        firstChild: const SizedBox.shrink(),
-                        secondChild: SingleChildScrollView(
-                          padding: const EdgeInsets.only(bottom: 20),
-                          scrollDirection: Axis.horizontal,
-                          child: Row(
-                            children: value.map(
-                              (hashtagTitle){
-                                //Get the index of this HashTag in the original list of images
-                                final indexOfTappedHashtag = availableHashtags.indexWhere(
-                                  (item) => item.first == hashtagTitle
-                                );
-                        
-                                //Using this index, get the notifier associated with it in the list of notifiers.
-                                final notifier = listOfValueNotifiers.elementAt(indexOfTappedHashtag);
-                                
-                                return AmptiveCustomContainer(
-                                  margin: const EdgeInsets.only(right: 15),
-                                  padding: const EdgeInsets.fromLTRB(15, 7, 15, 7),
-                                  alignment: Alignment.center,
-                                  radius: 10,
-                                  color: AmptiveColors.whiteColor.withOpacity(0.1),
-                                  child: Row(
-                                    mainAxisSize: MainAxisSize.min,
-                                    children: [
-                                      Text(
-                                        hashtagTitle,
-                                        style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                                          color: AmptiveColors.grey5Color,
+                  Align(
+                    alignment: Alignment.center,
+                    child: AmptiveRebuilderWidget(
+                      notifier: selectedHashTagTitlesNotifier,
+                      shouldDispose: true,
+                      builder: (_, value, __){
+                        return AmptiveAnimatedCrossFadeWidget(
+                          condition: value.isEmpty,
+                          firstChild: const SizedBox.shrink(),
+                          secondChild: SingleChildScrollView(
+                            padding: const EdgeInsets.only(bottom: 20),
+                            scrollDirection: Axis.horizontal,
+                            child: Row(
+                              children: value.map(
+                                (hashtagTitle){
+                                  //Get the index of this HashTag in the original list of images
+                                  final indexOfTappedHashtag = availableHashtags.indexWhere(
+                                    (item) => item.first == hashtagTitle
+                                  );
+                          
+                                  //Using this index, get the notifier associated with it in the list of notifiers.
+                                  final notifier = listOfValueNotifiers.elementAt(indexOfTappedHashtag);
+                                  
+                                  return AmptiveCustomContainer(
+                                    margin: const EdgeInsets.only(right: 15),
+                                    padding: const EdgeInsets.fromLTRB(15, 7, 15, 7),
+                                    alignment: Alignment.center,
+                                    radius: 10,
+                                    color: AmptiveColors.whiteColor.withOpacity(0.1),
+                                    child: Row(
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: [
+                                        Text(
+                                          hashtagTitle,
+                                          style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                                            color: AmptiveColors.grey5Color,
+                                          ),
                                         ),
-                                      ),
-                                      const Gap(5),
-                                      GestureDetector(
-                                        onTap: (){
-                                          //Disable this notifier
-                                          notifier.value = false;
-                                          //Remove this image from list
-                                          final listOfHashtagTitles = selectedHashTagTitlesNotifier.value;
-                                          listOfHashtagTitles.remove(hashtagTitle);
-                                          selectedHashTagTitlesNotifier.value = List.from(listOfHashtagTitles);
-                                        },
-                                        child: const Icon(Icons.close, size: 20)
-                                      )
-                                    ],
-                                  ),
-                                );
-                              }
-                            ).toList(),
+                                        const Gap(5),
+                                        GestureDetector(
+                                          onTap: (){
+                                            //Disable this notifier
+                                            notifier.value = false;
+                                            //Remove this title from list
+                                            final listOfHashtagTitles = selectedHashTagTitlesNotifier.value;
+                                            listOfHashtagTitles.remove(hashtagTitle);
+                                            selectedHashTagTitlesNotifier.value = List.from(listOfHashtagTitles);
+                                          },
+                                          child: const Icon(Icons.close, size: 20)
+                                        )
+                                      ],
+                                    ),
+                                  );
+                                }
+                              ).toList(),
+                            ),
                           ),
-                        ),
-                      );
-                    },
+                        );
+                      },
+                    ),
                   ),
             
                   //Column of hashtags

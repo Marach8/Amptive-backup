@@ -38,8 +38,7 @@ Future<void> showSelectAudienceAccessForShowsDialog(BuildContext context)async{
                   ? Icon(
                     Icons.keyboard_arrow_down,
                     color: AmptiveColors.whiteColor.withOpacity(0.6),
-                  )
-                  : AmptiveCustomContainer(
+                  ) : AmptiveCustomContainer(
                     margin: const EdgeInsets.symmetric(vertical: 10),
                     radius: 5, height: 4, width: 30,
                     color: AmptiveColors.whiteColor.withOpacity(0.6),
@@ -84,7 +83,7 @@ Future<void> showSelectAudienceAccessForShowsDialog(BuildContext context)async{
                   ),
                   child: Row(
                     children: [
-                      const AmptiveImageLoaderWidget(imagePath: AmptiveImageStrings.sIcon),
+                      const AmptiveImageLoaderWidget(imagePath: AmptiveImageStrings.PEOPLE),
                       const Gap(10),
                       Expanded(
                         child: Column(
@@ -147,7 +146,7 @@ Future<void> showSelectAudienceAccessForShowsDialog(BuildContext context)async{
                     children: [
                       Row(
                         children: [
-                          const AmptiveImageLoaderWidget(imagePath: AmptiveImageStrings.sIcon),
+                          const AmptiveImageLoaderWidget(imagePath: AmptiveImageStrings.PADLOCK),
                           const Gap(10),
                           Expanded(
                             child: Column(
