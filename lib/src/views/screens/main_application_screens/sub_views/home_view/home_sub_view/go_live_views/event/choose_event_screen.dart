@@ -100,6 +100,7 @@ class _AmptiveChooseOrCreateEventScreenState extends State<AmptiveChooseOrCreate
                 ),
               ),
             ),
+            
             CustomScrollView(
               physics: const BouncingScrollPhysics(),
               slivers: [
@@ -210,10 +211,10 @@ class _AmptiveChooseOrCreateEventScreenState extends State<AmptiveChooseOrCreate
               //await showAddCoHostDialog(context);
               //await showAddHashtagDialog(context);
               //showAddCommunitiesDialog(context);
-              showSelectAudienceAccessForEventsDialog(context);
+              //showSelectAudienceAccessForEventsDialog(context);
               //showWhispersDialog(context);
               //await showEventCapacitySelectionDialog(context: context);
-              //context.pushNamed(AmptiveRoutes.CREATE_SHOW_SUCCESS);
+              context.pushNamed(AmptiveRoutes.EVENT_SCHEDULED_SCREEN);
             } : null,
             buttonTitle: AmptiveOtherStrings.NEXT,
             bgColor: AmptiveColors.whiteColor,
