@@ -10,7 +10,6 @@ import 'package:amptive/src/views/widgets/common_widgets/annotated_region__widge
 import 'package:amptive/src/views/widgets/common_widgets/textformfield_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -19,6 +18,7 @@ import '../../../../../../../../utils/constants/font_weights.dart';
 import '../../../../../../../../utils/dialogs/add_co_host_dialog.dart';
 import '../../../../../../../../utils/dialogs/add_communities_dialog.dart';
 import '../../../../../../../../utils/dialogs/add_hastags_dialog.dart';
+import '../../../../../../../widgets/common_widgets/custom_container_widget.dart';
 import '../../../../../../../widgets/common_widgets/custom_rebuilder_widget.dart';
 
 class CreateShowScreen extends StatefulWidget {
@@ -240,33 +240,35 @@ class _CreateShowScreenState extends State<CreateShowScreen> {
                       title: "Community",
                     ),
                     SizedBox(height: 11.5.h),
-                    AmptiveRebuilderWidget(
-                      builder: (ctx, selected, _) {
-                        return selected && _selectedCommunityCard != null
-                            ? SelectedCommunity(
-                                selectedCommunity: _selectedCommunityCard!,
-                                onClose: () {
-                                  _communitySelected.value = false;
-                                },
-                              )
-                            : CreateShowTextFormField(
-                                controller: _titleController,
-                                hintText: "Select a community for your show",
-                                suffixIcon: Icon(
-                                  Icons.arrow_forward_ios,
-                                  size: 20.w,
-                                  color:
-                                      AmptiveColors.whiteColor.withOpacity(0.4),
-                                ),
-                                readOnly: true,
-                                onTap: () async {
-                                  _selectedCommunityCard =
-                                      await showAddCommunitiesDialog(context);
-                                  _communitySelected.value = true;
-                                },
-                              );
-                      },
-                      notifier: _communitySelected,
+                    AmptiveCustomContainer(
+                      child: AmptiveRebuilderWidget(
+                        builder: (ctx, selected, _) {
+                          return selected && _selectedCommunityCard != null
+                              ? SelectedCommunity(
+                                  selectedCommunity: _selectedCommunityCard!,
+                                  onClose: () {
+                                    _communitySelected.value = false;
+                                  },
+                                )
+                              : CreateShowTextFormField(
+                                  controller: _titleController,
+                                  hintText: "Select a community for your show",
+                                  suffixIcon: Icon(
+                                    Icons.arrow_forward_ios,
+                                    size: 20.w,
+                                    color:
+                                        AmptiveColors.whiteColor.withOpacity(0.4),
+                                  ),
+                                  readOnly: true,
+                                  onTap: () async {
+                                    _selectedCommunityCard =
+                                        await showAddCommunitiesDialog(context);
+                                    _communitySelected.value = true;
+                                  },
+                                );
+                        },
+                        notifier: _communitySelected,
+                      ),
                     ),
                     Container(
                       margin: EdgeInsets.only(top: 8.h),
