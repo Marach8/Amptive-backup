@@ -20,7 +20,7 @@ import '../constants/strings/other_strings.dart';
 
 import 'dart:developer' as marach show log;
 
-Future<void> showAddHashtagDialog(BuildContext context)async{
+Future<List<String>> showAddHashtagDialog(BuildContext context)async{
   final availableHashtags = <List<String>>[
     ['Emmanuel Ajah', 'Hashtag'],
     ['Tochukwu Iwuzed', 'Hashtag'],
@@ -293,7 +293,9 @@ Future<void> showAddHashtagDialog(BuildContext context)async{
                 builder: (_, value, __) {
                   return AmptiveElevatedButtonWidget(
                     margin: EdgeInsets.zero,
-                    onPressed: value ? () async{} : null,
+                    onPressed: value ? () async{
+                      Navigator.pop(context, selectedHashTagTitlesNotifier.value);
+                    } : null,
                     buttonTitle: AmptiveOtherStrings.CONTINUE,
                     bgColor: AmptiveColors.whiteColor,
                     fgColor: AmptiveColors.black,

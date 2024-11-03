@@ -13,6 +13,9 @@ class AmptiveImageStrings{
   static const walletIcon = '$generalSvgImagePath/WALLET ICON.svg';
   static const sIcon = '$generalSvgImagePath/Frame 79.svg';
   static const spreadNetworkIcon = '$generalSvgImagePath/Start or Schedule.svg';
+  static const robot = '$generalSvgImagePath/delivery robot.svg';
+
+
 
   static const jpeg2 = '$generalJpegImagePath/welcomeAvatar2.jpeg';
   static const jpeg1 = '$generalJpegImagePath/welcomeAvatar1.jpeg';
@@ -37,4 +40,10 @@ class AmptiveImageStrings{
   static const PADLOCK = '$generalPngImagePath/metalic padlock.png';
   static const PEOPLE = '$generalPngImagePath/people.png';
   static const createShowPlaceholderImage = '$generalPngImagePath/create-show-placeholder.png';
+  static const artCard = '$generalPngImagePath/art-card.png';
+  static const techCard= '$generalPngImagePath/tech-card.png';
+  static const societyCard = '$generalPngImagePath/society-card.png';
+
+
+
 }

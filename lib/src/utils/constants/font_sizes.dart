@@ -3,6 +3,10 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 class AmptiveFontSizes{
   const AmptiveFontSizes._();
 
+  static double size8 = 8.0.sp;
+
+  static double size9 = 9.0.sp;
+
   static double size10 = 10.0.sp;
 
   static double size12 = 12.0.sp;
