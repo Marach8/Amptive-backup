@@ -4,13 +4,18 @@ import 'package:amptive/src/utils/constants/colors.dart';
 import 'package:amptive/src/utils/constants/font_sizes.dart';
 import 'package:amptive/src/utils/constants/strings/image_strings.dart';
 import 'package:amptive/src/views/widgets/common_widgets/annotated_region__widget.dart';
+import 'package:amptive/src/views/widgets/common_widgets/custom_rebuilder_widget.dart';
+import 'package:amptive/src/views/widgets/common_widgets/image_loader_widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/textformfield_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:gap/gap.dart';
 import 'package:image_picker/image_picker.dart';
 import '../../../../../../../../utils/constants/font_weights.dart';
 import '../../../../../../../../utils/dialogs/add_communities_dialog.dart';
 import '../../../../../../../widgets/common_widgets/custom_container_widget.dart';
+import '../../../../../../../widgets/other_widgets/main_application_widgets/widgets_in_home_view/widgets_in_go_live/shows/create_show_select_audience_access_widget.dart';
+import '../../../../../../../widgets/other_widgets/main_application_widgets/widgets_in_home_view/widgets_in_go_live/shows/create_show_select_community_widget.dart';
 
 class CreateShowFormScreen extends StatefulWidget {
   const CreateShowFormScreen({super.key});
@@ -24,6 +29,8 @@ class _CreateShowFormScreenState extends State<CreateShowFormScreen> {
   File? _selectedImage;
   AssetImage? _defaultAssetImage;
   late TextEditingController _titleController;
+
+  // final selectCommunityNotifier = ValueNotifier<List<String>>([]);
 
   @override
   void initState() {
@@ -149,10 +156,12 @@ class _CreateShowFormScreenState extends State<CreateShowFormScreen> {
                         ),
                       ),
                     ),
+
                     const CreateShowTextFieldTitle(
                       title: "Title",
                       otherInfo: "140 remaining",
                     ),
+
                     SizedBox(height: 11.5.h),
                     CreateShowTextFormField(
                       controller: _titleController,
@@ -177,32 +186,23 @@ class _CreateShowFormScreenState extends State<CreateShowFormScreen> {
                     SizedBox(height: 33.5.h),
                     GestureDetector(
                       onTap: (){
-                        showAddCommunitiesDialog(context);
+                        
                       },
                       child: const CreateShowTextFieldTitle(
                         title: "Community",
                       ),
                     ),
                     SizedBox(height: 11.5.h),
-                    CreateShowTextFormField(
-                      controller: _titleController,
-                      hintText: "Select a community for your show",
-                      suffixIcon: Icon(
-                        Icons.arrow_forward_ios,
-                        size: 20.w,
-                        color: AmptiveColors.whiteColor.withOpacity(0.4),
-                      ),
-                    ),
-                    Container(
-                      margin: EdgeInsets.only(top: 8.h),
-                      child: Text(
-                        "Communities will help your Shows and Events reach more listeners. Listeners can also use communities to find your Shows and Events, easily. Learn more",
-                        overflow: TextOverflow.visible,
-                        style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                              fontWeight: AmptiveFontWeights.medium,
-                              color: AmptiveColors.whiteColor.withOpacity(0.4),
-                            ),
-                      ),
+                    const AmptiveCreateShowSelectCommunityWidget(),
+                    const Gap(8),
+
+                    Text(
+                      "Communities will help your Shows and Events reach more listeners. Listeners can also use communities to find your Shows and Events, easily. Learn more",
+                      overflow: TextOverflow.visible,
+                      style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                            fontWeight: AmptiveFontWeights.medium,
+                            color: AmptiveColors.whiteColor.withOpacity(0.4),
+                          ),
                     ),
                     SizedBox(height: 30.h),
 
@@ -265,26 +265,15 @@ class _CreateShowFormScreenState extends State<CreateShowFormScreen> {
                       title: "Audience Access",
                     ),
                     SizedBox(height: 11.5.h),
-                    CreateShowTextFormField(
-                      controller: _titleController,
-                      hintText: "Select who can access this show",
-                      suffixIcon: Icon(
-                        Icons.arrow_forward_ios,
-                        size: 20.w,
-                        color: AmptiveColors.whiteColor.withOpacity(0.4),
-                      ),
-                    ),
-                    Container(
-                      margin: EdgeInsets.only(top: 8.h),
-                      width: 360.w,
-                      child: Text(
-                        "You will be prompted to setup your subscription plan, if you haven't set it up yet.  ",
-                        overflow: TextOverflow.visible,
-                        style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                              fontWeight: AmptiveFontWeights.medium,
-                              color: AmptiveColors.whiteColor.withOpacity(0.4),
-                            ),
-                      ),
+                    const AmptiveCreateShowSelectAudienceAccessWidget(),
+                    const Gap(8),
+                    Text(
+                      "You will be prompted to setup your subscription plan, if you haven't set it up yet.  ",
+                      overflow: TextOverflow.visible,
+                      style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                            fontWeight: AmptiveFontWeights.medium,
+                            color: AmptiveColors.whiteColor.withOpacity(0.4),
+                          ),
                     ),
                     SizedBox(height: 30.h),
 
@@ -306,6 +295,8 @@ class _CreateShowFormScreenState extends State<CreateShowFormScreen> {
     return _selectedImage != null;
   }
 }
+
+
 
 class CreateShowTextFieldTitle extends StatelessWidget {
   final String title;
