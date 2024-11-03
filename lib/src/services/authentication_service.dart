@@ -22,6 +22,7 @@ class AuthenticationService {
           id: res.id,
           email: res.email ?? '',
           username: res.username ?? '',
+          profilePicture: null, name: ''
         );
       }
     } catch (e) {
@@ -42,6 +43,7 @@ class AuthenticationService {
           id: res.id,
           email: res.email ?? '',
           username: res.username ?? '',
+          profilePicture: null, name: '',
         );
       }
     } catch (e) {

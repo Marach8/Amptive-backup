@@ -16,6 +16,7 @@ class AmptiveImageStrings{
   static const robot = '$generalSvgImagePath/delivery robot.svg';
 
 
+
   static const jpeg2 = '$generalJpegImagePath/welcomeAvatar2.jpeg';
   static const jpeg1 = '$generalJpegImagePath/welcomeAvatar1.jpeg';
   static const jpeg3 = '$generalJpegImagePath/welcomeAvatar3.jpeg';
@@ -39,4 +40,10 @@ class AmptiveImageStrings{
   static const PADLOCK = '$generalPngImagePath/metalic padlock.png';
   static const PEOPLE = '$generalPngImagePath/people.png';
   static const createShowPlaceholderImage = '$generalPngImagePath/create-show-placeholder.png';
+  static const artCard = '$generalPngImagePath/art-card.png';
+  static const techCard= '$generalPngImagePath/tech-card.png';
+  static const societyCard = '$generalPngImagePath/society-card.png';
+
+
+
 }

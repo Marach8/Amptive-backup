@@ -199,7 +199,7 @@ final GoRouter amptiveAppRouter = GoRouter(
         GoRoute(
           name: AmptiveRoutes.CREATE_SHOW_FORM,
           path: AmptiveRoutes.CREATE_SHOW_FORM,
-          builder: (_, __) => const CreateShowFormScreen(),
+          builder: (_, __) => const CreateShowScreen(),
         ),
 
         GoRoute(

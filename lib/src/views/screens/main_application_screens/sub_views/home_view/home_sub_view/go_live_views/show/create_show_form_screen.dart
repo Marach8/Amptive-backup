@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'dart:ui';
 
+import 'package:amptive/src/models/community.dart';
 import 'package:amptive/src/utils/constants/colors.dart';
 import 'package:amptive/src/utils/constants/font_sizes.dart';
 import 'package:amptive/src/utils/constants/strings/image_strings.dart';
@@ -13,9 +14,12 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 
-import '../../../utils/constants/font_weights.dart';
-import '../../../utils/dialogs/add_communities_dialog.dart';
-import '../../widgets/common_widgets/custom_rebuilder_widget.dart';
+import '../../../../../../../../models/host.dart';
+import '../../../../../../../../utils/constants/font_weights.dart';
+import '../../../../../../../../utils/dialogs/add_co_host_dialog.dart';
+import '../../../../../../../../utils/dialogs/add_communities_dialog.dart';
+import '../../../../../../../../utils/dialogs/add_hastags_dialog.dart';
+import '../../../../../../../widgets/common_widgets/custom_rebuilder_widget.dart';
 
 class CreateShowScreen extends StatefulWidget {
   const CreateShowScreen({super.key});
@@ -27,21 +31,16 @@ class CreateShowScreen extends StatefulWidget {
 class _CreateShowScreenState extends State<CreateShowScreen> {
   late TextEditingController _titleController;
   final ImagePicker _picker = ImagePicker();
-  final List<dynamic> selectedHosts = [1, 2, 3, 4, 5];
-  List<String> hashtags = [
-    'amptive',
-    'amptiveLive',
-    'amptiveIsBack',
-    'ui',
-    'technology',
-    'science'
-  ];
+  List<dynamic> selectedHosts = [1, 2, 3, 4, 5];
+
   final ValueNotifier<File?> _selectedImage = ValueNotifier(null);
   final ValueNotifier<bool> _communitySelected = ValueNotifier(false);
   final ValueNotifier<bool> _coHostSelected = ValueNotifier(false);
   final ValueNotifier<bool> _hashTagSelected = ValueNotifier(false);
+  final ValueNotifier<List<String>> _hashtags = ValueNotifier([]);
 
   AssetImage? _defaultAssetImage;
+  Community? _selectedCommunityCard = null;
 
   final AndroidUiSettings _androidUiSettings = AndroidUiSettings(
     toolbarTitle: AmptiveOtherStrings.empty,
@@ -243,9 +242,13 @@ class _CreateShowScreenState extends State<CreateShowScreen> {
                     SizedBox(height: 11.5.h),
                     AmptiveRebuilderWidget(
                       builder: (ctx, selected, _) {
-                        return selected
+                        return selected && _selectedCommunityCard != null
                             ? SelectedCommunity(
-                                selectedImage: _selectedImage.value)
+                                selectedCommunity: _selectedCommunityCard!,
+                                onClose: () {
+                                  _communitySelected.value = false;
+                                },
+                              )
                             : CreateShowTextFormField(
                                 controller: _titleController,
                                 hintText: "Select a community for your show",
@@ -256,9 +259,9 @@ class _CreateShowScreenState extends State<CreateShowScreen> {
                                       AmptiveColors.whiteColor.withOpacity(0.4),
                                 ),
                                 readOnly: true,
-                                onTap: () {
-                                  showAddCommunitiesDialog(context);
-                                  //remove
+                                onTap: () async {
+                                  _selectedCommunityCard =
+                                      await showAddCommunitiesDialog(context);
                                   _communitySelected.value = true;
                                 },
                               );
@@ -294,7 +297,8 @@ class _CreateShowScreenState extends State<CreateShowScreen> {
                                 padding: EdgeInsets.symmetric(
                                     vertical: 13.h, horizontal: 16.w),
                                 decoration: BoxDecoration(
-                                    color: AmptiveColors.whiteColor.withOpacity(0.1),
+                                    color: AmptiveColors.whiteColor
+                                        .withOpacity(0.1),
                                     borderRadius: BorderRadius.circular(14.r)),
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -306,7 +310,9 @@ class _CreateShowScreenState extends State<CreateShowScreen> {
                                           items: selectedHosts,
                                         )),
                                         ElevatedButton(
-                                          onPressed: () {},
+                                          onPressed: () async {
+                                            await _editCoHosts(context);
+                                          },
                                           style: ElevatedButton.styleFrom(
                                             backgroundColor: AmptiveColors
                                                 .whiteColor
@@ -350,10 +356,8 @@ class _CreateShowScreenState extends State<CreateShowScreen> {
                                 hintText:
                                     "Search and add co-hosts for your show",
                                 readOnly: true,
-                                onTap: () {
-                                  setState(() {
-                                    _coHostSelected.value = true;
-                                  });
+                                onTap: () async {
+                                  await _editCoHosts(context);
                                 },
                                 prefixIcon: Icon(
                                   Icons.search,
@@ -385,7 +389,8 @@ class _CreateShowScreenState extends State<CreateShowScreen> {
                       controller: _titleController,
                       hintText: "Enter your own hashtag",
                       readOnly: true,
-                      onTap: () {
+                      onTap: () async {
+                        _hashtags.value = await showAddHashtagDialog(context);
                         _hashTagSelected.value = true;
                       },
                       suffixIcon: Icon(
@@ -403,7 +408,19 @@ class _CreateShowScreenState extends State<CreateShowScreen> {
                       notifier: _hashTagSelected,
                       builder: (ctx, selected, _) {
                         return selected
-                            ? SelectedHashTags(hashtags: hashtags)
+                            ? AmptiveRebuilderWidget(
+                                notifier: _hashtags,
+                                builder: (ctx, hashtags, _) {
+                                  return SelectedHashTags(
+                                    hashtags: hashtags,
+                                    onRemove: (hashtag) {
+                                      setState(() {
+                                        _hashtags.value.remove(hashtag);
+                                      });
+                                    },
+                                  );
+                                },
+                              )
                             : const SizedBox();
                       },
                     ),
@@ -461,18 +478,42 @@ class _CreateShowScreenState extends State<CreateShowScreen> {
     );
   }
 
+  Future<void> _editCoHosts(BuildContext context) async {
+    var temp = await showAddCoHostDialog(context);
+    selectedHosts = processSelectedHost(temp);
+    _coHostSelected.value = hostSelected();
+  }
+
   _imageSelected() {
     return _selectedImage.value != null;
+  }
+
+  processSelectedHost(List<Host> ls) {
+    if (ls.length >= 5) {
+      return ls.sublist(0, 5);
+    } else {
+      List<dynamic> dynamicList = List.from(ls);
+      for (int i = ls.length; i < 5; i++) {
+        dynamicList.add(i + 1);
+      }
+      return dynamicList;
+    }
+  }
+
+  bool hostSelected() {
+    return !selectedHosts.every((element) => element is int);
   }
 }
 
 class SelectedCommunity extends StatelessWidget {
   const SelectedCommunity({
     super.key,
-    required File? selectedImage,
-  }) : _selectedImage = selectedImage;
+    required Community selectedCommunity,
+    required this.onClose,
+  }) : _selectedCommunity = selectedCommunity;
 
-  final File? _selectedImage;
+  final Community _selectedCommunity;
+  final Function() onClose;
 
   @override
   Widget build(BuildContext context) {
@@ -485,36 +526,12 @@ class SelectedCommunity extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Container(
+          SizedBox(
             width: 100.328.w,
             height: 72.h,
-            decoration: BoxDecoration(
-                color: const Color(0xFF385EF2),
-                borderRadius: BorderRadius.circular(5.r)),
-            child: Stack(
-              children: [
-                Positioned(
-                  top: 4.h,
-                  left: 7.w,
-                  child: Text(
-                    "Technology",
-                    style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                        fontSize: AmptiveFontSizes.size9,
-                        fontWeight: AmptiveFontWeights.semiBold),
-                  ),
-                ),
-                Positioned(
-                    bottom: 0.h,
-                    right: 0.w,
-                    child: SizedBox(
-                      height: 52.h,
-                      width: 55.w,
-                      child: SvgPicture.asset(
-                        AmptiveImageStrings.amptiveLogo,
-                        fit: BoxFit.cover,
-                      ),
-                    ))
-              ],
+            child: Image.asset(
+              _selectedCommunity.coverPic!,
+              fit: BoxFit.cover,
             ),
           ),
           SizedBox(
@@ -527,7 +544,7 @@ class SelectedCommunity extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  "Technology",
+                  _selectedCommunity.name!,
                   style: Theme.of(context).textTheme.bodySmall,
                 ),
                 ElevatedButton(
@@ -551,7 +568,10 @@ class SelectedCommunity extends StatelessWidget {
               width: 1.w,
             ),
           ),
-          Icon(Icons.close)
+          GestureDetector(
+            onTap: onClose,
+            child: const Icon(Icons.close),
+          )
         ],
       ),
     );
@@ -675,9 +695,9 @@ class OverlappingHosts extends StatelessWidget {
                     color: AmptiveColors.whiteColor.withOpacity(0.4), width: 1),
               ),
               child: ClipOval(
-                child: item is String
-                    ? Image.network(
-                        'https://via.placeholder.com/40',
+                child: item is Host
+                    ? Image.asset(
+                        item.profilePicture!,
                         // Replace with actual image URL
                         fit: BoxFit.cover,
                       )
@@ -717,9 +737,11 @@ class SelectedHashTags extends StatelessWidget {
   const SelectedHashTags({
     super.key,
     required this.hashtags,
+    required this.onRemove,
   });
 
   final List<String> hashtags;
+  final Function(String) onRemove;
 
   @override
   Widget build(BuildContext context) {
@@ -746,9 +768,7 @@ class SelectedHashTags extends StatelessWidget {
                   ),
                   SizedBox(width: 4.w),
                   GestureDetector(
-                    onTap: () {
-                      hashtags.remove(hashtag); // Remove hashtag
-                    },
+                    onTap: () => onRemove(hashtag),
                     child: Icon(
                       Icons.close,
                       size: 16,
