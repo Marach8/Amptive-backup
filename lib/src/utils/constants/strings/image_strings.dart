@@ -13,6 +13,8 @@ class AmptiveImageStrings{
   static const walletIcon = '$generalSvgImagePath/WALLET ICON.svg';
   static const sIcon = '$generalSvgImagePath/Frame 79.svg';
   static const spreadNetworkIcon = '$generalSvgImagePath/Start or Schedule.svg';
+  static const robot = '$generalSvgImagePath/delivery robot.svg';
+
 
   static const jpeg2 = '$generalJpegImagePath/welcomeAvatar2.jpeg';
   static const jpeg1 = '$generalJpegImagePath/welcomeAvatar1.jpeg';

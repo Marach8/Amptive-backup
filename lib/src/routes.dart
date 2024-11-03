@@ -40,7 +40,7 @@ final GoRouter amptiveAppRouter = GoRouter(
   routes: <RouteBase>[
     GoRoute(
       path: AmptiveRoutes.index,
-      builder: (_, __) => const SplashScreen()
+      builder: (_, __) => const CreateShowScreen()
     ),
     GoRoute(
       name: AmptiveRoutes.welcome,
