@@ -35,6 +35,7 @@ class AmptiveOtherStrings{
   static const skip = 'Skip';
   static const back = 'Back';
   static const CONTINUE = 'Continue';
+  static const SET_FEE = 'Set fee';
 
   static const signUpWith = 'Sign up with ';
   static const signInWith = 'Sign in with ';
@@ -92,7 +93,7 @@ class AmptiveOtherStrings{
   static const verifyPhoneNumber  = 'Verify phone number';
   static const whatIsYourPhoneNumber = "What is your phone number?";
 
-  static const allow  = 'Allow';
+  static const ALLOW  = 'Allow';
   static const noThanks = "No thanks";
 
   static const SOCIETY = 'Society';
@@ -106,7 +107,7 @@ class AmptiveOtherStrings{
   static const hostedBy = 'Hosted by';
   static const showLess = ' Show less';
   static const showMore = 'Show more';
-  static const whispers = 'Whispers';
+  static const WHISPERS = 'Whispers';
   static const scheduled = 'Scheduled';
   static const subscribed = 'Subscribed';
   static const following = 'Following';
@@ -139,9 +140,58 @@ class AmptiveOtherStrings{
   static const CREATE_EVENT = 'Create Event';
   static const CREATE_EVENT_DESC = 'For one-time live audio experience';
   static const CREATE_SHOW_DESC = 'For live audio series with recurring episodes';
-  static const CHOOSE_OR_CREATE_SHOW = 'Continue from your already running show or create a new one';
+  static const CHOOSE_OR_CREATE_SHOW = 'Continue from your already running shows or create a new one';
+  static const CHOOSE_OR_CREATE_EVENT = 'Continue from your already running events or create a new one';
   static const CREATE_NEW_SHOW = 'Create new show';
+  static const CREATE_NEW_EVENT = 'Create new event';
   static const CHOOSE_SHOW = 'Choose Show';
+  static const CHOOSE_EVENT = 'Choose Event';
   static const ADD_COMMUNITY = 'Add Community';
+  static const ADD_CO_HOST = 'Add Co-host';
+  static const ADD_HASHTAG = 'Add Hashtag';
+  static const ADD_HASHTAG_DESC = 'You can add up to 4 hashtags, with each hashtag not more that 25 characaters long, without spaces or special characters';
+  static const SELECTED = 'Selected';
   static const ADD_COMMUNITY_DESC = 'Communities will help your Shows and Events reach more listeners. They can also use communites to find your Shows and Events easily. kfkjkajdjkjadjfjakjka';
+  static const ADD_COHOST_DESC = 'Added users must accept your invitation before they are added as your co-hosts.';
+  static const SEARCH_4_COHOSTS = 'Search for co-hosts';
+  static const SEARCH_4_HASHTAGS = 'Search for hashtags';
+  static const SUGGESTIONS = 'Suggestions';
+  static const NO_SUGGESTIONS = 'No Suggestions';
+  static const NO_TRENDING_HASHTAGS = 'No Trending Hashtags';
+  static const SEARCH_UR_HASHTAGS = 'Try searching for hashtag(s) in the search bar';
+  static const SEARCH_UR_COHOSTS = 'Try searching for your co-host(s) in the search bar';
+  static const AUDIENCE_ACCESS = 'Audience Access';
+  static const CAPACITY = 'Capacity';
+  static const MAX_CAPACITY = 'Kindly enter the maximun number of users/listeners that can access your event.';
+  static const MAX_CAPACITY_LIMIT = 'Once maximun capacity is reached, other users will not be allowed to join or pay for your event';
+  static const SET_CAPACITY = 'Set capacity';
+  static const REMOVE = 'Remove';
+  static const WHISPERS_DESC = 'Whispers are randomly selected comments from your live audience that appear on your event page while your are live.';
+  static const USERS_WOULD_WANT_2_JOIN = 'Non-attending users can see these comments, encouraging them to join your live event.';
+  static const TURN_ON = 'Turn On';
+  static const TURN_OFF = 'Turn Off';
+  static const WHISPERS_ENABLED = 'Whispers will be enabled for your event.';
+  static const WHISPERS_DISABLED = 'Whispers will be disabled for your event.';
+  static const HAND_RAISING = 'Hand Raising';
+  static const CNTRL_HAND_RAISING = "While you're live, you'll have full access to your moderation tools, allowing you to manage interactions and maintain control throughout the session.";
+  static const DISALLOW = "Don't Allow";
+  static const AUDIENCE_CAN_RAISE_HAND = 'Audience can raise their hands during your live show.';
+  static const AUDIENCE_CANNOT_RAISE_HAND = 'Audience cannot raise their hands during your live show.';
+  static const SHOW_AUDIENCE_ACCESS_DESC = "You will be prompted to setup subscription plan if you haven't set it up yet";
+  static const EVENT_AUDIENCE_ACCESS_DESC = 'You will be prompted to setup your payment fee for your event';
+  static const AMOUNT_2_CHARGE_4_EVENT = 'Kindly enter the amount you would want to charge users for your event';
+  static const PAID = 'Paid';
+  static const PAID_ACCESS = 'Only users who pay will have access';
+  static const FREE = 'Free';
+  static const SHOW_FREE_ACCESS = 'Everyone will access your show for free';
+  static const EVENT_FREE_ACCESS = 'Everyone will access your event for free';
+  static const SUBSCRIBERS_ONLY = 'Subscribers only';
+  static const ACCESS_2_ONLY_SUBSCRIBERS = 'Only your subscribers will have access';
+  static const EDIT_SUB_PLAN = 'Edit subscription plan';
+  static const SETUP_PAYMENT_FEE = 'Set up payment fee';
+  static const SHOW_IS_SETUP = 'Your Show is setup and airing!';
+  static const BEGIN_JOURNEY = 'Begin your journey by creating your first episode';
+  static const CREATE_1ST_EPISODE = 'Create first epidode';
+  static const VIEW_SHOW_PAGE = 'View show page';
+  static const EMPTY_FIELD = 'Field(s) cannot be empty';
 }

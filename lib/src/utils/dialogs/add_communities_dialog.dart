@@ -4,11 +4,10 @@ import 'package:amptive/src/utils/helpers/helper_functions/other_functions.dart'
 import 'package:amptive/src/views/widgets/common_widgets/image_loader_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
-
 import '../constants/strings/other_strings.dart';
 
-showAddCommunitiesDialog(BuildContext context)async{
-  return showModalBottomSheet(
+Future<void> showAddCommunitiesDialog(BuildContext context)async{
+  return await showModalBottomSheet(
     backgroundColor: AmptiveColors.brandBlackColor,
     constraints: BoxConstraints.expand(height: AmptiveHelperFunctions.getScreenHeight(context)),
     context: context,

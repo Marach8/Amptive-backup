@@ -97,7 +97,11 @@ class _AmptiveGoLiveScreenState extends State<AmptiveGoLiveScreen> {
         bottomNavigationBar: AmptiveRebuilderWidget(
           notifier: activateButton,
           builder: (_, activate, __) => AmptiveElevatedButtonWidget(
-            onPressed: activate ? () => context.pushNamed(AmptiveRoutes.CHOOSE_OR_CREATE_SHOW_SCREEN) : null,
+            onPressed: activate ? (){
+              showSelected.value ?
+                context.pushNamed(AmptiveRoutes.CHOOSE_OR_CREATE_SHOW_SCREEN)
+              : context.pushNamed(AmptiveRoutes.CHOOSE_OR_CREATE_EVENT_SCREEN);
+            }: null,
             buttonTitle: AmptiveOtherStrings.CONTINUE,
             bgColor: AmptiveColors.whiteColor,
             fgColor: AmptiveColors.black,

@@ -154,7 +154,7 @@ class AmptiveShowDetailedScreen extends StatelessWidget {
                     Gap(30.h),
               
                     Text(
-                      AmptiveOtherStrings.whispers,
+                      AmptiveOtherStrings.WHISPERS,
                       style: Theme.of(context).textTheme.bodySmall?.copyWith(
                         fontSize: AmptiveFontSizes.size17
                       ),  

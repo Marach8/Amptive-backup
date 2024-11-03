@@ -6,10 +6,10 @@ class AmptiveHelperFunctions{
   const AmptiveHelperFunctions._();
 
   static double getScreenWidth(BuildContext context)
-    => MediaQuery.of(context).size.width;
+    => MediaQuery.sizeOf(context).width;
 
   static double getScreenHeight(BuildContext context)
-    => MediaQuery.of(context).size.height;
+    => MediaQuery.sizeOf(context).height;
 
   static String enter4DigitSentFrom(String location) {
     return "Enter the 4 digit code we just sent to your $location";
