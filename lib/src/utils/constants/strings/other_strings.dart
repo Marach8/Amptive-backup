@@ -193,5 +193,9 @@ class AmptiveOtherStrings{
   static const BEGIN_JOURNEY = 'Begin your journey by creating your first episode';
   static const CREATE_1ST_EPISODE = 'Create first epidode';
   static const VIEW_SHOW_PAGE = 'View show page';
+  static const VIEW_EVENT_PAGE = 'View event page';
+  static const EVENT_SCHEDULED = 'Your Event is scheduled!';
+  static const SHARE_EVENT_LINK = 'Share your event link to build excitement and attract more attendees.';
   static const EMPTY_FIELD = 'Field(s) cannot be empty';
+  static const SHARE_EVENT = 'Share event';
 }

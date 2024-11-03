@@ -11,13 +11,10 @@ import '../../views/widgets/common_widgets/custom_rebuilder_widget.dart';
 import '../../views/widgets/common_widgets/elevated_button_widget.dart';
 import '../constants/strings/other_strings.dart';
 
-import 'dart:developer' as marach show log;
-
-Future<void> showSelectAudienceAccessForShowsDialog(BuildContext context)async{
-  final freeAccesNotifier = ValueNotifier(false);
-  final paidAccessNotifier = ValueNotifier(false);
-  final activateBtnNotifier = ValueNotifier(false);
-
+Future<String> showSelectAudienceAccessForShowsDialog(
+  BuildContext context
+)async{
+  final notifier = ValueNotifier<String>('');
   return await showModalBottomSheet(
     backgroundColor: AmptiveColors.brandBlackColor,
     constraints: BoxConstraints.expand(height: AmptiveHelperFunctions.getScreenHeight(context)),
@@ -33,7 +30,7 @@ Future<void> showSelectAudienceAccessForShowsDialog(BuildContext context)async{
           children: [
             Center(
               child: GestureDetector(
-                onTap: () => context.pop(),
+                onTap: () => context.pop(''),
                 child: Platform.isAndroid
                   ? Icon(
                     Icons.keyboard_arrow_down,
@@ -64,22 +61,23 @@ Future<void> showSelectAudienceAccessForShowsDialog(BuildContext context)async{
             const Gap(20),
         
             AmptiveRebuilderWidget(
-              notifier: freeAccesNotifier,
-              shouldDispose: true,
+              notifier: notifier,
               builder: (_, value, __) {
+                final isActive = value == AmptiveOtherStrings.FREE;
                 return AmptiveCustomContainer(
                   duration: 100,
                   onTap: (){
-                    activateBtnNotifier.value = !value;
-                    paidAccessNotifier.value = false;
-                    freeAccesNotifier.value = !value;
+                    if(value != AmptiveOtherStrings.FREE){
+                      notifier.value = AmptiveOtherStrings.FREE;
+                    }
+                    else{notifier.value = '';}
                   },
                   padding: const EdgeInsets.fromLTRB(15, 13, 15, 13),
                   radius: 15,
                   color: AmptiveColors.grey1Color,
                   border: Border.all(
                     width: 2,
-                    color: value ? AmptiveColors.brandBlueColor : AmptiveColors.transparentColor
+                    color: isActive ? AmptiveColors.brandBlueColor : AmptiveColors.transparentColor
                   ),
                   child: Row(
                     children: [
@@ -108,9 +106,9 @@ Future<void> showSelectAudienceAccessForShowsDialog(BuildContext context)async{
                       AmptiveCustomContainer(
                         height: 20, width: 20, radius: 20,
                         padding: const EdgeInsets.all(3),
-                        color: value ? AmptiveColors.brandBlueColor : AmptiveColors.transparentColor,
+                        color: isActive ? AmptiveColors.brandBlueColor : AmptiveColors.transparentColor,
                         border: Border.all(
-                          color: value ? AmptiveColors.brandBlueColor : AmptiveColors.whiteColor,
+                          color: isActive ? AmptiveColors.brandBlueColor : AmptiveColors.whiteColor,
                           strokeAlign: 5.0
                         ),
                         child: const SizedBox.shrink()
@@ -124,21 +122,22 @@ Future<void> showSelectAudienceAccessForShowsDialog(BuildContext context)async{
             const Gap(15),
         
             AmptiveRebuilderWidget(
-              shouldDispose: true,
-              notifier: paidAccessNotifier,
+              notifier: notifier,
               builder: (_, value, __) {
+                final isActive = value == AmptiveOtherStrings.SUBSCRIBERS_ONLY;
                 return AmptiveCustomContainer(
                   onTap: (){
-                    activateBtnNotifier.value = !value;
-                    freeAccesNotifier.value = false;
-                    paidAccessNotifier.value = !value;
+                    if(value != AmptiveOtherStrings.SUBSCRIBERS_ONLY){
+                      notifier.value = AmptiveOtherStrings.SUBSCRIBERS_ONLY;
+                    }
+                    else{notifier.value = '';}
                   },
                   padding: const EdgeInsets.fromLTRB(15, 13, 15, 13),
                   radius: 15, duration: 100,
                   color: AmptiveColors.grey1Color,
                   border: Border.all(
                     width: 2,
-                    color: value ? AmptiveColors.brandBlueColor : AmptiveColors.transparentColor
+                    color: isActive ? AmptiveColors.brandBlueColor : AmptiveColors.transparentColor
                   ),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -171,9 +170,9 @@ Future<void> showSelectAudienceAccessForShowsDialog(BuildContext context)async{
                           AmptiveCustomContainer(
                             height: 20, width: 20, radius: 20,
                             padding: const EdgeInsets.all(3),
-                            color: value ? AmptiveColors.brandBlueColor : AmptiveColors.transparentColor,
+                            color: isActive ? AmptiveColors.brandBlueColor : AmptiveColors.transparentColor,
                             border: Border.all(
-                              color: value ? AmptiveColors.brandBlueColor : AmptiveColors.whiteColor,
+                              color: isActive ? AmptiveColors.brandBlueColor : AmptiveColors.whiteColor,
                               strokeAlign: 5.0
                             ),
                             child: const SizedBox.shrink()
@@ -192,9 +191,7 @@ Future<void> showSelectAudienceAccessForShowsDialog(BuildContext context)async{
                             radius: 5,
                             child: Text(
                               AmptiveOtherStrings.EDIT_SUB_PLAN,
-                              style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                                //color: AmptiveColors.subtitleColor
-                              ),
+                              style: Theme.of(context).textTheme.titleMedium
                             ),
                           ),
                           const Spacer(),
@@ -212,12 +209,13 @@ Future<void> showSelectAudienceAccessForShowsDialog(BuildContext context)async{
             const Spacer(),
         
             AmptiveRebuilderWidget(
-              notifier: activateBtnNotifier,
-              shouldDispose: true,
+              notifier: notifier,
               builder: (_, value, __) {
+                final isActive = value == AmptiveOtherStrings.FREE 
+                  || value == AmptiveOtherStrings.SUBSCRIBERS_ONLY;
                 return AmptiveElevatedButtonWidget(
                   margin: EdgeInsets.zero,
-                  onPressed: value ? () async{} : null,
+                  onPressed: isActive ? (){context.pop(value);} : null,
                   buttonTitle: AmptiveOtherStrings.CONTINUE,
                   bgColor: AmptiveColors.whiteColor,
                   fgColor: AmptiveColors.black,
