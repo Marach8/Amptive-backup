@@ -1,6 +1,5 @@
 import 'dart:io';
 import 'dart:ui';
-
 import 'package:amptive/src/utils/constants/colors.dart';
 import 'package:amptive/src/utils/constants/font_sizes.dart';
 import 'package:amptive/src/utils/constants/strings/image_strings.dart';
@@ -9,18 +8,18 @@ import 'package:amptive/src/views/widgets/common_widgets/textformfield_widget.da
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:image_picker/image_picker.dart';
+import '../../../../../../../../utils/constants/font_weights.dart';
+import '../../../../../../../../utils/dialogs/add_communities_dialog.dart';
+import '../../../../../../../widgets/common_widgets/custom_container_widget.dart';
 
-import '../../../utils/constants/font_weights.dart';
-import '../../../utils/dialogs/add_communities_dialog.dart';
-
-class CreateShowScreen extends StatefulWidget {
-  const CreateShowScreen({super.key});
+class CreateShowFormScreen extends StatefulWidget {
+  const CreateShowFormScreen({super.key});
 
   @override
-  State<CreateShowScreen> createState() => _CreateShowScreenState();
+  State<CreateShowFormScreen> createState() => _CreateShowFormScreenState();
 }
 
-class _CreateShowScreenState extends State<CreateShowScreen> {
+class _CreateShowFormScreenState extends State<CreateShowFormScreen> {
   final ImagePicker _picker = ImagePicker();
   File? _selectedImage;
   AssetImage? _defaultAssetImage;
@@ -75,6 +74,7 @@ class _CreateShowScreenState extends State<CreateShowScreen> {
             ),
           ),
         ),
+
         body: Stack(
           children: [
             Positioned.fill(
@@ -89,11 +89,11 @@ class _CreateShowScreenState extends State<CreateShowScreen> {
                     ),
             ),
             Positioned.fill(
-              child: Container(
+              child: AmptiveCustomContainer(
                 color: AmptiveColors.black.withOpacity(0.6),
                 child: BackdropFilter(
                   filter: ImageFilter.blur(sigmaX: 150.0, sigmaY: 150.0),
-                  child: Container(),
+                  child: const SizedBox.shrink(),
                 ),
               ),
             ),
@@ -103,7 +103,7 @@ class _CreateShowScreenState extends State<CreateShowScreen> {
                 padding: EdgeInsets.symmetric(horizontal: 15.w),
                 child: Column(
                   children: [
-                    Container(
+                    AmptiveCustomContainer(
                       alignment: Alignment.center,
                       margin: EdgeInsets.only(top: 16.h, bottom: 34.h),
                       child: GestureDetector(

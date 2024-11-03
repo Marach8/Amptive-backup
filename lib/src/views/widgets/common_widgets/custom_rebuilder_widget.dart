@@ -34,13 +34,11 @@ class _AmptiveRebuilderWidgetState<T> extends State<AmptiveRebuilderWidget<T>> {
   }
 
   @override
-  Widget build(BuildContext _) {
-    return ValueListenableBuilder<T>(
-      valueListenable: notifier,
-      builder: widget.builder,
-      child: widget.child,
-    );
-  }
+  Widget build(_) => ValueListenableBuilder<T>(
+    valueListenable: notifier,
+    builder: widget.builder,
+    child: widget.child,
+  );
 }
 
 
