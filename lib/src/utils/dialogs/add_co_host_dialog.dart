@@ -11,15 +11,19 @@ import 'package:amptive/src/views/widgets/common_widgets/textformfield_widget.da
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
+import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
 import 'package:iconsax/iconsax.dart';
 import '../../models/host.dart';
+import '../../services/create_show/create_show_service.dart';
 import '../../views/widgets/common_widgets/custom_rebuilder_widget.dart';
 import '../../views/widgets/common_widgets/elevated_button_widget.dart';
 import '../constants/strings/other_strings.dart';
 
-Future<List<Host>> showAddCoHostDialog(BuildContext context) async {
-  final List<Host> coHostsData = getHostList();
+Future<Set<HostWithNotifier>?> showAddCoHostDialog(BuildContext context) async {
+  CreateShowService service = GetIt.I<CreateShowService>();
+
+  final List<HostWithNotifier> coHostsData = service.coHostsListData;
 
   final focusNode = FocusNode();
   final controller = TextEditingController();
@@ -28,12 +32,7 @@ Future<List<Host>> showAddCoHostDialog(BuildContext context) async {
       ? showSuffixIconNotifier.value = true
       : showSuffixIconNotifier.value = false);
 
-  final selectedNumberNotifier = ValueNotifier(0);
   final searchQueryNotifier = ValueNotifier('');
-  final activateBtnNotifier = ValueNotifier(false);
-
-  final listOfValueNotifiers =
-      List.generate(coHostsData.length, (_) => ValueNotifier(false));
 
   return await showModalBottomSheet(
       backgroundColor: AmptiveColors.brandBlackColor,
@@ -43,15 +42,7 @@ Future<List<Host>> showAddCoHostDialog(BuildContext context) async {
       isScrollControlled: true,
       useSafeArea: true,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(0)),
-      builder: (_) {
-        final selectedCoHosts = ValueNotifier<List<Host>>([]);
-        selectedCoHosts.addListener(() {
-          selectedNumberNotifier.value = selectedCoHosts.value.length;
-          selectedCoHosts.value.isEmpty
-              ? activateBtnNotifier.value = false
-              : activateBtnNotifier.value = true;
-        });
-
+      builder: (context) {
         return Stack(
           children: [
             Positioned.fill(
@@ -95,8 +86,8 @@ Future<List<Host>> showAddCoHostDialog(BuildContext context) async {
                           ),
                           Gap(60.w),
                           AmptiveRebuilderWidget(
-                              notifier: selectedNumberNotifier,
-                              shouldDispose: true,
+                              notifier: service.selectedCoHostLength,
+                              // shouldDispose: true,
                               builder: (_, number, __) {
                                 return Text(
                                   '$number ${AmptiveOtherStrings.SELECTED}',
@@ -121,6 +112,7 @@ Future<List<Host>> showAddCoHostDialog(BuildContext context) async {
                       ),
                       const Gap(20),
 
+                      // search SEARCH
                       AmptiveTextFormFieldWidget(
                         controller: controller,
                         focusNode: focusNode,
@@ -153,9 +145,10 @@ Future<List<Host>> showAddCoHostDialog(BuildContext context) async {
                       ),
 
                       AmptiveRebuilderWidget(
-                        notifier: selectedCoHosts,
-                        shouldDispose: true,
-                        builder: (_, value, __) {
+                        notifier: service.selectedCoHostLength,
+                        // shouldDispose: true,
+                        builder: (_, val, __) {
+                          var value = service.selectedCoHosts.value;
                           return AmptiveAnimatedCrossFadeWidget(
                             condition: value.isEmpty,
                             firstChild: const SizedBox.shrink(),
@@ -166,15 +159,6 @@ Future<List<Host>> showAddCoHostDialog(BuildContext context) async {
                                 scrollDirection: Axis.horizontal,
                                 child: Row(
                                   children: value.map((selCoHost) {
-                                    //Get the index of this image in the original list of images
-                                    final indexOfTappedImage = coHostsData
-                                        .indexWhere(
-                                            (coHost) => coHost.id == selCoHost.id);
-
-                                    //Using this index, get the notifier associated with it in the list of notifiers.
-                                    final notifier = listOfValueNotifiers
-                                        .elementAt(indexOfTappedImage);
-
                                     return Padding(
                                       padding: const EdgeInsets.only(right: 15),
                                       child: Stack(
@@ -188,7 +172,8 @@ Future<List<Host>> showAddCoHostDialog(BuildContext context) async {
                                             child: FittedBox(
                                                 fit: BoxFit.fill,
                                                 child: AmptiveImageLoaderWidget(
-                                                    imagePath: selCoHost.profilePicture!)),
+                                                    imagePath: selCoHost
+                                                        .host.profilePicture!)),
                                           ),
                                           Positioned(
                                             top: 0,
@@ -196,13 +181,11 @@ Future<List<Host>> showAddCoHostDialog(BuildContext context) async {
                                             child: AmptiveCustomContainer(
                                               onTap: () {
                                                 //Disable this notifier
-                                                notifier.value = false;
-                                                //Remove this image from list
-                                                final listOfImages =
-                                                    selectedCoHosts.value;
-                                                listOfImages.remove(selCoHost);
-                                                selectedCoHosts.value =
-                                                    List.from(listOfImages);
+                                                selCoHost.notifier.value =
+                                                    false;
+
+                                                service.removeSelectedCoHost(
+                                                    selCoHost);
                                               },
                                               color: AmptiveColors.textRedColor,
                                               height: 17,
@@ -229,18 +212,17 @@ Future<List<Host>> showAddCoHostDialog(BuildContext context) async {
                       AmptiveRebuilderWidget(
                           notifier: searchQueryNotifier,
                           builder: (_, searchString, __) {
-                            List<Host> filteredCoHosts;
+                            List<HostWithNotifier> filteredCoHosts;
 
                             if (searchString.isEmpty ||
                                 controller.text.isEmpty) {
                               filteredCoHosts = coHostsData;
                             } else {
-
                               filteredCoHosts = coHostsData.where((coHost) {
-                                return coHost.name!
+                                return coHost.host.name!
                                         .toLowerCase()
                                         .contains(searchString.toLowerCase()) ||
-                                    coHost.username!
+                                    coHost.host.username!
                                         .toLowerCase()
                                         .contains(searchString.toLowerCase());
                               }).toList();
@@ -248,8 +230,6 @@ Future<List<Host>> showAddCoHostDialog(BuildContext context) async {
 
                             return AmptiveListOfCoHostsWidget(
                               availableCoHosts: filteredCoHosts,
-                              listOfNotifiers: listOfValueNotifiers,
-                              selectedCoHosts: selectedCoHosts,
                             );
                           }),
                       Gap(100.h)
@@ -275,15 +255,15 @@ Future<List<Host>> showAddCoHostDialog(BuildContext context) async {
                 padding: const EdgeInsets.symmetric(horizontal: 15),
                 width: AmptiveHelperFunctions.getScreenWidth(context),
                 child: AmptiveRebuilderWidget(
-                    notifier: activateBtnNotifier,
-                    shouldDispose: true,
+                    notifier: service.selectedCoHostLength,
+                    // shouldDispose: true,
                     builder: (_, value, __) {
                       return AmptiveElevatedButtonWidget(
                         margin: EdgeInsets.zero,
-                        onPressed: value
+                        onPressed: value > 0
                             ? () async {
                                 Navigator.pop(
-                                    context, selectedCoHosts.value);
+                                    context, service.selectedCoHosts.value);
                               }
                             : null,
                         buttonTitle: AmptiveOtherStrings.CONTINUE,
@@ -299,15 +279,13 @@ Future<List<Host>> showAddCoHostDialog(BuildContext context) async {
 }
 
 class AmptiveListOfCoHostsWidget extends StatelessWidget {
-  final List<Host> availableCoHosts;
-  final List<ValueNotifier<bool>> listOfNotifiers;
-  final ValueNotifier<List<Host>> selectedCoHosts;
+  final List<HostWithNotifier> availableCoHosts;
+  final CreateShowService service = GetIt.I<CreateShowService>();
 
-  const AmptiveListOfCoHostsWidget(
-      {super.key,
-      required this.availableCoHosts,
-      required this.listOfNotifiers,
-      required this.selectedCoHosts});
+  AmptiveListOfCoHostsWidget({
+    super.key,
+    required this.availableCoHosts,
+  });
 
   @override
   Widget build(context) {
@@ -332,21 +310,22 @@ class AmptiveListOfCoHostsWidget extends StatelessWidget {
 
     return Column(
         mainAxisSize: MainAxisSize.min,
-        children: availableCoHosts.asMap().entries.map((entry) {
-          final notifier = listOfNotifiers.elementAt(entry.key);
+        children: availableCoHosts.map((entry) {
+          // final notifier = listOfNotifiers.elementAt(entry.key);
 
           return AmptiveCoHostWidget(
-            coHostDetail: entry.value,
-            notifier: notifier,
+            coHostDetail: entry,
             onTap: (image, isSelected) {
               if (isSelected) {
-                final listOfImages = selectedCoHosts.value;
-                listOfImages.remove(image);
-                selectedCoHosts.value = List.from(listOfImages);
+                // final listOfImages = selectedCoHosts.value;
+                // listOfImages.remove(image);
+                // selectedCoHosts.value = List.from(listOfImages);
+                service.removeSelectedCoHost(image);
               } else {
-                final listOfImages = selectedCoHosts.value;
-                listOfImages.add(image);
-                selectedCoHosts.value = List.from(listOfImages);
+                // final listOfImages = selectedCoHosts.value;
+                // listOfImages.add(image);
+                // selectedCoHosts.value = List.from(listOfImages);
+                service.addSelectedCoHost(image);
               }
             },
           );
@@ -355,15 +334,16 @@ class AmptiveListOfCoHostsWidget extends StatelessWidget {
 }
 
 class AmptiveCoHostWidget extends StatelessWidget {
-  final void Function(Host, bool) onTap;
-  final Host coHostDetail;
-  final ValueNotifier<bool> notifier;
+  final void Function(HostWithNotifier, bool) onTap;
+  final HostWithNotifier coHostDetail;
 
-  const AmptiveCoHostWidget(
-      {super.key,
-      required this.onTap,
-      required this.coHostDetail,
-      required this.notifier});
+  // final ValueNotifier<bool> notifier;
+
+  const AmptiveCoHostWidget({
+    super.key,
+    required this.onTap,
+    required this.coHostDetail,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -371,8 +351,8 @@ class AmptiveCoHostWidget extends StatelessWidget {
       padding: const EdgeInsets.symmetric(vertical: 15),
       child: GestureDetector(
         onTap: () {
-          onTap(coHostDetail, notifier.value);
-          notifier.value = !notifier.value;
+          onTap(coHostDetail, coHostDetail.notifier.value);
+          // coHostDetail.notifier.value = !coHostDetail.notifier.value;
         },
         child: Row(
           children: [
@@ -383,20 +363,21 @@ class AmptiveCoHostWidget extends StatelessWidget {
               radius: 30,
               child: FittedBox(
                   fit: BoxFit.fill,
-                  child: AmptiveImageLoaderWidget(imagePath: coHostDetail.profilePicture!)),
+                  child: AmptiveImageLoaderWidget(
+                      imagePath: coHostDetail.host.profilePicture!)),
             ),
             const Gap(10),
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(coHostDetail.name!,
+                  Text(coHostDetail.host.name!,
                       style: Theme.of(context)
                           .textTheme
                           .bodySmall
                           ?.copyWith(fontSize: AmptiveFontSizes.size15)),
                   Text(
-                    coHostDetail.username!,
+                    coHostDetail.host.username!,
                     style: Theme.of(context)
                         .textTheme
                         .bodySmall
@@ -406,7 +387,7 @@ class AmptiveCoHostWidget extends StatelessWidget {
               ),
             ),
             AmptiveRebuilderWidget(
-                notifier: notifier,
+                notifier: coHostDetail.notifier,
                 builder: (_, value, __) {
                   return AmptiveCustomContainer(
                       duration: 200,
@@ -428,39 +409,4 @@ class AmptiveCoHostWidget extends StatelessWidget {
       ),
     );
   }
-}
-
-List<Host> getHostList() {
-  List<Host> hostsList = [];
-
-  final coHostsData = <String, List<String>>{
-    AmptiveImageStrings.jpeg1: ['Emmanuel Ajah', 'nnanna😍💕'],
-    AmptiveImageStrings.jpeg2: ['Tochukwu Iwuzed', 'tobaby'],
-    AmptiveImageStrings.jpeg3: ['Ekene Okoro', 'kendo boss🦋'],
-    AmptiveImageStrings.discoverPic1: ['Rita Waltson', 'rita4life🐎'],
-    AmptiveImageStrings.OFFICE_LADIES: ['Lee Parker', 'therealguy'],
-    AmptiveImageStrings.MAN_PHOTO: ['Daniel Adesua', 'myownbrother'],
-    AmptiveImageStrings.COMMUNITY_CARD: ['Erica Nwosu', 'ricababygirl'],
-    AmptiveImageStrings.CRIMINAL: ['Peter Nwokeji', 'sirpee'],
-    AmptiveImageStrings.createShowPlaceholderImage: [
-      'Arlan Walker',
-      'walkerboss'
-    ],
-    AmptiveImageStrings.JOE_POMP_SHOW: ['Man Drone', 'ikennegodadi'],
-  };
-
-  coHostsData.forEach((pics, details) {
-    if (details.length >= 2) {
-      String name = details[0];
-      String username = details[1];
-      hostsList.add(Host(
-          id: 0,
-          name: name,
-          username: username,
-          email: '',
-          profilePicture: pics));
-    }
-  });
-
-  return hostsList;
 }
