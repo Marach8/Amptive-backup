@@ -22,6 +22,8 @@ class AmptiveRoutes {
   static String cropImage = "crop_image";
   static String preHomepage = "pre-homepage";
   static const CREATE_SHOW_FORM = "create-show-form";
+  static const CREATE_EVENT_FORM = "create-event-form";
+  static const CREATE_EPISODE_FORM = "create-episode-form";
 
 
   //MAIN APPLICATION

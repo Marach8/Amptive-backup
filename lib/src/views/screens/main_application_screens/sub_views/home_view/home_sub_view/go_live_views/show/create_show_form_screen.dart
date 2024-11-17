@@ -8,6 +8,7 @@ import 'package:amptive/src/utils/constants/constants.dart';
 import 'package:amptive/src/utils/constants/font_sizes.dart';
 import 'package:amptive/src/utils/constants/strings/image_strings.dart';
 import 'package:amptive/src/utils/constants/strings/other_strings.dart';
+import 'package:amptive/src/utils/constants/strings/route_strings.dart';
 import 'package:amptive/src/utils/dialogs/select_audience_access_for_events_dialog.dart';
 import 'package:amptive/src/utils/dialogs/select_audience_access_for_shows_dialog.dart';
 import 'package:amptive/src/utils/dialogs/select_capacity_for_events_dialog.dart';
@@ -19,6 +20,7 @@ import 'package:amptive/src/views/widgets/other_widgets/main_application_widgets
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get_it/get_it.dart';
+import 'package:go_router/go_router.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
@@ -44,10 +46,10 @@ class CreateShowScreen extends StatefulWidget {
 }
 
 class _CreateShowScreenState extends State<CreateShowScreen> {
-  late TextEditingController _titleController;
   final ImagePicker _picker = ImagePicker();
   List<dynamic> selectedHosts = [1, 2, 3, 4, 5];
   CreateShowService service = GetIt.I<CreateShowService>();
+  String? showTypeTitle;
 
   final ValueNotifier<File?> _selectedImage = ValueNotifier(null);
   final ValueNotifier<bool> _communitySelected = ValueNotifier(false);
@@ -80,18 +82,27 @@ class _CreateShowScreenState extends State<CreateShowScreen> {
   @override
   void initState() {
     super.initState();
+    setShowTypeTitle();
     service.initFormControl();
     _defaultAssetImage =
         const AssetImage(AmptiveImageStrings.createShowPlaceholderImage);
 
-    _titleController = TextEditingController();
   }
 
   @override
   void dispose() {
     service.dispose();
-    _titleController.dispose();
     super.dispose();
+  }
+
+  setShowTypeTitle() {
+    if (widget.showType == ShowType.episode) {
+      showTypeTitle = "Episode";
+    } else if (widget.showType == ShowType.event) {
+      showTypeTitle = "Event";
+    } else {
+      showTypeTitle = "Show";
+    }
   }
 
   //Image Picker function to get image from gallery
@@ -132,15 +143,31 @@ class _CreateShowScreenState extends State<CreateShowScreen> {
     return AmptiveAnnotatedRegionWidget(
       child: Scaffold(
         appBar: AppBar(
+          automaticallyImplyLeading: false,
           leading: const BackButton(),
           backgroundColor: AmptiveColors.black.withOpacity(0.05),
-          title: Container(
-            margin: EdgeInsets.only(left: 54.w),
-            child: Text(
-              "Create your Show",
-              style: Theme.of(context).textTheme.bodyMedium,
-            ),
+          title: Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              Padding(
+                padding: EdgeInsets.only(left: 50.w),
+                child: Text(
+                  "Create your $showTypeTitle",
+                  style: Theme.of(context).textTheme.bodyMedium,
+                ),
+              ),
+            ],
           ),
+          actions: [
+            ShowTypeVisibilityWidget(
+              showType: widget.showType,
+              allowedShowTypes: const [ShowType.event],
+              child: IconButton(
+                icon: const Icon(Iconsax.calendar_2),
+                onPressed: () {},
+              ),
+            ),
+          ],
         ),
         body: Stack(
           children: [
@@ -236,12 +263,12 @@ class _CreateShowScreenState extends State<CreateShowScreen> {
                         }),
                     SizedBox(height: 11.5.h),
                     CreateShowTextFormField(
-                      controller: _titleController,
+                      controller: service.titleController,
                       hintText: "What is the title of your show?",
                       maxLength: Constants.kMaxTitleCharacters,
                       onChanged: (val) {
                         service.titleCharLength.value =
-                            _titleController.text.length;
+                            service.titleController.text.length;
                       },
                     ),
                     SizedBox(height: 33.5.h),
@@ -702,7 +729,6 @@ class _CreateShowScreenState extends State<CreateShowScreen> {
                   filter: ImageFilter.blur(sigmaX: 5.0, sigmaY: 5.0),
                   child: Container(
                     height: 80.h,
-
                   ),
                 ),
               ),
@@ -711,24 +737,34 @@ class _CreateShowScreenState extends State<CreateShowScreen> {
               bottom: 0,
               right: 0,
               left: 0,
-              child: AmptiveElevatedButtonWidget(
-                height: 50.w,
-                buttonTitle: "Go LIVE",
-                onPressed: service.formIsValid() ? () {} : null,
-                buttonStyle: ButtonStyle(
-                  backgroundColor: WidgetStateProperty.resolveWith((states) {
-                    if (states.contains(WidgetState.disabled)) {
-                      return AmptiveColors.grey1Color;
-                    }
-                    return AmptiveColors.activeDotColor;
-                  }),
-                  foregroundColor: WidgetStateProperty.resolveWith((states) {
-                    if (states.contains(WidgetState.disabled)) {
-                      return AmptiveColors.strokeGreyColor;
-                    }
-                    return AmptiveColors.brandBlackColor; // Enabled text color
-                  }),
-                ),
+              child: AmptiveRebuilderWidget(
+                notifier: service.audienceAccessController,
+                builder: (_, val, __) {
+                  return AmptiveElevatedButtonWidget(
+                    height: 50.w,
+                    buttonTitle: "Go LIVE",
+                    onPressed: service.formIsValid()
+                        ? () {
+                            context.pushReplacementNamed(
+                                AmptiveRoutes.CREATE_SHOW_SUCCESS);
+                          }
+                        : null,
+                    buttonStyle: ButtonStyle(
+                      backgroundColor: WidgetStateProperty.resolveWith((states) {
+                        if (states.contains(WidgetState.disabled)) {
+                          return AmptiveColors.grey1Color;
+                        }
+                        return AmptiveColors.activeDotColor;
+                      }),
+                      foregroundColor: WidgetStateProperty.resolveWith((states) {
+                        if (states.contains(WidgetState.disabled)) {
+                          return AmptiveColors.strokeGreyColor;
+                        }
+                        return AmptiveColors.brandBlackColor;
+                      }),
+                    ),
+                  );
+                }
               ),
             )
           ],
@@ -770,58 +806,6 @@ class _CreateShowScreenState extends State<CreateShowScreen> {
 
   bool hostSelected() {
     return !selectedHosts.every((element) => element is int);
-  }
-}
-
-class CreateShowTextFieldTitle extends StatelessWidget {
-  final String title;
-  final String? otherInfo;
-  final IconData? prefixIcon;
-  final TextStyle? titleStyle;
-
-  const CreateShowTextFieldTitle({
-    super.key,
-    required this.title,
-    this.otherInfo,
-    this.prefixIcon,
-    this.titleStyle,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Visibility(
-          visible: prefixIcon != null,
-          child: Padding(
-            padding: EdgeInsets.only(right: 4.w),
-            child: Icon(
-              prefixIcon,
-              size: 18.h,
-            ),
-          ),
-        ),
-        Text(
-          title,
-          style: titleStyle ??
-              Theme.of(context)
-                  .textTheme
-                  .bodySmall
-                  ?.copyWith(fontSize: AmptiveFontSizes.size15),
-        ),
-        Expanded(
-            child: SizedBox(
-          width: 1.w,
-        )),
-        Text(
-          otherInfo ?? "",
-          style: Theme.of(context)
-              .textTheme
-              .titleSmall
-              ?.copyWith(color: AmptiveColors.whiteColor.withOpacity(0.4)),
-        ),
-      ],
-    );
   }
 }
 
@@ -883,58 +867,6 @@ class OverlappingHosts extends StatelessWidget {
                           ),
                         ],
                       ),
-              ),
-            ),
-          );
-        }).toList(),
-      ),
-    );
-  }
-}
-
-class SelectedHashTags extends StatelessWidget {
-  const SelectedHashTags({
-    super.key,
-    required this.hashtags,
-    required this.onRemove,
-  });
-
-  final List<String> hashtags;
-  final Function(String) onRemove;
-
-  @override
-  Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      scrollDirection: Axis.horizontal,
-      child: Row(
-        children: hashtags.map((hashtag) {
-          return Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 4.0),
-            child: Container(
-              padding: EdgeInsets.all(10.w),
-              decoration: BoxDecoration(
-                color: AmptiveColors.whiteColor.withOpacity(0.1),
-                borderRadius: BorderRadius.circular(10.r),
-              ),
-              child: Row(
-                children: [
-                  Text(
-                    hashtag,
-                    style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                          fontSize: AmptiveFontSizes.size10,
-                          color: AmptiveColors.whiteColor.withOpacity(0.7),
-                        ),
-                  ),
-                  SizedBox(width: 4.w),
-                  GestureDetector(
-                    onTap: () => onRemove(hashtag),
-                    child: Icon(
-                      Icons.close,
-                      size: 16,
-                      color: AmptiveColors.whiteColor.withOpacity(0.7),
-                    ),
-                  ),
-                ],
               ),
             ),
           );

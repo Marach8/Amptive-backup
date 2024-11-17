@@ -71,3 +71,111 @@ class CreateShowTextFormField extends AmptiveTextFormFieldWidget {
     );
   }
 }
+
+
+class CreateShowTextFieldTitle extends StatelessWidget {
+  final String title;
+  final String? otherInfo;
+  final IconData? prefixIcon;
+  final TextStyle? titleStyle;
+
+  const CreateShowTextFieldTitle({
+    super.key,
+    required this.title,
+    this.otherInfo,
+    this.prefixIcon,
+    this.titleStyle,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        Visibility(
+          visible: prefixIcon != null,
+          child: Padding(
+            padding: EdgeInsets.only(right: 4.w),
+            child: Icon(
+              prefixIcon,
+              size: 18.h,
+            ),
+          ),
+        ),
+        Text(
+          title,
+          style: titleStyle ??
+              Theme.of(context)
+                  .textTheme
+                  .bodySmall
+                  ?.copyWith(fontSize: AmptiveFontSizes.size15),
+        ),
+        Expanded(
+            child: SizedBox(
+              width: 1.w,
+            )),
+        Text(
+          otherInfo ?? "",
+          style: Theme.of(context)
+              .textTheme
+              .titleSmall
+              ?.copyWith(color: AmptiveColors.whiteColor.withOpacity(0.4)),
+        ),
+      ],
+    );
+  }
+}
+
+
+class SelectedHashTags extends StatelessWidget {
+  const SelectedHashTags({
+    super.key,
+    required this.hashtags,
+    required this.onRemove,
+  });
+
+  final List<String> hashtags;
+  final Function(String) onRemove;
+
+  @override
+  Widget build(BuildContext context) {
+    return SingleChildScrollView(
+      scrollDirection: Axis.horizontal,
+      child: Row(
+        children: hashtags.map((hashtag) {
+          return Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 4.0),
+            child: Container(
+              padding: EdgeInsets.all(10.w),
+              decoration: BoxDecoration(
+                color: AmptiveColors.whiteColor.withOpacity(0.1),
+                borderRadius: BorderRadius.circular(10.r),
+              ),
+              child: Row(
+                children: [
+                  Text(
+                    hashtag,
+                    style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                      fontSize: AmptiveFontSizes.size10,
+                      color: AmptiveColors.whiteColor.withOpacity(0.7),
+                    ),
+                  ),
+                  SizedBox(width: 4.w),
+                  GestureDetector(
+                    onTap: () => onRemove(hashtag),
+                    child: Icon(
+                      Icons.close,
+                      size: 16,
+                      color: AmptiveColors.whiteColor.withOpacity(0.7),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          );
+        }).toList(),
+      ),
+    );
+  }
+}
+
+

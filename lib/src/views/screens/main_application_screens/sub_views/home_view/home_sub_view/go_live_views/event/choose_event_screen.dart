@@ -138,7 +138,7 @@ class _AmptiveChooseOrCreateEventScreenState extends State<AmptiveChooseOrCreate
                                       if(selectedIndex != null){
                                         listOfValueNotifiers.elementAt(selectedIndex!).value = false;                                    
                                       }
-                                      // context.pushNamed(AmptiveRoutes.CREATE_SHOW_FORM);
+                                      context.pushNamed(AmptiveRoutes.CREATE_EVENT_FORM);
                                     },
                                     radius: 5.r,
                                     color: AmptiveColors.grey1Color,

@@ -24,6 +24,8 @@ class CreateShowService {
   late TextEditingController capacityController;
   late TextEditingController whisperController;
   late TextEditingController eventPaymentController;
+  late TextEditingController titleController;
+
 
   late ValueNotifier<bool> coHostSelected;
   late ValueNotifier<bool> hashTagSelected;
@@ -32,6 +34,7 @@ class CreateShowService {
   late ValueNotifier<int> descCharactersLength;
   late ValueNotifier<int> selectedCoHostLength;
   late ValueNotifier<Set<HostWithNotifier>> selectedCoHosts;
+
 
   initFormControl() {
     coHostSelected = ValueNotifier(false);
@@ -44,6 +47,7 @@ class CreateShowService {
     coHostsListData = getHostList();
 
     // init controllers
+    titleController = TextEditingController();
     coHostsListData = getHostList();
     descController = TextEditingController();
     audienceAccessController = TextEditingController();
@@ -62,6 +66,8 @@ class CreateShowService {
     descCharactersLength.dispose();
     selectedCoHostLength.dispose();
     selectedCoHosts.dispose();
+
+    titleController.dispose();
     descController.dispose();
     audienceAccessController.dispose();
     handRaisingController.dispose();
@@ -75,7 +81,7 @@ class CreateShowService {
   }
 
   bool formIsValid(){
-    return false;
+    return audienceAccessController.text != "";
   }
 
   List<Community> generateCommunities() {
