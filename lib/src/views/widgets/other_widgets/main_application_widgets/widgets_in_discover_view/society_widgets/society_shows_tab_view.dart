@@ -4,11 +4,7 @@ import 'package:gap/gap.dart';
 
 import '../../../../../../utils/constants/strings/image_strings.dart';
 import '../../../../../../utils/constants/strings/other_strings.dart';
-import '../../../../common_widgets/custom_container_widget.dart';
-import '../../events_and_shows_models_widgets/free_event_model.dart';
-import '../../events_and_shows_models_widgets/paid_event_model.dart';
 import '../../events_and_shows_models_widgets/paid_show_model.dart';
-import '../full_discover_view_widgets/top_creators_model.dart';
 import '../full_discover_view_widgets/trending_hashtag_model.dart';
 import '../row_of_title_with_view_all_trailing.dart';
 

@@ -1,13 +1,9 @@
 import 'package:amptive/src/utils/dialogs/select_audience_access_for_shows_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:gap/gap.dart';
 import '../../../../../../../utils/constants/colors.dart';
-import '../../../../../../../utils/constants/font_sizes.dart';
-import '../../../../../../../utils/dialogs/add_communities_dialog.dart';
 import '../../../../../common_widgets/custom_container_widget.dart';
 import '../../../../../common_widgets/custom_rebuilder_widget.dart';
-import '../../../../../common_widgets/image_loader_widget.dart';
 
 class AmptiveCreateShowSelectAudienceAccessWidget extends StatelessWidget {
   const AmptiveCreateShowSelectAudienceAccessWidget({super.key});

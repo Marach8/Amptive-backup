@@ -3,26 +3,16 @@ import 'dart:ui';
 import 'package:amptive/src/utils/constants/strings/image_strings.dart';
 import 'package:amptive/src/utils/constants/strings/other_strings.dart';
 import 'package:amptive/src/utils/constants/strings/route_strings.dart';
-import 'package:amptive/src/utils/dialogs/select_audience_access_for_shows_dialog.dart';
 import 'package:amptive/src/views/widgets/common_widgets/annotated_region__widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/custom_container_widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/custom_rebuilder_widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/elevated_button_widget.dart';
-import 'package:amptive/src/views/widgets/other_widgets/main_application_widgets/widgets_in_home_view/widgets_in_go_live/shows/existing_show_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 import 'package:go_router/go_router.dart';
 import '../../../../../../../../utils/constants/colors.dart';
-import 'dart:developer' as marach show log;
 
-import '../../../../../../../../utils/dialogs/add_co_host_dialog.dart';
-import '../../../../../../../../utils/dialogs/add_communities_dialog.dart';
-import '../../../../../../../../utils/dialogs/add_hastags_dialog.dart';
-import '../../../../../../../../utils/dialogs/select_audience_access_for_events_dialog.dart';
-import '../../../../../../../../utils/dialogs/select_capacity_for_events_dialog.dart';
-import '../../../../../../../../utils/dialogs/select_hand_raising_dialog.dart';
-import '../../../../../../../../utils/dialogs/select_whispers_dialog.dart';
 import '../../../../../../../widgets/common_widgets/image_loader_widget.dart';
 import '../../../../../../../widgets/other_widgets/main_application_widgets/widgets_in_home_view/widgets_in_go_live/events/existing_event_widget.dart';
 

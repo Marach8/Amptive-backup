@@ -1,7 +1,6 @@
 import 'dart:io';
 import 'package:amptive/src/utils/constants/colors.dart';
 import 'package:amptive/src/utils/constants/strings/image_strings.dart';
-import 'package:amptive/src/utils/helpers/helper_functions/other_functions.dart';
 import 'package:amptive/src/views/widgets/common_widgets/custom_container_widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/image_loader_widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/textformfield_widget.dart';
@@ -13,7 +12,6 @@ import '../../views/widgets/common_widgets/custom_rebuilder_widget.dart';
 import '../../views/widgets/common_widgets/elevated_button_widget.dart';
 import '../constants/strings/other_strings.dart';
 
-import 'dart:developer' as marach show log;
 
 Future<void> showEventPaymentFeeDialog({
   required BuildContext context,

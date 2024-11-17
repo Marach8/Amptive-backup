@@ -1,13 +1,10 @@
 import 'dart:async';
-import 'package:amptive/src/routes.dart';
 import 'package:amptive/src/utils/constants/strings/route_strings.dart';
 import 'package:amptive/src/utils/helpers/helper_functions/other_functions.dart';
-import 'package:amptive/src/views/widgets/common_widgets/custom_rebuilder_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 import 'package:go_router/go_router.dart';
-import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import '../../../../../../utils/constants/colors.dart';
 import '../../../../../../utils/constants/strings/image_strings.dart';
 import '../../../../../../utils/constants/strings/other_strings.dart';
@@ -21,7 +18,6 @@ import 'top_creators_model.dart';
 import 'trending_hashtag_model.dart';
 import 'package:amptive/src/views/widgets/common_widgets/custom_container_widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/image_loader_widget.dart';
-import 'dart:developer' as marach show log;
 
 class AmptiveFullDiscoverPageView extends StatelessWidget {
   const AmptiveFullDiscoverPageView({super.key});

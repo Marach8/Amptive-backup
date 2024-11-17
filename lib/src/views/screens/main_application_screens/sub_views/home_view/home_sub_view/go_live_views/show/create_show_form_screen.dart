@@ -43,7 +43,7 @@ class _CreateShowScreenState extends State<CreateShowScreen> {
   final ValueNotifier<bool> _communitySelected = ValueNotifier(false);
 
   AssetImage? _defaultAssetImage;
-  Community? _selectedCommunityCard = null;
+  Community? _selectedCommunityCard;
 
   final AndroidUiSettings _androidUiSettings = AndroidUiSettings(
     toolbarTitle: AmptiveOtherStrings.empty,

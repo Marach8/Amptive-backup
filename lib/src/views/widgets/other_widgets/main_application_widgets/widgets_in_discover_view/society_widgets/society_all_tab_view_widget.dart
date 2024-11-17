@@ -1,4 +1,3 @@
-import 'package:amptive/src/routes.dart';
 import 'package:amptive/src/utils/constants/strings/route_strings.dart';
 import 'package:amptive/src/views/widgets/other_widgets/main_application_widgets/events_and_shows_models_widgets/free_show_model.dart';
 import 'package:flutter/material.dart';

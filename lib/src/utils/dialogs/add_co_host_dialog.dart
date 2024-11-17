@@ -2,7 +2,6 @@ import 'dart:io';
 import 'dart:ui';
 import 'package:amptive/src/utils/constants/colors.dart';
 import 'package:amptive/src/utils/constants/font_sizes.dart';
-import 'package:amptive/src/utils/constants/strings/image_strings.dart';
 import 'package:amptive/src/utils/helpers/helper_functions/other_functions.dart';
 import 'package:amptive/src/views/widgets/animation_widgets/common_animation_widgets/animated_crossfade_widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/custom_container_widget.dart';

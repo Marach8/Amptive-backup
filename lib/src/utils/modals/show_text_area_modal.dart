@@ -5,7 +5,6 @@ import 'package:get_it/get_it.dart';
 
 import '../../services/create_show/create_show_service.dart';
 import '../constants/colors.dart';
-import '../constants/strings/other_strings.dart';
 import '../helpers/helper_functions/other_functions.dart';
 
 void showTextAreaModal(BuildContext context) {
