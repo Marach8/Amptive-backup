@@ -19,6 +19,7 @@ import 'package:amptive/src/views/screens/post_authentication_screens/pre_homepa
 import 'package:amptive/src/views/screens/post_authentication_screens/preference_screen.dart';
 import 'package:amptive/src/views/screens/onboarding_screens/onboarding_page_view_screen.dart';
 import 'package:amptive/src/views/screens/onboarding_screens/welcome_screen.dart';
+import 'package:amptive/src/views/widgets/other_widgets/main_application_widgets/widgets_in_home_view/widgets_in_go_live/shows/show_type_visibility.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'views/screens/main_application_screens/sub_views/discover/community_home_screen.dart';
@@ -41,7 +42,7 @@ final GoRouter amptiveAppRouter = GoRouter(
   routes: <RouteBase>[
     GoRoute(
       path: AmptiveRoutes.index,
-      builder: (_, __) => const CreateShowScreen()
+      builder: (_, __) => const AmptiveDashboardScreen()
     ),
     GoRoute(
       name: AmptiveRoutes.welcome,
@@ -200,7 +201,25 @@ final GoRouter amptiveAppRouter = GoRouter(
         GoRoute(
           name: AmptiveRoutes.CREATE_SHOW_FORM,
           path: AmptiveRoutes.CREATE_SHOW_FORM,
-          builder: (_, __) => const CreateShowScreen(),
+          builder: (_,  __) {
+            return const CreateShowScreen(showType: ShowType.show);
+          }
+        ),
+
+        GoRoute(
+            name: AmptiveRoutes.CREATE_EVENT_FORM,
+            path: AmptiveRoutes.CREATE_EVENT_FORM,
+            builder: (_,  GoRouterState state) {
+              return const CreateShowScreen(showType: ShowType.event,);
+            }
+        ),
+
+        GoRoute(
+            name: AmptiveRoutes.CREATE_EPISODE_FORM,
+            path: AmptiveRoutes.CREATE_EPISODE_FORM,
+            builder: (_,  __) {
+              return const CreateShowScreen(showType:  ShowType.episode);
+            }
         ),
 
         GoRoute(

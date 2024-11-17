@@ -7,6 +7,7 @@ import 'package:gap/gap.dart';
 import 'package:go_router/go_router.dart';
 import '../../../../../../../../utils/constants/colors.dart';
 import '../../../../../../../../utils/constants/strings/other_strings.dart';
+import '../../../../../../../../utils/constants/strings/route_strings.dart';
 import '../../../../../../../widgets/common_widgets/elevated_button_widget.dart';
 
 class AmptiveCreateShowSuccessScreen extends StatelessWidget {
@@ -59,7 +60,9 @@ class AmptiveCreateShowSuccessScreen extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             AmptiveElevatedButtonWidget(
-              onPressed: () async{},
+              onPressed: () async{
+                await context.pushNamed(AmptiveRoutes.CREATE_EPISODE_FORM);
+              },
               buttonTitle: AmptiveOtherStrings.CREATE_1ST_EPISODE,
               bgColor: AmptiveColors.whiteColor,
               fgColor: AmptiveColors.black,

@@ -1,11 +1,11 @@
 import 'dart:io';
+import 'package:amptive/src/services/create_show/create_show_service.dart';
 import 'package:amptive/src/utils/constants/colors.dart';
-import 'package:amptive/src/utils/constants/strings/image_strings.dart';
 import 'package:amptive/src/utils/helpers/helper_functions/other_functions.dart';
 import 'package:amptive/src/views/widgets/common_widgets/custom_container_widget.dart';
-import 'package:amptive/src/views/widgets/common_widgets/image_loader_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
+import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
 import '../../views/widgets/common_widgets/custom_rebuilder_widget.dart';
 import '../../views/widgets/common_widgets/elevated_button_widget.dart';
@@ -15,6 +15,7 @@ Future<void> showHandRaisingDialog(BuildContext context)async{
   final allowNotifier = ValueNotifier(false);
   final doNotAllowNotifier = ValueNotifier(false);
   final activateBtnNotifier = ValueNotifier(false);
+  CreateShowService service = GetIt.I<CreateShowService>();
 
   return await showModalBottomSheet(
     backgroundColor: AmptiveColors.brandBlackColor,
@@ -79,6 +80,7 @@ Future<void> showHandRaisingDialog(BuildContext context)async{
                     activateBtnNotifier.value = !value;
                     doNotAllowNotifier.value = false;
                     allowNotifier.value = !value;
+                    service.handRaisingController.text=  AmptiveOtherStrings.ALLOW;
                   },
                   padding: const EdgeInsets.fromLTRB(15, 13, 15, 13),
                   radius: 15,
@@ -136,6 +138,8 @@ Future<void> showHandRaisingDialog(BuildContext context)async{
                     activateBtnNotifier.value = !value;
                     allowNotifier.value = false;
                     doNotAllowNotifier.value = !value;
+                    service.handRaisingController.text=  AmptiveOtherStrings.DISALLOW;
+
                   },
                   padding: const EdgeInsets.fromLTRB(15, 13, 15, 13),
                   radius: 15, duration: 100,
@@ -195,7 +199,9 @@ Future<void> showHandRaisingDialog(BuildContext context)async{
               builder: (_, value, __) {
                 return AmptiveElevatedButtonWidget(
                   margin: EdgeInsets.zero,
-                  onPressed: value ? () async{} : null,
+                  onPressed: value ? () async{
+                    Navigator.pop(context);
+                  } : null,
                   buttonTitle: AmptiveOtherStrings.CONTINUE,
                   bgColor: AmptiveColors.whiteColor,
                   fgColor: AmptiveColors.black,

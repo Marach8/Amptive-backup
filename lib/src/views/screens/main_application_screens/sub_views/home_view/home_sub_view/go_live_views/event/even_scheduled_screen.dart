@@ -4,7 +4,6 @@ import 'package:amptive/src/views/widgets/common_widgets/circle_avatar.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:go_router/go_router.dart';
-import 'package:iconsax/iconsax.dart';
 import '../../../../../../../../utils/constants/colors.dart';
 import '../../../../../../../../utils/constants/strings/other_strings.dart';
 import '../../../../../../../widgets/common_widgets/app_bar_widget.dart';

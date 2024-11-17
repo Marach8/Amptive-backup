@@ -1,49 +1,52 @@
 import 'dart:io';
 import 'package:amptive/src/utils/constants/colors.dart';
-import 'package:amptive/src/utils/constants/strings/image_strings.dart';
 import 'package:amptive/src/utils/helpers/helper_functions/other_functions.dart';
 import 'package:amptive/src/views/widgets/common_widgets/custom_container_widget.dart';
-import 'package:amptive/src/views/widgets/common_widgets/image_loader_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
+import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
 import 'package:iconsax/iconsax.dart';
+import '../../services/create_show/create_show_service.dart';
 import '../../views/widgets/common_widgets/custom_rebuilder_widget.dart';
 import '../../views/widgets/common_widgets/elevated_button_widget.dart';
 import '../constants/strings/other_strings.dart';
 
-Future<void> showWhispersDialog(BuildContext context)async{
+Future<void> showWhispersDialog(BuildContext context) async {
   final allowNotifier = ValueNotifier(false);
   final doNotAllowNotifier = ValueNotifier(false);
   final activateBtnNotifier = ValueNotifier(false);
+  CreateShowService service = GetIt.I<CreateShowService>();
 
   return await showModalBottomSheet(
-    backgroundColor: AmptiveColors.brandBlackColor,
-    constraints: BoxConstraints.expand(height: AmptiveHelperFunctions.getScreenHeight(context)),
-    context: context,
-    isScrollControlled: true,
-    useSafeArea: true,
-    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(0)),
-    builder: (_){      
-      return Padding(
-        padding: const EdgeInsets.fromLTRB(15, 20, 15, 10),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
+      backgroundColor: AmptiveColors.brandBlackColor,
+      constraints: BoxConstraints.expand(
+          height: AmptiveHelperFunctions.getScreenHeight(context)),
+      context: context,
+      isScrollControlled: true,
+      useSafeArea: true,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(0)),
+      builder: (_) {
+        return Padding(
+          padding: const EdgeInsets.fromLTRB(15, 20, 15, 10),
+          child:
+              Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
             Center(
               child: GestureDetector(
                 onTap: () => context.pop(),
                 child: Platform.isAndroid
-                  ? Icon(
-                    Icons.keyboard_arrow_down,
-                    color: AmptiveColors.whiteColor.withOpacity(0.6),
-                  )
-                  : AmptiveCustomContainer(
-                    margin: const EdgeInsets.symmetric(vertical: 10),
-                    radius: 5, height: 4, width: 30,
-                    color: AmptiveColors.whiteColor.withOpacity(0.6),
-                    child: const SizedBox.shrink(),
-                  ),
+                    ? Icon(
+                        Icons.keyboard_arrow_down,
+                        color: AmptiveColors.whiteColor.withOpacity(0.6),
+                      )
+                    : AmptiveCustomContainer(
+                        margin: const EdgeInsets.symmetric(vertical: 10),
+                        radius: 5,
+                        height: 4,
+                        width: 30,
+                        color: AmptiveColors.whiteColor.withOpacity(0.6),
+                        child: const SizedBox.shrink(),
+                      ),
               ),
             ),
             Align(
@@ -64,156 +67,171 @@ Future<void> showWhispersDialog(BuildContext context)async{
             Text(
               maxLines: 3,
               AmptiveOtherStrings.WHISPERS_DESC,
-              style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                color: AmptiveColors.subtitleColor
-              ),
+              style: Theme.of(context)
+                  .textTheme
+                  .titleMedium
+                  ?.copyWith(color: AmptiveColors.subtitleColor),
             ),
             const Gap(15),
             Text(
               maxLines: 3,
               AmptiveOtherStrings.USERS_WOULD_WANT_2_JOIN,
-              style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                color: AmptiveColors.subtitleColor
-              ),
+              style: Theme.of(context)
+                  .textTheme
+                  .titleMedium
+                  ?.copyWith(color: AmptiveColors.subtitleColor),
             ),
             const Gap(20),
-        
             AmptiveRebuilderWidget(
-              notifier: allowNotifier,
-              shouldDispose: true,
-              builder: (_, value, __) {
-                return AmptiveCustomContainer(
-                  duration: 100,
-                  onTap: (){
-                    activateBtnNotifier.value = !value;
-                    doNotAllowNotifier.value = false;
-                    allowNotifier.value = !value;
-                  },
-                  padding: const EdgeInsets.fromLTRB(15, 13, 15, 13),
-                  radius: 15,
-                  color: AmptiveColors.grey1Color,
-                  border: Border.all(
-                    width: 2,
-                    color: value ? AmptiveColors.brandBlueColor : AmptiveColors.transparentColor
-                  ),
-                  child: Row(
-                    children: [
-                      AmptiveCustomContainer(
-                        height: 20, width: 20, radius: 20,
-                        padding: const EdgeInsets.all(3),
-                        color: value ? AmptiveColors.brandBlueColor : AmptiveColors.transparentColor,
-                        border: Border.all(
-                          color: value ? AmptiveColors.brandBlueColor : AmptiveColors.whiteColor,
-                          strokeAlign: 5.0
+                notifier: allowNotifier,
+                shouldDispose: true,
+                builder: (_, value, __) {
+                  return AmptiveCustomContainer(
+                    duration: 100,
+                    onTap: () {
+                      activateBtnNotifier.value = !value;
+                      doNotAllowNotifier.value = false;
+                      allowNotifier.value = !value;
+                      service.whisperController.text =
+                          AmptiveOtherStrings.TURNED_ON;
+                    },
+                    padding: const EdgeInsets.fromLTRB(15, 13, 15, 13),
+                    radius: 15,
+                    color: AmptiveColors.grey1Color,
+                    border: Border.all(
+                        width: 2,
+                        color: value
+                            ? AmptiveColors.brandBlueColor
+                            : AmptiveColors.transparentColor),
+                    child: Row(
+                      children: [
+                        AmptiveCustomContainer(
+                            height: 20,
+                            width: 20,
+                            radius: 20,
+                            padding: const EdgeInsets.all(3),
+                            color: value
+                                ? AmptiveColors.brandBlueColor
+                                : AmptiveColors.transparentColor,
+                            border: Border.all(
+                                color: value
+                                    ? AmptiveColors.brandBlueColor
+                                    : AmptiveColors.whiteColor,
+                                strokeAlign: 5.0),
+                            child: const SizedBox.shrink()),
+                        const Gap(10),
+                        Expanded(
+                          child: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(AmptiveOtherStrings.TURN_ON,
+                                  style:
+                                      Theme.of(context).textTheme.bodyMedium),
+                              Text(
+                                maxLines: 5,
+                                AmptiveOtherStrings.WHISPERS_ENABLED,
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .titleMedium
+                                    ?.copyWith(
+                                        color: AmptiveColors.subtitleColor),
+                              ),
+                            ],
+                          ),
                         ),
-                        child: const SizedBox.shrink()
-                      ),
-                      const Gap(10),
-                      Expanded(
-                        child: Column(
-                          mainAxisSize: MainAxisSize.min,
-                          crossAxisAlignment: CrossAxisAlignment.start,
+                      ],
+                    ),
+                  );
+                }),
+            const Gap(15),
+            AmptiveRebuilderWidget(
+                shouldDispose: true,
+                notifier: doNotAllowNotifier,
+                builder: (_, value, __) {
+                  return AmptiveCustomContainer(
+                    onTap: () {
+                      activateBtnNotifier.value = !value;
+                      allowNotifier.value = false;
+                      doNotAllowNotifier.value = !value;
+                      service.whisperController.text =
+                          AmptiveOtherStrings.TURNED_OFF;
+                    },
+                    padding: const EdgeInsets.fromLTRB(15, 13, 15, 13),
+                    radius: 15,
+                    duration: 100,
+                    color: AmptiveColors.grey1Color,
+                    border: Border.all(
+                        width: 2,
+                        color: value
+                            ? AmptiveColors.brandBlueColor
+                            : AmptiveColors.transparentColor),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Row(
                           children: [
-                            Text(
-                              AmptiveOtherStrings.TURN_ON,
-                              style: Theme.of(context).textTheme.bodyMedium
-                            ),
-                            Text(
-                              maxLines: 5,
-                              AmptiveOtherStrings.WHISPERS_ENABLED,
-                              style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                                color: AmptiveColors.subtitleColor
+                            AmptiveCustomContainer(
+                                height: 20,
+                                width: 20,
+                                radius: 20,
+                                padding: const EdgeInsets.all(3),
+                                color: value
+                                    ? AmptiveColors.brandBlueColor
+                                    : AmptiveColors.transparentColor,
+                                border: Border.all(
+                                    color: value
+                                        ? AmptiveColors.brandBlueColor
+                                        : AmptiveColors.whiteColor,
+                                    strokeAlign: 5.0),
+                                child: const SizedBox.shrink()),
+                            const Gap(10),
+                            Expanded(
+                              child: Column(
+                                mainAxisSize: MainAxisSize.min,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(AmptiveOtherStrings.TURN_OFF,
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .bodyMedium),
+                                  Text(
+                                    maxLines: 5,
+                                    AmptiveOtherStrings.WHISPERS_DISABLED,
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .titleMedium
+                                        ?.copyWith(
+                                            color: AmptiveColors.subtitleColor),
+                                  ),
+                                ],
                               ),
                             ),
                           ],
                         ),
-                      ),                      
-                    ],
-                  ),
-                );
-              }
-            ),
-        
-            const Gap(15),
-        
-            AmptiveRebuilderWidget(
-              shouldDispose: true,
-              notifier: doNotAllowNotifier,
-              builder: (_, value, __) {
-                return AmptiveCustomContainer(
-                  onTap: (){
-                    activateBtnNotifier.value = !value;
-                    allowNotifier.value = false;
-                    doNotAllowNotifier.value = !value;
-                  },
-                  padding: const EdgeInsets.fromLTRB(15, 13, 15, 13),
-                  radius: 15, duration: 100,
-                  color: AmptiveColors.grey1Color,
-                  border: Border.all(
-                    width: 2,
-                    color: value ? AmptiveColors.brandBlueColor : AmptiveColors.transparentColor
-                  ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Row(
-                        children: [
-                          AmptiveCustomContainer(
-                            height: 20, width: 20, radius: 20,
-                            padding: const EdgeInsets.all(3),
-                            color: value ? AmptiveColors.brandBlueColor : AmptiveColors.transparentColor,
-                            border: Border.all(
-                              color: value ? AmptiveColors.brandBlueColor : AmptiveColors.whiteColor,
-                              strokeAlign: 5.0
-                            ),
-                            child: const SizedBox.shrink()
-                          ),
-                          const Gap(10),
-                          Expanded(
-                            child: Column(
-                              mainAxisSize: MainAxisSize.min,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  AmptiveOtherStrings.TURN_OFF,
-                                  style: Theme.of(context).textTheme.bodyMedium
-                                ),
-                                Text(
-                                  maxLines: 5,
-                                  AmptiveOtherStrings.WHISPERS_DISABLED,
-                                  style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                                    color: AmptiveColors.subtitleColor
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                );
-              }
-            ),
+                      ],
+                    ),
+                  );
+                }),
             const Spacer(),
-        
             AmptiveRebuilderWidget(
-              notifier: activateBtnNotifier,
-              shouldDispose: true,
-              builder: (_, value, __) {
-                return AmptiveElevatedButtonWidget(
-                  margin: EdgeInsets.zero,
-                  onPressed: value ? () async{} : null,
-                  buttonTitle: AmptiveOtherStrings.CONTINUE,
-                  bgColor: AmptiveColors.whiteColor,
-                  fgColor: AmptiveColors.black,
-                );
-              }
-            )
-          ]
-        ),
-      );
-    }
-  );
+                notifier: activateBtnNotifier,
+                shouldDispose: true,
+                builder: (_, value, __) {
+                  return AmptiveElevatedButtonWidget(
+                    margin: EdgeInsets.zero,
+                    onPressed: value
+                        ? () async {
+                            Navigator.pop(context);
+                          }
+                        : null,
+                    buttonTitle: AmptiveOtherStrings.CONTINUE,
+                    bgColor: AmptiveColors.whiteColor,
+                    fgColor: AmptiveColors.black,
+                  );
+                })
+          ]),
+        );
+      });
 }

@@ -1,20 +1,16 @@
 import 'dart:io';
 import 'package:amptive/src/utils/constants/colors.dart';
-import 'package:amptive/src/utils/constants/strings/image_strings.dart';
-import 'package:amptive/src/utils/helpers/helper_functions/other_functions.dart';
 import 'package:amptive/src/views/widgets/common_widgets/custom_container_widget.dart';
-import 'package:amptive/src/views/widgets/common_widgets/image_loader_widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/textformfield_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
+import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
-import 'package:iconsax/iconsax.dart';
-import '../../views/widgets/common_widgets/custom_rebuilder_widget.dart';
+import '../../services/create_show/create_show_service.dart';
 import '../../views/widgets/common_widgets/elevated_button_widget.dart';
 import '../constants/strings/other_strings.dart';
 
-import 'dart:developer' as marach show log;
 
 Future<void> showEventCapacitySelectionDialog({
   required BuildContext context,
@@ -22,6 +18,8 @@ Future<void> showEventCapacitySelectionDialog({
 })async{
   //final activateSetFeeBtn = ValueNotifier(false);
   final formKey = GlobalKey<FormState>();
+  CreateShowService service = GetIt.I<CreateShowService>();
+
 
   return await showModalBottomSheet(
     constraints: BoxConstraints(maxHeight: 500.h),
@@ -85,7 +83,7 @@ Future<void> showEventCapacitySelectionDialog({
             Form(
               key: formKey,
               child: AmptiveTextFormFieldWidget(
-                controller: TextEditingController(text: '1'),
+                controller: service.capacityController,
                 disableBlueBorder: true,
                 //hintText: '0',
                 hintStyle: Theme.of(context).textTheme.bodyMedium,

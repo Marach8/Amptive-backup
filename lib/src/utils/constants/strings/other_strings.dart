@@ -169,7 +169,9 @@ class AmptiveOtherStrings{
   static const WHISPERS_DESC = 'Whispers are randomly selected comments from your live audience that appear on your event page while your are live.';
   static const USERS_WOULD_WANT_2_JOIN = 'Non-attending users can see these comments, encouraging them to join your live event.';
   static const TURN_ON = 'Turn On';
+  static const TURNED_ON = 'Turned On';
   static const TURN_OFF = 'Turn Off';
+  static const TURNED_OFF = 'Turned Off';
   static const WHISPERS_ENABLED = 'Whispers will be enabled for your event.';
   static const WHISPERS_DISABLED = 'Whispers will be disabled for your event.';
   static const HAND_RAISING = 'Hand Raising';
@@ -181,6 +183,7 @@ class AmptiveOtherStrings{
   static const EVENT_AUDIENCE_ACCESS_DESC = 'You will be prompted to setup your payment fee for your event';
   static const AMOUNT_2_CHARGE_4_EVENT = 'Kindly enter the amount you would want to charge users for your event';
   static const PAID = 'Paid';
+  static const PAY = 'Pay';
   static const PAID_ACCESS = 'Only users who pay will have access';
   static const FREE = 'Free';
   static const SHOW_FREE_ACCESS = 'Everyone will access your show for free';

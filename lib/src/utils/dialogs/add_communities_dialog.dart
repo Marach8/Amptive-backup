@@ -1,15 +1,17 @@
-import 'dart:math';
-
 import 'package:amptive/src/models/community.dart';
 import 'package:amptive/src/utils/constants/colors.dart';
-import 'package:amptive/src/utils/constants/strings/image_strings.dart';
 import 'package:amptive/src/utils/helpers/helper_functions/other_functions.dart';
 import 'package:amptive/src/views/widgets/common_widgets/image_loader_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
+import 'package:get_it/get_it.dart';
+import '../../services/create_show/create_show_service.dart';
 import '../constants/strings/other_strings.dart';
 
 Future<Community> showAddCommunitiesDialog(BuildContext context) async {
+
+  CreateShowService service = GetIt.I<CreateShowService>();
+
   return await showModalBottomSheet(
       backgroundColor: AmptiveColors.brandBlackColor,
       constraints: BoxConstraints.expand(
@@ -18,7 +20,7 @@ Future<Community> showAddCommunitiesDialog(BuildContext context) async {
       isScrollControlled: true,
       useSafeArea: true,
       builder: (_) {
-        final listOfItems = generateCommunities();
+        final listOfItems = service.generateCommunities();
         return SingleChildScrollView(
           physics: const BouncingScrollPhysics(),
           padding: const EdgeInsets.all(15),
@@ -67,60 +69,4 @@ Future<Community> showAddCommunitiesDialog(BuildContext context) async {
       });
 }
 
-List<Community> generateCommunities() {
-  final random = Random();
 
-  final names = [
-    'Music',
-    'Art',
-    'Society',
-    'Technology',
-    'Sports',
-    'True Crime',
-    'Business',
-    'Society',
-    'Technology',
-    'Sports',
-    'True Crime',
-    'Business'
-  ];
-
-  final pics = generateCorrespondingPics(names);
-
-  int index = -1;
-
-  return names.map((name) {
-    int id = random.nextInt(1000);
-    index++;
-
-    return Community(
-      id: id,
-      name: name,
-      coverPic: pics[index],
-    );
-  }).toList();
-}
-
-generateCorrespondingPics(List<String> names) {
-  final temp = [
-    AmptiveImageStrings.COMMUNITY_CARD,
-    AmptiveImageStrings.artCard,
-    AmptiveImageStrings.societyCard,
-    AmptiveImageStrings.techCard,
-
-  ];
-
-  if (temp.length >= names.length) {
-    return temp.sublist(0, names.length);
-  }
-
-  List result = [];
-  int index = 0;
-
-  while (result.length < names.length) {
-    result.add(temp[index]);
-    index = (index + 1) % temp.length;
-  }
-
-  return result;
-}
