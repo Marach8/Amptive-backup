@@ -8,11 +8,18 @@ import 'package:amptive/src/utils/constants/constants.dart';
 import 'package:amptive/src/utils/constants/font_sizes.dart';
 import 'package:amptive/src/utils/constants/strings/image_strings.dart';
 import 'package:amptive/src/utils/constants/strings/other_strings.dart';
+import 'package:amptive/src/utils/dialogs/select_audience_access_for_events_dialog.dart';
+import 'package:amptive/src/utils/dialogs/select_audience_access_for_shows_dialog.dart';
+import 'package:amptive/src/utils/dialogs/select_capacity_for_events_dialog.dart';
+import 'package:amptive/src/utils/dialogs/select_hand_raising_dialog.dart';
+import 'package:amptive/src/utils/dialogs/select_whispers_dialog.dart';
 import 'package:amptive/src/utils/modals/show_text_area_modal.dart';
 import 'package:amptive/src/views/widgets/common_widgets/annotated_region__widget.dart';
+import 'package:amptive/src/views/widgets/other_widgets/main_application_widgets/widgets_in_home_view/widgets_in_go_live/shows/show_type_visibility.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get_it/get_it.dart';
+import 'package:iconsax/iconsax.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -23,11 +30,14 @@ import '../../../../../../../../utils/dialogs/add_communities_dialog.dart';
 import '../../../../../../../../utils/dialogs/add_hastags_dialog.dart';
 import '../../../../../../../widgets/common_widgets/custom_container_widget.dart';
 import '../../../../../../../widgets/common_widgets/custom_rebuilder_widget.dart';
+import '../../../../../../../widgets/common_widgets/elevated_button_widget.dart';
 import '../../../../../../../widgets/other_widgets/main_application_widgets/widgets_in_create_show_event/create_show_text_form_field.dart';
 import '../../../../../../../widgets/other_widgets/main_application_widgets/widgets_in_create_show_event/selected_community.dart';
 
 class CreateShowScreen extends StatefulWidget {
-  const CreateShowScreen({super.key});
+  final ShowType showType;
+
+  const CreateShowScreen({super.key, this.showType = ShowType.event});
 
   @override
   State<CreateShowScreen> createState() => _CreateShowScreenState();
@@ -70,7 +80,7 @@ class _CreateShowScreenState extends State<CreateShowScreen> {
   @override
   void initState() {
     super.initState();
-    service.initNotifiers();
+    service.initFormControl();
     _defaultAssetImage =
         const AssetImage(AmptiveImageStrings.createShowPlaceholderImage);
 
@@ -79,7 +89,7 @@ class _CreateShowScreenState extends State<CreateShowScreen> {
 
   @override
   void dispose() {
-    service.disposeNotifiers();
+    service.dispose();
     _titleController.dispose();
     super.dispose();
   }
@@ -476,13 +486,22 @@ class _CreateShowScreenState extends State<CreateShowScreen> {
                     ),
                     SizedBox(height: 11.5.h),
                     CreateShowTextFormField(
-                      controller: TextEditingController(),
+                      readOnly: true,
+                      controller: service.audienceAccessController,
                       hintText: "Select who can access this show",
                       suffixIcon: Icon(
                         Icons.arrow_forward_ios,
                         size: 20.w,
                         color: AmptiveColors.whiteColor.withOpacity(0.4),
                       ),
+                      onTap: () async {
+                        if (widget.showType == ShowType.show) {
+                          await showSelectAudienceAccessForShowsDialog(context);
+                        } else {
+                          await showSelectAudienceAccessForEventsDialog(
+                              context);
+                        }
+                      },
                     ),
                     Container(
                       margin: EdgeInsets.only(top: 8.h),
@@ -499,13 +518,219 @@ class _CreateShowScreenState extends State<CreateShowScreen> {
                     SizedBox(height: 30.h),
 
                     Divider(
-                      height: 1.h,
+                      height: 2.h,
+                      thickness: 2.w,
                       color: AmptiveColors.brandBlackColor.withOpacity(0.10),
-                    )
+                    ),
+                    SizedBox(height: 24.h),
+
+                    CreateShowTextFieldTitle(
+                      title: "Moderation Tools",
+                      titleStyle: Theme.of(context)
+                          .textTheme
+                          .titleMedium
+                          ?.copyWith(fontWeight: AmptiveFontWeights.medium),
+                    ),
+                    SizedBox(height: 16.h),
+
+                    // Hand Raising
+                    ShowTypeVisibilityWidget(
+                      showType: ShowType.all,
+                      child: Container(
+                        margin: EdgeInsets.only(bottom: 12.h),
+                        child: const CreateShowTextFieldTitle(
+                          prefixIcon: Icons.front_hand_outlined,
+                          title: "Hand Raising",
+                        ),
+                      ),
+                    ),
+                    ShowTypeVisibilityWidget(
+                      showType: ShowType.all,
+                      child: CreateShowTextFormField(
+                        readOnly: true,
+                        controller: service.handRaisingController,
+                        hintText: "Select audience interaction",
+                        suffixIcon: Icon(
+                          Icons.arrow_forward_ios,
+                          size: 20.w,
+                          color: AmptiveColors.whiteColor.withOpacity(0.4),
+                        ),
+                        onTap: () async {
+                          await showHandRaisingDialog(context);
+                        },
+                      ),
+                    ),
+                    ShowTypeVisibilityWidget(
+                      showType: ShowType.all,
+                      child: Container(
+                        margin: EdgeInsets.only(top: 8.h, bottom: 30.h),
+                        width: 360.w,
+                        child: Text(
+                          "While you're live, you’ll have full access to your moderation tools, allowing you to manage interactions and maintain control throughout the session. Learn more",
+                          overflow: TextOverflow.visible,
+                          style: Theme.of(context)
+                              .textTheme
+                              .titleSmall
+                              ?.copyWith(
+                                fontWeight: AmptiveFontWeights.medium,
+                                color:
+                                    AmptiveColors.whiteColor.withOpacity(0.4),
+                              ),
+                        ),
+                      ),
+                    ),
+
+                    // Capacity
+                    ShowTypeVisibilityWidget(
+                      showType: widget.showType,
+                      allowedShowTypes: const [ShowType.event],
+                      child: Container(
+                        margin: EdgeInsets.only(bottom: 12.h),
+                        child: const CreateShowTextFieldTitle(
+                          prefixIcon: Icons.people_outline,
+                          title: "Capacity",
+                        ),
+                      ),
+                    ),
+                    ShowTypeVisibilityWidget(
+                      showType: widget.showType,
+                      allowedShowTypes: const [ShowType.event],
+                      child: CreateShowTextFormField(
+                        readOnly: true,
+                        controller: service.capacityController,
+                        hintText: "Unlimited",
+                        suffixIcon: Icon(
+                          Icons.arrow_forward_ios,
+                          size: 20.w,
+                          color: AmptiveColors.whiteColor.withOpacity(0.4),
+                        ),
+                        onTap: () async {
+                          await showEventCapacitySelectionDialog(
+                              context: context);
+                        },
+                      ),
+                    ),
+                    ShowTypeVisibilityWidget(
+                      showType: widget.showType,
+                      allowedShowTypes: const [ShowType.event],
+                      child: Container(
+                        margin: EdgeInsets.only(top: 8.h, bottom: 30.h),
+                        width: 360.w,
+                        child: Text(
+                          "Set the maximum number of listeners for your event. Once the limit is reached, no additional participants can join or pay.",
+                          overflow: TextOverflow.visible,
+                          style: Theme.of(context)
+                              .textTheme
+                              .titleSmall
+                              ?.copyWith(
+                                fontWeight: AmptiveFontWeights.medium,
+                                color:
+                                    AmptiveColors.whiteColor.withOpacity(0.4),
+                              ),
+                        ),
+                      ),
+                    ),
+
+                    // Whispers
+                    ShowTypeVisibilityWidget(
+                      showType: widget.showType,
+                      allowedShowTypes: const [
+                        ShowType.event,
+                        ShowType.episode
+                      ],
+                      child: Container(
+                        margin: EdgeInsets.only(bottom: 12.h),
+                        child: const CreateShowTextFieldTitle(
+                          prefixIcon: Iconsax.message,
+                          title: "Whispers",
+                        ),
+                      ),
+                    ),
+                    ShowTypeVisibilityWidget(
+                      showType: widget.showType,
+                      allowedShowTypes: const [
+                        ShowType.event,
+                        ShowType.episode
+                      ],
+                      child: CreateShowTextFormField(
+                        readOnly: true,
+                        controller: service.whisperController,
+                        hintText: "Turn whispers on or off for this event",
+                        suffixIcon: Icon(
+                          Icons.arrow_forward_ios,
+                          size: 20.w,
+                          color: AmptiveColors.whiteColor.withOpacity(0.4),
+                        ),
+                        onTap: () async {
+                          await showWhispersDialog(context);
+                        },
+                      ),
+                    ),
+                    ShowTypeVisibilityWidget(
+                      showType: widget.showType,
+                      allowedShowTypes: const [
+                        ShowType.event,
+                        ShowType.episode
+                      ],
+                      child: Container(
+                        margin: EdgeInsets.only(top: 8.h, bottom: 30.h),
+                        width: 360.w,
+                        child: Text(
+                          "Whispers are randomly selected comments from your live audience that appear on your event page while you are live. \n \nNon-attending users can see these comments, encouraging them to join your live event.",
+                          overflow: TextOverflow.visible,
+                          style: Theme.of(context)
+                              .textTheme
+                              .titleSmall
+                              ?.copyWith(
+                                fontWeight: AmptiveFontWeights.medium,
+                                color:
+                                    AmptiveColors.whiteColor.withOpacity(0.4),
+                              ),
+                        ),
+                      ),
+                    ),
                   ],
                 ),
               ),
             ),
+            Positioned(
+              bottom: 0,
+              right: 0,
+              left: 0,
+              child: ClipRect(
+                child: BackdropFilter(
+                  filter: ImageFilter.blur(sigmaX: 5.0, sigmaY: 5.0),
+                  child: Container(
+                    height: 80.h,
+
+                  ),
+                ),
+              ),
+            ),
+            Positioned(
+              bottom: 0,
+              right: 0,
+              left: 0,
+              child: AmptiveElevatedButtonWidget(
+                height: 50.w,
+                buttonTitle: "Go LIVE",
+                onPressed: service.formIsValid() ? () {} : null,
+                buttonStyle: ButtonStyle(
+                  backgroundColor: WidgetStateProperty.resolveWith((states) {
+                    if (states.contains(WidgetState.disabled)) {
+                      return AmptiveColors.grey1Color;
+                    }
+                    return AmptiveColors.activeDotColor;
+                  }),
+                  foregroundColor: WidgetStateProperty.resolveWith((states) {
+                    if (states.contains(WidgetState.disabled)) {
+                      return AmptiveColors.strokeGreyColor;
+                    }
+                    return AmptiveColors.brandBlackColor; // Enabled text color
+                  }),
+                ),
+              ),
+            )
           ],
         ),
       ),
@@ -518,15 +743,13 @@ class _CreateShowScreenState extends State<CreateShowScreen> {
   }
 
   Future<void> _editCoHosts(BuildContext context) async {
-
     var temp = await showAddCoHostDialog(context);
 
-    if(temp != null){
+    if (temp != null) {
       service.coHostSelected.value = false;
       selectedHosts = processSelectedHost(temp.toList());
       service.coHostSelected.value = hostSelected();
     }
-
   }
 
   _imageSelected() {
@@ -553,23 +776,38 @@ class _CreateShowScreenState extends State<CreateShowScreen> {
 class CreateShowTextFieldTitle extends StatelessWidget {
   final String title;
   final String? otherInfo;
+  final IconData? prefixIcon;
+  final TextStyle? titleStyle;
 
   const CreateShowTextFieldTitle({
     super.key,
     required this.title,
     this.otherInfo,
+    this.prefixIcon,
+    this.titleStyle,
   });
 
   @override
   Widget build(BuildContext context) {
     return Row(
       children: [
+        Visibility(
+          visible: prefixIcon != null,
+          child: Padding(
+            padding: EdgeInsets.only(right: 4.w),
+            child: Icon(
+              prefixIcon,
+              size: 18.h,
+            ),
+          ),
+        ),
         Text(
           title,
-          style: Theme.of(context)
-              .textTheme
-              .bodySmall
-              ?.copyWith(fontSize: AmptiveFontSizes.size15),
+          style: titleStyle ??
+              Theme.of(context)
+                  .textTheme
+                  .bodySmall
+                  ?.copyWith(fontSize: AmptiveFontSizes.size15),
         ),
         Expanded(
             child: SizedBox(

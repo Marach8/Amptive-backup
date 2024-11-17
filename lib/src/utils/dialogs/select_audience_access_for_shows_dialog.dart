@@ -6,15 +6,20 @@ import 'package:amptive/src/views/widgets/common_widgets/custom_container_widget
 import 'package:amptive/src/views/widgets/common_widgets/image_loader_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
+import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
+import '../../services/create_show/create_show_service.dart';
 import '../../views/widgets/common_widgets/custom_rebuilder_widget.dart';
 import '../../views/widgets/common_widgets/elevated_button_widget.dart';
 import '../constants/strings/other_strings.dart';
+
 
 Future<String> showSelectAudienceAccessForShowsDialog(
   BuildContext context
 )async{
   final notifier = ValueNotifier<String>('');
+  CreateShowService service = GetIt.I<CreateShowService>();
+
   return await showModalBottomSheet(
     backgroundColor: AmptiveColors.brandBlackColor,
     constraints: BoxConstraints.expand(height: AmptiveHelperFunctions.getScreenHeight(context)),
@@ -69,6 +74,8 @@ Future<String> showSelectAudienceAccessForShowsDialog(
                   onTap: (){
                     if(value != AmptiveOtherStrings.FREE){
                       notifier.value = AmptiveOtherStrings.FREE;
+                      service.audienceAccessController.text = AmptiveOtherStrings.FREE;
+
                     }
                     else{notifier.value = '';}
                   },
@@ -129,6 +136,8 @@ Future<String> showSelectAudienceAccessForShowsDialog(
                   onTap: (){
                     if(value != AmptiveOtherStrings.SUBSCRIBERS_ONLY){
                       notifier.value = AmptiveOtherStrings.SUBSCRIBERS_ONLY;
+                      service.audienceAccessController.text = AmptiveOtherStrings.SUBSCRIBERS_ONLY;
+
                     }
                     else{notifier.value = '';}
                   },

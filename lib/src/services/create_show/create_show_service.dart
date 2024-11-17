@@ -15,18 +15,25 @@ class CreateShowService {
   // constructorÏ
   CreateShowService._();
 
-  List<HostWithNotifier> coHostsListData = getHostList();
-  TextEditingController descController = TextEditingController();
+  double userEventFee = 2000.0;
 
-  ValueNotifier<bool> coHostSelected = ValueNotifier(false);
-  ValueNotifier<bool> hashTagSelected = ValueNotifier(false);
-  ValueNotifier<List<String>> hashtags = ValueNotifier([]);
-  ValueNotifier<int> titleCharLength = ValueNotifier(0);
-  ValueNotifier<int> descCharactersLength = ValueNotifier(0);
-  ValueNotifier<int> selectedCoHostLength = ValueNotifier(0);
-  ValueNotifier<Set<HostWithNotifier>> selectedCoHosts = ValueNotifier({});
+  late List<HostWithNotifier> coHostsListData;
+  late TextEditingController descController;
+  late TextEditingController audienceAccessController;
+  late TextEditingController handRaisingController;
+  late TextEditingController capacityController;
+  late TextEditingController whisperController;
+  late TextEditingController eventPaymentController;
 
-  initNotifiers() {
+  late ValueNotifier<bool> coHostSelected;
+  late ValueNotifier<bool> hashTagSelected;
+  late ValueNotifier<List<String>> hashtags;
+  late ValueNotifier<int> titleCharLength;
+  late ValueNotifier<int> descCharactersLength;
+  late ValueNotifier<int> selectedCoHostLength;
+  late ValueNotifier<Set<HostWithNotifier>> selectedCoHosts;
+
+  initFormControl() {
     coHostSelected = ValueNotifier(false);
     hashTagSelected = ValueNotifier(false);
     hashtags = ValueNotifier([]);
@@ -35,9 +42,19 @@ class CreateShowService {
     selectedCoHostLength = ValueNotifier(0);
     selectedCoHosts = ValueNotifier({});
     coHostsListData = getHostList();
+
+    // init controllers
+    coHostsListData = getHostList();
+    descController = TextEditingController();
+    audienceAccessController = TextEditingController();
+    handRaisingController = TextEditingController();
+    capacityController = TextEditingController(text: '10');
+    whisperController = TextEditingController();
+    eventPaymentController =
+        TextEditingController(text: userEventFee.toString());
   }
 
-  disposeNotifiers() {
+  dispose() {
     coHostSelected.dispose();
     hashTagSelected.dispose();
     hashtags.dispose();
@@ -46,10 +63,19 @@ class CreateShowService {
     selectedCoHostLength.dispose();
     selectedCoHosts.dispose();
     descController.dispose();
+    audienceAccessController.dispose();
+    handRaisingController.dispose();
+    capacityController.dispose();
+    whisperController.dispose();
+    eventPaymentController.dispose();
 
     for (var coHostNotifier in coHostsListData) {
       coHostNotifier.notifier.dispose();
     }
+  }
+
+  bool formIsValid(){
+    return false;
   }
 
   List<Community> generateCommunities() {
