@@ -30,9 +30,14 @@ class AmptiveLiveUserModelWidget extends StatelessWidget {
         ),
     
         Gap(10.h),
-        Text(
-          'Emmanuel',
-          style: Theme.of(context).textTheme.titleSmall
+        SizedBox(
+          width: 65.w,
+          child: Center(
+            child: Text(
+              'emmanuel',
+              style: Theme.of(context).textTheme.titleSmall
+            ),
+          ),
         ),
       ],
     );

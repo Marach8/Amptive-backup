@@ -3,6 +3,8 @@ import 'package:amptive/src/views/widgets/common_widgets/nav_bar_item.dart';
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
 
+import '../../../../utils/icons/custom_icon_icons.dart';
+
 class AmptiveDashboardBottomNavBarWidget extends StatelessWidget {
   const AmptiveDashboardBottomNavBarWidget({
     super.key,
@@ -34,7 +36,7 @@ class AmptiveDashboardBottomNavBarWidget extends StatelessWidget {
             pageController: pageController,
           ),
           AmptiveBottomAppBarItem(
-            icon: Iconsax.wifi,
+            icon: CustomIcon.wifil,
             itemIdentityIndex: 2,
             pageIndexNotifier: pageIndexNotifier,
             pageController: pageController,
