@@ -15,11 +15,13 @@ class AmptiveLiveIndicatorWithAnimatingDotWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      alignment: Alignment.center,
-      padding: EdgeInsets.fromLTRB(8.44.h, 5.h, 8.44.h, 5.h),
-      width: 60.w,
+      // alignment: Alignment.center,
+      padding: EdgeInsets.fromLTRB(8.44.w, 5.h, 8.44.w, 5.h),
+      width: 55.w,
       decoration: BoxDecoration(
         gradient: LinearGradient(
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
           colors: [
             AmptiveColors.orangeGradientColorA,
             AmptiveColors.orangeGradientColorB
@@ -38,14 +40,16 @@ class AmptiveLiveIndicatorWithAnimatingDotWidget extends StatelessWidget {
             ),
           ),
           Gap(4.w),
-          Text(
-            AmptiveOtherStrings.live.toUpperCase(),
-            textAlign: TextAlign.center,
-            style: Theme.of(context).textTheme.titleSmall?.copyWith(
-              fontSize: AmptiveFontSizes.size14,
-              fontWeight: AmptiveFontWeights.semiBold,
-              height: 0,
-            )
+          Expanded(
+            child: Text(
+              AmptiveOtherStrings.live.toUpperCase(),
+              textAlign: TextAlign.center,
+              style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                fontSize: AmptiveFontSizes.size14,
+                fontWeight: AmptiveFontWeights.semiBold,
+                height: 0,
+              )
+            ),
           ),
         ],
       ),

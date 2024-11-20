@@ -72,6 +72,7 @@ class AmptiveShowOrEventDataModelWidget extends StatelessWidget {
                       style: Theme.of(context).textTheme.displayMedium?.copyWith(
                         fontSize: AmptiveFontSizes.size24,
                         fontWeight: AmptiveFontWeights.semiBold,
+                        height: 1.2.sp,
                       ),
                     ),
                     Gap(12.h),
