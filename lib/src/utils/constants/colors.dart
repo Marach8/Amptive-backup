@@ -39,6 +39,8 @@ class AmptiveColors {
 
   static Color get textRedColor => const Color(0xFFD93535);
 
+  static Color get notifRed => const Color(0xFFEC0404);
+
   static Color get successColor => const Color(0xFF54C981);
 
   static Color get orangeGradientColorA => const Color.fromRGBO(249, 24, 128, 1);

@@ -15,6 +15,7 @@ import 'package:gap/gap.dart';
 import 'package:go_router/go_router.dart';
 import '../../../utils/constants/colors.dart';
 import '../../../utils/constants/strings/route_strings.dart';
+import '../../../utils/dialogs/options_dialog.dart';
 
 class AmptiveShowOrEventDataModelWidget extends StatelessWidget {
   const AmptiveShowOrEventDataModelWidget({
@@ -27,9 +28,7 @@ class AmptiveShowOrEventDataModelWidget extends StatelessWidget {
       children: [
         AmptiveListTileWithLeadingPictureWidget(
           leadingImagePath: AmptiveImageStrings.jpeg3,
-          trailingOnPressed: (){
-            context.pushNamed(AmptiveRoutes.EVENT_DETAILED_SCREEN);
-          },
+          trailingOnPressed: () => showAudioOrVideoFullDetailsOptions(context),
           title: 'glennodoyle',
           subtitle: 'Started a live show',
         ),

@@ -1,4 +1,7 @@
+import 'package:amptive/src/utils/constants/colors.dart';
 import 'package:amptive/src/utils/constants/strings/route_strings.dart';
+import 'package:amptive/src/views/widgets/common_widgets/circle_avatar.dart';
+import 'package:amptive/src/views/widgets/common_widgets/custom_container_widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/show_or_event_data_model_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -43,9 +46,17 @@ class AmptiveHomeViewWidget extends StatelessWidget {
             actions: [
               GestureDetector(
                 onTap: (){},
-                child: const AmptiveImageLoaderWidget(
-                  imagePath: AmptiveImageStrings.walletIcon, 
-                  height: 30, width: 30,
+                child: Stack(
+                  children: [
+                    const AmptiveImageLoaderWidget(
+                      imagePath: AmptiveImageStrings.walletIcon, 
+                      height: 30, width: 30,
+                    ),
+                    Positioned(
+                      top: 5, right: 0,
+                      child: AmptiveCirceAvatarWidget(diameter: 8, color: AmptiveColors.notifRed)
+                    )
+                  ],
                 )
               ),
               const Gap(24),
