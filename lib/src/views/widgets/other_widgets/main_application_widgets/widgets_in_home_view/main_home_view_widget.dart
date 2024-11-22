@@ -103,7 +103,10 @@ class AmptiveHomeViewWidget extends StatelessWidget {
                 ]
               ),
             ),
-            const AmptiveDividerWidget(),
+            Padding(
+              padding:  EdgeInsets.symmetric(vertical: 14.0.h),
+              child: const AmptiveDividerWidget(),
+            ),
 
             ...Iterable.generate(
               10,

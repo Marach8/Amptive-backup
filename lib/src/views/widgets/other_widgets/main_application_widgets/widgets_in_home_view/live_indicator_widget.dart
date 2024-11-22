@@ -18,6 +18,8 @@ class AmptiveLiveIndicatorWidget extends StatelessWidget {
       width: 38.w,
       decoration: BoxDecoration(
         gradient: LinearGradient(
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
           colors: [
             AmptiveColors.orangeGradientColorA,
             AmptiveColors.orangeGradientColorB
