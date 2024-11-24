@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'dart:math';
 
 import 'package:flutter/material.dart';
@@ -16,6 +17,7 @@ class CreateShowService {
   CreateShowService._();
 
   double userEventFee = 2000.0;
+  File? selectedShowImage;
 
   late List<HostWithNotifier> coHostsListData;
   late TextEditingController descController;
@@ -26,7 +28,6 @@ class CreateShowService {
   late TextEditingController eventPaymentController;
   late TextEditingController titleController;
 
-
   late ValueNotifier<bool> coHostSelected;
   late ValueNotifier<bool> hashTagSelected;
   late ValueNotifier<List<String>> hashtags;
@@ -34,7 +35,10 @@ class CreateShowService {
   late ValueNotifier<int> descCharactersLength;
   late ValueNotifier<int> selectedCoHostLength;
   late ValueNotifier<Set<HostWithNotifier>> selectedCoHosts;
+  late ValueNotifier<File?> selectedImage;
 
+
+  DateTime? eventDateTime;
 
   initFormControl() {
     coHostSelected = ValueNotifier(false);
@@ -44,6 +48,7 @@ class CreateShowService {
     descCharactersLength = ValueNotifier(0);
     selectedCoHostLength = ValueNotifier(0);
     selectedCoHosts = ValueNotifier({});
+    selectedImage = ValueNotifier(null);
     coHostsListData = getHostList();
 
     // init controllers
@@ -56,6 +61,8 @@ class CreateShowService {
     whisperController = TextEditingController();
     eventPaymentController =
         TextEditingController(text: userEventFee.toString());
+
+    eventDateTime = null;
   }
 
   dispose() {
@@ -66,6 +73,7 @@ class CreateShowService {
     descCharactersLength.dispose();
     selectedCoHostLength.dispose();
     selectedCoHosts.dispose();
+    selectedImage.dispose();
 
     titleController.dispose();
     descController.dispose();
@@ -75,14 +83,22 @@ class CreateShowService {
     whisperController.dispose();
     eventPaymentController.dispose();
 
+    eventDateTime = null;
+
     for (var coHostNotifier in coHostsListData) {
       coHostNotifier.notifier.dispose();
     }
   }
 
-  bool formIsValid(){
-    return audienceAccessController.text != "";
+  bool formIsValid() {
+    return selectedImage.value != null;
   }
+
+  onSubmit(){
+  selectedShowImage = selectedImage.value;
+  }
+
+
 
   List<Community> generateCommunities() {
     final random = Random();
@@ -161,6 +177,12 @@ class CreateShowService {
       selectedCoHostLength.value = currentSet.length;
       selCoHost.notifier.value = true;
     }
+  }
+
+  bool isValidEventDateTime() {
+    if (eventDateTime == null) return false;
+
+    return eventDateTime!.isAfter(DateTime.now());
   }
 }
 
