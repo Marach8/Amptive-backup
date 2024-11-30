@@ -42,7 +42,7 @@ class AmptiveLiveIndicatorWithAnimatingDotWidget extends StatelessWidget {
           Gap(4.w),
           Expanded(
             child: Text(
-              AmptiveOtherStrings.live.toUpperCase(),
+              AmptiveOtherStrings.LIVE.toUpperCase(),
               textAlign: TextAlign.center,
               style: Theme.of(context).textTheme.titleSmall?.copyWith(
                 fontSize: AmptiveFontSizes.size14,

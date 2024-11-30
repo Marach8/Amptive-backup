@@ -1,4 +1,5 @@
 import 'package:amptive/src/views/screens/main_application_screens/sub_views/discover/discover_home.dart';
+import 'package:amptive/src/views/screens/main_application_screens/sub_views/go_live_view/go_live_screen.dart';
 import 'package:amptive/src/views/widgets/common_widgets/annotated_region__widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/custom_rebuilder_widget.dart';
 import 'package:amptive/src/views/widgets/other_widgets/main_application_widgets/dashboard_nav_bar_widget.dart';
@@ -40,7 +41,7 @@ class _AmptiveDashboardScreenState extends State<AmptiveDashboardScreen> {
               children: [
                 const AmptiveHomeViewWidget(),
                 const AmptiveDiscoverViewWidget(),
-                Container(color: Colors.blue,),
+                const AmptiveMainGoLive(),
                 Container(color: Colors.green,),
               ]
             );

@@ -40,7 +40,7 @@ class AmptiveOtherStrings{
   static const signUpWith = 'Sign up with ';
   static const signInWith = 'Sign in with ';
   static const email = 'Email';
-  static const live = 'Live';
+  static const LIVE = 'Live';
   static const phoneNumber = 'Phone Number';
   static const facebook = 'Facebook';
   static const twitter = 'X(Twitter)';
@@ -201,4 +201,5 @@ class AmptiveOtherStrings{
   static const SHARE_EVENT_LINK = 'Share your event link to build excitement and attract more attendees.';
   static const EMPTY_FIELD = 'Field(s) cannot be empty';
   static const SHARE_EVENT = 'Share event';
+  static const COMMENT = 'Comment';
 }

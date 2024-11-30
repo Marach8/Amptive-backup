@@ -25,6 +25,7 @@ class AmptiveCircularContainerWithPictureWidget extends StatelessWidget {
       height: diameter ?? 30,
       width: diameter ?? 30,
       radius: (diameter ?? 30)/2,
+      padding: EdgeInsets.all(picturePadding ?? 0),
       border: addBorder ?? false ? Border.all(
         color: borderColor ?? AmptiveColors.whiteColor,
         width: borderWidth ?? 0.5,

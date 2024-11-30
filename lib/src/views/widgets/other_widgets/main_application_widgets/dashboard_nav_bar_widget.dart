@@ -16,7 +16,7 @@ class AmptiveDashboardBottomNavBarWidget extends StatelessWidget {
   @override
   Widget build(context) {
     return AmptiveCustomContainer(
-      color: AmptiveColors.brandBlackColor,
+      color: AmptiveColors.black,
       padding: const EdgeInsets.fromLTRB(20, 10, 20, 10),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,

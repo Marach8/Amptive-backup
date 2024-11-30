@@ -1,7 +1,5 @@
 import 'dart:math';
-
 import 'package:flutter/material.dart';
-
 import '../../models/community.dart';
 import '../../models/host.dart';
 import '../../utils/constants/strings/image_strings.dart';
@@ -27,6 +25,7 @@ class CreateShowService {
   late TextEditingController titleController;
 
 
+  late ValueNotifier<bool> coHostSelectionStarted;
   late ValueNotifier<bool> coHostSelected;
   late ValueNotifier<bool> hashTagSelected;
   late ValueNotifier<List<String>> hashtags;
@@ -37,13 +36,19 @@ class CreateShowService {
 
 
   initFormControl() {
+    coHostSelectionStarted = ValueNotifier(false);
     coHostSelected = ValueNotifier(false);
     hashTagSelected = ValueNotifier(false);
     hashtags = ValueNotifier([]);
     titleCharLength = ValueNotifier(0);
     descCharactersLength = ValueNotifier(0);
     selectedCoHostLength = ValueNotifier(0);
-    selectedCoHosts = ValueNotifier({});
+    selectedCoHosts = ValueNotifier(
+      List.generate(
+        5,
+        (_) => HostWithNotifier(host: Host.empty())
+      ).toSet()
+    );
     coHostsListData = getHostList();
 
     // init controllers
@@ -54,8 +59,7 @@ class CreateShowService {
     handRaisingController = TextEditingController();
     capacityController = TextEditingController(text: '10');
     whisperController = TextEditingController();
-    eventPaymentController =
-        TextEditingController(text: userEventFee.toString());
+    eventPaymentController = TextEditingController(text: userEventFee.toString());
   }
 
   dispose() {
@@ -141,25 +145,32 @@ class CreateShowService {
     return result;
   }
 
-  removeSelectedCoHost(HostWithNotifier selCoHost) {
-    final currentSet = selectedCoHosts.value;
+  removeSelectedCoHost(HostWithNotifier selectedCoHost) {
+    final currentList = selectedCoHosts.value.toList();
+    currentList.remove(selectedCoHost);
+    currentList.insert((selectedCoHostLength.value - 1), HostWithNotifier(host: Host.empty()));
+    selectedCoHostLength.value = selectedCoHostLength.value - 1;
+    selectedCoHosts.value = currentList.toSet();
+    selectedCoHost.notifier.value = false;
 
-    if (currentSet.contains(selCoHost)) {
-      currentSet.remove(selCoHost);
-      selectedCoHosts.value = currentSet;
-      selectedCoHostLength.value = currentSet.length;
-      selCoHost.notifier.value = false;
+    if(selectedCoHostLength.value == 0){
+      coHostSelectionStarted.value = false;
     }
+    else{coHostSelectionStarted.value = true;}
   }
 
-  addSelectedCoHost(HostWithNotifier selCoHost) {
-    final currentSet = selectedCoHosts.value;
+  addSelectedCoHost(HostWithNotifier selectedCoHost) {
+    if(selectedCoHostLength.value < 5){
+      final currentSet = selectedCoHosts.value.toList();
+      currentSet[selectedCoHostLength.value] = selectedCoHost;
+      selectedCoHostLength.value = selectedCoHostLength.value + 1;
+      selectedCoHosts.value = currentSet.toSet();
+      selectedCoHost.notifier.value = true;
 
-    if (!currentSet.contains(selCoHost)) {
-      currentSet.add(selCoHost);
-      selectedCoHosts.value = currentSet;
-      selectedCoHostLength.value = currentSet.length;
-      selCoHost.notifier.value = true;
+      if(selectedCoHostLength.value == 0){
+        coHostSelectionStarted.value = false;
+      }
+      else{coHostSelectionStarted.value = true;}
     }
   }
 }
