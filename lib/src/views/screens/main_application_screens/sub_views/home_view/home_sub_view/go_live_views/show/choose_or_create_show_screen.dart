@@ -16,6 +16,7 @@ import 'package:go_router/go_router.dart';
 import '../../../../../../../../utils/constants/colors.dart';
 
 import '../../../../../../../../utils/dialogs/add_hastags_dialog.dart';
+import '../../../../../../../../utils/dialogs/select_hand_raising_dialog.dart';
 
 class AmptiveChooseOrCreateShowScreen extends StatefulWidget {
   const AmptiveChooseOrCreateShowScreen({super.key});
@@ -85,10 +86,12 @@ class _AmptiveChooseOrCreateShowScreenState extends State<AmptiveChooseOrCreateS
             ),
             Positioned.fill(
               child: AmptiveCustomContainer(
-                color: AmptiveColors.black.withOpacity(0.6),
+                color: AmptiveColors.black.withOpacity(0.5),
                 child: BackdropFilter(
-                  filter: ImageFilter.blur(sigmaX: 100.0, sigmaY: 100.0),
-                  child: const SizedBox.shrink(),
+                  filter: ImageFilter.blur(sigmaX: 150.0, sigmaY: 150.0),
+                  child: Container(
+                    color: AmptiveColors.black.withOpacity(0.5),
+                  )
                 ),
               ),
             ),
@@ -201,7 +204,7 @@ class _AmptiveChooseOrCreateShowScreenState extends State<AmptiveChooseOrCreateS
           builder: (_, activate, __) => AmptiveElevatedButtonWidget(
             onPressed: activate ? () async{
               //await showAddCoHostDialog(context);
-              await showAddHashtagDialog(context);
+              //await showAddHashtagDialog(context);
               //await showHandRaisingDialog(context);
               //showAddCommunitiesDialog(context);
               //showSelectAudienceAccessForShowsDialog(context);

@@ -1,7 +1,6 @@
 import 'package:amptive/src/utils/constants/colors.dart';
 import 'package:amptive/src/utils/constants/strings/route_strings.dart';
 import 'package:amptive/src/views/widgets/common_widgets/circle_avatar.dart';
-import 'package:amptive/src/views/widgets/common_widgets/custom_container_widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/show_or_event_data_model_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -15,14 +14,11 @@ import '../../../common_widgets/live_user_model_widget.dart';
 import 'appbar_drop_down.dart';
 import 'user_go_live_widget.dart';
 
-
 class AmptiveHomeViewWidget extends StatelessWidget {
-  const AmptiveHomeViewWidget({
-    super.key,
-  });
+  const AmptiveHomeViewWidget({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(context) {
     return SafeArea(
       child: NestedScrollView(
         floatHeaderSlivers: true,
@@ -33,13 +29,16 @@ class AmptiveHomeViewWidget extends StatelessWidget {
             leadingWidth: 150.w,
             leading: const Padding(
               padding: EdgeInsets.only(left: 15),
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  AmptiveImageLoaderWidget(imagePath: AmptiveImageStrings.logo2, height: 20.906, width: 86.32,),
-                  Gap(4.0),
-                  AmptiveAppBarDropDownWidget()
-                ],
+              child: AmptiveAppBarDropDownWidget(
+                offset: Offset(0, 50),
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    AmptiveImageLoaderWidget(imagePath: AmptiveImageStrings.logo2, height: 20.906, width: 86.32,),
+                    Gap(4.0),
+                    Icon(Icons.keyboard_arrow_down_outlined, size: 25,),
+                  ],
+                ),
               ),
             ),
           
@@ -78,7 +77,7 @@ class AmptiveHomeViewWidget extends StatelessWidget {
           padding: EdgeInsets.zero,
           children: [
             SizedBox(
-              height: 100.h,
+              height: 100,
               child: ListView(
                 physics: const BouncingScrollPhysics(),
                 padding: EdgeInsets.zero,
@@ -86,18 +85,14 @@ class AmptiveHomeViewWidget extends StatelessWidget {
                 scrollDirection: Axis.horizontal,
                 children: [
                   Padding(
-                    padding: EdgeInsets.only(left: 10.62.w),
+                    padding: EdgeInsets.only(left: 11.w, right: 14.w),
                     child: const AmptiveUserGoLiveWidget(),
                   ),
                   ...Iterable.generate(
                     20,
-                    (_) => Row(
-                      mainAxisSize: MainAxisSize.min,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Gap(14.w),
-                        const AmptiveLiveUserModelWidget()
-                      ],
+                    (_) => Padding(
+                      padding: EdgeInsets.only(right: 14.w),
+                      child: const AmptiveLiveUserModelWidget(),
                     )
                   ),
                 ]

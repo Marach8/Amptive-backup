@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:amptive/src/utils/constants/font_sizes.dart';
 import 'package:amptive/src/utils/constants/maps.dart';
 import 'package:amptive/src/utils/helpers/helper_functions/other_functions.dart';
 import 'package:flutter/material.dart';
@@ -32,7 +33,7 @@ void showAudioOrVideoFullDetailsOptions(BuildContext context)
                   onTap: () => AmptiveHelperFunctions.hideAnyMountedSnackbar(context),
                   child: Platform.isAndroid
                     ? Icon(
-                      Icons.keyboard_arrow_down,
+                      Icons.keyboard_arrow_down, size: 30,
                       color: AmptiveColors.whiteColor.withOpacity(0.6),
                     ) : AmptiveCustomContainer(
                       margin: const EdgeInsets.symmetric(vertical: 10),
@@ -45,7 +46,7 @@ void showAudioOrVideoFullDetailsOptions(BuildContext context)
               const Gap(20),
               ...mapOfOptions.entries.map(
                 (entry) => Padding(
-                  padding: const EdgeInsets.only(bottom: 20),
+                  padding: const EdgeInsets.only(bottom: 30),
                   child: Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
@@ -54,7 +55,8 @@ void showAudioOrVideoFullDetailsOptions(BuildContext context)
                       Text(
                         entry.key,
                         style: Theme.of(context).textTheme.labelMedium?.copyWith(
-                          color: AmptiveColors.whiteColor
+                          color: AmptiveColors.whiteColor,
+                          fontSize: AmptiveFontSizes.size17
                         ),
                       )
                     ],

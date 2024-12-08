@@ -30,7 +30,7 @@ class AmptiveShowOrEventDataModelWidget extends StatelessWidget {
           leadingImagePath: AmptiveImageStrings.jpeg3,
           trailingOnPressed: () => showAudioOrVideoFullDetailsOptions(context),
           title: 'glennodoyle',
-          subtitle: 'Started a live show',
+          subtitle: 'started a live show',
         ),
         Gap(2.h),
         AmptiveCustomContainer(

@@ -167,6 +167,7 @@ class _CreateShowScreenState extends State<CreateShowScreen> {
             ),
           ],
         ),
+
         body: Stack(
           children: [
             AmptiveRebuilderWidget(
@@ -187,13 +188,16 @@ class _CreateShowScreenState extends State<CreateShowScreen> {
             ),
             Positioned.fill(
               child: Container(
-                color: AmptiveColors.black.withOpacity(0.6),
+                color: AmptiveColors.black.withOpacity(0.5),
                 child: BackdropFilter(
                   filter: ImageFilter.blur(sigmaX: 150.0, sigmaY: 150.0),
-                  child: Container(),
+                  child: Container(
+                    color: AmptiveColors.black.withOpacity(0.5),
+                  ),
                 ),
               ),
             ),
+            
             SingleChildScrollView(
               child: Padding(
                 padding: EdgeInsets.symmetric(horizontal: 15.w),

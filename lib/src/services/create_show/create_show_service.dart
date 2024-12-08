@@ -33,6 +33,7 @@ class CreateShowService {
   late ValueNotifier<int> descCharactersLength;
   late ValueNotifier<int> selectedCoHostLength;
   late ValueNotifier<Set<HostWithNotifier>> selectedCoHosts;
+  late ValueNotifier<Set<HostWithNotifier>> goLiveHostListNotifier;
 
 
   initFormControl() {
@@ -50,6 +51,14 @@ class CreateShowService {
       ).toSet()
     );
     coHostsListData = getHostList();
+    goLiveHostListNotifier = ValueNotifier(
+      getHostList().take(1).toSet()..addAll(
+        List.generate(
+          5,
+          (_) => HostWithNotifier(host: Host.empty())
+        )
+      )
+    );
 
     // init controllers
     titleController = TextEditingController();
@@ -172,6 +181,18 @@ class CreateShowService {
       }
       else{coHostSelectionStarted.value = true;}
     }
+  }
+
+  hostAddCohost(HostWithNotifier host, int index){
+    final newList = List<HostWithNotifier>.from(goLiveHostListNotifier.value);
+    newList[index] = host;
+    goLiveHostListNotifier.value = newList.toSet();
+  }
+  
+  hostRemoveCohost(HostWithNotifier host, int index){
+    final newList = List<HostWithNotifier>.from(goLiveHostListNotifier.value);
+    newList[index] = HostWithNotifier(host: Host.empty());
+    goLiveHostListNotifier.value = newList.toSet();
   }
 }
 

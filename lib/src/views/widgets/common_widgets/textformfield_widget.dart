@@ -16,10 +16,12 @@ class AmptiveTextFormFieldWidget extends StatelessWidget {
   final Widget? suffixIcon, prefixIcon;
   final bool? obscureText, disableBlueBorder;
   final Color? cursorColor;
-  final BoxConstraints? suffixConstraints, prefixConstraints;
+  final BoxConstraints? suffixConstraints,
+  prefixConstraints, constraints;
   final InputDecoration? decoration;
   final FocusNode? focusNode;
   final TextStyle? hintStyle;
+  final EdgeInsetsGeometry? contentPadding;
 
   const AmptiveTextFormFieldWidget({
     super.key,
@@ -32,6 +34,7 @@ class AmptiveTextFormFieldWidget extends StatelessWidget {
     this.hintText,
     this.cursorColor, 
     this.decoration,
+    this.constraints,
     this.suffixIcon,
     this.obscureText,
     this.prefixIcon,
@@ -40,7 +43,8 @@ class AmptiveTextFormFieldWidget extends StatelessWidget {
     this.hintStyle,
     this.onSaved,
     this.disableBlueBorder,
-    this.prefixConstraints
+    this.prefixConstraints,
+    this.contentPadding
   });
 
   @override
@@ -61,7 +65,8 @@ class AmptiveTextFormFieldWidget extends StatelessWidget {
       keyboardType: keyboardType,
       decoration: decoration ??  InputDecoration(        
         hintText: hintText,
-        contentPadding: const EdgeInsets.fromLTRB(16, 12, 16, 12).r,
+        constraints: constraints,
+        contentPadding: contentPadding ?? const EdgeInsets.fromLTRB(16, 12, 16, 12).r,
         focusedBorder: disableBlueBorder ?? false ? OutlineInputBorder(
           borderRadius: BorderRadius.circular(14).r,
           borderSide: BorderSide(
@@ -69,7 +74,7 @@ class AmptiveTextFormFieldWidget extends StatelessWidget {
           )
         ) : null,
         hintStyle: hintStyle ?? Theme.of(context).textTheme.titleLarge?.copyWith(
-          color: AmptiveColors.strokeGreyColor
+          color: AmptiveColors.strokeGreyColor,
         ),
         suffixIcon: suffixIcon,
         prefixIcon: prefixIcon,
@@ -90,3 +95,8 @@ class AmptiveTextFormFieldWidget extends StatelessWidget {
     );
   }
 }
+
+
+
+
+

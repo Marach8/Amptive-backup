@@ -230,10 +230,10 @@ Future<Set<HostWithNotifier>?> showAddCoHostDialog(BuildContext context) async {
                           builder: (_, searchString, __) {
                             List<HostWithNotifier> filteredCoHosts;
 
-                            if (searchString.isEmpty ||
-                                controller.text.isEmpty) {
+                            if (searchString.isEmpty || controller.text.isEmpty) {
                               filteredCoHosts = coHostsData;
-                            } else {
+                            } 
+                            else {
                               filteredCoHosts = coHostsData.where((coHost) {
                                 return coHost.host.name!
                                         .toLowerCase()
@@ -355,8 +355,6 @@ class AmptiveCoHostWidget extends StatelessWidget {
   final void Function(HostWithNotifier, bool) onTap;
   final HostWithNotifier coHostDetail;
 
-  // final ValueNotifier<bool> notifier;
-
   const AmptiveCoHostWidget({
     super.key,
     required this.onTap,
@@ -364,7 +362,7 @@ class AmptiveCoHostWidget extends StatelessWidget {
   });
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(context) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 15),
       child: GestureDetector(
@@ -373,9 +371,7 @@ class AmptiveCoHostWidget extends StatelessWidget {
           children: [
             AmptiveCustomContainer(
               clipBehavior: Clip.hardEdge,
-              height: 50,
-              width: 50,
-              radius: 30,
+              height: 50, width: 50, radius: 30,
               child: FittedBox(
                   fit: BoxFit.fill,
                   child: AmptiveImageLoaderWidget(
@@ -386,39 +382,37 @@ class AmptiveCoHostWidget extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(coHostDetail.host.name!,
-                      style: Theme.of(context)
-                          .textTheme
-                          .bodySmall
-                          ?.copyWith(fontSize: AmptiveFontSizes.size15)),
                   Text(
-                    coHostDetail.host.username!,
-                    style: Theme.of(context)
-                        .textTheme
-                        .bodySmall
-                        ?.copyWith(color: AmptiveColors.subtitleColor),
+                    coHostDetail.host.name ?? '',
+                    style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                      fontSize: AmptiveFontSizes.size15
+                    )
+                  ),
+                  Text(
+                    coHostDetail.host.username ?? '',
+                    style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                      color: AmptiveColors.subtitleColor
+                    ),
                   ),
                 ],
               ),
             ),
             AmptiveRebuilderWidget(
-                notifier: coHostDetail.notifier,
-                builder: (_, value, __) {
-                  return AmptiveCustomContainer(
-                      duration: 200,
-                      color: value
-                          ? AmptiveColors.whiteColor
-                          : AmptiveColors.transparentColor,
-                      border: Border.all(color: AmptiveColors.whiteColor),
-                      boxShape: BoxShape.circle,
-                      height: 24,
-                      width: 24,
-                      child: Icon(
-                        Icons.check,
-                        color: AmptiveColors.brandBlackColor,
-                        size: 20,
-                      ));
-                })
+              notifier: coHostDetail.notifier,
+              builder: (_, value, __) {
+                return AmptiveCustomContainer(
+                  duration: 200,
+                  color: value ? AmptiveColors.whiteColor : AmptiveColors.transparentColor,
+                  border: Border.all(color: AmptiveColors.whiteColor),
+                  boxShape: BoxShape.circle,
+                  height: 24, width: 24,
+                  child: Icon(
+                    Icons.check, size: 20,
+                    color: AmptiveColors.brandBlackColor,
+                  )
+                );
+              }
+            )
           ],
         ),
       ),

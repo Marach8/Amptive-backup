@@ -147,7 +147,7 @@ class AmptiveOtherStrings{
   static const CHOOSE_SHOW = 'Choose Show';
   static const CHOOSE_EVENT = 'Choose Event';
   static const ADD_COMMUNITY = 'Add Community';
-  static const ADD_CO_HOST = 'Add Co-host';
+  static const ADD_CO_HOST = 'Add Cohost';
   static const ADD_HASHTAG = 'Add Hashtag';
   static const ADD_HASHTAG_DESC = 'You can add up to 4 hashtags, with each hashtag not more that 25 characaters long, without spaces or special characters';
   static const SELECTED = 'Selected';
@@ -202,4 +202,5 @@ class AmptiveOtherStrings{
   static const EMPTY_FIELD = 'Field(s) cannot be empty';
   static const SHARE_EVENT = 'Share event';
   static const COMMENT = 'Comment';
+  static const HOST = 'Host';
 }

@@ -10,12 +10,18 @@ import 'package:go_router/go_router.dart';
 import 'package:iconsax/iconsax.dart';
 
 class AmptiveAppBarDropDownWidget extends StatelessWidget {
-  const AmptiveAppBarDropDownWidget({super.key});
+  final Widget child;
+  final Offset? offset;
+  const AmptiveAppBarDropDownWidget({
+    super.key,
+    required this.child,
+    this.offset
+  });
 
   @override
   Widget build(context) {  
     return PopupMenuButton<String>(
-      offset: const Offset(-80, 35),
+      offset: offset ?? const Offset(-80, 35),
       padding: EdgeInsets.zero,
       onSelected: (selectedSearchChoice){},
       color: AmptiveColors.containerGradientColorB,
@@ -23,7 +29,7 @@ class AmptiveAppBarDropDownWidget extends StatelessWidget {
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(12)
       ),
-      child: const Icon(Icons.keyboard_arrow_down_outlined, size: 25,),
+      child: child,
       
       itemBuilder: (_) => [
         PopupMenuItem<String>(

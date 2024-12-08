@@ -5,7 +5,7 @@ import 'package:iconsax/iconsax.dart';
 
 Map<String, Widget> mapOfOptions = {
   'Subscribe to glennodoyle': const Icon(Icons.favorite_border_outlined),
-  'Follow glennodoyle': const Icon(Iconsax.user_tick4),
+  'Follow glennodoyle': const AmptiveImageLoaderWidget(imagePath: AmptiveImageStrings.FOLLOW_ICON),
   'Share live': const AmptiveImageLoaderWidget(imagePath: AmptiveImageStrings.SHARE_LIVE),
   'Not interested': const Icon(Icons.visibility_off_outlined),
   'Report': const Icon(Icons.flag_outlined)
