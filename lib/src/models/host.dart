@@ -10,9 +10,9 @@ class Host extends AmptiveUser {
 }
 
 
-class HostWithNotifier {
-  late Host host;
+class ObjectWithNotifier<T> {
+  late T obj;
   ValueNotifier<bool> notifier = ValueNotifier(false);
 
-  HostWithNotifier({required this.host});
+  ObjectWithNotifier({required this.obj});
 }

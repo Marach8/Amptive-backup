@@ -462,9 +462,9 @@ class _CreateShowScreenState extends State<CreateShowScreen> {
                       hintText: "Enter your own hashtag",
                       readOnly: true,
                       onTap: () async {
-                        service.hashtags.value =
+                        // service.hashtags.value =
                             await showAddHashtagDialog(context);
-                        service.hashTagSelected.value = true;
+                        service.hashTagSelected.value = service.selectedHashtagLength.value > 0;
                       },
                       suffixIcon: Icon(
                         Icons.arrow_forward_ios,
@@ -473,23 +473,21 @@ class _CreateShowScreenState extends State<CreateShowScreen> {
                       ),
                     ),
                     AmptiveRebuilderWidget(
-                        notifier: service.hashTagSelected,
-                        builder: (ctx, selected, _) {
-                          return SizedBox(height: selected ? 8.h : 0);
+                        notifier: service.selectedHashtagLength,
+                        builder: (ctx, value, _) {
+                          return SizedBox(height: value > 0 ? 8.h : 0);
                         }),
                     AmptiveRebuilderWidget(
-                      notifier: service.hashTagSelected,
+                      notifier: service.selectedHashtagLength,
                       builder: (ctx, selected, _) {
-                        return selected
+                        return selected > 0
                             ? AmptiveRebuilderWidget(
-                                notifier: service.hashtags,
+                                notifier: service.selectedHashtags,
                                 builder: (ctx, hashtags, _) {
                                   return SelectedHashTags(
                                     hashtags: hashtags,
                                     onRemove: (hashtag) {
-                                      setState(() {
-                                        service.hashtags.value.remove(hashtag);
-                                      });
+                                        service.removeSelectedHashtags(hashtag);
                                     },
                                   );
                                 },
@@ -795,7 +793,7 @@ class _CreateShowScreenState extends State<CreateShowScreen> {
     return service.selectedImage.value != null;
   }
 
-  processSelectedHost(List<HostWithNotifier> ls) {
+  processSelectedHost(List<ObjectWithNotifier<Host>> ls) {
     if (ls.length >= 5) {
       return ls.sublist(0, 5);
     } else {
@@ -863,9 +861,9 @@ class OverlappingHosts extends StatelessWidget {
                     color: AmptiveColors.whiteColor.withOpacity(0.4), width: 1),
               ),
               child: ClipOval(
-                child: item is HostWithNotifier
+                child: item is ObjectWithNotifier<Host>
                     ? Image.asset(
-                        item.host.profilePicture!,
+                        item.obj.profilePicture!,
                         // Replace with actual image URL
                         fit: BoxFit.cover,
                       )

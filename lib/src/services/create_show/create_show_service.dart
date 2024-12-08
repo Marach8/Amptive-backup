@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'dart:math';
 
+import 'package:amptive/src/models/hashtag.dart';
 import 'package:flutter/material.dart';
 
 import '../../models/community.dart';
@@ -19,7 +20,8 @@ class CreateShowService {
   double userEventFee = 2000.0;
   File? selectedShowImage;
 
-  late List<HostWithNotifier> coHostsListData;
+  late List<ObjectWithNotifier<Host>> coHostsListData;
+  late List<ObjectWithNotifier<Hashtag>> hashTagListData;
   late TextEditingController descController;
   late TextEditingController audienceAccessController;
   late TextEditingController handRaisingController;
@@ -34,9 +36,11 @@ class CreateShowService {
   late ValueNotifier<int> titleCharLength;
   late ValueNotifier<int> descCharactersLength;
   late ValueNotifier<int> selectedCoHostLength;
-  late ValueNotifier<Set<HostWithNotifier>> selectedCoHosts;
-  late ValueNotifier<File?> selectedImage;
+  late ValueNotifier<int> selectedHashtagLength;
+  late ValueNotifier<Set<ObjectWithNotifier<Host>>> selectedCoHosts;
+  late ValueNotifier<Set<ObjectWithNotifier<Hashtag>>> selectedHashtags;
 
+  late ValueNotifier<File?> selectedImage;
 
   DateTime? eventDateTime;
 
@@ -47,9 +51,12 @@ class CreateShowService {
     titleCharLength = ValueNotifier(0);
     descCharactersLength = ValueNotifier(0);
     selectedCoHostLength = ValueNotifier(0);
+    selectedHashtagLength = ValueNotifier(0);
     selectedCoHosts = ValueNotifier({});
+    selectedHashtags = ValueNotifier({});
     selectedImage = ValueNotifier(null);
     coHostsListData = getHostList();
+    hashTagListData = getHashTags();
 
     // init controllers
     titleController = TextEditingController();
@@ -72,7 +79,9 @@ class CreateShowService {
     titleCharLength.dispose();
     descCharactersLength.dispose();
     selectedCoHostLength.dispose();
+    selectedHashtagLength.dispose();
     selectedCoHosts.dispose();
+    selectedHashtags.dispose();
     selectedImage.dispose();
 
     titleController.dispose();
@@ -88,17 +97,19 @@ class CreateShowService {
     for (var coHostNotifier in coHostsListData) {
       coHostNotifier.notifier.dispose();
     }
+
+    for (var hashtag in hashTagListData) {
+      hashtag.notifier.dispose();
+    }
   }
 
   bool formIsValid() {
     return selectedImage.value != null;
   }
 
-  onSubmit(){
-  selectedShowImage = selectedImage.value;
+  onSubmit() {
+    selectedShowImage = selectedImage.value;
   }
-
-
 
   List<Community> generateCommunities() {
     final random = Random();
@@ -157,7 +168,7 @@ class CreateShowService {
     return result;
   }
 
-  removeSelectedCoHost(HostWithNotifier selCoHost) {
+  removeSelectedCoHost(ObjectWithNotifier<Host> selCoHost) {
     final currentSet = selectedCoHosts.value;
 
     if (currentSet.contains(selCoHost)) {
@@ -168,7 +179,7 @@ class CreateShowService {
     }
   }
 
-  addSelectedCoHost(HostWithNotifier selCoHost) {
+  addSelectedCoHost(ObjectWithNotifier<Host> selCoHost) {
     final currentSet = selectedCoHosts.value;
 
     if (!currentSet.contains(selCoHost)) {
@@ -179,6 +190,29 @@ class CreateShowService {
     }
   }
 
+
+  removeSelectedHashtags(ObjectWithNotifier<Hashtag> selHashtag) {
+    final currentSet = selectedHashtags.value;
+
+    if (currentSet.contains(selHashtag)) {
+      currentSet.remove(selHashtag);
+      selectedHashtags.value = currentSet;
+      selectedHashtagLength.value = currentSet.length;
+      selHashtag.notifier.value = false;
+    }
+  }
+
+  addSelectedHashtags(ObjectWithNotifier<Hashtag> selHashtag) {
+    final currentSet = selectedHashtags.value;
+
+    if (!currentSet.contains(selHashtag)) {
+      currentSet.add(selHashtag);
+      selectedHashtags.value = currentSet;
+      selectedHashtagLength.value = currentSet.length;
+      selHashtag.notifier.value = true;
+    }
+  }
+
   bool isValidEventDateTime() {
     if (eventDateTime == null) return false;
 
@@ -186,8 +220,8 @@ class CreateShowService {
   }
 }
 
-List<HostWithNotifier> getHostList() {
-  List<HostWithNotifier> hostsList = [];
+List<ObjectWithNotifier<Host>> getHostList() {
+  List<ObjectWithNotifier<Host>> hostsList = [];
 
   final coHostsData = <String, List<String>>{
     AmptiveImageStrings.jpeg1: ['Emmanuel Ajah', 'nnanna😍💕'],
@@ -216,9 +250,34 @@ List<HostWithNotifier> getHostList() {
           email: '',
           profilePicture: pics);
 
-      hostsList.add(HostWithNotifier(host: host));
+      hostsList.add(ObjectWithNotifier<Host>(obj: host));
     }
   });
 
   return hostsList;
+}
+
+List<ObjectWithNotifier<Hashtag>> getHashTags() {
+  List<ObjectWithNotifier<Hashtag>> hashTagList = [];
+
+  final availableHashtags = <List<String>>[
+    ['Emmanuel Ajah', 'Hashtag'],
+    ['Tochukwu Iwuzed', 'Hashtag'],
+    ['Ekene Okoro', 'Hashtag'],
+    ['Rita Waltson', 'Hashtag'],
+    ['Lee Parker', 'Hashtag'],
+    ['Daniel Adesua', 'Hashtag'],
+    ['Erica Nwosu', 'Hashtag'],
+    ['Peter Nwokeji', 'Hashtag'],
+    ['Arlan Walker', 'Hashtag'],
+    ['Man Drone', 'Hashtag'],
+  ];
+
+  for (var element in availableHashtags) {
+    String name = element[0];
+    Hashtag hashTag = Hashtag(name: name);
+    hashTagList.add(ObjectWithNotifier<Hashtag>(obj: hashTag));
+  }
+
+  return hashTagList;
 }

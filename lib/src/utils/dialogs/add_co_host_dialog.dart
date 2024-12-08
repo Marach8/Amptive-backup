@@ -19,10 +19,10 @@ import '../../views/widgets/common_widgets/custom_rebuilder_widget.dart';
 import '../../views/widgets/common_widgets/elevated_button_widget.dart';
 import '../constants/strings/other_strings.dart';
 
-Future<Set<HostWithNotifier>?> showAddCoHostDialog(BuildContext context) async {
+Future<Set<ObjectWithNotifier<Host>>?> showAddCoHostDialog(BuildContext context) async {
   CreateShowService service = GetIt.I<CreateShowService>();
 
-  final List<HostWithNotifier> coHostsData = service.coHostsListData;
+  final List<ObjectWithNotifier<Host>> coHostsData = service.coHostsListData;
 
   final focusNode = FocusNode();
   final controller = TextEditingController();
@@ -86,7 +86,6 @@ Future<Set<HostWithNotifier>?> showAddCoHostDialog(BuildContext context) async {
                           Gap(60.w),
                           AmptiveRebuilderWidget(
                               notifier: service.selectedCoHostLength,
-                              // shouldDispose: true,
                               builder: (_, number, __) {
                                 return Text(
                                   '$number ${AmptiveOtherStrings.SELECTED}',
@@ -172,7 +171,7 @@ Future<Set<HostWithNotifier>?> showAddCoHostDialog(BuildContext context) async {
                                                 fit: BoxFit.fill,
                                                 child: AmptiveImageLoaderWidget(
                                                     imagePath: selCoHost
-                                                        .host.profilePicture!)),
+                                                        .obj.profilePicture!)),
                                           ),
                                           Positioned(
                                             top: 0,
@@ -211,17 +210,17 @@ Future<Set<HostWithNotifier>?> showAddCoHostDialog(BuildContext context) async {
                       AmptiveRebuilderWidget(
                           notifier: searchQueryNotifier,
                           builder: (_, searchString, __) {
-                            List<HostWithNotifier> filteredCoHosts;
+                            List<ObjectWithNotifier<Host>> filteredCoHosts;
 
                             if (searchString.isEmpty ||
                                 controller.text.isEmpty) {
                               filteredCoHosts = coHostsData;
                             } else {
                               filteredCoHosts = coHostsData.where((coHost) {
-                                return coHost.host.name!
+                                return coHost.obj.name!
                                         .toLowerCase()
                                         .contains(searchString.toLowerCase()) ||
-                                    coHost.host.username!
+                                    coHost.obj.username!
                                         .toLowerCase()
                                         .contains(searchString.toLowerCase());
                               }).toList();
@@ -278,7 +277,7 @@ Future<Set<HostWithNotifier>?> showAddCoHostDialog(BuildContext context) async {
 }
 
 class AmptiveListOfCoHostsWidget extends StatelessWidget {
-  final List<HostWithNotifier> availableCoHosts;
+  final List<ObjectWithNotifier<Host>> availableCoHosts;
   final CreateShowService service = GetIt.I<CreateShowService>();
 
   AmptiveListOfCoHostsWidget({
@@ -333,8 +332,8 @@ class AmptiveListOfCoHostsWidget extends StatelessWidget {
 }
 
 class AmptiveCoHostWidget extends StatelessWidget {
-  final void Function(HostWithNotifier, bool) onTap;
-  final HostWithNotifier coHostDetail;
+  final void Function(ObjectWithNotifier<Host>, bool) onTap;
+  final ObjectWithNotifier<Host> coHostDetail;
 
   // final ValueNotifier<bool> notifier;
 
@@ -363,20 +362,20 @@ class AmptiveCoHostWidget extends StatelessWidget {
               child: FittedBox(
                   fit: BoxFit.fill,
                   child: AmptiveImageLoaderWidget(
-                      imagePath: coHostDetail.host.profilePicture!)),
+                      imagePath: coHostDetail.obj.profilePicture!)),
             ),
             const Gap(10),
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(coHostDetail.host.name!,
+                  Text(coHostDetail.obj.name!,
                       style: Theme.of(context)
                           .textTheme
                           .bodySmall
                           ?.copyWith(fontSize: AmptiveFontSizes.size15)),
                   Text(
-                    coHostDetail.host.username!,
+                    coHostDetail.obj.username!,
                     style: Theme.of(context)
                         .textTheme
                         .bodySmall
