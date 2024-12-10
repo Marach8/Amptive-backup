@@ -32,7 +32,7 @@ class AmptiveLiveIndicatorWidget extends StatelessWidget {
         )
       ),
       child: Text(
-        AmptiveOtherStrings.live.toUpperCase(),
+        AmptiveOtherStrings.LIVE.toUpperCase(),
         style: Theme.of(context).textTheme.titleSmall?.copyWith(
           fontWeight: AmptiveFontWeights.semiBold
         )

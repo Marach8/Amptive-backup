@@ -30,7 +30,7 @@ import 'views/screens/main_application_screens/sub_views/discover/trending_socie
 import 'views/screens/main_application_screens/sub_views/home_view/home_sub_view/event_detailed_screen.dart';
 import 'views/screens/main_application_screens/sub_views/home_view/home_sub_view/following_screen.dart';
 import 'views/screens/main_application_screens/sub_views/home_view/home_sub_view/go_live_views/event/choose_event_screen.dart';
-import 'views/screens/main_application_screens/sub_views/home_view/home_sub_view/go_live_views/show/choose_show_screen.dart';
+import 'views/screens/main_application_screens/sub_views/home_view/home_sub_view/go_live_views/show/choose_or_create_show_screen.dart';
 import 'views/screens/main_application_screens/sub_views/home_view/home_sub_view/go_live_views/show/show_creation_success_screen.dart';
 import 'views/screens/main_application_screens/sub_views/home_view/home_sub_view/show_detailed_screen.dart';
 import 'views/screens/main_application_screens/sub_views/home_view/home_sub_view/subscribed_screen.dart';

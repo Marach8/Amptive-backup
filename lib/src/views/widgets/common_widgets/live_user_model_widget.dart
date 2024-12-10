@@ -2,7 +2,6 @@ import 'package:amptive/src/utils/constants/strings/image_strings.dart';
 import 'package:amptive/src/views/widgets/animation_widgets/other_animation_widgets/live_user_animation.dart';
 import 'package:amptive/src/views/widgets/other_widgets/main_application_widgets/widgets_in_home_view/live_indicator_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 
 class AmptiveLiveUserModelWidget extends StatelessWidget {
@@ -11,9 +10,10 @@ class AmptiveLiveUserModelWidget extends StatelessWidget {
   });
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(context) {
     return Column(
       mainAxisSize: MainAxisSize.min,
+      mainAxisAlignment: MainAxisAlignment.end,
       children: [
         const Stack(
           clipBehavior: Clip.none,
@@ -29,15 +29,10 @@ class AmptiveLiveUserModelWidget extends StatelessWidget {
           ],
         ),
     
-        Gap(10.h),
-        SizedBox(
-          width: 65.w,
-          child: Center(
-            child: Text(
-              'emmanuel',
-              style: Theme.of(context).textTheme.titleSmall
-            ),
-          ),
+        const Gap(10),
+        Text(
+          'emmanuel',
+          style: Theme.of(context).textTheme.titleSmall
         ),
       ],
     );

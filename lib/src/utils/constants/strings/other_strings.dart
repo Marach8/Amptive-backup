@@ -40,7 +40,7 @@ class AmptiveOtherStrings{
   static const signUpWith = 'Sign up with ';
   static const signInWith = 'Sign in with ';
   static const email = 'Email';
-  static const live = 'Live';
+  static const LIVE = 'Live';
   static const phoneNumber = 'Phone Number';
   static const facebook = 'Facebook';
   static const twitter = 'X(Twitter)';
@@ -147,7 +147,7 @@ class AmptiveOtherStrings{
   static const CHOOSE_SHOW = 'Choose Show';
   static const CHOOSE_EVENT = 'Choose Event';
   static const ADD_COMMUNITY = 'Add Community';
-  static const ADD_CO_HOST = 'Add Co-host';
+  static const ADD_CO_HOST = 'Add Cohost';
   static const ADD_HASHTAG = 'Add Hashtag';
   static const ADD_HASHTAG_DESC = 'You can add up to 4 hashtags, with each hashtag not more that 25 characaters long, without spaces or special characters';
   static const SELECTED = 'Selected';
@@ -201,4 +201,6 @@ class AmptiveOtherStrings{
   static const SHARE_EVENT_LINK = 'Share your event link to build excitement and attract more attendees.';
   static const EMPTY_FIELD = 'Field(s) cannot be empty';
   static const SHARE_EVENT = 'Share event';
+  static const COMMENT = 'Comment';
+  static const HOST = 'Host';
 }

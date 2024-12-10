@@ -23,7 +23,7 @@ class AmptiveFullDiscoverPageView extends StatelessWidget {
   const AmptiveFullDiscoverPageView({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(context) {
     return Column(
       children: [
         const NewWidget(),
@@ -77,7 +77,7 @@ class AmptiveFullDiscoverPageView extends StatelessWidget {
         Gap(15.h),
     
         SizedBox(
-          height: 165,
+          height: 170,
           child: ListView(
             physics: const BouncingScrollPhysics(),
             scrollDirection: Axis.horizontal,
@@ -183,7 +183,7 @@ class AmptiveFullDiscoverPageView extends StatelessWidget {
         ),
         Gap(20.h),
         SizedBox(
-          height: 165,
+          height: 170,
           child: ListView(
             physics: const BouncingScrollPhysics(),
             scrollDirection: Axis.horizontal,
@@ -208,7 +208,7 @@ class AmptiveFullDiscoverPageView extends StatelessWidget {
         ),
         Gap(15.h),
         SizedBox(
-          height: 165,
+          height: 170,
           child: ListView(
             physics: const BouncingScrollPhysics(),
             scrollDirection: Axis.horizontal,
@@ -220,6 +220,7 @@ class AmptiveFullDiscoverPageView extends StatelessWidget {
             ),
           ),
         ),
+        const Gap(100)
       ],
     );
   }

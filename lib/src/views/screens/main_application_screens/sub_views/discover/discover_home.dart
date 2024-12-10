@@ -41,11 +41,12 @@ class _AmptiveDiscoverViewWidgetState extends State<AmptiveDiscoverViewWidget> {
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(context) {
     return AmptiveAnnotatedRegionWidget(
       child: Scaffold(
         body: SafeArea(
           child: CustomScrollView(
+            physics: const BouncingScrollPhysics(),
             slivers: [
               const SliverAppBar(
                 title: Text('Discover'),
@@ -66,18 +67,13 @@ class _AmptiveDiscoverViewWidgetState extends State<AmptiveDiscoverViewWidget> {
                 child: ValueListenableBuilder(
                   valueListenable: notifier,
                   builder: (_, value, __) {
-                    int index = 0;
-                    if(value) index = 1;
-                    final listOfWidgets = [
-                      AmptiveFullDiscoverPageView(key: UniqueKey()),
-                      AmptiveRecentSearchesAndTabsView(
+                    return AmptiveFadingAnimatedSwitcherWidget(
+                      duration: 200,
+                      child: value ? AmptiveRecentSearchesAndTabsView(
                         key: UniqueKey(),
                         controller: controller,
-                      )
-                    ];
-                    return AmptiveFadingAnimatedSwitcherWidget(
-                      duration: 2,
-                      child: listOfWidgets.elementAt(index),
+                      ) : AmptiveFullDiscoverPageView(key: UniqueKey())
+                      
                     );
                   }
                 ),

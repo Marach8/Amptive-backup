@@ -14,7 +14,20 @@ class AmptiveImageStrings{
   static const sIcon = '$generalSvgImagePath/Frame 79.svg';
   static const spreadNetworkIcon = '$generalSvgImagePath/Start or Schedule.svg';
   static const robot = '$generalSvgImagePath/delivery robot.svg';
-
+  static const filledBell = '$generalSvgImagePath/Bell=Fill.svg';
+  static const outlinedBell = '$generalSvgImagePath/Bell=Outline.svg';
+  static const filledSearch = '$generalSvgImagePath/Discover animation icon=Fill.svg';
+  static const outlinedSearch = '$generalSvgImagePath/Discover animation icon=Outline.svg';
+  static const filledHome = '$generalSvgImagePath/Home=Fill.svg';
+  static const outlinedHome = '$generalSvgImagePath/Home button.svg';
+  static const filledBroadCast = '$generalSvgImagePath/Broadcast icon=Fill.svg';
+  static const outlinedBroadCast = '$generalSvgImagePath/Broadcast icon=Outline.svg';
+  static const CALEND_ICON = '$generalSvgImagePath/Contextual menu icon.svg';
+  static const PERSON_CHECKED = '$generalSvgImagePath/Contextual menu icon (1).svg';
+  static const SHARE_LIVE = '$generalSvgImagePath/Icon.svg';
+  static const FOLLOW_ICON = '$generalSvgImagePath/Icon (1).svg';
+  static const UNFOLLOW_ICON = '$generalSvgImagePath/Icon (2).svg';
+  static const GIFT_ICON = '$generalSvgImagePath/gift.svg';
 
 
   static const jpeg2 = '$generalJpegImagePath/welcomeAvatar2.jpeg';
@@ -43,7 +56,4 @@ class AmptiveImageStrings{
   static const artCard = '$generalPngImagePath/art-card.png';
   static const techCard= '$generalPngImagePath/tech-card.png';
   static const societyCard = '$generalPngImagePath/society-card.png';
-
-
-
 }

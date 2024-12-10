@@ -3,6 +3,7 @@ import 'package:amptive/src/services/auth/auth_field_service.dart';
 import 'package:amptive/src/services/auth/otp_service.dart';
 import 'package:amptive/src/services/authentication_service.dart';
 import 'package:amptive/src/services/create_show/create_show_service.dart';
+import 'package:amptive/src/services/go_live_service/go_live_service.dart';
 import 'package:amptive/src/services/preference_service.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
@@ -21,7 +22,7 @@ void setup() {
   GetIt.I.registerSingleton<AuthenticationService>(AuthenticationService());
   GetIt.I.registerSingleton<PreferenceService>(PreferenceService());
   GetIt.I.registerSingleton<CreateShowService>(CreateShowService());
-
+  GetIt.I.registerSingleton<GoLiveService>(GoLiveService());
 }
 
 List<SingleChildWidget> providers() {

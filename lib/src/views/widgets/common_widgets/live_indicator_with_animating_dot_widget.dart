@@ -15,9 +15,7 @@ class AmptiveLiveIndicatorWithAnimatingDotWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      // alignment: Alignment.center,
       padding: EdgeInsets.fromLTRB(8.44.w, 5.h, 8.44.w, 5.h),
-      width: 55.w,
       decoration: BoxDecoration(
         gradient: LinearGradient(
           begin: Alignment.topCenter,
@@ -31,7 +29,7 @@ class AmptiveLiveIndicatorWithAnimatingDotWidget extends StatelessWidget {
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisSize: MainAxisSize.min,
         children: [
           AmptiveAnimatedOpacityWidget(
             child: CircleAvatar(
@@ -40,16 +38,13 @@ class AmptiveLiveIndicatorWithAnimatingDotWidget extends StatelessWidget {
             ),
           ),
           Gap(4.w),
-          Expanded(
-            child: Text(
-              AmptiveOtherStrings.live.toUpperCase(),
-              textAlign: TextAlign.center,
-              style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                fontSize: AmptiveFontSizes.size14,
-                fontWeight: AmptiveFontWeights.semiBold,
-                height: 0,
-              )
-            ),
+          Text(
+            AmptiveOtherStrings.LIVE.toUpperCase(),
+            style: Theme.of(context).textTheme.titleSmall?.copyWith(
+              fontSize: AmptiveFontSizes.size14,
+              fontWeight: AmptiveFontWeights.semiBold,
+              height: 0,
+            )
           ),
         ],
       ),
