@@ -12,7 +12,7 @@ class GoLiveService {
   // constructorÏ
   GoLiveService._();
 
-  late List<HostWithNotifier> coHostsListData;
+  late List<ObjectWithNotifier<Host>> coHostsListData;
   late TextEditingController titleController;
 
 
@@ -20,9 +20,9 @@ class GoLiveService {
   late ValueNotifier<bool> scroll2Bottom;
 
   late ValueNotifier<int> selectedCoHostLength;
-  late ValueNotifier<Set<HostWithNotifier>> selectedCoHosts;
-  late ValueNotifier<Set<HostWithNotifier>> goLiveHostListNotifier;
-  late ValueNotifier<List<HostWithNotifier>> goLiveHostList4AudienceNotifier;
+  late ValueNotifier<Set<ObjectWithNotifier<Host>>> selectedCoHosts;
+  late ValueNotifier<Set<ObjectWithNotifier<Host>>> goLiveHostListNotifier;
+  late ValueNotifier<List<ObjectWithNotifier<Host>>> goLiveHostList4AudienceNotifier;
 
 
   initFormControl() {
@@ -32,7 +32,7 @@ class GoLiveService {
     selectedCoHosts = ValueNotifier(
       List.generate(
         5,
-        (_) => HostWithNotifier(host: Host.empty())
+        (_) => ObjectWithNotifier<Host>(obj: Host.empty())
       ).toSet()
     );
     coHostsListData = getHostList();
@@ -40,7 +40,7 @@ class GoLiveService {
       getHostList().take(1).toSet()..addAll(
         List.generate(
           5,
-          (_) => HostWithNotifier(host: Host.empty())
+          (_) => ObjectWithNotifier<Host>(obj: Host.empty())
         )
       )
     );
@@ -96,7 +96,7 @@ class GoLiveService {
   
   int counter = 1;
 
-  hostAddCohost(HostWithNotifier host, int index){
+  hostAddCohost(ObjectWithNotifier<Host> host, int index){
     // final newList = List<HostWithNotifier>.from(goLiveHostListNotifier.value);
     // newList[index] = host;
     // host.notifier.value = true;
@@ -113,7 +113,7 @@ class GoLiveService {
   }
   
 
-  hostRemoveCohost(HostWithNotifier host, int index){
+  hostRemoveCohost(ObjectWithNotifier<Host> host, int index){
     // final newList = List<HostWithNotifier>.from(goLiveHostListNotifier.value);
     // newList[index] = HostWithNotifier(host: Host.empty());
     // host.notifier.value = false;
@@ -133,8 +133,8 @@ class GoLiveService {
 
 
 
-List<HostWithNotifier> getHostList() {
-  List<HostWithNotifier> hostsList = [];
+List<ObjectWithNotifier<Host>> getHostList() {
+  List<ObjectWithNotifier<Host>> hostsList = [];
 
   final coHostsData = <String, List<String>>{
     AmptiveImageStrings.jpeg1: ['Emmanuel Ajah', 'nnanna😍💕'],
@@ -163,7 +163,7 @@ List<HostWithNotifier> getHostList() {
           email: '',
           profilePicture: pics);
 
-      hostsList.add(HostWithNotifier(host: host));
+      hostsList.add(ObjectWithNotifier<Host>(obj: host));
     }
   });
 

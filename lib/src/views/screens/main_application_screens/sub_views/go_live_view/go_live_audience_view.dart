@@ -135,13 +135,13 @@ class _AmptiveGoLiveAudienceViewState extends State<AmptiveGoLiveAudienceView> {
                                   imagePath: AmptiveImageStrings.CRIMINAL,
                                 ),
                                 title: Text(
-                                  string.host.name ?? '',
+                                  string.obj.name ?? '',
                                   style: Theme.of(context).textTheme.bodySmall?.copyWith(
                                     color: AmptiveColors.subtitleColor
                                   )
                                 ),
                                 subtitle: Text(
-                                  string.host.username ?? '',
+                                  string.obj.username ?? '',
                                   style: Theme.of(context).textTheme.titleMedium?.copyWith(
                                     fontSize: AmptiveFontSizes.size13
                                   )
@@ -293,7 +293,7 @@ class _AmptiveGoLiveAudienceViewState extends State<AmptiveGoLiveAudienceView> {
                 }
                 return AmptiveCustomContainer(
                   onTap: (){
-                    final host = HostWithNotifier(host: Host.empty());
+                    final host = ObjectWithNotifier<Host>(obj: Host.empty());
                     if(index == 0){
                       service.hostAddCohost(host, index + 1);
                     }

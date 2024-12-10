@@ -19,10 +19,10 @@ import '../../views/widgets/common_widgets/custom_rebuilder_widget.dart';
 import '../../views/widgets/common_widgets/elevated_button_widget.dart';
 import '../constants/strings/other_strings.dart';
 
-Future<Set<HostWithNotifier>?> showAddCoHostDialog(BuildContext context) async {
+Future<Set<ObjectWithNotifier<Host>>?> showAddCoHostDialog(BuildContext context) async {
   CreateShowService service = GetIt.I<CreateShowService>();
 
-  final List<HostWithNotifier> coHostsData = service.coHostsListData;
+  final List<ObjectWithNotifier<Host>> coHostsData = service.coHostsListData;
 
   final focusNode = FocusNode();
   final controller = TextEditingController();
@@ -86,7 +86,6 @@ Future<Set<HostWithNotifier>?> showAddCoHostDialog(BuildContext context) async {
                           Gap(60.w),
                           AmptiveRebuilderWidget(
                               notifier: service.selectedCoHostLength,
-                              // shouldDispose: true,
                               builder: (_, number, __) {
                                 return Text(
                                   '$number ${AmptiveOtherStrings.SELECTED}',
@@ -146,7 +145,7 @@ Future<Set<HostWithNotifier>?> showAddCoHostDialog(BuildContext context) async {
                       AmptiveRebuilderWidget(
                         notifier: service.coHostSelectionStarted,
                         // shouldDispose: true,
-                        builder: (_, selectionStarted, __) {                          
+                        builder: (_, selectionStarted, __) {
                           return AmptiveAnimatedCrossFadeWidget(
                             condition: !selectionStarted,
                             firstChild: const SizedBox.shrink(),
@@ -160,11 +159,11 @@ Future<Set<HostWithNotifier>?> showAddCoHostDialog(BuildContext context) async {
                                   builder: (_, selectedCoHosts, __) {
                                     return Row(
                                       children: selectedCoHosts.map((selectedCoHost) {
-                                        final showCoHost = selectedCoHost.host.profilePicture != null;
-                                        
+                                        final showCoHost = selectedCoHost.obj.profilePicture != null;
+
                                         if(!showCoHost){
                                           final index = selectedCoHosts.toList().indexOf(selectedCoHost);
-                                    
+
                                           return AmptiveCustomContainer(
                                             alignment: Alignment.center,
                                             margin: const EdgeInsets.only(right: 15),
@@ -178,7 +177,7 @@ Future<Set<HostWithNotifier>?> showAddCoHostDialog(BuildContext context) async {
                                             ),
                                           );
                                         }
-                                    
+
                                         return Padding(
                                           padding: const EdgeInsets.only(right: 15),
                                           child: Stack(
@@ -190,12 +189,12 @@ Future<Set<HostWithNotifier>?> showAddCoHostDialog(BuildContext context) async {
                                                 child: FittedBox(
                                                   fit: BoxFit.fill,
                                                   child: AmptiveImageLoaderWidget(
-                                                    imagePath: selectedCoHost.host.profilePicture ?? ''
+                                                    imagePath: selectedCoHost.obj.profilePicture ?? ''
                                                   )
                                                 ),
                                               ),
                                               Positioned(
-                                                top: 0, right: -4, 
+                                                top: 0, right: -4,
                                                 child: AmptiveCustomContainer(
                                                   onTap: () {
                                                     //Disable this notifier
@@ -228,17 +227,17 @@ Future<Set<HostWithNotifier>?> showAddCoHostDialog(BuildContext context) async {
                       AmptiveRebuilderWidget(
                           notifier: searchQueryNotifier,
                           builder: (_, searchString, __) {
-                            List<HostWithNotifier> filteredCoHosts;
+                            List<ObjectWithNotifier<Host>> filteredCoHosts;
 
                             if (searchString.isEmpty || controller.text.isEmpty) {
                               filteredCoHosts = coHostsData;
-                            } 
+                            }
                             else {
                               filteredCoHosts = coHostsData.where((coHost) {
-                                return coHost.host.name!
+                                return coHost.obj.name!
                                         .toLowerCase()
                                         .contains(searchString.toLowerCase()) ||
-                                    coHost.host.username!
+                                    coHost.obj.username!
                                         .toLowerCase()
                                         .contains(searchString.toLowerCase());
                               }).toList();
@@ -279,7 +278,7 @@ Future<Set<HostWithNotifier>?> showAddCoHostDialog(BuildContext context) async {
                       onPressed: value
                         ? (){
                         final selectedCoHosts = service.selectedCoHosts.value.where(
-                          (coHost) => coHost.host.profilePicture != null
+                          (coHost) => coHost.obj.profilePicture != null
                         );
                         context.pop(selectedCoHosts.toSet());
                         } : null,
@@ -300,7 +299,7 @@ Future<Set<HostWithNotifier>?> showAddCoHostDialog(BuildContext context) async {
 
 
 class AmptiveListOfCoHostsWidget extends StatelessWidget {
-  final List<HostWithNotifier> availableCoHosts;
+  final List<ObjectWithNotifier<Host>> availableCoHosts;
   final CreateShowService service = GetIt.I<CreateShowService>();
 
   AmptiveListOfCoHostsWidget({
@@ -337,7 +336,7 @@ class AmptiveListOfCoHostsWidget extends StatelessWidget {
         return AmptiveCoHostWidget(
           coHostDetail: coHost,
           onTap: (host, isSelected) {
-            if (isSelected) {              
+            if (isSelected) {
               service.removeSelectedCoHost(host);
             } else {
               service.addSelectedCoHost(host);
@@ -352,8 +351,8 @@ class AmptiveListOfCoHostsWidget extends StatelessWidget {
 
 
 class AmptiveCoHostWidget extends StatelessWidget {
-  final void Function(HostWithNotifier, bool) onTap;
-  final HostWithNotifier coHostDetail;
+  final void Function(ObjectWithNotifier<Host>, bool) onTap;
+  final ObjectWithNotifier<Host> coHostDetail;
 
   const AmptiveCoHostWidget({
     super.key,
@@ -375,7 +374,7 @@ class AmptiveCoHostWidget extends StatelessWidget {
               child: FittedBox(
                   fit: BoxFit.fill,
                   child: AmptiveImageLoaderWidget(
-                      imagePath: coHostDetail.host.profilePicture!)),
+                      imagePath: coHostDetail.obj.profilePicture!)),
             ),
             const Gap(10),
             Expanded(
@@ -383,16 +382,17 @@ class AmptiveCoHostWidget extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    coHostDetail.host.name ?? '',
+                    coHostDetail.obj.name ?? '',
                     style: Theme.of(context).textTheme.bodySmall?.copyWith(
                       fontSize: AmptiveFontSizes.size15
                     )
                   ),
                   Text(
-                    coHostDetail.host.username ?? '',
-                    style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                      color: AmptiveColors.subtitleColor
-                    ),
+                    coHostDetail.obj.username!,
+                    style: Theme.of(context)
+                        .textTheme
+                        .bodySmall
+                        ?.copyWith(color: AmptiveColors.subtitleColor),
                   ),
                 ],
               ),

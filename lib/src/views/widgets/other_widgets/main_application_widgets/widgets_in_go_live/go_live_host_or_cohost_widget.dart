@@ -30,11 +30,11 @@ import 'dart:developer' as marach show log;
 
 class AmptiveLiveHostAndCoHostWidget extends StatelessWidget {
   final double? top, bottom, left, right;
-  final HostWithNotifier hostOrCohost;
+  final ObjectWithNotifier<Host> hostOrCohost;
   final GoLiveService service;
   final bool isHost, removeCohost;
   final int index;
-  final Function(HostWithNotifier? host) onTap;
+  final Function(ObjectWithNotifier<Host>? host) onTap;
   const AmptiveLiveHostAndCoHostWidget({
     super.key,
     this.top, this.bottom,
@@ -49,7 +49,7 @@ class AmptiveLiveHostAndCoHostWidget extends StatelessWidget {
 
   @override
   Widget build(context) {
-    final showAddIcon = hostOrCohost.host.profilePicture == null;
+    final showAddIcon = hostOrCohost.obj.profilePicture == null;
 
     return AnimatedPositioned(
       duration: const Duration(milliseconds: 500),
@@ -60,7 +60,7 @@ class AmptiveLiveHostAndCoHostWidget extends StatelessWidget {
           
           if(index != 0){
             if(showAddIcon){
-              await showModalBottomSheet<HostWithNotifier>(
+              await showModalBottomSheet<ObjectWithNotifier<Host>>(
                 context: context,
                 builder: (_){
                   return AmptiveCustomContainer(
@@ -80,7 +80,7 @@ class AmptiveLiveHostAndCoHostWidget extends StatelessWidget {
                                 onTap:(host, isSelected){
                                   if(isSelected){
                                     final index2Remove = service.goLiveHostListNotifier.value.toList().indexWhere(
-                                      (aHost) => aHost.host.profilePicture == host.host.profilePicture
+                                      (aHost) => aHost.obj.profilePicture == host.obj.profilePicture
                                     );
                                     service.hostRemoveCohost(coHost, index2Remove);
                                     context.pop();
@@ -124,7 +124,7 @@ class AmptiveLiveHostAndCoHostWidget extends StatelessWidget {
                   diameter: isHost ? 94.h : 64.h, addBorder: true,
                   borderColor: AmptiveColors.whiteColor,
                   borderWidth: 1, picturePadding: 2,
-                  imagePath: hostOrCohost.host.profilePicture ?? ''
+                  imagePath: hostOrCohost.obj.profilePicture ?? ''
                 ),
                 Positioned(
                   bottom: 0, right: 5,
@@ -145,7 +145,7 @@ class AmptiveLiveHostAndCoHostWidget extends StatelessWidget {
             SizedBox(
               width: 80.w,
               child: Text(
-                hostOrCohost.host.name ?? AmptiveOtherStrings.ADD_CO_HOST.toLowerCase(),
+                hostOrCohost.obj.name ?? AmptiveOtherStrings.ADD_CO_HOST.toLowerCase(),
                 textAlign: TextAlign.center,
                 style: Theme.of(context).textTheme.titleSmall,
               ),

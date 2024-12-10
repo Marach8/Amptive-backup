@@ -41,9 +41,8 @@ final GoRouter amptiveAppRouter = GoRouter(
   // initialLocation: "/email-route/otp",
   routes: <RouteBase>[
     GoRoute(
-      path: AmptiveRoutes.index,
-      builder: (_, __) => const AmptiveDashboardScreen()
-    ),
+        path: AmptiveRoutes.index,
+        builder: (_, __) => const AmptiveDashboardScreen()),
     GoRoute(
       name: AmptiveRoutes.welcome,
       path: "/welcome-route",
@@ -64,38 +63,37 @@ final GoRouter amptiveAppRouter = GoRouter(
       ),
     ),
     GoRoute(
-      name: AmptiveRoutes.emailAuth,
-      path: "/email-route",
-      builder: (_, __) => const AmptiveEmailAuthScreen()
-    ),
+        name: AmptiveRoutes.emailAuth,
+        path: "/email-route",
+        builder: (_, __) => const AmptiveEmailAuthScreen()),
     GoRoute(
-      name: AmptiveRoutes.otp,
-      path: "/otp",
-      builder: (_, GoRouterState state) {
-        String where = state.extra as String;
-        return OTPScreen(from: where);
-      }
-    ),
+        name: AmptiveRoutes.otp,
+        path: "/otp",
+        builder: (_, GoRouterState state) {
+          String where = state.extra as String;
+          return OTPScreen(from: where);
+        }),
     GoRoute(
       name: AmptiveRoutes.addPhone,
       path: "/add-phone",
       builder: (_, __) => const AddPhoneScreen(),
     ),
     GoRoute(
-      name: AmptiveRoutes.addProfilePic,
-      path: "/add-profile-pic",
-      builder: (_, __) => const PostRegistrationScreen(),
-      routes: <RouteBase>[
-        GoRoute(
-          name: AmptiveRoutes.cropImage,
-          path: "crop-image",
-          builder: (_, GoRouterState state) {
-            File imageFile = state.extra as File;
-            return CropPage(title: "Cropper", imageFile: imageFile,);
-          }
-        ),
-      ]
-    ),
+        name: AmptiveRoutes.addProfilePic,
+        path: "/add-profile-pic",
+        builder: (_, __) => const PostRegistrationScreen(),
+        routes: <RouteBase>[
+          GoRoute(
+              name: AmptiveRoutes.cropImage,
+              path: "crop-image",
+              builder: (_, GoRouterState state) {
+                File imageFile = state.extra as File;
+                return CropPage(
+                  title: "Cropper",
+                  imageFile: imageFile,
+                );
+              }),
+        ]),
     GoRoute(
       name: AmptiveRoutes.passwordAuth,
       path: "/password",
@@ -130,166 +128,165 @@ final GoRouter amptiveAppRouter = GoRouter(
 
     //MAIN APPLICATION SCREENS
     GoRoute(
-      name: AmptiveRoutes.homeScreen,
-      path: "/home-screen",
-      builder: (_, __) => const AmptiveDashboardScreen(),
-      routes: [
-        GoRoute(
-          name: AmptiveRoutes.showDetailedScreen,
-          path: AmptiveRoutes.showDetailedScreen,
-          pageBuilder: (context, state) => CustomTransitionPage(
-            child: const AmptiveShowDetailedScreen(),
-            transitionsBuilder: (context, animation, secondaryAnimation, child){
-              var tween = Tween(
-                begin: const Offset(0.0, 1.0),
-                end: Offset.zero
-              ).animate(
-                CurvedAnimation(
-                  parent: animation,
-                  curve: Curves.easeIn
-                ),
-              );
+        name: AmptiveRoutes.homeScreen,
+        path: "/home-screen",
+        builder: (_, __) => const AmptiveDashboardScreen(),
+        routes: [
+          GoRoute(
+              name: AmptiveRoutes.showDetailedScreen,
+              path: AmptiveRoutes.showDetailedScreen,
+              pageBuilder: (context, state) => CustomTransitionPage(
+                    child: const AmptiveShowDetailedScreen(),
+                    transitionsBuilder:
+                        (context, animation, secondaryAnimation, child) {
+                      var tween =
+                          Tween(begin: const Offset(0.0, 1.0), end: Offset.zero)
+                              .animate(
+                        CurvedAnimation(
+                            parent: animation, curve: Curves.easeIn),
+                      );
 
-              return SlideTransition(
-                position: tween,
-                child: child,
+                      return SlideTransition(
+                        position: tween,
+                        child: child,
+                      );
+                    },
+                    reverseTransitionDuration:
+                        const Duration(milliseconds: 700),
+                    transitionDuration: const Duration(milliseconds: 700),
+                  )),
+          GoRoute(
+              name: AmptiveRoutes.EVENT_DETAILED_SCREEN,
+              path: AmptiveRoutes.EVENT_DETAILED_SCREEN,
+              pageBuilder: (context, state) => CustomTransitionPage(
+                    child: const AmptiveEventDetailedScreen(),
+                    transitionsBuilder:
+                        (context, animation, secondaryAnimation, child) {
+                      var tween =
+                          Tween(begin: const Offset(0.0, 1.0), end: Offset.zero)
+                              .animate(
+                        CurvedAnimation(
+                            parent: animation, curve: Curves.easeIn),
+                      );
+
+                      return SlideTransition(
+                        position: tween,
+                        child: child,
+                      );
+                    },
+                    reverseTransitionDuration:
+                        const Duration(milliseconds: 700),
+                    transitionDuration: const Duration(milliseconds: 700),
+                  )),
+          GoRoute(
+            name: AmptiveRoutes.CHOOSE_OR_CREATE_SHOW_SCREEN,
+            path: AmptiveRoutes.CHOOSE_OR_CREATE_SHOW_SCREEN,
+            builder: (_, __) => const AmptiveChooseOrCreateShowScreen(),
+          ),
+          GoRoute(
+            name: AmptiveRoutes.CHOOSE_OR_CREATE_EVENT_SCREEN,
+            path: AmptiveRoutes.CHOOSE_OR_CREATE_EVENT_SCREEN,
+            builder: (_, __) => const AmptiveChooseOrCreateEventScreen(),
+          ),
+          GoRoute(
+              name: AmptiveRoutes.CREATE_SHOW_FORM,
+              path: AmptiveRoutes.CREATE_SHOW_FORM,
+              builder: (_, __) {
+                return const CreateShowScreen(showType: ShowType.show);
+              }),
+          GoRoute(
+              name: AmptiveRoutes.CREATE_EVENT_FORM,
+              path: AmptiveRoutes.CREATE_EVENT_FORM,
+              builder: (_, GoRouterState state) {
+                return const CreateShowScreen(
+                  showType: ShowType.event,
+                );
+              }),
+          GoRoute(
+              name: AmptiveRoutes.CREATE_EPISODE_FORM,
+              path: AmptiveRoutes.CREATE_EPISODE_FORM,
+              builder: (_, __) {
+                return const CreateShowScreen(showType: ShowType.episode);
+              }),
+          GoRoute(
+            name: AmptiveRoutes.CREATE_SHOW_SUCCESS,
+            path: AmptiveRoutes.CREATE_SHOW_SUCCESS,
+            builder: (_, GoRouterState state) {
+              String imageFilePath = state.extra as String;
+              return AmptiveCreateShowSuccessScreen(
+                imageFilePath: imageFilePath,
               );
             },
-            reverseTransitionDuration: const Duration(milliseconds: 700),
-            transitionDuration: const Duration(milliseconds: 700),
-          )
-        ),
-
-        GoRoute(
-          name: AmptiveRoutes.EVENT_DETAILED_SCREEN,
-          path: AmptiveRoutes.EVENT_DETAILED_SCREEN,
-          pageBuilder: (context, state) => CustomTransitionPage(
-            child: const AmptiveEventDetailedScreen(),
-            transitionsBuilder: (context, animation, secondaryAnimation, child){
-              var tween = Tween(
-                begin: const Offset(0.0, 1.0),
-                end: Offset.zero
-              ).animate(
-                CurvedAnimation(
-                  parent: animation,
-                  curve: Curves.easeIn
-                ),
-              );
-
-              return SlideTransition(
-                position: tween,
-                child: child,
+          ),
+          GoRoute(
+            name: AmptiveRoutes.GO_LIVE_SCREEN,
+            path: AmptiveRoutes.GO_LIVE_SCREEN,
+            builder: (_, __) => const AmptiveGoLiveScreen(),
+          ),
+          GoRoute(
+            name: AmptiveRoutes.SCHEDULED_EVENTS_OR_SHOWS_SCREEN,
+            path: AmptiveRoutes.SCHEDULED_EVENTS_OR_SHOWS_SCREEN,
+            builder: (_, __) => const AmptiveScheduledEventOrShowViewWidget(),
+          ),
+          GoRoute(
+            name: AmptiveRoutes.EVENT_SCHEDULED_SCREEN,
+            path: AmptiveRoutes.EVENT_SCHEDULED_SCREEN,
+            builder: (_, GoRouterState state) {
+              String imageFilePath = state.extra as String;
+              return AmptiveShowScheduledScreen(
+                showType: ShowType.event,
+                imageFilePath: imageFilePath,
               );
             },
-            reverseTransitionDuration: const Duration(milliseconds: 700),
-            transitionDuration: const Duration(milliseconds: 700),
-          )
-        ),
-
-        GoRoute(
-          name: AmptiveRoutes.CHOOSE_OR_CREATE_SHOW_SCREEN,
-          path: AmptiveRoutes.CHOOSE_OR_CREATE_SHOW_SCREEN,
-          builder: (_, __) => const AmptiveChooseOrCreateShowScreen(),
-        ),
-
-        GoRoute(
-          name: AmptiveRoutes.CHOOSE_OR_CREATE_EVENT_SCREEN,
-          path: AmptiveRoutes.CHOOSE_OR_CREATE_EVENT_SCREEN,
-          builder: (_, __) => const AmptiveChooseOrCreateEventScreen(),
-        ),
-
-        GoRoute(
-          name: AmptiveRoutes.CREATE_SHOW_FORM,
-          path: AmptiveRoutes.CREATE_SHOW_FORM,
-          builder: (_,  __) {
-            return const CreateShowScreen(showType: ShowType.show);
-          }
-        ),
-
-        GoRoute(
-            name: AmptiveRoutes.CREATE_EVENT_FORM,
-            path: AmptiveRoutes.CREATE_EVENT_FORM,
-            builder: (_,  GoRouterState state) {
-              return const CreateShowScreen(showType: ShowType.event,);
-            }
-        ),
-
-        GoRoute(
-            name: AmptiveRoutes.CREATE_EPISODE_FORM,
-            path: AmptiveRoutes.CREATE_EPISODE_FORM,
-            builder: (_,  __) {
-              return const CreateShowScreen(showType:  ShowType.episode);
-            }
-        ),
-
-        GoRoute(
-          name: AmptiveRoutes.CREATE_SHOW_SUCCESS,
-          path: AmptiveRoutes.CREATE_SHOW_SUCCESS,
-          builder: (_, __) => const AmptiveCreateShowSuccessScreen(),
-        ),
-
-        GoRoute(
-          name: AmptiveRoutes.GO_LIVE_SCREEN,
-          path: AmptiveRoutes.GO_LIVE_SCREEN,
-          builder: (_, __) => const AmptiveGoLiveScreen(),
-        ),
-
-        GoRoute(
-          name: AmptiveRoutes.SCHEDULED_EVENTS_OR_SHOWS_SCREEN,
-          path: AmptiveRoutes.SCHEDULED_EVENTS_OR_SHOWS_SCREEN,
-          builder: (_, __) => const AmptiveScheduledEventOrShowViewWidget(),
-        ),
-
-        GoRoute(
-          name: AmptiveRoutes.EVENT_SCHEDULED_SCREEN,
-          path: AmptiveRoutes.EVENT_SCHEDULED_SCREEN,
-          builder: (_, __) => const AmptiveEventScheduledScreen(),
-        ),
-
-        GoRoute(
-          name: AmptiveRoutes.SUBSCRIBED_EVENTS_OR_SHOWS_SCREEN,
-          path: AmptiveRoutes.SUBSCRIBED_EVENTS_OR_SHOWS_SCREEN,
-          builder: (_, __) => const AmptiveSubscribedEventOrShowViewWidget(),
-        ),
-
-        GoRoute(
-          name: AmptiveRoutes.FOLLOWING_EVENTS_OR_SHOWS_SCREEN,
-          path: AmptiveRoutes.FOLLOWING_EVENTS_OR_SHOWS_SCREEN,
-          builder: (_, __) => const AmptiveFollowingEvenstOrShowsViewWidget(),
-        ),
-
-        GoRoute(
-          name: AmptiveRoutes.COMMUNITY_SCREEN,
-          path: AmptiveRoutes.COMMUNITY_SCREEN,
-          builder: (_, __) => const AmptiveCommunityScreen(),
-        ),
-
-        GoRoute(
-          name: AmptiveRoutes.SOCIETY_SCREEN,
-          path: AmptiveRoutes.SOCIETY_SCREEN,
-          builder: (_, __) => const AmptiveSocietyScreen(),
-          routes: [
-            GoRoute(
-              name: AmptiveRoutes.TRENDING_SOCIETY_SCREEN,
-              path: AmptiveRoutes.TRENDING_SOCIETY_SCREEN,
-              builder: (_, __) => const AmptiveTrendingSocietyScreen(),
-            ),
-
-            GoRoute(
-              name: AmptiveRoutes.TRENDING_HASHTAGS_SCREEN,
-              path: AmptiveRoutes.TRENDING_HASHTAGS_SCREEN,
-              builder: (_, __) => const AmptiveTrendingHashTagsScreen(),
-            ),
-
-            GoRoute(
-              name: AmptiveRoutes.TRENDING_HASHTAG_FULL_SCREEN,
-              path: AmptiveRoutes.TRENDING_HASHTAG_FULL_SCREEN,
-              builder: (_, __) => const AmptiveTrendingHashTagFullScreen(),
-            ),
-          ]
-        ),
-      ]
-    ),
+          ),
+          GoRoute(
+            name: AmptiveRoutes.EPISODE_SCHEDULED_SCREEN,
+            path: AmptiveRoutes.EPISODE_SCHEDULED_SCREEN,
+            builder: (_, GoRouterState state) {
+              String imageFilePath = state.extra as String;
+              return AmptiveShowScheduledScreen(
+                showType: ShowType.episode,
+                imageFilePath: imageFilePath,
+              );
+            },
+          ),
+          GoRoute(
+            name: AmptiveRoutes.SUBSCRIBED_EVENTS_OR_SHOWS_SCREEN,
+            path: AmptiveRoutes.SUBSCRIBED_EVENTS_OR_SHOWS_SCREEN,
+            builder: (_, __) => const AmptiveSubscribedEventOrShowViewWidget(),
+          ),
+          GoRoute(
+            name: AmptiveRoutes.FOLLOWING_EVENTS_OR_SHOWS_SCREEN,
+            path: AmptiveRoutes.FOLLOWING_EVENTS_OR_SHOWS_SCREEN,
+            builder: (_, __) => const AmptiveFollowingEvenstOrShowsViewWidget(),
+          ),
+          GoRoute(
+            name: AmptiveRoutes.COMMUNITY_SCREEN,
+            path: AmptiveRoutes.COMMUNITY_SCREEN,
+            builder: (_, __) => const AmptiveCommunityScreen(),
+          ),
+          GoRoute(
+              name: AmptiveRoutes.SOCIETY_SCREEN,
+              path: AmptiveRoutes.SOCIETY_SCREEN,
+              builder: (_, __) => const AmptiveSocietyScreen(),
+              routes: [
+                GoRoute(
+                  name: AmptiveRoutes.TRENDING_SOCIETY_SCREEN,
+                  path: AmptiveRoutes.TRENDING_SOCIETY_SCREEN,
+                  builder: (_, __) => const AmptiveTrendingSocietyScreen(),
+                ),
+                GoRoute(
+                  name: AmptiveRoutes.TRENDING_HASHTAGS_SCREEN,
+                  path: AmptiveRoutes.TRENDING_HASHTAGS_SCREEN,
+                  builder: (_, __) => const AmptiveTrendingHashTagsScreen(),
+                ),
+                GoRoute(
+                  name: AmptiveRoutes.TRENDING_HASHTAG_FULL_SCREEN,
+                  path: AmptiveRoutes.TRENDING_HASHTAG_FULL_SCREEN,
+                  builder: (_, __) => const AmptiveTrendingHashTagFullScreen(),
+                ),
+              ]),
+        ]),
   ],
   // observers: [LoggingNavigatorObserver()],
 );

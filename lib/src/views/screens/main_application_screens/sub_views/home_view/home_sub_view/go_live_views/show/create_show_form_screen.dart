@@ -14,6 +14,7 @@ import 'package:amptive/src/utils/dialogs/select_audience_access_for_shows_dialo
 import 'package:amptive/src/utils/dialogs/select_capacity_for_events_dialog.dart';
 import 'package:amptive/src/utils/dialogs/select_hand_raising_dialog.dart';
 import 'package:amptive/src/utils/dialogs/select_whispers_dialog.dart';
+import 'package:amptive/src/utils/modals/select_date_modal.dart';
 import 'package:amptive/src/utils/modals/show_text_area_modal.dart';
 import 'package:amptive/src/views/widgets/common_widgets/annotated_region__widget.dart';
 import 'package:amptive/src/views/widgets/other_widgets/main_application_widgets/widgets_in_home_view/widgets_in_go_live/shows/show_type_visibility.dart';
@@ -51,7 +52,7 @@ class _CreateShowScreenState extends State<CreateShowScreen> {
   CreateShowService service = GetIt.I<CreateShowService>();
   String? showTypeTitle;
 
-  final ValueNotifier<File?> _selectedImage = ValueNotifier(null);
+  // final ValueNotifier<File?> _selectedImage = ValueNotifier(null);
   final ValueNotifier<bool> _communitySelected = ValueNotifier(false);
 
   AssetImage? _defaultAssetImage;
@@ -84,7 +85,8 @@ class _CreateShowScreenState extends State<CreateShowScreen> {
     super.initState();
     setShowTypeTitle();
     service.initFormControl();
-    _defaultAssetImage = const AssetImage(AmptiveImageStrings.createShowPlaceholderImage);
+    _defaultAssetImage =
+        const AssetImage(AmptiveImageStrings.createShowPlaceholderImage);
   }
 
   @override
@@ -114,7 +116,7 @@ class _CreateShowScreenState extends State<CreateShowScreen> {
   Future<void> handlePickedFile(CroppedFile? pickedFile) async {
     if (pickedFile != null && mounted) {
       File image = File(pickedFile.path);
-      _selectedImage.value = image;
+      service.selectedImage.value = image;
     }
   }
 
@@ -162,16 +164,17 @@ class _CreateShowScreenState extends State<CreateShowScreen> {
               allowedShowTypes: const [ShowType.event],
               child: IconButton(
                 icon: const Icon(Iconsax.calendar_2),
-                onPressed: () {},
+                onPressed: () async {
+                  await selectDateModal(context, service.selectedImage.value);
+                },
               ),
             ),
           ],
         ),
-
         body: Stack(
           children: [
             AmptiveRebuilderWidget(
-              notifier: _selectedImage,
+              notifier: service.selectedImage,
               builder: (ctx, selectedImage, _) {
                 return Positioned.fill(
                   child: _imageSelected()
@@ -188,16 +191,15 @@ class _CreateShowScreenState extends State<CreateShowScreen> {
             ),
             Positioned.fill(
               child: Container(
-                color: AmptiveColors.black.withOpacity(0.5),
+                color: AmptiveColors.black.withOpacity(0.6),
                 child: BackdropFilter(
-                  filter: ImageFilter.blur(sigmaX: 150.0, sigmaY: 150.0),
-                  child: Container(
-                    color: AmptiveColors.black.withOpacity(0.5),
-                  ),
+                  filter: ImageFilter.blur(
+                      sigmaX: Platform.isIOS ? 15.0 : 150.0,
+                      sigmaY: Platform.isIOS ? 15.0 : 150.0),
+                  child: Container(),
                 ),
               ),
             ),
-            
             SingleChildScrollView(
               child: Padding(
                 padding: EdgeInsets.symmetric(horizontal: 15.w),
@@ -217,7 +219,7 @@ class _CreateShowScreenState extends State<CreateShowScreen> {
                           child: Stack(
                             children: [
                               AmptiveRebuilderWidget(
-                                notifier: _selectedImage,
+                                notifier: service.selectedImage,
                                 builder: (ctx, selectedImage, _) {
                                   return Positioned.fill(
                                     child: ClipRRect(
@@ -462,9 +464,10 @@ class _CreateShowScreenState extends State<CreateShowScreen> {
                       hintText: "Enter your own hashtag",
                       readOnly: true,
                       onTap: () async {
-                        service.hashtags.value =
-                            await showAddHashtagDialog(context);
-                        service.hashTagSelected.value = true;
+                        // service.hashtags.value =
+                        await showAddHashtagDialog(context);
+                        service.hashTagSelected.value =
+                            service.selectedHashtagLength.value > 0;
                       },
                       suffixIcon: Icon(
                         Icons.arrow_forward_ios,
@@ -473,23 +476,21 @@ class _CreateShowScreenState extends State<CreateShowScreen> {
                       ),
                     ),
                     AmptiveRebuilderWidget(
-                        notifier: service.hashTagSelected,
-                        builder: (ctx, selected, _) {
-                          return SizedBox(height: selected ? 8.h : 0);
+                        notifier: service.selectedHashtagLength,
+                        builder: (ctx, value, _) {
+                          return SizedBox(height: value > 0 ? 8.h : 0);
                         }),
                     AmptiveRebuilderWidget(
-                      notifier: service.hashTagSelected,
+                      notifier: service.selectedHashtagLength,
                       builder: (ctx, selected, _) {
-                        return selected
+                        return selected > 0
                             ? AmptiveRebuilderWidget(
-                                notifier: service.hashtags,
+                                notifier: service.selectedHashtags,
                                 builder: (ctx, hashtags, _) {
                                   return SelectedHashTags(
                                     hashtags: hashtags,
                                     onRemove: (hashtag) {
-                                      setState(() {
-                                        service.hashtags.value.remove(hashtag);
-                                      });
+                                      service.removeSelectedHashtags(hashtag);
                                     },
                                   );
                                 },
@@ -740,34 +741,35 @@ class _CreateShowScreenState extends State<CreateShowScreen> {
               right: 0,
               left: 0,
               child: AmptiveRebuilderWidget(
-                notifier: service.audienceAccessController,
-                builder: (_, val, __) {
-                  return AmptiveElevatedButtonWidget(
-                    height: 50.w,
-                    buttonTitle: "Go LIVE",
-                    onPressed: service.formIsValid()
-                        ? () {
-                            context.pushReplacementNamed(
-                                AmptiveRoutes.CREATE_SHOW_SUCCESS);
+                  notifier: service.selectedImage,
+                  builder: (_, val, __) {
+                    return AmptiveElevatedButtonWidget(
+                      height: 50.w,
+                      buttonTitle: getSubmitButtonTileText(),
+                      onPressed: service.formIsValid()
+                          ? () {
+                              service.onSubmit();
+                              navigateToSuccessPage();
+                            }
+                          : null,
+                      buttonStyle: ButtonStyle(
+                        backgroundColor:
+                            WidgetStateProperty.resolveWith((states) {
+                          if (states.contains(WidgetState.disabled)) {
+                            return AmptiveColors.grey1Color;
                           }
-                        : null,
-                    buttonStyle: ButtonStyle(
-                      backgroundColor: WidgetStateProperty.resolveWith((states) {
-                        if (states.contains(WidgetState.disabled)) {
-                          return AmptiveColors.grey1Color;
-                        }
-                        return AmptiveColors.activeDotColor;
-                      }),
-                      foregroundColor: WidgetStateProperty.resolveWith((states) {
-                        if (states.contains(WidgetState.disabled)) {
-                          return AmptiveColors.strokeGreyColor;
-                        }
-                        return AmptiveColors.brandBlackColor;
-                      }),
-                    ),
-                  );
-                }
-              ),
+                          return AmptiveColors.activeDotColor;
+                        }),
+                        foregroundColor:
+                            WidgetStateProperty.resolveWith((states) {
+                          if (states.contains(WidgetState.disabled)) {
+                            return AmptiveColors.strokeGreyColor;
+                          }
+                          return AmptiveColors.brandBlackColor;
+                        }),
+                      ),
+                    );
+                  }),
             )
           ],
         ),
@@ -791,10 +793,10 @@ class _CreateShowScreenState extends State<CreateShowScreen> {
   }
 
   _imageSelected() {
-    return _selectedImage.value != null;
+    return service.selectedImage.value != null;
   }
 
-  processSelectedHost(List<HostWithNotifier> ls) {
+  processSelectedHost(List<ObjectWithNotifier<Host>> ls) {
     if (ls.length >= 5) {
       return ls.sublist(0, 5);
     } else {
@@ -808,6 +810,29 @@ class _CreateShowScreenState extends State<CreateShowScreen> {
 
   bool hostSelected() {
     return !selectedHosts.every((element) => element is int);
+  }
+
+  getSubmitButtonTileText() {
+    if (widget.showType == ShowType.show) {
+      return "Go LIVE";
+    } else if (widget.showType == ShowType.event) {
+      return "Go LIVE";
+    } else if (widget.showType == ShowType.episode) {
+      return "Go LIVE";
+    }
+  }
+
+  void navigateToSuccessPage() {
+    if (widget.showType == ShowType.show) {
+      context.pushReplacementNamed(AmptiveRoutes.CREATE_SHOW_SUCCESS,
+          extra: service.selectedShowImage!.path);
+    } else if (widget.showType == ShowType.event) {
+      context.pushReplacementNamed(AmptiveRoutes.EVENT_SCHEDULED_SCREEN,
+          extra: service.selectedShowImage!.path);
+    } else if (widget.showType == ShowType.episode) {
+      context.pushReplacementNamed(AmptiveRoutes.EPISODE_SCHEDULED_SCREEN,
+          extra: service.selectedShowImage!.path);
+    }
   }
 }
 
@@ -840,9 +865,9 @@ class OverlappingHosts extends StatelessWidget {
                     color: AmptiveColors.whiteColor.withOpacity(0.4), width: 1),
               ),
               child: ClipOval(
-                child: item is HostWithNotifier
+                child: item is ObjectWithNotifier<Host>
                     ? Image.asset(
-                        item.host.profilePicture!,
+                        item.obj.profilePicture!,
                         // Replace with actual image URL
                         fit: BoxFit.cover,
                       )

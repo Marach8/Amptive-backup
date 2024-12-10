@@ -1,5 +1,9 @@
+import 'dart:io';
 import 'dart:math';
+
+import 'package:amptive/src/models/hashtag.dart';
 import 'package:flutter/material.dart';
+
 import '../../models/community.dart';
 import '../../models/host.dart';
 import '../../utils/constants/strings/image_strings.dart';
@@ -14,8 +18,11 @@ class CreateShowService {
   CreateShowService._();
 
   double userEventFee = 2000.0;
+  File? selectedShowImage;
 
-  late List<HostWithNotifier> coHostsListData;
+  late ValueNotifier<bool> coHostSelectionStarted;
+  late List<ObjectWithNotifier<Host>> coHostsListData;
+  late List<ObjectWithNotifier<Hashtag>> hashTagListData;
   late TextEditingController descController;
   late TextEditingController audienceAccessController;
   late TextEditingController handRaisingController;
@@ -24,17 +31,21 @@ class CreateShowService {
   late TextEditingController eventPaymentController;
   late TextEditingController titleController;
 
-
-  late ValueNotifier<bool> coHostSelectionStarted;
   late ValueNotifier<bool> coHostSelected;
   late ValueNotifier<bool> hashTagSelected;
   late ValueNotifier<List<String>> hashtags;
   late ValueNotifier<int> titleCharLength;
   late ValueNotifier<int> descCharactersLength;
   late ValueNotifier<int> selectedCoHostLength;
-  late ValueNotifier<Set<HostWithNotifier>> selectedCoHosts;
-  late ValueNotifier<Set<HostWithNotifier>> goLiveHostListNotifier;
+  late ValueNotifier<int> selectedHashtagLength;
+  late ValueNotifier<Set<ObjectWithNotifier<Host>>> selectedCoHosts;
+  late ValueNotifier<Set<ObjectWithNotifier<Hashtag>>> selectedHashtags;
+  late ValueNotifier<Set<ObjectWithNotifier<Host>>> goLiveHostListNotifier;
 
+
+  late ValueNotifier<File?> selectedImage;
+
+  DateTime? eventDateTime;
 
   initFormControl() {
     coHostSelectionStarted = ValueNotifier(false);
@@ -44,18 +55,23 @@ class CreateShowService {
     titleCharLength = ValueNotifier(0);
     descCharactersLength = ValueNotifier(0);
     selectedCoHostLength = ValueNotifier(0);
+    selectedHashtagLength = ValueNotifier(0);
+    // selectedCoHosts = ValueNotifier({});
+    selectedHashtags = ValueNotifier({});
+    selectedImage = ValueNotifier(null);
     selectedCoHosts = ValueNotifier(
       List.generate(
         5,
-        (_) => HostWithNotifier(host: Host.empty())
+        (_) => ObjectWithNotifier<Host>(obj: Host.empty())
       ).toSet()
     );
     coHostsListData = getHostList();
+    hashTagListData = getHashTags();
     goLiveHostListNotifier = ValueNotifier(
       getHostList().take(1).toSet()..addAll(
         List.generate(
           5,
-          (_) => HostWithNotifier(host: Host.empty())
+          (_) => ObjectWithNotifier<Host>(obj: Host.empty())
         )
       )
     );
@@ -68,6 +84,10 @@ class CreateShowService {
     handRaisingController = TextEditingController();
     capacityController = TextEditingController(text: '10');
     whisperController = TextEditingController();
+    eventPaymentController =
+        TextEditingController(text: userEventFee.toString());
+
+    eventDateTime = null;
     eventPaymentController = TextEditingController(text: userEventFee.toString());
   }
 
@@ -78,7 +98,10 @@ class CreateShowService {
     titleCharLength.dispose();
     descCharactersLength.dispose();
     selectedCoHostLength.dispose();
+    selectedHashtagLength.dispose();
     selectedCoHosts.dispose();
+    selectedHashtags.dispose();
+    selectedImage.dispose();
 
     titleController.dispose();
     descController.dispose();
@@ -88,13 +111,23 @@ class CreateShowService {
     whisperController.dispose();
     eventPaymentController.dispose();
 
+    eventDateTime = null;
+
     for (var coHostNotifier in coHostsListData) {
       coHostNotifier.notifier.dispose();
     }
+
+    for (var hashtag in hashTagListData) {
+      hashtag.notifier.dispose();
+    }
   }
 
-  bool formIsValid(){
-    return audienceAccessController.text != "";
+  bool formIsValid() {
+    return selectedImage.value != null;
+  }
+
+  onSubmit() {
+    selectedShowImage = selectedImage.value;
   }
 
   List<Community> generateCommunities() {
@@ -154,10 +187,11 @@ class CreateShowService {
     return result;
   }
 
-  removeSelectedCoHost(HostWithNotifier selectedCoHost) {
+  removeSelectedCoHost(ObjectWithNotifier<Host> selectedCoHost) {
+    // final currentSet = selectedCoHosts.value;
     final currentList = selectedCoHosts.value.toList();
     currentList.remove(selectedCoHost);
-    currentList.insert((selectedCoHostLength.value - 1), HostWithNotifier(host: Host.empty()));
+    currentList.insert((selectedCoHostLength.value - 1), ObjectWithNotifier<Host>(obj: Host.empty()));
     selectedCoHostLength.value = selectedCoHostLength.value - 1;
     selectedCoHosts.value = currentList.toSet();
     selectedCoHost.notifier.value = false;
@@ -168,7 +202,8 @@ class CreateShowService {
     else{coHostSelectionStarted.value = true;}
   }
 
-  addSelectedCoHost(HostWithNotifier selectedCoHost) {
+  addSelectedCoHost(ObjectWithNotifier<Host> selectedCoHost) {
+    // final currentSet = selectedCoHosts.value;
     if(selectedCoHostLength.value < 5){
       final currentSet = selectedCoHosts.value.toList();
       currentSet[selectedCoHostLength.value] = selectedCoHost;
@@ -183,21 +218,50 @@ class CreateShowService {
     }
   }
 
-  hostAddCohost(HostWithNotifier host, int index){
-    final newList = List<HostWithNotifier>.from(goLiveHostListNotifier.value);
+
+  removeSelectedHashtags(ObjectWithNotifier<Hashtag> selHashtag) {
+    final currentSet = selectedHashtags.value;
+
+    if (currentSet.contains(selHashtag)) {
+      currentSet.remove(selHashtag);
+      selectedHashtags.value = currentSet;
+      selectedHashtagLength.value = currentSet.length;
+      selHashtag.notifier.value = false;
+    }
+  }
+
+  addSelectedHashtags(ObjectWithNotifier<Hashtag> selHashtag) {
+    final currentSet = selectedHashtags.value;
+
+    if (!currentSet.contains(selHashtag)) {
+      currentSet.add(selHashtag);
+      selectedHashtags.value = currentSet;
+      selectedHashtagLength.value = currentSet.length;
+      selHashtag.notifier.value = true;
+    }
+  }
+
+  bool isValidEventDateTime() {
+    if (eventDateTime == null) return false;
+
+    return eventDateTime!.isAfter(DateTime.now());
+  }
+
+  hostAddCohost(ObjectWithNotifier<Host> host, int index){
+    final newList = List<ObjectWithNotifier<Host>>.from(goLiveHostListNotifier.value);
     newList[index] = host;
     goLiveHostListNotifier.value = newList.toSet();
   }
-  
-  hostRemoveCohost(HostWithNotifier host, int index){
-    final newList = List<HostWithNotifier>.from(goLiveHostListNotifier.value);
-    newList[index] = HostWithNotifier(host: Host.empty());
+
+  hostRemoveCohost(ObjectWithNotifier<Host> host, int index){
+    final newList = List<ObjectWithNotifier<Host>>.from(goLiveHostListNotifier.value);
+    newList[index] = ObjectWithNotifier<Host>(obj: Host.empty());
     goLiveHostListNotifier.value = newList.toSet();
   }
 }
 
-List<HostWithNotifier> getHostList() {
-  List<HostWithNotifier> hostsList = [];
+List<ObjectWithNotifier<Host>> getHostList() {
+  List<ObjectWithNotifier<Host>> hostsList = [];
 
   final coHostsData = <String, List<String>>{
     AmptiveImageStrings.jpeg1: ['Emmanuel Ajah', 'nnanna😍💕'],
@@ -226,9 +290,34 @@ List<HostWithNotifier> getHostList() {
           email: '',
           profilePicture: pics);
 
-      hostsList.add(HostWithNotifier(host: host));
+      hostsList.add(ObjectWithNotifier<Host>(obj: host));
     }
   });
 
   return hostsList;
+}
+
+List<ObjectWithNotifier<Hashtag>> getHashTags() {
+  List<ObjectWithNotifier<Hashtag>> hashTagList = [];
+
+  final availableHashtags = <List<String>>[
+    ['Emmanuel Ajah', 'Hashtag'],
+    ['Tochukwu Iwuzed', 'Hashtag'],
+    ['Ekene Okoro', 'Hashtag'],
+    ['Rita Waltson', 'Hashtag'],
+    ['Lee Parker', 'Hashtag'],
+    ['Daniel Adesua', 'Hashtag'],
+    ['Erica Nwosu', 'Hashtag'],
+    ['Peter Nwokeji', 'Hashtag'],
+    ['Arlan Walker', 'Hashtag'],
+    ['Man Drone', 'Hashtag'],
+  ];
+
+  for (var element in availableHashtags) {
+    String name = element[0];
+    Hashtag hashTag = Hashtag(name: name);
+    hashTagList.add(ObjectWithNotifier<Hashtag>(obj: hashTag));
+  }
+
+  return hashTagList;
 }

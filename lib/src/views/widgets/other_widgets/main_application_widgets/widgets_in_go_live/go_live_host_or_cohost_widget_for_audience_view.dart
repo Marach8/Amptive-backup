@@ -13,11 +13,11 @@ import 'dart:developer' as marach show log;
 
 class AmptiveLiveHostAndCoHostWidgetForAudienceView extends StatelessWidget {
   final double? top, bottom, left, right;
-  final HostWithNotifier? hostOrCohost;
+  final ObjectWithNotifier<Host>? hostOrCohost;
   final GoLiveService service;
   final bool isHost;
   final int index;
-  final Function(HostWithNotifier? host) onTap;
+  final Function(ObjectWithNotifier<Host>? host) onTap;
   const AmptiveLiveHostAndCoHostWidgetForAudienceView({
     super.key,
     this.top, this.bottom,
@@ -47,7 +47,7 @@ class AmptiveLiveHostAndCoHostWidgetForAudienceView extends StatelessWidget {
                 diameter: isHost ? 94.h : 64.h, addBorder: true,
                 borderColor: AmptiveColors.whiteColor,
                 borderWidth: 1, picturePadding: 2,
-                imagePath: hostOrCohost?.host.profilePicture ?? ''
+                imagePath: hostOrCohost?.obj.profilePicture ?? ''
               ),
               Positioned(
                 bottom: 0, right: 5,
@@ -68,7 +68,7 @@ class AmptiveLiveHostAndCoHostWidgetForAudienceView extends StatelessWidget {
           SizedBox(
             width: 80.w,
             child: Text(
-              hostOrCohost?.host.name ?? '',
+              hostOrCohost?.obj.name ?? '',
               textAlign: TextAlign.center,
               style: Theme.of(context).textTheme.titleSmall,
             ),

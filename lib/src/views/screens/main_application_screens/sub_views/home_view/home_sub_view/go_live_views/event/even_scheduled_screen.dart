@@ -5,12 +5,48 @@ import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:go_router/go_router.dart';
 import '../../../../../../../../utils/constants/colors.dart';
+import '../../../../../../../../utils/constants/strings/image_strings.dart';
 import '../../../../../../../../utils/constants/strings/other_strings.dart';
+import '../../../../../../../widgets/animation_widgets/other_animation_widgets/animated_create_show_success_image.dart';
 import '../../../../../../../widgets/common_widgets/app_bar_widget.dart';
+import '../../../../../../../widgets/common_widgets/custom_rebuilder_widget.dart';
 import '../../../../../../../widgets/common_widgets/elevated_button_widget.dart';
+import '../../../../../../../widgets/other_widgets/main_application_widgets/widgets_in_home_view/widgets_in_go_live/shows/show_type_visibility.dart';
 
-class AmptiveEventScheduledScreen extends StatelessWidget {
-  const AmptiveEventScheduledScreen({super.key});
+class AmptiveShowScheduledScreen extends StatefulWidget {
+  late final ShowType showType;
+  final String imageFilePath;
+
+  AmptiveShowScheduledScreen(
+      {super.key, showType = ShowType.event, required this.imageFilePath}) {
+    if (showType == ShowType.all || showType == ShowType.show) {
+      this.showType = ShowType.event;
+    } else {
+      this.showType = showType;
+    }
+  }
+
+  @override
+  State<AmptiveShowScheduledScreen> createState() =>
+      _AmptiveShowScheduledScreenState();
+}
+
+class _AmptiveShowScheduledScreenState
+    extends State<AmptiveShowScheduledScreen> {
+  late ShowType _showType;
+  BoxFit imageFit = BoxFit.cover;
+  final ValueNotifier<double> _normalSize = ValueNotifier(700.0);
+
+  @override
+  void initState() {
+    super.initState();
+    _showType = widget.showType;
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      imageFit = BoxFit.contain;
+      _normalSize.value = 140.0;
+    });
+  }
 
   @override
   Widget build(context) {
@@ -18,12 +54,15 @@ class AmptiveEventScheduledScreen extends StatelessWidget {
       child: Scaffold(
         appBar: AmptiveAppBar(
           leading: GestureDetector(
-            onTap: (){context.pop();},
-            child: const Icon(Icons.close, size: 20,)
-          ),
+              onTap: () {
+                context.pop();
+              },
+              child: const Icon(
+                Icons.close,
+                size: 20,
+              )),
           leadingWidth: 20,
         ),
-
         body: Align(
           alignment: Alignment.topCenter,
           child: SingleChildScrollView(
@@ -34,45 +73,67 @@ class AmptiveEventScheduledScreen extends StatelessWidget {
                 AmptiveCirceAvatarWidget(
                   diameter: 45,
                   color: AmptiveColors.whiteColor,
-                  child: Icon(Icons.calendar_today_outlined, color: AmptiveColors.black,),
+                  child: Icon(
+                    Icons.calendar_today_outlined,
+                    color: AmptiveColors.black,
+                  ),
                 ),
                 const Gap(5),
                 Text(
-                  AmptiveOtherStrings.EVENT_SCHEDULED,
-                  style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                    fontSize: AmptiveFontSizes.size23
-                  )
-                ),
+                    isEvent
+                        ? AmptiveOtherStrings.EVENT_SCHEDULED
+                        : 'Your Episode is scheduled!',
+                    style: Theme.of(context)
+                        .textTheme
+                        .bodyLarge
+                        ?.copyWith(fontSize: AmptiveFontSizes.size23)),
                 Text(
-                  AmptiveOtherStrings.SHARE_EVENT_LINK,
-                  maxLines: 2, textAlign: TextAlign.center,
-                  style: Theme.of(context).textTheme.titleMedium
+                    isEvent
+                        ? AmptiveOtherStrings.SHARE_EVENT_LINK
+                        : 'Share your episode link to build excitement and attract more attendees.',
+                    maxLines: 2,
+                    textAlign: TextAlign.center,
+                    style: Theme.of(context).textTheme.titleMedium),
+                const Gap(30),
+                AmptiveRebuilderWidget(
+                  notifier: _normalSize,
+                  builder: (_, val, __) {
+                    return AnimatedCreateShowSuccessImage(
+                      width: val,
+                      height: val,
+                      imageFit: imageFit,
+                      imagePath: widget.imageFilePath,
+                    );
+                  },
                 ),
               ],
             ),
           ),
         ),
-
         bottomNavigationBar: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
             AmptiveElevatedButtonWidget(
-              onPressed: (){},
-              buttonTitle: AmptiveOtherStrings.SHARE_EVENT,
+              onPressed: () {},
+              buttonTitle:
+                  isEvent ? AmptiveOtherStrings.SHARE_EVENT : 'Share episode',
               bgColor: AmptiveColors.whiteColor,
               fgColor: AmptiveColors.black,
             ),
             const Gap(10),
             GestureDetector(
-              onTap: (){},
+              onTap: () {},
               child: Text(
-                AmptiveOtherStrings.VIEW_EVENT_PAGE,
-                style: Theme.of(context).textTheme.bodyMedium
-              ),
+                  isEvent
+                      ? AmptiveOtherStrings.VIEW_EVENT_PAGE
+                      : 'View episode page',
+                  style: Theme.of(context).textTheme.bodyMedium),
             )
           ],
         ),
       ),
     );
   }
+
+  bool get isEvent => _showType == ShowType.event;
 }

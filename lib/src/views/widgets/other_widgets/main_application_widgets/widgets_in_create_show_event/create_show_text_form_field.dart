@@ -1,3 +1,5 @@
+import 'package:amptive/src/models/hashtag.dart';
+import 'package:amptive/src/models/host.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -133,8 +135,8 @@ class SelectedHashTags extends StatelessWidget {
     required this.onRemove,
   });
 
-  final List<String> hashtags;
-  final Function(String) onRemove;
+  final Set<ObjectWithNotifier<Hashtag>> hashtags;
+  final Function(ObjectWithNotifier<Hashtag>) onRemove;
 
   @override
   Widget build(BuildContext context) {
@@ -153,7 +155,7 @@ class SelectedHashTags extends StatelessWidget {
               child: Row(
                 children: [
                   Text(
-                    hashtag,
+                    hashtag.obj.name,
                     style: Theme.of(context).textTheme.bodySmall?.copyWith(
                       fontSize: AmptiveFontSizes.size10,
                       color: AmptiveColors.whiteColor.withOpacity(0.7),
