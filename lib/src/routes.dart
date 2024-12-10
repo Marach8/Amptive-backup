@@ -42,7 +42,7 @@ final GoRouter amptiveAppRouter = GoRouter(
   routes: <RouteBase>[
     GoRoute(
         path: AmptiveRoutes.index,
-        builder: (_, __) => const CreateShowScreen(showType: ShowType.show)),
+        builder: (_, __) => const AmptiveDashboardScreen()),
     GoRoute(
       name: AmptiveRoutes.welcome,
       path: "/welcome-route",
