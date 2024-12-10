@@ -15,6 +15,7 @@ class AmptiveCustomContainer extends StatelessWidget {
   final Clip clipBehavior;
   final int? duration;
   final VoidCallback? onTap;
+  final List<BoxShadow>? boxShadow;
 
   const AmptiveCustomContainer({
     super.key,
@@ -34,6 +35,7 @@ class AmptiveCustomContainer extends StatelessWidget {
     this.clipBehavior = Clip.none,
     this.duration,
     this.onTap,
+    this.boxShadow,
     required this.child
   });
 
@@ -60,7 +62,8 @@ class AmptiveCustomContainer extends StatelessWidget {
           shape: boxShape ?? BoxShape.rectangle,
           color: color,
           border: border,
-          borderRadius: boxShape == null ? BorderRadius.circular(radius ?? 0) : null
+          borderRadius: boxShape == null ? BorderRadius.circular(radius ?? 0) : null,
+          boxShadow: boxShadow
         ),
         child: child,
       ),

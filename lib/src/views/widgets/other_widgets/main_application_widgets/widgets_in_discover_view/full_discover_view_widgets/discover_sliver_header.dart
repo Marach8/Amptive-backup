@@ -1,4 +1,7 @@
+import 'package:amptive/src/utils/constants/strings/image_strings.dart';
 import 'package:amptive/src/views/widgets/common_widgets/custom_container_widget.dart';
+import 'package:amptive/src/views/widgets/common_widgets/custom_rebuilder_widget.dart';
+import 'package:amptive/src/views/widgets/common_widgets/image_loader_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
@@ -23,7 +26,7 @@ class AmptiveDiscoverSliverHeader extends SliverPersistentHeaderDelegate{
   @override
   Widget build(BuildContext context, double shrinkOffset, bool overlapsContent) {
     return AmptiveCustomContainer(
-      color: AmptiveColors.brandBlackColor,
+      color: AmptiveColors.black,
       height: 61,
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 15),
@@ -33,10 +36,18 @@ class AmptiveDiscoverSliverHeader extends SliverPersistentHeaderDelegate{
               child: AmptiveTextFormFieldWidget(
                 focusNode: focusNode,
                 controller: controller,
+                disableBlueBorder: true,
+                cursorHeight: 20,
+                cursorColor: AmptiveColors.whiteColor.withOpacity(0.6),
+                constraints: const BoxConstraints(maxHeight: 40),
+                contentPadding: const EdgeInsets.fromLTRB(16, 0, 16, 12),
                 hintText: AmptiveOtherStrings.SEARCH_FOR_EVENTS_ND_SHOWS,
-                prefixIcon: const Icon(Iconsax.search_normal_14),
-                suffixIcon: ValueListenableBuilder(
-                  valueListenable: notifier,
+                prefixIcon: const AmptiveImageLoaderWidget(
+                  imagePath: AmptiveImageStrings.outlinedSearch,
+                ),
+                suffixIcon: AmptiveRebuilderWidget(
+                  notifier: notifier,
+                  shouldDispose: true,
                   builder: (_, value, __) {
                     return Padding(
                       padding: const EdgeInsets.only(right: 10),
@@ -54,8 +65,9 @@ class AmptiveDiscoverSliverHeader extends SliverPersistentHeaderDelegate{
               ),
             ),
             Gap(10.w),
-            ValueListenableBuilder(
-              valueListenable: notifier,
+            AmptiveRebuilderWidget(
+              notifier: notifier,
+              shouldDispose: true,
               builder: (_, value, __) {
                 return AmptiveAnimatedCrossFadeWidget(
                   condition: value,

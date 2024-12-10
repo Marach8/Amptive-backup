@@ -20,6 +20,7 @@ class CreateShowService {
   double userEventFee = 2000.0;
   File? selectedShowImage;
 
+  late ValueNotifier<bool> coHostSelectionStarted;
   late List<ObjectWithNotifier<Host>> coHostsListData;
   late List<ObjectWithNotifier<Hashtag>> hashTagListData;
   late TextEditingController descController;
@@ -39,12 +40,15 @@ class CreateShowService {
   late ValueNotifier<int> selectedHashtagLength;
   late ValueNotifier<Set<ObjectWithNotifier<Host>>> selectedCoHosts;
   late ValueNotifier<Set<ObjectWithNotifier<Hashtag>>> selectedHashtags;
+  late ValueNotifier<Set<ObjectWithNotifier<Host>>> goLiveHostListNotifier;
+
 
   late ValueNotifier<File?> selectedImage;
 
   DateTime? eventDateTime;
 
   initFormControl() {
+    coHostSelectionStarted = ValueNotifier(false);
     coHostSelected = ValueNotifier(false);
     hashTagSelected = ValueNotifier(false);
     hashtags = ValueNotifier([]);
@@ -52,11 +56,25 @@ class CreateShowService {
     descCharactersLength = ValueNotifier(0);
     selectedCoHostLength = ValueNotifier(0);
     selectedHashtagLength = ValueNotifier(0);
-    selectedCoHosts = ValueNotifier({});
+    // selectedCoHosts = ValueNotifier({});
     selectedHashtags = ValueNotifier({});
     selectedImage = ValueNotifier(null);
+    selectedCoHosts = ValueNotifier(
+      List.generate(
+        5,
+        (_) => ObjectWithNotifier<Host>(obj: Host.empty())
+      ).toSet()
+    );
     coHostsListData = getHostList();
     hashTagListData = getHashTags();
+    goLiveHostListNotifier = ValueNotifier(
+      getHostList().take(1).toSet()..addAll(
+        List.generate(
+          5,
+          (_) => ObjectWithNotifier<Host>(obj: Host.empty())
+        )
+      )
+    );
 
     // init controllers
     titleController = TextEditingController();
@@ -70,6 +88,7 @@ class CreateShowService {
         TextEditingController(text: userEventFee.toString());
 
     eventDateTime = null;
+    eventPaymentController = TextEditingController(text: userEventFee.toString());
   }
 
   dispose() {
@@ -168,25 +187,34 @@ class CreateShowService {
     return result;
   }
 
-  removeSelectedCoHost(ObjectWithNotifier<Host> selCoHost) {
-    final currentSet = selectedCoHosts.value;
+  removeSelectedCoHost(ObjectWithNotifier<Host> selectedCoHost) {
+    // final currentSet = selectedCoHosts.value;
+    final currentList = selectedCoHosts.value.toList();
+    currentList.remove(selectedCoHost);
+    currentList.insert((selectedCoHostLength.value - 1), ObjectWithNotifier<Host>(obj: Host.empty()));
+    selectedCoHostLength.value = selectedCoHostLength.value - 1;
+    selectedCoHosts.value = currentList.toSet();
+    selectedCoHost.notifier.value = false;
 
-    if (currentSet.contains(selCoHost)) {
-      currentSet.remove(selCoHost);
-      selectedCoHosts.value = currentSet;
-      selectedCoHostLength.value = currentSet.length;
-      selCoHost.notifier.value = false;
+    if(selectedCoHostLength.value == 0){
+      coHostSelectionStarted.value = false;
     }
+    else{coHostSelectionStarted.value = true;}
   }
 
-  addSelectedCoHost(ObjectWithNotifier<Host> selCoHost) {
-    final currentSet = selectedCoHosts.value;
+  addSelectedCoHost(ObjectWithNotifier<Host> selectedCoHost) {
+    // final currentSet = selectedCoHosts.value;
+    if(selectedCoHostLength.value < 5){
+      final currentSet = selectedCoHosts.value.toList();
+      currentSet[selectedCoHostLength.value] = selectedCoHost;
+      selectedCoHostLength.value = selectedCoHostLength.value + 1;
+      selectedCoHosts.value = currentSet.toSet();
+      selectedCoHost.notifier.value = true;
 
-    if (!currentSet.contains(selCoHost)) {
-      currentSet.add(selCoHost);
-      selectedCoHosts.value = currentSet;
-      selectedCoHostLength.value = currentSet.length;
-      selCoHost.notifier.value = true;
+      if(selectedCoHostLength.value == 0){
+        coHostSelectionStarted.value = false;
+      }
+      else{coHostSelectionStarted.value = true;}
     }
   }
 
@@ -217,6 +245,18 @@ class CreateShowService {
     if (eventDateTime == null) return false;
 
     return eventDateTime!.isAfter(DateTime.now());
+  }
+
+  hostAddCohost(ObjectWithNotifier<Host> host, int index){
+    final newList = List<ObjectWithNotifier<Host>>.from(goLiveHostListNotifier.value);
+    newList[index] = host;
+    goLiveHostListNotifier.value = newList.toSet();
+  }
+
+  hostRemoveCohost(ObjectWithNotifier<Host> host, int index){
+    final newList = List<ObjectWithNotifier<Host>>.from(goLiveHostListNotifier.value);
+    newList[index] = ObjectWithNotifier<Host>(obj: Host.empty());
+    goLiveHostListNotifier.value = newList.toSet();
   }
 }
 

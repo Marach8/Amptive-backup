@@ -143,61 +143,78 @@ Future<Set<ObjectWithNotifier<Host>>?> showAddCoHostDialog(BuildContext context)
                       ),
 
                       AmptiveRebuilderWidget(
-                        notifier: service.selectedCoHostLength,
+                        notifier: service.coHostSelectionStarted,
                         // shouldDispose: true,
-                        builder: (_, val, __) {
-                          var value = service.selectedCoHosts.value;
+                        builder: (_, selectionStarted, __) {
                           return AmptiveAnimatedCrossFadeWidget(
-                            condition: value.isEmpty,
+                            condition: !selectionStarted,
                             firstChild: const SizedBox.shrink(),
                             secondChild: AmptiveCustomContainer(
-                              height: 43,
+                              height: 43, alignment: Alignment.center,
                               margin: const EdgeInsets.fromLTRB(20, 20, 20, 0),
                               child: SingleChildScrollView(
                                 scrollDirection: Axis.horizontal,
-                                child: Row(
-                                  children: value.map((selCoHost) {
-                                    return Padding(
-                                      padding: const EdgeInsets.only(right: 15),
-                                      child: Stack(
-                                        clipBehavior: Clip.none,
-                                        children: [
-                                          AmptiveCustomContainer(
-                                            clipBehavior: Clip.hardEdge,
-                                            height: 43,
-                                            width: 43,
-                                            radius: 30,
-                                            child: FittedBox(
-                                                fit: BoxFit.fill,
-                                                child: AmptiveImageLoaderWidget(
-                                                    imagePath: selCoHost
-                                                        .obj.profilePicture!)),
-                                          ),
-                                          Positioned(
-                                            top: 0,
-                                            right: -4,
-                                            child: AmptiveCustomContainer(
-                                              onTap: () {
-                                                //Disable this notifier
-                                                selCoHost.notifier.value =
-                                                    false;
+                                child: AmptiveRebuilderWidget(
+                                  notifier: service.selectedCoHosts,
+                                  builder: (_, selectedCoHosts, __) {
+                                    return Row(
+                                      children: selectedCoHosts.map((selectedCoHost) {
+                                        final showCoHost = selectedCoHost.obj.profilePicture != null;
 
-                                                service.removeSelectedCoHost(
-                                                    selCoHost);
-                                              },
-                                              color: AmptiveColors.textRedColor,
-                                              height: 17,
-                                              width: 17,
-                                              boxShape: BoxShape.circle,
-                                              child: const FittedBox(
-                                                  fit: BoxFit.scaleDown,
-                                                  child: Icon(Icons.close)),
+                                        if(!showCoHost){
+                                          final index = selectedCoHosts.toList().indexOf(selectedCoHost);
+
+                                          return AmptiveCustomContainer(
+                                            alignment: Alignment.center,
+                                            margin: const EdgeInsets.only(right: 15),
+                                            border: Border.all(color: AmptiveColors.whiteColor.withOpacity(0.4)),
+                                            height: 43, width: 43, radius: 30,
+                                            child: Text(
+                                              (index + 1).toString(),
+                                              style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                                                fontSize: AmptiveFontSizes.size12
+                                              ),
                                             ),
-                                          )
-                                        ],
-                                      ),
+                                          );
+                                        }
+
+                                        return Padding(
+                                          padding: const EdgeInsets.only(right: 15),
+                                          child: Stack(
+                                            clipBehavior: Clip.none,
+                                            children: [
+                                              AmptiveCustomContainer(
+                                                clipBehavior: Clip.hardEdge,
+                                                height: 43, width: 43, radius: 30,
+                                                child: FittedBox(
+                                                  fit: BoxFit.fill,
+                                                  child: AmptiveImageLoaderWidget(
+                                                    imagePath: selectedCoHost.obj.profilePicture ?? ''
+                                                  )
+                                                ),
+                                              ),
+                                              Positioned(
+                                                top: 0, right: -4,
+                                                child: AmptiveCustomContainer(
+                                                  onTap: () {
+                                                    //Disable this notifier
+                                                    // selectedCoHost.notifier.value = false;
+                                                    service.removeSelectedCoHost(selectedCoHost);
+                                                  },
+                                                  color: AmptiveColors.textRedColor,
+                                                  height: 17, width: 17,
+                                                  boxShape: BoxShape.circle,
+                                                  child: const FittedBox(
+                                                      fit: BoxFit.scaleDown,
+                                                      child: Icon(Icons.close)),
+                                                ),
+                                              )
+                                            ],
+                                          ),
+                                        );
+                                      }).toList(),
                                     );
-                                  }).toList(),
+                                  }
                                 ),
                               ),
                             ),
@@ -212,10 +229,10 @@ Future<Set<ObjectWithNotifier<Host>>?> showAddCoHostDialog(BuildContext context)
                           builder: (_, searchString, __) {
                             List<ObjectWithNotifier<Host>> filteredCoHosts;
 
-                            if (searchString.isEmpty ||
-                                controller.text.isEmpty) {
+                            if (searchString.isEmpty || controller.text.isEmpty) {
                               filteredCoHosts = coHostsData;
-                            } else {
+                            }
+                            else {
                               filteredCoHosts = coHostsData.where((coHost) {
                                 return coHost.obj.name!
                                         .toLowerCase()
@@ -253,28 +270,33 @@ Future<Set<ObjectWithNotifier<Host>>?> showAddCoHostDialog(BuildContext context)
                 padding: const EdgeInsets.symmetric(horizontal: 15),
                 width: AmptiveHelperFunctions.getScreenWidth(context),
                 child: AmptiveRebuilderWidget(
-                    notifier: service.selectedCoHostLength,
-                    // shouldDispose: true,
-                    builder: (_, value, __) {
-                      return AmptiveElevatedButtonWidget(
-                        margin: EdgeInsets.zero,
-                        onPressed: value > 0
-                            ? () async {
-                                Navigator.pop(
-                                    context, service.selectedCoHosts.value);
-                              }
-                            : null,
-                        buttonTitle: AmptiveOtherStrings.CONTINUE,
-                        bgColor: AmptiveColors.whiteColor,
-                        fgColor: AmptiveColors.black,
-                      );
-                    }),
+                  notifier: service.coHostSelectionStarted,
+                  // shouldDispose: true,
+                  builder: (_, value, __) {
+                    return AmptiveElevatedButtonWidget(
+                      margin: EdgeInsets.zero,
+                      onPressed: value
+                        ? (){
+                        final selectedCoHosts = service.selectedCoHosts.value.where(
+                          (coHost) => coHost.obj.profilePicture != null
+                        );
+                        context.pop(selectedCoHosts.toSet());
+                        } : null,
+                      buttonTitle: AmptiveOtherStrings.CONTINUE,
+                      bgColor: AmptiveColors.whiteColor,
+                      fgColor: AmptiveColors.black,
+                    );
+                  }
+                ),
               ),
             )
           ],
         );
-      });
+      }
+    );
 }
+
+
 
 class AmptiveListOfCoHostsWidget extends StatelessWidget {
   final List<ObjectWithNotifier<Host>> availableCoHosts;
@@ -291,8 +313,10 @@ class AmptiveListOfCoHostsWidget extends StatelessWidget {
       return Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(AmptiveOtherStrings.NO_SUGGESTIONS,
-              style: Theme.of(context).textTheme.bodyMedium),
+          Text(
+            AmptiveOtherStrings.NO_SUGGESTIONS,
+            style: Theme.of(context).textTheme.bodyMedium
+          ),
           Gap(3.h),
           Text(
             maxLines: 2,
@@ -307,35 +331,28 @@ class AmptiveListOfCoHostsWidget extends StatelessWidget {
     }
 
     return Column(
-        mainAxisSize: MainAxisSize.min,
-        children: availableCoHosts.map((entry) {
-          // final notifier = listOfNotifiers.elementAt(entry.key);
-
-          return AmptiveCoHostWidget(
-            coHostDetail: entry,
-            onTap: (image, isSelected) {
-              if (isSelected) {
-                // final listOfImages = selectedCoHosts.value;
-                // listOfImages.remove(image);
-                // selectedCoHosts.value = List.from(listOfImages);
-                service.removeSelectedCoHost(image);
-              } else {
-                // final listOfImages = selectedCoHosts.value;
-                // listOfImages.add(image);
-                // selectedCoHosts.value = List.from(listOfImages);
-                service.addSelectedCoHost(image);
-              }
-            },
-          );
-        }).toList());
+      mainAxisSize: MainAxisSize.min,
+      children: availableCoHosts.map((coHost) {
+        return AmptiveCoHostWidget(
+          coHostDetail: coHost,
+          onTap: (host, isSelected) {
+            if (isSelected) {
+              service.removeSelectedCoHost(host);
+            } else {
+              service.addSelectedCoHost(host);
+            }
+          },
+        );
+      }
+    ).toList());
   }
 }
+
+
 
 class AmptiveCoHostWidget extends StatelessWidget {
   final void Function(ObjectWithNotifier<Host>, bool) onTap;
   final ObjectWithNotifier<Host> coHostDetail;
-
-  // final ValueNotifier<bool> notifier;
 
   const AmptiveCoHostWidget({
     super.key,
@@ -344,21 +361,16 @@ class AmptiveCoHostWidget extends StatelessWidget {
   });
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(context) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 15),
       child: GestureDetector(
-        onTap: () {
-          onTap(coHostDetail, coHostDetail.notifier.value);
-          // coHostDetail.notifier.value = !coHostDetail.notifier.value;
-        },
+        onTap: () => onTap(coHostDetail, coHostDetail.notifier.value),
         child: Row(
           children: [
             AmptiveCustomContainer(
               clipBehavior: Clip.hardEdge,
-              height: 50,
-              width: 50,
-              radius: 30,
+              height: 50, width: 50, radius: 30,
               child: FittedBox(
                   fit: BoxFit.fill,
                   child: AmptiveImageLoaderWidget(
@@ -369,11 +381,12 @@ class AmptiveCoHostWidget extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(coHostDetail.obj.name!,
-                      style: Theme.of(context)
-                          .textTheme
-                          .bodySmall
-                          ?.copyWith(fontSize: AmptiveFontSizes.size15)),
+                  Text(
+                    coHostDetail.obj.name ?? '',
+                    style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                      fontSize: AmptiveFontSizes.size15
+                    )
+                  ),
                   Text(
                     coHostDetail.obj.username!,
                     style: Theme.of(context)
@@ -385,23 +398,21 @@ class AmptiveCoHostWidget extends StatelessWidget {
               ),
             ),
             AmptiveRebuilderWidget(
-                notifier: coHostDetail.notifier,
-                builder: (_, value, __) {
-                  return AmptiveCustomContainer(
-                      duration: 200,
-                      color: value
-                          ? AmptiveColors.whiteColor
-                          : AmptiveColors.transparentColor,
-                      border: Border.all(color: AmptiveColors.whiteColor),
-                      boxShape: BoxShape.circle,
-                      height: 24,
-                      width: 24,
-                      child: Icon(
-                        Icons.check,
-                        color: AmptiveColors.brandBlackColor,
-                        size: 20,
-                      ));
-                })
+              notifier: coHostDetail.notifier,
+              builder: (_, value, __) {
+                return AmptiveCustomContainer(
+                  duration: 200,
+                  color: value ? AmptiveColors.whiteColor : AmptiveColors.transparentColor,
+                  border: Border.all(color: AmptiveColors.whiteColor),
+                  boxShape: BoxShape.circle,
+                  height: 24, width: 24,
+                  child: Icon(
+                    Icons.check, size: 20,
+                    color: AmptiveColors.brandBlackColor,
+                  )
+                );
+              }
+            )
           ],
         ),
       ),
