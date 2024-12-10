@@ -193,7 +193,9 @@ class _CreateShowScreenState extends State<CreateShowScreen> {
               child: Container(
                 color: AmptiveColors.black.withOpacity(0.6),
                 child: BackdropFilter(
-                  filter: ImageFilter.blur(sigmaX: 150.0, sigmaY: 150.0),
+                  filter: ImageFilter.blur(
+                      sigmaX: Platform.isIOS ? 15.0 : 150.0,
+                      sigmaY: Platform.isIOS ? 15.0 : 150.0),
                   child: Container(),
                 ),
               ),
@@ -463,8 +465,9 @@ class _CreateShowScreenState extends State<CreateShowScreen> {
                       readOnly: true,
                       onTap: () async {
                         // service.hashtags.value =
-                            await showAddHashtagDialog(context);
-                        service.hashTagSelected.value = service.selectedHashtagLength.value > 0;
+                        await showAddHashtagDialog(context);
+                        service.hashTagSelected.value =
+                            service.selectedHashtagLength.value > 0;
                       },
                       suffixIcon: Icon(
                         Icons.arrow_forward_ios,
@@ -487,7 +490,7 @@ class _CreateShowScreenState extends State<CreateShowScreen> {
                                   return SelectedHashTags(
                                     hashtags: hashtags,
                                     onRemove: (hashtag) {
-                                        service.removeSelectedHashtags(hashtag);
+                                      service.removeSelectedHashtags(hashtag);
                                     },
                                   );
                                 },
@@ -821,7 +824,8 @@ class _CreateShowScreenState extends State<CreateShowScreen> {
 
   void navigateToSuccessPage() {
     if (widget.showType == ShowType.show) {
-      context.pushReplacementNamed(AmptiveRoutes.CREATE_SHOW_SUCCESS,   extra: service.selectedShowImage!.path);
+      context.pushReplacementNamed(AmptiveRoutes.CREATE_SHOW_SUCCESS,
+          extra: service.selectedShowImage!.path);
     } else if (widget.showType == ShowType.event) {
       context.pushReplacementNamed(AmptiveRoutes.EVENT_SCHEDULED_SCREEN,
           extra: service.selectedShowImage!.path);
