@@ -77,6 +77,9 @@ class AmptiveOtherStrings{
   static const checkerIsLoading = "Checker is loading...";
   static const usernameIsAvailable ="Username is available";
   static const whatShouldWeCallYou ="What should we call you?";
+  static const ROLE = 'message notifier';
+  static const MSG_TITLE = 'message title';
+  static const MSG_CONTENT = 'message content';
 
 
   static const addProfilePicture = "Add a profile picture";
@@ -133,6 +136,7 @@ class AmptiveOtherStrings{
   static const SEE_COMMUNITIES = 'See communities on Amptive';
   static const RECENT_SEARCHES = 'Recent Searches';
   static const CLEAR = 'Clear';
+  static const GIFTED_AMNT = 'Gifted Amount';
   static const DISCOVER_COMMUNITIES = 'Discover communities with interesting shows and events';
 
   static const CREATE_SHOW_OR_EVENT = 'Create Show or Event';
@@ -173,6 +177,10 @@ class AmptiveOtherStrings{
   static const TURNED_ON = 'Turned On';
   static const TURN_OFF = 'Turn Off';
   static const TURNED_OFF = 'Turned Off';
+  static const IS_TALKING = 'is talking';
+  static const IS_GIFTING = 'is gifting';
+  static const GIFTED = 'Gifted';
+  static const PINNED = 'Pinned';
   static const WHISPERS_ENABLED = 'Whispers will be enabled for your event.';
   static const WHISPERS_DISABLED = 'Whispers will be disabled for your event.';
   static const HAND_RAISING = 'Hand Raising';

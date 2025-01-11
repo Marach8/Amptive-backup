@@ -33,6 +33,10 @@ class AmptiveColors {
 
   static Color get offWhiteColor => const Color(0xFFE7E7E7);
 
+  static Color get green1 => const Color(0xFF009C51);
+
+  static Color get green2 => const Color(0xFF009C80);
+
   static Color get whiteColor => Colors.white;
 
   static Color get brandBlueColor => const Color(0xFF307FE2);
@@ -43,9 +47,9 @@ class AmptiveColors {
 
   static Color get successColor => const Color(0xFF54C981);
 
-  static Color get orangeGradientColorA => const Color.fromRGBO(249, 24, 128, 1);
+  static Color get orangeColor1 => const Color(0XFFF91880);
 
-  //static Color get orangeColorC => const Color(0xFFFF6482);
+  static Color get orangeColor2 => const Color(0xFF930E4C);
 
   static Color get orangeGradientColorB => const Color.fromRGBO(249, 32, 24, 1);
 

@@ -1,5 +1,7 @@
+import 'package:amptive/src/bloc/main_app/go_live_bloc/host_view/notifications_bloc.dart';
 import 'package:amptive/src/bloc/main_app/nav_bar_bloc.dart';
 import 'package:amptive/src/models/host.dart';
+import 'package:amptive/src/models/user_model.dart';
 import 'package:amptive/src/routes.dart';
 import 'package:amptive/src/utils/constants/font_sizes.dart';
 import 'package:amptive/src/utils/constants/strings/image_strings.dart';
@@ -24,6 +26,7 @@ import 'package:go_router/go_router.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:visibility_detector/visibility_detector.dart';
 import '../../../../../bloc/main_app/go_live_bloc/host_view/cohosts_display_bloc.dart';
+import '../../../../../models/go_live_notification_model.dart';
 import '../../../../../services/create_show/create_show_service.dart';
 import '../../../../../services/go_live_service/go_live_service.dart';
 import '../../../../../utils/constants/colors.dart';
@@ -32,6 +35,7 @@ import 'dart:developer' as marach show log;
 import '../../../../../utils/dialogs/go_live_add_cohost_dialog.dart';
 import '../../../../widgets/other_widgets/main_application_widgets/widgets_in_go_live/go_live_header_widget.dart';
 import '../../../../widgets/other_widgets/main_application_widgets/widgets_in_go_live/go_live_host_or_cohost_widget.dart';
+import '../../../../widgets/other_widgets/main_application_widgets/widgets_in_go_live/go_live_notification_widget.dart';
 
 
 class AmptiveGoLiveHostView extends StatefulWidget {
@@ -155,7 +159,6 @@ class _AmptiveGoLiveHostViewState extends State<AmptiveGoLiveHostView> {
           
                           return BlocBuilder<AmptiveGoLiveSelectCoHostBloc, List<HostWithNotifier>>(
                             builder: (_, listOfCoHosts) {
-                              marach.log('Hello');
                               final onlyHost = listOfCoHosts.isEmpty;
                               final hostAndACohost = listOfCoHosts.length == 1;
                               final hostAndT2Cohosts = listOfCoHosts.length == 2;
@@ -209,6 +212,26 @@ class _AmptiveGoLiveHostViewState extends State<AmptiveGoLiveHostView> {
                         }
                       )
                     ),
+
+                    BlocBuilder<AmptiveGoLiveNotificationBloc, AmptiveGoLiveNotificationModel>(
+                      builder: (_, state) {
+                        if(state.notificationType == AmptiveOtherStrings.PINNED){
+                          return Positioned(
+                            top: 260,
+                            child: SizedBox(
+                              width: AmptiveHelperFunctions.getScreenWidth(context),
+                              child: AmptiveGoLivePinnedMsgNtfctnWidget(state: state)
+                            )
+                          );
+                        }
+
+                        return Positioned(
+                          top: 260, left: 15,
+                          child: AmptiveGoLiveNotificationsWidget(state: state)
+                        );
+                        
+                      }
+                    ),
           
                     AmptiveRebuilderWidget(
                       notifier: service.scroll2Bottom,
@@ -250,7 +273,7 @@ class _AmptiveGoLiveHostViewState extends State<AmptiveGoLiveHostView> {
                         controller: TextEditingController(),
                         disableBlueBorder: true,
                         cursorHeight: 20,
-                        cursorColor: AmptiveColors.whiteColor.withOpacity(0.6),
+                        cursorColor: AmptiveColors.whiteColor.withValues(alpha: 0.6),
                         constraints: const BoxConstraints(maxHeight: 40),
                         contentPadding: const EdgeInsets.fromLTRB(16, 0, 16, 0),
                         hintText: AmptiveOtherStrings.COMMENT,
@@ -263,12 +286,26 @@ class _AmptiveGoLiveHostViewState extends State<AmptiveGoLiveHostView> {
                     if(index == 5){
                       await showGoLiveHostAddCoHostDialog(context: context);
                     }
+                    if(context.mounted && index == 0){
+                      context.read<AmptiveGoLiveNotificationBloc>().addTalkingNotification(
+                        service.coHostsListData.first
+                      );
+                    }
+                    if(context.mounted && index == 2){
+                      context.read<AmptiveGoLiveNotificationBloc>().addGiftingNotification(
+                        service.coHostsListData[2]
+                      );
+                    }
+                    if(context.mounted && index == 3){
+                      context.read<AmptiveGoLiveNotificationBloc>().addPinnedMsgNotification(
+                        service.coHostsListData[3], 'CO-HOST'
+                      );
+                    }
                   },
                   margin: index != 5 ? EdgeInsets.only(right: 5.w) : EdgeInsets.zero,
-                  color: AmptiveColors.whiteColor.withOpacity(0.1),
+                  color: AmptiveColors.whiteColor.withValues(alpha: 0.1),
                   padding: const EdgeInsets.all(5),
-                  radius: 30,
-                  child: widget
+                  radius: 30, child: widget
                 );
               }
             ).toList()

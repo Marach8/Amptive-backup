@@ -14,6 +14,7 @@ import 'bloc/authentication/otp/otp_auth_bloc.dart';
 import 'bloc/authentication/password/password_auth_bloc.dart';
 import 'bloc/main_app/go_live_bloc/host_view/available_cohosts_bloc.dart';
 import 'bloc/main_app/go_live_bloc/host_view/cohosts_display_bloc.dart';
+import 'bloc/main_app/go_live_bloc/host_view/notifications_bloc.dart';
 import 'bloc/main_app/nav_bar_bloc.dart';
 import 'bloc/onboarding_bloc/onboarding_bloc.dart';
 
@@ -38,5 +39,6 @@ List<SingleChildWidget> providers() {
     BlocProvider(create: (_) => AmptiveNavBarBloc()),
     BlocProvider(create: (_) => AmptiveGoLiveSelectCoHostBloc()),
     BlocProvider(create: (_) => AmptiveGoLiveAvailableCoHostsBloc(hostList: getHostList())),
+    BlocProvider(create: (_) => AmptiveGoLiveNotificationBloc()),
   ];
 }
