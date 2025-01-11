@@ -9,7 +9,7 @@ import 'package:amptive/src/views/widgets/common_widgets/elevated_button_widget.
 import 'package:amptive/src/views/widgets/common_widgets/textformfield_widget.dart';
 import 'package:country_pickers/country.dart';
 import 'package:country_pickers/utils/utils.dart';
-import 'package:figma_squircle/figma_squircle.dart';
+//import 'package:figma_squircle/figma_squircle.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -88,10 +88,10 @@ class _AddPhoneScreenState extends State<AddPhoneScreen> {
                                         : AmptiveColors.transparentColor,
                                     width: 2.w,
                                   ),
-                                  borderRadius: SmoothBorderRadius(
-                                    cornerRadius: 14.r,
-                                    cornerSmoothing: 1.0,
-                                  ),
+                                  // borderRadius: SmoothBorderRadius(
+                                  //   cornerRadius: 14.r,
+                                  //   cornerSmoothing: 1.0,
+                                  // ),
                                 ),
                                 child: Row(
                                   mainAxisAlignment: MainAxisAlignment.start,
@@ -179,20 +179,20 @@ class _AddPhoneScreenState extends State<AddPhoneScreen> {
                               width: 2.w,
                               color: AmptiveColors.brandBlueColor,
                             ),
-                            borderRadius: SmoothBorderRadius(
-                              cornerRadius: 14.r,
-                              cornerSmoothing: 1.0,
-                            ),
+                            // borderRadius: SmoothBorderRadius(
+                            //   cornerRadius: 14.r,
+                            //   cornerSmoothing: 1.0,
+                            // ),
                           ),
                           border: OutlineInputBorder(
                             borderSide: BorderSide(
                               width: 2.w,
                               color: AmptiveColors.transparentColor,
                             ),
-                            borderRadius: SmoothBorderRadius(
-                              cornerRadius: 14.r,
-                              cornerSmoothing: 1.0,
-                            ),
+                            // borderRadius: SmoothBorderRadius(
+                            //   cornerRadius: 14.r,
+                            //   cornerSmoothing: 1.0,
+                            // ),
                           ),
                         ),
                       ),

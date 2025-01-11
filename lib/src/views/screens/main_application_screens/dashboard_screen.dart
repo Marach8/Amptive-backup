@@ -1,3 +1,4 @@
+import 'package:amptive/src/bloc/main_app/nav_bar_bloc.dart';
 import 'package:amptive/src/views/screens/main_application_screens/sub_views/discover/discover_home.dart';
 import 'package:amptive/src/views/screens/main_application_screens/sub_views/go_live_view/go_live_audience_view.dart';
 import 'package:amptive/src/views/widgets/common_widgets/annotated_region__widget.dart';
@@ -5,53 +6,44 @@ import 'package:amptive/src/views/widgets/common_widgets/custom_rebuilder_widget
 import 'package:amptive/src/views/widgets/other_widgets/main_application_widgets/dashboard_nav_bar_widget.dart';
 import 'package:amptive/src/views/widgets/other_widgets/main_application_widgets/widgets_in_home_view/main_home_view_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+import '../../../services/go_live_service/go_live_service.dart';
+import 'sub_views/go_live_view/go_live_host_view.dart';
 
 
-class AmptiveDashboardScreen extends StatefulWidget {
+class AmptiveDashboardScreen extends StatelessWidget {
   const AmptiveDashboardScreen({super.key});
-
-  @override
-  State<AmptiveDashboardScreen> createState() => _AmptiveDashboardScreenState();
-}
-
-class _AmptiveDashboardScreenState extends State<AmptiveDashboardScreen> {
-  late ValueNotifier<int> _pageIndexNotifier;
-
-  @override
-  void initState(){
-    super.initState();
-    _pageIndexNotifier = ValueNotifier<int>(0);
-  }
-
-  @override
-  void dispose(){
-    _pageIndexNotifier.dispose();
-    super.dispose();
-  }
 
   @override
   Widget build(context) {
     return AmptiveAnnotatedRegionWidget(
       child: Scaffold(
-        body: AmptiveRebuilderWidget(
-          notifier: _pageIndexNotifier,
-          builder: (_, value, __) {
+        body: BlocBuilder<AmptiveNavBarBloc, int>(
+          builder: (_, index) {
             return IndexedStack(
-              index: value,
+              index: index,
               children: [
                 const AmptiveHomeViewWidget(),
                 const AmptiveDiscoverViewWidget(),
-                const AmptiveGoLiveAudienceView(),
+                //const AmptiveGoLiveAudienceView(),
                 // const AmptiveGoLiveCohostView(),
-                // const AmptiveGoLiveHostView(),
+                AmptiveGoLiveHostView(goLiveHost: getHostList().first),
                 Container(color: Colors.green,),
               ]
             );
           }
         ),
 
-        bottomNavigationBar: AmptiveDashboardBottomNavBarWidget(
-          pageIndexNotifier: _pageIndexNotifier,
+        bottomNavigationBar: BlocBuilder<AmptiveNavBarBloc, int>(
+          builder: (_, index) {
+            if(index == 2){
+              return const SizedBox.shrink();
+            }
+            return const AmptiveDashboardBottomNavBarWidget();
+          },
+          /// Only rebuild when index changes between 2 and other values
+          buildWhen: (prev, curr) => (prev == 2 && curr != 2) || (prev != 2 && curr == 2)
         )
       ),
     );

@@ -26,7 +26,6 @@ import '../../../../../services/go_live_service/go_live_service.dart';
 import '../../../../../utils/constants/colors.dart';
 import '../../../../../utils/constants/strings/other_strings.dart';
 import 'dart:developer' as marach show log;
-
 import '../../../../widgets/other_widgets/main_application_widgets/widgets_in_go_live/go_live_host_or_cohost_widget.dart';
 import '../../../../widgets/other_widgets/main_application_widgets/widgets_in_go_live/go_live_host_or_cohost_widget_for_audience_view.dart';
 
@@ -99,7 +98,7 @@ class _AmptiveGoLiveAudienceViewState extends State<AmptiveGoLiveAudienceView> {
                   Text(
                     // maxLines: 1,
                     'Emmanuel Okon',
-                    //"Don't Forget Who you are by glennodyle",
+                    //"Don't Forget Who you are by glennodylejfkjkadkkafdadafkdkfakdkfaj",
                     style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                       overflow: TextOverflow.fade
                     ),
@@ -107,8 +106,6 @@ class _AmptiveGoLiveAudienceViewState extends State<AmptiveGoLiveAudienceView> {
                 ],
               ),
             ),
-        
-        
             Expanded(
               child: Stack(
                 children: [
@@ -252,7 +249,7 @@ class _AmptiveGoLiveAudienceViewState extends State<AmptiveGoLiveAudienceView> {
                         duration: const Duration(milliseconds: 500),
                         child: AmptiveCustomContainer(
                           onTap: () => _scrollToBottom(),
-                          color: AmptiveColors.whiteColor.withOpacity(0.1),
+                          color: AmptiveColors.whiteColor.withValues(alpha:0.1),
                           height: 35, width: 35,
                           boxShape: BoxShape.circle,
                           child: const Icon(Icons.keyboard_double_arrow_down),
@@ -304,8 +301,7 @@ class _AmptiveGoLiveAudienceViewState extends State<AmptiveGoLiveAudienceView> {
                   margin: index != 5 ? EdgeInsets.only(right: 5.w) : EdgeInsets.zero,
                   color: AmptiveColors.whiteColor.withOpacity(0.1),
                   padding: const EdgeInsets.all(5),
-                  radius: 30,
-                  child: widget
+                  radius: 30, child: widget
                 );
               }
             ).toList()

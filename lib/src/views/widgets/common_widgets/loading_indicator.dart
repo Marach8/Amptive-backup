@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import '../../../utils/constants/colors.dart';
 
-class AmptiveCircularProgressIndicatorWidget extends StatelessWidget {
-  const AmptiveCircularProgressIndicatorWidget({
+class AmptiveLoadingIndicatorWidget extends StatelessWidget {
+  const AmptiveLoadingIndicatorWidget({
     super.key,
   });
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(context) {
     return CircularProgressIndicator(
       color: AmptiveColors.brandBlueColor,
-      backgroundColor: AmptiveColors.brandBlueColor.withOpacity(0.5),
+      backgroundColor: AmptiveColors.brandBlueColor.withValues(alpha: 0.5),
       strokeWidth: 3,
     );
   }

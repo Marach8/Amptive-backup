@@ -17,12 +17,13 @@ import '../../models/host.dart';
 import '../../services/create_show/create_show_service.dart';
 import '../../views/widgets/common_widgets/custom_rebuilder_widget.dart';
 import '../../views/widgets/common_widgets/elevated_button_widget.dart';
+import '../../views/widgets/common_widgets/search_filter_widget.dart';
 import '../constants/strings/other_strings.dart';
 
 Future<Set<HostWithNotifier>?> showAddCoHostDialog(BuildContext context) async {
   CreateShowService service = GetIt.I<CreateShowService>();
 
-  final List<HostWithNotifier> coHostsData = service.coHostsListData;
+  final List<HostWithNotifier> coHostsData = getHostList();
 
   final focusNode = FocusNode();
   final controller = TextEditingController();
@@ -198,8 +199,6 @@ Future<Set<HostWithNotifier>?> showAddCoHostDialog(BuildContext context) async {
                                                 top: 0, right: -4, 
                                                 child: AmptiveCustomContainer(
                                                   onTap: () {
-                                                    //Disable this notifier
-                                                    // selectedCoHost.notifier.value = false;
                                                     service.removeSelectedCoHost(selectedCoHost);
                                                   },
                                                   color: AmptiveColors.textRedColor,
@@ -382,6 +381,18 @@ class AmptiveCoHostWidget extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+                  // AmptiveRebuilderWidget(
+                  //   notifier: searchQueryNotifier,
+                  //   builder: (_, ) {
+                  //     return AmptiveSearchFilterWidget(
+                  //       title: coHostDetail.host.name ?? '',
+                  //       searchQuery:
+                  //       style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                  //         fontSize: AmptiveFontSizes.size15
+                  //       )
+                  //     );
+                  //   }
+                  // ),
                   Text(
                     coHostDetail.host.name ?? '',
                     style: Theme.of(context).textTheme.bodySmall?.copyWith(

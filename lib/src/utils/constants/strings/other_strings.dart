@@ -35,6 +35,7 @@ class AmptiveOtherStrings{
   static const skip = 'Skip';
   static const back = 'Back';
   static const CONTINUE = 'Continue';
+  static const SEND_INVITE = 'Send invite';
   static const SET_FEE = 'Set fee';
 
   static const signUpWith = 'Sign up with ';
