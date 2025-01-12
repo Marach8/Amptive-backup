@@ -64,7 +64,7 @@ class _TempLState extends State<TempL> with SingleTickerProviderStateMixin {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        backgroundColor: AmptiveColors.brandBlackColor,
+        backgroundColor: AmptiveColors.brandBlack,
         body: Stack(
           children: [
             Positioned(

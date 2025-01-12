@@ -41,7 +41,7 @@ class _CropPageState extends State<CropPage> {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
-          backgroundColor: AmptiveColors.brandBlackColor,
+          backgroundColor: AmptiveColors.brandBlack,
           elevation: 0.0,
           leadingWidth: 90.w,
           leading: GestureDetector(
@@ -94,7 +94,7 @@ class _CropPageState extends State<CropPage> {
                   }
                 },
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: AmptiveColors.brandBlueColor,
+                  backgroundColor: AmptiveColors.brandBlue,
                 ),
                 child: Text(
                   "Apply",
@@ -108,12 +108,12 @@ class _CropPageState extends State<CropPage> {
             ],
           ),
         ),
-        backgroundColor: AmptiveColors.brandBlackColor,
+        backgroundColor: AmptiveColors.brandBlack,
         body: Column(
           children: [
             Expanded(
               child: CustomImageCrop(
-                  backgroundColor: AmptiveColors.brandBlackColor,
+                  backgroundColor: AmptiveColors.brandBlack,
                   cropController: controller,
                   drawPath: drawCropPath,
                   image: FileImage(widget.imageFile)),

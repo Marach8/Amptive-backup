@@ -82,7 +82,7 @@ class _OTPScreenState extends State<OTPScreen> {
   Widget build(BuildContext context) {
     return AmptiveAnnotatedRegionWidget(
       child: Scaffold(
-        backgroundColor: AmptiveColors.brandBlackColor,
+        backgroundColor: AmptiveColors.brandBlack,
         appBar: const AmptiveAppBar(),
         body: Container(
           padding: EdgeInsets.symmetric(horizontal: 20.w),
@@ -224,7 +224,7 @@ class OTPTextFormField extends StatelessWidget {
         keyboardType: TextInputType.number,
         maxLength: 1,
         textAlignVertical: TextAlignVertical.center,
-        cursorColor: AmptiveColors.brandBlueColor,
+        cursorColor: AmptiveColors.brandBlue,
         decoration: InputDecoration(
           contentPadding:
               EdgeInsets.symmetric(horizontal: 16.w, vertical: 12.w),
@@ -241,7 +241,7 @@ class OTPTextFormField extends StatelessWidget {
           focusedBorder: OutlineInputBorder(
             borderSide: BorderSide(
               width: 2.w,
-              color: AmptiveColors.brandBlueColor,
+              color: AmptiveColors.brandBlue,
             ),
             borderRadius: BorderRadius.circular(14.r),
           ),

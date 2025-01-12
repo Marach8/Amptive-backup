@@ -1,4 +1,5 @@
 import 'package:amptive/src/utils/constants/strings/other_strings.dart';
+import 'package:intl/intl.dart';
 
 extension ExtString on String {
   bool get isValidEmail {
@@ -34,5 +35,12 @@ extension ExtString on String {
 
   
   bool get emailContainsEmailSymbol => contains(AmptiveOtherStrings.emailSymbol);
+
+
+  String formatPrice(){
+    final number = double.tryParse(this) ?? 0000;
+    final formatter = NumberFormat('#,###');
+    return formatter.format(number);
+  }
 
 }

@@ -23,7 +23,7 @@ class AmptiveAudioOrVideoDisplayPictureWithMoreIconWidget extends StatelessWidge
         child: AmptiveCustomContainer(
           height: 32, width: 32,
           boxShape: BoxShape.circle,
-          color: AmptiveColors.brandBlackColor.withOpacity(0.7),
+          color: AmptiveColors.brandBlack.withOpacity(0.7),
           child: const Icon(Icons.more_horiz),
         ),
       ),

@@ -15,14 +15,14 @@ import 'package:gap/gap.dart';
 import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
 import 'package:iconsax/iconsax.dart';
-import '../../bloc/main_app/go_live_bloc/host_view/available_cohosts_bloc.dart';
-import '../../models/host.dart';
-import '../../services/create_show/create_show_service.dart';
-import '../../views/widgets/common_widgets/loading_indicator.dart';
-import '../../views/widgets/common_widgets/custom_rebuilder_widget.dart';
-import '../../views/widgets/common_widgets/elevated_button_widget.dart';
-import '../constants/strings/other_strings.dart';
-import 'add_co_host_dialog.dart';
+import '../../../bloc/main_app/go_live_bloc/host_view/available_cohosts_bloc.dart';
+import '../../../models/host.dart';
+import '../../../services/create_show/create_show_service.dart';
+import '../../../views/widgets/common_widgets/loading_indicator.dart';
+import '../../../views/widgets/common_widgets/custom_rebuilder_widget.dart';
+import '../../../views/widgets/common_widgets/elevated_button_widget.dart';
+import '../../constants/strings/other_strings.dart';
+import '../add_co_host_dialog.dart';
 import 'dart:developer' as marach show log;
 
 Future<void> showGoLiveHostAddCoHostDialog({
@@ -39,7 +39,7 @@ final showSuffixIconNotifier = ValueNotifier(false);
   );
 
   return await showModalBottomSheet(
-      backgroundColor: AmptiveColors.brandBlackColor,
+      backgroundColor: AmptiveColors.brandBlack,
       constraints: BoxConstraints.expand(
         height: AmptiveHelperFunctions.getScreenHeight(context)
       ),

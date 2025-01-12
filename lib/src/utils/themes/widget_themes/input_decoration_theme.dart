@@ -34,7 +34,7 @@ class AmptiveInputDecorationTheme{
     ),
     focusedBorder: const OutlineInputBorder().copyWith(
       borderRadius: BorderRadius.circular(14).r,
-      borderSide: BorderSide(width: 2.r, color: AmptiveColors.brandBlueColor),
+      borderSide: BorderSide(width: 2.r, color: AmptiveColors.brandBlue),
     ),
     errorBorder: const OutlineInputBorder().copyWith(
       borderRadius: BorderRadius.circular(14).r,

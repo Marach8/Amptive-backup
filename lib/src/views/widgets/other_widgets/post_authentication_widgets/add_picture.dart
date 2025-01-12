@@ -69,7 +69,7 @@ class _AddPictureWidgetState extends State<AddPictureWidget> {
               AmptiveOtherStrings.photoGallery,
               textAlign: TextAlign.center,
               style: Theme.of(context).textTheme.headlineLarge?.copyWith(
-                    color: AmptiveColors.brandBlueColor,
+                    color: AmptiveColors.brandBlue,
                     fontWeight: AmptiveFontWeights.semiBold,
                   ),
             ),
@@ -85,7 +85,7 @@ class _AddPictureWidgetState extends State<AddPictureWidget> {
               AmptiveOtherStrings.camera,
               textAlign: TextAlign.center,
               style: Theme.of(context).textTheme.headlineLarge?.copyWith(
-                    color: AmptiveColors.brandBlueColor,
+                    color: AmptiveColors.brandBlue,
                     fontWeight: AmptiveFontWeights.semiBold,
                   ),
             ),
@@ -173,7 +173,7 @@ class _AddPictureWidgetState extends State<AddPictureWidget> {
                     child: CircleAvatar(
                       backgroundColor: _isProfilePictureAdded
                           ? AmptiveColors.textRedColor
-                          : AmptiveColors.brandBlueColor,
+                          : AmptiveColors.brandBlue,
                       child: SizedBox(
                         child: IconButton(
                           style: IconButton.styleFrom(),
@@ -233,7 +233,7 @@ class _AddPictureWidgetState extends State<AddPictureWidget> {
                         ? () => context.pushNamed(AmptiveRoutes.preference)
                         : null,
                 style: ElevatedButton.styleFrom(
-                    backgroundColor: AmptiveColors.brandBlueColor),
+                    backgroundColor: AmptiveColors.brandBlue),
                 child: Text(
                   AmptiveOtherStrings.NEXT,
                   style: Theme.of(context).textTheme.headlineMedium?.copyWith(

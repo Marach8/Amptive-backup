@@ -49,7 +49,7 @@ class _AmptivePreferenceScreenState extends State<AmptivePreferenceScreen> {
               state.selectedItems.length == Constants.kMaxNumberCommunities;
 
           return Scaffold(
-            backgroundColor: AmptiveColors.brandBlackColor,
+            backgroundColor: AmptiveColors.brandBlack,
             appBar: state is SelectPreferenceCompletedState
                 ? null
                 : const AmptiveAppBar(),
@@ -125,7 +125,7 @@ class _AmptivePreferenceScreenState extends State<AmptivePreferenceScreen> {
                                           },
                                           style: ElevatedButton.styleFrom(
                                             backgroundColor:
-                                                AmptiveColors.brandBlueColor,
+                                                AmptiveColors.brandBlue,
                                             padding: EdgeInsets.symmetric(
                                                 vertical: 11.5.h),
                                           ),

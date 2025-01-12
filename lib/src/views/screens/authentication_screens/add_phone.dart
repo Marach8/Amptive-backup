@@ -42,7 +42,7 @@ class _AddPhoneScreenState extends State<AddPhoneScreen> {
   Widget build(BuildContext context) {
     return AmptiveAnnotatedRegionWidget(
       child: Scaffold(
-        backgroundColor: AmptiveColors.brandBlackColor,
+        backgroundColor: AmptiveColors.brandBlack,
         appBar: const AmptiveAppBar(),
         body: Padding(
           padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 20.h),
@@ -84,7 +84,7 @@ class _AddPhoneScreenState extends State<AddPhoneScreen> {
                                       .withOpacity(0.3),
                                   border: Border.all(
                                     color: _isBottomSheetOpened
-                                        ? AmptiveColors.brandBlueColor
+                                        ? AmptiveColors.brandBlue
                                         : AmptiveColors.transparentColor,
                                     width: 2.w,
                                   ),
@@ -154,7 +154,7 @@ class _AddPhoneScreenState extends State<AddPhoneScreen> {
                       child: AmptiveTextFormFieldWidget(
                         controller: _phoneController,
                         keyboardType: TextInputType.number,
-                        cursorColor: AmptiveColors.brandBlueColor,
+                        cursorColor: AmptiveColors.brandBlue,
                         onChanged: (val) {
                           context
                               .read<AmptiveAuthBloc>()
@@ -177,7 +177,7 @@ class _AddPhoneScreenState extends State<AddPhoneScreen> {
                           focusedBorder: OutlineInputBorder(
                             borderSide: BorderSide(
                               width: 2.w,
-                              color: AmptiveColors.brandBlueColor,
+                              color: AmptiveColors.brandBlue,
                             ),
                             // borderRadius: SmoothBorderRadius(
                             //   cornerRadius: 14.r,

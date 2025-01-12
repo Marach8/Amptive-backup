@@ -57,7 +57,7 @@ class CupertinoPhoneCodeSelectWidget extends StatelessWidget {
                         ),
                       ),
                       Divider(
-                        color: AmptiveColors.brandBlackColor,
+                        color: AmptiveColors.brandBlack,
                         height: 0.h,
                         thickness: 1.h,
                       ),
@@ -67,9 +67,9 @@ class CupertinoPhoneCodeSelectWidget extends StatelessWidget {
                             brightness: Brightness.dark,
                           ),
                           child: Container(
-                            color: AmptiveColors.brandBlackColor,
+                            color: AmptiveColors.brandBlack,
                             child: CountryPickerCupertino(
-                              backgroundColor: AmptiveColors.brandBlackColor,
+                              backgroundColor: AmptiveColors.brandBlack,
                               diameterRatio: 3.r,
                               pickerItemHeight: 65.h,
                               itemBuilder: (country) =>

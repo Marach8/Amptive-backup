@@ -24,9 +24,9 @@ class AmptiveDashboardScreen extends StatelessWidget {
             return IndexedStack(
               index: index,
               children: [
-                const AmptiveHomeViewWidget(),
+                //const AmptiveHomeViewWidget(),
                 const AmptiveDiscoverViewWidget(),
-                //const AmptiveGoLiveAudienceView(),
+                AmptiveGoLiveAudienceView(goLiveHost: getHostList().first),
                 // const AmptiveGoLiveCohostView(),
                 AmptiveGoLiveHostView(goLiveHost: getHostList().first),
                 Container(color: Colors.green,),

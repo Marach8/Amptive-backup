@@ -52,7 +52,7 @@ class AmptiveCreateShowOrEventSelectionWidget extends StatelessWidget {
                 height: 120.h,
                 width: double.infinity,
                 radius: 5,
-                color: value ? AmptiveColors.brandBlueColor : AmptiveColors.grey1Color,
+                color: value ? AmptiveColors.brandBlue : AmptiveColors.grey1Color,
                 child: AnimatedScale(
                   scale: value ? 1.1 : 0.5,
                   duration: const Duration(milliseconds: 200),

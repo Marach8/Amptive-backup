@@ -17,7 +17,7 @@ class AmptiveSocietySliverHeader extends SliverPersistentHeaderDelegate{
   @override
   Widget build(BuildContext context, double shrinkOffset, bool overlapsContent) {
     return AmptiveCustomContainer(
-      color: AmptiveColors.brandBlackColor,
+      color: AmptiveColors.brandBlack,
       height: kToolbarHeight,
       child: TabBar(
         controller: tabController,
@@ -28,7 +28,7 @@ class AmptiveSocietySliverHeader extends SliverPersistentHeaderDelegate{
         indicatorColor: AmptiveColors.transparentColor,
         padding: const EdgeInsets.only(left: 15),
         isScrollable: true,
-        dividerColor: AmptiveColors.brandBlackColor,
+        dividerColor: AmptiveColors.brandBlack,
         tabs: ['All', 'Shows', 'Events'].asMap().entries.map(
           (tab){              
             return Tab(
@@ -45,7 +45,7 @@ class AmptiveSocietySliverHeader extends SliverPersistentHeaderDelegate{
                     child: Text(
                       tab.value,
                       style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                        color: isSelected ? AmptiveColors.brandBlackColor : AmptiveColors.whiteColor                           
+                        color: isSelected ? AmptiveColors.brandBlack : AmptiveColors.whiteColor                           
                       ),
                     ),
                   );

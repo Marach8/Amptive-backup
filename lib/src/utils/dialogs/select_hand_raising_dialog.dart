@@ -18,7 +18,7 @@ Future<void> showHandRaisingDialog(BuildContext context)async{
   CreateShowService service = GetIt.I<CreateShowService>();
 
   return await showModalBottomSheet(
-    backgroundColor: AmptiveColors.brandBlackColor,
+    backgroundColor: AmptiveColors.brandBlack,
     constraints: BoxConstraints.expand(height: AmptiveHelperFunctions.getScreenHeight(context)),
     context: context,
     isScrollControlled: true,
@@ -87,16 +87,16 @@ Future<void> showHandRaisingDialog(BuildContext context)async{
                   color: AmptiveColors.grey1Color,
                   border: Border.all(
                     width: 2,
-                    color: value ? AmptiveColors.brandBlueColor : AmptiveColors.transparentColor
+                    color: value ? AmptiveColors.brandBlue : AmptiveColors.transparentColor
                   ),
                   child: Row(
                     children: [
                       AmptiveCustomContainer(
                         height: 20, width: 20, radius: 20,
                         padding: const EdgeInsets.all(3),
-                        color: value ? AmptiveColors.brandBlueColor : AmptiveColors.transparentColor,
+                        color: value ? AmptiveColors.brandBlue : AmptiveColors.transparentColor,
                         border: Border.all(
-                          color: value ? AmptiveColors.brandBlueColor : AmptiveColors.whiteColor,
+                          color: value ? AmptiveColors.brandBlue : AmptiveColors.whiteColor,
                           strokeAlign: 5.0
                         ),
                         child: const SizedBox.shrink()
@@ -146,7 +146,7 @@ Future<void> showHandRaisingDialog(BuildContext context)async{
                   color: AmptiveColors.grey1Color,
                   border: Border.all(
                     width: 2,
-                    color: value ? AmptiveColors.brandBlueColor : AmptiveColors.transparentColor
+                    color: value ? AmptiveColors.brandBlue : AmptiveColors.transparentColor
                   ),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -157,9 +157,9 @@ Future<void> showHandRaisingDialog(BuildContext context)async{
                           AmptiveCustomContainer(
                             height: 20, width: 20, radius: 20,
                             padding: const EdgeInsets.all(3),
-                            color: value ? AmptiveColors.brandBlueColor : AmptiveColors.transparentColor,
+                            color: value ? AmptiveColors.brandBlue : AmptiveColors.transparentColor,
                             border: Border.all(
-                              color: value ? AmptiveColors.brandBlueColor : AmptiveColors.whiteColor,
+                              color: value ? AmptiveColors.brandBlue : AmptiveColors.whiteColor,
                               strokeAlign: 5.0
                             ),
                             child: const SizedBox.shrink()

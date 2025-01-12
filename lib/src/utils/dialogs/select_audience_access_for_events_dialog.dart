@@ -23,7 +23,7 @@ Future<void> showSelectAudienceAccessForEventsDialog(
   CreateShowService service = GetIt.I<CreateShowService>();
 
   return await showModalBottomSheet(
-      backgroundColor: AmptiveColors.brandBlackColor,
+      backgroundColor: AmptiveColors.brandBlack,
       constraints: BoxConstraints.expand(
           height: AmptiveHelperFunctions.getScreenHeight(context)),
       context: context,
@@ -87,7 +87,7 @@ Future<void> showSelectAudienceAccessForEventsDialog(
                     border: Border.all(
                         width: 2,
                         color: value
-                            ? AmptiveColors.brandBlueColor
+                            ? AmptiveColors.brandBlue
                             : AmptiveColors.transparentColor),
                     child: Row(
                       children: [
@@ -121,11 +121,11 @@ Future<void> showSelectAudienceAccessForEventsDialog(
                             radius: 20,
                             padding: const EdgeInsets.all(3),
                             color: value
-                                ? AmptiveColors.brandBlueColor
+                                ? AmptiveColors.brandBlue
                                 : AmptiveColors.transparentColor,
                             border: Border.all(
                                 color: value
-                                    ? AmptiveColors.brandBlueColor
+                                    ? AmptiveColors.brandBlue
                                     : AmptiveColors.whiteColor,
                                 strokeAlign: 5.0),
                             child: const SizedBox.shrink())
@@ -151,7 +151,7 @@ Future<void> showSelectAudienceAccessForEventsDialog(
                     border: Border.all(
                         width: 2,
                         color: value
-                            ? AmptiveColors.brandBlueColor
+                            ? AmptiveColors.brandBlue
                             : AmptiveColors.transparentColor),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -190,11 +190,11 @@ Future<void> showSelectAudienceAccessForEventsDialog(
                                 radius: 20,
                                 padding: const EdgeInsets.all(3),
                                 color: value
-                                    ? AmptiveColors.brandBlueColor
+                                    ? AmptiveColors.brandBlue
                                     : AmptiveColors.transparentColor,
                                 border: Border.all(
                                     color: value
-                                        ? AmptiveColors.brandBlueColor
+                                        ? AmptiveColors.brandBlue
                                         : AmptiveColors.whiteColor,
                                     strokeAlign: 5.0),
                                 child: const SizedBox.shrink())

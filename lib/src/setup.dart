@@ -1,3 +1,5 @@
+import 'package:amptive/src/bloc/main_app/go_live_bloc/audience_view/following_bloc.dart';
+import 'package:amptive/src/bloc/main_app/go_live_bloc/audience_view/subscription_bloc.dart';
 import 'package:amptive/src/bloc/preference/bloc.dart';
 import 'package:amptive/src/services/auth/auth_field_service.dart';
 import 'package:amptive/src/services/auth/otp_service.dart';
@@ -40,5 +42,7 @@ List<SingleChildWidget> providers() {
     BlocProvider(create: (_) => AmptiveGoLiveSelectCoHostBloc()),
     BlocProvider(create: (_) => AmptiveGoLiveAvailableCoHostsBloc(hostList: getHostList())),
     BlocProvider(create: (_) => AmptiveGoLiveNotificationBloc()),
+    BlocProvider(create: (_) => AmptiveFollowingBloc()),
+    BlocProvider(create: (_) => AmptiveSubscriptionBloc()),
   ];
 }

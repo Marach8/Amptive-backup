@@ -49,7 +49,7 @@ Future<List<String>> showAddHashtagDialog(BuildContext context)async{
   );
 
   return await showModalBottomSheet(
-    backgroundColor: AmptiveColors.brandBlackColor,
+    backgroundColor: AmptiveColors.brandBlack,
     constraints: BoxConstraints.expand(height: AmptiveHelperFunctions.getScreenHeight(context)),
     context: context,
     isScrollControlled: true,
@@ -402,7 +402,7 @@ class AmptiveAddHashtagWidget extends StatelessWidget {
                 child: Text(
                   '#',
                   style: Theme.of(context).textTheme.displaySmall?.copyWith(
-                    color: AmptiveColors.brandBlackColor
+                    color: AmptiveColors.brandBlack
                   )
                 ),
               ),
@@ -438,7 +438,7 @@ class AmptiveAddHashtagWidget extends StatelessWidget {
                   boxShape: BoxShape.circle,
                   height: 24, width: 24,
                   child: Icon(
-                    Icons.check, color: AmptiveColors.brandBlackColor,
+                    Icons.check, color: AmptiveColors.brandBlack,
                     size: 20,
                   )
                 );

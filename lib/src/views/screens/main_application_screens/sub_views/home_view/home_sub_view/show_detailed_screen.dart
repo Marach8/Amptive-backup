@@ -219,7 +219,7 @@ class AmptiveShowDetailedScreen extends StatelessWidget {
         bottomSheet: AmptiveElevatedButtonWidget(
           margin: const EdgeInsets.fromLTRB(20, 15, 20, 0),
           bgColor: AmptiveColors.whiteColor,
-          fgColor: AmptiveColors.brandBlackColor,
+          fgColor: AmptiveColors.brandBlack,
           buttonTitle: 'Subscrible N1,900/month',
           onPressed: (){}
         ),

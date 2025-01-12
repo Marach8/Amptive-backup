@@ -32,9 +32,9 @@ import '../../../../../services/go_live_service/go_live_service.dart';
 import '../../../../../utils/constants/colors.dart';
 import '../../../../../utils/constants/strings/other_strings.dart';
 import 'dart:developer' as marach show log;
-import '../../../../../utils/dialogs/go_live_add_cohost_dialog.dart';
+import '../../../../../utils/dialogs/go_live/go_live_add_cohost_dialog.dart';
 import '../../../../widgets/other_widgets/main_application_widgets/widgets_in_go_live/go_live_header_widget.dart';
-import '../../../../widgets/other_widgets/main_application_widgets/widgets_in_go_live/go_live_host_or_cohost_widget.dart';
+import '../../../../widgets/other_widgets/main_application_widgets/widgets_in_go_live/go_live_host_widget_for_host_view.dart';
 import '../../../../widgets/other_widgets/main_application_widgets/widgets_in_go_live/go_live_notification_widget.dart';
 
 
@@ -95,6 +95,35 @@ class _AmptiveGoLiveHostViewState extends State<AmptiveGoLiveHostView> {
             children: [
               const Gap(10),
               const AmptiveLiveViewHeaderWidget(),
+              const Gap(30),
+
+              Align(
+                alignment: Alignment.centerLeft,
+                child: AmptiveCustomContainer(
+                  onTap: (){},
+                  margin: const EdgeInsets.only(left: 15),
+                  padding: const EdgeInsets.fromLTRB(10, 5, 10, 5), radius: 30,
+                  color: AmptiveColors.whiteColor.withValues(alpha: 0.1),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Text(
+                        "🎁",
+                        style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                          overflow: TextOverflow.fade
+                        ),
+                      ),
+                      const Gap(5),
+                      Text(
+                        AmptiveOtherStrings.SOCIETY,
+                        style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                          overflow: TextOverflow.fade
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
 
               const Gap(10),          
           

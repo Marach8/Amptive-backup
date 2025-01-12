@@ -33,7 +33,7 @@ class CustomLoaderButton extends StatelessWidget {
       onTap: onTap,
       color: color ??
           (validCondition ?? false
-              ? AmptiveColors.brandBlueColor
+              ? AmptiveColors.brandBlue
               : const Color(0xFF2F2F2F)),
       loader: SizedBox(
         width: 25.w,

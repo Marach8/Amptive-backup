@@ -23,7 +23,7 @@ Future<void> showEventCapacitySelectionDialog({
 
   return await showModalBottomSheet(
     constraints: BoxConstraints(maxHeight: 500.h),
-    backgroundColor: AmptiveColors.brandBlackColor,
+    backgroundColor: AmptiveColors.brandBlack,
     // constraints: BoxConstraints.expand(height: AmptiveHelperFunctions.getScreenHeight(context)),
     context: context,
     isScrollControlled: true,

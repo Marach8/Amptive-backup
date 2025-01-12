@@ -13,7 +13,7 @@ Future<Community> showAddCommunitiesDialog(BuildContext context) async {
   CreateShowService service = GetIt.I<CreateShowService>();
 
   return await showModalBottomSheet(
-      backgroundColor: AmptiveColors.brandBlackColor,
+      backgroundColor: AmptiveColors.brandBlack,
       constraints: BoxConstraints.expand(
           height: AmptiveHelperFunctions.getScreenHeight(context)),
       context: context,

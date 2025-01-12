@@ -43,7 +43,7 @@ class _UserNameAuthScreenState extends State<UserNameAuthScreen> {
   Widget build(BuildContext context) {
     return AmptiveAnnotatedRegionWidget(
       child: Scaffold(
-        backgroundColor: AmptiveColors.brandBlackColor,
+        backgroundColor: AmptiveColors.brandBlack,
         appBar: const AmptiveAppBar(),
         body: Padding(
           padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 20.h),
@@ -82,7 +82,7 @@ class _UserNameAuthScreenState extends State<UserNameAuthScreen> {
                       },
                       keyboardType: TextInputType.text,
                       cursorColor: service.username.error == null
-                          ? AmptiveColors.brandBlueColor
+                          ? AmptiveColors.brandBlue
                           : AmptiveColors.textRedColor,
                       decoration: InputDecoration(
                         contentPadding: EdgeInsets.symmetric(
@@ -100,8 +100,8 @@ class _UserNameAuthScreenState extends State<UserNameAuthScreen> {
                                 width: 18,
                                 height: 18,
                                 child: CircularProgressIndicator(
-                                  color: AmptiveColors.brandBlueColor,
-                                  backgroundColor: AmptiveColors.brandBlueColor
+                                  color: AmptiveColors.brandBlue,
+                                  backgroundColor: AmptiveColors.brandBlue
                                       .withOpacity(0.5),
                                   strokeWidth: 3.w,
                                 ),
@@ -138,7 +138,7 @@ class _UserNameAuthScreenState extends State<UserNameAuthScreen> {
                           borderSide: BorderSide(
                             width: 2.w,
                             color: service.username.error == null
-                                ? AmptiveColors.brandBlueColor
+                                ? AmptiveColors.brandBlue
                                 : AmptiveColors.textRedColor,
                           ),
                           borderRadius: BorderRadius.circular(14.r),

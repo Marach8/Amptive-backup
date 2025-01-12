@@ -29,7 +29,7 @@ import '../../../../../utils/constants/colors.dart';
 import '../../../../../utils/constants/strings/other_strings.dart';
 import 'dart:developer' as marach show log;
 
-import '../../../../widgets/other_widgets/main_application_widgets/widgets_in_go_live/go_live_host_or_cohost_widget.dart';
+import '../../../../widgets/other_widgets/main_application_widgets/widgets_in_go_live/go_live_host_widget_for_host_view.dart';
 
 
 class AmptiveGoLiveCohostView extends StatefulWidget {

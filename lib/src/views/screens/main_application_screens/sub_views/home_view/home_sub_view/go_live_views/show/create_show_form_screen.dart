@@ -59,7 +59,7 @@ class _CreateShowScreenState extends State<CreateShowScreen> {
 
   final AndroidUiSettings _androidUiSettings = AndroidUiSettings(
     toolbarTitle: AmptiveOtherStrings.empty,
-    toolbarColor: AmptiveColors.brandBlueColor,
+    toolbarColor: AmptiveColors.brandBlue,
     toolbarWidgetColor: AmptiveColors.whiteColor,
     initAspectRatio: CropAspectRatioPreset.square,
     lockAspectRatio: false,
@@ -549,7 +549,7 @@ class _CreateShowScreenState extends State<CreateShowScreen> {
                     Divider(
                       height: 2.h,
                       thickness: 2.w,
-                      color: AmptiveColors.brandBlackColor.withOpacity(0.10),
+                      color: AmptiveColors.brandBlack.withOpacity(0.10),
                     ),
                     SizedBox(height: 24.h),
 
@@ -762,7 +762,7 @@ class _CreateShowScreenState extends State<CreateShowScreen> {
                         if (states.contains(WidgetState.disabled)) {
                           return AmptiveColors.strokeGreyColor;
                         }
-                        return AmptiveColors.brandBlackColor;
+                        return AmptiveColors.brandBlack;
                       }),
                     ),
                   );
@@ -852,7 +852,7 @@ class OverlappingHosts extends StatelessWidget {
                             filter:
                                 ImageFilter.blur(sigmaX: 53.4, sigmaY: 53.4),
                             child: Container(
-                              color: AmptiveColors.brandBlackColor
+                              color: AmptiveColors.brandBlack
                                   .withOpacity(0.2),
                             ),
                           ),

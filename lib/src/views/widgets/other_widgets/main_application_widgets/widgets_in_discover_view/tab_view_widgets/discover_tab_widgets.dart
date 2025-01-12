@@ -48,7 +48,7 @@ with SingleTickerProviderStateMixin{
           indicatorColor: AmptiveColors.transparentColor,
           padding: const EdgeInsets.only(left: 15),
           isScrollable: true,
-          dividerColor: AmptiveColors.brandBlackColor,
+          dividerColor: AmptiveColors.brandBlack,
           tabs: ['Top', 'Shows', 'Events', 'Users', 'Hashtags'].asMap().entries.map(
             (tab){              
               return Tab(
@@ -65,7 +65,7 @@ with SingleTickerProviderStateMixin{
                       child: Text(
                         tab.value,
                         style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                          color: isSelected ? AmptiveColors.brandBlackColor : AmptiveColors.whiteColor                           
+                          color: isSelected ? AmptiveColors.brandBlack : AmptiveColors.whiteColor                           
                         ),
                       ),
                     );

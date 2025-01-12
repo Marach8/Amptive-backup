@@ -12,7 +12,7 @@ class AmptiveElevatedButtonTheme{
     style: ElevatedButton.styleFrom(
       elevation: 0,
       foregroundColor: AmptiveColors.whiteColor,
-      backgroundColor: AmptiveColors.brandBlueColor,
+      backgroundColor: AmptiveColors.brandBlue,
       disabledForegroundColor: AmptiveColors.grey4Color,
       disabledBackgroundColor: AmptiveColors.fillGreyColor.withOpacity(0.3),
       textStyle: TextStyle(

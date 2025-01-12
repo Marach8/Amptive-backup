@@ -63,10 +63,10 @@ class _AmptiveAudioCreatorWidgetState extends State<AmptiveAudioCreatorWidget>{
           height: 74.99.h,
           child: CircleAvatar(
             radius: 36.5.r,
-            backgroundColor:_isBorderColored ? AmptiveColors.brandBlueColor : AmptiveColors.transparentColor,
+            backgroundColor:_isBorderColored ? AmptiveColors.brandBlue : AmptiveColors.transparentColor,
             child: CircleAvatar(
               radius: 34.814.r,
-              backgroundColor: AmptiveColors.brandBlackColor,
+              backgroundColor: AmptiveColors.brandBlack,
               child: CircleAvatar(
                 radius: 33.0.r,
                 backgroundImage: AssetImage(widget.assetName),
@@ -84,7 +84,7 @@ class _AmptiveAudioCreatorWidgetState extends State<AmptiveAudioCreatorWidget>{
               backgroundColor: AmptiveColors.whiteColor,
               child: Icon(
                 Icons.mic_off,
-                color: AmptiveColors.brandBlackColor,
+                color: AmptiveColors.brandBlack,
                 size: 19.h,
               ),
             ),

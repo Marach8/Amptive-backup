@@ -56,6 +56,8 @@ class AmptiveOtherStrings{
   static const passwordMustBeAtleast8 = 'Your password must be at least 8 characters';
   static const didNotGetCode = "Didn't get the code? ";
   static const sendAgain = 'Send again';
+  static const SEND = 'Send';
+  static const SEND_GIFT = 'Send gift';
 
   static const createPasswordForAccount = 'Create a password for your account';
   static const enterYourPassword = 'Enter your password';
@@ -113,14 +115,20 @@ class AmptiveOtherStrings{
   static const showMore = 'Show more';
   static const WHISPERS = 'Whispers';
   static const scheduled = 'Scheduled';
-  static const subscribed = 'Subscribed';
-  static const following = 'Following';
+  static const SUBSCRIBED = 'Subscribed';
+  static const SUBSCRIBE = 'Subscribe';
+  static const SUBSCRIBERS = 'Subscribers';
+  static const FOLLOWERS = 'Followers';
+  static const FOLLOWING = 'Following';
+  static const FOLLOW = 'Follow';
+  static const UNSUBSCRIBE = 'Unsubscribe';
 
   static const TECHNOLOGY = 'Technology';
   static const gotATicketId = 'Got a Ticket ID? (coming soon)';
   static const addedToCalender = 'Added to your calender';
   static const removedFromCalender = 'Removed from your calender';
   static const view = 'View';
+  static const GIFTS = 'Gifts';
 
   static const SEARCH_FOR_EVENTS_ND_SHOWS = 'Search for events, shows and more';
   static const CANCEL = 'Cancel';
@@ -158,6 +166,8 @@ class AmptiveOtherStrings{
   static const SELECTED = 'Selected';
   static const ADD_COMMUNITY_DESC = 'Communities will help your Shows and Events reach more listeners. They can also use communites to find your Shows and Events easily. kfkjkajdjkjadjfjakjka';
   static const ADD_COHOST_DESC = 'Added users must accept your invitation before they are added as your co-hosts.';
+  static const TOP_GIFTERS_DESC = 'Gifters are ranked base on the total amount they have contributed to the host during live sessions.';
+  static const TOP_GIFTERS = 'Top Gifters';
   static const SEARCH_4_COHOSTS = 'Search for co-hosts';
   static const SEARCH_4_HASHTAGS = 'Search for hashtags';
   static const SUGGESTIONS = 'Suggestions';
@@ -171,6 +181,7 @@ class AmptiveOtherStrings{
   static const MAX_CAPACITY_LIMIT = 'Once maximun capacity is reached, other users will not be allowed to join or pay for your event';
   static const SET_CAPACITY = 'Set capacity';
   static const REMOVE = 'Remove';
+  static const SEND_GIFT_2_HOST = 'Send a gift to the host';
   static const WHISPERS_DESC = 'Whispers are randomly selected comments from your live audience that appear on your event page while your are live.';
   static const USERS_WOULD_WANT_2_JOIN = 'Non-attending users can see these comments, encouraging them to join your live event.';
   static const TURN_ON = 'Turn On';

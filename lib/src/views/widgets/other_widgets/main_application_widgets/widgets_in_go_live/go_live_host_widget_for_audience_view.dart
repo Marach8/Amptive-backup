@@ -1,27 +1,25 @@
 import 'package:amptive/src/models/host.dart';
 import 'package:amptive/src/utils/constants/font_sizes.dart';
-import 'package:amptive/src/utils/dialogs/add_co_host_dialog.dart';
+import 'package:amptive/src/utils/dialogs/go_live/follow_or_subscribe_dialog.dart';
+import 'package:amptive/src/views/widgets/common_widgets/circle_avatar.dart';
 import 'package:amptive/src/views/widgets/common_widgets/circular_container_with_picture_widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/custom_container_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
-import '../../../../../bloc/main_app/go_live_bloc/host_view/cohosts_display_bloc.dart';
 import '../../../../../services/go_live_service/go_live_service.dart';
 import '../../../../../utils/constants/colors.dart';
 import '../../../../../utils/constants/strings/other_strings.dart';
-import '../../../../../utils/dialogs/go_live_add_cohost_dialog.dart';
-import '../../../common_widgets/circle_avatar.dart';
+import 'dart:developer' as marach show log;
 
-class AmptiveLiveHostAndCoHostWidget extends StatelessWidget {
+class AmptiveLiveHostAndCoHostWidgetForAudienceView extends StatelessWidget {
   final double? top, bottom, left, right;
   final HostWithNotifier? hostOrCohost;
   final GoLiveService service;
   final bool isHost;
   final int index;
-  final Function(HostWithNotifier?) onTap;
-  const AmptiveLiveHostAndCoHostWidget({
+  final Function(HostWithNotifier? host) onTap;
+  const AmptiveLiveHostAndCoHostWidgetForAudienceView({
     super.key,
     this.top, this.bottom,
     this.left, this.right,
@@ -34,35 +32,21 @@ class AmptiveLiveHostAndCoHostWidget extends StatelessWidget {
 
   @override
   Widget build(context) {
-    final showAddIcon = hostOrCohost?.host.profilePicture == null;
-
-    return AnimatedPositioned(
-      duration: const Duration(milliseconds: 500),
-      curve: Curves.decelerate,
-      top: top, left: left, right: right, bottom: bottom,
-      child: GestureDetector(
-        onTap: () async{
-          
-          /// If We did not tap on the Host
-          if(index != 0){
-            if(showAddIcon){
-              await showGoLiveHostAddCoHostDialog(context: context);
-            }
-            else{
-              context.read<AmptiveGoLiveSelectCoHostBloc>().hostRemoveCohostWithIndex(hostOrCohost, index-1);
-            }
-          }
-          onTap(hostOrCohost);
-        },
-        child : Column(
+    return GestureDetector(
+      onTap: (){
+        if(hostOrCohost != null){
+          showFollowHostOrCohostDialog(context: context, host: hostOrCohost!);
+        }
+      },
+      child: AnimatedPositioned(
+        duration: const Duration(seconds: 1),
+        curve: Curves.decelerate,
+        top: top, left: left, right: right, bottom: bottom,
+        child: hostOrCohost?.host.profilePicture == null ? const SizedBox() : Column(
           mainAxisSize: MainAxisSize.min,
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            showAddIcon ? AmptiveCustomContainer(
-              height: 64.h, width: 64.h, radius: 40.h,
-              border: Border.all(color: AmptiveColors.whiteColor, width: 0.5),
-              child: const Icon(Icons.add, size: 40)) 
-            : Stack(
+            Stack(
               clipBehavior: Clip.none,
               alignment: Alignment.center,
               children: [
@@ -79,7 +63,7 @@ class AmptiveLiveHostAndCoHostWidget extends StatelessWidget {
                     child: FittedBox(
                       fit: BoxFit.scaleDown,
                       child: Icon(
-                        Icons.mic_off, color: AmptiveColors.brandBlackColor,
+                        Icons.mic_off, color: AmptiveColors.brandBlack,
                         size: 15.h,
                       )
                     ),
@@ -91,7 +75,7 @@ class AmptiveLiveHostAndCoHostWidget extends StatelessWidget {
             SizedBox(
               width: 80.w,
               child: Text(
-                hostOrCohost?.host.name ?? AmptiveOtherStrings.ADD_CO_HOST.toLowerCase(),
+                hostOrCohost?.host.name ?? '',
                 textAlign: TextAlign.center,
                 style: Theme.of(context).textTheme.titleSmall,
               ),
@@ -116,8 +100,8 @@ class AmptiveLiveHostAndCoHostWidget extends StatelessWidget {
               ),
             ) : const SizedBox.shrink()
           ],
-        ),
-      )
+        )
+      ),
     );
   }
 }

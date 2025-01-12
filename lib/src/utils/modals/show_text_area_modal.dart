@@ -11,7 +11,7 @@ void showTextAreaModal(BuildContext context) {
   CreateShowService service = GetIt.I<CreateShowService>();
 
   showModalBottomSheet(
-    backgroundColor: AmptiveColors.brandBlackColor,
+    backgroundColor: AmptiveColors.brandBlack,
     constraints: BoxConstraints.expand(
         height: AmptiveHelperFunctions.getScreenHeight(context)),
     context: context,

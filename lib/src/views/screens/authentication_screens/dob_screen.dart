@@ -35,7 +35,7 @@ class _DateOfBirthScreenState extends State<DateOfBirthScreen> {
 
     return AmptiveAnnotatedRegionWidget(
       child: Scaffold(
-        backgroundColor: AmptiveColors.brandBlackColor,
+        backgroundColor: AmptiveColors.brandBlack,
         appBar: const AmptiveAppBar(),
         body: Padding(
           padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 20.h),
@@ -72,7 +72,7 @@ class _DateOfBirthScreenState extends State<DateOfBirthScreen> {
                     maxLines: 1,
                     autovalidateMode: AutovalidateMode.onUserInteraction,
                     keyboardType: TextInputType.none,
-                    cursorColor: AmptiveColors.brandBlueColor,
+                    cursorColor: AmptiveColors.brandBlue,
                     decoration: InputDecoration(
                       contentPadding: EdgeInsets.symmetric(
                           vertical: 12.h, horizontal: 16.w),
@@ -92,7 +92,7 @@ class _DateOfBirthScreenState extends State<DateOfBirthScreen> {
                       focusedBorder: OutlineInputBorder(
                         borderSide: BorderSide(
                           width: 2.w,
-                          color: AmptiveColors.brandBlueColor,
+                          color: AmptiveColors.brandBlue,
                         ),
                         borderRadius: BorderRadius.circular(14.r),
                       ),
@@ -188,13 +188,13 @@ class _DateOfBirthScreenState extends State<DateOfBirthScreen> {
                 ),
               ),
               Divider(
-                color: AmptiveColors.brandBlackColor,
+                color: AmptiveColors.brandBlack,
                 height: 0.h,
                 thickness: 1.h,
               ),
               Expanded(
                 child: Container(
-                  color: AmptiveColors.brandBlackColor,
+                  color: AmptiveColors.brandBlack,
                   child: CupertinoTheme(
                     data: const CupertinoThemeData(
                       brightness: Brightness.dark,

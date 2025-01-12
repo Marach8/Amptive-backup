@@ -39,10 +39,10 @@ void showAddedOrRemovedSnackbar({
                     Text(
                       AmptiveOtherStrings.view,
                       style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                        color: AmptiveColors.brandBlueColor
+                        color: AmptiveColors.brandBlue
                       ),
                     ),
-                    Icon(Icons.keyboard_arrow_right_sharp, color: AmptiveColors.brandBlueColor)
+                    Icon(Icons.keyboard_arrow_right_sharp, color: AmptiveColors.brandBlue)
                   ],
                 ),
               )

@@ -30,7 +30,7 @@ class AmptiveFollowingEvenstOrShowsViewWidget extends StatelessWidget {
               leading: Padding(
                 padding: const EdgeInsets.only(left: 20),
                 child: AmptiveAppBarLeadingWidget(
-                  leadingText: AmptiveOtherStrings.following,
+                  leadingText: AmptiveOtherStrings.FOLLOWING,
                   leadingStyle: Theme.of(context).textTheme.bodyMedium?.copyWith(
                     fontSize: AmptiveFontSizes.size23
                   ),

@@ -58,7 +58,7 @@ class AmptiveTextFormFieldWidget extends StatelessWidget {
       onChanged: onChanged,
       onSaved: onSaved,
       cursorColor: disableBlueBorder ?? false ? AmptiveColors.whiteColor
-        : AmptiveColors.brandBlueColor,
+        : AmptiveColors.brandBlue,
       obscureText: obscureText ?? false,
       cursorHeight: cursorHeight,
       cursorErrorColor: AmptiveColors.textRedColor,

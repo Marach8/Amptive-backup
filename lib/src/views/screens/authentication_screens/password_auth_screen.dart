@@ -72,7 +72,7 @@ class _PasswordAuthScreenState extends State<PasswordAuthScreen> {
                         },
                         obscureText: !_passwordVisible,
                         keyboardType: TextInputType.visiblePassword,
-                        cursorColor: AmptiveColors.brandBlueColor,
+                        cursorColor: AmptiveColors.brandBlue,
                         decoration: InputDecoration(
                           contentPadding: EdgeInsets.symmetric(
                               vertical: 12.h, horizontal: 16.w),
@@ -151,7 +151,7 @@ class _PasswordAuthScreenState extends State<PasswordAuthScreen> {
 
   OutlineInputBorder buildOutlineInputBorder() {
     return OutlineInputBorder(
-      borderSide: BorderSide(width: 2.w, color: AmptiveColors.brandBlueColor),
+      borderSide: BorderSide(width: 2.w, color: AmptiveColors.brandBlue),
       borderRadius: BorderRadius.circular(14.r),
     );
   }

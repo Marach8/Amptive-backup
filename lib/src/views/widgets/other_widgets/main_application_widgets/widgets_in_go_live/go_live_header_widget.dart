@@ -4,6 +4,7 @@ import 'package:amptive/src/routes.dart';
 import 'package:amptive/src/utils/constants/font_sizes.dart';
 import 'package:amptive/src/utils/constants/strings/image_strings.dart';
 import 'package:amptive/src/utils/dialogs/add_co_host_dialog.dart';
+import 'package:amptive/src/utils/dialogs/go_live/host_view_of_top_gifters.dart';
 import 'package:amptive/src/utils/helpers/helper_functions/other_functions.dart';
 import 'package:amptive/src/views/widgets/animation_widgets/horiz_slider_animation.dart';
 import 'package:amptive/src/views/widgets/common_widgets/annotated_region__widget.dart';
@@ -27,7 +28,8 @@ import '../../../../../services/go_live_service/go_live_service.dart';
 import '../../../../../utils/constants/colors.dart';
 import '../../../../../utils/constants/strings/other_strings.dart';
 import 'dart:developer' as marach show log;
-import '../../../../widgets/other_widgets/main_application_widgets/widgets_in_go_live/go_live_host_or_cohost_widget.dart';
+import '../../../../../utils/dialogs/go_live/audience_view_of_to_gifters.dart';
+import 'go_live_host_widget_for_host_view.dart';
 
 
 
@@ -57,7 +59,7 @@ class AmptiveLiveViewHeaderWidget extends StatelessWidget {
               Gap(5.w),
               Text(
                 // maxLines: 1,
-                "Don't Forget Who you are by glennodyle",
+                "Don't Forget Who you are by ",
                 style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                   overflow: TextOverflow.fade
                 ),
@@ -97,8 +99,8 @@ class AmptiveLiveViewHeaderWidget extends StatelessWidget {
             child: Row(
               children: [
                 AmptiveCustomContainer(
-                  onTap: (){
-                  },
+                  onTap: () => exitIcon == null ? showHostViewOfTopGiftersDialog(context)
+                    : showAudienceViewOfTopGiftersDialog(context),
                   padding: const EdgeInsets.all(5),
                   radius: 30,
                   color: AmptiveColors.whiteColor.withOpacity(0.1),
