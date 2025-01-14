@@ -13,7 +13,7 @@ Future<bool?> showConfirmationDialog({
   return await showDialog<bool?>(
     context: context,
     builder: (_) => AlertDialog(
-      backgroundColor: AmptiveColors.indicatorDark.withValues(alpha: 0.82),
+      backgroundColor: AmptiveColors.indicatorDark.withOpacity(0.82),
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(14),
       ),

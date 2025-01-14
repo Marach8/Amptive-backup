@@ -42,7 +42,7 @@ Future<void> showFollowHostOrCohostDialog({
       context: context,
       isScrollControlled: true,
       useSafeArea: true,
-      barrierColor: AmptiveColors.black.withValues(alpha: 0.6),
+      barrierColor: AmptiveColors.black.withOpacity(0.6),
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.only(
         topLeft: Radius.circular(15), topRight: Radius.circular(15),
@@ -67,12 +67,12 @@ Future<void> showFollowHostOrCohostDialog({
                       child: Platform.isAndroid
                           ? Icon(
                               Icons.keyboard_arrow_down,
-                              color: AmptiveColors.whiteColor.withValues(alpha:0.6),
+                              color: AmptiveColors.whiteColor.withOpacity(0.6),
                             )
                           : AmptiveCustomContainer(
                               margin: const EdgeInsets.symmetric(vertical: 10),
                               radius: 5, height: 4, width: 30,
-                              color: AmptiveColors.whiteColor.withValues(alpha:0.6),
+                              color: AmptiveColors.whiteColor.withOpacity(0.6),
                               child: const SizedBox.shrink(),
                             ),
                       ),
@@ -175,7 +175,7 @@ Future<void> showFollowHostOrCohostDialog({
                       'Autho of UNTAMED AND LOVE WARRIOR, Host ofWE CAN DO HARD THINGS Podcast Founder of @together jfjdkfjkdjkajkfdkakkdafdadfjkajkfa',
                       style: Theme.of(context).textTheme.bodySmall?.copyWith(
                         fontSize: AmptiveFontSizes.size13,
-                        color: AmptiveColors.subtitleColor.withValues(alpha: 0.76)
+                        color: AmptiveColors.subtitleColor.withOpacity(0.76)
                       ),
                     ),
                       

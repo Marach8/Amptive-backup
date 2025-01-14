@@ -28,15 +28,17 @@ class AmptiveGoLiveNotificationsWidget extends StatelessWidget {
     return AmptiveCustomContainer(
       padding: const EdgeInsets.fromLTRB(2, 0, 0, 0),
       height: 35, radius: 30,
-      gradient: LinearGradient(
-        colors: isTalking ? [
-          AmptiveColors.orangeColor1.withValues(alpha: 1),
-          AmptiveColors.orangeColor2.withValues(alpha: 0),
-        ] : isGifting ? [
-          AmptiveColors.green1.withValues(alpha: 1),
-          AmptiveColors.green2.withValues(alpha: 0)
-        ] : []
-      ),
+      gradient: isTalking ? LinearGradient(
+        colors: [
+          AmptiveColors.orangeColor1.withOpacity(1),
+          AmptiveColors.orangeColor2.withOpacity(0),
+        ]
+      ) :  isGifting ? LinearGradient(
+        colors: [
+          AmptiveColors.green1.withOpacity(1),
+          AmptiveColors.green2.withOpacity(0)
+        ]
+      ) : null,
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
@@ -87,7 +89,7 @@ class AmptiveGoLivePinnedMsgNtfctnWidget extends StatelessWidget {
     return AmptiveCustomContainer(
       padding: const EdgeInsets.fromLTRB(5, 10, 5, 5),
       margin: const EdgeInsets.only(left: 15, right: 15),
-      color: AmptiveColors.whiteColor.withValues(alpha: 0.15),
+      color: AmptiveColors.whiteColor.withOpacity(0.15),
       boxShadow: [
         BoxShadow(
           color: AmptiveColors.black,
@@ -112,13 +114,13 @@ class AmptiveGoLivePinnedMsgNtfctnWidget extends StatelessWidget {
                       child: Text(
                         user.name ?? '',
                         style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                          color: AmptiveColors.whiteColor.withValues(alpha: 0.7)
+                          color: AmptiveColors.whiteColor.withOpacity(0.7)
                         )
                       ),
                     ),
     
                     AmptiveCustomContainer(
-                      color: AmptiveColors.whiteColor.withValues(alpha: 0.2),
+                      color: AmptiveColors.whiteColor.withOpacity(0.2),
                       padding: const EdgeInsets.all(2), radius: 4,
                       child: Text(
                         (role ?? '').toUpperCase(),
@@ -129,7 +131,7 @@ class AmptiveGoLivePinnedMsgNtfctnWidget extends StatelessWidget {
                     ),
                     const Gap(5),
                     AmptiveCustomContainer(
-                      color: AmptiveColors.whiteColor.withValues(alpha: 0.2),
+                      color: AmptiveColors.whiteColor.withOpacity(0.2),
                       padding: const EdgeInsets.all(2), radius: 4,
                       child: Row(
                         children: [

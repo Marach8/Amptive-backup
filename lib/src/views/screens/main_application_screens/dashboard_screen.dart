@@ -7,8 +7,8 @@ import 'package:amptive/src/views/widgets/other_widgets/main_application_widgets
 import 'package:amptive/src/views/widgets/other_widgets/main_application_widgets/widgets_in_home_view/main_home_view_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
 import '../../../services/go_live_service/go_live_service.dart';
+import 'sub_views/go_live_view/go_live_cohost_view.dart';
 import 'sub_views/go_live_view/go_live_host_view.dart';
 
 
@@ -24,12 +24,12 @@ class AmptiveDashboardScreen extends StatelessWidget {
             return IndexedStack(
               index: index,
               children: [
-                //const AmptiveHomeViewWidget(),
+                const AmptiveHomeViewWidget(),
                 const AmptiveDiscoverViewWidget(),
                 AmptiveGoLiveAudienceView(goLiveHost: getHostList().first),
-                // const AmptiveGoLiveCohostView(),
+                //const AmptiveGoLiveCohostView(),
                 AmptiveGoLiveHostView(goLiveHost: getHostList().first),
-                Container(color: Colors.green,),
+                //Container(color: Colors.green,),
               ]
             );
           }

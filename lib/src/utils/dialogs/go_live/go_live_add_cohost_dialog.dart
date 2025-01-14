@@ -66,12 +66,12 @@ final showSuffixIconNotifier = ValueNotifier(false);
                         child: Platform.isAndroid
                             ? Icon(
                                 Icons.keyboard_arrow_down,
-                                color: AmptiveColors.whiteColor.withValues(alpha:0.6),
+                                color: AmptiveColors.whiteColor.withOpacity(0.6),
                               )
                             : AmptiveCustomContainer(
                                 margin: const EdgeInsets.symmetric(vertical: 10),
                                 radius: 5, height: 4, width: 30,
-                                color: AmptiveColors.whiteColor.withValues(alpha:0.6),
+                                color: AmptiveColors.whiteColor.withOpacity(0.6),
                                 child: const SizedBox.shrink(),
                               ),
                         ),
@@ -171,7 +171,7 @@ final showSuffixIconNotifier = ValueNotifier(false);
                                         return AmptiveCustomContainer(
                                           alignment: Alignment.center,
                                           margin: const EdgeInsets.only(right: 15),
-                                          border: Border.all(color: AmptiveColors.whiteColor.withValues(alpha: 0.4)),
+                                          border: Border.all(color: AmptiveColors.whiteColor.withOpacity(0.4)),
                                           height: 43, width: 43, radius: 30,
                                           child: Text(
                                             (index + 1).toString(),

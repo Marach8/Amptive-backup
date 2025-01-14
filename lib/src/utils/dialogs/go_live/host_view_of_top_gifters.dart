@@ -30,14 +30,14 @@ import 'dart:developer' as marach show log;
 Future<void> showHostViewOfTopGiftersDialog(BuildContext context) async {
 
   return await showModalBottomSheet(
-      backgroundColor: AmptiveColors.whiteColor.withValues(alpha: 0.08),
+      backgroundColor: AmptiveColors.whiteColor.withOpacity(0.08),
       constraints: BoxConstraints.expand(
         height: AmptiveHelperFunctions.getScreenHeight(context) * 0.86
       ),
       context: context,
       isScrollControlled: true,
       useSafeArea: true,
-      barrierColor: AmptiveColors.black.withValues(alpha: 0.6),
+      barrierColor: AmptiveColors.black.withOpacity(0.6),
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.only(
         topLeft: Radius.circular(50), topRight: Radius.circular(50),
@@ -68,12 +68,12 @@ Future<void> showHostViewOfTopGiftersDialog(BuildContext context) async {
                       child: Platform.isAndroid
                           ? Icon(
                               Icons.keyboard_arrow_down,
-                              color: AmptiveColors.whiteColor.withValues(alpha:0.6),
+                              color: AmptiveColors.whiteColor.withOpacity(0.6),
                             )
                           : AmptiveCustomContainer(
                               margin: const EdgeInsets.symmetric(vertical: 10),
                               radius: 5, height: 4, width: 30,
-                              color: AmptiveColors.whiteColor.withValues(alpha:0.6),
+                              color: AmptiveColors.whiteColor.withOpacity(0.6),
                               child: const SizedBox.shrink(),
                             ),
                       ),
@@ -174,7 +174,7 @@ class AmptiveGifterWidget extends StatelessWidget {
               ),
             ) : AmptiveCirceAvatarWidget(
               diameter: 5,
-              color: AmptiveColors.whiteColor.withValues(alpha: 0.4),
+              color: AmptiveColors.whiteColor.withOpacity(0.4),
               child: const SizedBox.shrink(),
             ),
             const Gap(5),

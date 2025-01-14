@@ -16,7 +16,7 @@ class AmptiveLoadingIndicatorWidget extends StatelessWidget {
       height: size, width: size,
       child: CircularProgressIndicator(
         color: color ?? AmptiveColors.brandBlue,
-        backgroundColor: AmptiveColors.brandBlue.withValues(alpha: 0.5),
+        backgroundColor: AmptiveColors.brandBlue.withOpacity(0.5),
         strokeWidth: 3,
       ),
     );

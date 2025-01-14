@@ -73,7 +73,7 @@ class AmptiveLiveViewHeaderWidget extends StatelessWidget {
           /// The default is for the host view. provide the exitIcon when calling for other views
           child: exitIcon ?? AmptiveCustomContainer(
             onTap: () => context.read<AmptiveNavBarBloc>().goToPage(0),
-            color: AmptiveColors.notifRed.withValues(alpha: 0.3),
+            color: AmptiveColors.notifRed.withOpacity(0.3),
             height: 35, width: 35, boxShape: BoxShape.circle,
             boxShadow: [
               BoxShadow(
@@ -128,7 +128,7 @@ class AmptiveLiveViewHeaderWidget extends StatelessWidget {
                 AmptiveCustomContainer(
                   padding: const EdgeInsets.all(5),
                   radius: 30,
-                  color: AmptiveColors.whiteColor.withValues(alpha: 0.1),
+                  color: AmptiveColors.whiteColor.withOpacity(0.1),
                   child: Row(
                     children: [
                       const Icon(Iconsax.user, size: 15),

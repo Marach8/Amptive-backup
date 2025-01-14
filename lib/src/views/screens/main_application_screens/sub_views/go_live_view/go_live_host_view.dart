@@ -103,7 +103,7 @@ class _AmptiveGoLiveHostViewState extends State<AmptiveGoLiveHostView> {
                   onTap: (){},
                   margin: const EdgeInsets.only(left: 15),
                   padding: const EdgeInsets.fromLTRB(10, 5, 10, 5), radius: 30,
-                  color: AmptiveColors.whiteColor.withValues(alpha: 0.1),
+                  color: AmptiveColors.whiteColor.withOpacity(0.1),
                   child: Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
@@ -123,7 +123,7 @@ class _AmptiveGoLiveHostViewState extends State<AmptiveGoLiveHostView> {
                     ],
                   ),
                 ),
-              ),
+             ),
 
               const Gap(10),          
           
@@ -270,7 +270,7 @@ class _AmptiveGoLiveHostViewState extends State<AmptiveGoLiveHostView> {
                           duration: const Duration(milliseconds: 500),
                           child: AmptiveCustomContainer(
                             onTap: () => _scrollToBottom(),
-                            color: AmptiveColors.whiteColor.withValues(alpha:0.1),
+                            color: AmptiveColors.whiteColor.withOpacity(0.1),
                             height: 35, width: 35,
                             boxShape: BoxShape.circle,
                             child: const Icon(Icons.keyboard_double_arrow_down),
@@ -302,7 +302,7 @@ class _AmptiveGoLiveHostViewState extends State<AmptiveGoLiveHostView> {
                         controller: TextEditingController(),
                         disableBlueBorder: true,
                         cursorHeight: 20,
-                        cursorColor: AmptiveColors.whiteColor.withValues(alpha: 0.6),
+                        cursorColor: AmptiveColors.whiteColor.withOpacity(0.6),
                         constraints: const BoxConstraints(maxHeight: 40),
                         contentPadding: const EdgeInsets.fromLTRB(16, 0, 16, 0),
                         hintText: AmptiveOtherStrings.COMMENT,
@@ -310,6 +310,7 @@ class _AmptiveGoLiveHostViewState extends State<AmptiveGoLiveHostView> {
                     )
                   );
                 }
+
                 return AmptiveCustomContainer(
                   onTap: () async{
                     if(index == 5){
@@ -332,7 +333,7 @@ class _AmptiveGoLiveHostViewState extends State<AmptiveGoLiveHostView> {
                     }
                   },
                   margin: index != 5 ? EdgeInsets.only(right: 5.w) : EdgeInsets.zero,
-                  color: AmptiveColors.whiteColor.withValues(alpha: 0.1),
+                  color: AmptiveColors.whiteColor.withOpacity(0.1),
                   padding: const EdgeInsets.all(5),
                   radius: 30, child: widget
                 );

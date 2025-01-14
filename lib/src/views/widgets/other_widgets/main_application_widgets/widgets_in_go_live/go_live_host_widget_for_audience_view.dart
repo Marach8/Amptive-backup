@@ -32,21 +32,22 @@ class AmptiveLiveHostAndCoHostWidgetForAudienceView extends StatelessWidget {
 
   @override
   Widget build(context) {
-    return GestureDetector(
-      onTap: (){
-        if(hostOrCohost != null){
-          showFollowHostOrCohostDialog(context: context, host: hostOrCohost!);
-        }
-      },
-      child: AnimatedPositioned(
-        duration: const Duration(seconds: 1),
-        curve: Curves.decelerate,
-        top: top, left: left, right: right, bottom: bottom,
-        child: hostOrCohost?.host.profilePicture == null ? const SizedBox() : Column(
-          mainAxisSize: MainAxisSize.min,
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            Stack(
+    return AnimatedPositioned(
+      duration: const Duration(seconds: 1),
+      curve: Curves.decelerate,
+      top: top, left: left, right: right, bottom: bottom,
+      child: hostOrCohost?.host.profilePicture == null ? const SizedBox() : Column(
+        mainAxisSize: MainAxisSize.min,
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          GestureDetector(
+            onTap: () {
+              if(hostOrCohost != null){
+                showFollowHostOrCohostDialog(context: context, host: hostOrCohost!);
+              }
+              onTap(hostOrCohost);
+            },
+            child: Stack(
               clipBehavior: Clip.none,
               alignment: Alignment.center,
               children: [
@@ -71,37 +72,37 @@ class AmptiveLiveHostAndCoHostWidgetForAudienceView extends StatelessWidget {
                 ),
               ],
             ),
-            Gap(5.h),
-            SizedBox(
-              width: 80.w,
-              child: Text(
-                hostOrCohost?.host.name ?? '',
-                textAlign: TextAlign.center,
-                style: Theme.of(context).textTheme.titleSmall,
-              ),
+          ),
+          Gap(5.h),
+          SizedBox(
+            width: 80.w,
+            child: Text(
+              hostOrCohost?.host.name ?? '',
+              textAlign: TextAlign.center,
+              style: Theme.of(context).textTheme.titleSmall,
             ),
-            Gap(5.h),
-            isHost ? AmptiveCustomContainer(
-              padding: const EdgeInsets.fromLTRB(4, 2, 4, 2),
-              radius: 5, 
-              gradient: LinearGradient(
-                begin: Alignment.topCenter,
-                end: Alignment.bottomCenter,
-                colors: [
-                  AmptiveColors.orangeColor1,
-                  AmptiveColors.orangeGradientColorB
-                ]
-              ),
-              child: Text(
-                AmptiveOtherStrings.HOST.toUpperCase(),
-                style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                  fontSize: AmptiveFontSizes.size10,
-                )
-              ),
-            ) : const SizedBox.shrink()
-          ],
-        )
-      ),
+          ),
+          Gap(5.h),
+          isHost ? AmptiveCustomContainer(
+            padding: const EdgeInsets.fromLTRB(4, 2, 4, 2),
+            radius: 5, 
+            gradient: LinearGradient(
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+              colors: [
+                AmptiveColors.orangeColor1,
+                AmptiveColors.orangeGradientColorB
+              ]
+            ),
+            child: Text(
+              AmptiveOtherStrings.HOST.toUpperCase(),
+              style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                fontSize: AmptiveFontSizes.size10,
+              )
+            ),
+          ) : const SizedBox.shrink()
+        ],
+      )
     );
   }
 }

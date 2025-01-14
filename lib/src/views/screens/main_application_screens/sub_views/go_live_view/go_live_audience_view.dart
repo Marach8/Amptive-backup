@@ -94,7 +94,7 @@ class _AmptiveGoLiveAudienceViewState extends State<AmptiveGoLiveAudienceView> {
               AmptiveLiveViewHeaderWidget(
                 exitIcon: AmptiveCustomContainer(
                 onTap: () => context.read<AmptiveNavBarBloc>().goToPage(0),
-                color: AmptiveColors.whiteColor.withValues(alpha: 0.1),
+                color: AmptiveColors.whiteColor.withOpacity(0.1),
                 height: 35, width: 35, boxShape: BoxShape.circle,
                 boxShadow: [
                   BoxShadow(
@@ -114,7 +114,7 @@ class _AmptiveGoLiveAudienceViewState extends State<AmptiveGoLiveAudienceView> {
                   onTap: (){},
                   margin: const EdgeInsets.only(left: 15),
                   padding: const EdgeInsets.fromLTRB(10, 5, 10, 5), radius: 30,
-                  color: AmptiveColors.whiteColor.withValues(alpha: 0.1),
+                  color: AmptiveColors.whiteColor.withOpacity(0.1),
                   child: Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
@@ -214,17 +214,6 @@ class _AmptiveGoLiveAudienceViewState extends State<AmptiveGoLiveAudienceView> {
                               final hostAnd3Cohosts = listOfHosts.where((a) => a.host.profilePicture != null).length == 3;
                               final hostAnd4Cohosts = listOfHosts.where((a) => a.host.profilePicture != null).length == 4;
                               final hostAnd5Cohosts = listOfHosts.every((a) => a.host.profilePicture != null);
-
-                              marach.log('only Host is $onlyHost');
-                              marach.log('only HostAnd cohost is $hostAndACohost');
-                              marach.log('only HostAnd 2cohost is $hostAnd2Cohosts');
-                              marach.log('only HostAnd 3cohost is $hostAnd3Cohosts');
-                              marach.log('only HostAnd 4cohost is $hostAnd4Cohosts');
-                              marach.log('only HostAnd 5cohost is $hostAnd5Cohosts');
-
-                              for(HostWithNotifier i in listOfHosts){
-                                marach.log(i.host.profilePicture ?? 'nothing');
-                              }
                 
                               return Stack(
                                 alignment: Alignment.center,
@@ -291,7 +280,7 @@ class _AmptiveGoLiveAudienceViewState extends State<AmptiveGoLiveAudienceView> {
                           duration: const Duration(milliseconds: 500),
                           child: AmptiveCustomContainer(
                             onTap: () => _scrollToBottom(),
-                            color: AmptiveColors.whiteColor.withValues(alpha:0.1),
+                            color: AmptiveColors.whiteColor.withOpacity(0.1),
                             height: 35, width: 35,
                             boxShape: BoxShape.circle,
                             child: const Icon(Icons.keyboard_double_arrow_down),
