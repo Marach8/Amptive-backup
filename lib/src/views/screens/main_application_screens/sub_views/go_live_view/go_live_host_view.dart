@@ -1,12 +1,15 @@
 import 'package:amptive/src/bloc/main_app/go_live_bloc/host_view/notifications_bloc.dart';
 import 'package:amptive/src/bloc/main_app/nav_bar_bloc.dart';
+import 'package:amptive/src/models/generic_response_model.dart';
 import 'package:amptive/src/models/host.dart';
 import 'package:amptive/src/models/user_model.dart';
 import 'package:amptive/src/routes.dart';
 import 'package:amptive/src/utils/constants/font_sizes.dart';
 import 'package:amptive/src/utils/constants/strings/image_strings.dart';
 import 'package:amptive/src/utils/dialogs/add_co_host_dialog.dart';
+import 'package:amptive/src/utils/dialogs/app_notification_dialog.dart';
 import 'package:amptive/src/utils/helpers/helper_functions/other_functions.dart';
+import 'package:amptive/src/views/widgets/animation_widgets/common_animation_widgets/animated_switcher.dart';
 import 'package:amptive/src/views/widgets/animation_widgets/horiz_slider_animation.dart';
 import 'package:amptive/src/views/widgets/common_widgets/annotated_region__widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/app_bar_widget.dart';
@@ -49,12 +52,14 @@ class AmptiveGoLiveHostView extends StatefulWidget {
 class _AmptiveGoLiveHostViewState extends State<AmptiveGoLiveHostView> {
   late GoLiveService service;
   late ScrollController _scrollController;
+  late ValueNotifier<bool> _scroll2BottomNotifier;
 
   @override 
   void initState(){
     super.initState();
     service = GetIt.I<GoLiveService>();
     service.initFormControl();
+    _scroll2BottomNotifier = ValueNotifier(false);
     _scrollController = ScrollController();
     _scrollController.addListener(_scrollListener);
   }
@@ -62,18 +67,19 @@ class _AmptiveGoLiveHostViewState extends State<AmptiveGoLiveHostView> {
   @override 
   void dispose(){
     service.dispose();
+    _scroll2BottomNotifier.dispose();
     super.dispose();
   }
 
 
   void _scrollListener() {
     if (_scrollController.position.userScrollDirection == ScrollDirection.forward) {
-      service.scroll2Bottom.value = true;
+      _scroll2BottomNotifier.value = true;
     }
     
     else if (_scrollController.position.atEdge &&
       _scrollController.position.pixels != 0) {
-      service.scroll2Bottom.value = false;
+      _scroll2BottomNotifier.value = false;
     }
   }
 
@@ -263,17 +269,20 @@ class _AmptiveGoLiveHostViewState extends State<AmptiveGoLiveHostView> {
                     ),
           
                     AmptiveRebuilderWidget(
-                      notifier: service.scroll2Bottom,
+                      notifier: _scroll2BottomNotifier,
                       builder: (_, showIcon, __) {
-                        return AnimatedPositioned(
-                          right: showIcon ? 15 : -50, bottom: 70,
-                          duration: const Duration(milliseconds: 500),
-                          child: AmptiveCustomContainer(
-                            onTap: () => _scrollToBottom(),
-                            color: AmptiveColors.whiteColor.withOpacity(0.1),
-                            height: 35, width: 35,
-                            boxShape: BoxShape.circle,
-                            child: const Icon(Icons.keyboard_double_arrow_down),
+                        return Positioned(
+                          bottom: 70, right: 15,
+                          child: AmptiveScalingAnimatedSwitcherWidget(
+                            duration: 500,
+                            child: showIcon ? AmptiveCustomContainer(
+                              key: const ValueKey(1),
+                              onTap: () => _scrollToBottom(),
+                              color: AmptiveColors.whiteColor.withOpacity(0.1),
+                              height: 35, width: 35,
+                              boxShape: BoxShape.circle,
+                              child: const Icon(Icons.keyboard_double_arrow_down),
+                            ) : const SizedBox.shrink(key: ValueKey(2)),
                           ),
                         );
                       }
@@ -314,7 +323,17 @@ class _AmptiveGoLiveHostViewState extends State<AmptiveGoLiveHostView> {
                 return AmptiveCustomContainer(
                   onTap: () async{
                     if(index == 5){
-                      await showGoLiveHostAddCoHostDialog(context: context);
+                      final sendInvite = await showGoLiveHostAddCoHostDialog(context: context);
+                      if(sendInvite ?? false){
+                        showSuccessOrFailureNotification(
+                          response: GenericResponseModel(
+                            isSuccessful: true,
+                            responseMessage: AmptiveOtherStrings.COHOST_INVITE_SENT
+                          ),
+                          bgColor: AmptiveColors.notifBg,
+                          child: const Icon(Icons.check_circle)
+                        );
+                      }
                     }
                     if(context.mounted && index == 0){
                       context.read<AmptiveGoLiveNotificationBloc>().addTalkingNotification(

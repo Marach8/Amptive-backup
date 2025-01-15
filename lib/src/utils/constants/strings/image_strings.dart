@@ -30,6 +30,8 @@ class AmptiveImageStrings{
   static const GIFT_ICON = '$_generalSvgImagePath/gift.svg';
   static const MICROPHONE = '$_generalSvgImagePath/Microphone.svg';
   static const USER_FOLLOW = '$_generalSvgImagePath/user-check.svg';
+  static const KICK_USER_OUT = '$_generalSvgImagePath/user out.svg';
+  static const USER_ICON = '$_generalSvgImagePath/user.svg';
 
   static const jpeg2 = '$_generalJpegImagePath/welcomeAvatar2.jpeg';
   static const jpeg1 = '$_generalJpegImagePath/welcomeAvatar1.jpeg';

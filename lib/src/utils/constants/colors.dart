@@ -49,6 +49,8 @@ class AmptiveColors {
 
   static Color get notifRed => const Color(0xFFEC0404);
 
+  static Color get notifBg => const Color(0xFF303439);
+
   static Color get successColor => const Color(0xFF54C981);
 
   static Color get orangeColor1 => const Color(0XFFF91880);

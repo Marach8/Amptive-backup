@@ -16,11 +16,11 @@ class AmptiveSubscriptionBloc extends Bloc<SubscriptionEvent, SubscriptionState>
       emit(InitialSubState());
     });
 
-    // on<SubscribeEvent>((_, emit) async{
-    //   emit(SubscriptionLoadingState());
-    //   await Future.delayed(const Duration(seconds: 2));
-    //   emit(SubscribedState());
-    // });
+    on<ShouldSubscribeEvent>((_, emit) async{
+      emit(SubscriptionLoadingState());
+      await Future.delayed(const Duration(seconds: 2));
+      emit(SubscribedState());
+    });
   }
 
 }
@@ -42,10 +42,10 @@ class InitialSubState extends SubscriptionState{}
 
 abstract class SubscriptionEvent{}
 
-class SubscribeEvent extends SubscriptionEvent{}
+class ShouldSubscribeEvent extends SubscriptionEvent{}
 
 class UnSubscribeEvent extends SubscriptionEvent{}
 
-class ReadyToSubscribeEvent extends SubscribeEvent{}
+class ReadyToSubscribeEvent extends SubscriptionEvent{}
 
-class Restet2InitialSubStateEvent extends SubscribeEvent{}
+class Restet2InitialSubStateEvent extends SubscriptionEvent{}

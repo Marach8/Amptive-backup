@@ -30,7 +30,7 @@ import 'dart:developer' as marach show log;
 Future<void> showHostViewOfTopGiftersDialog(BuildContext context) async {
 
   return await showModalBottomSheet(
-      backgroundColor: AmptiveColors.whiteColor.withOpacity(0.08),
+      backgroundColor: AmptiveColors.black4,
       constraints: BoxConstraints.expand(
         height: AmptiveHelperFunctions.getScreenHeight(context) * 0.86
       ),
@@ -48,10 +48,10 @@ Future<void> showHostViewOfTopGiftersDialog(BuildContext context) async {
             Positioned.fill(
               child: ClipRRect(
                 borderRadius: const BorderRadius.only(
-                  topLeft: Radius.circular(20), topRight: Radius.circular(20),
+                  topLeft: Radius.circular(15), topRight: Radius.circular(15),
                 ),
                 child: BackdropFilter(
-                  filter: ImageFilter.blur(sigmaX: 50, sigmaY: 50),
+                  filter: ImageFilter.blur(sigmaX: 1, sigmaY: 1),
                   child: const SizedBox.shrink()
                 ),
               ),

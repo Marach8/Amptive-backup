@@ -1,8 +1,10 @@
+import 'package:amptive/src/models/generic_response_model.dart';
 import 'package:amptive/src/models/host.dart';
 import 'package:amptive/src/routes.dart';
 import 'package:amptive/src/utils/constants/font_sizes.dart';
 import 'package:amptive/src/utils/constants/strings/image_strings.dart';
 import 'package:amptive/src/utils/dialogs/add_co_host_dialog.dart';
+import 'package:amptive/src/utils/dialogs/app_notification_dialog.dart';
 import 'package:amptive/src/utils/helpers/helper_functions/other_functions.dart';
 import 'package:amptive/src/views/widgets/animation_widgets/horiz_slider_animation.dart';
 import 'package:amptive/src/views/widgets/common_widgets/annotated_region__widget.dart';
@@ -30,6 +32,7 @@ import '../../../../../utils/constants/colors.dart';
 import '../../../../../utils/constants/strings/other_strings.dart';
 import 'dart:developer' as marach show log;
 import '../../../../../utils/dialogs/go_live/follow_or_subscribe_dialog.dart';
+import '../../../../widgets/animation_widgets/common_animation_widgets/animated_switcher.dart';
 import '../../../../widgets/other_widgets/main_application_widgets/widgets_in_go_live/go_live_header_widget.dart';
 import '../../../../widgets/other_widgets/main_application_widgets/widgets_in_go_live/go_live_host_widget_for_host_view.dart';
 import '../../../../widgets/other_widgets/main_application_widgets/widgets_in_go_live/go_live_host_widget_for_audience_view.dart';
@@ -46,12 +49,14 @@ class AmptiveGoLiveAudienceView extends StatefulWidget {
 class _AmptiveGoLiveAudienceViewState extends State<AmptiveGoLiveAudienceView> {
   late GoLiveService service;
   late ScrollController _scrollController;
+  late ValueNotifier<bool> _scroll2BottomNotifier;
 
   @override 
   void initState(){
     super.initState();
     service = GetIt.I<GoLiveService>();
     service.initFormControl();
+    _scroll2BottomNotifier = ValueNotifier(false);
     _scrollController = ScrollController();
     _scrollController.addListener(_scrollListener);
   }
@@ -65,10 +70,10 @@ class _AmptiveGoLiveAudienceViewState extends State<AmptiveGoLiveAudienceView> {
 
   void _scrollListener() {
     if (_scrollController.position.userScrollDirection == ScrollDirection.forward) {
-      service.scroll2Bottom.value = true;
+      _scroll2BottomNotifier.value = true;
     } 
     else if (_scrollController.position.atEdge && _scrollController.position.pixels != 0) {
-      service.scroll2Bottom.value = false;
+      _scroll2BottomNotifier.value = false;
     }
   }
 
@@ -273,17 +278,20 @@ class _AmptiveGoLiveAudienceViewState extends State<AmptiveGoLiveAudienceView> {
                     ),
           
                     AmptiveRebuilderWidget(
-                      notifier: service.scroll2Bottom,
+                      notifier: _scroll2BottomNotifier,
                       builder: (_, showIcon, __) {
-                        return AnimatedPositioned(
-                          right: showIcon ? 15 : -50, bottom: 70,
-                          duration: const Duration(milliseconds: 500),
-                          child: AmptiveCustomContainer(
-                            onTap: () => _scrollToBottom(),
-                            color: AmptiveColors.whiteColor.withOpacity(0.1),
-                            height: 35, width: 35,
-                            boxShape: BoxShape.circle,
-                            child: const Icon(Icons.keyboard_double_arrow_down),
+                        return Positioned(
+                          bottom: 70, right: 15,
+                          child: AmptiveScalingAnimatedSwitcherWidget(
+                            duration: 500,
+                            child: showIcon ? AmptiveCustomContainer(
+                              key: const ValueKey(1),
+                              onTap: () => _scrollToBottom(),
+                              color: AmptiveColors.whiteColor.withOpacity(0.1),
+                              height: 35, width: 35,
+                              boxShape: BoxShape.circle,
+                              child: const Icon(Icons.keyboard_double_arrow_down),
+                            ) : const SizedBox.shrink(key: ValueKey(2)),
                           ),
                         );
                       }
@@ -322,16 +330,24 @@ class _AmptiveGoLiveAudienceViewState extends State<AmptiveGoLiveAudienceView> {
                 }
                 return AmptiveCustomContainer(
                   onTap: (){
-                    final host = HostWithNotifier(host: Host.empty());
-                    if(index == 0){
-                      service.hostAddCohost(host, index + 1);
-                    }
-                    else if(index == 5){
-                      service.hostRemoveCohost(host, index + 1);
-                    }
+                    // final host = HostWithNotifier(host: Host.empty());
+                    // if(index == 0){
+                    //   service.hostAddCohost(host, index + 1);
+                    // }
+                    // else if(index == 5){
+                    //   service.hostRemoveCohost(host, index + 1);
+                    // }
                     // else if(index == 2){
                     //   showFollowHostOrCohostDialog(context: context, host: getHostList().first);
                     // }
+                    print(MediaQuery.of(context).size.height);
+                    showSuccessOrFailureNotification(
+                      response: GenericResponseModel(
+                        isSuccessful: false,
+                        responseMessage: 'You have been kicked out of the live session'
+                      ),
+                      child: const AmptiveImageLoaderWidget(imagePath: AmptiveImageStrings.KICK_USER_OUT)
+                    );
                   },
                   margin: index != 5 ? EdgeInsets.only(right: 5.w) : EdgeInsets.zero,
                   color: AmptiveColors.whiteColor.withOpacity(0.1),

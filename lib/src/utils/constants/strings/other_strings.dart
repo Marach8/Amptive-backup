@@ -122,6 +122,10 @@ class AmptiveOtherStrings{
   static const FOLLOWING = 'Following';
   static const FOLLOW = 'Follow';
   static const UNSUBSCRIBE = 'Unsubscribe';
+  static const COHOST_INVITE_SENT = 'Co-host invitation sent';
+  static const TOP_LISTENERS = 'Top Listeners';
+  static const TOP_LISTENERS_DESC = 'Top listeners are ranked by their level of interaction during the live session.';
+  static const LISTENERS = 'Listeners';
 
   static const TECHNOLOGY = 'Technology';
   static const gotATicketId = 'Got a Ticket ID? (coming soon)';
@@ -144,6 +148,8 @@ class AmptiveOtherStrings{
   static const SEE_COMMUNITIES = 'See communities on Amptive';
   static const RECENT_SEARCHES = 'Recent Searches';
   static const CLEAR = 'Clear';
+  static const KICK_OUT_LISTENER = 'Kickout listener';
+  static const KICK_OUT_DESC = 'This user will be unable to join this current live session but can join future live sessions';
   static const GIFTED_AMNT = 'Gifted Amount';
   static const DISCOVER_COMMUNITIES = 'Discover communities with interesting shows and events';
 
@@ -169,6 +175,7 @@ class AmptiveOtherStrings{
   static const TOP_GIFTERS_DESC = 'Gifters are ranked base on the total amount they have contributed to the host during live sessions.';
   static const TOP_GIFTERS = 'Top Gifters';
   static const SEARCH_4_COHOSTS = 'Search for co-hosts';
+  static const SEARCH_4_LISTENERS = 'Search for listeners';
   static const SEARCH_4_HASHTAGS = 'Search for hashtags';
   static const SUGGESTIONS = 'Suggestions';
   static const NO_SUGGESTIONS = 'No Suggestions';

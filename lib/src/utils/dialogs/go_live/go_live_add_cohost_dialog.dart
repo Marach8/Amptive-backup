@@ -25,7 +25,7 @@ import '../../constants/strings/other_strings.dart';
 import '../add_co_host_dialog.dart';
 import 'dart:developer' as marach show log;
 
-Future<void> showGoLiveHostAddCoHostDialog({
+Future<bool?> showGoLiveHostAddCoHostDialog({
   required BuildContext context,
 }) async {
 final focusNode = FocusNode();
@@ -38,7 +38,7 @@ final showSuffixIconNotifier = ValueNotifier(false);
       : showSuffixIconNotifier.value = false
   );
 
-  return await showModalBottomSheet(
+  return await showModalBottomSheet<bool>(
       backgroundColor: AmptiveColors.brandBlack,
       constraints: BoxConstraints.expand(
         height: AmptiveHelperFunctions.getScreenHeight(context)
@@ -62,7 +62,7 @@ final showSuffixIconNotifier = ValueNotifier(false);
                   children: [
                     Center(
                       child: GestureDetector(
-                        onTap: () => context.pop(),
+                        onTap: () => context.pop(false),
                         child: Platform.isAndroid
                             ? Icon(
                                 Icons.keyboard_arrow_down,
@@ -266,7 +266,7 @@ final showSuffixIconNotifier = ValueNotifier(false);
                     );
                     return AmptiveElevatedButtonWidget(
                       margin: EdgeInsets.zero,
-                      onPressed: shouldActivateBtn ? () => context.pop() : null,
+                      onPressed: shouldActivateBtn ? () => context.pop(true) : null,
                       buttonTitle: AmptiveOtherStrings.SEND_INVITE,
                       bgColor: AmptiveColors.whiteColor,
                       fgColor: AmptiveColors.black,

@@ -29,6 +29,7 @@ import '../../../../../utils/constants/colors.dart';
 import '../../../../../utils/constants/strings/other_strings.dart';
 import 'dart:developer' as marach show log;
 import '../../../../../utils/dialogs/go_live/audience_view_of_to_gifters.dart';
+import '../../../../../utils/dialogs/go_live/host_view_of_listeners_dialog.dart';
 import 'go_live_host_widget_for_host_view.dart';
 
 
@@ -126,12 +127,20 @@ class AmptiveLiveViewHeaderWidget extends StatelessWidget {
                 Gap(10.w),
                     
                 AmptiveCustomContainer(
+                  onTap: (){
+                    if(exitIcon == null){
+                      showListenersDialog(context: context);
+                    }
+                    else{
+                      showListenersDialog(context: context, enableKickOut: false);
+                    }
+                  },
                   padding: const EdgeInsets.all(5),
                   radius: 30,
                   color: AmptiveColors.whiteColor.withOpacity(0.1),
                   child: Row(
                     children: [
-                      const Icon(Iconsax.user, size: 15),
+                      const AmptiveImageLoaderWidget(imagePath: AmptiveImageStrings.USER_ICON),
                       Text(
                         "144k",
                         style: Theme.of(context).textTheme.bodyMedium?.copyWith(

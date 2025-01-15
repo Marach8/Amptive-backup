@@ -6,7 +6,7 @@ import 'package:amptive/src/bloc/main_app/go_live_bloc/host_view/cohosts_display
 import 'package:amptive/src/utils/constants/colors.dart';
 import 'package:amptive/src/utils/constants/font_sizes.dart';
 import 'package:amptive/src/utils/constants/strings/image_strings.dart';
-import 'package:amptive/src/utils/dialogs/alert_dialog.dart';
+import 'package:amptive/src/utils/dialogs/confirmation_alert_dialog.dart';
 import 'package:amptive/src/utils/helpers/extensions/string_extensions.dart';
 import 'package:amptive/src/utils/helpers/helper_functions/other_functions.dart';
 import 'package:amptive/src/views/widgets/animation_widgets/common_animation_widgets/animated_crossfade_widget.dart';
@@ -34,269 +34,270 @@ Future<void> showFollowHostOrCohostDialog({
   required HostWithNotifier host
 }) async {
   return await showModalBottomSheet(
-      backgroundColor: AmptiveColors.black4,
-      //backgroundColor: AmptiveColors.whiteColor.withValues(alpha: 0.1),
-      // constraints: BoxConstraints.expand(
-      //   height: AmptiveHelperFunctions.getScreenHeight(context) * 0.86
-      // ),
-      context: context,
-      isScrollControlled: true,
-      useSafeArea: true,
-      barrierColor: AmptiveColors.black.withOpacity(0.6),
-      shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.only(
-        topLeft: Radius.circular(15), topRight: Radius.circular(15),
-      )),
-      builder: (context) {
-        return ClipRRect(
-          borderRadius: const BorderRadius.only(
-            topLeft: Radius.circular(15), topRight: Radius.circular(15),
-          ),
-          child: BackdropFilter(
-            filter: ImageFilter.blur(sigmaX: 1, sigmaY: 1),
-            child: AmptiveCustomContainer(
-              width: AmptiveHelperFunctions.getScreenWidth(context),
-              padding: const EdgeInsets.fromLTRB(15, 10, 15, 10),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Center(
-                    child: GestureDetector(
-                      onTap: () => context.pop(),
-                      child: Platform.isAndroid
-                          ? Icon(
-                              Icons.keyboard_arrow_down,
-                              color: AmptiveColors.whiteColor.withOpacity(0.6),
-                            )
-                          : AmptiveCustomContainer(
-                              margin: const EdgeInsets.symmetric(vertical: 10),
-                              radius: 5, height: 4, width: 30,
-                              color: AmptiveColors.whiteColor.withOpacity(0.6),
-                              child: const SizedBox.shrink(),
+    backgroundColor: AmptiveColors.black4,
+    context: context,
+    isScrollControlled: true,
+    useSafeArea: true,
+    barrierColor: AmptiveColors.black.withOpacity(0.6),
+    shape: const RoundedRectangleBorder(
+      borderRadius: BorderRadius.only(
+      topLeft: Radius.circular(15), topRight: Radius.circular(15),
+    )),
+    builder: (context) {
+      return ClipRRect(
+        borderRadius: const BorderRadius.only(
+          topLeft: Radius.circular(15), topRight: Radius.circular(15),
+        ),
+        child: BackdropFilter(
+          filter: ImageFilter.blur(sigmaX: 1, sigmaY: 1),
+          child: AmptiveCustomContainer(
+            width: AmptiveHelperFunctions.getScreenWidth(context),
+            padding: const EdgeInsets.fromLTRB(15, 10, 15, 10),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Center(
+                  child: GestureDetector(
+                    onTap: () => context.pop(),
+                    child: Platform.isAndroid
+                        ? Icon(
+                            Icons.keyboard_arrow_down,
+                            color: AmptiveColors.whiteColor.withOpacity(0.6),
+                          )
+                        : AmptiveCustomContainer(
+                            margin: const EdgeInsets.symmetric(vertical: 10),
+                            radius: 5, height: 4, width: 30,
+                            color: AmptiveColors.whiteColor.withOpacity(0.6),
+                            child: const SizedBox.shrink(),
+                          ),
+                    ),
+                ),
+                  const Gap(10),
+                  Row(
+                    children: [
+                      AmptiveCircularContainerWithPictureWidget(
+                        imagePath: host.host.profilePicture ?? '',
+                        diameter: 70,
+                      ),
+                      const Gap(10),
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Text(
+                              host.host.name ?? '',
+                              style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                                fontSize: AmptiveFontSizes.size20
+                              ),
                             ),
+                            Text(
+                              host.host.username ?? '',
+                              style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                                color: AmptiveColors.subtitleColor
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
+                      const Gap(50),
+                      GestureDetector(
+                        onTap: (){},
+                        child: const Icon(Icons.more_horiz,),
+                      )
+                    ],
                   ),
-                    const Gap(10),
-                    Row(
-                      children: [
-                        AmptiveCircularContainerWithPictureWidget(
-                          imagePath: host.host.profilePicture ?? '',
-                          diameter: 70,
+                    
+                  const Gap(15),
+                    
+                  Row(
+                    children: [
+                      CustomPaint(
+                        size: const Size(16, 16),
+                        painter: RoundedScallopedPainter(
+                          color: AmptiveColors.dimWhiteColor1
                         ),
-                        const Gap(10),
-                        Expanded(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              Text(
-                                host.host.name ?? '',
-                                style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                                  fontSize: AmptiveFontSizes.size20
-                                ),
-                              ),
-                              Text(
-                                host.host.username ?? '',
-                                style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                                  color: AmptiveColors.subtitleColor
-                                ),
-                              ),
-                            ],
-                          ),
+                        child: Padding(
+                          padding: const EdgeInsets.all(2),
+                          child: Icon(Icons.star, color: AmptiveColors.black, size: 12),
                         ),
-                        const Gap(50),
-                        GestureDetector(
-                          onTap: (){},
-                          child: const Icon(Icons.more_horiz,),
-                        )
-                      ],
-                    ),
-                      
-                    const Gap(15),
-                      
-                    Row(
-                      children: [
-                        CustomPaint(
-                          size: const Size(16, 16),
-                          painter: RoundedScallopedPainter(
-                            color: AmptiveColors.dimWhiteColor1
-                          ),
-                          child: Padding(
-                            padding: const EdgeInsets.all(2),
-                            child: Icon(Icons.star, color: AmptiveColors.black, size: 12),
-                          ),
-                        ),
-                        Text(
-                          '1.1m',
-                          style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                            fontSize: AmptiveFontSizes.size16
-                          ),
-                        ),
-                        const Gap(5),
-                        Text(
-                          AmptiveOtherStrings.FOLLOWERS,
-                          style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                            fontSize: AmptiveFontSizes.size16
-                          ),
-                        ),
-                        const Gap(20),
-                      
-                        CustomPaint(
-                          size: const Size(16, 16),
-                          painter: RoundedScallopedPainter(
-                            color: AmptiveColors.yellowColor
-                          ),
-                          child: Padding(
-                            padding: const EdgeInsets.all(2),
-                            child: Icon(Icons.favorite, color: AmptiveColors.black, size: 12),
-                          ),
-                        ),
-                        Text(
-                          '150k',
-                          style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                            fontSize: AmptiveFontSizes.size16
-                          ),
-                        ),
-                        const Gap(5),
-                        Text(
-                          AmptiveOtherStrings.SUBSCRIBERS,
-                          style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                            fontSize: AmptiveFontSizes.size16
-                          ),
-                        ),
-                      ],
-                    ),
-                      
-                    const Gap(10),
-                      
-                    Text(
-                      maxLines: 2,
-                      'Autho of UNTAMED AND LOVE WARRIOR, Host ofWE CAN DO HARD THINGS Podcast Founder of @together jfjdkfjkdjkajkfdkakkdafdadfjkajkfa',
-                      style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                        fontSize: AmptiveFontSizes.size13,
-                        color: AmptiveColors.subtitleColor.withOpacity(0.76)
                       ),
+                      Text(
+                        '1.1m',
+                        style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                          fontSize: AmptiveFontSizes.size16
+                        ),
+                      ),
+                      const Gap(5),
+                      Text(
+                        AmptiveOtherStrings.FOLLOWERS,
+                        style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                          fontSize: AmptiveFontSizes.size16
+                        ),
+                      ),
+                      const Gap(20),
+                    
+                      CustomPaint(
+                        size: const Size(16, 16),
+                        painter: RoundedScallopedPainter(
+                          color: AmptiveColors.yellowColor
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.all(2),
+                          child: Icon(Icons.favorite, color: AmptiveColors.black, size: 12),
+                        ),
+                      ),
+                      Text(
+                        '150k',
+                        style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                          fontSize: AmptiveFontSizes.size16
+                        ),
+                      ),
+                      const Gap(5),
+                      Text(
+                        AmptiveOtherStrings.SUBSCRIBERS,
+                        style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                          fontSize: AmptiveFontSizes.size16
+                        ),
+                      ),
+                    ],
+                  ),
+                    
+                  const Gap(10),
+                    
+                  Text(
+                    maxLines: 2,
+                    'Author of UNTAMED AND LOVE WARRIOR, Host ofWE CAN DO HARD THINGS Podcast Founder of @together jfjdkfjkdjkajkfdkakkdafdadfjkajkfa',
+                    style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                      fontSize: AmptiveFontSizes.size13,
+                      color: AmptiveColors.subtitleColor.withOpacity(0.76)
                     ),
-                      
-                    const Gap(30),
-                    Row(
-                      children: [
-                        BlocConsumer<AmptiveFollowingBloc, FollowingState>(
-                          listener: (_, state){
-                            if(state is IsFollowingState){
-                              context.read<AmptiveSubscriptionBloc>().add(
-                                ReadyToSubscribeEvent()
-                              );
-                            }
-                            else if(state is IsNotFollowingState){
-                              context.read<AmptiveSubscriptionBloc>().add(
-                                Restet2InitialSubStateEvent()
-                              );
-                            }
-                          },
-                          builder: (_, state) {
-                            final isFollowing = state is IsFollowingState;
-                            final isLoading = state is FollowLoadingState;
-                            final notFollowing = state is IsNotFollowingState;
-
-                            return Flexible(
-                              child: AmptivePlainElevatedBtnWidget(
-                                onPressed: () async{
-                                  if(notFollowing){
-                                    context.read<AmptiveFollowingBloc>().add(ShouldFollowEvent());
-                                    // final shouldProceed = await showConfirmationDialog(
-                                    //   context: context,
-                                    //   title: 'Unfollowing ${host.host.name ?? ''}?',
-                                    //   content: 'Unfollowing will automatically cancell your subscription to their content.',
-                                    //   yesString: 'Unfollow',
-                                    //   noString: AmptiveOtherStrings.CANCEL
-                                    // );
-                                    // if(context.mounted && (shouldProceed ?? false)){
-                                    //   context.read<AmptiveFollowingBloc>().add(ShouldUnFollowEvent());
-                                    // }
-                                  }
-                                  else if(isFollowing){
-                                    final shouldUnfollow = await showConfirmationDialog(
-                                      context: context,
-                                      title: 'Unfollowing ${host.host.name ?? ''}?',
-                                      content: 'Unfollowing will automatically cancell your subscription to their content.',
-                                      yesString: 'Unfollow',
-                                      noString: AmptiveOtherStrings.CANCEL
-                                    );
-                                    if(context.mounted && (shouldUnfollow ?? false)){
-                                      context.read<AmptiveFollowingBloc>().add(ShouldUnFollowEvent());
-                                    }
-                                  }
-                                },
-                                bgColor: AmptiveColors.whiteColor,
-                                fgColor: AmptiveColors.brandBlack,
-                                buttonTitle:notFollowing ? AmptiveOtherStrings.FOLLOW : '',
-                                child: isFollowing ? const AmptiveImageLoaderWidget(
-                                  imagePath: AmptiveImageStrings.USER_FOLLOW
-                                ): isLoading ? const AmptiveLoadingIndicatorWidget(size: 20,) : null
-                              ),
+                  ),
+                    
+                  const Gap(30),
+                  Row(
+                    children: [
+                      BlocConsumer<AmptiveFollowingBloc, FollowingState>(
+                        listener: (_, state){
+                          if(state is IsFollowingState){
+                            context.read<AmptiveSubscriptionBloc>().add(
+                              ReadyToSubscribeEvent()
                             );
                           }
-                        ),
-                        const Gap(10),
+                          else if(state is IsNotFollowingState){
+                            context.read<AmptiveSubscriptionBloc>().add(
+                              Restet2InitialSubStateEvent()
+                            );
+                          }
+                        },
+                        builder: (_, state) {
+                          final isFollowing = state is IsFollowingState;
+                          final isLoading = state is FollowLoadingState;
+                          final notFollowing = state is IsNotFollowingState;
 
-                        BlocBuilder<AmptiveSubscriptionBloc, SubscriptionState>(
-                          builder: (_, state) {
-                            final isSubscribed = state is SubscribedState;
-                            final isLoading = state is SubscriptionLoadingState;
-                            final unSubscribed = state is Ready2SubscribeState;
-                            final initialState = state is InitialSubState;
+                          return Flexible(
+                            child: AmptivePlainElevatedBtnWidget(
+                              onPressed: () async{
+                                if(notFollowing){
+                                  context.read<AmptiveFollowingBloc>().add(ShouldFollowEvent());
+                                }
+                                else if(isFollowing){
+                                  final shouldUnfollow = await showConfirmationDialog(
+                                    context: context,
+                                    title: 'Unfollowing ${host.host.name ?? ''}?',
+                                    content: 'Unfollowing will automatically cancell your subscription to their content.',
+                                    yesString: 'Unfollow',
+                                    noString: AmptiveOtherStrings.CANCEL
+                                  );
+                                  if(context.mounted && (shouldUnfollow ?? false)){
+                                    context.read<AmptiveFollowingBloc>().add(ShouldUnFollowEvent());
+                                  }
+                                }
+                              },
+                              bgColor: AmptiveColors.whiteColor,
+                              fgColor: AmptiveColors.brandBlack,
+                              buttonTitle:notFollowing ? AmptiveOtherStrings.FOLLOW : '',
+                              child: isFollowing ? const AmptiveImageLoaderWidget(
+                                imagePath: AmptiveImageStrings.USER_FOLLOW
+                              ): isLoading ? const AmptiveLoadingIndicatorWidget(size: 20,) : null
+                            ),
+                          );
+                        }
+                      ),
+                      const Gap(10),
 
-                            if(initialState){
-                              return const SizedBox.shrink();
-                            }
+                      BlocBuilder<AmptiveSubscriptionBloc, SubscriptionState>(
+                        builder: (_, state) {
+                          final isSubscribed = state is SubscribedState;
+                          final isLoading = state is SubscriptionLoadingState;
+                          final unSubscribed = state is Ready2SubscribeState;
+                          final initialState = state is InitialSubState;
 
-                            return Expanded(
-                              flex: 4,
-                              child: AmptivePlainElevatedBtnWidget(
-                                onPressed: (){
-                                  
-                                },
-                                bgColor: AmptiveColors.yellowColor1,
-                                fgColor: AmptiveColors.brandBlack,
-                                buttonTitle: isSubscribed ? AmptiveOtherStrings.UNSUBSCRIBE : '',
-                                child: isLoading ? const AmptiveLoadingIndicatorWidget() 
-                                  : unSubscribed ? Row(
-                                    mainAxisSize: MainAxisSize.min,
-                                    children: [
-                                      Text(
-                                        AmptiveOtherStrings.SUBSCRIBE,
+                          if(initialState){
+                            return const SizedBox.shrink();
+                          }
+
+                          return Expanded(
+                            flex: 4,
+                            child: AmptivePlainElevatedBtnWidget(
+                              onPressed: ()async{
+                                if(unSubscribed){
+                                  context.read<AmptiveSubscriptionBloc>().add(ShouldSubscribeEvent());
+                                }
+                                else if(isSubscribed){
+                                  final shouldUnSubscribe = await showConfirmationDialog(
+                                    context: context,
+                                    title: "Are your sure you want to unsubscribe from ${host.host.name ?? ''}'s content?",
+                                    content: 'Unsubscribing will remove your access to "subscribers-only" live shows!',
+                                    yesString: AmptiveOtherStrings.UNSUBSCRIBE,
+                                    noString: AmptiveOtherStrings.CANCEL
+                                  );
+
+                                  if(context.mounted && (shouldUnSubscribe ?? false)){
+                                    context.read<AmptiveSubscriptionBloc>().add(UnSubscribeEvent());
+                                  }
+                                }
+                              },
+                              bgColor: AmptiveColors.yellowColor1,
+                              fgColor: AmptiveColors.brandBlack,
+                              buttonTitle: isSubscribed ? AmptiveOtherStrings.UNSUBSCRIBE : '',
+                              child: isLoading ? AmptiveLoadingIndicatorWidget(color: AmptiveColors.whiteColor,) 
+                                : unSubscribed ? Row(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    Text(
+                                      AmptiveOtherStrings.SUBSCRIBE,
+                                      style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                                        color: AmptiveColors.brandBlack,
+                                        fontSize: AmptiveFontSizes.size17
+                                      ),
+                                    ),
+                                    const Gap(2),
+                                    AmptiveCirceAvatarWidget(
+                                      diameter: 4,
+                                      color: AmptiveColors.brandBlack,
+                                    ),
+                                    const Gap(2),
+                                    Expanded(
+                                      child: Text(
+                                        'N1,900/month',
                                         style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                                           color: AmptiveColors.brandBlack,
                                           fontSize: AmptiveFontSizes.size17
                                         ),
                                       ),
-                                      const Gap(2),
-                                      AmptiveCirceAvatarWidget(
-                                        diameter: 4,
-                                        color: AmptiveColors.brandBlack,
-                                      ),
-                                      const Gap(2),
-                                      Expanded(
-                                        child: Text(
-                                          'N1,900/month',
-                                          style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                                            color: AmptiveColors.brandBlack,
-                                            fontSize: AmptiveFontSizes.size17
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  ) : null,
-                              ),
-                            );
-                          }
-                        ),
-                      ],
-                    )
-                  ]
-                ),
+                                    ),
+                                  ],
+                                ) : null,
+                            ),
+                          );
+                        }
+                      ),
+                    ],
+                  )
+                ]
+              ),
             )
           ),
         );

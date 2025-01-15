@@ -85,7 +85,8 @@ class AmptiveTextFormFieldWidget extends StatelessWidget {
         suffixIconConstraints: suffixConstraints ?? const BoxConstraints(
           maxHeight: 20,
           maxWidth: 35
-        )
+        ),
+        enabledBorder: null
       ),
       style: TextStyle(
         fontWeight: AmptiveFontWeights.regular,
