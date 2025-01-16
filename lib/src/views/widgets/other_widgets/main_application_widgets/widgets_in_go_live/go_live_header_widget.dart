@@ -14,21 +14,16 @@ import 'package:amptive/src/views/widgets/common_widgets/circular_container_with
 import 'package:amptive/src/views/widgets/common_widgets/custom_container_widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/custom_rebuilder_widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/image_loader_widget.dart';
-import 'package:amptive/src/views/widgets/common_widgets/textformfield_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
-import 'package:get_it/get_it.dart';
-import 'package:go_router/go_router.dart';
-import 'package:iconsax/iconsax.dart';
-import 'package:visibility_detector/visibility_detector.dart';
-import '../../../../../services/create_show/create_show_service.dart';
-import '../../../../../services/go_live_service/go_live_service.dart';
+import '../../../../../bloc/main_app/go_live_bloc/host_view/host_end_show_bloc.dart';
 import '../../../../../utils/constants/colors.dart';
 import '../../../../../utils/constants/strings/other_strings.dart';
 import 'dart:developer' as marach show log;
 import '../../../../../utils/dialogs/go_live/audience_view_of_to_gifters.dart';
+import '../../../../../utils/dialogs/go_live/host_end_show_dialog.dart';
 import '../../../../../utils/dialogs/go_live/host_view_of_listeners_dialog.dart';
 import 'go_live_host_widget_for_host_view.dart';
 
@@ -73,7 +68,13 @@ class AmptiveLiveViewHeaderWidget extends StatelessWidget {
           left: 15,
           /// The default is for the host view. provide the exitIcon when calling for other views
           child: exitIcon ?? AmptiveCustomContainer(
-            onTap: () => context.read<AmptiveNavBarBloc>().goToPage(0),
+            onTap: (){
+              context.read<AmptiveEndShowBloc>().add(
+                Reset2IntialStateEvent()
+              );
+              showHostEndShowDialog(context: context);
+              //context.read<AmptiveNavBarBloc>().goToPage(0),
+            },
             color: AmptiveColors.notifRed.withOpacity(0.3),
             height: 35, width: 35, boxShape: BoxShape.circle,
             boxShadow: [

@@ -5,14 +5,14 @@ class AmptiveGoLiveAvailableCoHostsBloc extends Bloc<AmptiveCohostsEvent, Amptiv
   final List<HostWithNotifier> hostList;
 
   AmptiveGoLiveAvailableCoHostsBloc({required this.hostList})
-      : super(AmptiveInitialCohosts(initialCohosts: hostList)) {
+      : super(InitialCohostsState(initialCohosts: hostList)) {
         
-    on<AmptiveSearchCohostEvent>((event, emit) {
-      emit(AmptiveCohostsLoadingState());
+    on<SearchCohostEvent>((event, emit) {
+      emit(CohostsLoadingState());
       final searchKey = event.searchKey.trim().toLowerCase();
 
       if (searchKey.isEmpty) {
-        emit(AmptiveInitialCohosts(initialCohosts: hostList));
+        emit(InitialCohostsState(initialCohosts: hostList));
       } else {
         final filteredCohosts = hostList.where((coHost) {
           final name = coHost.host.name?.toLowerCase() ?? '';
@@ -20,7 +20,7 @@ class AmptiveGoLiveAvailableCoHostsBloc extends Bloc<AmptiveCohostsEvent, Amptiv
           return name.contains(searchKey) || username.contains(searchKey);
         }).toList();
 
-        emit(AmptiveFilteredCohosts(filteredCohosts: filteredCohosts));
+        emit(FilteredCohostsState(filteredCohosts: filteredCohosts));
       }
     });
   }
@@ -30,10 +30,10 @@ class AmptiveGoLiveAvailableCoHostsBloc extends Bloc<AmptiveCohostsEvent, Amptiv
 
 abstract class AmptiveCohostsEvent {}
 
-class AmptiveSearchCohostEvent extends AmptiveCohostsEvent {
+class SearchCohostEvent extends AmptiveCohostsEvent {
   final String searchKey;
 
-  AmptiveSearchCohostEvent({this.searchKey = ''});
+  SearchCohostEvent({this.searchKey = ''});
 }
 
 
@@ -44,20 +44,20 @@ abstract class AmptiveCohostsState {
   AmptiveCohostsState(this.isLooading, this.cohosts);
 }
 
-class AmptiveInitialCohosts extends AmptiveCohostsState {
+class InitialCohostsState extends AmptiveCohostsState {
   final List<HostWithNotifier> initialCohosts;
-  AmptiveInitialCohosts({required this.initialCohosts}):super(
+  InitialCohostsState({required this.initialCohosts}):super(
     false, initialCohosts
   );
 }
 
-class AmptiveCohostsLoadingState extends AmptiveCohostsState{
-  AmptiveCohostsLoadingState(): super(true, null);
+class CohostsLoadingState extends AmptiveCohostsState{
+  CohostsLoadingState(): super(true, null);
 }
 
-class AmptiveFilteredCohosts extends AmptiveCohostsState {
+class FilteredCohostsState extends AmptiveCohostsState {
   final List<HostWithNotifier> filteredCohosts;
-  AmptiveFilteredCohosts({required this.filteredCohosts}): super(
+  FilteredCohostsState({required this.filteredCohosts}): super(
     false, filteredCohosts
   );
 }

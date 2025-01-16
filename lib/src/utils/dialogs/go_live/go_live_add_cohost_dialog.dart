@@ -119,7 +119,7 @@ final showSuffixIconNotifier = ValueNotifier(false);
                         onChanged: (text) => AmptiveHelperFunctions.callDebouncer(
                           200,
                           () => context.read<AmptiveGoLiveAvailableCoHostsBloc>().add(
-                            AmptiveSearchCohostEvent(searchKey: text)
+                            SearchCohostEvent(searchKey: text)
                           ),
                         ),
                         hintText: AmptiveOtherStrings.SEARCH_4_COHOSTS,
@@ -227,7 +227,7 @@ final showSuffixIconNotifier = ValueNotifier(false);
                       //Column of cohosts
                       BlocBuilder<AmptiveGoLiveAvailableCoHostsBloc, AmptiveCohostsState>(
                         builder: (_, cohostState) {
-                          if(cohostState is AmptiveCohostsLoadingState){
+                          if(cohostState is CohostsLoadingState){
                             return const AmptiveLoadingIndicatorWidget();
                           }
                           

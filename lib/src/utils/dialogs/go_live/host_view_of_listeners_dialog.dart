@@ -121,7 +121,7 @@ Future<void> showListenersDialog({
                     onChanged: (text) => AmptiveHelperFunctions.callDebouncer(
                       200,
                       () => context.read<AmptiveGoLiveAvailableCoHostsBloc>().add(
-                        AmptiveSearchCohostEvent(searchKey: text)
+                        SearchCohostEvent(searchKey: text)
                       ),
                     ),
                     hintText: AmptiveOtherStrings.SEARCH_4_LISTENERS,

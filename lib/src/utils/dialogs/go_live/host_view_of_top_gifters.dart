@@ -32,7 +32,7 @@ Future<void> showHostViewOfTopGiftersDialog(BuildContext context) async {
   return await showModalBottomSheet(
       backgroundColor: AmptiveColors.black4,
       constraints: BoxConstraints.expand(
-        height: AmptiveHelperFunctions.getScreenHeight(context) * 0.86
+        height: AmptiveHelperFunctions.getScreenHeight(context) * 0.84
       ),
       context: context,
       isScrollControlled: true,
@@ -40,7 +40,7 @@ Future<void> showHostViewOfTopGiftersDialog(BuildContext context) async {
       barrierColor: AmptiveColors.black.withOpacity(0.6),
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.only(
-        topLeft: Radius.circular(50), topRight: Radius.circular(50),
+        topLeft: Radius.circular(15), topRight: Radius.circular(15),
       )),
       builder: (context) {
         return Stack(

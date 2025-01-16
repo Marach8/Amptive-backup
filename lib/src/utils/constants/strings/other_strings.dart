@@ -126,6 +126,7 @@ class AmptiveOtherStrings{
   static const TOP_LISTENERS = 'Top Listeners';
   static const TOP_LISTENERS_DESC = 'Top listeners are ranked by their level of interaction during the live session.';
   static const LISTENERS = 'Listeners';
+  static const END_LIVE_SHOW = 'Are you sure you want to end your live show?';
 
   static const TECHNOLOGY = 'Technology';
   static const gotATicketId = 'Got a Ticket ID? (coming soon)';
@@ -229,5 +230,6 @@ class AmptiveOtherStrings{
   static const EMPTY_FIELD = 'Field(s) cannot be empty';
   static const SHARE_EVENT = 'Share event';
   static const COMMENT = 'Comment';
+  static const END_NOW = 'End now';
   static const HOST = 'Host';
 }
