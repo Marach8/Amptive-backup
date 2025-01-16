@@ -200,6 +200,11 @@ class AmptiveOtherStrings{
   static const IS_GIFTING = 'is gifting';
   static const GIFTED = 'Gifted';
   static const PINNED = 'Pinned';
+  static const MODERATION_TOOLS = 'Moderation Tools';
+  static const ALLOW_COMMENTS = 'Allow comments';
+  static const NEED_2_ENABLE_LISTENERS_MIC = "You will still need to enable the Listeners's mic";
+  static const ALLOW_AUDIENCE_MIC = 'Allow audience mic';
+  static const ALLOW_HANDRAISING = 'Allow hand raising';
   static const WHISPERS_ENABLED = 'Whispers will be enabled for your event.';
   static const WHISPERS_DISABLED = 'Whispers will be disabled for your event.';
   static const HAND_RAISING = 'Hand Raising';

@@ -8,6 +8,7 @@ import 'package:amptive/src/utils/constants/font_sizes.dart';
 import 'package:amptive/src/utils/constants/strings/image_strings.dart';
 import 'package:amptive/src/utils/dialogs/add_co_host_dialog.dart';
 import 'package:amptive/src/utils/dialogs/app_notification_dialog.dart';
+import 'package:amptive/src/utils/dialogs/go_live/host_moderation_tools_dialog.dart';
 import 'package:amptive/src/utils/helpers/helper_functions/other_functions.dart';
 import 'package:amptive/src/views/widgets/animation_widgets/common_animation_widgets/animated_switcher.dart';
 import 'package:amptive/src/views/widgets/animation_widgets/horiz_slider_animation.dart';
@@ -336,9 +337,10 @@ class _AmptiveGoLiveHostViewState extends State<AmptiveGoLiveHostView> {
                       }
                     }
                     if(context.mounted && index == 0){
-                      context.read<AmptiveGoLiveNotificationBloc>().addTalkingNotification(
-                        service.coHostsListData.first
-                      );
+                      showHostModerationToolsDialog(context);
+                      // context.read<AmptiveGoLiveNotificationBloc>().addTalkingNotification(
+                      //   service.coHostsListData.first
+                      // );
                     }
                     if(context.mounted && index == 2){
                       context.read<AmptiveGoLiveNotificationBloc>().addGiftingNotification(

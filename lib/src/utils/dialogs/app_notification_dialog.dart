@@ -103,4 +103,3 @@ Future<void> showNormalNotification({
     ),
   );
 }
-
