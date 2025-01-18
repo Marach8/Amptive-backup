@@ -41,6 +41,8 @@ class AmptiveColors {
 
   static Color get green2 => const Color(0xFF009C80);
 
+  static Color get activeSwitch => const Color(0xFF0BE09B);
+
   static Color get whiteColor => Colors.white;
 
   static Color get brandBlue => const Color(0xFF307FE2);

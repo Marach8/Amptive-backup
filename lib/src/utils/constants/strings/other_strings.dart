@@ -80,6 +80,12 @@ class AmptiveOtherStrings{
   static const usernameIsAvailable ="Username is available";
   static const whatShouldWeCallYou ="What should we call you?";
   static const ROLE = 'message notifier';
+  static const ALLOWED_AUD_MIC = "You allowed audience microphone";
+  static const DISABLED_AUD_MIC = "You disabled audience microphone";
+  static const ALLOWED_COMMENTS = "You allowed comments";
+  static const DISABLED_COMMENTS = "You disabled comments";
+  static const ALLOWED_HAND_RAISING = "You allowed hand raising";
+  static const DISABLED_HAND_RAISING = "You disabled hand raising";
   static const MSG_TITLE = 'message title';
   static const MSG_CONTENT = 'message content';
 

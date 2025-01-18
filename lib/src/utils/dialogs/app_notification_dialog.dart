@@ -66,17 +66,24 @@ Future<void> showNormalNotification({
   Color? bgColor
 }) async {
 
-  final platformDispatcher = PlatformDispatcher.instance;
-  final height = (platformDispatcher.views.first.physicalSize.height) * 0.5;
+  // final platformDispatcher = PlatformDispatcher.instance;
+  // final height = (platformDispatcher.views.first.physicalSize.height) * 0.5;
+
+  final view = PlatformDispatcher.instance.views.first;
+  final height = (view.physicalSize.height - view.viewInsets.top - view.viewInsets.bottom) /
+    view.devicePixelRatio;
+
+
 
   scaffoldMessengerKey.currentState?.showSnackBar(
     SnackBar(
-      backgroundColor: bgColor,
+      backgroundColor: bgColor ?? AmptiveColors.notifBg,
       elevation: 0,
       duration: const Duration(seconds: 3),
       behavior: SnackBarBehavior.floating,
+      dismissDirection: DismissDirection.up,
       margin: EdgeInsets.only(
-        left: 15.0, right: 15.0,
+        //left: 15.0, right: 15.0,
         bottom: height - (2 * kToolbarHeight)
       ),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),

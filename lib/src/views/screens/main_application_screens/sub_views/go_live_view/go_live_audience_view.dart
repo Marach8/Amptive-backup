@@ -24,6 +24,7 @@ import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:visibility_detector/visibility_detector.dart';
+import '../../../../../bloc/main_app/go_live_bloc/audience_view/host_moderation_control_bloc.dart';
 import '../../../../../bloc/main_app/go_live_bloc/host_view/cohosts_display_bloc.dart';
 import '../../../../../bloc/main_app/nav_bar_bloc.dart';
 import '../../../../../services/create_show/create_show_service.dart' hide getHostList;
@@ -123,12 +124,7 @@ class _AmptiveGoLiveAudienceViewState extends State<AmptiveGoLiveAudienceView> {
                   child: Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      Text(
-                        "🎁",
-                        style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                          overflow: TextOverflow.fade
-                        ),
-                      ),
+                      const AmptiveImageLoaderWidget(imagePath: AmptiveImageStrings.threePpl),
                       const Gap(5),
                       Text(
                         AmptiveOtherStrings.SOCIETY,
@@ -307,55 +303,70 @@ class _AmptiveGoLiveAudienceViewState extends State<AmptiveGoLiveAudienceView> {
           padding: const EdgeInsets.symmetric(horizontal: 15),
           color: AmptiveColors.black,
           height: 35,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: _listOfWidgets.map(
-              (widget){
-                final index = _listOfWidgets.indexOf(widget);
-                if(index == 1){
-                  return Expanded(
+          child: BlocBuilder<AmptiveGoLiveHostModerationToolsBloc, List<bool>>(
+            builder: (_, state) {
+              final commentIsEnabled = state.first;
+              final micIsEnabled = state[1];
+              final handRaiseIsEnabled = state.last;
+
+              return Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  _RenderAudienceViewButtons(
+                    onTap: (){},
+                    child: Transform.flip(flipX: true, child: const Icon(Icons.reply))
+                  ),
+                  Expanded(
                     child: Padding(
                       padding: EdgeInsets.only(right: 5.w),
                       child: AmptiveTextFormFieldWidget(
                         controller: TextEditingController(),
                         disableBlueBorder: true,
                         cursorHeight: 20,
+                        hintStyle: Theme.of(context).textTheme.titleLarge?.copyWith(
+                          color: commentIsEnabled ? AmptiveColors.strokeGreyColor
+                          : AmptiveColors.strokeGreyColor.withOpacity(0.3)
+                        ),
+                        fillColor: commentIsEnabled ? AmptiveColors.fillGreyColor.withOpacity(0.1) 
+                          : AmptiveColors.whiteColor.withOpacity(0.01),
+                        enabled: commentIsEnabled ? true : false,
                         cursorColor: AmptiveColors.whiteColor.withOpacity(0.6),
                         constraints: const BoxConstraints(maxHeight: 40),
                         contentPadding: const EdgeInsets.fromLTRB(16, 0, 16, 0),
                         hintText: AmptiveOtherStrings.COMMENT,
                       ),
                     )
-                  );
-                }
-                return AmptiveCustomContainer(
-                  onTap: (){
-                    // final host = HostWithNotifier(host: Host.empty());
-                    // if(index == 0){
-                    //   service.hostAddCohost(host, index + 1);
-                    // }
-                    // else if(index == 5){
-                    //   service.hostRemoveCohost(host, index + 1);
-                    // }
-                    // else if(index == 2){
-                    //   showFollowHostOrCohostDialog(context: context, host: getHostList().first);
-                    // }
-                    print(MediaQuery.of(context).size.height);
-                    showSuccessOrFailureNotification(
-                      response: GenericResponseModel(
-                        isSuccessful: false,
-                        responseMessage: 'You have been kicked out of the live session'
-                      ),
-                      child: const AmptiveImageLoaderWidget(imagePath: AmptiveImageStrings.KICK_USER_OUT)
-                    );
-                  },
-                  margin: index != 5 ? EdgeInsets.only(right: 5.w) : EdgeInsets.zero,
-                  color: AmptiveColors.whiteColor.withOpacity(0.1),
-                  padding: const EdgeInsets.all(5),
-                  radius: 30, child: widget
-                );
-              }
-            ).toList()
+                  ),
+                  if(micIsEnabled)_RenderAudienceViewButtons(
+                    onTap: (){
+                      showFollowHostOrCohostDialog(context: context, host: getHostList().first);
+                    },
+                    child: const Icon(Icons.mic),
+                  ),
+                  if(handRaiseIsEnabled)_RenderAudienceViewButtons(
+                    onTap: (){
+                      showSuccessOrFailureNotification(
+                        response: GenericResponseModel(
+                          isSuccessful: false,
+                          responseMessage: 'You have been kicked out of the live session'
+                        ),
+                        child: const AmptiveImageLoaderWidget(imagePath: AmptiveImageStrings.KICK_USER_OUT)
+                      );
+                    },
+                    child: const Icon(Icons.front_hand_outlined),
+                  ),
+                  _RenderAudienceViewButtons(
+                    onTap: (){},
+                    child: const AmptiveImageLoaderWidget(imagePath: AmptiveImageStrings.GIFT_ICON),
+                  ),
+                  _RenderAudienceViewButtons(
+                    onTap: (){},
+                    addMargin: false,
+                    child: Icon(Icons.favorite, color: AmptiveColors.notifRed),
+                  ),
+                ]
+              );
+            }
           ),
         ),
       ),
@@ -364,13 +375,25 @@ class _AmptiveGoLiveAudienceViewState extends State<AmptiveGoLiveAudienceView> {
 }
 
 
+class _RenderAudienceViewButtons extends StatelessWidget {
+  final VoidCallback onTap;
+  final Widget child;
+  final bool addMargin;
+  const _RenderAudienceViewButtons({
+    required this.onTap,
+    required this.child,
+    this.addMargin = true, 
+  });
 
+  @override
+  Widget build(BuildContext context) {
+    return AmptiveCustomContainer(
+      onTap: onTap,
+      margin: addMargin ? EdgeInsets.only(right: 5.w) : EdgeInsets.zero,
+      color: AmptiveColors.whiteColor.withOpacity(0.1),
+      padding: const EdgeInsets.all(5),
+      radius: 30, child: child
+    );
+  }
+}
 
-List<Widget> _listOfWidgets = [
-  const RotatedBox(quarterTurns: -45, child: Icon(Icons.logout)),
-  const Icon(Icons.mic),
-  const Icon(Icons.mic),
-  const Icon(Icons.front_hand_outlined),
-  const AmptiveImageLoaderWidget(imagePath: AmptiveImageStrings.GIFT_ICON),
-  Icon(Icons.favorite, color: AmptiveColors.notifRed,),
-];

@@ -14,6 +14,7 @@ import 'bloc/authentication/email/email_auth_bloc.dart';
 import 'bloc/authentication/general/auth_bloc.dart';
 import 'bloc/authentication/otp/otp_auth_bloc.dart';
 import 'bloc/authentication/password/password_auth_bloc.dart';
+import 'bloc/main_app/go_live_bloc/audience_view/host_moderation_control_bloc.dart';
 import 'bloc/main_app/go_live_bloc/host_view/available_cohosts_bloc.dart';
 import 'bloc/main_app/go_live_bloc/host_view/cohosts_display_bloc.dart';
 import 'bloc/main_app/go_live_bloc/host_view/host_end_show_bloc.dart';
@@ -46,5 +47,6 @@ List<SingleChildWidget> providers() {
     BlocProvider(create: (_) => AmptiveFollowingBloc()),
     BlocProvider(create: (_) => AmptiveSubscriptionBloc()),
     BlocProvider(create: (_) => AmptiveEndShowBloc()),
+    BlocProvider(create: (_) => AmptiveGoLiveHostModerationToolsBloc()),
   ];
 }

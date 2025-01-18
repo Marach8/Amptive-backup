@@ -114,12 +114,7 @@ class _AmptiveGoLiveHostViewState extends State<AmptiveGoLiveHostView> {
                   child: Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      Text(
-                        "🎁",
-                        style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                          overflow: TextOverflow.fade
-                        ),
-                      ),
+                      const AmptiveImageLoaderWidget(imagePath: AmptiveImageStrings.threePpl),
                       const Gap(5),
                       Text(
                         AmptiveOtherStrings.SOCIETY,
@@ -312,6 +307,7 @@ class _AmptiveGoLiveHostViewState extends State<AmptiveGoLiveHostView> {
                         controller: TextEditingController(),
                         disableBlueBorder: true,
                         cursorHeight: 20,
+                        fillColor: AmptiveColors.whiteColor.withOpacity(0.1),
                         cursorColor: AmptiveColors.whiteColor.withOpacity(0.6),
                         constraints: const BoxConstraints(maxHeight: 40),
                         contentPadding: const EdgeInsets.fromLTRB(16, 0, 16, 0),
@@ -375,6 +371,6 @@ List<Widget> _listOfWidgets = [
   const Icon(Icons.mic),
   const Icon(Icons.mic),
   const Icon(Icons.front_hand_outlined),
-  const RotatedBox(quarterTurns: -45, child: Icon(Icons.logout)),
+  Transform.flip(flipX: true, child: const Icon(Icons.reply)),
   const Icon(Icons.add),
 ];  

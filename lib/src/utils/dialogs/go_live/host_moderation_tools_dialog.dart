@@ -7,28 +7,19 @@ import 'package:amptive/src/utils/constants/colors.dart';
 import 'package:amptive/src/utils/constants/font_sizes.dart';
 import 'package:amptive/src/utils/constants/font_weights.dart';
 import 'package:amptive/src/utils/constants/strings/image_strings.dart';
+import 'package:amptive/src/utils/dialogs/app_notification_dialog.dart';
 import 'package:amptive/src/utils/dialogs/confirmation_alert_dialog.dart';
 import 'package:amptive/src/utils/helpers/extensions/string_extensions.dart';
 import 'package:amptive/src/utils/helpers/helper_functions/other_functions.dart';
-import 'package:amptive/src/views/widgets/animation_widgets/common_animation_widgets/animated_crossfade_widget.dart';
-import 'package:amptive/src/views/widgets/common_widgets/circle_avatar.dart';
-import 'package:amptive/src/views/widgets/common_widgets/circular_container_with_picture_widget.dart';
+
 import 'package:amptive/src/views/widgets/common_widgets/custom_container_widget.dart';
-import 'package:amptive/src/views/widgets/common_widgets/elevated_button_widget.dart';
-import 'package:amptive/src/views/widgets/common_widgets/image_loader_widget.dart';
-import 'package:amptive/src/views/widgets/common_widgets/loading_indicator.dart';
-import 'package:amptive/src/views/widgets/common_widgets/textformfield_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
 import 'package:go_router/go_router.dart';
 import 'package:iconsax/iconsax.dart';
-import '../../../bloc/main_app/go_live_bloc/audience_view/subscription_bloc.dart';
-import '../../../models/host.dart';
-import '../../../services/create_show/create_show_service.dart';
+import '../../../bloc/main_app/go_live_bloc/audience_view/host_moderation_control_bloc.dart';
 import '../../constants/strings/other_strings.dart';
-import '../add_co_host_dialog.dart';
-import 'dart:developer' as marach show log;
 
 Future<void> showHostModerationToolsDialog(BuildContext context) async {
   return await showModalBottomSheet(
@@ -77,20 +68,98 @@ Future<void> showHostModerationToolsDialog(BuildContext context) async {
                     style: Theme.of(context).textTheme.bodyLarge,
                   ),
                   const Gap(20),
-                  const CustomRow(
+                  _CustomRow(
                     title: AmptiveOtherStrings.ALLOW_COMMENTS,
                     icon: Iconsax.message,
+                    trailing: BlocConsumer<AmptiveGoLiveHostModerationToolsBloc, List<bool>>(
+                      listenWhen: (prev, curr) => prev.first != curr.first,
+                      buildWhen: (prev, curr) => prev.first != curr.first,
+                      listener: (_, state){
+                        if(state[1]){
+                          showNormalNotification(
+                            text: AmptiveOtherStrings.ALLOWED_COMMENTS,
+                            child:const Icon(Iconsax.message,)
+                          );
+                        }
+                        else{
+                          showNormalNotification(
+                            text: AmptiveOtherStrings.DISABLED_COMMENTS,
+                            child:const Icon(Iconsax.message)
+                          );
+                        }
+                      },
+                      builder: (_, state) {
+                        return _AmptiveSwitch(
+                          value: state.first,
+                          onChanged: (value) => value ?
+                          context.read<AmptiveGoLiveHostModerationToolsBloc>().allowComments()
+                          : context.read<AmptiveGoLiveHostModerationToolsBloc>().disableComments()
+                        );
+                      }
+                    ),
                   ),
                   const Gap(10),
-                  const CustomRow(
+                  _CustomRow(
                     title: AmptiveOtherStrings.ALLOW_AUDIENCE_MIC,
                     icon: Icons.mic,
                     subtitle: AmptiveOtherStrings.NEED_2_ENABLE_LISTENERS_MIC,
+                    trailing: BlocConsumer<AmptiveGoLiveHostModerationToolsBloc, List<bool>>(
+                      listenWhen: (prev, curr) => prev[1] != curr[1],
+                      buildWhen: (prev, curr) => prev[1] != curr[1],
+                      listener: (_, state){
+                        if(state[1]){
+                          showNormalNotification(
+                            text: AmptiveOtherStrings.ALLOWED_AUD_MIC,
+                            child:const Icon(Icons.mic)
+                          );
+                        }
+                        else{
+                          showNormalNotification(
+                            text: AmptiveOtherStrings.DISABLED_AUD_MIC,
+                            child:const Icon(Icons.mic)
+                          );
+                        }
+                      },
+                      builder: (_, state) {
+                        return _AmptiveSwitch(
+                          value: state[1],
+                          onChanged: (value) => value ?
+                          context.read<AmptiveGoLiveHostModerationToolsBloc>().allowAudienceMic()
+                          : context.read<AmptiveGoLiveHostModerationToolsBloc>().disableAudienceMic()
+                        );
+                      }
+                    ),
                   ),
                   const Gap(10),
-                  const CustomRow(
+                  _CustomRow(
                     title: AmptiveOtherStrings.ALLOW_COMMENTS,
-                    icon: Icons.front_hand_outlined
+                    icon: Icons.front_hand_outlined,
+                    trailing: BlocConsumer<AmptiveGoLiveHostModerationToolsBloc, List<bool>>(
+                      listenWhen: (prev, curr) => prev.last != curr.last,
+                      buildWhen: (prev, curr) => prev.last != curr.last,
+                      listener: (_, state){
+                        if(state.last){
+                          showNormalNotification(
+                            text: AmptiveOtherStrings.ALLOWED_HAND_RAISING,
+                            child:const Icon(Icons.front_hand_outlined)
+                          );
+                        }
+                        else{
+                          showNormalNotification(
+                            text: AmptiveOtherStrings.DISABLED_HAND_RAISING,
+                            child:const Icon(Icons.front_hand_outlined)
+                          );
+                        }
+                      },
+                      builder: (_, state) {
+                        return _AmptiveSwitch(
+                          value: state.last,
+                          onChanged: (value) => value ?
+                          context.read<AmptiveGoLiveHostModerationToolsBloc>().allowHandRaising()
+                          : context.read<AmptiveGoLiveHostModerationToolsBloc>().disableHandRaising()
+                        );
+                      }
+                    ),
                   ),
                 ]
               ),
@@ -103,19 +172,20 @@ Future<void> showHostModerationToolsDialog(BuildContext context) async {
 
 
 
-class CustomRow extends StatelessWidget {
+class _CustomRow extends StatelessWidget {
   final IconData icon;
   final String title;
+  final Widget trailing;
   final String? subtitle;
-  const CustomRow({
-    super.key,
+  const _CustomRow({
     required this.icon,
     required this.title,
+    required this.trailing,
     this.subtitle
   });
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(context) {
     return SizedBox(
       width: AmptiveHelperFunctions.getScreenWidth(context),
       child: Row(
@@ -145,16 +215,34 @@ class CustomRow extends StatelessWidget {
             ),
           ),
           const Gap(20),
-          Transform.scale(
-            scale: 0.8,
-            child: Switch.adaptive(
-              value: true,
-              onChanged: (value){
-                
-              }
-            ),
-          )
+          trailing
         ],
+      ),
+    );
+  }
+}
+
+
+class _AmptiveSwitch extends StatelessWidget {
+  const _AmptiveSwitch({
+    required this.value,
+    required this.onChanged,
+  });
+
+  final bool value;
+  final void Function(bool p1) onChanged;
+
+  @override
+  Widget build(context) {
+    return Transform.scale(
+      scale: 0.6,
+      child: Switch.adaptive(
+        value: value,
+        applyCupertinoTheme: true,
+        thumbColor: WidgetStatePropertyAll(AmptiveColors.whiteColor),
+        activeTrackColor: AmptiveColors.activeSwitch,
+        inactiveTrackColor: AmptiveColors.whiteColor.withOpacity(0.2),
+        onChanged: onChanged
       ),
     );
   }
