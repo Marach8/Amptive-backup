@@ -14,8 +14,8 @@ class AmptiveTextFormFieldWidget extends StatelessWidget {
   final TextAlign? textAlign;
   final double? cursorHeight;
   final Widget? suffixIcon, prefixIcon;
-  final bool? obscureText, disableBlueBorder;
-  final Color? cursorColor;
+  final bool? obscureText, disableBlueBorder, enabled;
+  final Color? cursorColor, fillColor;
   final BoxConstraints? suffixConstraints,
   prefixConstraints, constraints;
   final InputDecoration? decoration;
@@ -38,19 +38,22 @@ class AmptiveTextFormFieldWidget extends StatelessWidget {
     this.suffixIcon,
     this.obscureText,
     this.prefixIcon,
+    this.fillColor,
     this.suffixConstraints,
     this.focusNode,
     this.hintStyle,
     this.onSaved,
     this.disableBlueBorder,
     this.prefixConstraints,
-    this.contentPadding
+    this.contentPadding,
+    this.enabled
   });
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
       controller: controller,
+      enabled: enabled,
       textAlign: textAlign ?? TextAlign.start,
       validator: validator,
       maxLines: 1, focusNode: focusNode,
@@ -58,7 +61,7 @@ class AmptiveTextFormFieldWidget extends StatelessWidget {
       onChanged: onChanged,
       onSaved: onSaved,
       cursorColor: disableBlueBorder ?? false ? AmptiveColors.whiteColor
-        : AmptiveColors.brandBlueColor,
+        : AmptiveColors.brandBlue,
       obscureText: obscureText ?? false,
       cursorHeight: cursorHeight,
       cursorErrorColor: AmptiveColors.textRedColor,
@@ -66,6 +69,7 @@ class AmptiveTextFormFieldWidget extends StatelessWidget {
       decoration: decoration ??  InputDecoration(        
         hintText: hintText,
         constraints: constraints,
+        fillColor: fillColor,
         contentPadding: contentPadding ?? const EdgeInsets.fromLTRB(16, 12, 16, 12).r,
         focusedBorder: disableBlueBorder ?? false ? OutlineInputBorder(
           borderRadius: BorderRadius.circular(14).r,
@@ -85,7 +89,8 @@ class AmptiveTextFormFieldWidget extends StatelessWidget {
         suffixIconConstraints: suffixConstraints ?? const BoxConstraints(
           maxHeight: 20,
           maxWidth: 35
-        )
+        ),
+        enabledBorder: null
       ),
       style: TextStyle(
         fontWeight: AmptiveFontWeights.regular,

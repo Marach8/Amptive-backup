@@ -5,7 +5,6 @@ import 'package:amptive/src/views/widgets/common_widgets/image_loader_widget.dar
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
-import 'package:iconsax/iconsax.dart';
 import '../../../../../../utils/constants/colors.dart';
 import '../../../../../../utils/constants/strings/other_strings.dart';
 import '../../../../animation_widgets/common_animation_widgets/animated_crossfade_widget.dart';

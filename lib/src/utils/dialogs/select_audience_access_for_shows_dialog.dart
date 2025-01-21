@@ -21,7 +21,7 @@ Future<String> showSelectAudienceAccessForShowsDialog(
   CreateShowService service = GetIt.I<CreateShowService>();
 
   return await showModalBottomSheet(
-    backgroundColor: AmptiveColors.brandBlackColor,
+    backgroundColor: AmptiveColors.brandBlack,
     constraints: BoxConstraints.expand(height: AmptiveHelperFunctions.getScreenHeight(context)),
     context: context,
     isScrollControlled: true,
@@ -84,7 +84,7 @@ Future<String> showSelectAudienceAccessForShowsDialog(
                   color: AmptiveColors.grey1Color,
                   border: Border.all(
                     width: 2,
-                    color: isActive ? AmptiveColors.brandBlueColor : AmptiveColors.transparentColor
+                    color: isActive ? AmptiveColors.brandBlue : AmptiveColors.transparentColor
                   ),
                   child: Row(
                     children: [
@@ -113,9 +113,9 @@ Future<String> showSelectAudienceAccessForShowsDialog(
                       AmptiveCustomContainer(
                         height: 20, width: 20, radius: 20,
                         padding: const EdgeInsets.all(3),
-                        color: isActive ? AmptiveColors.brandBlueColor : AmptiveColors.transparentColor,
+                        color: isActive ? AmptiveColors.brandBlue : AmptiveColors.transparentColor,
                         border: Border.all(
-                          color: isActive ? AmptiveColors.brandBlueColor : AmptiveColors.whiteColor,
+                          color: isActive ? AmptiveColors.brandBlue : AmptiveColors.whiteColor,
                           strokeAlign: 5.0
                         ),
                         child: const SizedBox.shrink()
@@ -146,7 +146,7 @@ Future<String> showSelectAudienceAccessForShowsDialog(
                   color: AmptiveColors.grey1Color,
                   border: Border.all(
                     width: 2,
-                    color: isActive ? AmptiveColors.brandBlueColor : AmptiveColors.transparentColor
+                    color: isActive ? AmptiveColors.brandBlue : AmptiveColors.transparentColor
                   ),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -179,9 +179,9 @@ Future<String> showSelectAudienceAccessForShowsDialog(
                           AmptiveCustomContainer(
                             height: 20, width: 20, radius: 20,
                             padding: const EdgeInsets.all(3),
-                            color: isActive ? AmptiveColors.brandBlueColor : AmptiveColors.transparentColor,
+                            color: isActive ? AmptiveColors.brandBlue : AmptiveColors.transparentColor,
                             border: Border.all(
-                              color: isActive ? AmptiveColors.brandBlueColor : AmptiveColors.whiteColor,
+                              color: isActive ? AmptiveColors.brandBlue : AmptiveColors.whiteColor,
                               strokeAlign: 5.0
                             ),
                             child: const SizedBox.shrink()

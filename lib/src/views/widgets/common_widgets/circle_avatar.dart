@@ -7,17 +7,20 @@ class AmptiveCirceAvatarWidget extends StatelessWidget {
   final Color? color;
   final Widget? child;
   final int? animationDuration;
+  final VoidCallback? onTap;
   const AmptiveCirceAvatarWidget({
     super.key,
     required this.diameter,
     this.color,
     this.child,
-    this.animationDuration
+    this.animationDuration,
+    this.onTap
   });
 
   @override
   Widget build(BuildContext context) {
     return AmptiveCustomContainer(
+      onTap: onTap,
       duration: animationDuration,
       height: diameter, width: diameter,
       radius: diameter,

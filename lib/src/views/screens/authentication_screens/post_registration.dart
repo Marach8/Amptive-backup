@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:amptive/src/utils/constants/colors.dart';
-import 'package:amptive/src/views/widgets/common_widgets/circular_progress_indicator.dart';
+import 'package:amptive/src/views/widgets/common_widgets/loading_indicator.dart';
 import 'package:amptive/src/views/widgets/other_widgets/post_authentication_widgets/add_picture.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -34,7 +34,7 @@ class _PostRegistrationScreenState extends State<PostRegistrationScreen> {
   Widget build(BuildContext context) {
     return SafeArea(
         child: Scaffold(
-      backgroundColor: AmptiveColors.brandBlackColor,
+      backgroundColor: AmptiveColors.brandBlack,
       body: Padding(
         padding: EdgeInsets.only(left: 25.w, right: 25.w, top: 20.w),
         child: _isLoading ? const LoadingAccountWidget() : const AddPictureWidget(),
@@ -143,7 +143,7 @@ class _LoadingAccountWidgetState extends State<LoadingAccountWidget> {
             ),
           ),
         ),
-        const AmptiveCircularProgressIndicatorWidget(),
+        const AmptiveLoadingIndicatorWidget(),
       ],
     );
   }

@@ -48,7 +48,7 @@ class AmptivePaidEventModel extends StatelessWidget {
                   child: Text(
                     "P",
                     style: Theme.of(context).textTheme.displayMedium?.copyWith(
-                      color: AmptiveColors.brandBlackColor
+                      color: AmptiveColors.brandBlack
                     ),
                   ),
                 ),

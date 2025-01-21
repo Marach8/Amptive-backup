@@ -13,7 +13,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../../utils/constants/font_weights.dart';
 import '../../widgets/common_widgets/app_bar_widget.dart';
-import '../../widgets/common_widgets/circular_progress_indicator.dart';
+import '../../widgets/common_widgets/loading_indicator.dart';
 import '../../widgets/other_widgets/post_authentication_widgets/community_card_preference.dart';
 import '../../widgets/other_widgets/post_authentication_widgets/processing_preference_widget.dart';
 
@@ -49,13 +49,13 @@ class _AmptivePreferenceScreenState extends State<AmptivePreferenceScreen> {
               state.selectedItems.length == Constants.kMaxNumberCommunities;
 
           return Scaffold(
-            backgroundColor: AmptiveColors.brandBlackColor,
+            backgroundColor: AmptiveColors.brandBlack,
             appBar: state is SelectPreferenceCompletedState
                 ? null
                 : const AmptiveAppBar(),
             body: state is InitialState
                 ? const Center(
-                    child: AmptiveCircularProgressIndicatorWidget(),
+                    child: AmptiveLoadingIndicatorWidget(),
                   )
                 : state is SelectPreferenceCompletedState
                     ? const ProcessingPreferenceWidget()
@@ -125,7 +125,7 @@ class _AmptivePreferenceScreenState extends State<AmptivePreferenceScreen> {
                                           },
                                           style: ElevatedButton.styleFrom(
                                             backgroundColor:
-                                                AmptiveColors.brandBlueColor,
+                                                AmptiveColors.brandBlue,
                                             padding: EdgeInsets.symmetric(
                                                 vertical: 11.5.h),
                                           ),

@@ -35,6 +35,7 @@ class AmptiveOtherStrings{
   static const skip = 'Skip';
   static const back = 'Back';
   static const CONTINUE = 'Continue';
+  static const SEND_INVITE = 'Send invite';
   static const SET_FEE = 'Set fee';
 
   static const signUpWith = 'Sign up with ';
@@ -55,6 +56,8 @@ class AmptiveOtherStrings{
   static const passwordMustBeAtleast8 = 'Your password must be at least 8 characters';
   static const didNotGetCode = "Didn't get the code? ";
   static const sendAgain = 'Send again';
+  static const SEND = 'Send';
+  static const SEND_GIFT = 'Send gift';
 
   static const createPasswordForAccount = 'Create a password for your account';
   static const enterYourPassword = 'Enter your password';
@@ -76,6 +79,15 @@ class AmptiveOtherStrings{
   static const checkerIsLoading = "Checker is loading...";
   static const usernameIsAvailable ="Username is available";
   static const whatShouldWeCallYou ="What should we call you?";
+  static const ROLE = 'message notifier';
+  static const ALLOWED_AUD_MIC = "You allowed audience microphone";
+  static const DISABLED_AUD_MIC = "You disabled audience microphone";
+  static const ALLOWED_COMMENTS = "You allowed comments";
+  static const DISABLED_COMMENTS = "You disabled comments";
+  static const ALLOWED_HAND_RAISING = "You allowed hand raising";
+  static const DISABLED_HAND_RAISING = "You disabled hand raising";
+  static const MSG_TITLE = 'message title';
+  static const MSG_CONTENT = 'message content';
 
 
   static const addProfilePicture = "Add a profile picture";
@@ -109,14 +121,25 @@ class AmptiveOtherStrings{
   static const showMore = 'Show more';
   static const WHISPERS = 'Whispers';
   static const scheduled = 'Scheduled';
-  static const subscribed = 'Subscribed';
-  static const following = 'Following';
+  static const SUBSCRIBED = 'Subscribed';
+  static const SUBSCRIBE = 'Subscribe';
+  static const SUBSCRIBERS = 'Subscribers';
+  static const FOLLOWERS = 'Followers';
+  static const FOLLOWING = 'Following';
+  static const FOLLOW = 'Follow';
+  static const UNSUBSCRIBE = 'Unsubscribe';
+  static const COHOST_INVITE_SENT = 'Co-host invitation sent';
+  static const TOP_LISTENERS = 'Top Listeners';
+  static const TOP_LISTENERS_DESC = 'Top listeners are ranked by their level of interaction during the live session.';
+  static const LISTENERS = 'Listeners';
+  static const END_LIVE_SHOW = 'Are you sure you want to end your live show?';
 
   static const TECHNOLOGY = 'Technology';
   static const gotATicketId = 'Got a Ticket ID? (coming soon)';
   static const addedToCalender = 'Added to your calender';
   static const removedFromCalender = 'Removed from your calender';
   static const view = 'View';
+  static const GIFTS = 'Gifts';
 
   static const SEARCH_FOR_EVENTS_ND_SHOWS = 'Search for events, shows and more';
   static const CANCEL = 'Cancel';
@@ -132,6 +155,9 @@ class AmptiveOtherStrings{
   static const SEE_COMMUNITIES = 'See communities on Amptive';
   static const RECENT_SEARCHES = 'Recent Searches';
   static const CLEAR = 'Clear';
+  static const KICK_OUT_LISTENER = 'Kickout listener';
+  static const KICK_OUT_DESC = 'This user will be unable to join this current live session but can join future live sessions';
+  static const GIFTED_AMNT = 'Gifted Amount';
   static const DISCOVER_COMMUNITIES = 'Discover communities with interesting shows and events';
 
   static const CREATE_SHOW_OR_EVENT = 'Create Show or Event';
@@ -153,7 +179,10 @@ class AmptiveOtherStrings{
   static const SELECTED = 'Selected';
   static const ADD_COMMUNITY_DESC = 'Communities will help your Shows and Events reach more listeners. They can also use communites to find your Shows and Events easily. kfkjkajdjkjadjfjakjka';
   static const ADD_COHOST_DESC = 'Added users must accept your invitation before they are added as your co-hosts.';
+  static const TOP_GIFTERS_DESC = 'Gifters are ranked base on the total amount they have contributed to the host during live sessions.';
+  static const TOP_GIFTERS = 'Top Gifters';
   static const SEARCH_4_COHOSTS = 'Search for co-hosts';
+  static const SEARCH_4_LISTENERS = 'Search for listeners';
   static const SEARCH_4_HASHTAGS = 'Search for hashtags';
   static const SUGGESTIONS = 'Suggestions';
   static const NO_SUGGESTIONS = 'No Suggestions';
@@ -166,12 +195,22 @@ class AmptiveOtherStrings{
   static const MAX_CAPACITY_LIMIT = 'Once maximun capacity is reached, other users will not be allowed to join or pay for your event';
   static const SET_CAPACITY = 'Set capacity';
   static const REMOVE = 'Remove';
+  static const SEND_GIFT_2_HOST = 'Send a gift to the host';
   static const WHISPERS_DESC = 'Whispers are randomly selected comments from your live audience that appear on your event page while your are live.';
   static const USERS_WOULD_WANT_2_JOIN = 'Non-attending users can see these comments, encouraging them to join your live event.';
   static const TURN_ON = 'Turn On';
   static const TURNED_ON = 'Turned On';
   static const TURN_OFF = 'Turn Off';
   static const TURNED_OFF = 'Turned Off';
+  static const IS_TALKING = 'is talking';
+  static const IS_GIFTING = 'is gifting';
+  static const GIFTED = 'Gifted';
+  static const PINNED = 'Pinned';
+  static const MODERATION_TOOLS = 'Moderation Tools';
+  static const ALLOW_COMMENTS = 'Allow comments';
+  static const NEED_2_ENABLE_LISTENERS_MIC = "You will still need to enable the Listeners's mic";
+  static const ALLOW_AUDIENCE_MIC = 'Allow audience mic';
+  static const ALLOW_HANDRAISING = 'Allow hand raising';
   static const WHISPERS_ENABLED = 'Whispers will be enabled for your event.';
   static const WHISPERS_DISABLED = 'Whispers will be disabled for your event.';
   static const HAND_RAISING = 'Hand Raising';
@@ -202,5 +241,6 @@ class AmptiveOtherStrings{
   static const EMPTY_FIELD = 'Field(s) cannot be empty';
   static const SHARE_EVENT = 'Share event';
   static const COMMENT = 'Comment';
+  static const END_NOW = 'End now';
   static const HOST = 'Host';
 }

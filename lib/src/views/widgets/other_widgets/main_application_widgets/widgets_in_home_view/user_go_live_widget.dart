@@ -39,9 +39,9 @@ class AmptiveUserGoLiveWidget extends StatelessWidget {
                   alignment: Alignment.center,
                   padding: const EdgeInsets.all(0),
                   height: 20, width: 20, radius: 10,
-                  color: AmptiveColors.brandBlueColor,
+                  color: AmptiveColors.brandBlue,
                   border: Border.all(
-                    color: AmptiveColors.brandBlackColor,
+                    color: AmptiveColors.brandBlack,
                     width: 2,
                   ),
                   child: const Icon(Icons.add, size: 15, applyTextScaling: true),

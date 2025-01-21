@@ -25,7 +25,7 @@ class AmptiveRowOfPaidShowAndPlayButtonWidget extends StatelessWidget {
               padding:  EdgeInsets.all(8.5.w),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(5),
-                color: AmptiveColors.brandBlackColor
+                color: AmptiveColors.brandBlack
               ),
               child: Text(
                 AmptiveOtherStrings.PAID_SHOW.toUpperCase(),
@@ -42,7 +42,7 @@ class AmptiveRowOfPaidShowAndPlayButtonWidget extends StatelessWidget {
           width: 45.w,
           child: CircleAvatar(
             backgroundColor: AmptiveColors.authHintColor,
-            child: Icon(icon ?? Icons.play_arrow, color: AmptiveColors.brandBlackColor,
+            child: Icon(icon ?? Icons.play_arrow, color: AmptiveColors.brandBlack,
             size: 30.w,)
           ),
         )

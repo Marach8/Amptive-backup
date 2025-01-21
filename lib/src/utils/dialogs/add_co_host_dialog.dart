@@ -34,7 +34,7 @@ Future<Set<ObjectWithNotifier<Host>>?> showAddCoHostDialog(BuildContext context)
   final searchQueryNotifier = ValueNotifier('');
 
   return await showModalBottomSheet(
-      backgroundColor: AmptiveColors.brandBlackColor,
+      backgroundColor: AmptiveColors.brandBlack,
       constraints: BoxConstraints.expand(
           height: AmptiveHelperFunctions.getScreenHeight(context)),
       context: context,
@@ -86,6 +86,7 @@ Future<Set<ObjectWithNotifier<Host>>?> showAddCoHostDialog(BuildContext context)
                           Gap(60.w),
                           AmptiveRebuilderWidget(
                               notifier: service.selectedCoHostLength,
+                              // shouldDispose: true,
                               builder: (_, number, __) {
                                 return Text(
                                   '$number ${AmptiveOtherStrings.SELECTED}',
@@ -145,7 +146,7 @@ Future<Set<ObjectWithNotifier<Host>>?> showAddCoHostDialog(BuildContext context)
                       AmptiveRebuilderWidget(
                         notifier: service.coHostSelectionStarted,
                         // shouldDispose: true,
-                        builder: (_, selectionStarted, __) {
+                        builder: (_, selectionStarted, __) {                          
                           return AmptiveAnimatedCrossFadeWidget(
                             condition: !selectionStarted,
                             firstChild: const SizedBox.shrink(),
@@ -160,10 +161,10 @@ Future<Set<ObjectWithNotifier<Host>>?> showAddCoHostDialog(BuildContext context)
                                     return Row(
                                       children: selectedCoHosts.map((selectedCoHost) {
                                         final showCoHost = selectedCoHost.obj.profilePicture != null;
-
+                                        
                                         if(!showCoHost){
                                           final index = selectedCoHosts.toList().indexOf(selectedCoHost);
-
+                                    
                                           return AmptiveCustomContainer(
                                             alignment: Alignment.center,
                                             margin: const EdgeInsets.only(right: 15),
@@ -177,7 +178,7 @@ Future<Set<ObjectWithNotifier<Host>>?> showAddCoHostDialog(BuildContext context)
                                             ),
                                           );
                                         }
-
+                                    
                                         return Padding(
                                           padding: const EdgeInsets.only(right: 15),
                                           child: Stack(
@@ -194,7 +195,7 @@ Future<Set<ObjectWithNotifier<Host>>?> showAddCoHostDialog(BuildContext context)
                                                 ),
                                               ),
                                               Positioned(
-                                                top: 0, right: -4,
+                                                top: 0, right: -4, 
                                                 child: AmptiveCustomContainer(
                                                   onTap: () {
                                                     //Disable this notifier
@@ -231,7 +232,7 @@ Future<Set<ObjectWithNotifier<Host>>?> showAddCoHostDialog(BuildContext context)
 
                             if (searchString.isEmpty || controller.text.isEmpty) {
                               filteredCoHosts = coHostsData;
-                            }
+                            } 
                             else {
                               filteredCoHosts = coHostsData.where((coHost) {
                                 return coHost.obj.name!
@@ -336,7 +337,7 @@ class AmptiveListOfCoHostsWidget extends StatelessWidget {
         return AmptiveCoHostWidget(
           coHostDetail: coHost,
           onTap: (host, isSelected) {
-            if (isSelected) {
+            if (isSelected) {              
               service.removeSelectedCoHost(host);
             } else {
               service.addSelectedCoHost(host);
@@ -388,11 +389,10 @@ class AmptiveCoHostWidget extends StatelessWidget {
                     )
                   ),
                   Text(
-                    coHostDetail.obj.username!,
-                    style: Theme.of(context)
-                        .textTheme
-                        .bodySmall
-                        ?.copyWith(color: AmptiveColors.subtitleColor),
+                    coHostDetail.obj.username ?? '',
+                    style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                      color: AmptiveColors.subtitleColor
+                    ),
                   ),
                 ],
               ),
@@ -408,7 +408,7 @@ class AmptiveCoHostWidget extends StatelessWidget {
                   height: 24, width: 24,
                   child: Icon(
                     Icons.check, size: 20,
-                    color: AmptiveColors.brandBlackColor,
+                    color: AmptiveColors.brandBlack,
                   )
                 );
               }

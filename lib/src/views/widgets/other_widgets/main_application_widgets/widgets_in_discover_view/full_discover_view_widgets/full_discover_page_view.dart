@@ -1,6 +1,7 @@
-import 'dart:async';
 import 'package:amptive/src/utils/constants/strings/route_strings.dart';
 import 'package:amptive/src/utils/helpers/helper_functions/other_functions.dart';
+import 'package:amptive/src/views/widgets/common_widgets/custom_rebuilder_widget.dart';
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
@@ -26,7 +27,7 @@ class AmptiveFullDiscoverPageView extends StatelessWidget {
   Widget build(context) {
     return Column(
       children: [
-        const NewWidget(),
+        const _HorizontalScrollCards(),
         Gap(30.h),
         AmptiveRowOfTitleWithTrendingViewAll(
           title: AmptiveOtherStrings.TRENDING_HASHTAGS,
@@ -230,79 +231,48 @@ class AmptiveFullDiscoverPageView extends StatelessWidget {
 
 
 
-class NewWidget extends StatefulWidget {
-  const NewWidget({
-    super.key,
-  });
+class _HorizontalScrollCards extends StatefulWidget {
+  const _HorizontalScrollCards();
 
   @override
-  State<NewWidget> createState() => _NewWidgetState();
+  State<_HorizontalScrollCards> createState() => _HorizontalScrollCardsState();
 }
 
-class _NewWidgetState extends State<NewWidget> {
-  ValueNotifier<int> indexNotifier = ValueNotifier(0);
-  late ScrollController _scrollController;
-  late Timer _timer;
-  int _currentItemIndex = 0;
-  final int _itemCount = 3;
+class _HorizontalScrollCardsState extends State<_HorizontalScrollCards> {
+  final ValueNotifier<int> _indexNotifier = ValueNotifier(0);
+  final _adverts = [
+    AmptiveImageStrings.discoverPic1,
+    AmptiveImageStrings.discoverPic1,
+    AmptiveImageStrings.discoverPic1
+  ];
 
-  @override
-  void initState() {
-    super.initState();
-    _scrollController = ScrollController();
-    _scrollToNextItem();
-  }
-
-  void _scrollToNextItem() {
-    _timer = Timer.periodic(
-      const Duration(seconds: 5),
-      (_) async{
-        await _scrollController.animateTo(
-          _currentItemIndex * AmptiveHelperFunctions.getScreenWidth(context) * 0.9,
-          duration: const Duration(seconds: 2),
-          curve: Curves.easeInOut,
-        ).then(
-          (_) => indexNotifier.value = _currentItemIndex,
-        );
-        // marach.log(_currentItemIndex.toString());
-
-        _currentItemIndex++;
-        if (_currentItemIndex >= _itemCount) {
-          // Reset to the first item if we reach the end
-          _currentItemIndex = 0;
-          _scrollController.jumpTo(0.0);
-        }
-      }
-    );
-  }
 
   @override
   void dispose() {
-    _scrollController.dispose();
-    _timer.cancel();
+    _indexNotifier.dispose();
     super.dispose();
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(context) {
     return SizedBox(
-      height: 265,
+      height: 260,
+      width: AmptiveHelperFunctions.getScreenWidth(context),
       child: Column(
         children: [
-          SingleChildScrollView(
-            physics: const BouncingScrollPhysics(),
-            scrollDirection: Axis.horizontal,
-            controller: _scrollController,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: List.generate(
-                3,
-                (_) => const Padding(
-                  padding: EdgeInsets.only(left: 15),
-                  child: AmptiveImageLoaderWidget(imagePath: AmptiveImageStrings.discoverPic1),
-                )
-              )
-            ),
+          CarouselSlider.builder(
+            itemCount: _adverts.length,
+            itemBuilder: (_, pageIndex, __){
+              final advert = _adverts.elementAtOrNull(pageIndex);
+              return AmptiveImageLoaderWidget(imagePath: advert ?? '');
+            },
+            options: CarouselOptions(
+              autoPlay: true,
+              scrollPhysics: const BouncingScrollPhysics(),
+              autoPlayCurve: Curves.decelerate,
+              autoPlayInterval: const Duration(seconds: 5),
+              onPageChanged: (pageIndex, _) => _indexNotifier.value = pageIndex
+            )
           ),
           const Spacer(),
           Padding(
@@ -312,16 +282,14 @@ class _NewWidgetState extends State<NewWidget> {
               children: List.generate(
                 3,
                 (index){
-                  return ValueListenableBuilder(
-                    valueListenable: indexNotifier,
+                  return AmptiveRebuilderWidget(
+                    notifier: _indexNotifier,
                     builder: (_, value, __){
-                      //marach.log('this is the value $value');
                       final isActive = index == value;
                       return AmptiveCustomContainer(
                         margin: const EdgeInsets.only(left: 3),
-                        radius: 8,
-                        color: isActive ? AmptiveColors.whiteColor : AmptiveColors.inactiveDotColor,
-                        height: 8, 
+                        radius: 8, height: 8,
+                        color: isActive ? AmptiveColors.whiteColor : AmptiveColors.inactiveDotColor, 
                         width: isActive ? 25 : 8,
                         child: const SizedBox.shrink()
                       );
@@ -336,14 +304,3 @@ class _NewWidgetState extends State<NewWidget> {
     );
   }
 }
-
-          // SmoothPageIndicator(
-          //   controller: PageController(),
-          //   count: 3,
-          //   effect: ExpandingDotsEffect(
-          //     activeDotColor: AmptiveColors.whiteColor,
-          //     dotColor: AmptiveColors.inactiveDotColor,
-          //     dotHeight: 8, dotWidth: 8,
-          //     spacing: 4
-          //   ),
-          // )

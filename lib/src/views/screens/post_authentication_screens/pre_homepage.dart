@@ -72,7 +72,7 @@ class _PreHomePageState extends State<PreHomePage>
   Widget build(BuildContext context) {
     return AmptiveAnnotatedRegionWidget(
       child: Scaffold(
-        backgroundColor: AmptiveColors.brandBlackColor,
+        backgroundColor: AmptiveColors.brandBlack,
         body: Stack(
           children: [
             Positioned(
@@ -192,7 +192,7 @@ class _PreHomePageState extends State<PreHomePage>
               bottom: 0,
               child: Container(
                 width: MediaQuery.of(context).size.width,
-                color: AmptiveColors.brandBlackColor,
+                color: AmptiveColors.brandBlack,
                 padding: EdgeInsets.only(left: 25.w),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,

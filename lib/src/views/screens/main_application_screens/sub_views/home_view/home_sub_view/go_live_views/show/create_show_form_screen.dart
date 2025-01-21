@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'dart:typed_data';
 import 'dart:ui';
 
 import 'package:amptive/src/models/community.dart';
@@ -7,7 +8,6 @@ import 'package:amptive/src/utils/constants/colors.dart';
 import 'package:amptive/src/utils/constants/constants.dart';
 import 'package:amptive/src/utils/constants/font_sizes.dart';
 import 'package:amptive/src/utils/constants/strings/image_strings.dart';
-import 'package:amptive/src/utils/constants/strings/other_strings.dart';
 import 'package:amptive/src/utils/constants/strings/route_strings.dart';
 import 'package:amptive/src/utils/dialogs/select_audience_access_for_events_dialog.dart';
 import 'package:amptive/src/utils/dialogs/select_audience_access_for_shows_dialog.dart';
@@ -23,7 +23,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
 import 'package:iconsax/iconsax.dart';
-import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 
 import '../../../../../../../../models/host.dart';
@@ -40,7 +39,7 @@ import '../../../../../../../widgets/other_widgets/main_application_widgets/widg
 class CreateShowScreen extends StatefulWidget {
   final ShowType showType;
 
-  const CreateShowScreen({super.key, this.showType = ShowType.event});
+  const CreateShowScreen({super.key, this.showType = ShowType.show});
 
   @override
   State<CreateShowScreen> createState() => _CreateShowScreenState();
@@ -51,34 +50,11 @@ class _CreateShowScreenState extends State<CreateShowScreen> {
   List<dynamic> selectedHosts = [1, 2, 3, 4, 5];
   CreateShowService service = GetIt.I<CreateShowService>();
   String? showTypeTitle;
-
-  // final ValueNotifier<File?> _selectedImage = ValueNotifier(null);
   final ValueNotifier<bool> _communitySelected = ValueNotifier(false);
 
   AssetImage? _defaultAssetImage;
   Community? _selectedCommunityCard;
 
-  final AndroidUiSettings _androidUiSettings = AndroidUiSettings(
-    toolbarTitle: AmptiveOtherStrings.empty,
-    toolbarColor: AmptiveColors.brandBlueColor,
-    toolbarWidgetColor: AmptiveColors.whiteColor,
-    initAspectRatio: CropAspectRatioPreset.square,
-    lockAspectRatio: false,
-    aspectRatioPresets: [
-      CropAspectRatioPreset.original,
-      CropAspectRatioPreset.square,
-      CropAspectRatioPreset.ratio4x3,
-    ],
-  );
-
-  final IOSUiSettings _iosUiSettings = IOSUiSettings(
-    title: AmptiveOtherStrings.empty,
-    aspectRatioPresets: [
-      CropAspectRatioPreset.original,
-      CropAspectRatioPreset.square,
-      CropAspectRatioPreset.ratio4x3,
-    ],
-  );
 
   @override
   void initState() {
@@ -86,7 +62,7 @@ class _CreateShowScreenState extends State<CreateShowScreen> {
     setShowTypeTitle();
     service.initFormControl();
     _defaultAssetImage =
-        const AssetImage(AmptiveImageStrings.createShowPlaceholderImage);
+    const AssetImage(AmptiveImageStrings.createShowPlaceholderImage);
   }
 
   @override
@@ -108,33 +84,26 @@ class _CreateShowScreenState extends State<CreateShowScreen> {
   //Image Picker function to get image from gallery
   Future getImageFromGallery() async {
     final pickedFile = await _picker.pickImage(source: ImageSource.gallery);
-    final croppedFile = await _cropImage(pickedFile);
+    final croppedFile = await _customCrop(pickedFile);
 
     await handlePickedFile(croppedFile);
   }
 
-  Future<void> handlePickedFile(CroppedFile? pickedFile) async {
+  Future<void> handlePickedFile(MemoryImage? pickedFile) async {
     if (pickedFile != null && mounted) {
-      File image = File(pickedFile.path);
+      Uint8List image = pickedFile.bytes;
       service.selectedImage.value = image;
     }
   }
 
-  Future<CroppedFile?> _cropImage(XFile? pickedFile) async {
+  Future<MemoryImage?> _customCrop(XFile? pickedFile) async {
     if (pickedFile != null && mounted) {
-      final croppedFile = await ImageCropper().cropImage(
-        sourcePath: pickedFile.path,
-        compressFormat: ImageCompressFormat.jpg,
-        compressQuality: 100,
-        uiSettings: [
-          _androidUiSettings,
-          _iosUiSettings,
-        ],
-      );
+      File image = File(pickedFile.path);
+      MemoryImage? img =
+      await context.pushNamed(AmptiveRoutes.cropImageSquare, extra: image);
+      return img;
 
-      return croppedFile;
     }
-
     return null;
   }
 
@@ -178,14 +147,14 @@ class _CreateShowScreenState extends State<CreateShowScreen> {
               builder: (ctx, selectedImage, _) {
                 return Positioned.fill(
                   child: _imageSelected()
-                      ? Image.file(
-                          selectedImage!,
-                          fit: BoxFit.cover,
-                        )
+                      ? Image.memory(
+                    selectedImage!,
+                    fit: BoxFit.cover,
+                  )
                       : Image(
-                          image: _defaultAssetImage!,
-                          fit: BoxFit.cover,
-                        ),
+                    image: _defaultAssetImage!,
+                    fit: BoxFit.cover,
+                  ),
                 );
               },
             ),
@@ -225,14 +194,14 @@ class _CreateShowScreenState extends State<CreateShowScreen> {
                                     child: ClipRRect(
                                       borderRadius: BorderRadius.circular(10.r),
                                       child: _imageSelected()
-                                          ? Image.file(
-                                              selectedImage!,
-                                              fit: BoxFit.cover,
-                                            )
+                                          ? Image.memory(
+                                        selectedImage!,
+                                        fit: BoxFit.cover,
+                                      )
                                           : Image(
-                                              image: _defaultAssetImage!,
-                                              fit: BoxFit.cover,
-                                            ),
+                                        image: _defaultAssetImage!,
+                                        fit: BoxFit.cover,
+                                      ),
                                     ),
                                   );
                                 },
@@ -241,7 +210,7 @@ class _CreateShowScreenState extends State<CreateShowScreen> {
                                 child: Center(
                                   child: CircleAvatar(
                                     backgroundColor:
-                                        AmptiveColors.black.withOpacity(0.5),
+                                    AmptiveColors.black.withOpacity(0.5),
                                     radius: 20.r,
                                     child: Icon(
                                       Icons.add_photo_alternate_outlined,
@@ -315,29 +284,29 @@ class _CreateShowScreenState extends State<CreateShowScreen> {
                         builder: (ctx, selected, _) {
                           return selected && _selectedCommunityCard != null
                               ? SelectedCommunity(
-                                  selectedCommunity: _selectedCommunityCard!,
-                                  onClose: () {
-                                    _communitySelected.value = false;
-                                  },
-                                  onView: () async {
-                                    _communitySelected.value = false;
-                                    await _openCommunitySelection(context);
-                                  },
-                                )
+                            selectedCommunity: _selectedCommunityCard!,
+                            onClose: () {
+                              _communitySelected.value = false;
+                            },
+                            onView: () async {
+                              _communitySelected.value = false;
+                              await _openCommunitySelection(context);
+                            },
+                          )
                               : CreateShowTextFormField(
-                                  controller: TextEditingController(),
-                                  hintText: "Select a community for your show",
-                                  suffixIcon: Icon(
-                                    Icons.arrow_forward_ios,
-                                    size: 20.w,
-                                    color: AmptiveColors.whiteColor
-                                        .withOpacity(0.4),
-                                  ),
-                                  readOnly: true,
-                                  onTap: () async {
-                                    await _openCommunitySelection(context);
-                                  },
-                                );
+                            controller: TextEditingController(),
+                            hintText: "Select a community for your show",
+                            suffixIcon: Icon(
+                              Icons.arrow_forward_ios,
+                              size: 20.w,
+                              color: AmptiveColors.whiteColor
+                                  .withOpacity(0.4),
+                            ),
+                            readOnly: true,
+                            onTap: () async {
+                              await _openCommunitySelection(context);
+                            },
+                          );
                         },
                         notifier: _communitySelected,
                       ),
@@ -348,9 +317,9 @@ class _CreateShowScreenState extends State<CreateShowScreen> {
                         "Communities will help your Shows and Events reach more listeners. Listeners can also use communities to find your Shows and Events, easily. Learn more",
                         overflow: TextOverflow.visible,
                         style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                              fontWeight: AmptiveFontWeights.medium,
-                              color: AmptiveColors.whiteColor.withOpacity(0.4),
-                            ),
+                          fontWeight: AmptiveFontWeights.medium,
+                          color: AmptiveColors.whiteColor.withOpacity(0.4),
+                        ),
                       ),
                     ),
                     SizedBox(height: 30.h),
@@ -367,79 +336,79 @@ class _CreateShowScreenState extends State<CreateShowScreen> {
                       builder: (ctx, selected, _) {
                         return selected
                             ? Container(
-                                height: 98.h,
-                                padding: EdgeInsets.symmetric(
-                                    vertical: 13.h, horizontal: 16.w),
-                                decoration: BoxDecoration(
-                                    color: AmptiveColors.whiteColor
-                                        .withOpacity(0.1),
-                                    borderRadius: BorderRadius.circular(14.r)),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Row(
-                                      children: [
-                                        Expanded(
-                                            child: OverlappingHosts(
-                                          items: selectedHosts,
-                                        )),
-                                        ElevatedButton(
-                                          onPressed: () async {
-                                            await _editCoHosts(context);
-                                          },
-                                          style: ElevatedButton.styleFrom(
-                                            backgroundColor: AmptiveColors
-                                                .whiteColor
-                                                .withOpacity(0.1),
-                                            shape: RoundedRectangleBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(5.r),
-                                            ),
-                                          ),
-                                          child: Text("Edit co-host",
-                                              style: Theme.of(context)
-                                                  .textTheme
-                                                  .titleSmall
-                                                  ?.copyWith(
-                                                      color: AmptiveColors
-                                                          .whiteColor
-                                                          .withOpacity(0.7),
-                                                      fontWeight:
-                                                          AmptiveFontWeights
-                                                              .medium)),
-                                        )
-                                      ],
+                          height: 98.h,
+                          padding: EdgeInsets.symmetric(
+                              vertical: 13.h, horizontal: 16.w),
+                          decoration: BoxDecoration(
+                              color: AmptiveColors.whiteColor
+                                  .withOpacity(0.1),
+                              borderRadius: BorderRadius.circular(14.r)),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Row(
+                                children: [
+                                  Expanded(
+                                      child: OverlappingHosts(
+                                        items: selectedHosts,
+                                      )),
+                                  ElevatedButton(
+                                    onPressed: () async {
+                                      await _editCoHosts(context);
+                                    },
+                                    style: ElevatedButton.styleFrom(
+                                      backgroundColor: AmptiveColors
+                                          .whiteColor
+                                          .withOpacity(0.1),
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius:
+                                        BorderRadius.circular(5.r),
+                                      ),
                                     ),
-                                    Text(
-                                      "ABBYWAMBACH will be notified",
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .titleSmall
-                                          ?.copyWith(
-                                              fontSize: AmptiveFontSizes.size13,
-                                              color: AmptiveColors.whiteColor
-                                                  .withOpacity(0.6),
-                                              fontWeight:
-                                                  AmptiveFontWeights.medium),
-                                    )
-                                  ],
-                                ),
+                                    child: Text("Edit co-host",
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .titleSmall
+                                            ?.copyWith(
+                                            color: AmptiveColors
+                                                .whiteColor
+                                                .withOpacity(0.7),
+                                            fontWeight:
+                                            AmptiveFontWeights
+                                                .medium)),
+                                  )
+                                ],
+                              ),
+                              Text(
+                                "ABBYWAMBACH will be notified",
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .titleSmall
+                                    ?.copyWith(
+                                    fontSize: AmptiveFontSizes.size13,
+                                    color: AmptiveColors.whiteColor
+                                        .withOpacity(0.6),
+                                    fontWeight:
+                                    AmptiveFontWeights.medium),
                               )
+                            ],
+                          ),
+                        )
                             : CreateShowTextFormField(
-                                controller: TextEditingController(),
-                                hintText:
-                                    "Search and add co-hosts for your show",
-                                readOnly: true,
-                                onTap: () async {
-                                  await _editCoHosts(context);
-                                },
-                                prefixIcon: Icon(
-                                  Icons.search,
-                                  size: 20.w,
-                                  color:
-                                      AmptiveColors.whiteColor.withOpacity(0.4),
-                                ),
-                              );
+                          controller: TextEditingController(),
+                          hintText:
+                          "Search and add co-hosts for your show",
+                          readOnly: true,
+                          onTap: () async {
+                            await _editCoHosts(context);
+                          },
+                          prefixIcon: Icon(
+                            Icons.search,
+                            size: 20.w,
+                            color:
+                            AmptiveColors.whiteColor.withOpacity(0.4),
+                          ),
+                        );
                       },
                     ),
                     Container(
@@ -448,9 +417,9 @@ class _CreateShowScreenState extends State<CreateShowScreen> {
                         "Added users must accept your invitation before they are added as your co-hosts.",
                         overflow: TextOverflow.visible,
                         style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                              fontWeight: AmptiveFontWeights.medium,
-                              color: AmptiveColors.whiteColor.withOpacity(0.4),
-                            ),
+                          fontWeight: AmptiveFontWeights.medium,
+                          color: AmptiveColors.whiteColor.withOpacity(0.4),
+                        ),
                       ),
                     ),
                     SizedBox(height: 30.h),
@@ -485,16 +454,16 @@ class _CreateShowScreenState extends State<CreateShowScreen> {
                       builder: (ctx, selected, _) {
                         return selected > 0
                             ? AmptiveRebuilderWidget(
-                                notifier: service.selectedHashtags,
-                                builder: (ctx, hashtags, _) {
-                                  return SelectedHashTags(
-                                    hashtags: hashtags,
-                                    onRemove: (hashtag) {
-                                      service.removeSelectedHashtags(hashtag);
-                                    },
-                                  );
-                                },
-                              )
+                          notifier: service.selectedHashtags,
+                          builder: (ctx, hashtags, _) {
+                            return SelectedHashTags(
+                              hashtags: hashtags,
+                              onRemove: (hashtag) {
+                                service.removeSelectedHashtags(hashtag);
+                              },
+                            );
+                          },
+                        )
                             : const SizedBox();
                       },
                     ),
@@ -504,9 +473,9 @@ class _CreateShowScreenState extends State<CreateShowScreen> {
                         "You can add up to 5 hashtags, with each hashtag being up to 25 characters long and free of spaces or special characters.",
                         overflow: TextOverflow.visible,
                         style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                              fontWeight: AmptiveFontWeights.medium,
-                              color: AmptiveColors.whiteColor.withOpacity(0.4),
-                            ),
+                          fontWeight: AmptiveFontWeights.medium,
+                          color: AmptiveColors.whiteColor.withOpacity(0.4),
+                        ),
                       ),
                     ),
                     SizedBox(height: 30.h),
@@ -540,9 +509,9 @@ class _CreateShowScreenState extends State<CreateShowScreen> {
                         "You will be prompted to setup your subscription plan, if you haven't set it up yet.  ",
                         overflow: TextOverflow.visible,
                         style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                              fontWeight: AmptiveFontWeights.medium,
-                              color: AmptiveColors.whiteColor.withOpacity(0.4),
-                            ),
+                          fontWeight: AmptiveFontWeights.medium,
+                          color: AmptiveColors.whiteColor.withOpacity(0.4),
+                        ),
                       ),
                     ),
                     SizedBox(height: 30.h),
@@ -550,7 +519,7 @@ class _CreateShowScreenState extends State<CreateShowScreen> {
                     Divider(
                       height: 2.h,
                       thickness: 2.w,
-                      color: AmptiveColors.brandBlackColor.withOpacity(0.10),
+                      color: AmptiveColors.brandBlack.withOpacity(0.10),
                     ),
                     SizedBox(height: 24.h),
 
@@ -602,10 +571,10 @@ class _CreateShowScreenState extends State<CreateShowScreen> {
                               .textTheme
                               .titleSmall
                               ?.copyWith(
-                                fontWeight: AmptiveFontWeights.medium,
-                                color:
-                                    AmptiveColors.whiteColor.withOpacity(0.4),
-                              ),
+                            fontWeight: AmptiveFontWeights.medium,
+                            color:
+                            AmptiveColors.whiteColor.withOpacity(0.4),
+                          ),
                         ),
                       ),
                     ),
@@ -653,10 +622,10 @@ class _CreateShowScreenState extends State<CreateShowScreen> {
                               .textTheme
                               .titleSmall
                               ?.copyWith(
-                                fontWeight: AmptiveFontWeights.medium,
-                                color:
-                                    AmptiveColors.whiteColor.withOpacity(0.4),
-                              ),
+                            fontWeight: AmptiveFontWeights.medium,
+                            color:
+                            AmptiveColors.whiteColor.withOpacity(0.4),
+                          ),
                         ),
                       ),
                     ),
@@ -712,10 +681,10 @@ class _CreateShowScreenState extends State<CreateShowScreen> {
                               .textTheme
                               .titleSmall
                               ?.copyWith(
-                                fontWeight: AmptiveFontWeights.medium,
-                                color:
-                                    AmptiveColors.whiteColor.withOpacity(0.4),
-                              ),
+                            fontWeight: AmptiveFontWeights.medium,
+                            color:
+                            AmptiveColors.whiteColor.withOpacity(0.4),
+                          ),
                         ),
                       ),
                     ),
@@ -748,24 +717,24 @@ class _CreateShowScreenState extends State<CreateShowScreen> {
                       buttonTitle: getSubmitButtonTileText(),
                       onPressed: service.formIsValid()
                           ? () {
-                              service.onSubmit();
-                              navigateToSuccessPage();
-                            }
+                        service.onSubmit();
+                        navigateToSuccessPage();
+                      }
                           : null,
                       buttonStyle: ButtonStyle(
                         backgroundColor:
-                            WidgetStateProperty.resolveWith((states) {
+                        WidgetStateProperty.resolveWith((states) {
                           if (states.contains(WidgetState.disabled)) {
                             return AmptiveColors.grey1Color;
                           }
                           return AmptiveColors.activeDotColor;
                         }),
                         foregroundColor:
-                            WidgetStateProperty.resolveWith((states) {
+                        WidgetStateProperty.resolveWith((states) {
                           if (states.contains(WidgetState.disabled)) {
                             return AmptiveColors.strokeGreyColor;
                           }
-                          return AmptiveColors.brandBlackColor;
+                          return AmptiveColors.brandBlack;
                         }),
                       ),
                     );
@@ -825,13 +794,13 @@ class _CreateShowScreenState extends State<CreateShowScreen> {
   void navigateToSuccessPage() {
     if (widget.showType == ShowType.show) {
       context.pushReplacementNamed(AmptiveRoutes.CREATE_SHOW_SUCCESS,
-          extra: service.selectedShowImage!.path);
+          extra: service.selectedShowImage!);
     } else if (widget.showType == ShowType.event) {
       context.pushReplacementNamed(AmptiveRoutes.EVENT_SCHEDULED_SCREEN,
-          extra: service.selectedShowImage!.path);
+          extra: service.selectedShowImage!);
     } else if (widget.showType == ShowType.episode) {
       context.pushReplacementNamed(AmptiveRoutes.EPISODE_SCHEDULED_SCREEN,
-          extra: service.selectedShowImage!.path);
+          extra: service.selectedShowImage!);
     }
   }
 }
@@ -867,33 +836,33 @@ class OverlappingHosts extends StatelessWidget {
               child: ClipOval(
                 child: item is ObjectWithNotifier<Host>
                     ? Image.asset(
-                        item.obj.profilePicture!,
-                        // Replace with actual image URL
-                        fit: BoxFit.cover,
-                      )
+                  item.obj.profilePicture!,
+                  // Replace with actual image URL
+                  fit: BoxFit.cover,
+                )
                     : Stack(
-                        children: [
-                          BackdropFilter(
-                            filter:
-                                ImageFilter.blur(sigmaX: 53.4, sigmaY: 53.4),
-                            child: Container(
-                              color: AmptiveColors.brandBlackColor
-                                  .withOpacity(0.2),
-                            ),
-                          ),
-                          Center(
-                            child: Text(
-                              '$item', // Display number
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .bodySmall
-                                  ?.copyWith(
-                                    fontSize: AmptiveFontSizes.size10,
-                                  ),
-                            ),
-                          ),
-                        ],
+                  children: [
+                    BackdropFilter(
+                      filter:
+                      ImageFilter.blur(sigmaX: 53.4, sigmaY: 53.4),
+                      child: Container(
+                        color: AmptiveColors.brandBlack
+                            .withOpacity(0.2),
                       ),
+                    ),
+                    Center(
+                      child: Text(
+                        '$item', // Display number
+                        style: Theme.of(context)
+                            .textTheme
+                            .bodySmall
+                            ?.copyWith(
+                          fontSize: AmptiveFontSizes.size10,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
           );

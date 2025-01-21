@@ -21,13 +21,13 @@ class AmptiveLiveIndicatorWidget extends StatelessWidget {
           begin: Alignment.topCenter,
           end: Alignment.bottomCenter,
           colors: [
-            AmptiveColors.orangeGradientColorA,
+            AmptiveColors.orangeColor1,
             AmptiveColors.orangeGradientColorB
           ]
         ),
         borderRadius: BorderRadius.circular(5),
         border: Border.all(
-          color: AmptiveColors.brandBlackColor,
+          color: AmptiveColors.brandBlack,
           width: 2,
         )
       ),

@@ -31,7 +31,7 @@ class AmptiveExistingEventWidget extends StatelessWidget {
           onTap: () => onTap(isSelected),
           radius: 5,
           border: Border.all(
-            color: isSelected ? AmptiveColors.brandBlueColor : AmptiveColors.transparentColor,
+            color: isSelected ? AmptiveColors.brandBlue : AmptiveColors.transparentColor,
             width: 3,
           ),
           child: Column(

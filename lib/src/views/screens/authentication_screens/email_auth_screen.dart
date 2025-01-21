@@ -66,7 +66,7 @@ class _AmptiveEmailAuthScreenState extends State<AmptiveEmailAuthScreen> {
                   return AmptiveTextFormFieldWidget(
                     controller: _controller,
                     cursorColor: service.email.error == null
-                        ? AmptiveColors.brandBlueColor
+                        ? AmptiveColors.brandBlue
                         : AmptiveColors.textRedColor,
                     keyboardType: TextInputType.emailAddress,
                     onChanged: (currentText) {
@@ -96,7 +96,7 @@ class _AmptiveEmailAuthScreenState extends State<AmptiveEmailAuthScreen> {
                         borderSide: BorderSide(
                           width: 2.w,
                           color: service.email.error == null
-                              ? AmptiveColors.brandBlueColor
+                              ? AmptiveColors.brandBlue
                               : AmptiveColors.textRedColor,
                         ),
                         borderRadius: BorderRadius.circular(14.r),

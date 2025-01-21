@@ -1,7 +1,6 @@
 import 'package:amptive/src/utils/constants/strings/image_strings.dart';
 import 'package:amptive/src/views/widgets/common_widgets/image_loader_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:iconsax/iconsax.dart';
 
 Map<String, Widget> mapOfOptions = {
   'Subscribe to glennodoyle': const Icon(Icons.favorite_border_outlined),

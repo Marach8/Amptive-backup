@@ -6,12 +6,7 @@ import 'package:flutter/material.dart';
 import '../../common_widgets/custom_container_widget.dart';
 
 class AmptiveDashboardBottomNavBarWidget extends StatelessWidget {
-  const AmptiveDashboardBottomNavBarWidget({
-    super.key,
-    required this.pageIndexNotifier,
-  });
-
-  final ValueNotifier<int> pageIndexNotifier;
+  const AmptiveDashboardBottomNavBarWidget({super.key});
 
   @override
   Widget build(context) {
@@ -27,10 +22,9 @@ class AmptiveDashboardBottomNavBarWidget extends StatelessWidget {
               return Stack(
                 children: [
                   AmptiveBottomAppBarItem(
-                    selected: list.first,
-                    unselected: list.last,
+                    selectedImagePath: list.first,
+                    unselectedImagePath: list.last,
                     itemIdentityIndex: index,
-                    pageIndexNotifier: pageIndexNotifier,
                   ),
                   Positioned(
                     top: 0, right: 0,
@@ -54,10 +48,9 @@ class AmptiveDashboardBottomNavBarWidget extends StatelessWidget {
               );
             }
             return AmptiveBottomAppBarItem(
-              selected: list.first,
-              unselected: list.last,
+              selectedImagePath: list.first,
+              unselectedImagePath: list.last,
               itemIdentityIndex: index,
-              pageIndexNotifier: pageIndexNotifier,
             );
           }
         ).toList()

@@ -40,7 +40,7 @@ class _NameAuthScreenState extends State<NameAuthScreen> {
   Widget build(BuildContext context) {
     return AmptiveAnnotatedRegionWidget(
       child: Scaffold(
-        backgroundColor: AmptiveColors.brandBlackColor,
+        backgroundColor: AmptiveColors.brandBlack,
         appBar: const AmptiveAppBar(),
         body: Padding(
           padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 20.h),
@@ -66,7 +66,7 @@ class _NameAuthScreenState extends State<NameAuthScreen> {
                   },
                   keyboardType: TextInputType.text,
                   cursorColor: service.name.error == null
-                      ? AmptiveColors.brandBlueColor
+                      ? AmptiveColors.brandBlue
                       : AmptiveColors.textRedColor,
                   decoration: InputDecoration(
                     contentPadding:
@@ -79,7 +79,7 @@ class _NameAuthScreenState extends State<NameAuthScreen> {
                       borderSide: BorderSide(
                         width: 2.w,
                         color: service.name.error == null
-                            ? AmptiveColors.brandBlueColor
+                            ? AmptiveColors.brandBlue
                             : AmptiveColors.textRedColor,
                       ),
                       borderRadius: BorderRadius.circular(14.r),

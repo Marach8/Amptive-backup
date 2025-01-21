@@ -12,9 +12,7 @@ import 'package:amptive/src/views/widgets/other_widgets/main_application_widgets
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
-import 'package:go_router/go_router.dart';
 import '../../../utils/constants/colors.dart';
-import '../../../utils/constants/strings/route_strings.dart';
 import '../../../utils/dialogs/options_dialog.dart';
 
 class AmptiveShowOrEventDataModelWidget extends StatelessWidget {

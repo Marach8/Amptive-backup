@@ -56,7 +56,7 @@ class SinePainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     var paint = Paint()
-      ..color = AmptiveColors.brandBlueColor
+      ..color = AmptiveColors.brandBlue
       ..style = PaintingStyle.stroke
       ..strokeWidth = 2.0;
 

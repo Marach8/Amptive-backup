@@ -23,7 +23,7 @@ Future<void> showEventPaymentFeeDialog({
 
   return await showModalBottomSheet(
       constraints: BoxConstraints(maxHeight: 450.h),
-      backgroundColor: AmptiveColors.brandBlackColor,
+      backgroundColor: AmptiveColors.brandBlack,
       context: context,
       isScrollControlled: true,
       useSafeArea: true,

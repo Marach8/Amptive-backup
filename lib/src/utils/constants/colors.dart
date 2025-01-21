@@ -7,7 +7,11 @@ class AmptiveColors {
 
   static Color get black => Colors.black;
 
-  static Color get brandBlackColor => const Color(0xFF0D0D0D);
+  static Color get yellowColor => const Color(0xFFFFD700);
+
+  static Color get yellowColor1 => const Color(0xFFFED601);
+
+  static Color get brandBlack => const Color(0xFF0D0D0D);
 
   static Color get indicatorDark => const Color(0xFF252525);
 
@@ -33,19 +37,29 @@ class AmptiveColors {
 
   static Color get offWhiteColor => const Color(0xFFE7E7E7);
 
+  static Color get green1 => const Color(0xFF009C51);
+
+  static Color get green2 => const Color(0xFF009C80);
+
+  static Color get activeSwitch => const Color(0xFF0BE09B);
+
   static Color get whiteColor => Colors.white;
 
-  static Color get brandBlueColor => const Color(0xFF307FE2);
+  static Color get brandBlue => const Color(0xFF307FE2);
 
   static Color get textRedColor => const Color(0xFFD93535);
 
   static Color get notifRed => const Color(0xFFEC0404);
 
+  static Color get notifBg => const Color(0xFF303439);
+
   static Color get successColor => const Color(0xFF54C981);
 
-  static Color get orangeGradientColorA => const Color.fromRGBO(249, 24, 128, 1);
+  static Color get orangeColor1 => const Color(0XFFF91880);
 
-  //static Color get orangeColorC => const Color(0xFFFF6482);
+  static Color get orangeColor2 => const Color(0xFF930E4C);
+
+  static Color get black4 => const Color(0xFF202020);
 
   static Color get orangeGradientColorB => const Color.fromRGBO(249, 32, 24, 1);
 

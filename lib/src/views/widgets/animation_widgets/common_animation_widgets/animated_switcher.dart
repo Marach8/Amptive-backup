@@ -39,10 +39,10 @@ class AmptiveScalingAnimatedSwitcherWidget extends StatelessWidget {
   });
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(context) {
     return AnimatedSwitcher(
       duration: Duration(milliseconds: duration ?? 1000),
-      reverseDuration: Duration(seconds: duration ?? 1),
+      reverseDuration: Duration(milliseconds: duration ?? 1000),
       switchInCurve: Curves.easeIn,
       switchOutCurve: Curves.easeIn,
       transitionBuilder: (child, animation) {

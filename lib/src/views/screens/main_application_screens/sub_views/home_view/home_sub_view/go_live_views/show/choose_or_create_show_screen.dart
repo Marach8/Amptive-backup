@@ -15,8 +15,6 @@ import 'package:gap/gap.dart';
 import 'package:go_router/go_router.dart';
 import '../../../../../../../../utils/constants/colors.dart';
 
-import '../../../../../../../../utils/dialogs/add_hastags_dialog.dart';
-import '../../../../../../../../utils/dialogs/select_hand_raising_dialog.dart';
 
 class AmptiveChooseOrCreateShowScreen extends StatefulWidget {
   const AmptiveChooseOrCreateShowScreen({super.key});
@@ -100,7 +98,7 @@ class _AmptiveChooseOrCreateShowScreenState extends State<AmptiveChooseOrCreateS
               physics: const BouncingScrollPhysics(),
               slivers: [
                 SliverAppBar(
-                  backgroundColor: AmptiveColors.brandBlackColor.withOpacity(0.8),
+                  backgroundColor: AmptiveColors.brandBlack.withOpacity(0.8),
                   floating: true, //pinned: true,
                   leading: GestureDetector(
                     onTap: (){context.pop();},

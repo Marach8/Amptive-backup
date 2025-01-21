@@ -74,7 +74,7 @@ class AmptiveTabViewListTileWidget extends StatelessWidget {
               boxShape: BoxShape.circle,
               height: 24, width: 24,
               color: AmptiveColors.authHintColor,
-              child: Icon(Icons.play_arrow, size: 15, color: AmptiveColors.brandBlackColor,),
+              child: Icon(Icons.play_arrow, size: 15, color: AmptiveColors.brandBlack,),
             )
             : Icon(Icons.keyboard_arrow_right, size: 24, color: AmptiveColors.authHintColor,) 
         )

@@ -1,6 +1,6 @@
 import 'dart:io';
 import 'package:amptive/src/views/widgets/common_widgets/annotated_region__widget.dart';
-import 'package:amptive/src/views/widgets/common_widgets/circular_progress_indicator.dart';
+import 'package:amptive/src/views/widgets/common_widgets/loading_indicator.dart';
 import 'package:amptive/src/views/widgets/common_widgets/textformfield_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -187,7 +187,7 @@ class AmptiveEventDetailedScreen extends StatelessWidget {
                       hintText: 'Enter your Ticked ID',
                       suffixIcon: const Padding(
                         padding: EdgeInsets.only(right: 15),
-                        child: AmptiveCircularProgressIndicatorWidget(),
+                        child: AmptiveLoadingIndicatorWidget(),
                       ),
                     ),
                     Gap(10.h),
@@ -215,7 +215,7 @@ class AmptiveEventDetailedScreen extends StatelessWidget {
         bottomSheet: AmptiveElevatedButtonWidget(
           margin: const EdgeInsets.fromLTRB(20, 15, 20, 0),
           bgColor: AmptiveColors.whiteColor,
-          fgColor: AmptiveColors.brandBlackColor,
+          fgColor: AmptiveColors.brandBlack,
           text1: 'Pay', text2: 'N5,000',
           onPressed: (){}
         ),
