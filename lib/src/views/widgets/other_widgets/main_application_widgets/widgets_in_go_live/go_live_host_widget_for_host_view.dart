@@ -16,11 +16,11 @@ import '../../../common_widgets/circle_avatar.dart';
 
 class AmptiveLiveHostAndCoHostWidget extends StatelessWidget {
   final double? top, bottom, left, right;
-  final HostWithNotifier? hostOrCohost;
+  final ObjectWithNotifier<Host> hostOrCohost;
   final GoLiveService service;
   final bool isHost;
   final int index;
-  final Function(HostWithNotifier?) onTap;
+  final Function(ObjectWithNotifier<Host>? host) onTap;
   const AmptiveLiveHostAndCoHostWidget({
     super.key,
     this.top, this.bottom,
@@ -34,7 +34,7 @@ class AmptiveLiveHostAndCoHostWidget extends StatelessWidget {
 
   @override
   Widget build(context) {
-    final showAddIcon = hostOrCohost?.host.profilePicture == null;
+    final showAddIcon = hostOrCohost.obj.profilePicture == null;
 
     return AnimatedPositioned(
       duration: const Duration(milliseconds: 500),
@@ -70,7 +70,7 @@ class AmptiveLiveHostAndCoHostWidget extends StatelessWidget {
                   diameter: isHost ? 94.h : 64.h, addBorder: true,
                   borderColor: AmptiveColors.whiteColor,
                   borderWidth: 1, picturePadding: 2,
-                  imagePath: hostOrCohost?.host.profilePicture ?? ''
+                  imagePath: hostOrCohost.obj.profilePicture ?? ''
                 ),
                 Positioned(
                   bottom: 0, right: 5,

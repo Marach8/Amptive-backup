@@ -121,9 +121,16 @@ Future<void> showEventCapacitySelectionDialog({
                   fgColor: AmptiveColors.black,
                 ),
                 const Gap(20),
-                Text(
-                  AmptiveOtherStrings.REMOVE,
-                  style: Theme.of(context).textTheme.headlineMedium
+
+                AmptiveElevatedButtonWidget(
+                  margin: EdgeInsets.zero,
+                  onPressed: () async{
+                    service.capacityController.clear();
+                    context.pop();
+                  },
+                  buttonTitle: AmptiveOtherStrings.REMOVE,
+                  bgColor: AmptiveColors.transparentColor,
+                  fgColor: AmptiveColors.whiteColor,
                 ),
                 const Gap(10),
               ],

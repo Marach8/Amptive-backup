@@ -43,4 +43,6 @@ class AmptiveRoutes {
   static const CHOOSE_OR_CREATE_EVENT_SCREEN = 'choose_or_create_event';
   static const CREATE_SHOW_SUCCESS = 'create_show_success_screen';
   static const EVENT_SCHEDULED_SCREEN = 'event_scheduled';
+  static const EPISODE_SCHEDULED_SCREEN = 'episode_scheduled';
+
 }

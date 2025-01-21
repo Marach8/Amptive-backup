@@ -90,7 +90,7 @@ class AmptiveLiveHostAndCoHostWidgetForAudienceView extends StatelessWidget {
               begin: Alignment.topCenter,
               end: Alignment.bottomCenter,
               colors: [
-                AmptiveColors.orangeColor1,
+                AmptiveColors.orangeGradientColorA,
                 AmptiveColors.orangeGradientColorB
               ]
             ),
