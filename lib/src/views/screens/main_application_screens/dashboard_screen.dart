@@ -2,13 +2,11 @@ import 'package:amptive/src/bloc/main_app/nav_bar_bloc.dart';
 import 'package:amptive/src/views/screens/main_application_screens/sub_views/discover/discover_home.dart';
 import 'package:amptive/src/views/screens/main_application_screens/sub_views/go_live_view/go_live_audience_view.dart';
 import 'package:amptive/src/views/widgets/common_widgets/annotated_region__widget.dart';
-import 'package:amptive/src/views/widgets/common_widgets/custom_rebuilder_widget.dart';
 import 'package:amptive/src/views/widgets/other_widgets/main_application_widgets/dashboard_nav_bar_widget.dart';
 import 'package:amptive/src/views/widgets/other_widgets/main_application_widgets/widgets_in_home_view/main_home_view_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../services/go_live_service/go_live_service.dart';
-import 'sub_views/go_live_view/go_live_cohost_view.dart';
 import 'sub_views/go_live_view/go_live_host_view.dart';
 
 

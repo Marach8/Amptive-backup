@@ -1,4 +1,4 @@
-import 'dart:io';
+import 'dart:typed_data';
 import 'dart:ui';
 
 import 'package:amptive/src/utils/constants/colors.dart';
@@ -13,7 +13,8 @@ import '../../views/widgets/common_widgets/elevated_button_widget.dart';
 import '../constants/strings/image_strings.dart';
 import '../constants/strings/other_strings.dart';
 
-Future<void> selectDateModal(BuildContext context, File? selectedImage) async {
+Future<void> selectDateModal(
+    BuildContext context, Uint8List? selectedImage) async {
   CreateShowService service = GetIt.I<CreateShowService>();
 
   AssetImage? defaultAssetImage =
@@ -36,7 +37,7 @@ Future<void> selectDateModal(BuildContext context, File? selectedImage) async {
           children: [
             Positioned.fill(
               child: selectedImage != null
-                  ? Image.file(
+                  ? Image.memory(
                       selectedImage,
                       fit: BoxFit.cover,
                     )

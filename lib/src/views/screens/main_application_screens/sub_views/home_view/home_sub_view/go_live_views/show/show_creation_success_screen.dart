@@ -1,4 +1,3 @@
-import 'package:amptive/src/utils/constants/strings/image_strings.dart';
 import 'package:amptive/src/views/widgets/animation_widgets/other_animation_widgets/animated_create_show_success_image.dart';
 import 'package:amptive/src/views/widgets/common_widgets/annotated_region__widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/app_bar_widget.dart';

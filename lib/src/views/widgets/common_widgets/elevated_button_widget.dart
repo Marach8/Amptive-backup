@@ -1,8 +1,6 @@
 import 'package:amptive/src/utils/constants/colors.dart';
 import 'package:amptive/src/utils/helpers/helper_functions/other_functions.dart';
-import 'package:amptive/src/views/widgets/common_widgets/custom_container_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 
 class AmptiveElevatedButtonWidget extends StatelessWidget {

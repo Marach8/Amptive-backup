@@ -1,15 +1,10 @@
 import 'package:amptive/src/models/generic_response_model.dart';
 import 'package:amptive/src/models/host.dart';
-import 'package:amptive/src/routes.dart';
 import 'package:amptive/src/utils/constants/font_sizes.dart';
 import 'package:amptive/src/utils/constants/strings/image_strings.dart';
-import 'package:amptive/src/utils/dialogs/add_co_host_dialog.dart';
 import 'package:amptive/src/utils/dialogs/app_notification_dialog.dart';
 import 'package:amptive/src/utils/helpers/helper_functions/other_functions.dart';
-import 'package:amptive/src/views/widgets/animation_widgets/horiz_slider_animation.dart';
 import 'package:amptive/src/views/widgets/common_widgets/annotated_region__widget.dart';
-import 'package:amptive/src/views/widgets/common_widgets/app_bar_widget.dart';
-import 'package:amptive/src/views/widgets/common_widgets/circle_avatar.dart';
 import 'package:amptive/src/views/widgets/common_widgets/circular_container_with_picture_widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/custom_container_widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/custom_rebuilder_widget.dart';
@@ -21,21 +16,15 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 import 'package:get_it/get_it.dart';
-import 'package:go_router/go_router.dart';
-import 'package:iconsax/iconsax.dart';
-import 'package:visibility_detector/visibility_detector.dart';
 import '../../../../../bloc/main_app/go_live_bloc/audience_view/host_moderation_control_bloc.dart';
 import '../../../../../bloc/main_app/go_live_bloc/host_view/cohosts_display_bloc.dart';
 import '../../../../../bloc/main_app/nav_bar_bloc.dart';
-import '../../../../../services/create_show/create_show_service.dart' hide getHostList;
 import '../../../../../services/go_live_service/go_live_service.dart';
 import '../../../../../utils/constants/colors.dart';
 import '../../../../../utils/constants/strings/other_strings.dart';
-import 'dart:developer' as marach show log;
 import '../../../../../utils/dialogs/go_live/follow_or_subscribe_dialog.dart';
 import '../../../../widgets/animation_widgets/common_animation_widgets/animated_switcher.dart';
 import '../../../../widgets/other_widgets/main_application_widgets/widgets_in_go_live/go_live_header_widget.dart';
-import '../../../../widgets/other_widgets/main_application_widgets/widgets_in_go_live/go_live_host_widget_for_host_view.dart';
 import '../../../../widgets/other_widgets/main_application_widgets/widgets_in_go_live/go_live_host_widget_for_audience_view.dart';
 
 

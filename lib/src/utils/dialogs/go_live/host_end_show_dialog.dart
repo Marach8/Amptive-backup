@@ -1,31 +1,20 @@
-import 'package:amptive/src/bloc/main_app/go_live_bloc/audience_view/following_bloc.dart';
-import 'package:amptive/src/bloc/main_app/go_live_bloc/host_view/cohosts_display_bloc.dart';
 import 'package:amptive/src/utils/constants/colors.dart';
 import 'package:amptive/src/utils/constants/font_sizes.dart';
 import 'package:amptive/src/utils/constants/strings/image_strings.dart';
 import 'package:amptive/src/utils/dialogs/app_notification_dialog.dart';
-import 'package:amptive/src/utils/dialogs/confirmation_alert_dialog.dart';
-import 'package:amptive/src/utils/helpers/extensions/string_extensions.dart';
 import 'package:amptive/src/utils/helpers/helper_functions/other_functions.dart';
 import 'package:amptive/src/views/widgets/common_widgets/custom_container_widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/elevated_button_widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/image_loader_widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/loading_indicator.dart';
-import 'package:amptive/src/views/widgets/common_widgets/textformfield_widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/two_texts_rich_text_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
 import 'package:go_router/go_router.dart';
-import 'package:iconsax/iconsax.dart';
-import '../../../bloc/main_app/go_live_bloc/audience_view/subscription_bloc.dart';
 import '../../../bloc/main_app/go_live_bloc/host_view/host_end_show_bloc.dart';
 import '../../../bloc/main_app/nav_bar_bloc.dart';
-import '../../../models/host.dart';
-import '../../../services/create_show/create_show_service.dart';
 import '../../constants/strings/other_strings.dart';
-import '../add_co_host_dialog.dart';
-import 'dart:developer' as marach show log;
 
 Future<void> showHostEndShowDialog({
   required BuildContext context,

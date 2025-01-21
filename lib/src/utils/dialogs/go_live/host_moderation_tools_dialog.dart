@@ -1,15 +1,8 @@
 import 'dart:io';
-import 'dart:math';
 import 'dart:ui';
-import 'package:amptive/src/bloc/main_app/go_live_bloc/audience_view/following_bloc.dart';
-import 'package:amptive/src/bloc/main_app/go_live_bloc/host_view/cohosts_display_bloc.dart';
 import 'package:amptive/src/utils/constants/colors.dart';
 import 'package:amptive/src/utils/constants/font_sizes.dart';
-import 'package:amptive/src/utils/constants/font_weights.dart';
-import 'package:amptive/src/utils/constants/strings/image_strings.dart';
 import 'package:amptive/src/utils/dialogs/app_notification_dialog.dart';
-import 'package:amptive/src/utils/dialogs/confirmation_alert_dialog.dart';
-import 'package:amptive/src/utils/helpers/extensions/string_extensions.dart';
 import 'package:amptive/src/utils/helpers/helper_functions/other_functions.dart';
 
 import 'package:amptive/src/views/widgets/common_widgets/custom_container_widget.dart';

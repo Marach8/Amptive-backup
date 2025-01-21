@@ -1,24 +1,19 @@
 import 'dart:io';
 import 'dart:ui';
-import 'package:amptive/src/bloc/main_app/go_live_bloc/host_view/cohosts_display_bloc.dart';
 import 'package:amptive/src/utils/constants/colors.dart';
 import 'package:amptive/src/utils/constants/font_sizes.dart';
 import 'package:amptive/src/utils/helpers/extensions/string_extensions.dart';
 import 'package:amptive/src/utils/helpers/helper_functions/other_functions.dart';
-import 'package:amptive/src/views/widgets/animation_widgets/common_animation_widgets/animated_crossfade_widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/circle_avatar.dart';
 import 'package:amptive/src/views/widgets/common_widgets/circular_container_with_picture_widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/custom_container_widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/image_loader_widget.dart';
-import 'package:amptive/src/views/widgets/common_widgets/textformfield_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:go_router/go_router.dart';
 import '../../../models/host.dart';
 import '../../../services/create_show/create_show_service.dart';
 import '../../constants/strings/other_strings.dart';
-import '../add_co_host_dialog.dart';
-import 'dart:developer' as marach show log;
 
 Future<void> showAudienceViewOfTopGiftersDialog(BuildContext context) async {
   final randomUser = getHostList()[4];

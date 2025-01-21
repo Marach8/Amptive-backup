@@ -1,5 +1,5 @@
-import 'dart:io';
 import 'dart:math';
+import 'dart:typed_data';
 
 import 'package:amptive/src/models/hashtag.dart';
 import 'package:flutter/material.dart';
@@ -18,7 +18,7 @@ class CreateShowService {
   CreateShowService._();
 
   double userEventFee = 2000.0;
-  File? selectedShowImage;
+  Uint8List? selectedShowImage;
 
   late ValueNotifier<bool> coHostSelectionStarted;
   late List<ObjectWithNotifier<Host>> coHostsListData;
@@ -43,7 +43,7 @@ class CreateShowService {
   late ValueNotifier<Set<ObjectWithNotifier<Host>>> goLiveHostListNotifier;
 
 
-  late ValueNotifier<File?> selectedImage;
+  late ValueNotifier<Uint8List?> selectedImage;
 
   DateTime? eventDateTime;
 

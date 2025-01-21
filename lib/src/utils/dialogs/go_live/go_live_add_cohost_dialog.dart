@@ -23,7 +23,6 @@ import '../../../views/widgets/common_widgets/custom_rebuilder_widget.dart';
 import '../../../views/widgets/common_widgets/elevated_button_widget.dart';
 import '../../constants/strings/other_strings.dart';
 import '../add_co_host_dialog.dart';
-import 'dart:developer' as marach show log;
 
 Future<bool?> showGoLiveHostAddCoHostDialog({
   required BuildContext context,

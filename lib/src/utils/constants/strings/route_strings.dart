@@ -20,6 +20,7 @@ class AmptiveRoutes {
   //POST AUTHENTICATION
   static String addProfilePic = "add_profile_pic";
   static String cropImage = "crop_image";
+  static String cropImageSquare = "crop_image_square";
   static String preHomepage = "pre-homepage";
   static const CREATE_SHOW_FORM = "create-show-form";
   static const CREATE_EVENT_FORM = "create-event-form";

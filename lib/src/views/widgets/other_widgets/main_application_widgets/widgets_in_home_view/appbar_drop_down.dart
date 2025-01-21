@@ -7,7 +7,6 @@ import 'package:amptive/src/views/widgets/common_widgets/image_loader_widget.dar
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
-import 'package:iconsax/iconsax.dart';
 
 class AmptiveAppBarDropDownWidget extends StatelessWidget {
   final Widget child;

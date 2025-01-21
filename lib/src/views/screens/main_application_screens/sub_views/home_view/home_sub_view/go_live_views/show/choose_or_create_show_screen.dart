@@ -15,8 +15,6 @@ import 'package:gap/gap.dart';
 import 'package:go_router/go_router.dart';
 import '../../../../../../../../utils/constants/colors.dart';
 
-import '../../../../../../../../utils/dialogs/add_hastags_dialog.dart';
-import '../../../../../../../../utils/dialogs/select_hand_raising_dialog.dart';
 
 class AmptiveChooseOrCreateShowScreen extends StatefulWidget {
   const AmptiveChooseOrCreateShowScreen({super.key});
