@@ -20,7 +20,7 @@ class AmptiveGoLiveNotificationsWidget extends StatelessWidget {
 
   @override
   Widget build(context) {
-    final user = state.user.host;
+    final user = state.user.obj;
     final isTalking = state.notificationType == AmptiveOtherStrings.IS_TALKING;
     final isGifting = state.notificationType == AmptiveOtherStrings.IS_GIFTING;
     final giftedAmount = (state.extraDetail as Map<String, String>?)?.values.first;
@@ -80,7 +80,7 @@ class AmptiveGoLivePinnedMsgNtfctnWidget extends StatelessWidget {
 
   @override
   Widget build(context) {
-    final user = state.user.host;
+    final user = state.user.obj;
     final extraDetails = state.extraDetail as Map<String, String>?;
     final role = extraDetails?[AmptiveOtherStrings.ROLE];
     final msgTitle = extraDetails?[AmptiveOtherStrings.MSG_TITLE];

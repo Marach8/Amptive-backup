@@ -40,7 +40,7 @@ import '../../../../widgets/other_widgets/main_application_widgets/widgets_in_go
 
 
 class AmptiveGoLiveAudienceView extends StatefulWidget {
-  final HostWithNotifier goLiveHost;
+  final ObjectWithNotifier<Host> goLiveHost;
   const AmptiveGoLiveAudienceView({super.key, required this.goLiveHost});
 
   @override
@@ -165,13 +165,13 @@ class _AmptiveGoLiveAudienceViewState extends State<AmptiveGoLiveAudienceView> {
                                     imagePath: AmptiveImageStrings.CRIMINAL,
                                   ),
                                   title: Text(
-                                    string.host.name ?? '',
+                                    string.obj.name ?? '',
                                     style: Theme.of(context).textTheme.bodySmall?.copyWith(
                                       color: AmptiveColors.subtitleColor
                                     )
                                   ),
                                   subtitle: Text(
-                                    string.host.username ?? '',
+                                    string.obj.username ?? '',
                                     style: Theme.of(context).textTheme.titleMedium?.copyWith(
                                       fontSize: AmptiveFontSizes.size13
                                     )
@@ -199,7 +199,7 @@ class _AmptiveGoLiveAudienceViewState extends State<AmptiveGoLiveAudienceView> {
                         builder: (_, constraints) {
                           final width = constraints.maxWidth;
           
-                          return BlocBuilder<AmptiveGoLiveSelectCoHostBloc, List<HostWithNotifier>>(
+                          return BlocBuilder<AmptiveGoLiveSelectCoHostBloc, List<ObjectWithNotifier<Host>>>(
                             builder: (_, listOfHosts) {
           
                               final cohost1 = listOfHosts.elementAtOrNull(0);
@@ -209,12 +209,12 @@ class _AmptiveGoLiveAudienceViewState extends State<AmptiveGoLiveAudienceView> {
                               final cohost5 = listOfHosts.elementAtOrNull(4);
 
 
-                              final onlyHost = listOfHosts.every((a) => a.host.profilePicture == null);
-                              final hostAndACohost = listOfHosts.where((a) => a.host.profilePicture != null).length == 1;
-                              final hostAnd2Cohosts = listOfHosts.where((a) => a.host.profilePicture != null).length == 2;
-                              final hostAnd3Cohosts = listOfHosts.where((a) => a.host.profilePicture != null).length == 3;
-                              final hostAnd4Cohosts = listOfHosts.where((a) => a.host.profilePicture != null).length == 4;
-                              final hostAnd5Cohosts = listOfHosts.every((a) => a.host.profilePicture != null);
+                              final onlyHost = listOfHosts.every((a) => a.obj.profilePicture == null);
+                              final hostAndACohost = listOfHosts.where((a) => a.obj.profilePicture != null).length == 1;
+                              final hostAnd2Cohosts = listOfHosts.where((a) => a.obj.profilePicture != null).length == 2;
+                              final hostAnd3Cohosts = listOfHosts.where((a) => a.obj.profilePicture != null).length == 3;
+                              final hostAnd4Cohosts = listOfHosts.where((a) => a.obj.profilePicture != null).length == 4;
+                              final hostAnd5Cohosts = listOfHosts.every((a) => a.obj.profilePicture != null);
                 
                               return Stack(
                                 alignment: Alignment.center,

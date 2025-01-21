@@ -146,13 +146,13 @@ class _AmptiveGoLiveCohostViewState extends State<AmptiveGoLiveCohostView> {
                                   imagePath: AmptiveImageStrings.CRIMINAL,
                                 ),
                                 title: Text(
-                                  string.host.name ?? '',
+                                  string.obj.name ?? '',
                                   style: Theme.of(context).textTheme.bodySmall?.copyWith(
                                     color: AmptiveColors.subtitleColor
                                   )
                                 ),
                                 subtitle: Text(
-                                  string.host.username ?? '',
+                                  string.obj.username ?? '',
                                   style: Theme.of(context).textTheme.titleMedium?.copyWith(
                                     fontSize: AmptiveFontSizes.size13
                                   )

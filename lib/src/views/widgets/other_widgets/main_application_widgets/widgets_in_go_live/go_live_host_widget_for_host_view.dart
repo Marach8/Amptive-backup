@@ -1,6 +1,5 @@
 import 'package:amptive/src/models/host.dart';
 import 'package:amptive/src/utils/constants/font_sizes.dart';
-import 'package:amptive/src/utils/dialogs/add_co_host_dialog.dart';
 import 'package:amptive/src/views/widgets/common_widgets/circular_container_with_picture_widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/custom_container_widget.dart';
 import 'package:flutter/material.dart';
@@ -16,7 +15,7 @@ import '../../../common_widgets/circle_avatar.dart';
 
 class AmptiveLiveHostAndCoHostWidget extends StatelessWidget {
   final double? top, bottom, left, right;
-  final ObjectWithNotifier<Host> hostOrCohost;
+  final ObjectWithNotifier<Host>? hostOrCohost;
   final GoLiveService service;
   final bool isHost;
   final int index;
@@ -34,7 +33,7 @@ class AmptiveLiveHostAndCoHostWidget extends StatelessWidget {
 
   @override
   Widget build(context) {
-    final showAddIcon = hostOrCohost.obj.profilePicture == null;
+    final showAddIcon = hostOrCohost?.obj.profilePicture == null;
 
     return AnimatedPositioned(
       duration: const Duration(milliseconds: 500),
@@ -70,7 +69,7 @@ class AmptiveLiveHostAndCoHostWidget extends StatelessWidget {
                   diameter: isHost ? 94.h : 64.h, addBorder: true,
                   borderColor: AmptiveColors.whiteColor,
                   borderWidth: 1, picturePadding: 2,
-                  imagePath: hostOrCohost.obj.profilePicture ?? ''
+                  imagePath: hostOrCohost?.obj.profilePicture ?? ''
                 ),
                 Positioned(
                   bottom: 0, right: 5,
@@ -91,7 +90,7 @@ class AmptiveLiveHostAndCoHostWidget extends StatelessWidget {
             SizedBox(
               width: 80.w,
               child: Text(
-                hostOrCohost?.host.name ?? AmptiveOtherStrings.ADD_CO_HOST.toLowerCase(),
+                hostOrCohost?.obj.name ?? AmptiveOtherStrings.ADD_CO_HOST.toLowerCase(),
                 textAlign: TextAlign.center,
                 style: Theme.of(context).textTheme.titleSmall,
               ),

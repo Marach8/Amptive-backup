@@ -72,7 +72,7 @@ Future<bool?> showKickOutConfirmationDialog({
   required BuildContext context,
   required String title,
   required String content,
-  required HostWithNotifier listener
+  required ObjectWithNotifier<Host> listener
 }) async{
   return await showDialog<bool?>(
     context: context,
@@ -97,7 +97,7 @@ Future<bool?> showKickOutConfirmationDialog({
                 child: FittedBox(
                   fit: BoxFit.fill,
                   child: AmptiveImageLoaderWidget(
-                    imagePath: listener.host.profilePicture ?? ''
+                    imagePath: listener.obj.profilePicture ?? ''
                   )
                 ),
               ),

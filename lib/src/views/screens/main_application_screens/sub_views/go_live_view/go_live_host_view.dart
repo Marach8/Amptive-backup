@@ -43,7 +43,7 @@ import '../../../../widgets/other_widgets/main_application_widgets/widgets_in_go
 
 
 class AmptiveGoLiveHostView extends StatefulWidget {
-  final HostWithNotifier goLiveHost;
+  final ObjectWithNotifier<Host> goLiveHost;
   const AmptiveGoLiveHostView({super.key, required this.goLiveHost});
 
   @override
@@ -155,13 +155,13 @@ class _AmptiveGoLiveHostViewState extends State<AmptiveGoLiveHostView> {
                                     imagePath: AmptiveImageStrings.CRIMINAL,
                                   ),
                                   title: Text(
-                                    string.host.name ?? '',
+                                    string.obj.name ?? '',
                                     style: Theme.of(context).textTheme.bodySmall?.copyWith(
                                       color: AmptiveColors.subtitleColor
                                     )
                                   ),
                                   subtitle: Text(
-                                    string.host.username ?? '',
+                                    string.obj.username ?? '',
                                     style: Theme.of(context).textTheme.titleMedium?.copyWith(
                                       fontSize: AmptiveFontSizes.size13
                                     )
@@ -188,7 +188,7 @@ class _AmptiveGoLiveHostViewState extends State<AmptiveGoLiveHostView> {
                         builder: (_, constraints) {
                           final width = constraints.maxWidth;
           
-                          return BlocBuilder<AmptiveGoLiveSelectCoHostBloc, List<HostWithNotifier>>(
+                          return BlocBuilder<AmptiveGoLiveSelectCoHostBloc, List<ObjectWithNotifier<Host>>>(
                             builder: (_, listOfCoHosts) {
                               final onlyHost = listOfCoHosts.isEmpty;
                               final hostAndACohost = listOfCoHosts.length == 1;

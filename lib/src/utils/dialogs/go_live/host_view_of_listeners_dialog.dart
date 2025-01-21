@@ -188,8 +188,8 @@ Future<void> showListenersDialog({
 
 
 class AmptiveListenerWidget extends StatelessWidget {
-  final void Function(HostWithNotifier, bool) onTap;
-  final HostWithNotifier listener;
+  final void Function(ObjectWithNotifier<Host>, bool) onTap;
+  final ObjectWithNotifier<Host> listener;
   final bool? enableKickOut;
   final int index;
 
@@ -215,13 +215,13 @@ class AmptiveListenerWidget extends StatelessWidget {
               height: 50, width: 50, radius: 30,
               child: FittedBox(
                 fit: BoxFit.fill,
-                child: AmptiveImageLoaderWidget(imagePath: listener.host.profilePicture!)
+                child: AmptiveImageLoaderWidget(imagePath: listener.obj.profilePicture!)
               ),
             ),
             const Gap(10),
             Expanded(
               child: Text(
-                listener.host.username ?? '',
+                listener.obj.username ?? '',
                 style: Theme.of(context).textTheme.titleMedium
               ),
             ),
@@ -229,7 +229,7 @@ class AmptiveListenerWidget extends StatelessWidget {
               onTap: ()async{
                 final shouldKickOut = await showKickOutConfirmationDialog(
                   context: context,
-                  title: 'Are you kicking out ${listener.host.name}?',
+                  title: 'Are you kicking out ${listener.obj.name}?',
                   content: AmptiveOtherStrings.KICK_OUT_DESC,
                   listener: listener
                 );
@@ -238,7 +238,7 @@ class AmptiveListenerWidget extends StatelessWidget {
                   showSuccessOrFailureNotification(
                     response: GenericResponseModel(
                       isSuccessful: false,
-                      responseMessage: '${listener.host.name} has been kicked out!'
+                      responseMessage: '${listener.obj.name} has been kicked out!'
                     ),
                     child: const AmptiveImageLoaderWidget(imagePath: AmptiveImageStrings.KICK_USER_OUT)
                   );

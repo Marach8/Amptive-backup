@@ -6,19 +6,19 @@ import '../../../../utils/constants/strings/other_strings.dart';
 class AmptiveGoLiveNotificationBloc extends Cubit<AmptiveGoLiveNotificationModel>{
   AmptiveGoLiveNotificationBloc(): super(
     AmptiveGoLiveNotificationModel(
-      user: HostWithNotifier(host: Host.empty()),
+      user: ObjectWithNotifier(obj: Host.empty()),
       notificationType: ''
     )
   );
 
-  void addTalkingNotification(HostWithNotifier user) => emit(
+  void addTalkingNotification(ObjectWithNotifier<Host> user) => emit(
     AmptiveGoLiveNotificationModel(
       user: user,
       notificationType: AmptiveOtherStrings.IS_TALKING
     )
   );
 
-  void addGiftingNotification(HostWithNotifier user) => emit(
+  void addGiftingNotification(ObjectWithNotifier<Host> user) => emit(
     AmptiveGoLiveNotificationModel(
       user: user,
       notificationType: AmptiveOtherStrings.IS_GIFTING,
@@ -26,7 +26,7 @@ class AmptiveGoLiveNotificationBloc extends Cubit<AmptiveGoLiveNotificationModel
     )
   );
 
-  void addPinnedMsgNotification(HostWithNotifier user, String role) => emit(
+  void addPinnedMsgNotification(ObjectWithNotifier<Host> user, String role) => emit(
     AmptiveGoLiveNotificationModel(
       user: user,
       notificationType: AmptiveOtherStrings.PINNED,
@@ -40,7 +40,7 @@ class AmptiveGoLiveNotificationBloc extends Cubit<AmptiveGoLiveNotificationModel
 
   void removeNotification() => emit(
     AmptiveGoLiveNotificationModel(
-      user: HostWithNotifier(host: Host.empty()),
+      user: ObjectWithNotifier(obj: Host.empty()),
       notificationType: ''
     )
   );

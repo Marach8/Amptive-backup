@@ -31,7 +31,7 @@ import 'dart:developer' as marach show log;
 
 Future<void> showFollowHostOrCohostDialog({
   required BuildContext context,
-  required HostWithNotifier host
+  required ObjectWithNotifier<Host> host
 }) async {
   return await showModalBottomSheet(
     backgroundColor: AmptiveColors.black4,
@@ -77,7 +77,7 @@ Future<void> showFollowHostOrCohostDialog({
                   Row(
                     children: [
                       AmptiveCircularContainerWithPictureWidget(
-                        imagePath: host.host.profilePicture ?? '',
+                        imagePath: host.obj.profilePicture ?? '',
                         diameter: 70,
                       ),
                       const Gap(10),
@@ -87,13 +87,13 @@ Future<void> showFollowHostOrCohostDialog({
                           mainAxisSize: MainAxisSize.min,
                           children: [
                             Text(
-                              host.host.name ?? '',
+                              host.obj.name ?? '',
                               style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                                 fontSize: AmptiveFontSizes.size20
                               ),
                             ),
                             Text(
-                              host.host.username ?? '',
+                              host.obj.username ?? '',
                               style: Theme.of(context).textTheme.titleMedium?.copyWith(
                                 color: AmptiveColors.subtitleColor
                               ),
@@ -205,7 +205,7 @@ Future<void> showFollowHostOrCohostDialog({
                                 else if(isFollowing){
                                   final shouldUnfollow = await showConfirmationDialog(
                                     context: context,
-                                    title: 'Unfollowing ${host.host.name ?? ''}?',
+                                    title: 'Unfollowing ${host.obj.name ?? ''}?',
                                     content: 'Unfollowing will automatically cancell your subscription to their content.',
                                     yesString: 'Unfollow',
                                     noString: AmptiveOtherStrings.CANCEL
@@ -248,7 +248,7 @@ Future<void> showFollowHostOrCohostDialog({
                                 else if(isSubscribed){
                                   final shouldUnSubscribe = await showConfirmationDialog(
                                     context: context,
-                                    title: "Are your sure you want to unsubscribe from ${host.host.name ?? ''}'s content?",
+                                    title: "Are your sure you want to unsubscribe from ${host.obj.name ?? ''}'s content?",
                                     content: 'Unsubscribing will remove your access to "subscribers-only" live shows!',
                                     yesString: AmptiveOtherStrings.UNSUBSCRIBE,
                                     noString: AmptiveOtherStrings.CANCEL

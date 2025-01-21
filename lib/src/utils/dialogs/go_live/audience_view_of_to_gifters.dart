@@ -136,7 +136,7 @@ Future<void> showAudienceViewOfTopGiftersDialog(BuildContext context) async {
                     child: Row(
                       children: [
                         AmptiveCircularContainerWithPictureWidget(
-                          imagePath: randomUser.host.profilePicture ?? '',
+                          imagePath: randomUser.obj.profilePicture ?? '',
                           diameter:50,
                         ),
                         const Gap(10),
@@ -146,7 +146,7 @@ Future<void> showAudienceViewOfTopGiftersDialog(BuildContext context) async {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                randomUser.host.name ?? '',
+                                randomUser.obj.name ?? '',
                                 style: Theme.of(context).textTheme.bodySmall?.copyWith(
                                   fontSize: AmptiveFontSizes.size15
                                 )
@@ -190,8 +190,8 @@ Future<void> showAudienceViewOfTopGiftersDialog(BuildContext context) async {
 
 
 class AmptiveGifterWidget extends StatelessWidget {
-  final void Function(HostWithNotifier, bool) onTap;
-  final HostWithNotifier gifter;
+  final void Function(ObjectWithNotifier<Host>, bool) onTap;
+  final ObjectWithNotifier<Host> gifter;
   final int index;
 
   const AmptiveGifterWidget({
@@ -229,13 +229,13 @@ class AmptiveGifterWidget extends StatelessWidget {
               height: 50, width: 50, radius: 30,
               child: FittedBox(
                 fit: BoxFit.fill,
-                child: AmptiveImageLoaderWidget(imagePath: gifter.host.profilePicture!)
+                child: AmptiveImageLoaderWidget(imagePath: gifter.obj.profilePicture!)
               ),
             ),
             const Gap(10),
             Expanded(
               child: Text(
-                gifter.host.username ?? '',
+                gifter.obj.username ?? '',
                 style: Theme.of(context).textTheme.titleMedium
               ),
             ),

@@ -57,20 +57,20 @@ Future<Set<ObjectWithNotifier<Hashtag>>?> showAddHashtagDialog(
                           onTap: () => context.pop(),
                           child: Platform.isAndroid
                               ? Icon(
-                                  Icons.keyboard_arrow_down,
-                                  color:
-                                      AmptiveColors.whiteColor.withOpacity(0.6),
-                                )
+                            Icons.keyboard_arrow_down,
+                            color:
+                            AmptiveColors.whiteColor.withOpacity(0.6),
+                          )
                               : AmptiveCustomContainer(
-                                  margin:
-                                      const EdgeInsets.symmetric(vertical: 10),
-                                  radius: 5,
-                                  height: 4,
-                                  width: 30,
-                                  color:
-                                      AmptiveColors.whiteColor.withOpacity(0.6),
-                                  child: const SizedBox.shrink(),
-                                ),
+                            margin:
+                            const EdgeInsets.symmetric(vertical: 10),
+                            radius: 5,
+                            height: 4,
+                            width: 30,
+                            color:
+                            AmptiveColors.whiteColor.withOpacity(0.6),
+                            child: const SizedBox.shrink(),
+                          ),
                         ),
                       ),
                       Padding(
@@ -92,7 +92,7 @@ Future<Set<ObjectWithNotifier<Hashtag>>?> showAddHashtagDialog(
                                         .textTheme
                                         .bodySmall
                                         ?.copyWith(
-                                            color: AmptiveColors.subtitleColor),
+                                        color: AmptiveColors.subtitleColor),
                                   );
                                 }),
                           ],
@@ -184,21 +184,21 @@ Future<Set<ObjectWithNotifier<Hashtag>>?> showAddHashtagDialog(
                                         mainAxisSize: MainAxisSize.min,
                                         children: [
                                           Text(
-                                            selectedHashtag.obj.name!,
+                                            selectedHashtag.obj.name,
                                             style: Theme.of(context)
                                                 .textTheme
                                                 .bodySmall
                                                 ?.copyWith(
-                                                  color:
-                                                      AmptiveColors.grey5Color,
-                                                ),
+                                              color:
+                                              AmptiveColors.grey5Color,
+                                            ),
                                           ),
                                           const Gap(5),
                                           GestureDetector(
                                               onTap: () {
                                                 //Disable this notifier
                                                 selectedHashtag.notifier.value =
-                                                    false;
+                                                false;
                                                 //Remove this title from list
                                                 service.removeSelectedHashtags(
                                                     selectedHashtag);
@@ -221,7 +221,7 @@ Future<Set<ObjectWithNotifier<Hashtag>>?> showAddHashtagDialog(
                           notifier: searchQueryNotifier,
                           builder: (_, searchString, __) {
                             List<ObjectWithNotifier<Hashtag>>
-                                filteredHashtagTitles;
+                            filteredHashtagTitles;
 
                             if (searchString.isEmpty ||
                                 controller.text.isEmpty) {
@@ -229,8 +229,8 @@ Future<Set<ObjectWithNotifier<Hashtag>>?> showAddHashtagDialog(
                             } else {
                               filteredHashtagTitles = availableHashtags
                                   .where((hashtag) => hashtag.obj.name
-                                      .toLowerCase()
-                                      .contains(searchString.toLowerCase()))
+                                  .toLowerCase()
+                                  .contains(searchString.toLowerCase()))
                                   .toList();
 
                               if (filteredHashtagTitles.isEmpty) {
@@ -242,7 +242,7 @@ Future<Set<ObjectWithNotifier<Hashtag>>?> showAddHashtagDialog(
 
                             return Padding(
                               padding:
-                                  const EdgeInsets.symmetric(horizontal: 15),
+                              const EdgeInsets.symmetric(horizontal: 15),
                               child: AmptiveListOfHashtagsWidget(
                                 hashtags: filteredHashtagTitles,
                               ),
@@ -251,125 +251,104 @@ Future<Set<ObjectWithNotifier<Hashtag>>?> showAddHashtagDialog(
                     ]),
               ),
             ),
-          ),
-
-          Positioned(
-            bottom: 0,
-            child: SizedBox(
-              height: 80.h,
-              width: AmptiveHelperFunctions.getScreenWidth(context),
-              child: ClipRect(
-                child: BackdropFilter(
-                  filter: ImageFilter.blur(sigmaX: 2.0, sigmaY: 2.0),
-                  child: const SizedBox(height: 100)
+            Positioned(
+              bottom: 0,
+              child: SizedBox(
+                height: 80.h,
+                width: AmptiveHelperFunctions.getScreenWidth(context),
+                child: ClipRect(
+                  child: BackdropFilter(
+                      filter: ImageFilter.blur(sigmaX: 2.0, sigmaY: 2.0),
+                      child: const SizedBox(height: 100)),
                 ),
               ),
             ),
-          ),
-          
-          Positioned(
-            bottom: 10,
-            child: AmptiveCustomContainer(
-              height: 50.h,
-              padding: const EdgeInsets.symmetric(horizontal: 15),
-              width: AmptiveHelperFunctions.getScreenWidth(context),
-              child: AmptiveRebuilderWidget(
-                notifier: activateBtnNotifier,
-                shouldDispose: true,
-                builder: (_, value, __) {
-                  return AmptiveElevatedButtonWidget(
-                    margin: EdgeInsets.zero,
-                    onPressed: value ? () async{
-                      Navigator.pop(context, selectedHashTagTitlesNotifier.value);
-                    } : null,
-                    buttonTitle: AmptiveOtherStrings.CONTINUE,
-                    bgColor: AmptiveColors.whiteColor,
-                    fgColor: AmptiveColors.black,
-                  );
-                }
+            Positioned(
+              bottom: 10,
+              child: AmptiveCustomContainer(
+                height: 50.h,
+                padding: const EdgeInsets.symmetric(horizontal: 15),
+                width: AmptiveHelperFunctions.getScreenWidth(context),
+                child: AmptiveRebuilderWidget(
+                    notifier: service.selectedHashtagLength,
+                    builder: (_, value, __) {
+                      return AmptiveElevatedButtonWidget(
+                        margin: EdgeInsets.zero,
+                        onPressed: value > 0
+                            ? () async {
+                          Navigator.pop(
+                              context, service.selectedHashtags.value);
+                        }
+                            : null,
+                        buttonTitle: AmptiveOtherStrings.CONTINUE,
+                        bgColor: AmptiveColors.whiteColor,
+                        fgColor: AmptiveColors.black,
+                      );
+                    }),
               ),
-            ),
-          )
-        ],
-      );
-    }
-  );
+            )
+          ],
+        );
+      });
 }
 
-
-
-
-
 class AmptiveListOfHashtagsWidget extends StatelessWidget {
-  final List<List<String>> hashtags;
-  final List<ValueNotifier<bool>> listOfNotifiers;
-  final ValueNotifier<List<String>> selectedHashtagTitlesNotifier;
-  const AmptiveListOfHashtagsWidget({
+  final List<ObjectWithNotifier<Hashtag>> hashtags;
+  final CreateShowService service = GetIt.I<CreateShowService>();
+
+  AmptiveListOfHashtagsWidget({
     super.key,
     required this.hashtags,
-    required this.listOfNotifiers,
-    required this.selectedHashtagTitlesNotifier
   });
 
   @override
   Widget build(context) {
     return Column(
-      mainAxisSize: MainAxisSize.min,
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          hashtags.isEmpty ? AmptiveOtherStrings.NO_TRENDING_HASHTAGS
-          : AmptiveOtherStrings.TRENDING_HASHTAGS,
-          style: Theme.of(context).textTheme.bodyMedium
-        ),
-        Gap(3.h),
-        hashtags.isEmpty ? Text(
-          maxLines: 2,
-          AmptiveOtherStrings.SEARCH_UR_HASHTAGS,
-          style: Theme.of(context).textTheme.bodySmall?.copyWith(
-            color: AmptiveColors.subtitleColor
-          ),
-        ) : const SizedBox.shrink(),
-        ...hashtags.map(
-          (hashtagData) {
-            final index = hashtags.indexOf(hashtagData);
-            final notifier = listOfNotifiers.elementAt(index);
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+              hashtags.isEmpty
+                  ? AmptiveOtherStrings.NO_TRENDING_HASHTAGS
+                  : AmptiveOtherStrings.TRENDING_HASHTAGS,
+              style: Theme.of(context).textTheme.bodyMedium),
+          Gap(3.h),
+          hashtags.isEmpty
+              ? Text(
+            maxLines: 2,
+            AmptiveOtherStrings.SEARCH_UR_HASHTAGS,
+            style: Theme.of(context)
+                .textTheme
+                .bodySmall
+                ?.copyWith(color: AmptiveColors.subtitleColor),
+          )
+              : const SizedBox.shrink(),
+          ...hashtags.map((hashtagData) {
+            ;
 
             return AmptiveAddHashtagWidget(
               hashtagDetail: hashtagData,
-              notifier: notifier,
-              onTap: (hashtagTitle, isSelected){
-                if(isSelected){
-                  final listOfHashTitles = selectedHashtagTitlesNotifier.value;
-                  listOfHashTitles.remove(hashtagTitle);
-                  selectedHashtagTitlesNotifier.value = List.from(listOfHashTitles);
-                }
-                else{
-                  final listOfHashtagTitles = selectedHashtagTitlesNotifier.value;
-                  listOfHashtagTitles.add(hashtagTitle);
-                  selectedHashtagTitlesNotifier.value = List.from(listOfHashtagTitles);
+              onTap: (hashtagTitle) {
+                if (hashtagTitle.notifier.value) {
+                  service.removeSelectedHashtags(hashtagTitle);
+                } else {
+                  service.addSelectedHashtags(hashtagTitle);
                 }
               },
             );
-          }
-        ),
-      ]
-    );
+          }),
+        ]);
   }
 }
 
-
-
-
 class AmptiveAddHashtagWidget extends StatelessWidget {
-  final void Function(String, bool) onTap;
-  final List<String> hashtagDetail;
-  final ValueNotifier<bool> notifier;
+  final void Function(ObjectWithNotifier<Hashtag>) onTap;
+  final ObjectWithNotifier<Hashtag> hashtagDetail;
+
   const AmptiveAddHashtagWidget({
     super.key,
     required this.onTap,
     required this.hashtagDetail,
-    required this.notifier
   });
 
   @override
@@ -377,24 +356,23 @@ class AmptiveAddHashtagWidget extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 15),
       child: GestureDetector(
-        onTap: (){
-          onTap(hashtagDetail.first, notifier.value);
-          notifier.value = !notifier.value;
+        onTap: () {
+          onTap(hashtagDetail);
         },
         child: Row(
           children: [
             AmptiveCustomContainer(
-              height: 50, width: 50,
+              height: 50,
+              width: 50,
               color: AmptiveColors.whiteColor,
               radius: 30,
               child: FittedBox(
                 fit: BoxFit.scaleDown,
-                child: Text(
-                  '#',
-                  style: Theme.of(context).textTheme.displaySmall?.copyWith(
-                    color: AmptiveColors.brandBlack
-                  )
-                ),
+                child: Text('#',
+                    style: Theme.of(context)
+                        .textTheme
+                        .displaySmall
+                        ?.copyWith(color: AmptiveColors.brandBlack)),
               ),
             ),
             const Gap(10),
@@ -417,7 +395,6 @@ class AmptiveAddHashtagWidget extends StatelessWidget {
                 ],
               ),
             ),
-        
             AmptiveRebuilderWidget(
                 notifier: hashtagDetail.notifier,
                 builder: (_, value, __) {
@@ -432,7 +409,7 @@ class AmptiveAddHashtagWidget extends StatelessWidget {
                       width: 24,
                       child: Icon(
                         Icons.check,
-                        color: AmptiveColors.brandBlackColor,
+                        color: AmptiveColors.brandBlack,
                         size: 20,
                       ));
                 })

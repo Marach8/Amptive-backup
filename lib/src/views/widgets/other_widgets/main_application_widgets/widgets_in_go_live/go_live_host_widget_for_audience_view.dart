@@ -1,4 +1,3 @@
-import 'package:amptive/src/models/host.dart';
 import 'package:amptive/src/utils/constants/font_sizes.dart';
 import 'package:amptive/src/utils/dialogs/go_live/follow_or_subscribe_dialog.dart';
 import 'package:amptive/src/views/widgets/common_widgets/circle_avatar.dart';
@@ -7,6 +6,7 @@ import 'package:amptive/src/views/widgets/common_widgets/custom_container_widget
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
+import '../../../../../models/host.dart';
 import '../../../../../services/go_live_service/go_live_service.dart';
 import '../../../../../utils/constants/colors.dart';
 import '../../../../../utils/constants/strings/other_strings.dart';
@@ -14,11 +14,11 @@ import 'dart:developer' as marach show log;
 
 class AmptiveLiveHostAndCoHostWidgetForAudienceView extends StatelessWidget {
   final double? top, bottom, left, right;
-  final HostWithNotifier? hostOrCohost;
+  final ObjectWithNotifier<Host>? hostOrCohost;
   final GoLiveService service;
   final bool isHost;
   final int index;
-  final Function(HostWithNotifier? host) onTap;
+  final Function(ObjectWithNotifier<Host>? host) onTap;
   const AmptiveLiveHostAndCoHostWidgetForAudienceView({
     super.key,
     this.top, this.bottom,
@@ -36,7 +36,7 @@ class AmptiveLiveHostAndCoHostWidgetForAudienceView extends StatelessWidget {
       duration: const Duration(seconds: 1),
       curve: Curves.decelerate,
       top: top, left: left, right: right, bottom: bottom,
-      child: hostOrCohost?.host.profilePicture == null ? const SizedBox() : Column(
+      child: hostOrCohost?.obj.profilePicture == null ? const SizedBox() : Column(
         mainAxisSize: MainAxisSize.min,
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
@@ -55,7 +55,7 @@ class AmptiveLiveHostAndCoHostWidgetForAudienceView extends StatelessWidget {
                   diameter: isHost ? 94.h : 64.h, addBorder: true,
                   borderColor: AmptiveColors.whiteColor,
                   borderWidth: 1, picturePadding: 2,
-                  imagePath: hostOrCohost?.host.profilePicture ?? ''
+                  imagePath: hostOrCohost?.obj.profilePicture ?? ''
                 ),
                 Positioned(
                   bottom: 0, right: 5,
@@ -77,7 +77,7 @@ class AmptiveLiveHostAndCoHostWidgetForAudienceView extends StatelessWidget {
           SizedBox(
             width: 80.w,
             child: Text(
-              hostOrCohost?.host.name ?? '',
+              hostOrCohost?.obj.name ?? '',
               textAlign: TextAlign.center,
               style: Theme.of(context).textTheme.titleSmall,
             ),

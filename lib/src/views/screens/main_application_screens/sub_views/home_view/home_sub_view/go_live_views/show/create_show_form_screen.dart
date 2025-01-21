@@ -866,9 +866,9 @@ class OverlappingHosts extends StatelessWidget {
                     color: AmptiveColors.whiteColor.withOpacity(0.4), width: 1),
               ),
               child: ClipOval(
-                child: item is HostWithNotifier
+                child: item is ObjectWithNotifier<Host>
                     ? Image.asset(
-                        item.host.profilePicture!,
+                        item.obj.profilePicture!,
                         // Replace with actual image URL
                         fit: BoxFit.cover,
                       )
@@ -878,7 +878,7 @@ class OverlappingHosts extends StatelessWidget {
                             filter:
                                 ImageFilter.blur(sigmaX: 53.4, sigmaY: 53.4),
                             child: Container(
-                              color: AmptiveColors.brandBlackColor
+                              color: AmptiveColors.brandBlack
                                   .withOpacity(0.2),
                             ),
                           ),

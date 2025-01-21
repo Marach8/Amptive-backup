@@ -2,19 +2,19 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../models/host.dart';
 
 
-class AmptiveGoLiveSelectCoHostBloc extends Cubit<List<HostWithNotifier>>{
+class AmptiveGoLiveSelectCoHostBloc extends Cubit<List<ObjectWithNotifier<Host>>>{
   AmptiveGoLiveSelectCoHostBloc(): super(
     List.generate(
       maxCoHost,
-      (_) => HostWithNotifier(host: Host.empty())
+      (_) => ObjectWithNotifier(obj: Host.empty())
     )
   );
 
   static const maxCoHost = 5;
 
-  void hostAddCohost(HostWithNotifier coHost){
-    final newState = List<HostWithNotifier>.from(state).where(
-      (member) => (member.host.profilePicture ?? '').isNotEmpty
+  void hostAddCohost(ObjectWithNotifier<Host> coHost){
+    final newState = List<ObjectWithNotifier<Host>>.from(state).where(
+      (member) => (member.obj.profilePicture ?? '').isNotEmpty
     ).toList();
 
     if(newState.length < 5 && !newState.contains(coHost)){
@@ -24,7 +24,7 @@ class AmptiveGoLiveSelectCoHostBloc extends Cubit<List<HostWithNotifier>>{
       newState.addAll(
         List.generate(
           difference,
-          (_) => HostWithNotifier(host: Host.empty())
+          (_) => ObjectWithNotifier(obj: Host.empty())
         )
       );
 
@@ -33,25 +33,25 @@ class AmptiveGoLiveSelectCoHostBloc extends Cubit<List<HostWithNotifier>>{
     }
   }
 
-  void hostAddCohostWithIndex(HostWithNotifier coHost, int index){
+  void hostAddCohostWithIndex(ObjectWithNotifier<Host> coHost, int index){
     coHost.notifier.value = true;
-    final newState = List<HostWithNotifier>.from(state);
+    final newState = List<ObjectWithNotifier<Host>>.from(state);
     newState[index] = coHost;
     emit(newState);
   }
 
-  void hostRemoveCohost(HostWithNotifier? coHost){
+  void hostRemoveCohost(ObjectWithNotifier<Host>? coHost){
     coHost?.notifier.value = false;
-    final newState = List<HostWithNotifier>.from(state);
+    final newState = List<ObjectWithNotifier<Host>>.from(state);
     newState.remove(coHost);
-    newState.add(HostWithNotifier(host: Host.empty()));
+    newState.add(ObjectWithNotifier(obj: Host.empty()));
     emit(newState);
   }
 
-  void hostRemoveCohostWithIndex(HostWithNotifier? coHost, int index){
+  void hostRemoveCohostWithIndex(ObjectWithNotifier<Host>? coHost, int index){
     coHost?.notifier.value = false;
-    final newState = List<HostWithNotifier>.from(state);
-    newState[index] = HostWithNotifier(host: Host.empty());
+    final newState = List<ObjectWithNotifier<Host>>.from(state);
+    newState[index] = ObjectWithNotifier(obj: Host.empty());
     emit(newState);
   }
 }

@@ -84,10 +84,10 @@ final showSuffixIconNotifier = ValueNotifier(false);
                             style: Theme.of(context).textTheme.bodyLarge,
                           ),
                           Gap(60.w),
-                          BlocBuilder<AmptiveGoLiveSelectCoHostBloc, List<HostWithNotifier>>(
+                          BlocBuilder<AmptiveGoLiveSelectCoHostBloc, List<ObjectWithNotifier<Host>>>(
                             builder: (_, listOfCoHosts) {
                               final number = listOfCoHosts.where(
-                                (coHost) => (coHost.host.profilePicture ?? '').isNotEmpty
+                                (coHost) => (coHost.obj.profilePicture ?? '').isNotEmpty
                               ).length;
 
                               return Text(
@@ -147,10 +147,10 @@ final showSuffixIconNotifier = ValueNotifier(false);
                       ),
 
 
-                      BlocBuilder<AmptiveGoLiveSelectCoHostBloc, List<HostWithNotifier>>(
+                      BlocBuilder<AmptiveGoLiveSelectCoHostBloc, List<ObjectWithNotifier<Host>>>(
                         builder: (_, listOfCohosts) {
                           final showSelectedCohosts = listOfCohosts.any(
-                            (cohost) => (cohost.host.profilePicture ?? '').isNotEmpty
+                            (cohost) => (cohost.obj.profilePicture ?? '').isNotEmpty
                           );
 
                           return AmptiveAnimatedCrossFadeWidget(
@@ -164,7 +164,7 @@ final showSuffixIconNotifier = ValueNotifier(false);
                                 child: Row(
                                   children: listOfCohosts.map(
                                     (cohost) {
-                                      final showCoHost = (cohost.host.profilePicture ?? '').isNotEmpty;
+                                      final showCoHost = (cohost.obj.profilePicture ?? '').isNotEmpty;
                                       final index = listOfCohosts.indexOf(cohost);
                                       
                                       if(!showCoHost){
@@ -193,7 +193,7 @@ final showSuffixIconNotifier = ValueNotifier(false);
                                               child: FittedBox(
                                                 fit: BoxFit.fill,
                                                 child: AmptiveImageLoaderWidget(
-                                                  imagePath: cohost.host.profilePicture ?? ''
+                                                  imagePath: cohost.obj.profilePicture ?? ''
                                                 )
                                               ),
                                             ),
@@ -259,10 +259,10 @@ final showSuffixIconNotifier = ValueNotifier(false);
                 height: 50.h,
                 padding: const EdgeInsets.symmetric(horizontal: 15),
                 width: AmptiveHelperFunctions.getScreenWidth(context),
-                child: BlocBuilder<AmptiveGoLiveSelectCoHostBloc, List<HostWithNotifier>>(
+                child: BlocBuilder<AmptiveGoLiveSelectCoHostBloc, List<ObjectWithNotifier<Host>>>(
                   builder: (_, listOfCohosts) {
                     final shouldActivateBtn = listOfCohosts.any(
-                      (cohost) => (cohost.host.profilePicture ?? '').isNotEmpty
+                      (cohost) => (cohost.obj.profilePicture ?? '').isNotEmpty
                     );
                     return AmptiveElevatedButtonWidget(
                       margin: EdgeInsets.zero,
@@ -284,7 +284,7 @@ final showSuffixIconNotifier = ValueNotifier(false);
 
 
 class AmptiveListOfCoHostsWidget extends StatelessWidget {
-  final List<HostWithNotifier> availableCoHosts;
+  final List<ObjectWithNotifier<Host>> availableCoHosts;
   final CreateShowService service = GetIt.I<CreateShowService>();
 
   AmptiveListOfCoHostsWidget({
