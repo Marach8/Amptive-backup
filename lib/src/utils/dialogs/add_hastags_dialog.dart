@@ -92,7 +92,7 @@ Future<Set<ObjectWithNotifier<Hashtag>>?> showAddHashtagDialog(
                                         .textTheme
                                         .bodySmall
                                         ?.copyWith(
-                                        color: AmptiveColors.subtitleColor),
+                                        color: AmptiveColors.hexC2C2C2),
                                   );
                                 }),
                           ],
@@ -107,7 +107,7 @@ Future<Set<ObjectWithNotifier<Hashtag>>?> showAddHashtagDialog(
                           style: Theme.of(context)
                               .textTheme
                               .bodySmall
-                              ?.copyWith(color: AmptiveColors.subtitleColor),
+                              ?.copyWith(color: AmptiveColors.hexC2C2C2),
                         ),
                       ),
 
@@ -320,7 +320,7 @@ class AmptiveListOfHashtagsWidget extends StatelessWidget {
             style: Theme.of(context)
                 .textTheme
                 .bodySmall
-                ?.copyWith(color: AmptiveColors.subtitleColor),
+                ?.copyWith(color: AmptiveColors.hexC2C2C2),
           )
               : const SizedBox.shrink(),
           ...hashtags.map((hashtagData) {
@@ -390,7 +390,7 @@ class AmptiveAddHashtagWidget extends StatelessWidget {
                     style: Theme.of(context)
                         .textTheme
                         .bodySmall
-                        ?.copyWith(color: AmptiveColors.subtitleColor),
+                        ?.copyWith(color: AmptiveColors.hexC2C2C2),
                   ),
                 ],
               ),

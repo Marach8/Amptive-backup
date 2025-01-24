@@ -46,7 +46,7 @@ class AmptiveTabViewListTileWidget extends StatelessWidget {
             Text(
               'Show',
               style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                color: AmptiveColors.subtitleColor,
+                color: AmptiveColors.hexC2C2C2,
                 fontWeight: AmptiveFontWeights.medium,
                 fontSize: AmptiveFontSizes.size13,
                 height: 1.5
@@ -58,7 +58,7 @@ class AmptiveTabViewListTileWidget extends StatelessWidget {
             Text(
               'MONDAY AT 20:00',
               style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                color: AmptiveColors.subtitleColor,
+                color: AmptiveColors.hexC2C2C2,
                 fontWeight: AmptiveFontWeights.medium,
                 fontSize: AmptiveFontSizes.size13,
                 height: 1.5

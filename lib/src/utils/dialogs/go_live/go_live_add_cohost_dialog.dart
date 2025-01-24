@@ -92,7 +92,7 @@ final showSuffixIconNotifier = ValueNotifier(false);
                               return Text(
                                 '$number ${AmptiveOtherStrings.SELECTED}',
                                 style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                                  color: AmptiveColors.subtitleColor
+                                  color: AmptiveColors.hexC2C2C2
                                 ),
                               );
                             }
@@ -105,7 +105,7 @@ final showSuffixIconNotifier = ValueNotifier(false);
                         maxLines: 3,
                         AmptiveOtherStrings.ADD_COHOST_DESC,
                         style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                          color: AmptiveColors.subtitleColor
+                          color: AmptiveColors.hexC2C2C2
                         ),
                       ),
                       const Gap(20),
@@ -308,7 +308,7 @@ class AmptiveListOfCoHostsWidget extends StatelessWidget {
             style: Theme.of(context)
                 .textTheme
                 .bodySmall
-                ?.copyWith(color: AmptiveColors.subtitleColor),
+                ?.copyWith(color: AmptiveColors.hexC2C2C2),
           ),
         ],
       );

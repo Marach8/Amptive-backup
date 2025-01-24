@@ -67,11 +67,15 @@ class AmptiveColors {
 
   static Color get containerGradientColorB => const Color.fromRGBO(26, 26, 26, 1);
 
-  static Color get subtitleColor => const Color(0XFFC2C2C2);
+  static Color get hexC2C2C2 => const Color(0XFFC2C2C2);
 
   static Color get grey5Color => const Color(0xFFA8A8A8);
   
   static Color get dimWhiteColor1 => const Color(0xFFF2F2F2);
 
   static Color get snackBarBgColor => const Color.fromRGBO(48, 52, 57, 1);
+
+  static Color get hex303030 => const Color(0XFF303030);
+
+  static Color get hexEECEA0 => const Color(0XFFEECEA0);
 }

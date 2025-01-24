@@ -46,7 +46,7 @@ class AmptiveListTileWithLeadingPictureWidget extends StatelessWidget {
               Text(
                 subtitle,
                 style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                  color: AmptiveColors.subtitleColor,
+                  color: AmptiveColors.hexC2C2C2,
                   fontWeight: AmptiveFontWeights.medium,
                   fontSize: AmptiveFontSizes.size13,
                   height: 1.5

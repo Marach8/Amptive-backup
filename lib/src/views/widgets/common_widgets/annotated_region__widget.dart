@@ -4,10 +4,12 @@ import 'package:flutter/services.dart';
 
 class AmptiveAnnotatedRegionWidget extends StatelessWidget {
   final Widget child;
+  final Color? statusBarColor;
 
   const AmptiveAnnotatedRegionWidget({
     super.key,
     required this.child,
+    this.statusBarColor
   });
 
   @override
@@ -15,7 +17,7 @@ class AmptiveAnnotatedRegionWidget extends StatelessWidget {
     return AnnotatedRegion<SystemUiOverlayStyle>(
       value: SystemUiOverlayStyle(
         systemNavigationBarColor: AmptiveColors.black,
-        statusBarColor: AmptiveColors.black,
+        statusBarColor: statusBarColor ?? AmptiveColors.black,
         statusBarIconBrightness: Brightness.light,
         systemNavigationBarIconBrightness: Brightness.light
       ),

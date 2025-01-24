@@ -14,6 +14,7 @@ import 'package:amptive/src/views/screens/main_application_screens/sub_views/hom
 import 'package:amptive/src/views/screens/main_application_screens/dashboard_screen.dart';
 import 'package:amptive/src/views/screens/main_application_screens/sub_views/home_view/home_sub_view/go_live_views/main_go_live_screen.dart';
 import 'package:amptive/src/views/screens/main_application_screens/sub_views/home_view/home_sub_view/scheduled_screen.dart';
+import 'package:amptive/src/views/screens/main_application_screens/sub_views/profile/profile1.dart';
 import 'package:amptive/src/views/screens/post_authentication_screens/crop_image_screen.dart';
 import 'package:amptive/src/views/screens/post_authentication_screens/pre_homepage.dart';
 import 'package:amptive/src/views/screens/post_authentication_screens/preference_screen.dart';
@@ -218,6 +219,13 @@ final GoRouter amptiveAppRouter = GoRouter(
               );
             },
           ),
+
+          GoRoute(
+            name: AmptiveRoutes.PROFILE_SCREEN,
+            path: AmptiveRoutes.PROFILE_SCREEN,
+            builder: (_, __) => const Profile1Widget(),
+          ),
+
           GoRoute(
             name: AmptiveRoutes.GO_LIVE_SCREEN,
             path: AmptiveRoutes.GO_LIVE_SCREEN,

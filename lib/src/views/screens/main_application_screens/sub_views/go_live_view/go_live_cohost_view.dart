@@ -138,7 +138,7 @@ class _AmptiveGoLiveCohostViewState extends State<AmptiveGoLiveCohostView> {
                                 title: Text(
                                   string.obj.name ?? '',
                                   style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                                    color: AmptiveColors.subtitleColor
+                                    color: AmptiveColors.hexC2C2C2
                                   )
                                 ),
                                 subtitle: Text(

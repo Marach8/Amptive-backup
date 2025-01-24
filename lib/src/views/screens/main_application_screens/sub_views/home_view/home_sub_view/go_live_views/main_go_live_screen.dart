@@ -59,7 +59,7 @@ class _AmptiveGoLiveScreenState extends State<AmptiveGoLiveScreen> {
                 maxLines: 3,
                 AmptiveOtherStrings.CHOOSE_2_CREATE_SHOW_OR_EVENT,
                 style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                  color: AmptiveColors.subtitleColor
+                  color: AmptiveColors.hexC2C2C2
                 ),
               ),
               Gap(20.h),

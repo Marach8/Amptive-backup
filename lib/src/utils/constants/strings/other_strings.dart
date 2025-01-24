@@ -111,6 +111,9 @@ class AmptiveOtherStrings{
   static const SOCIETY = 'Society';
   static const GO_LIVE = 'Go live';
   static const PAID_SHOW = '\$paid show';
+  static const INSTAGRAM = 'Instagram';
+  static const LINKEDIN = 'LinkedIn';
+  static const WEBSITE = 'Website';
   static const PAID_SHOWS = 'Paid Shows';
   static const FREE_EVENTS = 'Free Events';
   static const PAID_EVENTS = 'Paid Events';
@@ -149,6 +152,7 @@ class AmptiveOtherStrings{
   static const TRUE_CRIME = 'True Crime';
   static const MORE_2_DISCOVER = 'More to Discover';
   static const TOP_CREATORS = 'Top Creators';
+  static const CREATOR = 'Creator';
   static const POPULAR_CREATORS = 'Popular Creators';
   static const SPOTLIGHT = 'Spotlight';
   static const VIEW_ALL = 'View all';
@@ -206,6 +210,7 @@ class AmptiveOtherStrings{
   static const IS_GIFTING = 'is gifting';
   static const GIFTED = 'Gifted';
   static const PINNED = 'Pinned';
+  static const TOP_CREATORS_IN_SOCIETY = 'Top Creators in Society';
   static const MODERATION_TOOLS = 'Moderation Tools';
   static const ALLOW_COMMENTS = 'Allow comments';
   static const NEED_2_ENABLE_LISTENERS_MIC = "You will still need to enable the Listeners's mic";

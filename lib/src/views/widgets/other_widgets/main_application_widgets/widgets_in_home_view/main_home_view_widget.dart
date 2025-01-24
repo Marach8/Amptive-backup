@@ -60,7 +60,7 @@ class AmptiveHomeViewWidget extends StatelessWidget {
               ),
               const Gap(24),
               GestureDetector(
-                onTap: (){},
+                onTap: () => context.pushNamed(AmptiveRoutes.PROFILE_SCREEN),
                 child: const Padding(
                   padding: EdgeInsets.only(right: 15),
                   child: AmptiveCircularContainerWithPictureWidget(

@@ -87,7 +87,7 @@ class AmptiveCreateShowOrEventSelectionWidget extends StatelessWidget {
                 maxLines: 2,
                 subtitle,
                 style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                  color: AmptiveColors.subtitleColor
+                  color: AmptiveColors.hexC2C2C2
                 ),
               )
             ],

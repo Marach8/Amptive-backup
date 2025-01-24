@@ -145,7 +145,7 @@ class _AmptiveGoLiveHostViewState extends State<AmptiveGoLiveHostView> {
                                   title: Text(
                                     string.obj.name ?? '',
                                     style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                                      color: AmptiveColors.subtitleColor
+                                      color: AmptiveColors.hexC2C2C2
                                     )
                                   ),
                                   subtitle: Text(
@@ -177,14 +177,7 @@ class _AmptiveGoLiveHostViewState extends State<AmptiveGoLiveHostView> {
                           final width = constraints.maxWidth;
           
                           return BlocBuilder<AmptiveGoLiveSelectCoHostBloc, List<ObjectWithNotifier<Host>>>(
-                            builder: (_, listOfCoHosts) {
-                              // final onlyHost = listOfCoHosts.isEmpty;
-                              // final hostAndACohost = listOfCoHosts.length == 1;
-                              // final hostAndT2Cohosts = listOfCoHosts.length == 2;
-                              // final hostAnd3Cohosts = listOfCoHosts.length == 3;
-                              // final hostAnd4Cohosts = listOfCoHosts.length == 4;
-                              // final hostAnd5Cohosts = listOfCoHosts.length == 5;
-                
+                            builder: (_, listOfCoHosts) {                
                               return Stack(
                                 alignment: Alignment.center,
                                 children: [

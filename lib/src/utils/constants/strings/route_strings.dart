@@ -40,6 +40,7 @@ class AmptiveRoutes {
   static const TRENDING_HASHTAGS_SCREEN = 'trending_hashtags_screen';
   static const TRENDING_HASHTAG_FULL_SCREEN = 'trending_hashtag_full_screen';
   static const GO_LIVE_SCREEN = 'go_live';
+  static const PROFILE_SCREEN = 'profile';
   static const CHOOSE_OR_CREATE_SHOW_SCREEN = 'choose_or_create_show';
   static const CHOOSE_OR_CREATE_EVENT_SCREEN = 'choose_or_create_event';
   static const CREATE_SHOW_SUCCESS = 'create_show_success_screen';

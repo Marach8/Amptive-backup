@@ -75,7 +75,7 @@ Future<void> showEventCapacitySelectionDialog({
               maxLines: 5,
               AmptiveOtherStrings.MAX_CAPACITY,
               style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                color: AmptiveColors.subtitleColor
+                color: AmptiveColors.hexC2C2C2
               ),
             ),
             const Gap(20),
@@ -103,7 +103,7 @@ Future<void> showEventCapacitySelectionDialog({
               maxLines: 5,
               AmptiveOtherStrings.MAX_CAPACITY_LIMIT,
               style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                color: AmptiveColors.subtitleColor
+                color: AmptiveColors.hexC2C2C2
               ),
             ),
             const Gap(20),

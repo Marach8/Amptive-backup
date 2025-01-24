@@ -91,7 +91,7 @@ Future<void> showAudienceViewOfTopGiftersDialog(BuildContext context) async {
                       maxLines: 3,
                       AmptiveOtherStrings.TOP_GIFTERS_DESC,
                       style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                        color: AmptiveColors.subtitleColor
+                        color: AmptiveColors.hexC2C2C2
                       ),
                     ),
                     const Gap(20),
@@ -149,7 +149,7 @@ Future<void> showAudienceViewOfTopGiftersDialog(BuildContext context) async {
                               Text(
                                 AmptiveOtherStrings.SEND_GIFT_2_HOST,
                                 style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                                  color: AmptiveColors.subtitleColor
+                                  color: AmptiveColors.hexC2C2C2
                                 )
                               )
                             ],
