@@ -159,7 +159,7 @@ class AmptiveGifterWidget extends StatelessWidget {
                 color: AmptiveColors.yellowColor,
                 fontSize: AmptiveFontSizes.size14
               ),
-            ) : AmptiveCirceAvatarWidget(
+            ) : AmptiveCircleAvatarWidget(
               diameter: 5,
               color: AmptiveColors.whiteColor.withOpacity(0.4),
               child: const SizedBox.shrink(),

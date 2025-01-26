@@ -266,7 +266,7 @@ Future<void> showFollowHostOrCohostDialog({
                                       ),
                                     ),
                                     const Gap(2),
-                                    AmptiveCirceAvatarWidget(
+                                    AmptiveCircleAvatarWidget(
                                       diameter: 4,
                                       color: AmptiveColors.brandBlack,
                                     ),

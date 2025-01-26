@@ -51,7 +51,7 @@ class AmptiveRecentSearchesListTileWidget extends StatelessWidget {
               ),
             ),
             const Gap(5),
-            const AmptiveCirceAvatarWidget(diameter: 3),
+            const AmptiveCircleAvatarWidget(diameter: 3),
             const Gap(5),
             Text(
               'MONDAY AT 20:00',

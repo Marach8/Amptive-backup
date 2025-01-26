@@ -1,0 +1,514 @@
+import 'package:amptive/src/routes.dart';
+import 'package:amptive/src/utils/constants/colors.dart';
+import 'package:amptive/src/utils/constants/font_sizes.dart';
+import 'package:amptive/src/utils/constants/font_weights.dart';
+import 'package:amptive/src/utils/constants/strings/image_strings.dart';
+import 'package:amptive/src/utils/constants/strings/other_strings.dart';
+import 'package:amptive/src/utils/constants/strings/route_strings.dart';
+import 'package:amptive/src/utils/helpers/helper_functions/other_functions.dart';
+import 'package:amptive/src/views/screens/main_application_screens/sub_views/home_view/home_sub_view/profile/ordinary_user_profile.dart';
+import 'package:amptive/src/views/widgets/common_widgets/annotated_region__widget.dart';
+import 'package:amptive/src/views/widgets/common_widgets/circle_avatar.dart';
+import 'package:amptive/src/views/widgets/common_widgets/circular_container_with_picture_widget.dart';
+import 'package:amptive/src/views/widgets/common_widgets/custom_container_widget.dart';
+import 'package:amptive/src/views/widgets/common_widgets/custom_rebuilder_widget.dart';
+import 'package:amptive/src/views/widgets/common_widgets/image_loader_widget.dart';
+import 'package:amptive/src/views/widgets/common_widgets/two_texts_rich_text_widget.dart';
+import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:gap/gap.dart';
+import 'package:go_router/go_router.dart';
+import 'package:iconsax/iconsax.dart';
+import '../../../../../../../utils/dialogs/go_live/follow_or_subscribe_dialog.dart';
+
+class AmptiveCreatorProfileScreen extends StatelessWidget {
+  const AmptiveCreatorProfileScreen({super.key});
+
+
+  @override
+  Widget build(context) {
+    final tabIndex = ValueNotifier<int>(0);
+    
+    return AmptiveAnnotatedRegionWidget(
+      statusBarColor: AmptiveColors.transparentColor,
+      child: Scaffold(
+        body: NestedScrollView(
+          headerSliverBuilder: (_, __) => [
+            SliverAppBar(
+              expandedHeight: 500.0, pinned: true,
+              leading:  AmptiveCircleAvatarWidget(
+                onTap: () => context.pop(),
+                diameter: 30, color: AmptiveColors.black.withOpacity(0.7),
+                child: const Icon(Icons.keyboard_arrow_left),
+              ),
+              automaticallyImplyLeading: false,
+              leadingWidth: 30,
+              actions: [
+                AmptiveCircleAvatarWidget(
+                  diameter: 30, color: AmptiveColors.black.withOpacity(0.7),
+                  child: const Icon(Iconsax.global, size: 20),
+                ),
+                AmptiveCircleAvatarWidget(
+                  onTap: () => context.pushNamed(AmptiveRoutes.USER_PROFILE_SCREEN),
+                  diameter: 30, color: AmptiveColors.black.withOpacity(0.7),
+                  child: const Icon(Icons.menu, size: 20),
+                ),
+              ],
+              backgroundColor: AmptiveColors.black,
+              flexibleSpace: FlexibleSpaceBar(
+                background: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    AmptiveCustomContainer(
+                      decorationImagePath: AmptiveImageStrings.weCanDoHardThingsBgImage,
+                      height: 150,                
+                      width: AmptiveHelperFunctions.getScreenWidth(context),
+                      child: Stack(
+                        alignment: Alignment.center,
+                        clipBehavior: Clip.none,
+                        children: [
+                          AmptiveCustomContainer(
+                            height: 150,
+                            gradient: LinearGradient(
+                              begin: Alignment.topCenter,
+                              end: Alignment.bottomCenter,
+                              colors: [
+                                AmptiveColors.black,
+                                AmptiveColors.transparentColor,
+                                AmptiveColors.transparentColor
+                              ]
+                            ),
+                            width: AmptiveHelperFunctions.getScreenWidth(context),
+                            child: const SizedBox(),
+                          ),
+                          Positioned(
+                            bottom: -35,
+                            child: AmptiveCircularContainerWithPictureWidget(
+                              diameter: 70, addBorder: true,
+                              borderColor: AmptiveColors.black,
+                              borderWidth: 3,
+                              imagePath: AmptiveImageStrings.jpeg1
+                            )
+                          ),
+                          Positioned(
+                            bottom: -35,
+                            child: AmptiveCustomContainer(
+                              color: AmptiveColors.yellowColor1,
+                              radius: 10,
+                              padding: const EdgeInsets.fromLTRB(5, 0, 5, 1),
+                              border: Border.all(color: AmptiveColors.black, width: 2),
+                              child: Text(
+                                AmptiveOtherStrings.CREATOR.toUpperCase(),
+                                style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                                  fontSize: AmptiveFontSizes.size10,
+                                  color: AmptiveColors.black
+                                ),
+                              ),
+                            )
+                          ),
+                        ],
+                      ),
+                    ),
+                    
+                    const Gap(50),
+                
+                    Text(
+                      'Glennon Doyle',
+                      style: Theme.of(context).textTheme.bodyLarge
+                    ),
+                    Text(
+                      'Glennondoyle',
+                      style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                        color: AmptiveColors.hexC2C2C2
+                      ),
+                    ),
+                
+                    const Gap(20),
+                
+                    AmptiveCustomContainer(
+                      border: Border.all(color: AmptiveColors.hexC2C2C2.withOpacity(0.23)),
+                      radius: 20,
+                      padding: const EdgeInsets.fromLTRB(10, 5, 10, 5),
+                      gradient: LinearGradient(
+                        begin: Alignment.topCenter,
+                        end: Alignment.bottomCenter,
+                        colors: [
+                          AmptiveColors.whiteColor.withOpacity(0.1),
+                          AmptiveColors.hex303030.withOpacity(0.1),
+                          AmptiveColors.whiteColor.withOpacity(0.1),
+                        ]
+                      ),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          const AmptiveImageLoaderWidget(imagePath: AmptiveImageStrings.TOP_CREATOR_BADGE),
+                          const Gap(5),
+                          Text(
+                            AmptiveOtherStrings.TOP_CREATORS_IN_SOCIETY,
+                            style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                              color: AmptiveColors.hexEECEA0,
+                              fontSize: AmptiveFontSizes.size13
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                
+                    const Gap(20),
+                
+                    Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        CustomPaint(
+                          size: const Size(16, 16),
+                          painter: RoundedScallopedPainter(
+                            color: AmptiveColors.dimWhiteColor1
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsets.all(2),
+                            child: Icon(Icons.star, color: AmptiveColors.black, size: 12),
+                          ),
+                        ),
+                        Text(
+                          '1.1m',
+                          style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                            fontSize: AmptiveFontSizes.size16
+                          ),
+                        ),
+                        const Gap(5),
+                        Text(
+                          AmptiveOtherStrings.FOLLOWERS,
+                          style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                            fontSize: AmptiveFontSizes.size16
+                          ),
+                        ),
+                        const Gap(20),
+                      
+                        CustomPaint(
+                          size: const Size(16, 16),
+                          painter: RoundedScallopedPainter(
+                            color: AmptiveColors.yellowColor
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsets.all(2),
+                            child: Icon(Icons.favorite, color: AmptiveColors.black, size: 12),
+                          ),
+                        ),
+                        Text(
+                          '150k',
+                          style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                            fontSize: AmptiveFontSizes.size16
+                          ),
+                        ),
+                        const Gap(5),
+                        Text(
+                          AmptiveOtherStrings.SUBSCRIBERS,
+                          style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                            fontSize: AmptiveFontSizes.size16
+                          ),
+                        ),
+                      ],
+                    ),
+                
+                    const Gap(20),
+                
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(15, 0, 15, 0),
+                      child: AmptiveMultipleTextsRichText(
+                        items: {
+                          'Author of UNTAMED & LOVE WARRIOR. Host of WE CAN DO HARD THINGS. Founder of'
+                          : Theme.of(context).textTheme.titleMedium!.copyWith(
+                            fontSize: AmptiveFontSizes.size13
+                          ),
+                          ' @together_rising. ': Theme.of(context).textTheme.titleMedium!.copyWith(
+                            fontSize: AmptiveFontSizes.size13,
+                            color: AmptiveColors.hexC2C2C2
+                          ),
+                          'Includes an Oscar winner.': Theme.of(context).textTheme.titleMedium!.copyWith(
+                            fontSize: AmptiveFontSizes.size13
+                          ),
+                        },
+                        textAlign: TextAlign.center,
+                        textOnTap: (index){
+                          if(index == 1){
+                            print("Hello");
+                          }
+                        },
+                      ),
+                    ),
+                
+                    const Gap(20),
+                
+                    Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Icon(Iconsax.instagram, color: AmptiveColors.hexC2C2C2, size: 15,),
+                        const Gap(3),
+                        Text(
+                          AmptiveOtherStrings.INSTAGRAM,
+                          style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                            color: AmptiveColors.hexC2C2C2
+                          ),
+                        ),
+                        const Gap(15),
+                        const AmptiveImageLoaderWidget(imagePath: AmptiveImageStrings.X_LOGO),
+                        const Gap(3),
+                        Text(
+                          'x',
+                          style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                            color: AmptiveColors.hexC2C2C2
+                          ),
+                        ),
+                        const Gap(15),
+                        FaIcon(FontAwesomeIcons.linkedin, color: AmptiveColors.hexC2C2C2, size: 15),
+                        const Gap(3),
+                        Text(
+                          AmptiveOtherStrings.LINKEDIN,
+                          style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                            color: AmptiveColors.hexC2C2C2
+                          ),
+                        ),
+                        const Gap(15),
+                        Transform.rotate(
+                          angle: -0.9,
+                          child: Icon(Icons.insert_link, color: AmptiveColors.hexC2C2C2, size: 15),
+                        ),
+                        const Gap(3),
+                        Text(
+                          AmptiveOtherStrings.WEBSITE,
+                          style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                            color: AmptiveColors.hexC2C2C2
+                          ),
+                        ),
+                      ],
+                    ),
+                
+                    const Gap(15),
+                
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Expanded(
+                          child: AmptiveCustomContainer(
+                            alignment: Alignment.center, radius: 50,
+                            margin: const EdgeInsets.only(left: 15),
+                            padding: const EdgeInsets.only(top: 10, bottom: 10),
+                            color: AmptiveColors.whiteColor.withOpacity(0.2),
+                            child: Text(
+                              AmptiveOtherStrings.EDIT_PROFILE,
+                              style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                                fontSize: AmptiveFontSizes.size14
+                              )
+                            )
+                          ),
+                        ),
+                        const Gap(10),
+                        Expanded(
+                          child: AmptiveCustomContainer(
+                            padding: const EdgeInsets.only(top: 10, bottom: 10),
+                            margin: const EdgeInsets.only(right: 15),
+                            alignment: Alignment.center, radius: 50,
+                            color: AmptiveColors.whiteColor.withOpacity(0.2),
+                            child: Text(
+                              AmptiveOtherStrings.SUBSCRIPTION,
+                              style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                                fontSize: AmptiveFontSizes.size14
+                              )
+                            )
+                          ),
+                        )
+                      ]
+                    ),                
+                  ],
+                ),
+              ),
+            ),
+
+
+            SliverPersistentHeader(
+              pinned: true,
+              delegate: AmptiveTabBarDelegate(
+                maxExt: 65, minExt: 65, rebuild: false,              
+                child: AmptiveCustomContainer(
+                  color: AmptiveColors.black,             
+                  child: AmptiveRebuilderWidget(
+                    notifier: tabIndex,
+                    shouldDispose: true,
+                    builder: (_, value, __) {
+                      return SingleChildScrollView(
+                        scrollDirection: Axis.horizontal,
+                        physics: const BouncingScrollPhysics(),
+                        child: Row(        
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,            
+                          children: [
+                            const Gap(15),
+                            ..._tabs.map(
+                              (string){
+                                final index = _tabs.indexOf(string);
+                                final isSelected = index == value;
+                                return AmptiveCustomContainer(
+                                  curve: Curves.decelerate,
+                                  alignment: Alignment.center, radius: 50,
+                                  padding: const EdgeInsets.fromLTRB(20, 5, 20, 5),
+                                  margin: const EdgeInsets.fromLTRB(0, 10, 10, 20),
+                                  color: isSelected ? AmptiveColors.whiteColor : AmptiveColors.black,
+                                  border: !isSelected ? Border.all(
+                                    color: AmptiveColors.whiteColor.withOpacity(0.1),
+                                    width: 2
+                                  ) : null,
+                                  onTap: () => tabIndex.value = index,
+                                  child: Text(
+                                    string,
+                                    style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                                      fontSize: AmptiveFontSizes.size13,
+                                      color: isSelected ? AmptiveColors.black : AmptiveColors.whiteColor
+                                    ),
+                                  ),
+                                );
+                              }
+                            )
+                          ]
+                        ),
+                      );
+                    }
+                  ),
+                ),
+              ),
+            )
+          ],
+
+          body:  AmptiveRebuilderWidget(
+            notifier: tabIndex,
+            builder: (_, index, __) {
+              return IndexedStack(
+                index: index,
+                children: List.generate(
+                  4,
+                  (_) => ListView.builder(
+                    padding: const EdgeInsets.fromLTRB(15, 0, 15, 50),
+                    itemCount: 10,
+                    itemBuilder: (_, listIndex){
+                      return const ProfileEventOrShowDisplay();
+                    },
+                  ),
+                )
+              );
+            }
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+
+
+
+
+
+class ProfileEventOrShowDisplay extends StatelessWidget {
+  const ProfileEventOrShowDisplay({super.key});
+
+  @override
+  Widget build(context) {
+    return AmptiveCustomContainer(
+      margin: const EdgeInsets.only(bottom: 15),
+      height: 80,
+      child: Row(
+        children: [
+          ClipRRect(
+            borderRadius: BorderRadius.circular(5),
+            child: const AmptiveImageLoaderWidget(
+              imagePath: AmptiveImageStrings.weCanDoHardThingsBgImage,
+              height: 77, width: 77,
+            ),
+          ),
+          const Gap(10),
+      
+          Flexible(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                //Row 1
+                Row(
+                  children: [
+                    AmptiveCircleAvatarWidget(
+                      diameter: 15,
+                      color: AmptiveColors.orangeColor1,
+                      child: const FittedBox(child: Text('S')),
+                    ),
+                    Text(
+                      'We Can Do Hard Things',
+                      style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                        fontSize: AmptiveFontSizes.size12,
+                        color: AmptiveColors.hexC2C2C2
+                      ),
+                    ),
+                    Icon(Icons.keyboard_arrow_right_outlined, color: AmptiveColors.hexC2C2C2, size: 20)
+                  ],
+                ),
+                //Row 2
+                Text(
+                  maxLines: 2,
+                  'How To Be More Alive With Cole Authur Riley (Best of Emmanuel Nnanna)',
+                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                    fontSize: AmptiveFontSizes.size15,
+                  ),
+                ),
+      
+                //Row 3
+                Row(
+                  children: [
+                    AmptiveCustomContainer(
+                      alignment: Alignment.center,
+                      height: 10, width: 10, radius: 1,
+                      color: AmptiveColors.hexC2C2C2,
+                      child: FittedBox(
+                        fit: BoxFit.scaleDown,
+                        child: Text(
+                          'P',
+                          style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                            fontWeight: AmptiveFontWeights.extraBold,
+                            fontSize: AmptiveFontSizes.size10,
+                            color: AmptiveColors.black
+                          ),
+                        )
+                      ),
+                    ),
+                    const Gap(5),
+                    Text(
+                      'Society',
+                      style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                        color: AmptiveColors.hexC2C2C2
+                      ),
+                    ),
+                    AmptiveCircleAvatarWidget(
+                      diameter: 3,
+                      color: AmptiveColors.hexC2C2C2,
+                    ),
+                    
+                    const Gap(5),
+                    Text(
+                      '15 JAN 2034 at 19:00',
+                      style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                        color: AmptiveColors.hexC2C2C2
+                      ),
+                    ),
+                  ],
+                )
+              ],
+            ),
+          )
+        ],
+      ),
+    );
+  }
+}
+
+
+
+final _tabs = [
+  AmptiveOtherStrings.SCHEDULED, AmptiveOtherStrings.ENDED,
+  AmptiveOtherStrings.SHOWS, AmptiveOtherStrings.EVENTS
+];

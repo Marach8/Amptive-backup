@@ -15,6 +15,7 @@ class AmptiveCustomContainer extends StatelessWidget {
   final Clip clipBehavior;
   final int? duration;
   final VoidCallback? onTap;
+  final Curve curve;
   final List<BoxShadow>? boxShadow;
 
   const AmptiveCustomContainer({
@@ -27,6 +28,7 @@ class AmptiveCustomContainer extends StatelessWidget {
     this.border,
     this.margin,
     this.gradient,
+    this.curve = Curves.easeIn,
     this.boxShape,
     this.constraints,
     this.alignment,
@@ -45,7 +47,7 @@ class AmptiveCustomContainer extends StatelessWidget {
       onTap: onTap,
       child: AnimatedContainer(
         duration: Duration(milliseconds: duration ?? 500),
-        curve: Curves.easeIn,
+        curve: curve,
         alignment: alignment,
         margin: margin,
         clipBehavior: clipBehavior,

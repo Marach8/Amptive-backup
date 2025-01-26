@@ -96,7 +96,7 @@ class _AmptiveGoLiveCohostViewState extends State<AmptiveGoLiveCohostView> {
                           style: Theme.of(context).textTheme.bodyMedium,
                         ),
                         Gap(5.w),
-                        const AmptiveCirceAvatarWidget(diameter: 5),
+                        const AmptiveCircleAvatarWidget(diameter: 5),
                         Gap(5.w),
                         Text(
                           // maxLines: 1,

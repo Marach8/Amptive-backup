@@ -80,7 +80,7 @@ class _AmptiveOnboardingScreenState extends State<AmptiveOnboardingScreen> {
                     effect: ExpandingDotsEffect(
                       dotHeight: 10.h,
                       dotWidth: 10.w,
-                      activeDotColor: AmptiveColors.activeDotColor,
+                      activeDotColor: AmptiveColors.hexD9D9D9,
                       dotColor: AmptiveColors.inactiveDotColor,
                     ),
                   ),

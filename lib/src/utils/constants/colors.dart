@@ -33,7 +33,7 @@ class AmptiveColors {
 
   static Color get authHintColor2 => const Color(0xFFCDCDCD);
 
-  static Color get activeDotColor => const Color(0xFFD9D9D9);
+  static Color get hexD9D9D9 => const Color(0xFFD9D9D9);
 
   static Color get offWhiteColor => const Color(0xFFE7E7E7);
 

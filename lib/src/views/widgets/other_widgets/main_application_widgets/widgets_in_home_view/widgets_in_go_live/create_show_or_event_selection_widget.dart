@@ -67,7 +67,7 @@ class AmptiveCreateShowOrEventSelectionWidget extends StatelessWidget {
               Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  AmptiveCirceAvatarWidget(
+                  AmptiveCircleAvatarWidget(
                     animationDuration: 200,
                     diameter: 15,
                     color: value ? AmptiveColors.orangeColor1 : AmptiveColors. grey1Color,

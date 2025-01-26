@@ -51,7 +51,7 @@ class AmptiveFreeShowModel extends StatelessWidget {
               
               Align(
                 alignment: Alignment.bottomCenter,
-                child: AmptiveCirceAvatarWidget(
+                child: AmptiveCircleAvatarWidget(
                   diameter: 4,
                   color: AmptiveColors.grey5Color
                 ),
