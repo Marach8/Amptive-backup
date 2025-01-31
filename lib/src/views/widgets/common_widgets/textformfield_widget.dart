@@ -10,7 +10,7 @@ class AmptiveTextFormFieldWidget extends StatelessWidget {
   final void Function(String?)? onSaved;
   final String? Function(String?)? validator;
   final TextInputType? keyboardType;
-  final String? hintText;
+  final String? hintText, counterText;
   final TextAlign? textAlign;
   final double? cursorHeight;
   final Widget? suffixIcon, prefixIcon;
@@ -21,6 +21,7 @@ class AmptiveTextFormFieldWidget extends StatelessWidget {
   final InputDecoration? decoration;
   final FocusNode? focusNode;
   final TextStyle? hintStyle;
+  final int? maxLines, maxLength;
   final EdgeInsetsGeometry? contentPadding;
 
   const AmptiveTextFormFieldWidget({
@@ -30,6 +31,7 @@ class AmptiveTextFormFieldWidget extends StatelessWidget {
     this.onChanged,
     this.keyboardType,
     this.textAlign,
+    this.counterText,
     this.cursorHeight,
     this.hintText,
     this.cursorColor, 
@@ -39,6 +41,7 @@ class AmptiveTextFormFieldWidget extends StatelessWidget {
     this.obscureText,
     this.prefixIcon,
     this.fillColor,
+    this.maxLines,
     this.suffixConstraints,
     this.focusNode,
     this.hintStyle,
@@ -46,19 +49,22 @@ class AmptiveTextFormFieldWidget extends StatelessWidget {
     this.disableBlueBorder,
     this.prefixConstraints,
     this.contentPadding,
-    this.enabled
+    this.enabled,
+    this.maxLength
   });
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(context) {
     return TextFormField(
       controller: controller,
       enabled: enabled,
+      
       textAlign: textAlign ?? TextAlign.start,
       validator: validator,
-      maxLines: 1, focusNode: focusNode,
+      maxLines: maxLines ?? 1, focusNode: focusNode,
       autovalidateMode: AutovalidateMode.onUserInteraction,
       onChanged: onChanged,
+      maxLength: maxLength,
       onSaved: onSaved,
       cursorColor: disableBlueBorder ?? false ? AmptiveColors.whiteColor
         : AmptiveColors.brandBlue,
@@ -66,7 +72,8 @@ class AmptiveTextFormFieldWidget extends StatelessWidget {
       cursorHeight: cursorHeight,
       cursorErrorColor: AmptiveColors.textRedColor,
       keyboardType: keyboardType,
-      decoration: decoration ??  InputDecoration(        
+      decoration: decoration ??  InputDecoration(     
+        counterText: counterText,   
         hintText: hintText,
         constraints: constraints,
         fillColor: fillColor,

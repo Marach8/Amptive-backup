@@ -16,7 +16,6 @@ import 'creator_profile.dart';
 
 
 
-
 class AmptiveOrdinaryUserProfileScreen extends StatelessWidget {
   const AmptiveOrdinaryUserProfileScreen({super.key});
 

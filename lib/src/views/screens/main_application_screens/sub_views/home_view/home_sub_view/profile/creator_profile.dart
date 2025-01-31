@@ -1,4 +1,3 @@
-import 'package:amptive/src/routes.dart';
 import 'package:amptive/src/utils/constants/colors.dart';
 import 'package:amptive/src/utils/constants/font_sizes.dart';
 import 'package:amptive/src/utils/constants/font_weights.dart';
@@ -23,7 +22,6 @@ import '../../../../../../../utils/dialogs/go_live/follow_or_subscribe_dialog.da
 
 class AmptiveCreatorProfileScreen extends StatelessWidget {
   const AmptiveCreatorProfileScreen({super.key});
-
 
   @override
   Widget build(context) {

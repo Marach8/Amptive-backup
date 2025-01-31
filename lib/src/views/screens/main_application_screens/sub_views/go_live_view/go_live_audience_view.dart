@@ -78,7 +78,7 @@ class _AmptiveGoLiveAudienceViewState extends State<AmptiveGoLiveAudienceView> {
 
   @override
   Widget build(context) {
-    final screenWidth = AmptiveHelperFunctions.getScreenWidth(context);
+    // final screenWidth = AmptiveHelperFunctions.getScreenWidth(context);
     return AmptiveAnnotatedRegionWidget(
       child: Scaffold(
         body: SafeArea(
@@ -108,12 +108,12 @@ class _AmptiveGoLiveAudienceViewState extends State<AmptiveGoLiveAudienceView> {
                 child: AmptiveCustomContainer(
                   onTap: (){},
                   margin: const EdgeInsets.only(left: 15),
-                  padding: const EdgeInsets.fromLTRB(10, 5, 10, 5), radius: 30,
+                  padding: const EdgeInsets.fromLTRB(5, 5, 10, 5), radius: 30,
                   color: AmptiveColors.whiteColor.withOpacity(0.1),
                   child: Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      const AmptiveImageLoaderWidget(imagePath: AmptiveImageStrings.threePpl),
+                      const AmptiveImageLoaderWidget(imagePath: AmptiveImageStrings.GROUP_ICON),
                       const Gap(5),
                       Text(
                         AmptiveOtherStrings.SOCIETY,
@@ -288,76 +288,173 @@ class _AmptiveGoLiveAudienceViewState extends State<AmptiveGoLiveAudienceView> {
           ),
         ),
 
-        bottomSheet: AmptiveCustomContainer(
-          padding: const EdgeInsets.symmetric(horizontal: 15),
-          color: AmptiveColors.black,
-          height: 35,
-          child: BlocBuilder<AmptiveGoLiveHostModerationToolsBloc, List<bool>>(
-            builder: (_, state) {
-              final commentIsEnabled = state.first;
-              final micIsEnabled = state[1];
-              final handRaiseIsEnabled = state.last;
+        bottomSheet: const GoLiveAudienViewControlsWidget(),
+      ),
+    );
+  }
+}
 
-              return Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  _RenderAudienceViewButtons(
-                    onTap: (){},
-                    child: Transform.flip(flipX: true, child: const Icon(Icons.reply))
+
+
+
+
+class GoLiveAudienViewControlsWidget extends StatefulWidget {
+  const GoLiveAudienViewControlsWidget({super.key});
+
+  @override
+  State<GoLiveAudienViewControlsWidget> createState() => _GoLiveAudienViewControlsWidgetState();
+}
+
+class _GoLiveAudienViewControlsWidgetState extends State<GoLiveAudienViewControlsWidget> {
+  late FocusNode _focusNode;
+  late TextEditingController _cntrl;
+  late ValueNotifier<bool> _isFocused, _hasText;
+
+  @override 
+  void initState(){
+    super.initState();
+    _focusNode = FocusNode();
+    _cntrl = TextEditingController();
+    _hasText = ValueNotifier(false);
+    _isFocused = ValueNotifier(false);
+    _focusNode.addListener(_onFocus);
+    _cntrl.addListener(_onInput);
+  }
+
+  void _onFocus() => _focusNode.hasFocus ? _isFocused.value = true : _isFocused.value = false;
+  void _onInput() => _cntrl.text.isNotEmpty ? _hasText.value = true : _hasText.value = false;
+
+  @override 
+  void dispose(){
+    _focusNode.dispose();
+    _isFocused.dispose();
+    _hasText.dispose();
+    _cntrl.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(context) {
+    return AmptiveCustomContainer(
+      padding: const EdgeInsets.fromLTRB(15, 10, 15, 10),
+      color: AmptiveColors.black,
+      child: Row(
+        children: [
+          AmptiveRebuilderWidget(
+            notifier: _isFocused,
+            builder: (_, value, __) {
+              if(value){
+                return Padding(
+                  padding: const EdgeInsets.only(right: 15),
+                  child: AmptiveCircularContainerWithPictureWidget(
+                    diameter: 35,
+                    imagePath: getHostList()[9].obj.profilePicture ?? ''
                   ),
-                  Expanded(
-                    child: Padding(
-                      padding: EdgeInsets.only(right: 5.w),
-                      child: AmptiveTextFormFieldWidget(
-                        controller: TextEditingController(),
-                        disableBlueBorder: true,
-                        cursorHeight: 20,
-                        hintStyle: Theme.of(context).textTheme.titleLarge?.copyWith(
-                          color: commentIsEnabled ? AmptiveColors.strokeGreyColor
-                          : AmptiveColors.strokeGreyColor.withOpacity(0.3)
-                        ),
-                        fillColor: commentIsEnabled ? AmptiveColors.fillGreyColor.withOpacity(0.1) 
-                          : AmptiveColors.whiteColor.withOpacity(0.01),
-                        enabled: commentIsEnabled ? true : false,
-                        cursorColor: AmptiveColors.whiteColor.withOpacity(0.6),
-                        constraints: const BoxConstraints(maxHeight: 40),
-                        contentPadding: const EdgeInsets.fromLTRB(16, 0, 16, 0),
-                        hintText: AmptiveOtherStrings.COMMENT,
-                      ),
-                    )
-                  ),
-                  if(micIsEnabled)_RenderAudienceViewButtons(
-                    onTap: (){
-                      showFollowHostOrCohostDialog(context: context, host: getHostList().first);
-                    },
-                    child: const Icon(Icons.mic),
-                  ),
-                  if(handRaiseIsEnabled)_RenderAudienceViewButtons(
-                    onTap: (){
-                      showSuccessOrFailureNotification(
-                        response: GenericResponseModel(
-                          isSuccessful: false,
-                          responseMessage: 'You have been kicked out of the live session'
-                        ),
-                        child: const AmptiveImageLoaderWidget(imagePath: AmptiveImageStrings.KICK_USER_OUT)
-                      );
-                    },
-                    child: const Icon(Icons.front_hand_outlined),
-                  ),
-                  _RenderAudienceViewButtons(
-                    onTap: (){},
-                    child: const AmptiveImageLoaderWidget(imagePath: AmptiveImageStrings.GIFT_ICON),
-                  ),
-                  _RenderAudienceViewButtons(
-                    onTap: (){},
-                    addMargin: false,
-                    child: Icon(Icons.favorite, color: AmptiveColors.notifRed),
-                  ),
-                ]
+                );
+              }
+
+              return _RenderAudienceViewButtons(
+                onTap: (){},
+                child: Transform.flip(flipX: true, child: const Icon(Icons.reply))
               );
             }
           ),
-        ),
+
+          BlocBuilder<AmptiveGoLiveHostModerationToolsBloc, List<bool>>(
+            builder: (_, state) {
+              final commentIsEnabled = state.first;
+              return Flexible(
+                child: Padding(
+                  padding: EdgeInsets.only(right: 5.w),
+                  child: AmptiveTextFormFieldWidget(
+                    controller: _cntrl,
+                    focusNode: _focusNode,
+                    disableBlueBorder: true,
+                    cursorHeight: 20,
+                    hintStyle: Theme.of(context).textTheme.titleLarge?.copyWith(
+                      color: commentIsEnabled ? AmptiveColors.strokeGreyColor
+                      : AmptiveColors.strokeGreyColor.withOpacity(0.3)
+                    ),
+                    fillColor: commentIsEnabled ? AmptiveColors.fillGreyColor.withOpacity(0.1) 
+                      : AmptiveColors.whiteColor.withOpacity(0.01),
+                    enabled: commentIsEnabled ? true : false,
+                    cursorColor: AmptiveColors.whiteColor.withOpacity(0.6),
+                    constraints: const BoxConstraints(maxHeight: 35),
+                    contentPadding: const EdgeInsets.fromLTRB(16, 0, 16, 0),
+                    hintText: AmptiveOtherStrings.COMMENT,
+                  ),
+                )
+              );
+            }
+          ),
+      
+          AmptiveRebuilderWidget(
+            notifier: _isFocused,
+            builder: (_, value, __) {
+              if(value){
+                return AmptiveRebuilderWidget(
+                  notifier: _hasText,
+                  builder: (_, value, __) {
+                    return GestureDetector(
+                      onTap: value ? (){
+                        _cntrl.clear();
+                        _focusNode.unfocus();
+                      } : null,
+                      child: Padding(
+                        padding: const EdgeInsets.only(left: 10),
+                        child: Icon(
+                          Icons.send,
+                          color:value ? AmptiveColors.whiteColor : AmptiveColors.lightDark,
+                        ),
+                      ),
+                    );
+                  }
+                );
+              }
+
+              return BlocBuilder<AmptiveGoLiveHostModerationToolsBloc, List<bool>>(
+                buildWhen: (prev, curr) => prev[1] != curr[1] || prev.last != curr.last,
+                builder: (_, state) {
+                  final micIsEnabled = state[1];
+                  final handRaiseIsEnabled = state.last;
+                    
+                  return Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      if(micIsEnabled)_RenderAudienceViewButtons(
+                        onTap: (){
+                          showFollowHostOrCohostDialog(context: context, host: getHostList().first);
+                        },
+                        child: const Icon(Icons.mic),
+                      ),
+                      if(handRaiseIsEnabled)_RenderAudienceViewButtons(
+                        onTap: (){
+                          showSuccessOrFailureNotification(
+                            response: GenericResponseModel(
+                              isSuccessful: false,
+                              responseMessage: 'You have been kicked out of the live session'
+                            ),
+                            child: const AmptiveImageLoaderWidget(imagePath: AmptiveImageStrings.KICK_USER_OUT)
+                          );
+                        },
+                        child: const Icon(Icons.front_hand_outlined),
+                      ),
+                      _RenderAudienceViewButtons(
+                        onTap: (){},
+                        child: const AmptiveImageLoaderWidget(imagePath: AmptiveImageStrings.GIFT_ICON),
+                      ),
+                      _RenderAudienceViewButtons(
+                        onTap: (){},
+                        addMargin: false,
+                        child: Icon(Icons.favorite, color: AmptiveColors.notifRed),
+                      ),
+                    ]
+                  );
+                }
+              );
+            }
+          ),
+        ],
       ),
     );
   }
@@ -375,7 +472,7 @@ class _RenderAudienceViewButtons extends StatelessWidget {
   });
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(context) {
     return AmptiveCustomContainer(
       onTap: onTap,
       margin: addMargin ? EdgeInsets.only(right: 5.w) : EdgeInsets.zero,
@@ -385,4 +482,3 @@ class _RenderAudienceViewButtons extends StatelessWidget {
     );
   }
 }
-

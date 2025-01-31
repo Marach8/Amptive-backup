@@ -172,8 +172,7 @@ Future<void> showAudienceViewOfTopGiftersDialog(BuildContext context) async {
                   )
                 ),
               ),
-            ),
-            
+            ),  
           ],
         );
       }
