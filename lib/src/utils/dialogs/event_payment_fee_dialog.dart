@@ -75,7 +75,7 @@ Future<void> showEventPaymentFeeDialog({
                   style: Theme.of(context)
                       .textTheme
                       .titleMedium
-                      ?.copyWith(color: AmptiveColors.subtitleColor),
+                      ?.copyWith(color: AmptiveColors.hexC2C2C2),
                 ),
                 const Gap(20),
                 Form(

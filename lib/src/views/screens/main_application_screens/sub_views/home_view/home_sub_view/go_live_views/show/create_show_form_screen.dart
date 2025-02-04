@@ -727,7 +727,7 @@ class _CreateShowScreenState extends State<CreateShowScreen> {
                           if (states.contains(WidgetState.disabled)) {
                             return AmptiveColors.grey1Color;
                           }
-                          return AmptiveColors.activeDotColor;
+                          return AmptiveColors.hexD9D9D9;
                         }),
                         foregroundColor:
                         WidgetStateProperty.resolveWith((states) {

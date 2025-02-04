@@ -96,7 +96,7 @@ class _AmptiveGoLiveCohostViewState extends State<AmptiveGoLiveCohostView> {
                           style: Theme.of(context).textTheme.bodyMedium,
                         ),
                         Gap(5.w),
-                        const AmptiveCirceAvatarWidget(diameter: 5),
+                        const AmptiveCircleAvatarWidget(diameter: 5),
                         Gap(5.w),
                         Text(
                           // maxLines: 1,
@@ -138,7 +138,7 @@ class _AmptiveGoLiveCohostViewState extends State<AmptiveGoLiveCohostView> {
                                 title: Text(
                                   string.obj.name ?? '',
                                   style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                                    color: AmptiveColors.subtitleColor
+                                    color: AmptiveColors.hexC2C2C2
                                   )
                                 ),
                                 subtitle: Text(

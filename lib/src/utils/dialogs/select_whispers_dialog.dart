@@ -70,7 +70,7 @@ Future<void> showWhispersDialog(BuildContext context) async {
               style: Theme.of(context)
                   .textTheme
                   .titleMedium
-                  ?.copyWith(color: AmptiveColors.subtitleColor),
+                  ?.copyWith(color: AmptiveColors.hexC2C2C2),
             ),
             const Gap(15),
             Text(
@@ -79,7 +79,7 @@ Future<void> showWhispersDialog(BuildContext context) async {
               style: Theme.of(context)
                   .textTheme
                   .titleMedium
-                  ?.copyWith(color: AmptiveColors.subtitleColor),
+                  ?.copyWith(color: AmptiveColors.hexC2C2C2),
             ),
             const Gap(20),
             AmptiveRebuilderWidget(
@@ -135,7 +135,7 @@ Future<void> showWhispersDialog(BuildContext context) async {
                                     .textTheme
                                     .titleMedium
                                     ?.copyWith(
-                                        color: AmptiveColors.subtitleColor),
+                                        color: AmptiveColors.hexC2C2C2),
                               ),
                             ],
                           ),
@@ -203,7 +203,7 @@ Future<void> showWhispersDialog(BuildContext context) async {
                                         .textTheme
                                         .titleMedium
                                         ?.copyWith(
-                                            color: AmptiveColors.subtitleColor),
+                                            color: AmptiveColors.hexC2C2C2),
                                   ),
                                 ],
                               ),

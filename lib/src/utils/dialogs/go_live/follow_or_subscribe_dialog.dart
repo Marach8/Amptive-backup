@@ -87,7 +87,7 @@ Future<void> showFollowHostOrCohostDialog({
                             Text(
                               host.obj.username ?? '',
                               style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                                color: AmptiveColors.subtitleColor
+                                color: AmptiveColors.hexC2C2C2
                               ),
                             ),
                           ],
@@ -163,7 +163,7 @@ Future<void> showFollowHostOrCohostDialog({
                     'Author of UNTAMED AND LOVE WARRIOR, Host ofWE CAN DO HARD THINGS Podcast Founder of @together jfjdkfjkdjkajkfdkakkdafdadfjkajkfa',
                     style: Theme.of(context).textTheme.bodySmall?.copyWith(
                       fontSize: AmptiveFontSizes.size13,
-                      color: AmptiveColors.subtitleColor.withOpacity(0.76)
+                      color: AmptiveColors.hexC2C2C2.withOpacity(0.76)
                     ),
                   ),
                     
@@ -266,7 +266,7 @@ Future<void> showFollowHostOrCohostDialog({
                                       ),
                                     ),
                                     const Gap(2),
-                                    AmptiveCirceAvatarWidget(
+                                    AmptiveCircleAvatarWidget(
                                       diameter: 4,
                                       color: AmptiveColors.brandBlack,
                                     ),

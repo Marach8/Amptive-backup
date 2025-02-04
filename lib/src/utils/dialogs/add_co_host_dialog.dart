@@ -94,7 +94,7 @@ Future<Set<ObjectWithNotifier<Host>>?> showAddCoHostDialog(BuildContext context)
                                       .textTheme
                                       .bodySmall
                                       ?.copyWith(
-                                          color: AmptiveColors.subtitleColor),
+                                          color: AmptiveColors.hexC2C2C2),
                                 );
                               }),
                         ],
@@ -107,7 +107,7 @@ Future<Set<ObjectWithNotifier<Host>>?> showAddCoHostDialog(BuildContext context)
                         style: Theme.of(context)
                             .textTheme
                             .bodySmall
-                            ?.copyWith(color: AmptiveColors.subtitleColor),
+                            ?.copyWith(color: AmptiveColors.hexC2C2C2),
                       ),
                       const Gap(20),
 
@@ -325,7 +325,7 @@ class AmptiveListOfCoHostsWidget extends StatelessWidget {
             style: Theme.of(context)
                 .textTheme
                 .bodySmall
-                ?.copyWith(color: AmptiveColors.subtitleColor),
+                ?.copyWith(color: AmptiveColors.hexC2C2C2),
           ),
         ],
       );
@@ -391,7 +391,7 @@ class AmptiveCoHostWidget extends StatelessWidget {
                   Text(
                     coHostDetail.obj.username ?? '',
                     style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                      color: AmptiveColors.subtitleColor
+                      color: AmptiveColors.hexC2C2C2
                     ),
                   ),
                 ],

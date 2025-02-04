@@ -98,7 +98,7 @@ Future<void> showListenersDialog({
                     maxLines: 3,
                     AmptiveOtherStrings.TOP_LISTENERS_DESC,
                     style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                      color: AmptiveColors.subtitleColor
+                      color: AmptiveColors.hexC2C2C2
                     ),
                   ),
                   const Gap(20),

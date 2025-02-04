@@ -67,7 +67,7 @@ Future<void> showSelectAudienceAccessForEventsDialog(
               style: Theme.of(context)
                   .textTheme
                   .titleMedium
-                  ?.copyWith(color: AmptiveColors.subtitleColor),
+                  ?.copyWith(color: AmptiveColors.hexC2C2C2),
             ),
             const Gap(20),
             AmptiveRebuilderWidget(
@@ -109,7 +109,7 @@ Future<void> showSelectAudienceAccessForEventsDialog(
                                     .textTheme
                                     .titleMedium
                                     ?.copyWith(
-                                        color: AmptiveColors.subtitleColor),
+                                        color: AmptiveColors.hexC2C2C2),
                               ),
                             ],
                           ),
@@ -178,7 +178,7 @@ Future<void> showSelectAudienceAccessForEventsDialog(
                                         .textTheme
                                         .titleMedium
                                         ?.copyWith(
-                                            color: AmptiveColors.subtitleColor),
+                                            color: AmptiveColors.hexC2C2C2),
                                   ),
                                 ],
                               ),

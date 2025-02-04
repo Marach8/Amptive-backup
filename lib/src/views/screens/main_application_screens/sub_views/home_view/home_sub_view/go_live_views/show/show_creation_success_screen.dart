@@ -69,7 +69,7 @@ class _AmptiveCreateShowSuccessScreenState
                 style: Theme.of(context)
                     .textTheme
                     .titleMedium
-                    ?.copyWith(color: AmptiveColors.subtitleColor),
+                    ?.copyWith(color: AmptiveColors.hexC2C2C2),
               ),
               const Gap(30),
               AmptiveRebuilderWidget(

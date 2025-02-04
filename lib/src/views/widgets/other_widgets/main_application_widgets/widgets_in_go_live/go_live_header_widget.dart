@@ -11,7 +11,7 @@ import 'package:gap/gap.dart';
 import '../../../../../bloc/main_app/go_live_bloc/host_view/host_end_show_bloc.dart';
 import '../../../../../utils/constants/colors.dart';
 import '../../../../../utils/constants/strings/other_strings.dart';
-import '../../../../../utils/dialogs/go_live/audience_view_of_to_gifters.dart';
+import '../../../../../utils/dialogs/go_live/audience_view_of_to_gifters_dialog.dart';
 import '../../../../../utils/dialogs/go_live/host_end_show_dialog.dart';
 import '../../../../../utils/dialogs/go_live/host_view_of_listeners_dialog.dart';
 
@@ -39,7 +39,7 @@ class AmptiveLiveViewHeaderWidget extends StatelessWidget {
                 style: Theme.of(context).textTheme.bodyMedium,
               ),
               Gap(5.w),
-              const AmptiveCirceAvatarWidget(diameter: 5),
+              const AmptiveCircleAvatarWidget(diameter: 5),
               Gap(5.w),
               Text(
                 // maxLines: 1,

@@ -115,7 +115,7 @@ class _AmptiveChooseOrCreateEventScreenState extends State<AmptiveChooseOrCreate
                       maxLines: 3,
                       AmptiveOtherStrings.CHOOSE_OR_CREATE_EVENT,
                       style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                        color: AmptiveColors.subtitleColor
+                        color: AmptiveColors.hexC2C2C2
                       ),
                     ),
                   ),
