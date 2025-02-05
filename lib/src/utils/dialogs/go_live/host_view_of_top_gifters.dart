@@ -17,7 +17,7 @@ import '../../constants/strings/other_strings.dart';
 Future<void> showHostViewOfTopGiftersDialog(BuildContext context) async {
 
   return await showModalBottomSheet(
-      backgroundColor: AmptiveColors.black4,
+      backgroundColor: AmptiveColors.hex202020,
       constraints: BoxConstraints.expand(
         height: AmptiveHelperFunctions.getScreenHeight(context) * 0.84
       ),

@@ -34,7 +34,7 @@ class SubscriptionLoadingState extends SubscriptionState{}
 
 class Ready2SubscribeState extends SubscriptionState{}
 
-//This is the state that will be emitted initially when
+//This state will be emitted initially when
 //user has not yet followed the host. The subscription button will
 //be hidden while in this state.
 class InitialSubState extends SubscriptionState{}

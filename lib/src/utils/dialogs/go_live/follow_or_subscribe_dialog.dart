@@ -26,7 +26,7 @@ Future<void> showFollowHostOrCohostDialog({
   required ObjectWithNotifier<Host> host
 }) async {
   return await showModalBottomSheet(
-    backgroundColor: AmptiveColors.black4,
+    backgroundColor: AmptiveColors.hex202020,
     context: context,
     isScrollControlled: true,
     useSafeArea: true,
