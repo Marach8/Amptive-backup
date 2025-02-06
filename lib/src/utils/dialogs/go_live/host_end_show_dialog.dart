@@ -46,8 +46,9 @@ Future<void> showHostEndShowDialog({
                       if(context.mounted){
                         context.read<AmptiveNavBarBloc>().goToPage(0);                        
                         context.pop();
-                        showNormalNotification(
-                          child: const Icon(Icons.check_circle),
+                        showAppNotification(
+                          context: context,
+                          icon: const Icon(Icons.check_circle),
                           text: 'Your live show has ended',
                           bgColor: AmptiveColors.notifBg
                         );
