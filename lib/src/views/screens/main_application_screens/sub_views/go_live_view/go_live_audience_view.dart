@@ -3,6 +3,7 @@ import 'package:amptive/src/models/host.dart';
 import 'package:amptive/src/utils/constants/font_sizes.dart';
 import 'package:amptive/src/utils/constants/strings/image_strings.dart';
 import 'package:amptive/src/utils/dialogs/app_notification_dialog.dart';
+import 'package:amptive/src/utils/dialogs/minimized_go_live_dialog.dart';
 import 'package:amptive/src/utils/helpers/helper_functions/other_functions.dart';
 import 'package:amptive/src/views/widgets/common_widgets/annotated_region__widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/circular_container_with_picture_widget.dart';
@@ -88,7 +89,10 @@ class _AmptiveGoLiveAudienceViewState extends State<AmptiveGoLiveAudienceView> {
               const Gap(10),
               AmptiveLiveViewHeaderWidget(
                 exitIcon: AmptiveCustomContainer(
-                onTap: () => context.read<AmptiveNavBarBloc>().goToPage(0),
+                onTap: (){
+                  context.read<AmptiveNavBarBloc>().goToPage(0);
+                  showMinimizedGoLiveState();
+                },
                 color: AmptiveColors.whiteColor.withOpacity(0.1),
                 height: 35, width: 35, boxShape: BoxShape.circle,
                 boxShadow: [

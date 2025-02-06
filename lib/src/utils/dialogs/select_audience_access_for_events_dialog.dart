@@ -83,7 +83,7 @@ Future<void> showSelectAudienceAccessForEventsDialog(
                     },
                     padding: const EdgeInsets.fromLTRB(15, 13, 15, 13),
                     radius: 15,
-                    color: AmptiveColors.grey1Color,
+                    color: AmptiveColors.hex2D2D2D,
                     border: Border.all(
                         width: 2,
                         color: value
@@ -147,7 +147,7 @@ Future<void> showSelectAudienceAccessForEventsDialog(
                     padding: const EdgeInsets.fromLTRB(15, 13, 15, 13),
                     radius: 15,
                     duration: 100,
-                    color: AmptiveColors.grey1Color,
+                    color: AmptiveColors.hex2D2D2D,
                     border: Border.all(
                         width: 2,
                         color: value

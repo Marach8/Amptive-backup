@@ -141,7 +141,7 @@ class _AmptiveChooseOrCreateEventScreenState extends State<AmptiveChooseOrCreate
                                       context.pushNamed(AmptiveRoutes.CREATE_EVENT_FORM);
                                     },
                                     radius: 5.r,
-                                    color: AmptiveColors.grey1Color,
+                                    color: AmptiveColors.hex2D2D2D,
                                     width: constraints.maxWidth,
                                     height: constraints.maxHeight * 0.7,
                                     child: Icon(Icons.add, size: 100.w),

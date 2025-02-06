@@ -79,7 +79,7 @@ Future<bool?> showKickOutConfirmationDialog({
     barrierColor: AmptiveColors.black.withOpacity(0.8),
     builder: (_) => AlertDialog(
       insetPadding: const EdgeInsets.fromLTRB(15, 0, 15, 0),
-      backgroundColor: AmptiveColors.black4,
+      backgroundColor: AmptiveColors.hex202020,
       contentPadding: const EdgeInsets.all(15),
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(14),

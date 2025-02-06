@@ -24,6 +24,7 @@ import '../../../views/widgets/common_widgets/elevated_button_widget.dart';
 import '../../constants/strings/other_strings.dart';
 import '../add_co_host_dialog.dart';
 
+
 Future<bool?> showGoLiveHostAddCoHostDialog({
   required BuildContext context,
 }) async {
@@ -38,7 +39,7 @@ final showSuffixIconNotifier = ValueNotifier(false);
   );
 
   return await showModalBottomSheet<bool>(
-      backgroundColor: AmptiveColors.black4,
+      backgroundColor: AmptiveColors.hex202020,
       constraints: BoxConstraints.expand(
         height: AmptiveHelperFunctions.getScreenHeight(context)
       ),

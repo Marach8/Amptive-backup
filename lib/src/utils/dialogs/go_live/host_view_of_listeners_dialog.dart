@@ -38,7 +38,7 @@ Future<void> showListenersDialog({
     );
 
   return await showModalBottomSheet(
-    backgroundColor: AmptiveColors.black4,
+    backgroundColor: AmptiveColors.hex202020,
     context: context,
     isScrollControlled: true,
     useSafeArea: true,
