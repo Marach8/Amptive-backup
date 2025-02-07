@@ -52,7 +52,7 @@ class AmptiveCreateShowOrEventSelectionWidget extends StatelessWidget {
                 height: 120.h,
                 width: double.infinity,
                 radius: 5,
-                color: value ? AmptiveColors.brandBlue : AmptiveColors.grey1Color,
+                color: value ? AmptiveColors.brandBlue : AmptiveColors.hex2D2D2D,
                 child: AnimatedScale(
                   scale: value ? 1.1 : 0.5,
                   duration: const Duration(milliseconds: 200),
@@ -67,10 +67,10 @@ class AmptiveCreateShowOrEventSelectionWidget extends StatelessWidget {
               Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  AmptiveCirceAvatarWidget(
+                  AmptiveCircleAvatarWidget(
                     animationDuration: 200,
                     diameter: 15,
-                    color: value ? AmptiveColors.orangeColor1 : AmptiveColors. grey1Color,
+                    color: value ? AmptiveColors.orangeColor1 : AmptiveColors. hex2D2D2D,
                     child: FittedBox(child: Text(alphabet)),
                   ),
                   const Gap(5),
@@ -87,7 +87,7 @@ class AmptiveCreateShowOrEventSelectionWidget extends StatelessWidget {
                 maxLines: 2,
                 subtitle,
                 style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                  color: AmptiveColors.subtitleColor
+                  color: AmptiveColors.hexC2C2C2
                 ),
               )
             ],

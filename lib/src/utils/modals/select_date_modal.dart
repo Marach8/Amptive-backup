@@ -79,7 +79,7 @@ Future<void> selectDateModal(
                       "Please select time between three months from today, and one hour from now",
                       maxLines: null,
                       style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                          color: AmptiveColors.subtitleColor,
+                          color: AmptiveColors.hexC2C2C2,
                           overflow: TextOverflow.visible),
                     ),
                   ),

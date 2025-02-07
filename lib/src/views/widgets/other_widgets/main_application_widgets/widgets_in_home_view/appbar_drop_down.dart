@@ -40,7 +40,7 @@ class AmptiveAppBarDropDownWidget extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                AmptiveOtherStrings.scheduled,
+                AmptiveOtherStrings.SCHEDULED,
                 style: Theme.of(context).textTheme.bodySmall?.copyWith(
                   fontSize: AmptiveFontSizes.size15
                 ),

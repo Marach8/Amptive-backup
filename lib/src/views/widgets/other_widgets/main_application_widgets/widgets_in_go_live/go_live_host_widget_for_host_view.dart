@@ -73,7 +73,7 @@ class AmptiveLiveHostAndCoHostWidget extends StatelessWidget {
                 ),
                 Positioned(
                   bottom: 0, right: 5,
-                  child: AmptiveCirceAvatarWidget(
+                  child: AmptiveCircleAvatarWidget(
                     diameter: 20.h,
                     child: FittedBox(
                       fit: BoxFit.scaleDown,

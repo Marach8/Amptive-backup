@@ -36,3 +36,42 @@ class AmptiveTwoTextRichTextWidget extends StatelessWidget {
     );
   }
 }
+
+
+
+
+class AmptiveMultipleTextsRichText extends StatelessWidget {
+  final Map<String, TextStyle> items;
+  final TextAlign? textAlign;
+  final void Function(int index)? textOnTap;
+  const AmptiveMultipleTextsRichText({
+    super.key,
+    required this.items,
+    this.textAlign,
+    this.textOnTap
+  });
+
+  @override
+  Widget build(context) {
+    return Text.rich(
+      textAlign: textAlign,
+      maxLines: 5,
+      TextSpan(
+        children: items.entries.map(
+          (item){
+            final index = items.entries.toList().indexOf(item);
+            return TextSpan(
+              text: item.key,
+              style: item.value,
+              recognizer: TapGestureRecognizer()..onTap = (){
+                if (textOnTap != null){
+                  textOnTap!(index);
+                }
+              }
+            );
+          }
+        ).toList()
+      )
+    );
+  }
+}

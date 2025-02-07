@@ -69,7 +69,7 @@ class _AmptiveShowScheduledScreenState
             physics: const BouncingScrollPhysics(),
             child: Column(
               children: [
-                AmptiveCirceAvatarWidget(
+                AmptiveCircleAvatarWidget(
                   diameter: 45,
                   color: AmptiveColors.whiteColor,
                   child: Icon(

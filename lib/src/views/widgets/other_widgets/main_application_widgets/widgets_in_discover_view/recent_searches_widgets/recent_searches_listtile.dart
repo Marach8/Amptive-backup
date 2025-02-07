@@ -18,7 +18,7 @@ class AmptiveRecentSearchesListTileWidget extends StatelessWidget {
   });
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(context) {
     return Padding(
       padding: const EdgeInsets.only(bottom: 15),
       child: ListTile(
@@ -44,19 +44,19 @@ class AmptiveRecentSearchesListTileWidget extends StatelessWidget {
             Text(
               'Show',
               style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                color: AmptiveColors.subtitleColor,
+                color: AmptiveColors.hexC2C2C2,
                 fontWeight: AmptiveFontWeights.medium,
                 fontSize: AmptiveFontSizes.size13,
                 height: 1.5
               ),
             ),
             const Gap(5),
-            const AmptiveCirceAvatarWidget(diameter: 3),
+            const AmptiveCircleAvatarWidget(diameter: 3),
             const Gap(5),
             Text(
               'MONDAY AT 20:00',
               style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                color: AmptiveColors.subtitleColor,
+                color: AmptiveColors.hexC2C2C2,
                 fontWeight: AmptiveFontWeights.medium,
                 fontSize: AmptiveFontSizes.size13,
                 height: 1.5

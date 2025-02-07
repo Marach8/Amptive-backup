@@ -70,7 +70,7 @@ class AmptiveExistingShowWidget extends StatelessWidget {
                   
                   Align(
                     alignment: Alignment.bottomCenter,
-                    child: AmptiveCirceAvatarWidget(
+                    child: AmptiveCircleAvatarWidget(
                       diameter: 5,
                       color: AmptiveColors.grey5Color,
                     ),

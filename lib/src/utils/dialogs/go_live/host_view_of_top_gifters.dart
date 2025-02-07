@@ -17,7 +17,7 @@ import '../../constants/strings/other_strings.dart';
 Future<void> showHostViewOfTopGiftersDialog(BuildContext context) async {
 
   return await showModalBottomSheet(
-      backgroundColor: AmptiveColors.black4,
+      backgroundColor: AmptiveColors.hex202020,
       constraints: BoxConstraints.expand(
         height: AmptiveHelperFunctions.getScreenHeight(context) * 0.84
       ),
@@ -89,7 +89,7 @@ Future<void> showHostViewOfTopGiftersDialog(BuildContext context) async {
                       maxLines: 3,
                       AmptiveOtherStrings.TOP_GIFTERS_DESC,
                       style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                        color: AmptiveColors.subtitleColor
+                        color: AmptiveColors.hexC2C2C2
                       ),
                     ),
                     const Gap(20),
@@ -159,7 +159,7 @@ class AmptiveGifterWidget extends StatelessWidget {
                 color: AmptiveColors.yellowColor,
                 fontSize: AmptiveFontSizes.size14
               ),
-            ) : AmptiveCirceAvatarWidget(
+            ) : AmptiveCircleAvatarWidget(
               diameter: 5,
               color: AmptiveColors.whiteColor.withOpacity(0.4),
               child: const SizedBox.shrink(),

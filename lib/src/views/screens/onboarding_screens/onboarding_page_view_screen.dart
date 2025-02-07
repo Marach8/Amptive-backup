@@ -53,7 +53,7 @@ class _AmptiveOnboardingScreenState extends State<AmptiveOnboardingScreen> {
                   title: AmptiveOtherStrings.goLiveLikeNeverBefore,
                   description:
                       AmptiveOtherStrings.monetizeYouLiveShowsAndEvents,
-                  pictureBgColor: AmptiveColors.grey1Color,
+                  pictureBgColor: AmptiveColors.hex2D2D2D,
                 ),
                 AmptiveCustomOnboardingPageViewSlideWidget(
                   title: AmptiveOtherStrings.experienceItUniquely,
@@ -80,7 +80,7 @@ class _AmptiveOnboardingScreenState extends State<AmptiveOnboardingScreen> {
                     effect: ExpandingDotsEffect(
                       dotHeight: 10.h,
                       dotWidth: 10.w,
-                      activeDotColor: AmptiveColors.activeDotColor,
+                      activeDotColor: AmptiveColors.hexD9D9D9,
                       dotColor: AmptiveColors.inactiveDotColor,
                     ),
                   ),

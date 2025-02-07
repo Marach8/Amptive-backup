@@ -20,7 +20,7 @@ Future<void> showHostEndShowDialog({
   required BuildContext context,
 }) async {
   return await showModalBottomSheet(
-    backgroundColor: AmptiveColors.black4,
+    backgroundColor: AmptiveColors.hex202020,
     context: context,
     isScrollControlled: true,
     useSafeArea: true,
@@ -146,7 +146,7 @@ Future<void> showHostEndShowDialog({
                         text1: 'You had a total of ',
                         text2: '144k listeners',
                         style1: Theme.of(context).textTheme.bodySmall?.copyWith(
-                          color: AmptiveColors.subtitleColor
+                          color: AmptiveColors.hexC2C2C2
                         ),
                         style2: Theme.of(context).textTheme.bodyMedium?.copyWith(
                           fontSize: AmptiveFontSizes.size14
@@ -157,7 +157,7 @@ Future<void> showHostEndShowDialog({
                         text1: 'You received ',
                         text2: '200 gifts',
                         style1: Theme.of(context).textTheme.bodySmall?.copyWith(
-                          color: AmptiveColors.subtitleColor
+                          color: AmptiveColors.hexC2C2C2
                         ),
                         style2: Theme.of(context).textTheme.bodyMedium?.copyWith(
                           fontSize: AmptiveFontSizes.size14

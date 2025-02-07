@@ -65,7 +65,7 @@ Future<void> showHandRaisingDialog(BuildContext context)async{
               maxLines: 3,
               AmptiveOtherStrings.CNTRL_HAND_RAISING,
               style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                color: AmptiveColors.subtitleColor
+                color: AmptiveColors.hexC2C2C2
               ),
             ),
             const Gap(20),
@@ -84,7 +84,7 @@ Future<void> showHandRaisingDialog(BuildContext context)async{
                   },
                   padding: const EdgeInsets.fromLTRB(15, 13, 15, 13),
                   radius: 15,
-                  color: AmptiveColors.grey1Color,
+                  color: AmptiveColors.hex2D2D2D,
                   border: Border.all(
                     width: 2,
                     color: value ? AmptiveColors.brandBlue : AmptiveColors.transparentColor
@@ -115,7 +115,7 @@ Future<void> showHandRaisingDialog(BuildContext context)async{
                               maxLines: 5,
                               AmptiveOtherStrings.AUDIENCE_CAN_RAISE_HAND,
                               style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                                color: AmptiveColors.subtitleColor
+                                color: AmptiveColors.hexC2C2C2
                               ),
                             ),
                           ],
@@ -143,7 +143,7 @@ Future<void> showHandRaisingDialog(BuildContext context)async{
                   },
                   padding: const EdgeInsets.fromLTRB(15, 13, 15, 13),
                   radius: 15, duration: 100,
-                  color: AmptiveColors.grey1Color,
+                  color: AmptiveColors.hex2D2D2D,
                   border: Border.all(
                     width: 2,
                     color: value ? AmptiveColors.brandBlue : AmptiveColors.transparentColor
@@ -178,7 +178,7 @@ Future<void> showHandRaisingDialog(BuildContext context)async{
                                   maxLines: 5,
                                   AmptiveOtherStrings.AUDIENCE_CANNOT_RAISE_HAND,
                                   style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                                    color: AmptiveColors.subtitleColor
+                                    color: AmptiveColors.hexC2C2C2
                                   ),
                                 ),
                               ],

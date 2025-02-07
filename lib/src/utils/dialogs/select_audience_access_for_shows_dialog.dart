@@ -60,7 +60,7 @@ Future<String> showSelectAudienceAccessForShowsDialog(
               maxLines: 5,
               AmptiveOtherStrings.SHOW_AUDIENCE_ACCESS_DESC,
               style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                color: AmptiveColors.subtitleColor
+                color: AmptiveColors.hexC2C2C2
               ),
             ),
             const Gap(20),
@@ -81,7 +81,7 @@ Future<String> showSelectAudienceAccessForShowsDialog(
                   },
                   padding: const EdgeInsets.fromLTRB(15, 13, 15, 13),
                   radius: 15,
-                  color: AmptiveColors.grey1Color,
+                  color: AmptiveColors.hex2D2D2D,
                   border: Border.all(
                     width: 2,
                     color: isActive ? AmptiveColors.brandBlue : AmptiveColors.transparentColor
@@ -103,7 +103,7 @@ Future<String> showSelectAudienceAccessForShowsDialog(
                               maxLines: 5,
                               AmptiveOtherStrings.SHOW_FREE_ACCESS,
                               style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                                color: AmptiveColors.subtitleColor
+                                color: AmptiveColors.hexC2C2C2
                               ),
                             ),
                           ],
@@ -143,7 +143,7 @@ Future<String> showSelectAudienceAccessForShowsDialog(
                   },
                   padding: const EdgeInsets.fromLTRB(15, 13, 15, 13),
                   radius: 15, duration: 100,
-                  color: AmptiveColors.grey1Color,
+                  color: AmptiveColors.hex2D2D2D,
                   border: Border.all(
                     width: 2,
                     color: isActive ? AmptiveColors.brandBlue : AmptiveColors.transparentColor
@@ -169,7 +169,7 @@ Future<String> showSelectAudienceAccessForShowsDialog(
                                   maxLines: 5,
                                   AmptiveOtherStrings.ACCESS_2_ONLY_SUBSCRIBERS,
                                   style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                                    color: AmptiveColors.subtitleColor
+                                    color: AmptiveColors.hexC2C2C2
                                   ),
                                 ),
                               ],

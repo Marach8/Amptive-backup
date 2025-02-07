@@ -22,6 +22,7 @@ class AmptiveHomeViewWidget extends StatelessWidget {
     return SafeArea(
       child: NestedScrollView(
         floatHeaderSlivers: true,
+        physics: const BouncingScrollPhysics(),
         headerSliverBuilder: (_, __) => [
           SliverAppBar(
             floating: true,
@@ -53,14 +54,14 @@ class AmptiveHomeViewWidget extends StatelessWidget {
                     ),
                     Positioned(
                       top: 5, right: 0,
-                      child: AmptiveCirceAvatarWidget(diameter: 8, color: AmptiveColors.notifRed)
+                      child: AmptiveCircleAvatarWidget(diameter: 8, color: AmptiveColors.notifRed)
                     )
                   ],
                 )
               ),
               const Gap(24),
               GestureDetector(
-                onTap: (){},
+                onTap: () => context.pushNamed(AmptiveRoutes.CREATOR_PROFILE_SCREEN),
                 child: const Padding(
                   padding: EdgeInsets.only(right: 15),
                   child: AmptiveCircularContainerWithPictureWidget(

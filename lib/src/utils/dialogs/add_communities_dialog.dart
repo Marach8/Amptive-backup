@@ -37,7 +37,7 @@ Future<Community> showAddCommunitiesDialog(BuildContext context) async {
               style: Theme.of(context)
                   .textTheme
                   .bodySmall
-                  ?.copyWith(color: AmptiveColors.subtitleColor),
+                  ?.copyWith(color: AmptiveColors.hexC2C2C2),
             ),
             const Gap(20),
             ...listOfItems.map((item) => GestureDetector(

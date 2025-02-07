@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 import '../../../utils/constants/colors.dart';
 import 'custom_container_widget.dart';
 
-class AmptiveCirceAvatarWidget extends StatelessWidget {
+class AmptiveCircleAvatarWidget extends StatelessWidget {
   final double diameter;
   final Color? color;
   final Widget? child;
   final int? animationDuration;
   final VoidCallback? onTap;
-  const AmptiveCirceAvatarWidget({
+  const AmptiveCircleAvatarWidget({
     super.key,
     required this.diameter,
     this.color,

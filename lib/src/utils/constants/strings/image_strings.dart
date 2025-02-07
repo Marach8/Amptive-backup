@@ -32,6 +32,9 @@ class AmptiveImageStrings{
   static const USER_FOLLOW = '$_generalSvgImagePath/user-check.svg';
   static const KICK_USER_OUT = '$_generalSvgImagePath/user out.svg';
   static const USER_ICON = '$_generalSvgImagePath/user.svg';
+  static const X_LOGO = '$_generalSvgImagePath/x_logo.svg.svg';
+  static const GROUP_ICON = '$_generalSvgImagePath/Group_fill.svg';
+  static const TOP_CREATOR_BADGE = '$_generalSvgImagePath/RANK BADGES.svg';
 
   static const jpeg2 = '$_generalJpegImagePath/welcomeAvatar2.jpeg';
   static const jpeg1 = '$_generalJpegImagePath/welcomeAvatar1.jpeg';
@@ -44,7 +47,7 @@ class AmptiveImageStrings{
   static const discoverPic1 = '$_generalPngImagePath/Frame 156.png';
   static const OFFICE_LADIES = '$_generalPngImagePath/Frame 22.png';
   static const endlessThread = '$_generalPngImagePath/Frame 71.png';
-  static const threePpl = '$_generalPngImagePath/Group_fill.png';
+  static const GROUP_ICON_BLUE = '$_generalPngImagePath/Group_fill.png';
   static const JOE_POMP_SHOW = '$_generalPngImagePath/Frame 71 (1).png';
   static const CRIMINAL = '$_generalPngImagePath/Frame 71 (2).png';
   static const COMMUNITY_CARD = '$_generalPngImagePath/Community card 1.png';

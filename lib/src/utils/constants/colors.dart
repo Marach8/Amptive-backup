@@ -15,7 +15,9 @@ class AmptiveColors {
 
   static Color get indicatorDark => const Color(0xFF252525);
 
-  static Color get grey1Color => const Color(0xFF2D2D2D);
+  static Color get lightDark => const Color(0xFF535353);
+
+  static Color get hex2D2D2D => const Color(0xFF2D2D2D);
 
   static Color get grey2Color => const Color(0xFF414141);
 
@@ -33,7 +35,7 @@ class AmptiveColors {
 
   static Color get authHintColor2 => const Color(0xFFCDCDCD);
 
-  static Color get activeDotColor => const Color(0xFFD9D9D9);
+  static Color get hexD9D9D9 => const Color(0xFFD9D9D9);
 
   static Color get offWhiteColor => const Color(0xFFE7E7E7);
 
@@ -59,7 +61,7 @@ class AmptiveColors {
 
   static Color get orangeColor2 => const Color(0xFF930E4C);
 
-  static Color get black4 => const Color(0xFF202020);
+  static Color get hex202020 => const Color(0xFF202020);
 
   static Color get orangeGradientColorB => const Color.fromRGBO(249, 32, 24, 1);
 
@@ -67,11 +69,15 @@ class AmptiveColors {
 
   static Color get containerGradientColorB => const Color.fromRGBO(26, 26, 26, 1);
 
-  static Color get subtitleColor => const Color(0XFFC2C2C2);
+  static Color get hexC2C2C2 => const Color(0XFFC2C2C2);
 
   static Color get grey5Color => const Color(0xFFA8A8A8);
   
   static Color get dimWhiteColor1 => const Color(0xFFF2F2F2);
 
   static Color get snackBarBgColor => const Color.fromRGBO(48, 52, 57, 1);
+
+  static Color get hex303030 => const Color(0XFF303030);
+
+  static Color get hexEECEA0 => const Color(0XFFEECEA0);
 }

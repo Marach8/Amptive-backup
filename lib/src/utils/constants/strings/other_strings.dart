@@ -111,6 +111,9 @@ class AmptiveOtherStrings{
   static const SOCIETY = 'Society';
   static const GO_LIVE = 'Go live';
   static const PAID_SHOW = '\$paid show';
+  static const INSTAGRAM = 'Instagram';
+  static const LINKEDIN = 'LinkedIn';
+  static const WEBSITE = 'Website';
   static const PAID_SHOWS = 'Paid Shows';
   static const FREE_EVENTS = 'Free Events';
   static const PAID_EVENTS = 'Paid Events';
@@ -120,9 +123,12 @@ class AmptiveOtherStrings{
   static const showLess = ' Show less';
   static const showMore = 'Show more';
   static const WHISPERS = 'Whispers';
-  static const scheduled = 'Scheduled';
+  static const ATTENDED = 'Attended';
+  static const UPCOMING = 'Upcoming';
+  static const SCHEDULED = 'Scheduled';
   static const SUBSCRIBED = 'Subscribed';
   static const SUBSCRIBE = 'Subscribe';
+  static const SUBSCRIPTION = 'Subscription';
   static const SUBSCRIBERS = 'Subscribers';
   static const FOLLOWERS = 'Followers';
   static const FOLLOWING = 'Following';
@@ -149,6 +155,7 @@ class AmptiveOtherStrings{
   static const TRUE_CRIME = 'True Crime';
   static const MORE_2_DISCOVER = 'More to Discover';
   static const TOP_CREATORS = 'Top Creators';
+  static const CREATOR = 'Creator';
   static const POPULAR_CREATORS = 'Popular Creators';
   static const SPOTLIGHT = 'Spotlight';
   static const VIEW_ALL = 'View all';
@@ -206,6 +213,7 @@ class AmptiveOtherStrings{
   static const IS_GIFTING = 'is gifting';
   static const GIFTED = 'Gifted';
   static const PINNED = 'Pinned';
+  static const TOP_CREATORS_IN_SOCIETY = 'Top Creators in Society';
   static const MODERATION_TOOLS = 'Moderation Tools';
   static const ALLOW_COMMENTS = 'Allow comments';
   static const NEED_2_ENABLE_LISTENERS_MIC = "You will still need to enable the Listeners's mic";
@@ -223,6 +231,9 @@ class AmptiveOtherStrings{
   static const AMOUNT_2_CHARGE_4_EVENT = 'Kindly enter the amount you would want to charge users for your event';
   static const PAID = 'Paid';
   static const PAY = 'Pay';
+  static const ENDED = 'Ended';
+  static const SHOWS = 'Shows';
+  static const EVENTS = 'Events';
   static const PAID_ACCESS = 'Only users who pay will have access';
   static const FREE = 'Free';
   static const SHOW_FREE_ACCESS = 'Everyone will access your show for free';
@@ -230,6 +241,7 @@ class AmptiveOtherStrings{
   static const SUBSCRIBERS_ONLY = 'Subscribers only';
   static const ACCESS_2_ONLY_SUBSCRIBERS = 'Only your subscribers will have access';
   static const EDIT_SUB_PLAN = 'Edit subscription plan';
+  static const EDIT_PROFILE = 'Edit profile';
   static const SETUP_PAYMENT_FEE = 'Set up payment fee';
   static const SHOW_IS_SETUP = 'Your Show is setup and airing!';
   static const BEGIN_JOURNEY = 'Begin your journey by creating your first episode';
