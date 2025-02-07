@@ -12,7 +12,7 @@ class AmptiveRecentSearchesView extends StatelessWidget {
   });
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(context) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 15),
       child: SingleChildScrollView(

@@ -17,7 +17,7 @@ class AmptivePictureWidget extends StatelessWidget {
   });
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(context) {
     return AmptiveCustomContainer(
       clipBehavior: Clip.hardEdge,
       height: diameter,

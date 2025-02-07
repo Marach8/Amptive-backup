@@ -18,7 +18,7 @@ class AmptiveRecentSearchesListTileWidget extends StatelessWidget {
   });
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(context) {
     return Padding(
       padding: const EdgeInsets.only(bottom: 15),
       child: ListTile(

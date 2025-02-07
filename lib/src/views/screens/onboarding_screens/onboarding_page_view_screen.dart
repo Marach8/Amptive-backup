@@ -53,7 +53,7 @@ class _AmptiveOnboardingScreenState extends State<AmptiveOnboardingScreen> {
                   title: AmptiveOtherStrings.goLiveLikeNeverBefore,
                   description:
                       AmptiveOtherStrings.monetizeYouLiveShowsAndEvents,
-                  pictureBgColor: AmptiveColors.grey1Color,
+                  pictureBgColor: AmptiveColors.hex2D2D2D,
                 ),
                 AmptiveCustomOnboardingPageViewSlideWidget(
                   title: AmptiveOtherStrings.experienceItUniquely,

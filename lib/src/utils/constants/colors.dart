@@ -17,7 +17,7 @@ class AmptiveColors {
 
   static Color get lightDark => const Color(0xFF535353);
 
-  static Color get grey1Color => const Color(0xFF2D2D2D);
+  static Color get hex2D2D2D => const Color(0xFF2D2D2D);
 
   static Color get grey2Color => const Color(0xFF414141);
 
@@ -61,7 +61,7 @@ class AmptiveColors {
 
   static Color get orangeColor2 => const Color(0xFF930E4C);
 
-  static Color get black4 => const Color(0xFF202020);
+  static Color get hex202020 => const Color(0xFF202020);
 
   static Color get orangeGradientColorB => const Color.fromRGBO(249, 32, 24, 1);
 

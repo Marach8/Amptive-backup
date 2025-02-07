@@ -16,7 +16,7 @@ import '../../constants/strings/other_strings.dart';
 
 Future<void> showHostModerationToolsDialog(BuildContext context) async {
   return await showModalBottomSheet(
-    backgroundColor: AmptiveColors.black4,
+    backgroundColor: AmptiveColors.hex202020,
     context: context,
     isScrollControlled: true,
     useSafeArea: true,
