@@ -69,15 +69,17 @@ Future<void> showHostModerationToolsDialog(BuildContext context) async {
                       buildWhen: (prev, curr) => prev.first != curr.first,
                       listener: (_, state){
                         if(state[1]){
-                          showNormalNotification(
+                          showAppNotification(
+                          context: context,
                             text: AmptiveOtherStrings.ALLOWED_COMMENTS,
-                            child:const Icon(Iconsax.message,)
+                            icon:const Icon(Iconsax.message,)
                           );
                         }
                         else{
-                          showNormalNotification(
+                          showAppNotification(
+                          context: context,
                             text: AmptiveOtherStrings.DISABLED_COMMENTS,
-                            child:const Icon(Iconsax.message)
+                            icon:const Icon(Iconsax.message)
                           );
                         }
                       },
@@ -101,15 +103,17 @@ Future<void> showHostModerationToolsDialog(BuildContext context) async {
                       buildWhen: (prev, curr) => prev[1] != curr[1],
                       listener: (_, state){
                         if(state[1]){
-                          showNormalNotification(
+                          showAppNotification(
+                          context: context,
                             text: AmptiveOtherStrings.ALLOWED_AUD_MIC,
-                            child:const Icon(Icons.mic)
+                            icon:const Icon(Icons.mic)
                           );
                         }
                         else{
-                          showNormalNotification(
+                          showAppNotification(
+                          context: context,
                             text: AmptiveOtherStrings.DISABLED_AUD_MIC,
-                            child:const Icon(Icons.mic)
+                            icon:const Icon(Icons.mic)
                           );
                         }
                       },
@@ -132,15 +136,17 @@ Future<void> showHostModerationToolsDialog(BuildContext context) async {
                       buildWhen: (prev, curr) => prev.last != curr.last,
                       listener: (_, state){
                         if(state.last){
-                          showNormalNotification(
+                          showAppNotification(
+                            context: context,
                             text: AmptiveOtherStrings.ALLOWED_HAND_RAISING,
-                            child:const Icon(Icons.front_hand_outlined)
+                            icon:const Icon(Icons.front_hand_outlined)
                           );
                         }
                         else{
-                          showNormalNotification(
+                          showAppNotification(
+                            context: context,
                             text: AmptiveOtherStrings.DISABLED_HAND_RAISING,
-                            child:const Icon(Icons.front_hand_outlined)
+                            icon:const Icon(Icons.front_hand_outlined)
                           );
                         }
                       },
