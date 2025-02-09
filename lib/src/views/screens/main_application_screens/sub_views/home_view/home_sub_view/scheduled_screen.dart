@@ -30,7 +30,7 @@ class AmptiveScheduledEventOrShowViewWidget extends StatelessWidget {
               leading: Padding(
                 padding: const EdgeInsets.only(left: 20),
                 child: AmptiveAppBarLeadingWidget(
-                  leadingText: AmptiveOtherStrings.SCHEDULED,
+                  leadingText: AmptiveStrings.SCHEDULED,
                   leadingStyle: Theme.of(context).textTheme.bodyMedium?.copyWith(
                     fontSize: AmptiveFontSizes.size23
                   ),

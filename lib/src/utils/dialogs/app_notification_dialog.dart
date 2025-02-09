@@ -21,7 +21,7 @@ Future<void> showSuccessOrFailureNotification({
 
   scaffoldMessengerKey.currentState?.showSnackBar(
     SnackBar(
-      backgroundColor: bgColor ?? (isSuccessful ? AmptiveColors.green1 : AmptiveColors.notifRed),
+      backgroundColor: bgColor ?? (isSuccessful ? AmptiveColors.green1 : AmptiveColors.hexECO404),
       elevation: 0,
       duration: const Duration(seconds: 3),
       behavior: SnackBarBehavior.floating,
@@ -44,7 +44,7 @@ Future<void> showSuccessOrFailureNotification({
               style: TextStyle(
                 color: AmptiveColors.whiteColor,
                 fontSize: AmptiveFontSizes.size14,
-                fontWeight: AmptiveFontWeights.medium,
+                fontWeight: AmptiveFontWeights.w500,
               ),
             ),
           ),
@@ -101,7 +101,7 @@ Future<void> showNormalNotification({
               style: TextStyle(
                 color: AmptiveColors.whiteColor,
                 fontSize: AmptiveFontSizes.size14,
-                fontWeight: AmptiveFontWeights.medium,
+                fontWeight: AmptiveFontWeights.w500,
               ),
             ),
           ),

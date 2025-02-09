@@ -24,7 +24,7 @@ class AmptiveTrendingHashTagFullScreen extends StatelessWidget {
             slivers: [
               SliverAppBar(
                 title: Text(
-                  AmptiveOtherStrings.HASH + AmptiveOtherStrings.SOCIETY,
+                  AmptiveStrings.HASH + AmptiveStrings.SOCIETY,
                   style: Theme.of(context).textTheme.bodyMedium,
                 ),
                 centerTitle: true,
@@ -40,7 +40,7 @@ class AmptiveTrendingHashTagFullScreen extends StatelessWidget {
                       boxShape: BoxShape.circle,
                       color: AmptiveColors.whiteColor,
                       child: Text(
-                        AmptiveOtherStrings.HASH,
+                        AmptiveStrings.HASH,
                         style: Theme.of(context).textTheme.displayMedium?.copyWith(
                           color: AmptiveColors.brandBlack
                         )
@@ -51,7 +51,7 @@ class AmptiveTrendingHashTagFullScreen extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          AmptiveOtherStrings.HASH + AmptiveOtherStrings.SOCIETY,
+                          AmptiveStrings.HASH + AmptiveStrings.SOCIETY,
                           style: Theme.of(context).textTheme.bodySmall?.copyWith(
                             fontSize: AmptiveFontSizes.size15
                           ),

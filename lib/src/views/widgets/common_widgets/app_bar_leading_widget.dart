@@ -21,7 +21,7 @@ class AmptiveAppBarLeadingWidget extends StatelessWidget {
         children: [
           Icon(Icons.arrow_back_ios, size: 20.r,),
           Text(
-            leadingText ?? AmptiveOtherStrings.back,
+            leadingText ?? AmptiveStrings.back,
             style: leadingStyle ?? Theme.of(context).textTheme.titleMedium,
           )
         ],

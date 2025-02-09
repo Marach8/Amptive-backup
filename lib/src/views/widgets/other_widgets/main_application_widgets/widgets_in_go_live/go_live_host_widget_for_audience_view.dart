@@ -103,7 +103,7 @@ class AmptiveLiveHostAndCoHostWidgetForAudienceView extends StatelessWidget {
                                 AmptiveColors.orangeGradientColorB,
                                 AmptiveColors.orangeGradientColorB
                               ]),
-                          child: Text(AmptiveOtherStrings.HOST.toUpperCase(),
+                          child: Text(AmptiveStrings.HOST.toUpperCase(),
                               style: Theme.of(context)
                                   .textTheme
                                   .bodySmall

@@ -57,7 +57,7 @@ Future<void> showWhispersDialog(BuildContext context) async {
                   const Icon(Iconsax.message),
                   const Gap(5),
                   Text(
-                    AmptiveOtherStrings.WHISPERS,
+                    AmptiveStrings.WHISPERS,
                     style: Theme.of(context).textTheme.bodyLarge,
                   ),
                 ],
@@ -66,7 +66,7 @@ Future<void> showWhispersDialog(BuildContext context) async {
             const Gap(20),
             Text(
               maxLines: 3,
-              AmptiveOtherStrings.WHISPERS_DESC,
+              AmptiveStrings.WHISPERS_DESC,
               style: Theme.of(context)
                   .textTheme
                   .titleMedium
@@ -75,7 +75,7 @@ Future<void> showWhispersDialog(BuildContext context) async {
             const Gap(15),
             Text(
               maxLines: 3,
-              AmptiveOtherStrings.USERS_WOULD_WANT_2_JOIN,
+              AmptiveStrings.USERS_WOULD_WANT_2_JOIN,
               style: Theme.of(context)
                   .textTheme
                   .titleMedium
@@ -93,7 +93,7 @@ Future<void> showWhispersDialog(BuildContext context) async {
                       doNotAllowNotifier.value = false;
                       allowNotifier.value = !value;
                       service.whisperController.text =
-                          AmptiveOtherStrings.TURNED_ON;
+                          AmptiveStrings.TURNED_ON;
                     },
                     padding: const EdgeInsets.fromLTRB(15, 13, 15, 13),
                     radius: 15,
@@ -101,7 +101,7 @@ Future<void> showWhispersDialog(BuildContext context) async {
                     border: Border.all(
                         width: 2,
                         color: value
-                            ? AmptiveColors.brandBlue
+                            ? AmptiveColors.hex307FE2
                             : AmptiveColors.transparentColor),
                     child: Row(
                       children: [
@@ -111,11 +111,11 @@ Future<void> showWhispersDialog(BuildContext context) async {
                             radius: 20,
                             padding: const EdgeInsets.all(3),
                             color: value
-                                ? AmptiveColors.brandBlue
+                                ? AmptiveColors.hex307FE2
                                 : AmptiveColors.transparentColor,
                             border: Border.all(
                                 color: value
-                                    ? AmptiveColors.brandBlue
+                                    ? AmptiveColors.hex307FE2
                                     : AmptiveColors.whiteColor,
                                 strokeAlign: 5.0),
                             child: const SizedBox.shrink()),
@@ -125,12 +125,12 @@ Future<void> showWhispersDialog(BuildContext context) async {
                             mainAxisSize: MainAxisSize.min,
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text(AmptiveOtherStrings.TURN_ON,
+                              Text(AmptiveStrings.TURN_ON,
                                   style:
                                       Theme.of(context).textTheme.bodyMedium),
                               Text(
                                 maxLines: 5,
-                                AmptiveOtherStrings.WHISPERS_ENABLED,
+                                AmptiveStrings.WHISPERS_ENABLED,
                                 style: Theme.of(context)
                                     .textTheme
                                     .titleMedium
@@ -155,7 +155,7 @@ Future<void> showWhispersDialog(BuildContext context) async {
                       allowNotifier.value = false;
                       doNotAllowNotifier.value = !value;
                       service.whisperController.text =
-                          AmptiveOtherStrings.TURNED_OFF;
+                          AmptiveStrings.TURNED_OFF;
                     },
                     padding: const EdgeInsets.fromLTRB(15, 13, 15, 13),
                     radius: 15,
@@ -164,7 +164,7 @@ Future<void> showWhispersDialog(BuildContext context) async {
                     border: Border.all(
                         width: 2,
                         color: value
-                            ? AmptiveColors.brandBlue
+                            ? AmptiveColors.hex307FE2
                             : AmptiveColors.transparentColor),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -178,11 +178,11 @@ Future<void> showWhispersDialog(BuildContext context) async {
                                 radius: 20,
                                 padding: const EdgeInsets.all(3),
                                 color: value
-                                    ? AmptiveColors.brandBlue
+                                    ? AmptiveColors.hex307FE2
                                     : AmptiveColors.transparentColor,
                                 border: Border.all(
                                     color: value
-                                        ? AmptiveColors.brandBlue
+                                        ? AmptiveColors.hex307FE2
                                         : AmptiveColors.whiteColor,
                                     strokeAlign: 5.0),
                                 child: const SizedBox.shrink()),
@@ -192,13 +192,13 @@ Future<void> showWhispersDialog(BuildContext context) async {
                                 mainAxisSize: MainAxisSize.min,
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Text(AmptiveOtherStrings.TURN_OFF,
+                                  Text(AmptiveStrings.TURN_OFF,
                                       style: Theme.of(context)
                                           .textTheme
                                           .bodyMedium),
                                   Text(
                                     maxLines: 5,
-                                    AmptiveOtherStrings.WHISPERS_DISABLED,
+                                    AmptiveStrings.WHISPERS_DISABLED,
                                     style: Theme.of(context)
                                         .textTheme
                                         .titleMedium
@@ -226,7 +226,7 @@ Future<void> showWhispersDialog(BuildContext context) async {
                             Navigator.pop(context);
                           }
                         : null,
-                    buttonTitle: AmptiveOtherStrings.CONTINUE,
+                    buttonTitle: AmptiveStrings.CONTINUE,
                     bgColor: AmptiveColors.whiteColor,
                     fgColor: AmptiveColors.black,
                   );

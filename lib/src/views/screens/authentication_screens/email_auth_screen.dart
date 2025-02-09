@@ -56,7 +56,7 @@ class _AmptiveEmailAuthScreenState extends State<AmptiveEmailAuthScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(AmptiveOtherStrings.whatIsYourEmail,
+              Text(AmptiveStrings.whatIsYourEmail,
                   style: Theme.of(context).textTheme.headlineMedium),
               Gap(10.h),
               Form(
@@ -66,7 +66,7 @@ class _AmptiveEmailAuthScreenState extends State<AmptiveEmailAuthScreen> {
                   return AmptiveTextFormFieldWidget(
                     controller: _controller,
                     cursorColor: service.email.error == null
-                        ? AmptiveColors.brandBlue
+                        ? AmptiveColors.hex307FE2
                         : AmptiveColors.textRedColor,
                     keyboardType: TextInputType.emailAddress,
                     onChanged: (currentText) {
@@ -78,17 +78,17 @@ class _AmptiveEmailAuthScreenState extends State<AmptiveEmailAuthScreen> {
                     decoration: InputDecoration(
                       contentPadding: EdgeInsets.symmetric(
                           vertical: 12.h, horizontal: 16.w),
-                      hintText: AmptiveOtherStrings.enterYourEmail,
+                      hintText: AmptiveStrings.enterYourEmail,
                       hintStyle: TextStyle(
                         fontSize: AmptiveFontSizes.size16,
                         color: AmptiveColors.authHintColor,
-                        fontWeight: AmptiveFontWeights.regular,
+                        fontWeight: AmptiveFontWeights.w400,
                       ),
                       errorText: service.email.error,
                       errorStyle: TextStyle(
                         color: AmptiveColors.textRedColor,
                         fontSize: AmptiveFontSizes.size12,
-                        fontWeight: AmptiveFontWeights.regular,
+                        fontWeight: AmptiveFontWeights.w400,
                       ),
                       filled: true,
                       fillColor: const Color(0xFF9E9E9E).withOpacity(0.3),
@@ -96,7 +96,7 @@ class _AmptiveEmailAuthScreenState extends State<AmptiveEmailAuthScreen> {
                         borderSide: BorderSide(
                           width: 2.w,
                           color: service.email.error == null
-                              ? AmptiveColors.brandBlue
+                              ? AmptiveColors.hex307FE2
                               : AmptiveColors.textRedColor,
                         ),
                         borderRadius: BorderRadius.circular(14.r),
@@ -121,7 +121,7 @@ class _AmptiveEmailAuthScreenState extends State<AmptiveEmailAuthScreen> {
                   margin: EdgeInsets.symmetric(vertical: 11.h),
                   child: Text(
                     service.customEmailStatus.value ??
-                        AmptiveOtherStrings.empty,
+                        AmptiveStrings.empty,
                     style: Theme.of(context).textTheme.titleSmall,
                   ),
                 );
@@ -133,7 +133,7 @@ class _AmptiveEmailAuthScreenState extends State<AmptiveEmailAuthScreen> {
           listener: (context, state) {
             if (state is ValidEmailAuthState && context.mounted) {
               context.pushNamed(AmptiveRoutes.otp,
-                  extra: AmptiveOtherStrings.email);
+                  extra: AmptiveStrings.email);
             }
           },
           child: Padding(
@@ -146,7 +146,7 @@ class _AmptiveEmailAuthScreenState extends State<AmptiveEmailAuthScreen> {
                     ? const AmptiveLoadingButtonWidget()
                     : AmptiveElevatedButtonWidget(
                         height: 50.w,
-                        buttonTitle: AmptiveOtherStrings.verifyEmail,
+                        buttonTitle: AmptiveStrings.verifyEmail,
                         onPressed: enableVerificationButton
                             ? () {
                                 context

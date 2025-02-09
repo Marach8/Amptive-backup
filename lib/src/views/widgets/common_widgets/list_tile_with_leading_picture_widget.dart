@@ -40,14 +40,14 @@ class AmptiveListTileWithLeadingPictureWidget extends StatelessWidget {
               Text(
                 title,
                 style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                  fontWeight: AmptiveFontWeights.medium,
+                  fontWeight: AmptiveFontWeights.w500,
                 ),
               ),
               Text(
                 subtitle,
                 style: Theme.of(context).textTheme.titleSmall?.copyWith(
                   color: AmptiveColors.hexC2C2C2,
-                  fontWeight: AmptiveFontWeights.medium,
+                  fontWeight: AmptiveFontWeights.w500,
                   fontSize: AmptiveFontSizes.size13,
                   height: 1.5
                 ),

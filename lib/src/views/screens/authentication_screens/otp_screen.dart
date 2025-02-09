@@ -128,15 +128,15 @@ class _OTPScreenState extends State<OTPScreen> {
                           text: TextSpan(
                             children: [
                               TextSpan(
-                                text: AmptiveOtherStrings.didNotGetCode,
+                                text: AmptiveStrings.didNotGetCode,
                                 style: Theme.of(context).textTheme.titleSmall
                               ),
                               TextSpan(
-                                text: AmptiveOtherStrings.sendAgain,
+                                text: AmptiveStrings.sendAgain,
                                 recognizer: _tapGestureRecognizer,
                                 style: Theme.of(context).textTheme.titleSmall?.copyWith(
                                   decoration: TextDecoration.underline,
-                                  fontWeight: AmptiveFontWeights.regular,
+                                  fontWeight: AmptiveFontWeights.w400,
                                   decorationColor: AmptiveColors.whiteColor,
                                 ),
                               ),
@@ -177,7 +177,7 @@ class _OTPScreenState extends State<OTPScreen> {
                   ? const AmptiveLoadingButtonWidget()
                   : AmptiveElevatedButtonWidget(
                     height: 50.w,
-                    buttonTitle: AmptiveOtherStrings.NEXT,
+                    buttonTitle: AmptiveStrings.NEXT,
                     onPressed: state is ValidOTPAuthState
                       ? () => context.read<AmptiveOTPAuthBloc>().add(VerifyOTPAuthEvent()) : null,
                   );
@@ -224,24 +224,24 @@ class OTPTextFormField extends StatelessWidget {
         keyboardType: TextInputType.number,
         maxLength: 1,
         textAlignVertical: TextAlignVertical.center,
-        cursorColor: AmptiveColors.brandBlue,
+        cursorColor: AmptiveColors.hex307FE2,
         decoration: InputDecoration(
           contentPadding:
               EdgeInsets.symmetric(horizontal: 16.w, vertical: 12.w),
           floatingLabelBehavior: FloatingLabelBehavior.never,
-          counterText: AmptiveOtherStrings.empty,
+          counterText: AmptiveStrings.empty,
           label: const Center(
-            child: Text(AmptiveOtherStrings.hyphen),
+            child: Text(AmptiveStrings.hyphen),
           ),
           labelStyle:Theme.of(context).textTheme.headlineMedium?.copyWith(
-          fontWeight: AmptiveFontWeights.regular,
+          fontWeight: AmptiveFontWeights.w400,
         ),
           filled: true,
           fillColor: AmptiveColors.fillGreyColor.withOpacity(0.3),
           focusedBorder: OutlineInputBorder(
             borderSide: BorderSide(
               width: 2.w,
-              color: AmptiveColors.brandBlue,
+              color: AmptiveColors.hex307FE2,
             ),
             borderRadius: BorderRadius.circular(14.r),
           ),
@@ -254,7 +254,7 @@ class OTPTextFormField extends StatelessWidget {
           ),
         ),
         style:Theme.of(context).textTheme.headlineMedium?.copyWith(
-          fontWeight: AmptiveFontWeights.regular,
+          fontWeight: AmptiveFontWeights.w400,
         ),
         textAlign: TextAlign.center,
       ),

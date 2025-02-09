@@ -27,7 +27,7 @@ class AmptiveCreateShowOrEventSelectionWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isShow = title == AmptiveOtherStrings.CREATE_SHOW;
+    final isShow = title == AmptiveStrings.CREATE_SHOW;
     return AmptiveRebuilderWidget(
       notifier: isShow ? showSelected : eventSelected,
       builder: (_, value, __) {
@@ -52,7 +52,7 @@ class AmptiveCreateShowOrEventSelectionWidget extends StatelessWidget {
                 height: 120.h,
                 width: double.infinity,
                 radius: 5,
-                color: value ? AmptiveColors.brandBlue : AmptiveColors.hex2D2D2D,
+                color: value ? AmptiveColors.hex307FE2 : AmptiveColors.hex2D2D2D,
                 child: AnimatedScale(
                   scale: value ? 1.1 : 0.5,
                   duration: const Duration(milliseconds: 200),

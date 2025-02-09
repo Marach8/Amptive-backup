@@ -68,7 +68,7 @@ class AmptiveShowOrEventDataModelWidget extends StatelessWidget {
                       "Don't Forget Who You Are ft. Jacob Scipio",
                       style: Theme.of(context).textTheme.displayMedium?.copyWith(
                         fontSize: AmptiveFontSizes.size24,
-                        fontWeight: AmptiveFontWeights.semiBold,
+                        fontWeight: AmptiveFontWeights.w600,
                         height: 1.2.sp,
                       ),
                     ),

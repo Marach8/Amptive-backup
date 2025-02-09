@@ -115,7 +115,7 @@ Future<void> selectDateModal(
                     service.eventDateTime = selectedDateTime;
                     Navigator.pop(context);
                   },
-                  buttonTitle: AmptiveOtherStrings.CONTINUE,
+                  buttonTitle: AmptiveStrings.CONTINUE,
                   bgColor: AmptiveColors.whiteColor,
                   fgColor: AmptiveColors.black,
                 ),
@@ -133,7 +133,7 @@ Future<void> selectDateModal(
                     service.eventDateTime = null;
                     Navigator.pop(context);
                   },
-                  buttonTitle: AmptiveOtherStrings.REMOVE,
+                  buttonTitle: AmptiveStrings.REMOVE,
                   bgColor: AmptiveColors.transparentColor,
                   fgColor: AmptiveColors.whiteColor,
                 ),

@@ -90,7 +90,7 @@ class AmptiveLiveHostAndCoHostWidget extends StatelessWidget {
             SizedBox(
               width: 80.w,
               child: Text(
-                hostOrCohost?.obj.name ?? AmptiveOtherStrings.ADD_CO_HOST.toLowerCase(),
+                hostOrCohost?.obj.name ?? AmptiveStrings.ADD_CO_HOST.toLowerCase(),
                 textAlign: TextAlign.center,
                 style: Theme.of(context).textTheme.titleSmall,
               ),
@@ -108,7 +108,7 @@ class AmptiveLiveHostAndCoHostWidget extends StatelessWidget {
                 ]
               ),
               child: Text(
-                AmptiveOtherStrings.HOST.toUpperCase(),
+                AmptiveStrings.HOST.toUpperCase(),
                 style: Theme.of(context).textTheme.bodySmall?.copyWith(
                   fontSize: AmptiveFontSizes.size10,
                 )

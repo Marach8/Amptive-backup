@@ -47,11 +47,11 @@ class AmptiveColors {
 
   static Color get whiteColor => Colors.white;
 
-  static Color get brandBlue => const Color(0xFF307FE2);
+  static Color get hex307FE2 => const Color(0xFF307FE2);
 
   static Color get textRedColor => const Color(0xFFD93535);
 
-  static Color get notifRed => const Color(0xFFEC0404);
+  static Color get hexECO404 => const Color(0xFFEC0404);
 
   static Color get notifBg => const Color(0xFF303439);
 

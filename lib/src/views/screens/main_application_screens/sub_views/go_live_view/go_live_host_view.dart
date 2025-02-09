@@ -105,7 +105,7 @@ class _AmptiveGoLiveHostViewState extends State<AmptiveGoLiveHostView> {
                       const AmptiveImageLoaderWidget(imagePath: AmptiveImageStrings.GROUP_ICON),
                       const Gap(5),
                       Text(
-                        AmptiveOtherStrings.SOCIETY,
+                        AmptiveStrings.SOCIETY,
                         style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                           overflow: TextOverflow.fade
                         ),
@@ -227,7 +227,7 @@ class _AmptiveGoLiveHostViewState extends State<AmptiveGoLiveHostView> {
 
                     BlocBuilder<AmptiveGoLiveNotificationBloc, AmptiveGoLiveNotificationModel>(
                       builder: (_, state) {
-                        if(state.notificationType == AmptiveOtherStrings.PINNED){
+                        if(state.notificationType == AmptiveStrings.PINNED){
                           return Positioned(
                             top: 260,
                             child: SizedBox(
@@ -360,7 +360,7 @@ class _GoLiveHostViewBottomSheetState extends State<GoLiveHostViewBottomSheet> {
                 cursorColor: AmptiveColors.whiteColor.withOpacity(0.6),
                 constraints: const BoxConstraints(maxHeight: 35),
                 contentPadding: const EdgeInsets.fromLTRB(16, 0, 16, 0),
-                hintText: AmptiveOtherStrings.COMMENT,
+                hintText: AmptiveStrings.COMMENT,
               ),
             )
           ),
@@ -418,7 +418,7 @@ class _GoLiveHostViewBottomSheetState extends State<GoLiveHostViewBottomSheet> {
                         showSuccessOrFailureNotification(
                           response: GenericResponseModel(
                             isSuccessful: true,
-                            responseMessage: AmptiveOtherStrings.COHOST_INVITE_SENT
+                            responseMessage: AmptiveStrings.COHOST_INVITE_SENT
                           ),
                           bgColor: AmptiveColors.notifBg,
                           child: const Icon(Icons.check_circle)

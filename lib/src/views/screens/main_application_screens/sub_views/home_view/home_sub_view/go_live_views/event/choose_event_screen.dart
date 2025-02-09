@@ -104,7 +104,7 @@ class _AmptiveChooseOrCreateEventScreenState extends State<AmptiveChooseOrCreate
                   centerTitle: true,
                   leadingWidth: 40,
                   title: Text(
-                    AmptiveOtherStrings.CHOOSE_EVENT,
+                    AmptiveStrings.CHOOSE_EVENT,
                     style: Theme.of(context).textTheme.bodyMedium,
                   ),
                 ),
@@ -113,7 +113,7 @@ class _AmptiveChooseOrCreateEventScreenState extends State<AmptiveChooseOrCreate
                     padding: const EdgeInsets.fromLTRB(15, 10, 15, 20),
                     child: Text(
                       maxLines: 3,
-                      AmptiveOtherStrings.CHOOSE_OR_CREATE_EVENT,
+                      AmptiveStrings.CHOOSE_OR_CREATE_EVENT,
                       style: Theme.of(context).textTheme.bodySmall?.copyWith(
                         color: AmptiveColors.hexC2C2C2
                       ),
@@ -148,7 +148,7 @@ class _AmptiveChooseOrCreateEventScreenState extends State<AmptiveChooseOrCreate
                                   ),
                                   const Gap(5),
                                   Text(
-                                    AmptiveOtherStrings.CREATE_NEW_EVENT,
+                                    AmptiveStrings.CREATE_NEW_EVENT,
                                     style: Theme.of(context).textTheme.bodyMedium,
                                   ),
                                 ],
@@ -206,7 +206,7 @@ class _AmptiveChooseOrCreateEventScreenState extends State<AmptiveChooseOrCreate
               //await showEventCapacitySelectionDialog(context: context);
               context.pushNamed(AmptiveRoutes.EVENT_SCHEDULED_SCREEN);
             } : null,
-            buttonTitle: AmptiveOtherStrings.NEXT,
+            buttonTitle: AmptiveStrings.NEXT,
             bgColor: AmptiveColors.whiteColor,
             fgColor: AmptiveColors.black,
           ),

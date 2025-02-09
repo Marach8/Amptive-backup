@@ -25,7 +25,7 @@ class AmptiveSearchFilterWidget extends StatelessWidget {
             return TextSpan(
               text: stringOfText,
               style: shouldHighlightString ? style?.copyWith(
-                color: AmptiveColors.brandBlue
+                color: AmptiveColors.hex307FE2
               ) : style                              
             );
           }

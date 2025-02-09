@@ -45,7 +45,7 @@ Future<bool?> showConfirmationDialog({
             yesString,
             style: Theme.of(context).textTheme.titleMedium?.copyWith(
               fontSize: AmptiveFontSizes.size17,
-              color: AmptiveColors.brandBlue
+              color: AmptiveColors.hex307FE2
             ),
           ),
         ),
@@ -55,7 +55,7 @@ Future<bool?> showConfirmationDialog({
             noString,
             style: Theme.of(context).textTheme.titleMedium?.copyWith(
               fontSize: AmptiveFontSizes.size17,
-              color: AmptiveColors.brandBlue
+              color: AmptiveColors.hex307FE2
             ),
           ),
         ),
@@ -104,7 +104,7 @@ Future<bool?> showKickOutConfirmationDialog({
               Positioned(
                 top: -1, right: -5, 
                 child: AmptiveCustomContainer(
-                  color: AmptiveColors.notifRed,
+                  color: AmptiveColors.hexECO404,
                   height: 17, width: 17,
                   boxShape: BoxShape.circle,
                   child: const FittedBox(
@@ -136,14 +136,14 @@ Future<bool?> showKickOutConfirmationDialog({
               bgColor: AmptiveColors.whiteColor,
               fgColor: AmptiveColors.black,
               onPressed: () => context.pop(true),
-              buttonTitle: AmptiveOtherStrings.KICK_OUT_LISTENER,
+              buttonTitle: AmptiveStrings.KICK_OUT_LISTENER,
             ),
           ),
           const Gap(20),
           GestureDetector(
             onTap: () => context.pop(false),
             child: Text(
-              AmptiveOtherStrings.CANCEL,
+              AmptiveStrings.CANCEL,
               style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                 fontSize: AmptiveFontSizes.size15,
 

@@ -24,7 +24,7 @@ class AmptiveDiscoverSocietyAllTabViewWidget extends StatelessWidget {
     return Column(
       children: [
         AmptiveRowOfTitleWithTrendingViewAll(
-          title: AmptiveOtherStrings.TRENDING,
+          title: AmptiveStrings.TRENDING,
           viewAllOnpressed: (){context.pushNamed(AmptiveRoutes.TRENDING_SOCIETY_SCREEN);},
         ),
         const Gap(10),
@@ -44,7 +44,7 @@ class AmptiveDiscoverSocietyAllTabViewWidget extends StatelessWidget {
     
         const Gap(35),
         AmptiveRowOfTitleWithTrendingViewAll(
-          title: AmptiveOtherStrings.PAID_SHOWS,
+          title: AmptiveStrings.PAID_SHOWS,
           viewAllOnpressed: (){},
         ),
         const Gap(10),
@@ -64,7 +64,7 @@ class AmptiveDiscoverSocietyAllTabViewWidget extends StatelessWidget {
     
         const Gap(35),
         AmptiveRowOfTitleWithTrendingViewAll(
-          title: AmptiveOtherStrings.FREE_SHOWS,
+          title: AmptiveStrings.FREE_SHOWS,
           viewAllOnpressed: (){},
         ),
         const Gap(10),
@@ -87,7 +87,7 @@ class AmptiveDiscoverSocietyAllTabViewWidget extends StatelessWidget {
           padding: const EdgeInsets.only(left: 15),
           alignment: Alignment.centerLeft,
           child: Text(
-            AmptiveOtherStrings.POPULAR_CREATORS,
+            AmptiveStrings.POPULAR_CREATORS,
             style: Theme.of(context).textTheme.bodyLarge 
           ),
         ),
@@ -108,7 +108,7 @@ class AmptiveDiscoverSocietyAllTabViewWidget extends StatelessWidget {
     
         const Gap(35),
         AmptiveRowOfTitleWithTrendingViewAll(
-          title: AmptiveOtherStrings.PAID_EVENTS,
+          title: AmptiveStrings.PAID_EVENTS,
           viewAllOnpressed: (){},
         ),
         const Gap(10),
@@ -128,7 +128,7 @@ class AmptiveDiscoverSocietyAllTabViewWidget extends StatelessWidget {
         const Gap(35),
     
         AmptiveRowOfTitleWithTrendingViewAll(
-          title: AmptiveOtherStrings.FREE_EVENTS,
+          title: AmptiveStrings.FREE_EVENTS,
           viewAllOnpressed: (){},
         ),
         const Gap(10),

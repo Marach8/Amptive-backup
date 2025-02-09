@@ -37,12 +37,12 @@ void showAddedOrRemovedSnackbar({
                 child: Row(
                   children: [
                     Text(
-                      AmptiveOtherStrings.view,
+                      AmptiveStrings.VIEW,
                       style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                        color: AmptiveColors.brandBlue
+                        color: AmptiveColors.hex307FE2
                       ),
                     ),
-                    Icon(Icons.keyboard_arrow_right_sharp, color: AmptiveColors.brandBlue)
+                    Icon(Icons.keyboard_arrow_right_sharp, color: AmptiveColors.hex307FE2)
                   ],
                 ),
               )

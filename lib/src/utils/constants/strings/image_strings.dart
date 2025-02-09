@@ -35,6 +35,7 @@ class AmptiveImageStrings{
   static const X_LOGO = '$_generalSvgImagePath/x_logo.svg.svg';
   static const GROUP_ICON = '$_generalSvgImagePath/Group_fill.svg';
   static const TOP_CREATOR_BADGE = '$_generalSvgImagePath/RANK BADGES.svg';
+  static const SUBSCRIBER_BADGE = '$_generalSvgImagePath/Subscribers badge.svg';
 
   static const jpeg2 = '$_generalJpegImagePath/welcomeAvatar2.jpeg';
   static const jpeg1 = '$_generalJpegImagePath/welcomeAvatar1.jpeg';

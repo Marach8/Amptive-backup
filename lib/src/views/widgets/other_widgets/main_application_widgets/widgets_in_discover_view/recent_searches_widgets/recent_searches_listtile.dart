@@ -35,7 +35,7 @@ class AmptiveRecentSearchesListTileWidget extends StatelessWidget {
         title: Text(
           title,
           style: Theme.of(context).textTheme.titleMedium?.copyWith(
-            fontWeight: AmptiveFontWeights.medium,
+            fontWeight: AmptiveFontWeights.w500,
             height: 1
           ),
         ),
@@ -45,7 +45,7 @@ class AmptiveRecentSearchesListTileWidget extends StatelessWidget {
               'Show',
               style: Theme.of(context).textTheme.titleSmall?.copyWith(
                 color: AmptiveColors.hexC2C2C2,
-                fontWeight: AmptiveFontWeights.medium,
+                fontWeight: AmptiveFontWeights.w500,
                 fontSize: AmptiveFontSizes.size13,
                 height: 1.5
               ),
@@ -57,7 +57,7 @@ class AmptiveRecentSearchesListTileWidget extends StatelessWidget {
               'MONDAY AT 20:00',
               style: Theme.of(context).textTheme.titleSmall?.copyWith(
                 color: AmptiveColors.hexC2C2C2,
-                fontWeight: AmptiveFontWeights.medium,
+                fontWeight: AmptiveFontWeights.w500,
                 fontSize: AmptiveFontSizes.size13,
                 height: 1.5
               ),

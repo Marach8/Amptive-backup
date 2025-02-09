@@ -30,7 +30,7 @@ class AmptiveSubscribedEventOrShowViewWidget extends StatelessWidget {
               leading: Padding(
                 padding: const EdgeInsets.only(left: 20),
                 child: AmptiveAppBarLeadingWidget(
-                  leadingText: AmptiveOtherStrings.SUBSCRIBED,
+                  leadingText: AmptiveStrings.SUBSCRIBED,
                   leadingStyle: Theme.of(context).textTheme.bodyMedium?.copyWith(
                     fontSize: AmptiveFontSizes.size23
                   ),

@@ -136,7 +136,7 @@ Future<void> showHostEndShowDialog({
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       if(initialState)Text(
-                        AmptiveOtherStrings.END_LIVE_SHOW,
+                        AmptiveStrings.END_LIVE_SHOW,
                         maxLines: 2, textAlign: TextAlign.center,
                         style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                           fontSize: AmptiveFontSizes.size23
@@ -204,16 +204,16 @@ Future<void> showHostEndShowDialog({
                           onPressed: () => context.read<AmptiveEndShowBloc>().add(
                             Proceed2EndShowEvent()
                           ),
-                          bgColor: AmptiveColors.notifRed,
+                          bgColor: AmptiveColors.hexECO404,
                           fgColor: AmptiveColors.whiteColor,
-                          buttonTitle: AmptiveOtherStrings.END_NOW,
+                          buttonTitle: AmptiveStrings.END_NOW,
                         ),
                       ),
                       const Gap(15),
                       GestureDetector(
                         onTap: () => context.pop(),
                         child: Text(
-                          AmptiveOtherStrings.CANCEL,
+                          AmptiveStrings.CANCEL,
                           style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                             fontSize: AmptiveFontSizes.size17
                           )

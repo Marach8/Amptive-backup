@@ -20,6 +20,7 @@ import 'bloc/main_app/go_live_bloc/host_view/cohosts_display_bloc.dart';
 import 'bloc/main_app/go_live_bloc/host_view/host_end_show_bloc.dart';
 import 'bloc/main_app/go_live_bloc/host_view/notifications_bloc.dart';
 import 'bloc/main_app/nav_bar_bloc.dart';
+import 'bloc/main_app/profile/profile_followers_bloc.dart';
 import 'bloc/onboarding_bloc/onboarding_bloc.dart';
 
 void setup() {
@@ -48,5 +49,6 @@ List<SingleChildWidget> providers() {
     BlocProvider(create: (_) => AmptiveSubscriptionBloc()),
     BlocProvider(create: (_) => AmptiveEndShowBloc()),
     BlocProvider(create: (_) => AmptiveGoLiveHostModerationToolsBloc()),
+    BlocProvider(create: (_) => AmptiveProfileFollowersBloc()),
   ];
 }

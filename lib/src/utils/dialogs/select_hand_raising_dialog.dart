@@ -54,7 +54,7 @@ Future<void> showHandRaisingDialog(BuildContext context)async{
                   const Icon(Icons.front_hand_outlined),
                   const Gap(5),
                   Text(
-                    AmptiveOtherStrings.HAND_RAISING,
+                    AmptiveStrings.HAND_RAISING,
                     style: Theme.of(context).textTheme.bodyLarge,
                   ),
                 ],
@@ -63,7 +63,7 @@ Future<void> showHandRaisingDialog(BuildContext context)async{
             const Gap(20),
             Text(
               maxLines: 3,
-              AmptiveOtherStrings.CNTRL_HAND_RAISING,
+              AmptiveStrings.CNTRL_HAND_RAISING,
               style: Theme.of(context).textTheme.titleMedium?.copyWith(
                 color: AmptiveColors.hexC2C2C2
               ),
@@ -80,23 +80,23 @@ Future<void> showHandRaisingDialog(BuildContext context)async{
                     activateBtnNotifier.value = !value;
                     doNotAllowNotifier.value = false;
                     allowNotifier.value = !value;
-                    service.handRaisingController.text=  AmptiveOtherStrings.ALLOW;
+                    service.handRaisingController.text=  AmptiveStrings.ALLOW;
                   },
                   padding: const EdgeInsets.fromLTRB(15, 13, 15, 13),
                   radius: 15,
                   color: AmptiveColors.hex2D2D2D,
                   border: Border.all(
                     width: 2,
-                    color: value ? AmptiveColors.brandBlue : AmptiveColors.transparentColor
+                    color: value ? AmptiveColors.hex307FE2 : AmptiveColors.transparentColor
                   ),
                   child: Row(
                     children: [
                       AmptiveCustomContainer(
                         height: 20, width: 20, radius: 20,
                         padding: const EdgeInsets.all(3),
-                        color: value ? AmptiveColors.brandBlue : AmptiveColors.transparentColor,
+                        color: value ? AmptiveColors.hex307FE2 : AmptiveColors.transparentColor,
                         border: Border.all(
-                          color: value ? AmptiveColors.brandBlue : AmptiveColors.whiteColor,
+                          color: value ? AmptiveColors.hex307FE2 : AmptiveColors.whiteColor,
                           strokeAlign: 5.0
                         ),
                         child: const SizedBox.shrink()
@@ -108,12 +108,12 @@ Future<void> showHandRaisingDialog(BuildContext context)async{
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              AmptiveOtherStrings.ALLOW,
+                              AmptiveStrings.ALLOW,
                               style: Theme.of(context).textTheme.bodyMedium
                             ),
                             Text(
                               maxLines: 5,
-                              AmptiveOtherStrings.AUDIENCE_CAN_RAISE_HAND,
+                              AmptiveStrings.AUDIENCE_CAN_RAISE_HAND,
                               style: Theme.of(context).textTheme.titleMedium?.copyWith(
                                 color: AmptiveColors.hexC2C2C2
                               ),
@@ -138,7 +138,7 @@ Future<void> showHandRaisingDialog(BuildContext context)async{
                     activateBtnNotifier.value = !value;
                     allowNotifier.value = false;
                     doNotAllowNotifier.value = !value;
-                    service.handRaisingController.text=  AmptiveOtherStrings.DISALLOW;
+                    service.handRaisingController.text=  AmptiveStrings.DISALLOW;
 
                   },
                   padding: const EdgeInsets.fromLTRB(15, 13, 15, 13),
@@ -146,7 +146,7 @@ Future<void> showHandRaisingDialog(BuildContext context)async{
                   color: AmptiveColors.hex2D2D2D,
                   border: Border.all(
                     width: 2,
-                    color: value ? AmptiveColors.brandBlue : AmptiveColors.transparentColor
+                    color: value ? AmptiveColors.hex307FE2 : AmptiveColors.transparentColor
                   ),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -157,9 +157,9 @@ Future<void> showHandRaisingDialog(BuildContext context)async{
                           AmptiveCustomContainer(
                             height: 20, width: 20, radius: 20,
                             padding: const EdgeInsets.all(3),
-                            color: value ? AmptiveColors.brandBlue : AmptiveColors.transparentColor,
+                            color: value ? AmptiveColors.hex307FE2 : AmptiveColors.transparentColor,
                             border: Border.all(
-                              color: value ? AmptiveColors.brandBlue : AmptiveColors.whiteColor,
+                              color: value ? AmptiveColors.hex307FE2 : AmptiveColors.whiteColor,
                               strokeAlign: 5.0
                             ),
                             child: const SizedBox.shrink()
@@ -171,12 +171,12 @@ Future<void> showHandRaisingDialog(BuildContext context)async{
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  AmptiveOtherStrings.DISALLOW,
+                                  AmptiveStrings.DISALLOW,
                                   style: Theme.of(context).textTheme.bodyMedium
                                 ),
                                 Text(
                                   maxLines: 5,
-                                  AmptiveOtherStrings.AUDIENCE_CANNOT_RAISE_HAND,
+                                  AmptiveStrings.AUDIENCE_CANNOT_RAISE_HAND,
                                   style: Theme.of(context).textTheme.titleMedium?.copyWith(
                                     color: AmptiveColors.hexC2C2C2
                                   ),
@@ -202,7 +202,7 @@ Future<void> showHandRaisingDialog(BuildContext context)async{
                   onPressed: value ? () async{
                     Navigator.pop(context);
                   } : null,
-                  buttonTitle: AmptiveOtherStrings.CONTINUE,
+                  buttonTitle: AmptiveStrings.CONTINUE,
                   bgColor: AmptiveColors.whiteColor,
                   fgColor: AmptiveColors.black,
                 );

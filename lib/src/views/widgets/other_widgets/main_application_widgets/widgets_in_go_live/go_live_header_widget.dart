@@ -35,7 +35,7 @@ class AmptiveLiveViewHeaderWidget extends StatelessWidget {
           child: Row(
             children: [
               Text(
-                AmptiveOtherStrings.LIVE,
+                AmptiveStrings.LIVE,
                 style: Theme.of(context).textTheme.bodyMedium,
               ),
               Gap(5.w),
@@ -63,7 +63,7 @@ class AmptiveLiveViewHeaderWidget extends StatelessWidget {
               showHostEndShowDialog(context: context);
               //context.read<AmptiveNavBarBloc>().goToPage(0),
             },
-            color: AmptiveColors.notifRed.withOpacity(0.3),
+            color: AmptiveColors.hexECO404.withOpacity(0.3),
             height: 35, width: 35, boxShape: BoxShape.circle,
             boxShadow: [
               BoxShadow(
@@ -72,7 +72,7 @@ class AmptiveLiveViewHeaderWidget extends StatelessWidget {
                 offset: const Offset(-20, 0)
               )
             ],
-            child: Icon(Icons.logout, color: AmptiveColors.notifRed),
+            child: Icon(Icons.logout, color: AmptiveColors.hexECO404),
           ),
         ),
     

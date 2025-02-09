@@ -99,7 +99,7 @@ class _AmptiveScheduledShowOrEventDataModelWidgetState extends State<AmptiveSche
                       overflow: TextOverflow.clip,
                       style: Theme.of(context).textTheme.displayMedium?.copyWith(
                         fontSize: AmptiveFontSizes.size24,
-                        fontWeight: AmptiveFontWeights.semiBold,
+                        fontWeight: AmptiveFontWeights.w600,
                         fontFamily: "Bricolage Grotesque"
                       ),
                     ),
@@ -114,8 +114,8 @@ class _AmptiveScheduledShowOrEventDataModelWidgetState extends State<AmptiveSche
                             _notifier.value = !value;
                             showAddedOrRemovedSnackbar(
                               context: context,
-                              content: value ? AmptiveOtherStrings.removedFromCalender
-                                : AmptiveOtherStrings.addedToCalender
+                              content: value ? AmptiveStrings.removedFromCalender
+                                : AmptiveStrings.addedToCalender
                             );
                           },
                           child: AmptiveAnimatedCrossFadeWidget(

@@ -34,7 +34,7 @@ extension ExtString on String {
   }
 
   
-  bool get emailContainsEmailSymbol => contains(AmptiveOtherStrings.emailSymbol);
+  bool get emailContainsEmailSymbol => contains(AmptiveStrings.emailSymbol);
 
 
   String formatPrice(){

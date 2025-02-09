@@ -39,7 +39,7 @@ class AmptiveUserGoLiveWidget extends StatelessWidget {
                   alignment: Alignment.center,
                   padding: const EdgeInsets.all(0),
                   height: 20, width: 20, radius: 10,
-                  color: AmptiveColors.brandBlue,
+                  color: AmptiveColors.hex307FE2,
                   border: Border.all(
                     color: AmptiveColors.brandBlack,
                     width: 2,
@@ -52,7 +52,7 @@ class AmptiveUserGoLiveWidget extends StatelessWidget {
       
           Gap(10.h),
           Text(
-            AmptiveOtherStrings.GO_LIVE,
+            AmptiveStrings.GO_LIVE,
             style: Theme.of(context).textTheme.titleSmall
           ),
         ],

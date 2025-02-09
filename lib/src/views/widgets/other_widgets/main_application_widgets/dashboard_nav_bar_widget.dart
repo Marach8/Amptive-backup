@@ -32,7 +32,7 @@ class AmptiveDashboardBottomNavBarWidget extends StatelessWidget {
                       padding: const EdgeInsets.fromLTRB(2, 0, 2, 0),
                       constraints: const BoxConstraints(minWidth: 15),
                       height: 15, radius: 100,
-                      color: AmptiveColors.notifRed,
+                      color: AmptiveColors.hexECO404,
                       child: FittedBox(
                         fit: BoxFit.scaleDown,
                         child: Text(

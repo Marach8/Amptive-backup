@@ -60,7 +60,7 @@ class CommunityCardPreferenceWidget extends StatelessWidget {
                         side: BorderSide(
                           width: 2.w,
                           strokeAlign: BorderSide.strokeAlignCenter,
-                          color: AmptiveColors.brandBlue,
+                          color: AmptiveColors.hex307FE2,
                         ),
                         borderRadius: BorderRadius.circular(6.r),
                       ),

@@ -51,14 +51,14 @@ Future<String> showSelectAudienceAccessForShowsDialog(
             Align(
               alignment: Alignment.center,
               child: Text(
-                AmptiveOtherStrings.AUDIENCE_ACCESS,
+                AmptiveStrings.AUDIENCE_ACCESS,
                 style: Theme.of(context).textTheme.bodyLarge,
               ),
             ),
             const Gap(20),
             Text(
               maxLines: 5,
-              AmptiveOtherStrings.SHOW_AUDIENCE_ACCESS_DESC,
+              AmptiveStrings.SHOW_AUDIENCE_ACCESS_DESC,
               style: Theme.of(context).textTheme.titleMedium?.copyWith(
                 color: AmptiveColors.hexC2C2C2
               ),
@@ -68,13 +68,13 @@ Future<String> showSelectAudienceAccessForShowsDialog(
             AmptiveRebuilderWidget(
               notifier: notifier,
               builder: (_, value, __) {
-                final isActive = value == AmptiveOtherStrings.FREE;
+                final isActive = value == AmptiveStrings.FREE;
                 return AmptiveCustomContainer(
                   duration: 100,
                   onTap: (){
-                    if(value != AmptiveOtherStrings.FREE){
-                      notifier.value = AmptiveOtherStrings.FREE;
-                      service.audienceAccessController.text = AmptiveOtherStrings.FREE;
+                    if(value != AmptiveStrings.FREE){
+                      notifier.value = AmptiveStrings.FREE;
+                      service.audienceAccessController.text = AmptiveStrings.FREE;
 
                     }
                     else{notifier.value = '';}
@@ -84,7 +84,7 @@ Future<String> showSelectAudienceAccessForShowsDialog(
                   color: AmptiveColors.hex2D2D2D,
                   border: Border.all(
                     width: 2,
-                    color: isActive ? AmptiveColors.brandBlue : AmptiveColors.transparentColor
+                    color: isActive ? AmptiveColors.hex307FE2 : AmptiveColors.transparentColor
                   ),
                   child: Row(
                     children: [
@@ -96,12 +96,12 @@ Future<String> showSelectAudienceAccessForShowsDialog(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              AmptiveOtherStrings.FREE,
+                              AmptiveStrings.FREE,
                               style: Theme.of(context).textTheme.bodyMedium
                             ),
                             Text(
                               maxLines: 5,
-                              AmptiveOtherStrings.SHOW_FREE_ACCESS,
+                              AmptiveStrings.SHOW_FREE_ACCESS,
                               style: Theme.of(context).textTheme.titleMedium?.copyWith(
                                 color: AmptiveColors.hexC2C2C2
                               ),
@@ -113,9 +113,9 @@ Future<String> showSelectAudienceAccessForShowsDialog(
                       AmptiveCustomContainer(
                         height: 20, width: 20, radius: 20,
                         padding: const EdgeInsets.all(3),
-                        color: isActive ? AmptiveColors.brandBlue : AmptiveColors.transparentColor,
+                        color: isActive ? AmptiveColors.hex307FE2 : AmptiveColors.transparentColor,
                         border: Border.all(
-                          color: isActive ? AmptiveColors.brandBlue : AmptiveColors.whiteColor,
+                          color: isActive ? AmptiveColors.hex307FE2 : AmptiveColors.whiteColor,
                           strokeAlign: 5.0
                         ),
                         child: const SizedBox.shrink()
@@ -131,12 +131,12 @@ Future<String> showSelectAudienceAccessForShowsDialog(
             AmptiveRebuilderWidget(
               notifier: notifier,
               builder: (_, value, __) {
-                final isActive = value == AmptiveOtherStrings.SUBSCRIBERS_ONLY;
+                final isActive = value == AmptiveStrings.SUBSCRIBERS_ONLY;
                 return AmptiveCustomContainer(
                   onTap: (){
-                    if(value != AmptiveOtherStrings.SUBSCRIBERS_ONLY){
-                      notifier.value = AmptiveOtherStrings.SUBSCRIBERS_ONLY;
-                      service.audienceAccessController.text = AmptiveOtherStrings.SUBSCRIBERS_ONLY;
+                    if(value != AmptiveStrings.SUBSCRIBERS_ONLY){
+                      notifier.value = AmptiveStrings.SUBSCRIBERS_ONLY;
+                      service.audienceAccessController.text = AmptiveStrings.SUBSCRIBERS_ONLY;
 
                     }
                     else{notifier.value = '';}
@@ -146,7 +146,7 @@ Future<String> showSelectAudienceAccessForShowsDialog(
                   color: AmptiveColors.hex2D2D2D,
                   border: Border.all(
                     width: 2,
-                    color: isActive ? AmptiveColors.brandBlue : AmptiveColors.transparentColor
+                    color: isActive ? AmptiveColors.hex307FE2 : AmptiveColors.transparentColor
                   ),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -162,12 +162,12 @@ Future<String> showSelectAudienceAccessForShowsDialog(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  AmptiveOtherStrings.SUBSCRIBERS_ONLY,
+                                  AmptiveStrings.SUBSCRIBERS_ONLY,
                                   style: Theme.of(context).textTheme.bodyMedium
                                 ),
                                 Text(
                                   maxLines: 5,
-                                  AmptiveOtherStrings.ACCESS_2_ONLY_SUBSCRIBERS,
+                                  AmptiveStrings.ACCESS_2_ONLY_SUBSCRIBERS,
                                   style: Theme.of(context).textTheme.titleMedium?.copyWith(
                                     color: AmptiveColors.hexC2C2C2
                                   ),
@@ -179,9 +179,9 @@ Future<String> showSelectAudienceAccessForShowsDialog(
                           AmptiveCustomContainer(
                             height: 20, width: 20, radius: 20,
                             padding: const EdgeInsets.all(3),
-                            color: isActive ? AmptiveColors.brandBlue : AmptiveColors.transparentColor,
+                            color: isActive ? AmptiveColors.hex307FE2 : AmptiveColors.transparentColor,
                             border: Border.all(
-                              color: isActive ? AmptiveColors.brandBlue : AmptiveColors.whiteColor,
+                              color: isActive ? AmptiveColors.hex307FE2 : AmptiveColors.whiteColor,
                               strokeAlign: 5.0
                             ),
                             child: const SizedBox.shrink()
@@ -199,7 +199,7 @@ Future<String> showSelectAudienceAccessForShowsDialog(
                             color: AmptiveColors.grey2Color,
                             radius: 5,
                             child: Text(
-                              AmptiveOtherStrings.EDIT_SUB_PLAN,
+                              AmptiveStrings.EDIT_SUB_PLAN,
                               style: Theme.of(context).textTheme.titleMedium
                             ),
                           ),
@@ -220,12 +220,12 @@ Future<String> showSelectAudienceAccessForShowsDialog(
             AmptiveRebuilderWidget(
               notifier: notifier,
               builder: (_, value, __) {
-                final isActive = value == AmptiveOtherStrings.FREE 
-                  || value == AmptiveOtherStrings.SUBSCRIBERS_ONLY;
+                final isActive = value == AmptiveStrings.FREE 
+                  || value == AmptiveStrings.SUBSCRIBERS_ONLY;
                 return AmptiveElevatedButtonWidget(
                   margin: EdgeInsets.zero,
                   onPressed: isActive ? (){context.pop(value);} : null,
-                  buttonTitle: AmptiveOtherStrings.CONTINUE,
+                  buttonTitle: AmptiveStrings.CONTINUE,
                   bgColor: AmptiveColors.whiteColor,
                   fgColor: AmptiveColors.black,
                 );

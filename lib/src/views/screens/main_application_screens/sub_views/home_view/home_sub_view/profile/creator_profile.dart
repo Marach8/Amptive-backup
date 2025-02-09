@@ -4,6 +4,7 @@ import 'package:amptive/src/utils/constants/font_weights.dart';
 import 'package:amptive/src/utils/constants/strings/image_strings.dart';
 import 'package:amptive/src/utils/constants/strings/other_strings.dart';
 import 'package:amptive/src/utils/constants/strings/route_strings.dart';
+import 'package:amptive/src/utils/dialogs/profile/show_top_creator_societies.dart';
 import 'package:amptive/src/utils/helpers/helper_functions/other_functions.dart';
 import 'package:amptive/src/views/screens/main_application_screens/sub_views/home_view/home_sub_view/profile/ordinary_user_profile.dart';
 import 'package:amptive/src/views/widgets/common_widgets/annotated_region__widget.dart';
@@ -42,15 +43,26 @@ class AmptiveCreatorProfileScreen extends StatelessWidget {
               automaticallyImplyLeading: false,
               leadingWidth: 30,
               actions: [
-                AmptiveCircleAvatarWidget(
-                  diameter: 30, color: AmptiveColors.black.withOpacity(0.7),
-                  child: const Icon(Iconsax.global, size: 20),
+                Stack(
+                  children: [
+                    AmptiveCircleAvatarWidget(
+                      onTap: () => context.pushNamed(AmptiveRoutes.USER_PROFILE_SCREEN),
+                      diameter: 30, color: AmptiveColors.black.withOpacity(0.7),
+                      child: const Icon(Iconsax.global, size: 20),
+                    ),
+                    Positioned(
+                      right: 1, top: 1,
+                      child: AmptiveCircleAvatarWidget(diameter: 8, color: AmptiveColors.hexECO404,),
+                    )
+                  ],
                 ),
+                const Gap(15),
                 AmptiveCircleAvatarWidget(
-                  onTap: () => context.pushNamed(AmptiveRoutes.USER_PROFILE_SCREEN),
+                  onTap: () => context.pushNamed(AmptiveRoutes.PROFILE_MENU_SCREEN),
                   diameter: 30, color: AmptiveColors.black.withOpacity(0.7),
                   child: const Icon(Icons.menu, size: 20),
                 ),
+                const Gap(15)
               ],
               backgroundColor: AmptiveColors.black,
               flexibleSpace: FlexibleSpaceBar(
@@ -96,7 +108,7 @@ class AmptiveCreatorProfileScreen extends StatelessWidget {
                               padding: const EdgeInsets.fromLTRB(5, 0, 5, 1),
                               border: Border.all(color: AmptiveColors.black, width: 2),
                               child: Text(
-                                AmptiveOtherStrings.CREATOR.toUpperCase(),
+                                AmptiveStrings.CREATOR.toUpperCase(),
                                 style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                                   fontSize: AmptiveFontSizes.size10,
                                   color: AmptiveColors.black
@@ -124,6 +136,9 @@ class AmptiveCreatorProfileScreen extends StatelessWidget {
                     const Gap(20),
                 
                     AmptiveCustomContainer(
+                      onTap: (){
+                        showTopCreatorSocietiesDialog(context);
+                      },
                       border: Border.all(color: AmptiveColors.hexC2C2C2.withOpacity(0.23)),
                       radius: 20,
                       padding: const EdgeInsets.fromLTRB(10, 5, 10, 5),
@@ -142,7 +157,7 @@ class AmptiveCreatorProfileScreen extends StatelessWidget {
                           const AmptiveImageLoaderWidget(imagePath: AmptiveImageStrings.TOP_CREATOR_BADGE),
                           const Gap(5),
                           Text(
-                            AmptiveOtherStrings.TOP_CREATORS_IN_SOCIETY,
+                            AmptiveStrings.TOP_CREATORS_IN_SOCIETY,
                             style: Theme.of(context).textTheme.bodySmall?.copyWith(
                               color: AmptiveColors.hexEECEA0,
                               fontSize: AmptiveFontSizes.size13
@@ -157,52 +172,67 @@ class AmptiveCreatorProfileScreen extends StatelessWidget {
                     Row(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        CustomPaint(
-                          size: const Size(16, 16),
-                          painter: RoundedScallopedPainter(
-                            color: AmptiveColors.dimWhiteColor1
-                          ),
-                          child: Padding(
-                            padding: const EdgeInsets.all(2),
-                            child: Icon(Icons.star, color: AmptiveColors.black, size: 12),
+                        GestureDetector(
+                          onTap: () => context.pushNamed(AmptiveRoutes.PROFILE_FOLLOWING_SCREEN),
+                          child: Row(
+                            children: [
+                              CustomPaint(
+                                size: const Size(16, 16),
+                                painter: RoundedScallopedPainter(
+                                  color: AmptiveColors.dimWhiteColor1
+                                ),
+                                child: Padding(
+                                  padding: const EdgeInsets.all(2),
+                                  child: Icon(Icons.star, color: AmptiveColors.black, size: 12),
+                                ),
+                              ),
+                              Text(
+                                '1.1m',
+                                style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                                  fontSize: AmptiveFontSizes.size16
+                                ),
+                              ),
+                              const Gap(5),
+                              Text(
+                                AmptiveStrings.FOLLOWERS,
+                                style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                                  fontSize: AmptiveFontSizes.size16
+                                ),
+                              ),
+                            ],
                           ),
                         ),
-                        Text(
-                          '1.1m',
-                          style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                            fontSize: AmptiveFontSizes.size16
-                          ),
-                        ),
-                        const Gap(5),
-                        Text(
-                          AmptiveOtherStrings.FOLLOWERS,
-                          style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                            fontSize: AmptiveFontSizes.size16
-                          ),
-                        ),
+
                         const Gap(20),
-                      
-                        CustomPaint(
-                          size: const Size(16, 16),
-                          painter: RoundedScallopedPainter(
-                            color: AmptiveColors.yellowColor
-                          ),
-                          child: Padding(
-                            padding: const EdgeInsets.all(2),
-                            child: Icon(Icons.favorite, color: AmptiveColors.black, size: 12),
-                          ),
-                        ),
-                        Text(
-                          '150k',
-                          style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                            fontSize: AmptiveFontSizes.size16
-                          ),
-                        ),
-                        const Gap(5),
-                        Text(
-                          AmptiveOtherStrings.SUBSCRIBERS,
-                          style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                            fontSize: AmptiveFontSizes.size16
+
+                        GestureDetector(
+                          onTap: () => context.pushNamed(AmptiveRoutes.PROFILE_SUBSCRIBERS_SCREEN),
+                          child: Row(
+                            children: [
+                              CustomPaint(
+                                size: const Size(16, 16),
+                                painter: RoundedScallopedPainter(
+                                  color: AmptiveColors.yellowColor
+                                ),
+                                child: Padding(
+                                  padding: const EdgeInsets.all(2),
+                                  child: Icon(Icons.favorite, color: AmptiveColors.black, size: 12),
+                                ),
+                              ),
+                              Text(
+                                '150k',
+                                style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                                  fontSize: AmptiveFontSizes.size16
+                                ),
+                              ),
+                              const Gap(5),
+                              Text(
+                                AmptiveStrings.SUBSCRIBERS,
+                                style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                                  fontSize: AmptiveFontSizes.size16
+                                ),
+                              ),
+                            ],
                           ),
                         ),
                       ],
@@ -243,7 +273,7 @@ class AmptiveCreatorProfileScreen extends StatelessWidget {
                         Icon(Iconsax.instagram, color: AmptiveColors.hexC2C2C2, size: 15,),
                         const Gap(3),
                         Text(
-                          AmptiveOtherStrings.INSTAGRAM,
+                          AmptiveStrings.INSTAGRAM,
                           style: Theme.of(context).textTheme.bodySmall?.copyWith(
                             color: AmptiveColors.hexC2C2C2
                           ),
@@ -261,7 +291,7 @@ class AmptiveCreatorProfileScreen extends StatelessWidget {
                         FaIcon(FontAwesomeIcons.linkedin, color: AmptiveColors.hexC2C2C2, size: 15),
                         const Gap(3),
                         Text(
-                          AmptiveOtherStrings.LINKEDIN,
+                          AmptiveStrings.LINKEDIN,
                           style: Theme.of(context).textTheme.bodySmall?.copyWith(
                             color: AmptiveColors.hexC2C2C2
                           ),
@@ -273,7 +303,7 @@ class AmptiveCreatorProfileScreen extends StatelessWidget {
                         ),
                         const Gap(3),
                         Text(
-                          AmptiveOtherStrings.WEBSITE,
+                          AmptiveStrings.WEBSITE,
                           style: Theme.of(context).textTheme.bodySmall?.copyWith(
                             color: AmptiveColors.hexC2C2C2
                           ),
@@ -293,7 +323,7 @@ class AmptiveCreatorProfileScreen extends StatelessWidget {
                             padding: const EdgeInsets.only(top: 10, bottom: 10),
                             color: AmptiveColors.whiteColor.withOpacity(0.2),
                             child: Text(
-                              AmptiveOtherStrings.EDIT_PROFILE,
+                              AmptiveStrings.EDIT_PROFILE,
                               style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                                 fontSize: AmptiveFontSizes.size14
                               )
@@ -308,7 +338,7 @@ class AmptiveCreatorProfileScreen extends StatelessWidget {
                             alignment: Alignment.center, radius: 50,
                             color: AmptiveColors.whiteColor.withOpacity(0.2),
                             child: Text(
-                              AmptiveOtherStrings.SUBSCRIPTION,
+                              AmptiveStrings.SUBSCRIPTION,
                               style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                                 fontSize: AmptiveFontSizes.size14
                               )
@@ -467,7 +497,7 @@ class ProfileEventOrShowDisplay extends StatelessWidget {
                         child: Text(
                           'P',
                           style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                            fontWeight: AmptiveFontWeights.extraBold,
+                            fontWeight: AmptiveFontWeights.w800,
                             fontSize: AmptiveFontSizes.size10,
                             color: AmptiveColors.black
                           ),
@@ -507,6 +537,6 @@ class ProfileEventOrShowDisplay extends StatelessWidget {
 
 
 final _tabs = [
-  AmptiveOtherStrings.SCHEDULED, AmptiveOtherStrings.ENDED,
-  AmptiveOtherStrings.SHOWS, AmptiveOtherStrings.EVENTS
+  AmptiveStrings.SCHEDULED, AmptiveStrings.ENDED,
+  AmptiveStrings.SHOWS, AmptiveStrings.EVENTS
 ];

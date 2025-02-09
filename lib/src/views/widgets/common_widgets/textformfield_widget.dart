@@ -67,7 +67,7 @@ class AmptiveTextFormFieldWidget extends StatelessWidget {
       maxLength: maxLength,
       onSaved: onSaved,
       cursorColor: disableBlueBorder ?? false ? AmptiveColors.whiteColor
-        : AmptiveColors.brandBlue,
+        : AmptiveColors.hex307FE2,
       obscureText: obscureText ?? false,
       cursorHeight: cursorHeight,
       cursorErrorColor: AmptiveColors.textRedColor,
@@ -100,7 +100,7 @@ class AmptiveTextFormFieldWidget extends StatelessWidget {
         enabledBorder: null
       ),
       style: TextStyle(
-        fontWeight: AmptiveFontWeights.regular,
+        fontWeight: AmptiveFontWeights.w400,
         fontSize: AmptiveFontSizes.size18,
         color: AmptiveColors.whiteColor,
       ),

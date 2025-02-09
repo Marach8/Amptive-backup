@@ -40,7 +40,7 @@ class AmptiveAppBarDropDownWidget extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                AmptiveOtherStrings.SCHEDULED,
+                AmptiveStrings.SCHEDULED,
                 style: Theme.of(context).textTheme.bodySmall?.copyWith(
                   fontSize: AmptiveFontSizes.size15
                 ),
@@ -58,7 +58,7 @@ class AmptiveAppBarDropDownWidget extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                AmptiveOtherStrings.SUBSCRIBED,
+                AmptiveStrings.SUBSCRIBED,
                 style: Theme.of(context).textTheme.bodySmall?.copyWith(
                   fontSize: AmptiveFontSizes.size15
                 ),
@@ -76,7 +76,7 @@ class AmptiveAppBarDropDownWidget extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                AmptiveOtherStrings.FOLLOWING,
+                AmptiveStrings.FOLLOWING,
                 style: Theme.of(context).textTheme.bodySmall?.copyWith(
                   fontSize: AmptiveFontSizes.size15
                 ),

@@ -61,7 +61,7 @@ class _UserNameAuthScreenState extends State<UserNameAuthScreen> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    AmptiveOtherStrings.whatShouldWeCallYou,
+                    AmptiveStrings.whatShouldWeCallYou,
                     style: Theme.of(context).textTheme.headlineMedium?.copyWith(
                           fontSize: AmptiveFontSizes.size17,
                         ),
@@ -82,7 +82,7 @@ class _UserNameAuthScreenState extends State<UserNameAuthScreen> {
                       },
                       keyboardType: TextInputType.text,
                       cursorColor: service.username.error == null
-                          ? AmptiveColors.brandBlue
+                          ? AmptiveColors.hex307FE2
                           : AmptiveColors.textRedColor,
                       decoration: InputDecoration(
                         contentPadding: EdgeInsets.symmetric(
@@ -91,7 +91,7 @@ class _UserNameAuthScreenState extends State<UserNameAuthScreen> {
                           padding: EdgeInsets.symmetric(
                               vertical: 12.h, horizontal: 16.w),
                           child: Text(
-                            AmptiveOtherStrings.emailSymbol,
+                            AmptiveStrings.emailSymbol,
                             style: Theme.of(context).textTheme.headlineMedium,
                           ),
                         ),
@@ -100,8 +100,8 @@ class _UserNameAuthScreenState extends State<UserNameAuthScreen> {
                                 width: 18,
                                 height: 18,
                                 child: CircularProgressIndicator(
-                                  color: AmptiveColors.brandBlue,
-                                  backgroundColor: AmptiveColors.brandBlue
+                                  color: AmptiveColors.hex307FE2,
+                                  backgroundColor: AmptiveColors.hex307FE2
                                       .withOpacity(0.5),
                                   strokeWidth: 3.w,
                                 ),
@@ -130,7 +130,7 @@ class _UserNameAuthScreenState extends State<UserNameAuthScreen> {
                                         ),
                                       )
                                     : null,
-                        hintText: AmptiveOtherStrings.username,
+                        hintText: AmptiveStrings.username,
                         hintStyle: Theme.of(context).textTheme.labelMedium,
                         filled: true,
                         fillColor: AmptiveColors.fillGreyColor.withOpacity(0.3),
@@ -138,7 +138,7 @@ class _UserNameAuthScreenState extends State<UserNameAuthScreen> {
                           borderSide: BorderSide(
                             width: 2.w,
                             color: service.username.error == null
-                                ? AmptiveColors.brandBlue
+                                ? AmptiveColors.hex307FE2
                                 : AmptiveColors.textRedColor,
                           ),
                           borderRadius: BorderRadius.circular(14.r),
@@ -159,9 +159,9 @@ class _UserNameAuthScreenState extends State<UserNameAuthScreen> {
                       height: 20.h,
                       margin: EdgeInsets.symmetric(vertical: 11.h),
                       child: Text(
-                        AmptiveOtherStrings.checkerIsLoading,
+                        AmptiveStrings.checkerIsLoading,
                         style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                              fontWeight: AmptiveFontWeights.medium,
+                              fontWeight: AmptiveFontWeights.w500,
                             ),
                       ),
                     ),
@@ -171,7 +171,7 @@ class _UserNameAuthScreenState extends State<UserNameAuthScreen> {
                     child: Container(
                       margin: EdgeInsets.symmetric(vertical: 11.h),
                       child: Text(
-                        AmptiveOtherStrings.usernameIsAvailable,
+                        AmptiveStrings.usernameIsAvailable,
                         style: Theme.of(context).textTheme.titleSmall?.copyWith(
                               color: AmptiveColors.successColor,
                             ),
@@ -183,7 +183,7 @@ class _UserNameAuthScreenState extends State<UserNameAuthScreen> {
                     child: Container(
                       margin: EdgeInsets.symmetric(vertical: 11.h),
                       child: Text(
-                        service.username.error ?? AmptiveOtherStrings.empty,
+                        service.username.error ?? AmptiveStrings.empty,
                         style: Theme.of(context).textTheme.titleSmall?.copyWith(
                               color: AmptiveColors.textRedColor,
                             ),
@@ -211,7 +211,7 @@ class _UserNameAuthScreenState extends State<UserNameAuthScreen> {
                       context.pushNamed(AmptiveRoutes.addName);
                     }
                   : null,
-              buttonTitle: AmptiveOtherStrings.NEXT,
+              buttonTitle: AmptiveStrings.NEXT,
             );
           }),
         ),

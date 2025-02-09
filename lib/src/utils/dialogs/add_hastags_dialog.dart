@@ -79,7 +79,7 @@ Future<Set<ObjectWithNotifier<Hashtag>>?> showAddHashtagDialog(
                           mainAxisAlignment: MainAxisAlignment.end,
                           children: [
                             Text(
-                              AmptiveOtherStrings.ADD_HASHTAG,
+                              AmptiveStrings.ADD_HASHTAG,
                               style: Theme.of(context).textTheme.bodyLarge,
                             ),
                             Gap(60.w),
@@ -87,7 +87,7 @@ Future<Set<ObjectWithNotifier<Hashtag>>?> showAddHashtagDialog(
                                 notifier: service.selectedHashtagLength,
                                 builder: (_, number, __) {
                                   return Text(
-                                    '$number ${AmptiveOtherStrings.SELECTED}',
+                                    '$number ${AmptiveStrings.SELECTED}',
                                     style: Theme.of(context)
                                         .textTheme
                                         .bodySmall
@@ -103,7 +103,7 @@ Future<Set<ObjectWithNotifier<Hashtag>>?> showAddHashtagDialog(
                         padding: const EdgeInsets.fromLTRB(15, 0, 15, 20),
                         child: Text(
                           maxLines: 5,
-                          AmptiveOtherStrings.ADD_HASHTAG_DESC,
+                          AmptiveStrings.ADD_HASHTAG_DESC,
                           style: Theme.of(context)
                               .textTheme
                               .bodySmall
@@ -120,7 +120,7 @@ Future<Set<ObjectWithNotifier<Hashtag>>?> showAddHashtagDialog(
                           onChanged: (text) {
                             searchQueryNotifier.value = text;
                           },
-                          hintText: AmptiveOtherStrings.SEARCH_4_COHOSTS,
+                          hintText: AmptiveStrings.SEARCH_4_COHOSTS,
                           prefixIcon: const Padding(
                             padding: EdgeInsets.symmetric(horizontal: 15),
                             child: Icon(Iconsax.search_normal_14),
@@ -280,7 +280,7 @@ Future<Set<ObjectWithNotifier<Hashtag>>?> showAddHashtagDialog(
                               context, service.selectedHashtags.value);
                         }
                             : null,
-                        buttonTitle: AmptiveOtherStrings.CONTINUE,
+                        buttonTitle: AmptiveStrings.CONTINUE,
                         bgColor: AmptiveColors.whiteColor,
                         fgColor: AmptiveColors.black,
                       );
@@ -309,14 +309,14 @@ class AmptiveListOfHashtagsWidget extends StatelessWidget {
         children: [
           Text(
               hashtags.isEmpty
-                  ? AmptiveOtherStrings.NO_TRENDING_HASHTAGS
-                  : AmptiveOtherStrings.TRENDING_HASHTAGS,
+                  ? AmptiveStrings.NO_TRENDING_HASHTAGS
+                  : AmptiveStrings.TRENDING_HASHTAGS,
               style: Theme.of(context).textTheme.bodyMedium),
           Gap(3.h),
           hashtags.isEmpty
               ? Text(
             maxLines: 2,
-            AmptiveOtherStrings.SEARCH_UR_HASHTAGS,
+            AmptiveStrings.SEARCH_UR_HASHTAGS,
             style: Theme.of(context)
                 .textTheme
                 .bodySmall

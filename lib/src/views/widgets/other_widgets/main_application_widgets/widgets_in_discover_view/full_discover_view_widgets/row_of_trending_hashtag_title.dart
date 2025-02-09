@@ -21,7 +21,7 @@ class AmptiveRowOfTrendingHashTagTitle extends StatelessWidget {
     return Row(
       children: [
         Text(
-          AmptiveOtherStrings.HASH,
+          AmptiveStrings.HASH,
           style: Theme.of(context).textTheme.displayMedium?.copyWith(
             color: AmptiveColors.authHintColor2
           )
@@ -31,7 +31,7 @@ class AmptiveRowOfTrendingHashTagTitle extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              AmptiveOtherStrings.HASH + hashTagTitle.toLowerCase(),
+              AmptiveStrings.HASH + hashTagTitle.toLowerCase(),
               style: Theme.of(context).textTheme.bodySmall?.copyWith(
                 fontSize: AmptiveFontSizes.size15
               ),

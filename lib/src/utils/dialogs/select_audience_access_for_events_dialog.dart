@@ -56,14 +56,14 @@ Future<void> showSelectAudienceAccessForEventsDialog(
             Align(
               alignment: Alignment.center,
               child: Text(
-                AmptiveOtherStrings.AUDIENCE_ACCESS,
+                AmptiveStrings.AUDIENCE_ACCESS,
                 style: Theme.of(context).textTheme.bodyLarge,
               ),
             ),
             const Gap(20),
             Text(
               maxLines: 5,
-              AmptiveOtherStrings.EVENT_AUDIENCE_ACCESS_DESC,
+              AmptiveStrings.EVENT_AUDIENCE_ACCESS_DESC,
               style: Theme.of(context)
                   .textTheme
                   .titleMedium
@@ -87,7 +87,7 @@ Future<void> showSelectAudienceAccessForEventsDialog(
                     border: Border.all(
                         width: 2,
                         color: value
-                            ? AmptiveColors.brandBlue
+                            ? AmptiveColors.hex307FE2
                             : AmptiveColors.transparentColor),
                     child: Row(
                       children: [
@@ -99,12 +99,12 @@ Future<void> showSelectAudienceAccessForEventsDialog(
                             mainAxisSize: MainAxisSize.min,
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text(AmptiveOtherStrings.FREE,
+                              Text(AmptiveStrings.FREE,
                                   style:
                                       Theme.of(context).textTheme.bodyMedium),
                               Text(
                                 maxLines: 5,
-                                AmptiveOtherStrings.EVENT_FREE_ACCESS,
+                                AmptiveStrings.EVENT_FREE_ACCESS,
                                 style: Theme.of(context)
                                     .textTheme
                                     .titleMedium
@@ -121,11 +121,11 @@ Future<void> showSelectAudienceAccessForEventsDialog(
                             radius: 20,
                             padding: const EdgeInsets.all(3),
                             color: value
-                                ? AmptiveColors.brandBlue
+                                ? AmptiveColors.hex307FE2
                                 : AmptiveColors.transparentColor,
                             border: Border.all(
                                 color: value
-                                    ? AmptiveColors.brandBlue
+                                    ? AmptiveColors.hex307FE2
                                     : AmptiveColors.whiteColor,
                                 strokeAlign: 5.0),
                             child: const SizedBox.shrink())
@@ -151,7 +151,7 @@ Future<void> showSelectAudienceAccessForEventsDialog(
                     border: Border.all(
                         width: 2,
                         color: value
-                            ? AmptiveColors.brandBlue
+                            ? AmptiveColors.hex307FE2
                             : AmptiveColors.transparentColor),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -167,13 +167,13 @@ Future<void> showSelectAudienceAccessForEventsDialog(
                                 mainAxisSize: MainAxisSize.min,
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Text(AmptiveOtherStrings.PAID,
+                                  Text(AmptiveStrings.PAID,
                                       style: Theme.of(context)
                                           .textTheme
                                           .bodyMedium),
                                   Text(
                                     maxLines: 5,
-                                    AmptiveOtherStrings.PAID_ACCESS,
+                                    AmptiveStrings.PAID_ACCESS,
                                     style: Theme.of(context)
                                         .textTheme
                                         .titleMedium
@@ -190,11 +190,11 @@ Future<void> showSelectAudienceAccessForEventsDialog(
                                 radius: 20,
                                 padding: const EdgeInsets.all(3),
                                 color: value
-                                    ? AmptiveColors.brandBlue
+                                    ? AmptiveColors.hex307FE2
                                     : AmptiveColors.transparentColor,
                                 border: Border.all(
                                     color: value
-                                        ? AmptiveColors.brandBlue
+                                        ? AmptiveColors.hex307FE2
                                         : AmptiveColors.whiteColor,
                                     strokeAlign: 5.0),
                                 child: const SizedBox.shrink())
@@ -216,7 +216,7 @@ Future<void> showSelectAudienceAccessForEventsDialog(
                               padding: const EdgeInsets.fromLTRB(10, 5, 10, 5),
                               color: AmptiveColors.grey2Color,
                               radius: 5,
-                              child: Text(AmptiveOtherStrings.SETUP_PAYMENT_FEE,
+                              child: Text(AmptiveStrings.SETUP_PAYMENT_FEE,
                                   style:
                                       Theme.of(context).textTheme.titleMedium),
                             ),
@@ -246,16 +246,16 @@ Future<void> showSelectAudienceAccessForEventsDialog(
                         ? () async {
                             if (paidAccessNotifier.value) {
                               service.audienceAccessController.text =
-                                  "${AmptiveOtherStrings.PAY} • ₦${service.userEventFee}";
+                                  "${AmptiveStrings.PAY} • ₦${service.userEventFee}";
                             } else if (freeAccesNotifier.value) {
                               service.audienceAccessController.text =
-                                  AmptiveOtherStrings.FREE;
+                                  AmptiveStrings.FREE;
                             }
 
                             Navigator.pop(context);
                           }
                         : null,
-                    buttonTitle: AmptiveOtherStrings.CONTINUE,
+                    buttonTitle: AmptiveStrings.CONTINUE,
                     bgColor: AmptiveColors.whiteColor,
                     fgColor: AmptiveColors.black,
                   );
