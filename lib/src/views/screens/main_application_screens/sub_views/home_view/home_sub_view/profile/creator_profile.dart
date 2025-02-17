@@ -35,18 +35,20 @@ class AmptiveCreatorProfileScreen extends StatelessWidget {
           headerSliverBuilder: (_, __) => [
             SliverAppBar(
               expandedHeight: 500.0, pinned: true,
-              leading:  AmptiveCircleAvatarWidget(
-                onTap: () => context.pop(),
-                diameter: 30, color: AmptiveColors.black.withOpacity(0.7),
-                child: const Icon(Icons.keyboard_arrow_left),
-              ),
               automaticallyImplyLeading: false,
-              leadingWidth: 30,
               actions: [
+                const Gap(15),
+                AmptiveCircleAvatarWidget(
+                  onTap: () => context.pop(),
+                  diameter: 30, color: AmptiveColors.black.withOpacity(0.7),
+                  child: const Icon(Icons.keyboard_arrow_left),
+                ),
+                const Spacer(),
                 Stack(
                   children: [
                     AmptiveCircleAvatarWidget(
-                      onTap: () => context.pushNamed(AmptiveRoutes.USER_PROFILE_SCREEN),
+                      onTap: () => context.pushNamed(AmptiveRoutes.COMMUNITY_TASK_SCREEN),
+                      //onTap: () => context.pushNamed(AmptiveRoutes.USER_PROFILE_SCREEN),
                       diameter: 30, color: AmptiveColors.black.withOpacity(0.7),
                       child: const Icon(Iconsax.global, size: 20),
                     ),
@@ -73,50 +75,59 @@ class AmptiveCreatorProfileScreen extends StatelessWidget {
                       decorationImagePath: AmptiveImageStrings.weCanDoHardThingsBgImage,
                       height: 150,                
                       width: AmptiveHelperFunctions.getScreenWidth(context),
-                      child: Stack(
-                        alignment: Alignment.center,
-                        clipBehavior: Clip.none,
-                        children: [
-                          AmptiveCustomContainer(
-                            height: 150,
-                            gradient: LinearGradient(
-                              begin: Alignment.topCenter,
-                              end: Alignment.bottomCenter,
-                              colors: [
-                                AmptiveColors.black,
-                                AmptiveColors.transparentColor,
-                                AmptiveColors.transparentColor
-                              ]
-                            ),
-                            width: AmptiveHelperFunctions.getScreenWidth(context),
-                            child: const SizedBox(),
-                          ),
-                          Positioned(
-                            bottom: -35,
-                            child: AmptiveCircularContainerWithPictureWidget(
-                              diameter: 70, addBorder: true,
-                              borderColor: AmptiveColors.black,
-                              borderWidth: 3,
-                              imagePath: AmptiveImageStrings.jpeg1
-                            )
-                          ),
-                          Positioned(
-                            bottom: -35,
-                            child: AmptiveCustomContainer(
-                              color: AmptiveColors.yellowColor1,
-                              radius: 10,
-                              padding: const EdgeInsets.fromLTRB(5, 0, 5, 1),
-                              border: Border.all(color: AmptiveColors.black, width: 2),
-                              child: Text(
-                                AmptiveStrings.CREATOR.toUpperCase(),
-                                style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                                  fontSize: AmptiveFontSizes.size10,
-                                  color: AmptiveColors.black
-                                ),
+                      child: GestureDetector(
+                        child: Stack(
+                          alignment: Alignment.center,
+                          clipBehavior: Clip.none,
+                          children: [
+                            AmptiveCustomContainer(
+                              height: 150,
+                              gradient: LinearGradient(
+                                begin: Alignment.topCenter,
+                                end: Alignment.bottomCenter,
+                                colors: [
+                                  AmptiveColors.black,
+                                  AmptiveColors.transparentColor,
+                                  AmptiveColors.transparentColor
+                                ]
                               ),
-                            )
-                          ),
-                        ],
+                              width: AmptiveHelperFunctions.getScreenWidth(context),
+                              child: const SizedBox(),
+                            ),
+                            Positioned(
+                              bottom: -35,
+                              child: Hero(
+                                tag: AmptiveImageStrings.jpeg1,
+                                child: AmptiveCircularContainerWithPictureWidget(
+                                  onTap: () => context.pushNamed(
+                                    AmptiveRoutes.PROFILE_PIC_SCREEN,
+                                    extra: AmptiveImageStrings.jpeg1
+                                  ),
+                                  diameter: 70, addBorder: true,
+                                  borderColor: AmptiveColors.black,
+                                  borderWidth: 3,
+                                  imagePath: AmptiveImageStrings.jpeg1
+                                ),
+                              )
+                            ),
+                            Positioned(
+                              bottom: -35,
+                              child: AmptiveCustomContainer(
+                                color: AmptiveColors.yellowColor1,
+                                radius: 10,
+                                padding: const EdgeInsets.fromLTRB(5, 0, 5, 1),
+                                border: Border.all(color: AmptiveColors.black, width: 2),
+                                child: Text(
+                                  AmptiveStrings.CREATOR.toUpperCase(),
+                                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                                    fontSize: AmptiveFontSizes.size10,
+                                    color: AmptiveColors.black
+                                  ),
+                                ),
+                              )
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                     

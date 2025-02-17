@@ -50,5 +50,6 @@ class AmptiveRoutes {
   static const CREATE_SHOW_SUCCESS = 'create_show_success_screen';
   static const EVENT_SCHEDULED_SCREEN = 'event_scheduled';
   static const EPISODE_SCHEDULED_SCREEN = 'episode_scheduled';
-
+  static const COMMUNITY_TASK_SCREEN = 'community_task';
+  static const PROFILE_PIC_SCREEN = 'profile_picture';
 }

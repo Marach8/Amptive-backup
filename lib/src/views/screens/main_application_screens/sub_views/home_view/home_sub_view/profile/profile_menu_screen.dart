@@ -15,15 +15,18 @@ class AmptiveProfileMenuScreen extends StatelessWidget {
   const AmptiveProfileMenuScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(context) {
     return AmptiveAnnotatedRegionWidget(
       child: Scaffold(
         appBar: AmptiveAppBar(
           leading: GestureDetector(
             onTap: () => context.pop(),
-            child: const Icon(Icons.keyboard_arrow_left_outlined),
+            child: const SizedBox(
+              height: 30, width: 30,
+              child: Icon(Icons.keyboard_arrow_left_outlined),
+            ),
           ),
-          leadingWidth: 10,
+          leadingWidth: 30,
           title: Text(
             AmptiveStrings.MENU,
             style: Theme.of(context).textTheme.bodyMedium,

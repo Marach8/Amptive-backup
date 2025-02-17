@@ -31,18 +31,20 @@ class AmptiveOrdinaryUserProfileScreen extends StatelessWidget {
           headerSliverBuilder: (_, __) => [
             SliverAppBar(
               expandedHeight: 340.0, pinned: true,
-              leading:  AmptiveCircleAvatarWidget(
-                onTap: () => context.pop(),
-                diameter: 30, color: AmptiveColors.black.withOpacity(0.7),
-                child: const Icon(Icons.keyboard_arrow_left),
-              ),
               automaticallyImplyLeading: false,
-              leadingWidth: 30,
               actions: [
+                const Gap(15),
+                AmptiveCircleAvatarWidget(
+                  onTap: () => context.pop(),
+                  diameter: 30, color: AmptiveColors.black.withOpacity(0.7),
+                  child: const Icon(Icons.keyboard_arrow_left),
+                ),
+                const Spacer(),
                 AmptiveCircleAvatarWidget(
                   diameter: 30, color: AmptiveColors.black.withOpacity(0.7),
                   child: const Icon(Icons.menu, size: 20),
                 ),
+                const Gap(15)
               ],
               backgroundColor: AmptiveColors.black,
               flexibleSpace: FlexibleSpaceBar(

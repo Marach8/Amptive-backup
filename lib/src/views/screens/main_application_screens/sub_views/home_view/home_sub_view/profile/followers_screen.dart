@@ -25,9 +25,12 @@ class AmptiveProfileFollowersScreen extends StatelessWidget {
         appBar: AmptiveAppBar(
           leading: GestureDetector(
             onTap: () => context.pop(),
-            child: const Icon(Icons.keyboard_arrow_left_outlined),
+            child: const Padding(
+              padding: EdgeInsets.fromLTRB(0, 15, 15, 15),
+              child: Icon(Icons.keyboard_arrow_left_outlined),
+            ),
           ),
-          leadingWidth: 10,
+          leadingWidth: 30,
           title: Text(
             AmptiveStrings.FOLLOWERS,
             style: Theme.of(context).textTheme.bodyMedium,

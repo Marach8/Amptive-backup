@@ -130,6 +130,12 @@ class AmptiveStrings{
   static const SUBSCRIBE = 'Subscribe';
   static const SUBSCRIPTION = 'Subscription';
   static const SUBSCRIBERS = 'Subscribers';
+  static const COMMUNITY_TASK = 'Community Task';
+  static const NO_TASK = 'No task available right now';
+  static const PROFILE_PIC = 'Profile Picture';
+  static const SHARE_PROFILE = 'Share profile';
+  static const EDIT = 'Edit';
+  static const TASKS_WILL_APPEAR_HERE = 'Available tasks for the communities you follow will appear here';
   static const FOLLOWERS = 'Followers';
   static const FOLLOWING = 'Following';
   static const FOLLOW = 'Follow';

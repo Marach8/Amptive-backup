@@ -13,7 +13,9 @@ import 'package:amptive/src/views/screens/main_application_screens/sub_views/hom
 import 'package:amptive/src/views/screens/main_application_screens/sub_views/home_view/home_sub_view/go_live_views/show/create_show_form_screen.dart';
 import 'package:amptive/src/views/screens/main_application_screens/dashboard_screen.dart';
 import 'package:amptive/src/views/screens/main_application_screens/sub_views/home_view/home_sub_view/go_live_views/main_go_live_screen.dart';
+import 'package:amptive/src/views/screens/main_application_screens/sub_views/home_view/home_sub_view/profile/community_task.dart';
 import 'package:amptive/src/views/screens/main_application_screens/sub_views/home_view/home_sub_view/profile/profile_menu_screen.dart';
+import 'package:amptive/src/views/screens/main_application_screens/sub_views/home_view/home_sub_view/profile/profile_pic_display.dart';
 import 'package:amptive/src/views/screens/main_application_screens/sub_views/home_view/home_sub_view/profile/subscribers_screen.dart';
 import 'package:amptive/src/views/screens/main_application_screens/sub_views/home_view/home_sub_view/scheduled_screen.dart';
 import 'package:amptive/src/views/screens/main_application_screens/sub_views/home_view/home_sub_view/profile/creator_profile.dart';
@@ -240,6 +242,21 @@ final GoRouter amptiveAppRouter = GoRouter(
             name: AmptiveRoutes.PROFILE_FOLLOWING_SCREEN,
             path: AmptiveRoutes.PROFILE_FOLLOWING_SCREEN,
             builder: (_, __) => const AmptiveProfileFollowersScreen(),
+          ),
+
+          GoRoute(
+            name: AmptiveRoutes.COMMUNITY_TASK_SCREEN,
+            path: AmptiveRoutes.COMMUNITY_TASK_SCREEN,
+            builder: (_, __) => const AmptiveCommunityTaskScreen(),
+          ),
+
+          GoRoute(
+            name: AmptiveRoutes.PROFILE_PIC_SCREEN,
+            path: AmptiveRoutes.PROFILE_PIC_SCREEN,
+            builder: (_, state){
+              final imgPath = state.extra as String;
+              return AmptiveViewProfilePicScreen(imgPath: imgPath);
+            }
           ),
 
           GoRoute(
