@@ -224,13 +224,12 @@ class AmptiveListenerWidget extends StatelessWidget {
                   listener: listener
                 );
 
-                if(shouldKickOut ?? false){
-                  showSuccessOrFailureNotification(
-                    response: GenericResponseModel(
-                      isSuccessful: false,
-                      responseMessage: '${listener.obj.name} has been kicked out!'
-                    ),
-                    child: const AmptiveImageLoaderWidget(imagePath: AmptiveImageStrings.KICK_USER_OUT)
+                if((shouldKickOut ?? false) && context.mounted){
+                  showAppNotification(
+                    context: context,
+                    icon: const AmptiveImageLoaderWidget(imagePath: AmptiveImageStrings.KICK_USER_OUT),
+                    text: '${listener.obj.name} has been kicked out!',
+                    bgColor: AmptiveColors.hexECO404,
                   );
                 }
               },

@@ -414,14 +414,12 @@ class _GoLiveHostViewBottomSheetState extends State<GoLiveHostViewBottomSheet> {
                   _RenderBottomSheetButtonsWidget(
                     onTap: ()async{
                       final sendInvite = await showGoLiveHostAddCoHostDialog(context: context);
-                      if(sendInvite ?? false){
-                        showSuccessOrFailureNotification(
-                          response: GenericResponseModel(
-                            isSuccessful: true,
-                            responseMessage: AmptiveStrings.COHOST_INVITE_SENT
-                          ),
+                      if(context.mounted && (sendInvite ?? false)){
+                        showAppNotification(
+                          context: context,
+                          icon: const Icon(Icons.check_circle),
+                          text: AmptiveStrings.COHOST_INVITE_SENT,
                           bgColor: AmptiveColors.notifBg,
-                          child: const Icon(Icons.check_circle)
                         );
                       }
                     },

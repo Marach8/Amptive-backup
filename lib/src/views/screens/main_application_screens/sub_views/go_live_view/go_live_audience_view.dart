@@ -433,12 +433,11 @@ class _GoLiveAudienViewControlsWidgetState extends State<GoLiveAudienViewControl
                       ),
                       if(handRaiseIsEnabled)_RenderAudienceViewButtons(
                         onTap: (){
-                          showSuccessOrFailureNotification(
-                            response: GenericResponseModel(
-                              isSuccessful: false,
-                              responseMessage: 'You have been kicked out of the live session'
-                            ),
-                            child: const AmptiveImageLoaderWidget(imagePath: AmptiveImageStrings.KICK_USER_OUT)
+                          showAppNotification(
+                            context: context,
+                            icon: const AmptiveImageLoaderWidget(imagePath: AmptiveImageStrings.KICK_USER_OUT),
+                            text: 'You have been kicked out of the live session',
+                            bgColor: AmptiveColors.hexECO404,
                           );
                         },
                         child: const Icon(Icons.front_hand_outlined),
