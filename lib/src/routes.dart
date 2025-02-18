@@ -14,7 +14,9 @@ import 'package:amptive/src/views/screens/main_application_screens/sub_views/hom
 import 'package:amptive/src/views/screens/main_application_screens/dashboard_screen.dart';
 import 'package:amptive/src/views/screens/main_application_screens/sub_views/home_view/home_sub_view/go_live_views/main_go_live_screen.dart';
 import 'package:amptive/src/views/screens/main_application_screens/sub_views/home_view/home_sub_view/profile/community_task.dart';
-import 'package:amptive/src/views/screens/main_application_screens/sub_views/home_view/home_sub_view/profile/profile_menu_screen.dart';
+import 'package:amptive/src/views/screens/main_application_screens/sub_views/home_view/home_sub_view/profile/menu/language.dart' show AmptiveSelectLanguageScreen;
+import 'package:amptive/src/views/screens/main_application_screens/sub_views/home_view/home_sub_view/profile/menu/privacy.dart' show AmptivePrivacyScreen;
+import 'package:amptive/src/views/screens/main_application_screens/sub_views/home_view/home_sub_view/profile/menu/profile_menu_screen.dart';
 import 'package:amptive/src/views/screens/main_application_screens/sub_views/home_view/home_sub_view/profile/profile_pic_display.dart';
 import 'package:amptive/src/views/screens/main_application_screens/sub_views/home_view/home_sub_view/profile/subscribers_screen.dart';
 import 'package:amptive/src/views/screens/main_application_screens/sub_views/home_view/home_sub_view/scheduled_screen.dart';
@@ -236,6 +238,18 @@ final GoRouter amptiveAppRouter = GoRouter(
             name: AmptiveRoutes.PROFILE_MENU_SCREEN,
             path: AmptiveRoutes.PROFILE_MENU_SCREEN,
             builder: (_, __) => const AmptiveProfileMenuScreen(),
+          ),
+
+          GoRoute(
+            name: AmptiveRoutes.LANGUAGE_SCREEN,
+            path: AmptiveRoutes.LANGUAGE_SCREEN,
+            builder: (_, __) => const AmptiveSelectLanguageScreen(),
+          ),
+
+          GoRoute(
+            name: AmptiveRoutes.PRIVACY_SCREEN,
+            path: AmptiveRoutes.PRIVACY_SCREEN,
+            builder: (_, __) => const AmptivePrivacyScreen(),
           ),
 
           GoRoute(

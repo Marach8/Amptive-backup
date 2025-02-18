@@ -177,6 +177,11 @@ class AmptiveStrings{
   static const APP_SETTINGS = 'App Settings';
   static const SETTINGS = 'Settings';
   static const LANGUAGE = 'Language';
+  static const APPROVED_USERS_CAN_FOLLOW = 'Only users who you approve can follow you and see your activities';
+  static const PRIVATE_ACCT = 'Private account';
+  static const MUTES_ND_BLOCKS = 'Mutes & Blocks';
+  static const MUTED_ACCTS = 'Muted accounts';
+  static const BLOCKED_ACCTS = 'Blocked accounts';
   static const HELP_SUPPORT = 'Help & Support';
   static const ABOUT = 'About';
   static const LOGOUT = 'Log out';
@@ -203,6 +208,8 @@ class AmptiveStrings{
   static const ADD_COMMUNITY = 'Add Community';
   static const ADD_CO_HOST = 'Add Cohost';
   static const ADD_HASHTAG = 'Add Hashtag';
+  static const ACCT_PRIVATE = 'Your account is now private';
+  static const USERS_CAN_SEE_UR_CALENDER = 'Users can see your calender';
   static const ADD_HASHTAG_DESC = 'You can add up to 4 hashtags, with each hashtag not more that 25 characaters long, without spaces or special characters';
   static const SELECTED = 'Selected';
   static const ADD_COMMUNITY_DESC = 'Communities will help your Shows and Events reach more listeners. They can also use communites to find your Shows and Events easily. kfkjkajdjkjadjfjakjka';
@@ -215,6 +222,7 @@ class AmptiveStrings{
   static const SEARCH_4_LISTENERS = 'Search for listeners';
   static const SEARCH_4_HASHTAGS = 'Search for hashtags';
   static const SUGGESTIONS = 'Suggestions';
+  static const APP_LANG = 'App language';
   static const NO_SUGGESTIONS = 'No Suggestions';
   static const NO_TRENDING_HASHTAGS = 'No Trending Hashtags';
   static const SEARCH_UR_HASHTAGS = 'Try searching for hashtag(s) in the search bar';
