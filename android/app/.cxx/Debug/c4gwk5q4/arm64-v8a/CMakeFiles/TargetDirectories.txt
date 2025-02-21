@@ -1,2 +1,0 @@
-C:/Users/nnannamarach/FlutterProjects/Amptive-mobile/android/app/.cxx/Debug/c4gwk5q4/arm64-v8a/CMakeFiles/edit_cache.dir
-C:/Users/nnannamarach/FlutterProjects/Amptive-mobile/android/app/.cxx/Debug/c4gwk5q4/arm64-v8a/CMakeFiles/rebuild_cache.dir
