@@ -12,13 +12,13 @@ class AmptiveElevatedButtonTheme{
     style: ElevatedButton.styleFrom(
       elevation: 0,
       foregroundColor: AmptiveColors.whiteColor,
-      backgroundColor: AmptiveColors.brandBlue,
+      backgroundColor: AmptiveColors.hex307FE2,
       disabledForegroundColor: AmptiveColors.grey4Color,
       disabledBackgroundColor: AmptiveColors.fillGreyColor.withOpacity(0.3),
       textStyle: TextStyle(
-        fontFamily: AmptiveOtherStrings.inter,
+        fontFamily: AmptiveStrings.inter,
         fontSize: AmptiveFontSizes.size16,
-        fontWeight: AmptiveFontWeights.semiBold
+        fontWeight: AmptiveFontWeights.w600
       ),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(40).r)
     )

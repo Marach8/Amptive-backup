@@ -32,7 +32,9 @@ class AmptiveElevatedButtonWidget extends StatelessWidget {
     return ElevatedButton(
         onPressed: onPressed,
         style: buttonStyle ?? ElevatedButton.styleFrom(
-            foregroundColor: fgColor, backgroundColor: bgColor),
+          foregroundColor: fgColor,
+          backgroundColor: bgColor,
+        ),
         child: shouldAddMiddleDot
             ? Row(
                 mainAxisSize: MainAxisSize.min,

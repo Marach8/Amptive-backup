@@ -18,11 +18,11 @@ class AmptiveMore2DiscoverTitle extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              AmptiveOtherStrings.MORE_2_DISCOVER,
+              AmptiveStrings.MORE_2_DISCOVER,
               style: Theme.of(context).textTheme.bodyLarge 
             ),
             Text(
-              AmptiveOtherStrings.SEE_COMMUNITIES,
+              AmptiveStrings.SEE_COMMUNITIES,
               style: Theme.of(context).textTheme.titleSmall?.copyWith(
                 fontSize: AmptiveFontSizes.size13,
                 color: AmptiveColors.authHintColor2
@@ -38,7 +38,7 @@ class AmptiveMore2DiscoverTitle extends StatelessWidget {
           child: Row(
             children: [
               Text(
-                AmptiveOtherStrings.VIEW_ALL,
+                AmptiveStrings.VIEW_ALL,
                 style: Theme.of(context).textTheme.labelMedium
               ),
               Icon(Icons.keyboard_arrow_right_sharp, color: AmptiveColors.authHintColor,)

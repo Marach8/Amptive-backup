@@ -50,7 +50,7 @@ class _NameAuthScreenState extends State<NameAuthScreen> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  AmptiveOtherStrings.whatIsYourName,
+                  AmptiveStrings.whatIsYourName,
                   style: Theme.of(context).textTheme.headlineMedium?.copyWith(
                         fontSize: AmptiveFontSizes.size17,
                       ),
@@ -66,12 +66,12 @@ class _NameAuthScreenState extends State<NameAuthScreen> {
                   },
                   keyboardType: TextInputType.text,
                   cursorColor: service.name.error == null
-                      ? AmptiveColors.brandBlue
+                      ? AmptiveColors.hex307FE2
                       : AmptiveColors.textRedColor,
                   decoration: InputDecoration(
                     contentPadding:
                         EdgeInsets.symmetric(vertical: 12.h, horizontal: 16.w),
-                    hintText: AmptiveOtherStrings.enterYourName,
+                    hintText: AmptiveStrings.enterYourName,
                     hintStyle: Theme.of(context).textTheme.labelMedium,
                     filled: true,
                     fillColor: const Color(0xFF9E9E9E).withOpacity(0.3),
@@ -79,7 +79,7 @@ class _NameAuthScreenState extends State<NameAuthScreen> {
                       borderSide: BorderSide(
                         width: 2.w,
                         color: service.name.error == null
-                            ? AmptiveColors.brandBlue
+                            ? AmptiveColors.hex307FE2
                             : AmptiveColors.textRedColor,
                       ),
                       borderRadius: BorderRadius.circular(14.r),
@@ -99,7 +99,7 @@ class _NameAuthScreenState extends State<NameAuthScreen> {
                     vertical: 11.h,
                   ),
                   child: Text(
-                    AmptiveOtherStrings.noteAboutProfilePic,
+                    AmptiveStrings.noteAboutProfilePic,
                     style: Theme.of(context).textTheme.titleSmall,
                   ),
                 ),
@@ -113,26 +113,26 @@ class _NameAuthScreenState extends State<NameAuthScreen> {
                   alignment: Alignment.centerLeft,
                   child: RichText(
                     text: TextSpan(
-                      text: AmptiveOtherStrings.warningOnClickingCreate +
-                          AmptiveOtherStrings.space,
+                      text: AmptiveStrings.warningOnClickingCreate +
+                          AmptiveStrings.space,
                       children: [
                         TextSpan(
-                          text: AmptiveOtherStrings.termsOfService +
-                              AmptiveOtherStrings.space,
+                          text: AmptiveStrings.termsOfService +
+                              AmptiveStrings.space,
                           style:
                               Theme.of(context).textTheme.titleSmall?.copyWith(
-                                    fontWeight: AmptiveFontWeights.bold,
+                                    fontWeight: AmptiveFontWeights.w700,
                                   ),
                         ),
                         const TextSpan(
-                          text: AmptiveOtherStrings.and +
-                              AmptiveOtherStrings.space,
+                          text: AmptiveStrings.and +
+                              AmptiveStrings.space,
                         ),
                         TextSpan(
-                          text: AmptiveOtherStrings.privacyPolicy,
+                          text: AmptiveStrings.privacyPolicy,
                           style:
                               Theme.of(context).textTheme.titleSmall?.copyWith(
-                                    fontWeight: AmptiveFontWeights.bold,
+                                    fontWeight: AmptiveFontWeights.w700,
                                   ),
                         ),
                       ],
@@ -149,7 +149,7 @@ class _NameAuthScreenState extends State<NameAuthScreen> {
           return AmptiveElevatedButtonWidget(
             height: 50.w,
             margin: EdgeInsets.only(bottom: 29.h),
-            buttonTitle: AmptiveOtherStrings.createAccount,
+            buttonTitle: AmptiveStrings.createAccount,
             onPressed: service.isNameValid
                 ? () {
                     // Validate returns true if the form is valid, or false otherwise.

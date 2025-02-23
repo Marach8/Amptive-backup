@@ -1,7 +1,7 @@
 // ignore_for_file: constant_identifier_names
 
-class AmptiveOtherStrings{
-  const AmptiveOtherStrings._();
+class AmptiveStrings{
+  const AmptiveStrings._();
 
   static const inter = 'Inter';
 
@@ -130,9 +130,16 @@ class AmptiveOtherStrings{
   static const SUBSCRIBE = 'Subscribe';
   static const SUBSCRIPTION = 'Subscription';
   static const SUBSCRIBERS = 'Subscribers';
+  static const COMMUNITY_TASK = 'Community Task';
+  static const NO_TASK = 'No task available right now';
+  static const PROFILE_PIC = 'Profile Picture';
+  static const SHARE_PROFILE = 'Share profile';
+  static const EDIT = 'Edit';
+  static const TASKS_WILL_APPEAR_HERE = 'Available tasks for the communities you follow will appear here';
   static const FOLLOWERS = 'Followers';
   static const FOLLOWING = 'Following';
   static const FOLLOW = 'Follow';
+  static const MANAGE = 'Manage';
   static const UNSUBSCRIBE = 'Unsubscribe';
   static const COHOST_INVITE_SENT = 'Co-host invitation sent';
   static const TOP_LISTENERS = 'Top Listeners';
@@ -144,7 +151,7 @@ class AmptiveOtherStrings{
   static const gotATicketId = 'Got a Ticket ID? (coming soon)';
   static const addedToCalender = 'Added to your calender';
   static const removedFromCalender = 'Removed from your calender';
-  static const view = 'View';
+  static const VIEW = 'View';
   static const GIFTS = 'Gifts';
 
   static const SEARCH_FOR_EVENTS_ND_SHOWS = 'Search for events, shows and more';
@@ -159,6 +166,25 @@ class AmptiveOtherStrings{
   static const POPULAR_CREATORS = 'Popular Creators';
   static const SPOTLIGHT = 'Spotlight';
   static const VIEW_ALL = 'View all';
+  static const MENU = 'Menu';
+  static const VIEW_CALENDER = 'View calender';
+  static const CALENDER = 'Calender';
+  static const ALLOW_SEE_CALENDER =  'Allow users to see your calender';
+  static const ACCT_SETTINGS = 'Account Settings';
+  static const ACCT = 'Account';
+  static const PRIVACY = 'Privacy';
+  static const PSWRD_ND_SECURITY = 'Password and Security';
+  static const APP_SETTINGS = 'App Settings';
+  static const SETTINGS = 'Settings';
+  static const LANGUAGE = 'Language';
+  static const APPROVED_USERS_CAN_FOLLOW = 'Only users who you approve can follow you and see your activities';
+  static const PRIVATE_ACCT = 'Private account';
+  static const MUTES_ND_BLOCKS = 'Mutes & Blocks';
+  static const MUTED_ACCTS = 'Muted accounts';
+  static const BLOCKED_ACCTS = 'Blocked accounts';
+  static const HELP_SUPPORT = 'Help & Support';
+  static const ABOUT = 'About';
+  static const LOGOUT = 'Log out';
   static const SEE_COMMUNITIES = 'See communities on Amptive';
   static const RECENT_SEARCHES = 'Recent Searches';
   static const CLEAR = 'Clear';
@@ -182,6 +208,8 @@ class AmptiveOtherStrings{
   static const ADD_COMMUNITY = 'Add Community';
   static const ADD_CO_HOST = 'Add Cohost';
   static const ADD_HASHTAG = 'Add Hashtag';
+  static const ACCT_PRIVATE = 'Your account is now private';
+  static const USERS_CAN_SEE_UR_CALENDER = 'Users can see your calender';
   static const ADD_HASHTAG_DESC = 'You can add up to 4 hashtags, with each hashtag not more that 25 characaters long, without spaces or special characters';
   static const SELECTED = 'Selected';
   static const ADD_COMMUNITY_DESC = 'Communities will help your Shows and Events reach more listeners. They can also use communites to find your Shows and Events easily. kfkjkajdjkjadjfjakjka';
@@ -189,15 +217,20 @@ class AmptiveOtherStrings{
   static const TOP_GIFTERS_DESC = 'Gifters are ranked base on the total amount they have contributed to the host during live sessions.';
   static const TOP_GIFTERS = 'Top Gifters';
   static const SEARCH_4_COHOSTS = 'Search for co-hosts';
+  static const SEARCH_4_FOLLOWERS = 'Search for followers';
+  static const SEARCH_4_SUBSCRIBERS = 'Search for subscribers';
   static const SEARCH_4_LISTENERS = 'Search for listeners';
   static const SEARCH_4_HASHTAGS = 'Search for hashtags';
   static const SUGGESTIONS = 'Suggestions';
+  static const APP_LANG = 'App language';
   static const NO_SUGGESTIONS = 'No Suggestions';
   static const NO_TRENDING_HASHTAGS = 'No Trending Hashtags';
   static const SEARCH_UR_HASHTAGS = 'Try searching for hashtag(s) in the search bar';
   static const SEARCH_UR_COHOSTS = 'Try searching for your co-host(s) in the search bar';
   static const AUDIENCE_ACCESS = 'Audience Access';
   static const CAPACITY = 'Capacity';
+  static const ALL_FOLLOWERS = 'All Followers';
+  static const ALL_SUBSCRIBERS = 'All Subscribers';
   static const MAX_CAPACITY = 'Kindly enter the maximun number of users/listeners that can access your event.';
   static const MAX_CAPACITY_LIMIT = 'Once maximun capacity is reached, other users will not be allowed to join or pay for your event';
   static const SET_CAPACITY = 'Set capacity';
@@ -215,6 +248,7 @@ class AmptiveOtherStrings{
   static const PINNED = 'Pinned';
   static const TOP_CREATORS_IN_SOCIETY = 'Top Creators in Society';
   static const MODERATION_TOOLS = 'Moderation Tools';
+  static const TOP_CREATOR_IN = 'Top Creator in';
   static const ALLOW_COMMENTS = 'Allow comments';
   static const NEED_2_ENABLE_LISTENERS_MIC = "You will still need to enable the Listeners's mic";
   static const ALLOW_AUDIENCE_MIC = 'Allow audience mic';

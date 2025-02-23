@@ -49,7 +49,7 @@ class SingleCommunityCardWidget extends StatelessWidget {
             child: Text(
               preference.name,
               style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                fontWeight: AmptiveFontWeights.semiBold,
+                fontWeight: AmptiveFontWeights.w600,
               ),
             ),
           ),

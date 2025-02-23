@@ -86,7 +86,7 @@ Future<void> showListenersDialog({
                         ),
                         const Gap(5),
                         Text(
-                          AmptiveOtherStrings.LISTENERS,
+                          AmptiveStrings.LISTENERS,
                           style: Theme.of(context).textTheme.bodyLarge
                         ),
                       ],
@@ -96,7 +96,7 @@ Future<void> showListenersDialog({
                     
                   Text(
                     maxLines: 3,
-                    AmptiveOtherStrings.TOP_LISTENERS_DESC,
+                    AmptiveStrings.TOP_LISTENERS_DESC,
                     style: Theme.of(context).textTheme.bodySmall?.copyWith(
                       color: AmptiveColors.hexC2C2C2
                     ),
@@ -114,7 +114,7 @@ Future<void> showListenersDialog({
                         SearchCohostEvent(searchKey: text)
                       ),
                     ),
-                    hintText: AmptiveOtherStrings.SEARCH_4_LISTENERS,
+                    hintText: AmptiveStrings.SEARCH_4_LISTENERS,
                     prefixConstraints: const BoxConstraints(maxWidth: 50),
                     prefixIcon: const Padding(
                       padding: EdgeInsets.symmetric(horizontal: 15),
@@ -142,7 +142,7 @@ Future<void> showListenersDialog({
                   Align(
                     alignment: Alignment.centerLeft,
                     child: Text(
-                      AmptiveOtherStrings.TOP_LISTENERS,
+                      AmptiveStrings.TOP_LISTENERS,
                       style: Theme.of(context).textTheme.bodyMedium
                     ),
                   ),
@@ -220,7 +220,7 @@ class AmptiveListenerWidget extends StatelessWidget {
                 final shouldKickOut = await showKickOutConfirmationDialog(
                   context: context,
                   title: 'Are you kicking out ${listener.obj.name}?',
-                  content: AmptiveOtherStrings.KICK_OUT_DESC,
+                  content: AmptiveStrings.KICK_OUT_DESC,
                   listener: listener
                 );
 
@@ -229,7 +229,7 @@ class AmptiveListenerWidget extends StatelessWidget {
                     context: context,
                     icon: const AmptiveImageLoaderWidget(imagePath: AmptiveImageStrings.KICK_USER_OUT),
                     text: '${listener.obj.name} has been kicked out!',
-                    bgColor: AmptiveColors.notifRed,
+                    bgColor: AmptiveColors.hexECO404,
                   );
                 }
               },

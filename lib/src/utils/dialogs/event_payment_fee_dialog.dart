@@ -64,14 +64,14 @@ Future<void> showEventPaymentFeeDialog({
                 Align(
                   alignment: Alignment.center,
                   child: Text(
-                    AmptiveOtherStrings.AUDIENCE_ACCESS,
+                    AmptiveStrings.AUDIENCE_ACCESS,
                     style: Theme.of(context).textTheme.bodyLarge,
                   ),
                 ),
                 const Gap(20),
                 Text(
                   maxLines: 5,
-                  AmptiveOtherStrings.AMOUNT_2_CHARGE_4_EVENT,
+                  AmptiveStrings.AMOUNT_2_CHARGE_4_EVENT,
                   style: Theme.of(context)
                       .textTheme
                       .titleMedium
@@ -88,7 +88,7 @@ Future<void> showEventPaymentFeeDialog({
                     keyboardType: TextInputType.number,
                     validator: (text) {
                       if (text?.isEmpty ?? false) {
-                        return AmptiveOtherStrings.EMPTY_FIELD;
+                        return AmptiveStrings.EMPTY_FIELD;
                       }
                       return null;
                     },
@@ -122,7 +122,7 @@ Future<void> showEventPaymentFeeDialog({
                                 context.pop();
                               }
                             : null,
-                        buttonTitle: AmptiveOtherStrings.SET_FEE,
+                        buttonTitle: AmptiveStrings.SET_FEE,
                         bgColor: AmptiveColors.whiteColor,
                         fgColor: AmptiveColors.black,
                       );

@@ -49,7 +49,7 @@ class CreateShowTextFormField extends AmptiveTextFormFieldWidget {
         hintStyle: TextStyle(
           fontSize: AmptiveFontSizes.size14,
           color: AmptiveColors.whiteColor.withOpacity(0.4),
-          fontWeight: AmptiveFontWeights.medium,
+          fontWeight: AmptiveFontWeights.w500,
         ),
         suffixIcon: suffixIcon,
         prefixIcon: prefixIcon,

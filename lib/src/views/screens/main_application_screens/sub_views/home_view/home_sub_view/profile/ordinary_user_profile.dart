@@ -31,18 +31,20 @@ class AmptiveOrdinaryUserProfileScreen extends StatelessWidget {
           headerSliverBuilder: (_, __) => [
             SliverAppBar(
               expandedHeight: 340.0, pinned: true,
-              leading:  AmptiveCircleAvatarWidget(
-                onTap: () => context.pop(),
-                diameter: 30, color: AmptiveColors.black.withOpacity(0.7),
-                child: const Icon(Icons.keyboard_arrow_left),
-              ),
               automaticallyImplyLeading: false,
-              leadingWidth: 30,
               actions: [
+                const Gap(15),
+                AmptiveCircleAvatarWidget(
+                  onTap: () => context.pop(),
+                  diameter: 30, color: AmptiveColors.black.withOpacity(0.7),
+                  child: const Icon(Icons.keyboard_arrow_left),
+                ),
+                const Spacer(),
                 AmptiveCircleAvatarWidget(
                   diameter: 30, color: AmptiveColors.black.withOpacity(0.7),
                   child: const Icon(Icons.menu, size: 20),
                 ),
+                const Gap(15)
               ],
               backgroundColor: AmptiveColors.black,
               flexibleSpace: FlexibleSpaceBar(
@@ -114,7 +116,7 @@ class AmptiveOrdinaryUserProfileScreen extends StatelessWidget {
                         ),
                         const Gap(5),
                         Text(
-                          AmptiveOtherStrings.FOLLOWERS,
+                          AmptiveStrings.FOLLOWERS,
                           style: Theme.of(context).textTheme.bodySmall?.copyWith(
                             fontSize: AmptiveFontSizes.size16
                           ),
@@ -131,7 +133,7 @@ class AmptiveOrdinaryUserProfileScreen extends StatelessWidget {
                       padding: const EdgeInsets.only(top: 10, bottom: 10),
                       color: AmptiveColors.whiteColor.withOpacity(0.2),
                       child: Text(
-                        AmptiveOtherStrings.EDIT_PROFILE,
+                        AmptiveStrings.EDIT_PROFILE,
                         style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                           fontSize: AmptiveFontSizes.size14
                         )
@@ -246,4 +248,4 @@ class AmptiveTabBarDelegate extends SliverPersistentHeaderDelegate {
 
 
 
-final _tabs = [AmptiveOtherStrings.ATTENDED, AmptiveOtherStrings.UPCOMING];
+final _tabs = [AmptiveStrings.ATTENDED, AmptiveStrings.UPCOMING];

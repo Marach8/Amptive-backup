@@ -22,7 +22,7 @@ class AmptiveTrendingHashTagsScreen extends StatelessWidget {
           slivers: [
             SliverAppBar(
               title: Text(
-                AmptiveOtherStrings.TRENDING_HASHTAGS,
+                AmptiveStrings.TRENDING_HASHTAGS,
                 style: Theme.of(context).textTheme.bodyMedium,
               ),
               elevation: 0,
@@ -37,7 +37,7 @@ class AmptiveTrendingHashTagsScreen extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 15),
                     child: AmptiveRowOfTrendingHashTagTitle(
-                      hashTagTitle: AmptiveOtherStrings.SOCIETY,
+                      hashTagTitle: AmptiveStrings.SOCIETY,
                       hashTagSubTitle: 'ankira22, glendonnor, and 15k other are live',
                       trailingOnpressed: (){
                         context.pushNamed(AmptiveRoutes.TRENDING_HASHTAG_FULL_SCREEN);
@@ -89,7 +89,7 @@ class AmptiveTrendingHashTagsScreen extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 15),
                     child: AmptiveRowOfTrendingHashTagTitle(
-                      hashTagTitle: AmptiveOtherStrings.SOCIETY,
+                      hashTagTitle: AmptiveStrings.SOCIETY,
                       hashTagSubTitle: 'ankira22, glendonnor, and 15k other are live',
                       trailingOnpressed: (){},
                     ),

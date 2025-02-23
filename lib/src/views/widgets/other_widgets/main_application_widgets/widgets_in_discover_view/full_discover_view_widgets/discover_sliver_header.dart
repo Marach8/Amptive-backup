@@ -40,7 +40,7 @@ class AmptiveDiscoverSliverHeader extends SliverPersistentHeaderDelegate{
                 cursorColor: AmptiveColors.whiteColor.withOpacity(0.6),
                 constraints: const BoxConstraints(maxHeight: 40),
                 contentPadding: const EdgeInsets.fromLTRB(16, 0, 16, 12),
-                hintText: AmptiveOtherStrings.SEARCH_FOR_EVENTS_ND_SHOWS,
+                hintText: AmptiveStrings.SEARCH_FOR_EVENTS_ND_SHOWS,
                 prefixIcon: const AmptiveImageLoaderWidget(
                   imagePath: AmptiveImageStrings.outlinedSearch,
                 ),
@@ -72,7 +72,7 @@ class AmptiveDiscoverSliverHeader extends SliverPersistentHeaderDelegate{
                   condition: value,
                   secondChild: const SizedBox.shrink(),
                   firstChild: Text(
-                    AmptiveOtherStrings.CANCEL,
+                    AmptiveStrings.CANCEL,
                     style: Theme.of(context).textTheme.titleLarge,
                   ),
                 );

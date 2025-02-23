@@ -30,7 +30,7 @@ class AmptiveFullDiscoverPageView extends StatelessWidget {
         const _HorizontalScrollCards(),
         Gap(30.h),
         AmptiveRowOfTitleWithTrendingViewAll(
-          title: AmptiveOtherStrings.TRENDING_HASHTAGS,
+          title: AmptiveStrings.TRENDING_HASHTAGS,
           viewAllOnpressed: (){
             context.pushNamed(AmptiveRoutes.TRENDING_HASHTAGS_SCREEN);
           },
@@ -42,7 +42,7 @@ class AmptiveFullDiscoverPageView extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: 15),
           child: AmptiveRowOfTrendingHashTagTitle(
             trailingOnpressed: () => context.pushNamed(AmptiveRoutes.SOCIETY_SCREEN),
-            hashTagTitle: AmptiveOtherStrings.SOCIETY,
+            hashTagTitle: AmptiveStrings.SOCIETY,
             hashTagSubTitle: 'ankira22, glendonnor, and 15k other are live',
           ),
         ),
@@ -94,7 +94,7 @@ class AmptiveFullDiscoverPageView extends StatelessWidget {
         Gap(60.h),
     
         const AmptiveDiscoverCategoriesTitleWidget(
-          categoryName: AmptiveOtherStrings.TECHNOLOGY
+          categoryName: AmptiveStrings.TECHNOLOGY
         ),
         Gap(15.h),
         SizedBox(
@@ -114,7 +114,7 @@ class AmptiveFullDiscoverPageView extends StatelessWidget {
         Gap(50.h),
     
         const AmptiveDiscoverCategoriesTitleWidget(
-          categoryName: AmptiveOtherStrings.SPORTS,
+          categoryName: AmptiveStrings.SPORTS,
         ),
         Gap(15.h),
         SizedBox(
@@ -134,7 +134,7 @@ class AmptiveFullDiscoverPageView extends StatelessWidget {
         Gap(50.h),
     
         const AmptiveDiscoverCategoriesTitleWidget(
-          categoryName: AmptiveOtherStrings.TRUE_CRIME,
+          categoryName: AmptiveStrings.TRUE_CRIME,
         ),
         Gap(15.h),
         SizedBox(
@@ -178,7 +178,7 @@ class AmptiveFullDiscoverPageView extends StatelessWidget {
           padding: const EdgeInsets.only(left: 15),
           alignment: Alignment.centerLeft,
           child: Text(
-            AmptiveOtherStrings.TOP_CREATORS,
+            AmptiveStrings.TOP_CREATORS,
             style: Theme.of(context).textTheme.bodyLarge 
           ),
         ),
@@ -203,7 +203,7 @@ class AmptiveFullDiscoverPageView extends StatelessWidget {
           padding: const EdgeInsets.only(left: 15),
           alignment: Alignment.centerLeft,
           child: Text(
-            AmptiveOtherStrings.SPOTLIGHT,
+            AmptiveStrings.SPOTLIGHT,
             style: Theme.of(context).textTheme.bodyLarge 
           ),
         ),

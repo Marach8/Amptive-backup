@@ -19,13 +19,13 @@ class AmptiveInputDecorationTheme{
     hintStyle: TextStyle(
       fontSize: AmptiveFontSizes.size16,
       color: AmptiveColors.authHintColor,
-      fontWeight: AmptiveFontWeights.regular
+      fontWeight: AmptiveFontWeights.w400
     ),
     contentPadding: const EdgeInsets.fromLTRB(16, 12, 16, 12).r,
     errorStyle: TextStyle(
       color: AmptiveColors.textRedColor,
       fontSize: AmptiveFontSizes.size12,
-      fontWeight: AmptiveFontWeights.regular
+      fontWeight: AmptiveFontWeights.w400
     ),
 
     enabledBorder: const OutlineInputBorder().copyWith(
@@ -34,7 +34,7 @@ class AmptiveInputDecorationTheme{
     ),
     focusedBorder: const OutlineInputBorder().copyWith(
       borderRadius: BorderRadius.circular(14).r,
-      borderSide: BorderSide(width: 2.r, color: AmptiveColors.brandBlue),
+      borderSide: BorderSide(width: 2.r, color: AmptiveColors.hex307FE2),
     ),
     errorBorder: const OutlineInputBorder().copyWith(
       borderRadius: BorderRadius.circular(14).r,

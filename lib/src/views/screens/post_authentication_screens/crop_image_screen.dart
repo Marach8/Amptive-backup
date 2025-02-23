@@ -94,7 +94,7 @@ class _CropPageState extends State<CropPage> {
                   }
                 },
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: AmptiveColors.brandBlue,
+                  backgroundColor: AmptiveColors.hex307FE2,
                 ),
                 child: Text(
                   "Apply",

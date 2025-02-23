@@ -77,7 +77,7 @@ Future<void> showHostViewOfTopGiftersDialog(BuildContext context) async {
                           ),
                           const Gap(5),
                           Text(
-                            AmptiveOtherStrings.GIFTS,
+                            AmptiveStrings.GIFTS,
                             style: Theme.of(context).textTheme.bodyLarge
                           ),
                         ],
@@ -87,14 +87,14 @@ Future<void> showHostViewOfTopGiftersDialog(BuildContext context) async {
                       
                     Text(
                       maxLines: 3,
-                      AmptiveOtherStrings.TOP_GIFTERS_DESC,
+                      AmptiveStrings.TOP_GIFTERS_DESC,
                       style: Theme.of(context).textTheme.bodySmall?.copyWith(
                         color: AmptiveColors.hexC2C2C2
                       ),
                     ),
                     const Gap(20),
                     Text(
-                      AmptiveOtherStrings.TOP_GIFTERS,
+                      AmptiveStrings.TOP_GIFTERS,
                       style: Theme.of(context).textTheme.bodyMedium
                     ),
                     const Gap(20),

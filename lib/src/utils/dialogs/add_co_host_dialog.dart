@@ -80,7 +80,7 @@ Future<Set<ObjectWithNotifier<Host>>?> showAddCoHostDialog(BuildContext context)
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
                           Text(
-                            AmptiveOtherStrings.ADD_CO_HOST,
+                            AmptiveStrings.ADD_CO_HOST,
                             style: Theme.of(context).textTheme.bodyLarge,
                           ),
                           Gap(60.w),
@@ -89,7 +89,7 @@ Future<Set<ObjectWithNotifier<Host>>?> showAddCoHostDialog(BuildContext context)
                               // shouldDispose: true,
                               builder: (_, number, __) {
                                 return Text(
-                                  '$number ${AmptiveOtherStrings.SELECTED}',
+                                  '$number ${AmptiveStrings.SELECTED}',
                                   style: Theme.of(context)
                                       .textTheme
                                       .bodySmall
@@ -103,7 +103,7 @@ Future<Set<ObjectWithNotifier<Host>>?> showAddCoHostDialog(BuildContext context)
 
                       Text(
                         maxLines: 3,
-                        AmptiveOtherStrings.ADD_COHOST_DESC,
+                        AmptiveStrings.ADD_COHOST_DESC,
                         style: Theme.of(context)
                             .textTheme
                             .bodySmall
@@ -119,7 +119,7 @@ Future<Set<ObjectWithNotifier<Host>>?> showAddCoHostDialog(BuildContext context)
                         onChanged: (text) {
                           searchQueryNotifier.value = text;
                         },
-                        hintText: AmptiveOtherStrings.SEARCH_4_COHOSTS,
+                        hintText: AmptiveStrings.SEARCH_4_COHOSTS,
                         prefixConstraints: const BoxConstraints(maxWidth: 50),
                         prefixIcon: const Padding(
                           padding: EdgeInsets.symmetric(horizontal: 15),
@@ -283,7 +283,7 @@ Future<Set<ObjectWithNotifier<Host>>?> showAddCoHostDialog(BuildContext context)
                         );
                         context.pop(selectedCoHosts.toSet());
                         } : null,
-                      buttonTitle: AmptiveOtherStrings.CONTINUE,
+                      buttonTitle: AmptiveStrings.CONTINUE,
                       bgColor: AmptiveColors.whiteColor,
                       fgColor: AmptiveColors.black,
                     );
@@ -315,13 +315,13 @@ class AmptiveListOfCoHostsWidget extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            AmptiveOtherStrings.NO_SUGGESTIONS,
+            AmptiveStrings.NO_SUGGESTIONS,
             style: Theme.of(context).textTheme.bodyMedium
           ),
           Gap(3.h),
           Text(
             maxLines: 2,
-            AmptiveOtherStrings.SEARCH_UR_COHOSTS,
+            AmptiveStrings.SEARCH_UR_COHOSTS,
             style: Theme.of(context)
                 .textTheme
                 .bodySmall

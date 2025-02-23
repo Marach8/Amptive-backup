@@ -44,7 +44,7 @@ class _AmptiveGoLiveScreenState extends State<AmptiveGoLiveScreen> {
           ),
           leadingWidth: 20,
           title: Text(
-            AmptiveOtherStrings.CREATE_SHOW_OR_EVENT,
+            AmptiveStrings.CREATE_SHOW_OR_EVENT,
             style: Theme.of(context).textTheme.bodyMedium,
           ),
         ),
@@ -57,7 +57,7 @@ class _AmptiveGoLiveScreenState extends State<AmptiveGoLiveScreen> {
             children: [
               Text(
                 maxLines: 3,
-                AmptiveOtherStrings.CHOOSE_2_CREATE_SHOW_OR_EVENT,
+                AmptiveStrings.CHOOSE_2_CREATE_SHOW_OR_EVENT,
                 style: Theme.of(context).textTheme.bodySmall?.copyWith(
                   color: AmptiveColors.hexC2C2C2
                 ),
@@ -71,8 +71,8 @@ class _AmptiveGoLiveScreenState extends State<AmptiveGoLiveScreen> {
                       eventSelected: eventSelected,
                       showSelected: showSelected,
                       onSelectedImagePath: AmptiveImageStrings.CREATE_SHOW_ICON,
-                      title: AmptiveOtherStrings.CREATE_SHOW,
-                      subtitle: AmptiveOtherStrings.CREATE_SHOW_DESC,
+                      title: AmptiveStrings.CREATE_SHOW,
+                      subtitle: AmptiveStrings.CREATE_SHOW_DESC,
                       alphabet: 'S',
                     ),
                   ),
@@ -83,8 +83,8 @@ class _AmptiveGoLiveScreenState extends State<AmptiveGoLiveScreen> {
                       eventSelected: eventSelected,
                       showSelected: showSelected,
                       onSelectedImagePath: AmptiveImageStrings.CREATE_EVENT_ICON,
-                      title: AmptiveOtherStrings.CREATE_EVENT,
-                      subtitle: AmptiveOtherStrings.CREATE_EVENT_DESC,
+                      title: AmptiveStrings.CREATE_EVENT,
+                      subtitle: AmptiveStrings.CREATE_EVENT_DESC,
                       alphabet: 'E',
                     ),
                   )
@@ -102,7 +102,7 @@ class _AmptiveGoLiveScreenState extends State<AmptiveGoLiveScreen> {
                 context.pushNamed(AmptiveRoutes.CHOOSE_OR_CREATE_SHOW_SCREEN)
               : context.pushNamed(AmptiveRoutes.CHOOSE_OR_CREATE_EVENT_SCREEN);
             }: null,
-            buttonTitle: AmptiveOtherStrings.CONTINUE,
+            buttonTitle: AmptiveStrings.CONTINUE,
             bgColor: AmptiveColors.whiteColor,
             fgColor: AmptiveColors.black,
           ),

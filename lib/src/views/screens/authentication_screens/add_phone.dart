@@ -52,7 +52,7 @@ class _AddPhoneScreenState extends State<AddPhoneScreen> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  AmptiveOtherStrings.whatIsYourPhoneNumber,
+                  AmptiveStrings.whatIsYourPhoneNumber,
                   style: Theme.of(context).textTheme.headlineMedium?.copyWith(
                         fontSize: AmptiveFontSizes.size17,
                       ),
@@ -84,7 +84,7 @@ class _AddPhoneScreenState extends State<AddPhoneScreen> {
                                       .withOpacity(0.3),
                                   border: Border.all(
                                     color: _isBottomSheetOpened
-                                        ? AmptiveColors.brandBlue
+                                        ? AmptiveColors.hex307FE2
                                         : AmptiveColors.transparentColor,
                                     width: 2.w,
                                   ),
@@ -107,14 +107,14 @@ class _AddPhoneScreenState extends State<AddPhoneScreen> {
                                         height: 12.75.h,
                                         width: 17.w,
                                         package:
-                                            AmptiveOtherStrings.countryPickers,
+                                            AmptiveStrings.countryPickers,
                                       ),
                                     ),
                                     SizedBox(
                                       width: 7.w,
                                     ),
                                     Text(
-                                      AmptiveOtherStrings.plus +
+                                      AmptiveStrings.plus +
                                           selectedCountry.phoneCode,
                                       style: Theme.of(context)
                                           .textTheme
@@ -154,7 +154,7 @@ class _AddPhoneScreenState extends State<AddPhoneScreen> {
                       child: AmptiveTextFormFieldWidget(
                         controller: _phoneController,
                         keyboardType: TextInputType.number,
-                        cursorColor: AmptiveColors.brandBlue,
+                        cursorColor: AmptiveColors.hex307FE2,
                         onChanged: (val) {
                           context
                               .read<AmptiveAuthBloc>()
@@ -163,7 +163,7 @@ class _AddPhoneScreenState extends State<AddPhoneScreen> {
                         decoration: InputDecoration(
                           contentPadding: EdgeInsets.symmetric(
                               vertical: 12.h, horizontal: 16.w),
-                          hintText: AmptiveOtherStrings.phoneNumber,
+                          hintText: AmptiveStrings.phoneNumber,
                           hintStyle: Theme.of(context).textTheme.labelMedium,
                           errorStyle: Theme.of(context)
                               .textTheme
@@ -177,7 +177,7 @@ class _AddPhoneScreenState extends State<AddPhoneScreen> {
                           focusedBorder: OutlineInputBorder(
                             borderSide: BorderSide(
                               width: 2.w,
-                              color: AmptiveColors.brandBlue,
+                              color: AmptiveColors.hex307FE2,
                             ),
                             // borderRadius: SmoothBorderRadius(
                             //   cornerRadius: 14.r,
@@ -215,11 +215,11 @@ class _AddPhoneScreenState extends State<AddPhoneScreen> {
               builder: (context, state) {
                 return AmptiveElevatedButtonWidget(
                   height: 50.w,
-                  buttonTitle: AmptiveOtherStrings.verifyPhoneNumber,
+                  buttonTitle: AmptiveStrings.verifyPhoneNumber,
                   onPressed: state is AddPhoneNumberState && state.isPhoneValid
                       ? () {
                           context.pushNamed(AmptiveRoutes.otp,
-                              extra: AmptiveOtherStrings.phoneNumber);
+                              extra: AmptiveStrings.phoneNumber);
                         }
                       : null,
                 );

@@ -41,11 +41,17 @@ class AmptiveRoutes {
   static const TRENDING_HASHTAG_FULL_SCREEN = 'trending_hashtag_full_screen';
   static const GO_LIVE_SCREEN = 'go_live';
   static const CREATOR_PROFILE_SCREEN = 'creator_profile';
+  static const PROFILE_MENU_SCREEN = 'profile_menu_screen';
+  static const PROFILE_FOLLOWING_SCREEN = 'profile_following_screen';
+  static const PROFILE_SUBSCRIBERS_SCREEN = 'profile_sub_screen';
   static const USER_PROFILE_SCREEN = 'user_profile';
   static const CHOOSE_OR_CREATE_SHOW_SCREEN = 'choose_or_create_show';
   static const CHOOSE_OR_CREATE_EVENT_SCREEN = 'choose_or_create_event';
   static const CREATE_SHOW_SUCCESS = 'create_show_success_screen';
   static const EVENT_SCHEDULED_SCREEN = 'event_scheduled';
   static const EPISODE_SCHEDULED_SCREEN = 'episode_scheduled';
-
+  static const COMMUNITY_TASK_SCREEN = 'community_task';
+  static const PROFILE_PIC_SCREEN = 'profile_picture';
+  static const LANGUAGE_SCREEN = 'language_screen';
+  static const PRIVACY_SCREEN = 'privacy_screen';
 }

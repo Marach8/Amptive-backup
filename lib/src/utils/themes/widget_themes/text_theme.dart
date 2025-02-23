@@ -11,7 +11,7 @@ class AmptiveTextTheme{
     displayMedium: TextStyle(
       color: AmptiveColors.whiteColor,
       fontSize: AmptiveFontSizes.size25,
-      fontWeight: AmptiveFontWeights.bold,
+      fontWeight: AmptiveFontWeights.w700,
       letterSpacing: 0.1,
       overflow: TextOverflow.ellipsis
     ),
@@ -19,63 +19,63 @@ class AmptiveTextTheme{
     headlineLarge: TextStyle(
       color: AmptiveColors.whiteColor,
       fontSize: AmptiveFontSizes.size22,
-      fontWeight: AmptiveFontWeights.bold,
+      fontWeight: AmptiveFontWeights.w700,
       overflow: TextOverflow.ellipsis
     ),
 
     headlineMedium: TextStyle(
       color: AmptiveColors.whiteColor,
       fontSize: AmptiveFontSizes.size18,
-      fontWeight: AmptiveFontWeights.bold,
+      fontWeight: AmptiveFontWeights.w700,
       overflow: TextOverflow.ellipsis
     ),
 
     bodyLarge : TextStyle(
       color: AmptiveColors.whiteColor,
       fontSize: AmptiveFontSizes.size18,
-      fontWeight: AmptiveFontWeights.semiBold,
+      fontWeight: AmptiveFontWeights.w600,
       overflow: TextOverflow.ellipsis
     ),
 
     bodyMedium : TextStyle(
       color: AmptiveColors.whiteColor,
       fontSize: AmptiveFontSizes.size16,
-      fontWeight: AmptiveFontWeights.semiBold,
+      fontWeight: AmptiveFontWeights.w600,
       overflow: TextOverflow.ellipsis
     ), 
 
     bodySmall : TextStyle(
       color: AmptiveColors.whiteColor,
       fontSize: AmptiveFontSizes.size14,
-      fontWeight: AmptiveFontWeights.medium,
+      fontWeight: AmptiveFontWeights.w500,
       overflow: TextOverflow.ellipsis
     ),
     
     labelMedium: TextStyle(
       color: AmptiveColors.authHintColor,
       fontSize: AmptiveFontSizes.size16,
-      fontWeight: AmptiveFontWeights.regular,
+      fontWeight: AmptiveFontWeights.w400,
       overflow: TextOverflow.ellipsis
     ),
 
     titleLarge: TextStyle(
       color: AmptiveColors.whiteColor,
       fontSize: AmptiveFontSizes.size15,
-      fontWeight: AmptiveFontWeights.regular,
+      fontWeight: AmptiveFontWeights.w400,
       overflow: TextOverflow.ellipsis
     ),
 
     titleMedium: TextStyle(
       color: AmptiveColors.whiteColor,
       fontSize: AmptiveFontSizes.size14,
-      fontWeight: AmptiveFontWeights.regular,
+      fontWeight: AmptiveFontWeights.w400,
       overflow: TextOverflow.ellipsis
     ),
 
     titleSmall: TextStyle(
       color: AmptiveColors.whiteColor,
       fontSize: AmptiveFontSizes.size12,
-      fontWeight: AmptiveFontWeights.regular,
+      fontWeight: AmptiveFontWeights.w400,
       overflow: TextOverflow.ellipsis
     ),
   );

@@ -1,26 +1,32 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import '../../../utils/helpers/helper_functions/other_functions.dart';
+
 class AmptiveOutlinedButtonWidget extends StatelessWidget {
   final String buttonTitle;
+  final Color? fgColor, bgColor;
   final void Function()? onPressed;
+  final double? height;
 
   const AmptiveOutlinedButtonWidget({
     super.key,
     required this.buttonTitle,
-    required this.onPressed
+    required this.onPressed,
+    this.fgColor,
+    this.bgColor,
+    this.height
   });
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 20),
-      width: double.infinity,
-      height: 50.h,
-      child: OutlinedButton(
-        onPressed: onPressed,
-        child: Text(buttonTitle)
+    return OutlinedButton(
+      style: ElevatedButton.styleFrom(
+        foregroundColor: fgColor,
+        backgroundColor: bgColor,
       ),
+      onPressed: onPressed,
+      child: Text(buttonTitle)
     );
   }
 }

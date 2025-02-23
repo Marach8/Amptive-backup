@@ -16,9 +16,9 @@ class AmptiveAppBarTheme{
     backgroundColor: AmptiveColors.black,
     foregroundColor: AmptiveColors.whiteColor,
     titleTextStyle: TextStyle(
-      fontFamily: AmptiveOtherStrings.inter,
+      fontFamily: AmptiveStrings.inter,
       fontSize: AmptiveFontSizes.size20,
-      fontWeight: AmptiveFontWeights.bold,
+      fontWeight: AmptiveFontWeights.w700,
     )
   );
 

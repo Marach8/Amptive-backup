@@ -20,7 +20,7 @@ class AmptiveThemeData{
     //   brightness: Brightness.dark,
     //   secondary: AmptiveColors.brandBlueColor,
     // ),
-    fontFamily: AmptiveOtherStrings.inter,
+    fontFamily: AmptiveStrings.inter,
     brightness: Brightness.dark,
     scaffoldBackgroundColor: AmptiveColors.black,
     // listTileTheme: AmptiveListTileTheme.darkListTileTheme,

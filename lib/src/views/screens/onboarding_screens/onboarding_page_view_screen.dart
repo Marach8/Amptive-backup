@@ -50,20 +50,20 @@ class _AmptiveOnboardingScreenState extends State<AmptiveOnboardingScreen> {
                       indexOfDestinationPage: index)),
               children: [
                 AmptiveCustomOnboardingPageViewSlideWidget(
-                  title: AmptiveOtherStrings.goLiveLikeNeverBefore,
+                  title: AmptiveStrings.goLiveLikeNeverBefore,
                   description:
-                      AmptiveOtherStrings.monetizeYouLiveShowsAndEvents,
+                      AmptiveStrings.monetizeYouLiveShowsAndEvents,
                   pictureBgColor: AmptiveColors.hex2D2D2D,
                 ),
                 AmptiveCustomOnboardingPageViewSlideWidget(
-                  title: AmptiveOtherStrings.experienceItUniquely,
-                  description: AmptiveOtherStrings.joinTheLargerAudience,
+                  title: AmptiveStrings.experienceItUniquely,
+                  description: AmptiveStrings.joinTheLargerAudience,
                   pictureBgColor: AmptiveColors.grey2Color,
                 ),
                 AmptiveCustomOnboardingPageViewSlideWidget(
-                  title: AmptiveOtherStrings.liveAudioAndEventShows,
+                  title: AmptiveStrings.liveAudioAndEventShows,
                   description:
-                      AmptiveOtherStrings.tuneIntoLiveAudioShowsAndEvents,
+                      AmptiveStrings.tuneIntoLiveAudioShowsAndEvents,
                   pictureBgColor: AmptiveColors.grey4Color,
                 ),
               ],
@@ -101,8 +101,8 @@ class _AmptiveOnboardingScreenState extends State<AmptiveOnboardingScreen> {
                           final currentPageIndex =
                               currentState.currentPageIndex;
                           return Text(currentPageIndex > 1
-                              ? AmptiveOtherStrings.NEXT
-                              : AmptiveOtherStrings.skip);
+                              ? AmptiveStrings.NEXT
+                              : AmptiveStrings.skip);
                         })),
                   )
                 ],

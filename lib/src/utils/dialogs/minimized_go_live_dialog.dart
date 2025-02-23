@@ -41,7 +41,7 @@ Future<void> showMinimizedGoLiveState() async {
                   style: TextStyle(
                     color: AmptiveColors.whiteColor,
                     fontSize: AmptiveFontSizes.size13,
-                    fontWeight: AmptiveFontWeights.medium,
+                    fontWeight: AmptiveFontWeights.w500,
                   ),
                 ),
                 Row(
@@ -59,7 +59,7 @@ Future<void> showMinimizedGoLiveState() async {
                           style: TextStyle(
                             color: AmptiveColors.hexC2C2C2,
                             fontSize: AmptiveFontSizes.size12,
-                            fontWeight: AmptiveFontWeights.medium,
+                            fontWeight: AmptiveFontWeights.w500,
                           ),
                         ),
                       ),

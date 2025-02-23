@@ -48,7 +48,7 @@ class _PasswordAuthScreenState extends State<PasswordAuthScreen> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  AmptiveOtherStrings.createPasswordForAccount,
+                  AmptiveStrings.createPasswordForAccount,
                   style: Theme.of(context).textTheme.headlineMedium,
                 ),
                 SizedBox(
@@ -72,11 +72,11 @@ class _PasswordAuthScreenState extends State<PasswordAuthScreen> {
                         },
                         obscureText: !_passwordVisible,
                         keyboardType: TextInputType.visiblePassword,
-                        cursorColor: AmptiveColors.brandBlue,
+                        cursorColor: AmptiveColors.hex307FE2,
                         decoration: InputDecoration(
                           contentPadding: EdgeInsets.symmetric(
                               vertical: 12.h, horizontal: 16.w),
-                          hintText: AmptiveOtherStrings.enterYourPassword,
+                          hintText: AmptiveStrings.enterYourPassword,
                           hintStyle: Theme.of(context).textTheme.labelMedium,
                           filled: true,
                           fillColor:
@@ -115,7 +115,7 @@ class _PasswordAuthScreenState extends State<PasswordAuthScreen> {
                     height: height,
                     margin: EdgeInsets.symmetric(vertical: 11.h),
                     child: Text(
-                      state.error ?? AmptiveOtherStrings.empty,
+                      state.error ?? AmptiveStrings.empty,
                       style: Theme.of(context).textTheme.titleSmall,
                     ),
                   );
@@ -135,7 +135,7 @@ class _PasswordAuthScreenState extends State<PasswordAuthScreen> {
             builder: (context, state) {
               return AmptiveElevatedButtonWidget(
                 height: 50.w,
-                buttonTitle: AmptiveOtherStrings.NEXT,
+                buttonTitle: AmptiveStrings.NEXT,
                 onPressed: state is ValidPasswordAuthState
                     ? () {
                         context.pushNamed(AmptiveRoutes.dobAuth);
@@ -151,7 +151,7 @@ class _PasswordAuthScreenState extends State<PasswordAuthScreen> {
 
   OutlineInputBorder buildOutlineInputBorder() {
     return OutlineInputBorder(
-      borderSide: BorderSide(width: 2.w, color: AmptiveColors.brandBlue),
+      borderSide: BorderSide(width: 2.w, color: AmptiveColors.hex307FE2),
       borderRadius: BorderRadius.circular(14.r),
     );
   }

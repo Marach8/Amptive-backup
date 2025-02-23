@@ -39,10 +39,10 @@ class AmptiveLiveIndicatorWithAnimatingDotWidget extends StatelessWidget {
           ),
           Gap(4.w),
           Text(
-            AmptiveOtherStrings.LIVE.toUpperCase(),
+            AmptiveStrings.LIVE.toUpperCase(),
             style: Theme.of(context).textTheme.titleSmall?.copyWith(
               fontSize: AmptiveFontSizes.size14,
-              fontWeight: AmptiveFontWeights.semiBold,
+              fontWeight: AmptiveFontWeights.w600,
               height: 0,
             )
           ),

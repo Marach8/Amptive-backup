@@ -80,7 +80,7 @@ class _AmptiveShowScheduledScreenState
                 const Gap(5),
                 Text(
                     isEvent
-                        ? AmptiveOtherStrings.EVENT_SCHEDULED
+                        ? AmptiveStrings.EVENT_SCHEDULED
                         : 'Your Episode is scheduled!',
                     style: Theme.of(context)
                         .textTheme
@@ -88,7 +88,7 @@ class _AmptiveShowScheduledScreenState
                         ?.copyWith(fontSize: AmptiveFontSizes.size23)),
                 Text(
                     isEvent
-                        ? AmptiveOtherStrings.SHARE_EVENT_LINK
+                        ? AmptiveStrings.SHARE_EVENT_LINK
                         : 'Share your episode link to build excitement and attract more attendees.',
                     maxLines: 2,
                     textAlign: TextAlign.center,
@@ -115,7 +115,7 @@ class _AmptiveShowScheduledScreenState
             AmptiveElevatedButtonWidget(
               onPressed: () {},
               buttonTitle:
-                  isEvent ? AmptiveOtherStrings.SHARE_EVENT : 'Share episode',
+                  isEvent ? AmptiveStrings.SHARE_EVENT : 'Share episode',
               bgColor: AmptiveColors.whiteColor,
               fgColor: AmptiveColors.black,
             ),
@@ -124,7 +124,7 @@ class _AmptiveShowScheduledScreenState
               onTap: () {},
               child: Text(
                   isEvent
-                      ? AmptiveOtherStrings.VIEW_EVENT_PAGE
+                      ? AmptiveStrings.VIEW_EVENT_PAGE
                       : 'View episode page',
                   style: Theme.of(context).textTheme.bodyMedium),
             )

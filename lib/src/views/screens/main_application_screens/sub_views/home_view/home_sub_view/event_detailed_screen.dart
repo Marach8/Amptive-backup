@@ -71,20 +71,20 @@ class AmptiveEventDetailedScreen extends StatelessWidget {
                       overflow: TextOverflow.clip,
                       style: Theme.of(context).textTheme.displayMedium?.copyWith(
                         fontSize: AmptiveFontSizes.size24,
-                        fontWeight: AmptiveFontWeights.semiBold,
+                        fontWeight: AmptiveFontWeights.w600,
                         fontFamily: "Bricolage Grotesque"
                       ),
                     ),
               
                     Gap(20.h),
                     const AmptiveRowOfTwoIconsAndTwoTextsWidget(
-                      text2: AmptiveOtherStrings.TECHNOLOGY,
+                      text2: AmptiveStrings.TECHNOLOGY,
                     ),
               
                     Gap(30.h),
               
                     Text(
-                      AmptiveOtherStrings.hashtags,
+                      AmptiveStrings.hashtags,
                       style: Theme.of(context).textTheme.bodySmall?.copyWith(
                         fontSize: AmptiveFontSizes.size17
                       ),  
@@ -96,7 +96,7 @@ class AmptiveEventDetailedScreen extends StatelessWidget {
                     Gap(20.h),
               
                     Text(
-                      AmptiveOtherStrings.hostedBy,
+                      AmptiveStrings.hostedBy,
                       style: Theme.of(context).textTheme.bodySmall?.copyWith(
                         fontSize: AmptiveFontSizes.size17
                       ),  
@@ -145,20 +145,20 @@ class AmptiveEventDetailedScreen extends StatelessWidget {
                     ReadMoreText(
                       'Jessica Yellin, founder of the Webby-Award Winning Independent News Brand, News Not Noise, returns to walk us through what is going on right now in the political landscape.',
                       trimMode: TrimMode.Length,
-                      trimExpandedText: AmptiveOtherStrings.showLess,
-                      trimCollapsedText: AmptiveOtherStrings.showMore,
+                      trimExpandedText: AmptiveStrings.showLess,
+                      trimCollapsedText: AmptiveStrings.showMore,
                       colorClickableText: AmptiveColors.whiteColor,
                       trimLength: 100,
                       style: TextStyle(
                         color: AmptiveColors.whiteColor.withOpacity(0.6),
                         fontSize: AmptiveFontSizes.size14,
-                        fontWeight: AmptiveFontWeights.medium,
+                        fontWeight: AmptiveFontWeights.w500,
                       ),
                     ),
                     Gap(30.h),
               
                     Text(
-                      AmptiveOtherStrings.WHISPERS,
+                      AmptiveStrings.WHISPERS,
                       style: Theme.of(context).textTheme.bodySmall?.copyWith(
                         fontSize: AmptiveFontSizes.size17
                       ),  
@@ -175,7 +175,7 @@ class AmptiveEventDetailedScreen extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      AmptiveOtherStrings.gotATicketId,
+                      AmptiveStrings.gotATicketId,
                       style: Theme.of(context).textTheme.bodySmall?.copyWith(
                         fontSize: AmptiveFontSizes.size17
                       ),  
@@ -194,14 +194,14 @@ class AmptiveEventDetailedScreen extends StatelessWidget {
                     ReadMoreText(
                       'If you already paid for this event on our website, you should have received a Ticket ID. Kindly enter your Ticket Id in the input field about to access the event...',
                       trimMode: TrimMode.Length,
-                      trimExpandedText: AmptiveOtherStrings.showLess,
+                      trimExpandedText: AmptiveStrings.showLess,
                       trimCollapsedText: 'Learn more about Ticked ID',
                       colorClickableText: AmptiveColors.whiteColor,
                       trimLength: 100,
                       style: TextStyle(
                         color: AmptiveColors.whiteColor.withOpacity(0.6),
                         fontSize: AmptiveFontSizes.size14,
-                        fontWeight: AmptiveFontWeights.medium,
+                        fontWeight: AmptiveFontWeights.w500,
                       ),
                     ),
                     Gap(100.h)

@@ -120,7 +120,7 @@ class _AmptiveGoLiveAudienceViewState extends State<AmptiveGoLiveAudienceView> {
                       const AmptiveImageLoaderWidget(imagePath: AmptiveImageStrings.GROUP_ICON),
                       const Gap(5),
                       Text(
-                        AmptiveOtherStrings.SOCIETY,
+                        AmptiveStrings.SOCIETY,
                         style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                           overflow: TextOverflow.fade
                         ),
@@ -385,7 +385,7 @@ class _GoLiveAudienViewControlsWidgetState extends State<GoLiveAudienViewControl
                     cursorColor: AmptiveColors.whiteColor.withOpacity(0.6),
                     constraints: const BoxConstraints(maxHeight: 35),
                     contentPadding: const EdgeInsets.fromLTRB(16, 0, 16, 0),
-                    hintText: AmptiveOtherStrings.COMMENT,
+                    hintText: AmptiveStrings.COMMENT,
                   ),
                 )
               );
@@ -437,7 +437,7 @@ class _GoLiveAudienViewControlsWidgetState extends State<GoLiveAudienViewControl
                             context: context,
                             icon: const AmptiveImageLoaderWidget(imagePath: AmptiveImageStrings.KICK_USER_OUT),
                             text: 'You have been kicked out of the live session',
-                            bgColor: AmptiveColors.notifRed,
+                            bgColor: AmptiveColors.hexECO404,
                           );
                         },
                         child: const Icon(Icons.front_hand_outlined),
@@ -449,7 +449,7 @@ class _GoLiveAudienViewControlsWidgetState extends State<GoLiveAudienViewControl
                       _RenderAudienceViewButtons(
                         onTap: (){},
                         addMargin: false,
-                        child: Icon(Icons.favorite, color: AmptiveColors.notifRed),
+                        child: Icon(Icons.favorite, color: AmptiveColors.hexECO404),
                       ),
                     ]
                   );

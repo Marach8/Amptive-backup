@@ -13,6 +13,12 @@ import 'package:amptive/src/views/screens/main_application_screens/sub_views/hom
 import 'package:amptive/src/views/screens/main_application_screens/sub_views/home_view/home_sub_view/go_live_views/show/create_show_form_screen.dart';
 import 'package:amptive/src/views/screens/main_application_screens/dashboard_screen.dart';
 import 'package:amptive/src/views/screens/main_application_screens/sub_views/home_view/home_sub_view/go_live_views/main_go_live_screen.dart';
+import 'package:amptive/src/views/screens/main_application_screens/sub_views/home_view/home_sub_view/profile/community_task.dart';
+import 'package:amptive/src/views/screens/main_application_screens/sub_views/home_view/home_sub_view/profile/menu/language.dart' show AmptiveSelectLanguageScreen;
+import 'package:amptive/src/views/screens/main_application_screens/sub_views/home_view/home_sub_view/profile/menu/privacy.dart' show AmptivePrivacyScreen;
+import 'package:amptive/src/views/screens/main_application_screens/sub_views/home_view/home_sub_view/profile/menu/profile_menu_screen.dart';
+import 'package:amptive/src/views/screens/main_application_screens/sub_views/home_view/home_sub_view/profile/profile_pic_display.dart';
+import 'package:amptive/src/views/screens/main_application_screens/sub_views/home_view/home_sub_view/profile/subscribers_screen.dart';
 import 'package:amptive/src/views/screens/main_application_screens/sub_views/home_view/home_sub_view/scheduled_screen.dart';
 import 'package:amptive/src/views/screens/main_application_screens/sub_views/home_view/home_sub_view/profile/creator_profile.dart';
 import 'package:amptive/src/views/screens/post_authentication_screens/crop_image_screen.dart';
@@ -33,6 +39,7 @@ import 'views/screens/main_application_screens/sub_views/home_view/home_sub_view
 import 'views/screens/main_application_screens/sub_views/home_view/home_sub_view/go_live_views/event/choose_event_screen.dart';
 import 'views/screens/main_application_screens/sub_views/home_view/home_sub_view/go_live_views/show/choose_or_create_show_screen.dart';
 import 'views/screens/main_application_screens/sub_views/home_view/home_sub_view/go_live_views/show/show_creation_success_screen.dart';
+import 'views/screens/main_application_screens/sub_views/home_view/home_sub_view/profile/followers_screen.dart';
 import 'views/screens/main_application_screens/sub_views/home_view/home_sub_view/profile/ordinary_user_profile.dart';
 import 'views/screens/main_application_screens/sub_views/home_view/home_sub_view/show_detailed_screen.dart';
 import 'views/screens/main_application_screens/sub_views/home_view/home_sub_view/subscribed_screen.dart';
@@ -225,6 +232,51 @@ final GoRouter amptiveAppRouter = GoRouter(
             name: AmptiveRoutes.CREATOR_PROFILE_SCREEN,
             path: AmptiveRoutes.CREATOR_PROFILE_SCREEN,
             builder: (_, __) => const AmptiveCreatorProfileScreen(),
+          ),
+
+          GoRoute(
+            name: AmptiveRoutes.PROFILE_MENU_SCREEN,
+            path: AmptiveRoutes.PROFILE_MENU_SCREEN,
+            builder: (_, __) => const AmptiveProfileMenuScreen(),
+          ),
+
+          GoRoute(
+            name: AmptiveRoutes.LANGUAGE_SCREEN,
+            path: AmptiveRoutes.LANGUAGE_SCREEN,
+            builder: (_, __) => const AmptiveSelectLanguageScreen(),
+          ),
+
+          GoRoute(
+            name: AmptiveRoutes.PRIVACY_SCREEN,
+            path: AmptiveRoutes.PRIVACY_SCREEN,
+            builder: (_, __) => const AmptivePrivacyScreen(),
+          ),
+
+          GoRoute(
+            name: AmptiveRoutes.PROFILE_FOLLOWING_SCREEN,
+            path: AmptiveRoutes.PROFILE_FOLLOWING_SCREEN,
+            builder: (_, __) => const AmptiveProfileFollowersScreen(),
+          ),
+
+          GoRoute(
+            name: AmptiveRoutes.COMMUNITY_TASK_SCREEN,
+            path: AmptiveRoutes.COMMUNITY_TASK_SCREEN,
+            builder: (_, __) => const AmptiveCommunityTaskScreen(),
+          ),
+
+          GoRoute(
+            name: AmptiveRoutes.PROFILE_PIC_SCREEN,
+            path: AmptiveRoutes.PROFILE_PIC_SCREEN,
+            builder: (_, state){
+              final imgPath = state.extra as String;
+              return AmptiveViewProfilePicScreen(imgPath: imgPath);
+            }
+          ),
+
+          GoRoute(
+            name: AmptiveRoutes.PROFILE_SUBSCRIBERS_SCREEN,
+            path: AmptiveRoutes.PROFILE_SUBSCRIBERS_SCREEN,
+            builder: (_, __) => const AmptiveProfileSubScribersScreen(),
           ),
 
           GoRoute(

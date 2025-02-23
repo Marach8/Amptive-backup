@@ -16,8 +16,8 @@ class AmptiveGoLiveNotificationsWidget extends StatelessWidget {
   @override
   Widget build(context) {
     final user = state.user.obj;
-    final isTalking = state.notificationType == AmptiveOtherStrings.IS_TALKING;
-    final isGifting = state.notificationType == AmptiveOtherStrings.IS_GIFTING;
+    final isTalking = state.notificationType == AmptiveStrings.IS_TALKING;
+    final isGifting = state.notificationType == AmptiveStrings.IS_GIFTING;
     final giftedAmount = (state.extraDetail as Map<String, String>?)?.values.first;
 
     return AmptiveCustomContainer(
@@ -50,7 +50,7 @@ class AmptiveGoLiveNotificationsWidget extends StatelessWidget {
           ),
           const Gap(5),
           Text(
-            isGifting ? '${AmptiveOtherStrings.GIFTED} $giftedAmount' : AmptiveOtherStrings.IS_TALKING,
+            isGifting ? '${AmptiveStrings.GIFTED} $giftedAmount' : AmptiveStrings.IS_TALKING,
             style: Theme.of(context).textTheme.titleSmall,
           ),
           const Gap(10),
@@ -77,9 +77,9 @@ class AmptiveGoLivePinnedMsgNtfctnWidget extends StatelessWidget {
   Widget build(context) {
     final user = state.user.obj;
     final extraDetails = state.extraDetail as Map<String, String>?;
-    final role = extraDetails?[AmptiveOtherStrings.ROLE];
-    final msgTitle = extraDetails?[AmptiveOtherStrings.MSG_TITLE];
-    final msgContent = extraDetails?[AmptiveOtherStrings.MSG_CONTENT];
+    final role = extraDetails?[AmptiveStrings.ROLE];
+    final msgTitle = extraDetails?[AmptiveStrings.MSG_TITLE];
+    final msgContent = extraDetails?[AmptiveStrings.MSG_CONTENT];
 
     return AmptiveCustomContainer(
       padding: const EdgeInsets.fromLTRB(5, 10, 5, 5),
@@ -136,7 +136,7 @@ class AmptiveGoLivePinnedMsgNtfctnWidget extends StatelessWidget {
                           ),
                           const Gap(2),
                           Text(
-                            AmptiveOtherStrings.PINNED.toUpperCase(),
+                            AmptiveStrings.PINNED.toUpperCase(),
                             style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                               fontSize: AmptiveFontSizes.size10
                             )

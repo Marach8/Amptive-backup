@@ -79,7 +79,7 @@ Future<void> showAudienceViewOfTopGiftersDialog(BuildContext context) async {
                           ),
                           const Gap(5),
                           Text(
-                            AmptiveOtherStrings.GIFTS,
+                            AmptiveStrings.GIFTS,
                             style: Theme.of(context).textTheme.bodyLarge
                           ),
                         ],
@@ -89,14 +89,14 @@ Future<void> showAudienceViewOfTopGiftersDialog(BuildContext context) async {
                       
                     Text(
                       maxLines: 3,
-                      AmptiveOtherStrings.TOP_GIFTERS_DESC,
+                      AmptiveStrings.TOP_GIFTERS_DESC,
                       style: Theme.of(context).textTheme.bodySmall?.copyWith(
                         color: AmptiveColors.hexC2C2C2
                       ),
                     ),
                     const Gap(20),
                     Text(
-                      AmptiveOtherStrings.TOP_GIFTERS,
+                      AmptiveStrings.TOP_GIFTERS,
                       style: Theme.of(context).textTheme.bodyMedium
                     ),
                     const Gap(20),
@@ -147,7 +147,7 @@ Future<void> showAudienceViewOfTopGiftersDialog(BuildContext context) async {
                                 )
                               ),
                               Text(
-                                AmptiveOtherStrings.SEND_GIFT_2_HOST,
+                                AmptiveStrings.SEND_GIFT_2_HOST,
                                 style: Theme.of(context).textTheme.titleMedium?.copyWith(
                                   color: AmptiveColors.hexC2C2C2
                                 )
@@ -159,9 +159,9 @@ Future<void> showAudienceViewOfTopGiftersDialog(BuildContext context) async {
                           onTap: (){},
                           radius: 40,
                           padding: const EdgeInsets.fromLTRB(10, 5, 10, 5),
-                          color: AmptiveColors.brandBlue,
+                          color: AmptiveColors.hex307FE2,
                           child: Text(
-                            AmptiveOtherStrings.SEND_GIFT,
+                            AmptiveStrings.SEND_GIFT,
                             style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                               fontSize: AmptiveFontSizes.size15
                             ),

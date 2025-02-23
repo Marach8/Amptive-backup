@@ -25,7 +25,7 @@ class AmptiveTrendingSocietyScreen extends StatelessWidget {
                 centerTitle: true,
                 floating: true,
                 leadingWidth: 100,
-                leading: const AmptiveAppBarLeadingWidget(leadingText: AmptiveOtherStrings.SOCIETY,)
+                leading: const AmptiveAppBarLeadingWidget(leadingText: AmptiveStrings.SOCIETY,)
               ),
 
               SliverGrid(

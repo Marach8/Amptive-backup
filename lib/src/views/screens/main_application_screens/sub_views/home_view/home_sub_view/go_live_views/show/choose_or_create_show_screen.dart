@@ -106,7 +106,7 @@ class _AmptiveChooseOrCreateShowScreenState extends State<AmptiveChooseOrCreateS
                   ),
                   centerTitle: true, leadingWidth: 40,
                   title: Text(
-                    AmptiveOtherStrings.CHOOSE_SHOW,
+                    AmptiveStrings.CHOOSE_SHOW,
                     style: Theme.of(context).textTheme.bodyMedium,
                   ),
                 ),
@@ -116,7 +116,7 @@ class _AmptiveChooseOrCreateShowScreenState extends State<AmptiveChooseOrCreateS
                     padding: const EdgeInsets.fromLTRB(15, 10, 15, 20),
                     child: Text(
                       maxLines: 3,
-                      AmptiveOtherStrings.CHOOSE_OR_CREATE_SHOW,
+                      AmptiveStrings.CHOOSE_OR_CREATE_SHOW,
                       style: Theme.of(context).textTheme.bodySmall?.copyWith(
                         color: AmptiveColors.hexC2C2C2
                       ),
@@ -151,7 +151,7 @@ class _AmptiveChooseOrCreateShowScreenState extends State<AmptiveChooseOrCreateS
                                   ),
                                   const Gap(5),
                                   Text(
-                                    AmptiveOtherStrings.CREATE_NEW_SHOW,
+                                    AmptiveStrings.CREATE_NEW_SHOW,
                                     style: Theme.of(context).textTheme.bodyMedium,
                                   ),
                                 ],
@@ -208,7 +208,7 @@ class _AmptiveChooseOrCreateShowScreenState extends State<AmptiveChooseOrCreateS
               //showSelectAudienceAccessForShowsDialog(context);
               //context.pushNamed(AmptiveRoutes.CREATE_SHOW_SUCCESS);
             } : null,
-            buttonTitle: AmptiveOtherStrings.NEXT,
+            buttonTitle: AmptiveStrings.NEXT,
             bgColor: AmptiveColors.whiteColor,
             fgColor: AmptiveColors.black,
           ),

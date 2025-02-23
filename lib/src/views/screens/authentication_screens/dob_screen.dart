@@ -45,7 +45,7 @@ class _DateOfBirthScreenState extends State<DateOfBirthScreen> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  AmptiveOtherStrings.whatIsYourDateOfBirth,
+                  AmptiveStrings.whatIsYourDateOfBirth,
                   style: GoogleFonts.inter(
                     color: AmptiveColors.whiteColor,
                     fontSize: 17.sp,
@@ -72,11 +72,11 @@ class _DateOfBirthScreenState extends State<DateOfBirthScreen> {
                     maxLines: 1,
                     autovalidateMode: AutovalidateMode.onUserInteraction,
                     keyboardType: TextInputType.none,
-                    cursorColor: AmptiveColors.brandBlue,
+                    cursorColor: AmptiveColors.hex307FE2,
                     decoration: InputDecoration(
                       contentPadding: EdgeInsets.symmetric(
                           vertical: 12.h, horizontal: 16.w),
-                      hintText: AmptiveOtherStrings.selectDate,
+                      hintText: AmptiveStrings.selectDate,
                       hintStyle: GoogleFonts.inter(
                         fontSize: 16.sp,
                         color: AmptiveColors.authHintColor,
@@ -92,7 +92,7 @@ class _DateOfBirthScreenState extends State<DateOfBirthScreen> {
                       focusedBorder: OutlineInputBorder(
                         borderSide: BorderSide(
                           width: 2.w,
-                          color: AmptiveColors.brandBlue,
+                          color: AmptiveColors.hex307FE2,
                         ),
                         borderRadius: BorderRadius.circular(14.r),
                       ),
@@ -114,7 +114,7 @@ class _DateOfBirthScreenState extends State<DateOfBirthScreen> {
                   height: 20.h,
                   margin: EdgeInsets.symmetric(vertical: 11.h),
                   child: Text(
-                    AmptiveOtherStrings.users13andOlderWarning,
+                    AmptiveStrings.users13andOlderWarning,
                     style: GoogleFonts.inter(
                       color: AmptiveColors.whiteColor,
                       fontWeight: FontWeight.w400,
@@ -145,7 +145,7 @@ class _DateOfBirthScreenState extends State<DateOfBirthScreen> {
                           context.pushNamed(AmptiveRoutes.addUsername);
                         }
                       : null,
-                  buttonTitle: AmptiveOtherStrings.NEXT,
+                  buttonTitle: AmptiveStrings.NEXT,
                 );
               }),
         ),
@@ -174,7 +174,7 @@ class _DateOfBirthScreenState extends State<DateOfBirthScreen> {
                   children: <Widget>[
                     CupertinoButton(
                       child: Text(
-                        AmptiveOtherStrings.done,
+                        AmptiveStrings.done,
                         style: GoogleFonts.inter(
                             color: AmptiveColors.whiteColor,
                             fontWeight: FontWeight.normal,

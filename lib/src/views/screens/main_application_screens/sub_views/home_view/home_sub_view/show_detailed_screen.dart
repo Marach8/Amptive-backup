@@ -68,7 +68,7 @@ class AmptiveShowDetailedScreen extends StatelessWidget {
                             overflow: TextOverflow.clip,
                             style: Theme.of(context).textTheme.displayMedium?.copyWith(
                               fontSize: AmptiveFontSizes.size24,
-                              fontWeight: AmptiveFontWeights.semiBold,
+                              fontWeight: AmptiveFontWeights.w600,
                               fontFamily: "Bricolage Grotesque"
                             ),
                           ),
@@ -79,7 +79,7 @@ class AmptiveShowDetailedScreen extends StatelessWidget {
                           Gap(30.h),
                     
                           Text(
-                            AmptiveOtherStrings.hashtags,
+                            AmptiveStrings.hashtags,
                             style: Theme.of(context).textTheme.bodySmall?.copyWith(
                               fontSize: AmptiveFontSizes.size17
                             ),  
@@ -91,7 +91,7 @@ class AmptiveShowDetailedScreen extends StatelessWidget {
                           Gap(20.h),
                     
                           Text(
-                            AmptiveOtherStrings.hostedBy,
+                            AmptiveStrings.hostedBy,
                             style: Theme.of(context).textTheme.bodySmall?.copyWith(
                               fontSize: AmptiveFontSizes.size17
                             ),  
@@ -140,20 +140,20 @@ class AmptiveShowDetailedScreen extends StatelessWidget {
                           ReadMoreText(
                             'Jessica Yellin, founder of the Webby-Award Winning Independent News Brand, News Not Noise, returns to walk us through what is going on right now in the political landscape.',
                             trimMode: TrimMode.Length,
-                            trimExpandedText: AmptiveOtherStrings.showLess,
-                            trimCollapsedText: AmptiveOtherStrings.showMore,
+                            trimExpandedText: AmptiveStrings.showLess,
+                            trimCollapsedText: AmptiveStrings.showMore,
                             colorClickableText: AmptiveColors.whiteColor,
                             trimLength: 100,
                             style: TextStyle(
                               color: AmptiveColors.whiteColor.withOpacity(0.6),
                               fontSize: AmptiveFontSizes.size14,
-                              fontWeight: AmptiveFontWeights.medium,
+                              fontWeight: AmptiveFontWeights.w500,
                             ),
                           ),
                           Gap(30.h),
                     
                           Text(
-                            AmptiveOtherStrings.WHISPERS,
+                            AmptiveStrings.WHISPERS,
                             style: Theme.of(context).textTheme.bodySmall?.copyWith(
                               fontSize: AmptiveFontSizes.size17
                             ),  

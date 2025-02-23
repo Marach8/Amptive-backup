@@ -82,7 +82,7 @@ final showSuffixIconNotifier = ValueNotifier(false);
                           mainAxisAlignment: MainAxisAlignment.end,
                           children: [
                             Text(
-                              AmptiveOtherStrings.ADD_CO_HOST,
+                              AmptiveStrings.ADD_CO_HOST,
                               style: Theme.of(context).textTheme.bodyLarge,
                             ),
                             Gap(60.w),
@@ -93,7 +93,7 @@ final showSuffixIconNotifier = ValueNotifier(false);
                                 ).length;
           
                                 return Text(
-                                  '$number ${AmptiveOtherStrings.SELECTED}',
+                                  '$number ${AmptiveStrings.SELECTED}',
                                   style: Theme.of(context).textTheme.bodySmall?.copyWith(
                                     color: AmptiveColors.hexC2C2C2
                                   ),
@@ -106,7 +106,7 @@ final showSuffixIconNotifier = ValueNotifier(false);
           
                         Text(
                           maxLines: 3,
-                          AmptiveOtherStrings.ADD_COHOST_DESC,
+                          AmptiveStrings.ADD_COHOST_DESC,
                           style: Theme.of(context).textTheme.bodySmall?.copyWith(
                             color: AmptiveColors.hexC2C2C2
                           ),
@@ -124,7 +124,7 @@ final showSuffixIconNotifier = ValueNotifier(false);
                               SearchCohostEvent(searchKey: text)
                             ),
                           ),
-                          hintText: AmptiveOtherStrings.SEARCH_4_COHOSTS,
+                          hintText: AmptiveStrings.SEARCH_4_COHOSTS,
                           prefixConstraints: const BoxConstraints(maxWidth: 50),
                           prefixIcon: const Padding(
                             padding: EdgeInsets.symmetric(horizontal: 15),
@@ -269,7 +269,7 @@ final showSuffixIconNotifier = ValueNotifier(false);
                       return AmptiveElevatedButtonWidget(
                         margin: EdgeInsets.zero,
                         onPressed: shouldActivateBtn ? () => context.pop(true) : null,
-                        buttonTitle: AmptiveOtherStrings.SEND_INVITE,
+                        buttonTitle: AmptiveStrings.SEND_INVITE,
                         bgColor: AmptiveColors.whiteColor,
                         fgColor: AmptiveColors.black,
                       );
@@ -302,13 +302,13 @@ class AmptiveListOfCoHostsWidget extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            AmptiveOtherStrings.NO_SUGGESTIONS,
+            AmptiveStrings.NO_SUGGESTIONS,
             style: Theme.of(context).textTheme.bodyMedium
           ),
           Gap(3.h),
           Text(
             maxLines: 2,
-            AmptiveOtherStrings.SEARCH_UR_COHOSTS,
+            AmptiveStrings.SEARCH_UR_COHOSTS,
             style: Theme.of(context)
                 .textTheme
                 .bodySmall

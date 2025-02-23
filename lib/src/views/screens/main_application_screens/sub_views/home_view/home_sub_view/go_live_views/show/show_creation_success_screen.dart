@@ -60,12 +60,12 @@ class _AmptiveCreateShowSuccessScreenState
               const Gap(15),
               Text(
                   textAlign: TextAlign.center,
-                  AmptiveOtherStrings.SHOW_IS_SETUP,
+                  AmptiveStrings.SHOW_IS_SETUP,
                   style: Theme.of(context).textTheme.headlineLarge),
               const Gap(10),
               Text(
                 textAlign: TextAlign.center,
-                AmptiveOtherStrings.BEGIN_JOURNEY,
+                AmptiveStrings.BEGIN_JOURNEY,
                 style: Theme.of(context)
                     .textTheme
                     .titleMedium
@@ -93,12 +93,12 @@ class _AmptiveCreateShowSuccessScreenState
               onPressed: () async {
                 await context.pushNamed(AmptiveRoutes.CREATE_EPISODE_FORM);
               },
-              buttonTitle: AmptiveOtherStrings.CREATE_1ST_EPISODE,
+              buttonTitle: AmptiveStrings.CREATE_1ST_EPISODE,
               bgColor: AmptiveColors.whiteColor,
               fgColor: AmptiveColors.black,
             ),
             const Gap(10),
-            Text(AmptiveOtherStrings.VIEW_SHOW_PAGE,
+            Text(AmptiveStrings.VIEW_SHOW_PAGE,
                 style: Theme.of(context).textTheme.headlineMedium),
             const Gap(10),
           ],

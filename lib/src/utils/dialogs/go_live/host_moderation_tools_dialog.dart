@@ -12,6 +12,7 @@ import 'package:gap/gap.dart';
 import 'package:go_router/go_router.dart';
 import 'package:iconsax/iconsax.dart';
 import '../../../bloc/main_app/go_live_bloc/audience_view/host_moderation_control_bloc.dart';
+import '../../../views/widgets/common_widgets/switch_widget.dart';
 import '../../constants/strings/other_strings.dart';
 
 Future<void> showHostModerationToolsDialog(BuildContext context) async {
@@ -57,12 +58,12 @@ Future<void> showHostModerationToolsDialog(BuildContext context) async {
                   ),
                   const Gap(10),
                   Text(
-                    AmptiveOtherStrings.MODERATION_TOOLS,
+                    AmptiveStrings.MODERATION_TOOLS,
                     style: Theme.of(context).textTheme.bodyLarge,
                   ),
                   const Gap(20),
                   _CustomRow(
-                    title: AmptiveOtherStrings.ALLOW_COMMENTS,
+                    title: AmptiveStrings.ALLOW_COMMENTS,
                     icon: Iconsax.message,
                     trailing: BlocConsumer<AmptiveGoLiveHostModerationToolsBloc, List<bool>>(
                       listenWhen: (prev, curr) => prev.first != curr.first,
@@ -71,20 +72,20 @@ Future<void> showHostModerationToolsDialog(BuildContext context) async {
                         if(state[1]){
                           showAppNotification(
                           context: context,
-                            text: AmptiveOtherStrings.ALLOWED_COMMENTS,
+                            text: AmptiveStrings.ALLOWED_COMMENTS,
                             icon:const Icon(Iconsax.message,)
                           );
                         }
                         else{
                           showAppNotification(
                           context: context,
-                            text: AmptiveOtherStrings.DISABLED_COMMENTS,
+                            text: AmptiveStrings.DISABLED_COMMENTS,
                             icon:const Icon(Iconsax.message)
                           );
                         }
                       },
                       builder: (_, state) {
-                        return _AmptiveSwitch(
+                        return AmptiveSwitch(
                           value: state.first,
                           onChanged: (value) => value ?
                           context.read<AmptiveGoLiveHostModerationToolsBloc>().allowComments()
@@ -95,9 +96,9 @@ Future<void> showHostModerationToolsDialog(BuildContext context) async {
                   ),
                   const Gap(10),
                   _CustomRow(
-                    title: AmptiveOtherStrings.ALLOW_AUDIENCE_MIC,
+                    title: AmptiveStrings.ALLOW_AUDIENCE_MIC,
                     icon: Icons.mic,
-                    subtitle: AmptiveOtherStrings.NEED_2_ENABLE_LISTENERS_MIC,
+                    subtitle: AmptiveStrings.NEED_2_ENABLE_LISTENERS_MIC,
                     trailing: BlocConsumer<AmptiveGoLiveHostModerationToolsBloc, List<bool>>(
                       listenWhen: (prev, curr) => prev[1] != curr[1],
                       buildWhen: (prev, curr) => prev[1] != curr[1],
@@ -105,20 +106,20 @@ Future<void> showHostModerationToolsDialog(BuildContext context) async {
                         if(state[1]){
                           showAppNotification(
                           context: context,
-                            text: AmptiveOtherStrings.ALLOWED_AUD_MIC,
+                            text: AmptiveStrings.ALLOWED_AUD_MIC,
                             icon:const Icon(Icons.mic)
                           );
                         }
                         else{
                           showAppNotification(
                           context: context,
-                            text: AmptiveOtherStrings.DISABLED_AUD_MIC,
+                            text: AmptiveStrings.DISABLED_AUD_MIC,
                             icon:const Icon(Icons.mic)
                           );
                         }
                       },
                       builder: (_, state) {
-                        return _AmptiveSwitch(
+                        return AmptiveSwitch(
                           value: state[1],
                           onChanged: (value) => value ?
                           context.read<AmptiveGoLiveHostModerationToolsBloc>().allowAudienceMic()
@@ -129,7 +130,7 @@ Future<void> showHostModerationToolsDialog(BuildContext context) async {
                   ),
                   const Gap(10),
                   _CustomRow(
-                    title: AmptiveOtherStrings.ALLOW_COMMENTS,
+                    title: AmptiveStrings.ALLOW_COMMENTS,
                     icon: Icons.front_hand_outlined,
                     trailing: BlocConsumer<AmptiveGoLiveHostModerationToolsBloc, List<bool>>(
                       listenWhen: (prev, curr) => prev.last != curr.last,
@@ -138,20 +139,20 @@ Future<void> showHostModerationToolsDialog(BuildContext context) async {
                         if(state.last){
                           showAppNotification(
                             context: context,
-                            text: AmptiveOtherStrings.ALLOWED_HAND_RAISING,
+                            text: AmptiveStrings.ALLOWED_HAND_RAISING,
                             icon:const Icon(Icons.front_hand_outlined)
                           );
                         }
                         else{
                           showAppNotification(
                             context: context,
-                            text: AmptiveOtherStrings.DISABLED_HAND_RAISING,
+                            text: AmptiveStrings.DISABLED_HAND_RAISING,
                             icon:const Icon(Icons.front_hand_outlined)
                           );
                         }
                       },
                       builder: (_, state) {
-                        return _AmptiveSwitch(
+                        return AmptiveSwitch(
                           value: state.last,
                           onChanged: (value) => value ?
                           context.read<AmptiveGoLiveHostModerationToolsBloc>().allowHandRaising()
@@ -216,32 +217,6 @@ class _CustomRow extends StatelessWidget {
           const Gap(20),
           trailing
         ],
-      ),
-    );
-  }
-}
-
-
-class _AmptiveSwitch extends StatelessWidget {
-  const _AmptiveSwitch({
-    required this.value,
-    required this.onChanged,
-  });
-
-  final bool value;
-  final void Function(bool p1) onChanged;
-
-  @override
-  Widget build(context) {
-    return Transform.scale(
-      scale: 0.6,
-      child: Switch.adaptive(
-        value: value,
-        applyCupertinoTheme: true,
-        thumbColor: WidgetStatePropertyAll(AmptiveColors.whiteColor),
-        activeTrackColor: AmptiveColors.activeSwitch,
-        inactiveTrackColor: AmptiveColors.whiteColor.withOpacity(0.2),
-        onChanged: onChanged
       ),
     );
   }

@@ -202,7 +202,7 @@ class _PreHomePageState extends State<PreHomePage>
                     ),
                     AmptiveElevatedButtonWidget(
                       height: 50.w,
-                      buttonTitle: AmptiveOtherStrings.ALLOW,
+                      buttonTitle: AmptiveStrings.ALLOW,
                       onPressed: () {
                         context.goNamed(AmptiveRoutes.homeScreen);
 
@@ -222,7 +222,7 @@ class _PreHomePageState extends State<PreHomePage>
                         child: Container(
                           padding: EdgeInsets.symmetric(vertical: 11.h),
                           child: Text(
-                            AmptiveOtherStrings.noThanks,
+                            AmptiveStrings.noThanks,
                             textAlign: TextAlign.center,
                             style: GoogleFonts.inter(
                               color: AmptiveColors.whiteColor,

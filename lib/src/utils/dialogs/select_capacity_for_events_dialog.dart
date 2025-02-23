@@ -64,7 +64,7 @@ Future<void> showEventCapacitySelectionDialog({
                 children: [
                   const Icon(Icons.group_outlined),
                   Text(
-                    AmptiveOtherStrings.CAPACITY,
+                    AmptiveStrings.CAPACITY,
                     style: Theme.of(context).textTheme.bodyLarge,
                   ),
                 ],
@@ -73,7 +73,7 @@ Future<void> showEventCapacitySelectionDialog({
             const Gap(20),
             Text(
               maxLines: 5,
-              AmptiveOtherStrings.MAX_CAPACITY,
+              AmptiveStrings.MAX_CAPACITY,
               style: Theme.of(context).textTheme.titleMedium?.copyWith(
                 color: AmptiveColors.hexC2C2C2
               ),
@@ -90,7 +90,7 @@ Future<void> showEventCapacitySelectionDialog({
                 keyboardType: TextInputType.number,
                 validator: (text){
                   if(text?.isEmpty ?? false){
-                    return AmptiveOtherStrings.EMPTY_FIELD;
+                    return AmptiveStrings.EMPTY_FIELD;
                   }
                   return null;
                 },
@@ -101,7 +101,7 @@ Future<void> showEventCapacitySelectionDialog({
             const Spacer(),
             Text(
               maxLines: 5,
-              AmptiveOtherStrings.MAX_CAPACITY_LIMIT,
+              AmptiveStrings.MAX_CAPACITY_LIMIT,
               style: Theme.of(context).textTheme.titleMedium?.copyWith(
                 color: AmptiveColors.hexC2C2C2
               ),
@@ -116,7 +116,7 @@ Future<void> showEventCapacitySelectionDialog({
                     formKey.currentState?.save();
                     context.pop();
                   },
-                  buttonTitle: AmptiveOtherStrings.SET_CAPACITY,
+                  buttonTitle: AmptiveStrings.SET_CAPACITY,
                   bgColor: AmptiveColors.whiteColor,
                   fgColor: AmptiveColors.black,
                 ),
@@ -128,7 +128,7 @@ Future<void> showEventCapacitySelectionDialog({
                     service.capacityController.clear();
                     context.pop();
                   },
-                  buttonTitle: AmptiveOtherStrings.REMOVE,
+                  buttonTitle: AmptiveStrings.REMOVE,
                   bgColor: AmptiveColors.transparentColor,
                   fgColor: AmptiveColors.whiteColor,
                 ),

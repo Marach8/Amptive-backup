@@ -27,13 +27,13 @@ Future<Community> showAddCommunitiesDialog(BuildContext context) async {
           child: Column(children: [
             const Gap(20),
             Text(
-              AmptiveOtherStrings.ADD_COMMUNITY,
+              AmptiveStrings.ADD_COMMUNITY,
               style: Theme.of(context).textTheme.bodyMedium,
             ),
             const Gap(20),
             Text(
               maxLines: 3,
-              AmptiveOtherStrings.ADD_COMMUNITY_DESC,
+              AmptiveStrings.ADD_COMMUNITY_DESC,
               style: Theme.of(context)
                   .textTheme
                   .bodySmall

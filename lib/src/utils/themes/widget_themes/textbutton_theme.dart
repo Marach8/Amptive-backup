@@ -15,9 +15,9 @@ class AmptiveTextButtonTheme{
       disabledForegroundColor: AmptiveColors.grey4Color,
       disabledBackgroundColor: AmptiveColors.transparentColor,
       textStyle: TextStyle(
-        fontFamily: AmptiveOtherStrings.inter,
+        fontFamily: AmptiveStrings.inter,
         fontSize: AmptiveFontSizes.size16,
-        fontWeight: AmptiveFontWeights.semiBold
+        fontWeight: AmptiveFontWeights.w600
       ),
     )
   );

@@ -67,7 +67,7 @@ class _AmptivePreferenceScreenState extends State<AmptivePreferenceScreen> {
                               margin: EdgeInsets.only(top: 20.h, bottom: 11.h),
                               alignment: Alignment.centerLeft,
                               child: Text(
-                                AmptiveOtherStrings.select5Communities,
+                                AmptiveStrings.select5Communities,
                                 style:
                                     Theme.of(context).textTheme.headlineLarge,
                               ),
@@ -76,7 +76,7 @@ class _AmptivePreferenceScreenState extends State<AmptivePreferenceScreen> {
                               margin: EdgeInsets.only(bottom: 30.h),
                               alignment: Alignment.centerLeft,
                               child: Text(
-                                AmptiveOtherStrings.selectedInterestNote,
+                                AmptiveStrings.selectedInterestNote,
                                 style: Theme.of(context)
                                     .textTheme
                                     .titleMedium
@@ -125,19 +125,19 @@ class _AmptivePreferenceScreenState extends State<AmptivePreferenceScreen> {
                                           },
                                           style: ElevatedButton.styleFrom(
                                             backgroundColor:
-                                                AmptiveColors.brandBlue,
+                                                AmptiveColors.hex307FE2,
                                             padding: EdgeInsets.symmetric(
                                                 vertical: 11.5.h),
                                           ),
                                           child: Text(
-                                            AmptiveOtherStrings.NEXT,
+                                            AmptiveStrings.NEXT,
                                             textAlign: TextAlign.center,
                                             style: Theme.of(context)
                                                 .textTheme
                                                 .headlineMedium
                                                 ?.copyWith(
                                                   fontWeight: AmptiveFontWeights
-                                                      .semiBold,
+                                                      .w600,
                                                 ),
                                           ),
                                         ),

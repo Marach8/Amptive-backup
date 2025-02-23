@@ -123,7 +123,7 @@ Future<void> showFollowHostOrCohostDialog({
                       ),
                       const Gap(5),
                       Text(
-                        AmptiveOtherStrings.FOLLOWERS,
+                        AmptiveStrings.FOLLOWERS,
                         style: Theme.of(context).textTheme.bodySmall?.copyWith(
                           fontSize: AmptiveFontSizes.size16
                         ),
@@ -148,7 +148,7 @@ Future<void> showFollowHostOrCohostDialog({
                       ),
                       const Gap(5),
                       Text(
-                        AmptiveOtherStrings.SUBSCRIBERS,
+                        AmptiveStrings.SUBSCRIBERS,
                         style: Theme.of(context).textTheme.bodySmall?.copyWith(
                           fontSize: AmptiveFontSizes.size16
                         ),
@@ -200,7 +200,7 @@ Future<void> showFollowHostOrCohostDialog({
                                     title: 'Unfollowing ${host.obj.name ?? ''}?',
                                     content: 'Unfollowing will automatically cancell your subscription to their content.',
                                     yesString: 'Unfollow',
-                                    noString: AmptiveOtherStrings.CANCEL
+                                    noString: AmptiveStrings.CANCEL
                                   );
                                   if(context.mounted && (shouldUnfollow ?? false)){
                                     context.read<AmptiveFollowingBloc>().add(ShouldUnFollowEvent());
@@ -209,7 +209,7 @@ Future<void> showFollowHostOrCohostDialog({
                               },
                               bgColor: AmptiveColors.whiteColor,
                               fgColor: AmptiveColors.brandBlack,
-                              buttonTitle:notFollowing ? AmptiveOtherStrings.FOLLOW : '',
+                              buttonTitle:notFollowing ? AmptiveStrings.FOLLOW : '',
                               child: isFollowing ? const AmptiveImageLoaderWidget(
                                 imagePath: AmptiveImageStrings.USER_FOLLOW
                               ): isLoading ? const AmptiveLoadingIndicatorWidget(size: 20,) : null
@@ -242,8 +242,8 @@ Future<void> showFollowHostOrCohostDialog({
                                     context: context,
                                     title: "Are your sure you want to unsubscribe from ${host.obj.name ?? ''}'s content?",
                                     content: 'Unsubscribing will remove your access to "subscribers-only" live shows!',
-                                    yesString: AmptiveOtherStrings.UNSUBSCRIBE,
-                                    noString: AmptiveOtherStrings.CANCEL
+                                    yesString: AmptiveStrings.UNSUBSCRIBE,
+                                    noString: AmptiveStrings.CANCEL
                                   );
 
                                   if(context.mounted && (shouldUnSubscribe ?? false)){
@@ -253,13 +253,13 @@ Future<void> showFollowHostOrCohostDialog({
                               },
                               bgColor: AmptiveColors.yellowColor1,
                               fgColor: AmptiveColors.brandBlack,
-                              buttonTitle: isSubscribed ? AmptiveOtherStrings.UNSUBSCRIBE : '',
+                              buttonTitle: isSubscribed ? AmptiveStrings.UNSUBSCRIBE : '',
                               child: isLoading ? AmptiveLoadingIndicatorWidget(color: AmptiveColors.whiteColor,) 
                                 : unSubscribed ? Row(
                                   mainAxisSize: MainAxisSize.min,
                                   children: [
                                     Text(
-                                      AmptiveOtherStrings.SUBSCRIBE,
+                                      AmptiveStrings.SUBSCRIBE,
                                       style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                                         color: AmptiveColors.brandBlack,
                                         fontSize: AmptiveFontSizes.size17

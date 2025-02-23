@@ -18,9 +18,9 @@ class AmptiveOutlinedButtonTheme{
       disabledBackgroundColor: AmptiveColors.transparentColor,
       side: BorderSide(color: AmptiveColors.whiteColor, width: 0.5),
       textStyle: TextStyle(
-        fontFamily: AmptiveOtherStrings.inter,
+        fontFamily: AmptiveStrings.inter,
         fontSize: AmptiveFontSizes.size16,
-        fontWeight: AmptiveFontWeights.semiBold
+        fontWeight: AmptiveFontWeights.w600
       ),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(40).r)
     )

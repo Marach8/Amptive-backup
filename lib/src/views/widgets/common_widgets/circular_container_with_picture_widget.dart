@@ -8,6 +8,7 @@ class AmptiveCircularContainerWithPictureWidget extends StatelessWidget {
   final double? diameter, picturePadding, borderWidth;
   final Color? borderColor;
   final bool? addBorder;
+  final VoidCallback? onTap;
 
   const AmptiveCircularContainerWithPictureWidget({
     super.key,
@@ -16,12 +17,14 @@ class AmptiveCircularContainerWithPictureWidget extends StatelessWidget {
     this.picturePadding, 
     this.borderWidth,
     this.borderColor,
-    this.addBorder
+    this.addBorder,
+    this.onTap
   });
 
   @override
   Widget build(BuildContext context) {
     return AmptiveCustomContainer(
+      onTap: onTap,
       height: diameter ?? 30,
       width: diameter ?? 30,
       radius: (diameter ?? 30)/2,

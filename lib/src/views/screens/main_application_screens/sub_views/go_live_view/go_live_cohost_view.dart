@@ -92,7 +92,7 @@ class _AmptiveGoLiveCohostViewState extends State<AmptiveGoLiveCohostView> {
                     child: Row(
                       children: [
                         Text(
-                          AmptiveOtherStrings.LIVE,
+                          AmptiveStrings.LIVE,
                           style: Theme.of(context).textTheme.bodyMedium,
                         ),
                         Gap(5.w),
@@ -268,7 +268,7 @@ class _AmptiveGoLiveCohostViewState extends State<AmptiveGoLiveCohostView> {
                         cursorColor: AmptiveColors.whiteColor.withOpacity(0.6),
                         constraints: const BoxConstraints(maxHeight: 40),
                         contentPadding: const EdgeInsets.fromLTRB(16, 0, 16, 0),
-                        hintText: AmptiveOtherStrings.COMMENT,
+                        hintText: AmptiveStrings.COMMENT,
                       ),
                     )
                   );
