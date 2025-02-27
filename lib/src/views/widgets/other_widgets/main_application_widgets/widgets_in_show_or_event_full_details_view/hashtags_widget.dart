@@ -20,7 +20,7 @@ class AmptiveHashtagsWidget extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             IntrinsicWidth(
-              child: AmptiveCustomContainer(
+              child: AmptiveContainer(
                 margin: const EdgeInsets.only(bottom: 15,),
                 padding: const EdgeInsets.fromLTRB(15, 7, 15, 7),
                 alignment: Alignment.center,

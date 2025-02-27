@@ -15,7 +15,9 @@ import 'package:amptive/src/views/screens/main_application_screens/dashboard_scr
 import 'package:amptive/src/views/screens/main_application_screens/sub_views/home_view/home_sub_view/go_live_views/main_go_live_screen.dart';
 import 'package:amptive/src/views/screens/main_application_screens/sub_views/home_view/home_sub_view/profile/community_task.dart';
 import 'package:amptive/src/views/screens/main_application_screens/sub_views/home_view/home_sub_view/profile/menu/language.dart' show AmptiveSelectLanguageScreen;
-import 'package:amptive/src/views/screens/main_application_screens/sub_views/home_view/home_sub_view/profile/menu/privacy.dart' show AmptivePrivacyScreen;
+import 'package:amptive/src/views/screens/main_application_screens/sub_views/home_view/home_sub_view/profile/menu/privacy/blocked_accts.dart';
+import 'package:amptive/src/views/screens/main_application_screens/sub_views/home_view/home_sub_view/profile/menu/privacy/muted_accts.dart';
+import 'package:amptive/src/views/screens/main_application_screens/sub_views/home_view/home_sub_view/profile/menu/privacy/privacy_home.dart' show AmptivePrivacyScreen;
 import 'package:amptive/src/views/screens/main_application_screens/sub_views/home_view/home_sub_view/profile/menu/profile_menu_screen.dart';
 import 'package:amptive/src/views/screens/main_application_screens/sub_views/home_view/home_sub_view/profile/profile_pic_display.dart';
 import 'package:amptive/src/views/screens/main_application_screens/sub_views/home_view/home_sub_view/profile/subscribers_screen.dart';
@@ -250,6 +252,18 @@ final GoRouter amptiveAppRouter = GoRouter(
             name: AmptiveRoutes.PRIVACY_SCREEN,
             path: AmptiveRoutes.PRIVACY_SCREEN,
             builder: (_, __) => const AmptivePrivacyScreen(),
+          ),
+
+          GoRoute(
+            name: AmptiveRoutes.BLOCKED_ACCTS_SCREEN,
+            path: AmptiveRoutes.BLOCKED_ACCTS_SCREEN,
+            builder: (_, __) => const AmptiveBlockedAcctsScreen(),
+          ),
+
+          GoRoute(
+            name: AmptiveRoutes.MUTED_ACCTS_SCREEN,
+            path: AmptiveRoutes.MUTED_ACCTS_SCREEN,
+            builder: (_, __) => const AmptiveMutedAcctsScreen(),
           ),
 
           GoRoute(

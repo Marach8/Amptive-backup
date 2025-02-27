@@ -24,7 +24,7 @@ class AmptiveDiscoverSliverHeader extends SliverPersistentHeaderDelegate{
 
   @override
   Widget build(BuildContext context, double shrinkOffset, bool overlapsContent) {
-    return AmptiveCustomContainer(
+    return AmptiveContainer(
       color: AmptiveColors.black,
       height: 61,
       child: Padding(

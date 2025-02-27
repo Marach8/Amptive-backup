@@ -61,7 +61,7 @@ Future<Set<ObjectWithNotifier<Hashtag>>?> showAddHashtagDialog(
                             color:
                             AmptiveColors.whiteColor.withOpacity(0.6),
                           )
-                              : AmptiveCustomContainer(
+                              : AmptiveContainer(
                             margin:
                             const EdgeInsets.symmetric(vertical: 10),
                             radius: 5,
@@ -172,7 +172,7 @@ Future<Set<ObjectWithNotifier<Hashtag>>?> showAddHashtagDialog(
                                     //Using this index, get the notifier associated with it in the list of notifiers.
                                     // final notifier = listOfValueNotifiers.elementAt(indexOfTappedHashtag);
 
-                                    return AmptiveCustomContainer(
+                                    return AmptiveContainer(
                                       margin: const EdgeInsets.only(right: 15),
                                       padding: const EdgeInsets.fromLTRB(
                                           15, 7, 15, 7),
@@ -265,7 +265,7 @@ Future<Set<ObjectWithNotifier<Hashtag>>?> showAddHashtagDialog(
             ),
             Positioned(
               bottom: 10,
-              child: AmptiveCustomContainer(
+              child: AmptiveContainer(
                 height: 50.h,
                 padding: const EdgeInsets.symmetric(horizontal: 15),
                 width: AmptiveHelperFunctions.getScreenWidth(context),
@@ -361,7 +361,7 @@ class AmptiveAddHashtagWidget extends StatelessWidget {
         },
         child: Row(
           children: [
-            AmptiveCustomContainer(
+            AmptiveContainer(
               height: 50,
               width: 50,
               color: AmptiveColors.whiteColor,
@@ -398,7 +398,7 @@ class AmptiveAddHashtagWidget extends StatelessWidget {
             AmptiveRebuilderWidget(
                 notifier: hashtagDetail.notifier,
                 builder: (_, value, __) {
-                  return AmptiveCustomContainer(
+                  return AmptiveContainer(
                       duration: 200,
                       color: value
                           ? AmptiveColors.whiteColor

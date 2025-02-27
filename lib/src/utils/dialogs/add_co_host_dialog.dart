@@ -64,7 +64,7 @@ Future<Set<ObjectWithNotifier<Host>>?> showAddCoHostDialog(BuildContext context)
                                   color:
                                       AmptiveColors.whiteColor.withOpacity(0.6),
                                 )
-                              : AmptiveCustomContainer(
+                              : AmptiveContainer(
                                   margin:
                                       const EdgeInsets.symmetric(vertical: 10),
                                   radius: 5,
@@ -150,7 +150,7 @@ Future<Set<ObjectWithNotifier<Host>>?> showAddCoHostDialog(BuildContext context)
                           return AmptiveAnimatedCrossFadeWidget(
                             condition: !selectionStarted,
                             firstChild: const SizedBox.shrink(),
-                            secondChild: AmptiveCustomContainer(
+                            secondChild: AmptiveContainer(
                               height: 43, alignment: Alignment.center,
                               margin: const EdgeInsets.fromLTRB(20, 20, 20, 0),
                               child: SingleChildScrollView(
@@ -165,7 +165,7 @@ Future<Set<ObjectWithNotifier<Host>>?> showAddCoHostDialog(BuildContext context)
                                         if(!showCoHost){
                                           final index = selectedCoHosts.toList().indexOf(selectedCoHost);
                                     
-                                          return AmptiveCustomContainer(
+                                          return AmptiveContainer(
                                             alignment: Alignment.center,
                                             margin: const EdgeInsets.only(right: 15),
                                             border: Border.all(color: AmptiveColors.whiteColor.withOpacity(0.4)),
@@ -184,7 +184,7 @@ Future<Set<ObjectWithNotifier<Host>>?> showAddCoHostDialog(BuildContext context)
                                           child: Stack(
                                             clipBehavior: Clip.none,
                                             children: [
-                                              AmptiveCustomContainer(
+                                              AmptiveContainer(
                                                 clipBehavior: Clip.hardEdge,
                                                 height: 43, width: 43, radius: 30,
                                                 child: FittedBox(
@@ -196,7 +196,7 @@ Future<Set<ObjectWithNotifier<Host>>?> showAddCoHostDialog(BuildContext context)
                                               ),
                                               Positioned(
                                                 top: 0, right: -4, 
-                                                child: AmptiveCustomContainer(
+                                                child: AmptiveContainer(
                                                   onTap: () {
                                                     //Disable this notifier
                                                     // selectedCoHost.notifier.value = false;
@@ -266,7 +266,7 @@ Future<Set<ObjectWithNotifier<Host>>?> showAddCoHostDialog(BuildContext context)
             ),
             Positioned(
               bottom: 10,
-              child: AmptiveCustomContainer(
+              child: AmptiveContainer(
                 height: 50.h,
                 padding: const EdgeInsets.symmetric(horizontal: 15),
                 width: AmptiveHelperFunctions.getScreenWidth(context),
@@ -369,7 +369,7 @@ class AmptiveCoHostWidget extends StatelessWidget {
         onTap: () => onTap(coHostDetail, coHostDetail.notifier.value),
         child: Row(
           children: [
-            AmptiveCustomContainer(
+            AmptiveContainer(
               clipBehavior: Clip.hardEdge,
               height: 50, width: 50, radius: 30,
               child: FittedBox(
@@ -400,7 +400,7 @@ class AmptiveCoHostWidget extends StatelessWidget {
             AmptiveRebuilderWidget(
               notifier: coHostDetail.notifier,
               builder: (_, value, __) {
-                return AmptiveCustomContainer(
+                return AmptiveContainer(
                   duration: 200,
                   color: value ? AmptiveColors.whiteColor : AmptiveColors.transparentColor,
                   border: Border.all(color: AmptiveColors.whiteColor),

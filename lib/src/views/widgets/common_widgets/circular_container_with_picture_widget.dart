@@ -23,7 +23,7 @@ class AmptiveCircularContainerWithPictureWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return AmptiveCustomContainer(
+    return AmptiveContainer(
       onTap: onTap,
       height: diameter ?? 30,
       width: diameter ?? 30,

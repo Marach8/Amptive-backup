@@ -94,7 +94,7 @@ class _AmptiveGoLiveHostViewState extends State<AmptiveGoLiveHostView> {
 
               Align(
                 alignment: Alignment.centerLeft,
-                child: AmptiveCustomContainer(
+                child: AmptiveContainer(
                   onTap: (){},
                   margin: const EdgeInsets.only(left: 15),
                   padding: const EdgeInsets.fromLTRB(5, 5, 10, 5), radius: 30,
@@ -162,7 +162,7 @@ class _AmptiveGoLiveHostViewState extends State<AmptiveGoLiveHostView> {
                       ),
                     ),
                 
-                    AmptiveCustomContainer(
+                    AmptiveContainer(
                       height: 250,
                       padding: const EdgeInsets.only(left: 20, right: 20),
                       boxShadow: [
@@ -252,7 +252,7 @@ class _AmptiveGoLiveHostViewState extends State<AmptiveGoLiveHostView> {
                           bottom: 70, right: 15,
                           child: AmptiveScalingAnimatedSwitcherWidget(
                             duration: 500,
-                            child: showIcon ? AmptiveCustomContainer(
+                            child: showIcon ? AmptiveContainer(
                               key: const ValueKey(1),
                               onTap: () => _scrollToBottom(),
                               color: AmptiveColors.whiteColor.withOpacity(0.1),
@@ -317,7 +317,7 @@ class _GoLiveHostViewBottomSheetState extends State<GoLiveHostViewBottomSheet> {
 
   @override
   Widget build(context) {
-    return AmptiveCustomContainer(
+    return AmptiveContainer(
       padding: const EdgeInsets.fromLTRB(15, 10, 15, 10),
       color: AmptiveColors.black,
      // height: 35,
@@ -449,7 +449,7 @@ class _RenderBottomSheetButtonsWidget extends StatelessWidget {
 
   @override
   Widget build(context) {
-    return AmptiveCustomContainer(
+    return AmptiveContainer(
       onTap: onTap,
       margin: margin ?? EdgeInsets.only(right: 5.w),
       color: AmptiveColors.whiteColor.withOpacity(0.1),

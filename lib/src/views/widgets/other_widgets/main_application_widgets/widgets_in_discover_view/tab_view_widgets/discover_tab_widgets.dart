@@ -56,7 +56,7 @@ with SingleTickerProviderStateMixin{
                 valueListenable: _isTabSelected,
                 builder: (_, value, __) {
                   final isSelected = tab.key == value;
-                    return AmptiveCustomContainer(
+                    return AmptiveContainer(
                       radius: 20,
                       margin: const EdgeInsets.only(right: 10),
                       color: isSelected ? 
@@ -77,7 +77,7 @@ with SingleTickerProviderStateMixin{
         ),
         
     
-        AmptiveCustomContainer(
+        AmptiveContainer(
           padding: const EdgeInsets.all(15),
           height: AmptiveHelperFunctions.getScreenHeight(context),
           child: TabBarView(

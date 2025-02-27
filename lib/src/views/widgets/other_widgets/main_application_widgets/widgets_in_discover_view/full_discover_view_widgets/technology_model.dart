@@ -15,7 +15,7 @@ class AmptiveTechnologyModel extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return AmptiveCustomContainer(
+    return AmptiveContainer(
       width: 250,
       padding: const EdgeInsets.only(left: 10),
       child: Column(
@@ -36,7 +36,7 @@ class AmptiveTechnologyModel extends StatelessWidget {
           ),
           Row(
             children: [
-              AmptiveCustomContainer(
+              AmptiveContainer(
                 height: 12, width: 12,
                 color: AmptiveColors.authHintColor,
                 child: FittedBox(

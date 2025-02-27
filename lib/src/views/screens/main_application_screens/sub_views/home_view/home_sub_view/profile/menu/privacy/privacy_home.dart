@@ -9,12 +9,13 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
 import 'package:go_router/go_router.dart';
 import 'package:iconsax/iconsax.dart';
-import '../../../../../../../../bloc/main_app/profile/private_account_bloc.dart';
-import '../../../../../../../../bloc/main_app/profile/profile_menu/language_bloc.dart';
-import '../../../../../../../../utils/constants/strings/other_strings.dart';
-import '../../../../../../../../utils/dialogs/app_notification_dialog.dart';
-import '../../../../../../../widgets/common_widgets/circle_avatar.dart';
-import '../../../../../../../widgets/common_widgets/switch_widget.dart';
+import '../../../../../../../../../bloc/main_app/profile/private_account_bloc.dart';
+import '../../../../../../../../../bloc/main_app/profile/profile_menu/language_bloc.dart';
+import '../../../../../../../../../utils/constants/strings/other_strings.dart';
+import '../../../../../../../../../utils/constants/strings/route_strings.dart';
+import '../../../../../../../../../utils/dialogs/app_notification_dialog.dart';
+import '../../../../../../../../widgets/common_widgets/circle_avatar.dart';
+import '../../../../../../../../widgets/common_widgets/switch_widget.dart';
 
 
 
@@ -38,7 +39,7 @@ class AmptivePrivacyScreen extends StatelessWidget {
                   ),
                   const Spacer(),
                   Text(
-                    AmptiveStrings.LANGUAGE,
+                    AmptiveStrings.PRIVACY,
                     style: Theme.of(context).textTheme.bodyMedium,
                   ),
                   const Spacer(),
@@ -99,12 +100,12 @@ class AmptivePrivacyScreen extends StatelessWidget {
                   MenuItem(
                     firstIcon: const Icon(Icons.notifications_off_outlined),
                     middleText: AmptiveStrings.MUTED_ACCTS,
-                    onTap: (){}
+                    onTap: () => context.pushNamed(AmptiveRoutes.MUTED_ACCTS_SCREEN)
                   ),
                   MenuItem(
                     firstIcon: const Icon(Icons.block),
                     middleText: AmptiveStrings.BLOCKED_ACCTS,
-                    onTap: (){}
+                    onTap: () => context.pushNamed(AmptiveRoutes.BLOCKED_ACCTS_SCREEN)
                   ),
                 ],
               ),

@@ -34,7 +34,7 @@ class AmptiveTrendingHashTagFullScreen extends StatelessWidget {
               SliverToBoxAdapter(
                 child: Row(
                   children: [
-                    AmptiveCustomContainer(
+                    AmptiveContainer(
                       alignment: Alignment.center,
                       height: 40, width: 40,
                       boxShape: BoxShape.circle,

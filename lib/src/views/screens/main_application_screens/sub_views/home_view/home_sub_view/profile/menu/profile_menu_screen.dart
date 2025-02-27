@@ -155,7 +155,7 @@ class MenuItem extends StatelessWidget {
 
   @override
   Widget build(context) {
-    return AmptiveCustomContainer(
+    return AmptiveContainer(
       margin: margin ?? const EdgeInsets.fromLTRB(15, 0, 15, 20),
       onTap: onTap,
       child: Row(

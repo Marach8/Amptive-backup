@@ -16,7 +16,7 @@ class AmptiveSocietySliverHeader extends SliverPersistentHeaderDelegate{
 
   @override
   Widget build(BuildContext context, double shrinkOffset, bool overlapsContent) {
-    return AmptiveCustomContainer(
+    return AmptiveContainer(
       color: AmptiveColors.brandBlack,
       height: kToolbarHeight,
       child: TabBar(
@@ -36,7 +36,7 @@ class AmptiveSocietySliverHeader extends SliverPersistentHeaderDelegate{
               valueListenable: notifier,
               builder: (_, value, __) {
                 final isSelected = tab.key == value;
-                  return AmptiveCustomContainer(
+                  return AmptiveContainer(
                     radius: 20,
                     margin: const EdgeInsets.only(right: 10),
                     color: isSelected ? 

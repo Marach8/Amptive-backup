@@ -170,7 +170,7 @@ class AmptiveShowDetailedScreen extends StatelessWidget {
 
               Positioned(
                 top: 0,
-                child: AmptiveCustomContainer(
+                child: AmptiveContainer(
                   height: 72.h,
                   width: AmptiveHelperFunctions.getScreenWidth(context),
                   child: ClipRect(
@@ -187,7 +187,7 @@ class AmptiveShowDetailedScreen extends StatelessWidget {
 
               Positioned(
                 top: 0,
-                child: AmptiveCustomContainer(
+                child: AmptiveContainer(
                   height: 72.h,
                   width: AmptiveHelperFunctions.getScreenWidth(context),
                   alignment: Alignment.center,
@@ -202,7 +202,7 @@ class AmptiveShowDetailedScreen extends StatelessWidget {
                         Icons.keyboard_arrow_down, size: 30,
                         color: AmptiveColors.whiteColor.withOpacity(0.6),
                       )
-                      : AmptiveCustomContainer(
+                      : AmptiveContainer(
                         margin: const EdgeInsets.symmetric(vertical: 10),
                         radius: 5, height: 4, width: 30,
                         color: AmptiveColors.whiteColor.withOpacity(0.6),

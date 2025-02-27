@@ -27,7 +27,7 @@ class AmptiveExistingEventWidget extends StatelessWidget {
     return AmptiveRebuilderWidget(
       notifier: eachButtonNotifier,
       builder: (_, isSelected, __) {
-        return AmptiveCustomContainer(
+        return AmptiveContainer(
           onTap: () => onTap(isSelected),
           radius: 5,
           border: Border.all(
@@ -37,7 +37,7 @@ class AmptiveExistingEventWidget extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              AmptiveCustomContainer(
+              AmptiveContainer(
                 radius: 5, height: imageHeight,
                 width: imageWidth,
                 clipBehavior: Clip.hardEdge,

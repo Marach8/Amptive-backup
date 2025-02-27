@@ -70,7 +70,7 @@ final showSuffixIconNotifier = ValueNotifier(false);
                                   Icons.keyboard_arrow_down,
                                   color: AmptiveColors.whiteColor.withOpacity(0.6),
                                 )
-                              : AmptiveCustomContainer(
+                              : AmptiveContainer(
                                   margin: const EdgeInsets.symmetric(vertical: 10),
                                   radius: 5, height: 4, width: 30,
                                   color: AmptiveColors.whiteColor.withOpacity(0.6),
@@ -158,7 +158,7 @@ final showSuffixIconNotifier = ValueNotifier(false);
                             return AmptiveAnimatedCrossFadeWidget(
                               condition: showSelectedCohosts,
                               secondChild: const SizedBox.shrink(),
-                              firstChild: AmptiveCustomContainer(
+                              firstChild: AmptiveContainer(
                                 height: 43, alignment: Alignment.center,
                                 margin: const EdgeInsets.fromLTRB(20, 20, 20, 0),
                                 child: SingleChildScrollView(
@@ -170,7 +170,7 @@ final showSuffixIconNotifier = ValueNotifier(false);
                                         final index = listOfCohosts.indexOf(cohost);
                                         
                                         if(!showCoHost){
-                                          return AmptiveCustomContainer(
+                                          return AmptiveContainer(
                                             alignment: Alignment.center,
                                             margin: const EdgeInsets.only(right: 15),
                                             border: Border.all(color: AmptiveColors.whiteColor.withOpacity(0.4)),
@@ -189,7 +189,7 @@ final showSuffixIconNotifier = ValueNotifier(false);
                                           child: Stack(
                                             clipBehavior: Clip.none,
                                             children: [
-                                              AmptiveCustomContainer(
+                                              AmptiveContainer(
                                                 clipBehavior: Clip.hardEdge,
                                                 height: 43, width: 43, radius: 30,
                                                 child: FittedBox(
@@ -201,7 +201,7 @@ final showSuffixIconNotifier = ValueNotifier(false);
                                               ),
                                               Positioned(
                                                 top: 0, right: -4, 
-                                                child: AmptiveCustomContainer(
+                                                child: AmptiveContainer(
                                                   onTap: () => context.read<AmptiveGoLiveSelectCoHostBloc>()
                                                     .hostRemoveCohost(cohost),
                                                   color: AmptiveColors.textRedColor,
@@ -257,7 +257,7 @@ final showSuffixIconNotifier = ValueNotifier(false);
               ),
               Positioned(
                 bottom: 10,
-                child: AmptiveCustomContainer(
+                child: AmptiveContainer(
                   height: 50.h,
                   padding: const EdgeInsets.symmetric(horizontal: 15),
                   width: AmptiveHelperFunctions.getScreenWidth(context),

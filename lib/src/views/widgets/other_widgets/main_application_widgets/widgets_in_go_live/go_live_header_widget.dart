@@ -55,7 +55,7 @@ class AmptiveLiveViewHeaderWidget extends StatelessWidget {
         Positioned(
           left: 15,
           /// The default is for the host view. provide the exitIcon when calling for other views
-          child: exitIcon ?? AmptiveCustomContainer(
+          child: exitIcon ?? AmptiveContainer(
             onTap: (){
               context.read<AmptiveEndShowBloc>().add(
                 Reset2IntialStateEvent()
@@ -78,7 +78,7 @@ class AmptiveLiveViewHeaderWidget extends StatelessWidget {
     
         Positioned(
           right: 15,
-          child: AmptiveCustomContainer(
+          child: AmptiveContainer(
             boxShadow: [
               BoxShadow(
                 color: AmptiveColors.black,
@@ -88,7 +88,7 @@ class AmptiveLiveViewHeaderWidget extends StatelessWidget {
             ],
             child: Row(
               children: [
-                AmptiveCustomContainer(
+                AmptiveContainer(
                   onTap: () => exitIcon == null ? showHostViewOfTopGiftersDialog(context)
                     : showAudienceViewOfTopGiftersDialog(context),
                   padding: const EdgeInsets.all(5),
@@ -115,7 +115,7 @@ class AmptiveLiveViewHeaderWidget extends StatelessWidget {
             
                 Gap(10.w),
                     
-                AmptiveCustomContainer(
+                AmptiveContainer(
                   onTap: (){
                     if(exitIcon == null){
                       showListenersDialog(context: context);

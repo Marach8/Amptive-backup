@@ -20,7 +20,7 @@ class AmptiveGoLiveNotificationsWidget extends StatelessWidget {
     final isGifting = state.notificationType == AmptiveStrings.IS_GIFTING;
     final giftedAmount = (state.extraDetail as Map<String, String>?)?.values.first;
 
-    return AmptiveCustomContainer(
+    return AmptiveContainer(
       padding: const EdgeInsets.fromLTRB(2, 0, 0, 0),
       height: 35, radius: 30,
       gradient: isTalking ? LinearGradient(
@@ -81,7 +81,7 @@ class AmptiveGoLivePinnedMsgNtfctnWidget extends StatelessWidget {
     final msgTitle = extraDetails?[AmptiveStrings.MSG_TITLE];
     final msgContent = extraDetails?[AmptiveStrings.MSG_CONTENT];
 
-    return AmptiveCustomContainer(
+    return AmptiveContainer(
       padding: const EdgeInsets.fromLTRB(5, 10, 5, 5),
       margin: const EdgeInsets.only(left: 15, right: 15),
       color: AmptiveColors.whiteColor.withOpacity(0.15),
@@ -114,7 +114,7 @@ class AmptiveGoLivePinnedMsgNtfctnWidget extends StatelessWidget {
                       ),
                     ),
     
-                    AmptiveCustomContainer(
+                    AmptiveContainer(
                       color: AmptiveColors.whiteColor.withOpacity(0.2),
                       padding: const EdgeInsets.all(2), radius: 4,
                       child: Text(
@@ -125,7 +125,7 @@ class AmptiveGoLivePinnedMsgNtfctnWidget extends StatelessWidget {
                       ),
                     ),
                     const Gap(5),
-                    AmptiveCustomContainer(
+                    AmptiveContainer(
                       color: AmptiveColors.whiteColor.withOpacity(0.2),
                       padding: const EdgeInsets.all(2), radius: 4,
                       child: Row(

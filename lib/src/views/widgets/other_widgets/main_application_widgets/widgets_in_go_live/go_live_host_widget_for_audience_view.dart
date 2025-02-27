@@ -93,7 +93,7 @@ class AmptiveLiveHostAndCoHostWidgetForAudienceView extends StatelessWidget {
                   ),
                   Gap(5.h),
                   isHost
-                      ? AmptiveCustomContainer(
+                      ? AmptiveContainer(
                           padding: const EdgeInsets.fromLTRB(4, 2, 4, 2),
                           radius: 5,
                           gradient: LinearGradient(

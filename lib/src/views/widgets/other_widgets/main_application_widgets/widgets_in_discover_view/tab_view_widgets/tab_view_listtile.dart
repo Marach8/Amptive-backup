@@ -70,7 +70,7 @@ class AmptiveTabViewListTileWidget extends StatelessWidget {
         trailing: GestureDetector(
           onTap: (){},
           child: addPlayButton 
-            ? AmptiveCustomContainer(
+            ? AmptiveContainer(
               boxShape: BoxShape.circle,
               height: 24, width: 24,
               color: AmptiveColors.authHintColor,

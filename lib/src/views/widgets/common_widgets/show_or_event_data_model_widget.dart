@@ -31,14 +31,14 @@ class AmptiveShowOrEventDataModelWidget extends StatelessWidget {
           subtitle: 'started a live show',
         ),
         Gap(2.h),
-        AmptiveCustomContainer(
+        AmptiveContainer(
           height: 425.h,
           clipBehavior: Clip.hardEdge,
           radius: 15.r,
           child: Stack(
             children: [
               const AmptiveImageLoaderWidget(imagePath: AmptiveImageStrings.weCanDoHardThingsBgImage),
-              AmptiveCustomContainer(
+              AmptiveContainer(
                 width: AmptiveHelperFunctions.getScreenWidth(context),
                 padding: const EdgeInsets.fromLTRB(15, 10, 15, 10),
                 radius: 15,

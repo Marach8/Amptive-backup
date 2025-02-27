@@ -38,7 +38,7 @@ class AmptiveSubscribedEventOrShowViewWidget extends StatelessWidget {
               ),
               bottom: PreferredSize(
                 preferredSize: const Size.fromHeight(0),
-                child: AmptiveCustomContainer(
+                child: AmptiveContainer(
                   color: AmptiveColors.whiteColor,
                   height: 0.15,
                   width: double.infinity,

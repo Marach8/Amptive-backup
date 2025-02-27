@@ -43,7 +43,7 @@ class AmptiveViewProfilePicScreen extends StatelessWidget {
             ),
           ),
         ),
-        bottomSheet: AmptiveCustomContainer(
+        bottomSheet: AmptiveContainer(
           padding: const EdgeInsets.fromLTRB(17, 5, 17, 5),
           color: AmptiveColors.whiteColor.withValues(alpha: 0.1),
           radius: 100,

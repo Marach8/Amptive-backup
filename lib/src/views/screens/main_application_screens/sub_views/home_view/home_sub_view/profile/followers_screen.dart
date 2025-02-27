@@ -101,7 +101,7 @@ class _AmptiveFollowerWidget extends StatelessWidget {
         onTap: () => onTap(follower, follower.notifier.value),
         child: Row(
           children: [
-            AmptiveCustomContainer(
+            AmptiveContainer(
               clipBehavior: Clip.hardEdge,
               height: 50, width: 50, radius: 30,
               child: FittedBox(
@@ -117,7 +117,7 @@ class _AmptiveFollowerWidget extends StatelessWidget {
               ),
             ),
 
-            AmptiveCustomContainer(
+            AmptiveContainer(
               radius: 30, color: AmptiveColors.whiteColor,
               padding: const EdgeInsets.fromLTRB(15, 5, 15, 5),
               child: Text(

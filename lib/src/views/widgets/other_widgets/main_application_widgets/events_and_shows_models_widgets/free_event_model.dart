@@ -16,7 +16,7 @@ class AmptiveFreeEventModel extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return AmptiveCustomContainer(
+    return AmptiveContainer(
       width: 137,
       padding: const EdgeInsets.only(left: 15),
       child: Column(

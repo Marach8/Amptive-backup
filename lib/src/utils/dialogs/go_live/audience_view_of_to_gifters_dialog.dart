@@ -59,7 +59,7 @@ Future<void> showAudienceViewOfTopGiftersDialog(BuildContext context) async {
                               Icons.keyboard_arrow_down,
                               color: AmptiveColors.whiteColor.withOpacity(0.6),
                             )
-                          : AmptiveCustomContainer(
+                          : AmptiveContainer(
                               margin: const EdgeInsets.symmetric(vertical: 10),
                               radius: 5, height: 4, width: 30,
                               color: AmptiveColors.whiteColor.withOpacity(0.6),
@@ -125,7 +125,7 @@ Future<void> showAudienceViewOfTopGiftersDialog(BuildContext context) async {
               child: ClipRect(
                 child: BackdropFilter(
                   filter: ImageFilter.blur(sigmaX: 50, sigmaY: 50),
-                  child: AmptiveCustomContainer(
+                  child: AmptiveContainer(
                     padding: const EdgeInsets.only(left: 25, right: 15, bottom: 20, top: 15),
                     width: AmptiveHelperFunctions.getScreenWidth(context),
                     child: Row(
@@ -155,7 +155,7 @@ Future<void> showAudienceViewOfTopGiftersDialog(BuildContext context) async {
                             ],
                           ),
                         ),
-                        AmptiveCustomContainer(
+                        AmptiveContainer(
                           onTap: (){},
                           radius: 40,
                           padding: const EdgeInsets.fromLTRB(10, 5, 10, 5),
@@ -218,7 +218,7 @@ class AmptiveGifterWidget extends StatelessWidget {
               child: const SizedBox.shrink(),
             ),
             const Gap(5),
-            AmptiveCustomContainer(
+            AmptiveContainer(
               clipBehavior: Clip.hardEdge,
               height: 50, width: 50, radius: 30,
               child: FittedBox(

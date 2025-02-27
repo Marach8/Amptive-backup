@@ -38,7 +38,7 @@ Future<void> showHandRaisingDialog(BuildContext context)async{
                     Icons.keyboard_arrow_down,
                     color: AmptiveColors.whiteColor.withOpacity(0.6),
                   )
-                  : AmptiveCustomContainer(
+                  : AmptiveContainer(
                     margin: const EdgeInsets.symmetric(vertical: 10),
                     radius: 5, height: 4, width: 30,
                     color: AmptiveColors.whiteColor.withOpacity(0.6),
@@ -74,7 +74,7 @@ Future<void> showHandRaisingDialog(BuildContext context)async{
               notifier: allowNotifier,
               shouldDispose: true,
               builder: (_, value, __) {
-                return AmptiveCustomContainer(
+                return AmptiveContainer(
                   duration: 100,
                   onTap: (){
                     activateBtnNotifier.value = !value;
@@ -91,7 +91,7 @@ Future<void> showHandRaisingDialog(BuildContext context)async{
                   ),
                   child: Row(
                     children: [
-                      AmptiveCustomContainer(
+                      AmptiveContainer(
                         height: 20, width: 20, radius: 20,
                         padding: const EdgeInsets.all(3),
                         color: value ? AmptiveColors.hex307FE2 : AmptiveColors.transparentColor,
@@ -133,7 +133,7 @@ Future<void> showHandRaisingDialog(BuildContext context)async{
               shouldDispose: true,
               notifier: doNotAllowNotifier,
               builder: (_, value, __) {
-                return AmptiveCustomContainer(
+                return AmptiveContainer(
                   onTap: (){
                     activateBtnNotifier.value = !value;
                     allowNotifier.value = false;
@@ -154,7 +154,7 @@ Future<void> showHandRaisingDialog(BuildContext context)async{
                     children: [
                       Row(
                         children: [
-                          AmptiveCustomContainer(
+                          AmptiveContainer(
                             height: 20, width: 20, radius: 20,
                             padding: const EdgeInsets.all(3),
                             color: value ? AmptiveColors.hex307FE2 : AmptiveColors.transparentColor,

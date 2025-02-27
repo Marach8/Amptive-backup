@@ -12,7 +12,7 @@ class AmptiveAudioOrVideoDisplayPictureWithMoreIconWidget extends StatelessWidge
 
   @override
   Widget build(BuildContext context) {
-    return AmptiveCustomContainer(
+    return AmptiveContainer(
       padding: const EdgeInsets.all(10),
       alignment: Alignment.topRight,
       height: 360.h,
@@ -20,7 +20,7 @@ class AmptiveAudioOrVideoDisplayPictureWithMoreIconWidget extends StatelessWidge
       decorationImagePath: AmptiveImageStrings.weCanDoHardThingsBgImage,
       child: GestureDetector(                      
         onTap: () => showAudioOrVideoFullDetailsOptions(context),
-        child: AmptiveCustomContainer(
+        child: AmptiveContainer(
           height: 32, width: 32,
           boxShape: BoxShape.circle,
           color: AmptiveColors.brandBlack.withOpacity(0.7),

@@ -105,7 +105,7 @@ Future<void> selectDateModal(
             Positioned(
               bottom: 70.h,
               right: 0,
-              child: AmptiveCustomContainer(
+              child: AmptiveContainer(
                 height: 50.h,
                 padding: const EdgeInsets.symmetric(horizontal: 15),
                 width: AmptiveHelperFunctions.getScreenWidth(context),
@@ -123,7 +123,7 @@ Future<void> selectDateModal(
             ),
             Positioned(
               bottom: 10.h,
-              child: AmptiveCustomContainer(
+              child: AmptiveContainer(
                 height: 50.h,
                 padding: const EdgeInsets.symmetric(horizontal: 15),
                 width: AmptiveHelperFunctions.getScreenWidth(context),

@@ -51,6 +51,11 @@ class AmptiveStrings{
   static const enterYourEmail = 'Enter your email...';
   static const thisEmailWillBeVerified = 'This email will be verified in the next step';
   static const verifyEmail = 'Verify email';
+  static const UNBLOCK_DESC = 'will be able to follow, subscribe and see your app activities';
+  static String unMuteDesc(String text ) => "You will be able to see $text's app activities";
+  static const IS_UNBLOCKED = 'is now unblocked';
+  static const IS_UNMUTED = 'is now unmuted';
+
 
   static const youEnteredInvalidCode = 'You entered an invalid code. ';
   static const passwordMustBeAtleast8 = 'Your password must be at least 8 characters';
@@ -289,4 +294,6 @@ class AmptiveStrings{
   static const COMMENT = 'Comment';
   static const END_NOW = 'End now';
   static const HOST = 'Host';
+  static const UNBLOCK = 'Unblock';
+  static const UNMUTE = 'Unmute';
 }

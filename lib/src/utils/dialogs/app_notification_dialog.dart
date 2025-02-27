@@ -16,7 +16,7 @@ Future<dynamic> showAppNotification({
     flushbarPosition: FlushbarPosition.TOP,
     duration: Duration(seconds: duration ?? 5),
     messageText: Center(
-      child: AmptiveCustomContainer(
+      child: AmptiveContainer(
         radius: 10, color: bgColor ?? AmptiveColors.notifBg,
         padding: const EdgeInsets.all(10),
         child: Row(

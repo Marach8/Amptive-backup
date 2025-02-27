@@ -11,7 +11,7 @@ class AmptiveCreateShowSelectAudienceAccessWidget extends StatelessWidget {
   @override
   Widget build(context) {
     final selectAudienceAccessNotifier = ValueNotifier<String>('');
-    return AmptiveCustomContainer(
+    return AmptiveContainer(
       radius: 14,
       padding: const EdgeInsets.fromLTRB(17, 15, 17, 15),
       color: AmptiveColors.whiteColor.withOpacity(0.1),

@@ -30,7 +30,7 @@ Future<void> showHostEndShowDialog({
       topLeft: Radius.circular(15), topRight: Radius.circular(15),
     )),
     builder: (context) {
-      return AmptiveCustomContainer(
+      return AmptiveContainer(
         height: AmptiveHelperFunctions.getScreenHeight(context),
         width: AmptiveHelperFunctions.getScreenWidth(context),
         color: AmptiveColors.black,
@@ -107,7 +107,7 @@ Future<void> showHostEndShowDialog({
                 return AnimatedPositioned(
                   duration: const Duration(seconds: 1),
                   top: initialState ? 200 : 220,
-                  child: AmptiveCustomContainer(
+                  child: AmptiveContainer(
                     clipBehavior: Clip.hardEdge,
                     radius: 5, height: initialState ? 150 : 200, 
                     width: initialState ? 150 : 200,
@@ -197,7 +197,7 @@ Future<void> showHostEndShowDialog({
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      AmptiveCustomContainer(
+                      AmptiveContainer(
                         padding: const EdgeInsets.only(left: 15, right: 15),
                         width: AmptiveHelperFunctions.getScreenWidth(context),
                         height: 50,

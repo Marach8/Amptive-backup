@@ -155,7 +155,7 @@ class _AmptiveGoLiveCohostViewState extends State<AmptiveGoLiveCohostView> {
                     ),
                   ),
               
-                  AmptiveCustomContainer(
+                  AmptiveContainer(
                     height: 250,
                     padding: const EdgeInsets.only(left: 20, right: 20),
                     boxShadow: [
@@ -232,7 +232,7 @@ class _AmptiveGoLiveCohostViewState extends State<AmptiveGoLiveCohostView> {
                       return AnimatedPositioned(
                         right: showIcon ? 15 : -50, bottom: 70,
                         duration: const Duration(milliseconds: 500),
-                        child: AmptiveCustomContainer(
+                        child: AmptiveContainer(
                           onTap: () => _scrollToBottom(),
                           color: AmptiveColors.whiteColor.withOpacity(0.1),
                           height: 35, width: 35,
@@ -248,7 +248,7 @@ class _AmptiveGoLiveCohostViewState extends State<AmptiveGoLiveCohostView> {
           ],
         ),
 
-        bottomSheet: AmptiveCustomContainer(
+        bottomSheet: AmptiveContainer(
           padding: const EdgeInsets.symmetric(horizontal: 15),
           color: AmptiveColors.black,
           height: 35,
@@ -273,7 +273,7 @@ class _AmptiveGoLiveCohostViewState extends State<AmptiveGoLiveCohostView> {
                     )
                   );
                 }
-                return AmptiveCustomContainer(
+                return AmptiveContainer(
                   margin: index != 5 ? EdgeInsets.only(right: 5.w) : EdgeInsets.zero,
                   color: AmptiveColors.whiteColor.withOpacity(0.1),
                   padding: const EdgeInsets.all(5),

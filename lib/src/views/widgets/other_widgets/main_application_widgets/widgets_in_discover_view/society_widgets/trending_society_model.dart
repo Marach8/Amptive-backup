@@ -24,7 +24,7 @@ class AmptiveTrendingSocietyModel extends StatelessWidget {
         ClipRRect(
           clipBehavior: Clip.hardEdge,
           borderRadius: BorderRadius.circular(5),
-          child: AmptiveCustomContainer(
+          child: AmptiveContainer(
             height: 170.h, width: AmptiveHelperFunctions.getScreenWidth(context),
             child: FittedBox(
               fit: BoxFit.fill,
@@ -45,7 +45,7 @@ class AmptiveTrendingSocietyModel extends StatelessWidget {
         Row(
           mainAxisSize: MainAxisSize.min,
           children: [
-            AmptiveCustomContainer(
+            AmptiveContainer(
               height: 12, width: 12,
               color: AmptiveColors.grey5Color,
               child: FittedBox(

@@ -39,7 +39,7 @@ class AmptiveSelectLanguageScreen extends StatelessWidget {
               ),
             ),
 
-            AmptiveCustomContainer(
+            AmptiveContainer(
               onTap: () => context.read<AmptiveLanguageBloc>().showLanguages(),
               margin: const EdgeInsets.all(15),
               color: AmptiveColors.whiteColor.withValues(alpha: 0.1),
@@ -91,7 +91,7 @@ class AmptiveSelectLanguageScreen extends StatelessWidget {
                                   )
                                 ),
                               ),
-                              AmptiveCustomContainer(
+                              AmptiveContainer(
                                 height: 15, width: 15, boxShape: BoxShape.circle,
                                 padding: const EdgeInsets.all(5),
                                 color: isSelected ? AmptiveColors.hex307FE2 : AmptiveColors.transparentColor,

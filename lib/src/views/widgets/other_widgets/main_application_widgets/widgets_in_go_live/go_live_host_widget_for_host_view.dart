@@ -57,7 +57,7 @@ class AmptiveLiveHostAndCoHostWidget extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            showAddIcon ? AmptiveCustomContainer(
+            showAddIcon ? AmptiveContainer(
               height: 64.h, width: 64.h, radius: 40.h,
               border: Border.all(color: AmptiveColors.whiteColor, width: 0.5),
               child: const Icon(Icons.add, size: 40)) 
@@ -96,7 +96,7 @@ class AmptiveLiveHostAndCoHostWidget extends StatelessWidget {
               ),
             ),
             Gap(5.h),
-            isHost ? AmptiveCustomContainer(
+            isHost ? AmptiveContainer(
               padding: const EdgeInsets.fromLTRB(4, 2, 4, 2),
               radius: 5, 
               gradient: LinearGradient(

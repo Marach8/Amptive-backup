@@ -83,7 +83,7 @@ class AmptiveDiscoverSocietyAllTabViewWidget extends StatelessWidget {
         ),
         const Gap(35),
     
-        AmptiveCustomContainer(
+        AmptiveContainer(
           padding: const EdgeInsets.only(left: 15),
           alignment: Alignment.centerLeft,
           child: Text(

@@ -19,7 +19,7 @@ class AmptiveCircleAvatarWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return AmptiveCustomContainer(
+    return AmptiveContainer(
       onTap: onTap,
       duration: animationDuration,
       height: diameter, width: diameter,

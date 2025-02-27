@@ -40,7 +40,7 @@ Future<String> showSelectAudienceAccessForShowsDialog(
                   ? Icon(
                     Icons.keyboard_arrow_down,
                     color: AmptiveColors.whiteColor.withOpacity(0.6),
-                  ) : AmptiveCustomContainer(
+                  ) : AmptiveContainer(
                     margin: const EdgeInsets.symmetric(vertical: 10),
                     radius: 5, height: 4, width: 30,
                     color: AmptiveColors.whiteColor.withOpacity(0.6),
@@ -69,7 +69,7 @@ Future<String> showSelectAudienceAccessForShowsDialog(
               notifier: notifier,
               builder: (_, value, __) {
                 final isActive = value == AmptiveStrings.FREE;
-                return AmptiveCustomContainer(
+                return AmptiveContainer(
                   duration: 100,
                   onTap: (){
                     if(value != AmptiveStrings.FREE){
@@ -110,7 +110,7 @@ Future<String> showSelectAudienceAccessForShowsDialog(
                         ),
                       ),
                       const Gap(15),
-                      AmptiveCustomContainer(
+                      AmptiveContainer(
                         height: 20, width: 20, radius: 20,
                         padding: const EdgeInsets.all(3),
                         color: isActive ? AmptiveColors.hex307FE2 : AmptiveColors.transparentColor,
@@ -132,7 +132,7 @@ Future<String> showSelectAudienceAccessForShowsDialog(
               notifier: notifier,
               builder: (_, value, __) {
                 final isActive = value == AmptiveStrings.SUBSCRIBERS_ONLY;
-                return AmptiveCustomContainer(
+                return AmptiveContainer(
                   onTap: (){
                     if(value != AmptiveStrings.SUBSCRIBERS_ONLY){
                       notifier.value = AmptiveStrings.SUBSCRIBERS_ONLY;
@@ -176,7 +176,7 @@ Future<String> showSelectAudienceAccessForShowsDialog(
                             ),
                           ),
                           const Gap(15),
-                          AmptiveCustomContainer(
+                          AmptiveContainer(
                             height: 20, width: 20, radius: 20,
                             padding: const EdgeInsets.all(3),
                             color: isActive ? AmptiveColors.hex307FE2 : AmptiveColors.transparentColor,
@@ -194,7 +194,7 @@ Future<String> showSelectAudienceAccessForShowsDialog(
                       const Gap(15),
                       Row(
                         children: [
-                          AmptiveCustomContainer(
+                          AmptiveContainer(
                             padding: const EdgeInsets.fromLTRB(10, 5, 10, 5),
                             color: AmptiveColors.grey2Color,
                             radius: 5,

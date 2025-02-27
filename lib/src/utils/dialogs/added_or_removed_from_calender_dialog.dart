@@ -20,7 +20,7 @@ void showAddedOrRemovedSnackbar({
           borderRadius: BorderRadius.circular(15)
         ),
         duration: const Duration(seconds: 5),
-        content: AmptiveCustomContainer(
+        content: AmptiveContainer(
           alignment: Alignment.center,
           height: 40,
           child: Row(

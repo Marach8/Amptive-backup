@@ -54,7 +54,7 @@ Future<void> showListenersDialog({
         ),
         child: BackdropFilter(
           filter: ImageFilter.blur(sigmaX: 1, sigmaY: 1),
-          child: AmptiveCustomContainer(
+          child: AmptiveContainer(
             width: AmptiveHelperFunctions.getScreenWidth(context),
             padding: const EdgeInsets.fromLTRB(15, 10, 15, 10),
             child: Column(
@@ -67,7 +67,7 @@ Future<void> showListenersDialog({
                           Icons.keyboard_arrow_down,
                           color: AmptiveColors.whiteColor.withOpacity(0.6),
                         )
-                      : AmptiveCustomContainer(
+                      : AmptiveContainer(
                           margin: const EdgeInsets.symmetric(vertical: 10),
                           radius: 5, height: 4, width: 30,
                           color: AmptiveColors.whiteColor.withOpacity(0.6),
@@ -200,7 +200,7 @@ class AmptiveListenerWidget extends StatelessWidget {
         onTap: () => onTap(listener, listener.notifier.value),
         child: Row(
           children: [
-            AmptiveCustomContainer(
+            AmptiveContainer(
               clipBehavior: Clip.hardEdge,
               height: 50, width: 50, radius: 30,
               child: FittedBox(
@@ -215,7 +215,7 @@ class AmptiveListenerWidget extends StatelessWidget {
                 style: Theme.of(context).textTheme.titleMedium
               ),
             ),
-            if(enableKickOut ?? true) AmptiveCustomContainer(
+            if(enableKickOut ?? true) AmptiveContainer(
               onTap: ()async{
                 final shouldKickOut = await showKickOutConfirmationDialog(
                   context: context,

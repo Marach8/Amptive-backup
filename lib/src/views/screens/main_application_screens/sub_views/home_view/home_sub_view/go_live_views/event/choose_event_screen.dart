@@ -82,7 +82,7 @@ class _AmptiveChooseOrCreateEventScreenState extends State<AmptiveChooseOrCreate
               ),
             ),
             Positioned.fill(
-              child: AmptiveCustomContainer(
+              child: AmptiveContainer(
                 color: AmptiveColors.black.withOpacity(0.6),
                 child: BackdropFilter(
                   filter: ImageFilter.blur(sigmaX: 100.0, sigmaY: 100.0),
@@ -132,7 +132,7 @@ class _AmptiveChooseOrCreateEventScreenState extends State<AmptiveChooseOrCreate
                               return Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  AmptiveCustomContainer(
+                                  AmptiveContainer(
                                     onTap: (){
                                       activateButton.value = false;
                                       if(selectedIndex != null){

@@ -10,7 +10,7 @@ class AmptiveDividerWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return AmptiveCustomContainer(
+    return AmptiveContainer(
       color: AmptiveColors.dimWhiteColor1,
       height: 0.1.h,
       width: double.infinity,

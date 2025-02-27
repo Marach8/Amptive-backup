@@ -91,7 +91,7 @@ Future<bool?> showKickOutConfirmationDialog({
           Stack(
             clipBehavior: Clip.none,
             children: [
-              AmptiveCustomContainer(
+              AmptiveContainer(
                 clipBehavior: Clip.hardEdge,
                 height: 43, width: 43, radius: 30,
                 child: FittedBox(
@@ -103,7 +103,7 @@ Future<bool?> showKickOutConfirmationDialog({
               ),
               Positioned(
                 top: -1, right: -5, 
-                child: AmptiveCustomContainer(
+                child: AmptiveContainer(
                   color: AmptiveColors.hexECO404,
                   height: 17, width: 17,
                   boxShape: BoxShape.circle,

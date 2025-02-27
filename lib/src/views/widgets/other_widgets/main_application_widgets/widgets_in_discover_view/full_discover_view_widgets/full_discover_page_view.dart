@@ -174,7 +174,7 @@ class AmptiveFullDiscoverPageView extends StatelessWidget {
     
         Gap(50.h),
     
-        AmptiveCustomContainer(
+        AmptiveContainer(
           padding: const EdgeInsets.only(left: 15),
           alignment: Alignment.centerLeft,
           child: Text(
@@ -199,7 +199,7 @@ class AmptiveFullDiscoverPageView extends StatelessWidget {
     
         Gap(50.h),
     
-        AmptiveCustomContainer(
+        AmptiveContainer(
           padding: const EdgeInsets.only(left: 15),
           alignment: Alignment.centerLeft,
           child: Text(
@@ -286,7 +286,7 @@ class _HorizontalScrollCardsState extends State<_HorizontalScrollCards> {
                     notifier: _indexNotifier,
                     builder: (_, value, __){
                       final isActive = index == value;
-                      return AmptiveCustomContainer(
+                      return AmptiveContainer(
                         margin: const EdgeInsets.only(left: 3),
                         radius: 8, height: 8,
                         color: isActive ? AmptiveColors.whiteColor : AmptiveColors.inactiveDotColor, 

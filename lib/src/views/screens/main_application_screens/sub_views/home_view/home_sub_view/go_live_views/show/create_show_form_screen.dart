@@ -279,7 +279,7 @@ class _CreateShowScreenState extends State<CreateShowScreen> {
                       title: "Community",
                     ),
                     SizedBox(height: 11.5.h),
-                    AmptiveCustomContainer(
+                    AmptiveContainer(
                       child: AmptiveRebuilderWidget(
                         builder: (ctx, selected, _) {
                           return selected && _selectedCommunityCard != null

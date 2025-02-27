@@ -20,7 +20,7 @@ class AmptiveWhispersListViewWidget extends StatelessWidget {
         separatorBuilder: (_, __) => Gap(15.w),
         scrollDirection: Axis.horizontal,
         itemCount: 10,
-        itemBuilder: (_, __) => AmptiveCustomContainer(
+        itemBuilder: (_, __) => AmptiveContainer(
           padding: const EdgeInsets.fromLTRB(15, 0, 15,  0),
           height: 230.h,
           width: 285.w,

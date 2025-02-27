@@ -44,7 +44,7 @@ class AmptiveRowOfNumberOfPeopleListeningWidget extends StatelessWidget {
 
             showNumberInsideContainer ? Positioned(
               left: 52,
-              child: AmptiveCustomContainer(
+              child: AmptiveContainer(
                 color: AmptiveColors.hex2D2D2D,
                 alignment: Alignment.center,
                 height: 30,

@@ -35,7 +35,7 @@ class AmptiveUserGoLiveWidget extends StatelessWidget {
               ),
               Positioned(
                 bottom: -5.h,
-                child: AmptiveCustomContainer(
+                child: AmptiveContainer(
                   alignment: Alignment.center,
                   padding: const EdgeInsets.all(0),
                   height: 20, width: 20, radius: 10,

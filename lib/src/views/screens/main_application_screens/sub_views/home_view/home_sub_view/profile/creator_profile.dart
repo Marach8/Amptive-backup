@@ -71,7 +71,7 @@ class AmptiveCreatorProfileScreen extends StatelessWidget {
                 background: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    AmptiveCustomContainer(
+                    AmptiveContainer(
                       decorationImagePath: AmptiveImageStrings.weCanDoHardThingsBgImage,
                       height: 150,                
                       width: AmptiveHelperFunctions.getScreenWidth(context),
@@ -80,7 +80,7 @@ class AmptiveCreatorProfileScreen extends StatelessWidget {
                           alignment: Alignment.center,
                           clipBehavior: Clip.none,
                           children: [
-                            AmptiveCustomContainer(
+                            AmptiveContainer(
                               height: 150,
                               gradient: LinearGradient(
                                 begin: Alignment.topCenter,
@@ -112,7 +112,7 @@ class AmptiveCreatorProfileScreen extends StatelessWidget {
                             ),
                             Positioned(
                               bottom: -35,
-                              child: AmptiveCustomContainer(
+                              child: AmptiveContainer(
                                 color: AmptiveColors.yellowColor1,
                                 radius: 10,
                                 padding: const EdgeInsets.fromLTRB(5, 0, 5, 1),
@@ -146,7 +146,7 @@ class AmptiveCreatorProfileScreen extends StatelessWidget {
                 
                     const Gap(20),
                 
-                    AmptiveCustomContainer(
+                    AmptiveContainer(
                       onTap: (){
                         showTopCreatorSocietiesDialog(context);
                       },
@@ -328,7 +328,7 @@ class AmptiveCreatorProfileScreen extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Expanded(
-                          child: AmptiveCustomContainer(
+                          child: AmptiveContainer(
                             alignment: Alignment.center, radius: 50,
                             margin: const EdgeInsets.only(left: 15),
                             padding: const EdgeInsets.only(top: 10, bottom: 10),
@@ -343,7 +343,7 @@ class AmptiveCreatorProfileScreen extends StatelessWidget {
                         ),
                         const Gap(10),
                         Expanded(
-                          child: AmptiveCustomContainer(
+                          child: AmptiveContainer(
                             padding: const EdgeInsets.only(top: 10, bottom: 10),
                             margin: const EdgeInsets.only(right: 15),
                             alignment: Alignment.center, radius: 50,
@@ -368,7 +368,7 @@ class AmptiveCreatorProfileScreen extends StatelessWidget {
               pinned: true,
               delegate: AmptiveTabBarDelegate(
                 maxExt: 65, minExt: 65, rebuild: false,              
-                child: AmptiveCustomContainer(
+                child: AmptiveContainer(
                   color: AmptiveColors.black,             
                   child: AmptiveRebuilderWidget(
                     notifier: tabIndex,
@@ -385,7 +385,7 @@ class AmptiveCreatorProfileScreen extends StatelessWidget {
                               (string){
                                 final index = _tabs.indexOf(string);
                                 final isSelected = index == value;
-                                return AmptiveCustomContainer(
+                                return AmptiveContainer(
                                   curve: Curves.decelerate,
                                   alignment: Alignment.center, radius: 50,
                                   padding: const EdgeInsets.fromLTRB(20, 5, 20, 5),
@@ -450,7 +450,7 @@ class ProfileEventOrShowDisplay extends StatelessWidget {
 
   @override
   Widget build(context) {
-    return AmptiveCustomContainer(
+    return AmptiveContainer(
       margin: const EdgeInsets.only(bottom: 15),
       height: 80,
       child: Row(
@@ -499,7 +499,7 @@ class ProfileEventOrShowDisplay extends StatelessWidget {
                 //Row 3
                 Row(
                   children: [
-                    AmptiveCustomContainer(
+                    AmptiveContainer(
                       alignment: Alignment.center,
                       height: 10, width: 10, radius: 1,
                       color: AmptiveColors.hexC2C2C2,

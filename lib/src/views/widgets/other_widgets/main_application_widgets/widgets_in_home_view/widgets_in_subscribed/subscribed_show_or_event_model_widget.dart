@@ -32,12 +32,12 @@ class AmptiveSubscribedShowOrEventDataModelWidget extends StatelessWidget {
           subtitle: 'Started a live show',
         ),
         Gap(2.h),
-        AmptiveCustomContainer(
+        AmptiveContainer(
           decorationImagePath: AmptiveImageStrings.weCanDoHardThingsBgImage,
           decorationImageFit: BoxFit.fill,
           height: 432.h,
           radius: 15.r,
-          child: AmptiveCustomContainer(
+          child: AmptiveContainer(
             padding: const EdgeInsets.fromLTRB(15, 10, 15, 10),
             radius: 15.r,
             gradient: LinearGradient(

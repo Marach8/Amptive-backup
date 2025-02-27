@@ -43,7 +43,7 @@ Future<void> showSelectAudienceAccessForEventsDialog(
                         Icons.keyboard_arrow_down,
                         color: AmptiveColors.whiteColor.withOpacity(0.6),
                       )
-                    : AmptiveCustomContainer(
+                    : AmptiveContainer(
                         margin: const EdgeInsets.symmetric(vertical: 10),
                         radius: 5,
                         height: 4,
@@ -74,7 +74,7 @@ Future<void> showSelectAudienceAccessForEventsDialog(
                 notifier: freeAccesNotifier,
                 shouldDispose: true,
                 builder: (_, value, __) {
-                  return AmptiveCustomContainer(
+                  return AmptiveContainer(
                     duration: 100,
                     onTap: () {
                       activateBtnNotifier.value = !value;
@@ -115,7 +115,7 @@ Future<void> showSelectAudienceAccessForEventsDialog(
                           ),
                         ),
                         const Gap(15),
-                        AmptiveCustomContainer(
+                        AmptiveContainer(
                             height: 20,
                             width: 20,
                             radius: 20,
@@ -138,7 +138,7 @@ Future<void> showSelectAudienceAccessForEventsDialog(
                 shouldDispose: true,
                 notifier: paidAccessNotifier,
                 builder: (_, value, __) {
-                  return AmptiveCustomContainer(
+                  return AmptiveContainer(
                     onTap: () {
                       activateBtnNotifier.value = !value;
                       freeAccesNotifier.value = false;
@@ -184,7 +184,7 @@ Future<void> showSelectAudienceAccessForEventsDialog(
                               ),
                             ),
                             const Gap(15),
-                            AmptiveCustomContainer(
+                            AmptiveContainer(
                                 height: 20,
                                 width: 20,
                                 radius: 20,
@@ -205,7 +205,7 @@ Future<void> showSelectAudienceAccessForEventsDialog(
                         const Gap(15),
                         Row(
                           children: [
-                            AmptiveCustomContainer(
+                            AmptiveContainer(
                               onTap: () async {
                                 freeAccesNotifier.value = false;
                                 paidAccessNotifier.value = true;

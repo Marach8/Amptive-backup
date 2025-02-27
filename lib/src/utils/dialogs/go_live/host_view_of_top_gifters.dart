@@ -57,7 +57,7 @@ Future<void> showHostViewOfTopGiftersDialog(BuildContext context) async {
                               Icons.keyboard_arrow_down,
                               color: AmptiveColors.whiteColor.withOpacity(0.6),
                             )
-                          : AmptiveCustomContainer(
+                          : AmptiveContainer(
                               margin: const EdgeInsets.symmetric(vertical: 10),
                               radius: 5, height: 4, width: 30,
                               color: AmptiveColors.whiteColor.withOpacity(0.6),
@@ -165,7 +165,7 @@ class AmptiveGifterWidget extends StatelessWidget {
               child: const SizedBox.shrink(),
             ),
             const Gap(5),
-            AmptiveCustomContainer(
+            AmptiveContainer(
               clipBehavior: Clip.hardEdge,
               height: 50, width: 50, radius: 30,
               child: FittedBox(

@@ -51,7 +51,7 @@ class AmptiveOrdinaryUserProfileScreen extends StatelessWidget {
                 background: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    AmptiveCustomContainer(
+                    AmptiveContainer(
                       color: AmptiveColors.whiteColor.withOpacity(0.5),
                       height: 150,
                       gradient: LinearGradient(
@@ -125,7 +125,7 @@ class AmptiveOrdinaryUserProfileScreen extends StatelessWidget {
                     ),
                     const Gap(20),
         
-                    AmptiveCustomContainer(
+                    AmptiveContainer(
                       onTap: (){},
                       width: AmptiveHelperFunctions.getScreenWidth(context),
                       alignment: Alignment.center, radius: 50,
@@ -150,7 +150,7 @@ class AmptiveOrdinaryUserProfileScreen extends StatelessWidget {
               pinned: true,
               delegate: AmptiveTabBarDelegate(
                 maxExt: 65, minExt: 65, rebuild: false,
-                child: AmptiveCustomContainer(
+                child: AmptiveContainer(
                   color: AmptiveColors.black,              
                   child: AmptiveRebuilderWidget(
                     notifier: tabIndex,
@@ -164,7 +164,7 @@ class AmptiveOrdinaryUserProfileScreen extends StatelessWidget {
                             (string){
                               final index = _tabs.indexOf(string);
                               final isSelected = index == value;
-                              return AmptiveCustomContainer(
+                              return AmptiveContainer(
                                 curve: Curves.decelerate,
                                 padding: const EdgeInsets.fromLTRB(20, 5, 20, 5),
                                 margin: const EdgeInsets.fromLTRB(0, 10, 10, 20),

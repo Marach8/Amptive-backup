@@ -33,7 +33,7 @@ Future<void> showHostModerationToolsDialog(BuildContext context) async {
         ),
         child: BackdropFilter(
           filter: ImageFilter.blur(sigmaX: 1, sigmaY: 1),
-          child: AmptiveCustomContainer(
+          child: AmptiveContainer(
             width: AmptiveHelperFunctions.getScreenWidth(context),
             padding: const EdgeInsets.fromLTRB(15, 10, 15, 10),
             child: Column(
@@ -48,7 +48,7 @@ Future<void> showHostModerationToolsDialog(BuildContext context) async {
                           Icons.keyboard_arrow_down,
                           color: AmptiveColors.whiteColor.withOpacity(0.6),
                         )
-                      : AmptiveCustomContainer(
+                      : AmptiveContainer(
                           margin: const EdgeInsets.symmetric(vertical: 10),
                           radius: 5, height: 4, width: 30,
                           color: AmptiveColors.whiteColor.withOpacity(0.6),

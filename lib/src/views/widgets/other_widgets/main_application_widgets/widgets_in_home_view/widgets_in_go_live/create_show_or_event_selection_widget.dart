@@ -47,7 +47,7 @@ class AmptiveCreateShowOrEventSelectionWidget extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              AmptiveCustomContainer(
+              AmptiveContainer(
                 duration: 200,
                 height: 120.h,
                 width: double.infinity,

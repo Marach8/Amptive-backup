@@ -88,7 +88,7 @@ class _AmptiveGoLiveAudienceViewState extends State<AmptiveGoLiveAudienceView> {
               
               const Gap(10),
               AmptiveLiveViewHeaderWidget(
-                exitIcon: AmptiveCustomContainer(
+                exitIcon: AmptiveContainer(
                 onTap: (){
                   context.read<AmptiveNavBarBloc>().goToPage(0);
                   showMinimizedGoLiveState();
@@ -109,7 +109,7 @@ class _AmptiveGoLiveAudienceViewState extends State<AmptiveGoLiveAudienceView> {
           
               Align(
                 alignment: Alignment.centerLeft,
-                child: AmptiveCustomContainer(
+                child: AmptiveContainer(
                   onTap: (){},
                   margin: const EdgeInsets.only(left: 15),
                   padding: const EdgeInsets.fromLTRB(5, 5, 10, 5), radius: 30,
@@ -177,7 +177,7 @@ class _AmptiveGoLiveAudienceViewState extends State<AmptiveGoLiveAudienceView> {
                       ),
                     ),
                 
-                    AmptiveCustomContainer(
+                    AmptiveContainer(
                       height: 250,
                       width: AmptiveHelperFunctions.getScreenWidth(context),
                       padding: const EdgeInsets.only(left: 20, right: 20),
@@ -273,7 +273,7 @@ class _AmptiveGoLiveAudienceViewState extends State<AmptiveGoLiveAudienceView> {
                           bottom: 70, right: 15,
                           child: AmptiveScalingAnimatedSwitcherWidget(
                             duration: 500,
-                            child: showIcon ? AmptiveCustomContainer(
+                            child: showIcon ? AmptiveContainer(
                               key: const ValueKey(1),
                               onTap: () => _scrollToBottom(),
                               color: AmptiveColors.whiteColor.withOpacity(0.1),
@@ -339,7 +339,7 @@ class _GoLiveAudienViewControlsWidgetState extends State<GoLiveAudienViewControl
 
   @override
   Widget build(context) {
-    return AmptiveCustomContainer(
+    return AmptiveContainer(
       padding: const EdgeInsets.fromLTRB(15, 10, 15, 10),
       color: AmptiveColors.black,
       child: Row(
@@ -476,7 +476,7 @@ class _RenderAudienceViewButtons extends StatelessWidget {
 
   @override
   Widget build(context) {
-    return AmptiveCustomContainer(
+    return AmptiveContainer(
       onTap: onTap,
       margin: addMargin ? EdgeInsets.only(right: 5.w) : EdgeInsets.zero,
       color: AmptiveColors.whiteColor.withOpacity(0.1),

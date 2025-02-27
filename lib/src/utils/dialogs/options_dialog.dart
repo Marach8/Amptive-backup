@@ -35,7 +35,7 @@ void showAudioOrVideoFullDetailsOptions(BuildContext context)
                     ? Icon(
                       Icons.keyboard_arrow_down, size: 30,
                       color: AmptiveColors.whiteColor.withOpacity(0.6),
-                    ) : AmptiveCustomContainer(
+                    ) : AmptiveContainer(
                       margin: const EdgeInsets.symmetric(vertical: 10),
                       radius: 5, height: 4, width: 30,
                       color: AmptiveColors.whiteColor.withOpacity(0.6),
