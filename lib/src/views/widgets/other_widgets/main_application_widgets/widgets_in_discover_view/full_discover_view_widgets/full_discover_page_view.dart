@@ -32,7 +32,7 @@ class AmptiveFullDiscoverPageView extends StatelessWidget {
         AmptiveRowOfTitleWithTrendingViewAll(
           title: AmptiveStrings.TRENDING_HASHTAGS,
           viewAllOnpressed: (){
-            context.pushNamed(AmptiveRoutes.TRENDING_HASHTAGS_SCREEN);
+            context.pushNamed(ATRoutes.TRENDING_HASHTAGS_SCREEN);
           },
         ),
     
@@ -41,7 +41,7 @@ class AmptiveFullDiscoverPageView extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 15),
           child: AmptiveRowOfTrendingHashTagTitle(
-            trailingOnpressed: () => context.pushNamed(AmptiveRoutes.SOCIETY_SCREEN),
+            trailingOnpressed: () => context.pushNamed(ATRoutes.SOCIETY_SCREEN),
             hashTagTitle: AmptiveStrings.SOCIETY,
             hashTagSubTitle: 'ankira22, glendonnor, and 15k other are live',
           ),

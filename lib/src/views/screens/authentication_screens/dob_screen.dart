@@ -33,7 +33,7 @@ class _DateOfBirthScreenState extends State<DateOfBirthScreen> {
   Widget build(BuildContext context) {
     var bottomSheetHeight = 232.h;
 
-    return AmptiveAnnotatedRegionWidget(
+    return ATAnnotatedRegionWidget(
       child: Scaffold(
         backgroundColor: AmptiveColors.brandBlack,
         appBar: const AmptiveAppBar(),
@@ -142,7 +142,7 @@ class _DateOfBirthScreenState extends State<DateOfBirthScreen> {
                   height: 50.w,
                   onPressed: state is EditDOBAuthState && state.dob != null
                       ? () {
-                          context.pushNamed(AmptiveRoutes.addUsername);
+                          context.pushNamed(ATRoutes.addUsername);
                         }
                       : null,
                   buttonTitle: AmptiveStrings.NEXT,

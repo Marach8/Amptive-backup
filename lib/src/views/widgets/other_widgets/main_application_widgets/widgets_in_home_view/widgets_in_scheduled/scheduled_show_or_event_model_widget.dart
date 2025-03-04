@@ -51,7 +51,7 @@ class _AmptiveScheduledShowOrEventDataModelWidgetState extends State<AmptiveSche
         AmptiveListTileWithLeadingPictureWidget(
           leadingImagePath: AmptiveImageStrings.jpeg3,
           trailingOnPressed: (){
-            context.pushNamed(AmptiveRoutes.EVENT_DETAILED_SCREEN);
+            context.pushNamed(ATRoutes.EVENT_DETAILED_SCREEN);
           },
           title: 'glennodoyle',
           subtitle: 'Started a live show',

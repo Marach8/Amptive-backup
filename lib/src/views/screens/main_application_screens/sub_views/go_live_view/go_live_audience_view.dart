@@ -80,7 +80,7 @@ class _AmptiveGoLiveAudienceViewState extends State<AmptiveGoLiveAudienceView> {
   @override
   Widget build(context) {
     // final screenWidth = AmptiveHelperFunctions.getScreenWidth(context);
-    return AmptiveAnnotatedRegionWidget(
+    return ATAnnotatedRegionWidget(
       child: Scaffold(
         body: SafeArea(
           child: Column(

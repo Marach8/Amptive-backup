@@ -17,7 +17,7 @@ class AmptiveUserGoLiveWidget extends StatelessWidget {
   @override
   Widget build(context) {
     return GestureDetector(
-      onTap: (){context.pushNamed(AmptiveRoutes.GO_LIVE_SCREEN);},
+      onTap: (){context.pushNamed(ATRoutes.GO_LIVE_SCREEN);},
       child: Column(
         mainAxisSize: MainAxisSize.min,
         mainAxisAlignment: MainAxisAlignment.end,

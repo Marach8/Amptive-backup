@@ -48,7 +48,7 @@ class _AmptiveEmailAuthScreenState extends State<AmptiveEmailAuthScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return AmptiveAnnotatedRegionWidget(
+    return ATAnnotatedRegionWidget(
       child: Scaffold(
         appBar: const AmptiveAppBar(),
         body: Padding(
@@ -132,7 +132,7 @@ class _AmptiveEmailAuthScreenState extends State<AmptiveEmailAuthScreen> {
         bottomSheet: BlocListener<AmptiveEmailAuthBloc, AmptiveEmailAuthState>(
           listener: (context, state) {
             if (state is ValidEmailAuthState && context.mounted) {
-              context.pushNamed(AmptiveRoutes.otp,
+              context.pushNamed(ATRoutes.otp,
                   extra: AmptiveStrings.email);
             }
           },

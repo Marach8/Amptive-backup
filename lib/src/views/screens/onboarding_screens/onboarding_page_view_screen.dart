@@ -38,7 +38,7 @@ class _AmptiveOnboardingScreenState extends State<AmptiveOnboardingScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return AmptiveAnnotatedRegionWidget(
+    return ATAnnotatedRegionWidget(
       child: Scaffold(
         body: Stack(
           children: [
@@ -93,7 +93,7 @@ class _AmptiveOnboardingScreenState extends State<AmptiveOnboardingScreen> {
                               vertical: 4.h, horizontal: 12.w),
                         ),
                         onPressed: () =>
-                            context.pushReplacementNamed(AmptiveRoutes.welcome),
+                            context.pushReplacementNamed(ATRoutes.welcome),
                         child: BlocBuilder<AmptiveOnboardingBloc,
                             AmptiveOnboardingState>(builder: (_, state) {
                           final currentState =

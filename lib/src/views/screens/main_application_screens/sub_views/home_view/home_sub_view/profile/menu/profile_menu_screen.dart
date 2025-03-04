@@ -21,7 +21,7 @@ class AmptiveProfileMenuScreen extends StatelessWidget {
 
   @override
   Widget build(context) {
-    return AmptiveAnnotatedRegionWidget(
+    return ATAnnotatedRegionWidget(
       child: Scaffold(
         appBar: AmptiveAppBar(
           leading: GestureDetector(
@@ -83,7 +83,7 @@ class AmptiveProfileMenuScreen extends StatelessWidget {
               MenuItem(
                 firstIcon: const Icon(Icons.lock_outline_rounded),
                 middleText: AmptiveStrings.PRIVACY,
-                onTap: () => context.pushNamed(AmptiveRoutes.PRIVACY_SCREEN)
+                onTap: () => context.pushNamed(ATRoutes.PRIVACY_SCREEN)
               ),
               MenuItem(
                 firstIcon: const Icon(Icons.password),
@@ -100,7 +100,7 @@ class AmptiveProfileMenuScreen extends StatelessWidget {
               MenuItem(
                 firstIcon: const Icon(Iconsax.global),
                 middleText: AmptiveStrings.LANGUAGE,
-                onTap: () => context.pushNamed(AmptiveRoutes.LANGUAGE_SCREEN)
+                onTap: () => context.pushNamed(ATRoutes.LANGUAGE_SCREEN)
               ),
               MenuItem(
                 firstIcon: const AmptiveImageLoaderWidget(

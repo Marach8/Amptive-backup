@@ -28,7 +28,7 @@ class AmptiveShowDetailedScreen extends StatelessWidget {
 
   @override
   Widget build(context) {
-    return AmptiveAnnotatedRegionWidget(
+    return ATAnnotatedRegionWidget(
       child: Scaffold(
         body: SafeArea(
           child: Stack(

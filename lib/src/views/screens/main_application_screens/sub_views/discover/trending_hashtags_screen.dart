@@ -15,7 +15,7 @@ class AmptiveTrendingHashTagsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return AmptiveAnnotatedRegionWidget(
+    return ATAnnotatedRegionWidget(
       child: Scaffold(
         body: CustomScrollView(
           physics: const BouncingScrollPhysics(),
@@ -40,7 +40,7 @@ class AmptiveTrendingHashTagsScreen extends StatelessWidget {
                       hashTagTitle: AmptiveStrings.SOCIETY,
                       hashTagSubTitle: 'ankira22, glendonnor, and 15k other are live',
                       trailingOnpressed: (){
-                        context.pushNamed(AmptiveRoutes.TRENDING_HASHTAG_FULL_SCREEN);
+                        context.pushNamed(ATRoutes.TRENDING_HASHTAG_FULL_SCREEN);
                       },
                     ),
                   ),              

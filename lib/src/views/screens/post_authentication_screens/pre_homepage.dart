@@ -70,7 +70,7 @@ class _PreHomePageState extends State<PreHomePage>
 
   @override
   Widget build(BuildContext context) {
-    return AmptiveAnnotatedRegionWidget(
+    return ATAnnotatedRegionWidget(
       child: Scaffold(
         backgroundColor: AmptiveColors.brandBlack,
         body: Stack(
@@ -204,7 +204,7 @@ class _PreHomePageState extends State<PreHomePage>
                       height: 50.w,
                       buttonTitle: AmptiveStrings.ALLOW,
                       onPressed: () {
-                        context.goNamed(AmptiveRoutes.homeScreen);
+                        context.goNamed(ATRoutes.homeScreen);
 
 
                       },
@@ -217,7 +217,7 @@ class _PreHomePageState extends State<PreHomePage>
                       height: 37.h,
                       child: GestureDetector(
                         onTap: () {
-                          context.goNamed(AmptiveRoutes.homeScreen);
+                          context.goNamed(ATRoutes.homeScreen);
                         },
                         child: Container(
                           padding: EdgeInsets.symmetric(vertical: 11.h),

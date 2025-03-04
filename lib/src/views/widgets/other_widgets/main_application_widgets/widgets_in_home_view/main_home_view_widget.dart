@@ -61,7 +61,7 @@ class AmptiveHomeViewWidget extends StatelessWidget {
               ),
               const Gap(24),
               GestureDetector(
-                onTap: () => context.pushNamed(AmptiveRoutes.CREATOR_PROFILE_SCREEN),
+                onTap: () => context.pushNamed(ATRoutes.CREATOR_PROFILE_SCREEN),
                 child: const Padding(
                   padding: EdgeInsets.only(right: 15),
                   child: AmptiveCircularContainerWithPictureWidget(
@@ -109,7 +109,7 @@ class AmptiveHomeViewWidget extends StatelessWidget {
               (_) => Padding(
                 padding: const EdgeInsets.fromLTRB(15, 0, 15, 30),
                 child: GestureDetector(
-                  onTap: () => context.pushNamed(AmptiveRoutes.showDetailedScreen),
+                  onTap: () => context.pushNamed(ATRoutes.showDetailedScreen),
                   child: const AmptiveShowOrEventDataModelWidget()
                 ),
               )

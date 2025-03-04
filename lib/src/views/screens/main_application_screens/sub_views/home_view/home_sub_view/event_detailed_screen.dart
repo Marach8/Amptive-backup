@@ -30,7 +30,7 @@ class AmptiveEventDetailedScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return AmptiveAnnotatedRegionWidget(
+    return ATAnnotatedRegionWidget(
       child: Scaffold(
         appBar: AmptiveAppBar(
           hideLeading: true,

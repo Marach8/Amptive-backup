@@ -42,7 +42,7 @@ class _AddPictureWidgetState extends State<AddPictureWidget> {
     if (pickedFile != null && mounted) {
       File image = File(pickedFile.path);
       MemoryImage? img =
-          await context.pushNamed(AmptiveRoutes.cropImage, extra: image);
+          await context.pushNamed(ATRoutes.cropImage, extra: image);
 
       if (img != null && mounted) {
         context
@@ -210,7 +210,7 @@ class _AddPictureWidgetState extends State<AddPictureWidget> {
             alignment: Alignment.center,
             child: GestureDetector(
               onTap: () {
-                context.pushNamed(AmptiveRoutes.preference);
+                context.pushNamed(ATRoutes.preference);
               },
               child: Text(
                 AmptiveStrings.skipForNow,
@@ -230,7 +230,7 @@ class _AddPictureWidgetState extends State<AddPictureWidget> {
               child: ElevatedButton(
                 onPressed:
                     state is ProfilePictureAddedState && state.image != null
-                        ? () => context.pushNamed(AmptiveRoutes.preference)
+                        ? () => context.pushNamed(ATRoutes.preference)
                         : null,
                 style: ElevatedButton.styleFrom(
                     backgroundColor: AmptiveColors.hex307FE2),

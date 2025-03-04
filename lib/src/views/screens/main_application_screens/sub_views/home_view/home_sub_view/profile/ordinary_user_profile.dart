@@ -23,7 +23,7 @@ class AmptiveOrdinaryUserProfileScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final tabIndex = ValueNotifier(0);
 
-    return AmptiveAnnotatedRegionWidget(
+    return ATAnnotatedRegionWidget(
       statusBarColor: AmptiveColors.transparentColor,
       child: Scaffold(
         body: NestedScrollView(

@@ -18,7 +18,7 @@ class AmptiveBlockedAcctsScreen extends StatelessWidget {
 
   @override
   Widget build(context) {
-    return AmptiveAnnotatedRegionWidget(
+    return ATAnnotatedRegionWidget(
       child: Scaffold(
         body: Column(
           children: [

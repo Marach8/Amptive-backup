@@ -83,7 +83,7 @@ class _AmptiveGoLiveHostViewState extends State<AmptiveGoLiveHostView> {
 
   @override
   Widget build(context) {
-    return AmptiveAnnotatedRegionWidget(
+    return ATAnnotatedRegionWidget(
       child: Scaffold(
         body: SafeArea(
           child: Column(

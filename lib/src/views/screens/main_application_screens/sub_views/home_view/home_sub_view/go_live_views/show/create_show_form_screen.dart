@@ -100,7 +100,7 @@ class _CreateShowScreenState extends State<CreateShowScreen> {
     if (pickedFile != null && mounted) {
       File image = File(pickedFile.path);
       MemoryImage? img =
-      await context.pushNamed(AmptiveRoutes.cropImageSquare, extra: image);
+      await context.pushNamed(ATRoutes.cropImageSquare, extra: image);
       return img;
 
     }
@@ -109,7 +109,7 @@ class _CreateShowScreenState extends State<CreateShowScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return AmptiveAnnotatedRegionWidget(
+    return ATAnnotatedRegionWidget(
       child: Scaffold(
         appBar: AppBar(
           automaticallyImplyLeading: false,
@@ -793,13 +793,13 @@ class _CreateShowScreenState extends State<CreateShowScreen> {
 
   void navigateToSuccessPage() {
     if (widget.showType == ShowType.show) {
-      context.pushReplacementNamed(AmptiveRoutes.CREATE_SHOW_SUCCESS,
+      context.pushReplacementNamed(ATRoutes.CREATE_SHOW_SUCCESS,
           extra: service.selectedShowImage!);
     } else if (widget.showType == ShowType.event) {
-      context.pushReplacementNamed(AmptiveRoutes.EVENT_SCHEDULED_SCREEN,
+      context.pushReplacementNamed(ATRoutes.EVENT_SCHEDULED_SCREEN,
           extra: service.selectedShowImage!);
     } else if (widget.showType == ShowType.episode) {
-      context.pushReplacementNamed(AmptiveRoutes.EPISODE_SCHEDULED_SCREEN,
+      context.pushReplacementNamed(ATRoutes.EPISODE_SCHEDULED_SCREEN,
           extra: service.selectedShowImage!);
     }
   }

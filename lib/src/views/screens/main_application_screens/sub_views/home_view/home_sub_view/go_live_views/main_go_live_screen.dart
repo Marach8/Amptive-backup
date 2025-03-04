@@ -35,7 +35,7 @@ class _AmptiveGoLiveScreenState extends State<AmptiveGoLiveScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return AmptiveAnnotatedRegionWidget(
+    return ATAnnotatedRegionWidget(
       child: Scaffold(
         appBar: AmptiveAppBar(
           leading: GestureDetector(
@@ -99,8 +99,8 @@ class _AmptiveGoLiveScreenState extends State<AmptiveGoLiveScreen> {
           builder: (_, activate, __) => AmptiveElevatedButtonWidget(
             onPressed: activate ? (){
               showSelected.value ?
-                context.pushNamed(AmptiveRoutes.CHOOSE_OR_CREATE_SHOW_SCREEN)
-              : context.pushNamed(AmptiveRoutes.CHOOSE_OR_CREATE_EVENT_SCREEN);
+                context.pushNamed(ATRoutes.CHOOSE_OR_CREATE_SHOW_SCREEN)
+              : context.pushNamed(ATRoutes.CHOOSE_OR_CREATE_EVENT_SCREEN);
             }: null,
             buttonTitle: AmptiveStrings.CONTINUE,
             bgColor: AmptiveColors.whiteColor,

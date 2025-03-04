@@ -28,7 +28,7 @@ class AmptiveCreatorProfileScreen extends StatelessWidget {
   Widget build(context) {
     final tabIndex = ValueNotifier<int>(0);
     
-    return AmptiveAnnotatedRegionWidget(
+    return ATAnnotatedRegionWidget(
       statusBarColor: AmptiveColors.transparentColor,
       child: Scaffold(
         body: NestedScrollView(
@@ -47,7 +47,7 @@ class AmptiveCreatorProfileScreen extends StatelessWidget {
                 Stack(
                   children: [
                     AmptiveCircleAvatarWidget(
-                      onTap: () => context.pushNamed(AmptiveRoutes.COMMUNITY_TASK_SCREEN),
+                      onTap: () => context.pushNamed(ATRoutes.COMMUNITY_TASK_SCREEN),
                       //onTap: () => context.pushNamed(AmptiveRoutes.USER_PROFILE_SCREEN),
                       diameter: 30, color: AmptiveColors.black.withOpacity(0.7),
                       child: const Icon(Iconsax.global, size: 20),
@@ -60,7 +60,7 @@ class AmptiveCreatorProfileScreen extends StatelessWidget {
                 ),
                 const Gap(15),
                 AmptiveCircleAvatarWidget(
-                  onTap: () => context.pushNamed(AmptiveRoutes.PROFILE_MENU_SCREEN),
+                  onTap: () => context.pushNamed(ATRoutes.PROFILE_MENU_SCREEN),
                   diameter: 30, color: AmptiveColors.black.withOpacity(0.7),
                   child: const Icon(Icons.menu, size: 20),
                 ),
@@ -100,7 +100,7 @@ class AmptiveCreatorProfileScreen extends StatelessWidget {
                                 tag: AmptiveImageStrings.jpeg1,
                                 child: AmptiveCircularContainerWithPictureWidget(
                                   onTap: () => context.pushNamed(
-                                    AmptiveRoutes.PROFILE_PIC_SCREEN,
+                                    ATRoutes.PROFILE_PIC_SCREEN,
                                     extra: AmptiveImageStrings.jpeg1
                                   ),
                                   diameter: 70, addBorder: true,
@@ -184,7 +184,7 @@ class AmptiveCreatorProfileScreen extends StatelessWidget {
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         GestureDetector(
-                          onTap: () => context.pushNamed(AmptiveRoutes.PROFILE_FOLLOWING_SCREEN),
+                          onTap: () => context.pushNamed(ATRoutes.PROFILE_FOLLOWING_SCREEN),
                           child: Row(
                             children: [
                               CustomPaint(
@@ -217,7 +217,7 @@ class AmptiveCreatorProfileScreen extends StatelessWidget {
                         const Gap(20),
 
                         GestureDetector(
-                          onTap: () => context.pushNamed(AmptiveRoutes.PROFILE_SUBSCRIBERS_SCREEN),
+                          onTap: () => context.pushNamed(ATRoutes.PROFILE_SUBSCRIBERS_SCREEN),
                           child: Row(
                             children: [
                               CustomPaint(

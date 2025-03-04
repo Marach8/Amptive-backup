@@ -19,7 +19,7 @@ class AmptiveSubscribedEventOrShowViewWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return AmptiveAnnotatedRegionWidget(
+    return ATAnnotatedRegionWidget(
       child: Scaffold(
         body: NestedScrollView(
           floatHeaderSlivers: true,
@@ -62,7 +62,7 @@ class AmptiveSubscribedEventOrShowViewWidget extends StatelessWidget {
                   (_) => Padding(
                     padding: const EdgeInsets.fromLTRB(20, 5, 20, 20),
                     child: GestureDetector(
-                      onTap: () => context.pushNamed(AmptiveRoutes.showDetailedScreen),
+                      onTap: () => context.pushNamed(ATRoutes.showDetailedScreen),
                       child: const AmptiveSubscribedShowOrEventDataModelWidget()
                     ),
                   )

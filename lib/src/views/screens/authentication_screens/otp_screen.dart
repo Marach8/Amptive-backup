@@ -80,7 +80,7 @@ class _OTPScreenState extends State<OTPScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return AmptiveAnnotatedRegionWidget(
+    return ATAnnotatedRegionWidget(
       child: Scaffold(
         backgroundColor: AmptiveColors.brandBlack,
         appBar: const AmptiveAppBar(),
@@ -167,7 +167,7 @@ class _OTPScreenState extends State<OTPScreen> {
           child: BlocListener<AmptiveOTPAuthBloc, AmptiveOTPAuthState>(
             listener: (context, state) {
               if (state is VerifiedOTPAuthState && context.mounted) {
-                context.pushReplacementNamed(AmptiveRoutes.passwordAuth);
+                context.pushReplacementNamed(ATRoutes.passwordAuth);
               }
             },
             child: BlocBuilder<AmptiveOTPAuthBloc, AmptiveOTPAuthState>(

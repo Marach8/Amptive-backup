@@ -37,7 +37,7 @@ class _PasswordAuthScreenState extends State<PasswordAuthScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return AmptiveAnnotatedRegionWidget(
+    return ATAnnotatedRegionWidget(
       child: Scaffold(
         appBar: const AmptiveAppBar(),
         body: Padding(
@@ -138,7 +138,7 @@ class _PasswordAuthScreenState extends State<PasswordAuthScreen> {
                 buttonTitle: AmptiveStrings.NEXT,
                 onPressed: state is ValidPasswordAuthState
                     ? () {
-                        context.pushNamed(AmptiveRoutes.dobAuth);
+                        context.pushNamed(ATRoutes.dobAuth);
                       }
                     : null,
               );

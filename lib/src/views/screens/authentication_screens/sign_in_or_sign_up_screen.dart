@@ -23,7 +23,7 @@ class AmptiveAuthScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return AmptiveAnnotatedRegionWidget(
+    return ATAnnotatedRegionWidget(
       child: Scaffold(
         appBar: const AmptiveAppBar(
           title: AmptiveImageLoaderWidget(imagePath: AmptiveImageStrings.logo2),
@@ -37,13 +37,13 @@ class AmptiveAuthScreen extends StatelessWidget {
 
                 AmptiveElevatedButtonWidget(
                   buttonTitle: (userSignUp ? AmptiveStrings.signUpWith : AmptiveStrings.signInWith) + AmptiveStrings.email,
-                  onPressed: () => context.pushNamed(AmptiveRoutes.emailAuth)
+                  onPressed: () => context.pushNamed(ATRoutes.emailAuth)
                 ),
                 Gap(15.h),
 
                 AmptiveOutlinedButtonWidget(
                   buttonTitle: (userSignUp ? AmptiveStrings.signUpWith : AmptiveStrings.signInWith) + AmptiveStrings.phoneNumber,
-                  onPressed: () => context.pushNamed(AmptiveRoutes.addPhone)
+                  onPressed: () => context.pushNamed(ATRoutes.addPhone)
                 ),
 
                 Gap(20.h),

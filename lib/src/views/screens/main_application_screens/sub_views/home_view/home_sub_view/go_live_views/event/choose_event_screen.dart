@@ -66,7 +66,7 @@ class _AmptiveChooseOrCreateEventScreenState extends State<AmptiveChooseOrCreate
 
   @override
   Widget build(context) {
-    return AmptiveAnnotatedRegionWidget(
+    return ATAnnotatedRegionWidget(
       child: Scaffold(
         body: Stack(
           children: [
@@ -138,7 +138,7 @@ class _AmptiveChooseOrCreateEventScreenState extends State<AmptiveChooseOrCreate
                                       if(selectedIndex != null){
                                         listOfValueNotifiers.elementAt(selectedIndex!).value = false;                                    
                                       }
-                                      context.pushNamed(AmptiveRoutes.CREATE_EVENT_FORM);
+                                      context.pushNamed(ATRoutes.CREATE_EVENT_FORM);
                                     },
                                     radius: 5.r,
                                     color: AmptiveColors.hex2D2D2D,
@@ -204,7 +204,7 @@ class _AmptiveChooseOrCreateEventScreenState extends State<AmptiveChooseOrCreate
               //showSelectAudienceAccessForEventsDialog(context);
               //showWhispersDialog(context);
               //await showEventCapacitySelectionDialog(context: context);
-              context.pushNamed(AmptiveRoutes.EVENT_SCHEDULED_SCREEN);
+              context.pushNamed(ATRoutes.EVENT_SCHEDULED_SCREEN);
             } : null,
             buttonTitle: AmptiveStrings.NEXT,
             bgColor: AmptiveColors.whiteColor,

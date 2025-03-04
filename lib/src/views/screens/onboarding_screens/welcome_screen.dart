@@ -18,7 +18,7 @@ class AmptiveWelcomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return AmptiveAnnotatedRegionWidget(
+    return ATAnnotatedRegionWidget(
       child: Scaffold(
       body: Center(
         child: SingleChildScrollView(
@@ -63,14 +63,14 @@ class AmptiveWelcomeScreen extends StatelessWidget {
               Gap(30.h),
 
               AmptiveElevatedButtonWidget(
-                onPressed: () => context.pushNamed(AmptiveRoutes.authScreen, extra: true),
+                onPressed: () => context.pushNamed(ATRoutes.authScreen, extra: true),
                 buttonTitle: AmptiveStrings.signUp,
               ),
 
               Gap(15.h),
 
               AmptiveOutlinedButtonWidget(
-                onPressed: () => context.pushNamed(AmptiveRoutes.authScreen, extra: false),
+                onPressed: () => context.pushNamed(ATRoutes.authScreen, extra: false),
                 buttonTitle: AmptiveStrings.signIn,
               ),
 

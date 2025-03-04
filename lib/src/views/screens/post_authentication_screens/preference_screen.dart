@@ -34,12 +34,12 @@ class _AmptivePreferenceScreenState extends State<AmptivePreferenceScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return AmptiveAnnotatedRegionWidget(
+    return ATAnnotatedRegionWidget(
       child: BlocListener<AmptivePreferenceBloc, AmptivePreferenceState>(
         listener: (context, state) {
           if (state is PreferencePersonalizedState) {
             // context.goNamed(AmptiveRoutes.homeScreen);
-            context.goNamed(AmptiveRoutes.preHomepage);
+            context.goNamed(ATRoutes.preHomepage);
 
           }
         },

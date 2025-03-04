@@ -34,7 +34,7 @@ class AmptiveAppBarDropDownWidget extends StatelessWidget {
         PopupMenuItem<String>(
           height: 40.h,
           onTap: (){
-            context.pushNamed(AmptiveRoutes.SCHEDULED_EVENTS_OR_SHOWS_SCREEN);
+            context.pushNamed(ATRoutes.SCHEDULED_EVENTS_OR_SHOWS_SCREEN);
           },
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -52,7 +52,7 @@ class AmptiveAppBarDropDownWidget extends StatelessWidget {
         PopupMenuItem<String>(
           height: 40.h,
           onTap: (){
-            context.pushNamed(AmptiveRoutes.SUBSCRIBED_EVENTS_OR_SHOWS_SCREEN);
+            context.pushNamed(ATRoutes.SUBSCRIBED_EVENTS_OR_SHOWS_SCREEN);
           },
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -70,7 +70,7 @@ class AmptiveAppBarDropDownWidget extends StatelessWidget {
         PopupMenuItem<String>(
           height: 40.h,
           onTap: (){
-            context.pushNamed(AmptiveRoutes.FOLLOWING_EVENTS_OR_SHOWS_SCREEN);
+            context.pushNamed(ATRoutes.FOLLOWING_EVENTS_OR_SHOWS_SCREEN);
           },
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,

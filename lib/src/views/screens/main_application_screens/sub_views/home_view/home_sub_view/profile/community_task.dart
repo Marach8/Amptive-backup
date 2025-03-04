@@ -10,7 +10,7 @@ class AmptiveCommunityTaskScreen extends StatelessWidget {
 
   @override
   Widget build(context) {
-    return AmptiveAnnotatedRegionWidget(
+    return ATAnnotatedRegionWidget(
       child: Scaffold(
         appBar: AmptiveAppBar(
           padding: EdgeInsets.zero,

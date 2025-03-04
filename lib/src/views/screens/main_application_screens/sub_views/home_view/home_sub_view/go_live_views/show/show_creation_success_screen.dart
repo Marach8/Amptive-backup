@@ -37,7 +37,7 @@ class _AmptiveCreateShowSuccessScreenState
 
   @override
   Widget build(BuildContext context) {
-    return AmptiveAnnotatedRegionWidget(
+    return ATAnnotatedRegionWidget(
       child: Scaffold(
         appBar: AmptiveAppBar(
           leadingWidth: 20,
@@ -91,7 +91,7 @@ class _AmptiveCreateShowSuccessScreenState
           children: [
             AmptiveElevatedButtonWidget(
               onPressed: () async {
-                await context.pushNamed(AmptiveRoutes.CREATE_EPISODE_FORM);
+                await context.pushNamed(ATRoutes.CREATE_EPISODE_FORM);
               },
               buttonTitle: AmptiveStrings.CREATE_1ST_EPISODE,
               bgColor: AmptiveColors.whiteColor,

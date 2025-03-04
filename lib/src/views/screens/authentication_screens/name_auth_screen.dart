@@ -38,7 +38,7 @@ class _NameAuthScreenState extends State<NameAuthScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return AmptiveAnnotatedRegionWidget(
+    return ATAnnotatedRegionWidget(
       child: Scaffold(
         backgroundColor: AmptiveColors.brandBlack,
         appBar: const AmptiveAppBar(),
@@ -153,7 +153,7 @@ class _NameAuthScreenState extends State<NameAuthScreen> {
             onPressed: service.isNameValid
                 ? () {
                     // Validate returns true if the form is valid, or false otherwise.
-                    context.goNamed(AmptiveRoutes.addProfilePic);
+                    context.goNamed(ATRoutes.addProfilePic);
                   }
                 : null,
           );

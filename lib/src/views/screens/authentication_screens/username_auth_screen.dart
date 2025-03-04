@@ -41,7 +41,7 @@ class _UserNameAuthScreenState extends State<UserNameAuthScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return AmptiveAnnotatedRegionWidget(
+    return ATAnnotatedRegionWidget(
       child: Scaffold(
         backgroundColor: AmptiveColors.brandBlack,
         appBar: const AmptiveAppBar(),
@@ -208,7 +208,7 @@ class _UserNameAuthScreenState extends State<UserNameAuthScreen> {
               height: 50.w,
               onPressed: service.isUsernameValid
                   ? () {
-                      context.pushNamed(AmptiveRoutes.addName);
+                      context.pushNamed(ATRoutes.addName);
                     }
                   : null,
               buttonTitle: AmptiveStrings.NEXT,

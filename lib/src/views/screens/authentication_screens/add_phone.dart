@@ -40,7 +40,7 @@ class _AddPhoneScreenState extends State<AddPhoneScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return AmptiveAnnotatedRegionWidget(
+    return ATAnnotatedRegionWidget(
       child: Scaffold(
         backgroundColor: AmptiveColors.brandBlack,
         appBar: const AmptiveAppBar(),
@@ -218,7 +218,7 @@ class _AddPhoneScreenState extends State<AddPhoneScreen> {
                   buttonTitle: AmptiveStrings.verifyPhoneNumber,
                   onPressed: state is AddPhoneNumberState && state.isPhoneValid
                       ? () {
-                          context.pushNamed(AmptiveRoutes.otp,
+                          context.pushNamed(ATRoutes.otp,
                               extra: AmptiveStrings.phoneNumber);
                         }
                       : null,

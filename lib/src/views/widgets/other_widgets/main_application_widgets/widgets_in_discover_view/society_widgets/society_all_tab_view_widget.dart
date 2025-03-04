@@ -25,7 +25,7 @@ class AmptiveDiscoverSocietyAllTabViewWidget extends StatelessWidget {
       children: [
         AmptiveRowOfTitleWithTrendingViewAll(
           title: AmptiveStrings.TRENDING,
-          viewAllOnpressed: (){context.pushNamed(AmptiveRoutes.TRENDING_SOCIETY_SCREEN);},
+          viewAllOnpressed: (){context.pushNamed(ATRoutes.TRENDING_SOCIETY_SCREEN);},
         ),
         const Gap(10),
         SizedBox(

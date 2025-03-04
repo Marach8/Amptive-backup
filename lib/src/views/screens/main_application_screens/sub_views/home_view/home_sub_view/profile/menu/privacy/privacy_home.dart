@@ -24,7 +24,7 @@ class AmptivePrivacyScreen extends StatelessWidget {
 
   @override
   Widget build(context) {
-    return AmptiveAnnotatedRegionWidget(
+    return ATAnnotatedRegionWidget(
       child: Scaffold(
         body: Column(
           children: [
@@ -100,12 +100,12 @@ class AmptivePrivacyScreen extends StatelessWidget {
                   MenuItem(
                     firstIcon: const Icon(Icons.notifications_off_outlined),
                     middleText: AmptiveStrings.MUTED_ACCTS,
-                    onTap: () => context.pushNamed(AmptiveRoutes.MUTED_ACCTS_SCREEN)
+                    onTap: () => context.pushNamed(ATRoutes.MUTED_ACCTS_SCREEN)
                   ),
                   MenuItem(
                     firstIcon: const Icon(Icons.block),
                     middleText: AmptiveStrings.BLOCKED_ACCTS,
-                    onTap: () => context.pushNamed(AmptiveRoutes.BLOCKED_ACCTS_SCREEN)
+                    onTap: () => context.pushNamed(ATRoutes.BLOCKED_ACCTS_SCREEN)
                   ),
                 ],
               ),
