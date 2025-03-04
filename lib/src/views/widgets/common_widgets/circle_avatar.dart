@@ -19,12 +19,12 @@ class AmptiveCircleAvatarWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return AmptiveContainer(
+    return ATContainer(
       onTap: onTap,
       duration: animationDuration,
       height: diameter, width: diameter,
       radius: diameter,
-      color: color ?? AmptiveColors.whiteColor,
+      color: color ?? ATColors.whiteColor,
       child: child ?? const SizedBox.shrink()
     );
   }

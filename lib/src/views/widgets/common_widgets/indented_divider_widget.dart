@@ -9,7 +9,7 @@ class AmptiveIndentedDividerWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final screenWidth = AmptiveHelperFunctions.getScreenWidth(context);
+    final screenWidth = ATHelperFuncs.getScreenWidth(context);
     final margin = (screenWidth - 170)/2;
 
     return Container(
@@ -17,7 +17,7 @@ class AmptiveIndentedDividerWidget extends StatelessWidget {
       height: 5,
       width: 170,
       decoration: BoxDecoration(
-        color: AmptiveColors.whiteColor,
+        color: ATColors.whiteColor,
         borderRadius: BorderRadius.circular(5)
       ),
     );

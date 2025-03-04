@@ -54,7 +54,7 @@ class AmptiveWelcomeScreen extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 25).r,
                 child: Text(
-                  AmptiveStrings.monetizeLiveAudioShowsAndEvents,
+                  ATStrings.monetizeLiveAudioShowsAndEvents,
                   textAlign: TextAlign.center,
                   style: Theme.of(context).textTheme.displayMedium,
                 ),
@@ -64,20 +64,20 @@ class AmptiveWelcomeScreen extends StatelessWidget {
 
               AmptiveElevatedButtonWidget(
                 onPressed: () => context.pushNamed(ATRoutes.authScreen, extra: true),
-                buttonTitle: AmptiveStrings.signUp,
+                buttonTitle: ATStrings.signUp,
               ),
 
               Gap(15.h),
 
               AmptiveOutlinedButtonWidget(
                 onPressed: () => context.pushNamed(ATRoutes.authScreen, extra: false),
-                buttonTitle: AmptiveStrings.signIn,
+                buttonTitle: ATStrings.signIn,
               ),
 
               Gap(10.h),
               TextButton(
                 onPressed: (){},
-                child: const Text(AmptiveStrings.attendAsGuest)
+                child: const Text(ATStrings.attendAsGuest)
               )
             ]
           ),

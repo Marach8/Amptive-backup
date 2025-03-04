@@ -12,18 +12,18 @@ class AmptiveInputDecorationTheme{
     errorMaxLines: 1,
     //isDense: true,
     filled: true,
-    fillColor: AmptiveColors.fillGreyColor.withOpacity(0.3),
+    fillColor: ATColors.fillGreyColor.withOpacity(0.3),
     // prefixIconColor: AmptiveColors.deepOrange,
     // suffixIconColor: AmptiveColors.deepOrange,
     //labelStyle: const TextStyle().copyWith(fontSize: AmptiveFontSizes.size13),
     hintStyle: TextStyle(
       fontSize: AmptiveFontSizes.size16,
-      color: AmptiveColors.authHintColor,
+      color: ATColors.authHintColor,
       fontWeight: AmptiveFontWeights.w400
     ),
     contentPadding: const EdgeInsets.fromLTRB(16, 12, 16, 12).r,
     errorStyle: TextStyle(
-      color: AmptiveColors.textRedColor,
+      color: ATColors.textRedColor,
       fontSize: AmptiveFontSizes.size12,
       fontWeight: AmptiveFontWeights.w400
     ),
@@ -34,20 +34,20 @@ class AmptiveInputDecorationTheme{
     ),
     focusedBorder: const OutlineInputBorder().copyWith(
       borderRadius: BorderRadius.circular(14).r,
-      borderSide: BorderSide(width: 2.r, color: AmptiveColors.hex307FE2),
+      borderSide: BorderSide(width: 2.r, color: ATColors.hex307FE2),
     ),
     errorBorder: const OutlineInputBorder().copyWith(
       borderRadius: BorderRadius.circular(14).r,
-      borderSide: BorderSide(width: 2.r, color: AmptiveColors.textRedColor),
+      borderSide: BorderSide(width: 2.r, color: ATColors.textRedColor),
     ),
     focusedErrorBorder: const OutlineInputBorder().copyWith(
       borderRadius: BorderRadius.circular(14).r,
-      borderSide: BorderSide(width: 2.r, color: AmptiveColors.textRedColor),
+      borderSide: BorderSide(width: 2.r, color: ATColors.textRedColor),
     ),
 
     disabledBorder: const OutlineInputBorder().copyWith(
       borderRadius: BorderRadius.circular(14).r,
-      borderSide: BorderSide(color: AmptiveColors.transparentColor),
+      borderSide: BorderSide(color: ATColors.transparentColor),
     ),
   );
 }

@@ -26,8 +26,11 @@ class CreateShowTextFormField extends AmptiveTextFormFieldWidget {
 
   final bool readOnly;
   final GestureTapCallback? onTap;
+  @override
   final int maxLength;
+  @override
   final int maxLines;
+  @override
   final String counterText;
 
   @override
@@ -48,24 +51,24 @@ class CreateShowTextFormField extends AmptiveTextFormFieldWidget {
         hintText: hintText,
         hintStyle: TextStyle(
           fontSize: AmptiveFontSizes.size14,
-          color: AmptiveColors.whiteColor.withOpacity(0.4),
+          color: ATColors.whiteColor.withOpacity(0.4),
           fontWeight: AmptiveFontWeights.w500,
         ),
         suffixIcon: suffixIcon,
         prefixIcon: prefixIcon,
         filled: true,
-        fillColor: AmptiveColors.whiteColor.withOpacity(0.1),
+        fillColor: ATColors.whiteColor.withOpacity(0.1),
         focusedBorder: OutlineInputBorder(
           borderSide: BorderSide(
             width: 2.w,
-            color: AmptiveColors.transparentColor,
+            color: ATColors.transparentColor,
           ),
           borderRadius: BorderRadius.circular(14.r),
         ),
         enabledBorder: OutlineInputBorder(
           borderSide: BorderSide(
             width: 1.w,
-            color: AmptiveColors.transparentColor,
+            color: ATColors.transparentColor,
           ),
           borderRadius: BorderRadius.circular(14.r),
         ), // Removes the border when not focused
@@ -120,7 +123,7 @@ class CreateShowTextFieldTitle extends StatelessWidget {
           style: Theme.of(context)
               .textTheme
               .titleSmall
-              ?.copyWith(color: AmptiveColors.whiteColor.withOpacity(0.4)),
+              ?.copyWith(color: ATColors.whiteColor.withOpacity(0.4)),
         ),
       ],
     );
@@ -149,7 +152,7 @@ class SelectedHashTags extends StatelessWidget {
             child: Container(
               padding: EdgeInsets.all(10.w),
               decoration: BoxDecoration(
-                color: AmptiveColors.whiteColor.withOpacity(0.1),
+                color: ATColors.whiteColor.withOpacity(0.1),
                 borderRadius: BorderRadius.circular(10.r),
               ),
               child: Row(
@@ -158,7 +161,7 @@ class SelectedHashTags extends StatelessWidget {
                     hashtag.obj.name,
                     style: Theme.of(context).textTheme.bodySmall?.copyWith(
                       fontSize: AmptiveFontSizes.size10,
-                      color: AmptiveColors.whiteColor.withOpacity(0.7),
+                      color: ATColors.whiteColor.withOpacity(0.7),
                     ),
                   ),
                   SizedBox(width: 4.w),
@@ -167,7 +170,7 @@ class SelectedHashTags extends StatelessWidget {
                     child: Icon(
                       Icons.close,
                       size: 16,
-                      color: AmptiveColors.whiteColor.withOpacity(0.7),
+                      color: ATColors.whiteColor.withOpacity(0.7),
                     ),
                   ),
                 ],

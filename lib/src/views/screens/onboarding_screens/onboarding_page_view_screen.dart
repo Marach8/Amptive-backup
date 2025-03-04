@@ -50,21 +50,21 @@ class _AmptiveOnboardingScreenState extends State<AmptiveOnboardingScreen> {
                       indexOfDestinationPage: index)),
               children: [
                 AmptiveCustomOnboardingPageViewSlideWidget(
-                  title: AmptiveStrings.goLiveLikeNeverBefore,
+                  title: ATStrings.goLiveLikeNeverBefore,
                   description:
-                      AmptiveStrings.monetizeYouLiveShowsAndEvents,
-                  pictureBgColor: AmptiveColors.hex2D2D2D,
+                      ATStrings.monetizeYouLiveShowsAndEvents,
+                  pictureBgColor: ATColors.hex2D2D2D,
                 ),
                 AmptiveCustomOnboardingPageViewSlideWidget(
-                  title: AmptiveStrings.experienceItUniquely,
-                  description: AmptiveStrings.joinTheLargerAudience,
-                  pictureBgColor: AmptiveColors.grey2Color,
+                  title: ATStrings.experienceItUniquely,
+                  description: ATStrings.joinTheLargerAudience,
+                  pictureBgColor: ATColors.grey2Color,
                 ),
                 AmptiveCustomOnboardingPageViewSlideWidget(
-                  title: AmptiveStrings.liveAudioAndEventShows,
+                  title: ATStrings.liveAudioAndEventShows,
                   description:
-                      AmptiveStrings.tuneIntoLiveAudioShowsAndEvents,
-                  pictureBgColor: AmptiveColors.grey4Color,
+                      ATStrings.tuneIntoLiveAudioShowsAndEvents,
+                  pictureBgColor: ATColors.grey4Color,
                 ),
               ],
             ),
@@ -80,8 +80,8 @@ class _AmptiveOnboardingScreenState extends State<AmptiveOnboardingScreen> {
                     effect: ExpandingDotsEffect(
                       dotHeight: 10.h,
                       dotWidth: 10.w,
-                      activeDotColor: AmptiveColors.hexD9D9D9,
-                      dotColor: AmptiveColors.inactiveDotColor,
+                      activeDotColor: ATColors.hexD9D9D9,
+                      dotColor: ATColors.inactiveDotColor,
                     ),
                   ),
                   Gap(80.r),
@@ -101,8 +101,8 @@ class _AmptiveOnboardingScreenState extends State<AmptiveOnboardingScreen> {
                           final currentPageIndex =
                               currentState.currentPageIndex;
                           return Text(currentPageIndex > 1
-                              ? AmptiveStrings.NEXT
-                              : AmptiveStrings.skip);
+                              ? ATStrings.NEXT
+                              : ATStrings.skip);
                         })),
                   )
                 ],

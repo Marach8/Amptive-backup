@@ -36,25 +36,25 @@ class AmptiveAuthScreen extends StatelessWidget {
               children: [
 
                 AmptiveElevatedButtonWidget(
-                  buttonTitle: (userSignUp ? AmptiveStrings.signUpWith : AmptiveStrings.signInWith) + AmptiveStrings.email,
-                  onPressed: () => context.pushNamed(ATRoutes.emailAuth)
+                  buttonTitle: (userSignUp ? ATStrings.signUpWith : ATStrings.signInWith) + ATStrings.EMAIL,
+                  onPressed: () => context.pushNamed(ATRoutes.EMAIL_SCREEN)
                 ),
                 Gap(15.h),
 
                 AmptiveOutlinedButtonWidget(
-                  buttonTitle: (userSignUp ? AmptiveStrings.signUpWith : AmptiveStrings.signInWith) + AmptiveStrings.phoneNumber,
+                  buttonTitle: (userSignUp ? ATStrings.signUpWith : ATStrings.signInWith) + ATStrings.FONE_NO,
                   onPressed: () => context.pushNamed(ATRoutes.addPhone)
                 ),
 
                 Gap(20.h),
                 Text(
-                  AmptiveStrings.or,
+                  ATStrings.or,
                   style: Theme.of(context).textTheme.bodyMedium
                 ),
                 Gap(20.h),
 
                 AmptiveOutlinedButtonWithLeadingIconWidget(
-                  buttonTitle: (userSignUp ? AmptiveStrings.signUpWith : AmptiveStrings.signInWith) + AmptiveStrings.facebook,
+                  buttonTitle: (userSignUp ? ATStrings.signUpWith : ATStrings.signInWith) + ATStrings.facebook,
                   onPressed: (){},
                   leadingIcon: const AmptiveImageLoaderWidget(
                     imagePath: AmptiveImageStrings.facebookIcon,
@@ -62,7 +62,7 @@ class AmptiveAuthScreen extends StatelessWidget {
                 ),
                 Gap(15.h),
                 AmptiveOutlinedButtonWithLeadingIconWidget(
-                  buttonTitle: (userSignUp ? AmptiveStrings.signUpWith : AmptiveStrings.signInWith) + AmptiveStrings.twitter,
+                  buttonTitle: (userSignUp ? ATStrings.signUpWith : ATStrings.signInWith) + ATStrings.twitter,
                   onPressed: (){},
                   leadingIcon: const Padding(
                     padding: EdgeInsets.only(left: 10),
@@ -71,7 +71,7 @@ class AmptiveAuthScreen extends StatelessWidget {
                 ),
                 Gap(15.h),
                 AmptiveOutlinedButtonWithLeadingIconWidget(
-                  buttonTitle: (userSignUp ? AmptiveStrings.signUpWith : AmptiveStrings.signInWith) + AmptiveStrings.google,
+                  buttonTitle: (userSignUp ? ATStrings.signUpWith : ATStrings.signInWith) + ATStrings.google,
                   onPressed: (){},
                   leadingIcon: const AmptiveImageLoaderWidget(
                     imagePath: AmptiveImageStrings.googleIcon,

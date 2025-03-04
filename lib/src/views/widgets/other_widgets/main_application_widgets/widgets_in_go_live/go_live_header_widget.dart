@@ -35,7 +35,7 @@ class AmptiveLiveViewHeaderWidget extends StatelessWidget {
           child: Row(
             children: [
               Text(
-                AmptiveStrings.LIVE,
+                ATStrings.LIVE,
                 style: Theme.of(context).textTheme.bodyMedium,
               ),
               Gap(5.w),
@@ -55,7 +55,7 @@ class AmptiveLiveViewHeaderWidget extends StatelessWidget {
         Positioned(
           left: 15,
           /// The default is for the host view. provide the exitIcon when calling for other views
-          child: exitIcon ?? AmptiveContainer(
+          child: exitIcon ?? ATContainer(
             onTap: (){
               context.read<AmptiveEndShowBloc>().add(
                 Reset2IntialStateEvent()
@@ -63,37 +63,37 @@ class AmptiveLiveViewHeaderWidget extends StatelessWidget {
               showHostEndShowDialog(context: context);
               //context.read<AmptiveNavBarBloc>().goToPage(0),
             },
-            color: AmptiveColors.hexECO404.withOpacity(0.3),
+            color: ATColors.hexECO404.withOpacity(0.3),
             height: 35, width: 35, boxShape: BoxShape.circle,
             boxShadow: [
               BoxShadow(
-                color: AmptiveColors.black,
+                color: ATColors.black,
                 blurRadius: 10, spreadRadius: 30,
                 offset: const Offset(-20, 0)
               )
             ],
-            child: Icon(Icons.logout, color: AmptiveColors.hexECO404),
+            child: Icon(Icons.logout, color: ATColors.hexECO404),
           ),
         ),
     
         Positioned(
           right: 15,
-          child: AmptiveContainer(
+          child: ATContainer(
             boxShadow: [
               BoxShadow(
-                color: AmptiveColors.black,
+                color: ATColors.black,
                 blurRadius: 10, spreadRadius: 30,
                 offset: const Offset(20, 0)
               )
             ],
             child: Row(
               children: [
-                AmptiveContainer(
+                ATContainer(
                   onTap: () => exitIcon == null ? showHostViewOfTopGiftersDialog(context)
                     : showAudienceViewOfTopGiftersDialog(context),
                   padding: const EdgeInsets.all(5),
                   radius: 30,
-                  color: AmptiveColors.whiteColor.withOpacity(0.1),
+                  color: ATColors.whiteColor.withOpacity(0.1),
                   child: Row(
                     children: [
                       Text(
@@ -115,7 +115,7 @@ class AmptiveLiveViewHeaderWidget extends StatelessWidget {
             
                 Gap(10.w),
                     
-                AmptiveContainer(
+                ATContainer(
                   onTap: (){
                     if(exitIcon == null){
                       showListenersDialog(context: context);
@@ -126,7 +126,7 @@ class AmptiveLiveViewHeaderWidget extends StatelessWidget {
                   },
                   padding: const EdgeInsets.all(5),
                   radius: 30,
-                  color: AmptiveColors.whiteColor.withOpacity(0.1),
+                  color: ATColors.whiteColor.withOpacity(0.1),
                   child: Row(
                     children: [
                       const AmptiveImageLoaderWidget(imagePath: AmptiveImageStrings.USER_ICON),

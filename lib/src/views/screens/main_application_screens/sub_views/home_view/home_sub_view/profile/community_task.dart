@@ -17,7 +17,7 @@ class AmptiveCommunityTaskScreen extends StatelessWidget {
           leading: const Icon(Icons.keyboard_arrow_left),
 
           title: Text(
-            AmptiveStrings.COMMUNITY_TASK,
+            ATStrings.COMMUNITY_TASK,
             style: Theme.of(context).textTheme.bodyMedium,
           ),
         ),
@@ -28,7 +28,7 @@ class AmptiveCommunityTaskScreen extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                AmptiveStrings.NO_TASK,
+                ATStrings.NO_TASK,
                 style: Theme.of(context).textTheme.bodySmall?.copyWith(
                   fontSize: AmptiveFontSizes.size16
                 ),
@@ -36,9 +36,9 @@ class AmptiveCommunityTaskScreen extends StatelessWidget {
 
               Text(
                 maxLines: 2,
-                AmptiveStrings.TASKS_WILL_APPEAR_HERE,
+                ATStrings.TASKS_WILL_APPEAR_HERE,
                 style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                  color: AmptiveColors.hexC2C2C2
+                  color: ATColors.hexC2C2C2
                 )
               ),
             ],

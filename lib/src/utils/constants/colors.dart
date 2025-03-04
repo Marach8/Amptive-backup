@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart' show Color, Colors;
 
-class AmptiveColors {
-  const AmptiveColors._();
+class ATColors {
+  const ATColors._();
 
   static Color get transparentColor => Colors.transparent;
 

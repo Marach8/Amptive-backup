@@ -40,7 +40,7 @@ List<SingleChildWidget> providers() {
   return [
     BlocProvider(create: (_) => AmptiveOnboardingBloc()),
     BlocProvider(create: (_) => AmptiveAuthBloc()),
-    BlocProvider(create: (_) => AmptiveEmailAuthBloc()),
+    BlocProvider(create: (_) => ATEmailAuthBloc()),
     BlocProvider(create: (_) => AmptiveOTPAuthBloc()),
     BlocProvider(create: (_) => AmptivePasswordAuthBloc()),
     BlocProvider(create: (_) => AmptivePreferenceBloc()),

@@ -21,7 +21,7 @@ Future<bool?> showConfirmationDialog({
   return await showDialog<bool?>(
     context: context,
     builder: (_) => AlertDialog(
-      backgroundColor: AmptiveColors.indicatorDark.withOpacity(0.82),
+      backgroundColor: ATColors.indicatorDark.withOpacity(0.82),
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(14),
       ),
@@ -45,7 +45,7 @@ Future<bool?> showConfirmationDialog({
             yesString,
             style: Theme.of(context).textTheme.titleMedium?.copyWith(
               fontSize: AmptiveFontSizes.size17,
-              color: AmptiveColors.hex307FE2
+              color: ATColors.hex307FE2
             ),
           ),
         ),
@@ -55,7 +55,7 @@ Future<bool?> showConfirmationDialog({
             noString,
             style: Theme.of(context).textTheme.titleMedium?.copyWith(
               fontSize: AmptiveFontSizes.size17,
-              color: AmptiveColors.hex307FE2
+              color: ATColors.hex307FE2
             ),
           ),
         ),
@@ -76,10 +76,10 @@ Future<bool?> showKickOutConfirmationDialog({
 }) async{
   return await showDialog<bool?>(
     context: context,
-    barrierColor: AmptiveColors.black.withOpacity(0.8),
+    barrierColor: ATColors.black.withOpacity(0.8),
     builder: (_) => AlertDialog(
       insetPadding: const EdgeInsets.fromLTRB(15, 0, 15, 0),
-      backgroundColor: AmptiveColors.hex202020,
+      backgroundColor: ATColors.hex202020,
       contentPadding: const EdgeInsets.all(15),
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(14),
@@ -91,7 +91,7 @@ Future<bool?> showKickOutConfirmationDialog({
           Stack(
             clipBehavior: Clip.none,
             children: [
-              AmptiveContainer(
+              ATContainer(
                 clipBehavior: Clip.hardEdge,
                 height: 43, width: 43, radius: 30,
                 child: FittedBox(
@@ -103,8 +103,8 @@ Future<bool?> showKickOutConfirmationDialog({
               ),
               Positioned(
                 top: -1, right: -5, 
-                child: AmptiveContainer(
-                  color: AmptiveColors.hexECO404,
+                child: ATContainer(
+                  color: ATColors.hexECO404,
                   height: 17, width: 17,
                   boxShape: BoxShape.circle,
                   child: const FittedBox(
@@ -131,19 +131,19 @@ Future<bool?> showKickOutConfirmationDialog({
           ),
           const Gap(20),
           SizedBox(
-            width: AmptiveHelperFunctions.getScreenWidth(context),
+            width: ATHelperFuncs.getScreenWidth(context),
             child: AmptiveElevatedButtonWidget(
-              bgColor: AmptiveColors.whiteColor,
-              fgColor: AmptiveColors.black,
+              bgColor: ATColors.whiteColor,
+              fgColor: ATColors.black,
               onPressed: () => context.pop(true),
-              buttonTitle: AmptiveStrings.KICK_OUT_LISTENER,
+              buttonTitle: ATStrings.KICK_OUT_LISTENER,
             ),
           ),
           const Gap(20),
           GestureDetector(
             onTap: () => context.pop(false),
             child: Text(
-              AmptiveStrings.CANCEL,
+              ATStrings.CANCEL,
               style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                 fontSize: AmptiveFontSizes.size15,
 

@@ -33,14 +33,14 @@ class CustomLoaderButton extends StatelessWidget {
       onTap: onTap,
       color: color ??
           (validCondition ?? false
-              ? AmptiveColors.hex307FE2
+              ? ATColors.hex307FE2
               : const Color(0xFF2F2F2F)),
       loader: SizedBox(
         width: 25.w,
         height: 25.w,
         child: CircularProgressIndicator(
-          color: AmptiveColors.whiteColor,
-          backgroundColor: AmptiveColors.whiteColor.withOpacity(0.5),
+          color: ATColors.whiteColor,
+          backgroundColor: ATColors.whiteColor.withOpacity(0.5),
           strokeWidth: 3.w,
         ),
       ),
@@ -50,7 +50,7 @@ class CustomLoaderButton extends StatelessWidget {
           fontWeight: FontWeight.w600,
           fontSize: 18.sp,
           color: validCondition ?? false
-              ? AmptiveColors.whiteColor
+              ? ATColors.whiteColor
               : const Color(0xFF666666),
         ),
       ),
@@ -78,8 +78,8 @@ class AmptiveLoadingButtonWidget extends StatelessWidget {
           width: 25.w,
           height: 25.w,
           child: CircularProgressIndicator(
-            color: AmptiveColors.whiteColor,
-            backgroundColor: AmptiveColors.whiteColor.withOpacity(0.5),
+            color: ATColors.whiteColor,
+            backgroundColor: ATColors.whiteColor.withOpacity(0.5),
             strokeWidth: 3.w,
           ),
         ),

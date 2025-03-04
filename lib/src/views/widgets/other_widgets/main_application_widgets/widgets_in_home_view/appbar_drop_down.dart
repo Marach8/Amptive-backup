@@ -23,7 +23,7 @@ class AmptiveAppBarDropDownWidget extends StatelessWidget {
       offset: offset ?? const Offset(-80, 35),
       padding: EdgeInsets.zero,
       onSelected: (selectedSearchChoice){},
-      color: AmptiveColors.containerGradientColorB,
+      color: ATColors.containerGradientColorB,
       elevation: 0,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(12)
@@ -40,7 +40,7 @@ class AmptiveAppBarDropDownWidget extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                AmptiveStrings.SCHEDULED,
+                ATStrings.SCHEDULED,
                 style: Theme.of(context).textTheme.bodySmall?.copyWith(
                   fontSize: AmptiveFontSizes.size15
                 ),
@@ -58,7 +58,7 @@ class AmptiveAppBarDropDownWidget extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                AmptiveStrings.SUBSCRIBED,
+                ATStrings.SUBSCRIBED,
                 style: Theme.of(context).textTheme.bodySmall?.copyWith(
                   fontSize: AmptiveFontSizes.size15
                 ),
@@ -76,7 +76,7 @@ class AmptiveAppBarDropDownWidget extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                AmptiveStrings.FOLLOWING,
+                ATStrings.FOLLOWING,
                 style: Theme.of(context).textTheme.bodySmall?.copyWith(
                   fontSize: AmptiveFontSizes.size15
                 ),

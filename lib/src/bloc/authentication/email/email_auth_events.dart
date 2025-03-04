@@ -1,8 +1,8 @@
-abstract class AmptiveEmailAuthEvent {}
+abstract class ATEmailAuthEvent {}
 
-class VerifyEmailAuthEvent extends AmptiveEmailAuthEvent {}
+class VerifyEmailAuthEvent extends ATEmailAuthEvent {}
 
-class EmailFieldChangedAuthEvent extends AmptiveEmailAuthEvent {
+class EmailFieldChangedAuthEvent extends ATEmailAuthEvent {
   String? currentTextEntered;
 
   EmailFieldChangedAuthEvent({this.currentTextEntered});

@@ -1,9 +1,7 @@
-import 'package:amptive/src/routes.dart';
 import 'package:amptive/src/utils/constants/colors.dart';
 import 'package:amptive/src/utils/constants/strings/image_strings.dart';
 import 'package:amptive/src/views/widgets/common_widgets/annotated_region__widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/image_loader_widget.dart';
-import 'package:amptive/src/views/widgets/common_widgets/outlined_button_widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/textformfield_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -33,7 +31,7 @@ class AmptiveProfileSubScribersScreen extends StatelessWidget {
           ),
           leadingWidth: 30,
           title: Text(
-            AmptiveStrings.SUBSCRIBERS,
+            ATStrings.SUBSCRIBERS,
             style: Theme.of(context).textTheme.bodyMedium,
           ),
         ),
@@ -46,15 +44,15 @@ class AmptiveProfileSubScribersScreen extends StatelessWidget {
               AmptiveTextFormFieldWidget(
                 controller: TextEditingController(),
                 disableBlueBorder: true,
-                hintText: AmptiveStrings.SEARCH_4_SUBSCRIBERS,
-                fillColor: AmptiveColors.whiteColor.withOpacity(0.1),
+                hintText: ATStrings.SEARCH_4_SUBSCRIBERS,
+                fillColor: ATColors.whiteColor.withOpacity(0.1),
                 prefixIcon: const AmptiveImageLoaderWidget(
                   imagePath: AmptiveImageStrings.filledSearch
                 ),
               ),
               const Gap(20),
               Text(
-                AmptiveStrings.ALL_SUBSCRIBERS,
+                ATStrings.ALL_SUBSCRIBERS,
                 style: Theme.of(context).textTheme.bodyMedium,
               ),
               const Gap(20),
@@ -102,7 +100,7 @@ class _AmptiveSubscriberWidget extends StatelessWidget {
         onTap: () => onTap(subscriber, subscriber.notifier.value),
         child: Row(
           children: [
-            AmptiveContainer(
+            ATContainer(
               clipBehavior: Clip.hardEdge,
               height: 50, width: 50, radius: 30,
               child: FittedBox(
@@ -117,12 +115,12 @@ class _AmptiveSubscriberWidget extends StatelessWidget {
                 style: Theme.of(context).textTheme.titleMedium
               ),
             ),
-            AmptiveContainer(
-              border: Border.all(color: AmptiveColors.whiteColor),
+            ATContainer(
+              border: Border.all(color: ATColors.whiteColor),
               radius: 30, 
               padding: const EdgeInsets.fromLTRB(15, 5, 15, 5),
               child: Text(
-                AmptiveStrings.MANAGE,
+                ATStrings.MANAGE,
                 style: Theme.of(context).textTheme.bodySmall?.copyWith(
                   fontSize: AmptiveFontSizes.size13,
                 ),

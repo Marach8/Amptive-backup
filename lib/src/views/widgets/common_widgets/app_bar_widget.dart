@@ -29,7 +29,7 @@ class AmptiveAppBar extends StatelessWidget implements PreferredSizeWidget {
       padding: padding ?? const EdgeInsets.symmetric(horizontal: 15),
       child: AppBar(
         automaticallyImplyLeading: false,
-        backgroundColor: bgColor ?? AmptiveColors.black,
+        backgroundColor: bgColor ?? ATColors.black,
         elevation: 0.0,
         centerTitle: centerTitle,
         leading: hideLeading ?? false ? null : leading ?? const AmptiveAppBarLeadingWidget(),

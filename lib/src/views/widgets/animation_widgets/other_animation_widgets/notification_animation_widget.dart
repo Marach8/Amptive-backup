@@ -108,7 +108,7 @@ class _AmptiveNotificationAnimationWidgetState extends State<AmptiveNotification
                 decoration: index == 0 ? BoxDecoration(
                   boxShadow: [
                     BoxShadow(
-                      color: AmptiveColors.transparentColor,
+                      color: ATColors.transparentColor,
                       spreadRadius: 10,
                       blurRadius: 7,
                       offset: const Offset(0, 3), // changes position of shadow

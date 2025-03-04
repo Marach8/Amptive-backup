@@ -42,7 +42,7 @@ class _AddPhoneScreenState extends State<AddPhoneScreen> {
   Widget build(BuildContext context) {
     return ATAnnotatedRegionWidget(
       child: Scaffold(
-        backgroundColor: AmptiveColors.brandBlack,
+        backgroundColor: ATColors.brandBlack,
         appBar: const AmptiveAppBar(),
         body: Padding(
           padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 20.h),
@@ -52,7 +52,7 @@ class _AddPhoneScreenState extends State<AddPhoneScreen> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  AmptiveStrings.whatIsYourPhoneNumber,
+                  ATStrings.whatIsYourPhoneNumber,
                   style: Theme.of(context).textTheme.headlineMedium?.copyWith(
                         fontSize: AmptiveFontSizes.size17,
                       ),
@@ -80,12 +80,12 @@ class _AddPhoneScreenState extends State<AddPhoneScreen> {
                                 padding: EdgeInsets.symmetric(
                                     vertical: 0.h, horizontal: 16.w),
                                 decoration: BoxDecoration(
-                                  color: AmptiveColors.fillGreyColor
+                                  color: ATColors.fillGreyColor
                                       .withOpacity(0.3),
                                   border: Border.all(
                                     color: _isBottomSheetOpened
-                                        ? AmptiveColors.hex307FE2
-                                        : AmptiveColors.transparentColor,
+                                        ? ATColors.hex307FE2
+                                        : ATColors.transparentColor,
                                     width: 2.w,
                                   ),
                                   // borderRadius: SmoothBorderRadius(
@@ -107,20 +107,20 @@ class _AddPhoneScreenState extends State<AddPhoneScreen> {
                                         height: 12.75.h,
                                         width: 17.w,
                                         package:
-                                            AmptiveStrings.countryPickers,
+                                            ATStrings.countryPickers,
                                       ),
                                     ),
                                     SizedBox(
                                       width: 7.w,
                                     ),
                                     Text(
-                                      AmptiveStrings.plus +
+                                      ATStrings.plus +
                                           selectedCountry.phoneCode,
                                       style: Theme.of(context)
                                           .textTheme
                                           .labelMedium
                                           ?.copyWith(
-                                              color: AmptiveColors.whiteColor),
+                                              color: ATColors.whiteColor),
                                     ),
                                     Padding(
                                       padding: EdgeInsets.only(
@@ -136,7 +136,7 @@ class _AddPhoneScreenState extends State<AddPhoneScreen> {
                                           _isBottomSheetOpened
                                               ? Icons.arrow_back_ios
                                               : Icons.arrow_forward_ios_rounded,
-                                          color: AmptiveColors.whiteColor,
+                                          color: ATColors.whiteColor,
                                           size: 22.13.h,
                                         ),
                                       ),
@@ -154,7 +154,7 @@ class _AddPhoneScreenState extends State<AddPhoneScreen> {
                       child: AmptiveTextFormFieldWidget(
                         controller: _phoneController,
                         keyboardType: TextInputType.number,
-                        cursorColor: AmptiveColors.hex307FE2,
+                        cursorColor: ATColors.hex307FE2,
                         onChanged: (val) {
                           context
                               .read<AmptiveAuthBloc>()
@@ -163,21 +163,21 @@ class _AddPhoneScreenState extends State<AddPhoneScreen> {
                         decoration: InputDecoration(
                           contentPadding: EdgeInsets.symmetric(
                               vertical: 12.h, horizontal: 16.w),
-                          hintText: AmptiveStrings.phoneNumber,
+                          hintText: ATStrings.FONE_NO,
                           hintStyle: Theme.of(context).textTheme.labelMedium,
                           errorStyle: Theme.of(context)
                               .textTheme
                               .headlineMedium
                               ?.copyWith(
-                                color: AmptiveColors.textRedColor,
+                                color: ATColors.textRedColor,
                               ),
                           filled: true,
                           fillColor:
-                              AmptiveColors.fillGreyColor.withOpacity(0.3),
+                              ATColors.fillGreyColor.withOpacity(0.3),
                           focusedBorder: OutlineInputBorder(
                             borderSide: BorderSide(
                               width: 2.w,
-                              color: AmptiveColors.hex307FE2,
+                              color: ATColors.hex307FE2,
                             ),
                             // borderRadius: SmoothBorderRadius(
                             //   cornerRadius: 14.r,
@@ -187,7 +187,7 @@ class _AddPhoneScreenState extends State<AddPhoneScreen> {
                           border: OutlineInputBorder(
                             borderSide: BorderSide(
                               width: 2.w,
-                              color: AmptiveColors.transparentColor,
+                              color: ATColors.transparentColor,
                             ),
                             // borderRadius: SmoothBorderRadius(
                             //   cornerRadius: 14.r,
@@ -215,11 +215,11 @@ class _AddPhoneScreenState extends State<AddPhoneScreen> {
               builder: (context, state) {
                 return AmptiveElevatedButtonWidget(
                   height: 50.w,
-                  buttonTitle: AmptiveStrings.verifyPhoneNumber,
+                  buttonTitle: ATStrings.verifyPhoneNumber,
                   onPressed: state is AddPhoneNumberState && state.isPhoneValid
                       ? () {
-                          context.pushNamed(ATRoutes.otp,
-                              extra: AmptiveStrings.phoneNumber);
+                          context.pushNamed(ATRoutes.OTP_SCREEN,
+                              extra: ATStrings.FONE_NO);
                         }
                       : null,
                 );

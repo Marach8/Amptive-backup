@@ -1,16 +1,11 @@
-import 'package:amptive/src/bloc/main_app/profile/allow_see_calender_bloc.dart';
 import 'package:amptive/src/utils/constants/colors.dart';
 import 'package:amptive/src/utils/constants/font_weights.dart';
 import 'package:amptive/src/views/screens/main_application_screens/sub_views/home_view/home_sub_view/profile/menu/profile_menu_screen.dart';
 import 'package:amptive/src/views/widgets/common_widgets/annotated_region__widget.dart';
-import 'package:amptive/src/views/widgets/common_widgets/custom_container_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:gap/gap.dart';
 import 'package:go_router/go_router.dart';
-import 'package:iconsax/iconsax.dart';
 import '../../../../../../../../../bloc/main_app/profile/private_account_bloc.dart';
-import '../../../../../../../../../bloc/main_app/profile/profile_menu/language_bloc.dart';
 import '../../../../../../../../../utils/constants/strings/other_strings.dart';
 import '../../../../../../../../../utils/constants/strings/route_strings.dart';
 import '../../../../../../../../../utils/dialogs/app_notification_dialog.dart';
@@ -34,16 +29,16 @@ class AmptivePrivacyScreen extends StatelessWidget {
                 children: [
                   AmptiveCircleAvatarWidget(
                     onTap: () => context.pop(),
-                    diameter: 30, color: AmptiveColors.transparentColor,
+                    diameter: 30, color: ATColors.transparentColor,
                     child: const Icon(Icons.keyboard_arrow_left),
                   ),
                   const Spacer(),
                   Text(
-                    AmptiveStrings.PRIVACY,
+                    ATStrings.PRIVACY,
                     style: Theme.of(context).textTheme.bodyMedium,
                   ),
                   const Spacer(),
-                  Icon(Icons.keyboard_arrow_left, color: AmptiveColors.transparentColor),
+                  Icon(Icons.keyboard_arrow_left, color: ATColors.transparentColor),
                 ],
               ),
             ),
@@ -58,9 +53,9 @@ class AmptivePrivacyScreen extends StatelessWidget {
                     child: Row(
                       children: [
                         Text(
-                          AmptiveStrings.PRIVATE_ACCT,
+                          ATStrings.PRIVATE_ACCT,
                           style: Theme.of(context).textTheme.labelMedium?.copyWith(
-                            color: AmptiveColors.whiteColor
+                            color: ATColors.whiteColor
                           )
                         ),
                         const Spacer(),
@@ -70,7 +65,7 @@ class AmptivePrivacyScreen extends StatelessWidget {
                               showAppNotification(
                                 context: context,
                                 icon: const Icon(Icons.check_circle),
-                                text: AmptiveStrings.ACCT_PRIVATE
+                                text: ATStrings.ACCT_PRIVATE
                               );
                             }
                           },
@@ -88,23 +83,23 @@ class AmptivePrivacyScreen extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.fromLTRB(15, 0, 15, 15),
                     child: Text(
-                      AmptiveStrings.APPROVED_USERS_CAN_FOLLOW,
+                      ATStrings.APPROVED_USERS_CAN_FOLLOW,
                       maxLines: 2,
                       style: Theme.of(context).textTheme.titleSmall?.copyWith(
                         fontWeight: AmptiveFontWeights.w500,
-                        color: AmptiveColors.whiteColor.withValues(alpha: 0.4)
+                        color: ATColors.whiteColor.withValues(alpha: 0.4)
                       )
                     ),
                   ),
-                  const MenuHeading(text: AmptiveStrings.MUTES_ND_BLOCKS),
+                  const MenuHeading(text: ATStrings.MUTES_ND_BLOCKS),
                   MenuItem(
                     firstIcon: const Icon(Icons.notifications_off_outlined),
-                    middleText: AmptiveStrings.MUTED_ACCTS,
+                    middleText: ATStrings.MUTED_ACCTS,
                     onTap: () => context.pushNamed(ATRoutes.MUTED_ACCTS_SCREEN)
                   ),
                   MenuItem(
                     firstIcon: const Icon(Icons.block),
-                    middleText: AmptiveStrings.BLOCKED_ACCTS,
+                    middleText: ATStrings.BLOCKED_ACCTS,
                     onTap: () => context.pushNamed(ATRoutes.BLOCKED_ACCTS_SCREEN)
                   ),
                 ],

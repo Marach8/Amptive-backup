@@ -24,7 +24,7 @@ class AmptiveDiscoverSocietyAllTabViewWidget extends StatelessWidget {
     return Column(
       children: [
         AmptiveRowOfTitleWithTrendingViewAll(
-          title: AmptiveStrings.TRENDING,
+          title: ATStrings.TRENDING,
           viewAllOnpressed: (){context.pushNamed(ATRoutes.TRENDING_SOCIETY_SCREEN);},
         ),
         const Gap(10),
@@ -44,7 +44,7 @@ class AmptiveDiscoverSocietyAllTabViewWidget extends StatelessWidget {
     
         const Gap(35),
         AmptiveRowOfTitleWithTrendingViewAll(
-          title: AmptiveStrings.PAID_SHOWS,
+          title: ATStrings.PAID_SHOWS,
           viewAllOnpressed: (){},
         ),
         const Gap(10),
@@ -64,7 +64,7 @@ class AmptiveDiscoverSocietyAllTabViewWidget extends StatelessWidget {
     
         const Gap(35),
         AmptiveRowOfTitleWithTrendingViewAll(
-          title: AmptiveStrings.FREE_SHOWS,
+          title: ATStrings.FREE_SHOWS,
           viewAllOnpressed: (){},
         ),
         const Gap(10),
@@ -83,11 +83,11 @@ class AmptiveDiscoverSocietyAllTabViewWidget extends StatelessWidget {
         ),
         const Gap(35),
     
-        AmptiveContainer(
+        ATContainer(
           padding: const EdgeInsets.only(left: 15),
           alignment: Alignment.centerLeft,
           child: Text(
-            AmptiveStrings.POPULAR_CREATORS,
+            ATStrings.POPULAR_CREATORS,
             style: Theme.of(context).textTheme.bodyLarge 
           ),
         ),
@@ -108,7 +108,7 @@ class AmptiveDiscoverSocietyAllTabViewWidget extends StatelessWidget {
     
         const Gap(35),
         AmptiveRowOfTitleWithTrendingViewAll(
-          title: AmptiveStrings.PAID_EVENTS,
+          title: ATStrings.PAID_EVENTS,
           viewAllOnpressed: (){},
         ),
         const Gap(10),
@@ -128,7 +128,7 @@ class AmptiveDiscoverSocietyAllTabViewWidget extends StatelessWidget {
         const Gap(35),
     
         AmptiveRowOfTitleWithTrendingViewAll(
-          title: AmptiveStrings.FREE_EVENTS,
+          title: ATStrings.FREE_EVENTS,
           viewAllOnpressed: (){},
         ),
         const Gap(10),

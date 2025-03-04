@@ -18,7 +18,7 @@ class AmptiveDiscoverSocietyShowsTabViewWidget extends StatelessWidget {
     return Column(
       children: [
         AmptiveRowOfTitleWithTrendingViewAll(
-          title: AmptiveStrings.TRENDING,
+          title: ATStrings.TRENDING,
           viewAllOnpressed: (){},
         ),
         const Gap(10),
@@ -38,7 +38,7 @@ class AmptiveDiscoverSocietyShowsTabViewWidget extends StatelessWidget {
     
         const Gap(35),
         AmptiveRowOfTitleWithTrendingViewAll(
-          title: AmptiveStrings.PAID_SHOWS,
+          title: ATStrings.PAID_SHOWS,
           viewAllOnpressed: (){},
         ),
         const Gap(10),
@@ -58,7 +58,7 @@ class AmptiveDiscoverSocietyShowsTabViewWidget extends StatelessWidget {
     
         const Gap(35),
         AmptiveRowOfTitleWithTrendingViewAll(
-          title: AmptiveStrings.FREE_SHOWS,
+          title: ATStrings.FREE_SHOWS,
           viewAllOnpressed: (){},
         ),
         const Gap(10),

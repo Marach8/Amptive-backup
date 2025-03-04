@@ -57,28 +57,28 @@ class _AmptiveScheduledShowOrEventDataModelWidgetState extends State<AmptiveSche
           subtitle: 'Started a live show',
         ),
         Gap(2.h),
-        AmptiveContainer(
+        ATContainer(
           height: 425.h,
           clipBehavior: Clip.hardEdge,
           radius: 15.r,
           child: Stack(
             children: [
               const AmptiveImageLoaderWidget(imagePath: AmptiveImageStrings.weCanDoHardThingsBgImage),
-              AmptiveContainer(
+              ATContainer(
                 padding: const EdgeInsets.fromLTRB(15, 10, 15, 10),
                 radius: 15.r,
                 gradient: LinearGradient(
                   begin: Alignment.topCenter,
                   end: Alignment.bottomCenter,
                   colors: [
-                    AmptiveColors.transparentColor,
-                    AmptiveColors.transparentColor,
-                    AmptiveColors.transparentColor,
-                    AmptiveColors.transparentColor,
-                    AmptiveColors.containerGradientColorB.withOpacity(0.5),
-                    AmptiveColors.containerGradientColorB,
-                    AmptiveColors.containerGradientColorB,
-                    AmptiveColors.containerGradientColorB,
+                    ATColors.transparentColor,
+                    ATColors.transparentColor,
+                    ATColors.transparentColor,
+                    ATColors.transparentColor,
+                    ATColors.containerGradientColorB.withOpacity(0.5),
+                    ATColors.containerGradientColorB,
+                    ATColors.containerGradientColorB,
+                    ATColors.containerGradientColorB,
                   ]
                 ),
                 child: Column(
@@ -114,8 +114,8 @@ class _AmptiveScheduledShowOrEventDataModelWidgetState extends State<AmptiveSche
                             _notifier.value = !value;
                             showAddedOrRemovedSnackbar(
                               context: context,
-                              content: value ? AmptiveStrings.removedFromCalender
-                                : AmptiveStrings.addedToCalender
+                              content: value ? ATStrings.removedFromCalender
+                                : ATStrings.addedToCalender
                             );
                           },
                           child: AmptiveAnimatedCrossFadeWidget(

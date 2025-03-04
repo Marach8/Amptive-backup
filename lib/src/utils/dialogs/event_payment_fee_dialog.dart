@@ -23,7 +23,7 @@ Future<void> showEventPaymentFeeDialog({
 
   return await showModalBottomSheet(
       constraints: BoxConstraints(maxHeight: 450.h),
-      backgroundColor: AmptiveColors.brandBlack,
+      backgroundColor: ATColors.brandBlack,
       context: context,
       isScrollControlled: true,
       useSafeArea: true,
@@ -43,14 +43,14 @@ Future<void> showEventPaymentFeeDialog({
                     child: Platform.isAndroid
                         ? Icon(
                             Icons.keyboard_arrow_down,
-                            color: AmptiveColors.whiteColor.withOpacity(0.6),
+                            color: ATColors.whiteColor.withOpacity(0.6),
                           )
-                        : AmptiveContainer(
+                        : ATContainer(
                             margin: const EdgeInsets.symmetric(vertical: 10),
                             radius: 5,
                             height: 4,
                             width: 30,
-                            color: AmptiveColors.whiteColor.withOpacity(0.6),
+                            color: ATColors.whiteColor.withOpacity(0.6),
                             child: const SizedBox.shrink(),
                           ),
                   ),
@@ -64,18 +64,18 @@ Future<void> showEventPaymentFeeDialog({
                 Align(
                   alignment: Alignment.center,
                   child: Text(
-                    AmptiveStrings.AUDIENCE_ACCESS,
+                    ATStrings.AUDIENCE_ACCESS,
                     style: Theme.of(context).textTheme.bodyLarge,
                   ),
                 ),
                 const Gap(20),
                 Text(
                   maxLines: 5,
-                  AmptiveStrings.AMOUNT_2_CHARGE_4_EVENT,
+                  ATStrings.AMOUNT_2_CHARGE_4_EVENT,
                   style: Theme.of(context)
                       .textTheme
                       .titleMedium
-                      ?.copyWith(color: AmptiveColors.hexC2C2C2),
+                      ?.copyWith(color: ATColors.hexC2C2C2),
                 ),
                 const Gap(20),
                 Form(
@@ -88,7 +88,7 @@ Future<void> showEventPaymentFeeDialog({
                     keyboardType: TextInputType.number,
                     validator: (text) {
                       if (text?.isEmpty ?? false) {
-                        return AmptiveStrings.EMPTY_FIELD;
+                        return ATStrings.EMPTY_FIELD;
                       }
                       return null;
                     },
@@ -122,9 +122,9 @@ Future<void> showEventPaymentFeeDialog({
                                 context.pop();
                               }
                             : null,
-                        buttonTitle: AmptiveStrings.SET_FEE,
-                        bgColor: AmptiveColors.whiteColor,
-                        fgColor: AmptiveColors.black,
+                        buttonTitle: ATStrings.SET_FEE,
+                        bgColor: ATColors.whiteColor,
+                        fgColor: ATColors.black,
                       );
                     })
               ]),

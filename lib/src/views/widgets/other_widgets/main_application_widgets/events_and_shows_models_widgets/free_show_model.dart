@@ -16,7 +16,7 @@ class AmptiveFreeShowModel extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return AmptiveContainer(
+    return ATContainer(
       width: 137,
       padding: const EdgeInsets.only(left: 15),
       child: Column(
@@ -43,7 +43,7 @@ class AmptiveFreeShowModel extends StatelessWidget {
                   'figma',
                   style: Theme.of(context).textTheme.titleSmall?.copyWith(
                     fontSize: AmptiveFontSizes.size13,
-                    color: AmptiveColors.grey5Color
+                    color: ATColors.grey5Color
                   ),
                 ),
               ),
@@ -53,14 +53,14 @@ class AmptiveFreeShowModel extends StatelessWidget {
                 alignment: Alignment.bottomCenter,
                 child: AmptiveCircleAvatarWidget(
                   diameter: 4,
-                  color: AmptiveColors.grey5Color
+                  color: ATColors.grey5Color
                 ),
               ),
               const Gap(2),
               Text(
                 'LIVE',
                 style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                  color: AmptiveColors.grey5Color
+                  color: ATColors.grey5Color
                 ),
               ),
             ],

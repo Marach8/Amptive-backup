@@ -1,6 +1,5 @@
 import 'dart:io';
 import 'dart:ui';
-import 'package:amptive/src/models/generic_response_model.dart';
 import 'package:amptive/src/utils/constants/colors.dart';
 import 'package:amptive/src/utils/constants/strings/image_strings.dart';
 import 'package:amptive/src/utils/dialogs/app_notification_dialog.dart';
@@ -38,11 +37,11 @@ Future<void> showListenersDialog({
     );
 
   return await showModalBottomSheet(
-    backgroundColor: AmptiveColors.hex202020,
+    backgroundColor: ATColors.hex202020,
     context: context,
     isScrollControlled: true,
     useSafeArea: true,
-    barrierColor: AmptiveColors.black.withOpacity(0.6),
+    barrierColor: ATColors.black.withOpacity(0.6),
     shape: const RoundedRectangleBorder(
       borderRadius: BorderRadius.only(
       topLeft: Radius.circular(15), topRight: Radius.circular(15),
@@ -54,8 +53,8 @@ Future<void> showListenersDialog({
         ),
         child: BackdropFilter(
           filter: ImageFilter.blur(sigmaX: 1, sigmaY: 1),
-          child: AmptiveContainer(
-            width: AmptiveHelperFunctions.getScreenWidth(context),
+          child: ATContainer(
+            width: ATHelperFuncs.getScreenWidth(context),
             padding: const EdgeInsets.fromLTRB(15, 10, 15, 10),
             child: Column(
               children: [
@@ -65,12 +64,12 @@ Future<void> showListenersDialog({
                     child: Platform.isAndroid
                       ? Icon(
                           Icons.keyboard_arrow_down,
-                          color: AmptiveColors.whiteColor.withOpacity(0.6),
+                          color: ATColors.whiteColor.withOpacity(0.6),
                         )
-                      : AmptiveContainer(
+                      : ATContainer(
                           margin: const EdgeInsets.symmetric(vertical: 10),
                           radius: 5, height: 4, width: 30,
-                          color: AmptiveColors.whiteColor.withOpacity(0.6),
+                          color: ATColors.whiteColor.withOpacity(0.6),
                           child: const SizedBox.shrink(),
                         ),
                     ),
@@ -86,7 +85,7 @@ Future<void> showListenersDialog({
                         ),
                         const Gap(5),
                         Text(
-                          AmptiveStrings.LISTENERS,
+                          ATStrings.LISTENERS,
                           style: Theme.of(context).textTheme.bodyLarge
                         ),
                       ],
@@ -96,9 +95,9 @@ Future<void> showListenersDialog({
                     
                   Text(
                     maxLines: 3,
-                    AmptiveStrings.TOP_LISTENERS_DESC,
+                    ATStrings.TOP_LISTENERS_DESC,
                     style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                      color: AmptiveColors.hexC2C2C2
+                      color: ATColors.hexC2C2C2
                     ),
                   ),
                   const Gap(20),
@@ -108,13 +107,13 @@ Future<void> showListenersDialog({
                     controller: controller,
                     focusNode: focusNode,
                     disableBlueBorder: true,
-                    onChanged: (text) => AmptiveHelperFunctions.callDebouncer(
+                    onChanged: (text) => ATHelperFuncs.callDebouncer(
                       200,
                       () => context.read<AmptiveGoLiveAvailableCoHostsBloc>().add(
                         SearchCohostEvent(searchKey: text)
                       ),
                     ),
-                    hintText: AmptiveStrings.SEARCH_4_LISTENERS,
+                    hintText: ATStrings.SEARCH_4_LISTENERS,
                     prefixConstraints: const BoxConstraints(maxWidth: 50),
                     prefixIcon: const Padding(
                       padding: EdgeInsets.symmetric(horizontal: 15),
@@ -142,7 +141,7 @@ Future<void> showListenersDialog({
                   Align(
                     alignment: Alignment.centerLeft,
                     child: Text(
-                      AmptiveStrings.TOP_LISTENERS,
+                      ATStrings.TOP_LISTENERS,
                       style: Theme.of(context).textTheme.bodyMedium
                     ),
                   ),
@@ -200,7 +199,7 @@ class AmptiveListenerWidget extends StatelessWidget {
         onTap: () => onTap(listener, listener.notifier.value),
         child: Row(
           children: [
-            AmptiveContainer(
+            ATContainer(
               clipBehavior: Clip.hardEdge,
               height: 50, width: 50, radius: 30,
               child: FittedBox(
@@ -215,12 +214,12 @@ class AmptiveListenerWidget extends StatelessWidget {
                 style: Theme.of(context).textTheme.titleMedium
               ),
             ),
-            if(enableKickOut ?? true) AmptiveContainer(
+            if(enableKickOut ?? true) ATContainer(
               onTap: ()async{
                 final shouldKickOut = await showKickOutConfirmationDialog(
                   context: context,
                   title: 'Are you kicking out ${listener.obj.name}?',
-                  content: AmptiveStrings.KICK_OUT_DESC,
+                  content: ATStrings.KICK_OUT_DESC,
                   listener: listener
                 );
 
@@ -229,12 +228,12 @@ class AmptiveListenerWidget extends StatelessWidget {
                     context: context,
                     icon: const AmptiveImageLoaderWidget(imagePath: AmptiveImageStrings.KICK_USER_OUT),
                     text: '${listener.obj.name} has been kicked out!',
-                    bgColor: AmptiveColors.hexECO404,
+                    bgColor: ATColors.hexECO404,
                   );
                 }
               },
               height: 35, width: 35, boxShape: BoxShape.circle,
-              color: AmptiveColors.whiteColor.withOpacity(0.1),
+              color: ATColors.whiteColor.withOpacity(0.1),
               child: const AmptiveImageLoaderWidget(
                 boxFit: BoxFit.scaleDown,
                 imagePath: AmptiveImageStrings.KICK_USER_OUT

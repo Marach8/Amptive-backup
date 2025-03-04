@@ -119,7 +119,7 @@ class _ProcessingPreferenceWidgetState
         Container(
           margin: EdgeInsets.only(top: 17.h),
           child: Text(
-            AmptiveStrings.personalizingYourExperience,
+            ATStrings.personalizingYourExperience,
             style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                   fontSize: AmptiveFontSizes.size17,
                   height: 0.09,

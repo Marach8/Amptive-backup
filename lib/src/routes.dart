@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:amptive/src/utils/constants/strings/route_strings.dart';
+import 'package:amptive/src/utils/helpers/extensions/string_extensions.dart';
 import 'package:amptive/src/views/screens/authentication_screens/add_phone.dart';
 import 'package:amptive/src/views/screens/authentication_screens/dob_screen.dart';
 import 'package:amptive/src/views/screens/authentication_screens/email_auth_screen.dart';
@@ -76,16 +77,20 @@ final GoRouter amptiveAppRouter = GoRouter(
       ),
     ),
     GoRoute(
-        name: ATRoutes.emailAuth,
-        path: "/email-route",
-        builder: (_, __) => const AmptiveEmailAuthScreen()),
+      name: ATRoutes.EMAIL_SCREEN,
+      path: ATRoutes.EMAIL_SCREEN.addSlash,
+      builder: (_, state) => ATEmailAuthScreen(title: state.extra as String?)
+    ),
     GoRoute(
-        name: ATRoutes.otp,
-        path: "/otp",
-        builder: (_, GoRouterState state) {
-          String where = state.extra as String;
-          return OTPScreen(from: where);
-        }),
+      name: ATRoutes.OTP_SCREEN,
+      path: ATRoutes.OTP_SCREEN.addSlash,
+      builder: (_, state) {
+        final params = state.extra as List<String>;
+        final email = params.first;
+        final title = params.last;
+        return ATOTPScreen(email: email, title: title);
+      }
+    ),
     GoRoute(
       name: ATRoutes.addPhone,
       path: "/add-phone",
@@ -278,7 +283,17 @@ final GoRouter amptiveAppRouter = GoRouter(
               GoRoute(
                 name: ATRoutes.ACCT_INFO_SCREEN,
                 path: ATRoutes.ACCT_INFO_SCREEN,
-                builder: (_, __) => const ATAccountInfoScreen(),
+                builder: (_, state){
+                  final params = state.extra as List<String?>?;
+                  final email = params?.first;
+                  final phone = params?.elementAtOrNull(1);
+                  final country = params?.last;
+                  return ATAccountInfoScreen(
+                    country: country,
+                    email: email,
+                    phone: phone,
+                  );
+                },
               ),
             ]
           ),

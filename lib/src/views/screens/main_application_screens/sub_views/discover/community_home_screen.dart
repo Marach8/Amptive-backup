@@ -31,9 +31,9 @@ class AmptiveCommunityScreen extends StatelessWidget {
               SliverToBoxAdapter(
                 child: Text(
                   maxLines: 3,
-                  AmptiveStrings.DISCOVER_COMMUNITIES,
+                  ATStrings.DISCOVER_COMMUNITIES,
                   style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                    color: AmptiveColors.grey5Color
+                    color: ATColors.grey5Color
                   ),
                 ),
               ),

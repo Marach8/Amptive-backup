@@ -20,18 +20,18 @@ class AmptiveHashtagsWidget extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             IntrinsicWidth(
-              child: AmptiveContainer(
+              child: ATContainer(
                 margin: const EdgeInsets.only(bottom: 15,),
                 padding: const EdgeInsets.fromLTRB(15, 7, 15, 7),
                 alignment: Alignment.center,
                 radius: 10,
-                color: AmptiveColors.whiteColor.withOpacity(0.1),
+                color: ATColors.whiteColor.withOpacity(0.1),
                 child: AmptiveTwoTextRichTextWidget(
                   text1: '# ',
                   text2: element,
                   style1: Theme.of(context).textTheme.bodyMedium,
                   style2: Theme.of(context).textTheme.bodySmall?.copyWith(
-                    color: AmptiveColors.grey5Color,
+                    color: ATColors.grey5Color,
                   ),
                 )
               ),

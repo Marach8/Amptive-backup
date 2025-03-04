@@ -40,7 +40,7 @@ class _NameAuthScreenState extends State<NameAuthScreen> {
   Widget build(BuildContext context) {
     return ATAnnotatedRegionWidget(
       child: Scaffold(
-        backgroundColor: AmptiveColors.brandBlack,
+        backgroundColor: ATColors.brandBlack,
         appBar: const AmptiveAppBar(),
         body: Padding(
           padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 20.h),
@@ -50,7 +50,7 @@ class _NameAuthScreenState extends State<NameAuthScreen> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  AmptiveStrings.whatIsYourName,
+                  ATStrings.whatIsYourName,
                   style: Theme.of(context).textTheme.headlineMedium?.copyWith(
                         fontSize: AmptiveFontSizes.size17,
                       ),
@@ -66,12 +66,12 @@ class _NameAuthScreenState extends State<NameAuthScreen> {
                   },
                   keyboardType: TextInputType.text,
                   cursorColor: service.name.error == null
-                      ? AmptiveColors.hex307FE2
-                      : AmptiveColors.textRedColor,
+                      ? ATColors.hex307FE2
+                      : ATColors.textRedColor,
                   decoration: InputDecoration(
                     contentPadding:
                         EdgeInsets.symmetric(vertical: 12.h, horizontal: 16.w),
-                    hintText: AmptiveStrings.enterYourName,
+                    hintText: ATStrings.enterYourName,
                     hintStyle: Theme.of(context).textTheme.labelMedium,
                     filled: true,
                     fillColor: const Color(0xFF9E9E9E).withOpacity(0.3),
@@ -79,15 +79,15 @@ class _NameAuthScreenState extends State<NameAuthScreen> {
                       borderSide: BorderSide(
                         width: 2.w,
                         color: service.name.error == null
-                            ? AmptiveColors.hex307FE2
-                            : AmptiveColors.textRedColor,
+                            ? ATColors.hex307FE2
+                            : ATColors.textRedColor,
                       ),
                       borderRadius: BorderRadius.circular(14.r),
                     ),
                     border: OutlineInputBorder(
                       borderSide: BorderSide(
                         width: 2.w,
-                        color: AmptiveColors.transparentColor,
+                        color: ATColors.transparentColor,
                       ),
                       borderRadius: BorderRadius.circular(14.r),
                     ),
@@ -99,7 +99,7 @@ class _NameAuthScreenState extends State<NameAuthScreen> {
                     vertical: 11.h,
                   ),
                   child: Text(
-                    AmptiveStrings.noteAboutProfilePic,
+                    ATStrings.noteAboutProfilePic,
                     style: Theme.of(context).textTheme.titleSmall,
                   ),
                 ),
@@ -113,23 +113,23 @@ class _NameAuthScreenState extends State<NameAuthScreen> {
                   alignment: Alignment.centerLeft,
                   child: RichText(
                     text: TextSpan(
-                      text: AmptiveStrings.warningOnClickingCreate +
-                          AmptiveStrings.space,
+                      text: ATStrings.warningOnClickingCreate +
+                          ATStrings.space,
                       children: [
                         TextSpan(
-                          text: AmptiveStrings.termsOfService +
-                              AmptiveStrings.space,
+                          text: ATStrings.termsOfService +
+                              ATStrings.space,
                           style:
                               Theme.of(context).textTheme.titleSmall?.copyWith(
                                     fontWeight: AmptiveFontWeights.w700,
                                   ),
                         ),
                         const TextSpan(
-                          text: AmptiveStrings.and +
-                              AmptiveStrings.space,
+                          text: ATStrings.and +
+                              ATStrings.space,
                         ),
                         TextSpan(
-                          text: AmptiveStrings.privacyPolicy,
+                          text: ATStrings.privacyPolicy,
                           style:
                               Theme.of(context).textTheme.titleSmall?.copyWith(
                                     fontWeight: AmptiveFontWeights.w700,
@@ -149,7 +149,7 @@ class _NameAuthScreenState extends State<NameAuthScreen> {
           return AmptiveElevatedButtonWidget(
             height: 50.w,
             margin: EdgeInsets.only(bottom: 29.h),
-            buttonTitle: AmptiveStrings.createAccount,
+            buttonTitle: ATStrings.createAccount,
             onPressed: service.isNameValid
                 ? () {
                     // Validate returns true if the form is valid, or false otherwise.

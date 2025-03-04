@@ -27,7 +27,7 @@ class AmptiveDiscoverCategoriesTitleWidget extends StatelessWidget {
           const Spacer(),
           GestureDetector(
             onTap: (){},
-            child: Icon(Icons.more_horiz, color: AmptiveColors.authHintColor,),
+            child: Icon(Icons.more_horiz, color: ATColors.authHintColor,),
           )
         ],
       ),

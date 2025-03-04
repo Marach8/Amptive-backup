@@ -21,7 +21,7 @@ class AmptiveRowOfSubtitleAndForwardIconWidget extends StatelessWidget {
           'We Can Do Hard Things',
           style: Theme.of(context).textTheme.labelMedium?.copyWith(
             fontSize: AmptiveFontSizes.size15,
-            color: AmptiveColors.dimWhiteColor1
+            color: ATColors.dimWhiteColor1
           ),
         ),
         const Gap(5),

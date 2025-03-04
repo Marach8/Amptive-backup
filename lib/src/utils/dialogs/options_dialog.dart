@@ -10,8 +10,8 @@ import '../constants/colors.dart';
 void showAudioOrVideoFullDetailsOptions(BuildContext context)
   => showModalBottomSheet(
       context: context,
-      barrierColor: AmptiveColors.black.withOpacity(0.5),
-      backgroundColor: AmptiveColors.containerGradientColorB,
+      barrierColor: ATColors.black.withOpacity(0.5),
+      backgroundColor: ATColors.containerGradientColorB,
       elevation: 0,
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.only(
@@ -30,15 +30,15 @@ void showAudioOrVideoFullDetailsOptions(BuildContext context)
               Align(
                 alignment: Alignment.center,
                 child: GestureDetector(
-                  onTap: () => AmptiveHelperFunctions.hideAnyMountedSnackbar(context),
+                  onTap: () => ATHelperFuncs.hideAnyMountedSnackbar(context),
                   child: Platform.isAndroid
                     ? Icon(
                       Icons.keyboard_arrow_down, size: 30,
-                      color: AmptiveColors.whiteColor.withOpacity(0.6),
-                    ) : AmptiveContainer(
+                      color: ATColors.whiteColor.withOpacity(0.6),
+                    ) : ATContainer(
                       margin: const EdgeInsets.symmetric(vertical: 10),
                       radius: 5, height: 4, width: 30,
-                      color: AmptiveColors.whiteColor.withOpacity(0.6),
+                      color: ATColors.whiteColor.withOpacity(0.6),
                       child: const SizedBox.shrink(),
                     ),
                 ),
@@ -55,7 +55,7 @@ void showAudioOrVideoFullDetailsOptions(BuildContext context)
                       Text(
                         entry.key,
                         style: Theme.of(context).textTheme.labelMedium?.copyWith(
-                          color: AmptiveColors.whiteColor,
+                          color: ATColors.whiteColor,
                           fontSize: AmptiveFontSizes.size17
                         ),
                       )

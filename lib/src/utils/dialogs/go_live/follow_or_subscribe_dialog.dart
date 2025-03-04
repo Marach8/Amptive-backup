@@ -26,11 +26,11 @@ Future<void> showFollowHostOrCohostDialog({
   required ObjectWithNotifier<Host> host
 }) async {
   return await showModalBottomSheet(
-    backgroundColor: AmptiveColors.hex202020,
+    backgroundColor: ATColors.hex202020,
     context: context,
     isScrollControlled: true,
     useSafeArea: true,
-    barrierColor: AmptiveColors.black.withOpacity(0.6),
+    barrierColor: ATColors.black.withOpacity(0.6),
     shape: const RoundedRectangleBorder(
       borderRadius: BorderRadius.only(
       topLeft: Radius.circular(15), topRight: Radius.circular(15),
@@ -42,8 +42,8 @@ Future<void> showFollowHostOrCohostDialog({
         ),
         child: BackdropFilter(
           filter: ImageFilter.blur(sigmaX: 1, sigmaY: 1),
-          child: AmptiveContainer(
-            width: AmptiveHelperFunctions.getScreenWidth(context),
+          child: ATContainer(
+            width: ATHelperFuncs.getScreenWidth(context),
             padding: const EdgeInsets.fromLTRB(15, 10, 15, 10),
             child: Column(
               mainAxisSize: MainAxisSize.min,
@@ -55,12 +55,12 @@ Future<void> showFollowHostOrCohostDialog({
                     child: Platform.isAndroid
                         ? Icon(
                             Icons.keyboard_arrow_down,
-                            color: AmptiveColors.whiteColor.withOpacity(0.6),
+                            color: ATColors.whiteColor.withOpacity(0.6),
                           )
-                        : AmptiveContainer(
+                        : ATContainer(
                             margin: const EdgeInsets.symmetric(vertical: 10),
                             radius: 5, height: 4, width: 30,
-                            color: AmptiveColors.whiteColor.withOpacity(0.6),
+                            color: ATColors.whiteColor.withOpacity(0.6),
                             child: const SizedBox.shrink(),
                           ),
                     ),
@@ -87,7 +87,7 @@ Future<void> showFollowHostOrCohostDialog({
                             Text(
                               host.obj.username ?? '',
                               style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                                color: AmptiveColors.hexC2C2C2
+                                color: ATColors.hexC2C2C2
                               ),
                             ),
                           ],
@@ -108,11 +108,11 @@ Future<void> showFollowHostOrCohostDialog({
                       CustomPaint(
                         size: const Size(16, 16),
                         painter: RoundedScallopedPainter(
-                          color: AmptiveColors.dimWhiteColor1
+                          color: ATColors.dimWhiteColor1
                         ),
                         child: Padding(
                           padding: const EdgeInsets.all(2),
-                          child: Icon(Icons.star, color: AmptiveColors.black, size: 12),
+                          child: Icon(Icons.star, color: ATColors.black, size: 12),
                         ),
                       ),
                       Text(
@@ -123,7 +123,7 @@ Future<void> showFollowHostOrCohostDialog({
                       ),
                       const Gap(5),
                       Text(
-                        AmptiveStrings.FOLLOWERS,
+                        ATStrings.FOLLOWERS,
                         style: Theme.of(context).textTheme.bodySmall?.copyWith(
                           fontSize: AmptiveFontSizes.size16
                         ),
@@ -133,11 +133,11 @@ Future<void> showFollowHostOrCohostDialog({
                       CustomPaint(
                         size: const Size(16, 16),
                         painter: RoundedScallopedPainter(
-                          color: AmptiveColors.yellowColor
+                          color: ATColors.yellowColor
                         ),
                         child: Padding(
                           padding: const EdgeInsets.all(2),
-                          child: Icon(Icons.favorite, color: AmptiveColors.black, size: 12),
+                          child: Icon(Icons.favorite, color: ATColors.black, size: 12),
                         ),
                       ),
                       Text(
@@ -148,7 +148,7 @@ Future<void> showFollowHostOrCohostDialog({
                       ),
                       const Gap(5),
                       Text(
-                        AmptiveStrings.SUBSCRIBERS,
+                        ATStrings.SUBSCRIBERS,
                         style: Theme.of(context).textTheme.bodySmall?.copyWith(
                           fontSize: AmptiveFontSizes.size16
                         ),
@@ -163,7 +163,7 @@ Future<void> showFollowHostOrCohostDialog({
                     'Author of UNTAMED AND LOVE WARRIOR, Host ofWE CAN DO HARD THINGS Podcast Founder of @together jfjdkfjkdjkajkfdkakkdafdadfjkajkfa',
                     style: Theme.of(context).textTheme.bodySmall?.copyWith(
                       fontSize: AmptiveFontSizes.size13,
-                      color: AmptiveColors.hexC2C2C2.withOpacity(0.76)
+                      color: ATColors.hexC2C2C2.withOpacity(0.76)
                     ),
                   ),
                     
@@ -200,16 +200,16 @@ Future<void> showFollowHostOrCohostDialog({
                                     title: 'Unfollowing ${host.obj.name ?? ''}?',
                                     content: 'Unfollowing will automatically cancell your subscription to their content.',
                                     yesString: 'Unfollow',
-                                    noString: AmptiveStrings.CANCEL
+                                    noString: ATStrings.CANCEL
                                   );
                                   if(context.mounted && (shouldUnfollow ?? false)){
                                     context.read<AmptiveFollowingBloc>().add(ShouldUnFollowEvent());
                                   }
                                 }
                               },
-                              bgColor: AmptiveColors.whiteColor,
-                              fgColor: AmptiveColors.brandBlack,
-                              buttonTitle:notFollowing ? AmptiveStrings.FOLLOW : '',
+                              bgColor: ATColors.whiteColor,
+                              fgColor: ATColors.brandBlack,
+                              buttonTitle:notFollowing ? ATStrings.FOLLOW : '',
                               child: isFollowing ? const AmptiveImageLoaderWidget(
                                 imagePath: AmptiveImageStrings.USER_FOLLOW
                               ): isLoading ? const AmptiveLoadingIndicatorWidget(size: 20,) : null
@@ -242,8 +242,8 @@ Future<void> showFollowHostOrCohostDialog({
                                     context: context,
                                     title: "Are your sure you want to unsubscribe from ${host.obj.name ?? ''}'s content?",
                                     content: 'Unsubscribing will remove your access to "subscribers-only" live shows!',
-                                    yesString: AmptiveStrings.UNSUBSCRIBE,
-                                    noString: AmptiveStrings.CANCEL
+                                    yesString: ATStrings.UNSUBSCRIBE,
+                                    noString: ATStrings.CANCEL
                                   );
 
                                   if(context.mounted && (shouldUnSubscribe ?? false)){
@@ -251,31 +251,31 @@ Future<void> showFollowHostOrCohostDialog({
                                   }
                                 }
                               },
-                              bgColor: AmptiveColors.yellowColor1,
-                              fgColor: AmptiveColors.brandBlack,
-                              buttonTitle: isSubscribed ? AmptiveStrings.UNSUBSCRIBE : '',
-                              child: isLoading ? AmptiveLoadingIndicatorWidget(color: AmptiveColors.whiteColor,) 
+                              bgColor: ATColors.yellowColor1,
+                              fgColor: ATColors.brandBlack,
+                              buttonTitle: isSubscribed ? ATStrings.UNSUBSCRIBE : '',
+                              child: isLoading ? AmptiveLoadingIndicatorWidget(color: ATColors.whiteColor,) 
                                 : unSubscribed ? Row(
                                   mainAxisSize: MainAxisSize.min,
                                   children: [
                                     Text(
-                                      AmptiveStrings.SUBSCRIBE,
+                                      ATStrings.SUBSCRIBE,
                                       style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                                        color: AmptiveColors.brandBlack,
+                                        color: ATColors.brandBlack,
                                         fontSize: AmptiveFontSizes.size17
                                       ),
                                     ),
                                     const Gap(2),
                                     AmptiveCircleAvatarWidget(
                                       diameter: 4,
-                                      color: AmptiveColors.brandBlack,
+                                      color: ATColors.brandBlack,
                                     ),
                                     const Gap(2),
                                     Expanded(
                                       child: Text(
                                         'N1,900/month',
                                         style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                                          color: AmptiveColors.brandBlack,
+                                          color: ATColors.brandBlack,
                                           fontSize: AmptiveFontSizes.size17
                                         ),
                                       ),

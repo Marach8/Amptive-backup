@@ -10,8 +10,8 @@ class AmptiveDashboardBottomNavBarWidget extends StatelessWidget {
 
   @override
   Widget build(context) {
-    return AmptiveContainer(
-      color: AmptiveColors.black,
+    return ATContainer(
+      color: ATColors.black,
       padding: const EdgeInsets.fromLTRB(20, 10, 20, 10),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -28,11 +28,11 @@ class AmptiveDashboardBottomNavBarWidget extends StatelessWidget {
                   ),
                   Positioned(
                     top: 0, right: 0,
-                    child: AmptiveContainer(
+                    child: ATContainer(
                       padding: const EdgeInsets.fromLTRB(2, 0, 2, 0),
                       constraints: const BoxConstraints(minWidth: 15),
                       height: 15, radius: 100,
-                      color: AmptiveColors.hexECO404,
+                      color: ATColors.hexECO404,
                       child: FittedBox(
                         fit: BoxFit.scaleDown,
                         child: Text(

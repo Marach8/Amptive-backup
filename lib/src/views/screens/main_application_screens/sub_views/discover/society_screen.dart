@@ -57,7 +57,7 @@ with SingleTickerProviderStateMixin{
                 ],
                 leading: const AmptiveBackArrowWidget(),
                 title: Text(
-                  AmptiveStrings.SOCIETY,
+                  ATStrings.SOCIETY,
                   style: Theme.of(context).textTheme.bodyMedium,
                 ),
               ),

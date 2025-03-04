@@ -12,13 +12,13 @@ class AmptiveOutlinedButtonTheme{
   static OutlinedButtonThemeData darkOutlinedButtonTheme = OutlinedButtonThemeData(
     style: OutlinedButton.styleFrom(
       elevation: 0,
-      foregroundColor: AmptiveColors.whiteColor,
-      backgroundColor: AmptiveColors.transparentColor,
-      disabledForegroundColor: AmptiveColors.inactiveDotColor,
-      disabledBackgroundColor: AmptiveColors.transparentColor,
-      side: BorderSide(color: AmptiveColors.whiteColor, width: 0.5),
+      foregroundColor: ATColors.whiteColor,
+      backgroundColor: ATColors.transparentColor,
+      disabledForegroundColor: ATColors.inactiveDotColor,
+      disabledBackgroundColor: ATColors.transparentColor,
+      side: BorderSide(color: ATColors.whiteColor, width: 0.5),
       textStyle: TextStyle(
-        fontFamily: AmptiveStrings.inter,
+        fontFamily: ATStrings.inter,
         fontSize: AmptiveFontSizes.size16,
         fontWeight: AmptiveFontWeights.w600
       ),

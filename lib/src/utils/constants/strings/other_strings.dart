@@ -1,7 +1,7 @@
 // ignore_for_file: constant_identifier_names
 
-class AmptiveStrings{
-  const AmptiveStrings._();
+class ATStrings{
+  const ATStrings._();
 
   static const inter = 'Inter';
 
@@ -25,6 +25,7 @@ class AmptiveStrings{
       "Tune into live audio shows and events.";
   static const monetizeLiveAudioShowsAndEvents =
       "Monetizable Live Audio Shows & Events ";
+  static const ENTER_CODE = 'Enter the 4 digit code we just sent to';
   static const NEXT = 'Next';
   static const or = 'or';
   static const and = 'and';
@@ -40,21 +41,27 @@ class AmptiveStrings{
 
   static const signUpWith = 'Sign up with ';
   static const signInWith = 'Sign in with ';
-  static const email = 'Email';
+  static const EMAIL = 'Email';
   static const LIVE = 'Live';
-  static const phoneNumber = 'Phone Number';
+  static const FONE_NO = 'Phone Number';
   static const facebook = 'Facebook';
   static const twitter = 'X(Twitter)';
   static const google = 'Google';
+  static const ADDING_EMAIL = 'Adding Email Address...';
+  static const EMAIL_ADDED = 'Email Added';
+  static const EMAIL_CHANGED = 'Email Changed';
+  static const WANT_2_CHANGE_EMAIL = 'Do you want to change your email address?';
+  static const CHANGE = 'Change';
 
   static const whatIsYourEmail = 'What is your email?';
   static const enterYourEmail = 'Enter your email...';
   static const thisEmailWillBeVerified = 'This email will be verified in the next step';
   static const verifyEmail = 'Verify email';
   static const UNBLOCK_DESC = 'will be able to follow, subscribe and see your app activities';
-  static String unMuteDesc(String text ) => "You will be able to see $text's app activities";
+  static String unMuteDesc(String text) => "You will be able to see $text's app activities";
   static const IS_UNBLOCKED = 'is now unblocked';
   static const IS_UNMUTED = 'is now unmuted';
+  static const COUNTRY = 'Country';
 
 
   static const youEnteredInvalidCode = 'You entered an invalid code. ';
@@ -143,6 +150,8 @@ class AmptiveStrings{
   static const TASKS_WILL_APPEAR_HERE = 'Available tasks for the communities you follow will appear here';
   static const FOLLOWERS = 'Followers';
   static const FOLLOWING = 'Following';
+  static const ADD_UR_EMAIL = 'Add your email address';
+  static const ADD_UR_PHONE = 'Add your phone number';
   static const FOLLOW = 'Follow';
   static const MANAGE = 'Manage';
   static const UNSUBSCRIBE = 'Unsubscribe';
@@ -190,6 +199,7 @@ class AmptiveStrings{
   static const HELP_SUPPORT = 'Help & Support';
   static const ABOUT = 'About';
   static const LOGOUT = 'Log out';
+  static const CODE_SENT = 'Code has been sent. You can request another in';
   static const SEE_COMMUNITIES = 'See communities on Amptive';
   static const RECENT_SEARCHES = 'Recent Searches';
   static const CLEAR = 'Clear';
@@ -296,4 +306,8 @@ class AmptiveStrings{
   static const HOST = 'Host';
   static const UNBLOCK = 'Unblock';
   static const UNMUTE = 'Unmute';
+
+  static const ACCT_INFO = 'Account Information';
+  static const SET_UP_ACCT_DETAILS = 'Setup your account details like your email address, phone number and country.';
+  static const DEACTIVATE_ACCT = 'Deactivate your account';
 }

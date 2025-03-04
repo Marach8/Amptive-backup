@@ -30,7 +30,7 @@ class AmptiveFollowingEvenstOrShowsViewWidget extends StatelessWidget {
               leading: Padding(
                 padding: const EdgeInsets.only(left: 20),
                 child: AmptiveAppBarLeadingWidget(
-                  leadingText: AmptiveStrings.FOLLOWING,
+                  leadingText: ATStrings.FOLLOWING,
                   leadingStyle: Theme.of(context).textTheme.bodyMedium?.copyWith(
                     fontSize: AmptiveFontSizes.size23
                   ),
@@ -38,8 +38,8 @@ class AmptiveFollowingEvenstOrShowsViewWidget extends StatelessWidget {
               ),
               bottom: PreferredSize(
                 preferredSize: const Size.fromHeight(0),
-                child: AmptiveContainer(
-                  color: AmptiveColors.whiteColor,
+                child: ATContainer(
+                  color: ATColors.whiteColor,
                   height: 0.15,
                   width: double.infinity,
                   child: const SizedBox.shrink(),

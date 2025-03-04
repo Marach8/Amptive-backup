@@ -2,22 +2,14 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 
 
-class AmptiveHelperFunctions{
-  const AmptiveHelperFunctions._();
+class ATHelperFuncs{
+  const ATHelperFuncs._();
 
   static double getScreenWidth(BuildContext context)
     => MediaQuery.sizeOf(context).width;
 
   static double getScreenHeight(BuildContext context)
     => MediaQuery.sizeOf(context).height;
-
-  static String enter4DigitSentFrom(String location) {
-    return "Enter the 4 digit code we just sent to your $location";
-  }
-
-  static String codeHasBeenSentResendIn(int time) {
-    return "Code has been sent. You can send another in $time";
-  }
 
 
   static void hideAnyMountedSnackbar(BuildContext context)

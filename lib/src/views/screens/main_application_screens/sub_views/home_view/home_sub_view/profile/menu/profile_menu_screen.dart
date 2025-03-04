@@ -33,7 +33,7 @@ class AmptiveProfileMenuScreen extends StatelessWidget {
           ),
           leadingWidth: 30,
           title: Text(
-            AmptiveStrings.MENU,
+            ATStrings.MENU,
             style: Theme.of(context).textTheme.bodyMedium,
           ),
         ),
@@ -43,16 +43,16 @@ class AmptiveProfileMenuScreen extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const MenuHeading(text: AmptiveStrings.CALENDER),
+              const MenuHeading(text: ATStrings.CALENDER),
               MenuItem(
                 firstIcon: const AmptiveImageLoaderWidget(imagePath: AmptiveImageStrings.CALEND_ICON),
-                middleText: AmptiveStrings.VIEW_CALENDER,
+                middleText: ATStrings.VIEW_CALENDER,
                 margin: const EdgeInsets.fromLTRB(15, 0, 15, 5),
                 onTap: (){}
               ),
               MenuItem(
                 firstIcon: const Icon(Icons.visibility_outlined),
-                middleText: AmptiveStrings.ALLOW_SEE_CALENDER,
+                middleText: ATStrings.ALLOW_SEE_CALENDER,
                 margin: const EdgeInsets.fromLTRB(15, 0, 5, 5),
                 lastIcon: BlocConsumer<AllowSeeCalenderBloc, bool>(
                   listener: (_, state){
@@ -60,7 +60,7 @@ class AmptiveProfileMenuScreen extends StatelessWidget {
                       showAppNotification(
                         context: context,
                         icon: const Icon(Icons.check_circle),
-                        text: AmptiveStrings.USERS_CAN_SEE_UR_CALENDER
+                        text: ATStrings.USERS_CAN_SEE_UR_CALENDER
                       );
                     }
                   },
@@ -74,58 +74,58 @@ class AmptiveProfileMenuScreen extends StatelessWidget {
                 onTap: (){}
               ),
 
-              const MenuHeading(text: AmptiveStrings.ACCT_SETTINGS),
+              const MenuHeading(text: ATStrings.ACCT_SETTINGS),
               MenuItem(
                 firstIcon: const Icon(Icons.account_circle_outlined),
-                middleText: AmptiveStrings.ACCT,
-                onTap: (){}
+                middleText: ATStrings.ACCT,
+                onTap: () => context.pushNamed(ATRoutes.ACCT_SCREEN)
               ),
               MenuItem(
                 firstIcon: const Icon(Icons.lock_outline_rounded),
-                middleText: AmptiveStrings.PRIVACY,
+                middleText: ATStrings.PRIVACY,
                 onTap: () => context.pushNamed(ATRoutes.PRIVACY_SCREEN)
               ),
               MenuItem(
                 firstIcon: const Icon(Icons.password),
-                middleText: AmptiveStrings.PSWRD_ND_SECURITY,
+                middleText: ATStrings.PSWRD_ND_SECURITY,
                 onTap: (){}
               ),
 
-              const MenuHeading(text: AmptiveStrings.APP_SETTINGS),
+              const MenuHeading(text: ATStrings.APP_SETTINGS),
               MenuItem(
                 firstIcon: const Icon(Icons.settings_outlined),
-                middleText: AmptiveStrings.SETTINGS,
+                middleText: ATStrings.SETTINGS,
                 onTap: (){}
               ),
               MenuItem(
                 firstIcon: const Icon(Iconsax.global),
-                middleText: AmptiveStrings.LANGUAGE,
+                middleText: ATStrings.LANGUAGE,
                 onTap: () => context.pushNamed(ATRoutes.LANGUAGE_SCREEN)
               ),
               MenuItem(
                 firstIcon: const AmptiveImageLoaderWidget(
                   imagePath: AmptiveImageStrings.SUBSCRIBER_BADGE,
                 ),
-                middleText: AmptiveStrings.SUBSCRIPTION,
+                middleText: ATStrings.SUBSCRIPTION,
                 onTap: (){}
               ),
 
-              const MenuHeading(text: AmptiveStrings.HELP_SUPPORT),
+              const MenuHeading(text: ATStrings.HELP_SUPPORT),
               MenuItem(
                 firstIcon: const Icon(Icons.info_outline_rounded),
-                middleText: AmptiveStrings.ABOUT,
+                middleText: ATStrings.ABOUT,
                 onTap: (){}
               ),
               MenuItem(
                 firstIcon: const Icon(Iconsax.message),
-                middleText: AmptiveStrings.HELP_SUPPORT,
+                middleText: ATStrings.HELP_SUPPORT,
                 onTap: (){}
               ),
 
               const Gap(20),
               MenuItem(
                 firstIcon: const Icon(Icons.logout),
-                middleText: AmptiveStrings.LOGOUT,
+                middleText: ATStrings.LOGOUT,
                 onTap: (){}
               ),
             ],
@@ -155,7 +155,7 @@ class MenuItem extends StatelessWidget {
 
   @override
   Widget build(context) {
-    return AmptiveContainer(
+    return ATContainer(
       margin: margin ?? const EdgeInsets.fromLTRB(15, 0, 15, 20),
       onTap: onTap,
       child: Row(
@@ -166,11 +166,11 @@ class MenuItem extends StatelessWidget {
             child: Text(
               middleText,
               style: Theme.of(context).textTheme.labelMedium?.copyWith(
-                color: AmptiveColors.whiteColor
+                color: ATColors.whiteColor
               ),
             ),
           ),
-          lastIcon ?? Icon(Icons.keyboard_arrow_right_outlined, color: AmptiveColors.hexC2C2C2)
+          lastIcon ?? Icon(Icons.keyboard_arrow_right_outlined, color: ATColors.hexC2C2C2)
         ],
       ),
     );
@@ -189,7 +189,7 @@ class MenuHeading extends StatelessWidget {
       child: Text(
         text,
         style: Theme.of(context).textTheme.bodySmall?.copyWith(
-          color: AmptiveColors.hexC2C2C2
+          color: ATColors.hexC2C2C2
         ),
       ),
     );

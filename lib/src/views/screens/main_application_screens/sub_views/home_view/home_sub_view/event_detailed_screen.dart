@@ -37,18 +37,18 @@ class AmptiveEventDetailedScreen extends StatelessWidget {
           centerTitle: true,
           title: GestureDetector(
             onTap: () {
-              AmptiveHelperFunctions.hideAnyMountedSnackbar(context);
+              ATHelperFuncs.hideAnyMountedSnackbar(context);
               context.pop();
             },
             child: Platform.isAndroid
               ? Icon(
                 Icons.keyboard_arrow_down,
-                color: AmptiveColors.whiteColor.withOpacity(0.6),
+                color: ATColors.whiteColor.withOpacity(0.6),
               )
-              : AmptiveContainer(
+              : ATContainer(
                 margin: const EdgeInsets.symmetric(vertical: 10),
                 radius: 5, height: 4, width: 30,
-                color: AmptiveColors.whiteColor.withOpacity(0.6),
+                color: ATColors.whiteColor.withOpacity(0.6),
                 child: const SizedBox.shrink(),
               ),
           ),
@@ -78,30 +78,30 @@ class AmptiveEventDetailedScreen extends StatelessWidget {
               
                     Gap(20.h),
                     const AmptiveRowOfTwoIconsAndTwoTextsWidget(
-                      text2: AmptiveStrings.TECHNOLOGY,
+                      text2: ATStrings.TECHNOLOGY,
                     ),
               
                     Gap(30.h),
               
                     Text(
-                      AmptiveStrings.hashtags,
+                      ATStrings.hashtags,
                       style: Theme.of(context).textTheme.bodySmall?.copyWith(
                         fontSize: AmptiveFontSizes.size17
                       ),  
                     ),
-                    Divider(color: AmptiveColors.whiteColor.withOpacity(0.1),),
+                    Divider(color: ATColors.whiteColor.withOpacity(0.1),),
                     const Gap(5),
                     const AmptiveHashtagsWidget(),
               
                     Gap(20.h),
               
                     Text(
-                      AmptiveStrings.hostedBy,
+                      ATStrings.hostedBy,
                       style: Theme.of(context).textTheme.bodySmall?.copyWith(
                         fontSize: AmptiveFontSizes.size17
                       ),  
                     ),
-                    Divider(color: AmptiveColors.whiteColor.withOpacity(0.1),),
+                    Divider(color: ATColors.whiteColor.withOpacity(0.1),),
                     ...List.generate(
                       1,
                       (_) => AmptiveListTileWithLeadingPictureWidget(
@@ -120,7 +120,7 @@ class AmptiveEventDetailedScreen extends StatelessWidget {
                         fontSize: AmptiveFontSizes.size17
                       ),  
                     ),
-                    Divider(color: AmptiveColors.whiteColor.withOpacity(0.1),),
+                    Divider(color: ATColors.whiteColor.withOpacity(0.1),),
                     Gap(10.h),
                     const AmptiveRowOfNumberOfPeopleListeningWidget(
                       showNumberInsideContainer: true,
@@ -130,7 +130,7 @@ class AmptiveEventDetailedScreen extends StatelessWidget {
                     Text(
                       'daniel, jessica, gerald, peter and 652 more',
                       style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                        color: AmptiveColors.whiteColor.withOpacity(0.6)
+                        color: ATColors.whiteColor.withOpacity(0.6)
                       ),
                     ),
                     Gap(35.h),
@@ -141,16 +141,16 @@ class AmptiveEventDetailedScreen extends StatelessWidget {
                         fontSize: AmptiveFontSizes.size17
                       ),  
                     ),
-                    Divider(color: AmptiveColors.whiteColor.withOpacity(0.1),),
+                    Divider(color: ATColors.whiteColor.withOpacity(0.1),),
                     ReadMoreText(
                       'Jessica Yellin, founder of the Webby-Award Winning Independent News Brand, News Not Noise, returns to walk us through what is going on right now in the political landscape.',
                       trimMode: TrimMode.Length,
-                      trimExpandedText: AmptiveStrings.showLess,
-                      trimCollapsedText: AmptiveStrings.showMore,
-                      colorClickableText: AmptiveColors.whiteColor,
+                      trimExpandedText: ATStrings.showLess,
+                      trimCollapsedText: ATStrings.showMore,
+                      colorClickableText: ATColors.whiteColor,
                       trimLength: 100,
                       style: TextStyle(
-                        color: AmptiveColors.whiteColor.withOpacity(0.6),
+                        color: ATColors.whiteColor.withOpacity(0.6),
                         fontSize: AmptiveFontSizes.size14,
                         fontWeight: AmptiveFontWeights.w500,
                       ),
@@ -158,12 +158,12 @@ class AmptiveEventDetailedScreen extends StatelessWidget {
                     Gap(30.h),
               
                     Text(
-                      AmptiveStrings.WHISPERS,
+                      ATStrings.WHISPERS,
                       style: Theme.of(context).textTheme.bodySmall?.copyWith(
                         fontSize: AmptiveFontSizes.size17
                       ),  
                     ),
-                    Divider(color: AmptiveColors.whiteColor.withOpacity(0.1),),
+                    Divider(color: ATColors.whiteColor.withOpacity(0.1),),
                   ],
                 ),
               ),
@@ -175,12 +175,12 @@ class AmptiveEventDetailedScreen extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      AmptiveStrings.gotATicketId,
+                      ATStrings.gotATicketId,
                       style: Theme.of(context).textTheme.bodySmall?.copyWith(
                         fontSize: AmptiveFontSizes.size17
                       ),  
                     ),
-                    Divider(color: AmptiveColors.whiteColor.withOpacity(0.1),),
+                    Divider(color: ATColors.whiteColor.withOpacity(0.1),),
                     Gap(5.h),
                     AmptiveTextFormFieldWidget(
                       controller: TextEditingController(),
@@ -194,12 +194,12 @@ class AmptiveEventDetailedScreen extends StatelessWidget {
                     ReadMoreText(
                       'If you already paid for this event on our website, you should have received a Ticket ID. Kindly enter your Ticket Id in the input field about to access the event...',
                       trimMode: TrimMode.Length,
-                      trimExpandedText: AmptiveStrings.showLess,
+                      trimExpandedText: ATStrings.showLess,
                       trimCollapsedText: 'Learn more about Ticked ID',
-                      colorClickableText: AmptiveColors.whiteColor,
+                      colorClickableText: ATColors.whiteColor,
                       trimLength: 100,
                       style: TextStyle(
-                        color: AmptiveColors.whiteColor.withOpacity(0.6),
+                        color: ATColors.whiteColor.withOpacity(0.6),
                         fontSize: AmptiveFontSizes.size14,
                         fontWeight: AmptiveFontWeights.w500,
                       ),
@@ -214,8 +214,8 @@ class AmptiveEventDetailedScreen extends StatelessWidget {
         ),
         bottomSheet: AmptiveElevatedButtonWidget(
           margin: const EdgeInsets.fromLTRB(20, 15, 20, 0),
-          bgColor: AmptiveColors.whiteColor,
-          fgColor: AmptiveColors.brandBlack,
+          bgColor: ATColors.whiteColor,
+          fgColor: ATColors.brandBlack,
           text1: 'Pay', text2: 'N5,000',
           onPressed: (){}
         ),

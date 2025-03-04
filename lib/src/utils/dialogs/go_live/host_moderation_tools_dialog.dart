@@ -17,11 +17,11 @@ import '../../constants/strings/other_strings.dart';
 
 Future<void> showHostModerationToolsDialog(BuildContext context) async {
   return await showModalBottomSheet(
-    backgroundColor: AmptiveColors.hex202020,
+    backgroundColor: ATColors.hex202020,
     context: context,
     isScrollControlled: true,
     useSafeArea: true,
-    barrierColor: AmptiveColors.black.withOpacity(0.6),
+    barrierColor: ATColors.black.withOpacity(0.6),
     shape: const RoundedRectangleBorder(
       borderRadius: BorderRadius.only(
       topLeft: Radius.circular(15), topRight: Radius.circular(15),
@@ -33,8 +33,8 @@ Future<void> showHostModerationToolsDialog(BuildContext context) async {
         ),
         child: BackdropFilter(
           filter: ImageFilter.blur(sigmaX: 1, sigmaY: 1),
-          child: AmptiveContainer(
-            width: AmptiveHelperFunctions.getScreenWidth(context),
+          child: ATContainer(
+            width: ATHelperFuncs.getScreenWidth(context),
             padding: const EdgeInsets.fromLTRB(15, 10, 15, 10),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -46,24 +46,24 @@ Future<void> showHostModerationToolsDialog(BuildContext context) async {
                     child: Platform.isAndroid
                       ? Icon(
                           Icons.keyboard_arrow_down,
-                          color: AmptiveColors.whiteColor.withOpacity(0.6),
+                          color: ATColors.whiteColor.withOpacity(0.6),
                         )
-                      : AmptiveContainer(
+                      : ATContainer(
                           margin: const EdgeInsets.symmetric(vertical: 10),
                           radius: 5, height: 4, width: 30,
-                          color: AmptiveColors.whiteColor.withOpacity(0.6),
+                          color: ATColors.whiteColor.withOpacity(0.6),
                           child: const SizedBox.shrink(),
                         ),
                     ),
                   ),
                   const Gap(10),
                   Text(
-                    AmptiveStrings.MODERATION_TOOLS,
+                    ATStrings.MODERATION_TOOLS,
                     style: Theme.of(context).textTheme.bodyLarge,
                   ),
                   const Gap(20),
                   _CustomRow(
-                    title: AmptiveStrings.ALLOW_COMMENTS,
+                    title: ATStrings.ALLOW_COMMENTS,
                     icon: Iconsax.message,
                     trailing: BlocConsumer<AmptiveGoLiveHostModerationToolsBloc, List<bool>>(
                       listenWhen: (prev, curr) => prev.first != curr.first,
@@ -72,14 +72,14 @@ Future<void> showHostModerationToolsDialog(BuildContext context) async {
                         if(state[1]){
                           showAppNotification(
                           context: context,
-                            text: AmptiveStrings.ALLOWED_COMMENTS,
+                            text: ATStrings.ALLOWED_COMMENTS,
                             icon:const Icon(Iconsax.message,)
                           );
                         }
                         else{
                           showAppNotification(
                           context: context,
-                            text: AmptiveStrings.DISABLED_COMMENTS,
+                            text: ATStrings.DISABLED_COMMENTS,
                             icon:const Icon(Iconsax.message)
                           );
                         }
@@ -96,9 +96,9 @@ Future<void> showHostModerationToolsDialog(BuildContext context) async {
                   ),
                   const Gap(10),
                   _CustomRow(
-                    title: AmptiveStrings.ALLOW_AUDIENCE_MIC,
+                    title: ATStrings.ALLOW_AUDIENCE_MIC,
                     icon: Icons.mic,
-                    subtitle: AmptiveStrings.NEED_2_ENABLE_LISTENERS_MIC,
+                    subtitle: ATStrings.NEED_2_ENABLE_LISTENERS_MIC,
                     trailing: BlocConsumer<AmptiveGoLiveHostModerationToolsBloc, List<bool>>(
                       listenWhen: (prev, curr) => prev[1] != curr[1],
                       buildWhen: (prev, curr) => prev[1] != curr[1],
@@ -106,14 +106,14 @@ Future<void> showHostModerationToolsDialog(BuildContext context) async {
                         if(state[1]){
                           showAppNotification(
                           context: context,
-                            text: AmptiveStrings.ALLOWED_AUD_MIC,
+                            text: ATStrings.ALLOWED_AUD_MIC,
                             icon:const Icon(Icons.mic)
                           );
                         }
                         else{
                           showAppNotification(
                           context: context,
-                            text: AmptiveStrings.DISABLED_AUD_MIC,
+                            text: ATStrings.DISABLED_AUD_MIC,
                             icon:const Icon(Icons.mic)
                           );
                         }
@@ -130,7 +130,7 @@ Future<void> showHostModerationToolsDialog(BuildContext context) async {
                   ),
                   const Gap(10),
                   _CustomRow(
-                    title: AmptiveStrings.ALLOW_COMMENTS,
+                    title: ATStrings.ALLOW_COMMENTS,
                     icon: Icons.front_hand_outlined,
                     trailing: BlocConsumer<AmptiveGoLiveHostModerationToolsBloc, List<bool>>(
                       listenWhen: (prev, curr) => prev.last != curr.last,
@@ -139,14 +139,14 @@ Future<void> showHostModerationToolsDialog(BuildContext context) async {
                         if(state.last){
                           showAppNotification(
                             context: context,
-                            text: AmptiveStrings.ALLOWED_HAND_RAISING,
+                            text: ATStrings.ALLOWED_HAND_RAISING,
                             icon:const Icon(Icons.front_hand_outlined)
                           );
                         }
                         else{
                           showAppNotification(
                             context: context,
-                            text: AmptiveStrings.DISABLED_HAND_RAISING,
+                            text: ATStrings.DISABLED_HAND_RAISING,
                             icon:const Icon(Icons.front_hand_outlined)
                           );
                         }
@@ -187,7 +187,7 @@ class _CustomRow extends StatelessWidget {
   @override
   Widget build(context) {
     return SizedBox(
-      width: AmptiveHelperFunctions.getScreenWidth(context),
+      width: ATHelperFuncs.getScreenWidth(context),
       child: Row(
         children: [
           Icon(icon),
@@ -208,7 +208,7 @@ class _CustomRow extends StatelessWidget {
                   subtitle!,
                   style: Theme.of(context).textTheme.bodySmall?.copyWith(
                     fontSize: AmptiveFontSizes.size12,
-                    color: AmptiveColors.whiteColor.withOpacity(0.4)
+                    color: ATColors.whiteColor.withOpacity(0.4)
                   ),
                 ),
               ],

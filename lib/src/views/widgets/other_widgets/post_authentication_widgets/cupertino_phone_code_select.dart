@@ -32,13 +32,13 @@ class CupertinoPhoneCodeSelectWidget extends StatelessWidget {
                 ? Column(
                     children: <Widget>[
                       Container(
-                        color: AmptiveColors.grey3Color,
+                        color: ATColors.grey3Color,
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.end,
                           children: <Widget>[
                             CupertinoButton(
                               child: Text(
-                                AmptiveStrings.done,
+                                ATStrings.done,
                                 style: Theme.of(context)
                                     .textTheme
                                     .bodyMedium
@@ -57,7 +57,7 @@ class CupertinoPhoneCodeSelectWidget extends StatelessWidget {
                         ),
                       ),
                       Divider(
-                        color: AmptiveColors.brandBlack,
+                        color: ATColors.brandBlack,
                         height: 0.h,
                         thickness: 1.h,
                       ),
@@ -67,9 +67,9 @@ class CupertinoPhoneCodeSelectWidget extends StatelessWidget {
                             brightness: Brightness.dark,
                           ),
                           child: Container(
-                            color: AmptiveColors.brandBlack,
+                            color: ATColors.brandBlack,
                             child: CountryPickerCupertino(
-                              backgroundColor: AmptiveColors.brandBlack,
+                              backgroundColor: ATColors.brandBlack,
                               diameterRatio: 3.r,
                               pickerItemHeight: 65.h,
                               itemBuilder: (country) =>
@@ -102,7 +102,7 @@ class CupertinoPhoneCodeSelectWidget extends StatelessWidget {
             height: 30.0.h,
             width: 41.0.w,
             fit: BoxFit.fill,
-            package: AmptiveStrings.countryPickers,
+            package: ATStrings.countryPickers,
           ),
           SizedBox(width: 23.0.w),
           Text(
@@ -113,7 +113,7 @@ class CupertinoPhoneCodeSelectWidget extends StatelessWidget {
           ),
           Expanded(child: SizedBox(width: 8.0.w)),
           Text(
-            AmptiveStrings.plus + country.phoneCode,
+            ATStrings.plus + country.phoneCode,
             style: Theme.of(context).textTheme.titleMedium?.copyWith(
               fontSize: AmptiveFontSizes.size23,
             ),

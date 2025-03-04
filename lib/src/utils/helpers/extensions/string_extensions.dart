@@ -34,7 +34,7 @@ extension ExtString on String {
   }
 
   
-  bool get emailContainsEmailSymbol => contains(AmptiveStrings.emailSymbol);
+  bool get emailContainsEmailSymbol => contains(ATStrings.emailSymbol);
 
 
   String formatPrice(){
@@ -42,5 +42,8 @@ extension ExtString on String {
     final formatter = NumberFormat('#,###');
     return formatter.format(number);
   }
+
+
+  String get addSlash => '/$this';
 
 }

@@ -43,18 +43,18 @@ class AmptiveElevatedButtonWidget extends StatelessWidget {
                       style: Theme.of(context)
                           .textTheme
                           .bodyMedium
-                          ?.copyWith(color: AmptiveColors.brandBlack)),
+                          ?.copyWith(color: ATColors.brandBlack)),
                   const Gap(5),
                   CircleAvatar(
                     radius: 2,
-                    backgroundColor: AmptiveColors.brandBlack,
+                    backgroundColor: ATColors.brandBlack,
                   ),
                   const Gap(5),
                   Text(text2!,
                       style: Theme.of(context)
                           .textTheme
                           .bodyMedium
-                          ?.copyWith(color: AmptiveColors.brandBlack)),
+                          ?.copyWith(color: ATColors.brandBlack)),
                 ],
               )
             : Text(buttonTitle!));
@@ -65,7 +65,7 @@ class AmptiveElevatedButtonWidget extends StatelessWidget {
 
 class AmptivePlainElevatedBtnWidget extends StatelessWidget {
   final String? buttonTitle;
-  final VoidCallback onPressed;
+  final void Function()? onPressed;
   final double? height;
   final Color? bgColor, fgColor;
   final Widget? child;
@@ -88,7 +88,7 @@ class AmptivePlainElevatedBtnWidget extends StatelessWidget {
         foregroundColor: fgColor,
         backgroundColor: bgColor,
         //padding: const EdgeInsets.fromLTRB(),
-        fixedSize: Size(AmptiveHelperFunctions.getScreenWidth(context), height ?? 45)
+        fixedSize: Size(ATHelperFuncs.getScreenWidth(context), height ?? 45)
       ),
       child: child ?? Text(buttonTitle ?? ''),
     );

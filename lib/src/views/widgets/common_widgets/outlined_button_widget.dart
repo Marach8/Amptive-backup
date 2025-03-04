@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import '../../../utils/helpers/helper_functions/other_functions.dart';
 
 class AmptiveOutlinedButtonWidget extends StatelessWidget {
   final String buttonTitle;

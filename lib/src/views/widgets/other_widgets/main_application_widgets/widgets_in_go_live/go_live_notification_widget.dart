@@ -16,22 +16,22 @@ class AmptiveGoLiveNotificationsWidget extends StatelessWidget {
   @override
   Widget build(context) {
     final user = state.user.obj;
-    final isTalking = state.notificationType == AmptiveStrings.IS_TALKING;
-    final isGifting = state.notificationType == AmptiveStrings.IS_GIFTING;
+    final isTalking = state.notificationType == ATStrings.IS_TALKING;
+    final isGifting = state.notificationType == ATStrings.IS_GIFTING;
     final giftedAmount = (state.extraDetail as Map<String, String>?)?.values.first;
 
-    return AmptiveContainer(
+    return ATContainer(
       padding: const EdgeInsets.fromLTRB(2, 0, 0, 0),
       height: 35, radius: 30,
       gradient: isTalking ? LinearGradient(
         colors: [
-          AmptiveColors.orangeColor1.withOpacity(1),
-          AmptiveColors.orangeColor2.withOpacity(0),
+          ATColors.orangeColor1.withOpacity(1),
+          ATColors.orangeColor2.withOpacity(0),
         ]
       ) :  isGifting ? LinearGradient(
         colors: [
-          AmptiveColors.green1.withOpacity(1),
-          AmptiveColors.green2.withOpacity(0)
+          ATColors.green1.withOpacity(1),
+          ATColors.green2.withOpacity(0)
         ]
       ) : null,
       child: Row(
@@ -50,7 +50,7 @@ class AmptiveGoLiveNotificationsWidget extends StatelessWidget {
           ),
           const Gap(5),
           Text(
-            isGifting ? '${AmptiveStrings.GIFTED} $giftedAmount' : AmptiveStrings.IS_TALKING,
+            isGifting ? '${ATStrings.GIFTED} $giftedAmount' : ATStrings.IS_TALKING,
             style: Theme.of(context).textTheme.titleSmall,
           ),
           const Gap(10),
@@ -77,17 +77,17 @@ class AmptiveGoLivePinnedMsgNtfctnWidget extends StatelessWidget {
   Widget build(context) {
     final user = state.user.obj;
     final extraDetails = state.extraDetail as Map<String, String>?;
-    final role = extraDetails?[AmptiveStrings.ROLE];
-    final msgTitle = extraDetails?[AmptiveStrings.MSG_TITLE];
-    final msgContent = extraDetails?[AmptiveStrings.MSG_CONTENT];
+    final role = extraDetails?[ATStrings.ROLE];
+    final msgTitle = extraDetails?[ATStrings.MSG_TITLE];
+    final msgContent = extraDetails?[ATStrings.MSG_CONTENT];
 
-    return AmptiveContainer(
+    return ATContainer(
       padding: const EdgeInsets.fromLTRB(5, 10, 5, 5),
       margin: const EdgeInsets.only(left: 15, right: 15),
-      color: AmptiveColors.whiteColor.withOpacity(0.15),
+      color: ATColors.whiteColor.withOpacity(0.15),
       boxShadow: [
         BoxShadow(
-          color: AmptiveColors.black,
+          color: ATColors.black,
         )
       ],
       radius: 10,
@@ -109,13 +109,13 @@ class AmptiveGoLivePinnedMsgNtfctnWidget extends StatelessWidget {
                       child: Text(
                         user.name ?? '',
                         style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                          color: AmptiveColors.whiteColor.withOpacity(0.7)
+                          color: ATColors.whiteColor.withOpacity(0.7)
                         )
                       ),
                     ),
     
-                    AmptiveContainer(
-                      color: AmptiveColors.whiteColor.withOpacity(0.2),
+                    ATContainer(
+                      color: ATColors.whiteColor.withOpacity(0.2),
                       padding: const EdgeInsets.all(2), radius: 4,
                       child: Text(
                         (role ?? '').toUpperCase(),
@@ -125,8 +125,8 @@ class AmptiveGoLivePinnedMsgNtfctnWidget extends StatelessWidget {
                       ),
                     ),
                     const Gap(5),
-                    AmptiveContainer(
-                      color: AmptiveColors.whiteColor.withOpacity(0.2),
+                    ATContainer(
+                      color: ATColors.whiteColor.withOpacity(0.2),
                       padding: const EdgeInsets.all(2), radius: 4,
                       child: Row(
                         children: [
@@ -136,7 +136,7 @@ class AmptiveGoLivePinnedMsgNtfctnWidget extends StatelessWidget {
                           ),
                           const Gap(2),
                           Text(
-                            AmptiveStrings.PINNED.toUpperCase(),
+                            ATStrings.PINNED.toUpperCase(),
                             style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                               fontSize: AmptiveFontSizes.size10
                             )

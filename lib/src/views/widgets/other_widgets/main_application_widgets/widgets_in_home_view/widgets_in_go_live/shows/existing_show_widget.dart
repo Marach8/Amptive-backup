@@ -27,17 +27,17 @@ class AmptiveExistingShowWidget extends StatelessWidget {
     return AmptiveRebuilderWidget(
       notifier: eachButtonNotifier,
       builder: (_, isSelected, __) {
-        return AmptiveContainer(
+        return ATContainer(
           onTap: () => onTap(isSelected),
           radius: 5,
           border: Border.all(
-            color: isSelected ? AmptiveColors.hex307FE2 : AmptiveColors.transparentColor,
+            color: isSelected ? ATColors.hex307FE2 : ATColors.transparentColor,
             width: 3,
           ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              AmptiveContainer(
+              ATContainer(
                 radius: 5, height: imageHeight,
                 width: imageWidth,
                 clipBehavior: Clip.hardEdge,
@@ -62,7 +62,7 @@ class AmptiveExistingShowWidget extends StatelessWidget {
                       'glendonnoyle',
                       style: Theme.of(context).textTheme.titleSmall?.copyWith(
                         fontSize: AmptiveFontSizes.size13,
-                        color: AmptiveColors.grey5Color,
+                        color: ATColors.grey5Color,
                       ),
                     ),
                   ),
@@ -72,13 +72,13 @@ class AmptiveExistingShowWidget extends StatelessWidget {
                     alignment: Alignment.bottomCenter,
                     child: AmptiveCircleAvatarWidget(
                       diameter: 5,
-                      color: AmptiveColors.grey5Color,
+                      color: ATColors.grey5Color,
                     ),
                   ),
                   Text(
                     'LIVE',
                     style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                      color: AmptiveColors.grey5Color,
+                      color: ATColors.grey5Color,
                     ),
                   ),
                 ],

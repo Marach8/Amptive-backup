@@ -72,7 +72,7 @@ class _PreHomePageState extends State<PreHomePage>
   Widget build(BuildContext context) {
     return ATAnnotatedRegionWidget(
       child: Scaffold(
-        backgroundColor: AmptiveColors.brandBlack,
+        backgroundColor: ATColors.brandBlack,
         body: Stack(
           children: [
             Positioned(
@@ -110,7 +110,7 @@ class _PreHomePageState extends State<PreHomePage>
                       'STAY ON THE LOOP',
                       textAlign: TextAlign.center,
                       style: GoogleFonts.inter(
-                        color: AmptiveColors.whiteColor,
+                        color: ATColors.whiteColor,
                         fontSize: 45.sp,
                         fontWeight: FontWeight.w800,
                       ),
@@ -125,7 +125,7 @@ class _PreHomePageState extends State<PreHomePage>
                       'Allow Amptive to send notifications of live audio shows & events ',
                       textAlign: TextAlign.center,
                       style: GoogleFonts.inter(
-                        color: AmptiveColors.whiteColor,
+                        color: ATColors.whiteColor,
                         fontSize: 14.sp,
                         fontWeight: FontWeight.w500,
                         letterSpacing: 0.28,
@@ -192,7 +192,7 @@ class _PreHomePageState extends State<PreHomePage>
               bottom: 0,
               child: Container(
                 width: MediaQuery.of(context).size.width,
-                color: AmptiveColors.brandBlack,
+                color: ATColors.brandBlack,
                 padding: EdgeInsets.only(left: 25.w),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
@@ -202,7 +202,7 @@ class _PreHomePageState extends State<PreHomePage>
                     ),
                     AmptiveElevatedButtonWidget(
                       height: 50.w,
-                      buttonTitle: AmptiveStrings.ALLOW,
+                      buttonTitle: ATStrings.ALLOW,
                       onPressed: () {
                         context.goNamed(ATRoutes.homeScreen);
 
@@ -222,10 +222,10 @@ class _PreHomePageState extends State<PreHomePage>
                         child: Container(
                           padding: EdgeInsets.symmetric(vertical: 11.h),
                           child: Text(
-                            AmptiveStrings.noThanks,
+                            ATStrings.noThanks,
                             textAlign: TextAlign.center,
                             style: GoogleFonts.inter(
-                              color: AmptiveColors.whiteColor,
+                              color: ATColors.whiteColor,
                               fontSize: 18.sp,
                               fontWeight: FontWeight.w600,
                               height: 0.18,

@@ -31,29 +31,29 @@ class AmptiveShowOrEventDataModelWidget extends StatelessWidget {
           subtitle: 'started a live show',
         ),
         Gap(2.h),
-        AmptiveContainer(
+        ATContainer(
           height: 425.h,
           clipBehavior: Clip.hardEdge,
           radius: 15.r,
           child: Stack(
             children: [
               const AmptiveImageLoaderWidget(imagePath: AmptiveImageStrings.weCanDoHardThingsBgImage),
-              AmptiveContainer(
-                width: AmptiveHelperFunctions.getScreenWidth(context),
+              ATContainer(
+                width: ATHelperFuncs.getScreenWidth(context),
                 padding: const EdgeInsets.fromLTRB(15, 10, 15, 10),
                 radius: 15,
                 gradient: LinearGradient(
                   begin: Alignment.topCenter,
                   end: Alignment.bottomCenter,
                   colors: [
-                    AmptiveColors.transparentColor,
-                    AmptiveColors.transparentColor,
-                    AmptiveColors.transparentColor,
-                    AmptiveColors.transparentColor,
-                    AmptiveColors.containerGradientColorB.withOpacity(0.5),
-                    AmptiveColors.containerGradientColorB,
-                    AmptiveColors.containerGradientColorB,
-                    AmptiveColors.containerGradientColorB,
+                    ATColors.transparentColor,
+                    ATColors.transparentColor,
+                    ATColors.transparentColor,
+                    ATColors.transparentColor,
+                    ATColors.containerGradientColorB.withOpacity(0.5),
+                    ATColors.containerGradientColorB,
+                    ATColors.containerGradientColorB,
+                    ATColors.containerGradientColorB,
                   ]
                 ),
                 child: Column(

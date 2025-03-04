@@ -1,15 +1,15 @@
-abstract class AmptiveEmailAuthState {}
+abstract class ATAuthState {}
 
-class InitialAuthState extends AmptiveEmailAuthState {}
+class InitialAuthState extends ATAuthState {}
 
-class MainAuthState extends AmptiveEmailAuthState {
+class MainAuthState extends ATAuthState {
   String? userEmail;
 
   MainAuthState({this.userEmail});
 }
 
-class LoadingAuthState extends AmptiveEmailAuthState {}
+class LoadingAuthState extends ATAuthState {}
 
-class ValidEmailAuthState extends AmptiveEmailAuthState {}
+class ValidEmailAuthState extends ATAuthState {}
 
-class InvalidEmailAuthState extends AmptiveEmailAuthState {}
+class InvalidEmailAuthState extends ATAuthState {}

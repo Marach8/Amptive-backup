@@ -30,7 +30,7 @@ class AmptiveFullDiscoverPageView extends StatelessWidget {
         const _HorizontalScrollCards(),
         Gap(30.h),
         AmptiveRowOfTitleWithTrendingViewAll(
-          title: AmptiveStrings.TRENDING_HASHTAGS,
+          title: ATStrings.TRENDING_HASHTAGS,
           viewAllOnpressed: (){
             context.pushNamed(ATRoutes.TRENDING_HASHTAGS_SCREEN);
           },
@@ -42,7 +42,7 @@ class AmptiveFullDiscoverPageView extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: 15),
           child: AmptiveRowOfTrendingHashTagTitle(
             trailingOnpressed: () => context.pushNamed(ATRoutes.SOCIETY_SCREEN),
-            hashTagTitle: AmptiveStrings.SOCIETY,
+            hashTagTitle: ATStrings.SOCIETY,
             hashTagSubTitle: 'ankira22, glendonnor, and 15k other are live',
           ),
         ),
@@ -94,7 +94,7 @@ class AmptiveFullDiscoverPageView extends StatelessWidget {
         Gap(60.h),
     
         const AmptiveDiscoverCategoriesTitleWidget(
-          categoryName: AmptiveStrings.TECHNOLOGY
+          categoryName: ATStrings.TECHNOLOGY
         ),
         Gap(15.h),
         SizedBox(
@@ -114,7 +114,7 @@ class AmptiveFullDiscoverPageView extends StatelessWidget {
         Gap(50.h),
     
         const AmptiveDiscoverCategoriesTitleWidget(
-          categoryName: AmptiveStrings.SPORTS,
+          categoryName: ATStrings.SPORTS,
         ),
         Gap(15.h),
         SizedBox(
@@ -134,7 +134,7 @@ class AmptiveFullDiscoverPageView extends StatelessWidget {
         Gap(50.h),
     
         const AmptiveDiscoverCategoriesTitleWidget(
-          categoryName: AmptiveStrings.TRUE_CRIME,
+          categoryName: ATStrings.TRUE_CRIME,
         ),
         Gap(15.h),
         SizedBox(
@@ -174,11 +174,11 @@ class AmptiveFullDiscoverPageView extends StatelessWidget {
     
         Gap(50.h),
     
-        AmptiveContainer(
+        ATContainer(
           padding: const EdgeInsets.only(left: 15),
           alignment: Alignment.centerLeft,
           child: Text(
-            AmptiveStrings.TOP_CREATORS,
+            ATStrings.TOP_CREATORS,
             style: Theme.of(context).textTheme.bodyLarge 
           ),
         ),
@@ -199,11 +199,11 @@ class AmptiveFullDiscoverPageView extends StatelessWidget {
     
         Gap(50.h),
     
-        AmptiveContainer(
+        ATContainer(
           padding: const EdgeInsets.only(left: 15),
           alignment: Alignment.centerLeft,
           child: Text(
-            AmptiveStrings.SPOTLIGHT,
+            ATStrings.SPOTLIGHT,
             style: Theme.of(context).textTheme.bodyLarge 
           ),
         ),
@@ -257,7 +257,7 @@ class _HorizontalScrollCardsState extends State<_HorizontalScrollCards> {
   Widget build(context) {
     return SizedBox(
       height: 260,
-      width: AmptiveHelperFunctions.getScreenWidth(context),
+      width: ATHelperFuncs.getScreenWidth(context),
       child: Column(
         children: [
           CarouselSlider.builder(
@@ -286,10 +286,10 @@ class _HorizontalScrollCardsState extends State<_HorizontalScrollCards> {
                     notifier: _indexNotifier,
                     builder: (_, value, __){
                       final isActive = index == value;
-                      return AmptiveContainer(
+                      return ATContainer(
                         margin: const EdgeInsets.only(left: 3),
                         radius: 8, height: 8,
-                        color: isActive ? AmptiveColors.whiteColor : AmptiveColors.inactiveDotColor, 
+                        color: isActive ? ATColors.whiteColor : ATColors.inactiveDotColor, 
                         width: isActive ? 25 : 8,
                         child: const SizedBox.shrink()
                       );

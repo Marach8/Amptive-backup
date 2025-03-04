@@ -82,8 +82,8 @@ class _AmptiveChooseOrCreateEventScreenState extends State<AmptiveChooseOrCreate
               ),
             ),
             Positioned.fill(
-              child: AmptiveContainer(
-                color: AmptiveColors.black.withOpacity(0.6),
+              child: ATContainer(
+                color: ATColors.black.withOpacity(0.6),
                 child: BackdropFilter(
                   filter: ImageFilter.blur(sigmaX: 100.0, sigmaY: 100.0),
                   child: const SizedBox.shrink(),
@@ -95,7 +95,7 @@ class _AmptiveChooseOrCreateEventScreenState extends State<AmptiveChooseOrCreate
               physics: const BouncingScrollPhysics(),
               slivers: [
                 SliverAppBar(
-                  backgroundColor: AmptiveColors.brandBlack.withOpacity(0.8),
+                  backgroundColor: ATColors.brandBlack.withOpacity(0.8),
                   floating: true,
                   leading: GestureDetector(
                     onTap: (){context.pop();},
@@ -104,7 +104,7 @@ class _AmptiveChooseOrCreateEventScreenState extends State<AmptiveChooseOrCreate
                   centerTitle: true,
                   leadingWidth: 40,
                   title: Text(
-                    AmptiveStrings.CHOOSE_EVENT,
+                    ATStrings.CHOOSE_EVENT,
                     style: Theme.of(context).textTheme.bodyMedium,
                   ),
                 ),
@@ -113,9 +113,9 @@ class _AmptiveChooseOrCreateEventScreenState extends State<AmptiveChooseOrCreate
                     padding: const EdgeInsets.fromLTRB(15, 10, 15, 20),
                     child: Text(
                       maxLines: 3,
-                      AmptiveStrings.CHOOSE_OR_CREATE_EVENT,
+                      ATStrings.CHOOSE_OR_CREATE_EVENT,
                       style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                        color: AmptiveColors.hexC2C2C2
+                        color: ATColors.hexC2C2C2
                       ),
                     ),
                   ),
@@ -132,7 +132,7 @@ class _AmptiveChooseOrCreateEventScreenState extends State<AmptiveChooseOrCreate
                               return Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  AmptiveContainer(
+                                  ATContainer(
                                     onTap: (){
                                       activateButton.value = false;
                                       if(selectedIndex != null){
@@ -141,14 +141,14 @@ class _AmptiveChooseOrCreateEventScreenState extends State<AmptiveChooseOrCreate
                                       context.pushNamed(ATRoutes.CREATE_EVENT_FORM);
                                     },
                                     radius: 5.r,
-                                    color: AmptiveColors.hex2D2D2D,
+                                    color: ATColors.hex2D2D2D,
                                     width: constraints.maxWidth,
                                     height: constraints.maxHeight * 0.7,
                                     child: Icon(Icons.add, size: 100.w),
                                   ),
                                   const Gap(5),
                                   Text(
-                                    AmptiveStrings.CREATE_NEW_EVENT,
+                                    ATStrings.CREATE_NEW_EVENT,
                                     style: Theme.of(context).textTheme.bodyMedium,
                                   ),
                                 ],
@@ -206,9 +206,9 @@ class _AmptiveChooseOrCreateEventScreenState extends State<AmptiveChooseOrCreate
               //await showEventCapacitySelectionDialog(context: context);
               context.pushNamed(ATRoutes.EVENT_SCHEDULED_SCREEN);
             } : null,
-            buttonTitle: AmptiveStrings.NEXT,
-            bgColor: AmptiveColors.whiteColor,
-            fgColor: AmptiveColors.black,
+            buttonTitle: ATStrings.NEXT,
+            bgColor: ATColors.whiteColor,
+            fgColor: ATColors.black,
           ),
         ),
       ),

@@ -21,18 +21,18 @@ class AmptiveLiveIndicatorWidget extends StatelessWidget {
           begin: Alignment.topCenter,
           end: Alignment.bottomCenter,
           colors: [
-            AmptiveColors.orangeColor1,
-            AmptiveColors.orangeGradientColorB
+            ATColors.orangeColor1,
+            ATColors.orangeGradientColorB
           ]
         ),
         borderRadius: BorderRadius.circular(5),
         border: Border.all(
-          color: AmptiveColors.brandBlack,
+          color: ATColors.brandBlack,
           width: 2,
         )
       ),
       child: Text(
-        AmptiveStrings.LIVE.toUpperCase(),
+        ATStrings.LIVE.toUpperCase(),
         style: Theme.of(context).textTheme.titleSmall?.copyWith(
           fontWeight: AmptiveFontWeights.w600
         )

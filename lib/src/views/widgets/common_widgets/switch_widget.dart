@@ -18,9 +18,9 @@ class AmptiveSwitch extends StatelessWidget {
       child: Switch.adaptive(
         value: value,
         applyCupertinoTheme: true,
-        thumbColor: WidgetStatePropertyAll(AmptiveColors.whiteColor),
-        activeTrackColor: AmptiveColors.activeSwitch,
-        inactiveTrackColor: AmptiveColors.whiteColor.withOpacity(0.2),
+        thumbColor: WidgetStatePropertyAll(ATColors.whiteColor),
+        activeTrackColor: ATColors.activeSwitch,
+        inactiveTrackColor: ATColors.whiteColor.withOpacity(0.2),
         onChanged: onChanged
       ),
     );

@@ -24,12 +24,12 @@ class AmptiveViewProfilePicScreen extends StatelessWidget {
           leadingWidth: 30,
           actions: [
             Text(
-              AmptiveStrings.EDIT,
+              ATStrings.EDIT,
               style: Theme.of(context).textTheme.bodyMedium
             ),
           ],
           title: Text(
-            AmptiveStrings.PROFILE_PIC,
+            ATStrings.PROFILE_PIC,
             style: Theme.of(context).textTheme.bodyMedium,
           ),
         ),
@@ -43,12 +43,12 @@ class AmptiveViewProfilePicScreen extends StatelessWidget {
             ),
           ),
         ),
-        bottomSheet: AmptiveContainer(
+        bottomSheet: ATContainer(
           padding: const EdgeInsets.fromLTRB(17, 5, 17, 5),
-          color: AmptiveColors.whiteColor.withValues(alpha: 0.1),
+          color: ATColors.whiteColor.withValues(alpha: 0.1),
           radius: 100,
           child: Text(
-            AmptiveStrings.SHARE_PROFILE,
+            ATStrings.SHARE_PROFILE,
             style: Theme.of(context).textTheme.bodyMedium
           ),
         ),

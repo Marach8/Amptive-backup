@@ -55,7 +55,7 @@ SingleTickerProviderStateMixin{
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(35),
         border: Border.all(
-          color: AmptiveColors.orangeColor1,
+          color: ATColors.orangeColor1,
           width: 2
         )
       ),

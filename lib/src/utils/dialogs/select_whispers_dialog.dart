@@ -19,9 +19,9 @@ Future<void> showWhispersDialog(BuildContext context) async {
   CreateShowService service = GetIt.I<CreateShowService>();
 
   return await showModalBottomSheet(
-      backgroundColor: AmptiveColors.brandBlack,
+      backgroundColor: ATColors.brandBlack,
       constraints: BoxConstraints.expand(
-          height: AmptiveHelperFunctions.getScreenHeight(context)),
+          height: ATHelperFuncs.getScreenHeight(context)),
       context: context,
       isScrollControlled: true,
       useSafeArea: true,
@@ -37,14 +37,14 @@ Future<void> showWhispersDialog(BuildContext context) async {
                 child: Platform.isAndroid
                     ? Icon(
                         Icons.keyboard_arrow_down,
-                        color: AmptiveColors.whiteColor.withOpacity(0.6),
+                        color: ATColors.whiteColor.withOpacity(0.6),
                       )
-                    : AmptiveContainer(
+                    : ATContainer(
                         margin: const EdgeInsets.symmetric(vertical: 10),
                         radius: 5,
                         height: 4,
                         width: 30,
-                        color: AmptiveColors.whiteColor.withOpacity(0.6),
+                        color: ATColors.whiteColor.withOpacity(0.6),
                         child: const SizedBox.shrink(),
                       ),
               ),
@@ -57,7 +57,7 @@ Future<void> showWhispersDialog(BuildContext context) async {
                   const Icon(Iconsax.message),
                   const Gap(5),
                   Text(
-                    AmptiveStrings.WHISPERS,
+                    ATStrings.WHISPERS,
                     style: Theme.of(context).textTheme.bodyLarge,
                   ),
                 ],
@@ -66,57 +66,57 @@ Future<void> showWhispersDialog(BuildContext context) async {
             const Gap(20),
             Text(
               maxLines: 3,
-              AmptiveStrings.WHISPERS_DESC,
+              ATStrings.WHISPERS_DESC,
               style: Theme.of(context)
                   .textTheme
                   .titleMedium
-                  ?.copyWith(color: AmptiveColors.hexC2C2C2),
+                  ?.copyWith(color: ATColors.hexC2C2C2),
             ),
             const Gap(15),
             Text(
               maxLines: 3,
-              AmptiveStrings.USERS_WOULD_WANT_2_JOIN,
+              ATStrings.USERS_WOULD_WANT_2_JOIN,
               style: Theme.of(context)
                   .textTheme
                   .titleMedium
-                  ?.copyWith(color: AmptiveColors.hexC2C2C2),
+                  ?.copyWith(color: ATColors.hexC2C2C2),
             ),
             const Gap(20),
             AmptiveRebuilderWidget(
                 notifier: allowNotifier,
                 shouldDispose: true,
                 builder: (_, value, __) {
-                  return AmptiveContainer(
+                  return ATContainer(
                     duration: 100,
                     onTap: () {
                       activateBtnNotifier.value = !value;
                       doNotAllowNotifier.value = false;
                       allowNotifier.value = !value;
                       service.whisperController.text =
-                          AmptiveStrings.TURNED_ON;
+                          ATStrings.TURNED_ON;
                     },
                     padding: const EdgeInsets.fromLTRB(15, 13, 15, 13),
                     radius: 15,
-                    color: AmptiveColors.hex2D2D2D,
+                    color: ATColors.hex2D2D2D,
                     border: Border.all(
                         width: 2,
                         color: value
-                            ? AmptiveColors.hex307FE2
-                            : AmptiveColors.transparentColor),
+                            ? ATColors.hex307FE2
+                            : ATColors.transparentColor),
                     child: Row(
                       children: [
-                        AmptiveContainer(
+                        ATContainer(
                             height: 20,
                             width: 20,
                             radius: 20,
                             padding: const EdgeInsets.all(3),
                             color: value
-                                ? AmptiveColors.hex307FE2
-                                : AmptiveColors.transparentColor,
+                                ? ATColors.hex307FE2
+                                : ATColors.transparentColor,
                             border: Border.all(
                                 color: value
-                                    ? AmptiveColors.hex307FE2
-                                    : AmptiveColors.whiteColor,
+                                    ? ATColors.hex307FE2
+                                    : ATColors.whiteColor,
                                 strokeAlign: 5.0),
                             child: const SizedBox.shrink()),
                         const Gap(10),
@@ -125,17 +125,17 @@ Future<void> showWhispersDialog(BuildContext context) async {
                             mainAxisSize: MainAxisSize.min,
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text(AmptiveStrings.TURN_ON,
+                              Text(ATStrings.TURN_ON,
                                   style:
                                       Theme.of(context).textTheme.bodyMedium),
                               Text(
                                 maxLines: 5,
-                                AmptiveStrings.WHISPERS_ENABLED,
+                                ATStrings.WHISPERS_ENABLED,
                                 style: Theme.of(context)
                                     .textTheme
                                     .titleMedium
                                     ?.copyWith(
-                                        color: AmptiveColors.hexC2C2C2),
+                                        color: ATColors.hexC2C2C2),
                               ),
                             ],
                           ),
@@ -149,41 +149,41 @@ Future<void> showWhispersDialog(BuildContext context) async {
                 shouldDispose: true,
                 notifier: doNotAllowNotifier,
                 builder: (_, value, __) {
-                  return AmptiveContainer(
+                  return ATContainer(
                     onTap: () {
                       activateBtnNotifier.value = !value;
                       allowNotifier.value = false;
                       doNotAllowNotifier.value = !value;
                       service.whisperController.text =
-                          AmptiveStrings.TURNED_OFF;
+                          ATStrings.TURNED_OFF;
                     },
                     padding: const EdgeInsets.fromLTRB(15, 13, 15, 13),
                     radius: 15,
                     duration: 100,
-                    color: AmptiveColors.hex2D2D2D,
+                    color: ATColors.hex2D2D2D,
                     border: Border.all(
                         width: 2,
                         color: value
-                            ? AmptiveColors.hex307FE2
-                            : AmptiveColors.transparentColor),
+                            ? ATColors.hex307FE2
+                            : ATColors.transparentColor),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         Row(
                           children: [
-                            AmptiveContainer(
+                            ATContainer(
                                 height: 20,
                                 width: 20,
                                 radius: 20,
                                 padding: const EdgeInsets.all(3),
                                 color: value
-                                    ? AmptiveColors.hex307FE2
-                                    : AmptiveColors.transparentColor,
+                                    ? ATColors.hex307FE2
+                                    : ATColors.transparentColor,
                                 border: Border.all(
                                     color: value
-                                        ? AmptiveColors.hex307FE2
-                                        : AmptiveColors.whiteColor,
+                                        ? ATColors.hex307FE2
+                                        : ATColors.whiteColor,
                                     strokeAlign: 5.0),
                                 child: const SizedBox.shrink()),
                             const Gap(10),
@@ -192,18 +192,18 @@ Future<void> showWhispersDialog(BuildContext context) async {
                                 mainAxisSize: MainAxisSize.min,
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Text(AmptiveStrings.TURN_OFF,
+                                  Text(ATStrings.TURN_OFF,
                                       style: Theme.of(context)
                                           .textTheme
                                           .bodyMedium),
                                   Text(
                                     maxLines: 5,
-                                    AmptiveStrings.WHISPERS_DISABLED,
+                                    ATStrings.WHISPERS_DISABLED,
                                     style: Theme.of(context)
                                         .textTheme
                                         .titleMedium
                                         ?.copyWith(
-                                            color: AmptiveColors.hexC2C2C2),
+                                            color: ATColors.hexC2C2C2),
                                   ),
                                 ],
                               ),
@@ -226,9 +226,9 @@ Future<void> showWhispersDialog(BuildContext context) async {
                             Navigator.pop(context);
                           }
                         : null,
-                    buttonTitle: AmptiveStrings.CONTINUE,
-                    bgColor: AmptiveColors.whiteColor,
-                    fgColor: AmptiveColors.black,
+                    buttonTitle: ATStrings.CONTINUE,
+                    bgColor: ATColors.whiteColor,
+                    fgColor: ATColors.black,
                   );
                 })
           ]),

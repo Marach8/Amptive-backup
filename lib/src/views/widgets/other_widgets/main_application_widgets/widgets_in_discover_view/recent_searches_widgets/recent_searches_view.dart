@@ -21,14 +21,14 @@ class AmptiveRecentSearchesView extends StatelessWidget {
             Row(
               children: [
                 Text(
-                  AmptiveStrings.RECENT_SEARCHES,
+                  ATStrings.RECENT_SEARCHES,
                   style: Theme.of(context).textTheme.bodyLarge
                 ),
                 const Spacer(),
                 Text(
-                  AmptiveStrings.CLEAR,
+                  ATStrings.CLEAR,
                   style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                    color: AmptiveColors.authHintColor
+                    color: ATColors.authHintColor
                   ),
                 ),
               ],

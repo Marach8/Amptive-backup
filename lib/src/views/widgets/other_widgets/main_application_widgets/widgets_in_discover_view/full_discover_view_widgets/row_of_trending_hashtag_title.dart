@@ -21,9 +21,9 @@ class AmptiveRowOfTrendingHashTagTitle extends StatelessWidget {
     return Row(
       children: [
         Text(
-          AmptiveStrings.HASH,
+          ATStrings.HASH,
           style: Theme.of(context).textTheme.displayMedium?.copyWith(
-            color: AmptiveColors.authHintColor2
+            color: ATColors.authHintColor2
           )
         ),
         Gap(10.h),
@@ -31,7 +31,7 @@ class AmptiveRowOfTrendingHashTagTitle extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              AmptiveStrings.HASH + hashTagTitle.toLowerCase(),
+              ATStrings.HASH + hashTagTitle.toLowerCase(),
               style: Theme.of(context).textTheme.bodySmall?.copyWith(
                 fontSize: AmptiveFontSizes.size15
               ),
@@ -40,7 +40,7 @@ class AmptiveRowOfTrendingHashTagTitle extends StatelessWidget {
               hashTagSubTitle,
               style: Theme.of(context).textTheme.titleSmall?.copyWith(
                 fontSize: AmptiveFontSizes.size13,
-                color: AmptiveColors.grey5Color
+                color: ATColors.grey5Color
               ),
             ),
           ],
@@ -48,7 +48,7 @@ class AmptiveRowOfTrendingHashTagTitle extends StatelessWidget {
         const Spacer(),
         GestureDetector(
           onTap: trailingOnpressed,
-          child: Icon(Icons.keyboard_arrow_right_sharp, color: AmptiveColors.authHintColor,)
+          child: Icon(Icons.keyboard_arrow_right_sharp, color: ATColors.authHintColor,)
         )
       ],
     );

@@ -39,9 +39,9 @@ final showSuffixIconNotifier = ValueNotifier(false);
   );
 
   return await showModalBottomSheet<bool>(
-      backgroundColor: AmptiveColors.hex202020,
+      backgroundColor: ATColors.hex202020,
       constraints: BoxConstraints.expand(
-        height: AmptiveHelperFunctions.getScreenHeight(context)
+        height: ATHelperFuncs.getScreenHeight(context)
       ),
       context: context,
       isScrollControlled: true,
@@ -68,12 +68,12 @@ final showSuffixIconNotifier = ValueNotifier(false);
                           child: Platform.isAndroid
                               ? Icon(
                                   Icons.keyboard_arrow_down,
-                                  color: AmptiveColors.whiteColor.withOpacity(0.6),
+                                  color: ATColors.whiteColor.withOpacity(0.6),
                                 )
-                              : AmptiveContainer(
+                              : ATContainer(
                                   margin: const EdgeInsets.symmetric(vertical: 10),
                                   radius: 5, height: 4, width: 30,
-                                  color: AmptiveColors.whiteColor.withOpacity(0.6),
+                                  color: ATColors.whiteColor.withOpacity(0.6),
                                   child: const SizedBox.shrink(),
                                 ),
                           ),
@@ -82,7 +82,7 @@ final showSuffixIconNotifier = ValueNotifier(false);
                           mainAxisAlignment: MainAxisAlignment.end,
                           children: [
                             Text(
-                              AmptiveStrings.ADD_CO_HOST,
+                              ATStrings.ADD_CO_HOST,
                               style: Theme.of(context).textTheme.bodyLarge,
                             ),
                             Gap(60.w),
@@ -93,9 +93,9 @@ final showSuffixIconNotifier = ValueNotifier(false);
                                 ).length;
           
                                 return Text(
-                                  '$number ${AmptiveStrings.SELECTED}',
+                                  '$number ${ATStrings.SELECTED}',
                                   style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                                    color: AmptiveColors.hexC2C2C2
+                                    color: ATColors.hexC2C2C2
                                   ),
                                 );
                               }
@@ -106,9 +106,9 @@ final showSuffixIconNotifier = ValueNotifier(false);
           
                         Text(
                           maxLines: 3,
-                          AmptiveStrings.ADD_COHOST_DESC,
+                          ATStrings.ADD_COHOST_DESC,
                           style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                            color: AmptiveColors.hexC2C2C2
+                            color: ATColors.hexC2C2C2
                           ),
                         ),
                         const Gap(20),
@@ -118,13 +118,13 @@ final showSuffixIconNotifier = ValueNotifier(false);
                           controller: controller,
                           focusNode: focusNode,
                           disableBlueBorder: true,
-                          onChanged: (text) => AmptiveHelperFunctions.callDebouncer(
+                          onChanged: (text) => ATHelperFuncs.callDebouncer(
                             200,
                             () => context.read<AmptiveGoLiveAvailableCoHostsBloc>().add(
                               SearchCohostEvent(searchKey: text)
                             ),
                           ),
-                          hintText: AmptiveStrings.SEARCH_4_COHOSTS,
+                          hintText: ATStrings.SEARCH_4_COHOSTS,
                           prefixConstraints: const BoxConstraints(maxWidth: 50),
                           prefixIcon: const Padding(
                             padding: EdgeInsets.symmetric(horizontal: 15),
@@ -158,7 +158,7 @@ final showSuffixIconNotifier = ValueNotifier(false);
                             return AmptiveAnimatedCrossFadeWidget(
                               condition: showSelectedCohosts,
                               secondChild: const SizedBox.shrink(),
-                              firstChild: AmptiveContainer(
+                              firstChild: ATContainer(
                                 height: 43, alignment: Alignment.center,
                                 margin: const EdgeInsets.fromLTRB(20, 20, 20, 0),
                                 child: SingleChildScrollView(
@@ -170,10 +170,10 @@ final showSuffixIconNotifier = ValueNotifier(false);
                                         final index = listOfCohosts.indexOf(cohost);
                                         
                                         if(!showCoHost){
-                                          return AmptiveContainer(
+                                          return ATContainer(
                                             alignment: Alignment.center,
                                             margin: const EdgeInsets.only(right: 15),
-                                            border: Border.all(color: AmptiveColors.whiteColor.withOpacity(0.4)),
+                                            border: Border.all(color: ATColors.whiteColor.withOpacity(0.4)),
                                             height: 43, width: 43, radius: 30,
                                             child: Text(
                                               (index + 1).toString(),
@@ -189,7 +189,7 @@ final showSuffixIconNotifier = ValueNotifier(false);
                                           child: Stack(
                                             clipBehavior: Clip.none,
                                             children: [
-                                              AmptiveContainer(
+                                              ATContainer(
                                                 clipBehavior: Clip.hardEdge,
                                                 height: 43, width: 43, radius: 30,
                                                 child: FittedBox(
@@ -201,10 +201,10 @@ final showSuffixIconNotifier = ValueNotifier(false);
                                               ),
                                               Positioned(
                                                 top: 0, right: -4, 
-                                                child: AmptiveContainer(
+                                                child: ATContainer(
                                                   onTap: () => context.read<AmptiveGoLiveSelectCoHostBloc>()
                                                     .hostRemoveCohost(cohost),
-                                                  color: AmptiveColors.textRedColor,
+                                                  color: ATColors.textRedColor,
                                                   height: 17, width: 17,
                                                   boxShape: BoxShape.circle,
                                                   child: const FittedBox(
@@ -246,7 +246,7 @@ final showSuffixIconNotifier = ValueNotifier(false);
                 bottom: 0,
                 child: SizedBox(
                   height: 80.h,
-                  width: AmptiveHelperFunctions.getScreenWidth(context),
+                  width: ATHelperFuncs.getScreenWidth(context),
                   child: ClipRect(
                     child: BackdropFilter(
                       filter: ImageFilter.blur(sigmaX: 2.0, sigmaY: 2.0),
@@ -257,10 +257,10 @@ final showSuffixIconNotifier = ValueNotifier(false);
               ),
               Positioned(
                 bottom: 10,
-                child: AmptiveContainer(
+                child: ATContainer(
                   height: 50.h,
                   padding: const EdgeInsets.symmetric(horizontal: 15),
-                  width: AmptiveHelperFunctions.getScreenWidth(context),
+                  width: ATHelperFuncs.getScreenWidth(context),
                   child: BlocBuilder<AmptiveGoLiveSelectCoHostBloc, List<ObjectWithNotifier<Host>>>(
                     builder: (_, listOfCohosts) {
                       final shouldActivateBtn = listOfCohosts.any(
@@ -269,9 +269,9 @@ final showSuffixIconNotifier = ValueNotifier(false);
                       return AmptiveElevatedButtonWidget(
                         margin: EdgeInsets.zero,
                         onPressed: shouldActivateBtn ? () => context.pop(true) : null,
-                        buttonTitle: AmptiveStrings.SEND_INVITE,
-                        bgColor: AmptiveColors.whiteColor,
-                        fgColor: AmptiveColors.black,
+                        buttonTitle: ATStrings.SEND_INVITE,
+                        bgColor: ATColors.whiteColor,
+                        fgColor: ATColors.black,
                       );
                     }
                   ),
@@ -302,17 +302,17 @@ class AmptiveListOfCoHostsWidget extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            AmptiveStrings.NO_SUGGESTIONS,
+            ATStrings.NO_SUGGESTIONS,
             style: Theme.of(context).textTheme.bodyMedium
           ),
           Gap(3.h),
           Text(
             maxLines: 2,
-            AmptiveStrings.SEARCH_UR_COHOSTS,
+            ATStrings.SEARCH_UR_COHOSTS,
             style: Theme.of(context)
                 .textTheme
                 .bodySmall
-                ?.copyWith(color: AmptiveColors.hexC2C2C2),
+                ?.copyWith(color: ATColors.hexC2C2C2),
           ),
         ],
       );

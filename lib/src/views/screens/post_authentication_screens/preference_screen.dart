@@ -49,7 +49,7 @@ class _AmptivePreferenceScreenState extends State<AmptivePreferenceScreen> {
               state.selectedItems.length == Constants.kMaxNumberCommunities;
 
           return Scaffold(
-            backgroundColor: AmptiveColors.brandBlack,
+            backgroundColor: ATColors.brandBlack,
             appBar: state is SelectPreferenceCompletedState
                 ? null
                 : const AmptiveAppBar(),
@@ -67,7 +67,7 @@ class _AmptivePreferenceScreenState extends State<AmptivePreferenceScreen> {
                               margin: EdgeInsets.only(top: 20.h, bottom: 11.h),
                               alignment: Alignment.centerLeft,
                               child: Text(
-                                AmptiveStrings.select5Communities,
+                                ATStrings.select5Communities,
                                 style:
                                     Theme.of(context).textTheme.headlineLarge,
                               ),
@@ -76,12 +76,12 @@ class _AmptivePreferenceScreenState extends State<AmptivePreferenceScreen> {
                               margin: EdgeInsets.only(bottom: 30.h),
                               alignment: Alignment.centerLeft,
                               child: Text(
-                                AmptiveStrings.selectedInterestNote,
+                                ATStrings.selectedInterestNote,
                                 style: Theme.of(context)
                                     .textTheme
                                     .titleMedium
                                     ?.copyWith(
-                                        color: AmptiveColors.authHintColor2),
+                                        color: ATColors.authHintColor2),
                               ),
                             ),
                             Expanded(
@@ -125,12 +125,12 @@ class _AmptivePreferenceScreenState extends State<AmptivePreferenceScreen> {
                                           },
                                           style: ElevatedButton.styleFrom(
                                             backgroundColor:
-                                                AmptiveColors.hex307FE2,
+                                                ATColors.hex307FE2,
                                             padding: EdgeInsets.symmetric(
                                                 vertical: 11.5.h),
                                           ),
                                           child: Text(
-                                            AmptiveStrings.NEXT,
+                                            ATStrings.NEXT,
                                             textAlign: TextAlign.center,
                                             style: Theme.of(context)
                                                 .textTheme

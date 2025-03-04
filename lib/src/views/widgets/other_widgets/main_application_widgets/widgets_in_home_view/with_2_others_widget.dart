@@ -15,7 +15,7 @@ class AmptiveWith2OthersWidget extends StatelessWidget {
       padding:  EdgeInsets.all(6.h),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(6.r),
-        color: AmptiveColors.black.withOpacity(0.7)
+        color: ATColors.black.withOpacity(0.7)
       ),
       child: Text(
         'with 2 others',

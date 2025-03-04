@@ -10,12 +10,12 @@ class AmptiveTextButtonTheme{
   static TextButtonThemeData darkTextButtonTheme = TextButtonThemeData(
     style: TextButton.styleFrom(
       elevation: 0,
-      foregroundColor: AmptiveColors.whiteColor,
-      backgroundColor: AmptiveColors.transparentColor,
-      disabledForegroundColor: AmptiveColors.grey4Color,
-      disabledBackgroundColor: AmptiveColors.transparentColor,
+      foregroundColor: ATColors.whiteColor,
+      backgroundColor: ATColors.transparentColor,
+      disabledForegroundColor: ATColors.grey4Color,
+      disabledBackgroundColor: ATColors.transparentColor,
       textStyle: TextStyle(
-        fontFamily: AmptiveStrings.inter,
+        fontFamily: ATStrings.inter,
         fontSize: AmptiveFontSizes.size16,
         fontWeight: AmptiveFontWeights.w600
       ),

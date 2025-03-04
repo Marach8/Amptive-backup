@@ -11,12 +11,12 @@ class AmptiveElevatedButtonTheme{
   static ElevatedButtonThemeData darkElevatedButtonTheme = ElevatedButtonThemeData(
     style: ElevatedButton.styleFrom(
       elevation: 0,
-      foregroundColor: AmptiveColors.whiteColor,
-      backgroundColor: AmptiveColors.hex307FE2,
-      disabledForegroundColor: AmptiveColors.grey4Color,
-      disabledBackgroundColor: AmptiveColors.fillGreyColor.withOpacity(0.3),
+      foregroundColor: ATColors.whiteColor,
+      backgroundColor: ATColors.hex307FE2,
+      disabledForegroundColor: ATColors.grey4Color,
+      disabledBackgroundColor: ATColors.fillGreyColor.withOpacity(0.3),
       textStyle: TextStyle(
-        fontFamily: AmptiveStrings.inter,
+        fontFamily: ATStrings.inter,
         fontSize: AmptiveFontSizes.size16,
         fontWeight: AmptiveFontWeights.w600
       ),

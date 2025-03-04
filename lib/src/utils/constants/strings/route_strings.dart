@@ -7,12 +7,12 @@ class ATRoutes {
   static String onboarding = "onboarding";
 
   //AUTHENTICATION
-  static String emailAuth = "email_auth";
+  static String EMAIL_SCREEN = "email_auth";
   static String preference = "preference";
   static String authScreen = "auth_screen";
   static String passwordAuth = "password_auth";
   static String dobAuth = "dob_auth";
-  static String otp = "otp";
+  static String OTP_SCREEN = "otp";
   static String addName = "name_auth";
   static String addUsername = "username_auth";
   static String addPhone = "add_phone_auth";

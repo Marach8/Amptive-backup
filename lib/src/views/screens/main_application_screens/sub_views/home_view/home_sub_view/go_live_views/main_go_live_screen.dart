@@ -44,7 +44,7 @@ class _AmptiveGoLiveScreenState extends State<AmptiveGoLiveScreen> {
           ),
           leadingWidth: 20,
           title: Text(
-            AmptiveStrings.CREATE_SHOW_OR_EVENT,
+            ATStrings.CREATE_SHOW_OR_EVENT,
             style: Theme.of(context).textTheme.bodyMedium,
           ),
         ),
@@ -57,9 +57,9 @@ class _AmptiveGoLiveScreenState extends State<AmptiveGoLiveScreen> {
             children: [
               Text(
                 maxLines: 3,
-                AmptiveStrings.CHOOSE_2_CREATE_SHOW_OR_EVENT,
+                ATStrings.CHOOSE_2_CREATE_SHOW_OR_EVENT,
                 style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                  color: AmptiveColors.hexC2C2C2
+                  color: ATColors.hexC2C2C2
                 ),
               ),
               Gap(20.h),
@@ -71,8 +71,8 @@ class _AmptiveGoLiveScreenState extends State<AmptiveGoLiveScreen> {
                       eventSelected: eventSelected,
                       showSelected: showSelected,
                       onSelectedImagePath: AmptiveImageStrings.CREATE_SHOW_ICON,
-                      title: AmptiveStrings.CREATE_SHOW,
-                      subtitle: AmptiveStrings.CREATE_SHOW_DESC,
+                      title: ATStrings.CREATE_SHOW,
+                      subtitle: ATStrings.CREATE_SHOW_DESC,
                       alphabet: 'S',
                     ),
                   ),
@@ -83,8 +83,8 @@ class _AmptiveGoLiveScreenState extends State<AmptiveGoLiveScreen> {
                       eventSelected: eventSelected,
                       showSelected: showSelected,
                       onSelectedImagePath: AmptiveImageStrings.CREATE_EVENT_ICON,
-                      title: AmptiveStrings.CREATE_EVENT,
-                      subtitle: AmptiveStrings.CREATE_EVENT_DESC,
+                      title: ATStrings.CREATE_EVENT,
+                      subtitle: ATStrings.CREATE_EVENT_DESC,
                       alphabet: 'E',
                     ),
                   )
@@ -102,9 +102,9 @@ class _AmptiveGoLiveScreenState extends State<AmptiveGoLiveScreen> {
                 context.pushNamed(ATRoutes.CHOOSE_OR_CREATE_SHOW_SCREEN)
               : context.pushNamed(ATRoutes.CHOOSE_OR_CREATE_EVENT_SCREEN);
             }: null,
-            buttonTitle: AmptiveStrings.CONTINUE,
-            bgColor: AmptiveColors.whiteColor,
-            fgColor: AmptiveColors.black,
+            buttonTitle: ATStrings.CONTINUE,
+            bgColor: ATColors.whiteColor,
+            fgColor: ATColors.black,
           ),
         ),
       ),

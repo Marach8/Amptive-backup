@@ -15,7 +15,7 @@ class AmptiveTechnologyModel extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return AmptiveContainer(
+    return ATContainer(
       width: 250,
       padding: const EdgeInsets.only(left: 10),
       child: Column(
@@ -36,15 +36,15 @@ class AmptiveTechnologyModel extends StatelessWidget {
           ),
           Row(
             children: [
-              AmptiveContainer(
+              ATContainer(
                 height: 12, width: 12,
-                color: AmptiveColors.authHintColor,
+                color: ATColors.authHintColor,
                 child: FittedBox(
                   fit: BoxFit.scaleDown,
                   child: Text(
                     "P",
                     style: Theme.of(context).textTheme.displayMedium?.copyWith(
-                      color: AmptiveColors.brandBlack
+                      color: ATColors.brandBlack
                     ),
                   ),
                 ),
@@ -54,18 +54,18 @@ class AmptiveTechnologyModel extends StatelessWidget {
                 'glendonnor',
                 style: Theme.of(context).textTheme.titleSmall?.copyWith(
                   fontSize: AmptiveFontSizes.size13,
-                  color: AmptiveColors.authHintColor2
+                  color: ATColors.authHintColor2
                 ),
               ),
               const Gap(5),
               AmptiveCircleAvatarWidget(
                 diameter: 3,
-                color: AmptiveColors.authHintColor2
+                color: ATColors.authHintColor2
               ),
               Text(
                 'FRIDAY',
                 style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                  color: AmptiveColors.authHintColor2
+                  color: ATColors.authHintColor2
                 ),
               ),
               const Spacer()

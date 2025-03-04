@@ -25,8 +25,8 @@ class AmptiveCustomOnboardingPageViewSlideWidget extends StatelessWidget {
       children: [
         Container(
           color: pictureBgColor,
-          width: AmptiveHelperFunctions.getScreenWidth(context),
-          height: AmptiveHelperFunctions.getScreenHeight(context) * 0.65,
+          width: ATHelperFuncs.getScreenWidth(context),
+          height: ATHelperFuncs.getScreenHeight(context) * 0.65,
           child: const AmptiveImageLoaderWidget(
             imagePath: AmptiveImageStrings.emptyImage,
             boxFit: BoxFit.scaleDown,

@@ -13,7 +13,7 @@ class AmptiveRefreshIndicatorWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return RefreshIndicator(
-      color: AmptiveColors.whiteColor,
+      color: ATColors.whiteColor,
       onRefresh: onRefresh ?? ()async{
         await Future.delayed(const Duration(seconds: 5));
       },
