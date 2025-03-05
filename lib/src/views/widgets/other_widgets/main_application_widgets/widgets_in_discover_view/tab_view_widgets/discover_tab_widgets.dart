@@ -60,7 +60,7 @@ with SingleTickerProviderStateMixin{
                       radius: 20,
                       margin: const EdgeInsets.only(right: 10),
                       color: isSelected ? 
-                        ATColors.whiteColor : ATColors.fillGreyColor.withOpacity(0.3),
+                        ATColors.whiteColor : ATColors.hex9E9E9E.withOpacity(0.3),
                       padding: const EdgeInsets.fromLTRB(15, 8, 15, 8),
                       child: Text(
                         tab.value,

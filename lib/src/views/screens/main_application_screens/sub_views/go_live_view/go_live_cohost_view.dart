@@ -260,7 +260,7 @@ class _AmptiveGoLiveCohostViewState extends State<AmptiveGoLiveCohostView> {
                   return Expanded(
                     child: Padding(
                       padding: EdgeInsets.only(right: 5.w),
-                      child: AmptiveTextFormFieldWidget(
+                      child: ATTextFormFieldWidget(
                         controller: TextEditingController(),
                         disableBlueBorder: true,
                         cursorHeight: 20,

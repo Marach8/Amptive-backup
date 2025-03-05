@@ -182,7 +182,7 @@ class AmptiveEventDetailedScreen extends StatelessWidget {
                     ),
                     Divider(color: ATColors.whiteColor.withOpacity(0.1),),
                     Gap(5.h),
-                    AmptiveTextFormFieldWidget(
+                    ATTextFormFieldWidget(
                       controller: TextEditingController(),
                       hintText: 'Enter your Ticked ID',
                       suffixIcon: const Padding(

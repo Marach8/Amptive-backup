@@ -82,7 +82,7 @@ Future<void> showEventCapacitySelectionDialog({
 
             Form(
               key: formKey,
-              child: AmptiveTextFormFieldWidget(
+              child: ATTextFormFieldWidget(
                 controller: service.capacityController,
                 disableBlueBorder: true,
                 //hintText: '0',

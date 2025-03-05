@@ -14,7 +14,7 @@ class AmptiveElevatedButtonTheme{
       foregroundColor: ATColors.whiteColor,
       backgroundColor: ATColors.hex307FE2,
       disabledForegroundColor: ATColors.grey4Color,
-      disabledBackgroundColor: ATColors.fillGreyColor.withOpacity(0.3),
+      disabledBackgroundColor: ATColors.hex9E9E9E.withOpacity(0.3),
       textStyle: TextStyle(
         fontFamily: ATStrings.inter,
         fontSize: AmptiveFontSizes.size16,

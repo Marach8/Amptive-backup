@@ -48,12 +48,19 @@ class ATStrings{
   static const twitter = 'X(Twitter)';
   static const google = 'Google';
   static const ADDING_EMAIL = 'Adding Email Address...';
+  static const CHANGING_EMAIL = 'Updating Email Address...';
+  static const CHANGING_PHONE = 'Updating Phone Number...';
+  static const ADDING_PHONE = 'Adding Phone Number...';
   static const EMAIL_ADDED = 'Email Added';
-  static const EMAIL_CHANGED = 'Email Changed';
-  static const WANT_2_CHANGE_EMAIL = 'Do you want to change your email address?';
+  static const FONE_ADDED = 'Phone Number Added';
+  static const FONE_CHANGED = 'Phone Number Updated';
+  static const EMAIL_CHANGED = 'Email Updated';
+  static const WANT_2_CHANGE_EMAIL = 'Do you want to update your email address?';
+  static const WANT_2_CHANGE_FONE = 'Do you want to update your phone number?';
   static const CHANGE = 'Change';
+  static const NO_WILL_BE_VERIFIED = 'This phone number will be verified in the next step.';
 
-  static const whatIsYourEmail = 'What is your email?';
+  static const UR_EMAIL = 'What is your email?';
   static const enterYourEmail = 'Enter your email...';
   static const thisEmailWillBeVerified = 'This email will be verified in the next step';
   static const verifyEmail = 'Verify email';
@@ -66,7 +73,7 @@ class ATStrings{
 
   static const youEnteredInvalidCode = 'You entered an invalid code. ';
   static const passwordMustBeAtleast8 = 'Your password must be at least 8 characters';
-  static const didNotGetCode = "Didn't get the code? ";
+  static const DID_NOT_GET_CODE = "Didn't get the code? ";
   static const sendAgain = 'Send again';
   static const SEND = 'Send';
   static const SEND_GIFT = 'Send gift';
@@ -114,8 +121,8 @@ class ATStrings{
   static const personalizingYourExperience = "Personalizing your experience...";
 
   static const countryPickers  = 'country_pickers';
-  static const verifyPhoneNumber  = 'Verify phone number';
-  static const whatIsYourPhoneNumber = "What is your phone number?";
+  static const VERIFY_FONE  = 'Verify phone number';
+  static const UR_FON_NUMBER = "What is your phone number?";
 
   static const ALLOW  = 'Allow';
   static const noThanks = "No thanks";

@@ -47,7 +47,7 @@ class ATAccountScreen extends StatelessWidget {
                   ATContainer(
                     onTap: () => context.pushNamed(
                       ATRoutes.ACCT_INFO_SCREEN,
-                      //extra: <String?>['nnanna@gmail.com']
+                      extra: <String?>['nnanna@gmail.com', '+2348022935013']
                     ),
                     padding: const EdgeInsets.all(15),
                     color: ATColors.whiteColor.withValues(alpha: 0.1),

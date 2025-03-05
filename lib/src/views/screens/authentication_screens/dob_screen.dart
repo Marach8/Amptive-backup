@@ -88,7 +88,7 @@ class _DateOfBirthScreenState extends State<DateOfBirthScreen> {
                         fontWeight: FontWeight.normal,
                       ),
                       filled: true,
-                      fillColor: ATColors.fillGreyColor.withOpacity(0.3),
+                      fillColor: ATColors.hex9E9E9E.withOpacity(0.3),
                       focusedBorder: OutlineInputBorder(
                         borderSide: BorderSide(
                           width: 2.w,

@@ -4,7 +4,7 @@ import 'package:amptive/src/utils/constants/font_weights.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-class AmptiveTextFormFieldWidget extends StatelessWidget {
+class ATTextFormFieldWidget extends StatelessWidget {
   final TextEditingController controller;
   final void Function(String)? onChanged;
   final void Function(String?)? onSaved;
@@ -24,7 +24,7 @@ class AmptiveTextFormFieldWidget extends StatelessWidget {
   final int? maxLines, maxLength;
   final EdgeInsetsGeometry? contentPadding;
 
-  const AmptiveTextFormFieldWidget({
+  const ATTextFormFieldWidget({
     super.key,
     required this.controller,
     this.validator,

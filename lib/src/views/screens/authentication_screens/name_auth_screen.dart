@@ -58,7 +58,7 @@ class _NameAuthScreenState extends State<NameAuthScreen> {
                 SizedBox(
                   height: 11.h,
                 ),
-                AmptiveTextFormFieldWidget(
+                ATTextFormFieldWidget(
                   controller: nameController,
                   onChanged: (val) {
                     context.read<AmptiveAuthBloc>().add(NameChangedEvent());

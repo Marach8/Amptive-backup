@@ -31,12 +31,12 @@ Future<bool?> showConfirmationDialog({
           fontSize: AmptiveFontSizes.size17,
         ),
       ),
-      content: Text(
+      content: content.isNotEmpty ? Text(
         content, maxLines: 3, textAlign: TextAlign.center,
         style: Theme.of(context).textTheme.titleMedium?.copyWith(
           fontSize: AmptiveFontSizes.size13,
         ),
-      ),
+      ): const SizedBox.shrink(),
       actionsAlignment: MainAxisAlignment.spaceBetween,
       actions: [
         GestureDetector(

@@ -65,7 +65,10 @@ class ATAccountInfoScreen extends StatelessWidget {
                         if(!(shouldChangeEmail ?? true)){return;}
                       }
                       if(context.mounted){
-                        final emailResult = await context.pushNamed(ATRoutes.EMAIL_SCREEN) as bool?;
+                        final emailResult = await context.pushNamed(
+                          ATRoutes.EMAIL_SCREEN, 
+                          extra: email == null ? ATStrings.ADDING_EMAIL : ATStrings.CHANGING_EMAIL,
+                        ) as bool?;
                         if(context.mounted && (emailResult ?? false)){
                           showAppNotification(
                             context: context,
@@ -79,8 +82,33 @@ class ATAccountInfoScreen extends StatelessWidget {
                   RenderRowInfo(
                     title: ATStrings.FONE_NO,
                     value: phone ?? ATStrings.ADD_UR_PHONE,
-                    onTap: (){},
+                    onTap: ()async{
+                      if(phone != null){
+                        final shouldChangeEmail = await showConfirmationDialog(
+                          context: context,
+                          title: ATStrings.WANT_2_CHANGE_FONE,
+                          content: '',
+                          yesString: ATStrings.CHANGE,
+                          noString: ATStrings.CANCEL
+                        );
+                        if(!(shouldChangeEmail ?? true)){return;}
+                      }
+                      if(context.mounted){
+                        final phoneResult = await context.pushNamed(
+                          ATRoutes.ADD_FONE_NO_SCREEN,
+                          extra: phone == null ? ATStrings.ADDING_PHONE : ATStrings.CHANGING_PHONE,
+                        ) as bool?;
+                        if(context.mounted && (phoneResult ?? false)){
+                          showAppNotification(
+                            context: context,
+                            icon: const Icon(Icons.check_circle),
+                            text: phone == null ? ATStrings.FONE_ADDED : ATStrings.FONE_CHANGED,
+                          );
+                        }
+                      }
+                    },
                   ),
+                  
                   RenderRowInfo(
                     title: ATStrings.COUNTRY,
                     value: country ?? 'Nigeria',

@@ -43,7 +43,7 @@ class AmptiveAuthScreen extends StatelessWidget {
 
                 AmptiveOutlinedButtonWidget(
                   buttonTitle: (userSignUp ? ATStrings.signUpWith : ATStrings.signInWith) + ATStrings.FONE_NO,
-                  onPressed: () => context.pushNamed(ATRoutes.addPhone)
+                  onPressed: () => context.pushNamed(ATRoutes.ADD_FONE_NO_SCREEN)
                 ),
 
                 Gap(20.h),

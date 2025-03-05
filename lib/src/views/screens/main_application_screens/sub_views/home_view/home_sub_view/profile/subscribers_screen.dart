@@ -41,7 +41,7 @@ class AmptiveProfileSubScribersScreen extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              AmptiveTextFormFieldWidget(
+              ATTextFormFieldWidget(
                 controller: TextEditingController(),
                 disableBlueBorder: true,
                 hintText: ATStrings.SEARCH_4_SUBSCRIBERS,

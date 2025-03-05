@@ -88,13 +88,13 @@ final GoRouter amptiveAppRouter = GoRouter(
         final params = state.extra as List<String>;
         final email = params.first;
         final title = params.last;
-        return ATOTPScreen(email: email, title: title);
+        return ATOTPScreen(emailOrPhone: email, title: title);
       }
     ),
     GoRoute(
-      name: ATRoutes.addPhone,
-      path: "/add-phone",
-      builder: (_, __) => const AddPhoneScreen(),
+      name: ATRoutes.ADD_FONE_NO_SCREEN,
+      path: ATRoutes.ADD_FONE_NO_SCREEN.addSlash,
+      builder: (_, state) => AddPhoneScreen(title: state.extra as String?),
     ),
     GoRoute(
         name: ATRoutes.addProfilePic,

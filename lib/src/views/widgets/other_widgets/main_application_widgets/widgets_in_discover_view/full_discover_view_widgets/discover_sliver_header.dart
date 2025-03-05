@@ -32,7 +32,7 @@ class AmptiveDiscoverSliverHeader extends SliverPersistentHeaderDelegate{
         child: Row(
           children: [
             Expanded(
-              child: AmptiveTextFormFieldWidget(
+              child: ATTextFormFieldWidget(
                 focusNode: focusNode,
                 controller: controller,
                 disableBlueBorder: true,

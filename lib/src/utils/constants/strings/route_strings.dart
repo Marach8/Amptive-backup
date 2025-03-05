@@ -15,7 +15,7 @@ class ATRoutes {
   static String OTP_SCREEN = "otp";
   static String addName = "name_auth";
   static String addUsername = "username_auth";
-  static String addPhone = "add_phone_auth";
+  static String ADD_FONE_NO_SCREEN = "add_phone_auth";
 
   //POST AUTHENTICATION
   static String addProfilePic = "add_profile_pic";

@@ -22,11 +22,11 @@ import '../../widgets/common_widgets/elevated_button_widget.dart';
 class ATOTPScreen extends StatefulWidget {
   const ATOTPScreen({
     super.key,
-    required this.email,
+    required this.emailOrPhone,
     required this.title
   });
 
-  final String email, title;
+  final String emailOrPhone, title;
 
   @override
   State<ATOTPScreen> createState() => _ATOTPScreenState();
@@ -99,7 +99,7 @@ class _ATOTPScreenState extends State<ATOTPScreen> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  '${ATStrings.ENTER_CODE} ${widget.email}',
+                  '${ATStrings.ENTER_CODE} ${widget.emailOrPhone}',
                   maxLines: 2,
                   style: Theme.of(context).textTheme.headlineMedium?.copyWith(
                     fontSize: AmptiveFontSizes.size17
@@ -132,7 +132,7 @@ class _ATOTPScreenState extends State<ATOTPScreen> {
                         text: TextSpan(
                           children: [
                             TextSpan(
-                              text: ATStrings.didNotGetCode,
+                              text: ATStrings.DID_NOT_GET_CODE,
                               style: Theme.of(context).textTheme.titleSmall
                             ),
                             TextSpan(
@@ -229,7 +229,7 @@ class _OTPTextFormField extends StatelessWidget {
           fontWeight: AmptiveFontWeights.w400,
         ),
           filled: true,
-          fillColor: ATColors.fillGreyColor.withOpacity(0.3),
+          fillColor: ATColors.hex9E9E9E.withOpacity(0.3),
           focusedBorder: OutlineInputBorder(
             borderSide: BorderSide(
               width: 2,

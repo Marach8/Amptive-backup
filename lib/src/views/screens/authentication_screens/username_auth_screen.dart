@@ -73,7 +73,7 @@ class _UserNameAuthScreenState extends State<UserNameAuthScreen> {
                       buildWhen: (p, current) {
                     return true;
                   }, builder: (_, state) {
-                    return AmptiveTextFormFieldWidget(
+                    return ATTextFormFieldWidget(
                       controller: usernameController,
                       onChanged: (val) {
                         context
@@ -133,7 +133,7 @@ class _UserNameAuthScreenState extends State<UserNameAuthScreen> {
                         hintText: ATStrings.username,
                         hintStyle: Theme.of(context).textTheme.labelMedium,
                         filled: true,
-                        fillColor: ATColors.fillGreyColor.withOpacity(0.3),
+                        fillColor: ATColors.hex9E9E9E.withOpacity(0.3),
                         focusedBorder: OutlineInputBorder(
                           borderSide: BorderSide(
                             width: 2.w,

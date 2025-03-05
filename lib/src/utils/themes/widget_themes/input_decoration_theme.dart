@@ -12,7 +12,7 @@ class AmptiveInputDecorationTheme{
     errorMaxLines: 1,
     //isDense: true,
     filled: true,
-    fillColor: ATColors.fillGreyColor.withOpacity(0.3),
+    fillColor: ATColors.hex9E9E9E.withOpacity(0.3),
     // prefixIconColor: AmptiveColors.deepOrange,
     // suffixIconColor: AmptiveColors.deepOrange,
     //labelStyle: const TextStyle().copyWith(fontSize: AmptiveFontSizes.size13),

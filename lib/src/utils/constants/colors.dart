@@ -29,7 +29,7 @@ class ATColors {
 
   static Color get strokeGreyColor => const Color(0xFF838383);
 
-  static Color get fillGreyColor => const Color(0xFF9E9E9E);
+  static Color get hex9E9E9E => const Color(0xFF9E9E9E);
 
   static Color get authHintColor => const Color(0xFFB6B6B6);
 

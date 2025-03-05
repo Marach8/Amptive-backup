@@ -62,7 +62,7 @@ class _PasswordAuthScreenState extends State<PasswordAuthScreen> {
                         // toggle password visibility
                         _passwordVisible = !_passwordVisible;
                       }
-                      return AmptiveTextFormFieldWidget(
+                      return ATTextFormFieldWidget(
                         controller: passwordController,
                         onChanged: (value) {
                           // trigger password changed event
@@ -80,7 +80,7 @@ class _PasswordAuthScreenState extends State<PasswordAuthScreen> {
                           hintStyle: Theme.of(context).textTheme.labelMedium,
                           filled: true,
                           fillColor:
-                              ATColors.fillGreyColor.withOpacity(0.3),
+                              ATColors.hex9E9E9E.withOpacity(0.3),
                           focusedBorder: buildOutlineInputBorder(),
                           border: OutlineInputBorder(
                             borderSide: BorderSide(
