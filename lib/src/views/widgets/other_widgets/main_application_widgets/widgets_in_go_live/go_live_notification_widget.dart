@@ -37,7 +37,7 @@ class AmptiveGoLiveNotificationsWidget extends StatelessWidget {
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          AmptiveCircularContainerWithPictureWidget(
+          ATRoundedImage(
             diameter: 30,
             imagePath: user.profilePicture ?? ''
           ),
@@ -55,8 +55,8 @@ class AmptiveGoLiveNotificationsWidget extends StatelessWidget {
           ),
           const Gap(10),
           AmptiveImageLoaderWidget(
-            imagePath: isTalking ? AmptiveImageStrings.MIC_ICON
-              : isGifting ? AmptiveImageStrings.MONEY_ICON : ''
+            imagePath: isTalking ? ATImgStrings.MIC_ICON
+              : isGifting ? ATImgStrings.MONEY_ICON : ''
           )
         ],
       ),
@@ -93,7 +93,7 @@ class AmptiveGoLivePinnedMsgNtfctnWidget extends StatelessWidget {
       radius: 10,
       child: Row(
         children: [
-          AmptiveCircularContainerWithPictureWidget(
+          ATRoundedImage(
             diameter: 30,
             imagePath: user.profilePicture ?? ''
           ),

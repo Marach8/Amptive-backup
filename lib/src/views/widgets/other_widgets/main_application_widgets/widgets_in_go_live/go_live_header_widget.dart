@@ -129,7 +129,7 @@ class AmptiveLiveViewHeaderWidget extends StatelessWidget {
                   color: ATColors.whiteColor.withOpacity(0.1),
                   child: Row(
                     children: [
-                      const AmptiveImageLoaderWidget(imagePath: AmptiveImageStrings.USER_ICON),
+                      const AmptiveImageLoaderWidget(imagePath: ATImgStrings.USER_ICON),
                       Text(
                         "144k",
                         style: Theme.of(context).textTheme.bodyMedium?.copyWith(

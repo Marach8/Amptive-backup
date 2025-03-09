@@ -42,7 +42,7 @@ class AmptiveDiscoverSliverHeader extends SliverPersistentHeaderDelegate{
                 contentPadding: const EdgeInsets.fromLTRB(16, 0, 16, 12),
                 hintText: ATStrings.SEARCH_FOR_EVENTS_ND_SHOWS,
                 prefixIcon: const AmptiveImageLoaderWidget(
-                  imagePath: AmptiveImageStrings.outlinedSearch,
+                  imagePath: ATImgStrings.outlinedSearch,
                 ),
                 suffixIcon: AmptiveRebuilderWidget(
                   notifier: notifier,

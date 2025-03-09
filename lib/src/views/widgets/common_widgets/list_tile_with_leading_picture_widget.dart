@@ -28,7 +28,7 @@ class AmptiveListTileWithLeadingPictureWidget extends StatelessWidget {
       padding: padding ?? const EdgeInsets.fromLTRB(0, 15, 0, 10),
       child: Row(
         children: [
-          AmptiveCircularContainerWithPictureWidget(
+          ATRoundedImage(
             imagePath: leadingImagePath,
             diameter: diameter ?? 40,
           ),

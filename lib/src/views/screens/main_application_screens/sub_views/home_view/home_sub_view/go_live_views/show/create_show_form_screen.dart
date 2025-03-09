@@ -62,7 +62,7 @@ class _CreateShowScreenState extends State<CreateShowScreen> {
     setShowTypeTitle();
     service.initFormControl();
     _defaultAssetImage =
-    const AssetImage(AmptiveImageStrings.createShowPlaceholderImage);
+    const AssetImage(ATImgStrings.createShowPlaceholderImage);
   }
 
   @override

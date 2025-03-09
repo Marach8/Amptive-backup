@@ -18,14 +18,14 @@ Future<void> selectDateModal(
   CreateShowService service = GetIt.I<CreateShowService>();
 
   AssetImage? defaultAssetImage =
-      const AssetImage(AmptiveImageStrings.createShowPlaceholderImage);
+      const AssetImage(ATImgStrings.createShowPlaceholderImage);
   var now = DateTime.now();
 
   DateTime selectedDateTime =
       service.isValidEventDateTime() ? service.eventDateTime! : now;
 
   return await showModalBottomSheet(
-      backgroundColor: ATColors.transparentColor,
+      backgroundColor: ATColors.trspntColor,
       constraints: BoxConstraints.expand(
           height: ATHelperFuncs.getScreenHeight(context)),
       context: context,
@@ -134,7 +134,7 @@ Future<void> selectDateModal(
                     Navigator.pop(context);
                   },
                   buttonTitle: ATStrings.REMOVE,
-                  bgColor: ATColors.transparentColor,
+                  bgColor: ATColors.trspntColor,
                   fgColor: ATColors.whiteColor,
                 ),
               ),

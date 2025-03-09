@@ -159,7 +159,7 @@ class _AddPictureWidgetState extends State<AddPictureWidget> {
                                 fit: BoxFit.contain,
                               )
                             : Image.asset(
-                                AmptiveImageStrings.noAvatarImage,
+                                ATImgStrings.noAvatarImage,
                                 height: 110.h,
                                 width: 84.w,
                                 fit: BoxFit.contain,

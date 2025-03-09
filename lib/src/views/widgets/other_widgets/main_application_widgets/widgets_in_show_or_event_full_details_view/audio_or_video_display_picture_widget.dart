@@ -5,8 +5,8 @@ import '../../../../../utils/constants/colors.dart';
 import '../../../../../utils/constants/strings/image_strings.dart';
 import '../../../common_widgets/custom_container_widget.dart';
 
-class AmptiveAudioOrVideoDisplayPictureWithMoreIconWidget extends StatelessWidget {
-  const AmptiveAudioOrVideoDisplayPictureWithMoreIconWidget({
+class ATEventOrShowCard extends StatelessWidget {
+  const ATEventOrShowCard({
     super.key,
   });
 
@@ -17,7 +17,7 @@ class AmptiveAudioOrVideoDisplayPictureWithMoreIconWidget extends StatelessWidge
       alignment: Alignment.topRight,
       height: 360.h,
       radius: 16,
-      decorationImagePath: AmptiveImageStrings.weCanDoHardThingsBgImage,
+      decorationImagePath: ATImgStrings.weCanDoHardThingsBgImage,
       child: GestureDetector(                      
         onTap: () => showAudioOrVideoFullDetailsOptions(context),
         child: ATContainer(

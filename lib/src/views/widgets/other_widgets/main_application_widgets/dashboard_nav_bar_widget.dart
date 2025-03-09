@@ -62,8 +62,8 @@ class AmptiveDashboardBottomNavBarWidget extends StatelessWidget {
 
 
 final listOfIcons = [
-  [AmptiveImageStrings.filledHome, AmptiveImageStrings.outlinedHome],
-  [AmptiveImageStrings.filledSearch, AmptiveImageStrings.outlinedSearch],
-  [AmptiveImageStrings.filledBroadCast, AmptiveImageStrings.outlinedBroadCast],
-  [AmptiveImageStrings.filledBell, AmptiveImageStrings.outlinedBell],
+  [ATImgStrings.filledHome, ATImgStrings.outlinedHome],
+  [ATImgStrings.filledSearch, ATImgStrings.outlinedSearch],
+  [ATImgStrings.filledBroadCast, ATImgStrings.outlinedBroadCast],
+  [ATImgStrings.filledBell, ATImgStrings.outlinedBell],
 ];

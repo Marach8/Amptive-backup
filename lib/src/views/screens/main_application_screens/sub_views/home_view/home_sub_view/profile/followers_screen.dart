@@ -48,7 +48,7 @@ class ATProfileFollowersScreen extends StatelessWidget {
                 hintText: ATStrings.SEARCH_4_FOLLOWERS,
                 fillColor: ATColors.whiteColor.withOpacity(0.1),
                 prefixIcon: const AmptiveImageLoaderWidget(
-                  imagePath: AmptiveImageStrings.filledSearch
+                  imagePath: ATImgStrings.filledSearch
                 ),
               ),
               const Gap(20),

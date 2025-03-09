@@ -20,7 +20,7 @@ class AmptiveRowOfTwoIconsAndTwoTextsWidget extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       children: [
         const AmptiveImageLoaderWidget(
-          imagePath: AmptiveImageStrings.spreadNetworkIcon,
+          imagePath: ATImgStrings.spreadNetworkIcon,
           height: 24, width: 24,
         ),
         const Gap(5),

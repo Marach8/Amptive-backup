@@ -24,7 +24,7 @@ class ATAccountScreen extends StatelessWidget {
                 children: [
                   AmptiveCircleAvatarWidget(
                     onTap: () => context.pop(),
-                    diameter: 30, color: ATColors.transparentColor,
+                    diameter: 30, color: ATColors.trspntColor,
                     child: const Icon(Icons.keyboard_arrow_left),
                   ),
                   const Spacer(),
@@ -33,7 +33,7 @@ class ATAccountScreen extends StatelessWidget {
                     style: Theme.of(context).textTheme.bodyMedium,
                   ),
                   const Spacer(),
-                  Icon(Icons.keyboard_arrow_left, color: ATColors.transparentColor),
+                  Icon(Icons.keyboard_arrow_left, color: ATColors.trspntColor),
                 ],
               ),
             ),
@@ -47,7 +47,7 @@ class ATAccountScreen extends StatelessWidget {
                   ATContainer(
                     onTap: () => context.pushNamed(
                       ATRoutes.ACCT_INFO_SCREEN,
-                      extra: <String?>['nnanna@gmail.com', '+2348022935013']
+                      extra: <String?>['nnanna@gmail.com', ]
                     ),
                     padding: const EdgeInsets.all(15),
                     color: ATColors.whiteColor.withValues(alpha: 0.1),

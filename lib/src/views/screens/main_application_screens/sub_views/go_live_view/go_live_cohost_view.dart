@@ -130,9 +130,9 @@ class _AmptiveGoLiveCohostViewState extends State<AmptiveGoLiveCohostView> {
                               return ListTile(
                                 horizontalTitleGap: 10,
                                 minTileHeight: 50,
-                                leading: AmptiveCircularContainerWithPictureWidget(
+                                leading: ATRoundedImage(
                                   diameter: 35.h,
-                                  imagePath: AmptiveImageStrings.CRIMINAL,
+                                  imagePath: ATImgStrings.CRIMINAL,
                                 ),
                                 title: Text(
                                   string.obj.name ?? '',

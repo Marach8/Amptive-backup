@@ -59,7 +59,7 @@ Future<void> showEventPaymentFeeDialog({
                 const Align(
                     alignment: Alignment.center,
                     child: AmptiveImageLoaderWidget(
-                        imagePath: AmptiveImageStrings.PADLOCK)),
+                        imagePath: ATImgStrings.PADLOCK)),
                 const Gap(10),
                 Align(
                   alignment: Alignment.center,

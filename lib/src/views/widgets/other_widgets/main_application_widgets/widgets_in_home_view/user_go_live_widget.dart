@@ -29,7 +29,7 @@ class AmptiveUserGoLiveWidget extends StatelessWidget {
               ClipRRect(
                 borderRadius: BorderRadius.circular(30),
                 child: const AmptiveImageLoaderWidget(
-                  imagePath: AmptiveImageStrings.jpeg1,
+                  imagePath: ATImgStrings.jpeg1,
                   boxFit: BoxFit.cover, height: 60, width: 60,
                 ),
               ),

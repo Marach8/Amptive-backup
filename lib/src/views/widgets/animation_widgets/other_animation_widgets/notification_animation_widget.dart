@@ -108,7 +108,7 @@ class _AmptiveNotificationAnimationWidgetState extends State<AmptiveNotification
                 decoration: index == 0 ? BoxDecoration(
                   boxShadow: [
                     BoxShadow(
-                      color: ATColors.transparentColor,
+                      color: ATColors.trspntColor,
                       spreadRadius: 10,
                       blurRadius: 7,
                       offset: const Offset(0, 3), // changes position of shadow
@@ -189,7 +189,7 @@ class CardWidget extends StatelessWidget {
                   borderRadius: BorderRadius.circular(7.r)),
             ),
             child: SvgPicture.asset(
-              AmptiveImageStrings.logo2,
+              ATImgStrings.logo2,
             ),
           ),
           Expanded(
@@ -250,7 +250,7 @@ class CardWidget extends StatelessWidget {
                         height: 21.w,
                         decoration: ShapeDecoration(
                           image: const DecorationImage(
-                            image: AssetImage(AmptiveImageStrings.noAvatarImage),
+                            image: AssetImage(ATImgStrings.noAvatarImage),
                             fit: BoxFit.fill,
                           ),
                           shape: RoundedRectangleBorder(

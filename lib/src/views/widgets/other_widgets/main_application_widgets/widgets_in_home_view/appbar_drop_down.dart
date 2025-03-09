@@ -45,7 +45,7 @@ class AmptiveAppBarDropDownWidget extends StatelessWidget {
                   fontSize: AmptiveFontSizes.size15
                 ),
               ),
-              const AmptiveImageLoaderWidget(imagePath: AmptiveImageStrings.CALEND_ICON)
+              const AmptiveImageLoaderWidget(imagePath: ATImgStrings.CALEND_ICON)
             ],
           )
         ),
@@ -81,7 +81,7 @@ class AmptiveAppBarDropDownWidget extends StatelessWidget {
                   fontSize: AmptiveFontSizes.size15
                 ),
               ),
-              const AmptiveImageLoaderWidget(imagePath: AmptiveImageStrings.PERSON_CHECKED)
+              const AmptiveImageLoaderWidget(imagePath: ATImgStrings.PERSON_CHECKED)
             ],
           )
         )

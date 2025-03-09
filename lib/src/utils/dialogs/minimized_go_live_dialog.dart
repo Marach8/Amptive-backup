@@ -28,7 +28,7 @@ Future<void> showMinimizedGoLiveState() async {
         mainAxisSize: MainAxisSize.min,
         children: [
           const AmptivePictureWidget(
-            imagePath: AmptiveImageStrings.weCanDoHardThingsBgImage,
+            imagePath: ATImgStrings.weCanDoHardThingsBgImage,
             diameter: 40, radius: 2,            
           ),
           const Gap(5),
@@ -47,7 +47,7 @@ Future<void> showMinimizedGoLiveState() async {
                 Row(
                   children: [
                     const AmptiveImageLoaderWidget(
-                      imagePath: AmptiveImageStrings.filledBroadCast,
+                      imagePath: ATImgStrings.filledBroadCast,
                       height: 15, width: 15,
                     ),
 

@@ -402,7 +402,7 @@ class AmptiveCoHostWidget extends StatelessWidget {
               builder: (_, value, __) {
                 return ATContainer(
                   duration: 200,
-                  color: value ? ATColors.whiteColor : ATColors.transparentColor,
+                  color: value ? ATColors.whiteColor : ATColors.trspntColor,
                   border: Border.all(color: ATColors.whiteColor),
                   boxShape: BoxShape.circle,
                   height: 24, width: 24,

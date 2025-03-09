@@ -129,7 +129,7 @@ Future<void> showEventCapacitySelectionDialog({
                     context.pop();
                   },
                   buttonTitle: ATStrings.REMOVE,
-                  bgColor: ATColors.transparentColor,
+                  bgColor: ATColors.trspntColor,
                   fgColor: ATColors.whiteColor,
                 ),
                 const Gap(10),

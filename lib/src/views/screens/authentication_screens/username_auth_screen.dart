@@ -146,7 +146,7 @@ class _UserNameAuthScreenState extends State<UserNameAuthScreen> {
                         border: OutlineInputBorder(
                           borderSide: BorderSide(
                             width: 2.w,
-                            color: ATColors.transparentColor,
+                            color: ATColors.trspntColor,
                           ),
                           borderRadius: BorderRadius.circular(14.r),
                         ),

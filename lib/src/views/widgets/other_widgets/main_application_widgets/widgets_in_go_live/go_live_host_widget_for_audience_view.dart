@@ -58,7 +58,7 @@ class AmptiveLiveHostAndCoHostWidgetForAudienceView extends StatelessWidget {
                       clipBehavior: Clip.none,
                       alignment: Alignment.center,
                       children: [
-                        AmptiveCircularContainerWithPictureWidget(
+                        ATRoundedImage(
                             diameter: isHost ? 94.h : 64.h,
                             addBorder: true,
                             borderColor: ATColors.whiteColor,

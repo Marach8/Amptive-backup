@@ -36,7 +36,7 @@ class AmptiveDiscoverSocietyAllTabViewWidget extends StatelessWidget {
             children: List.generate(
               5,
               (_) => const AmptiveTrendingHashtagModel(
-                trendingPicture: AmptiveImageStrings.weCanDoHardThingsBgImage,
+                trendingPicture: ATImgStrings.weCanDoHardThingsBgImage,
               )
             ),
           ),
@@ -56,7 +56,7 @@ class AmptiveDiscoverSocietyAllTabViewWidget extends StatelessWidget {
             children: List.generate(
               5,
               (_) => const AmptivePaidShowModel(
-                trendingPicture: AmptiveImageStrings.OFFICE_LADIES,
+                trendingPicture: ATImgStrings.OFFICE_LADIES,
               )
             ),
           ),
@@ -76,7 +76,7 @@ class AmptiveDiscoverSocietyAllTabViewWidget extends StatelessWidget {
             children: List.generate(
               5,
               (_) => const AmptiveFreeShowModel(
-                trendingPicture: AmptiveImageStrings.JOE_POMP_SHOW
+                trendingPicture: ATImgStrings.JOE_POMP_SHOW
               )
             ),
           ),
@@ -100,7 +100,7 @@ class AmptiveDiscoverSocietyAllTabViewWidget extends StatelessWidget {
             children: List.generate(
               5,
               (_) => const AmptiveTopCreatorsModel(
-                picture: AmptiveImageStrings.MAN_PHOTO
+                picture: ATImgStrings.MAN_PHOTO
               )
             ),
           ),
@@ -120,7 +120,7 @@ class AmptiveDiscoverSocietyAllTabViewWidget extends StatelessWidget {
             children: List.generate(
               5,
               (_) => const AmptivePaidEventModel(
-                trendingPicture: AmptiveImageStrings.CRIMINAL
+                trendingPicture: ATImgStrings.CRIMINAL
               )
             ),
           ),
@@ -140,7 +140,7 @@ class AmptiveDiscoverSocietyAllTabViewWidget extends StatelessWidget {
             children: List.generate(
               5,
               (_) => const AmptiveFreeEventModel(
-                trendingPicture: AmptiveImageStrings.weCanDoHardThingsBgImage
+                trendingPicture: ATImgStrings.weCanDoHardThingsBgImage
               )
             ),
           ),

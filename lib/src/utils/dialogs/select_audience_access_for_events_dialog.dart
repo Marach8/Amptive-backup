@@ -88,11 +88,11 @@ Future<void> showSelectAudienceAccessForEventsDialog(
                         width: 2,
                         color: value
                             ? ATColors.hex307FE2
-                            : ATColors.transparentColor),
+                            : ATColors.trspntColor),
                     child: Row(
                       children: [
                         const AmptiveImageLoaderWidget(
-                            imagePath: AmptiveImageStrings.PEOPLE),
+                            imagePath: ATImgStrings.PEOPLE),
                         const Gap(10),
                         Expanded(
                           child: Column(
@@ -122,7 +122,7 @@ Future<void> showSelectAudienceAccessForEventsDialog(
                             padding: const EdgeInsets.all(3),
                             color: value
                                 ? ATColors.hex307FE2
-                                : ATColors.transparentColor,
+                                : ATColors.trspntColor,
                             border: Border.all(
                                 color: value
                                     ? ATColors.hex307FE2
@@ -152,7 +152,7 @@ Future<void> showSelectAudienceAccessForEventsDialog(
                         width: 2,
                         color: value
                             ? ATColors.hex307FE2
-                            : ATColors.transparentColor),
+                            : ATColors.trspntColor),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisSize: MainAxisSize.min,
@@ -160,7 +160,7 @@ Future<void> showSelectAudienceAccessForEventsDialog(
                         Row(
                           children: [
                             const AmptiveImageLoaderWidget(
-                                imagePath: AmptiveImageStrings.PADLOCK),
+                                imagePath: ATImgStrings.PADLOCK),
                             const Gap(10),
                             Expanded(
                               child: Column(
@@ -191,7 +191,7 @@ Future<void> showSelectAudienceAccessForEventsDialog(
                                 padding: const EdgeInsets.all(3),
                                 color: value
                                     ? ATColors.hex307FE2
-                                    : ATColors.transparentColor,
+                                    : ATColors.trspntColor,
                                 border: Border.all(
                                     color: value
                                         ? ATColors.hex307FE2

@@ -68,7 +68,7 @@ Future<void> showFollowHostOrCohostDialog({
                   const Gap(10),
                   Row(
                     children: [
-                      AmptiveCircularContainerWithPictureWidget(
+                      ATRoundedImage(
                         imagePath: host.obj.profilePicture ?? '',
                         diameter: 70,
                       ),
@@ -211,7 +211,7 @@ Future<void> showFollowHostOrCohostDialog({
                               fgColor: ATColors.brandBlack,
                               buttonTitle:notFollowing ? ATStrings.FOLLOW : '',
                               child: isFollowing ? const AmptiveImageLoaderWidget(
-                                imagePath: AmptiveImageStrings.USER_FOLLOW
+                                imagePath: ATImgStrings.USER_FOLLOW
                               ): isLoading ? const AmptiveLoadingIndicatorWidget(size: 20,) : null
                             ),
                           );

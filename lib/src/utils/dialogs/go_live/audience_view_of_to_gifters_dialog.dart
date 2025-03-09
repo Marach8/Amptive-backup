@@ -130,7 +130,7 @@ Future<void> showAudienceViewOfTopGiftersDialog(BuildContext context) async {
                     width: ATHelperFuncs.getScreenWidth(context),
                     child: Row(
                       children: [
-                        AmptiveCircularContainerWithPictureWidget(
+                        ATRoundedImage(
                           imagePath: randomUser.obj.profilePicture ?? '',
                           diameter:50,
                         ),

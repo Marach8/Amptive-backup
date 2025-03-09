@@ -32,7 +32,7 @@ class AmptiveTrendingSocietyScreen extends StatelessWidget {
                 delegate: SliverChildListDelegate.fixed(
                   List.generate(
                     28,
-                    (_) => const AmptiveTrendingSocietyModel(trendingPicture: AmptiveImageStrings.jpeg2)
+                    (_) => const AmptiveTrendingSocietyModel(trendingPicture: ATImgStrings.jpeg2)
                   ).toList()
                 ),
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(

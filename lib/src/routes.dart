@@ -155,7 +155,7 @@ final GoRouter amptiveAppRouter = GoRouter(
               name: ATRoutes.showDetailedScreen,
               path: ATRoutes.showDetailedScreen,
               pageBuilder: (context, state) => CustomTransitionPage(
-                    child: const AmptiveShowDetailedScreen(),
+                    child: const ATShowDetailedScreen(),
                     transitionsBuilder:
                         (context, animation, secondaryAnimation, child) {
                       var tween =
@@ -344,7 +344,7 @@ final GoRouter amptiveAppRouter = GoRouter(
           GoRoute(
             name: ATRoutes.USER_PROFILE_SCREEN,
             path: ATRoutes.USER_PROFILE_SCREEN,
-            builder: (_, __) => const AmptiveOrdinaryUserProfileScreen(),
+            builder: (_, __) => const ATUserProfileScreen(),
           ),
 
           GoRoute(

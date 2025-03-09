@@ -57,7 +57,7 @@ class AmptiveFullDiscoverPageView extends StatelessWidget {
             children: List.generate(
               5,
               (_) => const AmptiveTrendingHashtagModel(
-                trendingPicture: AmptiveImageStrings.weCanDoHardThingsBgImage,
+                trendingPicture: ATImgStrings.weCanDoHardThingsBgImage,
               )
             ),
           ),
@@ -85,7 +85,7 @@ class AmptiveFullDiscoverPageView extends StatelessWidget {
             children: List.generate(
               5,
               (_) => const AmptiveTrendingHashtagModel(
-                trendingPicture: AmptiveImageStrings.OFFICE_LADIES
+                trendingPicture: ATImgStrings.OFFICE_LADIES
               )
             ),
           ),
@@ -105,7 +105,7 @@ class AmptiveFullDiscoverPageView extends StatelessWidget {
             children: List.generate(
               5,
               (_) => const AmptiveTechnologyModel(
-                trendingPicture: AmptiveImageStrings.endlessThread
+                trendingPicture: ATImgStrings.endlessThread
               )
             ),
           ),
@@ -125,7 +125,7 @@ class AmptiveFullDiscoverPageView extends StatelessWidget {
             children: List.generate(
               5,
               (_) => const AmptiveTechnologyModel(
-                trendingPicture: AmptiveImageStrings.JOE_POMP_SHOW
+                trendingPicture: ATImgStrings.JOE_POMP_SHOW
               )
             ),
           ),
@@ -145,7 +145,7 @@ class AmptiveFullDiscoverPageView extends StatelessWidget {
             children: List.generate(
               5,
               (_) => const AmptiveTechnologyModel(
-                trendingPicture: AmptiveImageStrings.CRIMINAL
+                trendingPicture: ATImgStrings.CRIMINAL
               )
             ),
           ),
@@ -166,7 +166,7 @@ class AmptiveFullDiscoverPageView extends StatelessWidget {
             children: List.generate(
               5,
               (_) => const AmptiveMore2DiscoverModel(
-                picture: AmptiveImageStrings.COMMUNITY_CARD
+                picture: ATImgStrings.COMMUNITY_CARD
               )
             ),
           ),
@@ -191,7 +191,7 @@ class AmptiveFullDiscoverPageView extends StatelessWidget {
             children: List.generate(
               5,
               (_) => const AmptiveTopCreatorsModel(
-                picture: AmptiveImageStrings.MAN_PHOTO
+                picture: ATImgStrings.MAN_PHOTO
               )
             ),
           ),
@@ -216,7 +216,7 @@ class AmptiveFullDiscoverPageView extends StatelessWidget {
             children: List.generate(
               5,
               (_) => const AmptiveTrendingHashtagModel(
-                trendingPicture: AmptiveImageStrings.OFFICE_LADIES
+                trendingPicture: ATImgStrings.OFFICE_LADIES
               )
             ),
           ),
@@ -241,9 +241,9 @@ class _HorizontalScrollCards extends StatefulWidget {
 class _HorizontalScrollCardsState extends State<_HorizontalScrollCards> {
   final ValueNotifier<int> _indexNotifier = ValueNotifier(0);
   final _adverts = [
-    AmptiveImageStrings.discoverPic1,
-    AmptiveImageStrings.discoverPic1,
-    AmptiveImageStrings.discoverPic1
+    ATImgStrings.discoverPic1,
+    ATImgStrings.discoverPic1,
+    ATImgStrings.discoverPic1
   ];
 
 

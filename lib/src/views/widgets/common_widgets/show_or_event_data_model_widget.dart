@@ -15,8 +15,8 @@ import 'package:gap/gap.dart';
 import '../../../utils/constants/colors.dart';
 import '../../../utils/dialogs/options_dialog.dart';
 
-class AmptiveShowOrEventDataModelWidget extends StatelessWidget {
-  const AmptiveShowOrEventDataModelWidget({
+class ATShowOrEventInfo extends StatelessWidget {
+  const ATShowOrEventInfo({
     super.key,
   });
 
@@ -25,7 +25,7 @@ class AmptiveShowOrEventDataModelWidget extends StatelessWidget {
     return Column(
       children: [
         AmptiveListTileWithLeadingPictureWidget(
-          leadingImagePath: AmptiveImageStrings.jpeg3,
+          leadingImagePath: ATImgStrings.jpeg3,
           trailingOnPressed: () => showAudioOrVideoFullDetailsOptions(context),
           title: 'glennodoyle',
           subtitle: 'started a live show',
@@ -37,7 +37,7 @@ class AmptiveShowOrEventDataModelWidget extends StatelessWidget {
           radius: 15.r,
           child: Stack(
             children: [
-              const AmptiveImageLoaderWidget(imagePath: AmptiveImageStrings.weCanDoHardThingsBgImage),
+              const AmptiveImageLoaderWidget(imagePath: ATImgStrings.weCanDoHardThingsBgImage),
               ATContainer(
                 width: ATHelperFuncs.getScreenWidth(context),
                 padding: const EdgeInsets.fromLTRB(15, 10, 15, 10),
@@ -46,10 +46,10 @@ class AmptiveShowOrEventDataModelWidget extends StatelessWidget {
                   begin: Alignment.topCenter,
                   end: Alignment.bottomCenter,
                   colors: [
-                    ATColors.transparentColor,
-                    ATColors.transparentColor,
-                    ATColors.transparentColor,
-                    ATColors.transparentColor,
+                    ATColors.trspntColor,
+                    ATColors.trspntColor,
+                    ATColors.trspntColor,
+                    ATColors.trspntColor,
                     ATColors.containerGradientColorB.withOpacity(0.5),
                     ATColors.containerGradientColorB,
                     ATColors.containerGradientColorB,

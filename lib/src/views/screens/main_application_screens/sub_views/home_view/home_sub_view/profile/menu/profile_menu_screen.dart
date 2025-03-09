@@ -45,7 +45,7 @@ class AmptiveProfileMenuScreen extends StatelessWidget {
             children: [
               const MenuHeading(text: ATStrings.CALENDER),
               MenuItem(
-                firstIcon: const AmptiveImageLoaderWidget(imagePath: AmptiveImageStrings.CALEND_ICON),
+                firstIcon: const AmptiveImageLoaderWidget(imagePath: ATImgStrings.CALEND_ICON),
                 middleText: ATStrings.VIEW_CALENDER,
                 margin: const EdgeInsets.fromLTRB(15, 0, 15, 5),
                 onTap: (){}
@@ -104,7 +104,7 @@ class AmptiveProfileMenuScreen extends StatelessWidget {
               ),
               MenuItem(
                 firstIcon: const AmptiveImageLoaderWidget(
-                  imagePath: AmptiveImageStrings.SUBSCRIBER_BADGE,
+                  imagePath: ATImgStrings.SUBSCRIBER_BADGE,
                 ),
                 middleText: ATStrings.SUBSCRIPTION,
                 onTap: (){}

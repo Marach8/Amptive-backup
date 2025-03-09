@@ -13,6 +13,7 @@ import 'package:amptive/src/views/widgets/common_widgets/circular_container_with
 import 'package:amptive/src/views/widgets/common_widgets/custom_container_widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/custom_rebuilder_widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/image_loader_widget.dart';
+import 'package:amptive/src/views/widgets/common_widgets/sliver_header_delegate.dart';
 import 'package:amptive/src/views/widgets/common_widgets/two_texts_rich_text_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -29,7 +30,7 @@ class AmptiveCreatorProfileScreen extends StatelessWidget {
     final tabIndex = ValueNotifier<int>(0);
     
     return ATAnnotatedRegionWidget(
-      statusBarColor: ATColors.transparentColor,
+      statusBarColor: ATColors.trspntColor,
       child: Scaffold(
         body: NestedScrollView(
           headerSliverBuilder: (_, __) => [
@@ -72,7 +73,7 @@ class AmptiveCreatorProfileScreen extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     ATContainer(
-                      decorationImagePath: AmptiveImageStrings.weCanDoHardThingsBgImage,
+                      decorationImagePath: ATImgStrings.weCanDoHardThingsBgImage,
                       height: 150,                
                       width: ATHelperFuncs.getScreenWidth(context),
                       child: GestureDetector(
@@ -87,8 +88,8 @@ class AmptiveCreatorProfileScreen extends StatelessWidget {
                                 end: Alignment.bottomCenter,
                                 colors: [
                                   ATColors.black,
-                                  ATColors.transparentColor,
-                                  ATColors.transparentColor
+                                  ATColors.trspntColor,
+                                  ATColors.trspntColor
                                 ]
                               ),
                               width: ATHelperFuncs.getScreenWidth(context),
@@ -97,16 +98,16 @@ class AmptiveCreatorProfileScreen extends StatelessWidget {
                             Positioned(
                               bottom: -35,
                               child: Hero(
-                                tag: AmptiveImageStrings.jpeg1,
-                                child: AmptiveCircularContainerWithPictureWidget(
+                                tag: ATImgStrings.jpeg1,
+                                child: ATRoundedImage(
                                   onTap: () => context.pushNamed(
                                     ATRoutes.PROFILE_PIC_SCREEN,
-                                    extra: AmptiveImageStrings.jpeg1
+                                    extra: ATImgStrings.jpeg1
                                   ),
                                   diameter: 70, addBorder: true,
                                   borderColor: ATColors.black,
                                   borderWidth: 3,
-                                  imagePath: AmptiveImageStrings.jpeg1
+                                  imagePath: ATImgStrings.jpeg1
                                 ),
                               )
                             ),
@@ -165,7 +166,7 @@ class AmptiveCreatorProfileScreen extends StatelessWidget {
                       child: Row(
                         mainAxisSize: MainAxisSize.min,
                         children: [
-                          const AmptiveImageLoaderWidget(imagePath: AmptiveImageStrings.TOP_CREATOR_BADGE),
+                          const AmptiveImageLoaderWidget(imagePath: ATImgStrings.TOP_CREATOR_BADGE),
                           const Gap(5),
                           Text(
                             ATStrings.TOP_CREATORS_IN_SOCIETY,
@@ -290,7 +291,7 @@ class AmptiveCreatorProfileScreen extends StatelessWidget {
                           ),
                         ),
                         const Gap(15),
-                        const AmptiveImageLoaderWidget(imagePath: AmptiveImageStrings.X_LOGO),
+                        const AmptiveImageLoaderWidget(imagePath: ATImgStrings.X_LOGO),
                         const Gap(3),
                         Text(
                           'x',
@@ -366,7 +367,7 @@ class AmptiveCreatorProfileScreen extends StatelessWidget {
 
             SliverPersistentHeader(
               pinned: true,
-              delegate: AmptiveTabBarDelegate(
+              delegate: ATSliverHDelegate(
                 maxExt: 65, minExt: 65, rebuild: false,              
                 child: ATContainer(
                   color: ATColors.black,             
@@ -458,7 +459,7 @@ class ProfileEventOrShowDisplay extends StatelessWidget {
           ClipRRect(
             borderRadius: BorderRadius.circular(5),
             child: const AmptiveImageLoaderWidget(
-              imagePath: AmptiveImageStrings.weCanDoHardThingsBgImage,
+              imagePath: ATImgStrings.weCanDoHardThingsBgImage,
               height: 77, width: 77,
             ),
           ),

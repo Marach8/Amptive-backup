@@ -30,14 +30,14 @@ class _AmptiveChooseOrCreateShowScreenState extends State<AmptiveChooseOrCreateS
 
   late List<ValueNotifier<bool>> listOfValueNotifiers;
   final listOfImageStrings = [
-    AmptiveImageStrings.CRIMINAL,
-    AmptiveImageStrings.weCanDoHardThingsBgImage,
-    AmptiveImageStrings.CRIMINAL,
-    AmptiveImageStrings.weCanDoHardThingsBgImage,
-    AmptiveImageStrings.CRIMINAL,
-    AmptiveImageStrings.weCanDoHardThingsBgImage,
-    AmptiveImageStrings.OFFICE_LADIES,
-    AmptiveImageStrings.JOE_POMP_SHOW,
+    ATImgStrings.CRIMINAL,
+    ATImgStrings.weCanDoHardThingsBgImage,
+    ATImgStrings.CRIMINAL,
+    ATImgStrings.weCanDoHardThingsBgImage,
+    ATImgStrings.CRIMINAL,
+    ATImgStrings.weCanDoHardThingsBgImage,
+    ATImgStrings.OFFICE_LADIES,
+    ATImgStrings.JOE_POMP_SHOW,
     ''
   ];
 

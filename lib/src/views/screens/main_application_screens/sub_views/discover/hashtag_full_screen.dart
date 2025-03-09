@@ -75,7 +75,7 @@ class AmptiveTrendingHashTagFullScreen extends StatelessWidget {
                 delegate: SliverChildListDelegate.fixed(
                   List.generate(
                     28,
-                    (_) => const AmptiveTrendingSocietyModel(trendingPicture: AmptiveImageStrings.weCanDoHardThingsBgImage)
+                    (_) => const AmptiveTrendingSocietyModel(trendingPicture: ATImgStrings.weCanDoHardThingsBgImage)
                   ).toList()
                 ),
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(

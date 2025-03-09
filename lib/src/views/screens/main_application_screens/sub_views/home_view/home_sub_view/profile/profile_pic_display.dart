@@ -37,7 +37,7 @@ class AmptiveViewProfilePicScreen extends StatelessWidget {
         body: Center(
           child: Hero(
             tag: imgPath,
-            child: AmptiveCircularContainerWithPictureWidget(
+            child: ATRoundedImage(
               imagePath: imgPath,
               diameter: 250,
             ),

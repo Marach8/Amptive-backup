@@ -25,7 +25,7 @@ class AmptiveWelcomeScreen extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              const AmptiveImageLoaderWidget(imagePath: AmptiveImageStrings.amptiveLogo),
+              const AmptiveImageLoaderWidget(imagePath: ATImgStrings.amptiveLogo),
               Gap(80.h),
 
               const Padding(
@@ -34,15 +34,15 @@ class AmptiveWelcomeScreen extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     AmptiveAudioCreatorWidget(
-                      assetName: AmptiveImageStrings.jpeg2,
+                      assetName: ATImgStrings.jpeg2,
                       delay: 3,
                     ),                    
                     AmptiveAudioCreatorWidget(
-                      assetName: AmptiveImageStrings.jpeg1,
+                      assetName: ATImgStrings.jpeg1,
                       delay: 6,
                     ),                    
                     AmptiveAudioCreatorWidget(
-                      assetName: AmptiveImageStrings.jpeg3,
+                      assetName: ATImgStrings.jpeg3,
                       delay: 9,
                     ),
                   ],

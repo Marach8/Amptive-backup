@@ -3,14 +3,14 @@ import 'package:amptive/src/views/widgets/common_widgets/custom_container_widget
 import 'package:amptive/src/views/widgets/common_widgets/image_loader_widget.dart';
 import 'package:flutter/material.dart';
 
-class AmptiveCircularContainerWithPictureWidget extends StatelessWidget {
+class ATRoundedImage extends StatelessWidget {
   final String imagePath;
   final double? diameter, picturePadding, borderWidth;
   final Color? borderColor;
   final bool? addBorder;
   final VoidCallback? onTap;
 
-  const AmptiveCircularContainerWithPictureWidget({
+  const ATRoundedImage({
     super.key,
     required this.imagePath,
     this.diameter,

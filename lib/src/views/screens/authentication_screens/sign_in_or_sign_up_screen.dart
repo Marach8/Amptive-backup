@@ -26,7 +26,7 @@ class AmptiveAuthScreen extends StatelessWidget {
     return ATAnnotatedRegionWidget(
       child: Scaffold(
         appBar: const AmptiveAppBar(
-          title: AmptiveImageLoaderWidget(imagePath: AmptiveImageStrings.logo2),
+          title: AmptiveImageLoaderWidget(imagePath: ATImgStrings.logo2),
         ),
 
         body: Center(
@@ -57,7 +57,7 @@ class AmptiveAuthScreen extends StatelessWidget {
                   buttonTitle: (userSignUp ? ATStrings.signUpWith : ATStrings.signInWith) + ATStrings.facebook,
                   onPressed: (){},
                   leadingIcon: const AmptiveImageLoaderWidget(
-                    imagePath: AmptiveImageStrings.facebookIcon,
+                    imagePath: ATImgStrings.facebookIcon,
                   )
                 ),
                 Gap(15.h),
@@ -74,7 +74,7 @@ class AmptiveAuthScreen extends StatelessWidget {
                   buttonTitle: (userSignUp ? ATStrings.signUpWith : ATStrings.signInWith) + ATStrings.google,
                   onPressed: (){},
                   leadingIcon: const AmptiveImageLoaderWidget(
-                    imagePath: AmptiveImageStrings.googleIcon,
+                    imagePath: ATImgStrings.googleIcon,
                   )
                 )
               ],

@@ -47,7 +47,7 @@ class AmptiveInputDecorationTheme{
 
     disabledBorder: const OutlineInputBorder().copyWith(
       borderRadius: BorderRadius.circular(14).r,
-      borderSide: BorderSide(color: ATColors.transparentColor),
+      borderSide: BorderSide(color: ATColors.trspntColor),
     ),
   );
 }

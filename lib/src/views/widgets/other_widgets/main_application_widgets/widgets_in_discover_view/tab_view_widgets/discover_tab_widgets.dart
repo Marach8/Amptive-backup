@@ -45,7 +45,7 @@ with SingleTickerProviderStateMixin{
           splashFactory: NoSplash.splashFactory,
           tabAlignment: TabAlignment.start,
           labelPadding: EdgeInsets.zero,
-          indicatorColor: ATColors.transparentColor,
+          indicatorColor: ATColors.trspntColor,
           padding: const EdgeInsets.only(left: 15),
           isScrollable: true,
           dividerColor: ATColors.brandBlack,
@@ -87,7 +87,7 @@ with SingleTickerProviderStateMixin{
                 children: List.generate(
                   10,
                   (_) => const AmptiveTabViewListTileWidget(
-                    leadingImagePath: AmptiveImageStrings.weCanDoHardThingsBgImage,
+                    leadingImagePath: ATImgStrings.weCanDoHardThingsBgImage,
                     addPlayButton: true,
                     title: 'We Can Do Hard Things',
                   ),
@@ -97,7 +97,7 @@ with SingleTickerProviderStateMixin{
                 children: List.generate(
                   10,
                   (_) => const AmptiveTabViewListTileWidget(
-                    leadingImagePath: AmptiveImageStrings.OFFICE_LADIES,
+                    leadingImagePath: ATImgStrings.OFFICE_LADIES,
                     isCircular: true,
                     addPlayButton: true,
                     title: 'We Can Do Hard Things',
@@ -108,7 +108,7 @@ with SingleTickerProviderStateMixin{
                 children: List.generate(
                   10,
                   (_) => const AmptiveTabViewListTileWidget(
-                    leadingImagePath: AmptiveImageStrings.weCanDoHardThingsBgImage,
+                    leadingImagePath: ATImgStrings.weCanDoHardThingsBgImage,
                     addPlayButton: true,
                     title: 'We Can Do Hard Things',
                   ),
@@ -118,7 +118,7 @@ with SingleTickerProviderStateMixin{
                 children: List.generate(
                   10,
                   (_) => const AmptiveTabViewListTileWidget(
-                    leadingImagePath: AmptiveImageStrings.MAN_PHOTO,
+                    leadingImagePath: ATImgStrings.MAN_PHOTO,
                     title: 'We Can Do Hard Things',
                   ),
                 )
@@ -127,7 +127,7 @@ with SingleTickerProviderStateMixin{
                 children: List.generate(
                   10,
                   (_) => const AmptiveTabViewListTileWidget(
-                    leadingImagePath: AmptiveImageStrings.CRIMINAL,
+                    leadingImagePath: ATImgStrings.CRIMINAL,
                     addPlayButton: true,
                     title: 'We Can Do Hard Things',
                   ),

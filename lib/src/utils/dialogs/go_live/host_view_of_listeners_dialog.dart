@@ -81,7 +81,7 @@ Future<void> showListenersDialog({
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         const AmptiveImageLoaderWidget(
-                          imagePath: AmptiveImageStrings.USER_ICON
+                          imagePath: ATImgStrings.USER_ICON
                         ),
                         const Gap(5),
                         Text(
@@ -226,7 +226,7 @@ class AmptiveListenerWidget extends StatelessWidget {
                 if((shouldKickOut ?? false) && context.mounted){
                   showAppNotification(
                     context: context,
-                    icon: const AmptiveImageLoaderWidget(imagePath: AmptiveImageStrings.KICK_USER_OUT),
+                    icon: const AmptiveImageLoaderWidget(imagePath: ATImgStrings.KICK_USER_OUT),
                     text: '${listener.obj.name} has been kicked out!',
                     bgColor: ATColors.hexECO404,
                   );
@@ -236,7 +236,7 @@ class AmptiveListenerWidget extends StatelessWidget {
               color: ATColors.whiteColor.withOpacity(0.1),
               child: const AmptiveImageLoaderWidget(
                 boxFit: BoxFit.scaleDown,
-                imagePath: AmptiveImageStrings.KICK_USER_OUT
+                imagePath: ATImgStrings.KICK_USER_OUT
               ),
             )
           ],

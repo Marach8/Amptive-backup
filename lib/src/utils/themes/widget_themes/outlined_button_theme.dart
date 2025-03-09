@@ -13,9 +13,9 @@ class AmptiveOutlinedButtonTheme{
     style: OutlinedButton.styleFrom(
       elevation: 0,
       foregroundColor: ATColors.whiteColor,
-      backgroundColor: ATColors.transparentColor,
+      backgroundColor: ATColors.trspntColor,
       disabledForegroundColor: ATColors.inactiveDotColor,
-      disabledBackgroundColor: ATColors.transparentColor,
+      disabledBackgroundColor: ATColors.trspntColor,
       side: BorderSide(color: ATColors.whiteColor, width: 0.5),
       textStyle: TextStyle(
         fontFamily: ATStrings.inter,

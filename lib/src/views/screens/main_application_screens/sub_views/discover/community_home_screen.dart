@@ -43,7 +43,7 @@ class AmptiveCommunityScreen extends StatelessWidget {
                   List.generate(
                     28,
                     (_) => const AmptiveMore2DiscoverModel(
-                      picture: AmptiveImageStrings.COMMUNITY_CARD,
+                      picture: ATImgStrings.COMMUNITY_CARD,
                       padding: EdgeInsets.zero,
                     )
                   ).toList()

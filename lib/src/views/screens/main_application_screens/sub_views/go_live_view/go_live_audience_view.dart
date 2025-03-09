@@ -116,7 +116,7 @@ class _AmptiveGoLiveAudienceViewState extends State<AmptiveGoLiveAudienceView> {
                   child: Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      const AmptiveImageLoaderWidget(imagePath: AmptiveImageStrings.GROUP_ICON),
+                      const AmptiveImageLoaderWidget(imagePath: ATImgStrings.GROUP_ICON),
                       const Gap(5),
                       Text(
                         ATStrings.SOCIETY,
@@ -152,9 +152,9 @@ class _AmptiveGoLiveAudienceViewState extends State<AmptiveGoLiveAudienceView> {
                                 return ListTile(
                                   horizontalTitleGap: 10,
                                   minTileHeight: 50,
-                                  leading: AmptiveCircularContainerWithPictureWidget(
+                                  leading: ATRoundedImage(
                                     diameter: 35.h,
-                                    imagePath: AmptiveImageStrings.CRIMINAL,
+                                    imagePath: ATImgStrings.CRIMINAL,
                                   ),
                                   title: Text(
                                     string.obj.name ?? '',
@@ -349,7 +349,7 @@ class _GoLiveAudienViewControlsWidgetState extends State<GoLiveAudienViewControl
               if(value){
                 return Padding(
                   padding: const EdgeInsets.only(right: 15),
-                  child: AmptiveCircularContainerWithPictureWidget(
+                  child: ATRoundedImage(
                     diameter: 35,
                     imagePath: getHostList()[9].obj.profilePicture ?? ''
                   ),
@@ -434,7 +434,7 @@ class _GoLiveAudienViewControlsWidgetState extends State<GoLiveAudienViewControl
                         onTap: (){
                           showAppNotification(
                             context: context,
-                            icon: const AmptiveImageLoaderWidget(imagePath: AmptiveImageStrings.KICK_USER_OUT),
+                            icon: const AmptiveImageLoaderWidget(imagePath: ATImgStrings.KICK_USER_OUT),
                             text: 'You have been kicked out of the live session',
                             bgColor: ATColors.hexECO404,
                           );
@@ -443,7 +443,7 @@ class _GoLiveAudienViewControlsWidgetState extends State<GoLiveAudienViewControl
                       ),
                       _RenderAudienceViewButtons(
                         onTap: (){},
-                        child: const AmptiveImageLoaderWidget(imagePath: AmptiveImageStrings.GIFT_ICON),
+                        child: const AmptiveImageLoaderWidget(imagePath: ATImgStrings.GIFT_ICON),
                       ),
                       _RenderAudienceViewButtons(
                         onTap: (){},

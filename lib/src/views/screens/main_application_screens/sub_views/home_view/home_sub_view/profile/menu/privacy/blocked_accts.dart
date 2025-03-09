@@ -28,7 +28,7 @@ class AmptiveBlockedAcctsScreen extends StatelessWidget {
                 children: [
                   AmptiveCircleAvatarWidget(
                     onTap: () => context.pop(),
-                    diameter: 30, color: ATColors.transparentColor,
+                    diameter: 30, color: ATColors.trspntColor,
                     child: const Icon(Icons.keyboard_arrow_left),
                   ),
                   const Spacer(),
@@ -37,7 +37,7 @@ class AmptiveBlockedAcctsScreen extends StatelessWidget {
                     style: Theme.of(context).textTheme.bodyMedium,
                   ),
                   const Spacer(),
-                  Icon(Icons.keyboard_arrow_left, color: ATColors.transparentColor),
+                  Icon(Icons.keyboard_arrow_left, color: ATColors.trspntColor),
                 ],
               ),
             ),

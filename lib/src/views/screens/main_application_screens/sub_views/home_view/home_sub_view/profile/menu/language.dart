@@ -25,7 +25,7 @@ class ATSelectLanguageScreen extends StatelessWidget {
                 children: [
                   AmptiveCircleAvatarWidget(
                     onTap: () => context.pop(),
-                    diameter: 30, color: ATColors.transparentColor,
+                    diameter: 30, color: ATColors.trspntColor,
                     child: const Icon(Icons.keyboard_arrow_left),
                   ),
                   const Spacer(),
@@ -34,7 +34,7 @@ class ATSelectLanguageScreen extends StatelessWidget {
                     style: Theme.of(context).textTheme.bodyMedium,
                   ),
                   const Spacer(),
-                  Icon(Icons.keyboard_arrow_left, color: ATColors.transparentColor),
+                  Icon(Icons.keyboard_arrow_left, color: ATColors.trspntColor),
                 ],
               ),
             ),
@@ -94,7 +94,7 @@ class ATSelectLanguageScreen extends StatelessWidget {
                               ATContainer(
                                 height: 15, width: 15, boxShape: BoxShape.circle,
                                 padding: const EdgeInsets.all(5),
-                                color: isSelected ? ATColors.hex307FE2 : ATColors.transparentColor,
+                                color: isSelected ? ATColors.hex307FE2 : ATColors.trspntColor,
                                 border: Border.all(
                                   color: isSelected ? ATColors.hex307FE2 : ATColors.whiteColor,
                                   strokeAlign: 5.0

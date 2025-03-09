@@ -30,7 +30,7 @@ class AmptiveDiscoverSocietyEventsTabViewWidget extends StatelessWidget {
             children: List.generate(
               5,
               (_) => const AmptiveTrendingHashtagModel(
-                trendingPicture: AmptiveImageStrings.weCanDoHardThingsBgImage,
+                trendingPicture: ATImgStrings.weCanDoHardThingsBgImage,
               )
             ),
           ),
@@ -50,7 +50,7 @@ class AmptiveDiscoverSocietyEventsTabViewWidget extends StatelessWidget {
             children: List.generate(
               5,
               (_) => const AmptivePaidEventModel(
-                trendingPicture: AmptiveImageStrings.CRIMINAL
+                trendingPicture: ATImgStrings.CRIMINAL
               )
             ),
           ),
@@ -70,7 +70,7 @@ class AmptiveDiscoverSocietyEventsTabViewWidget extends StatelessWidget {
             children: List.generate(
               5,
               (_) => const AmptiveFreeEventModel(
-                trendingPicture: AmptiveImageStrings.weCanDoHardThingsBgImage
+                trendingPicture: ATImgStrings.weCanDoHardThingsBgImage
               )
             ),
           ),

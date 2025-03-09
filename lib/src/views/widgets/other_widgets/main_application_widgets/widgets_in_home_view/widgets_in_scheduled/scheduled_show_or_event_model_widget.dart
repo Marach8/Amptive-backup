@@ -49,7 +49,7 @@ class _AmptiveScheduledShowOrEventDataModelWidgetState extends State<AmptiveSche
     return Column(
       children: [
         AmptiveListTileWithLeadingPictureWidget(
-          leadingImagePath: AmptiveImageStrings.jpeg3,
+          leadingImagePath: ATImgStrings.jpeg3,
           trailingOnPressed: (){
             context.pushNamed(ATRoutes.EVENT_DETAILED_SCREEN);
           },
@@ -63,7 +63,7 @@ class _AmptiveScheduledShowOrEventDataModelWidgetState extends State<AmptiveSche
           radius: 15.r,
           child: Stack(
             children: [
-              const AmptiveImageLoaderWidget(imagePath: AmptiveImageStrings.weCanDoHardThingsBgImage),
+              const AmptiveImageLoaderWidget(imagePath: ATImgStrings.weCanDoHardThingsBgImage),
               ATContainer(
                 padding: const EdgeInsets.fromLTRB(15, 10, 15, 10),
                 radius: 15.r,
@@ -71,10 +71,10 @@ class _AmptiveScheduledShowOrEventDataModelWidgetState extends State<AmptiveSche
                   begin: Alignment.topCenter,
                   end: Alignment.bottomCenter,
                   colors: [
-                    ATColors.transparentColor,
-                    ATColors.transparentColor,
-                    ATColors.transparentColor,
-                    ATColors.transparentColor,
+                    ATColors.trspntColor,
+                    ATColors.trspntColor,
+                    ATColors.trspntColor,
+                    ATColors.trspntColor,
                     ATColors.containerGradientColorB.withOpacity(0.5),
                     ATColors.containerGradientColorB,
                     ATColors.containerGradientColorB,

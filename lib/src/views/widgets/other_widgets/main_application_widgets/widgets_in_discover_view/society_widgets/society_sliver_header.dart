@@ -25,7 +25,7 @@ class AmptiveSocietySliverHeader extends SliverPersistentHeaderDelegate{
         splashFactory: NoSplash.splashFactory,
         tabAlignment: TabAlignment.start,
         labelPadding: EdgeInsets.zero,
-        indicatorColor: ATColors.transparentColor,
+        indicatorColor: ATColors.trspntColor,
         padding: const EdgeInsets.only(left: 15),
         isScrollable: true,
         dividerColor: ATColors.brandBlack,

@@ -3,8 +3,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../utils/constants/colors.dart';
 import 'custom_container_widget.dart';
 
-class AmptiveDividerWidget extends StatelessWidget {
-  const AmptiveDividerWidget({
+class ATDivider extends StatelessWidget {
+  const ATDivider({
     super.key,
   });
 

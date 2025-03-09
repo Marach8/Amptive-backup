@@ -63,7 +63,7 @@ class AmptiveEventDetailedScreen extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const AmptiveAudioOrVideoDisplayPictureWithMoreIconWidget(),
+                    const ATEventOrShowCard(),
                     Gap(15.h),
                     Text(
                       maxLines: 2,
@@ -109,7 +109,7 @@ class AmptiveEventDetailedScreen extends StatelessWidget {
                         title: 'Gerald',
                         subtitle: 'Host',
                         diameter: 35,
-                        leadingImagePath: AmptiveImageStrings.jpeg1,
+                        leadingImagePath: ATImgStrings.jpeg1,
                       )
                     ),
                     Gap(30.h),
@@ -167,7 +167,7 @@ class AmptiveEventDetailedScreen extends StatelessWidget {
                   ],
                 ),
               ),
-              const AmptiveWhispersListViewWidget(),
+              const ATWhispers(),
               Gap(30.h),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 20),

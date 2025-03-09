@@ -53,7 +53,7 @@ class AmptiveTrendingHashTagsScreen extends StatelessWidget {
                       children: List.generate(
                         5,
                         (_) => const AmptiveTrendingHashtagModel(
-                          trendingPicture: AmptiveImageStrings.weCanDoHardThingsBgImage,
+                          trendingPicture: ATImgStrings.weCanDoHardThingsBgImage,
                         )
                       ),
                     ),
@@ -78,7 +78,7 @@ class AmptiveTrendingHashTagsScreen extends StatelessWidget {
                       children: List.generate(
                         5,
                         (_) => const AmptiveTrendingHashtagModel(
-                          trendingPicture: AmptiveImageStrings.OFFICE_LADIES
+                          trendingPicture: ATImgStrings.OFFICE_LADIES
                         )
                       ),
                     ),
@@ -103,7 +103,7 @@ class AmptiveTrendingHashTagsScreen extends StatelessWidget {
                       children: List.generate(
                         5,
                         (_) => const AmptiveTrendingHashtagModel(
-                          trendingPicture: AmptiveImageStrings.weCanDoHardThingsBgImage,
+                          trendingPicture: ATImgStrings.weCanDoHardThingsBgImage,
                         )
                       ),
                     ),
@@ -128,7 +128,7 @@ class AmptiveTrendingHashTagsScreen extends StatelessWidget {
                       children: List.generate(
                         5,
                         (_) => const AmptiveTrendingHashtagModel(
-                          trendingPicture: AmptiveImageStrings.OFFICE_LADIES
+                          trendingPicture: ATImgStrings.OFFICE_LADIES
                         )
                       ),
                     ),

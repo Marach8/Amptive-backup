@@ -79,7 +79,7 @@ class _AddPhoneScreenState extends State<AddPhoneScreen> {
                           color: ATColors.hex9E9E9E.withOpacity(0.3),
                           radius: 14,
                           border: Border.all(
-                            color: _bottomSheetOpened ? ATColors.hex307FE2 : ATColors.transparentColor,
+                            color: _bottomSheetOpened ? ATColors.hex307FE2 : ATColors.trspntColor,
                             width: 2,
                           ),
                           child: Row(
@@ -132,7 +132,7 @@ class _AddPhoneScreenState extends State<AddPhoneScreen> {
                             borderSide: BorderSide(width: 2, color: ATColors.hex307FE2),
                           ),
                           border: OutlineInputBorder(
-                            borderSide: BorderSide(width: 2, color: ATColors.transparentColor),
+                            borderSide: BorderSide(width: 2, color: ATColors.trspntColor),
                           ),
                         ),
                       ),

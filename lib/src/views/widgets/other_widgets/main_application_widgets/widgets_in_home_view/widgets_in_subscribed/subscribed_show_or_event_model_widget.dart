@@ -24,7 +24,7 @@ class AmptiveSubscribedShowOrEventDataModelWidget extends StatelessWidget {
     return Column(
       children: [
         AmptiveListTileWithLeadingPictureWidget(
-          leadingImagePath: AmptiveImageStrings.jpeg3,
+          leadingImagePath: ATImgStrings.jpeg3,
           trailingOnPressed: (){
             context.pushNamed(ATRoutes.EVENT_DETAILED_SCREEN);
           },
@@ -33,7 +33,7 @@ class AmptiveSubscribedShowOrEventDataModelWidget extends StatelessWidget {
         ),
         Gap(2.h),
         ATContainer(
-          decorationImagePath: AmptiveImageStrings.weCanDoHardThingsBgImage,
+          decorationImagePath: ATImgStrings.weCanDoHardThingsBgImage,
           decorationImageFit: BoxFit.fill,
           height: 432.h,
           radius: 15.r,
@@ -44,10 +44,10 @@ class AmptiveSubscribedShowOrEventDataModelWidget extends StatelessWidget {
               begin: Alignment.topCenter,
               end: Alignment.bottomCenter,
               colors: [
-                ATColors.transparentColor,
-                ATColors.transparentColor,
-                ATColors.transparentColor,
-                ATColors.transparentColor,
+                ATColors.trspntColor,
+                ATColors.trspntColor,
+                ATColors.trspntColor,
+                ATColors.trspntColor,
                 ATColors.containerGradientColorB.withOpacity(0.5),
                 ATColors.containerGradientColorB,
                 ATColors.containerGradientColorB,

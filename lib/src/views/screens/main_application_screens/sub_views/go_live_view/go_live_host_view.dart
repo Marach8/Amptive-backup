@@ -101,7 +101,7 @@ class _AmptiveGoLiveHostViewState extends State<AmptiveGoLiveHostView> {
                   child: Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      const AmptiveImageLoaderWidget(imagePath: AmptiveImageStrings.GROUP_ICON),
+                      const AmptiveImageLoaderWidget(imagePath: ATImgStrings.GROUP_ICON),
                       const Gap(5),
                       Text(
                         ATStrings.SOCIETY,
@@ -137,9 +137,9 @@ class _AmptiveGoLiveHostViewState extends State<AmptiveGoLiveHostView> {
                                 return ListTile(
                                   horizontalTitleGap: 10,
                                   minTileHeight: 50,
-                                  leading: AmptiveCircularContainerWithPictureWidget(
+                                  leading: ATRoundedImage(
                                     diameter: 35.h,
-                                    imagePath: AmptiveImageStrings.CRIMINAL,
+                                    imagePath: ATImgStrings.CRIMINAL,
                                   ),
                                   title: Text(
                                     string.obj.name ?? '',
@@ -329,7 +329,7 @@ class _GoLiveHostViewBottomSheetState extends State<GoLiveHostViewBottomSheet> {
               if(value){
                 return Padding(
                   padding: const EdgeInsets.only(right: 15),
-                  child: AmptiveCircularContainerWithPictureWidget(
+                  child: ATRoundedImage(
                     diameter: 35,
                     imagePath: getHostList()[5].obj.profilePicture ?? ''
                   ),

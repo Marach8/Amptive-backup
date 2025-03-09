@@ -1,7 +1,7 @@
 // ignore_for_file: constant_identifier_names
 
-class AmptiveImageStrings{
-  const AmptiveImageStrings._();
+class ATImgStrings{
+  const ATImgStrings._();
 
   static const _generalSvgImagePath = 'assets/images/svg_images';
   static const _generalJpegImagePath = 'assets/images/jpeg_images';

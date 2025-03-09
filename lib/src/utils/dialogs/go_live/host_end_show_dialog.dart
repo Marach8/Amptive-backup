@@ -112,7 +112,7 @@ Future<void> showHostEndShowDialog({
                     radius: 5, height: initialState ? 150 : 200, 
                     width: initialState ? 150 : 200,
                     child: const AmptiveImageLoaderWidget(                  
-                      imagePath: AmptiveImageStrings.weCanDoHardThingsBgImage
+                      imagePath: ATImgStrings.weCanDoHardThingsBgImage
                     ),
                   ),
                 );

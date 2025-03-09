@@ -23,21 +23,21 @@ class AmptiveRowOfNumberOfPeopleListeningWidget extends StatelessWidget {
           alignment: Alignment.centerLeft,
           clipBehavior: Clip.none,
           children: [
-            const AmptiveCircularContainerWithPictureWidget(
-              imagePath: AmptiveImageStrings.jpeg1,
+            const ATRoundedImage(
+              imagePath: ATImgStrings.jpeg1,
               addBorder: true,
             ),
             const Positioned(
               left: 18,
-              child: AmptiveCircularContainerWithPictureWidget(
-                imagePath: AmptiveImageStrings.jpeg2,
+              child: ATRoundedImage(
+                imagePath: ATImgStrings.jpeg2,
                 addBorder: true,
               )
             ),
             const Positioned(
               left: 36,
-              child:AmptiveCircularContainerWithPictureWidget(
-                imagePath: AmptiveImageStrings.jpeg3,
+              child:ATRoundedImage(
+                imagePath: ATImgStrings.jpeg3,
                 addBorder: true,
               )
             ),

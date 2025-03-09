@@ -12,7 +12,7 @@ Future<dynamic> showAppNotification({
   Color? bgColor
 }) async {
   return await Flushbar(
-    backgroundColor: ATColors.transparentColor,
+    backgroundColor: ATColors.trspntColor,
     flushbarPosition: FlushbarPosition.TOP,
     duration: Duration(seconds: duration ?? 5),
     messageText: Center(
