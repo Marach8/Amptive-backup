@@ -1,6 +1,7 @@
 import 'package:amptive/src/bloc/main_app/go_live_bloc/audience_view/following_bloc.dart';
 import 'package:amptive/src/bloc/main_app/go_live_bloc/audience_view/subscription_bloc.dart';
 import 'package:amptive/src/bloc/main_app/profile/allow_see_calender_bloc.dart';
+import 'package:amptive/src/bloc/main_app/profile/profile_menu/select_country_bloc.dart';
 import 'package:amptive/src/bloc/preference/bloc.dart';
 import 'package:amptive/src/services/auth/auth_field_service.dart';
 import 'package:amptive/src/services/auth/otp_service.dart';
@@ -55,6 +56,7 @@ List<SingleChildWidget> providers() {
     BlocProvider(create: (_) => AmptiveProfileFollowersBloc()),
     BlocProvider(create: (_) => AllowSeeCalenderBloc()),
     BlocProvider(create: (_) => AmptiveLanguageBloc()),
-    BlocProvider(create: (_) => PrivateAccountBloc())
+    BlocProvider(create: (_) => PrivateAccountBloc()),
+    BlocProvider(create: (_) => ATSelectCountryBloc())
   ];
 }

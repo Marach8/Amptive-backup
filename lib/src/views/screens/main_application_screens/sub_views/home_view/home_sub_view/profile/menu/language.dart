@@ -10,8 +10,8 @@ import '../../../../../../../widgets/common_widgets/circle_avatar.dart';
 
 
 
-class AmptiveSelectLanguageScreen extends StatelessWidget {
-  const AmptiveSelectLanguageScreen({super.key});
+class ATSelectLanguageScreen extends StatelessWidget {
+  const ATSelectLanguageScreen({super.key});
 
   @override
   Widget build(context) {

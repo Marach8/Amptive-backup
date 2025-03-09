@@ -17,7 +17,8 @@ import 'package:amptive/src/views/screens/main_application_screens/sub_views/hom
 import 'package:amptive/src/views/screens/main_application_screens/sub_views/home_view/home_sub_view/profile/community_task.dart';
 import 'package:amptive/src/views/screens/main_application_screens/sub_views/home_view/home_sub_view/profile/menu/accounts/account_info.dart';
 import 'package:amptive/src/views/screens/main_application_screens/sub_views/home_view/home_sub_view/profile/menu/accounts/accounts_home.dart';
-import 'package:amptive/src/views/screens/main_application_screens/sub_views/home_view/home_sub_view/profile/menu/language.dart' show AmptiveSelectLanguageScreen;
+import 'package:amptive/src/views/screens/main_application_screens/sub_views/home_view/home_sub_view/profile/menu/accounts/select_country.dart';
+import 'package:amptive/src/views/screens/main_application_screens/sub_views/home_view/home_sub_view/profile/menu/language.dart' show ATSelectLanguageScreen;
 import 'package:amptive/src/views/screens/main_application_screens/sub_views/home_view/home_sub_view/profile/menu/privacy/blocked_accts.dart';
 import 'package:amptive/src/views/screens/main_application_screens/sub_views/home_view/home_sub_view/profile/menu/privacy/muted_accts.dart';
 import 'package:amptive/src/views/screens/main_application_screens/sub_views/home_view/home_sub_view/profile/menu/privacy/privacy_home.dart' show AmptivePrivacyScreen;
@@ -251,7 +252,7 @@ final GoRouter amptiveAppRouter = GoRouter(
               GoRoute(
                 name: ATRoutes.LANGUAGE_SCREEN,
                 path: ATRoutes.LANGUAGE_SCREEN,
-                builder: (_, __) => const AmptiveSelectLanguageScreen(),
+                builder: (_, __) => const ATSelectLanguageScreen(),
               ),
 
               GoRoute(
@@ -295,13 +296,28 @@ final GoRouter amptiveAppRouter = GoRouter(
                   );
                 },
               ),
+
+              GoRoute(
+                name: ATRoutes.SELECT_COUNTRY_SCREEN,
+                path: ATRoutes.SELECT_COUNTRY_SCREEN,
+                builder: (_, state){
+                  final params = state.extra as List;
+                  final countries = params.last as List<String>;
+                  final selectedCountry = params.first as String;
+
+                  return ATSelectCountryScreen(
+                    countries: countries,
+                    selectedCountry: selectedCountry,
+                  );
+                }
+              ),
             ]
           ),
 
           GoRoute(
             name: ATRoutes.PROFILE_FOLLOWING_SCREEN,
             path: ATRoutes.PROFILE_FOLLOWING_SCREEN,
-            builder: (_, __) => const AmptiveProfileFollowersScreen(),
+            builder: (_, __) => const ATProfileFollowersScreen(),
           ),
 
           GoRoute(

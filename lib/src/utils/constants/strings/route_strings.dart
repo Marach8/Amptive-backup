@@ -58,4 +58,5 @@ class ATRoutes {
   static const MUTED_ACCTS_SCREEN = 'muted_accounts_screen';
   static const ACCT_SCREEN = 'account_screen';
   static const ACCT_INFO_SCREEN = 'account_info_screen';
+  static const SELECT_COUNTRY_SCREEN = 'select_country_screen';
 }

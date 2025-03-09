@@ -69,7 +69,7 @@ class ATStrings{
   static const IS_UNBLOCKED = 'is now unblocked';
   static const IS_UNMUTED = 'is now unmuted';
   static const COUNTRY = 'Country';
-
+  static const SELECT_COUNTRY = 'Select Country';
 
   static const youEnteredInvalidCode = 'You entered an invalid code. ';
   static const passwordMustBeAtleast8 = 'Your password must be at least 8 characters';
