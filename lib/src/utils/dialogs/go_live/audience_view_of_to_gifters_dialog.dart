@@ -143,7 +143,7 @@ Future<void> showAudienceViewOfTopGiftersDialog(BuildContext context) async {
                               Text(
                                 randomUser.obj.name ?? '',
                                 style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                                  fontSize: AmptiveFontSizes.size15
+                                  fontSize: ATFontSizes.size15
                                 )
                               ),
                               Text(
@@ -163,7 +163,7 @@ Future<void> showAudienceViewOfTopGiftersDialog(BuildContext context) async {
                           child: Text(
                             ATStrings.SEND_GIFT,
                             style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                              fontSize: AmptiveFontSizes.size15
+                              fontSize: ATFontSizes.size15
                             ),
                           ),
                         )
@@ -210,7 +210,7 @@ class AmptiveGifterWidget extends StatelessWidget {
               index.toString(),
               style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                 color: ATColors.yellowColor,
-                fontSize: AmptiveFontSizes.size14
+                fontSize: ATFontSizes.size14
               ),
             ) : AmptiveCircleAvatarWidget(
               diameter: 5,

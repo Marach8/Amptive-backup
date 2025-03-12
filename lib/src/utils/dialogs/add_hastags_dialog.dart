@@ -383,7 +383,7 @@ class AmptiveAddHashtagWidget extends StatelessWidget {
                       style: Theme.of(context)
                           .textTheme
                           .bodySmall
-                          ?.copyWith(fontSize: AmptiveFontSizes.size15)),
+                          ?.copyWith(fontSize: ATFontSizes.size15)),
                   Text(
                     "Hashtag",
                     style: Theme.of(context)

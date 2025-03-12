@@ -140,7 +140,7 @@ Future<void> showHostEndShowDialog({
                         ATStrings.END_LIVE_SHOW,
                         maxLines: 2, textAlign: TextAlign.center,
                         style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                          fontSize: AmptiveFontSizes.size23
+                          fontSize: ATFontSizes.size23
                         )
                       ),
                       if(showNoOfListeners || showNoOfGifters)AmptiveTwoTextRichTextWidget(
@@ -150,7 +150,7 @@ Future<void> showHostEndShowDialog({
                           color: ATColors.hexC2C2C2
                         ),
                         style2: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                          fontSize: AmptiveFontSizes.size14
+                          fontSize: ATFontSizes.size14
                         ),
                       ),
                       const Gap(10),
@@ -161,7 +161,7 @@ Future<void> showHostEndShowDialog({
                           color: ATColors.hexC2C2C2
                         ),
                         style2: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                          fontSize: AmptiveFontSizes.size14
+                          fontSize: ATFontSizes.size14
                         ),
                       ),
                     ],
@@ -216,7 +216,7 @@ Future<void> showHostEndShowDialog({
                         child: Text(
                           ATStrings.CANCEL,
                           style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                            fontSize: AmptiveFontSizes.size17
+                            fontSize: ATFontSizes.size17
                           )
                         ),
                       ),

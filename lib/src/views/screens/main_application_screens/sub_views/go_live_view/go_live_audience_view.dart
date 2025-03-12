@@ -165,7 +165,7 @@ class _AmptiveGoLiveAudienceViewState extends State<AmptiveGoLiveAudienceView> {
                                   subtitle: Text(
                                     string.obj.username ?? '',
                                     style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                                      fontSize: AmptiveFontSizes.size13
+                                      fontSize: ATFontSizes.size13
                                     )
                                   ),
                                 );

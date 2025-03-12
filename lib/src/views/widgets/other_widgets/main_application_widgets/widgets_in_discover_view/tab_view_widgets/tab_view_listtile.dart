@@ -48,7 +48,7 @@ class AmptiveTabViewListTileWidget extends StatelessWidget {
               style: Theme.of(context).textTheme.titleSmall?.copyWith(
                 color: ATColors.hexC2C2C2,
                 fontWeight: AmptiveFontWeights.w500,
-                fontSize: AmptiveFontSizes.size13,
+                fontSize: ATFontSizes.size13,
                 height: 1.5
               ),
             ),
@@ -60,7 +60,7 @@ class AmptiveTabViewListTileWidget extends StatelessWidget {
               style: Theme.of(context).textTheme.titleSmall?.copyWith(
                 color: ATColors.hexC2C2C2,
                 fontWeight: AmptiveFontWeights.w500,
-                fontSize: AmptiveFontSizes.size13,
+                fontSize: ATFontSizes.size13,
                 height: 1.5
               ),
             ),

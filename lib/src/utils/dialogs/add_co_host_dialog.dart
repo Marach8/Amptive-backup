@@ -173,7 +173,7 @@ Future<Set<ObjectWithNotifier<Host>>?> showAddCoHostDialog(BuildContext context)
                                             child: Text(
                                               (index + 1).toString(),
                                               style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                                                fontSize: AmptiveFontSizes.size12
+                                                fontSize: ATFontSizes.size12
                                               ),
                                             ),
                                           );
@@ -385,7 +385,7 @@ class AmptiveCoHostWidget extends StatelessWidget {
                   Text(
                     coHostDetail.obj.name ?? '',
                     style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                      fontSize: AmptiveFontSizes.size15
+                      fontSize: ATFontSizes.size15
                     )
                   ),
                   Text(

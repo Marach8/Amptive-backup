@@ -53,13 +53,13 @@ class AmptiveTrendingHashTagFullScreen extends StatelessWidget {
                         Text(
                           ATStrings.HASH + ATStrings.SOCIETY,
                           style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                            fontSize: AmptiveFontSizes.size15
+                            fontSize: ATFontSizes.size15
                           ),
                         ),
                         Text(
                          'ankira22, emmanuel, and 15k others are live',
                           style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                            fontSize: AmptiveFontSizes.size13,
+                            fontSize: ATFontSizes.size13,
                             color: ATColors.grey5Color
                           ),
                         ),

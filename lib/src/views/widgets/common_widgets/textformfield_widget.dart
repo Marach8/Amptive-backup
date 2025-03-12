@@ -101,7 +101,7 @@ class ATTextFormFieldWidget extends StatelessWidget {
       ),
       style: TextStyle(
         fontWeight: AmptiveFontWeights.w400,
-        fontSize: AmptiveFontSizes.size18,
+        fontSize: ATFontSizes.size18,
         color: ATColors.whiteColor,
       ),
     );

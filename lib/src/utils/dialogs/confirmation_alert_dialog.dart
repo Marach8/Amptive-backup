@@ -28,13 +28,13 @@ Future<bool?> showConfirmationDialog({
       title: Text(
         title, maxLines: 3, textAlign: TextAlign.center,
         style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-          fontSize: AmptiveFontSizes.size17,
+          fontSize: ATFontSizes.size17,
         ),
       ),
       content: content.isNotEmpty ? Text(
         content, maxLines: 3, textAlign: TextAlign.center,
         style: Theme.of(context).textTheme.titleMedium?.copyWith(
-          fontSize: AmptiveFontSizes.size13,
+          fontSize: ATFontSizes.size13,
         ),
       ): const SizedBox.shrink(),
       actionsAlignment: MainAxisAlignment.spaceBetween,
@@ -44,7 +44,7 @@ Future<bool?> showConfirmationDialog({
           child: Text(
             yesString,
             style: Theme.of(context).textTheme.titleMedium?.copyWith(
-              fontSize: AmptiveFontSizes.size17,
+              fontSize: ATFontSizes.size17,
               color: ATColors.hex307FE2
             ),
           ),
@@ -54,7 +54,7 @@ Future<bool?> showConfirmationDialog({
           child: Text(
             noString,
             style: Theme.of(context).textTheme.titleMedium?.copyWith(
-              fontSize: AmptiveFontSizes.size17,
+              fontSize: ATFontSizes.size17,
               color: ATColors.hex307FE2
             ),
           ),
@@ -119,14 +119,14 @@ Future<bool?> showKickOutConfirmationDialog({
           Text(
             title, maxLines: 3, textAlign: TextAlign.center,
             style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-              fontSize: AmptiveFontSizes.size17,
+              fontSize: ATFontSizes.size17,
             ),
           ),
           const Gap(10),
           Text(
             content, maxLines: 3, textAlign: TextAlign.center,
             style: Theme.of(context).textTheme.titleMedium?.copyWith(
-              fontSize: AmptiveFontSizes.size13,
+              fontSize: ATFontSizes.size13,
             ),
           ),
           const Gap(20),
@@ -145,7 +145,7 @@ Future<bool?> showKickOutConfirmationDialog({
             child: Text(
               ATStrings.CANCEL,
               style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                fontSize: AmptiveFontSizes.size15,
+                fontSize: ATFontSizes.size15,
 
               ),
             ),

@@ -85,14 +85,14 @@ class _ATEmailAuthScreenState extends State<ATEmailAuthScreen> {
                       contentPadding: const EdgeInsets.fromLTRB(16, 12, 16, 12),
                       hintText: ATStrings.enterYourEmail,
                       hintStyle: TextStyle(
-                        fontSize: AmptiveFontSizes.size16,
+                        fontSize: ATFontSizes.size16,
                         color: ATColors.authHintColor,
                         fontWeight: AmptiveFontWeights.w400,
                       ),
                       errorText: service.email.error,
                       errorStyle: TextStyle(
                         color: ATColors.textRedColor,
-                        fontSize: AmptiveFontSizes.size12,
+                        fontSize: ATFontSizes.size12,
                         fontWeight: AmptiveFontWeights.w400,
                       ),
                       filled: true,

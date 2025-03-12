@@ -112,14 +112,14 @@ class ATUserProfileScreen extends StatelessWidget {
                         Text(
                           '1.2k',
                           style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                            fontSize: AmptiveFontSizes.size16
+                            fontSize: ATFontSizes.size16
                           ),
                         ),
                         const Gap(5),
                         Text(
                           ATStrings.FOLLOWERS,
                           style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                            fontSize: AmptiveFontSizes.size16
+                            fontSize: ATFontSizes.size16
                           ),
                         ),                
                       ],
@@ -136,7 +136,7 @@ class ATUserProfileScreen extends StatelessWidget {
                       child: Text(
                         ATStrings.EDIT_PROFILE,
                         style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                          fontSize: AmptiveFontSizes.size14
+                          fontSize: ATFontSizes.size14
                         )
                       )
                     ),
@@ -179,7 +179,7 @@ class ATUserProfileScreen extends StatelessWidget {
                                 child: Text(
                                   string,
                                   style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                                    fontSize: AmptiveFontSizes.size13,
+                                    fontSize: ATFontSizes.size13,
                                     color: isSelected ? ATColors.black : ATColors.whiteColor
                                   ),
                                 ),

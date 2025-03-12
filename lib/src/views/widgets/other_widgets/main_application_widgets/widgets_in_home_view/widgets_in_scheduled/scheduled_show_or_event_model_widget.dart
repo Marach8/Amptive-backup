@@ -89,7 +89,7 @@ class _AmptiveScheduledShowOrEventDataModelWidgetState extends State<AmptiveSche
                     Text(
                       '15 Jul 2024 at 17:00',
                       style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                        fontSize: AmptiveFontSizes.size16
+                        fontSize: ATFontSizes.size16
                       ),
                     ),
                     Gap(10.h),
@@ -98,7 +98,7 @@ class _AmptiveScheduledShowOrEventDataModelWidgetState extends State<AmptiveSche
                       "Don't Forget Who You Are ft. Jacob Scipio",
                       overflow: TextOverflow.clip,
                       style: Theme.of(context).textTheme.displayMedium?.copyWith(
-                        fontSize: AmptiveFontSizes.size24,
+                        fontSize: ATFontSizes.size24,
                         fontWeight: AmptiveFontWeights.w600,
                         fontFamily: "Bricolage Grotesque"
                       ),

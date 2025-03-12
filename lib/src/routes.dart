@@ -18,6 +18,7 @@ import 'package:amptive/src/views/screens/main_application_screens/sub_views/hom
 import 'package:amptive/src/views/screens/main_application_screens/sub_views/home_view/home_sub_view/profile/menu/accounts/account_info.dart';
 import 'package:amptive/src/views/screens/main_application_screens/sub_views/home_view/home_sub_view/profile/menu/accounts/accounts_home.dart';
 import 'package:amptive/src/views/screens/main_application_screens/sub_views/home_view/home_sub_view/profile/menu/accounts/select_country.dart';
+import 'package:amptive/src/views/screens/main_application_screens/sub_views/home_view/home_sub_view/profile/menu/calender/day_view.dart';
 import 'package:amptive/src/views/screens/main_application_screens/sub_views/home_view/home_sub_view/profile/menu/language.dart' show ATSelectLanguageScreen;
 import 'package:amptive/src/views/screens/main_application_screens/sub_views/home_view/home_sub_view/profile/menu/privacy/blocked_accts.dart';
 import 'package:amptive/src/views/screens/main_application_screens/sub_views/home_view/home_sub_view/profile/menu/privacy/muted_accts.dart';
@@ -249,6 +250,12 @@ final GoRouter amptiveAppRouter = GoRouter(
             path: ATRoutes.PROFILE_MENU_SCREEN,
             builder: (_, __) => const AmptiveProfileMenuScreen(),
             routes: [
+              GoRoute(
+                name: ATRoutes.CALENDER_SCREEN,
+                path: ATRoutes.CALENDER_SCREEN,
+                builder: (_, __) => const ATCalenderScreen(),
+              ),
+
               GoRoute(
                 name: ATRoutes.LANGUAGE_SCREEN,
                 path: ATRoutes.LANGUAGE_SCREEN,

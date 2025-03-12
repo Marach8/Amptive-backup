@@ -31,7 +31,7 @@ class AmptiveRowOfPaidShowAndPlayButtonWidget extends StatelessWidget {
                 ATStrings.PAID_SHOW.toUpperCase(),
                 style: Theme.of(context).textTheme.titleSmall?.copyWith(
                   fontWeight: AmptiveFontWeights.w500,
-                  fontSize: AmptiveFontSizes.size10
+                  fontSize: ATFontSizes.size10
                 )
               ),
             ),

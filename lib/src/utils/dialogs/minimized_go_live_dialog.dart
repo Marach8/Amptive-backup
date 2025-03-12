@@ -40,7 +40,7 @@ Future<void> showMinimizedGoLiveState() async {
                   'glennodoyle and 2 others',
                   style: TextStyle(
                     color: ATColors.whiteColor,
-                    fontSize: AmptiveFontSizes.size13,
+                    fontSize: ATFontSizes.size13,
                     fontWeight: AmptiveFontWeights.w500,
                   ),
                 ),
@@ -58,7 +58,7 @@ Future<void> showMinimizedGoLiveState() async {
                           "Don't forget who you are ft. Jacob Scipio and the boy is cooljdkjfkafkdajdjjakdjfkajeiefkdjfkdjakjdkjkja",
                           style: TextStyle(
                             color: ATColors.hexC2C2C2,
-                            fontSize: AmptiveFontSizes.size12,
+                            fontSize: ATFontSizes.size12,
                             fontWeight: AmptiveFontWeights.w500,
                           ),
                         ),

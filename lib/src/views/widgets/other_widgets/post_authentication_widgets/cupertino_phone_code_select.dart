@@ -108,14 +108,14 @@ class CupertinoPhoneCodeSelectWidget extends StatelessWidget {
           Text(
             country.name,
             style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                  fontSize: AmptiveFontSizes.size23,
+                  fontSize: ATFontSizes.size23,
                 ),
           ),
           Expanded(child: SizedBox(width: 8.0.w)),
           Text(
             ATStrings.plus + country.phoneCode,
             style: Theme.of(context).textTheme.titleMedium?.copyWith(
-              fontSize: AmptiveFontSizes.size23,
+              fontSize: ATFontSizes.size23,
             ),
           ),
         ],

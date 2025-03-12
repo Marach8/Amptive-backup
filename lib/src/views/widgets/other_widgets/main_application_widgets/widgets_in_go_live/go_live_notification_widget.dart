@@ -45,7 +45,7 @@ class AmptiveGoLiveNotificationsWidget extends StatelessWidget {
           Text(
             user.name ?? '',
             style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-              fontSize: AmptiveFontSizes.size12
+              fontSize: ATFontSizes.size12
             ),
           ),
           const Gap(5),
@@ -120,7 +120,7 @@ class AmptiveGoLivePinnedMsgNtfctnWidget extends StatelessWidget {
                       child: Text(
                         (role ?? '').toUpperCase(),
                         style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                          fontSize: AmptiveFontSizes.size10
+                          fontSize: ATFontSizes.size10
                         )
                       ),
                     ),
@@ -138,7 +138,7 @@ class AmptiveGoLivePinnedMsgNtfctnWidget extends StatelessWidget {
                           Text(
                             ATStrings.PINNED.toUpperCase(),
                             style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                              fontSize: AmptiveFontSizes.size10
+                              fontSize: ATFontSizes.size10
                             )
                           ),
                         ],
@@ -155,7 +155,7 @@ class AmptiveGoLivePinnedMsgNtfctnWidget extends StatelessWidget {
                     Text(
                       '$msgTitle: ',
                       style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                        fontSize: AmptiveFontSizes.size13
+                        fontSize: ATFontSizes.size13
                       ),
                     ),
                     Expanded(

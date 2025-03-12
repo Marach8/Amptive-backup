@@ -67,7 +67,7 @@ class ATShowOrEventInfo extends StatelessWidget {
                       maxLines: 2,
                       "Don't Forget Who You Are ft. Jacob Scipio",
                       style: Theme.of(context).textTheme.displayMedium?.copyWith(
-                        fontSize: AmptiveFontSizes.size24,
+                        fontSize: ATFontSizes.size24,
                         fontWeight: AmptiveFontWeights.w600,
                         height: 1.2.sp,
                       ),

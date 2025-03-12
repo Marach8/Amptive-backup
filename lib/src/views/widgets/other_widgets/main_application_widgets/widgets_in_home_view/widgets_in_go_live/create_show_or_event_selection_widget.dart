@@ -77,7 +77,7 @@ class AmptiveCreateShowOrEventSelectionWidget extends StatelessWidget {
                   Text(
                     title,
                     style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                      fontSize: AmptiveFontSizes.size13
+                      fontSize: ATFontSizes.size13
                     ),
                   )
                 ],

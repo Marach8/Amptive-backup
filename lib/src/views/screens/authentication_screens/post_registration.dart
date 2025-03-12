@@ -138,7 +138,7 @@ class _LoadingAccountWidgetState extends State<LoadingAccountWidget> {
                   key: ValueKey<String>(text),
                   textAlign: TextAlign.center,
                   style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                        fontSize: AmptiveFontSizes.size17,
+                        fontSize: ATFontSizes.size17,
                       )),
             ),
           ),

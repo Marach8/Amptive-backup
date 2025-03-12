@@ -55,7 +55,7 @@ class AmptiveTrendingHashtagModel extends StatelessWidget {
                 child: Text(
                   'glendonnoyle',
                   style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                    fontSize: AmptiveFontSizes.size13,
+                    fontSize: ATFontSizes.size13,
                     color: ATColors.grey5Color,
                   ),
                 ),

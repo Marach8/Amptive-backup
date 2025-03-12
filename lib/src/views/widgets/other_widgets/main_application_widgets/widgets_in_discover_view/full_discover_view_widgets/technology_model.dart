@@ -53,7 +53,7 @@ class AmptiveTechnologyModel extends StatelessWidget {
               Text(
                 'glendonnor',
                 style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                  fontSize: AmptiveFontSizes.size13,
+                  fontSize: ATFontSizes.size13,
                   color: ATColors.authHintColor2
                 ),
               ),

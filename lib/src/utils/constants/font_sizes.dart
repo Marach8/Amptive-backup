@@ -1,6 +1,6 @@
 
-class AmptiveFontSizes{
-  const AmptiveFontSizes._();
+class ATFontSizes{
+  const ATFontSizes._();
 
   static double size8 = 8.0;
 

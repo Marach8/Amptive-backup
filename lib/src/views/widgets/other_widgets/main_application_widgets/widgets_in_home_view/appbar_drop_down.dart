@@ -42,7 +42,7 @@ class AmptiveAppBarDropDownWidget extends StatelessWidget {
               Text(
                 ATStrings.SCHEDULED,
                 style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                  fontSize: AmptiveFontSizes.size15
+                  fontSize: ATFontSizes.size15
                 ),
               ),
               const AmptiveImageLoaderWidget(imagePath: ATImgStrings.CALEND_ICON)
@@ -60,7 +60,7 @@ class AmptiveAppBarDropDownWidget extends StatelessWidget {
               Text(
                 ATStrings.SUBSCRIBED,
                 style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                  fontSize: AmptiveFontSizes.size15
+                  fontSize: ATFontSizes.size15
                 ),
               ),
               const Icon(Icons.favorite_border_outlined)
@@ -78,7 +78,7 @@ class AmptiveAppBarDropDownWidget extends StatelessWidget {
               Text(
                 ATStrings.FOLLOWING,
                 style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                  fontSize: AmptiveFontSizes.size15
+                  fontSize: ATFontSizes.size15
                 ),
               ),
               const AmptiveImageLoaderWidget(imagePath: ATImgStrings.PERSON_CHECKED)

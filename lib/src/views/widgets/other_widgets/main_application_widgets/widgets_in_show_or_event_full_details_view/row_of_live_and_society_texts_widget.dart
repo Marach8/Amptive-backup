@@ -28,7 +28,7 @@ class AmptiveRowOfTwoIconsAndTwoTextsWidget extends StatelessWidget {
           ATStrings.LIVE.toUpperCase(),
           style: Theme.of(context).textTheme.bodyMedium?.copyWith(
             color: ATColors.grey5Color,
-            fontSize: AmptiveFontSizes.size14
+            fontSize: ATFontSizes.size14
           ),  
         ),
         const Gap(20),
@@ -38,7 +38,7 @@ class AmptiveRowOfTwoIconsAndTwoTextsWidget extends StatelessWidget {
           text2?.toUpperCase() ?? ATStrings.SOCIETY.toUpperCase(),
           style: Theme.of(context).textTheme.bodyMedium?.copyWith(
             color: ATColors.grey5Color,
-            fontSize: AmptiveFontSizes.size14
+            fontSize: ATFontSizes.size14
           ),  
         ),
       ],

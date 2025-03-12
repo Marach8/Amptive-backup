@@ -56,7 +56,7 @@ void showAudioOrVideoFullDetailsOptions(BuildContext context)
                         entry.key,
                         style: Theme.of(context).textTheme.labelMedium?.copyWith(
                           color: ATColors.whiteColor,
-                          fontSize: AmptiveFontSizes.size17
+                          fontSize: ATFontSizes.size17
                         ),
                       )
                     ],

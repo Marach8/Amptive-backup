@@ -53,7 +53,7 @@ class AmptiveRowOfNumberOfPeopleListeningWidget extends StatelessWidget {
                 child: Text(
                   '+652',
                   style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                    fontSize: AmptiveFontSizes.size13
+                    fontSize: ATFontSizes.size13
                   )
                 ),
               )
@@ -66,7 +66,7 @@ class AmptiveRowOfNumberOfPeopleListeningWidget extends StatelessWidget {
           child: Text(
             '656 listening',
             style: Theme.of(context).textTheme.titleMedium?.copyWith(
-              fontSize: AmptiveFontSizes.size13
+              fontSize: ATFontSizes.size13
             )
           ),
         )

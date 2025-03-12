@@ -52,7 +52,7 @@ class _NameAuthScreenState extends State<NameAuthScreen> {
                 Text(
                   ATStrings.whatIsYourName,
                   style: Theme.of(context).textTheme.headlineMedium?.copyWith(
-                        fontSize: AmptiveFontSizes.size17,
+                        fontSize: ATFontSizes.size17,
                       ),
                 ),
                 SizedBox(

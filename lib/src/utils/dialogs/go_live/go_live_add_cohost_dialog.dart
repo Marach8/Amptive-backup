@@ -178,7 +178,7 @@ final showSuffixIconNotifier = ValueNotifier(false);
                                             child: Text(
                                               (index + 1).toString(),
                                               style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                                                fontSize: AmptiveFontSizes.size12
+                                                fontSize: ATFontSizes.size12
                                               ),
                                             ),
                                           );

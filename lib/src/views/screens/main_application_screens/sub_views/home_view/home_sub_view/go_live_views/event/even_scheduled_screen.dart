@@ -85,7 +85,7 @@ class _AmptiveShowScheduledScreenState
                     style: Theme.of(context)
                         .textTheme
                         .bodyLarge
-                        ?.copyWith(fontSize: AmptiveFontSizes.size23)),
+                        ?.copyWith(fontSize: ATFontSizes.size23)),
                 Text(
                     isEvent
                         ? ATStrings.SHARE_EVENT_LINK

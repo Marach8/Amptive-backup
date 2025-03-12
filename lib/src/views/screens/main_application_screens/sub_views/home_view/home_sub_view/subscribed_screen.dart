@@ -32,7 +32,7 @@ class AmptiveSubscribedEventOrShowViewWidget extends StatelessWidget {
                 child: AmptiveAppBarLeadingWidget(
                   leadingText: ATStrings.SUBSCRIBED,
                   leadingStyle: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                    fontSize: AmptiveFontSizes.size23
+                    fontSize: ATFontSizes.size23
                   ),
                 )
               ),

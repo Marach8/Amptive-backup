@@ -30,7 +30,7 @@ class AmptiveCommunityTaskScreen extends StatelessWidget {
               Text(
                 ATStrings.NO_TASK,
                 style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                  fontSize: AmptiveFontSizes.size16
+                  fontSize: ATFontSizes.size16
                 ),
               ),
 

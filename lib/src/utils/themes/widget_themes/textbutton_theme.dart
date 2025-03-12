@@ -16,7 +16,7 @@ class AmptiveTextButtonTheme{
       disabledBackgroundColor: ATColors.trspntColor,
       textStyle: TextStyle(
         fontFamily: ATStrings.inter,
-        fontSize: AmptiveFontSizes.size16,
+        fontSize: ATFontSizes.size16,
         fontWeight: AmptiveFontWeights.w600
       ),
     )

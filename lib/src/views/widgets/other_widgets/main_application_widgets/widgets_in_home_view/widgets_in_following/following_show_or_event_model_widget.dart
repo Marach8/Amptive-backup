@@ -66,7 +66,7 @@ class AmptiveFollowingShowOrEventDataModelWidget extends StatelessWidget {
                   "Don't Forget Who You Are ft. Jacob Scipio",
                   overflow: TextOverflow.clip,
                   style: Theme.of(context).textTheme.displayMedium?.copyWith(
-                    fontSize: AmptiveFontSizes.size24,
+                    fontSize: ATFontSizes.size24,
                     fontWeight: AmptiveFontWeights.w600,
                     fontFamily: "Bricolage Grotesque"
                   ),

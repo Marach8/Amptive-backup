@@ -99,7 +99,7 @@ class ATShowDetailedScreen extends StatelessWidget {
                                 "Don't Forget Who You Are ft. Jacob Scipio",
                                 overflow: TextOverflow.clip,
                                 style: Theme.of(context).textTheme.displayMedium?.copyWith(
-                                  fontSize: AmptiveFontSizes.size24,
+                                  fontSize: ATFontSizes.size24,
                                   fontWeight: AmptiveFontWeights.w600,
                                   fontFamily: "Bricolage Grotesque"
                                 ),
@@ -112,7 +112,7 @@ class ATShowDetailedScreen extends StatelessWidget {
                               Text(
                                 ATStrings.hashtags,
                                 style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                                  fontSize: AmptiveFontSizes.size17
+                                  fontSize: ATFontSizes.size17
                                 ),  
                               ),
                               Divider(color: ATColors.whiteColor.withOpacity(0.1),),
@@ -124,7 +124,7 @@ class ATShowDetailedScreen extends StatelessWidget {
                               Text(
                                 ATStrings.hostedBy,
                                 style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                                  fontSize: AmptiveFontSizes.size17
+                                  fontSize: ATFontSizes.size17
                                 ),  
                               ),
                               Divider(color: ATColors.whiteColor.withOpacity(0.1),),
@@ -143,7 +143,7 @@ class ATShowDetailedScreen extends StatelessWidget {
                               Text(
                                 '656 Listening',
                                 style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                                  fontSize: AmptiveFontSizes.size17
+                                  fontSize: ATFontSizes.size17
                                 ),  
                               ),
                               Divider(color: ATColors.whiteColor.withOpacity(0.1),),
@@ -164,7 +164,7 @@ class ATShowDetailedScreen extends StatelessWidget {
                               Text(
                                 'About Episode',
                                 style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                                  fontSize: AmptiveFontSizes.size17
+                                  fontSize: ATFontSizes.size17
                                 ),  
                               ),
                               Divider(color: ATColors.whiteColor.withOpacity(0.1),),
@@ -177,7 +177,7 @@ class ATShowDetailedScreen extends StatelessWidget {
                                 trimLength: 100,
                                 style: TextStyle(
                                   color: ATColors.whiteColor.withOpacity(0.6),
-                                  fontSize: AmptiveFontSizes.size14,
+                                  fontSize: ATFontSizes.size14,
                                   fontWeight: AmptiveFontWeights.w500,
                                 ),
                               ),
@@ -186,7 +186,7 @@ class ATShowDetailedScreen extends StatelessWidget {
                               Text(
                                 ATStrings.WHISPERS,
                                 style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                                  fontSize: AmptiveFontSizes.size17
+                                  fontSize: ATFontSizes.size17
                                 ),  
                               ),
                               Divider(color: ATColors.whiteColor.withOpacity(0.1),),

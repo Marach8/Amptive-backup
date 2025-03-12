@@ -38,7 +38,7 @@ class AmptiveDashboardBottomNavBarWidget extends StatelessWidget {
                         child: Text(
                           '3', textAlign: TextAlign.center,
                           style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                            fontSize: AmptiveFontSizes.size10
+                            fontSize: ATFontSizes.size10
                           ),
                         ),
                       ),

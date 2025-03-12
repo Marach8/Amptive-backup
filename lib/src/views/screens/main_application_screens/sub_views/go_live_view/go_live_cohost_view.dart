@@ -143,7 +143,7 @@ class _AmptiveGoLiveCohostViewState extends State<AmptiveGoLiveCohostView> {
                                 subtitle: Text(
                                   string.obj.username ?? '',
                                   style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                                    fontSize: AmptiveFontSizes.size13
+                                    fontSize: ATFontSizes.size13
                                   )
                                 ),
                               );

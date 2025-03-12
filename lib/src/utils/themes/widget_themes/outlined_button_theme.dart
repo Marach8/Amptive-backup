@@ -19,7 +19,7 @@ class AmptiveOutlinedButtonTheme{
       side: BorderSide(color: ATColors.whiteColor, width: 0.5),
       textStyle: TextStyle(
         fontFamily: ATStrings.inter,
-        fontSize: AmptiveFontSizes.size16,
+        fontSize: ATFontSizes.size16,
         fontWeight: AmptiveFontWeights.w600
       ),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(40).r)

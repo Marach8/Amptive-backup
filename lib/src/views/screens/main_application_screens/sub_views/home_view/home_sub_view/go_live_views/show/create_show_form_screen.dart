@@ -385,7 +385,7 @@ class _CreateShowScreenState extends State<CreateShowScreen> {
                                     .textTheme
                                     .titleSmall
                                     ?.copyWith(
-                                    fontSize: AmptiveFontSizes.size13,
+                                    fontSize: ATFontSizes.size13,
                                     color: ATColors.whiteColor
                                         .withOpacity(0.6),
                                     fontWeight:
@@ -857,7 +857,7 @@ class OverlappingHosts extends StatelessWidget {
                             .textTheme
                             .bodySmall
                             ?.copyWith(
-                          fontSize: AmptiveFontSizes.size10,
+                          fontSize: ATFontSizes.size10,
                         ),
                       ),
                     ),

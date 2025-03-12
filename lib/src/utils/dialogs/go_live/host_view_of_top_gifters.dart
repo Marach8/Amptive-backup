@@ -157,7 +157,7 @@ class AmptiveGifterWidget extends StatelessWidget {
               index.toString(),
               style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                 color: ATColors.yellowColor,
-                fontSize: AmptiveFontSizes.size14
+                fontSize: ATFontSizes.size14
               ),
             ) : AmptiveCircleAvatarWidget(
               diameter: 5,

@@ -32,7 +32,7 @@ class AmptiveScheduledEventOrShowViewWidget extends StatelessWidget {
                 child: AmptiveAppBarLeadingWidget(
                   leadingText: ATStrings.SCHEDULED,
                   leadingStyle: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                    fontSize: AmptiveFontSizes.size23
+                    fontSize: ATFontSizes.size23
                   ),
                 )
               ),

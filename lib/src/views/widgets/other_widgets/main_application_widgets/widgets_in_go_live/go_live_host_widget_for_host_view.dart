@@ -110,7 +110,7 @@ class AmptiveLiveHostAndCoHostWidget extends StatelessWidget {
               child: Text(
                 ATStrings.HOST.toUpperCase(),
                 style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                  fontSize: AmptiveFontSizes.size10,
+                  fontSize: ATFontSizes.size10,
                 )
               ),
             ) : const SizedBox.shrink()

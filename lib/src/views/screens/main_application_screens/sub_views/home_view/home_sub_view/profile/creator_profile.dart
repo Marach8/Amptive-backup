@@ -121,7 +121,7 @@ class AmptiveCreatorProfileScreen extends StatelessWidget {
                                 child: Text(
                                   ATStrings.CREATOR.toUpperCase(),
                                   style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                                    fontSize: AmptiveFontSizes.size10,
+                                    fontSize: ATFontSizes.size10,
                                     color: ATColors.black
                                   ),
                                 ),
@@ -172,7 +172,7 @@ class AmptiveCreatorProfileScreen extends StatelessWidget {
                             ATStrings.TOP_CREATORS_IN_SOCIETY,
                             style: Theme.of(context).textTheme.bodySmall?.copyWith(
                               color: ATColors.hexEECEA0,
-                              fontSize: AmptiveFontSizes.size13
+                              fontSize: ATFontSizes.size13
                             ),
                           ),
                         ],
@@ -201,14 +201,14 @@ class AmptiveCreatorProfileScreen extends StatelessWidget {
                               Text(
                                 '1.1m',
                                 style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                                  fontSize: AmptiveFontSizes.size16
+                                  fontSize: ATFontSizes.size16
                                 ),
                               ),
                               const Gap(5),
                               Text(
                                 ATStrings.FOLLOWERS,
                                 style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                                  fontSize: AmptiveFontSizes.size16
+                                  fontSize: ATFontSizes.size16
                                 ),
                               ),
                             ],
@@ -234,14 +234,14 @@ class AmptiveCreatorProfileScreen extends StatelessWidget {
                               Text(
                                 '150k',
                                 style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                                  fontSize: AmptiveFontSizes.size16
+                                  fontSize: ATFontSizes.size16
                                 ),
                               ),
                               const Gap(5),
                               Text(
                                 ATStrings.SUBSCRIBERS,
                                 style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                                  fontSize: AmptiveFontSizes.size16
+                                  fontSize: ATFontSizes.size16
                                 ),
                               ),
                             ],
@@ -258,14 +258,14 @@ class AmptiveCreatorProfileScreen extends StatelessWidget {
                         items: {
                           'Author of UNTAMED & LOVE WARRIOR. Host of WE CAN DO HARD THINGS. Founder of'
                           : Theme.of(context).textTheme.titleMedium!.copyWith(
-                            fontSize: AmptiveFontSizes.size13
+                            fontSize: ATFontSizes.size13
                           ),
                           ' @together_rising. ': Theme.of(context).textTheme.titleMedium!.copyWith(
-                            fontSize: AmptiveFontSizes.size13,
+                            fontSize: ATFontSizes.size13,
                             color: ATColors.hexC2C2C2
                           ),
                           'Includes an Oscar winner.': Theme.of(context).textTheme.titleMedium!.copyWith(
-                            fontSize: AmptiveFontSizes.size13
+                            fontSize: ATFontSizes.size13
                           ),
                         },
                         textAlign: TextAlign.center,
@@ -337,7 +337,7 @@ class AmptiveCreatorProfileScreen extends StatelessWidget {
                             child: Text(
                               ATStrings.EDIT_PROFILE,
                               style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                                fontSize: AmptiveFontSizes.size14
+                                fontSize: ATFontSizes.size14
                               )
                             )
                           ),
@@ -352,7 +352,7 @@ class AmptiveCreatorProfileScreen extends StatelessWidget {
                             child: Text(
                               ATStrings.SUBSCRIPTION,
                               style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                                fontSize: AmptiveFontSizes.size14
+                                fontSize: ATFontSizes.size14
                               )
                             )
                           ),
@@ -400,7 +400,7 @@ class AmptiveCreatorProfileScreen extends StatelessWidget {
                                   child: Text(
                                     string,
                                     style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                                      fontSize: AmptiveFontSizes.size13,
+                                      fontSize: ATFontSizes.size13,
                                       color: isSelected ? ATColors.black : ATColors.whiteColor
                                     ),
                                   ),
@@ -481,7 +481,7 @@ class ProfileEventOrShowDisplay extends StatelessWidget {
                     Text(
                       'We Can Do Hard Things',
                       style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                        fontSize: AmptiveFontSizes.size12,
+                        fontSize: ATFontSizes.size12,
                         color: ATColors.hexC2C2C2
                       ),
                     ),
@@ -493,7 +493,7 @@ class ProfileEventOrShowDisplay extends StatelessWidget {
                   maxLines: 2,
                   'How To Be More Alive With Cole Authur Riley (Best of Emmanuel Nnanna)',
                   style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                    fontSize: AmptiveFontSizes.size15,
+                    fontSize: ATFontSizes.size15,
                   ),
                 ),
       
@@ -510,7 +510,7 @@ class ProfileEventOrShowDisplay extends StatelessWidget {
                           'P',
                           style: Theme.of(context).textTheme.titleSmall?.copyWith(
                             fontWeight: AmptiveFontWeights.w800,
-                            fontSize: AmptiveFontSizes.size10,
+                            fontSize: ATFontSizes.size10,
                             color: ATColors.black
                           ),
                         )

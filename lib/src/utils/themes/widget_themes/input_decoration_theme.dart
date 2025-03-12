@@ -17,14 +17,14 @@ class AmptiveInputDecorationTheme{
     // suffixIconColor: AmptiveColors.deepOrange,
     //labelStyle: const TextStyle().copyWith(fontSize: AmptiveFontSizes.size13),
     hintStyle: TextStyle(
-      fontSize: AmptiveFontSizes.size16,
+      fontSize: ATFontSizes.size16,
       color: ATColors.authHintColor,
       fontWeight: AmptiveFontWeights.w400
     ),
     contentPadding: const EdgeInsets.fromLTRB(16, 12, 16, 12).r,
     errorStyle: TextStyle(
       color: ATColors.textRedColor,
-      fontSize: AmptiveFontSizes.size12,
+      fontSize: ATFontSizes.size12,
       fontWeight: AmptiveFontWeights.w400
     ),
 

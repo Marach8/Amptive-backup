@@ -33,13 +33,13 @@ class AmptiveRowOfTrendingHashTagTitle extends StatelessWidget {
             Text(
               ATStrings.HASH + hashTagTitle.toLowerCase(),
               style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                fontSize: AmptiveFontSizes.size15
+                fontSize: ATFontSizes.size15
               ),
             ),
             Text(
               hashTagSubTitle,
               style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                fontSize: AmptiveFontSizes.size13,
+                fontSize: ATFontSizes.size13,
                 color: ATColors.grey5Color
               ),
             ),

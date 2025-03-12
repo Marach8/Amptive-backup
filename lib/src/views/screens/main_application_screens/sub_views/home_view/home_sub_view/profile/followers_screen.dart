@@ -123,7 +123,7 @@ class _AmptiveFollowerWidget extends StatelessWidget {
               child: Text(
                 ATStrings.REMOVE,
                 style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                  fontSize: AmptiveFontSizes.size13,
+                  fontSize: ATFontSizes.size13,
                   color: ATColors.black
                 ),
               ),

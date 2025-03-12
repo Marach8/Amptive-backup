@@ -70,7 +70,7 @@ class AmptiveEventDetailedScreen extends StatelessWidget {
                       "Figma Confiq 2024",
                       overflow: TextOverflow.clip,
                       style: Theme.of(context).textTheme.displayMedium?.copyWith(
-                        fontSize: AmptiveFontSizes.size24,
+                        fontSize: ATFontSizes.size24,
                         fontWeight: AmptiveFontWeights.w600,
                         fontFamily: "Bricolage Grotesque"
                       ),
@@ -86,7 +86,7 @@ class AmptiveEventDetailedScreen extends StatelessWidget {
                     Text(
                       ATStrings.hashtags,
                       style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                        fontSize: AmptiveFontSizes.size17
+                        fontSize: ATFontSizes.size17
                       ),  
                     ),
                     Divider(color: ATColors.whiteColor.withOpacity(0.1),),
@@ -98,7 +98,7 @@ class AmptiveEventDetailedScreen extends StatelessWidget {
                     Text(
                       ATStrings.hostedBy,
                       style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                        fontSize: AmptiveFontSizes.size17
+                        fontSize: ATFontSizes.size17
                       ),  
                     ),
                     Divider(color: ATColors.whiteColor.withOpacity(0.1),),
@@ -117,7 +117,7 @@ class AmptiveEventDetailedScreen extends StatelessWidget {
                     Text(
                       '12528 Listening',
                       style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                        fontSize: AmptiveFontSizes.size17
+                        fontSize: ATFontSizes.size17
                       ),  
                     ),
                     Divider(color: ATColors.whiteColor.withOpacity(0.1),),
@@ -138,7 +138,7 @@ class AmptiveEventDetailedScreen extends StatelessWidget {
                     Text(
                       'About Event',
                       style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                        fontSize: AmptiveFontSizes.size17
+                        fontSize: ATFontSizes.size17
                       ),  
                     ),
                     Divider(color: ATColors.whiteColor.withOpacity(0.1),),
@@ -151,7 +151,7 @@ class AmptiveEventDetailedScreen extends StatelessWidget {
                       trimLength: 100,
                       style: TextStyle(
                         color: ATColors.whiteColor.withOpacity(0.6),
-                        fontSize: AmptiveFontSizes.size14,
+                        fontSize: ATFontSizes.size14,
                         fontWeight: AmptiveFontWeights.w500,
                       ),
                     ),
@@ -160,7 +160,7 @@ class AmptiveEventDetailedScreen extends StatelessWidget {
                     Text(
                       ATStrings.WHISPERS,
                       style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                        fontSize: AmptiveFontSizes.size17
+                        fontSize: ATFontSizes.size17
                       ),  
                     ),
                     Divider(color: ATColors.whiteColor.withOpacity(0.1),),
@@ -177,7 +177,7 @@ class AmptiveEventDetailedScreen extends StatelessWidget {
                     Text(
                       ATStrings.gotATicketId,
                       style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                        fontSize: AmptiveFontSizes.size17
+                        fontSize: ATFontSizes.size17
                       ),  
                     ),
                     Divider(color: ATColors.whiteColor.withOpacity(0.1),),
@@ -200,7 +200,7 @@ class AmptiveEventDetailedScreen extends StatelessWidget {
                       trimLength: 100,
                       style: TextStyle(
                         color: ATColors.whiteColor.withOpacity(0.6),
-                        fontSize: AmptiveFontSizes.size14,
+                        fontSize: ATFontSizes.size14,
                         fontWeight: AmptiveFontWeights.w500,
                       ),
                     ),

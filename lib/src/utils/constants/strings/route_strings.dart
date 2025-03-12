@@ -53,6 +53,7 @@ class ATRoutes {
   static const COMMUNITY_TASK_SCREEN = 'community_task';
   static const PROFILE_PIC_SCREEN = 'profile_picture';
   static const LANGUAGE_SCREEN = 'language_screen';
+  static const CALENDER_SCREEN = 'calender_screen';
   static const PRIVACY_SCREEN = 'privacy_screen';
   static const BLOCKED_ACCTS_SCREEN = 'blocked_accounts_screen';
   static const MUTED_ACCTS_SCREEN = 'muted_accounts_screen';

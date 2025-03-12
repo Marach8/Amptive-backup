@@ -200,14 +200,14 @@ class _CustomRow extends StatelessWidget {
                 Text(
                   title,
                   style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                    fontSize: AmptiveFontSizes.size17
+                    fontSize: ATFontSizes.size17
                   ),
                 ),
                 if(subtitle != null)const Gap(8),
                 if(subtitle != null)Text(
                   subtitle!,
                   style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                    fontSize: AmptiveFontSizes.size12,
+                    fontSize: ATFontSizes.size12,
                     color: ATColors.whiteColor.withOpacity(0.4)
                   ),
                 ),

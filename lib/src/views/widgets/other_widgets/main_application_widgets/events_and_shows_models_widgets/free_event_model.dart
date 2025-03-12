@@ -41,7 +41,7 @@ class AmptiveFreeEventModel extends StatelessWidget {
                 child: Text(
                   'achidon',
                   style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                    fontSize: AmptiveFontSizes.size13,
+                    fontSize: ATFontSizes.size13,
                     color: ATColors.grey5Color,
                   ),
                 ),

@@ -20,7 +20,7 @@ class ShowOrEventIndicatorWithTitle extends StatelessWidget {
         Text(
           'We Can Do Hard Things',
           style: Theme.of(context).textTheme.labelMedium?.copyWith(
-            fontSize: AmptiveFontSizes.size15,
+            fontSize: ATFontSizes.size15,
             color: ATColors.dimWhiteColor1
           ),
         ),

@@ -122,7 +122,7 @@ class _AmptiveSubscriberWidget extends StatelessWidget {
               child: Text(
                 ATStrings.MANAGE,
                 style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                  fontSize: AmptiveFontSizes.size13,
+                  fontSize: ATFontSizes.size13,
                 ),
               ),
             )
