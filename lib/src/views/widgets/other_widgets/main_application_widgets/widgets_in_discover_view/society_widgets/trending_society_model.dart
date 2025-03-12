@@ -24,12 +24,12 @@ class AmptiveTrendingSocietyModel extends StatelessWidget {
         ClipRRect(
           clipBehavior: Clip.hardEdge,
           borderRadius: BorderRadius.circular(5),
-          child: AmptiveContainer(
+          child: ATContainer(
             height: 170.h, width: AmptiveHelperFunctions.getScreenWidth(context),
             child: FittedBox(
               fit: BoxFit.fill,
-              child: AmptiveImageLoaderWidget(
-                imagePath: trendingPicture
+              child: ATImgLoader(
+                imgPath: trendingPicture
               ),
             ),
           ),
@@ -45,15 +45,15 @@ class AmptiveTrendingSocietyModel extends StatelessWidget {
         Row(
           mainAxisSize: MainAxisSize.min,
           children: [
-            AmptiveContainer(
+            ATContainer(
               height: 12, width: 12,
-              color: AmptiveColors.grey5Color,
+              color: ATColors.grey5Color,
               child: FittedBox(
                 fit: BoxFit.scaleDown,
                 child: Text(
                   "P",
                   style: Theme.of(context).textTheme.displayMedium?.copyWith(
-                    color: AmptiveColors.brandBlack
+                    color: ATColors.brandBlack
                   ),
                 ),
               ),
@@ -64,8 +64,8 @@ class AmptiveTrendingSocietyModel extends StatelessWidget {
                 child: Text(
                   'glendonnoyle',
                   style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                    fontSize: AmptiveFontSizes.size13,
-                    color: AmptiveColors.grey5Color,
+                    fontSize: ATFontSizes.size13,
+                    color: ATColors.grey5Color,
                   ),
                 ),
               ),
@@ -76,14 +76,14 @@ class AmptiveTrendingSocietyModel extends StatelessWidget {
               alignment: Alignment.bottomCenter,
               child: AmptiveCircleAvatarWidget(
                 diameter: 4,
-                color: AmptiveColors.grey5Color,
+                color: ATColors.grey5Color,
               ),
             ),
             const Gap(5),
             Text(
               'LIVE',
               style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                color: AmptiveColors.grey5Color,
+                color: ATColors.grey5Color,
               ),
             ),
           ],

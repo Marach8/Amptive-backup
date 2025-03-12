@@ -27,10 +27,10 @@ class AmptiveRowOfTitleWithTrendingViewAll extends StatelessWidget {
             child: Row(
               children: [
                 Text(
-                  AmptiveStrings.VIEW_ALL,
+                  ATStrings.VIEW_ALL,
                   style: Theme.of(context).textTheme.labelMedium
                 ),
-                Icon(Icons.keyboard_arrow_right_sharp, color: AmptiveColors.authHintColor,)
+                Icon(Icons.keyboard_arrow_right_sharp, color: ATColors.authHintColor,)
               ],
             ),
           )

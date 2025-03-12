@@ -23,7 +23,7 @@ class SelectedCommunity extends StatelessWidget {
       height: 98.h,
       padding: EdgeInsets.symmetric(vertical: 13.h, horizontal: 16.w),
       decoration: BoxDecoration(
-          color: AmptiveColors.whiteColor.withOpacity(0.1),
+          color: ATColors.white.withOpacity(0.1),
           borderRadius: BorderRadius.circular(14.r)),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -52,14 +52,14 @@ class SelectedCommunity extends StatelessWidget {
                 ElevatedButton(
                   onPressed: onView,
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: AmptiveColors.whiteColor.withOpacity(0.1),
+                    backgroundColor: ATColors.white.withOpacity(0.1),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(5.r),
                     ),
                   ),
                   child: Text("View Community",
                       style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                          color: AmptiveColors.whiteColor.withOpacity(0.7),
+                          color: ATColors.white.withOpacity(0.7),
                           fontWeight: AmptiveFontWeights.w500)),
                 )
               ],

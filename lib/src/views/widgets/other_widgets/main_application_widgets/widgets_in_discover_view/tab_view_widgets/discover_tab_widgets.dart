@@ -45,10 +45,10 @@ with SingleTickerProviderStateMixin{
           splashFactory: NoSplash.splashFactory,
           tabAlignment: TabAlignment.start,
           labelPadding: EdgeInsets.zero,
-          indicatorColor: AmptiveColors.transparentColor,
+          indicatorColor: ATColors.trsprtColor,
           padding: const EdgeInsets.only(left: 15),
           isScrollable: true,
-          dividerColor: AmptiveColors.brandBlack,
+          dividerColor: ATColors.brandBlack,
           tabs: ['Top', 'Shows', 'Events', 'Users', 'Hashtags'].asMap().entries.map(
             (tab){              
               return Tab(
@@ -56,16 +56,16 @@ with SingleTickerProviderStateMixin{
                 valueListenable: _isTabSelected,
                 builder: (_, value, __) {
                   final isSelected = tab.key == value;
-                    return AmptiveContainer(
+                    return ATContainer(
                       radius: 20,
                       margin: const EdgeInsets.only(right: 10),
                       color: isSelected ? 
-                        AmptiveColors.whiteColor : AmptiveColors.fillGreyColor.withOpacity(0.3),
+                        ATColors.white : ATColors.fillGreyColor.withOpacity(0.3),
                       padding: const EdgeInsets.fromLTRB(15, 8, 15, 8),
                       child: Text(
                         tab.value,
                         style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                          color: isSelected ? AmptiveColors.brandBlack : AmptiveColors.whiteColor                           
+                          color: isSelected ? ATColors.brandBlack : ATColors.white                           
                         ),
                       ),
                     );
@@ -77,7 +77,7 @@ with SingleTickerProviderStateMixin{
         ),
         
     
-        AmptiveContainer(
+        ATContainer(
           padding: const EdgeInsets.all(15),
           height: AmptiveHelperFunctions.getScreenHeight(context),
           child: TabBarView(
@@ -87,7 +87,7 @@ with SingleTickerProviderStateMixin{
                 children: List.generate(
                   10,
                   (_) => const AmptiveTabViewListTileWidget(
-                    leadingImagePath: AmptiveImageStrings.weCanDoHardThingsBgImage,
+                    leadingImagePath: ATImgStrings.weCanDoHardThingsBgImage,
                     addPlayButton: true,
                     title: 'We Can Do Hard Things',
                   ),
@@ -97,7 +97,7 @@ with SingleTickerProviderStateMixin{
                 children: List.generate(
                   10,
                   (_) => const AmptiveTabViewListTileWidget(
-                    leadingImagePath: AmptiveImageStrings.OFFICE_LADIES,
+                    leadingImagePath: ATImgStrings.OFFICE_LADIES,
                     isCircular: true,
                     addPlayButton: true,
                     title: 'We Can Do Hard Things',
@@ -108,7 +108,7 @@ with SingleTickerProviderStateMixin{
                 children: List.generate(
                   10,
                   (_) => const AmptiveTabViewListTileWidget(
-                    leadingImagePath: AmptiveImageStrings.weCanDoHardThingsBgImage,
+                    leadingImagePath: ATImgStrings.weCanDoHardThingsBgImage,
                     addPlayButton: true,
                     title: 'We Can Do Hard Things',
                   ),
@@ -118,7 +118,7 @@ with SingleTickerProviderStateMixin{
                 children: List.generate(
                   10,
                   (_) => const AmptiveTabViewListTileWidget(
-                    leadingImagePath: AmptiveImageStrings.MAN_PHOTO,
+                    leadingImagePath: ATImgStrings.MAN_PHOTO,
                     title: 'We Can Do Hard Things',
                   ),
                 )
@@ -127,7 +127,7 @@ with SingleTickerProviderStateMixin{
                 children: List.generate(
                   10,
                   (_) => const AmptiveTabViewListTileWidget(
-                    leadingImagePath: AmptiveImageStrings.CRIMINAL,
+                    leadingImagePath: ATImgStrings.CRIMINAL,
                     addPlayButton: true,
                     title: 'We Can Do Hard Things',
                   ),

@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
-class AmptiveImageLoaderWidget extends StatelessWidget {
-  final String imagePath;
+class ATImgLoader extends StatelessWidget {
+  final String imgPath;
   final String? package;
   final BoxFit boxFit;
   final double? height, width;
 
-  const AmptiveImageLoaderWidget({
+  const ATImgLoader({
     super.key,
-    required this.imagePath,
+    required this.imgPath,
     this.height,
     this.width,
     this.package,
@@ -18,11 +18,11 @@ class AmptiveImageLoaderWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final imageExtension = imagePath.split('.').last;
+    final imageExtension = imgPath.split('.').last;
 
     if(imageExtension == 'jpg' || imageExtension == 'png' || imageExtension == 'jpeg'){
       return Image.asset(
-        imagePath,
+        imgPath,
         fit: boxFit,
         height: height,
         width: width,
@@ -32,7 +32,7 @@ class AmptiveImageLoaderWidget extends StatelessWidget {
 
     else if(imageExtension == 'svg'){
       return SvgPicture.asset(
-        imagePath, 
+        imgPath, 
         fit: boxFit,
         height: height,
         width: width,

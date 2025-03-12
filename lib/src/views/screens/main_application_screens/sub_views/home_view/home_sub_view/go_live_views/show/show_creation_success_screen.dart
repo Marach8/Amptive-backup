@@ -10,18 +10,18 @@ import '../../../../../../../../utils/constants/strings/other_strings.dart';
 import '../../../../../../../../utils/constants/strings/route_strings.dart';
 import '../../../../../../../widgets/common_widgets/elevated_button_widget.dart';
 
-class AmptiveCreateShowSuccessScreen extends StatefulWidget {
+class ATCreateShowSuccessScreen extends StatefulWidget {
   final String imageFilePath;
 
-  const AmptiveCreateShowSuccessScreen({super.key, required this.imageFilePath});
+  const ATCreateShowSuccessScreen({super.key, required this.imageFilePath});
 
   @override
-  State<AmptiveCreateShowSuccessScreen> createState() =>
-      _AmptiveCreateShowSuccessScreenState();
+  State<ATCreateShowSuccessScreen> createState() =>
+      _ATCreateShowSuccessScreenState();
 }
 
-class _AmptiveCreateShowSuccessScreenState
-    extends State<AmptiveCreateShowSuccessScreen> {
+class _ATCreateShowSuccessScreenState
+    extends State<ATCreateShowSuccessScreen> {
   BoxFit imageFit = BoxFit.cover;
   final ValueNotifier<double> _normalSize = ValueNotifier(700.0);
 
@@ -37,7 +37,7 @@ class _AmptiveCreateShowSuccessScreenState
 
   @override
   Widget build(BuildContext context) {
-    return AmptiveAnnotatedRegionWidget(
+    return ATAnnotatedRegion(
       child: Scaffold(
         appBar: AmptiveAppBar(
           leadingWidth: 20,
@@ -60,16 +60,16 @@ class _AmptiveCreateShowSuccessScreenState
               const Gap(15),
               Text(
                   textAlign: TextAlign.center,
-                  AmptiveStrings.SHOW_IS_SETUP,
+                  ATStrings.SHOW_IS_SETUP,
                   style: Theme.of(context).textTheme.headlineLarge),
               const Gap(10),
               Text(
                 textAlign: TextAlign.center,
-                AmptiveStrings.BEGIN_JOURNEY,
+                ATStrings.BEGIN_JOURNEY,
                 style: Theme.of(context)
                     .textTheme
                     .titleMedium
-                    ?.copyWith(color: AmptiveColors.hexC2C2C2),
+                    ?.copyWith(color: ATColors.hexC2C2C2),
               ),
               const Gap(30),
               AmptiveRebuilderWidget(
@@ -91,14 +91,14 @@ class _AmptiveCreateShowSuccessScreenState
           children: [
             AmptiveElevatedButtonWidget(
               onPressed: () async {
-                await context.pushNamed(AmptiveRoutes.CREATE_EPISODE_FORM);
+                await context.pushNamed(ATRoutes.CREATE_EPISODE_FORM);
               },
-              buttonTitle: AmptiveStrings.CREATE_1ST_EPISODE,
-              bgColor: AmptiveColors.whiteColor,
-              fgColor: AmptiveColors.black,
+              buttonTitle: ATStrings.CREATE_1ST_EPISODE,
+              bgColor: ATColors.white,
+              fgColor: ATColors.black,
             ),
             const Gap(10),
-            Text(AmptiveStrings.VIEW_SHOW_PAGE,
+            Text(ATStrings.VIEW_SHOW_PAGE,
                 style: Theme.of(context).textTheme.headlineMedium),
             const Gap(10),
           ],

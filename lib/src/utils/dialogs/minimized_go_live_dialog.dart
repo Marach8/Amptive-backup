@@ -14,7 +14,7 @@ import 'dart:developer' as marach show log;
 Future<void> showMinimizedGoLiveState() async {
   scaffoldMessengerKey.currentState?.showSnackBar(
     SnackBar(
-      backgroundColor: AmptiveColors.hex202020,
+      backgroundColor: ATColors.hex202020,
       elevation: 0,
       duration: const Duration(days: 10000),
       behavior: SnackBarBehavior.floating,
@@ -22,13 +22,13 @@ Future<void> showMinimizedGoLiveState() async {
       margin: const EdgeInsets.only(left: 10, right: 10),
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(10),
-        side: BorderSide(color: AmptiveColors.hex2D2D2D)
+        side: BorderSide(color: ATColors.hex2D2D2D)
       ),
       content: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
           const AmptivePictureWidget(
-            imagePath: AmptiveImageStrings.weCanDoHardThingsBgImage,
+            imagePath: ATImgStrings.weCanDoHardThingsBgImage,
             diameter: 40, radius: 2,            
           ),
           const Gap(5),
@@ -39,15 +39,15 @@ Future<void> showMinimizedGoLiveState() async {
                 Text(
                   'glennodoyle and 2 others',
                   style: TextStyle(
-                    color: AmptiveColors.whiteColor,
-                    fontSize: AmptiveFontSizes.size13,
+                    color: ATColors.white,
+                    fontSize: ATFontSizes.size13,
                     fontWeight: AmptiveFontWeights.w500,
                   ),
                 ),
                 Row(
                   children: [
-                    const AmptiveImageLoaderWidget(
-                      imagePath: AmptiveImageStrings.filledBroadCast,
+                    const ATImgLoader(
+                      imgPath: ATImgStrings.filledBroadCast,
                       height: 15, width: 15,
                     ),
 
@@ -57,8 +57,8 @@ Future<void> showMinimizedGoLiveState() async {
                         child: Text(
                           "Don't forget who you are ft. Jacob Scipio and the boy is cooljdkjfkafkdajdjjakdjfkajeiefkdjfkdjakjdkjkja",
                           style: TextStyle(
-                            color: AmptiveColors.hexC2C2C2,
-                            fontSize: AmptiveFontSizes.size12,
+                            color: ATColors.hexC2C2C2,
+                            fontSize: ATFontSizes.size12,
                             fontWeight: AmptiveFontWeights.w500,
                           ),
                         ),
@@ -72,7 +72,7 @@ Future<void> showMinimizedGoLiveState() async {
           ),
           GestureDetector(
             onTap: () => scaffoldMessengerKey.currentState?.hideCurrentSnackBar(),
-            child: Icon(Icons.close, color: AmptiveColors.whiteColor, size: 20),
+            child: Icon(Icons.close, color: ATColors.white, size: 20),
           )
         ],
       ),

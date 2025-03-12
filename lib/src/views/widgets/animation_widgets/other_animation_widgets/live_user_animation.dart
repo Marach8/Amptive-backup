@@ -55,14 +55,14 @@ SingleTickerProviderStateMixin{
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(35),
         border: Border.all(
-          color: AmptiveColors.orangeColor1,
+          color: ATColors.orangeColor1,
           width: 2
         )
       ),
       child: ClipRRect(
         borderRadius: BorderRadius.circular(35),
-        child: AmptiveImageLoaderWidget(
-          imagePath: widget.imagePath,
+        child: ATImgLoader(
+          imgPath: widget.imagePath,
           boxFit: BoxFit.cover,
           height: 60,
           width: 60,

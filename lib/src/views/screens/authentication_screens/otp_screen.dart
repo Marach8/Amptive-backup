@@ -80,9 +80,9 @@ class _OTPScreenState extends State<OTPScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return AmptiveAnnotatedRegionWidget(
+    return ATAnnotatedRegion(
       child: Scaffold(
-        backgroundColor: AmptiveColors.brandBlack,
+        backgroundColor: ATColors.brandBlack,
         appBar: const AmptiveAppBar(),
         body: Container(
           padding: EdgeInsets.symmetric(horizontal: 20.w),
@@ -97,7 +97,7 @@ class _OTPScreenState extends State<OTPScreen> {
                     AmptiveHelperFunctions.enter4DigitSentFrom(widget.from.toLowerCase()),
                     textAlign: TextAlign.start,
                     style: Theme.of(context).textTheme.headlineMedium?.copyWith(
-                      fontSize: AmptiveFontSizes.size17
+                      fontSize: ATFontSizes.size17
                     ),
                   ),
                 ),
@@ -128,16 +128,16 @@ class _OTPScreenState extends State<OTPScreen> {
                           text: TextSpan(
                             children: [
                               TextSpan(
-                                text: AmptiveStrings.didNotGetCode,
+                                text: ATStrings.didNotGetCode,
                                 style: Theme.of(context).textTheme.titleSmall
                               ),
                               TextSpan(
-                                text: AmptiveStrings.sendAgain,
+                                text: ATStrings.sendAgain,
                                 recognizer: _tapGestureRecognizer,
                                 style: Theme.of(context).textTheme.titleSmall?.copyWith(
                                   decoration: TextDecoration.underline,
                                   fontWeight: AmptiveFontWeights.w400,
-                                  decorationColor: AmptiveColors.whiteColor,
+                                  decorationColor: ATColors.white,
                                 ),
                               ),
                             ],
@@ -167,7 +167,7 @@ class _OTPScreenState extends State<OTPScreen> {
           child: BlocListener<AmptiveOTPAuthBloc, AmptiveOTPAuthState>(
             listener: (context, state) {
               if (state is VerifiedOTPAuthState && context.mounted) {
-                context.pushReplacementNamed(AmptiveRoutes.passwordAuth);
+                context.pushReplacementNamed(ATRoutes.passwordAuth);
               }
             },
             child: BlocBuilder<AmptiveOTPAuthBloc, AmptiveOTPAuthState>(
@@ -177,7 +177,7 @@ class _OTPScreenState extends State<OTPScreen> {
                   ? const AmptiveLoadingButtonWidget()
                   : AmptiveElevatedButtonWidget(
                     height: 50.w,
-                    buttonTitle: AmptiveStrings.NEXT,
+                    buttonTitle: ATStrings.NEXT,
                     onPressed: state is ValidOTPAuthState
                       ? () => context.read<AmptiveOTPAuthBloc>().add(VerifyOTPAuthEvent()) : null,
                   );
@@ -224,31 +224,31 @@ class OTPTextFormField extends StatelessWidget {
         keyboardType: TextInputType.number,
         maxLength: 1,
         textAlignVertical: TextAlignVertical.center,
-        cursorColor: AmptiveColors.hex307FE2,
+        cursorColor: ATColors.hex307FE2,
         decoration: InputDecoration(
           contentPadding:
               EdgeInsets.symmetric(horizontal: 16.w, vertical: 12.w),
           floatingLabelBehavior: FloatingLabelBehavior.never,
-          counterText: AmptiveStrings.empty,
+          counterText: ATStrings.empty,
           label: const Center(
-            child: Text(AmptiveStrings.hyphen),
+            child: Text(ATStrings.hyphen),
           ),
           labelStyle:Theme.of(context).textTheme.headlineMedium?.copyWith(
           fontWeight: AmptiveFontWeights.w400,
         ),
           filled: true,
-          fillColor: AmptiveColors.fillGreyColor.withOpacity(0.3),
+          fillColor: ATColors.fillGreyColor.withOpacity(0.3),
           focusedBorder: OutlineInputBorder(
             borderSide: BorderSide(
               width: 2.w,
-              color: AmptiveColors.hex307FE2,
+              color: ATColors.hex307FE2,
             ),
             borderRadius: BorderRadius.circular(14.r),
           ),
           border: OutlineInputBorder(
             borderSide: BorderSide(
               width: 2.w,
-              color: AmptiveColors.transparentColor,
+              color: ATColors.trsprtColor,
             ),
             borderRadius: BorderRadius.circular(14.r),
           ),

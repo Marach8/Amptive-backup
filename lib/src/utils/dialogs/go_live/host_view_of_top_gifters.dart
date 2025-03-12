@@ -17,14 +17,14 @@ import '../../constants/strings/other_strings.dart';
 Future<void> showHostViewOfTopGiftersDialog(BuildContext context) async {
 
   return await showModalBottomSheet(
-      backgroundColor: AmptiveColors.hex202020,
+      backgroundColor: ATColors.hex202020,
       constraints: BoxConstraints.expand(
         height: AmptiveHelperFunctions.getScreenHeight(context) * 0.84
       ),
       context: context,
       isScrollControlled: true,
       useSafeArea: true,
-      barrierColor: AmptiveColors.black.withOpacity(0.6),
+      barrierColor: ATColors.black.withOpacity(0.6),
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.only(
         topLeft: Radius.circular(15), topRight: Radius.circular(15),
@@ -55,12 +55,12 @@ Future<void> showHostViewOfTopGiftersDialog(BuildContext context) async {
                       child: Platform.isAndroid
                           ? Icon(
                               Icons.keyboard_arrow_down,
-                              color: AmptiveColors.whiteColor.withOpacity(0.6),
+                              color: ATColors.white.withOpacity(0.6),
                             )
-                          : AmptiveContainer(
+                          : ATContainer(
                               margin: const EdgeInsets.symmetric(vertical: 10),
                               radius: 5, height: 4, width: 30,
-                              color: AmptiveColors.whiteColor.withOpacity(0.6),
+                              color: ATColors.white.withOpacity(0.6),
                               child: const SizedBox.shrink(),
                             ),
                       ),
@@ -77,7 +77,7 @@ Future<void> showHostViewOfTopGiftersDialog(BuildContext context) async {
                           ),
                           const Gap(5),
                           Text(
-                            AmptiveStrings.GIFTS,
+                            ATStrings.GIFTS,
                             style: Theme.of(context).textTheme.bodyLarge
                           ),
                         ],
@@ -87,14 +87,14 @@ Future<void> showHostViewOfTopGiftersDialog(BuildContext context) async {
                       
                     Text(
                       maxLines: 3,
-                      AmptiveStrings.TOP_GIFTERS_DESC,
+                      ATStrings.TOP_GIFTERS_DESC,
                       style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                        color: AmptiveColors.hexC2C2C2
+                        color: ATColors.hexC2C2C2
                       ),
                     ),
                     const Gap(20),
                     Text(
-                      AmptiveStrings.TOP_GIFTERS,
+                      ATStrings.TOP_GIFTERS,
                       style: Theme.of(context).textTheme.bodyMedium
                     ),
                     const Gap(20),
@@ -156,21 +156,21 @@ class AmptiveGifterWidget extends StatelessWidget {
             isInTop3Gifter ? Text(
               index.toString(),
               style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                color: AmptiveColors.yellowColor,
-                fontSize: AmptiveFontSizes.size14
+                color: ATColors.yellowColor,
+                fontSize: ATFontSizes.size14
               ),
             ) : AmptiveCircleAvatarWidget(
               diameter: 5,
-              color: AmptiveColors.whiteColor.withOpacity(0.4),
+              color: ATColors.white.withOpacity(0.4),
               child: const SizedBox.shrink(),
             ),
             const Gap(5),
-            AmptiveContainer(
+            ATContainer(
               clipBehavior: Clip.hardEdge,
               height: 50, width: 50, radius: 30,
               child: FittedBox(
                 fit: BoxFit.fill,
-                child: AmptiveImageLoaderWidget(imagePath: gifter.obj.profilePicture!)
+                child: ATImgLoader(imgPath: gifter.obj.profilePicture!)
               ),
             ),
             const Gap(10),

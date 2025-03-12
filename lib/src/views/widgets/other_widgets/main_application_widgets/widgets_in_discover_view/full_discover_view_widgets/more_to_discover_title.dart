@@ -18,14 +18,14 @@ class AmptiveMore2DiscoverTitle extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              AmptiveStrings.MORE_2_DISCOVER,
+              ATStrings.MORE_2_DISCOVER,
               style: Theme.of(context).textTheme.bodyLarge 
             ),
             Text(
-              AmptiveStrings.SEE_COMMUNITIES,
+              ATStrings.SEE_COMMUNITIES,
               style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                fontSize: AmptiveFontSizes.size13,
-                color: AmptiveColors.authHintColor2
+                fontSize: ATFontSizes.size13,
+                color: ATColors.authHintColor2
               ),
             ),
           ],
@@ -33,15 +33,15 @@ class AmptiveMore2DiscoverTitle extends StatelessWidget {
         const Spacer(),
         GestureDetector(
           onTap: (){
-            context.pushNamed(AmptiveRoutes.COMMUNITY_SCREEN);
+            context.pushNamed(ATRoutes.COMMUNITY_SCREEN);
           },
           child: Row(
             children: [
               Text(
-                AmptiveStrings.VIEW_ALL,
+                ATStrings.VIEW_ALL,
                 style: Theme.of(context).textTheme.labelMedium
               ),
-              Icon(Icons.keyboard_arrow_right_sharp, color: AmptiveColors.authHintColor,)
+              Icon(Icons.keyboard_arrow_right_sharp, color: ATColors.authHintColor,)
             ],
           ),
         )

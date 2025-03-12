@@ -62,7 +62,7 @@ class _CreateShowScreenState extends State<CreateShowScreen> {
     setShowTypeTitle();
     service.initFormControl();
     _defaultAssetImage =
-    const AssetImage(AmptiveImageStrings.createShowPlaceholderImage);
+    const AssetImage(ATImgStrings.createShowPlaceholderImage);
   }
 
   @override
@@ -100,7 +100,7 @@ class _CreateShowScreenState extends State<CreateShowScreen> {
     if (pickedFile != null && mounted) {
       File image = File(pickedFile.path);
       MemoryImage? img =
-      await context.pushNamed(AmptiveRoutes.cropImageSquare, extra: image);
+      await context.pushNamed(ATRoutes.cropImageSquare, extra: image);
       return img;
 
     }
@@ -109,12 +109,12 @@ class _CreateShowScreenState extends State<CreateShowScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return AmptiveAnnotatedRegionWidget(
+    return ATAnnotatedRegion(
       child: Scaffold(
         appBar: AppBar(
           automaticallyImplyLeading: false,
           leading: const BackButton(),
-          backgroundColor: AmptiveColors.black.withOpacity(0.05),
+          backgroundColor: ATColors.black.withOpacity(0.05),
           title: Row(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
@@ -160,7 +160,7 @@ class _CreateShowScreenState extends State<CreateShowScreen> {
             ),
             Positioned.fill(
               child: Container(
-                color: AmptiveColors.black.withOpacity(0.6),
+                color: ATColors.black.withOpacity(0.6),
                 child: BackdropFilter(
                   filter: ImageFilter.blur(
                       sigmaX: Platform.isIOS ? 15.0 : 150.0,
@@ -210,11 +210,11 @@ class _CreateShowScreenState extends State<CreateShowScreen> {
                                 child: Center(
                                   child: CircleAvatar(
                                     backgroundColor:
-                                    AmptiveColors.black.withOpacity(0.5),
+                                    ATColors.black.withOpacity(0.5),
                                     radius: 20.r,
                                     child: Icon(
                                       Icons.add_photo_alternate_outlined,
-                                      color: AmptiveColors.whiteColor,
+                                      color: ATColors.white,
                                       size: 25.w,
                                     ),
                                   ),
@@ -264,7 +264,7 @@ class _CreateShowScreenState extends State<CreateShowScreen> {
                       suffixIcon: Icon(
                         Icons.arrow_forward_ios,
                         size: 20.w,
-                        color: AmptiveColors.whiteColor.withOpacity(0.4),
+                        color: ATColors.white.withOpacity(0.4),
                       ),
                       onChanged: (val) {
                         service.descCharactersLength.value =
@@ -279,7 +279,7 @@ class _CreateShowScreenState extends State<CreateShowScreen> {
                       title: "Community",
                     ),
                     SizedBox(height: 11.5.h),
-                    AmptiveContainer(
+                    ATContainer(
                       child: AmptiveRebuilderWidget(
                         builder: (ctx, selected, _) {
                           return selected && _selectedCommunityCard != null
@@ -299,7 +299,7 @@ class _CreateShowScreenState extends State<CreateShowScreen> {
                             suffixIcon: Icon(
                               Icons.arrow_forward_ios,
                               size: 20.w,
-                              color: AmptiveColors.whiteColor
+                              color: ATColors.white
                                   .withOpacity(0.4),
                             ),
                             readOnly: true,
@@ -318,7 +318,7 @@ class _CreateShowScreenState extends State<CreateShowScreen> {
                         overflow: TextOverflow.visible,
                         style: Theme.of(context).textTheme.titleSmall?.copyWith(
                           fontWeight: AmptiveFontWeights.w500,
-                          color: AmptiveColors.whiteColor.withOpacity(0.4),
+                          color: ATColors.white.withOpacity(0.4),
                         ),
                       ),
                     ),
@@ -340,7 +340,7 @@ class _CreateShowScreenState extends State<CreateShowScreen> {
                           padding: EdgeInsets.symmetric(
                               vertical: 13.h, horizontal: 16.w),
                           decoration: BoxDecoration(
-                              color: AmptiveColors.whiteColor
+                              color: ATColors.white
                                   .withOpacity(0.1),
                               borderRadius: BorderRadius.circular(14.r)),
                           child: Column(
@@ -357,8 +357,8 @@ class _CreateShowScreenState extends State<CreateShowScreen> {
                                       await _editCoHosts(context);
                                     },
                                     style: ElevatedButton.styleFrom(
-                                      backgroundColor: AmptiveColors
-                                          .whiteColor
+                                      backgroundColor: ATColors
+                                          .white
                                           .withOpacity(0.1),
                                       shape: RoundedRectangleBorder(
                                         borderRadius:
@@ -370,8 +370,8 @@ class _CreateShowScreenState extends State<CreateShowScreen> {
                                             .textTheme
                                             .titleSmall
                                             ?.copyWith(
-                                            color: AmptiveColors
-                                                .whiteColor
+                                            color: ATColors
+                                                .white
                                                 .withOpacity(0.7),
                                             fontWeight:
                                             AmptiveFontWeights
@@ -385,8 +385,8 @@ class _CreateShowScreenState extends State<CreateShowScreen> {
                                     .textTheme
                                     .titleSmall
                                     ?.copyWith(
-                                    fontSize: AmptiveFontSizes.size13,
-                                    color: AmptiveColors.whiteColor
+                                    fontSize: ATFontSizes.size13,
+                                    color: ATColors.white
                                         .withOpacity(0.6),
                                     fontWeight:
                                     AmptiveFontWeights.w500),
@@ -406,7 +406,7 @@ class _CreateShowScreenState extends State<CreateShowScreen> {
                             Icons.search,
                             size: 20.w,
                             color:
-                            AmptiveColors.whiteColor.withOpacity(0.4),
+                            ATColors.white.withOpacity(0.4),
                           ),
                         );
                       },
@@ -418,7 +418,7 @@ class _CreateShowScreenState extends State<CreateShowScreen> {
                         overflow: TextOverflow.visible,
                         style: Theme.of(context).textTheme.titleSmall?.copyWith(
                           fontWeight: AmptiveFontWeights.w500,
-                          color: AmptiveColors.whiteColor.withOpacity(0.4),
+                          color: ATColors.white.withOpacity(0.4),
                         ),
                       ),
                     ),
@@ -441,7 +441,7 @@ class _CreateShowScreenState extends State<CreateShowScreen> {
                       suffixIcon: Icon(
                         Icons.arrow_forward_ios,
                         size: 20.w,
-                        color: AmptiveColors.whiteColor.withOpacity(0.4),
+                        color: ATColors.white.withOpacity(0.4),
                       ),
                     ),
                     AmptiveRebuilderWidget(
@@ -474,7 +474,7 @@ class _CreateShowScreenState extends State<CreateShowScreen> {
                         overflow: TextOverflow.visible,
                         style: Theme.of(context).textTheme.titleSmall?.copyWith(
                           fontWeight: AmptiveFontWeights.w500,
-                          color: AmptiveColors.whiteColor.withOpacity(0.4),
+                          color: ATColors.white.withOpacity(0.4),
                         ),
                       ),
                     ),
@@ -491,7 +491,7 @@ class _CreateShowScreenState extends State<CreateShowScreen> {
                       suffixIcon: Icon(
                         Icons.arrow_forward_ios,
                         size: 20.w,
-                        color: AmptiveColors.whiteColor.withOpacity(0.4),
+                        color: ATColors.white.withOpacity(0.4),
                       ),
                       onTap: () async {
                         if (widget.showType == ShowType.show) {
@@ -510,7 +510,7 @@ class _CreateShowScreenState extends State<CreateShowScreen> {
                         overflow: TextOverflow.visible,
                         style: Theme.of(context).textTheme.titleSmall?.copyWith(
                           fontWeight: AmptiveFontWeights.w500,
-                          color: AmptiveColors.whiteColor.withOpacity(0.4),
+                          color: ATColors.white.withOpacity(0.4),
                         ),
                       ),
                     ),
@@ -519,7 +519,7 @@ class _CreateShowScreenState extends State<CreateShowScreen> {
                     Divider(
                       height: 2.h,
                       thickness: 2.w,
-                      color: AmptiveColors.brandBlack.withOpacity(0.10),
+                      color: ATColors.brandBlack.withOpacity(0.10),
                     ),
                     SizedBox(height: 24.h),
 
@@ -552,7 +552,7 @@ class _CreateShowScreenState extends State<CreateShowScreen> {
                         suffixIcon: Icon(
                           Icons.arrow_forward_ios,
                           size: 20.w,
-                          color: AmptiveColors.whiteColor.withOpacity(0.4),
+                          color: ATColors.white.withOpacity(0.4),
                         ),
                         onTap: () async {
                           await showHandRaisingDialog(context);
@@ -573,7 +573,7 @@ class _CreateShowScreenState extends State<CreateShowScreen> {
                               ?.copyWith(
                             fontWeight: AmptiveFontWeights.w500,
                             color:
-                            AmptiveColors.whiteColor.withOpacity(0.4),
+                            ATColors.white.withOpacity(0.4),
                           ),
                         ),
                       ),
@@ -601,7 +601,7 @@ class _CreateShowScreenState extends State<CreateShowScreen> {
                         suffixIcon: Icon(
                           Icons.arrow_forward_ios,
                           size: 20.w,
-                          color: AmptiveColors.whiteColor.withOpacity(0.4),
+                          color: ATColors.white.withOpacity(0.4),
                         ),
                         onTap: () async {
                           await showEventCapacitySelectionDialog(
@@ -624,7 +624,7 @@ class _CreateShowScreenState extends State<CreateShowScreen> {
                               ?.copyWith(
                             fontWeight: AmptiveFontWeights.w500,
                             color:
-                            AmptiveColors.whiteColor.withOpacity(0.4),
+                            ATColors.white.withOpacity(0.4),
                           ),
                         ),
                       ),
@@ -658,7 +658,7 @@ class _CreateShowScreenState extends State<CreateShowScreen> {
                         suffixIcon: Icon(
                           Icons.arrow_forward_ios,
                           size: 20.w,
-                          color: AmptiveColors.whiteColor.withOpacity(0.4),
+                          color: ATColors.white.withOpacity(0.4),
                         ),
                         onTap: () async {
                           await showWhispersDialog(context);
@@ -683,7 +683,7 @@ class _CreateShowScreenState extends State<CreateShowScreen> {
                               ?.copyWith(
                             fontWeight: AmptiveFontWeights.w500,
                             color:
-                            AmptiveColors.whiteColor.withOpacity(0.4),
+                            ATColors.white.withOpacity(0.4),
                           ),
                         ),
                       ),
@@ -725,16 +725,16 @@ class _CreateShowScreenState extends State<CreateShowScreen> {
                         backgroundColor:
                         WidgetStateProperty.resolveWith((states) {
                           if (states.contains(WidgetState.disabled)) {
-                            return AmptiveColors.hex2D2D2D;
+                            return ATColors.hex2D2D2D;
                           }
-                          return AmptiveColors.hexD9D9D9;
+                          return ATColors.hexD9D9D9;
                         }),
                         foregroundColor:
                         WidgetStateProperty.resolveWith((states) {
                           if (states.contains(WidgetState.disabled)) {
-                            return AmptiveColors.strokeGreyColor;
+                            return ATColors.strokeGreyColor;
                           }
-                          return AmptiveColors.brandBlack;
+                          return ATColors.brandBlack;
                         }),
                       ),
                     );
@@ -793,13 +793,13 @@ class _CreateShowScreenState extends State<CreateShowScreen> {
 
   void navigateToSuccessPage() {
     if (widget.showType == ShowType.show) {
-      context.pushReplacementNamed(AmptiveRoutes.CREATE_SHOW_SUCCESS,
+      context.pushReplacementNamed(ATRoutes.CREATE_SHOW_SUCCESS,
           extra: service.selectedShowImage!);
     } else if (widget.showType == ShowType.event) {
-      context.pushReplacementNamed(AmptiveRoutes.EVENT_SCHEDULED_SCREEN,
+      context.pushReplacementNamed(ATRoutes.EVENT_SCHEDULED_SCREEN,
           extra: service.selectedShowImage!);
     } else if (widget.showType == ShowType.episode) {
-      context.pushReplacementNamed(AmptiveRoutes.EPISODE_SCHEDULED_SCREEN,
+      context.pushReplacementNamed(ATRoutes.EPISODE_SCHEDULED_SCREEN,
           extra: service.selectedShowImage!);
     }
   }
@@ -831,7 +831,7 @@ class OverlappingHosts extends StatelessWidget {
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
                 border: Border.all(
-                    color: AmptiveColors.whiteColor.withOpacity(0.4), width: 1),
+                    color: ATColors.white.withOpacity(0.4), width: 1),
               ),
               child: ClipOval(
                 child: item is ObjectWithNotifier<Host>
@@ -846,7 +846,7 @@ class OverlappingHosts extends StatelessWidget {
                       filter:
                       ImageFilter.blur(sigmaX: 53.4, sigmaY: 53.4),
                       child: Container(
-                        color: AmptiveColors.brandBlack
+                        color: ATColors.brandBlack
                             .withOpacity(0.2),
                       ),
                     ),
@@ -857,7 +857,7 @@ class OverlappingHosts extends StatelessWidget {
                             .textTheme
                             .bodySmall
                             ?.copyWith(
-                          fontSize: AmptiveFontSizes.size10,
+                          fontSize: ATFontSizes.size10,
                         ),
                       ),
                     ),

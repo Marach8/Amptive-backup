@@ -18,14 +18,14 @@ Future<void> selectDateModal(
   CreateShowService service = GetIt.I<CreateShowService>();
 
   AssetImage? defaultAssetImage =
-      const AssetImage(AmptiveImageStrings.createShowPlaceholderImage);
+      const AssetImage(ATImgStrings.createShowPlaceholderImage);
   var now = DateTime.now();
 
   DateTime selectedDateTime =
       service.isValidEventDateTime() ? service.eventDateTime! : now;
 
   return await showModalBottomSheet(
-      backgroundColor: AmptiveColors.transparentColor,
+      backgroundColor: ATColors.trsprtColor,
       constraints: BoxConstraints.expand(
           height: AmptiveHelperFunctions.getScreenHeight(context)),
       context: context,
@@ -48,7 +48,7 @@ Future<void> selectDateModal(
             ),
             Positioned.fill(
               child: Container(
-                color: AmptiveColors.black.withOpacity(0.6),
+                color: ATColors.black.withOpacity(0.6),
                 child: BackdropFilter(
                   filter: ImageFilter.blur(sigmaX: 150.0, sigmaY: 150.0),
                   child: Container(),
@@ -79,7 +79,7 @@ Future<void> selectDateModal(
                       "Please select time between three months from today, and one hour from now",
                       maxLines: null,
                       style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                          color: AmptiveColors.hexC2C2C2,
+                          color: ATColors.hexC2C2C2,
                           overflow: TextOverflow.visible),
                     ),
                   ),
@@ -105,7 +105,7 @@ Future<void> selectDateModal(
             Positioned(
               bottom: 70.h,
               right: 0,
-              child: AmptiveContainer(
+              child: ATContainer(
                 height: 50.h,
                 padding: const EdgeInsets.symmetric(horizontal: 15),
                 width: AmptiveHelperFunctions.getScreenWidth(context),
@@ -115,15 +115,15 @@ Future<void> selectDateModal(
                     service.eventDateTime = selectedDateTime;
                     Navigator.pop(context);
                   },
-                  buttonTitle: AmptiveStrings.CONTINUE,
-                  bgColor: AmptiveColors.whiteColor,
-                  fgColor: AmptiveColors.black,
+                  buttonTitle: ATStrings.CONTINUE,
+                  bgColor: ATColors.white,
+                  fgColor: ATColors.black,
                 ),
               ),
             ),
             Positioned(
               bottom: 10.h,
-              child: AmptiveContainer(
+              child: ATContainer(
                 height: 50.h,
                 padding: const EdgeInsets.symmetric(horizontal: 15),
                 width: AmptiveHelperFunctions.getScreenWidth(context),
@@ -133,9 +133,9 @@ Future<void> selectDateModal(
                     service.eventDateTime = null;
                     Navigator.pop(context);
                   },
-                  buttonTitle: AmptiveStrings.REMOVE,
-                  bgColor: AmptiveColors.transparentColor,
-                  fgColor: AmptiveColors.whiteColor,
+                  buttonTitle: ATStrings.REMOVE,
+                  bgColor: ATColors.trsprtColor,
+                  fgColor: ATColors.white,
                 ),
               ),
             )

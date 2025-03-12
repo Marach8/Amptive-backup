@@ -67,4 +67,24 @@ class AmptiveHelperFunctions{
     }
     return null;
   }
+
+
+
+  static List<List<DateTime>> getWeeksInAMonth({required int year, required int month}) {
+    List<DateTime> allDays = [];
+    int daysInMonth = DateTime(year, month + 1, 0).day;
+
+    for (int i = 1; i <= daysInMonth; i++) {
+      allDays.add(DateTime(year, month, i));
+    }
+
+    List<List<DateTime>> weekChunks = [];
+    for (var i = 0; i < allDays.length; i += 7) {
+      weekChunks.add(
+        allDays.sublist(i, (i + 7) > allDays.length ? allDays.length : i + 7)
+      );
+    }
+
+    return weekChunks;
+  }
 }

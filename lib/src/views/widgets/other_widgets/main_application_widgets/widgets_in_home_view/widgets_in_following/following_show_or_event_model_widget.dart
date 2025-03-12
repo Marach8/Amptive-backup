@@ -24,34 +24,34 @@ class AmptiveFollowingShowOrEventDataModelWidget extends StatelessWidget {
     return Column(
       children: [
         AmptiveListTileWithLeadingPictureWidget(
-          leadingImagePath: AmptiveImageStrings.jpeg3,
+          leadingImagePath: ATImgStrings.jpeg3,
           trailingOnPressed: (){
-            context.pushNamed(AmptiveRoutes.EVENT_DETAILED_SCREEN);
+            context.pushNamed(ATRoutes.EVENT_DETAILED_SCREEN);
           },
           title: 'glennodoyle',
           subtitle: 'Started a live show',
         ),
         Gap(2.h),
-        AmptiveContainer(
-          decorationImagePath: AmptiveImageStrings.weCanDoHardThingsBgImage,
+        ATContainer(
+          decorationImagePath: ATImgStrings.weCanDoHardThingsBgImage,
           decorationImageFit: BoxFit.contain,
           height: 432.h,
           radius: 15.r,
-          child: AmptiveContainer(
+          child: ATContainer(
             padding: const EdgeInsets.fromLTRB(15, 10, 15, 10),
             radius: 15.r,
             gradient: LinearGradient(
               begin: Alignment.topCenter,
               end: Alignment.bottomCenter,
               colors: [
-                AmptiveColors.transparentColor,
-                AmptiveColors.transparentColor,
-                AmptiveColors.transparentColor,
-                AmptiveColors.transparentColor,
-                AmptiveColors.containerGradientColorB.withOpacity(0.5),
-                AmptiveColors.containerGradientColorB,
-                AmptiveColors.containerGradientColorB,
-                AmptiveColors.containerGradientColorB,
+                ATColors.trsprtColor,
+                ATColors.trsprtColor,
+                ATColors.trsprtColor,
+                ATColors.trsprtColor,
+                ATColors.containerGradientColorB.withOpacity(0.5),
+                ATColors.containerGradientColorB,
+                ATColors.containerGradientColorB,
+                ATColors.containerGradientColorB,
               ]
             ),
             child: Column(
@@ -66,7 +66,7 @@ class AmptiveFollowingShowOrEventDataModelWidget extends StatelessWidget {
                   "Don't Forget Who You Are ft. Jacob Scipio",
                   overflow: TextOverflow.clip,
                   style: Theme.of(context).textTheme.displayMedium?.copyWith(
-                    fontSize: AmptiveFontSizes.size24,
+                    fontSize: ATFontSizes.size24,
                     fontWeight: AmptiveFontWeights.w600,
                     fontFamily: "Bricolage Grotesque"
                   ),

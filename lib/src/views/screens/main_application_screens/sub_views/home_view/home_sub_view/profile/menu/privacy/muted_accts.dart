@@ -17,7 +17,7 @@ class AmptiveMutedAcctsScreen extends StatelessWidget {
 
   @override
   Widget build(context) {
-    return AmptiveAnnotatedRegionWidget(
+    return ATAnnotatedRegion(
       child: Scaffold(
         body: Column(
           children: [
@@ -27,16 +27,16 @@ class AmptiveMutedAcctsScreen extends StatelessWidget {
                 children: [
                   AmptiveCircleAvatarWidget(
                     onTap: () => context.pop(),
-                    diameter: 30, color: AmptiveColors.transparentColor,
+                    diameter: 30, color: ATColors.trsprtColor,
                     child: const Icon(Icons.keyboard_arrow_left),
                   ),
                   const Spacer(),
                   Text(
-                    AmptiveStrings.MUTED_ACCTS,
+                    ATStrings.MUTED_ACCTS,
                     style: Theme.of(context).textTheme.bodyMedium,
                   ),
                   const Spacer(),
-                  Icon(Icons.keyboard_arrow_left, color: AmptiveColors.transparentColor),
+                  Icon(Icons.keyboard_arrow_left, color: ATColors.trsprtColor),
                 ],
               ),
             ),
@@ -52,20 +52,20 @@ class AmptiveMutedAcctsScreen extends StatelessWidget {
                       final subscriber = state.elementAt(listIndex);
                       return AmptiveBlockedOrMutedAcctWidget(
                         subscriber: subscriber,
-                        text: AmptiveStrings.UNMUTE,
+                        text: ATStrings.UNMUTE,
                         onTap: (follower, isSelected)async{
                           final shouldUnmute = await showConfirmationDialog(
                             context: context,
-                            title: '${AmptiveStrings.UNMUTE} ${follower.obj.username}',
-                            content: AmptiveStrings.unMuteDesc(follower.obj.username ?? ''),
-                            yesString: AmptiveStrings.UNMUTE,
-                            noString: AmptiveStrings.CANCEL
+                            title: '${ATStrings.UNMUTE} ${follower.obj.username}',
+                            content: ATStrings.unMuteDesc(follower.obj.username ?? ''),
+                            yesString: ATStrings.UNMUTE,
+                            noString: ATStrings.CANCEL
                           );
                           if(context.mounted && (shouldUnmute ?? false)){
                             showAppNotification(
                               context: context,
                               icon: const Icon(Icons.check_circle),
-                              text: '${follower.obj.username} ${AmptiveStrings.IS_UNMUTED}'
+                              text: '${follower.obj.username} ${ATStrings.IS_UNMUTED}'
                             );
                           }
                         },

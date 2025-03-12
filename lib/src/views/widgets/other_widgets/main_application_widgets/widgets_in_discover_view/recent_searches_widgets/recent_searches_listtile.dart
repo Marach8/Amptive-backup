@@ -44,9 +44,9 @@ class AmptiveRecentSearchesListTileWidget extends StatelessWidget {
             Text(
               'Show',
               style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                color: AmptiveColors.hexC2C2C2,
+                color: ATColors.hexC2C2C2,
                 fontWeight: AmptiveFontWeights.w500,
-                fontSize: AmptiveFontSizes.size13,
+                fontSize: ATFontSizes.size13,
                 height: 1.5
               ),
             ),
@@ -56,9 +56,9 @@ class AmptiveRecentSearchesListTileWidget extends StatelessWidget {
             Text(
               'MONDAY AT 20:00',
               style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                color: AmptiveColors.hexC2C2C2,
+                color: ATColors.hexC2C2C2,
                 fontWeight: AmptiveFontWeights.w500,
-                fontSize: AmptiveFontSizes.size13,
+                fontSize: ATFontSizes.size13,
                 height: 1.5
               ),
             ),
@@ -67,7 +67,7 @@ class AmptiveRecentSearchesListTileWidget extends StatelessWidget {
 
         trailing: GestureDetector(
           onTap: (){},
-          child: Icon(Icons.close, size: 14, color: AmptiveColors.authHintColor,),
+          child: Icon(Icons.close, size: 14, color: ATColors.authHintColor,),
         )
       ),
     );

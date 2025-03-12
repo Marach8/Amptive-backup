@@ -66,6 +66,7 @@ dependencies:
   visibility_detector: ^0.4.0+2
   carousel_slider: ^5.0.0
   another_flushbar: ^1.12.30
+  geolocator: ^13.0.2
 
 
 dev_dependencies:

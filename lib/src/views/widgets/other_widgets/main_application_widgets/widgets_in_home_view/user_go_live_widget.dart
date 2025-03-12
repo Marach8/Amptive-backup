@@ -17,7 +17,7 @@ class AmptiveUserGoLiveWidget extends StatelessWidget {
   @override
   Widget build(context) {
     return GestureDetector(
-      onTap: (){context.pushNamed(AmptiveRoutes.GO_LIVE_SCREEN);},
+      onTap: (){context.pushNamed(ATRoutes.GO_LIVE_SCREEN);},
       child: Column(
         mainAxisSize: MainAxisSize.min,
         mainAxisAlignment: MainAxisAlignment.end,
@@ -28,20 +28,20 @@ class AmptiveUserGoLiveWidget extends StatelessWidget {
             children: [
               ClipRRect(
                 borderRadius: BorderRadius.circular(30),
-                child: const AmptiveImageLoaderWidget(
-                  imagePath: AmptiveImageStrings.jpeg1,
+                child: const ATImgLoader(
+                  imgPath: ATImgStrings.jpeg1,
                   boxFit: BoxFit.cover, height: 60, width: 60,
                 ),
               ),
               Positioned(
                 bottom: -5.h,
-                child: AmptiveContainer(
+                child: ATContainer(
                   alignment: Alignment.center,
                   padding: const EdgeInsets.all(0),
                   height: 20, width: 20, radius: 10,
-                  color: AmptiveColors.hex307FE2,
+                  color: ATColors.hex307FE2,
                   border: Border.all(
-                    color: AmptiveColors.brandBlack,
+                    color: ATColors.brandBlack,
                     width: 2,
                   ),
                   child: const Icon(Icons.add, size: 15, applyTextScaling: true),
@@ -52,7 +52,7 @@ class AmptiveUserGoLiveWidget extends StatelessWidget {
       
           Gap(10.h),
           Text(
-            AmptiveStrings.GO_LIVE,
+            ATStrings.GO_LIVE,
             style: Theme.of(context).textTheme.titleSmall
           ),
         ],

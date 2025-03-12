@@ -15,13 +15,13 @@ class AmptiveRowOfSubtitleAndForwardIconWidget extends StatelessWidget {
     return Row(
       mainAxisSize: MainAxisSize.min,
       children: [
-        const AmptiveImageLoaderWidget(imagePath: AmptiveImageStrings.sIcon),
+        const ATImgLoader(imgPath: ATImgStrings.sIcon),
         const Gap(5),
         Text(
           'We Can Do Hard Things',
           style: Theme.of(context).textTheme.labelMedium?.copyWith(
-            fontSize: AmptiveFontSizes.size15,
-            color: AmptiveColors.dimWhiteColor1
+            fontSize: ATFontSizes.size15,
+            color: ATColors.dimWhiteColor1
           ),
         ),
         const Gap(5),

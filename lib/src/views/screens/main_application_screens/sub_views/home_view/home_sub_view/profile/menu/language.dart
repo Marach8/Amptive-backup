@@ -15,7 +15,7 @@ class AmptiveSelectLanguageScreen extends StatelessWidget {
 
   @override
   Widget build(context) {
-    return AmptiveAnnotatedRegionWidget(
+    return ATAnnotatedRegion(
       child: Scaffold(
         body: Column(
           children: [
@@ -25,30 +25,30 @@ class AmptiveSelectLanguageScreen extends StatelessWidget {
                 children: [
                   AmptiveCircleAvatarWidget(
                     onTap: () => context.pop(),
-                    diameter: 30, color: AmptiveColors.transparentColor,
+                    diameter: 30, color: ATColors.trsprtColor,
                     child: const Icon(Icons.keyboard_arrow_left),
                   ),
                   const Spacer(),
                   Text(
-                    AmptiveStrings.LANGUAGE,
+                    ATStrings.LANGUAGE,
                     style: Theme.of(context).textTheme.bodyMedium,
                   ),
                   const Spacer(),
-                  Icon(Icons.keyboard_arrow_left, color: AmptiveColors.transparentColor),
+                  Icon(Icons.keyboard_arrow_left, color: ATColors.trsprtColor),
                 ],
               ),
             ),
 
-            AmptiveContainer(
+            ATContainer(
               onTap: () => context.read<AmptiveLanguageBloc>().showLanguages(),
               margin: const EdgeInsets.all(15),
-              color: AmptiveColors.whiteColor.withValues(alpha: 0.1),
+              color: ATColors.white.withValues(alpha: 0.1),
               radius: 14,
               padding: const EdgeInsets.fromLTRB(15, 10, 15, 10),
               child: Row(
                 children: [
                   Text(
-                    AmptiveStrings.APP_LANG,
+                    ATStrings.APP_LANG,
                     style: Theme.of(context).textTheme.bodySmall,
                   ),
                   const Spacer(),
@@ -57,12 +57,12 @@ class AmptiveSelectLanguageScreen extends StatelessWidget {
                       return Text(
                         state.first as String,
                         style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                          color: AmptiveColors.whiteColor.withValues(alpha: 0.4)
+                          color: ATColors.white.withValues(alpha: 0.4)
                         ),
                       );
                     }
                   ),
-                  Icon(Icons.keyboard_arrow_right, size: 20, color: AmptiveColors.whiteColor.withValues(alpha: 0.4)),
+                  Icon(Icons.keyboard_arrow_right, size: 20, color: ATColors.white.withValues(alpha: 0.4)),
                 ],
               ),
             ),
@@ -87,16 +87,16 @@ class AmptiveSelectLanguageScreen extends StatelessWidget {
                                 child: Text(
                                   lang,
                                   style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                                    color: AmptiveColors.hexC2C2C2
+                                    color: ATColors.hexC2C2C2
                                   )
                                 ),
                               ),
-                              AmptiveContainer(
+                              ATContainer(
                                 height: 15, width: 15, boxShape: BoxShape.circle,
                                 padding: const EdgeInsets.all(5),
-                                color: isSelected ? AmptiveColors.hex307FE2 : AmptiveColors.transparentColor,
+                                color: isSelected ? ATColors.hex307FE2 : ATColors.trsprtColor,
                                 border: Border.all(
-                                  color: isSelected ? AmptiveColors.hex307FE2 : AmptiveColors.whiteColor,
+                                  color: isSelected ? ATColors.hex307FE2 : ATColors.white,
                                   strokeAlign: 5.0
                                 ),
                                 child: const SizedBox.shrink()

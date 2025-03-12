@@ -1,7 +1,7 @@
 // ignore_for_file: constant_identifier_names
 
-class AmptiveStrings{
-  const AmptiveStrings._();
+class ATStrings{
+  const ATStrings._();
 
   static const inter = 'Inter';
 
@@ -78,6 +78,7 @@ class AmptiveStrings{
   static const whatIsYourName = 'What is your name?';
   static const createAccount = 'Create account';
   static const privacyPolicy = 'Privacy Policy.';
+  static const CREATE_SCHEDULE = 'Create a Schedule';
   static const warningOnClickingCreate = 'By clicking on ‘Create account’, you agree to the';
 
   static const username = "username";
@@ -133,6 +134,8 @@ class AmptiveStrings{
   static const SCHEDULED = 'Scheduled';
   static const SUBSCRIBED = 'Subscribed';
   static const SUBSCRIBE = 'Subscribe';
+  static const DAY_VIEW = 'Day view';
+  static const MONTH_VIEW = 'Month view';
   static const SUBSCRIPTION = 'Subscription';
   static const SUBSCRIBERS = 'Subscribers';
   static const COMMUNITY_TASK = 'Community Task';

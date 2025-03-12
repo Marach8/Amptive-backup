@@ -12,11 +12,11 @@ class AmptiveTopCreatorsModel extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return AmptiveContainer(
+    return ATContainer(
       padding: const EdgeInsets.only(left: 15),
       child: Column(
         children: [
-          AmptiveImageLoaderWidget(imagePath: picture), 
+          ATImgLoader(imgPath: picture), 
           const Gap(5),
           Text(
             'ammybach',

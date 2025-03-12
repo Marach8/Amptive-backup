@@ -43,18 +43,18 @@ class AmptiveElevatedButtonWidget extends StatelessWidget {
                       style: Theme.of(context)
                           .textTheme
                           .bodyMedium
-                          ?.copyWith(color: AmptiveColors.brandBlack)),
+                          ?.copyWith(color: ATColors.brandBlack)),
                   const Gap(5),
                   CircleAvatar(
                     radius: 2,
-                    backgroundColor: AmptiveColors.brandBlack,
+                    backgroundColor: ATColors.brandBlack,
                   ),
                   const Gap(5),
                   Text(text2!,
                       style: Theme.of(context)
                           .textTheme
                           .bodyMedium
-                          ?.copyWith(color: AmptiveColors.brandBlack)),
+                          ?.copyWith(color: ATColors.brandBlack)),
                 ],
               )
             : Text(buttonTitle!));
@@ -63,16 +63,16 @@ class AmptiveElevatedButtonWidget extends StatelessWidget {
 
 
 
-class AmptivePlainElevatedBtnWidget extends StatelessWidget {
-  final String? buttonTitle;
+class ATPlainElevatedBtn extends StatelessWidget {
+  final String? btnTitle;
   final VoidCallback onPressed;
   final double? height;
   final Color? bgColor, fgColor;
   final Widget? child;
 
-  const AmptivePlainElevatedBtnWidget({
+  const ATPlainElevatedBtn({
     super.key,
-    this.buttonTitle,
+    this.btnTitle,
     required this.onPressed,
     this.height,
     this.bgColor,
@@ -90,7 +90,7 @@ class AmptivePlainElevatedBtnWidget extends StatelessWidget {
         //padding: const EdgeInsets.fromLTRB(),
         fixedSize: Size(AmptiveHelperFunctions.getScreenWidth(context), height ?? 45)
       ),
-      child: child ?? Text(buttonTitle ?? ''),
+      child: child ?? Text(btnTitle ?? ''),
     );
   }
 }

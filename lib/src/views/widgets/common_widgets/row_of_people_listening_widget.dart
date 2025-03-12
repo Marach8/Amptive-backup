@@ -24,28 +24,28 @@ class AmptiveRowOfNumberOfPeopleListeningWidget extends StatelessWidget {
           clipBehavior: Clip.none,
           children: [
             const AmptiveCircularContainerWithPictureWidget(
-              imagePath: AmptiveImageStrings.jpeg1,
+              imagePath: ATImgStrings.jpeg1,
               addBorder: true,
             ),
             const Positioned(
               left: 18,
               child: AmptiveCircularContainerWithPictureWidget(
-                imagePath: AmptiveImageStrings.jpeg2,
+                imagePath: ATImgStrings.jpeg2,
                 addBorder: true,
               )
             ),
             const Positioned(
               left: 36,
               child:AmptiveCircularContainerWithPictureWidget(
-                imagePath: AmptiveImageStrings.jpeg3,
+                imagePath: ATImgStrings.jpeg3,
                 addBorder: true,
               )
             ),
 
             showNumberInsideContainer ? Positioned(
               left: 52,
-              child: AmptiveContainer(
-                color: AmptiveColors.hex2D2D2D,
+              child: ATContainer(
+                color: ATColors.hex2D2D2D,
                 alignment: Alignment.center,
                 height: 30,
                 width: 30,
@@ -53,7 +53,7 @@ class AmptiveRowOfNumberOfPeopleListeningWidget extends StatelessWidget {
                 child: Text(
                   '+652',
                   style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                    fontSize: AmptiveFontSizes.size13
+                    fontSize: ATFontSizes.size13
                   )
                 ),
               )
@@ -66,7 +66,7 @@ class AmptiveRowOfNumberOfPeopleListeningWidget extends StatelessWidget {
           child: Text(
             '656 listening',
             style: Theme.of(context).textTheme.titleMedium?.copyWith(
-              fontSize: AmptiveFontSizes.size13
+              fontSize: ATFontSizes.size13
             )
           ),
         )

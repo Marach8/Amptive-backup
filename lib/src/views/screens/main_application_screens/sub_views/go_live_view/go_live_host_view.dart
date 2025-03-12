@@ -83,7 +83,7 @@ class _AmptiveGoLiveHostViewState extends State<AmptiveGoLiveHostView> {
 
   @override
   Widget build(context) {
-    return AmptiveAnnotatedRegionWidget(
+    return ATAnnotatedRegion(
       child: Scaffold(
         body: SafeArea(
           child: Column(
@@ -94,18 +94,18 @@ class _AmptiveGoLiveHostViewState extends State<AmptiveGoLiveHostView> {
 
               Align(
                 alignment: Alignment.centerLeft,
-                child: AmptiveContainer(
+                child: ATContainer(
                   onTap: (){},
                   margin: const EdgeInsets.only(left: 15),
                   padding: const EdgeInsets.fromLTRB(5, 5, 10, 5), radius: 30,
-                  color: AmptiveColors.whiteColor.withOpacity(0.1),
+                  color: ATColors.white.withOpacity(0.1),
                   child: Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      const AmptiveImageLoaderWidget(imagePath: AmptiveImageStrings.GROUP_ICON),
+                      const ATImgLoader(imgPath: ATImgStrings.GROUP_ICON),
                       const Gap(5),
                       Text(
-                        AmptiveStrings.SOCIETY,
+                        ATStrings.SOCIETY,
                         style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                           overflow: TextOverflow.fade
                         ),
@@ -140,18 +140,18 @@ class _AmptiveGoLiveHostViewState extends State<AmptiveGoLiveHostView> {
                                   minTileHeight: 50,
                                   leading: AmptiveCircularContainerWithPictureWidget(
                                     diameter: 35.h,
-                                    imagePath: AmptiveImageStrings.CRIMINAL,
+                                    imagePath: ATImgStrings.CRIMINAL,
                                   ),
                                   title: Text(
                                     string.obj.name ?? '',
                                     style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                                      color: AmptiveColors.hexC2C2C2
+                                      color: ATColors.hexC2C2C2
                                     )
                                   ),
                                   subtitle: Text(
                                     string.obj.username ?? '',
                                     style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                                      fontSize: AmptiveFontSizes.size13
+                                      fontSize: ATFontSizes.size13
                                     )
                                   ),
                                 );
@@ -162,12 +162,12 @@ class _AmptiveGoLiveHostViewState extends State<AmptiveGoLiveHostView> {
                       ),
                     ),
                 
-                    AmptiveContainer(
+                    ATContainer(
                       height: 250,
                       padding: const EdgeInsets.only(left: 20, right: 20),
                       boxShadow: [
                         BoxShadow(
-                          color: AmptiveColors.black,
+                          color: ATColors.black,
                           spreadRadius: 10, blurRadius: 40,
                           offset: const Offset(0, 40)
                         )
@@ -227,7 +227,7 @@ class _AmptiveGoLiveHostViewState extends State<AmptiveGoLiveHostView> {
 
                     BlocBuilder<AmptiveGoLiveNotificationBloc, AmptiveGoLiveNotificationModel>(
                       builder: (_, state) {
-                        if(state.notificationType == AmptiveStrings.PINNED){
+                        if(state.notificationType == ATStrings.PINNED){
                           return Positioned(
                             top: 260,
                             child: SizedBox(
@@ -252,10 +252,10 @@ class _AmptiveGoLiveHostViewState extends State<AmptiveGoLiveHostView> {
                           bottom: 70, right: 15,
                           child: AmptiveScalingAnimatedSwitcherWidget(
                             duration: 500,
-                            child: showIcon ? AmptiveContainer(
+                            child: showIcon ? ATContainer(
                               key: const ValueKey(1),
                               onTap: () => _scrollToBottom(),
-                              color: AmptiveColors.whiteColor.withOpacity(0.1),
+                              color: ATColors.white.withOpacity(0.1),
                               height: 35, width: 35,
                               boxShape: BoxShape.circle,
                               child: const Icon(Icons.keyboard_double_arrow_down),
@@ -317,9 +317,9 @@ class _GoLiveHostViewBottomSheetState extends State<GoLiveHostViewBottomSheet> {
 
   @override
   Widget build(context) {
-    return AmptiveContainer(
+    return ATContainer(
       padding: const EdgeInsets.fromLTRB(15, 10, 15, 10),
-      color: AmptiveColors.black,
+      color: ATColors.black,
      // height: 35,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -356,11 +356,11 @@ class _GoLiveHostViewBottomSheetState extends State<GoLiveHostViewBottomSheet> {
                 cursorHeight: 20, maxLength: 50,
                 counterText: '', //maxLines: 2,
                 focusNode: _focusNode,
-                fillColor: AmptiveColors.whiteColor.withOpacity(0.1),
-                cursorColor: AmptiveColors.whiteColor.withOpacity(0.6),
+                fillColor: ATColors.white.withOpacity(0.1),
+                cursorColor: ATColors.white.withOpacity(0.6),
                 constraints: const BoxConstraints(maxHeight: 35),
                 contentPadding: const EdgeInsets.fromLTRB(16, 0, 16, 0),
-                hintText: AmptiveStrings.COMMENT,
+                hintText: ATStrings.COMMENT,
               ),
             )
           ),
@@ -381,7 +381,7 @@ class _GoLiveHostViewBottomSheetState extends State<GoLiveHostViewBottomSheet> {
                         padding: const EdgeInsets.only(left: 10),
                         child: Icon(
                           Icons.send,
-                          color:value ? AmptiveColors.whiteColor : AmptiveColors.lightDark,
+                          color:value ? ATColors.white : ATColors.lightDark,
                         ),
                       ),
                     );
@@ -418,8 +418,8 @@ class _GoLiveHostViewBottomSheetState extends State<GoLiveHostViewBottomSheet> {
                         showAppNotification(
                           context: context,
                           icon: const Icon(Icons.check_circle),
-                          text: AmptiveStrings.COHOST_INVITE_SENT,
-                          bgColor: AmptiveColors.notifBg,
+                          text: ATStrings.COHOST_INVITE_SENT,
+                          bgColor: ATColors.notifBg,
                         );
                       }
                     },
@@ -449,10 +449,10 @@ class _RenderBottomSheetButtonsWidget extends StatelessWidget {
 
   @override
   Widget build(context) {
-    return AmptiveContainer(
+    return ATContainer(
       onTap: onTap,
       margin: margin ?? EdgeInsets.only(right: 5.w),
-      color: AmptiveColors.whiteColor.withOpacity(0.1),
+      color: ATColors.white.withOpacity(0.1),
       padding: const EdgeInsets.all(5),
       radius: 30, child: child
     );

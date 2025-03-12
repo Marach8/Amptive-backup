@@ -20,20 +20,20 @@ Future<void> showHostEndShowDialog({
   required BuildContext context,
 }) async {
   return await showModalBottomSheet(
-    backgroundColor: AmptiveColors.hex202020,
+    backgroundColor: ATColors.hex202020,
     context: context,
     isScrollControlled: true,
     useSafeArea: true,
-    barrierColor: AmptiveColors.black.withOpacity(0.6),
+    barrierColor: ATColors.black.withOpacity(0.6),
     shape: const RoundedRectangleBorder(
       borderRadius: BorderRadius.only(
       topLeft: Radius.circular(15), topRight: Radius.circular(15),
     )),
     builder: (context) {
-      return AmptiveContainer(
+      return ATContainer(
         height: AmptiveHelperFunctions.getScreenHeight(context),
         width: AmptiveHelperFunctions.getScreenWidth(context),
-        color: AmptiveColors.black,
+        color: ATColors.black,
         child: Stack(
           alignment: Alignment.center,
           children: [            
@@ -50,7 +50,7 @@ Future<void> showHostEndShowDialog({
                           context: context,
                           icon: const Icon(Icons.check_circle),
                           text: 'Your live show has ended',
-                          bgColor: AmptiveColors.notifBg
+                          bgColor: ATColors.notifBg
                         );
                       }
                     }
@@ -107,12 +107,12 @@ Future<void> showHostEndShowDialog({
                 return AnimatedPositioned(
                   duration: const Duration(seconds: 1),
                   top: initialState ? 200 : 220,
-                  child: AmptiveContainer(
+                  child: ATContainer(
                     clipBehavior: Clip.hardEdge,
                     radius: 5, height: initialState ? 150 : 200, 
                     width: initialState ? 150 : 200,
-                    child: const AmptiveImageLoaderWidget(                  
-                      imagePath: AmptiveImageStrings.weCanDoHardThingsBgImage
+                    child: const ATImgLoader(                  
+                      imgPath: ATImgStrings.weCanDoHardThingsBgImage
                     ),
                   ),
                 );
@@ -137,20 +137,20 @@ Future<void> showHostEndShowDialog({
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       if(initialState)Text(
-                        AmptiveStrings.END_LIVE_SHOW,
+                        ATStrings.END_LIVE_SHOW,
                         maxLines: 2, textAlign: TextAlign.center,
                         style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                          fontSize: AmptiveFontSizes.size23
+                          fontSize: ATFontSizes.size23
                         )
                       ),
                       if(showNoOfListeners || showNoOfGifters)AmptiveTwoTextRichTextWidget(
                         text1: 'You had a total of ',
                         text2: '144k listeners',
                         style1: Theme.of(context).textTheme.bodySmall?.copyWith(
-                          color: AmptiveColors.hexC2C2C2
+                          color: ATColors.hexC2C2C2
                         ),
                         style2: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                          fontSize: AmptiveFontSizes.size14
+                          fontSize: ATFontSizes.size14
                         ),
                       ),
                       const Gap(10),
@@ -158,10 +158,10 @@ Future<void> showHostEndShowDialog({
                         text1: 'You received ',
                         text2: '200 gifts',
                         style1: Theme.of(context).textTheme.bodySmall?.copyWith(
-                          color: AmptiveColors.hexC2C2C2
+                          color: ATColors.hexC2C2C2
                         ),
                         style2: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                          fontSize: AmptiveFontSizes.size14
+                          fontSize: ATFontSizes.size14
                         ),
                       ),
                     ],
@@ -183,7 +183,7 @@ Future<void> showHostEndShowDialog({
                     child: Padding(
                       padding: const EdgeInsets.only(bottom: 10),
                       child: AmptiveLoadingIndicatorWidget(
-                        color: AmptiveColors.whiteColor,
+                        color: ATColors.white,
                       ),
                     ),
                   );
@@ -197,7 +197,7 @@ Future<void> showHostEndShowDialog({
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      AmptiveContainer(
+                      ATContainer(
                         padding: const EdgeInsets.only(left: 15, right: 15),
                         width: AmptiveHelperFunctions.getScreenWidth(context),
                         height: 50,
@@ -205,18 +205,18 @@ Future<void> showHostEndShowDialog({
                           onPressed: () => context.read<AmptiveEndShowBloc>().add(
                             Proceed2EndShowEvent()
                           ),
-                          bgColor: AmptiveColors.hexECO404,
-                          fgColor: AmptiveColors.whiteColor,
-                          buttonTitle: AmptiveStrings.END_NOW,
+                          bgColor: ATColors.hexECO404,
+                          fgColor: ATColors.white,
+                          buttonTitle: ATStrings.END_NOW,
                         ),
                       ),
                       const Gap(15),
                       GestureDetector(
                         onTap: () => context.pop(),
                         child: Text(
-                          AmptiveStrings.CANCEL,
+                          ATStrings.CANCEL,
                           style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                            fontSize: AmptiveFontSizes.size17
+                            fontSize: ATFontSizes.size17
                           )
                         ),
                       ),

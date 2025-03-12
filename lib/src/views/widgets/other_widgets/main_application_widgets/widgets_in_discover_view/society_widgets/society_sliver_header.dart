@@ -16,8 +16,8 @@ class AmptiveSocietySliverHeader extends SliverPersistentHeaderDelegate{
 
   @override
   Widget build(BuildContext context, double shrinkOffset, bool overlapsContent) {
-    return AmptiveContainer(
-      color: AmptiveColors.brandBlack,
+    return ATContainer(
+      color: ATColors.brandBlack,
       height: kToolbarHeight,
       child: TabBar(
         controller: tabController,
@@ -25,10 +25,10 @@ class AmptiveSocietySliverHeader extends SliverPersistentHeaderDelegate{
         splashFactory: NoSplash.splashFactory,
         tabAlignment: TabAlignment.start,
         labelPadding: EdgeInsets.zero,
-        indicatorColor: AmptiveColors.transparentColor,
+        indicatorColor: ATColors.trsprtColor,
         padding: const EdgeInsets.only(left: 15),
         isScrollable: true,
-        dividerColor: AmptiveColors.brandBlack,
+        dividerColor: ATColors.brandBlack,
         tabs: ['All', 'Shows', 'Events'].asMap().entries.map(
           (tab){              
             return Tab(
@@ -36,16 +36,16 @@ class AmptiveSocietySliverHeader extends SliverPersistentHeaderDelegate{
               valueListenable: notifier,
               builder: (_, value, __) {
                 final isSelected = tab.key == value;
-                  return AmptiveContainer(
+                  return ATContainer(
                     radius: 20,
                     margin: const EdgeInsets.only(right: 10),
                     color: isSelected ? 
-                      AmptiveColors.whiteColor : AmptiveColors.fillGreyColor.withOpacity(0.3),
+                      ATColors.white : ATColors.fillGreyColor.withOpacity(0.3),
                     padding: const EdgeInsets.fromLTRB(15, 8, 15, 8),
                     child: Text(
                       tab.value,
                       style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                        color: isSelected ? AmptiveColors.brandBlack : AmptiveColors.whiteColor                           
+                        color: isSelected ? ATColors.brandBlack : ATColors.white                           
                       ),
                     ),
                   );

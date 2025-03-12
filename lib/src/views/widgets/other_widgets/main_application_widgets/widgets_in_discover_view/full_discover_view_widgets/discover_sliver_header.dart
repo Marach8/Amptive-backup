@@ -24,8 +24,8 @@ class AmptiveDiscoverSliverHeader extends SliverPersistentHeaderDelegate{
 
   @override
   Widget build(BuildContext context, double shrinkOffset, bool overlapsContent) {
-    return AmptiveContainer(
-      color: AmptiveColors.black,
+    return ATContainer(
+      color: ATColors.black,
       height: 61,
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 15),
@@ -37,12 +37,12 @@ class AmptiveDiscoverSliverHeader extends SliverPersistentHeaderDelegate{
                 controller: controller,
                 disableBlueBorder: true,
                 cursorHeight: 20,
-                cursorColor: AmptiveColors.whiteColor.withOpacity(0.6),
+                cursorColor: ATColors.white.withOpacity(0.6),
                 constraints: const BoxConstraints(maxHeight: 40),
                 contentPadding: const EdgeInsets.fromLTRB(16, 0, 16, 12),
-                hintText: AmptiveStrings.SEARCH_FOR_EVENTS_ND_SHOWS,
-                prefixIcon: const AmptiveImageLoaderWidget(
-                  imagePath: AmptiveImageStrings.outlinedSearch,
+                hintText: ATStrings.SEARCH_FOR_EVENTS_ND_SHOWS,
+                prefixIcon: const ATImgLoader(
+                  imgPath: ATImgStrings.outlinedSearch,
                 ),
                 suffixIcon: AmptiveRebuilderWidget(
                   notifier: notifier,
@@ -55,7 +55,7 @@ class AmptiveDiscoverSliverHeader extends SliverPersistentHeaderDelegate{
                         secondChild: const SizedBox.shrink(),
                         firstChild: GestureDetector(
                           onTap: () => controller.clear(),
-                          child: Icon(Icons.close, size: 20, color: AmptiveColors.whiteColor)
+                          child: Icon(Icons.close, size: 20, color: ATColors.white)
                         ),
                       ),
                     );
@@ -72,7 +72,7 @@ class AmptiveDiscoverSliverHeader extends SliverPersistentHeaderDelegate{
                   condition: value,
                   secondChild: const SizedBox.shrink(),
                   firstChild: Text(
-                    AmptiveStrings.CANCEL,
+                    ATStrings.CANCEL,
                     style: Theme.of(context).textTheme.titleLarge,
                   ),
                 );

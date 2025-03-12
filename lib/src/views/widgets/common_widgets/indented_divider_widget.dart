@@ -17,7 +17,7 @@ class AmptiveIndentedDividerWidget extends StatelessWidget {
       height: 5,
       width: 170,
       decoration: BoxDecoration(
-        color: AmptiveColors.whiteColor,
+        color: ATColors.white,
         borderRadius: BorderRadius.circular(5)
       ),
     );

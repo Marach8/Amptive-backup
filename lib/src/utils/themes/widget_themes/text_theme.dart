@@ -9,72 +9,79 @@ class AmptiveTextTheme{
   static TextTheme darkTextTheme = TextTheme( 
  
     displayMedium: TextStyle(
-      color: AmptiveColors.whiteColor,
-      fontSize: AmptiveFontSizes.size25,
+      color: ATColors.white,
+      fontSize: ATFontSizes.size25,
       fontWeight: AmptiveFontWeights.w700,
       letterSpacing: 0.1,
       overflow: TextOverflow.ellipsis
     ),
 
     headlineLarge: TextStyle(
-      color: AmptiveColors.whiteColor,
-      fontSize: AmptiveFontSizes.size22,
+      color: ATColors.white,
+      fontSize: ATFontSizes.size22,
       fontWeight: AmptiveFontWeights.w700,
       overflow: TextOverflow.ellipsis
     ),
 
     headlineMedium: TextStyle(
-      color: AmptiveColors.whiteColor,
-      fontSize: AmptiveFontSizes.size18,
+      color: ATColors.white,
+      fontSize: ATFontSizes.size18,
       fontWeight: AmptiveFontWeights.w700,
       overflow: TextOverflow.ellipsis
     ),
 
     bodyLarge : TextStyle(
-      color: AmptiveColors.whiteColor,
-      fontSize: AmptiveFontSizes.size18,
+      color: ATColors.white,
+      fontSize: ATFontSizes.size18,
       fontWeight: AmptiveFontWeights.w600,
       overflow: TextOverflow.ellipsis
     ),
 
     bodyMedium : TextStyle(
-      color: AmptiveColors.whiteColor,
-      fontSize: AmptiveFontSizes.size16,
+      color: ATColors.white,
+      fontSize: ATFontSizes.size16,
       fontWeight: AmptiveFontWeights.w600,
       overflow: TextOverflow.ellipsis
     ), 
 
     bodySmall : TextStyle(
-      color: AmptiveColors.whiteColor,
-      fontSize: AmptiveFontSizes.size14,
+      color: ATColors.white,
+      fontSize: ATFontSizes.size14,
       fontWeight: AmptiveFontWeights.w500,
       overflow: TextOverflow.ellipsis
     ),
     
     labelMedium: TextStyle(
-      color: AmptiveColors.authHintColor,
-      fontSize: AmptiveFontSizes.size16,
+      color: ATColors.authHintColor,
+      fontSize: ATFontSizes.size16,
+      fontWeight: AmptiveFontWeights.w400,
+      overflow: TextOverflow.ellipsis
+    ),
+
+    labelSmall: TextStyle(
+      color: ATColors.white,
+      fontSize: ATFontSizes.size18,
       fontWeight: AmptiveFontWeights.w400,
       overflow: TextOverflow.ellipsis
     ),
 
     titleLarge: TextStyle(
-      color: AmptiveColors.whiteColor,
-      fontSize: AmptiveFontSizes.size15,
+      color: ATColors.white,
+      fontSize: ATFontSizes.size15,
       fontWeight: AmptiveFontWeights.w400,
       overflow: TextOverflow.ellipsis
     ),
 
     titleMedium: TextStyle(
-      color: AmptiveColors.whiteColor,
-      fontSize: AmptiveFontSizes.size14,
+      color: ATColors.white,
+      fontSize: ATFontSizes.size14,
       fontWeight: AmptiveFontWeights.w400,
       overflow: TextOverflow.ellipsis
     ),
 
     titleSmall: TextStyle(
-      color: AmptiveColors.whiteColor,
-      fontSize: AmptiveFontSizes.size12,
+      color: ATColors.white,
+      fontSize: ATFontSizes.size12,
       fontWeight: AmptiveFontWeights.w400,
       overflow: TextOverflow.ellipsis
     ),

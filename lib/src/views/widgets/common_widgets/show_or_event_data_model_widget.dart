@@ -25,20 +25,20 @@ class AmptiveShowOrEventDataModelWidget extends StatelessWidget {
     return Column(
       children: [
         AmptiveListTileWithLeadingPictureWidget(
-          leadingImagePath: AmptiveImageStrings.jpeg3,
+          leadingImagePath: ATImgStrings.jpeg3,
           trailingOnPressed: () => showAudioOrVideoFullDetailsOptions(context),
           title: 'glennodoyle',
           subtitle: 'started a live show',
         ),
         Gap(2.h),
-        AmptiveContainer(
+        ATContainer(
           height: 425.h,
           clipBehavior: Clip.hardEdge,
           radius: 15.r,
           child: Stack(
             children: [
-              const AmptiveImageLoaderWidget(imagePath: AmptiveImageStrings.weCanDoHardThingsBgImage),
-              AmptiveContainer(
+              const ATImgLoader(imgPath: ATImgStrings.weCanDoHardThingsBgImage),
+              ATContainer(
                 width: AmptiveHelperFunctions.getScreenWidth(context),
                 padding: const EdgeInsets.fromLTRB(15, 10, 15, 10),
                 radius: 15,
@@ -46,14 +46,14 @@ class AmptiveShowOrEventDataModelWidget extends StatelessWidget {
                   begin: Alignment.topCenter,
                   end: Alignment.bottomCenter,
                   colors: [
-                    AmptiveColors.transparentColor,
-                    AmptiveColors.transparentColor,
-                    AmptiveColors.transparentColor,
-                    AmptiveColors.transparentColor,
-                    AmptiveColors.containerGradientColorB.withOpacity(0.5),
-                    AmptiveColors.containerGradientColorB,
-                    AmptiveColors.containerGradientColorB,
-                    AmptiveColors.containerGradientColorB,
+                    ATColors.trsprtColor,
+                    ATColors.trsprtColor,
+                    ATColors.trsprtColor,
+                    ATColors.trsprtColor,
+                    ATColors.containerGradientColorB.withOpacity(0.5),
+                    ATColors.containerGradientColorB,
+                    ATColors.containerGradientColorB,
+                    ATColors.containerGradientColorB,
                   ]
                 ),
                 child: Column(
@@ -67,7 +67,7 @@ class AmptiveShowOrEventDataModelWidget extends StatelessWidget {
                       maxLines: 2,
                       "Don't Forget Who You Are ft. Jacob Scipio",
                       style: Theme.of(context).textTheme.displayMedium?.copyWith(
-                        fontSize: AmptiveFontSizes.size24,
+                        fontSize: ATFontSizes.size24,
                         fontWeight: AmptiveFontWeights.w600,
                         height: 1.2.sp,
                       ),

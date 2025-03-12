@@ -14,26 +14,26 @@ class AmptiveGoLiveNotificationBloc extends Cubit<AmptiveGoLiveNotificationModel
   void addTalkingNotification(ObjectWithNotifier<Host> user) => emit(
     AmptiveGoLiveNotificationModel(
       user: user,
-      notificationType: AmptiveStrings.IS_TALKING
+      notificationType: ATStrings.IS_TALKING
     )
   );
 
   void addGiftingNotification(ObjectWithNotifier<Host> user) => emit(
     AmptiveGoLiveNotificationModel(
       user: user,
-      notificationType: AmptiveStrings.IS_GIFTING,
-      extraDetail: {AmptiveStrings.GIFTED_AMNT: '10,000'}
+      notificationType: ATStrings.IS_GIFTING,
+      extraDetail: {ATStrings.GIFTED_AMNT: '10,000'}
     )
   );
 
   void addPinnedMsgNotification(ObjectWithNotifier<Host> user, String role) => emit(
     AmptiveGoLiveNotificationModel(
       user: user,
-      notificationType: AmptiveStrings.PINNED,
+      notificationType: ATStrings.PINNED,
       extraDetail: {
-        AmptiveStrings.ROLE: role,
-        AmptiveStrings.MSG_TITLE: 'Get our newsletter here',
-        AmptiveStrings.MSG_CONTENT: 'http://emmanuel.com'
+        ATStrings.ROLE: role,
+        ATStrings.MSG_TITLE: 'Get our newsletter here',
+        ATStrings.MSG_CONTENT: 'http://emmanuel.com'
       }
     )
   );

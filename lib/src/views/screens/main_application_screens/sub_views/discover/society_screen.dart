@@ -38,7 +38,7 @@ with SingleTickerProviderStateMixin{
   }
   @override
   Widget build(BuildContext context) {
-    return AmptiveAnnotatedRegionWidget(
+    return ATAnnotatedRegion(
       child: Scaffold(
         body: SafeArea(
           child: NestedScrollView(
@@ -57,7 +57,7 @@ with SingleTickerProviderStateMixin{
                 ],
                 leading: const AmptiveBackArrowWidget(),
                 title: Text(
-                  AmptiveStrings.SOCIETY,
+                  ATStrings.SOCIETY,
                   style: Theme.of(context).textTheme.bodyMedium,
                 ),
               ),

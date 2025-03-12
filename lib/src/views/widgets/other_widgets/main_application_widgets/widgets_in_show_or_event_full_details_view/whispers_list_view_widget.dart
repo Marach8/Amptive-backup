@@ -20,18 +20,18 @@ class AmptiveWhispersListViewWidget extends StatelessWidget {
         separatorBuilder: (_, __) => Gap(15.w),
         scrollDirection: Axis.horizontal,
         itemCount: 10,
-        itemBuilder: (_, __) => AmptiveContainer(
+        itemBuilder: (_, __) => ATContainer(
           padding: const EdgeInsets.fromLTRB(15, 0, 15,  0),
           height: 230.h,
           width: 285.w,
           radius: 10,
-          color: AmptiveColors.whiteColor.withOpacity(0.1),
+          color: ATColors.white.withOpacity(0.1),
           child: Column(
             children: [
               const AmptiveListTileWithLeadingPictureWidget(
                 title: 'karankabir',
                 subtitle: 'Listener',
-                leadingImagePath: AmptiveImageStrings.jpeg1,
+                leadingImagePath: ATImgStrings.jpeg1,
               ),
               Text(
                 maxLines: null,

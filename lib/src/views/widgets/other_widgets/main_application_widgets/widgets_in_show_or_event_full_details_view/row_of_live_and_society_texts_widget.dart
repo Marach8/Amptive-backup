@@ -19,26 +19,26 @@ class AmptiveRowOfTwoIconsAndTwoTextsWidget extends StatelessWidget {
     return Row(
       mainAxisSize: MainAxisSize.min,
       children: [
-        const AmptiveImageLoaderWidget(
-          imagePath: AmptiveImageStrings.spreadNetworkIcon,
+        const ATImgLoader(
+          imgPath: ATImgStrings.spreadNetworkIcon,
           height: 24, width: 24,
         ),
         const Gap(5),
         Text(
-          AmptiveStrings.LIVE.toUpperCase(),
+          ATStrings.LIVE.toUpperCase(),
           style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-            color: AmptiveColors.grey5Color,
-            fontSize: AmptiveFontSizes.size14
+            color: ATColors.grey5Color,
+            fontSize: ATFontSizes.size14
           ),  
         ),
         const Gap(20),
-        Icon(Icons.groups, color: AmptiveColors.grey5Color),
+        Icon(Icons.groups, color: ATColors.grey5Color),
         const Gap(5),
         Text(
-          text2?.toUpperCase() ?? AmptiveStrings.SOCIETY.toUpperCase(),
+          text2?.toUpperCase() ?? ATStrings.SOCIETY.toUpperCase(),
           style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-            color: AmptiveColors.grey5Color,
-            fontSize: AmptiveFontSizes.size14
+            color: ATColors.grey5Color,
+            fontSize: ATFontSizes.size14
           ),  
         ),
       ],

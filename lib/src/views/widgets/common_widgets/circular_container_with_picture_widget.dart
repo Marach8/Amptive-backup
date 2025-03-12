@@ -23,20 +23,20 @@ class AmptiveCircularContainerWithPictureWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return AmptiveContainer(
+    return ATContainer(
       onTap: onTap,
       height: diameter ?? 30,
       width: diameter ?? 30,
       radius: (diameter ?? 30)/2,
       padding: EdgeInsets.all(picturePadding ?? 0),
       border: addBorder ?? false ? Border.all(
-        color: borderColor ?? AmptiveColors.whiteColor,
+        color: borderColor ?? ATColors.white,
         width: borderWidth ?? 0.5,
       ) : null,
       child: ClipRRect(
         borderRadius: BorderRadius.circular((diameter ?? 30)/2),
-        child: AmptiveImageLoaderWidget(
-          imagePath: imagePath,
+        child: ATImgLoader(
+          imgPath: imagePath,
           boxFit: BoxFit.cover,
           height: diameter ?? 30,
           width: diameter ?? 30,
