@@ -69,7 +69,7 @@ class AmptiveWelcomeScreen extends StatelessWidget {
 
               Gap(15.h),
 
-              AmptiveOutlinedButtonWidget(
+              ATOutlinedBtn(
                 onPressed: () => context.pushNamed(ATRoutes.authScreen, extra: false),
                 buttonTitle: ATStrings.signIn,
               ),

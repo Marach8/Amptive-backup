@@ -1,4 +1,4 @@
-import 'package:amptive/src/bloc/main_app/profile/profile_menu/calender/calender_events_bloc.dart';
+import 'package:amptive/src/bloc/main_app/profile/profile_menu/calender/calender_programs_bloc.dart';
 import 'package:amptive/src/bloc/main_app/profile/profile_menu/calender/calender_views_bloc.dart';
 import 'package:amptive/src/bloc/main_app/profile/profile_menu/calender/selected_calender_date_bloc.dart';
 import 'package:amptive/src/models/host.dart';
@@ -17,7 +17,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
-
 import '../../../../../../../../widgets/common_widgets/overlapping_images.dart';
 
 
@@ -247,7 +246,7 @@ class HoursAndProgramsList extends StatelessWidget {
                 ),
                 const SizedBox(width: 5),
                 Expanded(
-                  child: Divider(color: ATColors.white.withValues(alpha: 0.2))
+                  child: Divider(color: ATColors.white.withValues(alpha: 0.2), height: 0,)
                 ),
               ],
             ),
@@ -265,72 +264,90 @@ class HoursAndProgramsList extends StatelessWidget {
                 final listOfProgs = programs.programs[formattedTime];
 
                 if(listOfProgs == null) return const SizedBox(height: 30);
-                
-                final anItem = listOfProgs.first;
-                final title = anItem.name;
-                final isEvent = anItem.isEvent;
-                final isPaid = anItem.isPaid;
-                final type = anItem.eventType;
-                final hostsImgs = anItem.hosts.map((host) => (host.obj as Host).profilePicture ?? '');
-                
-                return ATContainer(
-                  margin: const EdgeInsets.only(left: 55),
-                  radius: 5, clipBehavior: Clip.hardEdge,
-                  color: isEvent ? ATColors.hex27E8DB.withValues(alpha: 0.2) 
-                    : ATColors.hexF79E1E.withValues(alpha: 0.2),
-                  child: CustomPaint(
-                    painter:LeftBorderPainter(
-                      color: isEvent ? ATColors.hex27E8DB : ATColors.hexF79E1E,
-                      width: 5,
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.fromLTRB(7, 2, 0, 5),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Row(
-                            children: [
-                              isEvent ? const EventIcon() : const ShowIcon(),
-                              const SizedBox(width: 5),
-                              Expanded(
-                                child: Text(
-                                  title,
-                                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                                    fontSize: ATFontSizes.size13,
-                                    color: isEvent ? ATColors.hex27E8DB : ATColors.hexF79E1E
-                                  )
-                                ),
-                              ),
-
-                              Padding(
-                                padding: const EdgeInsets.fromLTRB(20, 0, 5, 0),
-                                child: ATOverlappingImages(imgPaths: hostsImgs.toList()),
-                              )
-                            ],
-                          ),
-                                          
-                          Row(
-                            children: [
-                              if(isPaid) const PaidIndicatorIcon(),
-                              if(isPaid) const SizedBox(width: 5),
-                              Expanded(
-                                child: Text(
-                                  type,
-                                  style: Theme.of(context).textTheme.titleSmall
-                                ),
-                              )
-                            ],
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
+                              
+                return Column(
+                  mainAxisSize: MainAxisSize.min,
+                  spacing: 5,
+                  children: listOfProgs.map(
+                    (program) => _CalenderProgramDisplay(program: program),
+                  ).toList()
                 );
               }
             ),
           ],
         );
       },
+    );
+  }
+}
+
+class _CalenderProgramDisplay extends StatelessWidget {
+  final CalenderProgram program;
+  const _CalenderProgramDisplay({
+    super.key,
+    required this.program
+  });
+
+  @override
+  Widget build(context) {
+    final title = program.name;
+    final isEvent = program.isEvent;
+    final isPaid = program.isPaid;
+    final type = program.eventType;
+    final hostsImgs = program.hosts.map((host) => (host.obj as Host).profilePicture ?? '');
+
+    return ATContainer(
+      margin: const EdgeInsets.only(left: 55),
+      radius: 5, clipBehavior: Clip.hardEdge,
+      color: isEvent ? ATColors.hex27E8DB.withValues(alpha: 0.2) 
+        : ATColors.hexF79E1E.withValues(alpha: 0.2),
+      child: CustomPaint(
+        painter:LeftBorderPainter(
+          color: isEvent ? ATColors.hex27E8DB : ATColors.hexF79E1E,
+          width: 5,
+        ),
+        child: Padding(
+          padding: const EdgeInsets.fromLTRB(7, 2, 0, 5),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                children: [
+                  isEvent ? const EventIcon() : const ShowIcon(),
+                  const SizedBox(width: 5),
+                  Expanded(
+                    child: Text(
+                      title,
+                      style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                        fontSize: ATFontSizes.size13,
+                        color: isEvent ? ATColors.hex27E8DB : ATColors.hexF79E1E
+                      )
+                    ),
+                  ),
+    
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(20, 0, 5, 0),
+                    child: ATOverlappingImages(imgPaths: hostsImgs.toList()),
+                  )
+                ],
+              ),
+                              
+              Row(
+                children: [
+                  if(isPaid) const PaidIndicatorIcon(),
+                  if(isPaid) const SizedBox(width: 5),
+                  Expanded(
+                    child: Text(
+                      type,
+                      style: Theme.of(context).textTheme.titleSmall
+                    ),
+                  )
+                ],
+              ),
+            ],
+          ),
+        ),
+      ),
     );
   }
 }

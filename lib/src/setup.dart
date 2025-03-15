@@ -24,7 +24,7 @@ import 'bloc/main_app/go_live_bloc/host_view/notifications_bloc.dart';
 import 'bloc/main_app/nav_bar_bloc.dart';
 import 'bloc/main_app/profile/private_account_bloc.dart';
 import 'bloc/main_app/profile/profile_followers_bloc.dart';
-import 'bloc/main_app/profile/profile_menu/calender/calender_events_bloc.dart';
+import 'bloc/main_app/profile/profile_menu/calender/calender_programs_bloc.dart';
 import 'bloc/main_app/profile/profile_menu/calender/selected_calender_date_bloc.dart';
 import 'bloc/main_app/profile/profile_menu/language_bloc.dart';
 import 'bloc/onboarding_bloc/onboarding_bloc.dart';
