@@ -19,13 +19,13 @@ class AmptiveInputDecorationTheme{
     hintStyle: TextStyle(
       fontSize: ATFontSizes.size16,
       color: ATColors.authHintColor,
-      fontWeight: AmptiveFontWeights.w400
+      fontWeight: ATFontWeights.w400
     ),
     contentPadding: const EdgeInsets.fromLTRB(16, 12, 16, 12).r,
     errorStyle: TextStyle(
       color: ATColors.textRedColor,
       fontSize: ATFontSizes.size12,
-      fontWeight: AmptiveFontWeights.w400
+      fontWeight: ATFontWeights.w400
     ),
 
     enabledBorder: const OutlineInputBorder().copyWith(

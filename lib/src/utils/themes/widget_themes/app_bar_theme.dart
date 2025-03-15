@@ -18,7 +18,7 @@ class AmptiveAppBarTheme{
     titleTextStyle: TextStyle(
       fontFamily: ATStrings.inter,
       fontSize: ATFontSizes.size20,
-      fontWeight: AmptiveFontWeights.w700,
+      fontWeight: ATFontWeights.w700,
     )
   );
 

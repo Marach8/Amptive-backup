@@ -1,7 +1,7 @@
 import 'dart:io';
 import 'package:amptive/src/utils/constants/colors.dart';
 import 'package:amptive/src/utils/constants/strings/image_strings.dart';
-import 'package:amptive/src/utils/helpers/helper_functions/other_functions.dart';
+import 'package:amptive/src/utils/helpers/helper_functions/helper_functions.dart';
 import 'package:amptive/src/views/widgets/common_widgets/custom_container_widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/image_loader_widget.dart';
 import 'package:flutter/material.dart';
@@ -22,7 +22,7 @@ Future<String> showSelectAudienceAccessForShowsDialog(
 
   return await showModalBottomSheet(
     backgroundColor: ATColors.brandBlack,
-    constraints: BoxConstraints.expand(height: AmptiveHelperFunctions.getScreenHeight(context)),
+    constraints: BoxConstraints.expand(height: ATHelperFuncs.getScreenHeight(context)),
     context: context,
     isScrollControlled: true,
     useSafeArea: true,

@@ -21,7 +21,7 @@ class AmptiveWith2OthersWidget extends StatelessWidget {
         'with 2 others',
         textAlign: TextAlign.center,
         style: Theme.of(context).textTheme.titleSmall?.copyWith(
-          fontWeight: AmptiveFontWeights.w500,
+          fontWeight: ATFontWeights.w500,
           fontSize: ATFontSizes.size13,
           height: 1.sp,
         )

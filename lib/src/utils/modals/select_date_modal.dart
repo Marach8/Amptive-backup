@@ -2,7 +2,7 @@ import 'dart:typed_data';
 import 'dart:ui';
 
 import 'package:amptive/src/utils/constants/colors.dart';
-import 'package:amptive/src/utils/helpers/helper_functions/other_functions.dart';
+import 'package:amptive/src/utils/helpers/helper_functions/helper_functions.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -27,7 +27,7 @@ Future<void> selectDateModal(
   return await showModalBottomSheet(
       backgroundColor: ATColors.trsprtColor,
       constraints: BoxConstraints.expand(
-          height: AmptiveHelperFunctions.getScreenHeight(context)),
+          height: ATHelperFuncs.getScreenHeight(context)),
       context: context,
       isScrollControlled: true,
       useSafeArea: true,
@@ -108,7 +108,7 @@ Future<void> selectDateModal(
               child: ATContainer(
                 height: 50.h,
                 padding: const EdgeInsets.symmetric(horizontal: 15),
-                width: AmptiveHelperFunctions.getScreenWidth(context),
+                width: ATHelperFuncs.getScreenWidth(context),
                 child: AmptiveElevatedButtonWidget(
                   margin: EdgeInsets.zero,
                   onPressed: () async {
@@ -126,7 +126,7 @@ Future<void> selectDateModal(
               child: ATContainer(
                 height: 50.h,
                 padding: const EdgeInsets.symmetric(horizontal: 15),
-                width: AmptiveHelperFunctions.getScreenWidth(context),
+                width: ATHelperFuncs.getScreenWidth(context),
                 child: AmptiveElevatedButtonWidget(
                   margin: EdgeInsets.zero,
                   onPressed: () async {

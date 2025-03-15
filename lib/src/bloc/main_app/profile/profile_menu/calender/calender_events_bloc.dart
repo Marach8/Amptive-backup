@@ -1,4 +1,7 @@
+import 'package:amptive/src/models/host.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
+import '../../../../../services/go_live_service/go_live_service.dart';
 
 class CalenderProgramBloc extends Bloc<ProgramsEvents, ProgramsState>{
   CalenderProgramBloc():super(NoProgramsState()){
@@ -9,18 +12,22 @@ class CalenderProgramBloc extends Bloc<ProgramsEvents, ProgramsState>{
         emit(
           ProgramsDataState(
             programs:{
-              '06:00 am': const [
+              '06:00 am': [
                 CalenderProgram(
                   name: 'Former CIA Agent On Trump Assasination Has Repented',
                   id: 1, isEvent: true,
-                  isPaid: true
+                  isPaid: true,
+                  eventType: 'News',
+                  hosts: getHostList().take(2).toList()
                 ),
               ],
-              '05:00 pm': const [
+              '05:00 pm': [
                 CalenderProgram(
                   name: 'Give Us The Wheel',
                   id: 2, isEvent: false,
-                  isPaid: false
+                  isPaid: false,
+                  eventType: 'Comedy',
+                  hosts: getHostList().take(4).toList()
                 ),
               ]
             }
@@ -59,14 +66,17 @@ class LoadProgramsEvent extends ProgramsEvents{
 
 
 class CalenderProgram{
-  final String name;
+  final String name, eventType;
   final int id;
+  final List<ObjectWithNotifier> hosts;
   final bool isEvent, isPaid;
 
   const CalenderProgram({
     required this.name,
     required this.id,
     required this.isEvent,
-    required this.isPaid
+    required this.isPaid,
+    required this.eventType,
+    required this.hosts
   });
 }

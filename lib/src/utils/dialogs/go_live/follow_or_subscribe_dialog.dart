@@ -6,9 +6,9 @@ import 'package:amptive/src/utils/constants/colors.dart';
 import 'package:amptive/src/utils/constants/font_sizes.dart';
 import 'package:amptive/src/utils/constants/strings/image_strings.dart';
 import 'package:amptive/src/utils/dialogs/confirmation_alert_dialog.dart';
-import 'package:amptive/src/utils/helpers/helper_functions/other_functions.dart';
+import 'package:amptive/src/utils/helpers/helper_functions/helper_functions.dart';
 import 'package:amptive/src/views/widgets/common_widgets/circle_avatar.dart';
-import 'package:amptive/src/views/widgets/common_widgets/circular_container_with_picture_widget.dart';
+import 'package:amptive/src/views/widgets/common_widgets/circular_image.dart';
 import 'package:amptive/src/views/widgets/common_widgets/custom_container_widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/elevated_button_widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/image_loader_widget.dart';
@@ -43,7 +43,7 @@ Future<void> showFollowHostOrCohostDialog({
         child: BackdropFilter(
           filter: ImageFilter.blur(sigmaX: 1, sigmaY: 1),
           child: ATContainer(
-            width: AmptiveHelperFunctions.getScreenWidth(context),
+            width: ATHelperFuncs.getScreenWidth(context),
             padding: const EdgeInsets.fromLTRB(15, 10, 15, 10),
             child: Column(
               mainAxisSize: MainAxisSize.min,
@@ -68,7 +68,7 @@ Future<void> showFollowHostOrCohostDialog({
                   const Gap(10),
                   Row(
                     children: [
-                      AmptiveCircularContainerWithPictureWidget(
+                      ATCircularImage(
                         imagePath: host.obj.profilePicture ?? '',
                         diameter: 70,
                       ),

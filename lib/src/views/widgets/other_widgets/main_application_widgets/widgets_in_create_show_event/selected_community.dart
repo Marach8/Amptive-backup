@@ -60,7 +60,7 @@ class SelectedCommunity extends StatelessWidget {
                   child: Text("View Community",
                       style: Theme.of(context).textTheme.titleSmall?.copyWith(
                           color: ATColors.white.withOpacity(0.7),
-                          fontWeight: AmptiveFontWeights.w500)),
+                          fontWeight: ATFontWeights.w500)),
                 )
               ],
             ),

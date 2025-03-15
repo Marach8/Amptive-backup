@@ -1,5 +1,5 @@
 import 'package:amptive/src/utils/constants/strings/route_strings.dart';
-import 'package:amptive/src/utils/helpers/helper_functions/other_functions.dart';
+import 'package:amptive/src/utils/helpers/helper_functions/helper_functions.dart';
 import 'package:amptive/src/views/widgets/common_widgets/custom_rebuilder_widget.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
@@ -257,7 +257,7 @@ class _HorizontalScrollCardsState extends State<_HorizontalScrollCards> {
   Widget build(context) {
     return SizedBox(
       height: 260,
-      width: AmptiveHelperFunctions.getScreenWidth(context),
+      width: ATHelperFuncs.getScreenWidth(context),
       child: Column(
         children: [
           CarouselSlider.builder(

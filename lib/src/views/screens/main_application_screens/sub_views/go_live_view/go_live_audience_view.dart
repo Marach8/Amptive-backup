@@ -4,9 +4,9 @@ import 'package:amptive/src/utils/constants/font_sizes.dart';
 import 'package:amptive/src/utils/constants/strings/image_strings.dart';
 import 'package:amptive/src/utils/dialogs/app_notification_dialog.dart';
 import 'package:amptive/src/utils/dialogs/minimized_go_live_dialog.dart';
-import 'package:amptive/src/utils/helpers/helper_functions/other_functions.dart';
+import 'package:amptive/src/utils/helpers/helper_functions/helper_functions.dart';
 import 'package:amptive/src/views/widgets/common_widgets/annotated_region__widget.dart';
-import 'package:amptive/src/views/widgets/common_widgets/circular_container_with_picture_widget.dart';
+import 'package:amptive/src/views/widgets/common_widgets/circular_image.dart';
 import 'package:amptive/src/views/widgets/common_widgets/custom_container_widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/custom_rebuilder_widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/image_loader_widget.dart';
@@ -136,11 +136,11 @@ class _AmptiveGoLiveAudienceViewState extends State<AmptiveGoLiveAudienceView> {
                 child: Stack(
                   children: [
                     SizedBox(
-                      height: AmptiveHelperFunctions.getScreenHeight(context),
+                      height: ATHelperFuncs.getScreenHeight(context),
                       child: Column(
                         children: [
                           SizedBox(
-                            height: AmptiveHelperFunctions.getScreenHeight(context) * 0.3,
+                            height: ATHelperFuncs.getScreenHeight(context) * 0.3,
                           ),
                           Expanded(
                             child: ListView.builder(
@@ -153,7 +153,7 @@ class _AmptiveGoLiveAudienceViewState extends State<AmptiveGoLiveAudienceView> {
                                 return ListTile(
                                   horizontalTitleGap: 10,
                                   minTileHeight: 50,
-                                  leading: AmptiveCircularContainerWithPictureWidget(
+                                  leading: ATCircularImage(
                                     diameter: 35.h,
                                     imagePath: ATImgStrings.CRIMINAL,
                                   ),
@@ -179,7 +179,7 @@ class _AmptiveGoLiveAudienceViewState extends State<AmptiveGoLiveAudienceView> {
                 
                     ATContainer(
                       height: 250,
-                      width: AmptiveHelperFunctions.getScreenWidth(context),
+                      width: ATHelperFuncs.getScreenWidth(context),
                       padding: const EdgeInsets.only(left: 20, right: 20),
                       boxShadow: [
                         BoxShadow(
@@ -350,7 +350,7 @@ class _GoLiveAudienViewControlsWidgetState extends State<GoLiveAudienViewControl
               if(value){
                 return Padding(
                   padding: const EdgeInsets.only(right: 15),
-                  child: AmptiveCircularContainerWithPictureWidget(
+                  child: ATCircularImage(
                     diameter: 35,
                     imagePath: getHostList()[9].obj.profilePicture ?? ''
                   ),

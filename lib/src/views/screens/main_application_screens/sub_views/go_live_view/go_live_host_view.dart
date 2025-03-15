@@ -5,10 +5,10 @@ import 'package:amptive/src/utils/constants/font_sizes.dart';
 import 'package:amptive/src/utils/constants/strings/image_strings.dart';
 import 'package:amptive/src/utils/dialogs/app_notification_dialog.dart';
 import 'package:amptive/src/utils/dialogs/go_live/host_moderation_tools_dialog.dart';
-import 'package:amptive/src/utils/helpers/helper_functions/other_functions.dart';
+import 'package:amptive/src/utils/helpers/helper_functions/helper_functions.dart';
 import 'package:amptive/src/views/widgets/animation_widgets/common_animation_widgets/animated_switcher.dart';
 import 'package:amptive/src/views/widgets/common_widgets/annotated_region__widget.dart';
-import 'package:amptive/src/views/widgets/common_widgets/circular_container_with_picture_widget.dart';
+import 'package:amptive/src/views/widgets/common_widgets/circular_image.dart';
 import 'package:amptive/src/views/widgets/common_widgets/custom_container_widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/custom_rebuilder_widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/image_loader_widget.dart';
@@ -121,11 +121,11 @@ class _AmptiveGoLiveHostViewState extends State<AmptiveGoLiveHostView> {
                 child: Stack(
                   children: [
                     SizedBox(
-                      height: AmptiveHelperFunctions.getScreenHeight(context),
+                      height: ATHelperFuncs.getScreenHeight(context),
                       child: Column(
                         children: [
                           SizedBox(
-                            height: AmptiveHelperFunctions.getScreenHeight(context) * 0.3,
+                            height: ATHelperFuncs.getScreenHeight(context) * 0.3,
                           ),
                           Expanded(
                             child: ListView.builder(
@@ -138,7 +138,7 @@ class _AmptiveGoLiveHostViewState extends State<AmptiveGoLiveHostView> {
                                 return ListTile(
                                   horizontalTitleGap: 10,
                                   minTileHeight: 50,
-                                  leading: AmptiveCircularContainerWithPictureWidget(
+                                  leading: ATCircularImage(
                                     diameter: 35.h,
                                     imagePath: ATImgStrings.CRIMINAL,
                                   ),
@@ -231,7 +231,7 @@ class _AmptiveGoLiveHostViewState extends State<AmptiveGoLiveHostView> {
                           return Positioned(
                             top: 260,
                             child: SizedBox(
-                              width: AmptiveHelperFunctions.getScreenWidth(context),
+                              width: ATHelperFuncs.getScreenWidth(context),
                               child: AmptiveGoLivePinnedMsgNtfctnWidget(state: state)
                             )
                           );
@@ -330,7 +330,7 @@ class _GoLiveHostViewBottomSheetState extends State<GoLiveHostViewBottomSheet> {
               if(value){
                 return Padding(
                   padding: const EdgeInsets.only(right: 15),
-                  child: AmptiveCircularContainerWithPictureWidget(
+                  child: ATCircularImage(
                     diameter: 35,
                     imagePath: getHostList()[5].obj.profilePicture ?? ''
                   ),

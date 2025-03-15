@@ -5,11 +5,11 @@ import 'package:amptive/src/utils/constants/strings/image_strings.dart';
 import 'package:amptive/src/utils/constants/strings/other_strings.dart';
 import 'package:amptive/src/utils/constants/strings/route_strings.dart';
 import 'package:amptive/src/utils/dialogs/profile/show_top_creator_societies.dart';
-import 'package:amptive/src/utils/helpers/helper_functions/other_functions.dart';
+import 'package:amptive/src/utils/helpers/helper_functions/helper_functions.dart';
 import 'package:amptive/src/views/screens/main_application_screens/sub_views/home_view/home_sub_view/profile/ordinary_user_profile.dart';
 import 'package:amptive/src/views/widgets/common_widgets/annotated_region__widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/circle_avatar.dart';
-import 'package:amptive/src/views/widgets/common_widgets/circular_container_with_picture_widget.dart';
+import 'package:amptive/src/views/widgets/common_widgets/circular_image.dart';
 import 'package:amptive/src/views/widgets/common_widgets/custom_container_widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/custom_rebuilder_widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/image_loader_widget.dart';
@@ -74,7 +74,7 @@ class AmptiveCreatorProfileScreen extends StatelessWidget {
                     ATContainer(
                       decorationImagePath: ATImgStrings.weCanDoHardThingsBgImage,
                       height: 150,                
-                      width: AmptiveHelperFunctions.getScreenWidth(context),
+                      width: ATHelperFuncs.getScreenWidth(context),
                       child: GestureDetector(
                         child: Stack(
                           alignment: Alignment.center,
@@ -91,14 +91,14 @@ class AmptiveCreatorProfileScreen extends StatelessWidget {
                                   ATColors.trsprtColor
                                 ]
                               ),
-                              width: AmptiveHelperFunctions.getScreenWidth(context),
+                              width: ATHelperFuncs.getScreenWidth(context),
                               child: const SizedBox(),
                             ),
                             Positioned(
                               bottom: -35,
                               child: Hero(
                                 tag: ATImgStrings.jpeg1,
-                                child: AmptiveCircularContainerWithPictureWidget(
+                                child: ATCircularImage(
                                   onTap: () => context.pushNamed(
                                     ATRoutes.PROFILE_PIC_SCREEN,
                                     extra: ATImgStrings.jpeg1
@@ -508,7 +508,7 @@ class ProfileEventOrShowDisplay extends StatelessWidget {
                         child: Text(
                           'P',
                           style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                            fontWeight: AmptiveFontWeights.w800,
+                            fontWeight: ATFontWeights.w800,
                             fontSize: ATFontSizes.size10,
                             color: ATColors.black
                           ),

@@ -18,7 +18,7 @@ class AmptiveElevatedButtonTheme{
       textStyle: TextStyle(
         fontFamily: ATStrings.inter,
         fontSize: ATFontSizes.size16,
-        fontWeight: AmptiveFontWeights.w600
+        fontWeight: ATFontWeights.w600
       ),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(40).r)
     )

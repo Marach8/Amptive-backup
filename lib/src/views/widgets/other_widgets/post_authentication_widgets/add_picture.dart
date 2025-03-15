@@ -70,7 +70,7 @@ class _AddPictureWidgetState extends State<AddPictureWidget> {
               textAlign: TextAlign.center,
               style: Theme.of(context).textTheme.headlineLarge?.copyWith(
                     color: ATColors.hex307FE2,
-                    fontWeight: AmptiveFontWeights.w600,
+                    fontWeight: ATFontWeights.w600,
                   ),
             ),
             onPressed: () {
@@ -86,7 +86,7 @@ class _AddPictureWidgetState extends State<AddPictureWidget> {
               textAlign: TextAlign.center,
               style: Theme.of(context).textTheme.headlineLarge?.copyWith(
                     color: ATColors.hex307FE2,
-                    fontWeight: AmptiveFontWeights.w600,
+                    fontWeight: ATFontWeights.w600,
                   ),
             ),
             onPressed: () {
@@ -123,7 +123,7 @@ class _AddPictureWidgetState extends State<AddPictureWidget> {
             ATStrings.addProfilePicture,
             textAlign: TextAlign.start,
             style: Theme.of(context).textTheme.headlineLarge?.copyWith(
-                  fontWeight: AmptiveFontWeights.w600,
+                  fontWeight: ATFontWeights.w600,
                 ),
           ),
           SizedBox(
@@ -216,7 +216,7 @@ class _AddPictureWidgetState extends State<AddPictureWidget> {
                 ATStrings.skipForNow,
                 textAlign: TextAlign.center,
                 style: Theme.of(context).textTheme.headlineMedium?.copyWith(
-                      fontWeight: AmptiveFontWeights.w600,
+                      fontWeight: ATFontWeights.w600,
                     ),
               ),
             ),
@@ -237,7 +237,7 @@ class _AddPictureWidgetState extends State<AddPictureWidget> {
                 child: Text(
                   ATStrings.NEXT,
                   style: Theme.of(context).textTheme.headlineMedium?.copyWith(
-                        fontWeight: AmptiveFontWeights.w600,
+                        fontWeight: ATFontWeights.w600,
                       ),
                 ),
               ),

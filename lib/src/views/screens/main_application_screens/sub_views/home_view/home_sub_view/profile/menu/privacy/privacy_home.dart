@@ -91,7 +91,7 @@ class AmptivePrivacyScreen extends StatelessWidget {
                       ATStrings.APPROVED_USERS_CAN_FOLLOW,
                       maxLines: 2,
                       style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                        fontWeight: AmptiveFontWeights.w500,
+                        fontWeight: ATFontWeights.w500,
                         color: ATColors.white.withValues(alpha: 0.4)
                       )
                     ),

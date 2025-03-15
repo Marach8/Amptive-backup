@@ -161,7 +161,7 @@ class _UserNameAuthScreenState extends State<UserNameAuthScreen> {
                       child: Text(
                         ATStrings.checkerIsLoading,
                         style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                              fontWeight: AmptiveFontWeights.w500,
+                              fontWeight: ATFontWeights.w500,
                             ),
                       ),
                     ),

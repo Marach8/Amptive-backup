@@ -42,7 +42,7 @@ class AmptiveLiveIndicatorWithAnimatingDotWidget extends StatelessWidget {
             ATStrings.LIVE.toUpperCase(),
             style: Theme.of(context).textTheme.titleSmall?.copyWith(
               fontSize: ATFontSizes.size14,
-              fontWeight: AmptiveFontWeights.w600,
+              fontWeight: ATFontWeights.w600,
               height: 0,
             )
           ),

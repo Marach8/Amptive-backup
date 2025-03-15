@@ -2,11 +2,11 @@ import 'dart:ui';
 
 import 'package:amptive/src/utils/constants/font_sizes.dart';
 import 'package:amptive/src/utils/constants/strings/image_strings.dart';
-import 'package:amptive/src/utils/helpers/helper_functions/other_functions.dart';
+import 'package:amptive/src/utils/helpers/helper_functions/helper_functions.dart';
 import 'package:amptive/src/views/widgets/animation_widgets/horiz_slider_animation.dart';
 import 'package:amptive/src/views/widgets/common_widgets/annotated_region__widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/circle_avatar.dart';
-import 'package:amptive/src/views/widgets/common_widgets/circular_container_with_picture_widget.dart';
+import 'package:amptive/src/views/widgets/common_widgets/circular_image.dart';
 import 'package:amptive/src/views/widgets/common_widgets/custom_container_widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/custom_rebuilder_widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/textformfield_widget.dart';
@@ -114,11 +114,11 @@ class _AmptiveGoLiveCohostViewState extends State<AmptiveGoLiveCohostView> {
               child: Stack(
                 children: [
                   SizedBox(
-                    height: AmptiveHelperFunctions.getScreenHeight(context),
+                    height: ATHelperFuncs.getScreenHeight(context),
                     child: Column(
                       children: [
                         SizedBox(
-                          height: AmptiveHelperFunctions.getScreenHeight(context) * 0.3,
+                          height: ATHelperFuncs.getScreenHeight(context) * 0.3,
                         ),
                         Expanded(
                           child: ListView.builder(
@@ -131,7 +131,7 @@ class _AmptiveGoLiveCohostViewState extends State<AmptiveGoLiveCohostView> {
                               return ListTile(
                                 horizontalTitleGap: 10,
                                 minTileHeight: 50,
-                                leading: AmptiveCircularContainerWithPictureWidget(
+                                leading: ATCircularImage(
                                   diameter: 35.h,
                                   imagePath: ATImgStrings.CRIMINAL,
                                 ),

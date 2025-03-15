@@ -12,7 +12,7 @@ import '../../../../../../utils/constants/font_sizes.dart';
 import '../../../../../../utils/constants/font_weights.dart';
 import '../../../../../../utils/constants/strings/image_strings.dart';
 import '../../../../../../utils/constants/strings/other_strings.dart';
-import '../../../../../../utils/helpers/helper_functions/other_functions.dart';
+import '../../../../../../utils/helpers/helper_functions/helper_functions.dart';
 import '../../../../../widgets/common_widgets/app_bar_widget.dart';
 import '../../../../../widgets/common_widgets/custom_container_widget.dart';
 import '../../../../../widgets/common_widgets/elevated_button_widget.dart';
@@ -37,7 +37,7 @@ class AmptiveEventDetailedScreen extends StatelessWidget {
           centerTitle: true,
           title: GestureDetector(
             onTap: () {
-              AmptiveHelperFunctions.hideAnyMountedSnackbar(context);
+              ATHelperFuncs.hideAnyMountedSnackbar(context);
               context.pop();
             },
             child: Platform.isAndroid
@@ -71,7 +71,7 @@ class AmptiveEventDetailedScreen extends StatelessWidget {
                       overflow: TextOverflow.clip,
                       style: Theme.of(context).textTheme.displayMedium?.copyWith(
                         fontSize: ATFontSizes.size24,
-                        fontWeight: AmptiveFontWeights.w600,
+                        fontWeight: ATFontWeights.w600,
                         fontFamily: "Bricolage Grotesque"
                       ),
                     ),
@@ -152,7 +152,7 @@ class AmptiveEventDetailedScreen extends StatelessWidget {
                       style: TextStyle(
                         color: ATColors.white.withOpacity(0.6),
                         fontSize: ATFontSizes.size14,
-                        fontWeight: AmptiveFontWeights.w500,
+                        fontWeight: ATFontWeights.w500,
                       ),
                     ),
                     Gap(30.h),
@@ -201,7 +201,7 @@ class AmptiveEventDetailedScreen extends StatelessWidget {
                       style: TextStyle(
                         color: ATColors.white.withOpacity(0.6),
                         fontSize: ATFontSizes.size14,
-                        fontWeight: AmptiveFontWeights.w500,
+                        fontWeight: ATFontWeights.w500,
                       ),
                     ),
                     Gap(100.h)

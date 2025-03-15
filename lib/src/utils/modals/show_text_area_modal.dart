@@ -5,7 +5,7 @@ import 'package:get_it/get_it.dart';
 
 import '../../services/create_show/create_show_service.dart';
 import '../constants/colors.dart';
-import '../helpers/helper_functions/other_functions.dart';
+import '../helpers/helper_functions/helper_functions.dart';
 
 void showTextAreaModal(BuildContext context) {
   CreateShowService service = GetIt.I<CreateShowService>();
@@ -13,7 +13,7 @@ void showTextAreaModal(BuildContext context) {
   showModalBottomSheet(
     backgroundColor: ATColors.brandBlack,
     constraints: BoxConstraints.expand(
-        height: AmptiveHelperFunctions.getScreenHeight(context)),
+        height: ATHelperFuncs.getScreenHeight(context)),
     context: context,
     useSafeArea: true,
     isScrollControlled: true,

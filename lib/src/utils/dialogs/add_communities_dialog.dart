@@ -1,6 +1,6 @@
 import 'package:amptive/src/models/community.dart';
 import 'package:amptive/src/utils/constants/colors.dart';
-import 'package:amptive/src/utils/helpers/helper_functions/other_functions.dart';
+import 'package:amptive/src/utils/helpers/helper_functions/helper_functions.dart';
 import 'package:amptive/src/views/widgets/common_widgets/image_loader_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
@@ -15,7 +15,7 @@ Future<Community> showAddCommunitiesDialog(BuildContext context) async {
   return await showModalBottomSheet(
       backgroundColor: ATColors.brandBlack,
       constraints: BoxConstraints.expand(
-          height: AmptiveHelperFunctions.getScreenHeight(context)),
+          height: ATHelperFuncs.getScreenHeight(context)),
       context: context,
       isScrollControlled: true,
       useSafeArea: true,

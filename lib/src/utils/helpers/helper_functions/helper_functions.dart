@@ -2,8 +2,8 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 
 
-class AmptiveHelperFunctions{
-  const AmptiveHelperFunctions._();
+class ATHelperFuncs{
+  const ATHelperFuncs._();
 
   static double getScreenWidth(BuildContext context)
     => MediaQuery.sizeOf(context).width;

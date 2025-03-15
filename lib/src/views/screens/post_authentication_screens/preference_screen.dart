@@ -136,7 +136,7 @@ class _AmptivePreferenceScreenState extends State<AmptivePreferenceScreen> {
                                                 .textTheme
                                                 .headlineMedium
                                                 ?.copyWith(
-                                                  fontWeight: AmptiveFontWeights
+                                                  fontWeight: ATFontWeights
                                                       .w600,
                                                 ),
                                           ),

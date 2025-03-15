@@ -5,7 +5,7 @@ import 'package:amptive/src/utils/constants/colors.dart';
 import 'package:amptive/src/utils/constants/strings/image_strings.dart';
 import 'package:amptive/src/utils/dialogs/app_notification_dialog.dart';
 import 'package:amptive/src/utils/dialogs/confirmation_alert_dialog.dart';
-import 'package:amptive/src/utils/helpers/helper_functions/other_functions.dart';
+import 'package:amptive/src/utils/helpers/helper_functions/helper_functions.dart';
 import 'package:amptive/src/views/widgets/animation_widgets/common_animation_widgets/animated_crossfade_widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/custom_container_widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/image_loader_widget.dart';
@@ -55,7 +55,7 @@ Future<void> showListenersDialog({
         child: BackdropFilter(
           filter: ImageFilter.blur(sigmaX: 1, sigmaY: 1),
           child: ATContainer(
-            width: AmptiveHelperFunctions.getScreenWidth(context),
+            width: ATHelperFuncs.getScreenWidth(context),
             padding: const EdgeInsets.fromLTRB(15, 10, 15, 10),
             child: Column(
               children: [
@@ -108,7 +108,7 @@ Future<void> showListenersDialog({
                     controller: controller,
                     focusNode: focusNode,
                     disableBlueBorder: true,
-                    onChanged: (text) => AmptiveHelperFunctions.callDebouncer(
+                    onChanged: (text) => ATHelperFuncs.callDebouncer(
                       200,
                       () => context.read<AmptiveGoLiveAvailableCoHostsBloc>().add(
                         SearchCohostEvent(searchKey: text)

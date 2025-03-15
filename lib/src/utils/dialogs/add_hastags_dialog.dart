@@ -3,7 +3,7 @@ import 'dart:ui';
 import 'package:amptive/src/models/hashtag.dart';
 import 'package:amptive/src/utils/constants/colors.dart';
 import 'package:amptive/src/utils/constants/font_sizes.dart';
-import 'package:amptive/src/utils/helpers/helper_functions/other_functions.dart';
+import 'package:amptive/src/utils/helpers/helper_functions/helper_functions.dart';
 import 'package:amptive/src/views/widgets/animation_widgets/common_animation_widgets/animated_crossfade_widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/custom_container_widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/textformfield_widget.dart';
@@ -36,7 +36,7 @@ Future<Set<ObjectWithNotifier<Hashtag>>?> showAddHashtagDialog(
   return await showModalBottomSheet(
       backgroundColor: ATColors.brandBlack,
       constraints: BoxConstraints.expand(
-          height: AmptiveHelperFunctions.getScreenHeight(context)),
+          height: ATHelperFuncs.getScreenHeight(context)),
       context: context,
       isScrollControlled: true,
       useSafeArea: true,
@@ -255,7 +255,7 @@ Future<Set<ObjectWithNotifier<Hashtag>>?> showAddHashtagDialog(
               bottom: 0,
               child: SizedBox(
                 height: 80.h,
-                width: AmptiveHelperFunctions.getScreenWidth(context),
+                width: ATHelperFuncs.getScreenWidth(context),
                 child: ClipRect(
                   child: BackdropFilter(
                       filter: ImageFilter.blur(sigmaX: 2.0, sigmaY: 2.0),
@@ -268,7 +268,7 @@ Future<Set<ObjectWithNotifier<Hashtag>>?> showAddHashtagDialog(
               child: ATContainer(
                 height: 50.h,
                 padding: const EdgeInsets.symmetric(horizontal: 15),
-                width: AmptiveHelperFunctions.getScreenWidth(context),
+                width: ATHelperFuncs.getScreenWidth(context),
                 child: AmptiveRebuilderWidget(
                     notifier: service.selectedHashtagLength,
                     builder: (_, value, __) {

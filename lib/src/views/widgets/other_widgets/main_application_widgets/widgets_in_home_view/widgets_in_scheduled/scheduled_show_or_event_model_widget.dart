@@ -99,7 +99,7 @@ class _AmptiveScheduledShowOrEventDataModelWidgetState extends State<AmptiveSche
                       overflow: TextOverflow.clip,
                       style: Theme.of(context).textTheme.displayMedium?.copyWith(
                         fontSize: ATFontSizes.size24,
-                        fontWeight: AmptiveFontWeights.w600,
+                        fontWeight: ATFontWeights.w600,
                         fontFamily: "Bricolage Grotesque"
                       ),
                     ),

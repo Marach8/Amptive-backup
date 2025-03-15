@@ -5,7 +5,7 @@ import '../../../../../models/go_live_notification_model.dart';
 import '../../../../../utils/constants/colors.dart';
 import '../../../../../utils/constants/strings/image_strings.dart';
 import '../../../../../utils/constants/strings/other_strings.dart';
-import '../../../common_widgets/circular_container_with_picture_widget.dart';
+import '../../../common_widgets/circular_image.dart';
 import '../../../common_widgets/custom_container_widget.dart';
 import '../../../common_widgets/image_loader_widget.dart';
 
@@ -37,7 +37,7 @@ class AmptiveGoLiveNotificationsWidget extends StatelessWidget {
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          AmptiveCircularContainerWithPictureWidget(
+          ATCircularImage(
             diameter: 30,
             imagePath: user.profilePicture ?? ''
           ),
@@ -93,7 +93,7 @@ class AmptiveGoLivePinnedMsgNtfctnWidget extends StatelessWidget {
       radius: 10,
       child: Row(
         children: [
-          AmptiveCircularContainerWithPictureWidget(
+          ATCircularImage(
             diameter: 30,
             imagePath: user.profilePicture ?? ''
           ),

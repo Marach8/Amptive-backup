@@ -17,7 +17,7 @@ class AmptiveTextButtonTheme{
       textStyle: TextStyle(
         fontFamily: ATStrings.inter,
         fontSize: ATFontSizes.size16,
-        fontWeight: AmptiveFontWeights.w600
+        fontWeight: ATFontWeights.w600
       ),
     )
   );

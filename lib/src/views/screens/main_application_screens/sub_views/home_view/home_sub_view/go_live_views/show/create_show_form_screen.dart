@@ -317,7 +317,7 @@ class _CreateShowScreenState extends State<CreateShowScreen> {
                         "Communities will help your Shows and Events reach more listeners. Listeners can also use communities to find your Shows and Events, easily. Learn more",
                         overflow: TextOverflow.visible,
                         style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                          fontWeight: AmptiveFontWeights.w500,
+                          fontWeight: ATFontWeights.w500,
                           color: ATColors.white.withOpacity(0.4),
                         ),
                       ),
@@ -374,7 +374,7 @@ class _CreateShowScreenState extends State<CreateShowScreen> {
                                                 .white
                                                 .withOpacity(0.7),
                                             fontWeight:
-                                            AmptiveFontWeights
+                                            ATFontWeights
                                                 .w500)),
                                   )
                                 ],
@@ -389,7 +389,7 @@ class _CreateShowScreenState extends State<CreateShowScreen> {
                                     color: ATColors.white
                                         .withOpacity(0.6),
                                     fontWeight:
-                                    AmptiveFontWeights.w500),
+                                    ATFontWeights.w500),
                               )
                             ],
                           ),
@@ -417,7 +417,7 @@ class _CreateShowScreenState extends State<CreateShowScreen> {
                         "Added users must accept your invitation before they are added as your co-hosts.",
                         overflow: TextOverflow.visible,
                         style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                          fontWeight: AmptiveFontWeights.w500,
+                          fontWeight: ATFontWeights.w500,
                           color: ATColors.white.withOpacity(0.4),
                         ),
                       ),
@@ -473,7 +473,7 @@ class _CreateShowScreenState extends State<CreateShowScreen> {
                         "You can add up to 5 hashtags, with each hashtag being up to 25 characters long and free of spaces or special characters.",
                         overflow: TextOverflow.visible,
                         style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                          fontWeight: AmptiveFontWeights.w500,
+                          fontWeight: ATFontWeights.w500,
                           color: ATColors.white.withOpacity(0.4),
                         ),
                       ),
@@ -509,7 +509,7 @@ class _CreateShowScreenState extends State<CreateShowScreen> {
                         "You will be prompted to setup your subscription plan, if you haven't set it up yet.  ",
                         overflow: TextOverflow.visible,
                         style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                          fontWeight: AmptiveFontWeights.w500,
+                          fontWeight: ATFontWeights.w500,
                           color: ATColors.white.withOpacity(0.4),
                         ),
                       ),
@@ -528,7 +528,7 @@ class _CreateShowScreenState extends State<CreateShowScreen> {
                       titleStyle: Theme.of(context)
                           .textTheme
                           .titleMedium
-                          ?.copyWith(fontWeight: AmptiveFontWeights.w500),
+                          ?.copyWith(fontWeight: ATFontWeights.w500),
                     ),
                     SizedBox(height: 16.h),
 
@@ -571,7 +571,7 @@ class _CreateShowScreenState extends State<CreateShowScreen> {
                               .textTheme
                               .titleSmall
                               ?.copyWith(
-                            fontWeight: AmptiveFontWeights.w500,
+                            fontWeight: ATFontWeights.w500,
                             color:
                             ATColors.white.withOpacity(0.4),
                           ),
@@ -622,7 +622,7 @@ class _CreateShowScreenState extends State<CreateShowScreen> {
                               .textTheme
                               .titleSmall
                               ?.copyWith(
-                            fontWeight: AmptiveFontWeights.w500,
+                            fontWeight: ATFontWeights.w500,
                             color:
                             ATColors.white.withOpacity(0.4),
                           ),
@@ -681,7 +681,7 @@ class _CreateShowScreenState extends State<CreateShowScreen> {
                               .textTheme
                               .titleSmall
                               ?.copyWith(
-                            fontWeight: AmptiveFontWeights.w500,
+                            fontWeight: ATFontWeights.w500,
                             color:
                             ATColors.white.withOpacity(0.4),
                           ),

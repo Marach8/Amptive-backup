@@ -1,6 +1,6 @@
 import 'package:amptive/src/utils/constants/colors.dart';
 import 'package:amptive/src/views/widgets/common_widgets/annotated_region__widget.dart';
-import 'package:amptive/src/views/widgets/common_widgets/circular_container_with_picture_widget.dart';
+import 'package:amptive/src/views/widgets/common_widgets/circular_image.dart';
 import 'package:amptive/src/views/widgets/common_widgets/custom_container_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -37,7 +37,7 @@ class AmptiveViewProfilePicScreen extends StatelessWidget {
         body: Center(
           child: Hero(
             tag: imgPath,
-            child: AmptiveCircularContainerWithPictureWidget(
+            child: ATCircularImage(
               imagePath: imgPath,
               diameter: 250,
             ),

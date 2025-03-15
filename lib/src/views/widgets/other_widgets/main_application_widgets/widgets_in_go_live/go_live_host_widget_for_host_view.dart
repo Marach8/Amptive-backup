@@ -1,6 +1,6 @@
 import 'package:amptive/src/models/host.dart';
 import 'package:amptive/src/utils/constants/font_sizes.dart';
-import 'package:amptive/src/views/widgets/common_widgets/circular_container_with_picture_widget.dart';
+import 'package:amptive/src/views/widgets/common_widgets/circular_image.dart';
 import 'package:amptive/src/views/widgets/common_widgets/custom_container_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -65,7 +65,7 @@ class AmptiveLiveHostAndCoHostWidget extends StatelessWidget {
               clipBehavior: Clip.none,
               alignment: Alignment.center,
               children: [
-                AmptiveCircularContainerWithPictureWidget(
+                ATCircularImage(
                   diameter: isHost ? 94.h : 64.h, addBorder: true,
                   borderColor: ATColors.white,
                   borderWidth: 1, picturePadding: 2,

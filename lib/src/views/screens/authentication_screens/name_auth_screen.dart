@@ -121,7 +121,7 @@ class _NameAuthScreenState extends State<NameAuthScreen> {
                               ATStrings.space,
                           style:
                               Theme.of(context).textTheme.titleSmall?.copyWith(
-                                    fontWeight: AmptiveFontWeights.w700,
+                                    fontWeight: ATFontWeights.w700,
                                   ),
                         ),
                         const TextSpan(
@@ -132,7 +132,7 @@ class _NameAuthScreenState extends State<NameAuthScreen> {
                           text: ATStrings.privacyPolicy,
                           style:
                               Theme.of(context).textTheme.titleSmall?.copyWith(
-                                    fontWeight: AmptiveFontWeights.w700,
+                                    fontWeight: ATFontWeights.w700,
                                   ),
                         ),
                       ],

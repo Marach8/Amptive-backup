@@ -3,7 +3,7 @@ import 'dart:ui';
 import 'package:amptive/src/bloc/main_app/go_live_bloc/host_view/cohosts_display_bloc.dart';
 import 'package:amptive/src/utils/constants/colors.dart';
 import 'package:amptive/src/utils/constants/font_sizes.dart';
-import 'package:amptive/src/utils/helpers/helper_functions/other_functions.dart';
+import 'package:amptive/src/utils/helpers/helper_functions/helper_functions.dart';
 import 'package:amptive/src/views/widgets/animation_widgets/common_animation_widgets/animated_crossfade_widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/custom_container_widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/image_loader_widget.dart';
@@ -41,7 +41,7 @@ final showSuffixIconNotifier = ValueNotifier(false);
   return await showModalBottomSheet<bool>(
       backgroundColor: ATColors.hex202020,
       constraints: BoxConstraints.expand(
-        height: AmptiveHelperFunctions.getScreenHeight(context)
+        height: ATHelperFuncs.getScreenHeight(context)
       ),
       context: context,
       isScrollControlled: true,
@@ -118,7 +118,7 @@ final showSuffixIconNotifier = ValueNotifier(false);
                           controller: controller,
                           focusNode: focusNode,
                           disableBlueBorder: true,
-                          onChanged: (text) => AmptiveHelperFunctions.callDebouncer(
+                          onChanged: (text) => ATHelperFuncs.callDebouncer(
                             200,
                             () => context.read<AmptiveGoLiveAvailableCoHostsBloc>().add(
                               SearchCohostEvent(searchKey: text)
@@ -246,7 +246,7 @@ final showSuffixIconNotifier = ValueNotifier(false);
                 bottom: 0,
                 child: SizedBox(
                   height: 80.h,
-                  width: AmptiveHelperFunctions.getScreenWidth(context),
+                  width: ATHelperFuncs.getScreenWidth(context),
                   child: ClipRect(
                     child: BackdropFilter(
                       filter: ImageFilter.blur(sigmaX: 2.0, sigmaY: 2.0),
@@ -260,7 +260,7 @@ final showSuffixIconNotifier = ValueNotifier(false);
                 child: ATContainer(
                   height: 50.h,
                   padding: const EdgeInsets.symmetric(horizontal: 15),
-                  width: AmptiveHelperFunctions.getScreenWidth(context),
+                  width: ATHelperFuncs.getScreenWidth(context),
                   child: BlocBuilder<AmptiveGoLiveSelectCoHostBloc, List<ObjectWithNotifier<Host>>>(
                     builder: (_, listOfCohosts) {
                       final shouldActivateBtn = listOfCohosts.any(

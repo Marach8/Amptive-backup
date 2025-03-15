@@ -41,7 +41,7 @@ Future<void> showMinimizedGoLiveState() async {
                   style: TextStyle(
                     color: ATColors.white,
                     fontSize: ATFontSizes.size13,
-                    fontWeight: AmptiveFontWeights.w500,
+                    fontWeight: ATFontWeights.w500,
                   ),
                 ),
                 Row(
@@ -59,7 +59,7 @@ Future<void> showMinimizedGoLiveState() async {
                           style: TextStyle(
                             color: ATColors.hexC2C2C2,
                             fontSize: ATFontSizes.size12,
-                            fontWeight: AmptiveFontWeights.w500,
+                            fontWeight: ATFontWeights.w500,
                           ),
                         ),
                       ),

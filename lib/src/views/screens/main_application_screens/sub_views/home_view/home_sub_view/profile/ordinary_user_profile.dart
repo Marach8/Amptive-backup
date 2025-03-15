@@ -2,10 +2,10 @@ import 'package:amptive/src/utils/constants/colors.dart';
 import 'package:amptive/src/utils/constants/font_sizes.dart';
 import 'package:amptive/src/utils/constants/strings/image_strings.dart';
 import 'package:amptive/src/utils/constants/strings/other_strings.dart';
-import 'package:amptive/src/utils/helpers/helper_functions/other_functions.dart';
+import 'package:amptive/src/utils/helpers/helper_functions/helper_functions.dart';
 import 'package:amptive/src/views/widgets/common_widgets/annotated_region__widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/circle_avatar.dart';
-import 'package:amptive/src/views/widgets/common_widgets/circular_container_with_picture_widget.dart';
+import 'package:amptive/src/views/widgets/common_widgets/circular_image.dart';
 import 'package:amptive/src/views/widgets/common_widgets/custom_container_widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/custom_rebuilder_widget.dart';
 import 'package:flutter/material.dart';
@@ -63,14 +63,14 @@ class AmptiveOrdinaryUserProfileScreen extends StatelessWidget {
                           ATColors.hexD9D9D9
                         ]
                       ),
-                      width: AmptiveHelperFunctions.getScreenWidth(context),
+                      width: ATHelperFuncs.getScreenWidth(context),
                       child: Stack(
                         alignment: Alignment.center,
                         clipBehavior: Clip.none,
                         children: [
                           Positioned(
                             bottom: -35,
-                            child: AmptiveCircularContainerWithPictureWidget(
+                            child: ATCircularImage(
                               diameter: 70, addBorder: true,
                               borderColor: ATColors.black,
                               borderWidth: 3,
@@ -127,7 +127,7 @@ class AmptiveOrdinaryUserProfileScreen extends StatelessWidget {
         
                     ATContainer(
                       onTap: (){},
-                      width: AmptiveHelperFunctions.getScreenWidth(context),
+                      width: ATHelperFuncs.getScreenWidth(context),
                       alignment: Alignment.center, radius: 50,
                       margin: const EdgeInsets.fromLTRB(15, 0, 15, 0),
                       padding: const EdgeInsets.only(top: 10, bottom: 10),

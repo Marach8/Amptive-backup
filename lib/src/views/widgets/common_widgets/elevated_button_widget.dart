@@ -1,5 +1,5 @@
 import 'package:amptive/src/utils/constants/colors.dart';
-import 'package:amptive/src/utils/helpers/helper_functions/other_functions.dart';
+import 'package:amptive/src/utils/helpers/helper_functions/helper_functions.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 
@@ -88,7 +88,7 @@ class ATPlainElevatedBtn extends StatelessWidget {
         foregroundColor: fgColor,
         backgroundColor: bgColor,
         //padding: const EdgeInsets.fromLTRB(),
-        fixedSize: Size(AmptiveHelperFunctions.getScreenWidth(context), height ?? 45)
+        fixedSize: Size(ATHelperFuncs.getScreenWidth(context), height ?? 45)
       ),
       child: child ?? Text(btnTitle ?? ''),
     );

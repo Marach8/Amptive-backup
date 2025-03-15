@@ -3,9 +3,9 @@ import 'dart:ui';
 import 'package:amptive/src/utils/constants/colors.dart';
 import 'package:amptive/src/utils/constants/font_sizes.dart';
 import 'package:amptive/src/utils/helpers/extensions/string_extensions.dart';
-import 'package:amptive/src/utils/helpers/helper_functions/other_functions.dart';
+import 'package:amptive/src/utils/helpers/helper_functions/helper_functions.dart';
 import 'package:amptive/src/views/widgets/common_widgets/circle_avatar.dart';
-import 'package:amptive/src/views/widgets/common_widgets/circular_container_with_picture_widget.dart';
+import 'package:amptive/src/views/widgets/common_widgets/circular_image.dart';
 import 'package:amptive/src/views/widgets/common_widgets/custom_container_widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/image_loader_widget.dart';
 import 'package:flutter/material.dart';
@@ -21,7 +21,7 @@ Future<void> showAudienceViewOfTopGiftersDialog(BuildContext context) async {
   return await showModalBottomSheet(
       backgroundColor: ATColors.white.withOpacity(0.08),
       constraints: BoxConstraints.expand(
-        height: AmptiveHelperFunctions.getScreenHeight(context) * 0.86
+        height: ATHelperFuncs.getScreenHeight(context) * 0.86
       ),
       context: context,
       isScrollControlled: true,
@@ -127,10 +127,10 @@ Future<void> showAudienceViewOfTopGiftersDialog(BuildContext context) async {
                   filter: ImageFilter.blur(sigmaX: 50, sigmaY: 50),
                   child: ATContainer(
                     padding: const EdgeInsets.only(left: 25, right: 15, bottom: 20, top: 15),
-                    width: AmptiveHelperFunctions.getScreenWidth(context),
+                    width: ATHelperFuncs.getScreenWidth(context),
                     child: Row(
                       children: [
-                        AmptiveCircularContainerWithPictureWidget(
+                        ATCircularImage(
                           imagePath: randomUser.obj.profilePicture ?? '',
                           diameter:50,
                         ),

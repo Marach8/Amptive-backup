@@ -82,13 +82,13 @@ class _AmptiveEmailAuthScreenState extends State<AmptiveEmailAuthScreen> {
                       hintStyle: TextStyle(
                         fontSize: ATFontSizes.size16,
                         color: ATColors.authHintColor,
-                        fontWeight: AmptiveFontWeights.w400,
+                        fontWeight: ATFontWeights.w400,
                       ),
                       errorText: service.email.error,
                       errorStyle: TextStyle(
                         color: ATColors.textRedColor,
                         fontSize: ATFontSizes.size12,
-                        fontWeight: AmptiveFontWeights.w400,
+                        fontWeight: ATFontWeights.w400,
                       ),
                       filled: true,
                       fillColor: const Color(0xFF9E9E9E).withOpacity(0.3),

@@ -2,7 +2,7 @@ import 'package:amptive/src/utils/constants/colors.dart';
 import 'package:amptive/src/views/widgets/common_widgets/custom_container_widget.dart';
 import 'package:flutter/material.dart';
 import '../../../../../../utils/constants/strings/image_strings.dart';
-import '../../../../../../utils/helpers/helper_functions/other_functions.dart';
+import '../../../../../../utils/helpers/helper_functions/helper_functions.dart';
 import 'tab_view_listtile.dart';
 
 class AmptiveDiscoverTabView extends StatefulWidget {
@@ -79,7 +79,7 @@ with SingleTickerProviderStateMixin{
     
         ATContainer(
           padding: const EdgeInsets.all(15),
-          height: AmptiveHelperFunctions.getScreenHeight(context),
+          height: ATHelperFuncs.getScreenHeight(context),
           child: TabBarView(
             controller: _tabController,
             children: [

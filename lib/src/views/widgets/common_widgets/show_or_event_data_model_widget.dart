@@ -1,7 +1,7 @@
 import 'package:amptive/src/utils/constants/font_sizes.dart';
 import 'package:amptive/src/utils/constants/font_weights.dart';
 import 'package:amptive/src/utils/constants/strings/image_strings.dart';
-import 'package:amptive/src/utils/helpers/helper_functions/other_functions.dart';
+import 'package:amptive/src/utils/helpers/helper_functions/helper_functions.dart';
 import 'package:amptive/src/views/widgets/common_widgets/custom_container_widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/image_loader_widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/live_indicator_with_animating_dot_widget.dart';
@@ -39,7 +39,7 @@ class AmptiveShowOrEventDataModelWidget extends StatelessWidget {
             children: [
               const ATImgLoader(imgPath: ATImgStrings.weCanDoHardThingsBgImage),
               ATContainer(
-                width: AmptiveHelperFunctions.getScreenWidth(context),
+                width: ATHelperFuncs.getScreenWidth(context),
                 padding: const EdgeInsets.fromLTRB(15, 10, 15, 10),
                 radius: 15,
                 gradient: LinearGradient(
@@ -68,7 +68,7 @@ class AmptiveShowOrEventDataModelWidget extends StatelessWidget {
                       "Don't Forget Who You Are ft. Jacob Scipio",
                       style: Theme.of(context).textTheme.displayMedium?.copyWith(
                         fontSize: ATFontSizes.size24,
-                        fontWeight: AmptiveFontWeights.w600,
+                        fontWeight: ATFontWeights.w600,
                         height: 1.2.sp,
                       ),
                     ),

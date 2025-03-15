@@ -43,7 +43,7 @@ class CupertinoPhoneCodeSelectWidget extends StatelessWidget {
                                     .textTheme
                                     .bodyMedium
                                     ?.copyWith(
-                                      fontWeight: AmptiveFontWeights.w500,
+                                      fontWeight: ATFontWeights.w500,
                                     ),
                               ),
                               onPressed: () {

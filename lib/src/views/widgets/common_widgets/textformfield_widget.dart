@@ -100,7 +100,7 @@ class AmptiveTextFormFieldWidget extends StatelessWidget {
         enabledBorder: null
       ),
       style: TextStyle(
-        fontWeight: AmptiveFontWeights.w400,
+        fontWeight: ATFontWeights.w400,
         fontSize: ATFontSizes.size18,
         color: ATColors.white,
       ),

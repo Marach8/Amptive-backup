@@ -4,7 +4,7 @@ import 'package:amptive/src/bloc/authentication/otp/otp_auth_states.dart';
 import 'package:amptive/src/services/auth/otp_service.dart';
 import 'package:amptive/src/utils/constants/colors.dart';
 import 'package:amptive/src/utils/constants/font_sizes.dart';
-import 'package:amptive/src/utils/helpers/helper_functions/other_functions.dart';
+import 'package:amptive/src/utils/helpers/helper_functions/helper_functions.dart';
 import 'package:amptive/src/views/widgets/common_widgets/annotated_region__widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/common_widgets.dart';
 import 'package:flutter/gestures.dart';
@@ -94,7 +94,7 @@ class _OTPScreenState extends State<OTPScreen> {
                   margin: EdgeInsets.only(top: 20.h),
                   width: 297.w,
                   child: Text(
-                    AmptiveHelperFunctions.enter4DigitSentFrom(widget.from.toLowerCase()),
+                    ATHelperFuncs.enter4DigitSentFrom(widget.from.toLowerCase()),
                     textAlign: TextAlign.start,
                     style: Theme.of(context).textTheme.headlineMedium?.copyWith(
                       fontSize: ATFontSizes.size17
@@ -136,7 +136,7 @@ class _OTPScreenState extends State<OTPScreen> {
                                 recognizer: _tapGestureRecognizer,
                                 style: Theme.of(context).textTheme.titleSmall?.copyWith(
                                   decoration: TextDecoration.underline,
-                                  fontWeight: AmptiveFontWeights.w400,
+                                  fontWeight: ATFontWeights.w400,
                                   decorationColor: ATColors.white,
                                 ),
                               ),
@@ -144,7 +144,7 @@ class _OTPScreenState extends State<OTPScreen> {
                           ),
                         )
                         : Text(
-                          AmptiveHelperFunctions.codeHasBeenSentResendIn(state.timeLeft),
+                          ATHelperFuncs.codeHasBeenSentResendIn(state.timeLeft),
                           style: Theme.of(context).textTheme.titleSmall,
                         ),
                       );
@@ -234,7 +234,7 @@ class OTPTextFormField extends StatelessWidget {
             child: Text(ATStrings.hyphen),
           ),
           labelStyle:Theme.of(context).textTheme.headlineMedium?.copyWith(
-          fontWeight: AmptiveFontWeights.w400,
+          fontWeight: ATFontWeights.w400,
         ),
           filled: true,
           fillColor: ATColors.fillGreyColor.withOpacity(0.3),
@@ -254,7 +254,7 @@ class OTPTextFormField extends StatelessWidget {
           ),
         ),
         style:Theme.of(context).textTheme.headlineMedium?.copyWith(
-          fontWeight: AmptiveFontWeights.w400,
+          fontWeight: ATFontWeights.w400,
         ),
         textAlign: TextAlign.center,
       ),

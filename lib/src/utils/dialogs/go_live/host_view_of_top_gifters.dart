@@ -3,7 +3,7 @@ import 'dart:ui';
 import 'package:amptive/src/utils/constants/colors.dart';
 import 'package:amptive/src/utils/constants/font_sizes.dart';
 import 'package:amptive/src/utils/helpers/extensions/string_extensions.dart';
-import 'package:amptive/src/utils/helpers/helper_functions/other_functions.dart';
+import 'package:amptive/src/utils/helpers/helper_functions/helper_functions.dart';
 import 'package:amptive/src/views/widgets/common_widgets/circle_avatar.dart';
 import 'package:amptive/src/views/widgets/common_widgets/custom_container_widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/image_loader_widget.dart';
@@ -19,7 +19,7 @@ Future<void> showHostViewOfTopGiftersDialog(BuildContext context) async {
   return await showModalBottomSheet(
       backgroundColor: ATColors.hex202020,
       constraints: BoxConstraints.expand(
-        height: AmptiveHelperFunctions.getScreenHeight(context) * 0.84
+        height: ATHelperFuncs.getScreenHeight(context) * 0.84
       ),
       context: context,
       isScrollControlled: true,

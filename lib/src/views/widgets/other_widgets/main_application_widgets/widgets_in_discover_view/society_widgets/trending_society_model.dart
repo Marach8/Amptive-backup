@@ -1,4 +1,4 @@
-import 'package:amptive/src/utils/helpers/helper_functions/other_functions.dart';
+import 'package:amptive/src/utils/helpers/helper_functions/helper_functions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
@@ -25,7 +25,7 @@ class AmptiveTrendingSocietyModel extends StatelessWidget {
           clipBehavior: Clip.hardEdge,
           borderRadius: BorderRadius.circular(5),
           child: ATContainer(
-            height: 170.h, width: AmptiveHelperFunctions.getScreenWidth(context),
+            height: 170.h, width: ATHelperFuncs.getScreenWidth(context),
             child: FittedBox(
               fit: BoxFit.fill,
               child: ATImgLoader(

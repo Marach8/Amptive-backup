@@ -7,7 +7,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 import 'package:go_router/go_router.dart';
 import '../../../../../utils/constants/strings/image_strings.dart';
-import '../../../common_widgets/circular_container_with_picture_widget.dart';
+import '../../../common_widgets/circular_image.dart';
 import '../../../common_widgets/divider_widget.dart';
 import '../../../common_widgets/image_loader_widget.dart';
 import '../../../common_widgets/live_user_model_widget.dart';
@@ -64,7 +64,7 @@ class AmptiveHomeViewWidget extends StatelessWidget {
                 onTap: () => context.pushNamed(ATRoutes.CREATOR_PROFILE_SCREEN),
                 child: const Padding(
                   padding: EdgeInsets.only(right: 15),
-                  child: AmptiveCircularContainerWithPictureWidget(
+                  child: ATCircularImage(
                     imagePath: ATImgStrings.jpeg2,
                   ),
                 )

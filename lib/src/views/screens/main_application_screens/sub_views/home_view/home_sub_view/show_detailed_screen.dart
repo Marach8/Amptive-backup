@@ -3,7 +3,7 @@ import 'dart:ui';
 import 'package:amptive/src/utils/constants/colors.dart';
 import 'package:amptive/src/utils/constants/strings/image_strings.dart';
 import 'package:amptive/src/utils/constants/strings/other_strings.dart';
-import 'package:amptive/src/utils/helpers/helper_functions/other_functions.dart';
+import 'package:amptive/src/utils/helpers/helper_functions/helper_functions.dart';
 import 'package:amptive/src/views/widgets/common_widgets/annotated_region__widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/custom_container_widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/elevated_button_widget.dart';
@@ -68,7 +68,7 @@ class AmptiveShowDetailedScreen extends StatelessWidget {
                             overflow: TextOverflow.clip,
                             style: Theme.of(context).textTheme.displayMedium?.copyWith(
                               fontSize: ATFontSizes.size24,
-                              fontWeight: AmptiveFontWeights.w600,
+                              fontWeight: ATFontWeights.w600,
                               fontFamily: "Bricolage Grotesque"
                             ),
                           ),
@@ -147,7 +147,7 @@ class AmptiveShowDetailedScreen extends StatelessWidget {
                             style: TextStyle(
                               color: ATColors.white.withOpacity(0.6),
                               fontSize: ATFontSizes.size14,
-                              fontWeight: AmptiveFontWeights.w500,
+                              fontWeight: ATFontWeights.w500,
                             ),
                           ),
                           Gap(30.h),
@@ -172,7 +172,7 @@ class AmptiveShowDetailedScreen extends StatelessWidget {
                 top: 0,
                 child: ATContainer(
                   height: 72.h,
-                  width: AmptiveHelperFunctions.getScreenWidth(context),
+                  width: ATHelperFuncs.getScreenWidth(context),
                   child: ClipRect(
                     child: BackdropFilter(
                       filter: ImageFilter.blur(
@@ -189,12 +189,12 @@ class AmptiveShowDetailedScreen extends StatelessWidget {
                 top: 0,
                 child: ATContainer(
                   height: 72.h,
-                  width: AmptiveHelperFunctions.getScreenWidth(context),
+                  width: ATHelperFuncs.getScreenWidth(context),
                   alignment: Alignment.center,
                   //color: AmptiveColors.black,
                   child: GestureDetector(
                     onTap: () {
-                      AmptiveHelperFunctions.hideAnyMountedSnackbar(context);
+                      ATHelperFuncs.hideAnyMountedSnackbar(context);
                       context.pop();
                     },
                     child: Platform.isAndroid

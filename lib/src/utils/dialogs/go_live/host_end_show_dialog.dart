@@ -2,7 +2,7 @@ import 'package:amptive/src/utils/constants/colors.dart';
 import 'package:amptive/src/utils/constants/font_sizes.dart';
 import 'package:amptive/src/utils/constants/strings/image_strings.dart';
 import 'package:amptive/src/utils/dialogs/app_notification_dialog.dart';
-import 'package:amptive/src/utils/helpers/helper_functions/other_functions.dart';
+import 'package:amptive/src/utils/helpers/helper_functions/helper_functions.dart';
 import 'package:amptive/src/views/widgets/common_widgets/custom_container_widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/elevated_button_widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/image_loader_widget.dart';
@@ -31,8 +31,8 @@ Future<void> showHostEndShowDialog({
     )),
     builder: (context) {
       return ATContainer(
-        height: AmptiveHelperFunctions.getScreenHeight(context),
-        width: AmptiveHelperFunctions.getScreenWidth(context),
+        height: ATHelperFuncs.getScreenHeight(context),
+        width: ATHelperFuncs.getScreenWidth(context),
         color: ATColors.black,
         child: Stack(
           alignment: Alignment.center,
@@ -199,7 +199,7 @@ Future<void> showHostEndShowDialog({
                     children: [
                       ATContainer(
                         padding: const EdgeInsets.only(left: 15, right: 15),
-                        width: AmptiveHelperFunctions.getScreenWidth(context),
+                        width: ATHelperFuncs.getScreenWidth(context),
                         height: 50,
                         child: AmptiveElevatedButtonWidget(
                           onPressed: () => context.read<AmptiveEndShowBloc>().add(

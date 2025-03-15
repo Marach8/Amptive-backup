@@ -1,7 +1,7 @@
 import 'package:amptive/src/utils/constants/colors.dart';
 import 'package:amptive/src/utils/constants/font_sizes.dart';
 import 'package:amptive/src/utils/constants/font_weights.dart';
-import 'package:amptive/src/views/widgets/common_widgets/circular_container_with_picture_widget.dart';
+import 'package:amptive/src/views/widgets/common_widgets/circular_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
@@ -28,7 +28,7 @@ class AmptiveListTileWithLeadingPictureWidget extends StatelessWidget {
       padding: padding ?? const EdgeInsets.fromLTRB(0, 15, 0, 10),
       child: Row(
         children: [
-          AmptiveCircularContainerWithPictureWidget(
+          ATCircularImage(
             imagePath: leadingImagePath,
             diameter: diameter ?? 40,
           ),
@@ -40,14 +40,14 @@ class AmptiveListTileWithLeadingPictureWidget extends StatelessWidget {
               Text(
                 title,
                 style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                  fontWeight: AmptiveFontWeights.w500,
+                  fontWeight: ATFontWeights.w500,
                 ),
               ),
               Text(
                 subtitle,
                 style: Theme.of(context).textTheme.titleSmall?.copyWith(
                   color: ATColors.hexC2C2C2,
-                  fontWeight: AmptiveFontWeights.w500,
+                  fontWeight: ATFontWeights.w500,
                   fontSize: ATFontSizes.size13,
                   height: 1.5
                 ),
