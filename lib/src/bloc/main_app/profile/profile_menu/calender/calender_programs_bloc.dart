@@ -71,7 +71,7 @@ class ProgramsErrorState extends ProgramsState{}
 abstract class ProgramsEvents{}
 
 class LoadProgramsEvent extends ProgramsEvents{
-  final DateTime programDate;
+  final DateTime? programDate;
   LoadProgramsEvent({required this.programDate});
 }
 
@@ -83,7 +83,7 @@ class CalenderProgram{
   final int id;
   final List<ObjectWithNotifier> hosts;
   final bool isEvent, isPaid;
-  final DateTime dateTime;
+  final DateTime? dateTime;
 
   const CalenderProgram({
     required this.name,

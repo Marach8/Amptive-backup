@@ -474,7 +474,7 @@ class ProfileEventOrShowDisplay extends StatelessWidget {
                   children: [
                     AmptiveCircleAvatarWidget(
                       diameter: 15,
-                      color: ATColors.orangeColor1,
+                      color: ATColors.hexF91880,
                       child: const FittedBox(child: Text('S')),
                     ),
                     Text(

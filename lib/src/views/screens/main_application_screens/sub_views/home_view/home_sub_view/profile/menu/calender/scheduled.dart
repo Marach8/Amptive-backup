@@ -11,8 +11,8 @@ import 'dart:developer' as marach show log;
 import '../../../../../../../../../models/host.dart';
 import '../../../../../../../../widgets/common_widgets/custom_container_widget.dart';
 
-class ScheduledCalenderEvents extends StatelessWidget {
-  const ScheduledCalenderEvents({super.key});
+class ScheduledEventsView extends StatelessWidget {
+  const ScheduledEventsView({super.key});
 
   @override
   Widget build(context) {

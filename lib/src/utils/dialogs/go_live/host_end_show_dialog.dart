@@ -182,7 +182,7 @@ Future<void> showHostEndShowDialog({
                     bottom: 0,
                     child: Padding(
                       padding: const EdgeInsets.only(bottom: 10),
-                      child: AmptiveLoadingIndicatorWidget(
+                      child: ATLoadingIndicator(
                         color: ATColors.white,
                       ),
                     ),

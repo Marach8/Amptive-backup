@@ -87,6 +87,9 @@ class ATPlainElevatedBtn extends StatelessWidget {
       style: ElevatedButton.styleFrom(
         foregroundColor: fgColor,
         backgroundColor: bgColor,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(30)
+        ),
         //padding: const EdgeInsets.fromLTRB(),
         fixedSize: Size(ATHelperFuncs.getScreenWidth(context), height ?? 45)
       ),

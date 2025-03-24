@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import '../../../utils/constants/colors.dart';
 
-class AmptiveLoadingIndicatorWidget extends StatelessWidget {
+class ATLoadingIndicator extends StatelessWidget {
   final Color? color;
   final double size;
-  const AmptiveLoadingIndicatorWidget({
+  const ATLoadingIndicator({
     super.key,
     this.color,
     this.size = 25

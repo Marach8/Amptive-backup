@@ -21,7 +21,7 @@ class AmptiveLiveIndicatorWidget extends StatelessWidget {
           begin: Alignment.topCenter,
           end: Alignment.bottomCenter,
           colors: [
-            ATColors.orangeColor1,
+            ATColors.hexF91880,
             ATColors.orangeGradientColorB
           ]
         ),

@@ -55,7 +55,7 @@ class _AmptivePreferenceScreenState extends State<AmptivePreferenceScreen> {
                 : const AmptiveAppBar(),
             body: state is InitialState
                 ? const Center(
-                    child: AmptiveLoadingIndicatorWidget(),
+                    child: ATLoadingIndicator(),
                   )
                 : state is SelectPreferenceCompletedState
                     ? const ProcessingPreferenceWidget()

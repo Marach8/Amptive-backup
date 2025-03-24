@@ -143,7 +143,7 @@ class _LoadingAccountWidgetState extends State<LoadingAccountWidget> {
             ),
           ),
         ),
-        const AmptiveLoadingIndicatorWidget(),
+        const ATLoadingIndicator(),
       ],
     );
   }

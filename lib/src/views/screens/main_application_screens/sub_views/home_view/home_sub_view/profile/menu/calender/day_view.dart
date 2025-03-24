@@ -1,5 +1,6 @@
 import 'package:amptive/src/bloc/main_app/profile/profile_menu/calender/calender_programs_bloc.dart';
 import 'package:amptive/src/bloc/main_app/profile/profile_menu/calender/calender_views_bloc.dart';
+import 'package:amptive/src/bloc/main_app/profile/profile_menu/calender/day_view_bloc.dart';
 import 'package:amptive/src/bloc/main_app/profile/profile_menu/calender/selected_calender_date_bloc.dart';
 import 'package:amptive/src/models/host.dart';
 import 'package:amptive/src/utils/constants/colors.dart';
@@ -11,6 +12,7 @@ import 'package:amptive/src/views/screens/main_application_screens/sub_views/hom
 import 'package:amptive/src/views/widgets/common_widgets/annotated_region__widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/custom_container_widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/elevated_button_widget.dart';
+import 'package:amptive/src/views/widgets/common_widgets/loading_indicator.dart';
 import 'package:amptive/src/views/widgets/common_widgets/shimmer.dart';
 import 'package:amptive/src/views/widgets/common_widgets/show_event_nd_paid_icons.dart';
 import 'package:flutter/material.dart';
@@ -30,43 +32,63 @@ class ATCalenderScreen extends StatelessWidget {
       child: Scaffold(
         body: Padding(
           padding: const EdgeInsets.fromLTRB(0, kToolbarHeight, 0, kBottomNavigationBarHeight),
-          child: BlocBuilder<CalenderViewsBloc, int>(
-            builder: (_, state) {
-              return Column(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.fromLTRB(5, 0,15, 10),
-                    child: Row(
-                      children: [
-                        GestureDetector(
-                          onTap: () => context.pop(),
-                          child: const Icon(Icons.keyboard_arrow_left, size: 30),
-                        ),
-                        Text(
-                          state == 1 ? '2025' : 'February 2025',
+          child: Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.fromLTRB(5, 0,15, 10),
+                child: Row(
+                  children: [
+                    GestureDetector(
+                      onTap: () => context.pop(),
+                      child: const Icon(Icons.keyboard_arrow_left, size: 30),
+                    ),
+                    BlocSelector<CalenderViewsBloc, CalenderViewsState, String>(
+                      selector: (curr) => curr.$2,
+                      builder: (_, state) {
+                        return Text(
+                          state,
                           style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                             fontSize: ATFontSizes.size23
                           ),
-                        ),
-                        const Spacer(),
-                        CalenderDropDown(currIndex: state),
-                      ],
+                        );
+                      }
                     ),
-                  ),
-              
-                  Expanded(
-                    child: IndexedStack(
-                      index: state,
+                    const Spacer(),
+                    BlocSelector<CalenderViewsBloc, CalenderViewsState, int>(
+                      selector: (curr) => curr.$1,
+                      builder: (_, state) {
+                        return CalenderDropDown(currIndex: state);
+                      }
+                    ),
+                  ],
+                ),
+              ),
+          
+              Expanded(
+                child: BlocConsumer<CalenderViewsBloc, CalenderViewsState>(
+                  listener: (_, state){
+                    if(state.$1 == 1){
+                      context.read<CalenderViewsBloc>().showOnlyYear();
+                    }
+                    else{
+                      context.read<CalenderViewsBloc>().showMonthAndYear();
+                    }
+                  },
+                  buildWhen: (prev, curr) => prev.$1 != curr.$1,
+                  listenWhen: (prev, curr) => prev.$1 != curr.$1,
+                  builder: (_, state) {
+                    return IndexedStack(
+                      index: state.$1,
                       children: const [
                         CalenderDayView(),
                         CalenderMonthView(),
-                        ScheduledCalenderEvents()
+                        ScheduledEventsView()
                       ],
-                    ),
-                  ),
-                ],
-              );
-            }
+                    );
+                  }
+                ),
+              ),
+            ],
           ),
         ),
 
@@ -112,35 +134,16 @@ class DateAndWeekDays extends StatefulWidget {
 
 class _DateAndWeekDaysState extends State<DateAndWeekDays> {
   late PageController _pageController;
-  late List<List<DateTime>> weeks;
-  int initialPage = 0;
 
   @override
-  void initState() {
+  void initState(){
     super.initState();
-    
-    final now = DateTime.now();
-    weeks = ATHelperFuncs.getWeeksInAMonth(
-      year: now.year, month: now.month
-    );
-
-    // Find the index of the week that contains today's date
-    for (int i = 0; i < weeks.length; i++) {
-      if (weeks[i].any((day) => day.day == now.day)) {
-        initialPage = i;
-        break;
-      }
-    }
-
-    _pageController = PageController(initialPage: initialPage);
-
-    // Scroll to today's page after the first frame
+    _pageController = PageController();
     WidgetsBinding.instance.addPostFrameCallback(
-      (_) => _pageController.animateToPage(
-        initialPage,
-        duration: const Duration(seconds: 1),
-        curve: Curves.decelerate
-      )
+      (_){
+        context.read<DayViewHeadingBloc>().add(InitializeDayViewHeadingEvent());
+        context.read<HoursInADayBloc>().generateHoursInADay();
+      }
     );
   }
 
@@ -153,66 +156,124 @@ class _DateAndWeekDaysState extends State<DateAndWeekDays> {
 
   @override
   Widget build(context) {
-    return PageView.builder(
-      controller: _pageController,
-      padEnds: false,
-      allowImplicitScrolling: true,
-      physics: const BouncingScrollPhysics(),
-      itemCount: weeks.length,
-      itemBuilder: (_, pageIndex) {
-        return Table(
-          children: [
-            TableRow(
-              children: weeks[pageIndex].map(
-                (day) => Text(
-                  DateFormat.E().format(day),
+    return BlocConsumer<DayViewHeadingBloc, DayViewHeadingState>(
+      listener: (_, curr){
+        if(curr is DayViewHeadingData){
+          ATHelperFuncs.callDebouncer(
+            500,
+            () => _pageController.animateToPage(
+              curr.initialPage,
+              duration: const Duration(seconds: 1),
+              curve: Curves.decelerate
+            )
+          );
+        }
+      },
+      builder: (_, state) {
+        if(state is DayViewHeadingLoading){
+          return const SizedBox(
+            height: 70,
+            child: ShimmerWidget(
+              margin: EdgeInsets.fromLTRB(15, 0, 15, 10),
+            ),
+          );
+        }
+
+        if(state is DayViewHeadingInitial){
+          return const SizedBox.shrink();
+        }
+
+        if(state is DateAndWeekDaysError){
+          return Text(state.error);
+        }
+
+        final weeks = (state as DayViewHeadingData).weeks;
+
+        return PageView.builder(
+          controller: _pageController,
+          padEnds: false,
+          allowImplicitScrolling: true,
+          physics: const BouncingScrollPhysics(),
+          itemCount: weeks.length,
+          itemBuilder: (_, pageIndex) {
+            final eachWeek = weeks.elementAtOrNull(pageIndex);
+            return RenderEachWeekHeading(eachWeek: eachWeek, key: ValueKey(pageIndex));
+          },
+        );
+      }
+    );
+  }
+}
+
+class RenderEachWeekHeading extends StatelessWidget {
+  const RenderEachWeekHeading({
+    super.key,
+    required this.eachWeek,
+  });
+
+  final List<DateTime?>? eachWeek;
+
+  @override
+  Widget build(context) {
+    const weekDays = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(20, 0, 15, 0),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: (eachWeek ?? []).asMap().entries.map(
+          (day){
+            final dayHeading = weekDays.elementAtOrNull(day.key);
+            final now = DateTime.now();
+            final isToday = (day.value?.year == now.year) &&
+              (day.value?.month == now.month) && (day.value?.day == now.day);
+      
+            return Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text(
+                  dayHeading ?? '',
                   textAlign: TextAlign.center,
                   style: Theme.of(context).textTheme.titleSmall,
                 ),
-              ).toList(),
-            ),
-            TableRow(
-              children: weeks[pageIndex].map(
-                (day) {
-                  final isToday = day.day == DateTime.now().day;
-                  return BlocBuilder<SelectedCalenderDateBloc, DateTime?>(
-                    builder: (_, state) {
-                      final isSelected = state == day;
-                      return ATContainer(
-                        onTap: () {
-                          context.read<SelectedCalenderDateBloc>().pickADate(day);
-                          ATHelperFuncs.callDebouncer(
-                            1000,
-                            () => context.read<CalenderProgramBloc>().add(
-                              LoadProgramsEvent(programDate: day),
-                            )
-                          );
-                          debugPrint("Selected: ${DateFormat.yMMMd().format(day)}");
-                        },
-                        duration: 0,
-                        margin: const EdgeInsets.only(top: 5),
-                        height: 35, width: 35,
-                        boxShape: BoxShape.circle,
-                        border: Border.all(
-                          color: isSelected ? ATColors.white : ATColors.trsprtColor,
+            
+                if(day.value != null) BlocBuilder<SelectedCalenderDateBloc, DateTime?>(
+                  builder: (_, state) {
+                    final isSelected = state == day.value;
+                    return ATContainer(
+                      onTap: () {
+                        context.read<SelectedCalenderDateBloc>().pickADate(day.value);
+                        ATHelperFuncs.callDebouncer(
+                          1000,
+                          () => context.read<CalenderProgramBloc>().add(
+                            LoadProgramsEvent(programDate: day.value),
+                          )
+                        );
+                        //debugPrint("Selected: ${DateFormat.yMMMd().format(day.value.day)}");
+                      },
+                      duration: 0,
+                      margin: const EdgeInsets.only(top: 5),
+                      height: 35, width: 35,
+                      boxShape: BoxShape.circle,
+                      border: Border.all(
+                        color: isSelected ? ATColors.white : ATColors.trsprtColor,
+                      ),
+                      color: isToday ? ATColors.hex307FE2 : ATColors.trsprtColor,
+                      child: FittedBox(
+                        fit: BoxFit.scaleDown,
+                        child: Text(
+                          '${day.value?.day}',
+                          style: Theme.of(context).textTheme.labelSmall,
                         ),
-                        color: isToday ? ATColors.hex307FE2 : ATColors.trsprtColor,
-                        child: FittedBox(
-                          fit: BoxFit.scaleDown,
-                          child: Text(
-                            '${day.day}',
-                            style: Theme.of(context).textTheme.labelSmall,
-                          ),
-                        ),
-                      );
-                    },
-                  );
-                },
-              ).toList(),
-            ),
-          ],
-        );
-      },
+                      ),
+                    );
+                  },
+                )
+              ],
+            );
+          }
+        ).toList()
+      ),
     );
   }
 }
@@ -225,66 +286,73 @@ class HoursAndProgramsList extends StatelessWidget {
   const HoursAndProgramsList({super.key});
   @override
   Widget build(context) {
-    return ListView.builder(
-      physics: const BouncingScrollPhysics(),
-      padding: const EdgeInsets.only(left: 15),
-      itemCount: 24,
-      itemBuilder: (context, index) {
-        DateTime time = DateTime(2025, 3, 12, index); 
-        String formattedTime = DateFormat('hh:00 a').format(time).toLowerCase();
+    return BlocBuilder<HoursInADayBloc, HoursInADayState?>(
+      builder: (_, state) {
+        if(state == null) return const SizedBox.shrink();
+        if(!state.$1) return const Center(child: ATLoadingIndicator(size: 30));
 
-        return Column(
-          children: [
-            Row(
+        return ListView.builder(
+          physics: const BouncingScrollPhysics(),
+          padding: const EdgeInsets.only(left: 15),
+          itemCount: state.$2.length,
+          itemBuilder: (_, index) {
+            final formattedTime = state.$2.elementAt(index);
+            return Column(
               children: [
-                Text(
-                  formattedTime, 
-                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                    fontSize: ATFontSizes.size11,
-                    color: ATColors.hexC2C2C2
-                  )
+                Row(
+                  children: [
+                    Text(
+                      formattedTime, 
+                      style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                        fontSize: ATFontSizes.size11,
+                        color: ATColors.hexC2C2C2
+                      )
+                    ),
+                    const SizedBox(width: 5),
+                    Expanded(
+                      child: Divider(color: ATColors.white.withValues(alpha: 0.2), height: 0,)
+                    ),
+                  ],
                 ),
-                const SizedBox(width: 5),
-                Expanded(
-                  child: Divider(color: ATColors.white.withValues(alpha: 0.2), height: 0,)
+                BlocBuilder<CalenderProgramBloc, ProgramsState>(
+                  builder: (_, state) {
+                    final isLoading = state is ProgramsLoadingState;
+                    final hasError = state is ProgramsErrorState;
+                    final initialState = state is NoProgramsState;
+        
+                    if(initialState) return const SizedBox(height: 30);
+                    if(isLoading) return const ShimmerWidget(margin: EdgeInsets.only(left: 58));
+                    if(hasError) return const Text('Error occured');
+        
+                    final programs = state as ProgramsDataState;
+                    final listOfProgs = programs.programs[formattedTime];
+        
+                    if(listOfProgs == null) return const SizedBox(height: 30);
+                                  
+                    return Column(
+                      mainAxisSize: MainAxisSize.min,
+                      spacing: 5,
+                      children: listOfProgs.map(
+                        (program) => _CalenderProgramDisplay(program: program),
+                      ).toList()
+                    );
+                  }
                 ),
               ],
-            ),
-            BlocBuilder<CalenderProgramBloc, ProgramsState>(
-              builder: (_, state) {
-                final isLoading = state is ProgramsLoadingState;
-                final hasError = state is ProgramsErrorState;
-                final initialState = state is NoProgramsState;
-
-                if(initialState) return const SizedBox(height: 30);
-                if(isLoading) return const ShimmerWidget(margin: EdgeInsets.only(left: 58));
-                if(hasError) return const Text('Error occured');
-
-                final programs = state as ProgramsDataState;
-                final listOfProgs = programs.programs[formattedTime];
-
-                if(listOfProgs == null) return const SizedBox(height: 30);
-                              
-                return Column(
-                  mainAxisSize: MainAxisSize.min,
-                  spacing: 5,
-                  children: listOfProgs.map(
-                    (program) => _CalenderProgramDisplay(program: program),
-                  ).toList()
-                );
-              }
-            ),
-          ],
+            );
+          },
         );
-      },
+      }
     );
   }
 }
 
+
+
+
 class _CalenderProgramDisplay extends StatelessWidget {
   final CalenderProgram program;
   const _CalenderProgramDisplay({
-    super.key,
     required this.program
   });
 

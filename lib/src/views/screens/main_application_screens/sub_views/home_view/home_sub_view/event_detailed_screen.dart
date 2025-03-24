@@ -187,7 +187,7 @@ class AmptiveEventDetailedScreen extends StatelessWidget {
                       hintText: 'Enter your Ticked ID',
                       suffixIcon: const Padding(
                         padding: EdgeInsets.only(right: 15),
-                        child: AmptiveLoadingIndicatorWidget(),
+                        child: ATLoadingIndicator(),
                       ),
                     ),
                     Gap(10.h),

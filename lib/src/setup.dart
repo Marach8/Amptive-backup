@@ -1,7 +1,9 @@
 import 'package:amptive/src/bloc/main_app/go_live_bloc/audience_view/following_bloc.dart';
 import 'package:amptive/src/bloc/main_app/go_live_bloc/audience_view/subscription_bloc.dart';
+import 'package:amptive/src/bloc/main_app/profile/profile_menu/calender/calender_month_view_bloc.dart';
 import 'package:amptive/src/bloc/main_app/profile/profile_menu/calender/calender_visibile_bloc.dart';
 import 'package:amptive/src/bloc/main_app/profile/profile_menu/calender/calender_views_bloc.dart';
+import 'package:amptive/src/bloc/main_app/profile/profile_menu/calender/day_view_bloc.dart';
 import 'package:amptive/src/bloc/preference/bloc.dart';
 import 'package:amptive/src/services/auth/auth_field_service.dart';
 import 'package:amptive/src/services/auth/otp_service.dart';
@@ -61,6 +63,9 @@ List<SingleChildWidget> providers() {
     BlocProvider(create: (_) => PrivateAccountBloc()),
     BlocProvider(create: (_) => CalenderViewsBloc()),
     BlocProvider(create: (_) => SelectedCalenderDateBloc()),
-    BlocProvider(create: (_) => CalenderProgramBloc())
+    BlocProvider(create: (_) => CalenderProgramBloc()),
+    BlocProvider(create: (_) => CalenderMonthViewBloc()),
+    BlocProvider(create: (_) => DayViewHeadingBloc()),
+    BlocProvider(create: (_) => HoursInADayBloc()),
   ];
 }

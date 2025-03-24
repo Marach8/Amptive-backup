@@ -212,7 +212,7 @@ Future<void> showFollowHostOrCohostDialog({
                               btnTitle:notFollowing ? ATStrings.FOLLOW : '',
                               child: isFollowing ? const ATImgLoader(
                                 imgPath: ATImgStrings.USER_FOLLOW
-                              ): isLoading ? const AmptiveLoadingIndicatorWidget(size: 20,) : null
+                              ): isLoading ? const ATLoadingIndicator(size: 20,) : null
                             ),
                           );
                         }
@@ -254,7 +254,7 @@ Future<void> showFollowHostOrCohostDialog({
                               bgColor: ATColors.yellowColor1,
                               fgColor: ATColors.brandBlack,
                               btnTitle: isSubscribed ? ATStrings.UNSUBSCRIBE : '',
-                              child: isLoading ? AmptiveLoadingIndicatorWidget(color: ATColors.white,) 
+                              child: isLoading ? ATLoadingIndicator(color: ATColors.white,) 
                                 : unSubscribed ? Row(
                                   mainAxisSize: MainAxisSize.min,
                                   children: [

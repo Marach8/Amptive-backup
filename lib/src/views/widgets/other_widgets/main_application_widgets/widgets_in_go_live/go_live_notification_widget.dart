@@ -25,7 +25,7 @@ class AmptiveGoLiveNotificationsWidget extends StatelessWidget {
       height: 35, radius: 30,
       gradient: isTalking ? LinearGradient(
         colors: [
-          ATColors.orangeColor1.withOpacity(1),
+          ATColors.hexF91880.withOpacity(1),
           ATColors.orangeColor2.withOpacity(0),
         ]
       ) :  isGifting ? LinearGradient(

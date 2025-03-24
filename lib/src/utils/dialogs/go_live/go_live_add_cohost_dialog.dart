@@ -230,7 +230,7 @@ final showSuffixIconNotifier = ValueNotifier(false);
                         BlocBuilder<AmptiveGoLiveAvailableCoHostsBloc, AmptiveCohostsState>(
                           builder: (_, cohostState) {
                             if(cohostState is CohostsLoadingState){
-                              return const AmptiveLoadingIndicatorWidget();
+                              return const ATLoadingIndicator();
                             }
                             
                             return AmptiveListOfCoHostsWidget(

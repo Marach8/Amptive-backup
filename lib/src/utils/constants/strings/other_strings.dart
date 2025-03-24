@@ -101,6 +101,7 @@ class ATStrings{
   static const photoGallery = 'Photo Gallery';
   static const camera = 'Camera';
   static const skipForNow = 'Skip for now';
+  static const MORE_SCHEDULE = 'More Schedule';
 
   static const select5Communities = "Select 5 communities you find interest in.";
   static const selectedInterestNote = "Your selected interests will be used to personalize you Amptive experience.";

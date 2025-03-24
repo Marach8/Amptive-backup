@@ -70,7 +70,7 @@ class AmptiveCreateShowOrEventSelectionWidget extends StatelessWidget {
                   AmptiveCircleAvatarWidget(
                     animationDuration: 200,
                     diameter: 15,
-                    color: value ? ATColors.orangeColor1 : ATColors. hex2D2D2D,
+                    color: value ? ATColors.hexF91880 : ATColors. hex2D2D2D,
                     child: FittedBox(child: Text(alphabet)),
                   ),
                   const Gap(5),
