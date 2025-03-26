@@ -14,8 +14,7 @@ import 'package:amptive/src/views/screens/main_application_screens/sub_views/hom
 import 'package:amptive/src/views/screens/main_application_screens/dashboard_screen.dart';
 import 'package:amptive/src/views/screens/main_application_screens/sub_views/home_view/home_sub_view/go_live_views/main_go_live_screen.dart';
 import 'package:amptive/src/views/screens/main_application_screens/sub_views/home_view/home_sub_view/profile/community_task.dart';
-import 'package:amptive/src/views/screens/main_application_screens/sub_views/home_view/home_sub_view/profile/menu/accounts/account_info.dart';
-import 'package:amptive/src/views/screens/main_application_screens/sub_views/home_view/home_sub_view/profile/menu/accounts/accounts_home.dart';
+import 'package:amptive/src/views/screens/main_application_screens/sub_views/home_view/home_sub_view/profile/menu/calender/day_view.dart';
 import 'package:amptive/src/views/screens/main_application_screens/sub_views/home_view/home_sub_view/profile/menu/language.dart' show AmptiveSelectLanguageScreen;
 import 'package:amptive/src/views/screens/main_application_screens/sub_views/home_view/home_sub_view/profile/menu/privacy/blocked_accts.dart';
 import 'package:amptive/src/views/screens/main_application_screens/sub_views/home_view/home_sub_view/profile/menu/privacy/muted_accts.dart';
@@ -226,7 +225,7 @@ final GoRouter amptiveAppRouter = GoRouter(
             path: ATRoutes.CREATE_SHOW_SUCCESS,
             builder: (_, GoRouterState state) {
               String imageFilePath = state.extra as String;
-              return AmptiveCreateShowSuccessScreen(
+              return ATCreateShowSuccessScreen(
                 imageFilePath: imageFilePath,
               );
             },
@@ -243,6 +242,12 @@ final GoRouter amptiveAppRouter = GoRouter(
             path: ATRoutes.PROFILE_MENU_SCREEN,
             builder: (_, __) => const AmptiveProfileMenuScreen(),
             routes: [
+              GoRoute(
+                name: ATRoutes.CALENDER_SCREEN,
+                path: ATRoutes.CALENDER_SCREEN,
+                builder: (_, __) => const ATCalenderScreen(),
+              ),
+
               GoRoute(
                 name: ATRoutes.LANGUAGE_SCREEN,
                 path: ATRoutes.LANGUAGE_SCREEN,
@@ -266,19 +271,6 @@ final GoRouter amptiveAppRouter = GoRouter(
                     builder: (_, __) => const AmptiveMutedAcctsScreen(),
                   ),
                 ]
-              ),
-            ]
-          ),
-
-          GoRoute(
-            name: ATRoutes.ACCT_SCREEN,
-            path: ATRoutes.ACCT_SCREEN,
-            builder: (_, __) => const ATAccountScreen(),
-            routes: [
-              GoRoute(
-                name: ATRoutes.ACCT_INFO_SCREEN,
-                path: ATRoutes.ACCT_INFO_SCREEN,
-                builder: (_, __) => const ATAccountInfoScreen(),
               ),
             ]
           ),

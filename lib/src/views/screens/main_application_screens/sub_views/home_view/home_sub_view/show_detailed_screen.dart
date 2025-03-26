@@ -3,7 +3,7 @@ import 'dart:ui';
 import 'package:amptive/src/utils/constants/colors.dart';
 import 'package:amptive/src/utils/constants/strings/image_strings.dart';
 import 'package:amptive/src/utils/constants/strings/other_strings.dart';
-import 'package:amptive/src/utils/helpers/helper_functions/other_functions.dart';
+import 'package:amptive/src/utils/helpers/helper_functions/helper_functions.dart';
 import 'package:amptive/src/views/widgets/common_widgets/annotated_region__widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/custom_container_widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/elevated_button_widget.dart';
@@ -28,24 +28,24 @@ class AmptiveShowDetailedScreen extends StatelessWidget {
 
   @override
   Widget build(context) {
-    return ATAnnotatedRegionWidget(
+    return ATAnnotatedRegion(
       child: Scaffold(
         body: SafeArea(
           child: Stack(
             children: [
               const Positioned.fill(
-                child: AmptiveImageLoaderWidget(
+                child: ATImgLoader(
                   boxFit: BoxFit.fill,
-                  imagePath: AmptiveImageStrings.weCanDoHardThingsBgImage
+                  imgPath: ATImgStrings.weCanDoHardThingsBgImage
                 )
               ),
               Positioned.fill(
                 child: Container(
-                  color: AmptiveColors.black.withOpacity(0.5),
+                  color: ATColors.black.withOpacity(0.5),
                   child: BackdropFilter(
                     filter: ImageFilter.blur(sigmaX: 150.0, sigmaY: 150.0),
                     child: Container(
-                      color: AmptiveColors.black.withOpacity(0.5),
+                      color: ATColors.black.withOpacity(0.5),
                     ),
                   ),
                 ),
@@ -58,7 +58,7 @@ class AmptiveShowDetailedScreen extends StatelessWidget {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          const AmptiveAudioOrVideoDisplayPictureWithMoreIconWidget(),
+                          const EventOrShowDisplay(),
                           Gap(30.h),
                           const AmptiveRowOfSubtitleAndForwardIconWidget(),
                           Gap(15.h),
@@ -67,8 +67,8 @@ class AmptiveShowDetailedScreen extends StatelessWidget {
                             "Don't Forget Who You Are ft. Jacob Scipio",
                             overflow: TextOverflow.clip,
                             style: Theme.of(context).textTheme.displayMedium?.copyWith(
-                              fontSize: AmptiveFontSizes.size24,
-                              fontWeight: AmptiveFontWeights.w600,
+                              fontSize: ATFontSizes.size24,
+                              fontWeight: ATFontWeights.w600,
                               fontFamily: "Bricolage Grotesque"
                             ),
                           ),
@@ -79,24 +79,24 @@ class AmptiveShowDetailedScreen extends StatelessWidget {
                           Gap(30.h),
                     
                           Text(
-                            AmptiveStrings.hashtags,
+                            ATStrings.hashtags,
                             style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                              fontSize: AmptiveFontSizes.size17
+                              fontSize: ATFontSizes.size17
                             ),  
                           ),
-                          Divider(color: AmptiveColors.whiteColor.withOpacity(0.1),),
+                          Divider(color: ATColors.white.withOpacity(0.1),),
                           const Gap(5),
                           const AmptiveHashtagsWidget(),
                     
                           Gap(20.h),
                     
                           Text(
-                            AmptiveStrings.hostedBy,
+                            ATStrings.hostedBy,
                             style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                              fontSize: AmptiveFontSizes.size17
+                              fontSize: ATFontSizes.size17
                             ),  
                           ),
-                          Divider(color: AmptiveColors.whiteColor.withOpacity(0.1),),
+                          Divider(color: ATColors.white.withOpacity(0.1),),
                           ...List.generate(
                             3,
                             (_) => AmptiveListTileWithLeadingPictureWidget(
@@ -104,7 +104,7 @@ class AmptiveShowDetailedScreen extends StatelessWidget {
                               title: 'Gerald',
                               subtitle: 'Host',
                               diameter: 35,
-                              leadingImagePath: AmptiveImageStrings.jpeg1,
+                              leadingImagePath: ATImgStrings.jpeg1,
                             )
                           ),
                           Gap(30.h),
@@ -112,10 +112,10 @@ class AmptiveShowDetailedScreen extends StatelessWidget {
                           Text(
                             '656 Listening',
                             style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                              fontSize: AmptiveFontSizes.size17
+                              fontSize: ATFontSizes.size17
                             ),  
                           ),
-                          Divider(color: AmptiveColors.whiteColor.withOpacity(0.1),),
+                          Divider(color: ATColors.white.withOpacity(0.1),),
                           Gap(10.h),
                           const AmptiveRowOfNumberOfPeopleListeningWidget(
                             showNumberInsideContainer: true,
@@ -125,7 +125,7 @@ class AmptiveShowDetailedScreen extends StatelessWidget {
                           Text(
                             'daniel, jessica, gerald, peter and 652 more',
                             style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                              color: AmptiveColors.whiteColor.withOpacity(0.6)
+                              color: ATColors.white.withOpacity(0.6)
                             ),
                           ),
                           Gap(35.h),
@@ -133,32 +133,32 @@ class AmptiveShowDetailedScreen extends StatelessWidget {
                           Text(
                             'About Episode',
                             style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                              fontSize: AmptiveFontSizes.size17
+                              fontSize: ATFontSizes.size17
                             ),  
                           ),
-                          Divider(color: AmptiveColors.whiteColor.withOpacity(0.1),),
+                          Divider(color: ATColors.white.withOpacity(0.1),),
                           ReadMoreText(
                             'Jessica Yellin, founder of the Webby-Award Winning Independent News Brand, News Not Noise, returns to walk us through what is going on right now in the political landscape.',
                             trimMode: TrimMode.Length,
-                            trimExpandedText: AmptiveStrings.showLess,
-                            trimCollapsedText: AmptiveStrings.showMore,
-                            colorClickableText: AmptiveColors.whiteColor,
+                            trimExpandedText: ATStrings.showLess,
+                            trimCollapsedText: ATStrings.showMore,
+                            colorClickableText: ATColors.white,
                             trimLength: 100,
                             style: TextStyle(
-                              color: AmptiveColors.whiteColor.withOpacity(0.6),
-                              fontSize: AmptiveFontSizes.size14,
-                              fontWeight: AmptiveFontWeights.w500,
+                              color: ATColors.white.withOpacity(0.6),
+                              fontSize: ATFontSizes.size14,
+                              fontWeight: ATFontWeights.w500,
                             ),
                           ),
                           Gap(30.h),
                     
                           Text(
-                            AmptiveStrings.WHISPERS,
+                            ATStrings.WHISPERS,
                             style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                              fontSize: AmptiveFontSizes.size17
+                              fontSize: ATFontSizes.size17
                             ),  
                           ),
-                          Divider(color: AmptiveColors.whiteColor.withOpacity(0.1),),
+                          Divider(color: ATColors.white.withOpacity(0.1),),
                         ],
                       ),
                     ),
@@ -170,9 +170,9 @@ class AmptiveShowDetailedScreen extends StatelessWidget {
 
               Positioned(
                 top: 0,
-                child: AmptiveContainer(
+                child: ATContainer(
                   height: 72.h,
-                  width: AmptiveHelperFunctions.getScreenWidth(context),
+                  width: ATHelperFuncs.getScreenWidth(context),
                   child: ClipRect(
                     child: BackdropFilter(
                       filter: ImageFilter.blur(
@@ -187,25 +187,25 @@ class AmptiveShowDetailedScreen extends StatelessWidget {
 
               Positioned(
                 top: 0,
-                child: AmptiveContainer(
+                child: ATContainer(
                   height: 72.h,
-                  width: AmptiveHelperFunctions.getScreenWidth(context),
+                  width: ATHelperFuncs.getScreenWidth(context),
                   alignment: Alignment.center,
                   //color: AmptiveColors.black,
                   child: GestureDetector(
                     onTap: () {
-                      AmptiveHelperFunctions.hideAnyMountedSnackbar(context);
+                      ATHelperFuncs.hideAnyMountedSnackbar(context);
                       context.pop();
                     },
                     child: Platform.isAndroid
                       ? Icon(
                         Icons.keyboard_arrow_down, size: 30,
-                        color: AmptiveColors.whiteColor.withOpacity(0.6),
+                        color: ATColors.white.withOpacity(0.6),
                       )
-                      : AmptiveContainer(
+                      : ATContainer(
                         margin: const EdgeInsets.symmetric(vertical: 10),
                         radius: 5, height: 4, width: 30,
-                        color: AmptiveColors.whiteColor.withOpacity(0.6),
+                        color: ATColors.white.withOpacity(0.6),
                         child: const SizedBox.shrink(),
                       ),
                   ),
@@ -216,8 +216,8 @@ class AmptiveShowDetailedScreen extends StatelessWidget {
         ),
         bottomSheet: AmptiveElevatedButtonWidget(
           margin: const EdgeInsets.fromLTRB(20, 15, 20, 0),
-          bgColor: AmptiveColors.whiteColor,
-          fgColor: AmptiveColors.brandBlack,
+          bgColor: ATColors.white,
+          fgColor: ATColors.brandBlack,
           buttonTitle: 'Subscrible N1,900/month',
           onPressed: (){}
         ),

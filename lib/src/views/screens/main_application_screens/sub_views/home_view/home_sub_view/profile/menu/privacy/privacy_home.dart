@@ -1,4 +1,4 @@
-import 'package:amptive/src/bloc/main_app/profile/allow_see_calender_bloc.dart';
+import 'package:amptive/src/bloc/main_app/profile/profile_menu/calender/calender_visibile_bloc.dart';
 import 'package:amptive/src/utils/constants/colors.dart';
 import 'package:amptive/src/utils/constants/font_weights.dart';
 import 'package:amptive/src/views/screens/main_application_screens/sub_views/home_view/home_sub_view/profile/menu/profile_menu_screen.dart';
@@ -24,7 +24,7 @@ class AmptivePrivacyScreen extends StatelessWidget {
 
   @override
   Widget build(context) {
-    return ATAnnotatedRegionWidget(
+    return ATAnnotatedRegion(
       child: Scaffold(
         body: Column(
           children: [
@@ -34,16 +34,16 @@ class AmptivePrivacyScreen extends StatelessWidget {
                 children: [
                   AmptiveCircleAvatarWidget(
                     onTap: () => context.pop(),
-                    diameter: 30, color: AmptiveColors.transparentColor,
+                    diameter: 30, color: ATColors.trsprtColor,
                     child: const Icon(Icons.keyboard_arrow_left),
                   ),
                   const Spacer(),
                   Text(
-                    AmptiveStrings.PRIVACY,
+                    ATStrings.PRIVACY,
                     style: Theme.of(context).textTheme.bodyMedium,
                   ),
                   const Spacer(),
-                  Icon(Icons.keyboard_arrow_left, color: AmptiveColors.transparentColor),
+                  Icon(Icons.keyboard_arrow_left, color: ATColors.trsprtColor),
                 ],
               ),
             ),
@@ -58,9 +58,9 @@ class AmptivePrivacyScreen extends StatelessWidget {
                     child: Row(
                       children: [
                         Text(
-                          AmptiveStrings.PRIVATE_ACCT,
+                          ATStrings.PRIVATE_ACCT,
                           style: Theme.of(context).textTheme.labelMedium?.copyWith(
-                            color: AmptiveColors.whiteColor
+                            color: ATColors.white
                           )
                         ),
                         const Spacer(),
@@ -70,7 +70,7 @@ class AmptivePrivacyScreen extends StatelessWidget {
                               showAppNotification(
                                 context: context,
                                 icon: const Icon(Icons.check_circle),
-                                text: AmptiveStrings.ACCT_PRIVATE
+                                text: ATStrings.ACCT_PRIVATE
                               );
                             }
                           },
@@ -88,23 +88,23 @@ class AmptivePrivacyScreen extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.fromLTRB(15, 0, 15, 15),
                     child: Text(
-                      AmptiveStrings.APPROVED_USERS_CAN_FOLLOW,
+                      ATStrings.APPROVED_USERS_CAN_FOLLOW,
                       maxLines: 2,
                       style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                        fontWeight: AmptiveFontWeights.w500,
-                        color: AmptiveColors.whiteColor.withValues(alpha: 0.4)
+                        fontWeight: ATFontWeights.w500,
+                        color: ATColors.white.withValues(alpha: 0.4)
                       )
                     ),
                   ),
-                  const MenuHeading(text: AmptiveStrings.MUTES_ND_BLOCKS),
+                  const MenuHeading(text: ATStrings.MUTES_ND_BLOCKS),
                   MenuItem(
                     firstIcon: const Icon(Icons.notifications_off_outlined),
-                    middleText: AmptiveStrings.MUTED_ACCTS,
+                    middleText: ATStrings.MUTED_ACCTS,
                     onTap: () => context.pushNamed(ATRoutes.MUTED_ACCTS_SCREEN)
                   ),
                   MenuItem(
                     firstIcon: const Icon(Icons.block),
-                    middleText: AmptiveStrings.BLOCKED_ACCTS,
+                    middleText: ATStrings.BLOCKED_ACCTS,
                     onTap: () => context.pushNamed(ATRoutes.BLOCKED_ACCTS_SCREEN)
                   ),
                 ],

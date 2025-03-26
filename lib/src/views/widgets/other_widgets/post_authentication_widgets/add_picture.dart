@@ -66,11 +66,11 @@ class _AddPictureWidgetState extends State<AddPictureWidget> {
         actions: [
           CupertinoActionSheetAction(
             child: Text(
-              AmptiveStrings.photoGallery,
+              ATStrings.photoGallery,
               textAlign: TextAlign.center,
               style: Theme.of(context).textTheme.headlineLarge?.copyWith(
-                    color: AmptiveColors.hex307FE2,
-                    fontWeight: AmptiveFontWeights.w600,
+                    color: ATColors.hex307FE2,
+                    fontWeight: ATFontWeights.w600,
                   ),
             ),
             onPressed: () {
@@ -82,11 +82,11 @@ class _AddPictureWidgetState extends State<AddPictureWidget> {
           ),
           CupertinoActionSheetAction(
             child: Text(
-              AmptiveStrings.camera,
+              ATStrings.camera,
               textAlign: TextAlign.center,
               style: Theme.of(context).textTheme.headlineLarge?.copyWith(
-                    color: AmptiveColors.hex307FE2,
-                    fontWeight: AmptiveFontWeights.w600,
+                    color: ATColors.hex307FE2,
+                    fontWeight: ATFontWeights.w600,
                   ),
             ),
             onPressed: () {
@@ -120,20 +120,20 @@ class _AddPictureWidgetState extends State<AddPictureWidget> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            AmptiveStrings.addProfilePicture,
+            ATStrings.addProfilePicture,
             textAlign: TextAlign.start,
             style: Theme.of(context).textTheme.headlineLarge?.copyWith(
-                  fontWeight: AmptiveFontWeights.w600,
+                  fontWeight: ATFontWeights.w600,
                 ),
           ),
           SizedBox(
             height: 4.h,
           ),
           Text(
-            AmptiveStrings.useYOurFavImage,
+            ATStrings.useYOurFavImage,
             textAlign: TextAlign.start,
             style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                  color: AmptiveColors.authHintColor2,
+                  color: ATColors.authHintColor2,
                 ),
           ),
           BlocBuilder<AmptiveAuthBloc, AmptiveAuthState>(
@@ -159,7 +159,7 @@ class _AddPictureWidgetState extends State<AddPictureWidget> {
                                 fit: BoxFit.contain,
                               )
                             : Image.asset(
-                                AmptiveImageStrings.noAvatarImage,
+                                ATImgStrings.noAvatarImage,
                                 height: 110.h,
                                 width: 84.w,
                                 fit: BoxFit.contain,
@@ -172,8 +172,8 @@ class _AddPictureWidgetState extends State<AddPictureWidget> {
                     left: 49.w,
                     child: CircleAvatar(
                       backgroundColor: _isProfilePictureAdded
-                          ? AmptiveColors.textRedColor
-                          : AmptiveColors.hex307FE2,
+                          ? ATColors.textRedColor
+                          : ATColors.hex307FE2,
                       child: SizedBox(
                         child: IconButton(
                           style: IconButton.styleFrom(),
@@ -187,7 +187,7 @@ class _AddPictureWidgetState extends State<AddPictureWidget> {
                             height: 41.25.h,
                             child: Icon(
                               _isProfilePictureAdded ? Icons.close : Icons.add,
-                              color: AmptiveColors.whiteColor,
+                              color: ATColors.white,
                               opticalSize: 50.h,
                             ),
                           ),
@@ -213,10 +213,10 @@ class _AddPictureWidgetState extends State<AddPictureWidget> {
                 context.pushNamed(ATRoutes.preference);
               },
               child: Text(
-                AmptiveStrings.skipForNow,
+                ATStrings.skipForNow,
                 textAlign: TextAlign.center,
                 style: Theme.of(context).textTheme.headlineMedium?.copyWith(
-                      fontWeight: AmptiveFontWeights.w600,
+                      fontWeight: ATFontWeights.w600,
                     ),
               ),
             ),
@@ -233,11 +233,11 @@ class _AddPictureWidgetState extends State<AddPictureWidget> {
                         ? () => context.pushNamed(ATRoutes.preference)
                         : null,
                 style: ElevatedButton.styleFrom(
-                    backgroundColor: AmptiveColors.hex307FE2),
+                    backgroundColor: ATColors.hex307FE2),
                 child: Text(
-                  AmptiveStrings.NEXT,
+                  ATStrings.NEXT,
                   style: Theme.of(context).textTheme.headlineMedium?.copyWith(
-                        fontWeight: AmptiveFontWeights.w600,
+                        fontWeight: ATFontWeights.w600,
                       ),
                 ),
               ),

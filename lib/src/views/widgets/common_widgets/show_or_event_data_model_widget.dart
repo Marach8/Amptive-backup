@@ -1,7 +1,7 @@
 import 'package:amptive/src/utils/constants/font_sizes.dart';
 import 'package:amptive/src/utils/constants/font_weights.dart';
 import 'package:amptive/src/utils/constants/strings/image_strings.dart';
-import 'package:amptive/src/utils/helpers/helper_functions/other_functions.dart';
+import 'package:amptive/src/utils/helpers/helper_functions/helper_functions.dart';
 import 'package:amptive/src/views/widgets/common_widgets/custom_container_widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/image_loader_widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/live_indicator_with_animating_dot_widget.dart';
@@ -25,35 +25,35 @@ class AmptiveShowOrEventDataModelWidget extends StatelessWidget {
     return Column(
       children: [
         AmptiveListTileWithLeadingPictureWidget(
-          leadingImagePath: AmptiveImageStrings.jpeg3,
+          leadingImagePath: ATImgStrings.jpeg3,
           trailingOnPressed: () => showAudioOrVideoFullDetailsOptions(context),
           title: 'glennodoyle',
           subtitle: 'started a live show',
         ),
         Gap(2.h),
-        AmptiveContainer(
+        ATContainer(
           height: 425.h,
           clipBehavior: Clip.hardEdge,
           radius: 15.r,
           child: Stack(
             children: [
-              const AmptiveImageLoaderWidget(imagePath: AmptiveImageStrings.weCanDoHardThingsBgImage),
-              AmptiveContainer(
-                width: AmptiveHelperFunctions.getScreenWidth(context),
+              const ATImgLoader(imgPath: ATImgStrings.weCanDoHardThingsBgImage),
+              ATContainer(
+                width: ATHelperFuncs.getScreenWidth(context),
                 padding: const EdgeInsets.fromLTRB(15, 10, 15, 10),
                 radius: 15,
                 gradient: LinearGradient(
                   begin: Alignment.topCenter,
                   end: Alignment.bottomCenter,
                   colors: [
-                    AmptiveColors.transparentColor,
-                    AmptiveColors.transparentColor,
-                    AmptiveColors.transparentColor,
-                    AmptiveColors.transparentColor,
-                    AmptiveColors.containerGradientColorB.withOpacity(0.5),
-                    AmptiveColors.containerGradientColorB,
-                    AmptiveColors.containerGradientColorB,
-                    AmptiveColors.containerGradientColorB,
+                    ATColors.trsprtColor,
+                    ATColors.trsprtColor,
+                    ATColors.trsprtColor,
+                    ATColors.trsprtColor,
+                    ATColors.containerGradientColorB.withOpacity(0.5),
+                    ATColors.containerGradientColorB,
+                    ATColors.containerGradientColorB,
+                    ATColors.containerGradientColorB,
                   ]
                 ),
                 child: Column(
@@ -67,8 +67,8 @@ class AmptiveShowOrEventDataModelWidget extends StatelessWidget {
                       maxLines: 2,
                       "Don't Forget Who You Are ft. Jacob Scipio",
                       style: Theme.of(context).textTheme.displayMedium?.copyWith(
-                        fontSize: AmptiveFontSizes.size24,
-                        fontWeight: AmptiveFontWeights.w600,
+                        fontSize: ATFontSizes.size24,
+                        fontWeight: ATFontWeights.w600,
                         height: 1.2.sp,
                       ),
                     ),

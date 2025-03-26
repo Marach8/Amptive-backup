@@ -41,7 +41,7 @@ class _CropPageState extends State<CropPage> {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
-          backgroundColor: AmptiveColors.brandBlack,
+          backgroundColor: ATColors.brandBlack,
           elevation: 0.0,
           leadingWidth: 90.w,
           leading: GestureDetector(
@@ -57,7 +57,7 @@ class _CropPageState extends State<CropPage> {
                     height: 20.h,
                     child: Icon(
                       Icons.arrow_back_ios,
-                      color: AmptiveColors.whiteColor,
+                      color: ATColors.white,
                     ),
                   ),
                   Container(
@@ -66,7 +66,7 @@ class _CropPageState extends State<CropPage> {
                     child: Text(
                       "Back",
                       style: GoogleFonts.inter(
-                        color: AmptiveColors.whiteColor,
+                        color: ATColors.white,
                         fontSize: 14.sp,
                         fontWeight: FontWeight.w400,
                       ),
@@ -94,12 +94,12 @@ class _CropPageState extends State<CropPage> {
                   }
                 },
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: AmptiveColors.hex307FE2,
+                  backgroundColor: ATColors.hex307FE2,
                 ),
                 child: Text(
                   "Apply",
                   style: GoogleFonts.inter(
-                    color: AmptiveColors.whiteColor,
+                    color: ATColors.white,
                     fontSize: 16.sp,
                     fontWeight: FontWeight.w600,
                   ),
@@ -108,12 +108,12 @@ class _CropPageState extends State<CropPage> {
             ],
           ),
         ),
-        backgroundColor: AmptiveColors.brandBlack,
+        backgroundColor: ATColors.brandBlack,
         body: Column(
           children: [
             Expanded(
               child: CustomImageCrop(
-                  backgroundColor: AmptiveColors.brandBlack,
+                  backgroundColor: ATColors.brandBlack,
                   cropController: controller,
                   drawPath: drawCropPath,
                   image: FileImage(widget.imageFile)),

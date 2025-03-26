@@ -49,7 +49,7 @@ class SingleCommunityCardWidget extends StatelessWidget {
             child: Text(
               preference.name,
               style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                fontWeight: AmptiveFontWeights.w600,
+                fontWeight: ATFontWeights.w600,
               ),
             ),
           ),
@@ -74,7 +74,7 @@ class SingleCommunityCardWidget extends StatelessWidget {
                           shape: OvalBorder(),
                         ),
                         child: Icon(
-                          color: AmptiveColors.brandBlack,
+                          color: ATColors.brandBlack,
                           Icons.check,
                           size: 20.h,
                           weight: 30,

@@ -16,7 +16,7 @@ class AmptivePaidEventModel extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return AmptiveContainer(
+    return ATContainer(
       width: 137,
       padding: const EdgeInsets.only(left: 15),
       child: Column(
@@ -25,9 +25,9 @@ class AmptivePaidEventModel extends StatelessWidget {
           ClipRRect(
             clipBehavior: Clip.hardEdge,
             borderRadius: BorderRadius.circular(5),
-            child: AmptiveImageLoaderWidget(
+            child: ATImgLoader(
               boxFit: BoxFit.scaleDown,
-              imagePath: trendingPicture
+              imgPath: trendingPicture
             ),
           ),
           const Gap(5),
@@ -40,15 +40,15 @@ class AmptivePaidEventModel extends StatelessWidget {
           ),
           Row(
             children: [
-              AmptiveContainer(
+              ATContainer(
                 height: 12, width: 12,
-                color: AmptiveColors.grey5Color,
+                color: ATColors.grey5Color,
                 child: FittedBox(
                   fit: BoxFit.scaleDown,
                   child: Text(
                     "P",
                     style: Theme.of(context).textTheme.displayMedium?.copyWith(
-                      color: AmptiveColors.brandBlack
+                      color: ATColors.brandBlack
                     ),
                   ),
                 ),
@@ -58,8 +58,8 @@ class AmptivePaidEventModel extends StatelessWidget {
                 child: Text(
                   'glendonnoyle',
                   style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                    fontSize: AmptiveFontSizes.size13,
-                    color: AmptiveColors.grey5Color,
+                    fontSize: ATFontSizes.size13,
+                    color: ATColors.grey5Color,
                   ),
                 ),
               ),
@@ -69,13 +69,13 @@ class AmptivePaidEventModel extends StatelessWidget {
                 alignment: Alignment.bottomCenter,
                 child: AmptiveCircleAvatarWidget(
                   diameter: 5,
-                  color: AmptiveColors.grey5Color,
+                  color: ATColors.grey5Color,
                 ),
               ),
               Text(
                 'LIVE',
                 style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                  color: AmptiveColors.grey5Color,
+                  color: ATColors.grey5Color,
                 ),
               ),
             ],

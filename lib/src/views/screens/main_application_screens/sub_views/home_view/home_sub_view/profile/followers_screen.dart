@@ -20,7 +20,7 @@ class AmptiveProfileFollowersScreen extends StatelessWidget {
 
   @override
   Widget build(context) {
-    return ATAnnotatedRegionWidget(
+    return ATAnnotatedRegion(
       child: Scaffold(
         appBar: AmptiveAppBar(
           leading: GestureDetector(
@@ -32,7 +32,7 @@ class AmptiveProfileFollowersScreen extends StatelessWidget {
           ),
           leadingWidth: 30,
           title: Text(
-            AmptiveStrings.FOLLOWERS,
+            ATStrings.FOLLOWERS,
             style: Theme.of(context).textTheme.bodyMedium,
           ),
         ),
@@ -45,15 +45,15 @@ class AmptiveProfileFollowersScreen extends StatelessWidget {
               AmptiveTextFormFieldWidget(
                 controller: TextEditingController(),
                 disableBlueBorder: true,
-                hintText: AmptiveStrings.SEARCH_4_FOLLOWERS,
-                fillColor: AmptiveColors.whiteColor.withOpacity(0.1),
-                prefixIcon: const AmptiveImageLoaderWidget(
-                  imagePath: AmptiveImageStrings.filledSearch
+                hintText: ATStrings.SEARCH_4_FOLLOWERS,
+                fillColor: ATColors.white.withOpacity(0.1),
+                prefixIcon: const ATImgLoader(
+                  imgPath: ATImgStrings.filledSearch
                 ),
               ),
               const Gap(20),
               Text(
-                AmptiveStrings.ALL_FOLLOWERS,
+                ATStrings.ALL_FOLLOWERS,
                 style: Theme.of(context).textTheme.bodyMedium,
               ),
               const Gap(20),
@@ -101,12 +101,12 @@ class _AmptiveFollowerWidget extends StatelessWidget {
         onTap: () => onTap(follower, follower.notifier.value),
         child: Row(
           children: [
-            AmptiveContainer(
+            ATContainer(
               clipBehavior: Clip.hardEdge,
               height: 50, width: 50, radius: 30,
               child: FittedBox(
                 fit: BoxFit.fill,
-                child: AmptiveImageLoaderWidget(imagePath: follower.obj.profilePicture!)
+                child: ATImgLoader(imgPath: follower.obj.profilePicture!)
               ),
             ),
             const Gap(10),
@@ -117,14 +117,14 @@ class _AmptiveFollowerWidget extends StatelessWidget {
               ),
             ),
 
-            AmptiveContainer(
-              radius: 30, color: AmptiveColors.whiteColor,
+            ATContainer(
+              radius: 30, color: ATColors.white,
               padding: const EdgeInsets.fromLTRB(15, 5, 15, 5),
               child: Text(
-                AmptiveStrings.REMOVE,
+                ATStrings.REMOVE,
                 style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                  fontSize: AmptiveFontSizes.size13,
-                  color: AmptiveColors.black
+                  fontSize: ATFontSizes.size13,
+                  color: ATColors.black
                 ),
               ),
             )

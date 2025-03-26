@@ -1,7 +1,7 @@
 import 'dart:io';
 import 'package:amptive/src/services/create_show/create_show_service.dart';
 import 'package:amptive/src/utils/constants/colors.dart';
-import 'package:amptive/src/utils/helpers/helper_functions/other_functions.dart';
+import 'package:amptive/src/utils/helpers/helper_functions/helper_functions.dart';
 import 'package:amptive/src/views/widgets/common_widgets/custom_container_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
@@ -18,8 +18,8 @@ Future<void> showHandRaisingDialog(BuildContext context)async{
   CreateShowService service = GetIt.I<CreateShowService>();
 
   return await showModalBottomSheet(
-    backgroundColor: AmptiveColors.brandBlack,
-    constraints: BoxConstraints.expand(height: AmptiveHelperFunctions.getScreenHeight(context)),
+    backgroundColor: ATColors.brandBlack,
+    constraints: BoxConstraints.expand(height: ATHelperFuncs.getScreenHeight(context)),
     context: context,
     isScrollControlled: true,
     useSafeArea: true,
@@ -36,12 +36,12 @@ Future<void> showHandRaisingDialog(BuildContext context)async{
                 child: Platform.isAndroid
                   ? Icon(
                     Icons.keyboard_arrow_down,
-                    color: AmptiveColors.whiteColor.withOpacity(0.6),
+                    color: ATColors.white.withOpacity(0.6),
                   )
-                  : AmptiveContainer(
+                  : ATContainer(
                     margin: const EdgeInsets.symmetric(vertical: 10),
                     radius: 5, height: 4, width: 30,
-                    color: AmptiveColors.whiteColor.withOpacity(0.6),
+                    color: ATColors.white.withOpacity(0.6),
                     child: const SizedBox.shrink(),
                   ),
               ),
@@ -54,7 +54,7 @@ Future<void> showHandRaisingDialog(BuildContext context)async{
                   const Icon(Icons.front_hand_outlined),
                   const Gap(5),
                   Text(
-                    AmptiveStrings.HAND_RAISING,
+                    ATStrings.HAND_RAISING,
                     style: Theme.of(context).textTheme.bodyLarge,
                   ),
                 ],
@@ -63,9 +63,9 @@ Future<void> showHandRaisingDialog(BuildContext context)async{
             const Gap(20),
             Text(
               maxLines: 3,
-              AmptiveStrings.CNTRL_HAND_RAISING,
+              ATStrings.CNTRL_HAND_RAISING,
               style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                color: AmptiveColors.hexC2C2C2
+                color: ATColors.hexC2C2C2
               ),
             ),
             const Gap(20),
@@ -74,29 +74,29 @@ Future<void> showHandRaisingDialog(BuildContext context)async{
               notifier: allowNotifier,
               shouldDispose: true,
               builder: (_, value, __) {
-                return AmptiveContainer(
+                return ATContainer(
                   duration: 100,
                   onTap: (){
                     activateBtnNotifier.value = !value;
                     doNotAllowNotifier.value = false;
                     allowNotifier.value = !value;
-                    service.handRaisingController.text=  AmptiveStrings.ALLOW;
+                    service.handRaisingController.text=  ATStrings.ALLOW;
                   },
                   padding: const EdgeInsets.fromLTRB(15, 13, 15, 13),
                   radius: 15,
-                  color: AmptiveColors.hex2D2D2D,
+                  color: ATColors.hex2D2D2D,
                   border: Border.all(
                     width: 2,
-                    color: value ? AmptiveColors.hex307FE2 : AmptiveColors.transparentColor
+                    color: value ? ATColors.hex307FE2 : ATColors.trsprtColor
                   ),
                   child: Row(
                     children: [
-                      AmptiveContainer(
+                      ATContainer(
                         height: 20, width: 20, radius: 20,
                         padding: const EdgeInsets.all(3),
-                        color: value ? AmptiveColors.hex307FE2 : AmptiveColors.transparentColor,
+                        color: value ? ATColors.hex307FE2 : ATColors.trsprtColor,
                         border: Border.all(
-                          color: value ? AmptiveColors.hex307FE2 : AmptiveColors.whiteColor,
+                          color: value ? ATColors.hex307FE2 : ATColors.white,
                           strokeAlign: 5.0
                         ),
                         child: const SizedBox.shrink()
@@ -108,14 +108,14 @@ Future<void> showHandRaisingDialog(BuildContext context)async{
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              AmptiveStrings.ALLOW,
+                              ATStrings.ALLOW,
                               style: Theme.of(context).textTheme.bodyMedium
                             ),
                             Text(
                               maxLines: 5,
-                              AmptiveStrings.AUDIENCE_CAN_RAISE_HAND,
+                              ATStrings.AUDIENCE_CAN_RAISE_HAND,
                               style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                                color: AmptiveColors.hexC2C2C2
+                                color: ATColors.hexC2C2C2
                               ),
                             ),
                           ],
@@ -133,20 +133,20 @@ Future<void> showHandRaisingDialog(BuildContext context)async{
               shouldDispose: true,
               notifier: doNotAllowNotifier,
               builder: (_, value, __) {
-                return AmptiveContainer(
+                return ATContainer(
                   onTap: (){
                     activateBtnNotifier.value = !value;
                     allowNotifier.value = false;
                     doNotAllowNotifier.value = !value;
-                    service.handRaisingController.text=  AmptiveStrings.DISALLOW;
+                    service.handRaisingController.text=  ATStrings.DISALLOW;
 
                   },
                   padding: const EdgeInsets.fromLTRB(15, 13, 15, 13),
                   radius: 15, duration: 100,
-                  color: AmptiveColors.hex2D2D2D,
+                  color: ATColors.hex2D2D2D,
                   border: Border.all(
                     width: 2,
-                    color: value ? AmptiveColors.hex307FE2 : AmptiveColors.transparentColor
+                    color: value ? ATColors.hex307FE2 : ATColors.trsprtColor
                   ),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -154,12 +154,12 @@ Future<void> showHandRaisingDialog(BuildContext context)async{
                     children: [
                       Row(
                         children: [
-                          AmptiveContainer(
+                          ATContainer(
                             height: 20, width: 20, radius: 20,
                             padding: const EdgeInsets.all(3),
-                            color: value ? AmptiveColors.hex307FE2 : AmptiveColors.transparentColor,
+                            color: value ? ATColors.hex307FE2 : ATColors.trsprtColor,
                             border: Border.all(
-                              color: value ? AmptiveColors.hex307FE2 : AmptiveColors.whiteColor,
+                              color: value ? ATColors.hex307FE2 : ATColors.white,
                               strokeAlign: 5.0
                             ),
                             child: const SizedBox.shrink()
@@ -171,14 +171,14 @@ Future<void> showHandRaisingDialog(BuildContext context)async{
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  AmptiveStrings.DISALLOW,
+                                  ATStrings.DISALLOW,
                                   style: Theme.of(context).textTheme.bodyMedium
                                 ),
                                 Text(
                                   maxLines: 5,
-                                  AmptiveStrings.AUDIENCE_CANNOT_RAISE_HAND,
+                                  ATStrings.AUDIENCE_CANNOT_RAISE_HAND,
                                   style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                                    color: AmptiveColors.hexC2C2C2
+                                    color: ATColors.hexC2C2C2
                                   ),
                                 ),
                               ],
@@ -202,9 +202,9 @@ Future<void> showHandRaisingDialog(BuildContext context)async{
                   onPressed: value ? () async{
                     Navigator.pop(context);
                   } : null,
-                  buttonTitle: AmptiveStrings.CONTINUE,
-                  bgColor: AmptiveColors.whiteColor,
-                  fgColor: AmptiveColors.black,
+                  buttonTitle: ATStrings.CONTINUE,
+                  bgColor: ATColors.white,
+                  fgColor: ATColors.black,
                 );
               }
             )

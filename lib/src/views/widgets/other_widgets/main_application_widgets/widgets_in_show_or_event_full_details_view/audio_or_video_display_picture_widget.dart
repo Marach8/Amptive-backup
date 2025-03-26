@@ -5,25 +5,25 @@ import '../../../../../utils/constants/colors.dart';
 import '../../../../../utils/constants/strings/image_strings.dart';
 import '../../../common_widgets/custom_container_widget.dart';
 
-class AmptiveAudioOrVideoDisplayPictureWithMoreIconWidget extends StatelessWidget {
-  const AmptiveAudioOrVideoDisplayPictureWithMoreIconWidget({
+class EventOrShowDisplay extends StatelessWidget {
+  const EventOrShowDisplay({
     super.key,
   });
 
   @override
   Widget build(BuildContext context) {
-    return AmptiveContainer(
+    return ATContainer(
       padding: const EdgeInsets.all(10),
       alignment: Alignment.topRight,
       height: 360.h,
       radius: 16,
-      decorationImagePath: AmptiveImageStrings.weCanDoHardThingsBgImage,
+      decorationImagePath: ATImgStrings.weCanDoHardThingsBgImage,
       child: GestureDetector(                      
         onTap: () => showAudioOrVideoFullDetailsOptions(context),
-        child: AmptiveContainer(
+        child: ATContainer(
           height: 32, width: 32,
           boxShape: BoxShape.circle,
-          color: AmptiveColors.brandBlack.withOpacity(0.7),
+          color: ATColors.brandBlack.withOpacity(0.7),
           child: const Icon(Icons.more_horiz),
         ),
       ),

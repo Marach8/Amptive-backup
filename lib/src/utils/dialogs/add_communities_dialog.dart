@@ -1,6 +1,6 @@
 import 'package:amptive/src/models/community.dart';
 import 'package:amptive/src/utils/constants/colors.dart';
-import 'package:amptive/src/utils/helpers/helper_functions/other_functions.dart';
+import 'package:amptive/src/utils/helpers/helper_functions/helper_functions.dart';
 import 'package:amptive/src/views/widgets/common_widgets/image_loader_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
@@ -13,9 +13,9 @@ Future<Community> showAddCommunitiesDialog(BuildContext context) async {
   CreateShowService service = GetIt.I<CreateShowService>();
 
   return await showModalBottomSheet(
-      backgroundColor: AmptiveColors.brandBlack,
+      backgroundColor: ATColors.brandBlack,
       constraints: BoxConstraints.expand(
-          height: AmptiveHelperFunctions.getScreenHeight(context)),
+          height: ATHelperFuncs.getScreenHeight(context)),
       context: context,
       isScrollControlled: true,
       useSafeArea: true,
@@ -27,17 +27,17 @@ Future<Community> showAddCommunitiesDialog(BuildContext context) async {
           child: Column(children: [
             const Gap(20),
             Text(
-              AmptiveStrings.ADD_COMMUNITY,
+              ATStrings.ADD_COMMUNITY,
               style: Theme.of(context).textTheme.bodyMedium,
             ),
             const Gap(20),
             Text(
               maxLines: 3,
-              AmptiveStrings.ADD_COMMUNITY_DESC,
+              ATStrings.ADD_COMMUNITY_DESC,
               style: Theme.of(context)
                   .textTheme
                   .bodySmall
-                  ?.copyWith(color: AmptiveColors.hexC2C2C2),
+                  ?.copyWith(color: ATColors.hexC2C2C2),
             ),
             const Gap(20),
             ...listOfItems.map((item) => GestureDetector(
@@ -53,8 +53,8 @@ Future<Community> showAddCommunitiesDialog(BuildContext context) async {
                             width: 67,
                             child: FittedBox(
                                 fit: BoxFit.fill,
-                                child: AmptiveImageLoaderWidget(
-                                    imagePath: item.coverPic!))),
+                                child: ATImgLoader(
+                                    imgPath: item.coverPic!))),
                         const Gap(15),
                         Text(
                           item.name!,

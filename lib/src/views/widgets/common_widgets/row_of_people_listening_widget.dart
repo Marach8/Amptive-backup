@@ -1,7 +1,7 @@
 import 'package:amptive/src/utils/constants/colors.dart';
 import 'package:amptive/src/utils/constants/font_sizes.dart';
 import 'package:amptive/src/utils/constants/strings/image_strings.dart';
-import 'package:amptive/src/views/widgets/common_widgets/circular_container_with_picture_widget.dart';
+import 'package:amptive/src/views/widgets/common_widgets/circular_image.dart';
 import 'package:amptive/src/views/widgets/common_widgets/custom_container_widget.dart';
 import 'package:flutter/material.dart';
 
@@ -23,29 +23,29 @@ class AmptiveRowOfNumberOfPeopleListeningWidget extends StatelessWidget {
           alignment: Alignment.centerLeft,
           clipBehavior: Clip.none,
           children: [
-            const AmptiveCircularContainerWithPictureWidget(
-              imagePath: AmptiveImageStrings.jpeg1,
+            const ATCircularImage(
+              imagePath: ATImgStrings.jpeg1,
               addBorder: true,
             ),
             const Positioned(
               left: 18,
-              child: AmptiveCircularContainerWithPictureWidget(
-                imagePath: AmptiveImageStrings.jpeg2,
+              child: ATCircularImage(
+                imagePath: ATImgStrings.jpeg2,
                 addBorder: true,
               )
             ),
             const Positioned(
               left: 36,
-              child:AmptiveCircularContainerWithPictureWidget(
-                imagePath: AmptiveImageStrings.jpeg3,
+              child:ATCircularImage(
+                imagePath: ATImgStrings.jpeg3,
                 addBorder: true,
               )
             ),
 
             showNumberInsideContainer ? Positioned(
               left: 52,
-              child: AmptiveContainer(
-                color: AmptiveColors.hex2D2D2D,
+              child: ATContainer(
+                color: ATColors.hex2D2D2D,
                 alignment: Alignment.center,
                 height: 30,
                 width: 30,
@@ -53,7 +53,7 @@ class AmptiveRowOfNumberOfPeopleListeningWidget extends StatelessWidget {
                 child: Text(
                   '+652',
                   style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                    fontSize: AmptiveFontSizes.size13
+                    fontSize: ATFontSizes.size13
                   )
                 ),
               )
@@ -66,7 +66,7 @@ class AmptiveRowOfNumberOfPeopleListeningWidget extends StatelessWidget {
           child: Text(
             '656 listening',
             style: Theme.of(context).textTheme.titleMedium?.copyWith(
-              fontSize: AmptiveFontSizes.size13
+              fontSize: ATFontSizes.size13
             )
           ),
         )

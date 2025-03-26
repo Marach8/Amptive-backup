@@ -1,5 +1,5 @@
 import 'package:amptive/src/utils/constants/strings/route_strings.dart';
-import 'package:amptive/src/utils/helpers/helper_functions/other_functions.dart';
+import 'package:amptive/src/utils/helpers/helper_functions/helper_functions.dart';
 import 'package:amptive/src/views/widgets/common_widgets/custom_rebuilder_widget.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
@@ -30,7 +30,7 @@ class AmptiveFullDiscoverPageView extends StatelessWidget {
         const _HorizontalScrollCards(),
         Gap(30.h),
         AmptiveRowOfTitleWithTrendingViewAll(
-          title: AmptiveStrings.TRENDING_HASHTAGS,
+          title: ATStrings.TRENDING_HASHTAGS,
           viewAllOnpressed: (){
             context.pushNamed(ATRoutes.TRENDING_HASHTAGS_SCREEN);
           },
@@ -42,7 +42,7 @@ class AmptiveFullDiscoverPageView extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: 15),
           child: AmptiveRowOfTrendingHashTagTitle(
             trailingOnpressed: () => context.pushNamed(ATRoutes.SOCIETY_SCREEN),
-            hashTagTitle: AmptiveStrings.SOCIETY,
+            hashTagTitle: ATStrings.SOCIETY,
             hashTagSubTitle: 'ankira22, glendonnor, and 15k other are live',
           ),
         ),
@@ -57,7 +57,7 @@ class AmptiveFullDiscoverPageView extends StatelessWidget {
             children: List.generate(
               5,
               (_) => const AmptiveTrendingHashtagModel(
-                trendingPicture: AmptiveImageStrings.weCanDoHardThingsBgImage,
+                trendingPicture: ATImgStrings.weCanDoHardThingsBgImage,
               )
             ),
           ),
@@ -85,7 +85,7 @@ class AmptiveFullDiscoverPageView extends StatelessWidget {
             children: List.generate(
               5,
               (_) => const AmptiveTrendingHashtagModel(
-                trendingPicture: AmptiveImageStrings.OFFICE_LADIES
+                trendingPicture: ATImgStrings.OFFICE_LADIES
               )
             ),
           ),
@@ -94,7 +94,7 @@ class AmptiveFullDiscoverPageView extends StatelessWidget {
         Gap(60.h),
     
         const AmptiveDiscoverCategoriesTitleWidget(
-          categoryName: AmptiveStrings.TECHNOLOGY
+          categoryName: ATStrings.TECHNOLOGY
         ),
         Gap(15.h),
         SizedBox(
@@ -105,7 +105,7 @@ class AmptiveFullDiscoverPageView extends StatelessWidget {
             children: List.generate(
               5,
               (_) => const AmptiveTechnologyModel(
-                trendingPicture: AmptiveImageStrings.endlessThread
+                trendingPicture: ATImgStrings.endlessThread
               )
             ),
           ),
@@ -114,7 +114,7 @@ class AmptiveFullDiscoverPageView extends StatelessWidget {
         Gap(50.h),
     
         const AmptiveDiscoverCategoriesTitleWidget(
-          categoryName: AmptiveStrings.SPORTS,
+          categoryName: ATStrings.SPORTS,
         ),
         Gap(15.h),
         SizedBox(
@@ -125,7 +125,7 @@ class AmptiveFullDiscoverPageView extends StatelessWidget {
             children: List.generate(
               5,
               (_) => const AmptiveTechnologyModel(
-                trendingPicture: AmptiveImageStrings.JOE_POMP_SHOW
+                trendingPicture: ATImgStrings.JOE_POMP_SHOW
               )
             ),
           ),
@@ -134,7 +134,7 @@ class AmptiveFullDiscoverPageView extends StatelessWidget {
         Gap(50.h),
     
         const AmptiveDiscoverCategoriesTitleWidget(
-          categoryName: AmptiveStrings.TRUE_CRIME,
+          categoryName: ATStrings.TRUE_CRIME,
         ),
         Gap(15.h),
         SizedBox(
@@ -145,7 +145,7 @@ class AmptiveFullDiscoverPageView extends StatelessWidget {
             children: List.generate(
               5,
               (_) => const AmptiveTechnologyModel(
-                trendingPicture: AmptiveImageStrings.CRIMINAL
+                trendingPicture: ATImgStrings.CRIMINAL
               )
             ),
           ),
@@ -166,7 +166,7 @@ class AmptiveFullDiscoverPageView extends StatelessWidget {
             children: List.generate(
               5,
               (_) => const AmptiveMore2DiscoverModel(
-                picture: AmptiveImageStrings.COMMUNITY_CARD
+                picture: ATImgStrings.COMMUNITY_CARD
               )
             ),
           ),
@@ -174,11 +174,11 @@ class AmptiveFullDiscoverPageView extends StatelessWidget {
     
         Gap(50.h),
     
-        AmptiveContainer(
+        ATContainer(
           padding: const EdgeInsets.only(left: 15),
           alignment: Alignment.centerLeft,
           child: Text(
-            AmptiveStrings.TOP_CREATORS,
+            ATStrings.TOP_CREATORS,
             style: Theme.of(context).textTheme.bodyLarge 
           ),
         ),
@@ -191,7 +191,7 @@ class AmptiveFullDiscoverPageView extends StatelessWidget {
             children: List.generate(
               5,
               (_) => const AmptiveTopCreatorsModel(
-                picture: AmptiveImageStrings.MAN_PHOTO
+                picture: ATImgStrings.MAN_PHOTO
               )
             ),
           ),
@@ -199,11 +199,11 @@ class AmptiveFullDiscoverPageView extends StatelessWidget {
     
         Gap(50.h),
     
-        AmptiveContainer(
+        ATContainer(
           padding: const EdgeInsets.only(left: 15),
           alignment: Alignment.centerLeft,
           child: Text(
-            AmptiveStrings.SPOTLIGHT,
+            ATStrings.SPOTLIGHT,
             style: Theme.of(context).textTheme.bodyLarge 
           ),
         ),
@@ -216,7 +216,7 @@ class AmptiveFullDiscoverPageView extends StatelessWidget {
             children: List.generate(
               5,
               (_) => const AmptiveTrendingHashtagModel(
-                trendingPicture: AmptiveImageStrings.OFFICE_LADIES
+                trendingPicture: ATImgStrings.OFFICE_LADIES
               )
             ),
           ),
@@ -241,9 +241,9 @@ class _HorizontalScrollCards extends StatefulWidget {
 class _HorizontalScrollCardsState extends State<_HorizontalScrollCards> {
   final ValueNotifier<int> _indexNotifier = ValueNotifier(0);
   final _adverts = [
-    AmptiveImageStrings.discoverPic1,
-    AmptiveImageStrings.discoverPic1,
-    AmptiveImageStrings.discoverPic1
+    ATImgStrings.discoverPic1,
+    ATImgStrings.discoverPic1,
+    ATImgStrings.discoverPic1
   ];
 
 
@@ -257,14 +257,14 @@ class _HorizontalScrollCardsState extends State<_HorizontalScrollCards> {
   Widget build(context) {
     return SizedBox(
       height: 260,
-      width: AmptiveHelperFunctions.getScreenWidth(context),
+      width: ATHelperFuncs.getScreenWidth(context),
       child: Column(
         children: [
           CarouselSlider.builder(
             itemCount: _adverts.length,
             itemBuilder: (_, pageIndex, __){
               final advert = _adverts.elementAtOrNull(pageIndex);
-              return AmptiveImageLoaderWidget(imagePath: advert ?? '');
+              return ATImgLoader(imgPath: advert ?? '');
             },
             options: CarouselOptions(
               autoPlay: true,
@@ -286,10 +286,10 @@ class _HorizontalScrollCardsState extends State<_HorizontalScrollCards> {
                     notifier: _indexNotifier,
                     builder: (_, value, __){
                       final isActive = index == value;
-                      return AmptiveContainer(
+                      return ATContainer(
                         margin: const EdgeInsets.only(left: 3),
                         radius: 8, height: 8,
-                        color: isActive ? AmptiveColors.whiteColor : AmptiveColors.inactiveDotColor, 
+                        color: isActive ? ATColors.white : ATColors.inactiveDotColor, 
                         width: isActive ? 25 : 8,
                         child: const SizedBox.shrink()
                       );

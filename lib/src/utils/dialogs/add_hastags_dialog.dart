@@ -3,7 +3,7 @@ import 'dart:ui';
 import 'package:amptive/src/models/hashtag.dart';
 import 'package:amptive/src/utils/constants/colors.dart';
 import 'package:amptive/src/utils/constants/font_sizes.dart';
-import 'package:amptive/src/utils/helpers/helper_functions/other_functions.dart';
+import 'package:amptive/src/utils/helpers/helper_functions/helper_functions.dart';
 import 'package:amptive/src/views/widgets/animation_widgets/common_animation_widgets/animated_crossfade_widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/custom_container_widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/textformfield_widget.dart';
@@ -34,9 +34,9 @@ Future<Set<ObjectWithNotifier<Hashtag>>?> showAddHashtagDialog(
   final searchQueryNotifier = ValueNotifier('');
 
   return await showModalBottomSheet(
-      backgroundColor: AmptiveColors.brandBlack,
+      backgroundColor: ATColors.brandBlack,
       constraints: BoxConstraints.expand(
-          height: AmptiveHelperFunctions.getScreenHeight(context)),
+          height: ATHelperFuncs.getScreenHeight(context)),
       context: context,
       isScrollControlled: true,
       useSafeArea: true,
@@ -59,16 +59,16 @@ Future<Set<ObjectWithNotifier<Hashtag>>?> showAddHashtagDialog(
                               ? Icon(
                             Icons.keyboard_arrow_down,
                             color:
-                            AmptiveColors.whiteColor.withOpacity(0.6),
+                            ATColors.white.withOpacity(0.6),
                           )
-                              : AmptiveContainer(
+                              : ATContainer(
                             margin:
                             const EdgeInsets.symmetric(vertical: 10),
                             radius: 5,
                             height: 4,
                             width: 30,
                             color:
-                            AmptiveColors.whiteColor.withOpacity(0.6),
+                            ATColors.white.withOpacity(0.6),
                             child: const SizedBox.shrink(),
                           ),
                         ),
@@ -79,7 +79,7 @@ Future<Set<ObjectWithNotifier<Hashtag>>?> showAddHashtagDialog(
                           mainAxisAlignment: MainAxisAlignment.end,
                           children: [
                             Text(
-                              AmptiveStrings.ADD_HASHTAG,
+                              ATStrings.ADD_HASHTAG,
                               style: Theme.of(context).textTheme.bodyLarge,
                             ),
                             Gap(60.w),
@@ -87,12 +87,12 @@ Future<Set<ObjectWithNotifier<Hashtag>>?> showAddHashtagDialog(
                                 notifier: service.selectedHashtagLength,
                                 builder: (_, number, __) {
                                   return Text(
-                                    '$number ${AmptiveStrings.SELECTED}',
+                                    '$number ${ATStrings.SELECTED}',
                                     style: Theme.of(context)
                                         .textTheme
                                         .bodySmall
                                         ?.copyWith(
-                                        color: AmptiveColors.hexC2C2C2),
+                                        color: ATColors.hexC2C2C2),
                                   );
                                 }),
                           ],
@@ -103,11 +103,11 @@ Future<Set<ObjectWithNotifier<Hashtag>>?> showAddHashtagDialog(
                         padding: const EdgeInsets.fromLTRB(15, 0, 15, 20),
                         child: Text(
                           maxLines: 5,
-                          AmptiveStrings.ADD_HASHTAG_DESC,
+                          ATStrings.ADD_HASHTAG_DESC,
                           style: Theme.of(context)
                               .textTheme
                               .bodySmall
-                              ?.copyWith(color: AmptiveColors.hexC2C2C2),
+                              ?.copyWith(color: ATColors.hexC2C2C2),
                         ),
                       ),
 
@@ -120,7 +120,7 @@ Future<Set<ObjectWithNotifier<Hashtag>>?> showAddHashtagDialog(
                           onChanged: (text) {
                             searchQueryNotifier.value = text;
                           },
-                          hintText: AmptiveStrings.SEARCH_4_COHOSTS,
+                          hintText: ATStrings.SEARCH_4_COHOSTS,
                           prefixIcon: const Padding(
                             padding: EdgeInsets.symmetric(horizontal: 15),
                             child: Icon(Iconsax.search_normal_14),
@@ -172,13 +172,13 @@ Future<Set<ObjectWithNotifier<Hashtag>>?> showAddHashtagDialog(
                                     //Using this index, get the notifier associated with it in the list of notifiers.
                                     // final notifier = listOfValueNotifiers.elementAt(indexOfTappedHashtag);
 
-                                    return AmptiveContainer(
+                                    return ATContainer(
                                       margin: const EdgeInsets.only(right: 15),
                                       padding: const EdgeInsets.fromLTRB(
                                           15, 7, 15, 7),
                                       alignment: Alignment.center,
                                       radius: 10,
-                                      color: AmptiveColors.whiteColor
+                                      color: ATColors.white
                                           .withOpacity(0.1),
                                       child: Row(
                                         mainAxisSize: MainAxisSize.min,
@@ -190,7 +190,7 @@ Future<Set<ObjectWithNotifier<Hashtag>>?> showAddHashtagDialog(
                                                 .bodySmall
                                                 ?.copyWith(
                                               color:
-                                              AmptiveColors.grey5Color,
+                                              ATColors.grey5Color,
                                             ),
                                           ),
                                           const Gap(5),
@@ -255,7 +255,7 @@ Future<Set<ObjectWithNotifier<Hashtag>>?> showAddHashtagDialog(
               bottom: 0,
               child: SizedBox(
                 height: 80.h,
-                width: AmptiveHelperFunctions.getScreenWidth(context),
+                width: ATHelperFuncs.getScreenWidth(context),
                 child: ClipRect(
                   child: BackdropFilter(
                       filter: ImageFilter.blur(sigmaX: 2.0, sigmaY: 2.0),
@@ -265,10 +265,10 @@ Future<Set<ObjectWithNotifier<Hashtag>>?> showAddHashtagDialog(
             ),
             Positioned(
               bottom: 10,
-              child: AmptiveContainer(
+              child: ATContainer(
                 height: 50.h,
                 padding: const EdgeInsets.symmetric(horizontal: 15),
-                width: AmptiveHelperFunctions.getScreenWidth(context),
+                width: ATHelperFuncs.getScreenWidth(context),
                 child: AmptiveRebuilderWidget(
                     notifier: service.selectedHashtagLength,
                     builder: (_, value, __) {
@@ -280,9 +280,9 @@ Future<Set<ObjectWithNotifier<Hashtag>>?> showAddHashtagDialog(
                               context, service.selectedHashtags.value);
                         }
                             : null,
-                        buttonTitle: AmptiveStrings.CONTINUE,
-                        bgColor: AmptiveColors.whiteColor,
-                        fgColor: AmptiveColors.black,
+                        buttonTitle: ATStrings.CONTINUE,
+                        bgColor: ATColors.white,
+                        fgColor: ATColors.black,
                       );
                     }),
               ),
@@ -309,18 +309,18 @@ class AmptiveListOfHashtagsWidget extends StatelessWidget {
         children: [
           Text(
               hashtags.isEmpty
-                  ? AmptiveStrings.NO_TRENDING_HASHTAGS
-                  : AmptiveStrings.TRENDING_HASHTAGS,
+                  ? ATStrings.NO_TRENDING_HASHTAGS
+                  : ATStrings.TRENDING_HASHTAGS,
               style: Theme.of(context).textTheme.bodyMedium),
           Gap(3.h),
           hashtags.isEmpty
               ? Text(
             maxLines: 2,
-            AmptiveStrings.SEARCH_UR_HASHTAGS,
+            ATStrings.SEARCH_UR_HASHTAGS,
             style: Theme.of(context)
                 .textTheme
                 .bodySmall
-                ?.copyWith(color: AmptiveColors.hexC2C2C2),
+                ?.copyWith(color: ATColors.hexC2C2C2),
           )
               : const SizedBox.shrink(),
           ...hashtags.map((hashtagData) {
@@ -361,10 +361,10 @@ class AmptiveAddHashtagWidget extends StatelessWidget {
         },
         child: Row(
           children: [
-            AmptiveContainer(
+            ATContainer(
               height: 50,
               width: 50,
-              color: AmptiveColors.whiteColor,
+              color: ATColors.white,
               radius: 30,
               child: FittedBox(
                 fit: BoxFit.scaleDown,
@@ -372,7 +372,7 @@ class AmptiveAddHashtagWidget extends StatelessWidget {
                     style: Theme.of(context)
                         .textTheme
                         .displaySmall
-                        ?.copyWith(color: AmptiveColors.brandBlack)),
+                        ?.copyWith(color: ATColors.brandBlack)),
               ),
             ),
             const Gap(10),
@@ -384,13 +384,13 @@ class AmptiveAddHashtagWidget extends StatelessWidget {
                       style: Theme.of(context)
                           .textTheme
                           .bodySmall
-                          ?.copyWith(fontSize: AmptiveFontSizes.size15)),
+                          ?.copyWith(fontSize: ATFontSizes.size15)),
                   Text(
                     "Hashtag",
                     style: Theme.of(context)
                         .textTheme
                         .bodySmall
-                        ?.copyWith(color: AmptiveColors.hexC2C2C2),
+                        ?.copyWith(color: ATColors.hexC2C2C2),
                   ),
                 ],
               ),
@@ -398,18 +398,18 @@ class AmptiveAddHashtagWidget extends StatelessWidget {
             AmptiveRebuilderWidget(
                 notifier: hashtagDetail.notifier,
                 builder: (_, value, __) {
-                  return AmptiveContainer(
+                  return ATContainer(
                       duration: 200,
                       color: value
-                          ? AmptiveColors.whiteColor
-                          : AmptiveColors.transparentColor,
-                      border: Border.all(color: AmptiveColors.whiteColor),
+                          ? ATColors.white
+                          : ATColors.trsprtColor,
+                      border: Border.all(color: ATColors.white),
                       boxShape: BoxShape.circle,
                       height: 24,
                       width: 24,
                       child: Icon(
                         Icons.check,
-                        color: AmptiveColors.brandBlack,
+                        color: ATColors.brandBlack,
                         size: 20,
                       ));
                 })

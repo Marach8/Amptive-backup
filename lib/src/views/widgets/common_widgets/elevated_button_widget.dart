@@ -1,5 +1,5 @@
 import 'package:amptive/src/utils/constants/colors.dart';
-import 'package:amptive/src/utils/helpers/helper_functions/other_functions.dart';
+import 'package:amptive/src/utils/helpers/helper_functions/helper_functions.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 
@@ -43,18 +43,18 @@ class AmptiveElevatedButtonWidget extends StatelessWidget {
                       style: Theme.of(context)
                           .textTheme
                           .bodyMedium
-                          ?.copyWith(color: AmptiveColors.brandBlack)),
+                          ?.copyWith(color: ATColors.brandBlack)),
                   const Gap(5),
                   CircleAvatar(
                     radius: 2,
-                    backgroundColor: AmptiveColors.brandBlack,
+                    backgroundColor: ATColors.brandBlack,
                   ),
                   const Gap(5),
                   Text(text2!,
                       style: Theme.of(context)
                           .textTheme
                           .bodyMedium
-                          ?.copyWith(color: AmptiveColors.brandBlack)),
+                          ?.copyWith(color: ATColors.brandBlack)),
                 ],
               )
             : Text(buttonTitle!));
@@ -63,16 +63,16 @@ class AmptiveElevatedButtonWidget extends StatelessWidget {
 
 
 
-class AmptivePlainElevatedBtnWidget extends StatelessWidget {
-  final String? buttonTitle;
+class ATPlainElevatedBtn extends StatelessWidget {
+  final String? btnTitle;
   final VoidCallback onPressed;
   final double? height;
   final Color? bgColor, fgColor;
   final Widget? child;
 
-  const AmptivePlainElevatedBtnWidget({
+  const ATPlainElevatedBtn({
     super.key,
-    this.buttonTitle,
+    this.btnTitle,
     required this.onPressed,
     this.height,
     this.bgColor,
@@ -87,10 +87,13 @@ class AmptivePlainElevatedBtnWidget extends StatelessWidget {
       style: ElevatedButton.styleFrom(
         foregroundColor: fgColor,
         backgroundColor: bgColor,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(30)
+        ),
         //padding: const EdgeInsets.fromLTRB(),
-        fixedSize: Size(AmptiveHelperFunctions.getScreenWidth(context), height ?? 45)
+        fixedSize: Size(ATHelperFuncs.getScreenWidth(context), height ?? 45)
       ),
-      child: child ?? Text(buttonTitle ?? ''),
+      child: child ?? Text(btnTitle ?? ''),
     );
   }
 }

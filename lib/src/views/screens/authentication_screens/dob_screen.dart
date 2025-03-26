@@ -33,9 +33,9 @@ class _DateOfBirthScreenState extends State<DateOfBirthScreen> {
   Widget build(BuildContext context) {
     var bottomSheetHeight = 232.h;
 
-    return ATAnnotatedRegionWidget(
+    return ATAnnotatedRegion(
       child: Scaffold(
-        backgroundColor: AmptiveColors.brandBlack,
+        backgroundColor: ATColors.brandBlack,
         appBar: const AmptiveAppBar(),
         body: Padding(
           padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 20.h),
@@ -45,9 +45,9 @@ class _DateOfBirthScreenState extends State<DateOfBirthScreen> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  AmptiveStrings.whatIsYourDateOfBirth,
+                  ATStrings.whatIsYourDateOfBirth,
                   style: GoogleFonts.inter(
-                    color: AmptiveColors.whiteColor,
+                    color: ATColors.white,
                     fontSize: 17.sp,
                     fontWeight: FontWeight.bold,
                   ),
@@ -72,34 +72,34 @@ class _DateOfBirthScreenState extends State<DateOfBirthScreen> {
                     maxLines: 1,
                     autovalidateMode: AutovalidateMode.onUserInteraction,
                     keyboardType: TextInputType.none,
-                    cursorColor: AmptiveColors.hex307FE2,
+                    cursorColor: ATColors.hex307FE2,
                     decoration: InputDecoration(
                       contentPadding: EdgeInsets.symmetric(
                           vertical: 12.h, horizontal: 16.w),
-                      hintText: AmptiveStrings.selectDate,
+                      hintText: ATStrings.selectDate,
                       hintStyle: GoogleFonts.inter(
                         fontSize: 16.sp,
-                        color: AmptiveColors.authHintColor,
+                        color: ATColors.authHintColor,
                         fontWeight: FontWeight.normal,
                       ),
                       errorStyle: GoogleFonts.inter(
-                        color: AmptiveColors.textRedColor,
+                        color: ATColors.textRedColor,
                         fontSize: 12.sp,
                         fontWeight: FontWeight.normal,
                       ),
                       filled: true,
-                      fillColor: AmptiveColors.fillGreyColor.withOpacity(0.3),
+                      fillColor: ATColors.fillGreyColor.withOpacity(0.3),
                       focusedBorder: OutlineInputBorder(
                         borderSide: BorderSide(
                           width: 2.w,
-                          color: AmptiveColors.hex307FE2,
+                          color: ATColors.hex307FE2,
                         ),
                         borderRadius: BorderRadius.circular(14.r),
                       ),
                       border: OutlineInputBorder(
                         borderSide: BorderSide(
                           width: 2.w,
-                          color: AmptiveColors.transparentColor,
+                          color: ATColors.trsprtColor,
                         ),
                         borderRadius: BorderRadius.circular(14.r),
                       ),
@@ -107,16 +107,16 @@ class _DateOfBirthScreenState extends State<DateOfBirthScreen> {
                     style: GoogleFonts.inter(
                         fontWeight: FontWeight.normal,
                         fontSize: 16.sp,
-                        color: AmptiveColors.whiteColor),
+                        color: ATColors.white),
                   );
                 }),
                 Container(
                   height: 20.h,
                   margin: EdgeInsets.symmetric(vertical: 11.h),
                   child: Text(
-                    AmptiveStrings.users13andOlderWarning,
+                    ATStrings.users13andOlderWarning,
                     style: GoogleFonts.inter(
-                      color: AmptiveColors.whiteColor,
+                      color: ATColors.white,
                       fontWeight: FontWeight.w400,
                       fontSize: 11.sp,
                       height: 0.14,
@@ -145,7 +145,7 @@ class _DateOfBirthScreenState extends State<DateOfBirthScreen> {
                           context.pushNamed(ATRoutes.addUsername);
                         }
                       : null,
-                  buttonTitle: AmptiveStrings.NEXT,
+                  buttonTitle: ATStrings.NEXT,
                 );
               }),
         ),
@@ -168,15 +168,15 @@ class _DateOfBirthScreenState extends State<DateOfBirthScreen> {
           child: Column(
             children: <Widget>[
               Container(
-                color: AmptiveColors.grey2Color,
+                color: ATColors.grey2Color,
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: <Widget>[
                     CupertinoButton(
                       child: Text(
-                        AmptiveStrings.done,
+                        ATStrings.done,
                         style: GoogleFonts.inter(
-                            color: AmptiveColors.whiteColor,
+                            color: ATColors.white,
                             fontWeight: FontWeight.normal,
                             fontSize: 16.sp),
                       ),
@@ -188,13 +188,13 @@ class _DateOfBirthScreenState extends State<DateOfBirthScreen> {
                 ),
               ),
               Divider(
-                color: AmptiveColors.brandBlack,
+                color: ATColors.brandBlack,
                 height: 0.h,
                 thickness: 1.h,
               ),
               Expanded(
                 child: Container(
-                  color: AmptiveColors.brandBlack,
+                  color: ATColors.brandBlack,
                   child: CupertinoTheme(
                     data: const CupertinoThemeData(
                       brightness: Brightness.dark,

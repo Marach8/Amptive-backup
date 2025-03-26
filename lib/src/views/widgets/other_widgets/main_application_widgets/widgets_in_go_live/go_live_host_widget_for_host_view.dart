@@ -1,6 +1,6 @@
 import 'package:amptive/src/models/host.dart';
 import 'package:amptive/src/utils/constants/font_sizes.dart';
-import 'package:amptive/src/views/widgets/common_widgets/circular_container_with_picture_widget.dart';
+import 'package:amptive/src/views/widgets/common_widgets/circular_image.dart';
 import 'package:amptive/src/views/widgets/common_widgets/custom_container_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -57,17 +57,17 @@ class AmptiveLiveHostAndCoHostWidget extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            showAddIcon ? AmptiveContainer(
+            showAddIcon ? ATContainer(
               height: 64.h, width: 64.h, radius: 40.h,
-              border: Border.all(color: AmptiveColors.whiteColor, width: 0.5),
+              border: Border.all(color: ATColors.white, width: 0.5),
               child: const Icon(Icons.add, size: 40)) 
             : Stack(
               clipBehavior: Clip.none,
               alignment: Alignment.center,
               children: [
-                AmptiveCircularContainerWithPictureWidget(
+                ATCircularImage(
                   diameter: isHost ? 94.h : 64.h, addBorder: true,
-                  borderColor: AmptiveColors.whiteColor,
+                  borderColor: ATColors.white,
                   borderWidth: 1, picturePadding: 2,
                   imagePath: hostOrCohost?.obj.profilePicture ?? ''
                 ),
@@ -78,7 +78,7 @@ class AmptiveLiveHostAndCoHostWidget extends StatelessWidget {
                     child: FittedBox(
                       fit: BoxFit.scaleDown,
                       child: Icon(
-                        Icons.mic_off, color: AmptiveColors.brandBlack,
+                        Icons.mic_off, color: ATColors.brandBlack,
                         size: 15.h,
                       )
                     ),
@@ -90,27 +90,27 @@ class AmptiveLiveHostAndCoHostWidget extends StatelessWidget {
             SizedBox(
               width: 80.w,
               child: Text(
-                hostOrCohost?.obj.name ?? AmptiveStrings.ADD_CO_HOST.toLowerCase(),
+                hostOrCohost?.obj.name ?? ATStrings.ADD_CO_HOST.toLowerCase(),
                 textAlign: TextAlign.center,
                 style: Theme.of(context).textTheme.titleSmall,
               ),
             ),
             Gap(5.h),
-            isHost ? AmptiveContainer(
+            isHost ? ATContainer(
               padding: const EdgeInsets.fromLTRB(4, 2, 4, 2),
               radius: 5, 
               gradient: LinearGradient(
                 begin: Alignment.topCenter,
                 end: Alignment.bottomCenter,
                 colors: [
-                  AmptiveColors.orangeColor1,
-                  AmptiveColors.orangeGradientColorB
+                  ATColors.hexF91880,
+                  ATColors.orangeGradientColorB
                 ]
               ),
               child: Text(
-                AmptiveStrings.HOST.toUpperCase(),
+                ATStrings.HOST.toUpperCase(),
                 style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                  fontSize: AmptiveFontSizes.size10,
+                  fontSize: ATFontSizes.size10,
                 )
               ),
             ) : const SizedBox.shrink()

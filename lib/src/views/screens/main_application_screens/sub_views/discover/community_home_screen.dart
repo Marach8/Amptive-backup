@@ -12,7 +12,7 @@ class AmptiveCommunityScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ATAnnotatedRegionWidget(
+    return ATAnnotatedRegion(
       child: Scaffold(
         body: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 15),
@@ -31,9 +31,9 @@ class AmptiveCommunityScreen extends StatelessWidget {
               SliverToBoxAdapter(
                 child: Text(
                   maxLines: 3,
-                  AmptiveStrings.DISCOVER_COMMUNITIES,
+                  ATStrings.DISCOVER_COMMUNITIES,
                   style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                    color: AmptiveColors.grey5Color
+                    color: ATColors.grey5Color
                   ),
                 ),
               ),
@@ -43,7 +43,7 @@ class AmptiveCommunityScreen extends StatelessWidget {
                   List.generate(
                     28,
                     (_) => const AmptiveMore2DiscoverModel(
-                      picture: AmptiveImageStrings.COMMUNITY_CARD,
+                      picture: ATImgStrings.COMMUNITY_CARD,
                       padding: EdgeInsets.zero,
                     )
                   ).toList()

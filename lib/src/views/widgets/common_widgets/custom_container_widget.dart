@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class AmptiveContainer extends StatelessWidget {
+class ATContainer extends StatelessWidget {
   final EdgeInsetsGeometry? padding, margin;
   final Color? color;
   final double? height, width, radius;
@@ -18,7 +18,7 @@ class AmptiveContainer extends StatelessWidget {
   final Curve curve;
   final List<BoxShadow>? boxShadow;
 
-  const AmptiveContainer({
+  const ATContainer({
     super.key,
     this.padding,
     this.color,

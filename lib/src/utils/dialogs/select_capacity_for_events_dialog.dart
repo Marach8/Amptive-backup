@@ -23,7 +23,7 @@ Future<void> showEventCapacitySelectionDialog({
 
   return await showModalBottomSheet(
     constraints: BoxConstraints(maxHeight: 500.h),
-    backgroundColor: AmptiveColors.brandBlack,
+    backgroundColor: ATColors.brandBlack,
     // constraints: BoxConstraints.expand(height: AmptiveHelperFunctions.getScreenHeight(context)),
     context: context,
     isScrollControlled: true,
@@ -47,12 +47,12 @@ Future<void> showEventCapacitySelectionDialog({
                 child: Platform.isAndroid
                   ? Icon(
                     Icons.keyboard_arrow_down,
-                    color: AmptiveColors.whiteColor.withOpacity(0.6),
+                    color: ATColors.white.withOpacity(0.6),
                   )
-                  : AmptiveContainer(
+                  : ATContainer(
                     margin: const EdgeInsets.symmetric(vertical: 10),
                     radius: 5, height: 4, width: 30,
-                    color: AmptiveColors.whiteColor.withOpacity(0.6),
+                    color: ATColors.white.withOpacity(0.6),
                     child: const SizedBox.shrink(),
                   ),
               ),
@@ -64,7 +64,7 @@ Future<void> showEventCapacitySelectionDialog({
                 children: [
                   const Icon(Icons.group_outlined),
                   Text(
-                    AmptiveStrings.CAPACITY,
+                    ATStrings.CAPACITY,
                     style: Theme.of(context).textTheme.bodyLarge,
                   ),
                 ],
@@ -73,9 +73,9 @@ Future<void> showEventCapacitySelectionDialog({
             const Gap(20),
             Text(
               maxLines: 5,
-              AmptiveStrings.MAX_CAPACITY,
+              ATStrings.MAX_CAPACITY,
               style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                color: AmptiveColors.hexC2C2C2
+                color: ATColors.hexC2C2C2
               ),
             ),
             const Gap(20),
@@ -90,7 +90,7 @@ Future<void> showEventCapacitySelectionDialog({
                 keyboardType: TextInputType.number,
                 validator: (text){
                   if(text?.isEmpty ?? false){
-                    return AmptiveStrings.EMPTY_FIELD;
+                    return ATStrings.EMPTY_FIELD;
                   }
                   return null;
                 },
@@ -101,9 +101,9 @@ Future<void> showEventCapacitySelectionDialog({
             const Spacer(),
             Text(
               maxLines: 5,
-              AmptiveStrings.MAX_CAPACITY_LIMIT,
+              ATStrings.MAX_CAPACITY_LIMIT,
               style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                color: AmptiveColors.hexC2C2C2
+                color: ATColors.hexC2C2C2
               ),
             ),
             const Gap(20),
@@ -116,9 +116,9 @@ Future<void> showEventCapacitySelectionDialog({
                     formKey.currentState?.save();
                     context.pop();
                   },
-                  buttonTitle: AmptiveStrings.SET_CAPACITY,
-                  bgColor: AmptiveColors.whiteColor,
-                  fgColor: AmptiveColors.black,
+                  buttonTitle: ATStrings.SET_CAPACITY,
+                  bgColor: ATColors.white,
+                  fgColor: ATColors.black,
                 ),
                 const Gap(20),
 
@@ -128,9 +128,9 @@ Future<void> showEventCapacitySelectionDialog({
                     service.capacityController.clear();
                     context.pop();
                   },
-                  buttonTitle: AmptiveStrings.REMOVE,
-                  bgColor: AmptiveColors.transparentColor,
-                  fgColor: AmptiveColors.whiteColor,
+                  buttonTitle: ATStrings.REMOVE,
+                  bgColor: ATColors.trsprtColor,
+                  fgColor: ATColors.white,
                 ),
                 const Gap(10),
               ],

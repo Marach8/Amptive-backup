@@ -1,4 +1,3 @@
-import 'package:amptive/src/bloc/main_app/profile/allow_see_calender_bloc.dart';
 import 'package:amptive/src/utils/constants/colors.dart';
 import 'package:amptive/src/utils/constants/font_weights.dart';
 import 'package:amptive/src/views/screens/main_application_screens/sub_views/home_view/home_sub_view/profile/menu/profile_menu_screen.dart';
@@ -24,7 +23,7 @@ class ATAccountScreen extends StatelessWidget {
 
   @override
   Widget build(context) {
-    return ATAnnotatedRegionWidget(
+    return ATAnnotatedRegion(
       child: Scaffold(
         body: Column(
           children: [
@@ -34,16 +33,16 @@ class ATAccountScreen extends StatelessWidget {
                 children: [
                   AmptiveCircleAvatarWidget(
                     onTap: () => context.pop(),
-                    diameter: 30, color: AmptiveColors.transparentColor,
+                    diameter: 30, color: ATColors.trsprtColor,
                     child: const Icon(Icons.keyboard_arrow_left),
                   ),
                   const Spacer(),
                   Text(
-                    AmptiveStrings.ACCT,
+                    ATStrings.ACCT,
                     style: Theme.of(context).textTheme.bodyMedium,
                   ),
                   const Spacer(),
-                  Icon(Icons.keyboard_arrow_left, color: AmptiveColors.transparentColor),
+                  Icon(Icons.keyboard_arrow_left, color: ATColors.trsprtColor),
                 ],
               ),
             ),

@@ -1,7 +1,7 @@
 import 'package:amptive/src/utils/constants/font_sizes.dart';
 import 'package:amptive/src/utils/dialogs/go_live/follow_or_subscribe_dialog.dart';
 import 'package:amptive/src/views/widgets/common_widgets/circle_avatar.dart';
-import 'package:amptive/src/views/widgets/common_widgets/circular_container_with_picture_widget.dart';
+import 'package:amptive/src/views/widgets/common_widgets/circular_image.dart';
 import 'package:amptive/src/views/widgets/common_widgets/custom_container_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -58,10 +58,10 @@ class AmptiveLiveHostAndCoHostWidgetForAudienceView extends StatelessWidget {
                       clipBehavior: Clip.none,
                       alignment: Alignment.center,
                       children: [
-                        AmptiveCircularContainerWithPictureWidget(
+                        ATCircularImage(
                             diameter: isHost ? 94.h : 64.h,
                             addBorder: true,
-                            borderColor: AmptiveColors.whiteColor,
+                            borderColor: ATColors.white,
                             borderWidth: 1,
                             picturePadding: 2,
                             imagePath: hostOrCohost?.obj.profilePicture ?? ''),
@@ -74,7 +74,7 @@ class AmptiveLiveHostAndCoHostWidgetForAudienceView extends StatelessWidget {
                                 fit: BoxFit.scaleDown,
                                 child: Icon(
                                   Icons.mic_off,
-                                  color: AmptiveColors.brandBlack,
+                                  color: ATColors.brandBlack,
                                   size: 15.h,
                                 )),
                           ),
@@ -93,22 +93,22 @@ class AmptiveLiveHostAndCoHostWidgetForAudienceView extends StatelessWidget {
                   ),
                   Gap(5.h),
                   isHost
-                      ? AmptiveContainer(
+                      ? ATContainer(
                           padding: const EdgeInsets.fromLTRB(4, 2, 4, 2),
                           radius: 5,
                           gradient: LinearGradient(
                               begin: Alignment.topCenter,
                               end: Alignment.bottomCenter,
                               colors: [
-                                AmptiveColors.orangeGradientColorB,
-                                AmptiveColors.orangeGradientColorB
+                                ATColors.orangeGradientColorB,
+                                ATColors.orangeGradientColorB
                               ]),
-                          child: Text(AmptiveStrings.HOST.toUpperCase(),
+                          child: Text(ATStrings.HOST.toUpperCase(),
                               style: Theme.of(context)
                                   .textTheme
                                   .bodySmall
                                   ?.copyWith(
-                                    fontSize: AmptiveFontSizes.size10,
+                                    fontSize: ATFontSizes.size10,
                                   )),
                         )
                       : const SizedBox.shrink()

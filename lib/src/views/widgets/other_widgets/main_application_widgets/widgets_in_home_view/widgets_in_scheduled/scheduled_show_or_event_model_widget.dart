@@ -49,7 +49,7 @@ class _AmptiveScheduledShowOrEventDataModelWidgetState extends State<AmptiveSche
     return Column(
       children: [
         AmptiveListTileWithLeadingPictureWidget(
-          leadingImagePath: AmptiveImageStrings.jpeg3,
+          leadingImagePath: ATImgStrings.jpeg3,
           trailingOnPressed: (){
             context.pushNamed(ATRoutes.EVENT_DETAILED_SCREEN);
           },
@@ -57,28 +57,28 @@ class _AmptiveScheduledShowOrEventDataModelWidgetState extends State<AmptiveSche
           subtitle: 'Started a live show',
         ),
         Gap(2.h),
-        AmptiveContainer(
+        ATContainer(
           height: 425.h,
           clipBehavior: Clip.hardEdge,
           radius: 15.r,
           child: Stack(
             children: [
-              const AmptiveImageLoaderWidget(imagePath: AmptiveImageStrings.weCanDoHardThingsBgImage),
-              AmptiveContainer(
+              const ATImgLoader(imgPath: ATImgStrings.weCanDoHardThingsBgImage),
+              ATContainer(
                 padding: const EdgeInsets.fromLTRB(15, 10, 15, 10),
                 radius: 15.r,
                 gradient: LinearGradient(
                   begin: Alignment.topCenter,
                   end: Alignment.bottomCenter,
                   colors: [
-                    AmptiveColors.transparentColor,
-                    AmptiveColors.transparentColor,
-                    AmptiveColors.transparentColor,
-                    AmptiveColors.transparentColor,
-                    AmptiveColors.containerGradientColorB.withOpacity(0.5),
-                    AmptiveColors.containerGradientColorB,
-                    AmptiveColors.containerGradientColorB,
-                    AmptiveColors.containerGradientColorB,
+                    ATColors.trsprtColor,
+                    ATColors.trsprtColor,
+                    ATColors.trsprtColor,
+                    ATColors.trsprtColor,
+                    ATColors.containerGradientColorB.withOpacity(0.5),
+                    ATColors.containerGradientColorB,
+                    ATColors.containerGradientColorB,
+                    ATColors.containerGradientColorB,
                   ]
                 ),
                 child: Column(
@@ -89,7 +89,7 @@ class _AmptiveScheduledShowOrEventDataModelWidgetState extends State<AmptiveSche
                     Text(
                       '15 Jul 2024 at 17:00',
                       style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                        fontSize: AmptiveFontSizes.size16
+                        fontSize: ATFontSizes.size16
                       ),
                     ),
                     Gap(10.h),
@@ -98,8 +98,8 @@ class _AmptiveScheduledShowOrEventDataModelWidgetState extends State<AmptiveSche
                       "Don't Forget Who You Are ft. Jacob Scipio",
                       overflow: TextOverflow.clip,
                       style: Theme.of(context).textTheme.displayMedium?.copyWith(
-                        fontSize: AmptiveFontSizes.size24,
-                        fontWeight: AmptiveFontWeights.w600,
+                        fontSize: ATFontSizes.size24,
+                        fontWeight: ATFontWeights.w600,
                         fontFamily: "Bricolage Grotesque"
                       ),
                     ),
@@ -114,8 +114,8 @@ class _AmptiveScheduledShowOrEventDataModelWidgetState extends State<AmptiveSche
                             _notifier.value = !value;
                             showAddedOrRemovedSnackbar(
                               context: context,
-                              content: value ? AmptiveStrings.removedFromCalender
-                                : AmptiveStrings.addedToCalender
+                              content: value ? ATStrings.removedFromCalender
+                                : ATStrings.addedToCalender
                             );
                           },
                           child: AmptiveAnimatedCrossFadeWidget(

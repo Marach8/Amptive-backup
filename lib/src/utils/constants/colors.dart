@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart' show Color, Colors;
 
-class AmptiveColors {
-  const AmptiveColors._();
+class ATColors {
+  const ATColors._();
 
-  static Color get transparentColor => Colors.transparent;
+  static Color get trsprtColor => Colors.transparent;
 
   static Color get black => Colors.black;
 
@@ -45,7 +45,7 @@ class AmptiveColors {
 
   static Color get activeSwitch => const Color(0xFF0BE09B);
 
-  static Color get whiteColor => Colors.white;
+  static Color get white => Colors.white;
 
   static Color get hex307FE2 => const Color(0xFF307FE2);
 
@@ -57,7 +57,7 @@ class AmptiveColors {
 
   static Color get successColor => const Color(0xFF54C981);
 
-  static Color get orangeColor1 => const Color(0XFFF91880);
+  static Color get hexF91880 => const Color(0XFFF91880);
 
   static Color get orangeColor2 => const Color(0xFF930E4C);
 
@@ -80,4 +80,10 @@ class AmptiveColors {
   static Color get hex303030 => const Color(0XFF303030);
 
   static Color get hexEECEA0 => const Color(0XFFEECEA0);
+
+  static Color get hex27E8DB => const Color(0XFF27E8DB);
+
+  static Color get hexF79E1E => const Color(0XFFEECEA0);
+
+  static Color get hexEA5489 => const Color(0XFFEA5489);
 }

@@ -21,14 +21,14 @@ class AmptiveRecentSearchesView extends StatelessWidget {
             Row(
               children: [
                 Text(
-                  AmptiveStrings.RECENT_SEARCHES,
+                  ATStrings.RECENT_SEARCHES,
                   style: Theme.of(context).textTheme.bodyLarge
                 ),
                 const Spacer(),
                 Text(
-                  AmptiveStrings.CLEAR,
+                  ATStrings.CLEAR,
                   style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                    color: AmptiveColors.authHintColor
+                    color: ATColors.authHintColor
                   ),
                 ),
               ],
@@ -36,52 +36,52 @@ class AmptiveRecentSearchesView extends StatelessWidget {
             Gap(20.h),
             
             const AmptiveRecentSearchesListTileWidget(
-              leadingImagePath: AmptiveImageStrings.OFFICE_LADIES,
+              leadingImagePath: ATImgStrings.OFFICE_LADIES,
               title: 'Glennon Doyle',
               isCircular: true,
             ),
             const AmptiveRecentSearchesListTileWidget(
-              leadingImagePath: AmptiveImageStrings.jpeg3,
+              leadingImagePath: ATImgStrings.jpeg3,
               title: 'Former CIA Agent On Trump As many',
             ),
             const AmptiveRecentSearchesListTileWidget(
-              leadingImagePath: AmptiveImageStrings.weCanDoHardThingsBgImage,
+              leadingImagePath: ATImgStrings.weCanDoHardThingsBgImage,
               title: 'Former CIA Agent On Trump As many',
             ),
             const AmptiveRecentSearchesListTileWidget(
-              leadingImagePath: AmptiveImageStrings.MAN_PHOTO,
+              leadingImagePath: ATImgStrings.MAN_PHOTO,
               title: 'Glennon Doyle',
               isCircular: true,
             ),
             const AmptiveRecentSearchesListTileWidget(
-              leadingImagePath: AmptiveImageStrings.discoverPic1,
+              leadingImagePath: ATImgStrings.discoverPic1,
               title: 'Former CIA Agent On Trump As many',
             ),
             const AmptiveRecentSearchesListTileWidget(
-              leadingImagePath: AmptiveImageStrings.JOE_POMP_SHOW,
+              leadingImagePath: ATImgStrings.JOE_POMP_SHOW,
               title: 'Former CIA Agent On Trump As many',
               isCircular: true,
             ),
             const AmptiveRecentSearchesListTileWidget(
-              leadingImagePath: AmptiveImageStrings.MAN_PHOTO,
+              leadingImagePath: ATImgStrings.MAN_PHOTO,
               title: 'Glennon Doyle',
               isCircular: true,
             ),
             const AmptiveRecentSearchesListTileWidget(
-              leadingImagePath: AmptiveImageStrings.discoverPic1,
+              leadingImagePath: ATImgStrings.discoverPic1,
               title: 'Former CIA Agent On Trump As many',
             ),
             const AmptiveRecentSearchesListTileWidget(
-              leadingImagePath: AmptiveImageStrings.JOE_POMP_SHOW,
+              leadingImagePath: ATImgStrings.JOE_POMP_SHOW,
               title: 'Former CIA Agent On Trump As many',
               isCircular: true,
             ),
             const AmptiveRecentSearchesListTileWidget(
-              leadingImagePath: AmptiveImageStrings.discoverPic1,
+              leadingImagePath: ATImgStrings.discoverPic1,
               title: 'Former CIA Agent On Trump As many',
             ),
             const AmptiveRecentSearchesListTileWidget(
-              leadingImagePath: AmptiveImageStrings.JOE_POMP_SHOW,
+              leadingImagePath: ATImgStrings.JOE_POMP_SHOW,
               title: 'Former CIA Agent On Trump As many',
               isCircular: true,
             ),

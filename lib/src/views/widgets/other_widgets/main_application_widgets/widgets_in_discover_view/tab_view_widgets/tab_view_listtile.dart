@@ -37,7 +37,7 @@ class AmptiveTabViewListTileWidget extends StatelessWidget {
         title: Text(
           title,
           style: Theme.of(context).textTheme.titleMedium?.copyWith(
-            fontWeight: AmptiveFontWeights.w500,
+            fontWeight: ATFontWeights.w500,
             height: 1
           ),
         ),
@@ -46,9 +46,9 @@ class AmptiveTabViewListTileWidget extends StatelessWidget {
             Text(
               'Show',
               style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                color: AmptiveColors.hexC2C2C2,
-                fontWeight: AmptiveFontWeights.w500,
-                fontSize: AmptiveFontSizes.size13,
+                color: ATColors.hexC2C2C2,
+                fontWeight: ATFontWeights.w500,
+                fontSize: ATFontSizes.size13,
                 height: 1.5
               ),
             ),
@@ -58,9 +58,9 @@ class AmptiveTabViewListTileWidget extends StatelessWidget {
             Text(
               'MONDAY AT 20:00',
               style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                color: AmptiveColors.hexC2C2C2,
-                fontWeight: AmptiveFontWeights.w500,
-                fontSize: AmptiveFontSizes.size13,
+                color: ATColors.hexC2C2C2,
+                fontWeight: ATFontWeights.w500,
+                fontSize: ATFontSizes.size13,
                 height: 1.5
               ),
             ),
@@ -70,13 +70,13 @@ class AmptiveTabViewListTileWidget extends StatelessWidget {
         trailing: GestureDetector(
           onTap: (){},
           child: addPlayButton 
-            ? AmptiveContainer(
+            ? ATContainer(
               boxShape: BoxShape.circle,
               height: 24, width: 24,
-              color: AmptiveColors.authHintColor,
-              child: Icon(Icons.play_arrow, size: 15, color: AmptiveColors.brandBlack,),
+              color: ATColors.authHintColor,
+              child: Icon(Icons.play_arrow, size: 15, color: ATColors.brandBlack,),
             )
-            : Icon(Icons.keyboard_arrow_right, size: 24, color: AmptiveColors.authHintColor,) 
+            : Icon(Icons.keyboard_arrow_right, size: 24, color: ATColors.authHintColor,) 
         )
       ),
     );

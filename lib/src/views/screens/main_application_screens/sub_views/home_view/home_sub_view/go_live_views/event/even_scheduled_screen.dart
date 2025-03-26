@@ -49,7 +49,7 @@ class _AmptiveShowScheduledScreenState
 
   @override
   Widget build(context) {
-    return ATAnnotatedRegionWidget(
+    return ATAnnotatedRegion(
       child: Scaffold(
         appBar: AmptiveAppBar(
           leading: GestureDetector(
@@ -71,24 +71,24 @@ class _AmptiveShowScheduledScreenState
               children: [
                 AmptiveCircleAvatarWidget(
                   diameter: 45,
-                  color: AmptiveColors.whiteColor,
+                  color: ATColors.white,
                   child: Icon(
                     Icons.calendar_today_outlined,
-                    color: AmptiveColors.black,
+                    color: ATColors.black,
                   ),
                 ),
                 const Gap(5),
                 Text(
                     isEvent
-                        ? AmptiveStrings.EVENT_SCHEDULED
+                        ? ATStrings.EVENT_SCHEDULED
                         : 'Your Episode is scheduled!',
                     style: Theme.of(context)
                         .textTheme
                         .bodyLarge
-                        ?.copyWith(fontSize: AmptiveFontSizes.size23)),
+                        ?.copyWith(fontSize: ATFontSizes.size23)),
                 Text(
                     isEvent
-                        ? AmptiveStrings.SHARE_EVENT_LINK
+                        ? ATStrings.SHARE_EVENT_LINK
                         : 'Share your episode link to build excitement and attract more attendees.',
                     maxLines: 2,
                     textAlign: TextAlign.center,
@@ -115,16 +115,16 @@ class _AmptiveShowScheduledScreenState
             AmptiveElevatedButtonWidget(
               onPressed: () {},
               buttonTitle:
-                  isEvent ? AmptiveStrings.SHARE_EVENT : 'Share episode',
-              bgColor: AmptiveColors.whiteColor,
-              fgColor: AmptiveColors.black,
+                  isEvent ? ATStrings.SHARE_EVENT : 'Share episode',
+              bgColor: ATColors.white,
+              fgColor: ATColors.black,
             ),
             const Gap(10),
             GestureDetector(
               onTap: () {},
               child: Text(
                   isEvent
-                      ? AmptiveStrings.VIEW_EVENT_PAGE
+                      ? ATStrings.VIEW_EVENT_PAGE
                       : 'View episode page',
                   style: Theme.of(context).textTheme.bodyMedium),
             )

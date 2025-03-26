@@ -15,14 +15,14 @@ class AmptiveTrendingHashTagsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ATAnnotatedRegionWidget(
+    return ATAnnotatedRegion(
       child: Scaffold(
         body: CustomScrollView(
           physics: const BouncingScrollPhysics(),
           slivers: [
             SliverAppBar(
               title: Text(
-                AmptiveStrings.TRENDING_HASHTAGS,
+                ATStrings.TRENDING_HASHTAGS,
                 style: Theme.of(context).textTheme.bodyMedium,
               ),
               elevation: 0,
@@ -37,7 +37,7 @@ class AmptiveTrendingHashTagsScreen extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 15),
                     child: AmptiveRowOfTrendingHashTagTitle(
-                      hashTagTitle: AmptiveStrings.SOCIETY,
+                      hashTagTitle: ATStrings.SOCIETY,
                       hashTagSubTitle: 'ankira22, glendonnor, and 15k other are live',
                       trailingOnpressed: (){
                         context.pushNamed(ATRoutes.TRENDING_HASHTAG_FULL_SCREEN);
@@ -53,7 +53,7 @@ class AmptiveTrendingHashTagsScreen extends StatelessWidget {
                       children: List.generate(
                         5,
                         (_) => const AmptiveTrendingHashtagModel(
-                          trendingPicture: AmptiveImageStrings.weCanDoHardThingsBgImage,
+                          trendingPicture: ATImgStrings.weCanDoHardThingsBgImage,
                         )
                       ),
                     ),
@@ -78,7 +78,7 @@ class AmptiveTrendingHashTagsScreen extends StatelessWidget {
                       children: List.generate(
                         5,
                         (_) => const AmptiveTrendingHashtagModel(
-                          trendingPicture: AmptiveImageStrings.OFFICE_LADIES
+                          trendingPicture: ATImgStrings.OFFICE_LADIES
                         )
                       ),
                     ),
@@ -89,7 +89,7 @@ class AmptiveTrendingHashTagsScreen extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 15),
                     child: AmptiveRowOfTrendingHashTagTitle(
-                      hashTagTitle: AmptiveStrings.SOCIETY,
+                      hashTagTitle: ATStrings.SOCIETY,
                       hashTagSubTitle: 'ankira22, glendonnor, and 15k other are live',
                       trailingOnpressed: (){},
                     ),
@@ -103,7 +103,7 @@ class AmptiveTrendingHashTagsScreen extends StatelessWidget {
                       children: List.generate(
                         5,
                         (_) => const AmptiveTrendingHashtagModel(
-                          trendingPicture: AmptiveImageStrings.weCanDoHardThingsBgImage,
+                          trendingPicture: ATImgStrings.weCanDoHardThingsBgImage,
                         )
                       ),
                     ),
@@ -128,7 +128,7 @@ class AmptiveTrendingHashTagsScreen extends StatelessWidget {
                       children: List.generate(
                         5,
                         (_) => const AmptiveTrendingHashtagModel(
-                          trendingPicture: AmptiveImageStrings.OFFICE_LADIES
+                          trendingPicture: ATImgStrings.OFFICE_LADIES
                         )
                       ),
                     ),

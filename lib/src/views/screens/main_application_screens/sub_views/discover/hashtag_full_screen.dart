@@ -15,7 +15,7 @@ class AmptiveTrendingHashTagFullScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ATAnnotatedRegionWidget(
+    return ATAnnotatedRegion(
       child: Scaffold(
         body: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 15),
@@ -24,7 +24,7 @@ class AmptiveTrendingHashTagFullScreen extends StatelessWidget {
             slivers: [
               SliverAppBar(
                 title: Text(
-                  AmptiveStrings.HASH + AmptiveStrings.SOCIETY,
+                  ATStrings.HASH + ATStrings.SOCIETY,
                   style: Theme.of(context).textTheme.bodyMedium,
                 ),
                 centerTitle: true,
@@ -34,15 +34,15 @@ class AmptiveTrendingHashTagFullScreen extends StatelessWidget {
               SliverToBoxAdapter(
                 child: Row(
                   children: [
-                    AmptiveContainer(
+                    ATContainer(
                       alignment: Alignment.center,
                       height: 40, width: 40,
                       boxShape: BoxShape.circle,
-                      color: AmptiveColors.whiteColor,
+                      color: ATColors.white,
                       child: Text(
-                        AmptiveStrings.HASH,
+                        ATStrings.HASH,
                         style: Theme.of(context).textTheme.displayMedium?.copyWith(
-                          color: AmptiveColors.brandBlack
+                          color: ATColors.brandBlack
                         )
                       ),
                     ),
@@ -51,16 +51,16 @@ class AmptiveTrendingHashTagFullScreen extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          AmptiveStrings.HASH + AmptiveStrings.SOCIETY,
+                          ATStrings.HASH + ATStrings.SOCIETY,
                           style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                            fontSize: AmptiveFontSizes.size15
+                            fontSize: ATFontSizes.size15
                           ),
                         ),
                         Text(
                          'ankira22, emmanuel, and 15k others are live',
                           style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                            fontSize: AmptiveFontSizes.size13,
-                            color: AmptiveColors.grey5Color
+                            fontSize: ATFontSizes.size13,
+                            color: ATColors.grey5Color
                           ),
                         ),
                       ],
@@ -75,7 +75,7 @@ class AmptiveTrendingHashTagFullScreen extends StatelessWidget {
                 delegate: SliverChildListDelegate.fixed(
                   List.generate(
                     28,
-                    (_) => const AmptiveTrendingSocietyModel(trendingPicture: AmptiveImageStrings.weCanDoHardThingsBgImage)
+                    (_) => const AmptiveTrendingSocietyModel(trendingPicture: ATImgStrings.weCanDoHardThingsBgImage)
                   ).toList()
                 ),
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(

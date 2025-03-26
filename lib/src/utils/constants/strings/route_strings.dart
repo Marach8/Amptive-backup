@@ -56,6 +56,5 @@ class ATRoutes {
   static const PRIVACY_SCREEN = 'privacy_screen';
   static const BLOCKED_ACCTS_SCREEN = 'blocked_accounts_screen';
   static const MUTED_ACCTS_SCREEN = 'muted_accounts_screen';
-  static const ACCT_SCREEN = 'account_screen';
-  static const ACCT_INFO_SCREEN = 'account_info_screen';
+  static const CALENDER_SCREEN = 'calender_screen';
 }

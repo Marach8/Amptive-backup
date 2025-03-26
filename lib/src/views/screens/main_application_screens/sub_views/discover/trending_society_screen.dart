@@ -10,7 +10,7 @@ class AmptiveTrendingSocietyScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ATAnnotatedRegionWidget(
+    return ATAnnotatedRegion(
       child: Scaffold(
         body: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 15),
@@ -25,14 +25,14 @@ class AmptiveTrendingSocietyScreen extends StatelessWidget {
                 centerTitle: true,
                 floating: true,
                 leadingWidth: 100,
-                leading: const AmptiveAppBarLeadingWidget(leadingText: AmptiveStrings.SOCIETY,)
+                leading: const AmptiveAppBarLeadingWidget(leadingText: ATStrings.SOCIETY,)
               ),
 
               SliverGrid(
                 delegate: SliverChildListDelegate.fixed(
                   List.generate(
                     28,
-                    (_) => const AmptiveTrendingSocietyModel(trendingPicture: AmptiveImageStrings.jpeg2)
+                    (_) => const AmptiveTrendingSocietyModel(trendingPicture: ATImgStrings.jpeg2)
                   ).toList()
                 ),
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
