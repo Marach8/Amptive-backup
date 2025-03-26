@@ -34,7 +34,7 @@ class _PostRegistrationScreenState extends State<PostRegistrationScreen> {
   Widget build(BuildContext context) {
     return SafeArea(
         child: Scaffold(
-      backgroundColor: AmptiveColors.brandBlack,
+      backgroundColor: ATColors.brandBlack,
       body: Padding(
         padding: EdgeInsets.only(left: 25.w, right: 25.w, top: 20.w),
         child: _isLoading ? const LoadingAccountWidget() : const AddPictureWidget(),
@@ -138,12 +138,12 @@ class _LoadingAccountWidgetState extends State<LoadingAccountWidget> {
                   key: ValueKey<String>(text),
                   textAlign: TextAlign.center,
                   style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                        fontSize: AmptiveFontSizes.size17,
+                        fontSize: ATFontSizes.size17,
                       )),
             ),
           ),
         ),
-        const AmptiveLoadingIndicatorWidget(),
+        const ATLoadingIndicator(),
       ],
     );
   }

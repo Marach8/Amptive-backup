@@ -4,9 +4,9 @@ import 'package:amptive/src/utils/constants/font_sizes.dart';
 import 'package:amptive/src/utils/constants/strings/image_strings.dart';
 import 'package:amptive/src/utils/dialogs/app_notification_dialog.dart';
 import 'package:amptive/src/utils/dialogs/minimized_go_live_dialog.dart';
-import 'package:amptive/src/utils/helpers/helper_functions/other_functions.dart';
+import 'package:amptive/src/utils/helpers/helper_functions/helper_functions.dart';
 import 'package:amptive/src/views/widgets/common_widgets/annotated_region__widget.dart';
-import 'package:amptive/src/views/widgets/common_widgets/circular_container_with_picture_widget.dart';
+import 'package:amptive/src/views/widgets/common_widgets/circular_image.dart';
 import 'package:amptive/src/views/widgets/common_widgets/custom_container_widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/custom_rebuilder_widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/image_loader_widget.dart';
@@ -80,7 +80,7 @@ class _AmptiveGoLiveAudienceViewState extends State<AmptiveGoLiveAudienceView> {
   @override
   Widget build(context) {
     // final screenWidth = AmptiveHelperFunctions.getScreenWidth(context);
-    return AmptiveAnnotatedRegionWidget(
+    return ATAnnotatedRegion(
       child: Scaffold(
         body: SafeArea(
           child: Column(
@@ -88,16 +88,16 @@ class _AmptiveGoLiveAudienceViewState extends State<AmptiveGoLiveAudienceView> {
               
               const Gap(10),
               AmptiveLiveViewHeaderWidget(
-                exitIcon: AmptiveContainer(
+                exitIcon: ATContainer(
                 onTap: (){
                   context.read<AmptiveNavBarBloc>().goToPage(0);
                   showMinimizedGoLiveState();
                 },
-                color: AmptiveColors.whiteColor.withOpacity(0.1),
+                color: ATColors.white.withOpacity(0.1),
                 height: 35, width: 35, boxShape: BoxShape.circle,
                 boxShadow: [
                   BoxShadow(
-                    color: AmptiveColors.black,
+                    color: ATColors.black,
                     blurRadius: 10, spreadRadius: 30,
                     offset: const Offset(-20, 0)
                   )
@@ -109,18 +109,18 @@ class _AmptiveGoLiveAudienceViewState extends State<AmptiveGoLiveAudienceView> {
           
               Align(
                 alignment: Alignment.centerLeft,
-                child: AmptiveContainer(
+                child: ATContainer(
                   onTap: (){},
                   margin: const EdgeInsets.only(left: 15),
                   padding: const EdgeInsets.fromLTRB(5, 5, 10, 5), radius: 30,
-                  color: AmptiveColors.whiteColor.withOpacity(0.1),
+                  color: ATColors.white.withOpacity(0.1),
                   child: Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      const AmptiveImageLoaderWidget(imagePath: AmptiveImageStrings.GROUP_ICON),
+                      const ATImgLoader(imgPath: ATImgStrings.GROUP_ICON),
                       const Gap(5),
                       Text(
-                        AmptiveStrings.SOCIETY,
+                        ATStrings.SOCIETY,
                         style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                           overflow: TextOverflow.fade
                         ),
@@ -136,11 +136,11 @@ class _AmptiveGoLiveAudienceViewState extends State<AmptiveGoLiveAudienceView> {
                 child: Stack(
                   children: [
                     SizedBox(
-                      height: AmptiveHelperFunctions.getScreenHeight(context),
+                      height: ATHelperFuncs.getScreenHeight(context),
                       child: Column(
                         children: [
                           SizedBox(
-                            height: AmptiveHelperFunctions.getScreenHeight(context) * 0.3,
+                            height: ATHelperFuncs.getScreenHeight(context) * 0.3,
                           ),
                           Expanded(
                             child: ListView.builder(
@@ -153,20 +153,20 @@ class _AmptiveGoLiveAudienceViewState extends State<AmptiveGoLiveAudienceView> {
                                 return ListTile(
                                   horizontalTitleGap: 10,
                                   minTileHeight: 50,
-                                  leading: AmptiveCircularContainerWithPictureWidget(
+                                  leading: ATCircularImage(
                                     diameter: 35.h,
-                                    imagePath: AmptiveImageStrings.CRIMINAL,
+                                    imagePath: ATImgStrings.CRIMINAL,
                                   ),
                                   title: Text(
                                     string.obj.name ?? '',
                                     style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                                      color: AmptiveColors.hexC2C2C2
+                                      color: ATColors.hexC2C2C2
                                     )
                                   ),
                                   subtitle: Text(
                                     string.obj.username ?? '',
                                     style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                                      fontSize: AmptiveFontSizes.size13
+                                      fontSize: ATFontSizes.size13
                                     )
                                   ),
                                 );
@@ -177,13 +177,13 @@ class _AmptiveGoLiveAudienceViewState extends State<AmptiveGoLiveAudienceView> {
                       ),
                     ),
                 
-                    AmptiveContainer(
+                    ATContainer(
                       height: 250,
-                      width: AmptiveHelperFunctions.getScreenWidth(context),
+                      width: ATHelperFuncs.getScreenWidth(context),
                       padding: const EdgeInsets.only(left: 20, right: 20),
                       boxShadow: [
                         BoxShadow(
-                          color: AmptiveColors.black,
+                          color: ATColors.black,
                           spreadRadius: 10, blurRadius: 40,
                           offset: const Offset(0, 40)
                         )
@@ -273,10 +273,10 @@ class _AmptiveGoLiveAudienceViewState extends State<AmptiveGoLiveAudienceView> {
                           bottom: 70, right: 15,
                           child: AmptiveScalingAnimatedSwitcherWidget(
                             duration: 500,
-                            child: showIcon ? AmptiveContainer(
+                            child: showIcon ? ATContainer(
                               key: const ValueKey(1),
                               onTap: () => _scrollToBottom(),
-                              color: AmptiveColors.whiteColor.withOpacity(0.1),
+                              color: ATColors.white.withOpacity(0.1),
                               height: 35, width: 35,
                               boxShape: BoxShape.circle,
                               child: const Icon(Icons.keyboard_double_arrow_down),
@@ -339,9 +339,9 @@ class _GoLiveAudienViewControlsWidgetState extends State<GoLiveAudienViewControl
 
   @override
   Widget build(context) {
-    return AmptiveContainer(
+    return ATContainer(
       padding: const EdgeInsets.fromLTRB(15, 10, 15, 10),
-      color: AmptiveColors.black,
+      color: ATColors.black,
       child: Row(
         children: [
           AmptiveRebuilderWidget(
@@ -350,7 +350,7 @@ class _GoLiveAudienViewControlsWidgetState extends State<GoLiveAudienViewControl
               if(value){
                 return Padding(
                   padding: const EdgeInsets.only(right: 15),
-                  child: AmptiveCircularContainerWithPictureWidget(
+                  child: ATCircularImage(
                     diameter: 35,
                     imagePath: getHostList()[9].obj.profilePicture ?? ''
                   ),
@@ -376,16 +376,16 @@ class _GoLiveAudienViewControlsWidgetState extends State<GoLiveAudienViewControl
                     disableBlueBorder: true,
                     cursorHeight: 20,
                     hintStyle: Theme.of(context).textTheme.titleLarge?.copyWith(
-                      color: commentIsEnabled ? AmptiveColors.strokeGreyColor
-                      : AmptiveColors.strokeGreyColor.withOpacity(0.3)
+                      color: commentIsEnabled ? ATColors.strokeGreyColor
+                      : ATColors.strokeGreyColor.withOpacity(0.3)
                     ),
-                    fillColor: commentIsEnabled ? AmptiveColors.fillGreyColor.withOpacity(0.1) 
-                      : AmptiveColors.whiteColor.withOpacity(0.01),
+                    fillColor: commentIsEnabled ? ATColors.fillGreyColor.withOpacity(0.1) 
+                      : ATColors.white.withOpacity(0.01),
                     enabled: commentIsEnabled ? true : false,
-                    cursorColor: AmptiveColors.whiteColor.withOpacity(0.6),
+                    cursorColor: ATColors.white.withOpacity(0.6),
                     constraints: const BoxConstraints(maxHeight: 35),
                     contentPadding: const EdgeInsets.fromLTRB(16, 0, 16, 0),
-                    hintText: AmptiveStrings.COMMENT,
+                    hintText: ATStrings.COMMENT,
                   ),
                 )
               );
@@ -408,7 +408,7 @@ class _GoLiveAudienViewControlsWidgetState extends State<GoLiveAudienViewControl
                         padding: const EdgeInsets.only(left: 10),
                         child: Icon(
                           Icons.send,
-                          color:value ? AmptiveColors.whiteColor : AmptiveColors.lightDark,
+                          color:value ? ATColors.white : ATColors.lightDark,
                         ),
                       ),
                     );
@@ -435,21 +435,21 @@ class _GoLiveAudienViewControlsWidgetState extends State<GoLiveAudienViewControl
                         onTap: (){
                           showAppNotification(
                             context: context,
-                            icon: const AmptiveImageLoaderWidget(imagePath: AmptiveImageStrings.KICK_USER_OUT),
+                            icon: const ATImgLoader(imgPath: ATImgStrings.KICK_USER_OUT),
                             text: 'You have been kicked out of the live session',
-                            bgColor: AmptiveColors.hexECO404,
+                            bgColor: ATColors.hexECO404,
                           );
                         },
                         child: const Icon(Icons.front_hand_outlined),
                       ),
                       _RenderAudienceViewButtons(
                         onTap: (){},
-                        child: const AmptiveImageLoaderWidget(imagePath: AmptiveImageStrings.GIFT_ICON),
+                        child: const ATImgLoader(imgPath: ATImgStrings.GIFT_ICON),
                       ),
                       _RenderAudienceViewButtons(
                         onTap: (){},
                         addMargin: false,
-                        child: Icon(Icons.favorite, color: AmptiveColors.hexECO404),
+                        child: Icon(Icons.favorite, color: ATColors.hexECO404),
                       ),
                     ]
                   );
@@ -476,10 +476,10 @@ class _RenderAudienceViewButtons extends StatelessWidget {
 
   @override
   Widget build(context) {
-    return AmptiveContainer(
+    return ATContainer(
       onTap: onTap,
       margin: addMargin ? EdgeInsets.only(right: 5.w) : EdgeInsets.zero,
-      color: AmptiveColors.whiteColor.withOpacity(0.1),
+      color: ATColors.white.withOpacity(0.1),
       padding: const EdgeInsets.all(5),
       radius: 30, child: child
     );

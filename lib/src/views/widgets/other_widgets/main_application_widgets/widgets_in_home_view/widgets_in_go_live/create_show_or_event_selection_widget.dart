@@ -27,7 +27,7 @@ class AmptiveCreateShowOrEventSelectionWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isShow = title == AmptiveStrings.CREATE_SHOW;
+    final isShow = title == ATStrings.CREATE_SHOW;
     return AmptiveRebuilderWidget(
       notifier: isShow ? showSelected : eventSelected,
       builder: (_, value, __) {
@@ -47,18 +47,18 @@ class AmptiveCreateShowOrEventSelectionWidget extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              AmptiveContainer(
+              ATContainer(
                 duration: 200,
                 height: 120.h,
                 width: double.infinity,
                 radius: 5,
-                color: value ? AmptiveColors.hex307FE2 : AmptiveColors.hex2D2D2D,
+                color: value ? ATColors.hex307FE2 : ATColors.hex2D2D2D,
                 child: AnimatedScale(
                   scale: value ? 1.1 : 0.5,
                   duration: const Duration(milliseconds: 200),
-                  child: AmptiveImageLoaderWidget(
+                  child: ATImgLoader(
                     key: UniqueKey(),
-                    imagePath: onSelectedImagePath,
+                    imgPath: onSelectedImagePath,
                     boxFit: BoxFit.fill,
                   ),
                 )
@@ -70,14 +70,14 @@ class AmptiveCreateShowOrEventSelectionWidget extends StatelessWidget {
                   AmptiveCircleAvatarWidget(
                     animationDuration: 200,
                     diameter: 15,
-                    color: value ? AmptiveColors.orangeColor1 : AmptiveColors. hex2D2D2D,
+                    color: value ? ATColors.hexF91880 : ATColors. hex2D2D2D,
                     child: FittedBox(child: Text(alphabet)),
                   ),
                   const Gap(5),
                   Text(
                     title,
                     style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                      fontSize: AmptiveFontSizes.size13
+                      fontSize: ATFontSizes.size13
                     ),
                   )
                 ],
@@ -87,7 +87,7 @@ class AmptiveCreateShowOrEventSelectionWidget extends StatelessWidget {
                 maxLines: 2,
                 subtitle,
                 style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                  color: AmptiveColors.hexC2C2C2
+                  color: ATColors.hexC2C2C2
                 ),
               )
             ],

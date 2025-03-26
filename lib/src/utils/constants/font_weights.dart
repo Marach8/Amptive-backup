@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class AmptiveFontWeights{
-  const AmptiveFontWeights._();
+class ATFontWeights{
+  const ATFontWeights._();
 
   static const FontWeight w100 = FontWeight.w100;
 

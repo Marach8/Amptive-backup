@@ -137,19 +137,19 @@ List<ObjectWithNotifier<Host>> getHostList() {
   List<ObjectWithNotifier<Host>> hostsList = [];
 
   final coHostsData = <String, List<String>>{
-    AmptiveImageStrings.jpeg1: ['Emmanuel Ajah', 'nnanna😍💕'],
-    AmptiveImageStrings.jpeg2: ['Tochukwu Iwuzed', 'tobaby'],
-    AmptiveImageStrings.jpeg3: ['Ekene Okoro', 'kendo boss🦋'],
-    AmptiveImageStrings.discoverPic1: ['Rita Waltson', 'rita4life🐎'],
-    AmptiveImageStrings.OFFICE_LADIES: ['Lee Parker', 'therealguy'],
-    AmptiveImageStrings.MAN_PHOTO: ['Daniel Adesua', 'myownbrother'],
-    AmptiveImageStrings.COMMUNITY_CARD: ['Erica Nwosu', 'ricababygirl'],
-    AmptiveImageStrings.CRIMINAL: ['Peter Nwokeji', 'sirpee'],
-    AmptiveImageStrings.createShowPlaceholderImage: [
+    ATImgStrings.jpeg1: ['Emmanuel Ajah', 'nnanna😍💕'],
+    ATImgStrings.jpeg2: ['Tochukwu Iwuzed', 'tobaby'],
+    ATImgStrings.jpeg3: ['Ekene Okoro', 'kendo boss🦋'],
+    ATImgStrings.discoverPic1: ['Rita Waltson', 'rita4life🐎'],
+    ATImgStrings.OFFICE_LADIES: ['Lee Parker', 'therealguy'],
+    ATImgStrings.MAN_PHOTO: ['Daniel Adesua', 'myownbrother'],
+    ATImgStrings.COMMUNITY_CARD: ['Erica Nwosu', 'ricababygirl'],
+    ATImgStrings.CRIMINAL: ['Peter Nwokeji', 'sirpee'],
+    ATImgStrings.createShowPlaceholderImage: [
       'Arlan Walker',
       'walkerboss'
     ],
-    AmptiveImageStrings.JOE_POMP_SHOW: ['Man Drone', 'ikennegodadi'],
+    ATImgStrings.JOE_POMP_SHOW: ['Man Drone', 'ikennegodadi'],
   };
 
   coHostsData.forEach((pics, details) {

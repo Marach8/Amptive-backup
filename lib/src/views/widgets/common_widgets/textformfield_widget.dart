@@ -66,11 +66,11 @@ class AmptiveTextFormFieldWidget extends StatelessWidget {
       onChanged: onChanged,
       maxLength: maxLength,
       onSaved: onSaved,
-      cursorColor: disableBlueBorder ?? false ? AmptiveColors.whiteColor
-        : AmptiveColors.hex307FE2,
+      cursorColor: disableBlueBorder ?? false ? ATColors.white
+        : ATColors.hex307FE2,
       obscureText: obscureText ?? false,
       cursorHeight: cursorHeight,
-      cursorErrorColor: AmptiveColors.textRedColor,
+      cursorErrorColor: ATColors.textRedColor,
       keyboardType: keyboardType,
       decoration: decoration ??  InputDecoration(     
         counterText: counterText,   
@@ -81,11 +81,11 @@ class AmptiveTextFormFieldWidget extends StatelessWidget {
         focusedBorder: disableBlueBorder ?? false ? OutlineInputBorder(
           borderRadius: BorderRadius.circular(14).r,
           borderSide: BorderSide(
-            color: AmptiveColors.transparentColor
+            color: ATColors.trsprtColor
           )
         ) : null,
         hintStyle: hintStyle ?? Theme.of(context).textTheme.titleLarge?.copyWith(
-          color: AmptiveColors.strokeGreyColor,
+          color: ATColors.strokeGreyColor,
         ),
         suffixIcon: suffixIcon,
         prefixIcon: prefixIcon,
@@ -100,9 +100,9 @@ class AmptiveTextFormFieldWidget extends StatelessWidget {
         enabledBorder: null
       ),
       style: TextStyle(
-        fontWeight: AmptiveFontWeights.w400,
-        fontSize: AmptiveFontSizes.size18,
-        color: AmptiveColors.whiteColor,
+        fontWeight: ATFontWeights.w400,
+        fontSize: ATFontSizes.size18,
+        color: ATColors.white,
       ),
     );
   }

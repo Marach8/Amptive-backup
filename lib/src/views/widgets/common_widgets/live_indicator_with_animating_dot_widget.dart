@@ -21,8 +21,8 @@ class AmptiveLiveIndicatorWithAnimatingDotWidget extends StatelessWidget {
           begin: Alignment.topCenter,
           end: Alignment.bottomCenter,
           colors: [
-            AmptiveColors.orangeColor1,
-            AmptiveColors.orangeGradientColorB
+            ATColors.hexF91880,
+            ATColors.orangeGradientColorB
           ]
         ),
         borderRadius: BorderRadius.circular(5.r),
@@ -34,15 +34,15 @@ class AmptiveLiveIndicatorWithAnimatingDotWidget extends StatelessWidget {
           AmptiveAnimatedOpacityWidget(
             child: CircleAvatar(
               radius: 3.r,
-              backgroundColor: AmptiveColors.whiteColor,
+              backgroundColor: ATColors.white,
             ),
           ),
           Gap(4.w),
           Text(
-            AmptiveStrings.LIVE.toUpperCase(),
+            ATStrings.LIVE.toUpperCase(),
             style: Theme.of(context).textTheme.titleSmall?.copyWith(
-              fontSize: AmptiveFontSizes.size14,
-              fontWeight: AmptiveFontWeights.w600,
+              fontSize: ATFontSizes.size14,
+              fontWeight: ATFontWeights.w600,
               height: 0,
             )
           ),

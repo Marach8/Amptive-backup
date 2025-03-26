@@ -27,25 +27,25 @@ class AmptiveExistingEventWidget extends StatelessWidget {
     return AmptiveRebuilderWidget(
       notifier: eachButtonNotifier,
       builder: (_, isSelected, __) {
-        return AmptiveContainer(
+        return ATContainer(
           onTap: () => onTap(isSelected),
           radius: 5,
           border: Border.all(
-            color: isSelected ? AmptiveColors.hex307FE2 : AmptiveColors.transparentColor,
+            color: isSelected ? ATColors.hex307FE2 : ATColors.trsprtColor,
             width: 3,
           ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              AmptiveContainer(
+              ATContainer(
                 radius: 5, height: imageHeight,
                 width: imageWidth,
                 clipBehavior: Clip.hardEdge,
                 child: FittedBox(
                   fit: BoxFit.fill,
-                  child: AmptiveImageLoaderWidget(
+                  child: ATImgLoader(
                     boxFit: BoxFit.fill,
-                    imagePath: trendingPicture
+                    imgPath: trendingPicture
                   ),
                 ),
               ),
@@ -61,8 +61,8 @@ class AmptiveExistingEventWidget extends StatelessWidget {
                     child: Text(
                       'glendonnoyle',
                       style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                        fontSize: AmptiveFontSizes.size13,
-                        color: AmptiveColors.grey5Color,
+                        fontSize: ATFontSizes.size13,
+                        color: ATColors.grey5Color,
                       ),
                     ),
                   ),
@@ -72,13 +72,13 @@ class AmptiveExistingEventWidget extends StatelessWidget {
                     alignment: Alignment.bottomCenter,
                     child: AmptiveCircleAvatarWidget(
                       diameter: 5,
-                      color: AmptiveColors.grey5Color,
+                      color: ATColors.grey5Color,
                     ),
                   ),
                   Text(
                     'LIVE',
                     style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                      color: AmptiveColors.grey5Color,
+                      color: ATColors.grey5Color,
                     ),
                   ),
                 ],

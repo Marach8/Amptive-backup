@@ -25,8 +25,8 @@ class AmptiveBottomAppBarItem extends StatelessWidget {
           onTap: () => context.read<AmptiveNavBarBloc>().goToPage(itemIdentityIndex),
           child: AmptiveAnimatedCrossFadeWidget(
             condition: isSelected,
-            firstChild: AmptiveImageLoaderWidget(imagePath: selectedImagePath),
-            secondChild: AmptiveImageLoaderWidget(imagePath: unselectedImagePath)
+            firstChild: ATImgLoader(imgPath: selectedImagePath),
+            secondChild: ATImgLoader(imgPath: unselectedImagePath)
           ),
         );
       }

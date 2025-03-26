@@ -12,7 +12,7 @@ void showAddedOrRemovedSnackbar({
   => Future.delayed(const Duration(seconds: 1)).then(
     (_) => ScaffoldMessenger.maybeOf(context)?.showSnackBar(
       SnackBar(
-        backgroundColor: AmptiveColors.snackBarBgColor,
+        backgroundColor: ATColors.snackBarBgColor,
         margin: const EdgeInsets.fromLTRB(20, 0, 20, 0),
         behavior: SnackBarBehavior.floating,
         elevation: 0,
@@ -20,7 +20,7 @@ void showAddedOrRemovedSnackbar({
           borderRadius: BorderRadius.circular(15)
         ),
         duration: const Duration(seconds: 5),
-        content: AmptiveContainer(
+        content: ATContainer(
           alignment: Alignment.center,
           height: 40,
           child: Row(
@@ -37,12 +37,12 @@ void showAddedOrRemovedSnackbar({
                 child: Row(
                   children: [
                     Text(
-                      AmptiveStrings.VIEW,
+                      ATStrings.VIEW,
                       style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                        color: AmptiveColors.hex307FE2
+                        color: ATColors.hex307FE2
                       ),
                     ),
-                    Icon(Icons.keyboard_arrow_right_sharp, color: AmptiveColors.hex307FE2)
+                    Icon(Icons.keyboard_arrow_right_sharp, color: ATColors.hex307FE2)
                   ],
                 ),
               )

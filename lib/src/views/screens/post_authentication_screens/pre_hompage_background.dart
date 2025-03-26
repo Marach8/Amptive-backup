@@ -73,7 +73,7 @@ class _PreHomePageBackgroundState extends State<PreHomePageBackground>
               painter: HalfMoonPainter(
                 animation: _animation,
                 stretchedMode: isStretched,
-                color: widget.color ?? AmptiveColors.hex307FE2,
+                color: widget.color ?? ATColors.hex307FE2,
               ),
             ),
           ),

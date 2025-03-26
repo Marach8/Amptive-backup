@@ -15,7 +15,7 @@ class AmptiveDashboardScreen extends StatelessWidget {
 
   @override
   Widget build(context) {
-    return AmptiveAnnotatedRegionWidget(
+    return ATAnnotatedRegion(
       child: Scaffold(
         body: BlocBuilder<AmptiveNavBarBloc, int>(
           builder: (_, index) {

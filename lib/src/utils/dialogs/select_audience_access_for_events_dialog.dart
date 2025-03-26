@@ -2,7 +2,7 @@ import 'dart:io';
 import 'package:amptive/src/utils/constants/colors.dart';
 import 'package:amptive/src/utils/constants/strings/image_strings.dart';
 import 'package:amptive/src/utils/dialogs/event_payment_fee_dialog.dart';
-import 'package:amptive/src/utils/helpers/helper_functions/other_functions.dart';
+import 'package:amptive/src/utils/helpers/helper_functions/helper_functions.dart';
 import 'package:amptive/src/views/widgets/common_widgets/custom_container_widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/image_loader_widget.dart';
 import 'package:flutter/material.dart';
@@ -23,9 +23,9 @@ Future<void> showSelectAudienceAccessForEventsDialog(
   CreateShowService service = GetIt.I<CreateShowService>();
 
   return await showModalBottomSheet(
-      backgroundColor: AmptiveColors.brandBlack,
+      backgroundColor: ATColors.brandBlack,
       constraints: BoxConstraints.expand(
-          height: AmptiveHelperFunctions.getScreenHeight(context)),
+          height: ATHelperFuncs.getScreenHeight(context)),
       context: context,
       isScrollControlled: true,
       useSafeArea: true,
@@ -41,14 +41,14 @@ Future<void> showSelectAudienceAccessForEventsDialog(
                 child: Platform.isAndroid
                     ? Icon(
                         Icons.keyboard_arrow_down,
-                        color: AmptiveColors.whiteColor.withOpacity(0.6),
+                        color: ATColors.white.withOpacity(0.6),
                       )
-                    : AmptiveContainer(
+                    : ATContainer(
                         margin: const EdgeInsets.symmetric(vertical: 10),
                         radius: 5,
                         height: 4,
                         width: 30,
-                        color: AmptiveColors.whiteColor.withOpacity(0.6),
+                        color: ATColors.white.withOpacity(0.6),
                         child: const SizedBox.shrink(),
                       ),
               ),
@@ -56,25 +56,25 @@ Future<void> showSelectAudienceAccessForEventsDialog(
             Align(
               alignment: Alignment.center,
               child: Text(
-                AmptiveStrings.AUDIENCE_ACCESS,
+                ATStrings.AUDIENCE_ACCESS,
                 style: Theme.of(context).textTheme.bodyLarge,
               ),
             ),
             const Gap(20),
             Text(
               maxLines: 5,
-              AmptiveStrings.EVENT_AUDIENCE_ACCESS_DESC,
+              ATStrings.EVENT_AUDIENCE_ACCESS_DESC,
               style: Theme.of(context)
                   .textTheme
                   .titleMedium
-                  ?.copyWith(color: AmptiveColors.hexC2C2C2),
+                  ?.copyWith(color: ATColors.hexC2C2C2),
             ),
             const Gap(20),
             AmptiveRebuilderWidget(
                 notifier: freeAccesNotifier,
                 shouldDispose: true,
                 builder: (_, value, __) {
-                  return AmptiveContainer(
+                  return ATContainer(
                     duration: 100,
                     onTap: () {
                       activateBtnNotifier.value = !value;
@@ -83,50 +83,50 @@ Future<void> showSelectAudienceAccessForEventsDialog(
                     },
                     padding: const EdgeInsets.fromLTRB(15, 13, 15, 13),
                     radius: 15,
-                    color: AmptiveColors.hex2D2D2D,
+                    color: ATColors.hex2D2D2D,
                     border: Border.all(
                         width: 2,
                         color: value
-                            ? AmptiveColors.hex307FE2
-                            : AmptiveColors.transparentColor),
+                            ? ATColors.hex307FE2
+                            : ATColors.trsprtColor),
                     child: Row(
                       children: [
-                        const AmptiveImageLoaderWidget(
-                            imagePath: AmptiveImageStrings.PEOPLE),
+                        const ATImgLoader(
+                            imgPath: ATImgStrings.PEOPLE),
                         const Gap(10),
                         Expanded(
                           child: Column(
                             mainAxisSize: MainAxisSize.min,
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text(AmptiveStrings.FREE,
+                              Text(ATStrings.FREE,
                                   style:
                                       Theme.of(context).textTheme.bodyMedium),
                               Text(
                                 maxLines: 5,
-                                AmptiveStrings.EVENT_FREE_ACCESS,
+                                ATStrings.EVENT_FREE_ACCESS,
                                 style: Theme.of(context)
                                     .textTheme
                                     .titleMedium
                                     ?.copyWith(
-                                        color: AmptiveColors.hexC2C2C2),
+                                        color: ATColors.hexC2C2C2),
                               ),
                             ],
                           ),
                         ),
                         const Gap(15),
-                        AmptiveContainer(
+                        ATContainer(
                             height: 20,
                             width: 20,
                             radius: 20,
                             padding: const EdgeInsets.all(3),
                             color: value
-                                ? AmptiveColors.hex307FE2
-                                : AmptiveColors.transparentColor,
+                                ? ATColors.hex307FE2
+                                : ATColors.trsprtColor,
                             border: Border.all(
                                 color: value
-                                    ? AmptiveColors.hex307FE2
-                                    : AmptiveColors.whiteColor,
+                                    ? ATColors.hex307FE2
+                                    : ATColors.white,
                                 strokeAlign: 5.0),
                             child: const SizedBox.shrink())
                       ],
@@ -138,7 +138,7 @@ Future<void> showSelectAudienceAccessForEventsDialog(
                 shouldDispose: true,
                 notifier: paidAccessNotifier,
                 builder: (_, value, __) {
-                  return AmptiveContainer(
+                  return ATContainer(
                     onTap: () {
                       activateBtnNotifier.value = !value;
                       freeAccesNotifier.value = false;
@@ -147,55 +147,55 @@ Future<void> showSelectAudienceAccessForEventsDialog(
                     padding: const EdgeInsets.fromLTRB(15, 13, 15, 13),
                     radius: 15,
                     duration: 100,
-                    color: AmptiveColors.hex2D2D2D,
+                    color: ATColors.hex2D2D2D,
                     border: Border.all(
                         width: 2,
                         color: value
-                            ? AmptiveColors.hex307FE2
-                            : AmptiveColors.transparentColor),
+                            ? ATColors.hex307FE2
+                            : ATColors.trsprtColor),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         Row(
                           children: [
-                            const AmptiveImageLoaderWidget(
-                                imagePath: AmptiveImageStrings.PADLOCK),
+                            const ATImgLoader(
+                                imgPath: ATImgStrings.PADLOCK),
                             const Gap(10),
                             Expanded(
                               child: Column(
                                 mainAxisSize: MainAxisSize.min,
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Text(AmptiveStrings.PAID,
+                                  Text(ATStrings.PAID,
                                       style: Theme.of(context)
                                           .textTheme
                                           .bodyMedium),
                                   Text(
                                     maxLines: 5,
-                                    AmptiveStrings.PAID_ACCESS,
+                                    ATStrings.PAID_ACCESS,
                                     style: Theme.of(context)
                                         .textTheme
                                         .titleMedium
                                         ?.copyWith(
-                                            color: AmptiveColors.hexC2C2C2),
+                                            color: ATColors.hexC2C2C2),
                                   ),
                                 ],
                               ),
                             ),
                             const Gap(15),
-                            AmptiveContainer(
+                            ATContainer(
                                 height: 20,
                                 width: 20,
                                 radius: 20,
                                 padding: const EdgeInsets.all(3),
                                 color: value
-                                    ? AmptiveColors.hex307FE2
-                                    : AmptiveColors.transparentColor,
+                                    ? ATColors.hex307FE2
+                                    : ATColors.trsprtColor,
                                 border: Border.all(
                                     color: value
-                                        ? AmptiveColors.hex307FE2
-                                        : AmptiveColors.whiteColor,
+                                        ? ATColors.hex307FE2
+                                        : ATColors.white,
                                     strokeAlign: 5.0),
                                 child: const SizedBox.shrink())
                           ],
@@ -205,7 +205,7 @@ Future<void> showSelectAudienceAccessForEventsDialog(
                         const Gap(15),
                         Row(
                           children: [
-                            AmptiveContainer(
+                            ATContainer(
                               onTap: () async {
                                 freeAccesNotifier.value = false;
                                 paidAccessNotifier.value = true;
@@ -214,9 +214,9 @@ Future<void> showSelectAudienceAccessForEventsDialog(
                                 );
                               },
                               padding: const EdgeInsets.fromLTRB(10, 5, 10, 5),
-                              color: AmptiveColors.grey2Color,
+                              color: ATColors.grey2Color,
                               radius: 5,
-                              child: Text(AmptiveStrings.SETUP_PAYMENT_FEE,
+                              child: Text(ATStrings.SETUP_PAYMENT_FEE,
                                   style:
                                       Theme.of(context).textTheme.titleMedium),
                             ),
@@ -246,18 +246,18 @@ Future<void> showSelectAudienceAccessForEventsDialog(
                         ? () async {
                             if (paidAccessNotifier.value) {
                               service.audienceAccessController.text =
-                                  "${AmptiveStrings.PAY} • ₦${service.userEventFee}";
+                                  "${ATStrings.PAY} • ₦${service.userEventFee}";
                             } else if (freeAccesNotifier.value) {
                               service.audienceAccessController.text =
-                                  AmptiveStrings.FREE;
+                                  ATStrings.FREE;
                             }
 
                             Navigator.pop(context);
                           }
                         : null,
-                    buttonTitle: AmptiveStrings.CONTINUE,
-                    bgColor: AmptiveColors.whiteColor,
-                    fgColor: AmptiveColors.black,
+                    buttonTitle: ATStrings.CONTINUE,
+                    bgColor: ATColors.white,
+                    fgColor: ATColors.black,
                   );
                 })
           ]),

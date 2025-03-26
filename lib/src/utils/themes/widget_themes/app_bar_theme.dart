@@ -13,12 +13,12 @@ class AmptiveAppBarTheme{
   static AppBarTheme darkAppBarTheme = AppBarTheme(
     elevation: 0,
     scrolledUnderElevation: 0,
-    backgroundColor: AmptiveColors.black,
-    foregroundColor: AmptiveColors.whiteColor,
+    backgroundColor: ATColors.black,
+    foregroundColor: ATColors.white,
     titleTextStyle: TextStyle(
-      fontFamily: AmptiveStrings.inter,
-      fontSize: AmptiveFontSizes.size20,
-      fontWeight: AmptiveFontWeights.w700,
+      fontFamily: ATStrings.inter,
+      fontSize: ATFontSizes.size20,
+      fontWeight: ATFontWeights.w700,
     )
   );
 

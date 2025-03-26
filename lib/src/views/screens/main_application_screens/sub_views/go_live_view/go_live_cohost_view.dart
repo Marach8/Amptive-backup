@@ -2,11 +2,11 @@ import 'dart:ui';
 
 import 'package:amptive/src/utils/constants/font_sizes.dart';
 import 'package:amptive/src/utils/constants/strings/image_strings.dart';
-import 'package:amptive/src/utils/helpers/helper_functions/other_functions.dart';
+import 'package:amptive/src/utils/helpers/helper_functions/helper_functions.dart';
 import 'package:amptive/src/views/widgets/animation_widgets/horiz_slider_animation.dart';
 import 'package:amptive/src/views/widgets/common_widgets/annotated_region__widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/circle_avatar.dart';
-import 'package:amptive/src/views/widgets/common_widgets/circular_container_with_picture_widget.dart';
+import 'package:amptive/src/views/widgets/common_widgets/circular_image.dart';
 import 'package:amptive/src/views/widgets/common_widgets/custom_container_widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/custom_rebuilder_widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/textformfield_widget.dart';
@@ -81,7 +81,7 @@ class _AmptiveGoLiveCohostViewState extends State<AmptiveGoLiveCohostView> {
 
   @override
   Widget build(context) {
-    return AmptiveAnnotatedRegionWidget(
+    return ATAnnotatedRegion(
       child: Scaffold(
         appBar: AppBar(),
         body: Column(
@@ -92,7 +92,7 @@ class _AmptiveGoLiveCohostViewState extends State<AmptiveGoLiveCohostView> {
                     child: Row(
                       children: [
                         Text(
-                          AmptiveStrings.LIVE,
+                          ATStrings.LIVE,
                           style: Theme.of(context).textTheme.bodyMedium,
                         ),
                         Gap(5.w),
@@ -114,11 +114,11 @@ class _AmptiveGoLiveCohostViewState extends State<AmptiveGoLiveCohostView> {
               child: Stack(
                 children: [
                   SizedBox(
-                    height: AmptiveHelperFunctions.getScreenHeight(context),
+                    height: ATHelperFuncs.getScreenHeight(context),
                     child: Column(
                       children: [
                         SizedBox(
-                          height: AmptiveHelperFunctions.getScreenHeight(context) * 0.3,
+                          height: ATHelperFuncs.getScreenHeight(context) * 0.3,
                         ),
                         Expanded(
                           child: ListView.builder(
@@ -131,20 +131,20 @@ class _AmptiveGoLiveCohostViewState extends State<AmptiveGoLiveCohostView> {
                               return ListTile(
                                 horizontalTitleGap: 10,
                                 minTileHeight: 50,
-                                leading: AmptiveCircularContainerWithPictureWidget(
+                                leading: ATCircularImage(
                                   diameter: 35.h,
-                                  imagePath: AmptiveImageStrings.CRIMINAL,
+                                  imagePath: ATImgStrings.CRIMINAL,
                                 ),
                                 title: Text(
                                   string.obj.name ?? '',
                                   style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                                    color: AmptiveColors.hexC2C2C2
+                                    color: ATColors.hexC2C2C2
                                   )
                                 ),
                                 subtitle: Text(
                                   string.obj.username ?? '',
                                   style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                                    fontSize: AmptiveFontSizes.size13
+                                    fontSize: ATFontSizes.size13
                                   )
                                 ),
                               );
@@ -155,12 +155,12 @@ class _AmptiveGoLiveCohostViewState extends State<AmptiveGoLiveCohostView> {
                     ),
                   ),
               
-                  AmptiveContainer(
+                  ATContainer(
                     height: 250,
                     padding: const EdgeInsets.only(left: 20, right: 20),
                     boxShadow: [
                       BoxShadow(
-                        color: AmptiveColors.black,
+                        color: ATColors.black,
                         spreadRadius: 10, blurRadius: 40,
                         offset: const Offset(0, 40)
                       )
@@ -232,9 +232,9 @@ class _AmptiveGoLiveCohostViewState extends State<AmptiveGoLiveCohostView> {
                       return AnimatedPositioned(
                         right: showIcon ? 15 : -50, bottom: 70,
                         duration: const Duration(milliseconds: 500),
-                        child: AmptiveContainer(
+                        child: ATContainer(
                           onTap: () => _scrollToBottom(),
-                          color: AmptiveColors.whiteColor.withOpacity(0.1),
+                          color: ATColors.white.withOpacity(0.1),
                           height: 35, width: 35,
                           boxShape: BoxShape.circle,
                           child: const Icon(Icons.keyboard_double_arrow_down),
@@ -248,9 +248,9 @@ class _AmptiveGoLiveCohostViewState extends State<AmptiveGoLiveCohostView> {
           ],
         ),
 
-        bottomSheet: AmptiveContainer(
+        bottomSheet: ATContainer(
           padding: const EdgeInsets.symmetric(horizontal: 15),
-          color: AmptiveColors.black,
+          color: ATColors.black,
           height: 35,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -265,17 +265,17 @@ class _AmptiveGoLiveCohostViewState extends State<AmptiveGoLiveCohostView> {
                         controller: TextEditingController(),
                         disableBlueBorder: true,
                         cursorHeight: 20,
-                        cursorColor: AmptiveColors.whiteColor.withOpacity(0.6),
+                        cursorColor: ATColors.white.withOpacity(0.6),
                         constraints: const BoxConstraints(maxHeight: 40),
                         contentPadding: const EdgeInsets.fromLTRB(16, 0, 16, 0),
-                        hintText: AmptiveStrings.COMMENT,
+                        hintText: ATStrings.COMMENT,
                       ),
                     )
                   );
                 }
-                return AmptiveContainer(
+                return ATContainer(
                   margin: index != 5 ? EdgeInsets.only(right: 5.w) : EdgeInsets.zero,
-                  color: AmptiveColors.whiteColor.withOpacity(0.1),
+                  color: ATColors.white.withOpacity(0.1),
                   padding: const EdgeInsets.all(5),
                   radius: 30,
                   child: widget

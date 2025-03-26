@@ -10,8 +10,8 @@ class AmptiveDividerWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return AmptiveContainer(
-      color: AmptiveColors.dimWhiteColor1,
+    return ATContainer(
+      color: ATColors.dimWhiteColor1,
       height: 0.1.h,
       width: double.infinity,
       child: const SizedBox.shrink(),

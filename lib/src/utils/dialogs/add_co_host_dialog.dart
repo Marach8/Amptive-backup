@@ -2,7 +2,7 @@ import 'dart:io';
 import 'dart:ui';
 import 'package:amptive/src/utils/constants/colors.dart';
 import 'package:amptive/src/utils/constants/font_sizes.dart';
-import 'package:amptive/src/utils/helpers/helper_functions/other_functions.dart';
+import 'package:amptive/src/utils/helpers/helper_functions/helper_functions.dart';
 import 'package:amptive/src/views/widgets/animation_widgets/common_animation_widgets/animated_crossfade_widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/custom_container_widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/image_loader_widget.dart';
@@ -34,9 +34,9 @@ Future<Set<ObjectWithNotifier<Host>>?> showAddCoHostDialog(BuildContext context)
   final searchQueryNotifier = ValueNotifier('');
 
   return await showModalBottomSheet(
-      backgroundColor: AmptiveColors.brandBlack,
+      backgroundColor: ATColors.brandBlack,
       constraints: BoxConstraints.expand(
-          height: AmptiveHelperFunctions.getScreenHeight(context)),
+          height: ATHelperFuncs.getScreenHeight(context)),
       context: context,
       isScrollControlled: true,
       useSafeArea: true,
@@ -62,16 +62,16 @@ Future<Set<ObjectWithNotifier<Host>>?> showAddCoHostDialog(BuildContext context)
                               ? Icon(
                                   Icons.keyboard_arrow_down,
                                   color:
-                                      AmptiveColors.whiteColor.withOpacity(0.6),
+                                      ATColors.white.withOpacity(0.6),
                                 )
-                              : AmptiveContainer(
+                              : ATContainer(
                                   margin:
                                       const EdgeInsets.symmetric(vertical: 10),
                                   radius: 5,
                                   height: 4,
                                   width: 30,
                                   color:
-                                      AmptiveColors.whiteColor.withOpacity(0.6),
+                                      ATColors.white.withOpacity(0.6),
                                   child: const SizedBox.shrink(),
                                 ),
                         ),
@@ -80,7 +80,7 @@ Future<Set<ObjectWithNotifier<Host>>?> showAddCoHostDialog(BuildContext context)
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
                           Text(
-                            AmptiveStrings.ADD_CO_HOST,
+                            ATStrings.ADD_CO_HOST,
                             style: Theme.of(context).textTheme.bodyLarge,
                           ),
                           Gap(60.w),
@@ -89,12 +89,12 @@ Future<Set<ObjectWithNotifier<Host>>?> showAddCoHostDialog(BuildContext context)
                               // shouldDispose: true,
                               builder: (_, number, __) {
                                 return Text(
-                                  '$number ${AmptiveStrings.SELECTED}',
+                                  '$number ${ATStrings.SELECTED}',
                                   style: Theme.of(context)
                                       .textTheme
                                       .bodySmall
                                       ?.copyWith(
-                                          color: AmptiveColors.hexC2C2C2),
+                                          color: ATColors.hexC2C2C2),
                                 );
                               }),
                         ],
@@ -103,11 +103,11 @@ Future<Set<ObjectWithNotifier<Host>>?> showAddCoHostDialog(BuildContext context)
 
                       Text(
                         maxLines: 3,
-                        AmptiveStrings.ADD_COHOST_DESC,
+                        ATStrings.ADD_COHOST_DESC,
                         style: Theme.of(context)
                             .textTheme
                             .bodySmall
-                            ?.copyWith(color: AmptiveColors.hexC2C2C2),
+                            ?.copyWith(color: ATColors.hexC2C2C2),
                       ),
                       const Gap(20),
 
@@ -119,7 +119,7 @@ Future<Set<ObjectWithNotifier<Host>>?> showAddCoHostDialog(BuildContext context)
                         onChanged: (text) {
                           searchQueryNotifier.value = text;
                         },
-                        hintText: AmptiveStrings.SEARCH_4_COHOSTS,
+                        hintText: ATStrings.SEARCH_4_COHOSTS,
                         prefixConstraints: const BoxConstraints(maxWidth: 50),
                         prefixIcon: const Padding(
                           padding: EdgeInsets.symmetric(horizontal: 15),
@@ -150,7 +150,7 @@ Future<Set<ObjectWithNotifier<Host>>?> showAddCoHostDialog(BuildContext context)
                           return AmptiveAnimatedCrossFadeWidget(
                             condition: !selectionStarted,
                             firstChild: const SizedBox.shrink(),
-                            secondChild: AmptiveContainer(
+                            secondChild: ATContainer(
                               height: 43, alignment: Alignment.center,
                               margin: const EdgeInsets.fromLTRB(20, 20, 20, 0),
                               child: SingleChildScrollView(
@@ -165,15 +165,15 @@ Future<Set<ObjectWithNotifier<Host>>?> showAddCoHostDialog(BuildContext context)
                                         if(!showCoHost){
                                           final index = selectedCoHosts.toList().indexOf(selectedCoHost);
                                     
-                                          return AmptiveContainer(
+                                          return ATContainer(
                                             alignment: Alignment.center,
                                             margin: const EdgeInsets.only(right: 15),
-                                            border: Border.all(color: AmptiveColors.whiteColor.withOpacity(0.4)),
+                                            border: Border.all(color: ATColors.white.withOpacity(0.4)),
                                             height: 43, width: 43, radius: 30,
                                             child: Text(
                                               (index + 1).toString(),
                                               style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                                                fontSize: AmptiveFontSizes.size12
+                                                fontSize: ATFontSizes.size12
                                               ),
                                             ),
                                           );
@@ -184,25 +184,25 @@ Future<Set<ObjectWithNotifier<Host>>?> showAddCoHostDialog(BuildContext context)
                                           child: Stack(
                                             clipBehavior: Clip.none,
                                             children: [
-                                              AmptiveContainer(
+                                              ATContainer(
                                                 clipBehavior: Clip.hardEdge,
                                                 height: 43, width: 43, radius: 30,
                                                 child: FittedBox(
                                                   fit: BoxFit.fill,
-                                                  child: AmptiveImageLoaderWidget(
-                                                    imagePath: selectedCoHost.obj.profilePicture ?? ''
+                                                  child: ATImgLoader(
+                                                    imgPath: selectedCoHost.obj.profilePicture ?? ''
                                                   )
                                                 ),
                                               ),
                                               Positioned(
                                                 top: 0, right: -4, 
-                                                child: AmptiveContainer(
+                                                child: ATContainer(
                                                   onTap: () {
                                                     //Disable this notifier
                                                     // selectedCoHost.notifier.value = false;
                                                     service.removeSelectedCoHost(selectedCoHost);
                                                   },
-                                                  color: AmptiveColors.textRedColor,
+                                                  color: ATColors.textRedColor,
                                                   height: 17, width: 17,
                                                   boxShape: BoxShape.circle,
                                                   child: const FittedBox(
@@ -256,7 +256,7 @@ Future<Set<ObjectWithNotifier<Host>>?> showAddCoHostDialog(BuildContext context)
               bottom: 0,
               child: SizedBox(
                 height: 80.h,
-                width: AmptiveHelperFunctions.getScreenWidth(context),
+                width: ATHelperFuncs.getScreenWidth(context),
                 child: ClipRect(
                   child: BackdropFilter(
                       filter: ImageFilter.blur(sigmaX: 2.0, sigmaY: 2.0),
@@ -266,10 +266,10 @@ Future<Set<ObjectWithNotifier<Host>>?> showAddCoHostDialog(BuildContext context)
             ),
             Positioned(
               bottom: 10,
-              child: AmptiveContainer(
+              child: ATContainer(
                 height: 50.h,
                 padding: const EdgeInsets.symmetric(horizontal: 15),
-                width: AmptiveHelperFunctions.getScreenWidth(context),
+                width: ATHelperFuncs.getScreenWidth(context),
                 child: AmptiveRebuilderWidget(
                   notifier: service.coHostSelectionStarted,
                   // shouldDispose: true,
@@ -283,9 +283,9 @@ Future<Set<ObjectWithNotifier<Host>>?> showAddCoHostDialog(BuildContext context)
                         );
                         context.pop(selectedCoHosts.toSet());
                         } : null,
-                      buttonTitle: AmptiveStrings.CONTINUE,
-                      bgColor: AmptiveColors.whiteColor,
-                      fgColor: AmptiveColors.black,
+                      buttonTitle: ATStrings.CONTINUE,
+                      bgColor: ATColors.white,
+                      fgColor: ATColors.black,
                     );
                   }
                 ),
@@ -315,17 +315,17 @@ class AmptiveListOfCoHostsWidget extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            AmptiveStrings.NO_SUGGESTIONS,
+            ATStrings.NO_SUGGESTIONS,
             style: Theme.of(context).textTheme.bodyMedium
           ),
           Gap(3.h),
           Text(
             maxLines: 2,
-            AmptiveStrings.SEARCH_UR_COHOSTS,
+            ATStrings.SEARCH_UR_COHOSTS,
             style: Theme.of(context)
                 .textTheme
                 .bodySmall
-                ?.copyWith(color: AmptiveColors.hexC2C2C2),
+                ?.copyWith(color: ATColors.hexC2C2C2),
           ),
         ],
       );
@@ -369,13 +369,13 @@ class AmptiveCoHostWidget extends StatelessWidget {
         onTap: () => onTap(coHostDetail, coHostDetail.notifier.value),
         child: Row(
           children: [
-            AmptiveContainer(
+            ATContainer(
               clipBehavior: Clip.hardEdge,
               height: 50, width: 50, radius: 30,
               child: FittedBox(
                   fit: BoxFit.fill,
-                  child: AmptiveImageLoaderWidget(
-                      imagePath: coHostDetail.obj.profilePicture!)),
+                  child: ATImgLoader(
+                      imgPath: coHostDetail.obj.profilePicture!)),
             ),
             const Gap(10),
             Expanded(
@@ -385,13 +385,13 @@ class AmptiveCoHostWidget extends StatelessWidget {
                   Text(
                     coHostDetail.obj.name ?? '',
                     style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                      fontSize: AmptiveFontSizes.size15
+                      fontSize: ATFontSizes.size15
                     )
                   ),
                   Text(
                     coHostDetail.obj.username ?? '',
                     style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                      color: AmptiveColors.hexC2C2C2
+                      color: ATColors.hexC2C2C2
                     ),
                   ),
                 ],
@@ -400,15 +400,15 @@ class AmptiveCoHostWidget extends StatelessWidget {
             AmptiveRebuilderWidget(
               notifier: coHostDetail.notifier,
               builder: (_, value, __) {
-                return AmptiveContainer(
+                return ATContainer(
                   duration: 200,
-                  color: value ? AmptiveColors.whiteColor : AmptiveColors.transparentColor,
-                  border: Border.all(color: AmptiveColors.whiteColor),
+                  color: value ? ATColors.white : ATColors.trsprtColor,
+                  border: Border.all(color: ATColors.white),
                   boxShape: BoxShape.circle,
                   height: 24, width: 24,
                   child: Icon(
                     Icons.check, size: 20,
-                    color: AmptiveColors.brandBlack,
+                    color: ATColors.brandBlack,
                   )
                 );
               }

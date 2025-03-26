@@ -20,7 +20,7 @@ class AmptiveLiveUserModelWidget extends StatelessWidget {
           alignment: Alignment.center,
           children: [
             AmptiveAnimatedPaddingOnPictureWidget(
-              imagePath: AmptiveImageStrings.jpeg3,
+              imagePath: ATImgStrings.jpeg3,
             ),
             Positioned(
               bottom: -4,

@@ -14,6 +14,7 @@ import 'package:amptive/src/views/screens/main_application_screens/sub_views/hom
 import 'package:amptive/src/views/screens/main_application_screens/dashboard_screen.dart';
 import 'package:amptive/src/views/screens/main_application_screens/sub_views/home_view/home_sub_view/go_live_views/main_go_live_screen.dart';
 import 'package:amptive/src/views/screens/main_application_screens/sub_views/home_view/home_sub_view/profile/community_task.dart';
+import 'package:amptive/src/views/screens/main_application_screens/sub_views/home_view/home_sub_view/profile/menu/calender/day_view.dart';
 import 'package:amptive/src/views/screens/main_application_screens/sub_views/home_view/home_sub_view/profile/menu/language.dart' show AmptiveSelectLanguageScreen;
 import 'package:amptive/src/views/screens/main_application_screens/sub_views/home_view/home_sub_view/profile/menu/privacy/blocked_accts.dart';
 import 'package:amptive/src/views/screens/main_application_screens/sub_views/home_view/home_sub_view/profile/menu/privacy/muted_accts.dart';
@@ -48,54 +49,54 @@ import 'views/screens/main_application_screens/sub_views/home_view/home_sub_view
 
 // The route configuration.
 final GoRouter amptiveAppRouter = GoRouter(
-  initialLocation: AmptiveRoutes.index,
+  initialLocation: ATRoutes.index,
   // initialLocation: "/email-route/otp",
   routes: <RouteBase>[
     GoRoute(
-        path: AmptiveRoutes.index,
+        path: ATRoutes.index,
         builder: (_, __) => const AmptiveDashboardScreen()),
     GoRoute(
-      name: AmptiveRoutes.welcome,
+      name: ATRoutes.welcome,
       path: "/welcome-route",
       builder: (_, __) => const AmptiveWelcomeScreen(),
     ),
     GoRoute(
-      name: AmptiveRoutes.onboarding,
+      name: ATRoutes.onboarding,
       path: "/onboarding-route",
       builder: (_, __) => const AmptiveOnboardingScreen(),
     ),
 
     //AUTHENTICATION SCREENS
     GoRoute(
-      name: AmptiveRoutes.authScreen,
+      name: ATRoutes.authScreen,
       path: "/auth-route",
       builder: (_, GoRouterState state) => AmptiveAuthScreen(
         userSignUp: state.extra as bool,
       ),
     ),
     GoRoute(
-        name: AmptiveRoutes.emailAuth,
+        name: ATRoutes.emailAuth,
         path: "/email-route",
         builder: (_, __) => const AmptiveEmailAuthScreen()),
     GoRoute(
-        name: AmptiveRoutes.otp,
+        name: ATRoutes.otp,
         path: "/otp",
         builder: (_, GoRouterState state) {
           String where = state.extra as String;
           return OTPScreen(from: where);
         }),
     GoRoute(
-      name: AmptiveRoutes.addPhone,
+      name: ATRoutes.addPhone,
       path: "/add-phone",
       builder: (_, __) => const AddPhoneScreen(),
     ),
     GoRoute(
-        name: AmptiveRoutes.addProfilePic,
+        name: ATRoutes.addProfilePic,
         path: "/add-profile-pic",
         builder: (_, __) => const PostRegistrationScreen(),
         routes: <RouteBase>[
           GoRoute(
-              name: AmptiveRoutes.cropImage,
+              name: ATRoutes.cropImage,
               path: "crop-image",
               builder: (_, GoRouterState state) {
                 File imageFile = state.extra as File;
@@ -106,46 +107,46 @@ final GoRouter amptiveAppRouter = GoRouter(
               }),
         ]),
     GoRoute(
-      name: AmptiveRoutes.passwordAuth,
+      name: ATRoutes.passwordAuth,
       path: "/password",
       builder: (_, __) => const PasswordAuthScreen(),
     ),
     GoRoute(
-      name: AmptiveRoutes.dobAuth,
+      name: ATRoutes.dobAuth,
       path: "/dob",
       builder: (_, __) => const DateOfBirthScreen(),
     ),
     GoRoute(
-      name: AmptiveRoutes.addUsername,
+      name: ATRoutes.addUsername,
       path: "/username-add",
       builder: (_, __) => const UserNameAuthScreen(),
     ),
     GoRoute(
-      name: AmptiveRoutes.addName,
+      name: ATRoutes.addName,
       path: "/name-add",
       builder: (_, __) => const NameAuthScreen(),
     ),
     GoRoute(
-      name: AmptiveRoutes.preference,
+      name: ATRoutes.preference,
       path: "/preference-route",
       builder: (_, __) => const AmptivePreferenceScreen(),
     ),
 
     GoRoute(
-      name: AmptiveRoutes.preHomepage,
+      name: ATRoutes.preHomepage,
       path: "/pre-homepage",
       builder: (_, __) => const PreHomePage(),
     ),
 
     //MAIN APPLICATION SCREENS
     GoRoute(
-        name: AmptiveRoutes.homeScreen,
+        name: ATRoutes.homeScreen,
         path: "/home-screen",
         builder: (_, __) => const AmptiveDashboardScreen(),
         routes: [
           GoRoute(
-              name: AmptiveRoutes.showDetailedScreen,
-              path: AmptiveRoutes.showDetailedScreen,
+              name: ATRoutes.showDetailedScreen,
+              path: ATRoutes.showDetailedScreen,
               pageBuilder: (context, state) => CustomTransitionPage(
                     child: const AmptiveShowDetailedScreen(),
                     transitionsBuilder:
@@ -167,8 +168,8 @@ final GoRouter amptiveAppRouter = GoRouter(
                     transitionDuration: const Duration(milliseconds: 700),
                   )),
           GoRoute(
-              name: AmptiveRoutes.EVENT_DETAILED_SCREEN,
-              path: AmptiveRoutes.EVENT_DETAILED_SCREEN,
+              name: ATRoutes.EVENT_DETAILED_SCREEN,
+              path: ATRoutes.EVENT_DETAILED_SCREEN,
               pageBuilder: (context, state) => CustomTransitionPage(
                     child: const AmptiveEventDetailedScreen(),
                     transitionsBuilder:
@@ -190,97 +191,105 @@ final GoRouter amptiveAppRouter = GoRouter(
                     transitionDuration: const Duration(milliseconds: 700),
                   )),
           GoRoute(
-            name: AmptiveRoutes.CHOOSE_OR_CREATE_SHOW_SCREEN,
-            path: AmptiveRoutes.CHOOSE_OR_CREATE_SHOW_SCREEN,
+            name: ATRoutes.CHOOSE_OR_CREATE_SHOW_SCREEN,
+            path: ATRoutes.CHOOSE_OR_CREATE_SHOW_SCREEN,
             builder: (_, __) => const AmptiveChooseOrCreateShowScreen(),
           ),
           GoRoute(
-            name: AmptiveRoutes.CHOOSE_OR_CREATE_EVENT_SCREEN,
-            path: AmptiveRoutes.CHOOSE_OR_CREATE_EVENT_SCREEN,
+            name: ATRoutes.CHOOSE_OR_CREATE_EVENT_SCREEN,
+            path: ATRoutes.CHOOSE_OR_CREATE_EVENT_SCREEN,
             builder: (_, __) => const AmptiveChooseOrCreateEventScreen(),
           ),
           GoRoute(
-              name: AmptiveRoutes.CREATE_SHOW_FORM,
-              path: AmptiveRoutes.CREATE_SHOW_FORM,
+              name: ATRoutes.CREATE_SHOW_FORM,
+              path: ATRoutes.CREATE_SHOW_FORM,
               builder: (_, __) {
                 return const CreateShowScreen(showType: ShowType.show);
               }),
           GoRoute(
-              name: AmptiveRoutes.CREATE_EVENT_FORM,
-              path: AmptiveRoutes.CREATE_EVENT_FORM,
+              name: ATRoutes.CREATE_EVENT_FORM,
+              path: ATRoutes.CREATE_EVENT_FORM,
               builder: (_, GoRouterState state) {
                 return const CreateShowScreen(
                   showType: ShowType.event,
                 );
               }),
           GoRoute(
-              name: AmptiveRoutes.CREATE_EPISODE_FORM,
-              path: AmptiveRoutes.CREATE_EPISODE_FORM,
+              name: ATRoutes.CREATE_EPISODE_FORM,
+              path: ATRoutes.CREATE_EPISODE_FORM,
               builder: (_, __) {
                 return const CreateShowScreen(showType: ShowType.episode);
               }),
           GoRoute(
-            name: AmptiveRoutes.CREATE_SHOW_SUCCESS,
-            path: AmptiveRoutes.CREATE_SHOW_SUCCESS,
+            name: ATRoutes.CREATE_SHOW_SUCCESS,
+            path: ATRoutes.CREATE_SHOW_SUCCESS,
             builder: (_, GoRouterState state) {
               String imageFilePath = state.extra as String;
-              return AmptiveCreateShowSuccessScreen(
+              return ATCreateShowSuccessScreen(
                 imageFilePath: imageFilePath,
               );
             },
           ),
 
           GoRoute(
-            name: AmptiveRoutes.CREATOR_PROFILE_SCREEN,
-            path: AmptiveRoutes.CREATOR_PROFILE_SCREEN,
+            name: ATRoutes.CREATOR_PROFILE_SCREEN,
+            path: ATRoutes.CREATOR_PROFILE_SCREEN,
             builder: (_, __) => const AmptiveCreatorProfileScreen(),
           ),
 
           GoRoute(
-            name: AmptiveRoutes.PROFILE_MENU_SCREEN,
-            path: AmptiveRoutes.PROFILE_MENU_SCREEN,
+            name: ATRoutes.PROFILE_MENU_SCREEN,
+            path: ATRoutes.PROFILE_MENU_SCREEN,
             builder: (_, __) => const AmptiveProfileMenuScreen(),
+            routes: [
+              GoRoute(
+                name: ATRoutes.CALENDER_SCREEN,
+                path: ATRoutes.CALENDER_SCREEN,
+                builder: (_, __) => const ATCalenderScreen(),
+              ),
+
+              GoRoute(
+                name: ATRoutes.LANGUAGE_SCREEN,
+                path: ATRoutes.LANGUAGE_SCREEN,
+                builder: (_, __) => const AmptiveSelectLanguageScreen(),
+              ),
+
+              GoRoute(
+                name: ATRoutes.PRIVACY_SCREEN,
+                path: ATRoutes.PRIVACY_SCREEN,
+                builder: (_, __) => const AmptivePrivacyScreen(),
+                routes: [
+                  GoRoute(
+                    name: ATRoutes.BLOCKED_ACCTS_SCREEN,
+                    path: ATRoutes.BLOCKED_ACCTS_SCREEN,
+                    builder: (_, __) => const AmptiveBlockedAcctsScreen(),
+                  ),
+
+                  GoRoute(
+                    name: ATRoutes.MUTED_ACCTS_SCREEN,
+                    path: ATRoutes.MUTED_ACCTS_SCREEN,
+                    builder: (_, __) => const AmptiveMutedAcctsScreen(),
+                  ),
+                ]
+              ),
+            ]
           ),
 
           GoRoute(
-            name: AmptiveRoutes.LANGUAGE_SCREEN,
-            path: AmptiveRoutes.LANGUAGE_SCREEN,
-            builder: (_, __) => const AmptiveSelectLanguageScreen(),
-          ),
-
-          GoRoute(
-            name: AmptiveRoutes.PRIVACY_SCREEN,
-            path: AmptiveRoutes.PRIVACY_SCREEN,
-            builder: (_, __) => const AmptivePrivacyScreen(),
-          ),
-
-          GoRoute(
-            name: AmptiveRoutes.BLOCKED_ACCTS_SCREEN,
-            path: AmptiveRoutes.BLOCKED_ACCTS_SCREEN,
-            builder: (_, __) => const AmptiveBlockedAcctsScreen(),
-          ),
-
-          GoRoute(
-            name: AmptiveRoutes.MUTED_ACCTS_SCREEN,
-            path: AmptiveRoutes.MUTED_ACCTS_SCREEN,
-            builder: (_, __) => const AmptiveMutedAcctsScreen(),
-          ),
-
-          GoRoute(
-            name: AmptiveRoutes.PROFILE_FOLLOWING_SCREEN,
-            path: AmptiveRoutes.PROFILE_FOLLOWING_SCREEN,
+            name: ATRoutes.PROFILE_FOLLOWING_SCREEN,
+            path: ATRoutes.PROFILE_FOLLOWING_SCREEN,
             builder: (_, __) => const AmptiveProfileFollowersScreen(),
           ),
 
           GoRoute(
-            name: AmptiveRoutes.COMMUNITY_TASK_SCREEN,
-            path: AmptiveRoutes.COMMUNITY_TASK_SCREEN,
+            name: ATRoutes.COMMUNITY_TASK_SCREEN,
+            path: ATRoutes.COMMUNITY_TASK_SCREEN,
             builder: (_, __) => const AmptiveCommunityTaskScreen(),
           ),
 
           GoRoute(
-            name: AmptiveRoutes.PROFILE_PIC_SCREEN,
-            path: AmptiveRoutes.PROFILE_PIC_SCREEN,
+            name: ATRoutes.PROFILE_PIC_SCREEN,
+            path: ATRoutes.PROFILE_PIC_SCREEN,
             builder: (_, state){
               final imgPath = state.extra as String;
               return AmptiveViewProfilePicScreen(imgPath: imgPath);
@@ -288,30 +297,30 @@ final GoRouter amptiveAppRouter = GoRouter(
           ),
 
           GoRoute(
-            name: AmptiveRoutes.PROFILE_SUBSCRIBERS_SCREEN,
-            path: AmptiveRoutes.PROFILE_SUBSCRIBERS_SCREEN,
+            name: ATRoutes.PROFILE_SUBSCRIBERS_SCREEN,
+            path: ATRoutes.PROFILE_SUBSCRIBERS_SCREEN,
             builder: (_, __) => const AmptiveProfileSubScribersScreen(),
           ),
 
           GoRoute(
-            name: AmptiveRoutes.USER_PROFILE_SCREEN,
-            path: AmptiveRoutes.USER_PROFILE_SCREEN,
+            name: ATRoutes.USER_PROFILE_SCREEN,
+            path: ATRoutes.USER_PROFILE_SCREEN,
             builder: (_, __) => const AmptiveOrdinaryUserProfileScreen(),
           ),
 
           GoRoute(
-            name: AmptiveRoutes.GO_LIVE_SCREEN,
-            path: AmptiveRoutes.GO_LIVE_SCREEN,
+            name: ATRoutes.GO_LIVE_SCREEN,
+            path: ATRoutes.GO_LIVE_SCREEN,
             builder: (_, __) => const AmptiveGoLiveScreen(),
           ),
           GoRoute(
-            name: AmptiveRoutes.SCHEDULED_EVENTS_OR_SHOWS_SCREEN,
-            path: AmptiveRoutes.SCHEDULED_EVENTS_OR_SHOWS_SCREEN,
+            name: ATRoutes.SCHEDULED_EVENTS_OR_SHOWS_SCREEN,
+            path: ATRoutes.SCHEDULED_EVENTS_OR_SHOWS_SCREEN,
             builder: (_, __) => const AmptiveScheduledEventOrShowViewWidget(),
           ),
           GoRoute(
-            name: AmptiveRoutes.EVENT_SCHEDULED_SCREEN,
-            path: AmptiveRoutes.EVENT_SCHEDULED_SCREEN,
+            name: ATRoutes.EVENT_SCHEDULED_SCREEN,
+            path: ATRoutes.EVENT_SCHEDULED_SCREEN,
             builder: (_, GoRouterState state) {
               String imageFilePath = state.extra as String;
               return AmptiveShowScheduledScreen(
@@ -321,8 +330,8 @@ final GoRouter amptiveAppRouter = GoRouter(
             },
           ),
           GoRoute(
-            name: AmptiveRoutes.EPISODE_SCHEDULED_SCREEN,
-            path: AmptiveRoutes.EPISODE_SCHEDULED_SCREEN,
+            name: ATRoutes.EPISODE_SCHEDULED_SCREEN,
+            path: ATRoutes.EPISODE_SCHEDULED_SCREEN,
             builder: (_, GoRouterState state) {
               String imageFilePath = state.extra as String;
               return AmptiveShowScheduledScreen(
@@ -332,38 +341,38 @@ final GoRouter amptiveAppRouter = GoRouter(
             },
           ),
           GoRoute(
-            name: AmptiveRoutes.SUBSCRIBED_EVENTS_OR_SHOWS_SCREEN,
-            path: AmptiveRoutes.SUBSCRIBED_EVENTS_OR_SHOWS_SCREEN,
+            name: ATRoutes.SUBSCRIBED_EVENTS_OR_SHOWS_SCREEN,
+            path: ATRoutes.SUBSCRIBED_EVENTS_OR_SHOWS_SCREEN,
             builder: (_, __) => const AmptiveSubscribedEventOrShowViewWidget(),
           ),
           GoRoute(
-            name: AmptiveRoutes.FOLLOWING_EVENTS_OR_SHOWS_SCREEN,
-            path: AmptiveRoutes.FOLLOWING_EVENTS_OR_SHOWS_SCREEN,
+            name: ATRoutes.FOLLOWING_EVENTS_OR_SHOWS_SCREEN,
+            path: ATRoutes.FOLLOWING_EVENTS_OR_SHOWS_SCREEN,
             builder: (_, __) => const AmptiveFollowingEvenstOrShowsViewWidget(),
           ),
           GoRoute(
-            name: AmptiveRoutes.COMMUNITY_SCREEN,
-            path: AmptiveRoutes.COMMUNITY_SCREEN,
+            name: ATRoutes.COMMUNITY_SCREEN,
+            path: ATRoutes.COMMUNITY_SCREEN,
             builder: (_, __) => const AmptiveCommunityScreen(),
           ),
           GoRoute(
-              name: AmptiveRoutes.SOCIETY_SCREEN,
-              path: AmptiveRoutes.SOCIETY_SCREEN,
+              name: ATRoutes.SOCIETY_SCREEN,
+              path: ATRoutes.SOCIETY_SCREEN,
               builder: (_, __) => const AmptiveSocietyScreen(),
               routes: [
                 GoRoute(
-                  name: AmptiveRoutes.TRENDING_SOCIETY_SCREEN,
-                  path: AmptiveRoutes.TRENDING_SOCIETY_SCREEN,
+                  name: ATRoutes.TRENDING_SOCIETY_SCREEN,
+                  path: ATRoutes.TRENDING_SOCIETY_SCREEN,
                   builder: (_, __) => const AmptiveTrendingSocietyScreen(),
                 ),
                 GoRoute(
-                  name: AmptiveRoutes.TRENDING_HASHTAGS_SCREEN,
-                  path: AmptiveRoutes.TRENDING_HASHTAGS_SCREEN,
+                  name: ATRoutes.TRENDING_HASHTAGS_SCREEN,
+                  path: ATRoutes.TRENDING_HASHTAGS_SCREEN,
                   builder: (_, __) => const AmptiveTrendingHashTagsScreen(),
                 ),
                 GoRoute(
-                  name: AmptiveRoutes.TRENDING_HASHTAG_FULL_SCREEN,
-                  path: AmptiveRoutes.TRENDING_HASHTAG_FULL_SCREEN,
+                  name: ATRoutes.TRENDING_HASHTAG_FULL_SCREEN,
+                  path: ATRoutes.TRENDING_HASHTAG_FULL_SCREEN,
                   builder: (_, __) => const AmptiveTrendingHashTagFullScreen(),
                 ),
               ]),

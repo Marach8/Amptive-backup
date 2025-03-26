@@ -12,15 +12,15 @@ class AmptiveOutlinedButtonTheme{
   static OutlinedButtonThemeData darkOutlinedButtonTheme = OutlinedButtonThemeData(
     style: OutlinedButton.styleFrom(
       elevation: 0,
-      foregroundColor: AmptiveColors.whiteColor,
-      backgroundColor: AmptiveColors.transparentColor,
-      disabledForegroundColor: AmptiveColors.inactiveDotColor,
-      disabledBackgroundColor: AmptiveColors.transparentColor,
-      side: BorderSide(color: AmptiveColors.whiteColor, width: 0.5),
+      foregroundColor: ATColors.white,
+      backgroundColor: ATColors.trsprtColor,
+      disabledForegroundColor: ATColors.inactiveDotColor,
+      disabledBackgroundColor: ATColors.trsprtColor,
+      side: BorderSide(color: ATColors.white, width: 0.5),
       textStyle: TextStyle(
-        fontFamily: AmptiveStrings.inter,
-        fontSize: AmptiveFontSizes.size16,
-        fontWeight: AmptiveFontWeights.w600
+        fontFamily: ATStrings.inter,
+        fontSize: ATFontSizes.size16,
+        fontWeight: ATFontWeights.w600
       ),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(40).r)
     )

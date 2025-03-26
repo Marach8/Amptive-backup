@@ -21,7 +21,7 @@ class AmptiveProfileSubScribersScreen extends StatelessWidget {
 
   @override
   Widget build(context) {
-    return AmptiveAnnotatedRegionWidget(
+    return ATAnnotatedRegion(
       child: Scaffold(
         appBar: AmptiveAppBar(
           leading: GestureDetector(
@@ -33,7 +33,7 @@ class AmptiveProfileSubScribersScreen extends StatelessWidget {
           ),
           leadingWidth: 30,
           title: Text(
-            AmptiveStrings.SUBSCRIBERS,
+            ATStrings.SUBSCRIBERS,
             style: Theme.of(context).textTheme.bodyMedium,
           ),
         ),
@@ -46,15 +46,15 @@ class AmptiveProfileSubScribersScreen extends StatelessWidget {
               AmptiveTextFormFieldWidget(
                 controller: TextEditingController(),
                 disableBlueBorder: true,
-                hintText: AmptiveStrings.SEARCH_4_SUBSCRIBERS,
-                fillColor: AmptiveColors.whiteColor.withOpacity(0.1),
-                prefixIcon: const AmptiveImageLoaderWidget(
-                  imagePath: AmptiveImageStrings.filledSearch
+                hintText: ATStrings.SEARCH_4_SUBSCRIBERS,
+                fillColor: ATColors.white.withOpacity(0.1),
+                prefixIcon: const ATImgLoader(
+                  imgPath: ATImgStrings.filledSearch
                 ),
               ),
               const Gap(20),
               Text(
-                AmptiveStrings.ALL_SUBSCRIBERS,
+                ATStrings.ALL_SUBSCRIBERS,
                 style: Theme.of(context).textTheme.bodyMedium,
               ),
               const Gap(20),
@@ -102,12 +102,12 @@ class _AmptiveSubscriberWidget extends StatelessWidget {
         onTap: () => onTap(subscriber, subscriber.notifier.value),
         child: Row(
           children: [
-            AmptiveContainer(
+            ATContainer(
               clipBehavior: Clip.hardEdge,
               height: 50, width: 50, radius: 30,
               child: FittedBox(
                 fit: BoxFit.fill,
-                child: AmptiveImageLoaderWidget(imagePath: subscriber.obj.profilePicture!)
+                child: ATImgLoader(imgPath: subscriber.obj.profilePicture!)
               ),
             ),
             const Gap(10),
@@ -117,14 +117,14 @@ class _AmptiveSubscriberWidget extends StatelessWidget {
                 style: Theme.of(context).textTheme.titleMedium
               ),
             ),
-            AmptiveContainer(
-              border: Border.all(color: AmptiveColors.whiteColor),
+            ATContainer(
+              border: Border.all(color: ATColors.white),
               radius: 30, 
               padding: const EdgeInsets.fromLTRB(15, 5, 15, 5),
               child: Text(
-                AmptiveStrings.MANAGE,
+                ATStrings.MANAGE,
                 style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                  fontSize: AmptiveFontSizes.size13,
+                  fontSize: ATFontSizes.size13,
                 ),
               ),
             )

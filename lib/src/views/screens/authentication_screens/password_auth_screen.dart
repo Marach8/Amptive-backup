@@ -37,7 +37,7 @@ class _PasswordAuthScreenState extends State<PasswordAuthScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return AmptiveAnnotatedRegionWidget(
+    return ATAnnotatedRegion(
       child: Scaffold(
         appBar: const AmptiveAppBar(),
         body: Padding(
@@ -48,7 +48,7 @@ class _PasswordAuthScreenState extends State<PasswordAuthScreen> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  AmptiveStrings.createPasswordForAccount,
+                  ATStrings.createPasswordForAccount,
                   style: Theme.of(context).textTheme.headlineMedium,
                 ),
                 SizedBox(
@@ -72,20 +72,20 @@ class _PasswordAuthScreenState extends State<PasswordAuthScreen> {
                         },
                         obscureText: !_passwordVisible,
                         keyboardType: TextInputType.visiblePassword,
-                        cursorColor: AmptiveColors.hex307FE2,
+                        cursorColor: ATColors.hex307FE2,
                         decoration: InputDecoration(
                           contentPadding: EdgeInsets.symmetric(
                               vertical: 12.h, horizontal: 16.w),
-                          hintText: AmptiveStrings.enterYourPassword,
+                          hintText: ATStrings.enterYourPassword,
                           hintStyle: Theme.of(context).textTheme.labelMedium,
                           filled: true,
                           fillColor:
-                              AmptiveColors.fillGreyColor.withOpacity(0.3),
+                              ATColors.fillGreyColor.withOpacity(0.3),
                           focusedBorder: buildOutlineInputBorder(),
                           border: OutlineInputBorder(
                             borderSide: BorderSide(
                               width: 2.w,
-                              color: AmptiveColors.transparentColor,
+                              color: ATColors.trsprtColor,
                             ),
                             borderRadius: BorderRadius.circular(14.r),
                           ),
@@ -96,7 +96,7 @@ class _PasswordAuthScreenState extends State<PasswordAuthScreen> {
                                 _passwordVisible
                                     ? Icons.visibility_off
                                     : Icons.visibility,
-                                color: AmptiveColors.whiteColor,
+                                color: ATColors.white,
                               ),
                             ),
                             onPressed: () {
@@ -115,7 +115,7 @@ class _PasswordAuthScreenState extends State<PasswordAuthScreen> {
                     height: height,
                     margin: EdgeInsets.symmetric(vertical: 11.h),
                     child: Text(
-                      state.error ?? AmptiveStrings.empty,
+                      state.error ?? ATStrings.empty,
                       style: Theme.of(context).textTheme.titleSmall,
                     ),
                   );
@@ -135,10 +135,10 @@ class _PasswordAuthScreenState extends State<PasswordAuthScreen> {
             builder: (context, state) {
               return AmptiveElevatedButtonWidget(
                 height: 50.w,
-                buttonTitle: AmptiveStrings.NEXT,
+                buttonTitle: ATStrings.NEXT,
                 onPressed: state is ValidPasswordAuthState
                     ? () {
-                        context.pushNamed(AmptiveRoutes.dobAuth);
+                        context.pushNamed(ATRoutes.dobAuth);
                       }
                     : null,
               );
@@ -151,7 +151,7 @@ class _PasswordAuthScreenState extends State<PasswordAuthScreen> {
 
   OutlineInputBorder buildOutlineInputBorder() {
     return OutlineInputBorder(
-      borderSide: BorderSide(width: 2.w, color: AmptiveColors.hex307FE2),
+      borderSide: BorderSide(width: 2.w, color: ATColors.hex307FE2),
       borderRadius: BorderRadius.circular(14.r),
     );
   }

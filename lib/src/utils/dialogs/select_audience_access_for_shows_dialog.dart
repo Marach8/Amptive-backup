@@ -1,7 +1,7 @@
 import 'dart:io';
 import 'package:amptive/src/utils/constants/colors.dart';
 import 'package:amptive/src/utils/constants/strings/image_strings.dart';
-import 'package:amptive/src/utils/helpers/helper_functions/other_functions.dart';
+import 'package:amptive/src/utils/helpers/helper_functions/helper_functions.dart';
 import 'package:amptive/src/views/widgets/common_widgets/custom_container_widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/image_loader_widget.dart';
 import 'package:flutter/material.dart';
@@ -21,8 +21,8 @@ Future<String> showSelectAudienceAccessForShowsDialog(
   CreateShowService service = GetIt.I<CreateShowService>();
 
   return await showModalBottomSheet(
-    backgroundColor: AmptiveColors.brandBlack,
-    constraints: BoxConstraints.expand(height: AmptiveHelperFunctions.getScreenHeight(context)),
+    backgroundColor: ATColors.brandBlack,
+    constraints: BoxConstraints.expand(height: ATHelperFuncs.getScreenHeight(context)),
     context: context,
     isScrollControlled: true,
     useSafeArea: true,
@@ -39,11 +39,11 @@ Future<String> showSelectAudienceAccessForShowsDialog(
                 child: Platform.isAndroid
                   ? Icon(
                     Icons.keyboard_arrow_down,
-                    color: AmptiveColors.whiteColor.withOpacity(0.6),
-                  ) : AmptiveContainer(
+                    color: ATColors.white.withOpacity(0.6),
+                  ) : ATContainer(
                     margin: const EdgeInsets.symmetric(vertical: 10),
                     radius: 5, height: 4, width: 30,
-                    color: AmptiveColors.whiteColor.withOpacity(0.6),
+                    color: ATColors.white.withOpacity(0.6),
                     child: const SizedBox.shrink(),
                   ),
               ),
@@ -51,16 +51,16 @@ Future<String> showSelectAudienceAccessForShowsDialog(
             Align(
               alignment: Alignment.center,
               child: Text(
-                AmptiveStrings.AUDIENCE_ACCESS,
+                ATStrings.AUDIENCE_ACCESS,
                 style: Theme.of(context).textTheme.bodyLarge,
               ),
             ),
             const Gap(20),
             Text(
               maxLines: 5,
-              AmptiveStrings.SHOW_AUDIENCE_ACCESS_DESC,
+              ATStrings.SHOW_AUDIENCE_ACCESS_DESC,
               style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                color: AmptiveColors.hexC2C2C2
+                color: ATColors.hexC2C2C2
               ),
             ),
             const Gap(20),
@@ -68,27 +68,27 @@ Future<String> showSelectAudienceAccessForShowsDialog(
             AmptiveRebuilderWidget(
               notifier: notifier,
               builder: (_, value, __) {
-                final isActive = value == AmptiveStrings.FREE;
-                return AmptiveContainer(
+                final isActive = value == ATStrings.FREE;
+                return ATContainer(
                   duration: 100,
                   onTap: (){
-                    if(value != AmptiveStrings.FREE){
-                      notifier.value = AmptiveStrings.FREE;
-                      service.audienceAccessController.text = AmptiveStrings.FREE;
+                    if(value != ATStrings.FREE){
+                      notifier.value = ATStrings.FREE;
+                      service.audienceAccessController.text = ATStrings.FREE;
 
                     }
                     else{notifier.value = '';}
                   },
                   padding: const EdgeInsets.fromLTRB(15, 13, 15, 13),
                   radius: 15,
-                  color: AmptiveColors.hex2D2D2D,
+                  color: ATColors.hex2D2D2D,
                   border: Border.all(
                     width: 2,
-                    color: isActive ? AmptiveColors.hex307FE2 : AmptiveColors.transparentColor
+                    color: isActive ? ATColors.hex307FE2 : ATColors.trsprtColor
                   ),
                   child: Row(
                     children: [
-                      const AmptiveImageLoaderWidget(imagePath: AmptiveImageStrings.PEOPLE),
+                      const ATImgLoader(imgPath: ATImgStrings.PEOPLE),
                       const Gap(10),
                       Expanded(
                         child: Column(
@@ -96,26 +96,26 @@ Future<String> showSelectAudienceAccessForShowsDialog(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              AmptiveStrings.FREE,
+                              ATStrings.FREE,
                               style: Theme.of(context).textTheme.bodyMedium
                             ),
                             Text(
                               maxLines: 5,
-                              AmptiveStrings.SHOW_FREE_ACCESS,
+                              ATStrings.SHOW_FREE_ACCESS,
                               style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                                color: AmptiveColors.hexC2C2C2
+                                color: ATColors.hexC2C2C2
                               ),
                             ),
                           ],
                         ),
                       ),
                       const Gap(15),
-                      AmptiveContainer(
+                      ATContainer(
                         height: 20, width: 20, radius: 20,
                         padding: const EdgeInsets.all(3),
-                        color: isActive ? AmptiveColors.hex307FE2 : AmptiveColors.transparentColor,
+                        color: isActive ? ATColors.hex307FE2 : ATColors.trsprtColor,
                         border: Border.all(
-                          color: isActive ? AmptiveColors.hex307FE2 : AmptiveColors.whiteColor,
+                          color: isActive ? ATColors.hex307FE2 : ATColors.white,
                           strokeAlign: 5.0
                         ),
                         child: const SizedBox.shrink()
@@ -131,22 +131,22 @@ Future<String> showSelectAudienceAccessForShowsDialog(
             AmptiveRebuilderWidget(
               notifier: notifier,
               builder: (_, value, __) {
-                final isActive = value == AmptiveStrings.SUBSCRIBERS_ONLY;
-                return AmptiveContainer(
+                final isActive = value == ATStrings.SUBSCRIBERS_ONLY;
+                return ATContainer(
                   onTap: (){
-                    if(value != AmptiveStrings.SUBSCRIBERS_ONLY){
-                      notifier.value = AmptiveStrings.SUBSCRIBERS_ONLY;
-                      service.audienceAccessController.text = AmptiveStrings.SUBSCRIBERS_ONLY;
+                    if(value != ATStrings.SUBSCRIBERS_ONLY){
+                      notifier.value = ATStrings.SUBSCRIBERS_ONLY;
+                      service.audienceAccessController.text = ATStrings.SUBSCRIBERS_ONLY;
 
                     }
                     else{notifier.value = '';}
                   },
                   padding: const EdgeInsets.fromLTRB(15, 13, 15, 13),
                   radius: 15, duration: 100,
-                  color: AmptiveColors.hex2D2D2D,
+                  color: ATColors.hex2D2D2D,
                   border: Border.all(
                     width: 2,
-                    color: isActive ? AmptiveColors.hex307FE2 : AmptiveColors.transparentColor
+                    color: isActive ? ATColors.hex307FE2 : ATColors.trsprtColor
                   ),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -154,7 +154,7 @@ Future<String> showSelectAudienceAccessForShowsDialog(
                     children: [
                       Row(
                         children: [
-                          const AmptiveImageLoaderWidget(imagePath: AmptiveImageStrings.PADLOCK),
+                          const ATImgLoader(imgPath: ATImgStrings.PADLOCK),
                           const Gap(10),
                           Expanded(
                             child: Column(
@@ -162,26 +162,26 @@ Future<String> showSelectAudienceAccessForShowsDialog(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  AmptiveStrings.SUBSCRIBERS_ONLY,
+                                  ATStrings.SUBSCRIBERS_ONLY,
                                   style: Theme.of(context).textTheme.bodyMedium
                                 ),
                                 Text(
                                   maxLines: 5,
-                                  AmptiveStrings.ACCESS_2_ONLY_SUBSCRIBERS,
+                                  ATStrings.ACCESS_2_ONLY_SUBSCRIBERS,
                                   style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                                    color: AmptiveColors.hexC2C2C2
+                                    color: ATColors.hexC2C2C2
                                   ),
                                 ),
                               ],
                             ),
                           ),
                           const Gap(15),
-                          AmptiveContainer(
+                          ATContainer(
                             height: 20, width: 20, radius: 20,
                             padding: const EdgeInsets.all(3),
-                            color: isActive ? AmptiveColors.hex307FE2 : AmptiveColors.transparentColor,
+                            color: isActive ? ATColors.hex307FE2 : ATColors.trsprtColor,
                             border: Border.all(
-                              color: isActive ? AmptiveColors.hex307FE2 : AmptiveColors.whiteColor,
+                              color: isActive ? ATColors.hex307FE2 : ATColors.white,
                               strokeAlign: 5.0
                             ),
                             child: const SizedBox.shrink()
@@ -194,12 +194,12 @@ Future<String> showSelectAudienceAccessForShowsDialog(
                       const Gap(15),
                       Row(
                         children: [
-                          AmptiveContainer(
+                          ATContainer(
                             padding: const EdgeInsets.fromLTRB(10, 5, 10, 5),
-                            color: AmptiveColors.grey2Color,
+                            color: ATColors.grey2Color,
                             radius: 5,
                             child: Text(
-                              AmptiveStrings.EDIT_SUB_PLAN,
+                              ATStrings.EDIT_SUB_PLAN,
                               style: Theme.of(context).textTheme.titleMedium
                             ),
                           ),
@@ -220,14 +220,14 @@ Future<String> showSelectAudienceAccessForShowsDialog(
             AmptiveRebuilderWidget(
               notifier: notifier,
               builder: (_, value, __) {
-                final isActive = value == AmptiveStrings.FREE 
-                  || value == AmptiveStrings.SUBSCRIBERS_ONLY;
+                final isActive = value == ATStrings.FREE 
+                  || value == ATStrings.SUBSCRIBERS_ONLY;
                 return AmptiveElevatedButtonWidget(
                   margin: EdgeInsets.zero,
                   onPressed: isActive ? (){context.pop(value);} : null,
-                  buttonTitle: AmptiveStrings.CONTINUE,
-                  bgColor: AmptiveColors.whiteColor,
-                  fgColor: AmptiveColors.black,
+                  buttonTitle: ATStrings.CONTINUE,
+                  bgColor: ATColors.white,
+                  fgColor: ATColors.black,
                 );
               }
             )

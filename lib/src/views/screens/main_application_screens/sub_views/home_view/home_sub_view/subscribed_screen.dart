@@ -19,7 +19,7 @@ class AmptiveSubscribedEventOrShowViewWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return AmptiveAnnotatedRegionWidget(
+    return ATAnnotatedRegion(
       child: Scaffold(
         body: NestedScrollView(
           floatHeaderSlivers: true,
@@ -30,16 +30,16 @@ class AmptiveSubscribedEventOrShowViewWidget extends StatelessWidget {
               leading: Padding(
                 padding: const EdgeInsets.only(left: 20),
                 child: AmptiveAppBarLeadingWidget(
-                  leadingText: AmptiveStrings.SUBSCRIBED,
+                  leadingText: ATStrings.SUBSCRIBED,
                   leadingStyle: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                    fontSize: AmptiveFontSizes.size23
+                    fontSize: ATFontSizes.size23
                   ),
                 )
               ),
               bottom: PreferredSize(
                 preferredSize: const Size.fromHeight(0),
-                child: AmptiveContainer(
-                  color: AmptiveColors.whiteColor,
+                child: ATContainer(
+                  color: ATColors.white,
                   height: 0.15,
                   width: double.infinity,
                   child: const SizedBox.shrink(),
@@ -62,7 +62,7 @@ class AmptiveSubscribedEventOrShowViewWidget extends StatelessWidget {
                   (_) => Padding(
                     padding: const EdgeInsets.fromLTRB(20, 5, 20, 20),
                     child: GestureDetector(
-                      onTap: () => context.pushNamed(AmptiveRoutes.showDetailedScreen),
+                      onTap: () => context.pushNamed(ATRoutes.showDetailedScreen),
                       child: const AmptiveSubscribedShowOrEventDataModelWidget()
                     ),
                   )

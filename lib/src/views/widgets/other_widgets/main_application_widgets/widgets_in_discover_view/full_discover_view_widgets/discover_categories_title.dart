@@ -18,7 +18,7 @@ class AmptiveDiscoverCategoriesTitleWidget extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 15),
       child: Row(
         children: [
-          const AmptiveImageLoaderWidget(imagePath: AmptiveImageStrings.GROUP_ICON_BLUE),
+          const ATImgLoader(imgPath: ATImgStrings.GROUP_ICON_BLUE),
           Gap(10.h),
           Text(
             categoryName,
@@ -27,7 +27,7 @@ class AmptiveDiscoverCategoriesTitleWidget extends StatelessWidget {
           const Spacer(),
           GestureDetector(
             onTap: (){},
-            child: Icon(Icons.more_horiz, color: AmptiveColors.authHintColor,),
+            child: Icon(Icons.more_horiz, color: ATColors.authHintColor,),
           )
         ],
       ),

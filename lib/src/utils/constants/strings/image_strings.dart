@@ -1,7 +1,7 @@
 // ignore_for_file: constant_identifier_names
 
-class AmptiveImageStrings{
-  const AmptiveImageStrings._();
+class ATImgStrings{
+  const ATImgStrings._();
 
   static const _generalSvgImagePath = 'assets/images/svg_images';
   static const _generalJpegImagePath = 'assets/images/jpeg_images';
@@ -11,7 +11,7 @@ class AmptiveImageStrings{
   static const amptiveLogo = '$_generalSvgImagePath/Logo.svg';
   static const logo2 = '$_generalSvgImagePath/amptive_logotype.svg';
   static const walletIcon = '$_generalSvgImagePath/WALLET ICON.svg';
-  static const sIcon = '$_generalSvgImagePath/Frame 79.svg';
+  static const SHOW_ICON = '$_generalSvgImagePath/Frame 79.svg';
   static const spreadNetworkIcon = '$_generalSvgImagePath/Start or Schedule.svg';
   static const robot = '$_generalSvgImagePath/delivery robot.svg';
   static const filledBell = '$_generalSvgImagePath/Bell=Fill.svg';

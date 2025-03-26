@@ -1,12 +1,14 @@
 
-class AmptiveFontSizes{
-  const AmptiveFontSizes._();
+class ATFontSizes{
+  const ATFontSizes._();
 
   static double size8 = 8.0;
 
   static double size9 = 9.0;
 
   static double size10 = 10.0;
+
+  static double size11 = 11.0;
 
   static double size12 = 12.0;
 

@@ -18,7 +18,7 @@ class AmptiveBlockedAcctsScreen extends StatelessWidget {
 
   @override
   Widget build(context) {
-    return AmptiveAnnotatedRegionWidget(
+    return ATAnnotatedRegion(
       child: Scaffold(
         body: Column(
           children: [
@@ -28,16 +28,16 @@ class AmptiveBlockedAcctsScreen extends StatelessWidget {
                 children: [
                   AmptiveCircleAvatarWidget(
                     onTap: () => context.pop(),
-                    diameter: 30, color: AmptiveColors.transparentColor,
+                    diameter: 30, color: ATColors.trsprtColor,
                     child: const Icon(Icons.keyboard_arrow_left),
                   ),
                   const Spacer(),
                   Text(
-                    AmptiveStrings.BLOCKED_ACCTS,
+                    ATStrings.BLOCKED_ACCTS,
                     style: Theme.of(context).textTheme.bodyMedium,
                   ),
                   const Spacer(),
-                  Icon(Icons.keyboard_arrow_left, color: AmptiveColors.transparentColor),
+                  Icon(Icons.keyboard_arrow_left, color: ATColors.trsprtColor),
                 ],
               ),
             ),
@@ -53,20 +53,20 @@ class AmptiveBlockedAcctsScreen extends StatelessWidget {
                       final subscriber = state.elementAt(listIndex);
                       return AmptiveBlockedOrMutedAcctWidget(
                         subscriber: subscriber,
-                        text: AmptiveStrings.UNBLOCK,
+                        text: ATStrings.UNBLOCK,
                         onTap: (follower, isSelected) async{
                           final shouldUnblock = await showConfirmationDialog(
                             context: context,
-                            title: '${AmptiveStrings.UNBLOCK} ${follower.obj.username}',
-                            content: '${follower.obj.username} ${AmptiveStrings.UNBLOCK_DESC}',
-                            yesString: AmptiveStrings.UNBLOCK,
-                            noString: AmptiveStrings.CANCEL
+                            title: '${ATStrings.UNBLOCK} ${follower.obj.username}',
+                            content: '${follower.obj.username} ${ATStrings.UNBLOCK_DESC}',
+                            yesString: ATStrings.UNBLOCK,
+                            noString: ATStrings.CANCEL
                           );
                           if(context.mounted && (shouldUnblock ?? false)){
                             showAppNotification(
                               context: context,
                               icon: const Icon(Icons.check_circle),
-                              text: '${follower.obj.username} ${AmptiveStrings.IS_UNBLOCKED}'
+                              text: '${follower.obj.username} ${ATStrings.IS_UNBLOCKED}'
                             );
                           }
                         },
@@ -105,12 +105,12 @@ class AmptiveBlockedOrMutedAcctWidget extends StatelessWidget {
       padding: const EdgeInsets.symmetric(vertical: 15),
       child: Row(
         children: [
-          AmptiveContainer(
+          ATContainer(
             clipBehavior: Clip.hardEdge,
             height: 50, width: 50, radius: 30,
             child: FittedBox(
               fit: BoxFit.fill,
-              child: AmptiveImageLoaderWidget(imagePath: subscriber.obj.profilePicture!)
+              child: ATImgLoader(imgPath: subscriber.obj.profilePicture!)
             ),
           ),
           const SizedBox(width: 10),
@@ -120,15 +120,15 @@ class AmptiveBlockedOrMutedAcctWidget extends StatelessWidget {
               style: Theme.of(context).textTheme.titleMedium
             ),
           ),
-          AmptiveContainer(
+          ATContainer(
             onTap: () => onTap(subscriber, subscriber.notifier.value),
-            border: Border.all(color: AmptiveColors.whiteColor),
+            border: Border.all(color: ATColors.white),
             radius: 30, 
             padding: const EdgeInsets.fromLTRB(15, 5, 15, 5),
             child: Text(
               text,
               style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                fontSize: AmptiveFontSizes.size13,
+                fontSize: ATFontSizes.size13,
               ),
             ),
           )

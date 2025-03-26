@@ -48,7 +48,7 @@ class _AmptiveEmailAuthScreenState extends State<AmptiveEmailAuthScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return AmptiveAnnotatedRegionWidget(
+    return ATAnnotatedRegion(
       child: Scaffold(
         appBar: const AmptiveAppBar(),
         body: Padding(
@@ -56,7 +56,7 @@ class _AmptiveEmailAuthScreenState extends State<AmptiveEmailAuthScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(AmptiveStrings.whatIsYourEmail,
+              Text(ATStrings.whatIsYourEmail,
                   style: Theme.of(context).textTheme.headlineMedium),
               Gap(10.h),
               Form(
@@ -66,8 +66,8 @@ class _AmptiveEmailAuthScreenState extends State<AmptiveEmailAuthScreen> {
                   return AmptiveTextFormFieldWidget(
                     controller: _controller,
                     cursorColor: service.email.error == null
-                        ? AmptiveColors.hex307FE2
-                        : AmptiveColors.textRedColor,
+                        ? ATColors.hex307FE2
+                        : ATColors.textRedColor,
                     keyboardType: TextInputType.emailAddress,
                     onChanged: (currentText) {
                       service.validateEmail(currentText);
@@ -78,17 +78,17 @@ class _AmptiveEmailAuthScreenState extends State<AmptiveEmailAuthScreen> {
                     decoration: InputDecoration(
                       contentPadding: EdgeInsets.symmetric(
                           vertical: 12.h, horizontal: 16.w),
-                      hintText: AmptiveStrings.enterYourEmail,
+                      hintText: ATStrings.enterYourEmail,
                       hintStyle: TextStyle(
-                        fontSize: AmptiveFontSizes.size16,
-                        color: AmptiveColors.authHintColor,
-                        fontWeight: AmptiveFontWeights.w400,
+                        fontSize: ATFontSizes.size16,
+                        color: ATColors.authHintColor,
+                        fontWeight: ATFontWeights.w400,
                       ),
                       errorText: service.email.error,
                       errorStyle: TextStyle(
-                        color: AmptiveColors.textRedColor,
-                        fontSize: AmptiveFontSizes.size12,
-                        fontWeight: AmptiveFontWeights.w400,
+                        color: ATColors.textRedColor,
+                        fontSize: ATFontSizes.size12,
+                        fontWeight: ATFontWeights.w400,
                       ),
                       filled: true,
                       fillColor: const Color(0xFF9E9E9E).withOpacity(0.3),
@@ -96,15 +96,15 @@ class _AmptiveEmailAuthScreenState extends State<AmptiveEmailAuthScreen> {
                         borderSide: BorderSide(
                           width: 2.w,
                           color: service.email.error == null
-                              ? AmptiveColors.hex307FE2
-                              : AmptiveColors.textRedColor,
+                              ? ATColors.hex307FE2
+                              : ATColors.textRedColor,
                         ),
                         borderRadius: BorderRadius.circular(14.r),
                       ),
                       border: OutlineInputBorder(
                         borderSide: BorderSide(
                           width: 2.w,
-                          color: AmptiveColors.transparentColor,
+                          color: ATColors.trsprtColor,
                         ),
                         borderRadius: BorderRadius.circular(14.r),
                       ),
@@ -121,7 +121,7 @@ class _AmptiveEmailAuthScreenState extends State<AmptiveEmailAuthScreen> {
                   margin: EdgeInsets.symmetric(vertical: 11.h),
                   child: Text(
                     service.customEmailStatus.value ??
-                        AmptiveStrings.empty,
+                        ATStrings.empty,
                     style: Theme.of(context).textTheme.titleSmall,
                   ),
                 );
@@ -132,8 +132,8 @@ class _AmptiveEmailAuthScreenState extends State<AmptiveEmailAuthScreen> {
         bottomSheet: BlocListener<AmptiveEmailAuthBloc, AmptiveEmailAuthState>(
           listener: (context, state) {
             if (state is ValidEmailAuthState && context.mounted) {
-              context.pushNamed(AmptiveRoutes.otp,
-                  extra: AmptiveStrings.email);
+              context.pushNamed(ATRoutes.otp,
+                  extra: ATStrings.email);
             }
           },
           child: Padding(
@@ -146,7 +146,7 @@ class _AmptiveEmailAuthScreenState extends State<AmptiveEmailAuthScreen> {
                     ? const AmptiveLoadingButtonWidget()
                     : AmptiveElevatedButtonWidget(
                         height: 50.w,
-                        buttonTitle: AmptiveStrings.verifyEmail,
+                        buttonTitle: ATStrings.verifyEmail,
                         onPressed: enableVerificationButton
                             ? () {
                                 context

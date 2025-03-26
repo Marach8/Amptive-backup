@@ -1,6 +1,6 @@
 // ignore_for_file: constant_identifier_names
 
-class AmptiveRoutes {
+class ATRoutes {
   //WELCOME AND ONBOARDING
   static String index = "/";
   static String welcome = "welcome";
@@ -56,4 +56,5 @@ class AmptiveRoutes {
   static const PRIVACY_SCREEN = 'privacy_screen';
   static const BLOCKED_ACCTS_SCREEN = 'blocked_accounts_screen';
   static const MUTED_ACCTS_SCREEN = 'muted_accounts_screen';
+  static const CALENDER_SCREEN = 'calender_screen';
 }
