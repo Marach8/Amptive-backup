@@ -81,7 +81,7 @@ class ATTextFormFieldWidget extends StatelessWidget {
         focusedBorder: disableBlueBorder ?? false ? OutlineInputBorder(
           borderRadius: BorderRadius.circular(14).r,
           borderSide: BorderSide(
-            color: ATColors.trsprtColor
+            color: ATColors.trsprnt
           )
         ) : null,
         hintStyle: hintStyle ?? Theme.of(context).textTheme.titleLarge?.copyWith(

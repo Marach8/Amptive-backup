@@ -140,8 +140,8 @@ class _ATOTPScreenState extends State<ATOTPScreen> {
                               recognizer: _tapGestureRecognizer,
                               style: Theme.of(context).textTheme.titleSmall?.copyWith(
                                 decoration: TextDecoration.underline,
-                                fontWeight: AmptiveFontWeights.w400,
-                                decorationColor: ATColors.whiteColor,
+                                fontWeight: ATFontWeights.w400,
+                                decorationColor: ATColors.white,
                               ),
                             ),
                           ],
@@ -172,9 +172,9 @@ class _ATOTPScreenState extends State<ATOTPScreen> {
             builder: (context, state) {
               return state is LoadingAuthState && context.mounted
                 ? const AmptiveLoadingButtonWidget()
-                : AmptivePlainElevatedBtnWidget(
+                : ATPlainElevatedBtn(
                   height: 50,
-                  buttonTitle: ATStrings.NEXT,
+                  btnTitle: ATStrings.NEXT,
                   onPressed: state is ValidOTPAuthState
                     ? () => context.read<AmptiveOTPAuthBloc>().add(VerifyOTPAuthEvent()) : null,
                 );
@@ -240,7 +240,7 @@ class _OTPTextFormField extends StatelessWidget {
           border: OutlineInputBorder(
             borderSide: BorderSide(
               width: 2,
-              color: ATColors.trspntColor,
+              color: ATColors.trsprnt,
             ),
             borderRadius: BorderRadius.circular(14),
           ),

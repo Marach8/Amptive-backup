@@ -32,17 +32,16 @@ class ATAccountInfoScreen extends StatelessWidget {
                 children: [
                   AmptiveCircleAvatarWidget(
                     onTap: () => context.pop(),
-                    diameter: 30, color: ATColors.trspntColor,
+                    diameter: 30, color: ATColors.trsprnt,
                     child: const Icon(Icons.keyboard_arrow_left),
                   ),
                   const Spacer(),
                   Text(
                     ATStrings.ACCT,
-                    ATStrings.ACCT,
                     style: Theme.of(context).textTheme.bodyMedium,
                   ),
                   const Spacer(),
-                  Icon(Icons.keyboard_arrow_left, color: ATColors.trspntColor),
+                  Icon(Icons.keyboard_arrow_left, color: ATColors.trsprnt),
                 ],
               ),
             ),
@@ -167,10 +166,10 @@ class RenderRowInfo extends StatelessWidget {
                 Text(
                   value,
                   style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                    color: ATColors.whiteColor.withValues(alpha: 0.4)
+                    color: ATColors.white.withValues(alpha: 0.4)
                   ),
                 ),
-                Icon(Icons.keyboard_arrow_right, color: ATColors.whiteColor.withValues(alpha: 0.4)),
+                Icon(Icons.keyboard_arrow_right, color: ATColors.white.withValues(alpha: 0.4)),
               ],
             ),
           ),

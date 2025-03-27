@@ -11,9 +11,9 @@ class AmptiveTextButtonTheme{
     style: TextButton.styleFrom(
       elevation: 0,
       foregroundColor: ATColors.white,
-      backgroundColor: ATColors.trsprtColor,
+      backgroundColor: ATColors.trsprnt,
       disabledForegroundColor: ATColors.grey4Color,
-      disabledBackgroundColor: ATColors.trsprtColor,
+      disabledBackgroundColor: ATColors.trsprnt,
       textStyle: TextStyle(
         fontFamily: ATStrings.inter,
         fontSize: ATFontSizes.size16,

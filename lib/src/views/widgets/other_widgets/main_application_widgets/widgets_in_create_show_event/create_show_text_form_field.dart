@@ -61,14 +61,14 @@ class CreateShowTextFormField extends ATTextFormFieldWidget {
         focusedBorder: OutlineInputBorder(
           borderSide: BorderSide(
             width: 2.w,
-            color: ATColors.trsprtColor,
+            color: ATColors.trsprnt,
           ),
           borderRadius: BorderRadius.circular(14.r),
         ),
         enabledBorder: OutlineInputBorder(
           borderSide: BorderSide(
             width: 1.w,
-            color: ATColors.trsprtColor,
+            color: ATColors.trsprnt,
           ),
           borderRadius: BorderRadius.circular(14.r),
         ), // Removes the border when not focused

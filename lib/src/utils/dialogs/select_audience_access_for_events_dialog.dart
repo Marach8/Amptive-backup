@@ -88,7 +88,7 @@ Future<void> showSelectAudienceAccessForEventsDialog(
                         width: 2,
                         color: value
                             ? ATColors.hex307FE2
-                            : ATColors.trspntColor),
+                            : ATColors.trsprnt),
                     child: Row(
                       children: [
                         const ATImgLoader(
@@ -122,7 +122,7 @@ Future<void> showSelectAudienceAccessForEventsDialog(
                             padding: const EdgeInsets.all(3),
                             color: value
                                 ? ATColors.hex307FE2
-                                : ATColors.trspntColor,
+                                : ATColors.trsprnt,
                             border: Border.all(
                                 color: value
                                     ? ATColors.hex307FE2
@@ -152,7 +152,7 @@ Future<void> showSelectAudienceAccessForEventsDialog(
                         width: 2,
                         color: value
                             ? ATColors.hex307FE2
-                            : ATColors.trspntColor),
+                            : ATColors.trsprnt),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisSize: MainAxisSize.min,
@@ -179,7 +179,6 @@ Future<void> showSelectAudienceAccessForEventsDialog(
                                         .titleMedium
                                         ?.copyWith(
                                             color: ATColors.hexC2C2C2),
-                                            color: ATColors.hexC2C2C2),
                                   ),
                                 ],
                               ),
@@ -192,7 +191,7 @@ Future<void> showSelectAudienceAccessForEventsDialog(
                                 padding: const EdgeInsets.all(3),
                                 color: value
                                     ? ATColors.hex307FE2
-                                    : ATColors.trspntColor,
+                                    : ATColors.trsprnt,
                                 border: Border.all(
                                     color: value
                                         ? ATColors.hex307FE2

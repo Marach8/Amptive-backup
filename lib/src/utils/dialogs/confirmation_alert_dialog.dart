@@ -22,7 +22,6 @@ Future<bool?> showConfirmationDialog({
     context: context,
     builder: (_) => AlertDialog(
       backgroundColor: ATColors.indicatorDark.withOpacity(0.82),
-      backgroundColor: ATColors.indicatorDark.withOpacity(0.82),
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(14),
       ),

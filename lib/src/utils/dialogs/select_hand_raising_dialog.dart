@@ -87,14 +87,14 @@ Future<void> showHandRaisingDialog(BuildContext context)async{
                   color: ATColors.hex2D2D2D,
                   border: Border.all(
                     width: 2,
-                    color: value ? ATColors.hex307FE2 : ATColors.trspntColor
+                    color: value ? ATColors.hex307FE2 : ATColors.trsprnt
                   ),
                   child: Row(
                     children: [
                       ATContainer(
                         height: 20, width: 20, radius: 20,
                         padding: const EdgeInsets.all(3),
-                        color: value ? ATColors.hex307FE2 : ATColors.trspntColor,
+                        color: value ? ATColors.hex307FE2 : ATColors.trsprnt,
                         border: Border.all(
                           color: value ? ATColors.hex307FE2 : ATColors.white,
                           strokeAlign: 5.0
@@ -146,7 +146,7 @@ Future<void> showHandRaisingDialog(BuildContext context)async{
                   color: ATColors.hex2D2D2D,
                   border: Border.all(
                     width: 2,
-                    color: value ? ATColors.hex307FE2 : ATColors.trspntColor
+                    color: value ? ATColors.hex307FE2 : ATColors.trsprnt
                   ),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -157,7 +157,7 @@ Future<void> showHandRaisingDialog(BuildContext context)async{
                           ATContainer(
                             height: 20, width: 20, radius: 20,
                             padding: const EdgeInsets.all(3),
-                            color: value ? ATColors.hex307FE2 : ATColors.trspntColor,
+                            color: value ? ATColors.hex307FE2 : ATColors.trsprnt,
                             border: Border.all(
                               color: value ? ATColors.hex307FE2 : ATColors.white,
                               strokeAlign: 5.0

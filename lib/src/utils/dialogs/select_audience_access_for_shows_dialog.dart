@@ -84,7 +84,7 @@ Future<String> showSelectAudienceAccessForShowsDialog(
                   color: ATColors.hex2D2D2D,
                   border: Border.all(
                     width: 2,
-                    color: isActive ? ATColors.hex307FE2 : ATColors.trspntColor
+                    color: isActive ? ATColors.hex307FE2 : ATColors.trsprnt
                   ),
                   child: Row(
                     children: [
@@ -113,7 +113,7 @@ Future<String> showSelectAudienceAccessForShowsDialog(
                       ATContainer(
                         height: 20, width: 20, radius: 20,
                         padding: const EdgeInsets.all(3),
-                        color: isActive ? ATColors.hex307FE2 : ATColors.trspntColor,
+                        color: isActive ? ATColors.hex307FE2 : ATColors.trsprnt,
                         border: Border.all(
                           color: isActive ? ATColors.hex307FE2 : ATColors.white,
                           strokeAlign: 5.0
@@ -146,7 +146,7 @@ Future<String> showSelectAudienceAccessForShowsDialog(
                   color: ATColors.hex2D2D2D,
                   border: Border.all(
                     width: 2,
-                    color: isActive ? ATColors.hex307FE2 : ATColors.trspntColor
+                    color: isActive ? ATColors.hex307FE2 : ATColors.trsprnt
                   ),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -179,7 +179,7 @@ Future<String> showSelectAudienceAccessForShowsDialog(
                           ATContainer(
                             height: 20, width: 20, radius: 20,
                             padding: const EdgeInsets.all(3),
-                            color: isActive ? ATColors.hex307FE2 : ATColors.trspntColor,
+                            color: isActive ? ATColors.hex307FE2 : ATColors.trsprnt,
                             border: Border.all(
                               color: isActive ? ATColors.hex307FE2 : ATColors.white,
                               strokeAlign: 5.0

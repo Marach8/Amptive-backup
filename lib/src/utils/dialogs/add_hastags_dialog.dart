@@ -400,9 +400,9 @@ class AmptiveAddHashtagWidget extends StatelessWidget {
                   return ATContainer(
                       duration: 200,
                       color: value
-                          ? ATColors.whiteColor
-                          : ATColors.trspntColor,
-                      border: Border.all(color: ATColors.whiteColor),
+                          ? ATColors.white
+                          : ATColors.trsprnt,
+                      border: Border.all(color: ATColors.white),
                       boxShape: BoxShape.circle,
                       height: 24,
                       width: 24,

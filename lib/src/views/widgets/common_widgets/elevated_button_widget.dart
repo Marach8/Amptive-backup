@@ -65,7 +65,7 @@ class AmptiveElevatedButtonWidget extends StatelessWidget {
 
 class ATPlainElevatedBtn extends StatelessWidget {
   final String? btnTitle;
-  final VoidCallback onPressed;
+  final void Function()? onPressed;
   final double? height;
   final Color? bgColor, fgColor;
   final Widget? child;

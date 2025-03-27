@@ -2,26 +2,26 @@
 
 class ATRoutes {
   //WELCOME AND ONBOARDING
-  static String index = "/";
-  static String welcome = "welcome";
-  static String onboarding = "onboarding";
+  static  const index = "/";
+  static  const welcome = "welcome";
+  static  const onboarding = "onboarding";
 
   //AUTHENTICATION
-  static String EMAIL_SCREEN = "email_auth";
-  static String preference = "preference";
-  static String authScreen = "auth_screen";
-  static String passwordAuth = "password_auth";
-  static String dobAuth = "dob_auth";
-  static String OTP_SCREEN = "otp";
-  static String addName = "name_auth";
-  static String addUsername = "username_auth";
-  static String ADD_FONE_NO_SCREEN = "add_phone_auth";
+  static  const EMAIL_SCREEN = "email_auth";
+  static  const preference = "preference";
+  static  const authScreen = "auth_screen";
+  static  const passwordAuth = "password_auth";
+  static  const dobAuth = "dob_auth";
+  static  const OTP_SCREEN = "otp";
+  static  const addName = "name_auth";
+  static  const addUsername = "username_auth";
+  static  const ADD_FONE_NO_SCREEN = "add_phone_auth";
 
   //POST AUTHENTICATION
-  static String addProfilePic = "add_profile_pic";
-  static String cropImage = "crop_image";
-  static String cropImageSquare = "crop_image_square";
-  static String preHomepage = "pre-homepage";
+  static  const addProfilePic = "add_profile_pic";
+  static  const cropImage = "crop_image";
+  static  const cropImageSquare = "crop_image_square";
+  static  const preHomepage = "pre-homepage";
   static const CREATE_SHOW_FORM = "create-show-form";
   static const CREATE_EVENT_FORM = "create-event-form";
   static const CREATE_EPISODE_FORM = "create-episode-form";
@@ -57,6 +57,7 @@ class ATRoutes {
   static const PRIVACY_SCREEN = 'privacy_screen';
   static const BLOCKED_ACCTS_SCREEN = 'blocked_accounts_screen';
   static const MUTED_ACCTS_SCREEN = 'muted_accounts_screen';
-  static const CALENDER_SCREEN = 'calender_screen';
   static const SELECT_COUNTRY_SCREEN = 'select_country_screen';
+  static const ACCT_INFO_SCREEN = 'account_infomation_screen';
+  static const ACCT_SCREEN = 'account_screen';
 }

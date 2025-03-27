@@ -30,7 +30,7 @@ class AmptiveCreatorProfileScreen extends StatelessWidget {
     final tabIndex = ValueNotifier<int>(0);
     
     return ATAnnotatedRegion(
-      statusBarColor: ATColors.trsprtColor,
+      statusBarColor: ATColors.trsprnt,
       child: Scaffold(
         body: NestedScrollView(
           headerSliverBuilder: (_, __) => [
@@ -88,8 +88,8 @@ class AmptiveCreatorProfileScreen extends StatelessWidget {
                                 end: Alignment.bottomCenter,
                                 colors: [
                                   ATColors.black,
-                                  ATColors.trspntColor,
-                                  ATColors.trspntColor
+                                  ATColors.trsprnt,
+                                  ATColors.trsprnt
                                 ]
                               ),
                               width: ATHelperFuncs.getScreenWidth(context),

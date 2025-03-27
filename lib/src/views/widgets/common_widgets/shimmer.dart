@@ -23,7 +23,7 @@ class ShimmerWidget extends StatelessWidget {
   Widget build(context) {
     return Shimmer.fromColors(
       baseColor: baseColor ?? ATColors.white.withValues(alpha: 0.5),
-      highlightColor: highlightColor ?? ATColors.fillGreyColor,
+      highlightColor: highlightColor ?? ATColors.hex9E9E9E,
       child: ATContainer(
         margin: margin,
         height: height ?? 40, radius: 5,

@@ -102,7 +102,7 @@ Future<void> showWhispersDialog(BuildContext context) async {
                         width: 2,
                         color: value
                             ? ATColors.hex307FE2
-                            : ATColors.trspntColor),
+                            : ATColors.trsprnt),
                     child: Row(
                       children: [
                         ATContainer(
@@ -112,7 +112,7 @@ Future<void> showWhispersDialog(BuildContext context) async {
                             padding: const EdgeInsets.all(3),
                             color: value
                                 ? ATColors.hex307FE2
-                                : ATColors.trspntColor,
+                                : ATColors.trsprnt,
                             border: Border.all(
                                 color: value
                                     ? ATColors.hex307FE2
@@ -165,7 +165,7 @@ Future<void> showWhispersDialog(BuildContext context) async {
                         width: 2,
                         color: value
                             ? ATColors.hex307FE2
-                            : ATColors.trspntColor),
+                            : ATColors.trsprnt),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisSize: MainAxisSize.min,
@@ -179,7 +179,7 @@ Future<void> showWhispersDialog(BuildContext context) async {
                                 padding: const EdgeInsets.all(3),
                                 color: value
                                     ? ATColors.hex307FE2
-                                    : ATColors.trspntColor,
+                                    : ATColors.trsprnt,
                                 border: Border.all(
                                     color: value
                                         ? ATColors.hex307FE2

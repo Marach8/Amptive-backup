@@ -28,17 +28,15 @@ class AmptiveExistingEventWidget extends StatelessWidget {
       notifier: eachButtonNotifier,
       builder: (_, isSelected, __) {
         return ATContainer(
-        return ATContainer(
           onTap: () => onTap(isSelected),
           radius: 5,
           border: Border.all(
-            color: isSelected ? ATColors.hex307FE2 : ATColors.trspntColor,
+            color: isSelected ? ATColors.hex307FE2 : ATColors.trsprnt,
             width: 3,
           ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              ATContainer(
               ATContainer(
                 radius: 5, height: imageHeight,
                 width: imageWidth,
@@ -65,8 +63,6 @@ class AmptiveExistingEventWidget extends StatelessWidget {
                       style: Theme.of(context).textTheme.titleSmall?.copyWith(
                         fontSize: ATFontSizes.size13,
                         color: ATColors.grey5Color,
-                        fontSize: ATFontSizes.size13,
-                        color: ATColors.grey5Color,
                       ),
                     ),
                   ),
@@ -77,13 +73,11 @@ class AmptiveExistingEventWidget extends StatelessWidget {
                     child: AmptiveCircleAvatarWidget(
                       diameter: 5,
                       color: ATColors.grey5Color,
-                      color: ATColors.grey5Color,
                     ),
                   ),
                   Text(
                     'LIVE',
                     style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                      color: ATColors.grey5Color,
                       color: ATColors.grey5Color,
                     ),
                   ),

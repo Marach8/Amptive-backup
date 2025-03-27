@@ -378,7 +378,7 @@ class _GoLiveAudienViewControlsWidgetState extends State<GoLiveAudienViewControl
                       color: commentIsEnabled ? ATColors.strokeGreyColor
                       : ATColors.strokeGreyColor.withOpacity(0.3)
                     ),
-                    fillColor: commentIsEnabled ? ATColors.fillGreyColor.withOpacity(0.1) 
+                    fillColor: commentIsEnabled ? ATColors.hex9E9E9E.withOpacity(0.1) 
                       : ATColors.white.withOpacity(0.01),
                     enabled: commentIsEnabled ? true : false,
                     cursorColor: ATColors.white.withOpacity(0.6),

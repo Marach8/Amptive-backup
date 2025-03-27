@@ -129,8 +129,8 @@ Future<void> showEventCapacitySelectionDialog({
                     context.pop();
                   },
                   buttonTitle: ATStrings.REMOVE,
-                  bgColor: ATColors.trspntColor,
-                  fgColor: ATColors.whiteColor,
+                  bgColor: ATColors.trsprnt,
+                  fgColor: ATColors.white,
                 ),
                 const Gap(10),
               ],

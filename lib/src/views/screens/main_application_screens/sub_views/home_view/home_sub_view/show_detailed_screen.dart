@@ -4,6 +4,7 @@ import 'package:amptive/src/utils/constants/colors.dart';
 import 'package:amptive/src/utils/constants/strings/image_strings.dart';
 import 'package:amptive/src/utils/constants/strings/other_strings.dart';
 import 'package:amptive/src/utils/helpers/helper_functions/helper_functions.dart';
+import 'package:amptive/src/views/screens/main_application_screens/sub_views/home_view/home_sub_view/profile/creator_profile.dart';
 import 'package:amptive/src/views/widgets/common_widgets/annotated_region__widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/custom_container_widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/elevated_button_widget.dart';
@@ -59,9 +60,9 @@ class ATShowDetailedScreen extends StatelessWidget {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          const EventOrShowDisplay(),
+                          const ProfileEventOrShowDisplay(),
                           Gap(30.h),
-                          const AmptiveRowOfSubtitleAndForwardIconWidget(),
+                          //const AmptiveRowOfSubtitleAndForwardIconWidget(),
                           Gap(15.h),
                           Text(
                             maxLines: 2,
@@ -163,7 +164,7 @@ class ATShowDetailedScreen extends StatelessWidget {
                         ],
                       ),
                     ),
-                    const AmptiveWhispersListViewWidget(),
+                    const ATWhispers(),
                     const Gap(70)
                   ],
                 ),

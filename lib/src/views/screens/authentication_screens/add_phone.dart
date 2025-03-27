@@ -79,7 +79,7 @@ class _AddPhoneScreenState extends State<AddPhoneScreen> {
                           color: ATColors.hex9E9E9E.withOpacity(0.3),
                           radius: 14,
                           border: Border.all(
-                            color: _bottomSheetOpened ? ATColors.hex307FE2 : ATColors.trspntColor,
+                            color: _bottomSheetOpened ? ATColors.hex307FE2 : ATColors.trsprnt,
                             width: 2,
                           ),
                           child: Row(
@@ -97,7 +97,7 @@ class _AddPhoneScreenState extends State<AddPhoneScreen> {
                               Text(
                                 ATStrings.plus + selectedCountry.phoneCode,
                                 style: Theme.of(context).textTheme.labelMedium?.copyWith(
-                                  color: ATColors.whiteColor
+                                  color: ATColors.white
                                 ),
                               ),
                               Icon(
@@ -132,7 +132,7 @@ class _AddPhoneScreenState extends State<AddPhoneScreen> {
                             borderSide: BorderSide(width: 2, color: ATColors.hex307FE2),
                           ),
                           border: OutlineInputBorder(
-                            borderSide: BorderSide(width: 2, color: ATColors.trspntColor),
+                            borderSide: BorderSide(width: 2, color: ATColors.trsprnt),
                           ),
                         ),
                       ),
@@ -158,9 +158,9 @@ class _AddPhoneScreenState extends State<AddPhoneScreen> {
               Country selectedCountry = state is SelectCountryCodeState
                 ? state.selectedCountry : CountryPickerUtils.getCountryByIsoCode(
                     Constants.kDefaultCountrySelected);
-              return AmptivePlainElevatedBtnWidget(
+              return ATPlainElevatedBtn(
                 height: 50,
-                buttonTitle: ATStrings.VERIFY_FONE,
+                btnTitle: ATStrings.VERIFY_FONE,
                 onPressed: state is AddPhoneNumberState && state.isPhoneValid
                   ? () {
                     final phoneNo = ATStrings.plus + selectedCountry.phoneCode + _phoneController.text.trim();

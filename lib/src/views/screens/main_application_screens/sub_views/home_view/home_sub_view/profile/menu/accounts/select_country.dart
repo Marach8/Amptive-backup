@@ -19,7 +19,7 @@ class ATSelectCountryScreen extends StatelessWidget {
 
   @override
   Widget build(context) {
-    return ATAnnotatedRegionWidget(
+    return ATAnnotatedRegion(
       child: Scaffold(
         body: Column(
           children: [
@@ -29,7 +29,7 @@ class ATSelectCountryScreen extends StatelessWidget {
                 children: [
                   AmptiveCircleAvatarWidget(
                     onTap: () => context.pop(),
-                    diameter: 30, color: ATColors.trspntColor,
+                    diameter: 30, color: ATColors.trsprnt,
                     child: const Icon(Icons.keyboard_arrow_left),
                   ),
                   const Spacer(),
@@ -38,7 +38,7 @@ class ATSelectCountryScreen extends StatelessWidget {
                     style: Theme.of(context).textTheme.bodyMedium,
                   ),
                   const Spacer(),
-                  Icon(Icons.keyboard_arrow_left, color: ATColors.trspntColor),
+                  Icon(Icons.keyboard_arrow_left, color: ATColors.trsprnt),
                 ],
               ),
             ),
@@ -70,9 +70,9 @@ class ATSelectCountryScreen extends StatelessWidget {
                                 ATContainer(
                                   height: 15, width: 15, boxShape: BoxShape.circle,
                                   padding: const EdgeInsets.all(5),
-                                  color: isSelected ? ATColors.hex307FE2 : ATColors.trspntColor,
+                                  color: isSelected ? ATColors.hex307FE2 : ATColors.trsprnt,
                                   border: Border.all(
-                                    color: isSelected ? ATColors.hex307FE2 : ATColors.whiteColor,
+                                    color: isSelected ? ATColors.hex307FE2 : ATColors.white,
                                     strokeAlign: 5.0
                                   ),
                                   child: const SizedBox.shrink()

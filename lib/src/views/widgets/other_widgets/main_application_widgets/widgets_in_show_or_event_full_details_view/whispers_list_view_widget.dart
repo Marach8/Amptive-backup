@@ -21,13 +21,12 @@ class ATWhispers extends StatelessWidget {
           margin: const EdgeInsets.only(left: 15),
           padding: const EdgeInsets.fromLTRB(15, 0, 15,  0),
           height: 230, width: 285, radius: 10,
-          color: ATColors.whiteColor.withOpacity(0.1),
+          color: ATColors.white.withOpacity(0.1),
           child: Column(
             children: [
               const AmptiveListTileWithLeadingPictureWidget(
                 title: 'karankabir',
                 subtitle: 'Listener',
-                leadingImagePath: ATImgStrings.jpeg1,
                 leadingImagePath: ATImgStrings.jpeg1,
               ),
               const SizedBox(height: 10),

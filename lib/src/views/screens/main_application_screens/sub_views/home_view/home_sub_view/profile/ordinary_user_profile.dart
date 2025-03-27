@@ -25,7 +25,7 @@ class ATUserProfileScreen extends StatelessWidget {
     final tabIndex = ValueNotifier(0);
 
     return ATAnnotatedRegion(
-      statusBarColor: ATColors.trsprtColor,
+      statusBarColor: ATColors.trsprnt,
       child: Scaffold(
         body: NestedScrollView(
           floatHeaderSlivers: true,

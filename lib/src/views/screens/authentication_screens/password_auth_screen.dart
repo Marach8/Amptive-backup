@@ -85,7 +85,7 @@ class _PasswordAuthScreenState extends State<PasswordAuthScreen> {
                           border: OutlineInputBorder(
                             borderSide: BorderSide(
                               width: 2.w,
-                              color: ATColors.trspntColor,
+                              color: ATColors.trsprnt,
                             ),
                             borderRadius: BorderRadius.circular(14.r),
                           ),

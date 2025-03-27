@@ -109,7 +109,7 @@ class _ATEmailAuthScreenState extends State<ATEmailAuthScreen> {
                       border: OutlineInputBorder(
                         borderSide: BorderSide(
                           width: 2,
-                          color: ATColors.trspntColor,
+                          color: ATColors.trsprnt,
                         ),
                         borderRadius: BorderRadius.circular(14),
                       ),
@@ -150,9 +150,9 @@ class _ATEmailAuthScreenState extends State<ATEmailAuthScreen> {
         
               return state is LoadingAuthState && context.mounted
                 ? const AmptiveLoadingButtonWidget()
-                : AmptivePlainElevatedBtnWidget(
+                : ATPlainElevatedBtn(
                     height: 50,
-                    buttonTitle: ATStrings.verifyEmail,
+                    btnTitle: ATStrings.verifyEmail,
                     onPressed: enableBtn ? (){
                       context.read<ATEmailAuthBloc>()
                         .add(VerifyEmailAuthEvent());

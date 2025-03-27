@@ -13,20 +13,16 @@ class ATEventOrShowCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ATContainer(
-    return ATContainer(
       padding: const EdgeInsets.all(10),
       alignment: Alignment.topRight,
       height: 360.h,
       radius: 16,
       decorationImagePath: ATImgStrings.weCanDoHardThingsBgImage,
-      decorationImagePath: ATImgStrings.weCanDoHardThingsBgImage,
       child: GestureDetector(                      
         onTap: () => showAudioOrVideoFullDetailsOptions(context),
         child: ATContainer(
-        child: ATContainer(
           height: 32, width: 32,
           boxShape: BoxShape.circle,
-          color: ATColors.brandBlack.withOpacity(0.7),
           color: ATColors.brandBlack.withOpacity(0.7),
           child: const Icon(Icons.more_horiz),
         ),
