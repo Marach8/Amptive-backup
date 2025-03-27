@@ -1,5 +1,5 @@
 import 'package:amptive/src/utils/constants/strings/image_strings.dart';
-import 'package:amptive/src/utils/helpers/helper_functions/other_functions.dart';
+import 'package:amptive/src/utils/helpers/helper_functions/helper_functions.dart';
 import 'package:amptive/src/views/widgets/other_widgets/onboarding_widgets/heading_and_description_texts_column_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -27,8 +27,8 @@ class AmptiveCustomOnboardingPageViewSlideWidget extends StatelessWidget {
           color: pictureBgColor,
           width: ATHelperFuncs.getScreenWidth(context),
           height: ATHelperFuncs.getScreenHeight(context) * 0.65,
-          child: const AmptiveImageLoaderWidget(
-            imagePath: ATImgStrings.emptyImage,
+          child: const ATImgLoader(
+            imgPath: ATImgStrings.emptyImage,
             boxFit: BoxFit.scaleDown,
           )
         ),

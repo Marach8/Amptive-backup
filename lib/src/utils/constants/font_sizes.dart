@@ -8,6 +8,8 @@ class ATFontSizes{
 
   static double size10 = 10.0;
 
+  static double size11 = 11.0;
+
   static double size12 = 12.0;
 
   static double size13 = 13.0;

@@ -63,7 +63,7 @@ class _AmptiveScheduledShowOrEventDataModelWidgetState extends State<AmptiveSche
           radius: 15.r,
           child: Stack(
             children: [
-              const AmptiveImageLoaderWidget(imagePath: ATImgStrings.weCanDoHardThingsBgImage),
+              const ATImgLoader(imgPath: ATImgStrings.weCanDoHardThingsBgImage),
               ATContainer(
                 padding: const EdgeInsets.fromLTRB(15, 10, 15, 10),
                 radius: 15.r,
@@ -71,10 +71,10 @@ class _AmptiveScheduledShowOrEventDataModelWidgetState extends State<AmptiveSche
                   begin: Alignment.topCenter,
                   end: Alignment.bottomCenter,
                   colors: [
-                    ATColors.trspntColor,
-                    ATColors.trspntColor,
-                    ATColors.trspntColor,
-                    ATColors.trspntColor,
+                    ATColors.trsprtColor,
+                    ATColors.trsprtColor,
+                    ATColors.trsprtColor,
+                    ATColors.trsprtColor,
                     ATColors.containerGradientColorB.withOpacity(0.5),
                     ATColors.containerGradientColorB,
                     ATColors.containerGradientColorB,
@@ -99,7 +99,7 @@ class _AmptiveScheduledShowOrEventDataModelWidgetState extends State<AmptiveSche
                       overflow: TextOverflow.clip,
                       style: Theme.of(context).textTheme.displayMedium?.copyWith(
                         fontSize: ATFontSizes.size24,
-                        fontWeight: AmptiveFontWeights.w600,
+                        fontWeight: ATFontWeights.w600,
                         fontFamily: "Bricolage Grotesque"
                       ),
                     ),

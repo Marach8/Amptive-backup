@@ -66,7 +66,7 @@ class ATTextFormFieldWidget extends StatelessWidget {
       onChanged: onChanged,
       maxLength: maxLength,
       onSaved: onSaved,
-      cursorColor: disableBlueBorder ?? false ? ATColors.whiteColor
+      cursorColor: disableBlueBorder ?? false ? ATColors.white
         : ATColors.hex307FE2,
       obscureText: obscureText ?? false,
       cursorHeight: cursorHeight,
@@ -81,7 +81,7 @@ class ATTextFormFieldWidget extends StatelessWidget {
         focusedBorder: disableBlueBorder ?? false ? OutlineInputBorder(
           borderRadius: BorderRadius.circular(14).r,
           borderSide: BorderSide(
-            color: ATColors.trspntColor
+            color: ATColors.trsprtColor
           )
         ) : null,
         hintStyle: hintStyle ?? Theme.of(context).textTheme.titleLarge?.copyWith(
@@ -100,9 +100,9 @@ class ATTextFormFieldWidget extends StatelessWidget {
         enabledBorder: null
       ),
       style: TextStyle(
-        fontWeight: AmptiveFontWeights.w400,
+        fontWeight: ATFontWeights.w400,
         fontSize: ATFontSizes.size18,
-        color: ATColors.whiteColor,
+        color: ATColors.white,
       ),
     );
   }

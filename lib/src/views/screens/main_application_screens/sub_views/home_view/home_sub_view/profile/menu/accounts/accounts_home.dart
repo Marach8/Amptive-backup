@@ -14,7 +14,7 @@ class ATAccountScreen extends StatelessWidget {
 
   @override
   Widget build(context) {
-    return ATAnnotatedRegionWidget(
+    return ATAnnotatedRegion(
       child: Scaffold(
         body: Column(
           children: [
@@ -50,7 +50,7 @@ class ATAccountScreen extends StatelessWidget {
                       extra: <String?>['nnanna@gmail.com', '']
                     ),
                     padding: const EdgeInsets.all(15),
-                    color: ATColors.whiteColor.withValues(alpha: 0.1),
+                    color: ATColors.white.withValues(alpha: 0.1),
                     radius: 14,
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -66,13 +66,13 @@ class ATAccountScreen extends StatelessWidget {
                               Text(
                                 ATStrings.SET_UP_ACCT_DETAILS, maxLines: 2,
                                 style: Theme.of(context).textTheme.labelSmall?.copyWith(
-                                  color: ATColors.whiteColor.withValues(alpha: 0.4)
+                                  color: ATColors.white.withValues(alpha: 0.4)
                                 ),
                               ),
                             ],
                           ),
                         ),
-                        Icon(Icons.keyboard_arrow_right, color: ATColors.whiteColor.withValues(alpha: 0.4)),
+                        Icon(Icons.keyboard_arrow_right, color: ATColors.white.withValues(alpha: 0.4)),
                       ],
                     )
                   ),
@@ -80,7 +80,7 @@ class ATAccountScreen extends StatelessWidget {
                   const SizedBox(height: 20),
 
                   ATContainer(
-                    color: ATColors.whiteColor.withValues(alpha: 0.1),
+                    color: ATColors.white.withValues(alpha: 0.1),
                     padding: const EdgeInsets.fromLTRB(15, 10, 15, 10),
                     radius: 14,
                     child: Row(
@@ -90,7 +90,7 @@ class ATAccountScreen extends StatelessWidget {
                           ATStrings.DEACTIVATE_ACCT,
                           style: Theme.of(context).textTheme.bodySmall,
                         ),
-                        Icon(Icons.keyboard_arrow_right, color: ATColors.whiteColor.withValues(alpha: 0.4)),
+                        Icon(Icons.keyboard_arrow_right, color: ATColors.white.withValues(alpha: 0.4)),
                       ],
                     ),
                   )

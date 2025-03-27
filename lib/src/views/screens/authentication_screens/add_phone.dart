@@ -41,7 +41,7 @@ class _AddPhoneScreenState extends State<AddPhoneScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return ATAnnotatedRegionWidget(
+    return ATAnnotatedRegion(
       child: Scaffold(
         appBar: AmptiveAppBar(
           title: Text(

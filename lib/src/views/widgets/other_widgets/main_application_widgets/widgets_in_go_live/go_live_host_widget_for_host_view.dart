@@ -1,6 +1,6 @@
 import 'package:amptive/src/models/host.dart';
 import 'package:amptive/src/utils/constants/font_sizes.dart';
-import 'package:amptive/src/views/widgets/common_widgets/circular_container_with_picture_widget.dart';
+import 'package:amptive/src/views/widgets/common_widgets/circular_image.dart';
 import 'package:amptive/src/views/widgets/common_widgets/custom_container_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -59,15 +59,15 @@ class AmptiveLiveHostAndCoHostWidget extends StatelessWidget {
           children: [
             showAddIcon ? ATContainer(
               height: 64.h, width: 64.h, radius: 40.h,
-              border: Border.all(color: ATColors.whiteColor, width: 0.5),
+              border: Border.all(color: ATColors.white, width: 0.5),
               child: const Icon(Icons.add, size: 40)) 
             : Stack(
               clipBehavior: Clip.none,
               alignment: Alignment.center,
               children: [
-                ATRoundedImage(
+                ATCircularImage(
                   diameter: isHost ? 94.h : 64.h, addBorder: true,
-                  borderColor: ATColors.whiteColor,
+                  borderColor: ATColors.white,
                   borderWidth: 1, picturePadding: 2,
                   imagePath: hostOrCohost?.obj.profilePicture ?? ''
                 ),
@@ -103,7 +103,7 @@ class AmptiveLiveHostAndCoHostWidget extends StatelessWidget {
                 begin: Alignment.topCenter,
                 end: Alignment.bottomCenter,
                 colors: [
-                  ATColors.orangeColor1,
+                  ATColors.hexF91880,
                   ATColors.orangeGradientColorB
                 ]
               ),

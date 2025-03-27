@@ -39,15 +39,15 @@ Future<void> showMinimizedGoLiveState() async {
                 Text(
                   'glennodoyle and 2 others',
                   style: TextStyle(
-                    color: ATColors.whiteColor,
+                    color: ATColors.white,
                     fontSize: ATFontSizes.size13,
-                    fontWeight: AmptiveFontWeights.w500,
+                    fontWeight: ATFontWeights.w500,
                   ),
                 ),
                 Row(
                   children: [
-                    const AmptiveImageLoaderWidget(
-                      imagePath: ATImgStrings.filledBroadCast,
+                    const ATImgLoader(
+                      imgPath: ATImgStrings.filledBroadCast,
                       height: 15, width: 15,
                     ),
 
@@ -59,7 +59,7 @@ Future<void> showMinimizedGoLiveState() async {
                           style: TextStyle(
                             color: ATColors.hexC2C2C2,
                             fontSize: ATFontSizes.size12,
-                            fontWeight: AmptiveFontWeights.w500,
+                            fontWeight: ATFontWeights.w500,
                           ),
                         ),
                       ),
@@ -72,7 +72,7 @@ Future<void> showMinimizedGoLiveState() async {
           ),
           GestureDetector(
             onTap: () => scaffoldMessengerKey.currentState?.hideCurrentSnackBar(),
-            child: Icon(Icons.close, color: ATColors.whiteColor, size: 20),
+            child: Icon(Icons.close, color: ATColors.white, size: 20),
           )
         ],
       ),

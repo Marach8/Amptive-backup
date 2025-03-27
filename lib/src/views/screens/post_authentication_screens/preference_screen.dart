@@ -34,7 +34,7 @@ class _AmptivePreferenceScreenState extends State<AmptivePreferenceScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return ATAnnotatedRegionWidget(
+    return ATAnnotatedRegion(
       child: BlocListener<AmptivePreferenceBloc, AmptivePreferenceState>(
         listener: (context, state) {
           if (state is PreferencePersonalizedState) {
@@ -55,7 +55,7 @@ class _AmptivePreferenceScreenState extends State<AmptivePreferenceScreen> {
                 : const AmptiveAppBar(),
             body: state is InitialState
                 ? const Center(
-                    child: AmptiveLoadingIndicatorWidget(),
+                    child: ATLoadingIndicator(),
                   )
                 : state is SelectPreferenceCompletedState
                     ? const ProcessingPreferenceWidget()
@@ -136,7 +136,7 @@ class _AmptivePreferenceScreenState extends State<AmptivePreferenceScreen> {
                                                 .textTheme
                                                 .headlineMedium
                                                 ?.copyWith(
-                                                  fontWeight: AmptiveFontWeights
+                                                  fontWeight: ATFontWeights
                                                       .w600,
                                                 ),
                                           ),

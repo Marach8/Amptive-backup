@@ -109,7 +109,7 @@ class _CreateShowScreenState extends State<CreateShowScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return ATAnnotatedRegionWidget(
+    return ATAnnotatedRegion(
       child: Scaffold(
         appBar: AppBar(
           automaticallyImplyLeading: false,
@@ -214,7 +214,7 @@ class _CreateShowScreenState extends State<CreateShowScreen> {
                                     radius: 20.r,
                                     child: Icon(
                                       Icons.add_photo_alternate_outlined,
-                                      color: ATColors.whiteColor,
+                                      color: ATColors.white,
                                       size: 25.w,
                                     ),
                                   ),
@@ -264,7 +264,7 @@ class _CreateShowScreenState extends State<CreateShowScreen> {
                       suffixIcon: Icon(
                         Icons.arrow_forward_ios,
                         size: 20.w,
-                        color: ATColors.whiteColor.withOpacity(0.4),
+                        color: ATColors.white.withOpacity(0.4),
                       ),
                       onChanged: (val) {
                         service.descCharactersLength.value =
@@ -299,7 +299,7 @@ class _CreateShowScreenState extends State<CreateShowScreen> {
                             suffixIcon: Icon(
                               Icons.arrow_forward_ios,
                               size: 20.w,
-                              color: ATColors.whiteColor
+                              color: ATColors.white
                                   .withOpacity(0.4),
                             ),
                             readOnly: true,
@@ -317,8 +317,8 @@ class _CreateShowScreenState extends State<CreateShowScreen> {
                         "Communities will help your Shows and Events reach more listeners. Listeners can also use communities to find your Shows and Events, easily. Learn more",
                         overflow: TextOverflow.visible,
                         style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                          fontWeight: AmptiveFontWeights.w500,
-                          color: ATColors.whiteColor.withOpacity(0.4),
+                          fontWeight: ATFontWeights.w500,
+                          color: ATColors.white.withOpacity(0.4),
                         ),
                       ),
                     ),
@@ -340,7 +340,7 @@ class _CreateShowScreenState extends State<CreateShowScreen> {
                           padding: EdgeInsets.symmetric(
                               vertical: 13.h, horizontal: 16.w),
                           decoration: BoxDecoration(
-                              color: ATColors.whiteColor
+                              color: ATColors.white
                                   .withOpacity(0.1),
                               borderRadius: BorderRadius.circular(14.r)),
                           child: Column(
@@ -358,7 +358,7 @@ class _CreateShowScreenState extends State<CreateShowScreen> {
                                     },
                                     style: ElevatedButton.styleFrom(
                                       backgroundColor: ATColors
-                                          .whiteColor
+                                          .white
                                           .withOpacity(0.1),
                                       shape: RoundedRectangleBorder(
                                         borderRadius:
@@ -371,10 +371,10 @@ class _CreateShowScreenState extends State<CreateShowScreen> {
                                             .titleSmall
                                             ?.copyWith(
                                             color: ATColors
-                                                .whiteColor
+                                                .white
                                                 .withOpacity(0.7),
                                             fontWeight:
-                                            AmptiveFontWeights
+                                            ATFontWeights
                                                 .w500)),
                                   )
                                 ],
@@ -386,10 +386,10 @@ class _CreateShowScreenState extends State<CreateShowScreen> {
                                     .titleSmall
                                     ?.copyWith(
                                     fontSize: ATFontSizes.size13,
-                                    color: ATColors.whiteColor
+                                    color: ATColors.white
                                         .withOpacity(0.6),
                                     fontWeight:
-                                    AmptiveFontWeights.w500),
+                                    ATFontWeights.w500),
                               )
                             ],
                           ),
@@ -406,7 +406,7 @@ class _CreateShowScreenState extends State<CreateShowScreen> {
                             Icons.search,
                             size: 20.w,
                             color:
-                            ATColors.whiteColor.withOpacity(0.4),
+                            ATColors.white.withOpacity(0.4),
                           ),
                         );
                       },
@@ -417,8 +417,8 @@ class _CreateShowScreenState extends State<CreateShowScreen> {
                         "Added users must accept your invitation before they are added as your co-hosts.",
                         overflow: TextOverflow.visible,
                         style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                          fontWeight: AmptiveFontWeights.w500,
-                          color: ATColors.whiteColor.withOpacity(0.4),
+                          fontWeight: ATFontWeights.w500,
+                          color: ATColors.white.withOpacity(0.4),
                         ),
                       ),
                     ),
@@ -441,7 +441,7 @@ class _CreateShowScreenState extends State<CreateShowScreen> {
                       suffixIcon: Icon(
                         Icons.arrow_forward_ios,
                         size: 20.w,
-                        color: ATColors.whiteColor.withOpacity(0.4),
+                        color: ATColors.white.withOpacity(0.4),
                       ),
                     ),
                     AmptiveRebuilderWidget(
@@ -473,8 +473,8 @@ class _CreateShowScreenState extends State<CreateShowScreen> {
                         "You can add up to 5 hashtags, with each hashtag being up to 25 characters long and free of spaces or special characters.",
                         overflow: TextOverflow.visible,
                         style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                          fontWeight: AmptiveFontWeights.w500,
-                          color: ATColors.whiteColor.withOpacity(0.4),
+                          fontWeight: ATFontWeights.w500,
+                          color: ATColors.white.withOpacity(0.4),
                         ),
                       ),
                     ),
@@ -491,7 +491,7 @@ class _CreateShowScreenState extends State<CreateShowScreen> {
                       suffixIcon: Icon(
                         Icons.arrow_forward_ios,
                         size: 20.w,
-                        color: ATColors.whiteColor.withOpacity(0.4),
+                        color: ATColors.white.withOpacity(0.4),
                       ),
                       onTap: () async {
                         if (widget.showType == ShowType.show) {
@@ -509,8 +509,8 @@ class _CreateShowScreenState extends State<CreateShowScreen> {
                         "You will be prompted to setup your subscription plan, if you haven't set it up yet.  ",
                         overflow: TextOverflow.visible,
                         style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                          fontWeight: AmptiveFontWeights.w500,
-                          color: ATColors.whiteColor.withOpacity(0.4),
+                          fontWeight: ATFontWeights.w500,
+                          color: ATColors.white.withOpacity(0.4),
                         ),
                       ),
                     ),
@@ -528,7 +528,7 @@ class _CreateShowScreenState extends State<CreateShowScreen> {
                       titleStyle: Theme.of(context)
                           .textTheme
                           .titleMedium
-                          ?.copyWith(fontWeight: AmptiveFontWeights.w500),
+                          ?.copyWith(fontWeight: ATFontWeights.w500),
                     ),
                     SizedBox(height: 16.h),
 
@@ -552,7 +552,7 @@ class _CreateShowScreenState extends State<CreateShowScreen> {
                         suffixIcon: Icon(
                           Icons.arrow_forward_ios,
                           size: 20.w,
-                          color: ATColors.whiteColor.withOpacity(0.4),
+                          color: ATColors.white.withOpacity(0.4),
                         ),
                         onTap: () async {
                           await showHandRaisingDialog(context);
@@ -571,9 +571,9 @@ class _CreateShowScreenState extends State<CreateShowScreen> {
                               .textTheme
                               .titleSmall
                               ?.copyWith(
-                            fontWeight: AmptiveFontWeights.w500,
+                            fontWeight: ATFontWeights.w500,
                             color:
-                            ATColors.whiteColor.withOpacity(0.4),
+                            ATColors.white.withOpacity(0.4),
                           ),
                         ),
                       ),
@@ -601,7 +601,7 @@ class _CreateShowScreenState extends State<CreateShowScreen> {
                         suffixIcon: Icon(
                           Icons.arrow_forward_ios,
                           size: 20.w,
-                          color: ATColors.whiteColor.withOpacity(0.4),
+                          color: ATColors.white.withOpacity(0.4),
                         ),
                         onTap: () async {
                           await showEventCapacitySelectionDialog(
@@ -622,9 +622,9 @@ class _CreateShowScreenState extends State<CreateShowScreen> {
                               .textTheme
                               .titleSmall
                               ?.copyWith(
-                            fontWeight: AmptiveFontWeights.w500,
+                            fontWeight: ATFontWeights.w500,
                             color:
-                            ATColors.whiteColor.withOpacity(0.4),
+                            ATColors.white.withOpacity(0.4),
                           ),
                         ),
                       ),
@@ -658,7 +658,7 @@ class _CreateShowScreenState extends State<CreateShowScreen> {
                         suffixIcon: Icon(
                           Icons.arrow_forward_ios,
                           size: 20.w,
-                          color: ATColors.whiteColor.withOpacity(0.4),
+                          color: ATColors.white.withOpacity(0.4),
                         ),
                         onTap: () async {
                           await showWhispersDialog(context);
@@ -681,9 +681,9 @@ class _CreateShowScreenState extends State<CreateShowScreen> {
                               .textTheme
                               .titleSmall
                               ?.copyWith(
-                            fontWeight: AmptiveFontWeights.w500,
+                            fontWeight: ATFontWeights.w500,
                             color:
-                            ATColors.whiteColor.withOpacity(0.4),
+                            ATColors.white.withOpacity(0.4),
                           ),
                         ),
                       ),
@@ -831,7 +831,7 @@ class OverlappingHosts extends StatelessWidget {
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
                 border: Border.all(
-                    color: ATColors.whiteColor.withOpacity(0.4), width: 1),
+                    color: ATColors.white.withOpacity(0.4), width: 1),
               ),
               child: ClipOval(
                 child: item is ObjectWithNotifier<Host>

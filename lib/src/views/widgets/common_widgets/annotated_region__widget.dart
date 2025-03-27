@@ -2,11 +2,11 @@ import 'package:amptive/src/utils/constants/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-class ATAnnotatedRegionWidget extends StatelessWidget {
+class ATAnnotatedRegion extends StatelessWidget {
   final Widget child;
   final Color? statusBarColor;
 
-  const ATAnnotatedRegionWidget({
+  const ATAnnotatedRegion({
     super.key,
     required this.child,
     this.statusBarColor

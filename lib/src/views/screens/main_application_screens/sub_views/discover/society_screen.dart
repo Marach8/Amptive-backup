@@ -38,7 +38,7 @@ with SingleTickerProviderStateMixin{
   }
   @override
   Widget build(BuildContext context) {
-    return ATAnnotatedRegionWidget(
+    return ATAnnotatedRegion(
       child: Scaffold(
         body: SafeArea(
           child: NestedScrollView(

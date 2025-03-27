@@ -23,10 +23,10 @@ class AmptiveAuthScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ATAnnotatedRegionWidget(
+    return ATAnnotatedRegion(
       child: Scaffold(
         appBar: const AmptiveAppBar(
-          title: AmptiveImageLoaderWidget(imagePath: ATImgStrings.logo2),
+          title: ATImgLoader(imgPath: ATImgStrings.logo2),
         ),
 
         body: Center(
@@ -56,8 +56,8 @@ class AmptiveAuthScreen extends StatelessWidget {
                 AmptiveOutlinedButtonWithLeadingIconWidget(
                   buttonTitle: (userSignUp ? ATStrings.signUpWith : ATStrings.signInWith) + ATStrings.facebook,
                   onPressed: (){},
-                  leadingIcon: const AmptiveImageLoaderWidget(
-                    imagePath: ATImgStrings.facebookIcon,
+                  leadingIcon: const ATImgLoader(
+                    imgPath: ATImgStrings.facebookIcon,
                   )
                 ),
                 Gap(15.h),
@@ -73,8 +73,8 @@ class AmptiveAuthScreen extends StatelessWidget {
                 AmptiveOutlinedButtonWithLeadingIconWidget(
                   buttonTitle: (userSignUp ? ATStrings.signUpWith : ATStrings.signInWith) + ATStrings.google,
                   onPressed: (){},
-                  leadingIcon: const AmptiveImageLoaderWidget(
-                    imagePath: ATImgStrings.googleIcon,
+                  leadingIcon: const ATImgLoader(
+                    imgPath: ATImgStrings.googleIcon,
                   )
                 )
               ],

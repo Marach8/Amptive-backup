@@ -18,7 +18,7 @@ class AmptiveBlockedAcctsScreen extends StatelessWidget {
 
   @override
   Widget build(context) {
-    return ATAnnotatedRegionWidget(
+    return ATAnnotatedRegion(
       child: Scaffold(
         body: Column(
           children: [
@@ -33,6 +33,7 @@ class AmptiveBlockedAcctsScreen extends StatelessWidget {
                   ),
                   const Spacer(),
                   Text(
+                    ATStrings.BLOCKED_ACCTS,
                     ATStrings.BLOCKED_ACCTS,
                     style: Theme.of(context).textTheme.bodyMedium,
                   ),
@@ -54,9 +55,14 @@ class AmptiveBlockedAcctsScreen extends StatelessWidget {
                       return AmptiveBlockedOrMutedAcctWidget(
                         subscriber: subscriber,
                         text: ATStrings.UNBLOCK,
+                        text: ATStrings.UNBLOCK,
                         onTap: (follower, isSelected) async{
                           final shouldUnblock = await showConfirmationDialog(
                             context: context,
+                            title: '${ATStrings.UNBLOCK} ${follower.obj.username}',
+                            content: '${follower.obj.username} ${ATStrings.UNBLOCK_DESC}',
+                            yesString: ATStrings.UNBLOCK,
+                            noString: ATStrings.CANCEL
                             title: '${ATStrings.UNBLOCK} ${follower.obj.username}',
                             content: '${follower.obj.username} ${ATStrings.UNBLOCK_DESC}',
                             yesString: ATStrings.UNBLOCK,
@@ -66,6 +72,7 @@ class AmptiveBlockedAcctsScreen extends StatelessWidget {
                             showAppNotification(
                               context: context,
                               icon: const Icon(Icons.check_circle),
+                              text: '${follower.obj.username} ${ATStrings.IS_UNBLOCKED}'
                               text: '${follower.obj.username} ${ATStrings.IS_UNBLOCKED}'
                             );
                           }
@@ -106,11 +113,12 @@ class AmptiveBlockedOrMutedAcctWidget extends StatelessWidget {
       child: Row(
         children: [
           ATContainer(
+          ATContainer(
             clipBehavior: Clip.hardEdge,
             height: 50, width: 50, radius: 30,
             child: FittedBox(
               fit: BoxFit.fill,
-              child: AmptiveImageLoaderWidget(imagePath: subscriber.obj.profilePicture!)
+              child: ATImgLoader(imgPath: subscriber.obj.profilePicture!)
             ),
           ),
           const SizedBox(width: 10),
@@ -121,6 +129,7 @@ class AmptiveBlockedOrMutedAcctWidget extends StatelessWidget {
             ),
           ),
           ATContainer(
+          ATContainer(
             onTap: () => onTap(subscriber, subscriber.notifier.value),
             border: Border.all(color: ATColors.whiteColor),
             radius: 30, 
@@ -128,6 +137,7 @@ class AmptiveBlockedOrMutedAcctWidget extends StatelessWidget {
             child: Text(
               text,
               style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                fontSize: ATFontSizes.size13,
                 fontSize: ATFontSizes.size13,
               ),
             ),

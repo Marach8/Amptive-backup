@@ -2,7 +2,7 @@ import 'dart:io';
 import 'package:amptive/src/utils/constants/colors.dart';
 import 'package:amptive/src/utils/constants/strings/image_strings.dart';
 import 'package:amptive/src/utils/dialogs/event_payment_fee_dialog.dart';
-import 'package:amptive/src/utils/helpers/helper_functions/other_functions.dart';
+import 'package:amptive/src/utils/helpers/helper_functions/helper_functions.dart';
 import 'package:amptive/src/views/widgets/common_widgets/custom_container_widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/image_loader_widget.dart';
 import 'package:flutter/material.dart';
@@ -41,14 +41,14 @@ Future<void> showSelectAudienceAccessForEventsDialog(
                 child: Platform.isAndroid
                     ? Icon(
                         Icons.keyboard_arrow_down,
-                        color: ATColors.whiteColor.withOpacity(0.6),
+                        color: ATColors.white.withOpacity(0.6),
                       )
                     : ATContainer(
                         margin: const EdgeInsets.symmetric(vertical: 10),
                         radius: 5,
                         height: 4,
                         width: 30,
-                        color: ATColors.whiteColor.withOpacity(0.6),
+                        color: ATColors.white.withOpacity(0.6),
                         child: const SizedBox.shrink(),
                       ),
               ),
@@ -91,8 +91,8 @@ Future<void> showSelectAudienceAccessForEventsDialog(
                             : ATColors.trspntColor),
                     child: Row(
                       children: [
-                        const AmptiveImageLoaderWidget(
-                            imagePath: ATImgStrings.PEOPLE),
+                        const ATImgLoader(
+                            imgPath: ATImgStrings.PEOPLE),
                         const Gap(10),
                         Expanded(
                           child: Column(
@@ -126,7 +126,7 @@ Future<void> showSelectAudienceAccessForEventsDialog(
                             border: Border.all(
                                 color: value
                                     ? ATColors.hex307FE2
-                                    : ATColors.whiteColor,
+                                    : ATColors.white,
                                 strokeAlign: 5.0),
                             child: const SizedBox.shrink())
                       ],
@@ -159,8 +159,8 @@ Future<void> showSelectAudienceAccessForEventsDialog(
                       children: [
                         Row(
                           children: [
-                            const AmptiveImageLoaderWidget(
-                                imagePath: ATImgStrings.PADLOCK),
+                            const ATImgLoader(
+                                imgPath: ATImgStrings.PADLOCK),
                             const Gap(10),
                             Expanded(
                               child: Column(
@@ -179,6 +179,7 @@ Future<void> showSelectAudienceAccessForEventsDialog(
                                         .titleMedium
                                         ?.copyWith(
                                             color: ATColors.hexC2C2C2),
+                                            color: ATColors.hexC2C2C2),
                                   ),
                                 ],
                               ),
@@ -195,7 +196,7 @@ Future<void> showSelectAudienceAccessForEventsDialog(
                                 border: Border.all(
                                     color: value
                                         ? ATColors.hex307FE2
-                                        : ATColors.whiteColor,
+                                        : ATColors.white,
                                     strokeAlign: 5.0),
                                 child: const SizedBox.shrink())
                           ],
@@ -256,7 +257,7 @@ Future<void> showSelectAudienceAccessForEventsDialog(
                           }
                         : null,
                     buttonTitle: ATStrings.CONTINUE,
-                    bgColor: ATColors.whiteColor,
+                    bgColor: ATColors.white,
                     fgColor: ATColors.black,
                   );
                 })

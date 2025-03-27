@@ -3,7 +3,7 @@ import 'dart:ui';
 import 'package:amptive/src/bloc/main_app/go_live_bloc/host_view/cohosts_display_bloc.dart';
 import 'package:amptive/src/utils/constants/colors.dart';
 import 'package:amptive/src/utils/constants/font_sizes.dart';
-import 'package:amptive/src/utils/helpers/helper_functions/other_functions.dart';
+import 'package:amptive/src/utils/helpers/helper_functions/helper_functions.dart';
 import 'package:amptive/src/views/widgets/animation_widgets/common_animation_widgets/animated_crossfade_widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/custom_container_widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/image_loader_widget.dart';
@@ -68,12 +68,12 @@ final showSuffixIconNotifier = ValueNotifier(false);
                           child: Platform.isAndroid
                               ? Icon(
                                   Icons.keyboard_arrow_down,
-                                  color: ATColors.whiteColor.withOpacity(0.6),
+                                  color: ATColors.white.withOpacity(0.6),
                                 )
                               : ATContainer(
                                   margin: const EdgeInsets.symmetric(vertical: 10),
                                   radius: 5, height: 4, width: 30,
-                                  color: ATColors.whiteColor.withOpacity(0.6),
+                                  color: ATColors.white.withOpacity(0.6),
                                   child: const SizedBox.shrink(),
                                 ),
                           ),
@@ -173,7 +173,7 @@ final showSuffixIconNotifier = ValueNotifier(false);
                                           return ATContainer(
                                             alignment: Alignment.center,
                                             margin: const EdgeInsets.only(right: 15),
-                                            border: Border.all(color: ATColors.whiteColor.withOpacity(0.4)),
+                                            border: Border.all(color: ATColors.white.withOpacity(0.4)),
                                             height: 43, width: 43, radius: 30,
                                             child: Text(
                                               (index + 1).toString(),
@@ -194,8 +194,8 @@ final showSuffixIconNotifier = ValueNotifier(false);
                                                 height: 43, width: 43, radius: 30,
                                                 child: FittedBox(
                                                   fit: BoxFit.fill,
-                                                  child: AmptiveImageLoaderWidget(
-                                                    imagePath: cohost.obj.profilePicture ?? ''
+                                                  child: ATImgLoader(
+                                                    imgPath: cohost.obj.profilePicture ?? ''
                                                   )
                                                 ),
                                               ),
@@ -230,7 +230,7 @@ final showSuffixIconNotifier = ValueNotifier(false);
                         BlocBuilder<AmptiveGoLiveAvailableCoHostsBloc, AmptiveCohostsState>(
                           builder: (_, cohostState) {
                             if(cohostState is CohostsLoadingState){
-                              return const AmptiveLoadingIndicatorWidget();
+                              return const ATLoadingIndicator();
                             }
                             
                             return AmptiveListOfCoHostsWidget(
@@ -270,7 +270,7 @@ final showSuffixIconNotifier = ValueNotifier(false);
                         margin: EdgeInsets.zero,
                         onPressed: shouldActivateBtn ? () => context.pop(true) : null,
                         buttonTitle: ATStrings.SEND_INVITE,
-                        bgColor: ATColors.whiteColor,
+                        bgColor: ATColors.white,
                         fgColor: ATColors.black,
                       );
                     }

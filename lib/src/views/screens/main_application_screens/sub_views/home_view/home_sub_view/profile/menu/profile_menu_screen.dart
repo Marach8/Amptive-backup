@@ -14,14 +14,14 @@ import 'package:gap/gap.dart';
 import 'package:go_router/go_router.dart';
 import 'package:iconsax/iconsax.dart';
 
-import '../../../../../../../../bloc/main_app/profile/allow_see_calender_bloc.dart';
+import '../../../../../../../../bloc/main_app/profile/profile_menu/calender/calender_visibile_bloc.dart';
 
 class AmptiveProfileMenuScreen extends StatelessWidget {
   const AmptiveProfileMenuScreen({super.key});
 
   @override
   Widget build(context) {
-    return ATAnnotatedRegionWidget(
+    return ATAnnotatedRegion(
       child: Scaffold(
         appBar: AmptiveAppBar(
           leading: GestureDetector(
@@ -45,16 +45,16 @@ class AmptiveProfileMenuScreen extends StatelessWidget {
             children: [
               const MenuHeading(text: ATStrings.CALENDER),
               MenuItem(
-                firstIcon: const AmptiveImageLoaderWidget(imagePath: ATImgStrings.CALEND_ICON),
+                firstIcon: const ATImgLoader(imgPath: ATImgStrings.CALEND_ICON),
                 middleText: ATStrings.VIEW_CALENDER,
                 margin: const EdgeInsets.fromLTRB(15, 0, 15, 5),
-                onTap: (){}
+                onTap: () => context.pushNamed(ATRoutes.CALENDER_SCREEN)
               ),
               MenuItem(
                 firstIcon: const Icon(Icons.visibility_outlined),
                 middleText: ATStrings.ALLOW_SEE_CALENDER,
                 margin: const EdgeInsets.fromLTRB(15, 0, 5, 5),
-                lastIcon: BlocConsumer<AllowSeeCalenderBloc, bool>(
+                lastIcon: BlocConsumer<CalenderVisibleBloc, bool>(
                   listener: (_, state){
                     if(state){
                       showAppNotification(
@@ -67,7 +67,7 @@ class AmptiveProfileMenuScreen extends StatelessWidget {
                   builder: (_, state)  => AmptiveSwitch(
                     value: state,
                     onChanged: (value){
-                      context.read<AllowSeeCalenderBloc>().toggleSeeCalender();
+                      context.read<CalenderVisibleBloc>().toggleSeeCalender();
                     }
                   )
                 ),
@@ -103,8 +103,8 @@ class AmptiveProfileMenuScreen extends StatelessWidget {
                 onTap: () => context.pushNamed(ATRoutes.LANGUAGE_SCREEN)
               ),
               MenuItem(
-                firstIcon: const AmptiveImageLoaderWidget(
-                  imagePath: ATImgStrings.SUBSCRIBER_BADGE,
+                firstIcon: const ATImgLoader(
+                  imgPath: ATImgStrings.SUBSCRIBER_BADGE,
                 ),
                 middleText: ATStrings.SUBSCRIPTION,
                 onTap: (){}
@@ -166,7 +166,7 @@ class MenuItem extends StatelessWidget {
             child: Text(
               middleText,
               style: Theme.of(context).textTheme.labelMedium?.copyWith(
-                color: ATColors.whiteColor
+                color: ATColors.white
               ),
             ),
           ),

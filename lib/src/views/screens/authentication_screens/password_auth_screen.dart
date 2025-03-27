@@ -37,7 +37,7 @@ class _PasswordAuthScreenState extends State<PasswordAuthScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return ATAnnotatedRegionWidget(
+    return ATAnnotatedRegion(
       child: Scaffold(
         appBar: const AmptiveAppBar(),
         body: Padding(
@@ -96,7 +96,7 @@ class _PasswordAuthScreenState extends State<PasswordAuthScreen> {
                                 _passwordVisible
                                     ? Icons.visibility_off
                                     : Icons.visibility,
-                                color: ATColors.whiteColor,
+                                color: ATColors.white,
                               ),
                             ),
                             onPressed: () {

@@ -232,7 +232,7 @@ final GoRouter amptiveAppRouter = GoRouter(
             path: ATRoutes.CREATE_SHOW_SUCCESS,
             builder: (_, GoRouterState state) {
               String imageFilePath = state.extra as String;
-              return AmptiveCreateShowSuccessScreen(
+              return ATCreateShowSuccessScreen(
                 imageFilePath: imageFilePath,
               );
             },
@@ -249,6 +249,12 @@ final GoRouter amptiveAppRouter = GoRouter(
             path: ATRoutes.PROFILE_MENU_SCREEN,
             builder: (_, __) => const AmptiveProfileMenuScreen(),
             routes: [
+              GoRoute(
+                name: ATRoutes.CALENDER_SCREEN,
+                path: ATRoutes.CALENDER_SCREEN,
+                builder: (_, __) => const ATCalenderScreen(),
+              ),
+
               GoRoute(
                 name: ATRoutes.LANGUAGE_SCREEN,
                 path: ATRoutes.LANGUAGE_SCREEN,

@@ -190,6 +190,7 @@ class CardWidget extends StatelessWidget {
             ),
             child: SvgPicture.asset(
               ATImgStrings.logo2,
+              ATImgStrings.logo2,
             ),
           ),
           Expanded(
@@ -250,6 +251,7 @@ class CardWidget extends StatelessWidget {
                         height: 21.w,
                         decoration: ShapeDecoration(
                           image: const DecorationImage(
+                            image: AssetImage(ATImgStrings.noAvatarImage),
                             image: AssetImage(ATImgStrings.noAvatarImage),
                             fit: BoxFit.fill,
                           ),

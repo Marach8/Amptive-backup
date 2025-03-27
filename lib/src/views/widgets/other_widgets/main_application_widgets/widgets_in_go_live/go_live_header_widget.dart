@@ -93,7 +93,7 @@ class AmptiveLiveViewHeaderWidget extends StatelessWidget {
                     : showAudienceViewOfTopGiftersDialog(context),
                   padding: const EdgeInsets.all(5),
                   radius: 30,
-                  color: ATColors.whiteColor.withOpacity(0.1),
+                  color: ATColors.white.withOpacity(0.1),
                   child: Row(
                     children: [
                       Text(
@@ -126,10 +126,10 @@ class AmptiveLiveViewHeaderWidget extends StatelessWidget {
                   },
                   padding: const EdgeInsets.all(5),
                   radius: 30,
-                  color: ATColors.whiteColor.withOpacity(0.1),
+                  color: ATColors.white.withOpacity(0.1),
                   child: Row(
                     children: [
-                      const AmptiveImageLoaderWidget(imagePath: ATImgStrings.USER_ICON),
+                      const ATImgLoader(imgPath: ATImgStrings.USER_ICON),
                       Text(
                         "144k",
                         style: Theme.of(context).textTheme.bodyMedium?.copyWith(

@@ -5,11 +5,11 @@ import 'package:amptive/src/utils/constants/strings/image_strings.dart';
 import 'package:amptive/src/utils/constants/strings/other_strings.dart';
 import 'package:amptive/src/utils/constants/strings/route_strings.dart';
 import 'package:amptive/src/utils/dialogs/profile/show_top_creator_societies.dart';
-import 'package:amptive/src/utils/helpers/helper_functions/other_functions.dart';
+import 'package:amptive/src/utils/helpers/helper_functions/helper_functions.dart';
 import 'package:amptive/src/views/screens/main_application_screens/sub_views/home_view/home_sub_view/profile/ordinary_user_profile.dart';
 import 'package:amptive/src/views/widgets/common_widgets/annotated_region__widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/circle_avatar.dart';
-import 'package:amptive/src/views/widgets/common_widgets/circular_container_with_picture_widget.dart';
+import 'package:amptive/src/views/widgets/common_widgets/circular_image.dart';
 import 'package:amptive/src/views/widgets/common_widgets/custom_container_widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/custom_rebuilder_widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/image_loader_widget.dart';
@@ -29,8 +29,8 @@ class AmptiveCreatorProfileScreen extends StatelessWidget {
   Widget build(context) {
     final tabIndex = ValueNotifier<int>(0);
     
-    return ATAnnotatedRegionWidget(
-      statusBarColor: ATColors.trspntColor,
+    return ATAnnotatedRegion(
+      statusBarColor: ATColors.trsprtColor,
       child: Scaffold(
         body: NestedScrollView(
           headerSliverBuilder: (_, __) => [
@@ -99,7 +99,7 @@ class AmptiveCreatorProfileScreen extends StatelessWidget {
                               bottom: -35,
                               child: Hero(
                                 tag: ATImgStrings.jpeg1,
-                                child: ATRoundedImage(
+                                child: ATCircularImage(
                                   onTap: () => context.pushNamed(
                                     ATRoutes.PROFILE_PIC_SCREEN,
                                     extra: ATImgStrings.jpeg1
@@ -158,15 +158,15 @@ class AmptiveCreatorProfileScreen extends StatelessWidget {
                         begin: Alignment.topCenter,
                         end: Alignment.bottomCenter,
                         colors: [
-                          ATColors.whiteColor.withOpacity(0.1),
+                          ATColors.white.withOpacity(0.1),
                           ATColors.hex303030.withOpacity(0.1),
-                          ATColors.whiteColor.withOpacity(0.1),
+                          ATColors.white.withOpacity(0.1),
                         ]
                       ),
                       child: Row(
                         mainAxisSize: MainAxisSize.min,
                         children: [
-                          const AmptiveImageLoaderWidget(imagePath: ATImgStrings.TOP_CREATOR_BADGE),
+                          const ATImgLoader(imgPath: ATImgStrings.TOP_CREATOR_BADGE),
                           const Gap(5),
                           Text(
                             ATStrings.TOP_CREATORS_IN_SOCIETY,
@@ -291,7 +291,7 @@ class AmptiveCreatorProfileScreen extends StatelessWidget {
                           ),
                         ),
                         const Gap(15),
-                        const AmptiveImageLoaderWidget(imagePath: ATImgStrings.X_LOGO),
+                        const ATImgLoader(imgPath: ATImgStrings.X_LOGO),
                         const Gap(3),
                         Text(
                           'x',
@@ -333,7 +333,7 @@ class AmptiveCreatorProfileScreen extends StatelessWidget {
                             alignment: Alignment.center, radius: 50,
                             margin: const EdgeInsets.only(left: 15),
                             padding: const EdgeInsets.only(top: 10, bottom: 10),
-                            color: ATColors.whiteColor.withOpacity(0.2),
+                            color: ATColors.white.withOpacity(0.2),
                             child: Text(
                               ATStrings.EDIT_PROFILE,
                               style: Theme.of(context).textTheme.bodyMedium?.copyWith(
@@ -348,7 +348,7 @@ class AmptiveCreatorProfileScreen extends StatelessWidget {
                             padding: const EdgeInsets.only(top: 10, bottom: 10),
                             margin: const EdgeInsets.only(right: 15),
                             alignment: Alignment.center, radius: 50,
-                            color: ATColors.whiteColor.withOpacity(0.2),
+                            color: ATColors.white.withOpacity(0.2),
                             child: Text(
                               ATStrings.SUBSCRIPTION,
                               style: Theme.of(context).textTheme.bodyMedium?.copyWith(
@@ -391,9 +391,9 @@ class AmptiveCreatorProfileScreen extends StatelessWidget {
                                   alignment: Alignment.center, radius: 50,
                                   padding: const EdgeInsets.fromLTRB(20, 5, 20, 5),
                                   margin: const EdgeInsets.fromLTRB(0, 10, 10, 20),
-                                  color: isSelected ? ATColors.whiteColor : ATColors.black,
+                                  color: isSelected ? ATColors.white : ATColors.black,
                                   border: !isSelected ? Border.all(
-                                    color: ATColors.whiteColor.withOpacity(0.1),
+                                    color: ATColors.white.withOpacity(0.1),
                                     width: 2
                                   ) : null,
                                   onTap: () => tabIndex.value = index,
@@ -401,7 +401,7 @@ class AmptiveCreatorProfileScreen extends StatelessWidget {
                                     string,
                                     style: Theme.of(context).textTheme.bodySmall?.copyWith(
                                       fontSize: ATFontSizes.size13,
-                                      color: isSelected ? ATColors.black : ATColors.whiteColor
+                                      color: isSelected ? ATColors.black : ATColors.white
                                     ),
                                   ),
                                 );
@@ -458,8 +458,8 @@ class ProfileEventOrShowDisplay extends StatelessWidget {
         children: [
           ClipRRect(
             borderRadius: BorderRadius.circular(5),
-            child: const AmptiveImageLoaderWidget(
-              imagePath: ATImgStrings.weCanDoHardThingsBgImage,
+            child: const ATImgLoader(
+              imgPath: ATImgStrings.weCanDoHardThingsBgImage,
               height: 77, width: 77,
             ),
           ),
@@ -475,7 +475,7 @@ class ProfileEventOrShowDisplay extends StatelessWidget {
                   children: [
                     AmptiveCircleAvatarWidget(
                       diameter: 15,
-                      color: ATColors.orangeColor1,
+                      color: ATColors.hexF91880,
                       child: const FittedBox(child: Text('S')),
                     ),
                     Text(
@@ -509,7 +509,7 @@ class ProfileEventOrShowDisplay extends StatelessWidget {
                         child: Text(
                           'P',
                           style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                            fontWeight: AmptiveFontWeights.w800,
+                            fontWeight: ATFontWeights.w800,
                             fontSize: ATFontSizes.size10,
                             color: ATColors.black
                           ),

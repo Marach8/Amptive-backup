@@ -24,7 +24,7 @@ class AmptiveTechnologyModel extends StatelessWidget {
           ClipRRect(
             clipBehavior: Clip.hardEdge,
             borderRadius: BorderRadius.circular(5),
-            child: AmptiveImageLoaderWidget(imagePath: trendingPicture),
+            child: ATImgLoader(imgPath: trendingPicture),
           ),
           const Gap(5),
           SizedBox(

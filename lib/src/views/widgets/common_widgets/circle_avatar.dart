@@ -24,7 +24,7 @@ class AmptiveCircleAvatarWidget extends StatelessWidget {
       duration: animationDuration,
       height: diameter, width: diameter,
       radius: diameter,
-      color: color ?? ATColors.whiteColor,
+      color: color ?? ATColors.white,
       child: child ?? const SizedBox.shrink()
     );
   }

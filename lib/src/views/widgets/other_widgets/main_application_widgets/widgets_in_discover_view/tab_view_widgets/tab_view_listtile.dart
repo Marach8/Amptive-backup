@@ -37,7 +37,7 @@ class AmptiveTabViewListTileWidget extends StatelessWidget {
         title: Text(
           title,
           style: Theme.of(context).textTheme.titleMedium?.copyWith(
-            fontWeight: AmptiveFontWeights.w500,
+            fontWeight: ATFontWeights.w500,
             height: 1
           ),
         ),
@@ -47,7 +47,7 @@ class AmptiveTabViewListTileWidget extends StatelessWidget {
               'Show',
               style: Theme.of(context).textTheme.titleSmall?.copyWith(
                 color: ATColors.hexC2C2C2,
-                fontWeight: AmptiveFontWeights.w500,
+                fontWeight: ATFontWeights.w500,
                 fontSize: ATFontSizes.size13,
                 height: 1.5
               ),
@@ -59,7 +59,7 @@ class AmptiveTabViewListTileWidget extends StatelessWidget {
               'MONDAY AT 20:00',
               style: Theme.of(context).textTheme.titleSmall?.copyWith(
                 color: ATColors.hexC2C2C2,
-                fontWeight: AmptiveFontWeights.w500,
+                fontWeight: ATFontWeights.w500,
                 fontSize: ATFontSizes.size13,
                 height: 1.5
               ),

@@ -66,7 +66,7 @@ class _AmptiveChooseOrCreateEventScreenState extends State<AmptiveChooseOrCreate
 
   @override
   Widget build(context) {
-    return ATAnnotatedRegionWidget(
+    return ATAnnotatedRegion(
       child: Scaffold(
         body: Stack(
           children: [
@@ -74,8 +74,8 @@ class _AmptiveChooseOrCreateEventScreenState extends State<AmptiveChooseOrCreate
               child: AmptiveRebuilderWidget(
                 notifier: selectedImage,
                 builder: (_, value, __) {
-                  return AmptiveImageLoaderWidget(
-                    imagePath: value,
+                  return ATImgLoader(
+                    imgPath: value,
                     boxFit: BoxFit.cover,
                   );
                 }
@@ -207,7 +207,7 @@ class _AmptiveChooseOrCreateEventScreenState extends State<AmptiveChooseOrCreate
               context.pushNamed(ATRoutes.EVENT_SCHEDULED_SCREEN);
             } : null,
             buttonTitle: ATStrings.NEXT,
-            bgColor: ATColors.whiteColor,
+            bgColor: ATColors.white,
             fgColor: ATColors.black,
           ),
         ),

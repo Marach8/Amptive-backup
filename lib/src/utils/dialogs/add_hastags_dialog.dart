@@ -3,7 +3,7 @@ import 'dart:ui';
 import 'package:amptive/src/models/hashtag.dart';
 import 'package:amptive/src/utils/constants/colors.dart';
 import 'package:amptive/src/utils/constants/font_sizes.dart';
-import 'package:amptive/src/utils/helpers/helper_functions/other_functions.dart';
+import 'package:amptive/src/utils/helpers/helper_functions/helper_functions.dart';
 import 'package:amptive/src/views/widgets/animation_widgets/common_animation_widgets/animated_crossfade_widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/custom_container_widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/textformfield_widget.dart';
@@ -59,7 +59,7 @@ Future<Set<ObjectWithNotifier<Hashtag>>?> showAddHashtagDialog(
                               ? Icon(
                             Icons.keyboard_arrow_down,
                             color:
-                            ATColors.whiteColor.withOpacity(0.6),
+                            ATColors.white.withOpacity(0.6),
                           )
                               : ATContainer(
                             margin:
@@ -68,7 +68,7 @@ Future<Set<ObjectWithNotifier<Hashtag>>?> showAddHashtagDialog(
                             height: 4,
                             width: 30,
                             color:
-                            ATColors.whiteColor.withOpacity(0.6),
+                            ATColors.white.withOpacity(0.6),
                             child: const SizedBox.shrink(),
                           ),
                         ),
@@ -178,7 +178,7 @@ Future<Set<ObjectWithNotifier<Hashtag>>?> showAddHashtagDialog(
                                           15, 7, 15, 7),
                                       alignment: Alignment.center,
                                       radius: 10,
-                                      color: ATColors.whiteColor
+                                      color: ATColors.white
                                           .withOpacity(0.1),
                                       child: Row(
                                         mainAxisSize: MainAxisSize.min,
@@ -281,7 +281,7 @@ Future<Set<ObjectWithNotifier<Hashtag>>?> showAddHashtagDialog(
                         }
                             : null,
                         buttonTitle: ATStrings.CONTINUE,
-                        bgColor: ATColors.whiteColor,
+                        bgColor: ATColors.white,
                         fgColor: ATColors.black,
                       );
                     }),
@@ -363,7 +363,7 @@ class AmptiveAddHashtagWidget extends StatelessWidget {
             ATContainer(
               height: 50,
               width: 50,
-              color: ATColors.whiteColor,
+              color: ATColors.white,
               radius: 30,
               child: FittedBox(
                 fit: BoxFit.scaleDown,

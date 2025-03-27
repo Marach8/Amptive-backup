@@ -10,7 +10,7 @@ class AmptiveTrendingSocietyScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ATAnnotatedRegionWidget(
+    return ATAnnotatedRegion(
       child: Scaffold(
         body: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 15),

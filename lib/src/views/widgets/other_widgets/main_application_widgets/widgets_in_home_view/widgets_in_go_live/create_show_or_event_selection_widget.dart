@@ -56,9 +56,9 @@ class AmptiveCreateShowOrEventSelectionWidget extends StatelessWidget {
                 child: AnimatedScale(
                   scale: value ? 1.1 : 0.5,
                   duration: const Duration(milliseconds: 200),
-                  child: AmptiveImageLoaderWidget(
+                  child: ATImgLoader(
                     key: UniqueKey(),
-                    imagePath: onSelectedImagePath,
+                    imgPath: onSelectedImagePath,
                     boxFit: BoxFit.fill,
                   ),
                 )
@@ -70,7 +70,7 @@ class AmptiveCreateShowOrEventSelectionWidget extends StatelessWidget {
                   AmptiveCircleAvatarWidget(
                     animationDuration: 200,
                     diameter: 15,
-                    color: value ? ATColors.orangeColor1 : ATColors. hex2D2D2D,
+                    color: value ? ATColors.hexF91880 : ATColors. hex2D2D2D,
                     child: FittedBox(child: Text(alphabet)),
                   ),
                   const Gap(5),

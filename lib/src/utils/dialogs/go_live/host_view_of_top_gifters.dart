@@ -3,7 +3,7 @@ import 'dart:ui';
 import 'package:amptive/src/utils/constants/colors.dart';
 import 'package:amptive/src/utils/constants/font_sizes.dart';
 import 'package:amptive/src/utils/helpers/extensions/string_extensions.dart';
-import 'package:amptive/src/utils/helpers/helper_functions/other_functions.dart';
+import 'package:amptive/src/utils/helpers/helper_functions/helper_functions.dart';
 import 'package:amptive/src/views/widgets/common_widgets/circle_avatar.dart';
 import 'package:amptive/src/views/widgets/common_widgets/custom_container_widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/image_loader_widget.dart';
@@ -55,12 +55,12 @@ Future<void> showHostViewOfTopGiftersDialog(BuildContext context) async {
                       child: Platform.isAndroid
                           ? Icon(
                               Icons.keyboard_arrow_down,
-                              color: ATColors.whiteColor.withOpacity(0.6),
+                              color: ATColors.white.withOpacity(0.6),
                             )
                           : ATContainer(
                               margin: const EdgeInsets.symmetric(vertical: 10),
                               radius: 5, height: 4, width: 30,
-                              color: ATColors.whiteColor.withOpacity(0.6),
+                              color: ATColors.white.withOpacity(0.6),
                               child: const SizedBox.shrink(),
                             ),
                       ),
@@ -161,7 +161,7 @@ class AmptiveGifterWidget extends StatelessWidget {
               ),
             ) : AmptiveCircleAvatarWidget(
               diameter: 5,
-              color: ATColors.whiteColor.withOpacity(0.4),
+              color: ATColors.white.withOpacity(0.4),
               child: const SizedBox.shrink(),
             ),
             const Gap(5),
@@ -170,7 +170,7 @@ class AmptiveGifterWidget extends StatelessWidget {
               height: 50, width: 50, radius: 30,
               child: FittedBox(
                 fit: BoxFit.fill,
-                child: AmptiveImageLoaderWidget(imagePath: gifter.obj.profilePicture!)
+                child: ATImgLoader(imgPath: gifter.obj.profilePicture!)
               ),
             ),
             const Gap(10),

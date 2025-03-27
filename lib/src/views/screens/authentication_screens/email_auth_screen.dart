@@ -45,8 +45,8 @@ class _ATEmailAuthScreenState extends State<ATEmailAuthScreen> {
   }
 
   @override
-  Widget build(context) {
-    return ATAnnotatedRegionWidget(
+  Widget build(BuildContext context) {
+    return ATAnnotatedRegion(
       child: Scaffold(
         appBar: AmptiveAppBar(
           title: Text(
@@ -87,13 +87,13 @@ class _ATEmailAuthScreenState extends State<ATEmailAuthScreen> {
                       hintStyle: TextStyle(
                         fontSize: ATFontSizes.size16,
                         color: ATColors.authHintColor,
-                        fontWeight: AmptiveFontWeights.w400,
+                        fontWeight: ATFontWeights.w400,
                       ),
                       errorText: service.email.error,
                       errorStyle: TextStyle(
                         color: ATColors.textRedColor,
                         fontSize: ATFontSizes.size12,
-                        fontWeight: AmptiveFontWeights.w400,
+                        fontWeight: ATFontWeights.w400,
                       ),
                       filled: true,
                       fillColor: const Color(0xFF9E9E9E).withOpacity(0.3),
@@ -101,8 +101,8 @@ class _ATEmailAuthScreenState extends State<ATEmailAuthScreen> {
                         borderSide: BorderSide(
                           width: 2,
                           color: service.email.error == null
-                            ? ATColors.hex307FE2
-                            : ATColors.textRedColor,
+                              ? ATColors.hex307FE2
+                              : ATColors.textRedColor,
                         ),
                         borderRadius: BorderRadius.circular(14),
                       ),

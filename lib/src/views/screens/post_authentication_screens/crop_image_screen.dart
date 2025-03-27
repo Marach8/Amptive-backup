@@ -57,7 +57,7 @@ class _CropPageState extends State<CropPage> {
                     height: 20.h,
                     child: Icon(
                       Icons.arrow_back_ios,
-                      color: ATColors.whiteColor,
+                      color: ATColors.white,
                     ),
                   ),
                   Container(
@@ -66,7 +66,7 @@ class _CropPageState extends State<CropPage> {
                     child: Text(
                       "Back",
                       style: GoogleFonts.inter(
-                        color: ATColors.whiteColor,
+                        color: ATColors.white,
                         fontSize: 14.sp,
                         fontWeight: FontWeight.w400,
                       ),
@@ -99,7 +99,7 @@ class _CropPageState extends State<CropPage> {
                 child: Text(
                   "Apply",
                   style: GoogleFonts.inter(
-                    color: ATColors.whiteColor,
+                    color: ATColors.white,
                     fontSize: 16.sp,
                     fontWeight: FontWeight.w600,
                   ),

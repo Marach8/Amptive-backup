@@ -1,6 +1,6 @@
 import 'package:amptive/src/models/community.dart';
 import 'package:amptive/src/utils/constants/colors.dart';
-import 'package:amptive/src/utils/helpers/helper_functions/other_functions.dart';
+import 'package:amptive/src/utils/helpers/helper_functions/helper_functions.dart';
 import 'package:amptive/src/views/widgets/common_widgets/image_loader_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
@@ -53,8 +53,8 @@ Future<Community> showAddCommunitiesDialog(BuildContext context) async {
                             width: 67,
                             child: FittedBox(
                                 fit: BoxFit.fill,
-                                child: AmptiveImageLoaderWidget(
-                                    imagePath: item.coverPic!))),
+                                child: ATImgLoader(
+                                    imgPath: item.coverPic!))),
                         const Gap(15),
                         Text(
                           item.name!,

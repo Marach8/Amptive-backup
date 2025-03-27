@@ -35,7 +35,7 @@ class _AmptiveGoLiveScreenState extends State<AmptiveGoLiveScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return ATAnnotatedRegionWidget(
+    return ATAnnotatedRegion(
       child: Scaffold(
         appBar: AmptiveAppBar(
           leading: GestureDetector(
@@ -103,7 +103,7 @@ class _AmptiveGoLiveScreenState extends State<AmptiveGoLiveScreen> {
               : context.pushNamed(ATRoutes.CHOOSE_OR_CREATE_EVENT_SCREEN);
             }: null,
             buttonTitle: ATStrings.CONTINUE,
-            bgColor: ATColors.whiteColor,
+            bgColor: ATColors.white,
             fgColor: ATColors.black,
           ),
         ),

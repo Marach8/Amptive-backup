@@ -18,7 +18,7 @@ class AmptiveDiscoverCategoriesTitleWidget extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 15),
       child: Row(
         children: [
-          const AmptiveImageLoaderWidget(imagePath: ATImgStrings.GROUP_ICON_BLUE),
+          const ATImgLoader(imgPath: ATImgStrings.GROUP_ICON_BLUE),
           Gap(10.h),
           Text(
             categoryName,

@@ -42,7 +42,7 @@ class _AmptiveDiscoverViewWidgetState extends State<AmptiveDiscoverViewWidget> {
 
   @override
   Widget build(context) {
-    return ATAnnotatedRegionWidget(
+    return ATAnnotatedRegion(
       child: Scaffold(
         body: SafeArea(
           child: CustomScrollView(

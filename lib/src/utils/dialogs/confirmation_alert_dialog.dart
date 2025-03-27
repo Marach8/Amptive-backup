@@ -2,7 +2,7 @@ import 'package:amptive/src/models/host.dart';
 import 'package:amptive/src/utils/constants/colors.dart';
 import 'package:amptive/src/utils/constants/font_sizes.dart';
 import 'package:amptive/src/utils/constants/strings/other_strings.dart';
-import 'package:amptive/src/utils/helpers/helper_functions/other_functions.dart';
+import 'package:amptive/src/utils/helpers/helper_functions/helper_functions.dart';
 import 'package:amptive/src/views/widgets/common_widgets/elevated_button_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
@@ -21,6 +21,7 @@ Future<bool?> showConfirmationDialog({
   return await showDialog<bool?>(
     context: context,
     builder: (_) => AlertDialog(
+      backgroundColor: ATColors.indicatorDark.withOpacity(0.82),
       backgroundColor: ATColors.indicatorDark.withOpacity(0.82),
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(14),
@@ -96,8 +97,8 @@ Future<bool?> showKickOutConfirmationDialog({
                 height: 43, width: 43, radius: 30,
                 child: FittedBox(
                   fit: BoxFit.fill,
-                  child: AmptiveImageLoaderWidget(
-                    imagePath: listener.obj.profilePicture ?? ''
+                  child: ATImgLoader(
+                    imgPath: listener.obj.profilePicture ?? ''
                   )
                 ),
               ),
@@ -133,7 +134,7 @@ Future<bool?> showKickOutConfirmationDialog({
           SizedBox(
             width: ATHelperFuncs.getScreenWidth(context),
             child: AmptiveElevatedButtonWidget(
-              bgColor: ATColors.whiteColor,
+              bgColor: ATColors.white,
               fgColor: ATColors.black,
               onPressed: () => context.pop(true),
               buttonTitle: ATStrings.KICK_OUT_LISTENER,

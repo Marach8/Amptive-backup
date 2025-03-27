@@ -28,6 +28,7 @@ class ATWhispers extends StatelessWidget {
                 title: 'karankabir',
                 subtitle: 'Listener',
                 leadingImagePath: ATImgStrings.jpeg1,
+                leadingImagePath: ATImgStrings.jpeg1,
               ),
               const SizedBox(height: 10),
               Text(

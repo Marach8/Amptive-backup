@@ -17,7 +17,7 @@ class AmptiveMutedAcctsScreen extends StatelessWidget {
 
   @override
   Widget build(context) {
-    return ATAnnotatedRegionWidget(
+    return ATAnnotatedRegion(
       child: Scaffold(
         body: Column(
           children: [

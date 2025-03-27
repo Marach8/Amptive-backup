@@ -5,7 +5,7 @@ import '../../../../../models/go_live_notification_model.dart';
 import '../../../../../utils/constants/colors.dart';
 import '../../../../../utils/constants/strings/image_strings.dart';
 import '../../../../../utils/constants/strings/other_strings.dart';
-import '../../../common_widgets/circular_container_with_picture_widget.dart';
+import '../../../common_widgets/circular_image.dart';
 import '../../../common_widgets/custom_container_widget.dart';
 import '../../../common_widgets/image_loader_widget.dart';
 
@@ -25,7 +25,7 @@ class AmptiveGoLiveNotificationsWidget extends StatelessWidget {
       height: 35, radius: 30,
       gradient: isTalking ? LinearGradient(
         colors: [
-          ATColors.orangeColor1.withOpacity(1),
+          ATColors.hexF91880.withOpacity(1),
           ATColors.orangeColor2.withOpacity(0),
         ]
       ) :  isGifting ? LinearGradient(
@@ -37,7 +37,7 @@ class AmptiveGoLiveNotificationsWidget extends StatelessWidget {
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          ATRoundedImage(
+          ATCircularImage(
             diameter: 30,
             imagePath: user.profilePicture ?? ''
           ),
@@ -54,8 +54,8 @@ class AmptiveGoLiveNotificationsWidget extends StatelessWidget {
             style: Theme.of(context).textTheme.titleSmall,
           ),
           const Gap(10),
-          AmptiveImageLoaderWidget(
-            imagePath: isTalking ? ATImgStrings.MIC_ICON
+          ATImgLoader(
+            imgPath: isTalking ? ATImgStrings.MIC_ICON
               : isGifting ? ATImgStrings.MONEY_ICON : ''
           )
         ],
@@ -84,7 +84,7 @@ class AmptiveGoLivePinnedMsgNtfctnWidget extends StatelessWidget {
     return ATContainer(
       padding: const EdgeInsets.fromLTRB(5, 10, 5, 5),
       margin: const EdgeInsets.only(left: 15, right: 15),
-      color: ATColors.whiteColor.withOpacity(0.15),
+      color: ATColors.white.withOpacity(0.15),
       boxShadow: [
         BoxShadow(
           color: ATColors.black,
@@ -93,7 +93,7 @@ class AmptiveGoLivePinnedMsgNtfctnWidget extends StatelessWidget {
       radius: 10,
       child: Row(
         children: [
-          ATRoundedImage(
+          ATCircularImage(
             diameter: 30,
             imagePath: user.profilePicture ?? ''
           ),
@@ -109,13 +109,13 @@ class AmptiveGoLivePinnedMsgNtfctnWidget extends StatelessWidget {
                       child: Text(
                         user.name ?? '',
                         style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                          color: ATColors.whiteColor.withOpacity(0.7)
+                          color: ATColors.white.withOpacity(0.7)
                         )
                       ),
                     ),
     
                     ATContainer(
-                      color: ATColors.whiteColor.withOpacity(0.2),
+                      color: ATColors.white.withOpacity(0.2),
                       padding: const EdgeInsets.all(2), radius: 4,
                       child: Text(
                         (role ?? '').toUpperCase(),
@@ -126,7 +126,7 @@ class AmptiveGoLivePinnedMsgNtfctnWidget extends StatelessWidget {
                     ),
                     const Gap(5),
                     ATContainer(
-                      color: ATColors.whiteColor.withOpacity(0.2),
+                      color: ATColors.white.withOpacity(0.2),
                       padding: const EdgeInsets.all(2), radius: 4,
                       child: Row(
                         children: [

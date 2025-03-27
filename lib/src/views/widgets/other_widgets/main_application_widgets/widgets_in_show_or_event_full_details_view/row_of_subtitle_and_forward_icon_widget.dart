@@ -15,7 +15,7 @@ class ShowOrEventIndicatorWithTitle extends StatelessWidget {
     return Row(
       mainAxisSize: MainAxisSize.min,
       children: [
-        const AmptiveImageLoaderWidget(imagePath: ATImgStrings.sIcon),
+        const ATImgLoader(imgPath: ATImgStrings.SHOW_ICON),
         const Gap(5),
         Text(
           'We Can Do Hard Things',

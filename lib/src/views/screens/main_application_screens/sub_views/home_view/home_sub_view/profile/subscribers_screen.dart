@@ -19,7 +19,7 @@ class AmptiveProfileSubScribersScreen extends StatelessWidget {
 
   @override
   Widget build(context) {
-    return ATAnnotatedRegionWidget(
+    return ATAnnotatedRegion(
       child: Scaffold(
         appBar: AmptiveAppBar(
           leading: GestureDetector(
@@ -45,9 +45,9 @@ class AmptiveProfileSubScribersScreen extends StatelessWidget {
                 controller: TextEditingController(),
                 disableBlueBorder: true,
                 hintText: ATStrings.SEARCH_4_SUBSCRIBERS,
-                fillColor: ATColors.whiteColor.withOpacity(0.1),
-                prefixIcon: const AmptiveImageLoaderWidget(
-                  imagePath: ATImgStrings.filledSearch
+                fillColor: ATColors.white.withOpacity(0.1),
+                prefixIcon: const ATImgLoader(
+                  imgPath: ATImgStrings.filledSearch
                 ),
               ),
               const Gap(20),
@@ -105,7 +105,7 @@ class _AmptiveSubscriberWidget extends StatelessWidget {
               height: 50, width: 50, radius: 30,
               child: FittedBox(
                 fit: BoxFit.fill,
-                child: AmptiveImageLoaderWidget(imagePath: subscriber.obj.profilePicture!)
+                child: ATImgLoader(imgPath: subscriber.obj.profilePicture!)
               ),
             ),
             const Gap(10),
@@ -116,7 +116,7 @@ class _AmptiveSubscriberWidget extends StatelessWidget {
               ),
             ),
             ATContainer(
-              border: Border.all(color: ATColors.whiteColor),
+              border: Border.all(color: ATColors.white),
               radius: 30, 
               padding: const EdgeInsets.fromLTRB(15, 5, 15, 5),
               child: Text(

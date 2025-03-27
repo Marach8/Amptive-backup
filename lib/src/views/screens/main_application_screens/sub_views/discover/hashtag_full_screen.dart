@@ -15,7 +15,7 @@ class AmptiveTrendingHashTagFullScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ATAnnotatedRegionWidget(
+    return ATAnnotatedRegion(
       child: Scaffold(
         body: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 15),
@@ -38,7 +38,7 @@ class AmptiveTrendingHashTagFullScreen extends StatelessWidget {
                       alignment: Alignment.center,
                       height: 40, width: 40,
                       boxShape: BoxShape.circle,
-                      color: ATColors.whiteColor,
+                      color: ATColors.white,
                       child: Text(
                         ATStrings.HASH,
                         style: Theme.of(context).textTheme.displayMedium?.copyWith(

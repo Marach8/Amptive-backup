@@ -38,7 +38,7 @@ class _NameAuthScreenState extends State<NameAuthScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return ATAnnotatedRegionWidget(
+    return ATAnnotatedRegion(
       child: Scaffold(
         backgroundColor: ATColors.brandBlack,
         appBar: const AmptiveAppBar(),
@@ -121,7 +121,7 @@ class _NameAuthScreenState extends State<NameAuthScreen> {
                               ATStrings.space,
                           style:
                               Theme.of(context).textTheme.titleSmall?.copyWith(
-                                    fontWeight: AmptiveFontWeights.w700,
+                                    fontWeight: ATFontWeights.w700,
                                   ),
                         ),
                         const TextSpan(
@@ -132,7 +132,7 @@ class _NameAuthScreenState extends State<NameAuthScreen> {
                           text: ATStrings.privacyPolicy,
                           style:
                               Theme.of(context).textTheme.titleSmall?.copyWith(
-                                    fontWeight: AmptiveFontWeights.w700,
+                                    fontWeight: ATFontWeights.w700,
                                   ),
                         ),
                       ],

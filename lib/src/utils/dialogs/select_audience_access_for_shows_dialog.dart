@@ -1,7 +1,7 @@
 import 'dart:io';
 import 'package:amptive/src/utils/constants/colors.dart';
 import 'package:amptive/src/utils/constants/strings/image_strings.dart';
-import 'package:amptive/src/utils/helpers/helper_functions/other_functions.dart';
+import 'package:amptive/src/utils/helpers/helper_functions/helper_functions.dart';
 import 'package:amptive/src/views/widgets/common_widgets/custom_container_widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/image_loader_widget.dart';
 import 'package:flutter/material.dart';
@@ -39,11 +39,11 @@ Future<String> showSelectAudienceAccessForShowsDialog(
                 child: Platform.isAndroid
                   ? Icon(
                     Icons.keyboard_arrow_down,
-                    color: ATColors.whiteColor.withOpacity(0.6),
+                    color: ATColors.white.withOpacity(0.6),
                   ) : ATContainer(
                     margin: const EdgeInsets.symmetric(vertical: 10),
                     radius: 5, height: 4, width: 30,
-                    color: ATColors.whiteColor.withOpacity(0.6),
+                    color: ATColors.white.withOpacity(0.6),
                     child: const SizedBox.shrink(),
                   ),
               ),
@@ -88,7 +88,7 @@ Future<String> showSelectAudienceAccessForShowsDialog(
                   ),
                   child: Row(
                     children: [
-                      const AmptiveImageLoaderWidget(imagePath: ATImgStrings.PEOPLE),
+                      const ATImgLoader(imgPath: ATImgStrings.PEOPLE),
                       const Gap(10),
                       Expanded(
                         child: Column(
@@ -115,7 +115,7 @@ Future<String> showSelectAudienceAccessForShowsDialog(
                         padding: const EdgeInsets.all(3),
                         color: isActive ? ATColors.hex307FE2 : ATColors.trspntColor,
                         border: Border.all(
-                          color: isActive ? ATColors.hex307FE2 : ATColors.whiteColor,
+                          color: isActive ? ATColors.hex307FE2 : ATColors.white,
                           strokeAlign: 5.0
                         ),
                         child: const SizedBox.shrink()
@@ -154,7 +154,7 @@ Future<String> showSelectAudienceAccessForShowsDialog(
                     children: [
                       Row(
                         children: [
-                          const AmptiveImageLoaderWidget(imagePath: ATImgStrings.PADLOCK),
+                          const ATImgLoader(imgPath: ATImgStrings.PADLOCK),
                           const Gap(10),
                           Expanded(
                             child: Column(
@@ -181,7 +181,7 @@ Future<String> showSelectAudienceAccessForShowsDialog(
                             padding: const EdgeInsets.all(3),
                             color: isActive ? ATColors.hex307FE2 : ATColors.trspntColor,
                             border: Border.all(
-                              color: isActive ? ATColors.hex307FE2 : ATColors.whiteColor,
+                              color: isActive ? ATColors.hex307FE2 : ATColors.white,
                               strokeAlign: 5.0
                             ),
                             child: const SizedBox.shrink()
@@ -226,7 +226,7 @@ Future<String> showSelectAudienceAccessForShowsDialog(
                   margin: EdgeInsets.zero,
                   onPressed: isActive ? (){context.pop(value);} : null,
                   buttonTitle: ATStrings.CONTINUE,
-                  bgColor: ATColors.whiteColor,
+                  bgColor: ATColors.white,
                   fgColor: ATColors.black,
                 );
               }

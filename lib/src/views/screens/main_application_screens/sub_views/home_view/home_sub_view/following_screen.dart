@@ -19,7 +19,7 @@ class AmptiveFollowingEvenstOrShowsViewWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ATAnnotatedRegionWidget(
+    return ATAnnotatedRegion(
       child: Scaffold(
         body: NestedScrollView(
           floatHeaderSlivers: true,
@@ -39,7 +39,7 @@ class AmptiveFollowingEvenstOrShowsViewWidget extends StatelessWidget {
               bottom: PreferredSize(
                 preferredSize: const Size.fromHeight(0),
                 child: ATContainer(
-                  color: ATColors.whiteColor,
+                  color: ATColors.white,
                   height: 0.15,
                   width: double.infinity,
                   child: const SizedBox.shrink(),

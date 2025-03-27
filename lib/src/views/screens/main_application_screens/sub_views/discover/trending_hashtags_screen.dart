@@ -15,7 +15,7 @@ class AmptiveTrendingHashTagsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ATAnnotatedRegionWidget(
+    return ATAnnotatedRegion(
       child: Scaffold(
         body: CustomScrollView(
           physics: const BouncingScrollPhysics(),

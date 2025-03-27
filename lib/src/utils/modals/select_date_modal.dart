@@ -2,7 +2,7 @@ import 'dart:typed_data';
 import 'dart:ui';
 
 import 'package:amptive/src/utils/constants/colors.dart';
-import 'package:amptive/src/utils/helpers/helper_functions/other_functions.dart';
+import 'package:amptive/src/utils/helpers/helper_functions/helper_functions.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -116,7 +116,7 @@ Future<void> selectDateModal(
                     Navigator.pop(context);
                   },
                   buttonTitle: ATStrings.CONTINUE,
-                  bgColor: ATColors.whiteColor,
+                  bgColor: ATColors.white,
                   fgColor: ATColors.black,
                 ),
               ),

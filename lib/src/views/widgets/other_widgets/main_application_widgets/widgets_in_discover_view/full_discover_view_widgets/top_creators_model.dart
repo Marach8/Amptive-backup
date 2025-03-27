@@ -16,7 +16,7 @@ class AmptiveTopCreatorsModel extends StatelessWidget {
       padding: const EdgeInsets.only(left: 15),
       child: Column(
         children: [
-          AmptiveImageLoaderWidget(imagePath: picture), 
+          ATImgLoader(imgPath: picture), 
           const Gap(5),
           Text(
             'ammybach',

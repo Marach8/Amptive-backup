@@ -21,7 +21,7 @@ class AmptiveLiveIndicatorWidget extends StatelessWidget {
           begin: Alignment.topCenter,
           end: Alignment.bottomCenter,
           colors: [
-            ATColors.orangeColor1,
+            ATColors.hexF91880,
             ATColors.orangeGradientColorB
           ]
         ),
@@ -34,7 +34,7 @@ class AmptiveLiveIndicatorWidget extends StatelessWidget {
       child: Text(
         ATStrings.LIVE.toUpperCase(),
         style: Theme.of(context).textTheme.titleSmall?.copyWith(
-          fontWeight: AmptiveFontWeights.w600
+          fontWeight: ATFontWeights.w600
         )
       ),
     );

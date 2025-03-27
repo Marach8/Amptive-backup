@@ -11,14 +11,14 @@ class AmptiveElevatedButtonTheme{
   static ElevatedButtonThemeData darkElevatedButtonTheme = ElevatedButtonThemeData(
     style: ElevatedButton.styleFrom(
       elevation: 0,
-      foregroundColor: ATColors.whiteColor,
+      foregroundColor: ATColors.white,
       backgroundColor: ATColors.hex307FE2,
       disabledForegroundColor: ATColors.grey4Color,
-      disabledBackgroundColor: ATColors.hex9E9E9E.withOpacity(0.3),
+      disabledBackgroundColor: ATColors.fillGreyColor.withOpacity(0.3),
       textStyle: TextStyle(
         fontFamily: ATStrings.inter,
         fontSize: ATFontSizes.size16,
-        fontWeight: AmptiveFontWeights.w600
+        fontWeight: ATFontWeights.w600
       ),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(40).r)
     )

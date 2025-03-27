@@ -14,11 +14,11 @@ class AmptiveAppBarTheme{
     elevation: 0,
     scrolledUnderElevation: 0,
     backgroundColor: ATColors.black,
-    foregroundColor: ATColors.whiteColor,
+    foregroundColor: ATColors.white,
     titleTextStyle: TextStyle(
       fontFamily: ATStrings.inter,
       fontSize: ATFontSizes.size20,
-      fontWeight: AmptiveFontWeights.w700,
+      fontWeight: ATFontWeights.w700,
     )
   );
 

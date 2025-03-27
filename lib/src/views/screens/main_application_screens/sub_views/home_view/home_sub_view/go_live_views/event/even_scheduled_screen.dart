@@ -49,7 +49,7 @@ class _AmptiveShowScheduledScreenState
 
   @override
   Widget build(context) {
-    return ATAnnotatedRegionWidget(
+    return ATAnnotatedRegion(
       child: Scaffold(
         appBar: AmptiveAppBar(
           leading: GestureDetector(
@@ -71,7 +71,7 @@ class _AmptiveShowScheduledScreenState
               children: [
                 AmptiveCircleAvatarWidget(
                   diameter: 45,
-                  color: ATColors.whiteColor,
+                  color: ATColors.white,
                   child: Icon(
                     Icons.calendar_today_outlined,
                     color: ATColors.black,
@@ -116,7 +116,7 @@ class _AmptiveShowScheduledScreenState
               onPressed: () {},
               buttonTitle:
                   isEvent ? ATStrings.SHARE_EVENT : 'Share episode',
-              bgColor: ATColors.whiteColor,
+              bgColor: ATColors.white,
               fgColor: ATColors.black,
             ),
             const Gap(10),

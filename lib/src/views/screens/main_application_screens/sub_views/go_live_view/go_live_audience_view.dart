@@ -3,9 +3,9 @@ import 'package:amptive/src/utils/constants/font_sizes.dart';
 import 'package:amptive/src/utils/constants/strings/image_strings.dart';
 import 'package:amptive/src/utils/dialogs/app_notification_dialog.dart';
 import 'package:amptive/src/utils/dialogs/minimized_go_live_dialog.dart';
-import 'package:amptive/src/utils/helpers/helper_functions/other_functions.dart';
+import 'package:amptive/src/utils/helpers/helper_functions/helper_functions.dart';
 import 'package:amptive/src/views/widgets/common_widgets/annotated_region__widget.dart';
-import 'package:amptive/src/views/widgets/common_widgets/circular_container_with_picture_widget.dart';
+import 'package:amptive/src/views/widgets/common_widgets/circular_image.dart';
 import 'package:amptive/src/views/widgets/common_widgets/custom_container_widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/custom_rebuilder_widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/image_loader_widget.dart';
@@ -79,7 +79,7 @@ class _AmptiveGoLiveAudienceViewState extends State<AmptiveGoLiveAudienceView> {
   @override
   Widget build(context) {
     // final screenWidth = AmptiveHelperFunctions.getScreenWidth(context);
-    return ATAnnotatedRegionWidget(
+    return ATAnnotatedRegion(
       child: Scaffold(
         body: SafeArea(
           child: Column(
@@ -92,7 +92,7 @@ class _AmptiveGoLiveAudienceViewState extends State<AmptiveGoLiveAudienceView> {
                   context.read<AmptiveNavBarBloc>().goToPage(0);
                   showMinimizedGoLiveState();
                 },
-                color: ATColors.whiteColor.withOpacity(0.1),
+                color: ATColors.white.withOpacity(0.1),
                 height: 35, width: 35, boxShape: BoxShape.circle,
                 boxShadow: [
                   BoxShadow(
@@ -112,11 +112,11 @@ class _AmptiveGoLiveAudienceViewState extends State<AmptiveGoLiveAudienceView> {
                   onTap: (){},
                   margin: const EdgeInsets.only(left: 15),
                   padding: const EdgeInsets.fromLTRB(5, 5, 10, 5), radius: 30,
-                  color: ATColors.whiteColor.withOpacity(0.1),
+                  color: ATColors.white.withOpacity(0.1),
                   child: Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      const AmptiveImageLoaderWidget(imagePath: ATImgStrings.GROUP_ICON),
+                      const ATImgLoader(imgPath: ATImgStrings.GROUP_ICON),
                       const Gap(5),
                       Text(
                         ATStrings.SOCIETY,
@@ -152,7 +152,7 @@ class _AmptiveGoLiveAudienceViewState extends State<AmptiveGoLiveAudienceView> {
                                 return ListTile(
                                   horizontalTitleGap: 10,
                                   minTileHeight: 50,
-                                  leading: ATRoundedImage(
+                                  leading: ATCircularImage(
                                     diameter: 35.h,
                                     imagePath: ATImgStrings.CRIMINAL,
                                   ),
@@ -275,7 +275,7 @@ class _AmptiveGoLiveAudienceViewState extends State<AmptiveGoLiveAudienceView> {
                             child: showIcon ? ATContainer(
                               key: const ValueKey(1),
                               onTap: () => _scrollToBottom(),
-                              color: ATColors.whiteColor.withOpacity(0.1),
+                              color: ATColors.white.withOpacity(0.1),
                               height: 35, width: 35,
                               boxShape: BoxShape.circle,
                               child: const Icon(Icons.keyboard_double_arrow_down),
@@ -349,7 +349,7 @@ class _GoLiveAudienViewControlsWidgetState extends State<GoLiveAudienViewControl
               if(value){
                 return Padding(
                   padding: const EdgeInsets.only(right: 15),
-                  child: ATRoundedImage(
+                  child: ATCircularImage(
                     diameter: 35,
                     imagePath: getHostList()[9].obj.profilePicture ?? ''
                   ),
@@ -378,10 +378,10 @@ class _GoLiveAudienViewControlsWidgetState extends State<GoLiveAudienViewControl
                       color: commentIsEnabled ? ATColors.strokeGreyColor
                       : ATColors.strokeGreyColor.withOpacity(0.3)
                     ),
-                    fillColor: commentIsEnabled ? ATColors.hex9E9E9E.withOpacity(0.1) 
-                      : ATColors.whiteColor.withOpacity(0.01),
+                    fillColor: commentIsEnabled ? ATColors.fillGreyColor.withOpacity(0.1) 
+                      : ATColors.white.withOpacity(0.01),
                     enabled: commentIsEnabled ? true : false,
-                    cursorColor: ATColors.whiteColor.withOpacity(0.6),
+                    cursorColor: ATColors.white.withOpacity(0.6),
                     constraints: const BoxConstraints(maxHeight: 35),
                     contentPadding: const EdgeInsets.fromLTRB(16, 0, 16, 0),
                     hintText: ATStrings.COMMENT,
@@ -407,7 +407,7 @@ class _GoLiveAudienViewControlsWidgetState extends State<GoLiveAudienViewControl
                         padding: const EdgeInsets.only(left: 10),
                         child: Icon(
                           Icons.send,
-                          color:value ? ATColors.whiteColor : ATColors.lightDark,
+                          color:value ? ATColors.white : ATColors.lightDark,
                         ),
                       ),
                     );
@@ -434,7 +434,7 @@ class _GoLiveAudienViewControlsWidgetState extends State<GoLiveAudienViewControl
                         onTap: (){
                           showAppNotification(
                             context: context,
-                            icon: const AmptiveImageLoaderWidget(imagePath: ATImgStrings.KICK_USER_OUT),
+                            icon: const ATImgLoader(imgPath: ATImgStrings.KICK_USER_OUT),
                             text: 'You have been kicked out of the live session',
                             bgColor: ATColors.hexECO404,
                           );
@@ -443,7 +443,7 @@ class _GoLiveAudienViewControlsWidgetState extends State<GoLiveAudienViewControl
                       ),
                       _RenderAudienceViewButtons(
                         onTap: (){},
-                        child: const AmptiveImageLoaderWidget(imagePath: ATImgStrings.GIFT_ICON),
+                        child: const ATImgLoader(imgPath: ATImgStrings.GIFT_ICON),
                       ),
                       _RenderAudienceViewButtons(
                         onTap: (){},
@@ -478,7 +478,7 @@ class _RenderAudienceViewButtons extends StatelessWidget {
     return ATContainer(
       onTap: onTap,
       margin: addMargin ? EdgeInsets.only(right: 5.w) : EdgeInsets.zero,
-      color: ATColors.whiteColor.withOpacity(0.1),
+      color: ATColors.white.withOpacity(0.1),
       padding: const EdgeInsets.all(5),
       radius: 30, child: child
     );

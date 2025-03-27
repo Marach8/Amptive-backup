@@ -8,10 +8,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 
-class AmptiveAppBarDropDownWidget extends StatelessWidget {
+class ATHomeDropDown extends StatelessWidget {
   final Widget child;
   final Offset? offset;
-  const AmptiveAppBarDropDownWidget({
+  const ATHomeDropDown({
     super.key,
     required this.child,
     this.offset
@@ -45,7 +45,7 @@ class AmptiveAppBarDropDownWidget extends StatelessWidget {
                   fontSize: ATFontSizes.size15
                 ),
               ),
-              const AmptiveImageLoaderWidget(imagePath: ATImgStrings.CALEND_ICON)
+              const ATImgLoader(imgPath: ATImgStrings.CALEND_ICON)
             ],
           )
         ),
@@ -81,7 +81,7 @@ class AmptiveAppBarDropDownWidget extends StatelessWidget {
                   fontSize: ATFontSizes.size15
                 ),
               ),
-              const AmptiveImageLoaderWidget(imagePath: ATImgStrings.PERSON_CHECKED)
+              const ATImgLoader(imgPath: ATImgStrings.PERSON_CHECKED)
             ],
           )
         )

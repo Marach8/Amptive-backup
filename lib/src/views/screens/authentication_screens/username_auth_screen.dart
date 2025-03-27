@@ -41,7 +41,7 @@ class _UserNameAuthScreenState extends State<UserNameAuthScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return ATAnnotatedRegionWidget(
+    return ATAnnotatedRegion(
       child: Scaffold(
         backgroundColor: ATColors.brandBlack,
         appBar: const AmptiveAppBar(),
@@ -161,7 +161,7 @@ class _UserNameAuthScreenState extends State<UserNameAuthScreen> {
                       child: Text(
                         ATStrings.checkerIsLoading,
                         style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                              fontWeight: AmptiveFontWeights.w500,
+                              fontWeight: ATFontWeights.w500,
                             ),
                       ),
                     ),

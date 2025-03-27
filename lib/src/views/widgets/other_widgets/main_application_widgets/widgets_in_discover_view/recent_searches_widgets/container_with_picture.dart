@@ -24,8 +24,8 @@ class AmptivePictureWidget extends StatelessWidget {
       width: diameter,
       radius: (isCircular ?? false) ? null : radius,
       boxShape: (isCircular ?? false) ? BoxShape.circle : null,
-      child: AmptiveImageLoaderWidget(
-        imagePath: imagePath,
+      child: ATImgLoader(
+        imgPath: imagePath,
         boxFit: BoxFit.cover
       ),
     );

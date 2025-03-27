@@ -6,9 +6,9 @@ import 'package:amptive/src/utils/constants/colors.dart';
 import 'package:amptive/src/utils/constants/font_sizes.dart';
 import 'package:amptive/src/utils/constants/strings/image_strings.dart';
 import 'package:amptive/src/utils/dialogs/confirmation_alert_dialog.dart';
-import 'package:amptive/src/utils/helpers/helper_functions/other_functions.dart';
+import 'package:amptive/src/utils/helpers/helper_functions/helper_functions.dart';
 import 'package:amptive/src/views/widgets/common_widgets/circle_avatar.dart';
-import 'package:amptive/src/views/widgets/common_widgets/circular_container_with_picture_widget.dart';
+import 'package:amptive/src/views/widgets/common_widgets/circular_image.dart';
 import 'package:amptive/src/views/widgets/common_widgets/custom_container_widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/elevated_button_widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/image_loader_widget.dart';
@@ -55,12 +55,12 @@ Future<void> showFollowHostOrCohostDialog({
                     child: Platform.isAndroid
                         ? Icon(
                             Icons.keyboard_arrow_down,
-                            color: ATColors.whiteColor.withOpacity(0.6),
+                            color: ATColors.white.withOpacity(0.6),
                           )
                         : ATContainer(
                             margin: const EdgeInsets.symmetric(vertical: 10),
                             radius: 5, height: 4, width: 30,
-                            color: ATColors.whiteColor.withOpacity(0.6),
+                            color: ATColors.white.withOpacity(0.6),
                             child: const SizedBox.shrink(),
                           ),
                     ),
@@ -68,7 +68,7 @@ Future<void> showFollowHostOrCohostDialog({
                   const Gap(10),
                   Row(
                     children: [
-                      ATRoundedImage(
+                      ATCircularImage(
                         imagePath: host.obj.profilePicture ?? '',
                         diameter: 70,
                       ),
@@ -189,7 +189,7 @@ Future<void> showFollowHostOrCohostDialog({
                           final notFollowing = state is IsNotFollowingState;
 
                           return Flexible(
-                            child: AmptivePlainElevatedBtnWidget(
+                            child: ATPlainElevatedBtn(
                               onPressed: () async{
                                 if(notFollowing){
                                   context.read<AmptiveFollowingBloc>().add(ShouldFollowEvent());
@@ -207,12 +207,12 @@ Future<void> showFollowHostOrCohostDialog({
                                   }
                                 }
                               },
-                              bgColor: ATColors.whiteColor,
+                              bgColor: ATColors.white,
                               fgColor: ATColors.brandBlack,
-                              buttonTitle:notFollowing ? ATStrings.FOLLOW : '',
-                              child: isFollowing ? const AmptiveImageLoaderWidget(
-                                imagePath: ATImgStrings.USER_FOLLOW
-                              ): isLoading ? const AmptiveLoadingIndicatorWidget(size: 20,) : null
+                              btnTitle:notFollowing ? ATStrings.FOLLOW : '',
+                              child: isFollowing ? const ATImgLoader(
+                                imgPath: ATImgStrings.USER_FOLLOW
+                              ): isLoading ? const ATLoadingIndicator(size: 20,) : null
                             ),
                           );
                         }
@@ -232,7 +232,7 @@ Future<void> showFollowHostOrCohostDialog({
 
                           return Expanded(
                             flex: 4,
-                            child: AmptivePlainElevatedBtnWidget(
+                            child: ATPlainElevatedBtn(
                               onPressed: ()async{
                                 if(unSubscribed){
                                   context.read<AmptiveSubscriptionBloc>().add(ShouldSubscribeEvent());
@@ -253,8 +253,8 @@ Future<void> showFollowHostOrCohostDialog({
                               },
                               bgColor: ATColors.yellowColor1,
                               fgColor: ATColors.brandBlack,
-                              buttonTitle: isSubscribed ? ATStrings.UNSUBSCRIBE : '',
-                              child: isLoading ? AmptiveLoadingIndicatorWidget(color: ATColors.whiteColor,) 
+                              btnTitle: isSubscribed ? ATStrings.UNSUBSCRIBE : '',
+                              child: isLoading ? ATLoadingIndicator(color: ATColors.white,) 
                                 : unSubscribed ? Row(
                                   mainAxisSize: MainAxisSize.min,
                                   children: [

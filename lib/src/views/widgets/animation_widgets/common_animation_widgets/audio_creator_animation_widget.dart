@@ -81,7 +81,7 @@ class _AmptiveAudioCreatorWidgetState extends State<AmptiveAudioCreatorWidget>{
             visible: !_isBorderColored,
             child: CircleAvatar(
               radius: 12.r,
-              backgroundColor: ATColors.whiteColor,
+              backgroundColor: ATColors.white,
               child: Icon(
                 Icons.mic_off,
                 color: ATColors.brandBlack,

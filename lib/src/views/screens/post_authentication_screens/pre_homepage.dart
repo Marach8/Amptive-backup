@@ -70,7 +70,7 @@ class _PreHomePageState extends State<PreHomePage>
 
   @override
   Widget build(BuildContext context) {
-    return ATAnnotatedRegionWidget(
+    return ATAnnotatedRegion(
       child: Scaffold(
         backgroundColor: ATColors.brandBlack,
         body: Stack(
@@ -110,7 +110,7 @@ class _PreHomePageState extends State<PreHomePage>
                       'STAY ON THE LOOP',
                       textAlign: TextAlign.center,
                       style: GoogleFonts.inter(
-                        color: ATColors.whiteColor,
+                        color: ATColors.white,
                         fontSize: 45.sp,
                         fontWeight: FontWeight.w800,
                       ),
@@ -125,7 +125,7 @@ class _PreHomePageState extends State<PreHomePage>
                       'Allow Amptive to send notifications of live audio shows & events ',
                       textAlign: TextAlign.center,
                       style: GoogleFonts.inter(
-                        color: ATColors.whiteColor,
+                        color: ATColors.white,
                         fontSize: 14.sp,
                         fontWeight: FontWeight.w500,
                         letterSpacing: 0.28,
@@ -225,7 +225,7 @@ class _PreHomePageState extends State<PreHomePage>
                             ATStrings.noThanks,
                             textAlign: TextAlign.center,
                             style: GoogleFonts.inter(
-                              color: ATColors.whiteColor,
+                              color: ATColors.white,
                               fontSize: 18.sp,
                               fontWeight: FontWeight.w600,
                               height: 0.18,

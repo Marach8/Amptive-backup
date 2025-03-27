@@ -1,5 +1,5 @@
 import 'package:amptive/src/utils/constants/strings/route_strings.dart';
-import 'package:amptive/src/utils/helpers/helper_functions/other_functions.dart';
+import 'package:amptive/src/utils/helpers/helper_functions/helper_functions.dart';
 import 'package:amptive/src/views/widgets/common_widgets/custom_rebuilder_widget.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
@@ -264,7 +264,7 @@ class _HorizontalScrollCardsState extends State<_HorizontalScrollCards> {
             itemCount: _adverts.length,
             itemBuilder: (_, pageIndex, __){
               final advert = _adverts.elementAtOrNull(pageIndex);
-              return AmptiveImageLoaderWidget(imagePath: advert ?? '');
+              return ATImgLoader(imgPath: advert ?? '');
             },
             options: CarouselOptions(
               autoPlay: true,
@@ -289,7 +289,7 @@ class _HorizontalScrollCardsState extends State<_HorizontalScrollCards> {
                       return ATContainer(
                         margin: const EdgeInsets.only(left: 3),
                         radius: 8, height: 8,
-                        color: isActive ? ATColors.whiteColor : ATColors.inactiveDotColor, 
+                        color: isActive ? ATColors.white : ATColors.inactiveDotColor, 
                         width: isActive ? 25 : 8,
                         child: const SizedBox.shrink()
                       );

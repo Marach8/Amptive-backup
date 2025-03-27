@@ -2,7 +2,7 @@ import 'dart:io';
 import 'dart:ui';
 import 'package:amptive/src/utils/constants/colors.dart';
 import 'package:amptive/src/utils/constants/font_sizes.dart';
-import 'package:amptive/src/utils/helpers/helper_functions/other_functions.dart';
+import 'package:amptive/src/utils/helpers/helper_functions/helper_functions.dart';
 import 'package:amptive/src/views/widgets/animation_widgets/common_animation_widgets/animated_crossfade_widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/custom_container_widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/image_loader_widget.dart';
@@ -62,7 +62,7 @@ Future<Set<ObjectWithNotifier<Host>>?> showAddCoHostDialog(BuildContext context)
                               ? Icon(
                                   Icons.keyboard_arrow_down,
                                   color:
-                                      ATColors.whiteColor.withOpacity(0.6),
+                                      ATColors.white.withOpacity(0.6),
                                 )
                               : ATContainer(
                                   margin:
@@ -71,7 +71,7 @@ Future<Set<ObjectWithNotifier<Host>>?> showAddCoHostDialog(BuildContext context)
                                   height: 4,
                                   width: 30,
                                   color:
-                                      ATColors.whiteColor.withOpacity(0.6),
+                                      ATColors.white.withOpacity(0.6),
                                   child: const SizedBox.shrink(),
                                 ),
                         ),
@@ -168,7 +168,7 @@ Future<Set<ObjectWithNotifier<Host>>?> showAddCoHostDialog(BuildContext context)
                                           return ATContainer(
                                             alignment: Alignment.center,
                                             margin: const EdgeInsets.only(right: 15),
-                                            border: Border.all(color: ATColors.whiteColor.withOpacity(0.4)),
+                                            border: Border.all(color: ATColors.white.withOpacity(0.4)),
                                             height: 43, width: 43, radius: 30,
                                             child: Text(
                                               (index + 1).toString(),
@@ -189,8 +189,8 @@ Future<Set<ObjectWithNotifier<Host>>?> showAddCoHostDialog(BuildContext context)
                                                 height: 43, width: 43, radius: 30,
                                                 child: FittedBox(
                                                   fit: BoxFit.fill,
-                                                  child: AmptiveImageLoaderWidget(
-                                                    imagePath: selectedCoHost.obj.profilePicture ?? ''
+                                                  child: ATImgLoader(
+                                                    imgPath: selectedCoHost.obj.profilePicture ?? ''
                                                   )
                                                 ),
                                               ),
@@ -284,7 +284,7 @@ Future<Set<ObjectWithNotifier<Host>>?> showAddCoHostDialog(BuildContext context)
                         context.pop(selectedCoHosts.toSet());
                         } : null,
                       buttonTitle: ATStrings.CONTINUE,
-                      bgColor: ATColors.whiteColor,
+                      bgColor: ATColors.white,
                       fgColor: ATColors.black,
                     );
                   }
@@ -374,8 +374,8 @@ class AmptiveCoHostWidget extends StatelessWidget {
               height: 50, width: 50, radius: 30,
               child: FittedBox(
                   fit: BoxFit.fill,
-                  child: AmptiveImageLoaderWidget(
-                      imagePath: coHostDetail.obj.profilePicture!)),
+                  child: ATImgLoader(
+                      imgPath: coHostDetail.obj.profilePicture!)),
             ),
             const Gap(10),
             Expanded(

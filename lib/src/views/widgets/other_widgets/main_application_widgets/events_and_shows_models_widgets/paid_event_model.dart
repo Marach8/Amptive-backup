@@ -25,9 +25,9 @@ class AmptivePaidEventModel extends StatelessWidget {
           ClipRRect(
             clipBehavior: Clip.hardEdge,
             borderRadius: BorderRadius.circular(5),
-            child: AmptiveImageLoaderWidget(
+            child: ATImgLoader(
               boxFit: BoxFit.scaleDown,
-              imagePath: trendingPicture
+              imgPath: trendingPicture
             ),
           ),
           const Gap(5),

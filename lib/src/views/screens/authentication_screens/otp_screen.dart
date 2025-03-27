@@ -4,7 +4,7 @@ import 'package:amptive/src/bloc/authentication/otp/otp_auth_states.dart';
 import 'package:amptive/src/services/auth/otp_service.dart';
 import 'package:amptive/src/utils/constants/colors.dart';
 import 'package:amptive/src/utils/constants/font_sizes.dart';
-import 'package:amptive/src/utils/helpers/helper_functions/other_functions.dart';
+import 'package:amptive/src/utils/helpers/helper_functions/helper_functions.dart';
 import 'package:amptive/src/views/widgets/common_widgets/annotated_region__widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/common_widgets.dart';
 import 'package:flutter/gestures.dart';
@@ -82,7 +82,7 @@ class _ATOTPScreenState extends State<ATOTPScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return ATAnnotatedRegionWidget(
+    return ATAnnotatedRegion(
       child: Scaffold(
         backgroundColor: ATColors.brandBlack,
         appBar: AmptiveAppBar(
@@ -226,7 +226,7 @@ class _OTPTextFormField extends StatelessWidget {
             child: Text(ATStrings.hyphen),
           ),
           labelStyle:Theme.of(context).textTheme.headlineMedium?.copyWith(
-          fontWeight: AmptiveFontWeights.w400,
+          fontWeight: ATFontWeights.w400,
         ),
           filled: true,
           fillColor: ATColors.hex9E9E9E.withOpacity(0.3),
@@ -246,7 +246,7 @@ class _OTPTextFormField extends StatelessWidget {
           ),
         ),
         style:Theme.of(context).textTheme.headlineMedium?.copyWith(
-          fontWeight: AmptiveFontWeights.w400,
+          fontWeight: ATFontWeights.w400,
         ),
         textAlign: TextAlign.center,
       ),

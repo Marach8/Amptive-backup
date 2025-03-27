@@ -12,20 +12,20 @@ class AmptiveInputDecorationTheme{
     errorMaxLines: 1,
     //isDense: true,
     filled: true,
-    fillColor: ATColors.hex9E9E9E.withOpacity(0.3),
+    fillColor: ATColors.fillGreyColor.withOpacity(0.3),
     // prefixIconColor: AmptiveColors.deepOrange,
     // suffixIconColor: AmptiveColors.deepOrange,
     //labelStyle: const TextStyle().copyWith(fontSize: AmptiveFontSizes.size13),
     hintStyle: TextStyle(
       fontSize: ATFontSizes.size16,
       color: ATColors.authHintColor,
-      fontWeight: AmptiveFontWeights.w400
+      fontWeight: ATFontWeights.w400
     ),
     contentPadding: const EdgeInsets.fromLTRB(16, 12, 16, 12).r,
     errorStyle: TextStyle(
       color: ATColors.textRedColor,
       fontSize: ATFontSizes.size12,
-      fontWeight: AmptiveFontWeights.w400
+      fontWeight: ATFontWeights.w400
     ),
 
     enabledBorder: const OutlineInputBorder().copyWith(
@@ -47,7 +47,7 @@ class AmptiveInputDecorationTheme{
 
     disabledBorder: const OutlineInputBorder().copyWith(
       borderRadius: BorderRadius.circular(14).r,
-      borderSide: BorderSide(color: ATColors.trspntColor),
+      borderSide: BorderSide(color: ATColors.trsprtColor),
     ),
   );
 }

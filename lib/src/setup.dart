@@ -1,7 +1,9 @@
 import 'package:amptive/src/bloc/main_app/go_live_bloc/audience_view/following_bloc.dart';
 import 'package:amptive/src/bloc/main_app/go_live_bloc/audience_view/subscription_bloc.dart';
-import 'package:amptive/src/bloc/main_app/profile/allow_see_calender_bloc.dart';
-import 'package:amptive/src/bloc/main_app/profile/profile_menu/select_country_bloc.dart';
+import 'package:amptive/src/bloc/main_app/profile/profile_menu/calender/calender_month_view_bloc.dart';
+import 'package:amptive/src/bloc/main_app/profile/profile_menu/calender/calender_visibile_bloc.dart';
+import 'package:amptive/src/bloc/main_app/profile/profile_menu/calender/calender_views_bloc.dart';
+import 'package:amptive/src/bloc/main_app/profile/profile_menu/calender/day_view_bloc.dart';
 import 'package:amptive/src/bloc/preference/bloc.dart';
 import 'package:amptive/src/services/auth/auth_field_service.dart';
 import 'package:amptive/src/services/auth/otp_service.dart';
@@ -24,6 +26,8 @@ import 'bloc/main_app/go_live_bloc/host_view/notifications_bloc.dart';
 import 'bloc/main_app/nav_bar_bloc.dart';
 import 'bloc/main_app/profile/private_account_bloc.dart';
 import 'bloc/main_app/profile/profile_followers_bloc.dart';
+import 'bloc/main_app/profile/profile_menu/calender/calender_programs_bloc.dart';
+import 'bloc/main_app/profile/profile_menu/calender/selected_calender_date_bloc.dart';
 import 'bloc/main_app/profile/profile_menu/language_bloc.dart';
 import 'bloc/onboarding_bloc/onboarding_bloc.dart';
 
@@ -54,9 +58,14 @@ List<SingleChildWidget> providers() {
     BlocProvider(create: (_) => AmptiveEndShowBloc()),
     BlocProvider(create: (_) => AmptiveGoLiveHostModerationToolsBloc()),
     BlocProvider(create: (_) => AmptiveProfileFollowersBloc()),
-    BlocProvider(create: (_) => AllowSeeCalenderBloc()),
+    BlocProvider(create: (_) => CalenderVisibleBloc()),
     BlocProvider(create: (_) => AmptiveLanguageBloc()),
     BlocProvider(create: (_) => PrivateAccountBloc()),
-    BlocProvider(create: (_) => ATSelectCountryBloc())
+    BlocProvider(create: (_) => CalenderViewsBloc()),
+    BlocProvider(create: (_) => SelectedCalenderDateBloc()),
+    BlocProvider(create: (_) => CalenderProgramBloc()),
+    BlocProvider(create: (_) => CalenderMonthViewBloc()),
+    BlocProvider(create: (_) => DayViewHeadingBloc()),
+    BlocProvider(create: (_) => HoursInADayBloc()),
   ];
 }

@@ -17,7 +17,7 @@ class AmptiveMore2DiscoverModel extends StatelessWidget {
       child: ClipRRect(
         clipBehavior: Clip.hardEdge,
         borderRadius: BorderRadius.circular(5),
-        child: AmptiveImageLoaderWidget(imagePath: picture),
+        child: ATImgLoader(imgPath: picture),
       ),
     );
   }

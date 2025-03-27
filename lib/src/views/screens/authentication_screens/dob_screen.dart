@@ -33,7 +33,7 @@ class _DateOfBirthScreenState extends State<DateOfBirthScreen> {
   Widget build(BuildContext context) {
     var bottomSheetHeight = 232.h;
 
-    return ATAnnotatedRegionWidget(
+    return ATAnnotatedRegion(
       child: Scaffold(
         backgroundColor: ATColors.brandBlack,
         appBar: const AmptiveAppBar(),
@@ -47,7 +47,7 @@ class _DateOfBirthScreenState extends State<DateOfBirthScreen> {
                 Text(
                   ATStrings.whatIsYourDateOfBirth,
                   style: GoogleFonts.inter(
-                    color: ATColors.whiteColor,
+                    color: ATColors.white,
                     fontSize: 17.sp,
                     fontWeight: FontWeight.bold,
                   ),
@@ -107,7 +107,7 @@ class _DateOfBirthScreenState extends State<DateOfBirthScreen> {
                     style: GoogleFonts.inter(
                         fontWeight: FontWeight.normal,
                         fontSize: 16.sp,
-                        color: ATColors.whiteColor),
+                        color: ATColors.white),
                   );
                 }),
                 Container(
@@ -116,7 +116,7 @@ class _DateOfBirthScreenState extends State<DateOfBirthScreen> {
                   child: Text(
                     ATStrings.users13andOlderWarning,
                     style: GoogleFonts.inter(
-                      color: ATColors.whiteColor,
+                      color: ATColors.white,
                       fontWeight: FontWeight.w400,
                       fontSize: 11.sp,
                       height: 0.14,
@@ -176,7 +176,7 @@ class _DateOfBirthScreenState extends State<DateOfBirthScreen> {
                       child: Text(
                         ATStrings.done,
                         style: GoogleFonts.inter(
-                            color: ATColors.whiteColor,
+                            color: ATColors.white,
                             fontWeight: FontWeight.normal,
                             fontSize: 16.sp),
                       ),

@@ -10,18 +10,18 @@ import '../../../../../../../../utils/constants/strings/other_strings.dart';
 import '../../../../../../../../utils/constants/strings/route_strings.dart';
 import '../../../../../../../widgets/common_widgets/elevated_button_widget.dart';
 
-class AmptiveCreateShowSuccessScreen extends StatefulWidget {
+class ATCreateShowSuccessScreen extends StatefulWidget {
   final String imageFilePath;
 
-  const AmptiveCreateShowSuccessScreen({super.key, required this.imageFilePath});
+  const ATCreateShowSuccessScreen({super.key, required this.imageFilePath});
 
   @override
-  State<AmptiveCreateShowSuccessScreen> createState() =>
-      _AmptiveCreateShowSuccessScreenState();
+  State<ATCreateShowSuccessScreen> createState() =>
+      _ATCreateShowSuccessScreenState();
 }
 
-class _AmptiveCreateShowSuccessScreenState
-    extends State<AmptiveCreateShowSuccessScreen> {
+class _ATCreateShowSuccessScreenState
+    extends State<ATCreateShowSuccessScreen> {
   BoxFit imageFit = BoxFit.cover;
   final ValueNotifier<double> _normalSize = ValueNotifier(700.0);
 
@@ -37,7 +37,7 @@ class _AmptiveCreateShowSuccessScreenState
 
   @override
   Widget build(BuildContext context) {
-    return ATAnnotatedRegionWidget(
+    return ATAnnotatedRegion(
       child: Scaffold(
         appBar: AmptiveAppBar(
           leadingWidth: 20,
@@ -94,7 +94,7 @@ class _AmptiveCreateShowSuccessScreenState
                 await context.pushNamed(ATRoutes.CREATE_EPISODE_FORM);
               },
               buttonTitle: ATStrings.CREATE_1ST_EPISODE,
-              bgColor: ATColors.whiteColor,
+              bgColor: ATColors.white,
               fgColor: ATColors.black,
             ),
             const Gap(10),

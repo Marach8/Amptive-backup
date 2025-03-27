@@ -4,7 +4,7 @@ import 'package:amptive/src/utils/constants/colors.dart';
 import 'package:amptive/src/utils/constants/strings/image_strings.dart';
 import 'package:amptive/src/utils/dialogs/app_notification_dialog.dart';
 import 'package:amptive/src/utils/dialogs/confirmation_alert_dialog.dart';
-import 'package:amptive/src/utils/helpers/helper_functions/other_functions.dart';
+import 'package:amptive/src/utils/helpers/helper_functions/helper_functions.dart';
 import 'package:amptive/src/views/widgets/animation_widgets/common_animation_widgets/animated_crossfade_widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/custom_container_widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/image_loader_widget.dart';
@@ -64,12 +64,12 @@ Future<void> showListenersDialog({
                     child: Platform.isAndroid
                       ? Icon(
                           Icons.keyboard_arrow_down,
-                          color: ATColors.whiteColor.withOpacity(0.6),
+                          color: ATColors.white.withOpacity(0.6),
                         )
                       : ATContainer(
                           margin: const EdgeInsets.symmetric(vertical: 10),
                           radius: 5, height: 4, width: 30,
-                          color: ATColors.whiteColor.withOpacity(0.6),
+                          color: ATColors.white.withOpacity(0.6),
                           child: const SizedBox.shrink(),
                         ),
                     ),
@@ -80,8 +80,8 @@ Future<void> showListenersDialog({
                     child: Row(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        const AmptiveImageLoaderWidget(
-                          imagePath: ATImgStrings.USER_ICON
+                        const ATImgLoader(
+                          imgPath: ATImgStrings.USER_ICON
                         ),
                         const Gap(5),
                         Text(
@@ -204,7 +204,7 @@ class AmptiveListenerWidget extends StatelessWidget {
               height: 50, width: 50, radius: 30,
               child: FittedBox(
                 fit: BoxFit.fill,
-                child: AmptiveImageLoaderWidget(imagePath: listener.obj.profilePicture!)
+                child: ATImgLoader(imgPath: listener.obj.profilePicture!)
               ),
             ),
             const Gap(10),
@@ -226,17 +226,17 @@ class AmptiveListenerWidget extends StatelessWidget {
                 if((shouldKickOut ?? false) && context.mounted){
                   showAppNotification(
                     context: context,
-                    icon: const AmptiveImageLoaderWidget(imagePath: ATImgStrings.KICK_USER_OUT),
+                    icon: const ATImgLoader(imgPath: ATImgStrings.KICK_USER_OUT),
                     text: '${listener.obj.name} has been kicked out!',
                     bgColor: ATColors.hexECO404,
                   );
                 }
               },
               height: 35, width: 35, boxShape: BoxShape.circle,
-              color: ATColors.whiteColor.withOpacity(0.1),
-              child: const AmptiveImageLoaderWidget(
+              color: ATColors.white.withOpacity(0.1),
+              child: const ATImgLoader(
                 boxFit: BoxFit.scaleDown,
-                imagePath: ATImgStrings.KICK_USER_OUT
+                imgPath: ATImgStrings.KICK_USER_OUT
               ),
             )
           ],

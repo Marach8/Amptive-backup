@@ -22,7 +22,7 @@ class ATAccountInfoScreen extends StatelessWidget {
 
   @override
   Widget build(context) {
-    return ATAnnotatedRegionWidget(
+    return ATAnnotatedRegion(
       child: Scaffold(
         body: Column(
           children: [
@@ -37,6 +37,7 @@ class ATAccountInfoScreen extends StatelessWidget {
                   ),
                   const Spacer(),
                   Text(
+                    ATStrings.ACCT,
                     ATStrings.ACCT,
                     style: Theme.of(context).textTheme.bodyMedium,
                   ),

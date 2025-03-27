@@ -1,6 +1,6 @@
 import 'dart:io';
 import 'package:amptive/src/utils/constants/colors.dart';
-import 'package:amptive/src/utils/helpers/helper_functions/other_functions.dart';
+import 'package:amptive/src/utils/helpers/helper_functions/helper_functions.dart';
 import 'package:amptive/src/views/widgets/common_widgets/custom_container_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
@@ -37,14 +37,14 @@ Future<void> showWhispersDialog(BuildContext context) async {
                 child: Platform.isAndroid
                     ? Icon(
                         Icons.keyboard_arrow_down,
-                        color: ATColors.whiteColor.withOpacity(0.6),
+                        color: ATColors.white.withOpacity(0.6),
                       )
                     : ATContainer(
                         margin: const EdgeInsets.symmetric(vertical: 10),
                         radius: 5,
                         height: 4,
                         width: 30,
-                        color: ATColors.whiteColor.withOpacity(0.6),
+                        color: ATColors.white.withOpacity(0.6),
                         child: const SizedBox.shrink(),
                       ),
               ),
@@ -116,7 +116,7 @@ Future<void> showWhispersDialog(BuildContext context) async {
                             border: Border.all(
                                 color: value
                                     ? ATColors.hex307FE2
-                                    : ATColors.whiteColor,
+                                    : ATColors.white,
                                 strokeAlign: 5.0),
                             child: const SizedBox.shrink()),
                         const Gap(10),
@@ -183,7 +183,7 @@ Future<void> showWhispersDialog(BuildContext context) async {
                                 border: Border.all(
                                     color: value
                                         ? ATColors.hex307FE2
-                                        : ATColors.whiteColor,
+                                        : ATColors.white,
                                     strokeAlign: 5.0),
                                 child: const SizedBox.shrink()),
                             const Gap(10),
@@ -227,7 +227,7 @@ Future<void> showWhispersDialog(BuildContext context) async {
                           }
                         : null,
                     buttonTitle: ATStrings.CONTINUE,
-                    bgColor: ATColors.whiteColor,
+                    bgColor: ATColors.white,
                     fgColor: ATColors.black,
                   );
                 })

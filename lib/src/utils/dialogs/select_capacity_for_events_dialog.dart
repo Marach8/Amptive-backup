@@ -47,12 +47,12 @@ Future<void> showEventCapacitySelectionDialog({
                 child: Platform.isAndroid
                   ? Icon(
                     Icons.keyboard_arrow_down,
-                    color: ATColors.whiteColor.withOpacity(0.6),
+                    color: ATColors.white.withOpacity(0.6),
                   )
                   : ATContainer(
                     margin: const EdgeInsets.symmetric(vertical: 10),
                     radius: 5, height: 4, width: 30,
-                    color: ATColors.whiteColor.withOpacity(0.6),
+                    color: ATColors.white.withOpacity(0.6),
                     child: const SizedBox.shrink(),
                   ),
               ),
@@ -117,7 +117,7 @@ Future<void> showEventCapacitySelectionDialog({
                     context.pop();
                   },
                   buttonTitle: ATStrings.SET_CAPACITY,
-                  bgColor: ATColors.whiteColor,
+                  bgColor: ATColors.white,
                   fgColor: ATColors.black,
                 ),
                 const Gap(20),

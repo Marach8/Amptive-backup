@@ -5,7 +5,7 @@ class AmptiveIconTheme{
   const AmptiveIconTheme._();
 
   static IconThemeData darkIconTheme = IconThemeData(
-    color: ATColors.whiteColor
+    color: ATColors.white
   );
 
   //lightTheme will be implemented here

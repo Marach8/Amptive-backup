@@ -25,7 +25,7 @@ class AmptiveSocietySliverHeader extends SliverPersistentHeaderDelegate{
         splashFactory: NoSplash.splashFactory,
         tabAlignment: TabAlignment.start,
         labelPadding: EdgeInsets.zero,
-        indicatorColor: ATColors.trspntColor,
+        indicatorColor: ATColors.trsprtColor,
         padding: const EdgeInsets.only(left: 15),
         isScrollable: true,
         dividerColor: ATColors.brandBlack,
@@ -40,12 +40,12 @@ class AmptiveSocietySliverHeader extends SliverPersistentHeaderDelegate{
                     radius: 20,
                     margin: const EdgeInsets.only(right: 10),
                     color: isSelected ? 
-                      ATColors.whiteColor : ATColors.hex9E9E9E.withOpacity(0.3),
+                      ATColors.white : ATColors.fillGreyColor.withOpacity(0.3),
                     padding: const EdgeInsets.fromLTRB(15, 8, 15, 8),
                     child: Text(
                       tab.value,
                       style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                        color: isSelected ? ATColors.brandBlack : ATColors.whiteColor                           
+                        color: isSelected ? ATColors.brandBlack : ATColors.white                           
                       ),
                     ),
                   );

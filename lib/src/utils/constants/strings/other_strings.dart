@@ -92,6 +92,7 @@ class ATStrings{
   static const whatIsYourName = 'What is your name?';
   static const createAccount = 'Create account';
   static const privacyPolicy = 'Privacy Policy.';
+  static const CREATE_SCHEDULE = 'Create a Schedule';
   static const warningOnClickingCreate = 'By clicking on ‘Create account’, you agree to the';
 
   static const username = "username";
@@ -114,6 +115,7 @@ class ATStrings{
   static const photoGallery = 'Photo Gallery';
   static const camera = 'Camera';
   static const skipForNow = 'Skip for now';
+  static const MORE_SCHEDULE = 'More Schedule';
 
   static const select5Communities = "Select 5 communities you find interest in.";
   static const selectedInterestNote = "Your selected interests will be used to personalize you Amptive experience.";
@@ -147,6 +149,8 @@ class ATStrings{
   static const SCHEDULED = 'Scheduled';
   static const SUBSCRIBED = 'Subscribed';
   static const SUBSCRIBE = 'Subscribe';
+  static const DAY_VIEW = 'Day view';
+  static const MONTH_VIEW = 'Month view';
   static const SUBSCRIPTION = 'Subscription';
   static const SUBSCRIBERS = 'Subscribers';
   static const COMMUNITY_TASK = 'Community Task';

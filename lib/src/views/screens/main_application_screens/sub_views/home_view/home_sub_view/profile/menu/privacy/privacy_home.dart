@@ -1,3 +1,4 @@
+import 'package:amptive/src/bloc/main_app/profile/profile_menu/calender/calender_visibile_bloc.dart';
 import 'package:amptive/src/utils/constants/colors.dart';
 import 'package:amptive/src/utils/constants/font_weights.dart';
 import 'package:amptive/src/views/screens/main_application_screens/sub_views/home_view/home_sub_view/profile/menu/profile_menu_screen.dart';
@@ -19,7 +20,7 @@ class AmptivePrivacyScreen extends StatelessWidget {
 
   @override
   Widget build(context) {
-    return ATAnnotatedRegionWidget(
+    return ATAnnotatedRegion(
       child: Scaffold(
         body: Column(
           children: [
@@ -55,7 +56,7 @@ class AmptivePrivacyScreen extends StatelessWidget {
                         Text(
                           ATStrings.PRIVATE_ACCT,
                           style: Theme.of(context).textTheme.labelMedium?.copyWith(
-                            color: ATColors.whiteColor
+                            color: ATColors.white
                           )
                         ),
                         const Spacer(),
@@ -86,8 +87,8 @@ class AmptivePrivacyScreen extends StatelessWidget {
                       ATStrings.APPROVED_USERS_CAN_FOLLOW,
                       maxLines: 2,
                       style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                        fontWeight: AmptiveFontWeights.w500,
-                        color: ATColors.whiteColor.withValues(alpha: 0.4)
+                        fontWeight: ATFontWeights.w500,
+                        color: ATColors.white.withValues(alpha: 0.4)
                       )
                     ),
                   ),

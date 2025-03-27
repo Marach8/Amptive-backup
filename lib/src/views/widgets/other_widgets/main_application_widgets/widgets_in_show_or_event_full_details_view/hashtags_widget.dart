@@ -25,7 +25,7 @@ class AmptiveHashtagsWidget extends StatelessWidget {
                 padding: const EdgeInsets.fromLTRB(15, 7, 15, 7),
                 alignment: Alignment.center,
                 radius: 10,
-                color: ATColors.whiteColor.withOpacity(0.1),
+                color: ATColors.white.withOpacity(0.1),
                 child: AmptiveTwoTextRichTextWidget(
                   text1: '# ',
                   text2: element,

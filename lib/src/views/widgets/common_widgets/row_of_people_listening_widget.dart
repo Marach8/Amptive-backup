@@ -1,7 +1,7 @@
 import 'package:amptive/src/utils/constants/colors.dart';
 import 'package:amptive/src/utils/constants/font_sizes.dart';
 import 'package:amptive/src/utils/constants/strings/image_strings.dart';
-import 'package:amptive/src/views/widgets/common_widgets/circular_container_with_picture_widget.dart';
+import 'package:amptive/src/views/widgets/common_widgets/circular_image.dart';
 import 'package:amptive/src/views/widgets/common_widgets/custom_container_widget.dart';
 import 'package:flutter/material.dart';
 
@@ -23,20 +23,20 @@ class AmptiveRowOfNumberOfPeopleListeningWidget extends StatelessWidget {
           alignment: Alignment.centerLeft,
           clipBehavior: Clip.none,
           children: [
-            const ATRoundedImage(
+            const ATCircularImage(
               imagePath: ATImgStrings.jpeg1,
               addBorder: true,
             ),
             const Positioned(
               left: 18,
-              child: ATRoundedImage(
+              child: ATCircularImage(
                 imagePath: ATImgStrings.jpeg2,
                 addBorder: true,
               )
             ),
             const Positioned(
               left: 36,
-              child:ATRoundedImage(
+              child:ATCircularImage(
                 imagePath: ATImgStrings.jpeg3,
                 addBorder: true,
               )

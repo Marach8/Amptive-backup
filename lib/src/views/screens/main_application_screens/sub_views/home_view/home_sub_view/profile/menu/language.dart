@@ -15,7 +15,7 @@ class ATSelectLanguageScreen extends StatelessWidget {
 
   @override
   Widget build(context) {
-    return ATAnnotatedRegionWidget(
+    return ATAnnotatedRegion(
       child: Scaffold(
         body: Column(
           children: [
@@ -42,7 +42,7 @@ class ATSelectLanguageScreen extends StatelessWidget {
             ATContainer(
               onTap: () => context.read<AmptiveLanguageBloc>().showLanguages(),
               margin: const EdgeInsets.all(15),
-              color: ATColors.whiteColor.withValues(alpha: 0.1),
+              color: ATColors.white.withValues(alpha: 0.1),
               radius: 14,
               padding: const EdgeInsets.fromLTRB(15, 10, 15, 10),
               child: Row(
@@ -57,12 +57,12 @@ class ATSelectLanguageScreen extends StatelessWidget {
                       return Text(
                         state.first as String,
                         style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                          color: ATColors.whiteColor.withValues(alpha: 0.4)
+                          color: ATColors.white.withValues(alpha: 0.4)
                         ),
                       );
                     }
                   ),
-                  Icon(Icons.keyboard_arrow_right, size: 20, color: ATColors.whiteColor.withValues(alpha: 0.4)),
+                  Icon(Icons.keyboard_arrow_right, size: 20, color: ATColors.white.withValues(alpha: 0.4)),
                 ],
               ),
             ),
@@ -96,7 +96,7 @@ class ATSelectLanguageScreen extends StatelessWidget {
                                 padding: const EdgeInsets.all(5),
                                 color: isSelected ? ATColors.hex307FE2 : ATColors.trspntColor,
                                 border: Border.all(
-                                  color: isSelected ? ATColors.hex307FE2 : ATColors.whiteColor,
+                                  color: isSelected ? ATColors.hex307FE2 : ATColors.white,
                                   strokeAlign: 5.0
                                 ),
                                 child: const SizedBox.shrink()

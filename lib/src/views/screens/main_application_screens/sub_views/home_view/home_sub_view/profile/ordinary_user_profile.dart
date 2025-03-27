@@ -2,10 +2,10 @@ import 'package:amptive/src/utils/constants/colors.dart';
 import 'package:amptive/src/utils/constants/font_sizes.dart';
 import 'package:amptive/src/utils/constants/strings/image_strings.dart';
 import 'package:amptive/src/utils/constants/strings/other_strings.dart';
-import 'package:amptive/src/utils/helpers/helper_functions/other_functions.dart';
+import 'package:amptive/src/utils/helpers/helper_functions/helper_functions.dart';
 import 'package:amptive/src/views/widgets/common_widgets/annotated_region__widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/circle_avatar.dart';
-import 'package:amptive/src/views/widgets/common_widgets/circular_container_with_picture_widget.dart';
+import 'package:amptive/src/views/widgets/common_widgets/circular_image.dart';
 import 'package:amptive/src/views/widgets/common_widgets/custom_container_widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/custom_rebuilder_widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/sliver_header_delegate.dart';
@@ -24,8 +24,8 @@ class ATUserProfileScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final tabIndex = ValueNotifier(0);
 
-    return ATAnnotatedRegionWidget(
-      statusBarColor: ATColors.trspntColor,
+    return ATAnnotatedRegion(
+      statusBarColor: ATColors.trsprtColor,
       child: Scaffold(
         body: NestedScrollView(
           floatHeaderSlivers: true,
@@ -53,14 +53,14 @@ class ATUserProfileScreen extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     ATContainer(
-                      color: ATColors.whiteColor.withOpacity(0.5),
+                      color: ATColors.white.withOpacity(0.5),
                       height: 150,
                       gradient: LinearGradient(
                         begin: Alignment.topCenter,
                         end: Alignment.bottomCenter,
                         colors: [
                           ATColors.black,
-                          ATColors.whiteColor.withOpacity(0.5),
+                          ATColors.white.withOpacity(0.5),
                           ATColors.hexD9D9D9
                         ]
                       ),
@@ -71,7 +71,7 @@ class ATUserProfileScreen extends StatelessWidget {
                         children: [
                           Positioned(
                             bottom: -35,
-                            child: ATRoundedImage(
+                            child: ATCircularImage(
                               diameter: 70, addBorder: true,
                               borderColor: ATColors.black,
                               borderWidth: 3,
@@ -132,7 +132,7 @@ class ATUserProfileScreen extends StatelessWidget {
                       alignment: Alignment.center, radius: 50,
                       margin: const EdgeInsets.fromLTRB(15, 0, 15, 0),
                       padding: const EdgeInsets.only(top: 10, bottom: 10),
-                      color: ATColors.whiteColor.withOpacity(0.2),
+                      color: ATColors.white.withOpacity(0.2),
                       child: Text(
                         ATStrings.EDIT_PROFILE,
                         style: Theme.of(context).textTheme.bodyMedium?.copyWith(
@@ -171,16 +171,16 @@ class ATUserProfileScreen extends StatelessWidget {
                                 margin: const EdgeInsets.fromLTRB(0, 10, 10, 20),
                                 alignment: Alignment.center, radius: 50,
                                 border: !isSelected ? Border.all(
-                                  color: ATColors.whiteColor.withOpacity(0.1),
+                                  color: ATColors.white.withOpacity(0.1),
                                   width: 2
                                 ) : null,
-                                color: isSelected ? ATColors.whiteColor : ATColors.black,
+                                color: isSelected ? ATColors.white : ATColors.black,
                                 onTap: () => tabIndex.value = index,
                                 child: Text(
                                   string,
                                   style: Theme.of(context).textTheme.bodySmall?.copyWith(
                                     fontSize: ATFontSizes.size13,
-                                    color: isSelected ? ATColors.black : ATColors.whiteColor
+                                    color: isSelected ? ATColors.black : ATColors.white
                                   ),
                                 ),
                               );

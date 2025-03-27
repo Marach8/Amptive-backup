@@ -18,14 +18,14 @@ class AmptiveWelcomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ATAnnotatedRegionWidget(
+    return ATAnnotatedRegion(
       child: Scaffold(
       body: Center(
         child: SingleChildScrollView(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              const AmptiveImageLoaderWidget(imagePath: ATImgStrings.amptiveLogo),
+              const ATImgLoader(imgPath: ATImgStrings.amptiveLogo),
               Gap(80.h),
 
               const Padding(
@@ -69,7 +69,7 @@ class AmptiveWelcomeScreen extends StatelessWidget {
 
               Gap(15.h),
 
-              AmptiveOutlinedButtonWidget(
+              ATOutlinedBtn(
                 onPressed: () => context.pushNamed(ATRoutes.authScreen, extra: false),
                 buttonTitle: ATStrings.signIn,
               ),

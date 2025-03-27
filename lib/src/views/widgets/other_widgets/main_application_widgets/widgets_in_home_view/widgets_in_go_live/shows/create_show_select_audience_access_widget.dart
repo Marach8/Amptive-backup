@@ -14,7 +14,7 @@ class AmptiveCreateShowSelectAudienceAccessWidget extends StatelessWidget {
     return ATContainer(
       radius: 14,
       padding: const EdgeInsets.fromLTRB(17, 15, 17, 15),
-      color: ATColors.whiteColor.withOpacity(0.1),
+      color: ATColors.white.withOpacity(0.1),
       child: AmptiveRebuilderWidget(
         shouldDispose: true,
         notifier: selectAudienceAccessNotifier,
@@ -26,7 +26,7 @@ class AmptiveCreateShowSelectAudienceAccessWidget extends StatelessWidget {
                 selectedAudienceAccess.isEmpty ? "Select who can access this show" 
                   : selectedAudienceAccess,
                 style: selectedAudienceAccess.isEmpty ? Theme.of(context).textTheme.bodySmall?.copyWith(
-                  color: ATColors.whiteColor.withOpacity(0.4),
+                  color: ATColors.white.withOpacity(0.4),
                 ) : Theme.of(context).textTheme.bodySmall,
               ),
               GestureDetector(
@@ -36,7 +36,7 @@ class AmptiveCreateShowSelectAudienceAccessWidget extends StatelessWidget {
                 },
                 child: Icon(
                   Icons.arrow_forward_ios, size: 20.w,
-                  color: ATColors.whiteColor.withOpacity(0.4),
+                  color: ATColors.white.withOpacity(0.4),
                 ),
               ),
             ],

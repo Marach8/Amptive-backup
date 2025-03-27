@@ -20,7 +20,7 @@ class ATProfileFollowersScreen extends StatelessWidget {
 
   @override
   Widget build(context) {
-    return ATAnnotatedRegionWidget(
+    return ATAnnotatedRegion(
       child: Scaffold(
         appBar: AmptiveAppBar(
           leading: GestureDetector(
@@ -46,9 +46,9 @@ class ATProfileFollowersScreen extends StatelessWidget {
                 controller: TextEditingController(),
                 disableBlueBorder: true,
                 hintText: ATStrings.SEARCH_4_FOLLOWERS,
-                fillColor: ATColors.whiteColor.withOpacity(0.1),
-                prefixIcon: const AmptiveImageLoaderWidget(
-                  imagePath: ATImgStrings.filledSearch
+                fillColor: ATColors.white.withOpacity(0.1),
+                prefixIcon: const ATImgLoader(
+                  imgPath: ATImgStrings.filledSearch
                 ),
               ),
               const Gap(20),
@@ -106,7 +106,7 @@ class _AmptiveFollowerWidget extends StatelessWidget {
               height: 50, width: 50, radius: 30,
               child: FittedBox(
                 fit: BoxFit.fill,
-                child: AmptiveImageLoaderWidget(imagePath: follower.obj.profilePicture!)
+                child: ATImgLoader(imgPath: follower.obj.profilePicture!)
               ),
             ),
             const Gap(10),
@@ -118,7 +118,7 @@ class _AmptiveFollowerWidget extends StatelessWidget {
             ),
 
             ATContainer(
-              radius: 30, color: ATColors.whiteColor,
+              radius: 30, color: ATColors.white,
               padding: const EdgeInsets.fromLTRB(15, 5, 15, 5),
               child: Text(
                 ATStrings.REMOVE,

@@ -37,12 +37,12 @@ class AmptiveDiscoverSliverHeader extends SliverPersistentHeaderDelegate{
                 controller: controller,
                 disableBlueBorder: true,
                 cursorHeight: 20,
-                cursorColor: ATColors.whiteColor.withOpacity(0.6),
+                cursorColor: ATColors.white.withOpacity(0.6),
                 constraints: const BoxConstraints(maxHeight: 40),
                 contentPadding: const EdgeInsets.fromLTRB(16, 0, 16, 12),
                 hintText: ATStrings.SEARCH_FOR_EVENTS_ND_SHOWS,
-                prefixIcon: const AmptiveImageLoaderWidget(
-                  imagePath: ATImgStrings.outlinedSearch,
+                prefixIcon: const ATImgLoader(
+                  imgPath: ATImgStrings.outlinedSearch,
                 ),
                 suffixIcon: AmptiveRebuilderWidget(
                   notifier: notifier,
@@ -55,7 +55,7 @@ class AmptiveDiscoverSliverHeader extends SliverPersistentHeaderDelegate{
                         secondChild: const SizedBox.shrink(),
                         firstChild: GestureDetector(
                           onTap: () => controller.clear(),
-                          child: Icon(Icons.close, size: 20, color: ATColors.whiteColor)
+                          child: Icon(Icons.close, size: 20, color: ATColors.white)
                         ),
                       ),
                     );

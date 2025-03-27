@@ -3,7 +3,7 @@ import 'dart:ui';
 import 'package:amptive/src/utils/constants/colors.dart';
 import 'package:amptive/src/utils/constants/strings/image_strings.dart';
 import 'package:amptive/src/utils/constants/strings/other_strings.dart';
-import 'package:amptive/src/utils/helpers/helper_functions/other_functions.dart';
+import 'package:amptive/src/utils/helpers/helper_functions/helper_functions.dart';
 import 'package:amptive/src/views/widgets/common_widgets/annotated_region__widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/custom_container_widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/elevated_button_widget.dart';
@@ -29,192 +29,198 @@ class ATShowDetailedScreen extends StatelessWidget {
 
   @override
   Widget build(context) {
-    return ATAnnotatedRegionWidget(
-      statusBarColor: ATColors.trspntColor,
+    return ATAnnotatedRegion(
       child: Scaffold(
-        body: Stack(
-          children: [
-            const Positioned.fill(
-              child: AmptiveImageLoaderWidget(
-                boxFit: BoxFit.fill,
-                imagePath: ATImgStrings.weCanDoHardThingsBgImage
-              )
-            ),
-            NestedScrollView(
-              headerSliverBuilder: (_, __) => [
-                SliverPersistentHeader(
-                  pinned: true,
-                  delegate: ATSliverHDelegate(
-                    maxExt: 70, minExt: 70,
-                    child: ATContainer(
-                      color: ATColors.black.withOpacity(0.8),
-                      height: 70,
-                      width: ATHelperFuncs.getScreenWidth(context),
-                      child: ClipRect(
-                        child: BackdropFilter(
-                          filter: ImageFilter.blur(sigmaX: 10.0, sigmaY: 10.0),
-                          child: GestureDetector(
-                            onTap: () {
-                              ATHelperFuncs.hideAnyMountedSnackbar(context);
-                              context.pop();
-                            },
-                            child: Platform.isAndroid
-                              ? Icon(
-                                Icons.keyboard_arrow_down, size: 30,
-                                color: ATColors.whiteColor.withOpacity(0.6),
-                              )
-                              : ATContainer(
-                                margin: const EdgeInsets.symmetric(vertical: 10),
-                                radius: 5, height: 4, width: 30,
-                                color: ATColors.whiteColor.withOpacity(0.6),
-                                child: const SizedBox.shrink(),
-                              ),
-                          ),
-                        ),
-                      ),
-                    ),
-                  )
+        body: SafeArea(
+          child: Stack(
+            children: [
+              const Positioned.fill(
+                child: ATImgLoader(
+                  boxFit: BoxFit.fill,
+                  imgPath: ATImgStrings.weCanDoHardThingsBgImage
                 )
-              ],
-            
-              body: BackdropFilter(
-                filter: ImageFilter.blur(sigmaX: 150.0, sigmaY: 150.0),
+              ),
+              Positioned.fill(
                 child: Container(
-                  color: ATColors.black.withOpacity(0.8),
-                  child: SingleChildScrollView(
-                    physics: const BouncingScrollPhysics(),
-                    child: Column(
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.fromLTRB(15, 0, 15, 15),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              const ATEventOrShowCard(),
-                              const SizedBox(height: 30),
-                              const ShowOrEventIndicatorWithTitle(),
-                              const SizedBox(height: 15),
-                              Text(
-                                maxLines: 2,
-                                "Don't Forget Who You Are ft. Jacob Scipio",
-                                overflow: TextOverflow.clip,
-                                style: Theme.of(context).textTheme.displayMedium?.copyWith(
-                                  fontSize: ATFontSizes.size24,
-                                  fontWeight: AmptiveFontWeights.w600,
-                                  fontFamily: "Bricolage Grotesque"
-                                ),
-                              ),
-                                                    
-                              const SizedBox(height: 20),
-                              const AmptiveRowOfTwoIconsAndTwoTextsWidget(),
-                              const SizedBox(height: 30),
-                                                    
-                              Text(
-                                ATStrings.hashtags,
-                                style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                                  fontSize: ATFontSizes.size17
-                                ),  
-                              ),
-                              Divider(color: ATColors.whiteColor.withOpacity(0.1),),
-                              const Gap(5),
-                              const AmptiveHashtagsWidget(),
-                                                    
-                              Gap(20.h),
-                                                    
-                              Text(
-                                ATStrings.hostedBy,
-                                style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                                  fontSize: ATFontSizes.size17
-                                ),  
-                              ),
-                              Divider(color: ATColors.whiteColor.withOpacity(0.1),),
-                              ...List.generate(
-                                3,
-                                (_) => AmptiveListTileWithLeadingPictureWidget(
-                                  padding: const EdgeInsets.symmetric(vertical: 9).r,
-                                  title: 'Gerald',
-                                  subtitle: 'Host',
-                                  diameter: 35,
-                                  leadingImagePath: ATImgStrings.jpeg1,
-                                )
-                              ),
-                              Gap(30.h),
-                                                    
-                              Text(
-                                '656 Listening',
-                                style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                                  fontSize: ATFontSizes.size17
-                                ),  
-                              ),
-                              Divider(color: ATColors.whiteColor.withOpacity(0.1),),
-                              Gap(10.h),
-                              const AmptiveRowOfNumberOfPeopleListeningWidget(
-                                showNumberInsideContainer: true,
-                              ),
-                              
-                              Gap(20.h),
-                              Text(
-                                'daniel, jessica, gerald, peter and 652 more',
-                                style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                                  color: ATColors.whiteColor.withOpacity(0.6)
-                                ),
-                              ),
-                              Gap(35.h),
-                                                    
-                              Text(
-                                'About Episode',
-                                style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                                  fontSize: ATFontSizes.size17
-                                ),  
-                              ),
-                              Divider(color: ATColors.whiteColor.withOpacity(0.1),),
-                              ReadMoreText(
-                                'Jessica Yellin, founder of the Webby-Award Winning Independent News Brand, News Not Noise, returns to walk us through what is going on right now in the political landscape.',
-                                trimMode: TrimMode.Length,
-                                trimExpandedText: ATStrings.showLess,
-                                trimCollapsedText: ATStrings.showMore,
-                                colorClickableText: ATColors.whiteColor,
-                                trimLength: 100,
-                                style: TextStyle(
-                                  color: ATColors.whiteColor.withOpacity(0.6),
-                                  fontSize: ATFontSizes.size14,
-                                  fontWeight: AmptiveFontWeights.w500,
-                                ),
-                              ),
-                              Gap(30.h),
-                                                    
-                              Text(
-                                ATStrings.WHISPERS,
-                                style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                                  fontSize: ATFontSizes.size17
-                                ),  
-                              ),
-                              Divider(color: ATColors.whiteColor.withOpacity(0.1),),
-                            ],
-                          ),
-                        ),
-                        const ATWhispers(),
-                        const Gap(70)
-                      ],
+                  color: ATColors.black.withOpacity(0.5),
+                  child: BackdropFilter(
+                    filter: ImageFilter.blur(sigmaX: 150.0, sigmaY: 150.0),
+                    child: Container(
+                      color: ATColors.black.withOpacity(0.5),
                     ),
                   ),
                 ),
               ),
-            ),
-          ],
-        ),
-        bottomSheet: ATContainer(
-          clipBehavior: Clip.hardEdge,
-          padding: const EdgeInsets.fromLTRB(15, 5, 15, 10),
-          child: BackdropFilter(
-            filter: ImageFilter.blur(sigmaX: 3.0, sigmaY: 3.0),
-            child: AmptivePlainElevatedBtnWidget(
-              bgColor: ATColors.whiteColor,
-              fgColor: ATColors.brandBlack,
-              buttonTitle: 'Subscrible N1,900/month',
-              onPressed: (){}
-            ),
+              SingleChildScrollView(
+                child: Column(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(20, 80, 20, 5),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const EventOrShowDisplay(),
+                          Gap(30.h),
+                          const AmptiveRowOfSubtitleAndForwardIconWidget(),
+                          Gap(15.h),
+                          Text(
+                            maxLines: 2,
+                            "Don't Forget Who You Are ft. Jacob Scipio",
+                            overflow: TextOverflow.clip,
+                            style: Theme.of(context).textTheme.displayMedium?.copyWith(
+                              fontSize: ATFontSizes.size24,
+                              fontWeight: ATFontWeights.w600,
+                              fontFamily: "Bricolage Grotesque"
+                            ),
+                          ),
+                    
+                          Gap(20.h),
+                          const AmptiveRowOfTwoIconsAndTwoTextsWidget(),
+                    
+                          Gap(30.h),
+                    
+                          Text(
+                            ATStrings.hashtags,
+                            style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                              fontSize: ATFontSizes.size17
+                            ),  
+                          ),
+                          Divider(color: ATColors.white.withOpacity(0.1),),
+                          const Gap(5),
+                          const AmptiveHashtagsWidget(),
+                    
+                          Gap(20.h),
+                    
+                          Text(
+                            ATStrings.hostedBy,
+                            style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                              fontSize: ATFontSizes.size17
+                            ),  
+                          ),
+                          Divider(color: ATColors.white.withOpacity(0.1),),
+                          ...List.generate(
+                            3,
+                            (_) => AmptiveListTileWithLeadingPictureWidget(
+                              padding: const EdgeInsets.symmetric(vertical: 9).r,
+                              title: 'Gerald',
+                              subtitle: 'Host',
+                              diameter: 35,
+                              leadingImagePath: ATImgStrings.jpeg1,
+                            )
+                          ),
+                          Gap(30.h),
+                    
+                          Text(
+                            '656 Listening',
+                            style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                              fontSize: ATFontSizes.size17
+                            ),  
+                          ),
+                          Divider(color: ATColors.white.withOpacity(0.1),),
+                          Gap(10.h),
+                          const AmptiveRowOfNumberOfPeopleListeningWidget(
+                            showNumberInsideContainer: true,
+                          ),
+                          
+                          Gap(20.h),
+                          Text(
+                            'daniel, jessica, gerald, peter and 652 more',
+                            style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                              color: ATColors.white.withOpacity(0.6)
+                            ),
+                          ),
+                          Gap(35.h),
+                    
+                          Text(
+                            'About Episode',
+                            style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                              fontSize: ATFontSizes.size17
+                            ),  
+                          ),
+                          Divider(color: ATColors.white.withOpacity(0.1),),
+                          ReadMoreText(
+                            'Jessica Yellin, founder of the Webby-Award Winning Independent News Brand, News Not Noise, returns to walk us through what is going on right now in the political landscape.',
+                            trimMode: TrimMode.Length,
+                            trimExpandedText: ATStrings.showLess,
+                            trimCollapsedText: ATStrings.showMore,
+                            colorClickableText: ATColors.white,
+                            trimLength: 100,
+                            style: TextStyle(
+                              color: ATColors.white.withOpacity(0.6),
+                              fontSize: ATFontSizes.size14,
+                              fontWeight: ATFontWeights.w500,
+                            ),
+                          ),
+                          Gap(30.h),
+                    
+                          Text(
+                            ATStrings.WHISPERS,
+                            style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                              fontSize: ATFontSizes.size17
+                            ),  
+                          ),
+                          Divider(color: ATColors.white.withOpacity(0.1),),
+                        ],
+                      ),
+                    ),
+                    const AmptiveWhispersListViewWidget(),
+                    const Gap(70)
+                  ],
+                ),
+              ),
+
+              Positioned(
+                top: 0,
+                child: ATContainer(
+                  height: 72.h,
+                  width: ATHelperFuncs.getScreenWidth(context),
+                  child: ClipRect(
+                    child: BackdropFilter(
+                      filter: ImageFilter.blur(
+                        sigmaX: 50.0, sigmaY: 50.0,
+                        tileMode:TileMode.decal
+                      ),
+                      child: Container()
+                    ),
+                  ),
+                ),
+              ),
+
+              Positioned(
+                top: 0,
+                child: ATContainer(
+                  height: 72.h,
+                  width: ATHelperFuncs.getScreenWidth(context),
+                  alignment: Alignment.center,
+                  //color: AmptiveColors.black,
+                  child: GestureDetector(
+                    onTap: () {
+                      ATHelperFuncs.hideAnyMountedSnackbar(context);
+                      context.pop();
+                    },
+                    child: Platform.isAndroid
+                      ? Icon(
+                        Icons.keyboard_arrow_down, size: 30,
+                        color: ATColors.white.withOpacity(0.6),
+                      )
+                      : ATContainer(
+                        margin: const EdgeInsets.symmetric(vertical: 10),
+                        radius: 5, height: 4, width: 30,
+                        color: ATColors.white.withOpacity(0.6),
+                        child: const SizedBox.shrink(),
+                      ),
+                  ),
+                ),
+              )
+            ],
           ),
+        ),
+        bottomSheet: AmptiveElevatedButtonWidget(
+          margin: const EdgeInsets.fromLTRB(20, 15, 20, 0),
+          bgColor: ATColors.white,
+          fgColor: ATColors.brandBlack,
+          buttonTitle: 'Subscrible N1,900/month',
+          onPressed: (){}
         ),
       ),
     );

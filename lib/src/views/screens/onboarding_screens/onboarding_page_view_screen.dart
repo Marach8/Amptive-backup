@@ -38,7 +38,7 @@ class _AmptiveOnboardingScreenState extends State<AmptiveOnboardingScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return ATAnnotatedRegionWidget(
+    return ATAnnotatedRegion(
       child: Scaffold(
         body: Stack(
           children: [

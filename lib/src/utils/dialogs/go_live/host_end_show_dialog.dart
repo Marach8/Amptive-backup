@@ -2,7 +2,7 @@ import 'package:amptive/src/utils/constants/colors.dart';
 import 'package:amptive/src/utils/constants/font_sizes.dart';
 import 'package:amptive/src/utils/constants/strings/image_strings.dart';
 import 'package:amptive/src/utils/dialogs/app_notification_dialog.dart';
-import 'package:amptive/src/utils/helpers/helper_functions/other_functions.dart';
+import 'package:amptive/src/utils/helpers/helper_functions/helper_functions.dart';
 import 'package:amptive/src/views/widgets/common_widgets/custom_container_widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/elevated_button_widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/image_loader_widget.dart';
@@ -111,8 +111,8 @@ Future<void> showHostEndShowDialog({
                     clipBehavior: Clip.hardEdge,
                     radius: 5, height: initialState ? 150 : 200, 
                     width: initialState ? 150 : 200,
-                    child: const AmptiveImageLoaderWidget(                  
-                      imagePath: ATImgStrings.weCanDoHardThingsBgImage
+                    child: const ATImgLoader(                  
+                      imgPath: ATImgStrings.weCanDoHardThingsBgImage
                     ),
                   ),
                 );
@@ -182,8 +182,8 @@ Future<void> showHostEndShowDialog({
                     bottom: 0,
                     child: Padding(
                       padding: const EdgeInsets.only(bottom: 10),
-                      child: AmptiveLoadingIndicatorWidget(
-                        color: ATColors.whiteColor,
+                      child: ATLoadingIndicator(
+                        color: ATColors.white,
                       ),
                     ),
                   );
@@ -206,7 +206,7 @@ Future<void> showHostEndShowDialog({
                             Proceed2EndShowEvent()
                           ),
                           bgColor: ATColors.hexECO404,
-                          fgColor: ATColors.whiteColor,
+                          fgColor: ATColors.white,
                           buttonTitle: ATStrings.END_NOW,
                         ),
                       ),
