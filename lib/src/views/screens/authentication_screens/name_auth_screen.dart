@@ -58,7 +58,7 @@ class _NameAuthScreenState extends State<NameAuthScreen> {
                 SizedBox(
                   height: 11.h,
                 ),
-                AmptiveTextFormFieldWidget(
+                ATTextFormFieldWidget(
                   controller: nameController,
                   onChanged: (val) {
                     context.read<AmptiveAuthBloc>().add(NameChangedEvent());
@@ -87,7 +87,7 @@ class _NameAuthScreenState extends State<NameAuthScreen> {
                     border: OutlineInputBorder(
                       borderSide: BorderSide(
                         width: 2.w,
-                        color: ATColors.trsprtColor,
+                        color: ATColors.trspntColor,
                       ),
                       borderRadius: BorderRadius.circular(14.r),
                     ),

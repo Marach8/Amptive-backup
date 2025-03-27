@@ -8,6 +8,7 @@ import 'package:amptive/src/views/widgets/common_widgets/circle_avatar.dart';
 import 'package:amptive/src/views/widgets/common_widgets/circular_image.dart';
 import 'package:amptive/src/views/widgets/common_widgets/custom_container_widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/custom_rebuilder_widget.dart';
+import 'package:amptive/src/views/widgets/common_widgets/sliver_header_delegate.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:go_router/go_router.dart';
@@ -16,8 +17,8 @@ import 'creator_profile.dart';
 
 
 
-class AmptiveOrdinaryUserProfileScreen extends StatelessWidget {
-  const AmptiveOrdinaryUserProfileScreen({super.key});
+class ATUserProfileScreen extends StatelessWidget {
+  const ATUserProfileScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -148,7 +149,7 @@ class AmptiveOrdinaryUserProfileScreen extends StatelessWidget {
             //Header for sticky tab
             SliverPersistentHeader(
               pinned: true,
-              delegate: AmptiveTabBarDelegate(
+              delegate: ATSliverHDelegate(
                 maxExt: 65, minExt: 65, rebuild: false,
                 child: ATContainer(
                   color: ATColors.black,              
@@ -217,35 +218,6 @@ class AmptiveOrdinaryUserProfileScreen extends StatelessWidget {
     );
   }
 }
-
-// TabBar delegate for sticky tabs
-class AmptiveTabBarDelegate extends SliverPersistentHeaderDelegate {
-  final Widget child;
-  final bool rebuild;
-  final double minExt, maxExt;
-
-  AmptiveTabBarDelegate({
-    required this.child,
-    required this.maxExt,
-    required this.minExt,
-    required this.rebuild
-  });
-
-  @override
-  double get minExtent => minExt;
-
-  @override
-  double get maxExtent => maxExt;
-
-  @override
-  Widget build(context, double shrinkOffset, bool overlapsContent) => child;
-
-  @override
-  bool shouldRebuild(covariant SliverPersistentHeaderDelegate oldDelegate) {
-    return rebuild;
-  }
-}
-
 
 
 final _tabs = [ATStrings.ATTENDED, ATStrings.UPCOMING];

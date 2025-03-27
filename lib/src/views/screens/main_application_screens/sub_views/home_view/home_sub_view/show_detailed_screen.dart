@@ -8,6 +8,7 @@ import 'package:amptive/src/views/widgets/common_widgets/annotated_region__widge
 import 'package:amptive/src/views/widgets/common_widgets/custom_container_widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/elevated_button_widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/image_loader_widget.dart';
+import 'package:amptive/src/views/widgets/common_widgets/sliver_header_delegate.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
@@ -23,8 +24,8 @@ import '../../../../../widgets/other_widgets/main_application_widgets/widgets_in
 import '../../../../../widgets/other_widgets/main_application_widgets/widgets_in_show_or_event_full_details_view/row_of_subtitle_and_forward_icon_widget.dart';
 import '../../../../../widgets/other_widgets/main_application_widgets/widgets_in_show_or_event_full_details_view/whispers_list_view_widget.dart';
 
-class AmptiveShowDetailedScreen extends StatelessWidget {
-  const AmptiveShowDetailedScreen({super.key});
+class ATShowDetailedScreen extends StatelessWidget {
+  const ATShowDetailedScreen({super.key});
 
   @override
   Widget build(context) {

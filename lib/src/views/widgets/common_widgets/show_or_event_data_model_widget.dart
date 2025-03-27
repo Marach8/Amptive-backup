@@ -15,8 +15,8 @@ import 'package:gap/gap.dart';
 import '../../../utils/constants/colors.dart';
 import '../../../utils/dialogs/options_dialog.dart';
 
-class AmptiveShowOrEventDataModelWidget extends StatelessWidget {
-  const AmptiveShowOrEventDataModelWidget({
+class ATShowOrEventInfo extends StatelessWidget {
+  const ATShowOrEventInfo({
     super.key,
   });
 

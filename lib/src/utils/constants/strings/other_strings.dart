@@ -25,6 +25,7 @@ class ATStrings{
       "Tune into live audio shows and events.";
   static const monetizeLiveAudioShowsAndEvents =
       "Monetizable Live Audio Shows & Events ";
+  static const ENTER_CODE = 'Enter the 4 digit code we just sent to';
   static const NEXT = 'Next';
   static const or = 'or';
   static const and = 'and';
@@ -40,26 +41,39 @@ class ATStrings{
 
   static const signUpWith = 'Sign up with ';
   static const signInWith = 'Sign in with ';
-  static const email = 'Email';
+  static const EMAIL = 'Email';
   static const LIVE = 'Live';
-  static const phoneNumber = 'Phone Number';
+  static const FONE_NO = 'Phone Number';
   static const facebook = 'Facebook';
   static const twitter = 'X(Twitter)';
   static const google = 'Google';
+  static const ADDING_EMAIL = 'Adding Email Address...';
+  static const CHANGING_EMAIL = 'Updating Email Address...';
+  static const CHANGING_PHONE = 'Updating Phone Number...';
+  static const ADDING_PHONE = 'Adding Phone Number...';
+  static const EMAIL_ADDED = 'Email Added';
+  static const FONE_ADDED = 'Phone Number Added';
+  static const FONE_CHANGED = 'Phone Number Updated';
+  static const EMAIL_CHANGED = 'Email Updated';
+  static const WANT_2_CHANGE_EMAIL = 'Do you want to update your email address?';
+  static const WANT_2_CHANGE_FONE = 'Do you want to update your phone number?';
+  static const CHANGE = 'Change';
+  static const NO_WILL_BE_VERIFIED = 'This phone number will be verified in the next step.';
 
-  static const whatIsYourEmail = 'What is your email?';
+  static const UR_EMAIL = 'What is your email?';
   static const enterYourEmail = 'Enter your email...';
   static const thisEmailWillBeVerified = 'This email will be verified in the next step';
   static const verifyEmail = 'Verify email';
   static const UNBLOCK_DESC = 'will be able to follow, subscribe and see your app activities';
-  static String unMuteDesc(String text ) => "You will be able to see $text's app activities";
+  static String unMuteDesc(String text) => "You will be able to see $text's app activities";
   static const IS_UNBLOCKED = 'is now unblocked';
   static const IS_UNMUTED = 'is now unmuted';
-
+  static const COUNTRY = 'Country';
+  static const SELECT_COUNTRY = 'Select Country';
 
   static const youEnteredInvalidCode = 'You entered an invalid code. ';
   static const passwordMustBeAtleast8 = 'Your password must be at least 8 characters';
-  static const didNotGetCode = "Didn't get the code? ";
+  static const DID_NOT_GET_CODE = "Didn't get the code? ";
   static const sendAgain = 'Send again';
   static const SEND = 'Send';
   static const SEND_GIFT = 'Send gift';
@@ -109,8 +123,8 @@ class ATStrings{
   static const personalizingYourExperience = "Personalizing your experience...";
 
   static const countryPickers  = 'country_pickers';
-  static const verifyPhoneNumber  = 'Verify phone number';
-  static const whatIsYourPhoneNumber = "What is your phone number?";
+  static const VERIFY_FONE  = 'Verify phone number';
+  static const UR_FON_NUMBER = "What is your phone number?";
 
   static const ALLOW  = 'Allow';
   static const noThanks = "No thanks";
@@ -147,6 +161,8 @@ class ATStrings{
   static const TASKS_WILL_APPEAR_HERE = 'Available tasks for the communities you follow will appear here';
   static const FOLLOWERS = 'Followers';
   static const FOLLOWING = 'Following';
+  static const ADD_UR_EMAIL = 'Add your email address';
+  static const ADD_UR_PHONE = 'Add your phone number';
   static const FOLLOW = 'Follow';
   static const MANAGE = 'Manage';
   static const UNSUBSCRIBE = 'Unsubscribe';
@@ -194,6 +210,7 @@ class ATStrings{
   static const HELP_SUPPORT = 'Help & Support';
   static const ABOUT = 'About';
   static const LOGOUT = 'Log out';
+  static const CODE_SENT = 'Code has been sent. You can request another in';
   static const SEE_COMMUNITIES = 'See communities on Amptive';
   static const RECENT_SEARCHES = 'Recent Searches';
   static const CLEAR = 'Clear';
@@ -300,4 +317,8 @@ class ATStrings{
   static const HOST = 'Host';
   static const UNBLOCK = 'Unblock';
   static const UNMUTE = 'Unmute';
+
+  static const ACCT_INFO = 'Account Information';
+  static const SET_UP_ACCT_DETAILS = 'Setup your account details like your email address, phone number and country.';
+  static const DEACTIVATE_ACCT = 'Deactivate your account';
 }

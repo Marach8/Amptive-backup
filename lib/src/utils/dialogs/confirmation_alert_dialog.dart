@@ -22,6 +22,7 @@ Future<bool?> showConfirmationDialog({
     context: context,
     builder: (_) => AlertDialog(
       backgroundColor: ATColors.indicatorDark.withOpacity(0.82),
+      backgroundColor: ATColors.indicatorDark.withOpacity(0.82),
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(14),
       ),
@@ -31,12 +32,12 @@ Future<bool?> showConfirmationDialog({
           fontSize: ATFontSizes.size17,
         ),
       ),
-      content: Text(
+      content: content.isNotEmpty ? Text(
         content, maxLines: 3, textAlign: TextAlign.center,
         style: Theme.of(context).textTheme.titleMedium?.copyWith(
           fontSize: ATFontSizes.size13,
         ),
-      ),
+      ): const SizedBox.shrink(),
       actionsAlignment: MainAxisAlignment.spaceBetween,
       actions: [
         GestureDetector(

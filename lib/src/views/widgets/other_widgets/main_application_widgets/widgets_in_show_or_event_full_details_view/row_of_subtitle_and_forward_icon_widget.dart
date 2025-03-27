@@ -5,8 +5,8 @@ import '../../../../../utils/constants/font_sizes.dart';
 import '../../../../../utils/constants/strings/image_strings.dart';
 import '../../../common_widgets/image_loader_widget.dart';
 
-class AmptiveRowOfSubtitleAndForwardIconWidget extends StatelessWidget {
-  const AmptiveRowOfSubtitleAndForwardIconWidget({
+class ShowOrEventIndicatorWithTitle extends StatelessWidget {
+  const ShowOrEventIndicatorWithTitle({
     super.key,
   });
 

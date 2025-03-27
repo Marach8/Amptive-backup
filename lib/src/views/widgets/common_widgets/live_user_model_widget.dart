@@ -4,8 +4,8 @@ import 'package:amptive/src/views/widgets/other_widgets/main_application_widgets
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 
-class AmptiveLiveUserModelWidget extends StatelessWidget {
-  const AmptiveLiveUserModelWidget({
+class ATLiveUser extends StatelessWidget {
+  const ATLiveUser({
     super.key,
   });
 

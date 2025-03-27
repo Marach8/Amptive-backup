@@ -25,8 +25,7 @@ class AmptiveHomeViewWidget extends StatelessWidget {
         physics: const BouncingScrollPhysics(),
         headerSliverBuilder: (_, __) => [
           SliverAppBar(
-            floating: true,
-            centerTitle: false,   
+            floating: true, snap: true,
             leadingWidth: 150.w,
             leading: const Padding(
               padding: EdgeInsets.only(left: 15),
@@ -93,7 +92,7 @@ class AmptiveHomeViewWidget extends StatelessWidget {
                     20,
                     (_) => Padding(
                       padding: EdgeInsets.only(right: 14.w),
-                      child: const AmptiveLiveUserModelWidget(),
+                      child: const ATLiveUser(),
                     )
                   ),
                 ]
@@ -101,7 +100,7 @@ class AmptiveHomeViewWidget extends StatelessWidget {
             ),
             Padding(
               padding:  EdgeInsets.symmetric(vertical: 14.0.h),
-              child: const AmptiveDividerWidget(),
+              child: const ATDivider(),
             ),
 
             ...Iterable.generate(
@@ -110,7 +109,7 @@ class AmptiveHomeViewWidget extends StatelessWidget {
                 padding: const EdgeInsets.fromLTRB(15, 0, 15, 30),
                 child: GestureDetector(
                   onTap: () => context.pushNamed(ATRoutes.showDetailedScreen),
-                  child: const AmptiveShowOrEventDataModelWidget()
+                  child: const ATShowOrEventInfo()
                 ),
               )
             )

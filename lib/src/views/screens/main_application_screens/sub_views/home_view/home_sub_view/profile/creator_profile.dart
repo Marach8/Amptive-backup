@@ -13,6 +13,7 @@ import 'package:amptive/src/views/widgets/common_widgets/circular_image.dart';
 import 'package:amptive/src/views/widgets/common_widgets/custom_container_widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/custom_rebuilder_widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/image_loader_widget.dart';
+import 'package:amptive/src/views/widgets/common_widgets/sliver_header_delegate.dart';
 import 'package:amptive/src/views/widgets/common_widgets/two_texts_rich_text_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -87,8 +88,8 @@ class AmptiveCreatorProfileScreen extends StatelessWidget {
                                 end: Alignment.bottomCenter,
                                 colors: [
                                   ATColors.black,
-                                  ATColors.trsprtColor,
-                                  ATColors.trsprtColor
+                                  ATColors.trspntColor,
+                                  ATColors.trspntColor
                                 ]
                               ),
                               width: ATHelperFuncs.getScreenWidth(context),
@@ -366,7 +367,7 @@ class AmptiveCreatorProfileScreen extends StatelessWidget {
 
             SliverPersistentHeader(
               pinned: true,
-              delegate: AmptiveTabBarDelegate(
+              delegate: ATSliverHDelegate(
                 maxExt: 65, minExt: 65, rebuild: false,              
                 child: ATContainer(
                   color: ATColors.black,             

@@ -10,10 +10,8 @@ import 'package:amptive/src/views/widgets/common_widgets/common_widgets.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
-
 import '../../../bloc/authentication/otp/otp_auth_events.dart';
 import '../../../utils/constants/font_weights.dart';
 import '../../../utils/constants/strings/other_strings.dart';
@@ -21,16 +19,20 @@ import '../../../utils/constants/strings/route_strings.dart';
 import '../../widgets/common_widgets/app_bar_widget.dart';
 import '../../widgets/common_widgets/elevated_button_widget.dart';
 
-class OTPScreen extends StatefulWidget {
-  const OTPScreen({super.key, required this.from});
+class ATOTPScreen extends StatefulWidget {
+  const ATOTPScreen({
+    super.key,
+    required this.emailOrPhone,
+    required this.title
+  });
 
-  final String from;
+  final String emailOrPhone, title;
 
   @override
-  State<OTPScreen> createState() => _OTPScreenState();
+  State<ATOTPScreen> createState() => _ATOTPScreenState();
 }
 
-class _OTPScreenState extends State<OTPScreen> {
+class _ATOTPScreenState extends State<ATOTPScreen> {
   late TapGestureRecognizer _tapGestureRecognizer;
   // late Timer _timer;
   bool _resendButtonEnabled = false;
@@ -83,36 +85,41 @@ class _OTPScreenState extends State<OTPScreen> {
     return ATAnnotatedRegion(
       child: Scaffold(
         backgroundColor: ATColors.brandBlack,
-        appBar: const AmptiveAppBar(),
-        body: Container(
-          padding: EdgeInsets.symmetric(horizontal: 20.w),
+        appBar: AmptiveAppBar(
+          title: Text(
+            widget.title,
+            style: Theme.of(context).textTheme.bodyMedium,
+          ),
+        ),
+
+        body: Padding(
+          padding: const EdgeInsets.fromLTRB(15, 15, 15, 0),
           child: Form(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Container(
-                  margin: EdgeInsets.only(top: 20.h),
-                  width: 297.w,
-                  child: Text(
-                    ATHelperFuncs.enter4DigitSentFrom(widget.from.toLowerCase()),
-                    textAlign: TextAlign.start,
-                    style: Theme.of(context).textTheme.headlineMedium?.copyWith(
-                      fontSize: ATFontSizes.size17
-                    ),
+                Text(
+                  '${ATStrings.ENTER_CODE} ${widget.emailOrPhone}',
+                  maxLines: 2,
+                  style: Theme.of(context).textTheme.headlineMedium?.copyWith(
+                    fontSize: ATFontSizes.size17
                   ),
                 ),
-                SizedBox(height: 11.h,),
+                const SizedBox(height: 11),
                 Row(
                   children: [
-                    OTPTextFormField(index: 0,),
-                    SizedBox(width: 10.w,),
-                    OTPTextFormField(index: 1),
-                    SizedBox(width: 10.w,),
-                    OTPTextFormField(index: 2),
-                    SizedBox(width: 10.w,),
-                    OTPTextFormField(index: 3),
+                    _OTPTextFormField(index: 0,),
+                    const SizedBox(width: 10,),
+                    _OTPTextFormField(index: 1),
+                    const SizedBox(width: 10,),
+                    _OTPTextFormField(index: 2),
+                    const SizedBox(width: 10,),
+                    _OTPTextFormField(index: 3),
                   ],
                 ),
+
+                const SizedBox(height: 20),
+
                 BlocBuilder<AmptiveOTPAuthBloc, AmptiveOTPAuthState>(
                   buildWhen: (prev, curr) => curr is AmptiveOTPCounterState,
                   builder: (context, state) {
@@ -121,68 +128,57 @@ class _OTPScreenState extends State<OTPScreen> {
                       _resendButtonEnabled = true;
                     }
                     if (state is AmptiveOTPCounterState) {
-                      return Container(
-                        margin: EdgeInsets.only(top: 11.h),
-                        alignment: Alignment.centerLeft,
-                        child: _resendButtonEnabled ? RichText(
-                          text: TextSpan(
-                            children: [
-                              TextSpan(
-                                text: ATStrings.didNotGetCode,
-                                style: Theme.of(context).textTheme.titleSmall
+                      return _resendButtonEnabled ? RichText(
+                        text: TextSpan(
+                          children: [
+                            TextSpan(
+                              text: ATStrings.DID_NOT_GET_CODE,
+                              style: Theme.of(context).textTheme.titleSmall
+                            ),
+                            TextSpan(
+                              text: ATStrings.sendAgain,
+                              recognizer: _tapGestureRecognizer,
+                              style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                                decoration: TextDecoration.underline,
+                                fontWeight: AmptiveFontWeights.w400,
+                                decorationColor: ATColors.whiteColor,
                               ),
-                              TextSpan(
-                                text: ATStrings.sendAgain,
-                                recognizer: _tapGestureRecognizer,
-                                style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                                  decoration: TextDecoration.underline,
-                                  fontWeight: ATFontWeights.w400,
-                                  decorationColor: ATColors.white,
-                                ),
-                              ),
-                            ],
-                          ),
-                        )
-                        : Text(
-                          ATHelperFuncs.codeHasBeenSentResendIn(state.timeLeft),
-                          style: Theme.of(context).textTheme.titleSmall,
+                            ),
+                          ],
                         ),
+                      )
+                      : Text(
+                        '${ATStrings.CODE_SENT} ${state.timeLeft}',
+                        style: Theme.of(context).textTheme.titleSmall,
                       );
                     }
                     return Container();
                   }
                 ),
-                const Spacer()
-                // Expanded(
-                //   child: SizedBox(
-                //     height: 1.h,
-                //   ),
-                // ),
               ],
             ),
           ),
         ),
         bottomSheet: Padding(
-          padding: EdgeInsets.only(bottom: 16.h),
-          child: BlocListener<AmptiveOTPAuthBloc, AmptiveOTPAuthState>(
+          padding: const EdgeInsets.fromLTRB(15, 0, 15, 15),
+          child: BlocConsumer<AmptiveOTPAuthBloc, AmptiveOTPAuthState>(
             listener: (context, state) {
               if (state is VerifiedOTPAuthState && context.mounted) {
-                context.pushReplacementNamed(ATRoutes.passwordAuth);
+                //Remove this screen and the email input screen
+                context.pop(); context.pop(true);
               }
             },
-            child: BlocBuilder<AmptiveOTPAuthBloc, AmptiveOTPAuthState>(
-              buildWhen: (prev, curr) => curr is! AmptiveOTPCounterState,
-              builder: (context, state) {
-                return state is LoadingAuthState && context.mounted
-                  ? const AmptiveLoadingButtonWidget()
-                  : AmptiveElevatedButtonWidget(
-                    height: 50.w,
-                    buttonTitle: ATStrings.NEXT,
-                    onPressed: state is ValidOTPAuthState
-                      ? () => context.read<AmptiveOTPAuthBloc>().add(VerifyOTPAuthEvent()) : null,
-                  );
-              },
-            ),
+            buildWhen: (prev, curr) => curr is! AmptiveOTPCounterState,
+            builder: (context, state) {
+              return state is LoadingAuthState && context.mounted
+                ? const AmptiveLoadingButtonWidget()
+                : AmptivePlainElevatedBtnWidget(
+                  height: 50,
+                  buttonTitle: ATStrings.NEXT,
+                  onPressed: state is ValidOTPAuthState
+                    ? () => context.read<AmptiveOTPAuthBloc>().add(VerifyOTPAuthEvent()) : null,
+                );
+            },
           ),
         ),
       ),
@@ -190,26 +186,23 @@ class _OTPScreenState extends State<OTPScreen> {
   }
 }
 
-class OTPTextFormField extends StatelessWidget {
-  OTPTextFormField({
-    super.key,
-    required this.index,
-  });
+
+class _OTPTextFormField extends StatelessWidget {
+  _OTPTextFormField({required this.index});
 
   final int index;
   final OtpService service = GetIt.I<OtpService>();
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(context) {
     return SizedBox(
-      height: 48.w,
-      width: 56.83.w,
+      height: 48,
+      width: 56.83,
       child: TextFormField(
         autofocus: true,
         // textInputAction: TextInputAction.previous,
         onChanged: (value) {
           service.setOtp(value, index);
-
           // trigger otp changed event
           context
               .read<AmptiveOTPAuthBloc>()
@@ -226,8 +219,7 @@ class OTPTextFormField extends StatelessWidget {
         textAlignVertical: TextAlignVertical.center,
         cursorColor: ATColors.hex307FE2,
         decoration: InputDecoration(
-          contentPadding:
-              EdgeInsets.symmetric(horizontal: 16.w, vertical: 12.w),
+          contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
           floatingLabelBehavior: FloatingLabelBehavior.never,
           counterText: ATStrings.empty,
           label: const Center(
@@ -237,20 +229,20 @@ class OTPTextFormField extends StatelessWidget {
           fontWeight: ATFontWeights.w400,
         ),
           filled: true,
-          fillColor: ATColors.fillGreyColor.withOpacity(0.3),
+          fillColor: ATColors.hex9E9E9E.withOpacity(0.3),
           focusedBorder: OutlineInputBorder(
             borderSide: BorderSide(
-              width: 2.w,
+              width: 2,
               color: ATColors.hex307FE2,
             ),
-            borderRadius: BorderRadius.circular(14.r),
+            borderRadius: BorderRadius.circular(14),
           ),
           border: OutlineInputBorder(
             borderSide: BorderSide(
-              width: 2.w,
-              color: ATColors.trsprtColor,
+              width: 2,
+              color: ATColors.trspntColor,
             ),
-            borderRadius: BorderRadius.circular(14.r),
+            borderRadius: BorderRadius.circular(14),
           ),
         ),
         style:Theme.of(context).textTheme.headlineMedium?.copyWith(

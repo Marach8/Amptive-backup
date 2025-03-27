@@ -80,7 +80,7 @@ Future<void> showEventPaymentFeeDialog({
                 const Gap(20),
                 Form(
                   key: formKey,
-                  child: AmptiveTextFormFieldWidget(
+                  child: ATTextFormFieldWidget(
                     controller: service.eventPaymentController,
                     disableBlueBorder: true,
                     hintText: '0',

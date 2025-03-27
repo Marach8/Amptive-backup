@@ -9,25 +9,23 @@ import 'package:amptive/src/views/widgets/common_widgets/elevated_button_widget.
 import 'package:amptive/src/views/widgets/common_widgets/textformfield_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:gap/gap.dart';
 import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
-
 import '../../../bloc/authentication/email/email_auth_bloc.dart';
 import '../../../bloc/authentication/email/email_auth_events.dart';
 import '../../../utils/constants/strings/route_strings.dart';
 import '../../widgets/common_widgets/app_bar_widget.dart';
 import '../../widgets/common_widgets/common_widgets.dart';
 
-class AmptiveEmailAuthScreen extends StatefulWidget {
-  const AmptiveEmailAuthScreen({super.key});
+class ATEmailAuthScreen extends StatefulWidget {
+  const ATEmailAuthScreen({super.key, this.title});
+  final String? title;
 
   @override
-  State<AmptiveEmailAuthScreen> createState() => _AmptiveEmailAuthScreenState();
+  State<ATEmailAuthScreen> createState() => _ATEmailAuthScreenState();
 }
 
-class _AmptiveEmailAuthScreenState extends State<AmptiveEmailAuthScreen> {
+class _ATEmailAuthScreenState extends State<ATEmailAuthScreen> {
   late AuthFieldService service;
   late TextEditingController _controller;
   late GlobalKey<FormState> _formKey;
@@ -50,20 +48,28 @@ class _AmptiveEmailAuthScreenState extends State<AmptiveEmailAuthScreen> {
   Widget build(BuildContext context) {
     return ATAnnotatedRegion(
       child: Scaffold(
-        appBar: const AmptiveAppBar(),
-        body: Padding(
-          padding: EdgeInsets.all(20.r),
+        appBar: AmptiveAppBar(
+          title: Text(
+            widget.title ?? '',
+            style: Theme.of(context).textTheme.bodyMedium,
+          ),
+        ),
+        body: SingleChildScrollView(
+          physics: const BouncingScrollPhysics(),
+          padding: const EdgeInsets.all(15),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(ATStrings.whatIsYourEmail,
-                  style: Theme.of(context).textTheme.headlineMedium),
-              Gap(10.h),
+              Text(
+                ATStrings.UR_EMAIL,
+                style: Theme.of(context).textTheme.headlineMedium
+              ),
+              const SizedBox(height: 10),
               Form(
                 key: _formKey,
-                child: BlocBuilder<AmptiveEmailAuthBloc, AmptiveEmailAuthState>(
+                child: BlocBuilder<ATEmailAuthBloc, ATAuthState>(
                     builder: (_, state) {
-                  return AmptiveTextFormFieldWidget(
+                  return ATTextFormFieldWidget(
                     controller: _controller,
                     cursorColor: service.email.error == null
                         ? ATColors.hex307FE2
@@ -71,13 +77,12 @@ class _AmptiveEmailAuthScreenState extends State<AmptiveEmailAuthScreen> {
                     keyboardType: TextInputType.emailAddress,
                     onChanged: (currentText) {
                       service.validateEmail(currentText);
-                      context.read<AmptiveEmailAuthBloc>().add(
-                          EmailFieldChangedAuthEvent(
-                              currentTextEntered: currentText));
+                      context.read<ATEmailAuthBloc>().add(
+                        EmailFieldChangedAuthEvent(currentTextEntered: currentText)
+                      );
                     },
                     decoration: InputDecoration(
-                      contentPadding: EdgeInsets.symmetric(
-                          vertical: 12.h, horizontal: 16.w),
+                      contentPadding: const EdgeInsets.fromLTRB(16, 12, 16, 12),
                       hintText: ATStrings.enterYourEmail,
                       hintStyle: TextStyle(
                         fontSize: ATFontSizes.size16,
@@ -94,31 +99,30 @@ class _AmptiveEmailAuthScreenState extends State<AmptiveEmailAuthScreen> {
                       fillColor: const Color(0xFF9E9E9E).withOpacity(0.3),
                       focusedBorder: OutlineInputBorder(
                         borderSide: BorderSide(
-                          width: 2.w,
+                          width: 2,
                           color: service.email.error == null
                               ? ATColors.hex307FE2
                               : ATColors.textRedColor,
                         ),
-                        borderRadius: BorderRadius.circular(14.r),
+                        borderRadius: BorderRadius.circular(14),
                       ),
                       border: OutlineInputBorder(
                         borderSide: BorderSide(
-                          width: 2.w,
-                          color: ATColors.trsprtColor,
+                          width: 2,
+                          color: ATColors.trspntColor,
                         ),
-                        borderRadius: BorderRadius.circular(14.r),
+                        borderRadius: BorderRadius.circular(14),
                       ),
                     ),
                   );
                 }),
               ),
-              BlocBuilder<AmptiveEmailAuthBloc, AmptiveEmailAuthState>(
+              BlocBuilder<ATEmailAuthBloc, ATAuthState>(
                   builder: (context, state) {
-                var height =
-                    service.customEmailStatus.value != null ? 20.h : 0.h;
+                var height = service.customEmailStatus.value != null ? 20 : 0;
                 return Container(
-                  height: height,
-                  margin: EdgeInsets.symmetric(vertical: 11.h),
+                  height: height.toDouble(),
+                  margin: const EdgeInsets.symmetric(vertical: 11),
                   child: Text(
                     service.customEmailStatus.value ??
                         ATStrings.empty,
@@ -129,34 +133,32 @@ class _AmptiveEmailAuthScreenState extends State<AmptiveEmailAuthScreen> {
             ],
           ),
         ),
-        bottomSheet: BlocListener<AmptiveEmailAuthBloc, AmptiveEmailAuthState>(
-          listener: (context, state) {
-            if (state is ValidEmailAuthState && context.mounted) {
-              context.pushNamed(ATRoutes.otp,
-                  extra: ATStrings.email);
-            }
-          },
-          child: Padding(
-            padding: EdgeInsets.only(bottom: 16.h),
-            child: BlocBuilder<AmptiveEmailAuthBloc, AmptiveEmailAuthState>(
-              builder: (context, state) {
-                final enableVerificationButton = service.isEmailValid;
 
-                return state is LoadingAuthState && context.mounted
-                    ? const AmptiveLoadingButtonWidget()
-                    : AmptiveElevatedButtonWidget(
-                        height: 50.w,
-                        buttonTitle: ATStrings.verifyEmail,
-                        onPressed: enableVerificationButton
-                            ? () {
-                                context
-                                    .read<AmptiveEmailAuthBloc>()
-                                    .add(VerifyEmailAuthEvent());
-                              }
-                            : null,
-                      );
-              },
-            ),
+        bottomSheet: Padding(
+          padding: const EdgeInsets.fromLTRB(15, 0, 15, 15),
+          child: BlocConsumer<ATEmailAuthBloc, ATAuthState>(
+            listener: (context, state) {
+              if (state is ValidEmailAuthState && context.mounted) {
+                context.pushNamed(
+                  ATRoutes.OTP_SCREEN,
+                  extra: [_controller.text.trim(), widget.title]
+                );
+              }
+            },
+            builder: (context, state) {
+              final enableBtn = service.isEmailValid;
+        
+              return state is LoadingAuthState && context.mounted
+                ? const AmptiveLoadingButtonWidget()
+                : AmptivePlainElevatedBtnWidget(
+                    height: 50,
+                    buttonTitle: ATStrings.verifyEmail,
+                    onPressed: enableBtn ? (){
+                      context.read<ATEmailAuthBloc>()
+                        .add(VerifyEmailAuthEvent());
+                    }: null
+                  );
+            },
           ),
         ),
       ),

@@ -15,8 +15,8 @@ import '../../../../../../../utils/constants/strings/other_strings.dart';
 import '../../../../../../widgets/common_widgets/app_bar_widget.dart';
 import '../../../../../../widgets/common_widgets/custom_container_widget.dart';
 
-class AmptiveProfileFollowersScreen extends StatelessWidget {
-  const AmptiveProfileFollowersScreen({super.key});
+class ATProfileFollowersScreen extends StatelessWidget {
+  const ATProfileFollowersScreen({super.key});
 
   @override
   Widget build(context) {
@@ -42,7 +42,7 @@ class AmptiveProfileFollowersScreen extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              AmptiveTextFormFieldWidget(
+              ATTextFormFieldWidget(
                 controller: TextEditingController(),
                 disableBlueBorder: true,
                 hintText: ATStrings.SEARCH_4_FOLLOWERS,

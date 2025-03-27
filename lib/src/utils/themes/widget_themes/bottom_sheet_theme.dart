@@ -5,11 +5,11 @@ class AmptiveBottomSheetTheme{
   const AmptiveBottomSheetTheme._();
 
   static BottomSheetThemeData darkBottomSheetTheme = BottomSheetThemeData(
-    backgroundColor: ATColors.trsprtColor,
-    modalBackgroundColor: ATColors.trsprtColor,
+    backgroundColor: ATColors.trspntColor,
+    modalBackgroundColor: ATColors.trspntColor,
     elevation: 0,
     modalElevation: 0,
-    modalBarrierColor: ATColors.trsprtColor
+    modalBarrierColor: ATColors.trspntColor
   );
 
   //lightTheme will be implemented here

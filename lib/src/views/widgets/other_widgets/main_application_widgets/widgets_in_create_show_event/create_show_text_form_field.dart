@@ -8,7 +8,7 @@ import '../../../../../utils/constants/font_sizes.dart';
 import '../../../../../utils/constants/font_weights.dart';
 import '../../../common_widgets/textformfield_widget.dart';
 
-class CreateShowTextFormField extends AmptiveTextFormFieldWidget {
+class CreateShowTextFormField extends ATTextFormFieldWidget {
   const CreateShowTextFormField(
       {super.key,
         required super.controller,
@@ -26,8 +26,11 @@ class CreateShowTextFormField extends AmptiveTextFormFieldWidget {
 
   final bool readOnly;
   final GestureTapCallback? onTap;
+  @override
   final int maxLength;
+  @override
   final int maxLines;
+  @override
   final String counterText;
 
   @override

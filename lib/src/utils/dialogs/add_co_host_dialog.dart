@@ -112,7 +112,7 @@ Future<Set<ObjectWithNotifier<Host>>?> showAddCoHostDialog(BuildContext context)
                       const Gap(20),
 
                       // search SEARCH
-                      AmptiveTextFormFieldWidget(
+                      ATTextFormFieldWidget(
                         controller: controller,
                         focusNode: focusNode,
                         disableBlueBorder: true,
@@ -402,8 +402,8 @@ class AmptiveCoHostWidget extends StatelessWidget {
               builder: (_, value, __) {
                 return ATContainer(
                   duration: 200,
-                  color: value ? ATColors.white : ATColors.trsprtColor,
-                  border: Border.all(color: ATColors.white),
+                  color: value ? ATColors.whiteColor : ATColors.trspntColor,
+                  border: Border.all(color: ATColors.whiteColor),
                   boxShape: BoxShape.circle,
                   height: 24, width: 24,
                   child: Icon(

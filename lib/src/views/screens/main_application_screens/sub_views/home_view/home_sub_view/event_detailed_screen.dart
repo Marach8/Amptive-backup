@@ -38,6 +38,7 @@ class AmptiveEventDetailedScreen extends StatelessWidget {
           title: GestureDetector(
             onTap: () {
               ATHelperFuncs.hideAnyMountedSnackbar(context);
+              ATHelperFuncs.hideAnyMountedSnackbar(context);
               context.pop();
             },
             child: Platform.isAndroid
@@ -63,7 +64,7 @@ class AmptiveEventDetailedScreen extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const EventOrShowDisplay(),
+                    const ATEventOrShowCard(),
                     Gap(15.h),
                     Text(
                       maxLines: 2,
@@ -167,7 +168,7 @@ class AmptiveEventDetailedScreen extends StatelessWidget {
                   ],
                 ),
               ),
-              const AmptiveWhispersListViewWidget(),
+              const ATWhispers(),
               Gap(30.h),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -182,7 +183,7 @@ class AmptiveEventDetailedScreen extends StatelessWidget {
                     ),
                     Divider(color: ATColors.white.withOpacity(0.1),),
                     Gap(5.h),
-                    AmptiveTextFormFieldWidget(
+                    ATTextFormFieldWidget(
                       controller: TextEditingController(),
                       hintText: 'Enter your Ticked ID',
                       suffixIcon: const Padding(

@@ -7,15 +7,15 @@ class ATRoutes {
   static String onboarding = "onboarding";
 
   //AUTHENTICATION
-  static String emailAuth = "email_auth";
+  static String EMAIL_SCREEN = "email_auth";
   static String preference = "preference";
   static String authScreen = "auth_screen";
   static String passwordAuth = "password_auth";
   static String dobAuth = "dob_auth";
-  static String otp = "otp";
+  static String OTP_SCREEN = "otp";
   static String addName = "name_auth";
   static String addUsername = "username_auth";
-  static String addPhone = "add_phone_auth";
+  static String ADD_FONE_NO_SCREEN = "add_phone_auth";
 
   //POST AUTHENTICATION
   static String addProfilePic = "add_profile_pic";
@@ -53,8 +53,10 @@ class ATRoutes {
   static const COMMUNITY_TASK_SCREEN = 'community_task';
   static const PROFILE_PIC_SCREEN = 'profile_picture';
   static const LANGUAGE_SCREEN = 'language_screen';
+  static const CALENDER_SCREEN = 'calender_screen';
   static const PRIVACY_SCREEN = 'privacy_screen';
   static const BLOCKED_ACCTS_SCREEN = 'blocked_accounts_screen';
   static const MUTED_ACCTS_SCREEN = 'muted_accounts_screen';
   static const CALENDER_SCREEN = 'calender_screen';
+  static const SELECT_COUNTRY_SCREEN = 'select_country_screen';
 }

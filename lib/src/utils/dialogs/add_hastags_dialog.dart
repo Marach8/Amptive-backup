@@ -113,7 +113,7 @@ Future<Set<ObjectWithNotifier<Hashtag>>?> showAddHashtagDialog(
 
                       Padding(
                         padding: const EdgeInsets.fromLTRB(15, 0, 15, 20),
-                        child: AmptiveTextFormFieldWidget(
+                        child: ATTextFormFieldWidget(
                           disableBlueBorder: true,
                           controller: controller,
                           focusNode: focusNode,
@@ -324,7 +324,6 @@ class AmptiveListOfHashtagsWidget extends StatelessWidget {
           )
               : const SizedBox.shrink(),
           ...hashtags.map((hashtagData) {
-            ;
 
             return AmptiveAddHashtagWidget(
               hashtagDetail: hashtagData,
@@ -401,9 +400,9 @@ class AmptiveAddHashtagWidget extends StatelessWidget {
                   return ATContainer(
                       duration: 200,
                       color: value
-                          ? ATColors.white
-                          : ATColors.trsprtColor,
-                      border: Border.all(color: ATColors.white),
+                          ? ATColors.whiteColor
+                          : ATColors.trspntColor,
+                      border: Border.all(color: ATColors.whiteColor),
                       boxShape: BoxShape.circle,
                       height: 24,
                       width: 24,

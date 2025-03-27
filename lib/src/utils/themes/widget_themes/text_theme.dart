@@ -58,10 +58,17 @@ class AmptiveTextTheme{
       overflow: TextOverflow.ellipsis
     ),
 
+    // labelSmall: TextStyle(
+    //   color: ATColors.white,
+    //   fontSize: ATFontSizes.size18,
+    //   fontWeight: ATFontWeights.w400,
+    //   overflow: TextOverflow.ellipsis
+    // ),
+
     labelSmall: TextStyle(
       color: ATColors.white,
-      fontSize: ATFontSizes.size18,
-      fontWeight: ATFontWeights.w400,
+      fontSize: ATFontSizes.size12,
+      fontWeight: ATFontWeights.w500,
       overflow: TextOverflow.ellipsis
     ),
 

@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:amptive/src/utils/constants/strings/route_strings.dart';
+import 'package:amptive/src/utils/helpers/extensions/string_extensions.dart';
 import 'package:amptive/src/views/screens/authentication_screens/add_phone.dart';
 import 'package:amptive/src/views/screens/authentication_screens/dob_screen.dart';
 import 'package:amptive/src/views/screens/authentication_screens/email_auth_screen.dart';
@@ -14,8 +15,10 @@ import 'package:amptive/src/views/screens/main_application_screens/sub_views/hom
 import 'package:amptive/src/views/screens/main_application_screens/dashboard_screen.dart';
 import 'package:amptive/src/views/screens/main_application_screens/sub_views/home_view/home_sub_view/go_live_views/main_go_live_screen.dart';
 import 'package:amptive/src/views/screens/main_application_screens/sub_views/home_view/home_sub_view/profile/community_task.dart';
-import 'package:amptive/src/views/screens/main_application_screens/sub_views/home_view/home_sub_view/profile/menu/calender/day_view.dart';
-import 'package:amptive/src/views/screens/main_application_screens/sub_views/home_view/home_sub_view/profile/menu/language.dart' show AmptiveSelectLanguageScreen;
+import 'package:amptive/src/views/screens/main_application_screens/sub_views/home_view/home_sub_view/profile/menu/accounts/account_info.dart';
+import 'package:amptive/src/views/screens/main_application_screens/sub_views/home_view/home_sub_view/profile/menu/accounts/accounts_home.dart';
+import 'package:amptive/src/views/screens/main_application_screens/sub_views/home_view/home_sub_view/profile/menu/accounts/select_country.dart';
+import 'package:amptive/src/views/screens/main_application_screens/sub_views/home_view/home_sub_view/profile/menu/language.dart' show ATSelectLanguageScreen;
 import 'package:amptive/src/views/screens/main_application_screens/sub_views/home_view/home_sub_view/profile/menu/privacy/blocked_accts.dart';
 import 'package:amptive/src/views/screens/main_application_screens/sub_views/home_view/home_sub_view/profile/menu/privacy/muted_accts.dart';
 import 'package:amptive/src/views/screens/main_application_screens/sub_views/home_view/home_sub_view/profile/menu/privacy/privacy_home.dart' show AmptivePrivacyScreen;
@@ -75,20 +78,24 @@ final GoRouter amptiveAppRouter = GoRouter(
       ),
     ),
     GoRoute(
-        name: ATRoutes.emailAuth,
-        path: "/email-route",
-        builder: (_, __) => const AmptiveEmailAuthScreen()),
+      name: ATRoutes.EMAIL_SCREEN,
+      path: ATRoutes.EMAIL_SCREEN.addSlash,
+      builder: (_, state) => ATEmailAuthScreen(title: state.extra as String?)
+    ),
     GoRoute(
-        name: ATRoutes.otp,
-        path: "/otp",
-        builder: (_, GoRouterState state) {
-          String where = state.extra as String;
-          return OTPScreen(from: where);
-        }),
+      name: ATRoutes.OTP_SCREEN,
+      path: ATRoutes.OTP_SCREEN.addSlash,
+      builder: (_, state) {
+        final params = state.extra as List<String>;
+        final email = params.first;
+        final title = params.last;
+        return ATOTPScreen(emailOrPhone: email, title: title);
+      }
+    ),
     GoRoute(
-      name: ATRoutes.addPhone,
-      path: "/add-phone",
-      builder: (_, __) => const AddPhoneScreen(),
+      name: ATRoutes.ADD_FONE_NO_SCREEN,
+      path: ATRoutes.ADD_FONE_NO_SCREEN.addSlash,
+      builder: (_, state) => AddPhoneScreen(title: state.extra as String?),
     ),
     GoRoute(
         name: ATRoutes.addProfilePic,
@@ -148,7 +155,7 @@ final GoRouter amptiveAppRouter = GoRouter(
               name: ATRoutes.showDetailedScreen,
               path: ATRoutes.showDetailedScreen,
               pageBuilder: (context, state) => CustomTransitionPage(
-                    child: const AmptiveShowDetailedScreen(),
+                    child: const ATShowDetailedScreen(),
                     transitionsBuilder:
                         (context, animation, secondaryAnimation, child) {
                       var tween =
@@ -251,7 +258,7 @@ final GoRouter amptiveAppRouter = GoRouter(
               GoRoute(
                 name: ATRoutes.LANGUAGE_SCREEN,
                 path: ATRoutes.LANGUAGE_SCREEN,
-                builder: (_, __) => const AmptiveSelectLanguageScreen(),
+                builder: (_, __) => const ATSelectLanguageScreen(),
               ),
 
               GoRoute(
@@ -276,9 +283,47 @@ final GoRouter amptiveAppRouter = GoRouter(
           ),
 
           GoRoute(
+            name: ATRoutes.ACCT_SCREEN,
+            path: ATRoutes.ACCT_SCREEN,
+            builder: (_, __) => const ATAccountScreen(),
+            routes: [
+              GoRoute(
+                name: ATRoutes.ACCT_INFO_SCREEN,
+                path: ATRoutes.ACCT_INFO_SCREEN,
+                builder: (_, state){
+                  final params = state.extra as List<String?>?;
+                  final email = params?.first;
+                  final phone = params?.elementAtOrNull(1);
+                  final country = params?.last;
+                  return ATAccountInfoScreen(
+                    country: country,
+                    email: email,
+                    phone: phone,
+                  );
+                },
+              ),
+
+              GoRoute(
+                name: ATRoutes.SELECT_COUNTRY_SCREEN,
+                path: ATRoutes.SELECT_COUNTRY_SCREEN,
+                builder: (_, state){
+                  final params = state.extra as List;
+                  final countries = params.last as List<String>;
+                  final selectedCountry = params.first as String;
+
+                  return ATSelectCountryScreen(
+                    countries: countries,
+                    selectedCountry: selectedCountry,
+                  );
+                }
+              ),
+            ]
+          ),
+
+          GoRoute(
             name: ATRoutes.PROFILE_FOLLOWING_SCREEN,
             path: ATRoutes.PROFILE_FOLLOWING_SCREEN,
-            builder: (_, __) => const AmptiveProfileFollowersScreen(),
+            builder: (_, __) => const ATProfileFollowersScreen(),
           ),
 
           GoRoute(
@@ -305,7 +350,7 @@ final GoRouter amptiveAppRouter = GoRouter(
           GoRoute(
             name: ATRoutes.USER_PROFILE_SCREEN,
             path: ATRoutes.USER_PROFILE_SCREEN,
-            builder: (_, __) => const AmptiveOrdinaryUserProfileScreen(),
+            builder: (_, __) => const ATUserProfileScreen(),
           ),
 
           GoRoute(

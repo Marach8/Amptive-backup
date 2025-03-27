@@ -36,14 +36,14 @@ class AmptiveAuthScreen extends StatelessWidget {
               children: [
 
                 AmptiveElevatedButtonWidget(
-                  buttonTitle: (userSignUp ? ATStrings.signUpWith : ATStrings.signInWith) + ATStrings.email,
-                  onPressed: () => context.pushNamed(ATRoutes.emailAuth)
+                  buttonTitle: (userSignUp ? ATStrings.signUpWith : ATStrings.signInWith) + ATStrings.EMAIL,
+                  onPressed: () => context.pushNamed(ATRoutes.EMAIL_SCREEN)
                 ),
                 Gap(15.h),
 
-                ATOutlinedBtn(
-                  buttonTitle: (userSignUp ? ATStrings.signUpWith : ATStrings.signInWith) + ATStrings.phoneNumber,
-                  onPressed: () => context.pushNamed(ATRoutes.addPhone)
+                AmptiveOutlinedButtonWidget(
+                  buttonTitle: (userSignUp ? ATStrings.signUpWith : ATStrings.signInWith) + ATStrings.FONE_NO,
+                  onPressed: () => context.pushNamed(ATRoutes.ADD_FONE_NO_SCREEN)
                 ),
 
                 Gap(20.h),

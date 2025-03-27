@@ -4,8 +4,8 @@ import 'email_auth_events.dart';
 import 'email_auth_states.dart';
 import '../../../services/auth/auth_field_service.dart';
 
-class AmptiveEmailAuthBloc extends Bloc<AmptiveEmailAuthEvent, AmptiveEmailAuthState> {
-  AmptiveEmailAuthBloc() : super(InitialAuthState()) {
+class ATEmailAuthBloc extends Bloc<ATEmailAuthEvent, ATAuthState> {
+  ATEmailAuthBloc() : super(InitialAuthState()) {
     on<EmailFieldChangedAuthEvent>((event, emit) {
       final currentTextEntered = event.currentTextEntered;
 

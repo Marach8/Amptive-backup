@@ -10,8 +10,8 @@ import '../../../../../../../widgets/common_widgets/circle_avatar.dart';
 
 
 
-class AmptiveSelectLanguageScreen extends StatelessWidget {
-  const AmptiveSelectLanguageScreen({super.key});
+class ATSelectLanguageScreen extends StatelessWidget {
+  const ATSelectLanguageScreen({super.key});
 
   @override
   Widget build(context) {
@@ -25,7 +25,7 @@ class AmptiveSelectLanguageScreen extends StatelessWidget {
                 children: [
                   AmptiveCircleAvatarWidget(
                     onTap: () => context.pop(),
-                    diameter: 30, color: ATColors.trsprtColor,
+                    diameter: 30, color: ATColors.trspntColor,
                     child: const Icon(Icons.keyboard_arrow_left),
                   ),
                   const Spacer(),
@@ -34,7 +34,7 @@ class AmptiveSelectLanguageScreen extends StatelessWidget {
                     style: Theme.of(context).textTheme.bodyMedium,
                   ),
                   const Spacer(),
-                  Icon(Icons.keyboard_arrow_left, color: ATColors.trsprtColor),
+                  Icon(Icons.keyboard_arrow_left, color: ATColors.trspntColor),
                 ],
               ),
             ),
@@ -94,7 +94,7 @@ class AmptiveSelectLanguageScreen extends StatelessWidget {
                               ATContainer(
                                 height: 15, width: 15, boxShape: BoxShape.circle,
                                 padding: const EdgeInsets.all(5),
-                                color: isSelected ? ATColors.hex307FE2 : ATColors.trsprtColor,
+                                color: isSelected ? ATColors.hex307FE2 : ATColors.trspntColor,
                                 border: Border.all(
                                   color: isSelected ? ATColors.hex307FE2 : ATColors.white,
                                   strokeAlign: 5.0

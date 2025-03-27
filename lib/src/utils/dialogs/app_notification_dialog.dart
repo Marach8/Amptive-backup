@@ -6,13 +6,13 @@ import '../../views/widgets/common_widgets/custom_container_widget.dart';
 
 Future<dynamic> showAppNotification({
   required BuildContext context,
-  required Widget? icon,
+  Widget? icon,
   required String text,
   int? duration,
   Color? bgColor
 }) async {
   return await Flushbar(
-    backgroundColor: ATColors.trsprtColor,
+    backgroundColor: ATColors.trspntColor,
     flushbarPosition: FlushbarPosition.TOP,
     duration: Duration(seconds: duration ?? 5),
     messageText: Center(

@@ -25,7 +25,7 @@ Future<void> selectDateModal(
       service.isValidEventDateTime() ? service.eventDateTime! : now;
 
   return await showModalBottomSheet(
-      backgroundColor: ATColors.trsprtColor,
+      backgroundColor: ATColors.trspntColor,
       constraints: BoxConstraints.expand(
           height: ATHelperFuncs.getScreenHeight(context)),
       context: context,
@@ -134,8 +134,8 @@ Future<void> selectDateModal(
                     Navigator.pop(context);
                   },
                   buttonTitle: ATStrings.REMOVE,
-                  bgColor: ATColors.trsprtColor,
-                  fgColor: ATColors.white,
+                  bgColor: ATColors.trspntColor,
+                  fgColor: ATColors.whiteColor,
                 ),
               ),
             )

@@ -63,7 +63,7 @@ class _AmptiveAudioCreatorWidgetState extends State<AmptiveAudioCreatorWidget>{
           height: 74.99.h,
           child: CircleAvatar(
             radius: 36.5.r,
-            backgroundColor:_isBorderColored ? ATColors.hex307FE2 : ATColors.trsprtColor,
+            backgroundColor:_isBorderColored ? ATColors.hex307FE2 : ATColors.trspntColor,
             child: CircleAvatar(
               radius: 34.814.r,
               backgroundColor: ATColors.brandBlack,

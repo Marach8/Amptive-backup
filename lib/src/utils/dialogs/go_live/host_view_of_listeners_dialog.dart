@@ -1,6 +1,5 @@
 import 'dart:io';
 import 'dart:ui';
-import 'package:amptive/src/models/generic_response_model.dart';
 import 'package:amptive/src/utils/constants/colors.dart';
 import 'package:amptive/src/utils/constants/strings/image_strings.dart';
 import 'package:amptive/src/utils/dialogs/app_notification_dialog.dart';
@@ -104,7 +103,7 @@ Future<void> showListenersDialog({
                   const Gap(20),
                   // search SEARCH
 
-                  AmptiveTextFormFieldWidget(
+                  ATTextFormFieldWidget(
                     controller: controller,
                     focusNode: focusNode,
                     disableBlueBorder: true,

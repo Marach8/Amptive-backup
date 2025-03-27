@@ -82,7 +82,7 @@ Future<void> showEventCapacitySelectionDialog({
 
             Form(
               key: formKey,
-              child: AmptiveTextFormFieldWidget(
+              child: ATTextFormFieldWidget(
                 controller: service.capacityController,
                 disableBlueBorder: true,
                 //hintText: '0',
@@ -129,8 +129,8 @@ Future<void> showEventCapacitySelectionDialog({
                     context.pop();
                   },
                   buttonTitle: ATStrings.REMOVE,
-                  bgColor: ATColors.trsprtColor,
-                  fgColor: ATColors.white,
+                  bgColor: ATColors.trspntColor,
+                  fgColor: ATColors.whiteColor,
                 ),
                 const Gap(10),
               ],

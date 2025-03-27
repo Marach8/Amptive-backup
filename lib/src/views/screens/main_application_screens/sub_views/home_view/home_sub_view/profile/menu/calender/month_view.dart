@@ -238,7 +238,7 @@ class EachDayWidget extends StatelessWidget {
     return Column(
       children: [
         CircleAvatar(
-          backgroundColor: isToday ? ATColors.hex307FE2 : ATColors.trsprtColor,
+          backgroundColor: isToday ? ATColors.hex307FE2 : ATColors.trspntColor,
           child: Text(
             (day?.day.toString()) ?? '',
             style: Theme.of(context).textTheme.bodyLarge,

@@ -28,16 +28,17 @@ class AmptiveBlockedAcctsScreen extends StatelessWidget {
                 children: [
                   AmptiveCircleAvatarWidget(
                     onTap: () => context.pop(),
-                    diameter: 30, color: ATColors.trsprtColor,
+                    diameter: 30, color: ATColors.trspntColor,
                     child: const Icon(Icons.keyboard_arrow_left),
                   ),
                   const Spacer(),
                   Text(
                     ATStrings.BLOCKED_ACCTS,
+                    ATStrings.BLOCKED_ACCTS,
                     style: Theme.of(context).textTheme.bodyMedium,
                   ),
                   const Spacer(),
-                  Icon(Icons.keyboard_arrow_left, color: ATColors.trsprtColor),
+                  Icon(Icons.keyboard_arrow_left, color: ATColors.trspntColor),
                 ],
               ),
             ),
@@ -54,9 +55,14 @@ class AmptiveBlockedAcctsScreen extends StatelessWidget {
                       return AmptiveBlockedOrMutedAcctWidget(
                         subscriber: subscriber,
                         text: ATStrings.UNBLOCK,
+                        text: ATStrings.UNBLOCK,
                         onTap: (follower, isSelected) async{
                           final shouldUnblock = await showConfirmationDialog(
                             context: context,
+                            title: '${ATStrings.UNBLOCK} ${follower.obj.username}',
+                            content: '${follower.obj.username} ${ATStrings.UNBLOCK_DESC}',
+                            yesString: ATStrings.UNBLOCK,
+                            noString: ATStrings.CANCEL
                             title: '${ATStrings.UNBLOCK} ${follower.obj.username}',
                             content: '${follower.obj.username} ${ATStrings.UNBLOCK_DESC}',
                             yesString: ATStrings.UNBLOCK,
@@ -66,6 +72,7 @@ class AmptiveBlockedAcctsScreen extends StatelessWidget {
                             showAppNotification(
                               context: context,
                               icon: const Icon(Icons.check_circle),
+                              text: '${follower.obj.username} ${ATStrings.IS_UNBLOCKED}'
                               text: '${follower.obj.username} ${ATStrings.IS_UNBLOCKED}'
                             );
                           }
@@ -106,6 +113,7 @@ class AmptiveBlockedOrMutedAcctWidget extends StatelessWidget {
       child: Row(
         children: [
           ATContainer(
+          ATContainer(
             clipBehavior: Clip.hardEdge,
             height: 50, width: 50, radius: 30,
             child: FittedBox(
@@ -121,13 +129,15 @@ class AmptiveBlockedOrMutedAcctWidget extends StatelessWidget {
             ),
           ),
           ATContainer(
+          ATContainer(
             onTap: () => onTap(subscriber, subscriber.notifier.value),
-            border: Border.all(color: ATColors.white),
+            border: Border.all(color: ATColors.whiteColor),
             radius: 30, 
             padding: const EdgeInsets.fromLTRB(15, 5, 15, 5),
             child: Text(
               text,
               style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                fontSize: ATFontSizes.size13,
                 fontSize: ATFontSizes.size13,
               ),
             ),

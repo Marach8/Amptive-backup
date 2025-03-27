@@ -43,4 +43,7 @@ extension ExtString on String {
     return formatter.format(number);
   }
 
+
+  String get addSlash => '/$this';
+
 }
