@@ -4,8 +4,8 @@ import 'package:amptive/src/views/widgets/common_widgets/circular_image.dart';
 import 'package:amptive/src/views/widgets/common_widgets/custom_container_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import '../../../../../../../utils/constants/strings/other_strings.dart';
-import '../../../../../../widgets/common_widgets/app_bar_widget.dart';
+import '../../../../../../../../utils/constants/strings/other_strings.dart';
+import '../../../../../../../widgets/common_widgets/app_bar_widget.dart';
 
 
 class AmptiveViewProfilePicScreen extends StatelessWidget {

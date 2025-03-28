@@ -11,7 +11,7 @@ import 'package:amptive/src/views/widgets/common_widgets/image_loader_widget.dar
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import '../../../../../../../../../utils/dialogs/app_notification_dialog.dart';
+import '../../../../../../../../../../utils/dialogs/app_notification_dialog.dart';
 
 class AmptiveBlockedAcctsScreen extends StatelessWidget {
   const AmptiveBlockedAcctsScreen({super.key});

@@ -6,9 +6,9 @@ import 'package:amptive/src/views/widgets/common_widgets/annotated_region__widge
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import '../../../../../../../../../utils/constants/strings/other_strings.dart';
-import '../../../../../../../../../utils/constants/strings/route_strings.dart';
-import '../../../../../../../../widgets/common_widgets/circle_avatar.dart';
+import '../../../../../../../../../../utils/constants/strings/other_strings.dart';
+import '../../../../../../../../../../utils/constants/strings/route_strings.dart';
+import '../../../../../../../../../widgets/common_widgets/circle_avatar.dart';
 
 
 class ATAccountInfoScreen extends StatelessWidget {

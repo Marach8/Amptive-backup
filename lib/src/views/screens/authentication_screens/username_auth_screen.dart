@@ -130,7 +130,7 @@ class _UserNameAuthScreenState extends State<UserNameAuthScreen> {
                                         ),
                                       )
                                     : null,
-                        hintText: ATStrings.username,
+                        hintText: ATStrings.USERNAME,
                         hintStyle: Theme.of(context).textTheme.labelMedium,
                         filled: true,
                         fillColor: ATColors.hex9E9E9E.withOpacity(0.3),

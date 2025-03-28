@@ -95,7 +95,6 @@ class ATStrings{
   static const CREATE_SCHEDULE = 'Create a Schedule';
   static const warningOnClickingCreate = 'By clicking on ‘Create account’, you agree to the';
 
-  static const username = "username";
   static const checkerIsLoading = "Checker is loading...";
   static const usernameIsAvailable ="Username is available";
   static const whatShouldWeCallYou ="What should we call you?";
@@ -112,9 +111,10 @@ class ATStrings{
 
   static const addProfilePicture = "Add a profile picture";
   static const useYOurFavImage = "Use one of your favourite image or selfie";
-  static const photoGallery = 'Photo Gallery';
-  static const camera = 'Camera';
+  static const PHOTO_GALLERY = 'Photo Gallery';
+  static const CAMERA = 'Camera';
   static const skipForNow = 'Skip for now';
+  static const APPLY = 'Apply';
   static const MORE_SCHEDULE = 'More Schedule';
 
   static const select5Communities = "Select 5 communities you find interest in.";
@@ -198,6 +198,13 @@ class ATStrings{
   static const ACCT_SETTINGS = 'Account Settings';
   static const ACCT = 'Account';
   static const PRIVACY = 'Privacy';
+  static const EDIT_PROFILE = 'Edit Profile';
+  static const ABT_U = 'About you';
+  static const USERNAME = 'Username';
+  static const NAME = 'Name';
+  static const BIO = 'Bio';
+  static const LINKS = 'Links';
+  static const SWITCH_ACCT = 'Switch account type';
   static const PSWRD_ND_SECURITY = 'Password and Security';
   static const APP_SETTINGS = 'App Settings';
   static const SETTINGS = 'Settings';
@@ -301,7 +308,6 @@ class ATStrings{
   static const SUBSCRIBERS_ONLY = 'Subscribers only';
   static const ACCESS_2_ONLY_SUBSCRIBERS = 'Only your subscribers will have access';
   static const EDIT_SUB_PLAN = 'Edit subscription plan';
-  static const EDIT_PROFILE = 'Edit profile';
   static const SETUP_PAYMENT_FEE = 'Set up payment fee';
   static const SHOW_IS_SETUP = 'Your Show is setup and airing!';
   static const BEGIN_JOURNEY = 'Begin your journey by creating your first episode';

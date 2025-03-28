@@ -14,7 +14,7 @@ import 'package:gap/gap.dart';
 import 'package:go_router/go_router.dart';
 import 'package:iconsax/iconsax.dart';
 
-import '../../../../../../../../bloc/main_app/profile/profile_menu/calender/calender_visibile_bloc.dart';
+import '../../../../../../../../../bloc/main_app/profile/profile_menu/calender/calender_visibile_bloc.dart';
 
 class AmptiveProfileMenuScreen extends StatelessWidget {
   const AmptiveProfileMenuScreen({super.key});

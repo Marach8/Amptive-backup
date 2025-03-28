@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import '../../../../../../utils/constants/colors.dart';
-import '../../../../../widgets/common_widgets/app_bar_leading_widget.dart';
+import '../../../../../widgets/common_widgets/back_button.dart';
 import '../../../../../widgets/common_widgets/custom_container_widget.dart';
 import '../../../../../widgets/other_widgets/main_application_widgets/widgets_in_home_view/widgets_in_following/following_show_or_event_model_widget.dart';
 
@@ -29,7 +29,7 @@ class AmptiveFollowingEvenstOrShowsViewWidget extends StatelessWidget {
               leadingWidth: 150.w,
               leading: Padding(
                 padding: const EdgeInsets.only(left: 20),
-                child: AmptiveAppBarLeadingWidget(
+                child: ATBackBtn(
                   leadingText: ATStrings.FOLLOWING,
                   leadingStyle: Theme.of(context).textTheme.bodyMedium?.copyWith(
                     fontSize: ATFontSizes.size23

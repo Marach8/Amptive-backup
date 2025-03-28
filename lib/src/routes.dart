@@ -14,20 +14,22 @@ import 'package:amptive/src/views/screens/main_application_screens/sub_views/hom
 import 'package:amptive/src/views/screens/main_application_screens/sub_views/home_view/home_sub_view/go_live_views/show/create_show_form_screen.dart';
 import 'package:amptive/src/views/screens/main_application_screens/dashboard_screen.dart';
 import 'package:amptive/src/views/screens/main_application_screens/sub_views/home_view/home_sub_view/go_live_views/main_go_live_screen.dart';
-import 'package:amptive/src/views/screens/main_application_screens/sub_views/home_view/home_sub_view/profile/community_task.dart';
-import 'package:amptive/src/views/screens/main_application_screens/sub_views/home_view/home_sub_view/profile/menu/accounts/account_info.dart';
-import 'package:amptive/src/views/screens/main_application_screens/sub_views/home_view/home_sub_view/profile/menu/accounts/accounts_home.dart';
-import 'package:amptive/src/views/screens/main_application_screens/sub_views/home_view/home_sub_view/profile/menu/accounts/select_country.dart';
-import 'package:amptive/src/views/screens/main_application_screens/sub_views/home_view/home_sub_view/profile/menu/calender/day_view.dart';
-import 'package:amptive/src/views/screens/main_application_screens/sub_views/home_view/home_sub_view/profile/menu/language.dart' show ATSelectLanguageScreen;
-import 'package:amptive/src/views/screens/main_application_screens/sub_views/home_view/home_sub_view/profile/menu/privacy/blocked_accts.dart';
-import 'package:amptive/src/views/screens/main_application_screens/sub_views/home_view/home_sub_view/profile/menu/privacy/muted_accts.dart';
-import 'package:amptive/src/views/screens/main_application_screens/sub_views/home_view/home_sub_view/profile/menu/privacy/privacy_home.dart' show AmptivePrivacyScreen;
-import 'package:amptive/src/views/screens/main_application_screens/sub_views/home_view/home_sub_view/profile/menu/profile_menu_screen.dart';
-import 'package:amptive/src/views/screens/main_application_screens/sub_views/home_view/home_sub_view/profile/profile_pic_display.dart';
-import 'package:amptive/src/views/screens/main_application_screens/sub_views/home_view/home_sub_view/profile/subscribers_screen.dart';
+import 'package:amptive/src/views/screens/main_application_screens/sub_views/home_view/profile/presentation/views/community_task_screen.dart';
+import 'package:amptive/src/views/screens/main_application_screens/sub_views/home_view/profile/presentation/views/creator_profile_screen.dart';
+import 'package:amptive/src/views/screens/main_application_screens/sub_views/home_view/profile/presentation/views/crop_bg_image_screen.dart';
+import 'package:amptive/src/views/screens/main_application_screens/sub_views/home_view/profile/presentation/views/edit_profile_screen.dart';
+import 'package:amptive/src/views/screens/main_application_screens/sub_views/home_view/profile/presentation/views/profile_menu/accounts/account_info.dart';
+import 'package:amptive/src/views/screens/main_application_screens/sub_views/home_view/profile/presentation/views/profile_menu/accounts/accounts_home.dart';
+import 'package:amptive/src/views/screens/main_application_screens/sub_views/home_view/profile/presentation/views/profile_menu/accounts/select_country.dart';
+import 'package:amptive/src/views/screens/main_application_screens/sub_views/home_view/profile/presentation/views/profile_menu/calender/day_view.dart';
+import 'package:amptive/src/views/screens/main_application_screens/sub_views/home_view/profile/presentation/views/profile_menu/language.dart' show ATSelectLanguageScreen;
+import 'package:amptive/src/views/screens/main_application_screens/sub_views/home_view/profile/presentation/views/profile_menu/privacy/blocked_accts.dart';
+import 'package:amptive/src/views/screens/main_application_screens/sub_views/home_view/profile/presentation/views/profile_menu/privacy/muted_accts.dart';
+import 'package:amptive/src/views/screens/main_application_screens/sub_views/home_view/profile/presentation/views/profile_menu/privacy/privacy_home.dart' show AmptivePrivacyScreen;
+import 'package:amptive/src/views/screens/main_application_screens/sub_views/home_view/profile/presentation/views/profile_menu/profile_menu_screen.dart';
+import 'package:amptive/src/views/screens/main_application_screens/sub_views/home_view/profile/presentation/views/profile_pic_display_screen.dart';
+import 'package:amptive/src/views/screens/main_application_screens/sub_views/home_view/profile/presentation/views/subscribers_screen.dart';
 import 'package:amptive/src/views/screens/main_application_screens/sub_views/home_view/home_sub_view/scheduled_screen.dart';
-import 'package:amptive/src/views/screens/main_application_screens/sub_views/home_view/home_sub_view/profile/creator_profile.dart';
 import 'package:amptive/src/views/screens/post_authentication_screens/crop_image_screen.dart';
 import 'package:amptive/src/views/screens/post_authentication_screens/pre_homepage.dart';
 import 'package:amptive/src/views/screens/post_authentication_screens/preference_screen.dart';
@@ -46,15 +48,15 @@ import 'views/screens/main_application_screens/sub_views/home_view/home_sub_view
 import 'views/screens/main_application_screens/sub_views/home_view/home_sub_view/go_live_views/event/choose_event_screen.dart';
 import 'views/screens/main_application_screens/sub_views/home_view/home_sub_view/go_live_views/show/choose_or_create_show_screen.dart';
 import 'views/screens/main_application_screens/sub_views/home_view/home_sub_view/go_live_views/show/show_creation_success_screen.dart';
-import 'views/screens/main_application_screens/sub_views/home_view/home_sub_view/profile/followers_screen.dart';
-import 'views/screens/main_application_screens/sub_views/home_view/home_sub_view/profile/ordinary_user_profile.dart';
+import 'views/screens/main_application_screens/sub_views/home_view/profile/presentation/views/followers_screen.dart';
+import 'views/screens/main_application_screens/sub_views/home_view/profile/presentation/views/user_profile_screen.dart';
 import 'views/screens/main_application_screens/sub_views/home_view/home_sub_view/show_detailed_screen.dart';
 import 'views/screens/main_application_screens/sub_views/home_view/home_sub_view/subscribed_screen.dart';
 
 // The route configuration.
 final GoRouter amptiveAppRouter = GoRouter(
   initialLocation: ATRoutes.index,
-  // initialLocation: "/email-route/otp",
+  //initialLocation: "/add-profile-pic",
   routes: <RouteBase>[
     GoRoute(
         path: ATRoutes.index,
@@ -87,10 +89,10 @@ final GoRouter amptiveAppRouter = GoRouter(
       name: ATRoutes.OTP_SCREEN,
       path: ATRoutes.OTP_SCREEN.addSlash,
       builder: (_, state) {
-        final params = state.extra as List<String>;
-        final email = params.first;
+        final params = state.extra as List<String?>;
+        final emailOrPhone = params.first;
         final title = params.last;
-        return ATOTPScreen(emailOrPhone: email, title: title);
+        return ATOTPScreen(emailOrPhone: emailOrPhone ?? '', title: title ?? '');
       }
     ),
     GoRoute(
@@ -243,6 +245,19 @@ final GoRouter amptiveAppRouter = GoRouter(
             name: ATRoutes.CREATOR_PROFILE_SCREEN,
             path: ATRoutes.CREATOR_PROFILE_SCREEN,
             builder: (_, __) => const AmptiveCreatorProfileScreen(),
+          ),
+
+          GoRoute(
+            name: ATRoutes.EDIT_PROFILE,
+            path: ATRoutes.EDIT_PROFILE.addSlash,
+            builder: (_, __) => const EditProfileScreen(),
+            routes: [
+              GoRoute(
+                name: ATRoutes.PROFILE_BG_CROP,
+                path: ATRoutes.PROFILE_BG_CROP,
+                builder: (_, state) => CropProfileBgImageScreen(file: state.extra as File)
+              ),
+            ]
           ),
 
           GoRoute(

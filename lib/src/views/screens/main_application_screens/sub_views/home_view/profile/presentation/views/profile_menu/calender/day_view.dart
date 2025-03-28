@@ -7,8 +7,8 @@ import 'package:amptive/src/utils/constants/colors.dart';
 import 'package:amptive/src/utils/constants/font_sizes.dart';
 import 'package:amptive/src/utils/constants/strings/other_strings.dart';
 import 'package:amptive/src/utils/helpers/helper_functions/helper_functions.dart';
-import 'package:amptive/src/views/screens/main_application_screens/sub_views/home_view/home_sub_view/profile/menu/calender/month_view.dart';
-import 'package:amptive/src/views/screens/main_application_screens/sub_views/home_view/home_sub_view/profile/menu/calender/scheduled.dart';
+import 'package:amptive/src/views/screens/main_application_screens/sub_views/home_view/profile/presentation/views/profile_menu/calender/month_view.dart';
+import 'package:amptive/src/views/screens/main_application_screens/sub_views/home_view/profile/presentation/views/profile_menu/calender/scheduled.dart';
 import 'package:amptive/src/views/widgets/common_widgets/annotated_region__widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/custom_container_widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/elevated_button_widget.dart';
@@ -19,7 +19,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
-import '../../../../../../../../widgets/common_widgets/overlapping_images.dart';
+import '../../../../../../../../../widgets/common_widgets/overlapping_images.dart';
 
 
 

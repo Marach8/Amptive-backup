@@ -60,4 +60,6 @@ class ATRoutes {
   static const SELECT_COUNTRY_SCREEN = 'select_country_screen';
   static const ACCT_INFO_SCREEN = 'account_infomation_screen';
   static const ACCT_SCREEN = 'account_screen';
+  static const EDIT_PROFILE = 'edit_profile';
+  static const PROFILE_BG_CROP = 'profile_bg_crop';
 }

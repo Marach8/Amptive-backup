@@ -1,3 +1,4 @@
+import 'package:amptive/src/utils/helpers/helper_functions/helper_functions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../utils/constants/colors.dart';
@@ -9,11 +10,11 @@ class ATDivider extends StatelessWidget {
   });
 
   @override
-  Widget build(BuildContext context) {
-    return ATContainer(
-      color: ATColors.dimWhiteColor1,
-      height: 0.1.h,
-      width: double.infinity,
+  Widget build(context) {
+    return Container(
+      color: ATColors.white.withValues(alpha: 0.1),
+      height: 0.5,
+      width: ATHelperFuncs.getScreenWidth(context),
       child: const SizedBox.shrink(),
     );
   }

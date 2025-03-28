@@ -11,6 +11,7 @@ import 'package:amptive/src/services/authentication_service.dart';
 import 'package:amptive/src/services/create_show/create_show_service.dart';
 import 'package:amptive/src/services/go_live_service/go_live_service.dart' hide getHostList;
 import 'package:amptive/src/services/preference_service.dart';
+import 'package:amptive/src/views/screens/main_application_screens/sub_views/home_view/profile/bloc/profile_bloc_export.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 import 'package:provider/single_child_widget.dart';
@@ -67,5 +68,7 @@ List<SingleChildWidget> providers() {
     BlocProvider(create: (_) => CalenderMonthViewBloc()),
     BlocProvider(create: (_) => DayViewHeadingBloc()),
     BlocProvider(create: (_) => HoursInADayBloc()),
+    BlocProvider(create: (_) => ProfileTabViewBloc()),
+    BlocProvider(create: (_) => ImagePickerBloc()),
   ];
 }

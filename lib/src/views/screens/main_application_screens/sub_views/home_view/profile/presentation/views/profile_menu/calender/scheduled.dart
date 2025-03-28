@@ -1,15 +1,15 @@
 import 'package:amptive/src/bloc/main_app/profile/profile_menu/calender/calender_programs_bloc.dart';
 import 'package:amptive/src/services/go_live_service/go_live_service.dart';
 import 'package:amptive/src/utils/constants/colors.dart';
-import 'package:amptive/src/views/screens/main_application_screens/sub_views/home_view/home_sub_view/profile/menu/calender/day_view.dart';
+import 'package:amptive/src/views/screens/main_application_screens/sub_views/home_view/profile/presentation/views/profile_menu/calender/day_view.dart';
 import 'package:amptive/src/views/widgets/common_widgets/overlapping_images.dart';
 import 'package:amptive/src/views/widgets/common_widgets/show_event_nd_paid_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:sticky_headers/sticky_headers.dart';
 import 'dart:developer' as marach show log;
-import '../../../../../../../../../models/host.dart';
-import '../../../../../../../../widgets/common_widgets/custom_container_widget.dart';
+import '../../../../../../../../../../models/host.dart';
+import '../../../../../../../../../widgets/common_widgets/custom_container_widget.dart';
 
 class ScheduledEventsView extends StatelessWidget {
   const ScheduledEventsView({super.key});

@@ -88,7 +88,7 @@ class _CropPageState extends State<CropPage> {
               ElevatedButton(
                 onPressed: () async {
                   final image = await controller.onCropImage();
-                  if (image != null && mounted) {
+                  if (image != null && context.mounted) {
                     // Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext context) => ResultScreen(image: image)));
                     context.pop(image);
                   }

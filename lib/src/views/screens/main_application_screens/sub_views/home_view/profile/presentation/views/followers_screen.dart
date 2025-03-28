@@ -9,11 +9,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../../../../../../bloc/main_app/profile/profile_followers_bloc.dart';
-import '../../../../../../../models/host.dart';
-import '../../../../../../../utils/constants/strings/other_strings.dart';
-import '../../../../../../widgets/common_widgets/app_bar_widget.dart';
-import '../../../../../../widgets/common_widgets/custom_container_widget.dart';
+import '../../../../../../../../bloc/main_app/profile/profile_followers_bloc.dart';
+import '../../../../../../../../models/host.dart';
+import '../../../../../../../../utils/constants/strings/other_strings.dart';
+import '../../../../../../../widgets/common_widgets/app_bar_widget.dart';
+import '../../../../../../../widgets/common_widgets/custom_container_widget.dart';
 
 class ATProfileFollowersScreen extends StatelessWidget {
   const ATProfileFollowersScreen({super.key});
