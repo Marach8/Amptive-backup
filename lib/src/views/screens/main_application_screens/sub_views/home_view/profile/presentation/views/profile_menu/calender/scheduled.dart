@@ -7,7 +7,6 @@ import 'package:amptive/src/views/widgets/common_widgets/show_event_nd_paid_icon
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:sticky_headers/sticky_headers.dart';
-import 'dart:developer' as marach show log;
 import '../../../../../../../../../../models/host.dart';
 import '../../../../../../../../../widgets/common_widgets/custom_container_widget.dart';
 
@@ -183,7 +182,6 @@ final _map = <DateTime, List<CalenderProgram>>{
 class _CalenderProgramDisplay extends StatelessWidget {
   final CalenderProgram program;
   const _CalenderProgramDisplay({
-    super.key,
     required this.program
   });
 

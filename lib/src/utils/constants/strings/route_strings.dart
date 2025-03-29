@@ -62,4 +62,11 @@ class ATRoutes {
   static const ACCT_SCREEN = 'account_screen';
   static const EDIT_PROFILE = 'edit_profile';
   static const PROFILE_BG_CROP = 'profile_bg_crop';
+  static const EDIT_NAME = 'edit_name';
+  static const EDIT_USERNAME = 'edit_username';
+  static const EDIT_BIO = 'edit_bio';
+  static const EDIT_SOCIALS = 'edit_socials';
+  static const SWITCH_ACCT = 'switch_account';
+  static const CREATOR_LANDING = 'creator_landing';
+  static const SELECT_CAT = 'select_category';
 }

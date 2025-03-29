@@ -11,6 +11,7 @@ class ATStrings{
   static const underscore = '_';
   static const plus  = '+';
   static const HASH = '#';
+  static const AT_SIGN = '@';
 
 
   static const goLiveLikeNeverBefore = "Go Live, Like Never Before";
@@ -34,7 +35,7 @@ class ATStrings{
   static const signIn = 'Sign in';
   static const attendAsGuest = 'Attend as guest';
   static const skip = 'Skip';
-  static const back = 'Back';
+  static const BACK = 'Back';
   static const CONTINUE = 'Continue';
   static const SEND_INVITE = 'Send invite';
   static const SET_FEE = 'Set fee';
@@ -47,6 +48,7 @@ class ATStrings{
   static const facebook = 'Facebook';
   static const twitter = 'X(Twitter)';
   static const google = 'Google';
+  static const PROCEED = 'Proceed';
   static const ADDING_EMAIL = 'Adding Email Address...';
   static const CHANGING_EMAIL = 'Updating Email Address...';
   static const CHANGING_PHONE = 'Updating Phone Number...';
@@ -58,6 +60,7 @@ class ATStrings{
   static const WANT_2_CHANGE_EMAIL = 'Do you want to update your email address?';
   static const WANT_2_CHANGE_FONE = 'Do you want to update your phone number?';
   static const CHANGE = 'Change';
+  static const ACCEPT_CHANGES = 'Accept Changes';
   static const NO_WILL_BE_VERIFIED = 'This phone number will be verified in the next step.';
 
   static const UR_EMAIL = 'What is your email?';
@@ -66,9 +69,11 @@ class ATStrings{
   static const verifyEmail = 'Verify email';
   static const UNBLOCK_DESC = 'will be able to follow, subscribe and see your app activities';
   static String unMuteDesc(String text) => "You will be able to see $text's app activities";
+  static String enterLink(String link) => "Enter your $link link";
   static const IS_UNBLOCKED = 'is now unblocked';
   static const IS_UNMUTED = 'is now unmuted';
   static const COUNTRY = 'Country';
+  static const PROFILE = 'Profile';
   static const SELECT_COUNTRY = 'Select Country';
 
   static const youEnteredInvalidCode = 'You entered an invalid code. ';
@@ -77,6 +82,7 @@ class ATStrings{
   static const sendAgain = 'Send again';
   static const SEND = 'Send';
   static const SEND_GIFT = 'Send gift';
+  static const THIS_WILL_APPEAR_ON_PROFILE = 'Note that this will appear on your profile';
 
   static const createPasswordForAccount = 'Create a password for your account';
   static const enterYourPassword = 'Enter your password';
@@ -95,8 +101,8 @@ class ATStrings{
   static const CREATE_SCHEDULE = 'Create a Schedule';
   static const warningOnClickingCreate = 'By clicking on ‘Create account’, you agree to the';
 
-  static const checkerIsLoading = "Checker is loading...";
-  static const usernameIsAvailable ="Username is available";
+  static const CHECKER_LOADING = "Checker is loading...";
+  static const USERNAME_AVAILABLE ="Username is available";
   static const whatShouldWeCallYou ="What should we call you?";
   static const ROLE = 'message notifier';
   static const ALLOWED_AUD_MIC = "You allowed audience microphone";
@@ -133,6 +139,7 @@ class ATStrings{
   static const GO_LIVE = 'Go live';
   static const PAID_SHOW = '\$paid show';
   static const INSTAGRAM = 'Instagram';
+  static const X = 'X';
   static const LINKEDIN = 'LinkedIn';
   static const WEBSITE = 'Website';
   static const PAID_SHOWS = 'Paid Shows';
@@ -178,6 +185,7 @@ class ATStrings{
   static const removedFromCalender = 'Removed from your calender';
   static const VIEW = 'View';
   static const GIFTS = 'Gifts';
+  static const ADD_LINK = 'Add Link';
 
   static const SEARCH_FOR_EVENTS_ND_SHOWS = 'Search for events, shows and more';
   static const CANCEL = 'Cancel';
@@ -203,8 +211,14 @@ class ATStrings{
   static const USERNAME = 'Username';
   static const NAME = 'Name';
   static const BIO = 'Bio';
+  static const SELECT_ACCT_TYPE = 'Select your choice account type to proceed.';
+  static const CREATOR_ACCT = 'Creator Account';
+  static const BIZ_ACCT = 'Business Account';
+  static const CREATOR_ACCT_DESC = 'Best for podcasters, artists, influencers, public figures etc.';
+  static const BIZ_ACCT_DESC = 'Best for brands, organizations, service providers, local businesses etc.';
+  static String setUpAcct(String acct) => "Set up $acct";
   static const LINKS = 'Links';
-  static const SWITCH_ACCT = 'Switch account type';
+  static const SWITCH_ACCT = 'Switch Account Type';
   static const PSWRD_ND_SECURITY = 'Password and Security';
   static const APP_SETTINGS = 'App Settings';
   static const SETTINGS = 'Settings';

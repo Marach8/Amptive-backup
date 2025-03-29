@@ -52,7 +52,7 @@ class _AmptivePreferenceScreenState extends State<AmptivePreferenceScreen> {
             backgroundColor: ATColors.brandBlack,
             appBar: state is SelectPreferenceCompletedState
                 ? null
-                : const AmptiveAppBar(),
+                : const ATAppBar(),
             body: state is InitialState
                 ? const Center(
                     child: ATLoadingIndicator(),

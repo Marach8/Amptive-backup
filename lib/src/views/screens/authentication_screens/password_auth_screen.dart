@@ -39,7 +39,7 @@ class _PasswordAuthScreenState extends State<PasswordAuthScreen> {
   Widget build(BuildContext context) {
     return ATAnnotatedRegion(
       child: Scaffold(
-        appBar: const AmptiveAppBar(),
+        appBar: const ATAppBar(),
         body: Padding(
           padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 20.h),
           child: Form(
@@ -62,7 +62,7 @@ class _PasswordAuthScreenState extends State<PasswordAuthScreen> {
                         // toggle password visibility
                         _passwordVisible = !_passwordVisible;
                       }
-                      return ATTextFormFieldWidget(
+                      return ATTextFormField(
                         controller: passwordController,
                         onChanged: (value) {
                           // trigger password changed event

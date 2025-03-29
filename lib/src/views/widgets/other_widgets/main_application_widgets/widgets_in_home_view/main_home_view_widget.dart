@@ -53,7 +53,7 @@ class AmptiveHomeViewWidget extends StatelessWidget {
                     ),
                     Positioned(
                       top: 5, right: 0,
-                      child: AmptiveCircleAvatarWidget(diameter: 8, color: ATColors.hexECO404)
+                      child: ATCircleAvatar(diameter: 8, color: ATColors.hexECO404)
                     )
                   ],
                 )

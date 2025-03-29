@@ -21,7 +21,7 @@ class AmptiveProfileSubScribersScreen extends StatelessWidget {
   Widget build(context) {
     return ATAnnotatedRegion(
       child: Scaffold(
-        appBar: AmptiveAppBar(
+        appBar: ATAppBar(
           leading: GestureDetector(
             onTap: () => context.pop(),
             child: const Padding(
@@ -41,7 +41,7 @@ class AmptiveProfileSubScribersScreen extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              ATTextFormFieldWidget(
+              ATTextFormField(
                 controller: TextEditingController(),
                 disableBlueBorder: true,
                 hintText: ATStrings.SEARCH_4_SUBSCRIBERS,

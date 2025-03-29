@@ -1,14 +1,10 @@
 import 'package:amptive/src/utils/constants/colors.dart';
-import 'package:amptive/src/utils/constants/font_sizes.dart';
 import 'package:amptive/src/utils/constants/strings/other_strings.dart';
-import 'package:amptive/src/views/widgets/common_widgets/circle_avatar.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:iconsax/iconsax.dart';
 
-import '../../../../../../../../utils/constants/font_weights.dart';
 import '../../../../../../../../utils/constants/strings/image_strings.dart';
-import '../../../../../../../widgets/common_widgets/custom_container_widget.dart' show ATContainer;
 import '../../../../../../../widgets/common_widgets/image_loader_widget.dart' show ATImgLoader;
 
 class RowOfSocials extends StatelessWidget {

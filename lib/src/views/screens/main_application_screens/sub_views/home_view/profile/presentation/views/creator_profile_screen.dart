@@ -1,27 +1,17 @@
 import 'package:amptive/src/utils/constants/colors.dart';
 import 'package:amptive/src/utils/constants/font_sizes.dart';
-import 'package:amptive/src/utils/constants/font_weights.dart';
-import 'package:amptive/src/utils/constants/strings/image_strings.dart';
 import 'package:amptive/src/utils/constants/strings/other_strings.dart';
 import 'package:amptive/src/utils/constants/strings/route_strings.dart';
-import 'package:amptive/src/utils/dialogs/profile/show_top_creator_societies.dart';
-import 'package:amptive/src/utils/helpers/helper_functions/helper_functions.dart';
 import 'package:amptive/src/views/widgets/common_widgets/annotated_region__widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/circle_avatar.dart';
-import 'package:amptive/src/views/widgets/common_widgets/circular_image.dart';
-import 'package:amptive/src/views/widgets/common_widgets/custom_container_widget.dart';
-import 'package:amptive/src/views/widgets/common_widgets/custom_rebuilder_widget.dart';
-import 'package:amptive/src/views/widgets/common_widgets/image_loader_widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/sliver_header_delegate.dart';
 import 'package:amptive/src/views/widgets/common_widgets/two_texts_rich_text_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:gap/gap.dart';
 import 'package:go_router/go_router.dart';
 import 'package:iconsax/iconsax.dart';
 
-import '../../../../../../../../utils/dialogs/go_live/follow_or_subscribe_dialog.dart';
 import '../../bloc/profile_bloc_export.dart';
 import '../widgets/profile_widgets_export.dart';
 
@@ -41,7 +31,7 @@ class AmptiveCreatorProfileScreen extends StatelessWidget {
               automaticallyImplyLeading: false,
               actions: [
                 const Gap(15),
-                AmptiveCircleAvatarWidget(
+                ATCircleAvatar(
                   onTap: () => context.pop(),
                   diameter: 30, color: ATColors.black.withOpacity(0.7),
                   child: const Icon(Icons.keyboard_arrow_left),
@@ -49,7 +39,7 @@ class AmptiveCreatorProfileScreen extends StatelessWidget {
                 const Spacer(),
                 Stack(
                   children: [
-                    AmptiveCircleAvatarWidget(
+                    ATCircleAvatar(
                       onTap: () => context.pushNamed(ATRoutes.COMMUNITY_TASK_SCREEN),
                       //onTap: () => context.pushNamed(AmptiveRoutes.USER_PROFILE_SCREEN),
                       diameter: 30, color: ATColors.black.withOpacity(0.7),
@@ -57,12 +47,12 @@ class AmptiveCreatorProfileScreen extends StatelessWidget {
                     ),
                     Positioned(
                       right: 1, top: 1,
-                      child: AmptiveCircleAvatarWidget(diameter: 8, color: ATColors.hexECO404,),
+                      child: ATCircleAvatar(diameter: 8, color: ATColors.hexECO404,),
                     )
                   ],
                 ),
                 const Gap(15),
-                AmptiveCircleAvatarWidget(
+                ATCircleAvatar(
                   onTap: () => context.pushNamed(ATRoutes.PROFILE_MENU_SCREEN),
                   diameter: 30, color: ATColors.black.withOpacity(0.7),
                   child: const Icon(Icons.menu, size: 20),

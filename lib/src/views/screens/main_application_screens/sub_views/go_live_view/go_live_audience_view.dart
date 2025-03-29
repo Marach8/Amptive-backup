@@ -369,7 +369,7 @@ class _GoLiveAudienViewControlsWidgetState extends State<GoLiveAudienViewControl
               return Flexible(
                 child: Padding(
                   padding: EdgeInsets.only(right: 5.w),
-                  child: ATTextFormFieldWidget(
+                  child: ATTextFormField(
                     controller: _cntrl,
                     focusNode: _focusNode,
                     disableBlueBorder: true,

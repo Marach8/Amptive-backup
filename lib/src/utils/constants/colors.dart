@@ -41,7 +41,7 @@ class ATColors {
 
   static Color get green1 => const Color(0xFF009C51);
 
-  static Color get green2 => const Color(0xFF009C80);
+  static Color get hex009C80 => const Color(0xFF009C80);
 
   static Color get activeSwitch => const Color(0xFF0BE09B);
 

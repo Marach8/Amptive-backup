@@ -14,7 +14,6 @@ import 'package:country_pickers/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'dart:math' as math;
 
 import '../../../bloc/authentication/general/auth_bloc.dart';
 import '../../../bloc/authentication/general/auth_events.dart';
@@ -43,7 +42,7 @@ class _AddPhoneScreenState extends State<AddPhoneScreen> {
   Widget build(BuildContext context) {
     return ATAnnotatedRegion(
       child: Scaffold(
-        appBar: AmptiveAppBar(
+        appBar: ATAppBar(
           title: Text(
             widget.title ?? '',
             style: Theme.of(context).textTheme.bodyMedium,
@@ -111,7 +110,7 @@ class _AddPhoneScreenState extends State<AddPhoneScreen> {
                     ),
                     const SizedBox(width: 10),
                     Expanded(
-                      child: ATTextFormFieldWidget(
+                      child: ATTextFormField(
                         controller: _phoneController,
                         keyboardType: TextInputType.number,
                         cursorColor: ATColors.hex307FE2,

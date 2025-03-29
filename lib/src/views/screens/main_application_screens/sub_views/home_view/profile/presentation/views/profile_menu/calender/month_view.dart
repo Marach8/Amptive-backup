@@ -37,7 +37,7 @@ class _CalenderMonthViewState extends State<CalenderMonthView> {
 
   @override
   void dispose() {
-    _scrollController.dispose();;
+    _scrollController.dispose();
     super.dispose();
   }
 

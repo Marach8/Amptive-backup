@@ -31,7 +31,7 @@ class AmptiveGoLiveNotificationsWidget extends StatelessWidget {
       ) :  isGifting ? LinearGradient(
         colors: [
           ATColors.green1.withOpacity(1),
-          ATColors.green2.withOpacity(0)
+          ATColors.hex009C80.withOpacity(0)
         ]
       ) : null,
       child: Row(

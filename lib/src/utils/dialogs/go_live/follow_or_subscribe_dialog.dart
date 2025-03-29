@@ -266,7 +266,7 @@ Future<void> showFollowHostOrCohostDialog({
                                       ),
                                     ),
                                     const Gap(2),
-                                    AmptiveCircleAvatarWidget(
+                                    ATCircleAvatar(
                                       diameter: 4,
                                       color: ATColors.brandBlack,
                                     ),

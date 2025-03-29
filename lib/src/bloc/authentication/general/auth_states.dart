@@ -20,9 +20,9 @@ class EditDOBAuthState extends AmptiveAuthState {
 
 class HideOrShowPasswordAuthState extends AmptiveAuthState {}
 
-class UsernameLoadingAuthState extends AmptiveAuthState {}
+class VerifyingUsernameState extends AmptiveAuthState {}
 
-class UsernameValidatedAuthState extends AmptiveAuthState {}
+class UsernameVerifiedState extends AmptiveAuthState {}
 
 class NameChangedState extends AmptiveAuthState {}
 

@@ -51,7 +51,7 @@ class _AmptiveShowScheduledScreenState
   Widget build(context) {
     return ATAnnotatedRegion(
       child: Scaffold(
-        appBar: AmptiveAppBar(
+        appBar: ATAppBar(
           leading: GestureDetector(
               onTap: () {
                 context.pop();
@@ -69,7 +69,7 @@ class _AmptiveShowScheduledScreenState
             physics: const BouncingScrollPhysics(),
             child: Column(
               children: [
-                AmptiveCircleAvatarWidget(
+                ATCircleAvatar(
                   diameter: 45,
                   color: ATColors.white,
                   child: Icon(

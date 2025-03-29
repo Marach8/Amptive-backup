@@ -114,7 +114,7 @@ final showSuffixIconNotifier = ValueNotifier(false);
                         const Gap(20),
           
                         // search SEARCH
-                        ATTextFormFieldWidget(
+                        ATTextFormField(
                           controller: controller,
                           focusNode: focusNode,
                           disableBlueBorder: true,

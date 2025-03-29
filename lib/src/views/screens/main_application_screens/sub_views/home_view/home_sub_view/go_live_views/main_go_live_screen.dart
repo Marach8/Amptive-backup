@@ -37,7 +37,7 @@ class _AmptiveGoLiveScreenState extends State<AmptiveGoLiveScreen> {
   Widget build(BuildContext context) {
     return ATAnnotatedRegion(
       child: Scaffold(
-        appBar: AmptiveAppBar(
+        appBar: ATAppBar(
           leading: GestureDetector(
             onTap: (){context.pop();},
             child: const Icon(Icons.close, size: 20,)

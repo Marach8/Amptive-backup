@@ -13,7 +13,7 @@ class AmptiveCommunityTaskScreen extends StatelessWidget {
   Widget build(context) {
     return ATAnnotatedRegion(
       child: Scaffold(
-        appBar: AmptiveAppBar(
+        appBar: ATAppBar(
           padding: EdgeInsets.zero,
           leading: const Icon(Icons.keyboard_arrow_left),
 

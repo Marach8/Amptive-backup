@@ -35,7 +35,7 @@ class ProfileEventOrShowDisplay extends StatelessWidget {
                 //Row 1
                 Row(
                   children: [
-                    AmptiveCircleAvatarWidget(
+                    ATCircleAvatar(
                       diameter: 15,
                       color: ATColors.hexF91880,
                       child: const FittedBox(child: Text('S')),
@@ -85,7 +85,7 @@ class ProfileEventOrShowDisplay extends StatelessWidget {
                         color: ATColors.hexC2C2C2
                       ),
                     ),
-                    AmptiveCircleAvatarWidget(
+                    ATCircleAvatar(
                       diameter: 3,
                       color: ATColors.hexC2C2C2,
                     ),

@@ -16,7 +16,7 @@ class AmptiveViewProfilePicScreen extends StatelessWidget {
   Widget build(context) {
     return ATAnnotatedRegion(
       child: Scaffold(
-        appBar: AmptiveAppBar(
+        appBar: ATAppBar(
           leading: GestureDetector(
             onTap: () => context.pop(),
             child: const Icon(Icons.close),

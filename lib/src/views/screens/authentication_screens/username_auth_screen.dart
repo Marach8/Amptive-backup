@@ -44,14 +44,14 @@ class _UserNameAuthScreenState extends State<UserNameAuthScreen> {
     return ATAnnotatedRegion(
       child: Scaffold(
         backgroundColor: ATColors.brandBlack,
-        appBar: const AmptiveAppBar(),
+        appBar: const ATAppBar(),
         body: Padding(
           padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 20.h),
           child: BlocListener<AmptiveAuthBloc, AmptiveAuthState>(
             listener: (context, state) {
-              if (state is UsernameLoadingAuthState) {
+              if (state is VerifyingUsernameState) {
                 _isLoading = true;
-              } else if (state is UsernameValidatedAuthState) {
+              } else if (state is UsernameVerifiedState) {
                 _isLoading = false;
               }
             },
@@ -73,7 +73,7 @@ class _UserNameAuthScreenState extends State<UserNameAuthScreen> {
                       buildWhen: (p, current) {
                     return true;
                   }, builder: (_, state) {
-                    return ATTextFormFieldWidget(
+                    return ATTextFormField(
                       controller: usernameController,
                       onChanged: (val) {
                         context
@@ -159,7 +159,7 @@ class _UserNameAuthScreenState extends State<UserNameAuthScreen> {
                       height: 20.h,
                       margin: EdgeInsets.symmetric(vertical: 11.h),
                       child: Text(
-                        ATStrings.checkerIsLoading,
+                        ATStrings.CHECKER_LOADING,
                         style: Theme.of(context).textTheme.titleSmall?.copyWith(
                               fontWeight: ATFontWeights.w500,
                             ),
@@ -171,7 +171,7 @@ class _UserNameAuthScreenState extends State<UserNameAuthScreen> {
                     child: Container(
                       margin: EdgeInsets.symmetric(vertical: 11.h),
                       child: Text(
-                        ATStrings.usernameIsAvailable,
+                        ATStrings.USERNAME_AVAILABLE,
                         style: Theme.of(context).textTheme.titleSmall?.copyWith(
                               color: ATColors.successColor,
                             ),

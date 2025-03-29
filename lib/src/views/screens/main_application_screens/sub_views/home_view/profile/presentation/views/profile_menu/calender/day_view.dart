@@ -18,7 +18,6 @@ import 'package:amptive/src/views/widgets/common_widgets/show_event_nd_paid_icon
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:intl/intl.dart';
 import '../../../../../../../../../widgets/common_widgets/overlapping_images.dart';
 
 

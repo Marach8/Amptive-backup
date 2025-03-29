@@ -22,7 +22,7 @@ class ATAccountScreen extends StatelessWidget {
               padding: const EdgeInsets.fromLTRB(7, kToolbarHeight, 15, 15),
               child: Row(
                 children: [
-                  AmptiveCircleAvatarWidget(
+                  ATCircleAvatar(
                     onTap: () => context.pop(),
                     diameter: 30, color: ATColors.trsprnt,
                     child: const Icon(Icons.keyboard_arrow_left),

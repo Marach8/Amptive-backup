@@ -8,7 +8,7 @@ import '../../../../../utils/constants/font_sizes.dart';
 import '../../../../../utils/constants/font_weights.dart';
 import '../../../common_widgets/textformfield_widget.dart';
 
-class CreateShowTextFormField extends ATTextFormFieldWidget {
+class CreateShowTextFormField extends ATTextFormField {
   const CreateShowTextFormField(
       {super.key,
         required super.controller,

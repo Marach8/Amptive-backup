@@ -1,9 +1,10 @@
 export 'program_display.dart';
-export '../views/creator_profile_pix.dart';
+export 'creator_profile_pix.dart';
 export 'creator_badge.dart';
 export 'no_of_followers.dart';
 export 'row_of_socials.dart';
 export 'no_of_subscribers.dart';
-export 'row_of_edit_profile_and_sub.dart';
+export 'edit_profile_and_sub.dart';
 export 'profile_screen_tabs.dart';
 export 'user_profile_bg_display.dart';
+export 'edit_profile_bg_pic.dart';

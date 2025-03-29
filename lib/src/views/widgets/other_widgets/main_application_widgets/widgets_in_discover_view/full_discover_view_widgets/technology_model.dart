@@ -58,7 +58,7 @@ class AmptiveTechnologyModel extends StatelessWidget {
                 ),
               ),
               const Gap(5),
-              AmptiveCircleAvatarWidget(
+              ATCircleAvatar(
                 diameter: 3,
                 color: ATColors.authHintColor2
               ),

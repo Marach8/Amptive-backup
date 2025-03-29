@@ -23,9 +23,9 @@ class AmptiveAuthBloc extends Bloc<AmptiveAuthEvent, AmptiveAuthState> {
     });
 
     on<UsernameChangedEvent>((event, emit) async {
-      emit(UsernameLoadingAuthState());
+      emit(VerifyingUsernameState());
       await service.validateUsername(event.username);
-      emit(UsernameValidatedAuthState());
+      emit(UsernameVerifiedState());
     },
         transformer: (events, mapper) =>
             events.debounceTime(Durations.extralong4).switchMap(mapper));
