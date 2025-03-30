@@ -23,7 +23,7 @@ class AmptiveRowOfTrendingHashTagTitle extends StatelessWidget {
         Text(
           ATStrings.HASH,
           style: Theme.of(context).textTheme.displayMedium?.copyWith(
-            color: ATColors.authHintColor2
+            color: ATColors.hexCDCDCD
           )
         ),
         Gap(10.h),

@@ -127,7 +127,7 @@ class _AddPictureWidgetState extends State<AddPictureWidget> {
             ATStrings.useYOurFavImage,
             textAlign: TextAlign.start,
             style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                  color: ATColors.authHintColor2,
+                  color: ATColors.hexCDCDCD,
                 ),
           ),
           BlocBuilder<AmptiveAuthBloc, AmptiveAuthState>(

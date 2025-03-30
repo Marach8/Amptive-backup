@@ -48,6 +48,9 @@ class ATStrings{
   static const facebook = 'Facebook';
   static const twitter = 'X(Twitter)';
   static const google = 'Google';
+  static const SELECT_CAT = 'Select your category';
+  static const CAT_WONT_BE_SHOWN = 'Selected category will not be shown on your public profile and can be changed anytime.';
+  static const SEARCH_CAT = 'Search for a category';
   static const PROCEED = 'Proceed';
   static const ADDING_EMAIL = 'Adding Email Address...';
   static const CHANGING_EMAIL = 'Updating Email Address...';
@@ -323,6 +326,7 @@ class ATStrings{
   static const ACCESS_2_ONLY_SUBSCRIBERS = 'Only your subscribers will have access';
   static const EDIT_SUB_PLAN = 'Edit subscription plan';
   static const SETUP_PAYMENT_FEE = 'Set up payment fee';
+  static const SETUP_SUB_PLAN = 'Set up subscription plan';
   static const SHOW_IS_SETUP = 'Your Show is setup and airing!';
   static const BEGIN_JOURNEY = 'Begin your journey by creating your first episode';
   static const CREATE_1ST_EPISODE = 'Create first epidode';
@@ -337,6 +341,16 @@ class ATStrings{
   static const HOST = 'Host';
   static const UNBLOCK = 'Unblock';
   static const UNMUTE = 'Unmute';
+  static const AMPTIVE_4_CREATORS = 'Amptive for Creators';
+  static const U_OWN_STAGE = 'You own the stage.';
+  static const CREATE_LIVE_SHOWS_ND_EVENTS = 'Create Live Audio Shows & Events';
+  static const HOST_CAPTIVATING_PROGRAMS = 'Host captivating live shows and events';
+  static const RECEIVE_GIFTS_4RM_AUDIENCE = 'Receive Gifts from Your Audience';
+  static const GET_SUPPORT_4RM_FANS = 'Get support from fans with live gifting during shows and events';
+  static const EARN_BY_COMPLETING_TASKS = 'Earn by Completing Community Tasks';
+  static const TAKE_TASK_ND_GET_REWARDS = 'Take on engaging community tasks and get rewarded';
+  static const ENABLE_SUB_4_UR_SHOW = 'Enable Subscriptions for Your Shows';
+  static const OFFER_XCLUSIVE_CONTENT = 'Offer exclusive live content and get paid monthly by your subscribers';
 
   static const ACCT_INFO = 'Account Information';
   static const SET_UP_ACCT_DETAILS = 'Setup your account details like your email address, phone number and country.';

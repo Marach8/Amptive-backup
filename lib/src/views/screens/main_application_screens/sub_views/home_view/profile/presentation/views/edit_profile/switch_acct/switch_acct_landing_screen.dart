@@ -11,7 +11,10 @@ import 'package:amptive/src/views/widgets/common_widgets/divider_widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/elevated_button_widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/image_loader_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+
+import '../../../../bloc/profile_bloc_export.dart';
 
 class SwitchAccountScreen extends StatelessWidget {
   const SwitchAccountScreen({super.key});
@@ -71,7 +74,10 @@ class SwitchAccountScreen extends StatelessWidget {
               padding: const EdgeInsets.fromLTRB(15, 5, 15, 10),
               child: ATPlainElevatedBtn(
                 onPressed: index == null ? null 
-                  : () => context.pushNamed(ATRoutes.CREATOR_LANDING),
+                  : (){
+                    context.read<CreatorAnimationBloc>().reset();
+                    context.pushNamed(ATRoutes.CREATOR_LANDING);
+                  },
                 btnTitle: ATStrings.PROCEED,
               ),
             ),

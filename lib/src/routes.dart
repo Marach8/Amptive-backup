@@ -277,6 +277,11 @@ final GoRouter amptiveAppRouter = GoRouter(
                 path: ATRoutes.CREATOR_LANDING,
                 builder: (_, state) => const CreatorLandingScreen()
               ),
+              GoRoute(
+                name: ATRoutes.SELECT_CAT,
+                path: ATRoutes.SELECT_CAT,
+                builder: (_, state) => const SelectCategoryScreen()
+              ),
             ]
           ),
 

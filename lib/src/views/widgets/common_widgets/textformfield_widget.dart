@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 
 
 class ATTextFormField extends StatelessWidget {
-  final TextEditingController controller;
+  final TextEditingController? controller;
   final void Function(String)? onChanged;
   final void Function(String?)? onSaved;
   final String? Function(String?)? validator;
@@ -34,7 +34,7 @@ class ATTextFormField extends StatelessWidget {
 
   const ATTextFormField({
     super.key,
-    required this.controller,
+    this.controller,
     this.validator,
     this.onChanged,
     this.keyboardType,

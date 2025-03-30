@@ -1,0 +1,26 @@
+import 'package:amptive/src/utils/constants/colors.dart';
+import 'package:amptive/src/views/widgets/common_widgets/custom_container_widget.dart';
+import 'package:flutter/material.dart';
+
+class ATRadioButton extends StatelessWidget {
+  const ATRadioButton({
+    super.key,
+    required this.isSelected,
+  });
+
+  final bool isSelected;
+
+  @override
+  Widget build(context) {
+    return ATContainer(
+      height: 15, width: 15, boxShape: BoxShape.circle,
+      padding: const EdgeInsets.all(5),
+      color: isSelected ? ATColors.hex307FE2 : ATColors.trsprnt,
+      border: Border.all(
+        color: isSelected ? ATColors.hex307FE2 : ATColors.white,
+        strokeAlign: 5.0
+      ),
+      child: const SizedBox.shrink()
+    );
+  }
+}

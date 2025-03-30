@@ -31,6 +31,7 @@ class EditProfileScreen extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const EditProfileBgImage(),
+            const SizedBox(height: 20),
             Expanded(
               child: SingleChildScrollView(
                 physics: const BouncingScrollPhysics(),

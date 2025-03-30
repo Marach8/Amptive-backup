@@ -53,3 +53,25 @@ class ATRoundedBackBtn extends StatelessWidget {
     );
   }
 }
+
+
+
+class ATXBackBtn extends StatelessWidget {
+  const ATXBackBtn({super.key});
+
+  @override
+  Widget build(context) {
+    return Align(
+      alignment: Alignment.center,
+      child: InkWell(
+        onTap: () => context.pop(),
+        splashColor: ATColors.hex303030,
+        borderRadius: BorderRadius.circular(30),
+        child: const SizedBox(
+          height: 30, width: 30,
+          child: Icon(Icons.close),
+        ),
+      ),
+    );
+  }
+}

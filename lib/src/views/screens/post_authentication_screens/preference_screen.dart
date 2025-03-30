@@ -81,7 +81,7 @@ class _AmptivePreferenceScreenState extends State<AmptivePreferenceScreen> {
                                     .textTheme
                                     .titleMedium
                                     ?.copyWith(
-                                        color: ATColors.authHintColor2),
+                                        color: ATColors.hexCDCDCD),
                               ),
                             ),
                             Expanded(

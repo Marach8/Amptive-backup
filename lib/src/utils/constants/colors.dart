@@ -33,7 +33,7 @@ class ATColors {
 
   static Color get authHintColor => const Color(0xFFB6B6B6);
 
-  static Color get authHintColor2 => const Color(0xFFCDCDCD);
+  static Color get hexCDCDCD => const Color(0xFFCDCDCD);
 
   static Color get hexD9D9D9 => const Color(0xFFD9D9D9);
 
