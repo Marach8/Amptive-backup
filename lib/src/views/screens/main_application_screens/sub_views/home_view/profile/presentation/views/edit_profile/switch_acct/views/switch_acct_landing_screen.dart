@@ -14,7 +14,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../../../bloc/profile_bloc_export.dart';
+import '../../../../../bloc/profile_bloc_export.dart';
 
 class SwitchAccountScreen extends StatelessWidget {
   const SwitchAccountScreen({super.key});
@@ -75,7 +75,7 @@ class SwitchAccountScreen extends StatelessWidget {
               child: ATPlainElevatedBtn(
                 onPressed: index == null ? null 
                   : (){
-                    context.read<CreatorAnimationBloc>().reset();
+                    context.read<CreatorLandingAnimationBloc>().reset();
                     context.pushNamed(ATRoutes.CREATOR_LANDING);
                   },
                 btnTitle: ATStrings.PROCEED,

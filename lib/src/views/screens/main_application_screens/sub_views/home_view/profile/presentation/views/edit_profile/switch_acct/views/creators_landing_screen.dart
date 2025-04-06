@@ -12,7 +12,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../../../bloc/profile_bloc_export.dart';
+import '../../../../../bloc/profile_bloc_export.dart';
 
 class CreatorLandingScreen extends StatelessWidget {
   const CreatorLandingScreen({super.key});
@@ -29,7 +29,7 @@ class CreatorLandingScreen extends StatelessWidget {
     WidgetsBinding.instance.addPostFrameCallback(
       (_) => Future.delayed(
         const Duration(milliseconds: 500),
-        () => context.mounted ? context.read<CreatorAnimationBloc>().triggerNext(0) : {}
+        () => context.mounted ? context.read<CreatorLandingAnimationBloc>().triggerNext(0) : {}
       )
     );
     return ATAnnotatedRegion(
@@ -86,7 +86,7 @@ class CreatorLandingScreen extends StatelessWidget {
       
         bottomSheet: Padding(
           padding: const EdgeInsets.fromLTRB(15, 5, 15, 10),
-          child: BlocSelector<CreatorAnimationBloc, List<bool>, bool>(
+          child: BlocSelector<CreatorLandingAnimationBloc, List<bool>, bool>(
             selector: (state) => state.last,
             builder: (_, isVisible) {
               return ATPlainElevatedBtn(
@@ -113,13 +113,13 @@ class _CustomWidget extends StatelessWidget {
 
   @override
   Widget build(context) {
-    return BlocSelector<CreatorAnimationBloc, List<bool>, bool>(
+    return BlocSelector<CreatorLandingAnimationBloc, List<bool>, bool>(
       selector: (state) => state.elementAt(index),
       builder: (_, isVisible) {
         return AnimatedOpacity(
           duration: const Duration(milliseconds: 500),
           opacity: isVisible ? 1 : 0, curve: Curves.decelerate,
-          onEnd: () => isVisible? context.read<CreatorAnimationBloc>().triggerNext(index + 1): null,
+          onEnd: () => isVisible? context.read<CreatorLandingAnimationBloc>().triggerNext(index + 1): null,
           child: Padding(
             padding: const EdgeInsets.only(bottom: 20),
             child: Row(

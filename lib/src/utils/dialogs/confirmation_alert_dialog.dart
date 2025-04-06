@@ -3,6 +3,7 @@ import 'package:amptive/src/utils/constants/colors.dart';
 import 'package:amptive/src/utils/constants/font_sizes.dart';
 import 'package:amptive/src/utils/constants/strings/other_strings.dart';
 import 'package:amptive/src/utils/helpers/helper_functions/helper_functions.dart';
+import 'package:amptive/src/views/widgets/common_widgets/divider_widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/elevated_button_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
@@ -21,45 +22,62 @@ Future<bool?> showConfirmationDialog({
   return await showDialog<bool?>(
     context: context,
     builder: (_) => AlertDialog(
-      backgroundColor: ATColors.indicatorDark.withOpacity(0.82),
+      backgroundColor: ATColors.hex252525.withOpacity(0.82),
+      contentPadding: const EdgeInsets.fromLTRB(0, 20, 0, 0),
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(14),
       ),
-      title: Text(
-        title, maxLines: 3, textAlign: TextAlign.center,
-        style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-          fontSize: ATFontSizes.size17,
-        ),
-      ),
-      content: content.isNotEmpty ? Text(
-        content, maxLines: 3, textAlign: TextAlign.center,
-        style: Theme.of(context).textTheme.titleMedium?.copyWith(
-          fontSize: ATFontSizes.size13,
-        ),
-      ): const SizedBox.shrink(),
-      actionsAlignment: MainAxisAlignment.spaceBetween,
-      actions: [
-        GestureDetector(
-          onTap: () => context.pop(true),
-          child: Text(
-            yesString,
-            style: Theme.of(context).textTheme.titleMedium?.copyWith(
-              fontSize: ATFontSizes.size17,
-              color: ATColors.hex307FE2
+      content: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Padding(
+            padding: const EdgeInsets.fromLTRB(20, 0, 20, 10),
+            child: Text(
+              title, maxLines: 3, textAlign: TextAlign.center,
+              style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                fontSize: ATFontSizes.size17,
+              ),
             ),
           ),
-        ),
-        GestureDetector(
-          onTap: () => context.pop(false),
-          child: Text(
-            noString,
-            style: Theme.of(context).textTheme.titleMedium?.copyWith(
-              fontSize: ATFontSizes.size17,
-              color: ATColors.hex307FE2
+          if(content.isNotEmpty)Padding(
+            padding: const EdgeInsets.fromLTRB(20, 0, 20, 20),
+            child: Text(
+              content, maxLines: 3, textAlign: TextAlign.center,
+              style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                fontSize: ATFontSizes.size13,
+              ),
             ),
           ),
-        ),
-      ],
+          const ATDivider(),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            spacing: 30,
+            children: [
+              GestureDetector(
+                onTap: () => context.pop(true),
+                child: Text(
+                  yesString,
+                  style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                    fontSize: ATFontSizes.size17,
+                    color: ATColors.hex307FE2
+                  ),
+                ),
+              ),
+              const ATDivider(axis: AxisType.vertical, height: 50),
+              GestureDetector(
+                onTap: () => context.pop(false),
+                child: Text(
+                  noString,
+                  style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                    fontSize: ATFontSizes.size17,
+                    color: ATColors.hex307FE2
+                  ),
+                ),
+              ),
+            ],
+          )
+        ],
+      )
     )
   );
 }

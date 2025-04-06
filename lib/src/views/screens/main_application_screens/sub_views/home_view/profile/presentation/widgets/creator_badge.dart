@@ -1,48 +1,32 @@
-import 'package:amptive/src/utils/constants/strings/other_strings.dart';
-import 'package:amptive/src/utils/dialogs/profile/show_top_creator_societies.dart';
-import 'package:amptive/src/views/widgets/common_widgets/custom_container_widget.dart';
 import 'package:amptive/src/utils/constants/colors.dart';
 import 'package:amptive/src/utils/constants/font_sizes.dart';
+import 'package:amptive/src/utils/constants/strings/other_strings.dart';
+import 'package:amptive/src/views/widgets/common_widgets/custom_container_widget.dart';
 import 'package:flutter/material.dart';
-
-import '../../../../../../../../utils/constants/strings/image_strings.dart';
-import '../../../../../../../widgets/common_widgets/image_loader_widget.dart';
-
 
 class CreatorBadge extends StatelessWidget {
   const CreatorBadge({
     super.key,
+    this.width, 
+    this.height,
+    this.radius
   });
+  final double? height, width, radius;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(context) {
     return ATContainer(
-      onTap: () => showTopCreatorSocietiesDialog(context),
-      border: Border.all(color: ATColors.hexC2C2C2.withOpacity(0.23)),
-      radius: 20,
-      padding: const EdgeInsets.fromLTRB(10, 5, 10, 5),
-      gradient: LinearGradient(
-        begin: Alignment.topCenter,
-        end: Alignment.bottomCenter,
-        colors: [
-          ATColors.white.withOpacity(0.1),
-          ATColors.hex303030.withOpacity(0.1),
-          ATColors.white.withOpacity(0.1),
-        ]
-      ),
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          const ATImgLoader(imgPath: ATImgStrings.TOP_CREATOR_BADGE),
-          const SizedBox(width: 5,),
-          Text(
-            ATStrings.TOP_CREATORS_IN_SOCIETY,
-            style: Theme.of(context).textTheme.bodySmall?.copyWith(
-              color: ATColors.hexEECEA0,
-              fontSize: ATFontSizes.size13
-            ),
-          ),
-        ],
+      height: height, width: width,
+      color: ATColors.hexFED601,
+      radius: radius ?? 10,
+      padding: const EdgeInsets.fromLTRB(5, 0, 5, 1),
+      border: Border.all(color: ATColors.black, width: 2),
+      child: Text(
+        ATStrings.CREATOR.toUpperCase(),
+        style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+          fontSize: ATFontSizes.size10,
+          color: ATColors.black
+        ),
       ),
     );
   }

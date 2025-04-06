@@ -1,3 +1,2 @@
-export 'creators_landing_screen.dart';
-export 'switch_acct_landing_screen.dart';
-export 'select_category_screen.dart';
+export 'views/switch_acct_views_export.dart';
+export 'widgets/switch_acct_widget_export.dart';

@@ -69,4 +69,7 @@ class ATRoutes {
   static const SWITCH_ACCT = 'switch_account';
   static const CREATOR_LANDING = 'creator_landing';
   static const SELECT_CAT = 'select_category';
+  static const CREATOR_SUB_PLAN = 'creator_sub_plan';
+  static const CO_HOST_FEE_SETUP = 'co_host_fee_setup';
+  static const CREATOR_SUCCESS = 'creator_success';
 }

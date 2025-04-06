@@ -69,6 +69,9 @@ List<SingleChildWidget> providers() {
     BlocProvider(create: (_) => DayViewHeadingBloc()),
     BlocProvider(create: (_) => HoursInADayBloc()),
     BlocProvider(create: (_) => ProfileTabViewBloc()),
-    BlocProvider(create: (_) => CreatorAnimationBloc()),
+    BlocProvider(create: (_) => CreatorLandingAnimationBloc()),
+    BlocProvider(create: (_) => CreatorSuccessAnimationBloc()),
+    BlocProvider(create: (_) => SubPlanSetupBloc()),
+    BlocProvider(create: (_) => CohostFeeSetupBloc()),
   ];
 }

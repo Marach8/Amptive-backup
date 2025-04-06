@@ -1,24 +1,18 @@
 import 'package:amptive/src/utils/constants/colors.dart';
 import 'package:amptive/src/utils/constants/font_sizes.dart';
-import 'package:amptive/src/utils/constants/strings/image_strings.dart';
 import 'package:amptive/src/utils/constants/strings/other_strings.dart';
 import 'package:amptive/src/utils/constants/strings/route_strings.dart';
 import 'package:amptive/src/views/widgets/common_widgets/annotated_region__widget.dart';
-import 'package:amptive/src/views/widgets/common_widgets/app_bar_widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/back_button.dart';
 import 'package:amptive/src/views/widgets/common_widgets/custom_container_widget.dart';
-import 'package:amptive/src/views/widgets/common_widgets/divider_widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/elevated_button_widget.dart';
-import 'package:amptive/src/views/widgets/common_widgets/image_loader_widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/radio_button.dart';
 import 'package:amptive/src/views/widgets/common_widgets/sliver_header_delegate.dart';
 import 'package:amptive/src/views/widgets/common_widgets/textformfield_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:iconsax/iconsax.dart';
 
-import '../../../../bloc/profile_bloc_export.dart';
 
 class SelectCategoryScreen extends StatelessWidget {
   const SelectCategoryScreen({super.key});
@@ -55,7 +49,7 @@ class SelectCategoryScreen extends StatelessWidget {
                                   ATStrings.AMPTIVE_4_CREATORS,
                                   style: Theme.of(context).textTheme.bodyMedium
                                 ),
-                                const Visibility(visible: false, child: const ATRoundedBackBtn()),
+                                const Visibility(visible: false, child: ATRoundedBackBtn()),
                               ],
                             ),
                           ),
@@ -81,8 +75,8 @@ class SelectCategoryScreen extends StatelessWidget {
                             padding: const EdgeInsets.fromLTRB(13, 0, 15, 0),
                             child: ATTextFormField(
                               onChanged: (input){},
-                              prefixIcon: Padding(
-                                padding: const EdgeInsets.only(left: 10),
+                              prefixIcon: const Padding(
+                                padding: EdgeInsets.only(left: 10),
                                 child: Icon(Iconsax.search_normal_14),
                               ),
                               hintText: ATStrings.SEARCH_CAT,
@@ -114,7 +108,7 @@ class SelectCategoryScreen extends StatelessWidget {
                                   ),
                                 ),
                               ),
-                              ATRadioButton(isSelected: false)
+                              const ATRadioButton(isSelected: false)
                             ],
                           ),
                         ),
@@ -131,8 +125,7 @@ class SelectCategoryScreen extends StatelessWidget {
           color: ATColors.black,
           padding: const EdgeInsets.fromLTRB(15, 5, 15, 10),
           child: ATPlainElevatedBtn(
-            onPressed: (){
-            },
+            onPressed: () => context.pushNamed(ATRoutes.CREATOR_SUB_PLAN),
             btnTitle: ATStrings.SETUP_SUB_PLAN
           ),
         ),

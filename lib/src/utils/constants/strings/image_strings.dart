@@ -75,4 +75,5 @@ class ATImgStrings{
   static const CREATOR_GIF = '$_pngPath/gift.png';
   static const CREATOR_GLOBE = '$_pngPath/internet.png';
   static const CREATOR_LOCK = '$_pngPath/lock with heart.png';
+  static const INFO_ICON = '$_pngPath/price tag.png';
 }

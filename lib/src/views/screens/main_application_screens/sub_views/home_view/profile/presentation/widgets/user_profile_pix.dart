@@ -57,7 +57,7 @@ class CreatorProfilePix extends StatelessWidget {
             Positioned(
               bottom: -35,
               child: ATContainer(
-                color: ATColors.yellowColor1,
+                color: ATColors.hexFED601,
                 radius: 10,
                 padding: const EdgeInsets.fromLTRB(5, 0, 5, 1),
                 border: Border.all(color: ATColors.black, width: 2),

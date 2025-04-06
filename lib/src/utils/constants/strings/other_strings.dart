@@ -46,6 +46,7 @@ class ATStrings{
   static const LIVE = 'Live';
   static const FONE_NO = 'Phone Number';
   static const facebook = 'Facebook';
+  static const VISIT_PROFILE = 'Visit profile';
   static const twitter = 'X(Twitter)';
   static const google = 'Google';
   static const SELECT_CAT = 'Select your category';
@@ -63,6 +64,10 @@ class ATStrings{
   static const WANT_2_CHANGE_EMAIL = 'Do you want to update your email address?';
   static const WANT_2_CHANGE_FONE = 'Do you want to update your phone number?';
   static const CHANGE = 'Change';
+  static const DELETE_PLAN = 'Delete plan';
+  static const DELETE = 'Delete';
+  static const DELETE_SUB_PLAN = 'Delete subscription plan?';
+  static const DELETE_SUB_PLAN_DESC = 'Deleting plan will grant listeners free access to your shows.';
   static const ACCEPT_CHANGES = 'Accept Changes';
   static const NO_WILL_BE_VERIFIED = 'This phone number will be verified in the next step.';
 
@@ -102,6 +107,8 @@ class ATStrings{
   static const createAccount = 'Create account';
   static const privacyPolicy = 'Privacy Policy.';
   static const CREATE_SCHEDULE = 'Create a Schedule';
+  static const SUB_OVERVIEW = 'Subscription Plan Overview';
+  static const SUB_OVERVIEW_DESC = 'Only subscribers will have access to your shows';
   static const warningOnClickingCreate = 'By clicking on ‘Create account’, you agree to the';
 
   static const CHECKER_LOADING = "Checker is loading...";
@@ -124,6 +131,9 @@ class ATStrings{
   static const CAMERA = 'Camera';
   static const skipForNow = 'Skip for now';
   static const APPLY = 'Apply';
+  static const ADD_NEW_PLAN = 'Add New Plan';
+  static const SPECIFY_FEE = 'Please specify the fee you wish to charge listeners monthly for your live shows.';
+  static const AMPTIVE_CHARGES_4_CREATORS = 'Amptive charges a 2% fee on each subscription';
   static const MORE_SCHEDULE = 'More Schedule';
 
   static const select5Communities = "Select 5 communities you find interest in.";
@@ -342,6 +352,16 @@ class ATStrings{
   static const UNBLOCK = 'Unblock';
   static const UNMUTE = 'Unmute';
   static const AMPTIVE_4_CREATORS = 'Amptive for Creators';
+  static const SUB_PLAN = 'Subscription Plan';
+  static const COHOST_FEE_SETUP = 'Co-host Fee Setup';
+  static const WHAT_IS_COHOST_FEE = 'What is Co-host fee?';
+  static const COHOST_FEE_DESC = 'This is a fee you will charge creators for co-hosting their events or shows';
+  static const ALLOW_FREE_COHOSTING = "Click 'Setup later' to co-host for free.";
+  static const ADD_NEW = 'Add new';
+  static const AMTPIVE_CHARGES_4_COHOSTING = 'Amptive charges a 2% fee on payments from each creator';
+  static const SETUP_COHOST_FEE = 'Setup co-host fee';
+  static const SETUP_LATER = 'Setup later';
+  static const ALLOW_FREE_SUB = "Click 'Setup later' to allow free subscription for your listeners";
   static const U_OWN_STAGE = 'You own the stage.';
   static const CREATE_LIVE_SHOWS_ND_EVENTS = 'Create Live Audio Shows & Events';
   static const HOST_CAPTIVATING_PROGRAMS = 'Host captivating live shows and events';
@@ -355,4 +375,8 @@ class ATStrings{
   static const ACCT_INFO = 'Account Information';
   static const SET_UP_ACCT_DETAILS = 'Setup your account details like your email address, phone number and country.';
   static const DEACTIVATE_ACCT = 'Deactivate your account';
+  static const CAT_SELECETED = 'Category selected';
+  static const SUB_FEE_SETUP = 'Subscription fee setup';
+  static const U_R_A_CREATOR = 'You are now a creator';
+  static const NOW_U_CAN_CREATE = 'Now, you can create live audio show and events';
 }

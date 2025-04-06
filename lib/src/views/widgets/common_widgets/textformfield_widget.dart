@@ -13,12 +13,13 @@ class ATTextFormField extends StatelessWidget {
   final String? hintText, counterText;
   final TextAlign? textAlign;
   final double? cursorHeight;
-  final Widget? suffixIcon, prefixIcon;
+  final Widget? suffixIcon, prefixIcon, prefix, suffix;
   final bool? obscureText, disableBlueBorder, enabled;
   final Color? cursorColor, fillColor;
   final BoxConstraints? suffixConstraints,
   prefixConstraints, constraints;
   final InputDecoration? decoration;
+  final InputBorder? enabledBorder;
   final FocusNode? focusNode;
   final TextStyle? hintStyle;
   final TextInputAction? textInputAction;
@@ -42,6 +43,7 @@ class ATTextFormField extends StatelessWidget {
     this.counterText,
     this.cursorHeight,
     this.hintText,
+    this.enabledBorder,
     this.cursorColor, 
     this.decoration,
     this.constraints,
@@ -60,7 +62,9 @@ class ATTextFormField extends StatelessWidget {
     this.buildCounter,
     this.textInputAction,
     this.enabled,
-    this.maxLength
+    this.maxLength,
+    this.prefix,
+    this.suffix
   });
 
   @override
@@ -92,7 +96,7 @@ class ATTextFormField extends StatelessWidget {
         counterText: counterText,   
         hintText: hintText,
         constraints: constraints,
-        fillColor: fillColor,
+        fillColor: fillColor, filled: fillColor != null,
         contentPadding: contentPadding ?? const EdgeInsets.fromLTRB(16, 12, 16, 12),
         focusedBorder: disableBlueBorder ?? false ? OutlineInputBorder(
           borderRadius: BorderRadius.circular(14),
@@ -103,6 +107,7 @@ class ATTextFormField extends StatelessWidget {
         ),
         suffixIcon: suffixIcon,
         prefixIcon: prefixIcon,
+        prefix: prefix, suffix: suffix,
         prefixIconConstraints: prefixConstraints ?? const BoxConstraints(
           maxHeight: 35,
           maxWidth: 35
@@ -111,7 +116,7 @@ class ATTextFormField extends StatelessWidget {
           maxHeight: 35,
           maxWidth: 35
         ),
-        enabledBorder: null
+        enabledBorder: enabledBorder
       ),
     );
   }

@@ -11,7 +11,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
 import 'package:go_router/go_router.dart';
 import 'package:iconsax/iconsax.dart';
-
 import '../../bloc/profile_bloc_export.dart';
 import '../widgets/profile_widgets_export.dart';
 
@@ -66,8 +65,7 @@ class AmptiveCreatorProfileScreen extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     const CreatorProfilePix(),                    
-                    const SizedBox(height: 50),
-                
+                    const SizedBox(height: 50),                
                     Text(
                       'Glennon Doyle',
                       style: Theme.of(context).textTheme.bodyLarge
@@ -80,7 +78,7 @@ class AmptiveCreatorProfileScreen extends StatelessWidget {
                     ),
                 
                     const SizedBox(height: 20),                
-                    const CreatorBadge(),                
+                    const TopCreatorBadge(),                
                     const SizedBox(height: 20),
                 
                     const Row(

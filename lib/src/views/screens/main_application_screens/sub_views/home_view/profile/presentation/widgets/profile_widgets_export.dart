@@ -1,6 +1,6 @@
 export 'program_display.dart';
 export 'creator_profile_pix.dart';
-export 'creator_badge.dart';
+export 'top_creator_badge.dart';
 export 'no_of_followers.dart';
 export 'row_of_socials.dart';
 export 'no_of_subscribers.dart';
