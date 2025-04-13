@@ -349,7 +349,7 @@ class _GoLiveHostViewBottomSheetState extends State<GoLiveHostViewBottomSheet> {
           Flexible(
             child: Padding(
               padding: EdgeInsets.only(right: 5.w),
-              child: ATTextFormFieldWidget(
+              child: ATTextFormField(
                 controller: _cntrl,
                 disableBlueBorder: true,
                 cursorHeight: 20, maxLength: 50,

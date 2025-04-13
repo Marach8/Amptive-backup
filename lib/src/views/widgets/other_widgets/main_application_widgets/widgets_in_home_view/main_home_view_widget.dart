@@ -53,7 +53,7 @@ class AmptiveHomeViewWidget extends StatelessWidget {
                     ),
                     Positioned(
                       top: 5, right: 0,
-                      child: AmptiveCircleAvatarWidget(diameter: 8, color: ATColors.hexECO404)
+                      child: ATCircleAvatar(diameter: 8, color: ATColors.hexECO404)
                     )
                   ],
                 )
@@ -61,6 +61,7 @@ class AmptiveHomeViewWidget extends StatelessWidget {
               const Gap(24),
               GestureDetector(
                 onTap: () => context.pushNamed(ATRoutes.CREATOR_PROFILE_SCREEN),
+                //onTap: () => context.pushNamed(ATRoutes.USER_PROFILE_SCREEN),
                 child: const Padding(
                   padding: EdgeInsets.only(right: 15),
                   child: ATCircularImage(

@@ -62,7 +62,6 @@ dependencies:
   iconsax: ^0.0.8
   rxdart: ^0.28.0
   readmore: ^3.0.0
-  image_cropper: ^8.0.2
   visibility_detector: ^0.4.0+2
   carousel_slider: ^5.0.0
   another_flushbar: ^1.12.30

@@ -4,7 +4,6 @@ import 'package:amptive/src/bloc/authentication/otp/otp_auth_states.dart';
 import 'package:amptive/src/services/auth/otp_service.dart';
 import 'package:amptive/src/utils/constants/colors.dart';
 import 'package:amptive/src/utils/constants/font_sizes.dart';
-import 'package:amptive/src/utils/helpers/helper_functions/helper_functions.dart';
 import 'package:amptive/src/views/widgets/common_widgets/annotated_region__widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/common_widgets.dart';
 import 'package:flutter/gestures.dart';
@@ -15,7 +14,6 @@ import 'package:go_router/go_router.dart';
 import '../../../bloc/authentication/otp/otp_auth_events.dart';
 import '../../../utils/constants/font_weights.dart';
 import '../../../utils/constants/strings/other_strings.dart';
-import '../../../utils/constants/strings/route_strings.dart';
 import '../../widgets/common_widgets/app_bar_widget.dart';
 import '../../widgets/common_widgets/elevated_button_widget.dart';
 
@@ -85,7 +83,7 @@ class _ATOTPScreenState extends State<ATOTPScreen> {
     return ATAnnotatedRegion(
       child: Scaffold(
         backgroundColor: ATColors.brandBlack,
-        appBar: AmptiveAppBar(
+        appBar: ATAppBar(
           title: Text(
             widget.title,
             style: Theme.of(context).textTheme.bodyMedium,

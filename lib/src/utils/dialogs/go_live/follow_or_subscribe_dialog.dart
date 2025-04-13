@@ -251,7 +251,7 @@ Future<void> showFollowHostOrCohostDialog({
                                   }
                                 }
                               },
-                              bgColor: ATColors.yellowColor1,
+                              bgColor: ATColors.hexFED601,
                               fgColor: ATColors.brandBlack,
                               btnTitle: isSubscribed ? ATStrings.UNSUBSCRIBE : '',
                               child: isLoading ? ATLoadingIndicator(color: ATColors.white,) 
@@ -266,7 +266,7 @@ Future<void> showFollowHostOrCohostDialog({
                                       ),
                                     ),
                                     const Gap(2),
-                                    AmptiveCircleAvatarWidget(
+                                    ATCircleAvatar(
                                       diameter: 4,
                                       color: ATColors.brandBlack,
                                     ),

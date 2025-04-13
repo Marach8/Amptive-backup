@@ -41,7 +41,7 @@ class _NameAuthScreenState extends State<NameAuthScreen> {
     return ATAnnotatedRegion(
       child: Scaffold(
         backgroundColor: ATColors.brandBlack,
-        appBar: const AmptiveAppBar(),
+        appBar: const ATAppBar(),
         body: Padding(
           padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 20.h),
           child: Form(
@@ -58,7 +58,7 @@ class _NameAuthScreenState extends State<NameAuthScreen> {
                 SizedBox(
                   height: 11.h,
                 ),
-                ATTextFormFieldWidget(
+                ATTextFormField(
                   controller: nameController,
                   onChanged: (val) {
                     context.read<AmptiveAuthBloc>().add(NameChangedEvent());

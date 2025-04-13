@@ -25,7 +25,7 @@ class AmptiveAuthScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return ATAnnotatedRegion(
       child: Scaffold(
-        appBar: const AmptiveAppBar(
+        appBar: const ATAppBar(
           title: ATImgLoader(imgPath: ATImgStrings.logo2),
         ),
 

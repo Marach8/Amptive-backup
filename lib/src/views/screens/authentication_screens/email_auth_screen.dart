@@ -48,7 +48,7 @@ class _ATEmailAuthScreenState extends State<ATEmailAuthScreen> {
   Widget build(BuildContext context) {
     return ATAnnotatedRegion(
       child: Scaffold(
-        appBar: AmptiveAppBar(
+        appBar: ATAppBar(
           title: Text(
             widget.title ?? '',
             style: Theme.of(context).textTheme.bodyMedium,
@@ -69,7 +69,7 @@ class _ATEmailAuthScreenState extends State<ATEmailAuthScreen> {
                 key: _formKey,
                 child: BlocBuilder<ATEmailAuthBloc, ATAuthState>(
                     builder: (_, state) {
-                  return ATTextFormFieldWidget(
+                  return ATTextFormField(
                     controller: _controller,
                     cursorColor: service.email.error == null
                         ? ATColors.hex307FE2

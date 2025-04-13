@@ -1,8 +1,10 @@
 import 'dart:async';
+import 'dart:io';
 import 'dart:math';
 import 'package:amptive/src/bloc/main_app/profile/profile_menu/calender/calender_programs_bloc.dart';
 import 'package:amptive/src/services/create_show/create_show_service.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 
 
@@ -14,6 +16,8 @@ class ATHelperFuncs{
 
   static double getScreenHeight(BuildContext context)
     => MediaQuery.sizeOf(context).height;
+
+  static bool getPlatform() => Platform.isAndroid;
 
   static String enter4DigitSentFrom(String location) {
     return "Enter the 4 digit code we just sent to your $location";
@@ -182,6 +186,24 @@ static List<String> generateHoursInADay(dynamic _) {
     final calendarDays = generateCalendarDays(year, month);
 
     return {monthName: calendarDays};
+  }
+
+  static Future<File?> getImageFromGallery() async {
+    final picker = ImagePicker();
+    final pickedFile = await picker.pickImage(source: ImageSource.gallery);
+    if (pickedFile != null) {
+      return File(pickedFile.path);
+    }
+    return null;
+  }
+
+  static Future<File?> getImageFromCamera() async {
+    final picker = ImagePicker();
+    final pickedFile = await picker.pickImage(source: ImageSource.camera);
+    if (pickedFile != null) {
+      return File(pickedFile.path);
+    }
+    return null;
   }
 
 

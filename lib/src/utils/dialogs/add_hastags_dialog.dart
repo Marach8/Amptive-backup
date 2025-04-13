@@ -113,7 +113,7 @@ Future<Set<ObjectWithNotifier<Hashtag>>?> showAddHashtagDialog(
 
                       Padding(
                         padding: const EdgeInsets.fromLTRB(15, 0, 15, 20),
-                        child: ATTextFormFieldWidget(
+                        child: ATTextFormField(
                           disableBlueBorder: true,
                           controller: controller,
                           focusNode: focusNode,

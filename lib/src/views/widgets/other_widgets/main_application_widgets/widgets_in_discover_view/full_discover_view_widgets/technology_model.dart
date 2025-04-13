@@ -54,18 +54,18 @@ class AmptiveTechnologyModel extends StatelessWidget {
                 'glendonnor',
                 style: Theme.of(context).textTheme.titleSmall?.copyWith(
                   fontSize: ATFontSizes.size13,
-                  color: ATColors.authHintColor2
+                  color: ATColors.hexCDCDCD
                 ),
               ),
               const Gap(5),
-              AmptiveCircleAvatarWidget(
+              ATCircleAvatar(
                 diameter: 3,
-                color: ATColors.authHintColor2
+                color: ATColors.hexCDCDCD
               ),
               Text(
                 'FRIDAY',
                 style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                  color: ATColors.authHintColor2
+                  color: ATColors.hexCDCDCD
                 ),
               ),
               const Spacer()

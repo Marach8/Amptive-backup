@@ -64,7 +64,7 @@ class AmptivePaidShowModel extends StatelessWidget {
               
               Align(
                 alignment: Alignment.bottomCenter,
-                child: AmptiveCircleAvatarWidget(
+                child: ATCircleAvatar(
                   diameter: 4,
                   color: ATColors.grey5Color,
                 ),

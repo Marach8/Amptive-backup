@@ -14,20 +14,8 @@ import 'package:amptive/src/views/screens/main_application_screens/sub_views/hom
 import 'package:amptive/src/views/screens/main_application_screens/sub_views/home_view/home_sub_view/go_live_views/show/create_show_form_screen.dart';
 import 'package:amptive/src/views/screens/main_application_screens/dashboard_screen.dart';
 import 'package:amptive/src/views/screens/main_application_screens/sub_views/home_view/home_sub_view/go_live_views/main_go_live_screen.dart';
-import 'package:amptive/src/views/screens/main_application_screens/sub_views/home_view/home_sub_view/profile/community_task.dart';
-import 'package:amptive/src/views/screens/main_application_screens/sub_views/home_view/home_sub_view/profile/menu/accounts/account_info.dart';
-import 'package:amptive/src/views/screens/main_application_screens/sub_views/home_view/home_sub_view/profile/menu/accounts/accounts_home.dart';
-import 'package:amptive/src/views/screens/main_application_screens/sub_views/home_view/home_sub_view/profile/menu/accounts/select_country.dart';
-import 'package:amptive/src/views/screens/main_application_screens/sub_views/home_view/home_sub_view/profile/menu/calender/day_view.dart';
-import 'package:amptive/src/views/screens/main_application_screens/sub_views/home_view/home_sub_view/profile/menu/language.dart' show ATSelectLanguageScreen;
-import 'package:amptive/src/views/screens/main_application_screens/sub_views/home_view/home_sub_view/profile/menu/privacy/blocked_accts.dart';
-import 'package:amptive/src/views/screens/main_application_screens/sub_views/home_view/home_sub_view/profile/menu/privacy/muted_accts.dart';
-import 'package:amptive/src/views/screens/main_application_screens/sub_views/home_view/home_sub_view/profile/menu/privacy/privacy_home.dart' show AmptivePrivacyScreen;
-import 'package:amptive/src/views/screens/main_application_screens/sub_views/home_view/home_sub_view/profile/menu/profile_menu_screen.dart';
-import 'package:amptive/src/views/screens/main_application_screens/sub_views/home_view/home_sub_view/profile/profile_pic_display.dart';
-import 'package:amptive/src/views/screens/main_application_screens/sub_views/home_view/home_sub_view/profile/subscribers_screen.dart';
+import 'package:amptive/src/views/screens/main_application_screens/sub_views/home_view/profile/presentation/views/profile_views_export.dart';
 import 'package:amptive/src/views/screens/main_application_screens/sub_views/home_view/home_sub_view/scheduled_screen.dart';
-import 'package:amptive/src/views/screens/main_application_screens/sub_views/home_view/home_sub_view/profile/creator_profile.dart';
 import 'package:amptive/src/views/screens/post_authentication_screens/crop_image_screen.dart';
 import 'package:amptive/src/views/screens/post_authentication_screens/pre_homepage.dart';
 import 'package:amptive/src/views/screens/post_authentication_screens/preference_screen.dart';
@@ -46,15 +34,13 @@ import 'views/screens/main_application_screens/sub_views/home_view/home_sub_view
 import 'views/screens/main_application_screens/sub_views/home_view/home_sub_view/go_live_views/event/choose_event_screen.dart';
 import 'views/screens/main_application_screens/sub_views/home_view/home_sub_view/go_live_views/show/choose_or_create_show_screen.dart';
 import 'views/screens/main_application_screens/sub_views/home_view/home_sub_view/go_live_views/show/show_creation_success_screen.dart';
-import 'views/screens/main_application_screens/sub_views/home_view/home_sub_view/profile/followers_screen.dart';
-import 'views/screens/main_application_screens/sub_views/home_view/home_sub_view/profile/ordinary_user_profile.dart';
 import 'views/screens/main_application_screens/sub_views/home_view/home_sub_view/show_detailed_screen.dart';
 import 'views/screens/main_application_screens/sub_views/home_view/home_sub_view/subscribed_screen.dart';
 
 // The route configuration.
 final GoRouter amptiveAppRouter = GoRouter(
   initialLocation: ATRoutes.index,
-  // initialLocation: "/email-route/otp",
+  //initialLocation: "/add-profile-pic",
   routes: <RouteBase>[
     GoRoute(
         path: ATRoutes.index,
@@ -87,10 +73,10 @@ final GoRouter amptiveAppRouter = GoRouter(
       name: ATRoutes.OTP_SCREEN,
       path: ATRoutes.OTP_SCREEN.addSlash,
       builder: (_, state) {
-        final params = state.extra as List<String>;
-        final email = params.first;
+        final params = state.extra as List<String?>;
+        final emailOrPhone = params.first;
         final title = params.last;
-        return ATOTPScreen(emailOrPhone: email, title: title);
+        return ATOTPScreen(emailOrPhone: emailOrPhone ?? '', title: title ?? '');
       }
     ),
     GoRoute(
@@ -243,6 +229,75 @@ final GoRouter amptiveAppRouter = GoRouter(
             name: ATRoutes.CREATOR_PROFILE_SCREEN,
             path: ATRoutes.CREATOR_PROFILE_SCREEN,
             builder: (_, __) => const AmptiveCreatorProfileScreen(),
+          ),
+
+          GoRoute(
+            name: ATRoutes.EDIT_PROFILE,
+            path: ATRoutes.EDIT_PROFILE.addSlash,
+            builder: (_, __) => const EditProfileScreen(),
+            routes: [
+              GoRoute(
+                name: ATRoutes.PROFILE_BG_CROP,
+                path: ATRoutes.PROFILE_BG_CROP,
+                builder: (_, state) => CropProfileBgImageScreen(file: state.extra as File)
+              ),
+              GoRoute(
+                name: ATRoutes.EDIT_NAME,
+                path: ATRoutes.EDIT_NAME,
+                builder: (_, state) => EditNameScreen(initialName: state.extra as String),
+              ),
+              GoRoute(
+                name: ATRoutes.EDIT_USERNAME,
+                path: ATRoutes.EDIT_USERNAME,
+                builder: (_, state) => EditUsernameScreen(initialUsername: state.extra as String),
+              ),
+              GoRoute(
+                name: ATRoutes.EDIT_BIO,
+                path: ATRoutes.EDIT_BIO,
+                builder: (_, state) => EditBioScreen(initialBio: state.extra as String),
+              ),
+              GoRoute(
+                name: ATRoutes.EDIT_SOCIALS,
+                path: ATRoutes.EDIT_SOCIALS,
+                builder: (_, state){
+                  final params = state.extra as List<String?>;
+                  return EditSocialsScreen(
+                    initialLink: params.first,
+                    socialName: params.last as String
+                  );
+                }
+              ),
+              GoRoute(
+                name: ATRoutes.SWITCH_ACCT,
+                path: ATRoutes.SWITCH_ACCT,
+                builder: (_, state) => const SwitchAccountScreen()
+              ),
+              GoRoute(
+                name: ATRoutes.SELECTED_ACCT_LANDING,
+                path: ATRoutes.SELECTED_ACCT_LANDING,
+                builder: (_, state) => SelectedAcctLandingScreen(isCreator: state.extra as bool)
+              ),
+              GoRoute(
+                name: ATRoutes.SELECT_CAT,
+                path: ATRoutes.SELECT_CAT,
+                builder: (_, __) => const SelectCategoryScreen()
+              ),
+              GoRoute(
+                name: ATRoutes.CREATOR_SUB_PLAN,
+                path: ATRoutes.CREATOR_SUB_PLAN,
+                builder: (_, __) => const CreatorSubPlanScreen()
+              ),
+              GoRoute(
+                name: ATRoutes.CO_HOST_FEE_SETUP,
+                path: ATRoutes.CO_HOST_FEE_SETUP,
+                builder: (_, state) => const CoHostFeeSetupScreen()
+              ),
+              GoRoute(
+                name: ATRoutes.CREATOR_SUCCESS,
+                path: ATRoutes.CREATOR_SUCCESS,
+                builder: (_, state) => const CreatorSuccessScreen()
+              ),
+            ]
           ),
 
           GoRoute(

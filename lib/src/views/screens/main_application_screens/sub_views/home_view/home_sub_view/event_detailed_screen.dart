@@ -32,8 +32,7 @@ class AmptiveEventDetailedScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return ATAnnotatedRegion(
       child: Scaffold(
-        appBar: AmptiveAppBar(
-          hideLeading: true,
+        appBar: ATAppBar(
           centerTitle: true,
           title: GestureDetector(
             onTap: () {
@@ -183,7 +182,7 @@ class AmptiveEventDetailedScreen extends StatelessWidget {
                     ),
                     Divider(color: ATColors.white.withOpacity(0.1),),
                     Gap(5.h),
-                    ATTextFormFieldWidget(
+                    ATTextFormField(
                       controller: TextEditingController(),
                       hintText: 'Enter your Ticked ID',
                       suffixIcon: const Padding(

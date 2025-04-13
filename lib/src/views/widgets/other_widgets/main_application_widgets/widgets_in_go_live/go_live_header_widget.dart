@@ -39,7 +39,7 @@ class AmptiveLiveViewHeaderWidget extends StatelessWidget {
                 style: Theme.of(context).textTheme.bodyMedium,
               ),
               Gap(5.w),
-              const AmptiveCircleAvatarWidget(diameter: 5),
+              const ATCircleAvatar(diameter: 5),
               Gap(5.w),
               Text(
                 // maxLines: 1,

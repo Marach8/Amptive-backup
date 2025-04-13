@@ -4,12 +4,10 @@ import 'package:amptive/src/utils/constants/colors.dart';
 import 'package:amptive/src/utils/constants/strings/image_strings.dart';
 import 'package:amptive/src/utils/constants/strings/other_strings.dart';
 import 'package:amptive/src/utils/helpers/helper_functions/helper_functions.dart';
-import 'package:amptive/src/views/screens/main_application_screens/sub_views/home_view/home_sub_view/profile/creator_profile.dart';
 import 'package:amptive/src/views/widgets/common_widgets/annotated_region__widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/custom_container_widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/elevated_button_widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/image_loader_widget.dart';
-import 'package:amptive/src/views/widgets/common_widgets/sliver_header_delegate.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
@@ -19,11 +17,10 @@ import '../../../../../../utils/constants/font_sizes.dart';
 import '../../../../../../utils/constants/font_weights.dart';
 import '../../../../../widgets/common_widgets/list_tile_with_leading_picture_widget.dart';
 import '../../../../../widgets/common_widgets/row_of_people_listening_widget.dart';
-import '../../../../../widgets/other_widgets/main_application_widgets/widgets_in_show_or_event_full_details_view/audio_or_video_display_picture_widget.dart';
 import '../../../../../widgets/other_widgets/main_application_widgets/widgets_in_show_or_event_full_details_view/hashtags_widget.dart';
 import '../../../../../widgets/other_widgets/main_application_widgets/widgets_in_show_or_event_full_details_view/row_of_live_and_society_texts_widget.dart';
-import '../../../../../widgets/other_widgets/main_application_widgets/widgets_in_show_or_event_full_details_view/row_of_subtitle_and_forward_icon_widget.dart';
 import '../../../../../widgets/other_widgets/main_application_widgets/widgets_in_show_or_event_full_details_view/whispers_list_view_widget.dart';
+import '../profile/presentation/profile_prez_export.dart';
 
 class ATShowDetailedScreen extends StatelessWidget {
   const ATShowDetailedScreen({super.key});

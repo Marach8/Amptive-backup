@@ -112,7 +112,7 @@ Future<Set<ObjectWithNotifier<Host>>?> showAddCoHostDialog(BuildContext context)
                       const Gap(20),
 
                       // search SEARCH
-                      ATTextFormFieldWidget(
+                      ATTextFormField(
                         controller: controller,
                         focusNode: focusNode,
                         disableBlueBorder: true,

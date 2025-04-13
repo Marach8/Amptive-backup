@@ -11,6 +11,7 @@ class ATStrings{
   static const underscore = '_';
   static const plus  = '+';
   static const HASH = '#';
+  static const AT_SIGN = '@';
 
 
   static const goLiveLikeNeverBefore = "Go Live, Like Never Before";
@@ -34,7 +35,7 @@ class ATStrings{
   static const signIn = 'Sign in';
   static const attendAsGuest = 'Attend as guest';
   static const skip = 'Skip';
-  static const back = 'Back';
+  static const BACK = 'Back';
   static const CONTINUE = 'Continue';
   static const SEND_INVITE = 'Send invite';
   static const SET_FEE = 'Set fee';
@@ -45,8 +46,13 @@ class ATStrings{
   static const LIVE = 'Live';
   static const FONE_NO = 'Phone Number';
   static const facebook = 'Facebook';
+  static const VISIT_PROFILE = 'Visit profile';
   static const twitter = 'X(Twitter)';
   static const google = 'Google';
+  static const SELECT_CAT = 'Select your category';
+  static const CAT_WONT_BE_SHOWN = 'Selected category will not be shown on your public profile and can be changed anytime.';
+  static const SEARCH_CAT = 'Search for a category';
+  static const PROCEED = 'Proceed';
   static const ADDING_EMAIL = 'Adding Email Address...';
   static const CHANGING_EMAIL = 'Updating Email Address...';
   static const CHANGING_PHONE = 'Updating Phone Number...';
@@ -58,6 +64,11 @@ class ATStrings{
   static const WANT_2_CHANGE_EMAIL = 'Do you want to update your email address?';
   static const WANT_2_CHANGE_FONE = 'Do you want to update your phone number?';
   static const CHANGE = 'Change';
+  static const DELETE_PLAN = 'Delete plan';
+  static const DELETE = 'Delete';
+  static const DELETE_SUB_PLAN = 'Delete subscription plan?';
+  static const DELETE_SUB_PLAN_DESC = 'Deleting plan will grant listeners free access to your shows.';
+  static const ACCEPT_CHANGES = 'Accept Changes';
   static const NO_WILL_BE_VERIFIED = 'This phone number will be verified in the next step.';
 
   static const UR_EMAIL = 'What is your email?';
@@ -66,9 +77,11 @@ class ATStrings{
   static const verifyEmail = 'Verify email';
   static const UNBLOCK_DESC = 'will be able to follow, subscribe and see your app activities';
   static String unMuteDesc(String text) => "You will be able to see $text's app activities";
+  static String enterLink(String link) => "Enter your $link link";
   static const IS_UNBLOCKED = 'is now unblocked';
   static const IS_UNMUTED = 'is now unmuted';
   static const COUNTRY = 'Country';
+  static const PROFILE = 'Profile';
   static const SELECT_COUNTRY = 'Select Country';
 
   static const youEnteredInvalidCode = 'You entered an invalid code. ';
@@ -77,6 +90,7 @@ class ATStrings{
   static const sendAgain = 'Send again';
   static const SEND = 'Send';
   static const SEND_GIFT = 'Send gift';
+  static const THIS_WILL_APPEAR_ON_PROFILE = 'Note that this will appear on your profile';
 
   static const createPasswordForAccount = 'Create a password for your account';
   static const enterYourPassword = 'Enter your password';
@@ -93,11 +107,12 @@ class ATStrings{
   static const createAccount = 'Create account';
   static const privacyPolicy = 'Privacy Policy.';
   static const CREATE_SCHEDULE = 'Create a Schedule';
+  static const SUB_OVERVIEW = 'Subscription Plan Overview';
+  static const SUB_OVERVIEW_DESC = 'Only subscribers will have access to your shows';
   static const warningOnClickingCreate = 'By clicking on ‘Create account’, you agree to the';
 
-  static const username = "username";
-  static const checkerIsLoading = "Checker is loading...";
-  static const usernameIsAvailable ="Username is available";
+  static const CHECKER_LOADING = "Checker is loading...";
+  static const USERNAME_AVAILABLE ="Username is available";
   static const whatShouldWeCallYou ="What should we call you?";
   static const ROLE = 'message notifier';
   static const ALLOWED_AUD_MIC = "You allowed audience microphone";
@@ -112,9 +127,13 @@ class ATStrings{
 
   static const addProfilePicture = "Add a profile picture";
   static const useYOurFavImage = "Use one of your favourite image or selfie";
-  static const photoGallery = 'Photo Gallery';
-  static const camera = 'Camera';
+  static const PHOTO_GALLERY = 'Photo Gallery';
+  static const CAMERA = 'Camera';
   static const skipForNow = 'Skip for now';
+  static const APPLY = 'Apply';
+  static const ADD_NEW_PLAN = 'Add New Plan';
+  static const SPECIFY_FEE = 'Please specify the fee you wish to charge listeners monthly for your live shows.';
+  static const AMPTIVE_CHARGES_4_CREATORS = 'Amptive charges a 2% fee on each subscription';
   static const MORE_SCHEDULE = 'More Schedule';
 
   static const select5Communities = "Select 5 communities you find interest in.";
@@ -133,6 +152,7 @@ class ATStrings{
   static const GO_LIVE = 'Go live';
   static const PAID_SHOW = '\$paid show';
   static const INSTAGRAM = 'Instagram';
+  static const X = 'X';
   static const LINKEDIN = 'LinkedIn';
   static const WEBSITE = 'Website';
   static const PAID_SHOWS = 'Paid Shows';
@@ -178,6 +198,7 @@ class ATStrings{
   static const removedFromCalender = 'Removed from your calender';
   static const VIEW = 'View';
   static const GIFTS = 'Gifts';
+  static const ADD_LINK = 'Add Link';
 
   static const SEARCH_FOR_EVENTS_ND_SHOWS = 'Search for events, shows and more';
   static const CANCEL = 'Cancel';
@@ -188,6 +209,7 @@ class ATStrings{
   static const MORE_2_DISCOVER = 'More to Discover';
   static const TOP_CREATORS = 'Top Creators';
   static const CREATOR = 'Creator';
+  static const BUSINESS = 'Business';
   static const POPULAR_CREATORS = 'Popular Creators';
   static const SPOTLIGHT = 'Spotlight';
   static const VIEW_ALL = 'View all';
@@ -198,6 +220,19 @@ class ATStrings{
   static const ACCT_SETTINGS = 'Account Settings';
   static const ACCT = 'Account';
   static const PRIVACY = 'Privacy';
+  static const EDIT_PROFILE = 'Edit Profile';
+  static const ABT_U = 'About you';
+  static const USERNAME = 'Username';
+  static const NAME = 'Name';
+  static const BIO = 'Bio';
+  static const SELECT_ACCT_TYPE = 'Select your choice account type to proceed.';
+  static const CREATOR_ACCT = 'Creator Account';
+  static const BIZ_ACCT = 'Business Account';
+  static const CREATOR_ACCT_DESC = 'Best for podcasters, artists, influencers, public figures etc.';
+  static const BIZ_ACCT_DESC = 'Best for brands, organizations, service providers, local businesses etc.';
+  static String setUpAcct(String acct) => "Set up $acct";
+  static const LINKS = 'Links';
+  static const SWITCH_ACCT = 'Switch Account Type';
   static const PSWRD_ND_SECURITY = 'Password and Security';
   static const APP_SETTINGS = 'App Settings';
   static const SETTINGS = 'Settings';
@@ -301,8 +336,8 @@ class ATStrings{
   static const SUBSCRIBERS_ONLY = 'Subscribers only';
   static const ACCESS_2_ONLY_SUBSCRIBERS = 'Only your subscribers will have access';
   static const EDIT_SUB_PLAN = 'Edit subscription plan';
-  static const EDIT_PROFILE = 'Edit profile';
   static const SETUP_PAYMENT_FEE = 'Set up payment fee';
+  static const SETUP_SUB_PLAN = 'Set up subscription plan';
   static const SHOW_IS_SETUP = 'Your Show is setup and airing!';
   static const BEGIN_JOURNEY = 'Begin your journey by creating your first episode';
   static const CREATE_1ST_EPISODE = 'Create first epidode';
@@ -317,8 +352,46 @@ class ATStrings{
   static const HOST = 'Host';
   static const UNBLOCK = 'Unblock';
   static const UNMUTE = 'Unmute';
+  static const AMPTIVE_4_CREATORS = 'Amptive for Creators';
+  static const AMPTIVE_4_BIZ = 'Amptive for Business';
+  static const CONNECT_SELL = 'Connect, sell and grow';
+  static const SUB_PLAN = 'Subscription Plan';
+  static const COHOST_FEE_SETUP = 'Co-host Fee Setup';
+  static const SETTING_UP_ACCT = 'Setting up account';
+  static const ALMOST_THERE = 'Almost there';
+  static const WHAT_IS_COHOST_FEE = 'What is Co-host fee?';
+  static const COHOST_FEE_DESC = 'This is a fee you will charge creators for co-hosting their events or shows';
+  static const ALLOW_FREE_COHOSTING = "Click 'Setup later' to co-host for free.";
+  static const ADD_NEW = 'Add new';
+  static const AMTPIVE_CHARGES_4_COHOSTING = 'Amptive charges a 2% fee on payments from each creator';
+  static const SETUP_COHOST_FEE = 'Setup co-host fee';
+  static const SETUP_LATER = 'Setup later';
+  static const ALLOW_FREE_SUB = "Click 'Setup later' to allow free subscription for your listeners";
+  static const U_OWN_STAGE = 'You own the stage.';
+  static const CREATE_LIVE_SHOWS_ND_EVENTS = 'Create Live Audio Shows & Events';
+  static const HOST_CAPTIVATING_PROGRAMS = 'Host captivating live shows and events';
+  static const RECEIVE_GIFTS_4RM_AUDIENCE = 'Receive Gifts from Your Audience';
+  static const GET_SUPPORT_4RM_FANS = 'Get support from fans with live gifting during shows and events';
+  static const EARN_BY_COMPLETING_TASKS = 'Earn by Completing Community Tasks';
+  static const TAKE_TASK_ND_GET_REWARDS = 'Take on engaging community tasks and get rewarded';
+  static const ENABLE_SUB_4_UR_SHOW = 'Enable Subscriptions for Your Shows';
+  static const OFFER_XCLUSIVE_CONTENT = 'Offer exclusive live content and get paid monthly by your subscribers';
+  static const PARTNER_WITH_CREATORS = 'Sponsor & Partner with Creators';
+  static const COLLABORATE_WITH_CREATORS = 'Collaborate with creators to broaden your reach and engage their audience.';
+  static const SELL_TICKETS = 'Sell Tickets for Exclusive Events';
+  static const MONETIZE_EVENTS = 'Monetize your events with seamless ticket sales and exclusive access.';
+  static const HOST_BRANDED_AUDIO = 'Host Branded Live Audio Events';
+  static const ENGAGE_AUDIENCE = 'Engage your audience with live discussions tailored to your business.';
+  static const PROMOTE_UR_BUSINESS = 'Promote Your Business & Services';
+  static const SHOWCASE_UR_PRODUCTS = 'Showcase your products or services through audio experiences';
 
   static const ACCT_INFO = 'Account Information';
   static const SET_UP_ACCT_DETAILS = 'Setup your account details like your email address, phone number and country.';
   static const DEACTIVATE_ACCT = 'Deactivate your account';
+  static const CAT_SELECETED = 'Category selected';
+  static const SUB_FEE_SETUP = 'Subscription fee setup';
+  static const U_R_A_CREATOR = 'You are now a creator';
+  static const UR_BIZ_IS_READY = 'Your business is ready';
+  static const EXPAND_UR_BIZ = 'Expand your business and connect with potential customers.';
+  static const NOW_U_CAN_CREATE = 'Now, you can create live audio shows and events.';
 }

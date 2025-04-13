@@ -9,11 +9,11 @@ class ATColors {
 
   static Color get yellowColor => const Color(0xFFFFD700);
 
-  static Color get yellowColor1 => const Color(0xFFFED601);
+  static Color get hexFED601 => const Color(0xFFFED601);
 
   static Color get brandBlack => const Color(0xFF0D0D0D);
 
-  static Color get indicatorDark => const Color(0xFF252525);
+  static Color get hex252525 => const Color(0xFF252525);
 
   static Color get lightDark => const Color(0xFF535353);
 
@@ -33,7 +33,7 @@ class ATColors {
 
   static Color get authHintColor => const Color(0xFFB6B6B6);
 
-  static Color get authHintColor2 => const Color(0xFFCDCDCD);
+  static Color get hexCDCDCD => const Color(0xFFCDCDCD);
 
   static Color get hexD9D9D9 => const Color(0xFFD9D9D9);
 
@@ -41,7 +41,7 @@ class ATColors {
 
   static Color get green1 => const Color(0xFF009C51);
 
-  static Color get green2 => const Color(0xFF009C80);
+  static Color get hex009C80 => const Color(0xFF009C80);
 
   static Color get activeSwitch => const Color(0xFF0BE09B);
 
@@ -85,5 +85,13 @@ class ATColors {
 
   static Color get hexF79E1E => const Color(0XFFEECEA0);
 
+  static Color get hex2F2F2F => const Color(0XFF2F2F2F);
+
+  static Color get hex666666 => const Color(0XFF666666);
+
   static Color get hexEA5489 => const Color(0XFFEA5489);
+
+  static Color get hex23221C => const Color(0XFF23221C);
+
+  static Color get hex090909 => const Color(0XFF090909);
 }

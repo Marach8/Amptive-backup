@@ -36,7 +36,7 @@ class _DateOfBirthScreenState extends State<DateOfBirthScreen> {
     return ATAnnotatedRegion(
       child: Scaffold(
         backgroundColor: ATColors.brandBlack,
-        appBar: const AmptiveAppBar(),
+        appBar: const ATAppBar(),
         body: Padding(
           padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 20.h),
           child: Form(

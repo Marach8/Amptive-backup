@@ -1,20 +1,27 @@
+import 'package:amptive/src/utils/helpers/helper_functions/helper_functions.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../utils/constants/colors.dart';
-import 'custom_container_widget.dart';
 
 class ATDivider extends StatelessWidget {
   const ATDivider({
     super.key,
+    this.axis = AxisType.horizontal,
+    this.height
   });
 
+  final AxisType? axis;
+  final double? height;
+
   @override
-  Widget build(BuildContext context) {
-    return ATContainer(
-      color: ATColors.dimWhiteColor1,
-      height: 0.1.h,
-      width: double.infinity,
+  Widget build(context) {
+    final isHorizontal = axis == AxisType.horizontal;
+    return Container(
+      color: ATColors.white.withValues(alpha: 0.1),
+      height: isHorizontal ? 0.5 : height,
+      width: isHorizontal ? ATHelperFuncs.getScreenWidth(context) : 0.5,
       child: const SizedBox.shrink(),
     );
   }
 }
+
+enum AxisType {vertical, horizontal}

@@ -1,6 +1,5 @@
 import 'dart:io';
 import 'dart:typed_data';
-
 import 'package:amptive/src/bloc/authentication/general/auth_bloc.dart';
 import 'package:amptive/src/bloc/authentication/general/auth_states.dart';
 import 'package:flutter/cupertino.dart';
@@ -9,7 +8,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:image_picker/image_picker.dart';
-
 import '../../../../bloc/authentication/general/auth_events.dart';
 import '../../../../utils/constants/colors.dart';
 import '../../../../utils/constants/font_weights.dart';
@@ -32,10 +30,13 @@ class _AddPictureWidgetState extends State<AddPictureWidget> {
   //Image Picker function to get image from gallery
   Future getImageFromGallery() async {
     final pickedFile = await _picker.pickImage(source: ImageSource.gallery);
-
     await handlePickedFile(pickedFile);
+  }
 
-    // var croppedFile = await _cropImage(_image);
+  //Image Picker function to get image from camera
+  Future getImageFromCamera() async {
+    final pickedFile = await _picker.pickImage(source: ImageSource.camera);
+    await handlePickedFile(pickedFile);
   }
 
   Future<void> handlePickedFile(XFile? pickedFile) async {
@@ -52,13 +53,6 @@ class _AddPictureWidgetState extends State<AddPictureWidget> {
     }
   }
 
-//Image Picker function to get image from camera
-  Future getImageFromCamera() async {
-    final pickedFile = await _picker.pickImage(source: ImageSource.camera);
-    await handlePickedFile(pickedFile);
-
-  }
-
   Future showOptions() async {
     showCupertinoModalPopup(
       context: context,
@@ -66,7 +60,7 @@ class _AddPictureWidgetState extends State<AddPictureWidget> {
         actions: [
           CupertinoActionSheetAction(
             child: Text(
-              ATStrings.photoGallery,
+              ATStrings.PHOTO_GALLERY,
               textAlign: TextAlign.center,
               style: Theme.of(context).textTheme.headlineLarge?.copyWith(
                     color: ATColors.hex307FE2,
@@ -82,7 +76,7 @@ class _AddPictureWidgetState extends State<AddPictureWidget> {
           ),
           CupertinoActionSheetAction(
             child: Text(
-              ATStrings.camera,
+              ATStrings.CAMERA,
               textAlign: TextAlign.center,
               style: Theme.of(context).textTheme.headlineLarge?.copyWith(
                     color: ATColors.hex307FE2,
@@ -133,7 +127,7 @@ class _AddPictureWidgetState extends State<AddPictureWidget> {
             ATStrings.useYOurFavImage,
             textAlign: TextAlign.start,
             style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                  color: ATColors.authHintColor2,
+                  color: ATColors.hexCDCDCD,
                 ),
           ),
           BlocBuilder<AmptiveAuthBloc, AmptiveAuthState>(

@@ -60,4 +60,16 @@ class ATRoutes {
   static const SELECT_COUNTRY_SCREEN = 'select_country_screen';
   static const ACCT_INFO_SCREEN = 'account_infomation_screen';
   static const ACCT_SCREEN = 'account_screen';
+  static const EDIT_PROFILE = 'edit_profile';
+  static const PROFILE_BG_CROP = 'profile_bg_crop';
+  static const EDIT_NAME = 'edit_name';
+  static const EDIT_USERNAME = 'edit_username';
+  static const EDIT_BIO = 'edit_bio';
+  static const EDIT_SOCIALS = 'edit_socials';
+  static const SWITCH_ACCT = 'switch_account';
+  static const SELECTED_ACCT_LANDING = 'creator_landing';
+  static const SELECT_CAT = 'select_category';
+  static const CREATOR_SUB_PLAN = 'creator_sub_plan';
+  static const CO_HOST_FEE_SETUP = 'co_host_fee_setup';
+  static const CREATOR_SUCCESS = 'creator_success';
 }

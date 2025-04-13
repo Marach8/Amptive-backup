@@ -39,7 +39,7 @@ class _ATCreateShowSuccessScreenState
   Widget build(BuildContext context) {
     return ATAnnotatedRegion(
       child: Scaffold(
-        appBar: AmptiveAppBar(
+        appBar: ATAppBar(
           leadingWidth: 20,
           leading: GestureDetector(
               onTap: () {
