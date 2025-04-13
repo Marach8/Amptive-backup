@@ -36,7 +36,7 @@ class ATImgStrings{
   static const GROUP_ICON = '$_svgPath/Group_fill.svg';
   static const TOP_CREATOR_BADGE = '$_svgPath/RANK BADGES.svg';
   static const SUBSCRIBER_BADGE = '$_svgPath/Subscribers badge.svg';
-  static const BIZ_ACCT_LOGO = '$_svgPath/Simplification (1).svg';
+  static const BIZ_ACCT_LOGO = '$_svgPath/Simplification (3).svg';
   static const CREATOR_ACCT_LOGO = '$_svgPath/Simplification.svg';
   // static const CREATOR_MIC = '$_svgPath/creator-microphone.svg';
   // static const CREATOR_GIF = '$_svgPath/creatorgif.svg';
@@ -76,4 +76,7 @@ class ATImgStrings{
   static const CREATOR_GLOBE = '$_pngPath/internet.png';
   static const CREATOR_LOCK = '$_pngPath/lock with heart.png';
   static const INFO_ICON = '$_pngPath/price tag.png';
+  static const BIZ_ARROW = '$_pngPath/arrow decor.png';
+  static const BIZ_TICKETS = '$_pngPath/interface design window.png';
+  static const BIZ_THUNDER = '$_pngPath/lightning.png';
 }

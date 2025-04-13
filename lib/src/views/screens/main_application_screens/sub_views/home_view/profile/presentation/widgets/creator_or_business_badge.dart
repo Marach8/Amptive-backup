@@ -4,14 +4,16 @@ import 'package:amptive/src/utils/constants/strings/other_strings.dart';
 import 'package:amptive/src/views/widgets/common_widgets/custom_container_widget.dart';
 import 'package:flutter/material.dart';
 
-class CreatorBadge extends StatelessWidget {
-  const CreatorBadge({
+class CreatorOrBizBadge extends StatelessWidget {
+  const CreatorOrBizBadge({
     super.key,
     this.width, 
     this.height,
-    this.radius
+    this.radius,
+    this.isCreator = true
   });
   final double? height, width, radius;
+  final bool? isCreator;
 
   @override
   Widget build(context) {
@@ -22,7 +24,7 @@ class CreatorBadge extends StatelessWidget {
       padding: const EdgeInsets.fromLTRB(5, 0, 5, 1),
       border: Border.all(color: ATColors.black, width: 2),
       child: Text(
-        ATStrings.CREATOR.toUpperCase(),
+        (isCreator ?? false ? ATStrings.CREATOR : ATStrings.BUSINESS).toUpperCase(),
         style: Theme.of(context).textTheme.bodyMedium?.copyWith(
           fontSize: ATFontSizes.size10,
           color: ATColors.black

@@ -5,7 +5,7 @@ class ATContainer extends StatelessWidget {
   final Color? color;
   final double? height, width, radius;
   final BoxBorder? border;
-  final Widget child;
+  final Widget? child;
   final BoxShape? boxShape;
   final BoxConstraints? constraints;
   final Gradient? gradient;
@@ -38,7 +38,7 @@ class ATContainer extends StatelessWidget {
     this.duration,
     this.onTap,
     this.boxShadow,
-    required this.child
+    this.child
   });
 
   @override

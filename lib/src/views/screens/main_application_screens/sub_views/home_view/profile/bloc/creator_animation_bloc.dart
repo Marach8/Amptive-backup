@@ -16,8 +16,8 @@ class CreatorLandingAnimationBloc extends Cubit<List<bool>>{
 
 
 
-class CreatorSuccessAnimationBloc extends Cubit<List<bool>>{
-  CreatorSuccessAnimationBloc(): super(List.generate(5,(_) => false));
+class SwitchAcctSuccessAnimationBloc extends Cubit<List<bool>>{
+  SwitchAcctSuccessAnimationBloc(): super(List.generate(5,(_) => false));
   
   void triggerNext(int newIndex)async{
     if (newIndex < 3) {
@@ -35,7 +35,7 @@ class CreatorSuccessAnimationBloc extends Cubit<List<bool>>{
   void showSuccesState() async{
     state[3] = true;
     emit(List.from(state));
-    await Future.delayed(const Duration(milliseconds: 100));
+    await Future.delayed(const Duration(milliseconds: 50));
     state[4] = true;
     emit(List.from(state));
   }

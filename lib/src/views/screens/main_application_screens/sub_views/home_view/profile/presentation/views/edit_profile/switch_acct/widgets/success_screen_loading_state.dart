@@ -1,20 +1,22 @@
-import 'package:amptive/src/utils/constants/colors.dart';
 import 'package:amptive/src/utils/constants/font_sizes.dart';
 import 'package:amptive/src/utils/constants/strings/other_strings.dart';
-import 'package:amptive/src/utils/helpers/helper_functions/helper_functions.dart';
 import 'package:amptive/src/views/screens/main_application_screens/sub_views/home_view/profile/bloc/profile_bloc_export.dart';
-import 'package:amptive/src/views/widgets/common_widgets/annotated_region__widget.dart';
-import 'package:amptive/src/views/widgets/common_widgets/elevated_button_widget.dart';
+import 'package:amptive/src/views/screens/main_application_screens/sub_views/home_view/profile/presentation/views/profile_views_export.dart';
 import 'package:amptive/src/views/widgets/common_widgets/loading_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+
 class LoadingState extends StatelessWidget {
   const LoadingState({super.key});
 
+  static const creatorList = [ATStrings.CAT_SELECETED, ATStrings.SUB_FEE_SETUP, ATStrings.COHOST_FEE_SETUP];
+  static const bizList = [ATStrings.CAT_SELECETED, ATStrings.SETTING_UP_ACCT, ATStrings.ALMOST_THERE];
+
   @override
   Widget build(BuildContext context) {
-    final list = [ATStrings.CAT_SELECETED, ATStrings.SUB_FEE_SETUP, ATStrings.COHOST_FEE_SETUP];
+    final isCreator = AccountStatusProvider.of(context)?.isCreator ?? false;
+    
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
@@ -22,10 +24,10 @@ class LoadingState extends StatelessWidget {
           height: 30,
           child: Stack(
             alignment: Alignment.center,
-            children: list.map(
+            children: (isCreator ? creatorList : bizList).map(
               (item){
-                final index = list.indexOf(item);
-                return BlocSelector<CreatorSuccessAnimationBloc, List<bool>, bool>(
+                final index = (isCreator ? creatorList : bizList).indexOf(item);
+                return BlocSelector<SwitchAcctSuccessAnimationBloc, List<bool>, bool>(
                   selector: (state) => state.elementAt(index),
                   builder: (_, isVisible) {
                     return AnimatedPositioned(
@@ -35,7 +37,7 @@ class LoadingState extends StatelessWidget {
                       onEnd: () => isVisible ? 
                         Future.delayed(
                           const Duration(milliseconds: 2500),
-                          () => context.mounted ? context.read<CreatorSuccessAnimationBloc>().triggerNext(index + 1) : {}
+                          () => context.mounted ? context.read<SwitchAcctSuccessAnimationBloc>().triggerNext(index + 1) : {}
                         ) : null,
                       child: Row(
                         mainAxisSize: MainAxisSize.min,

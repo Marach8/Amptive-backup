@@ -70,7 +70,7 @@ List<SingleChildWidget> providers() {
     BlocProvider(create: (_) => HoursInADayBloc()),
     BlocProvider(create: (_) => ProfileTabViewBloc()),
     BlocProvider(create: (_) => CreatorLandingAnimationBloc()),
-    BlocProvider(create: (_) => CreatorSuccessAnimationBloc()),
+    BlocProvider(create: (_) => SwitchAcctSuccessAnimationBloc()),
     BlocProvider(create: (_) => SubPlanSetupBloc()),
     BlocProvider(create: (_) => CohostFeeSetupBloc()),
   ];

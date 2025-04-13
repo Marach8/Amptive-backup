@@ -76,7 +76,10 @@ class SwitchAccountScreen extends StatelessWidget {
                 onPressed: index == null ? null 
                   : (){
                     context.read<CreatorLandingAnimationBloc>().reset();
-                    context.pushNamed(ATRoutes.CREATOR_LANDING);
+                    context.pushNamed(
+                      ATRoutes.SELECTED_ACCT_LANDING,
+                      extra: index == 0 ? true : false
+                    );
                   },
                 btnTitle: ATStrings.PROCEED,
               ),

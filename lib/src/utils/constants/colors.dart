@@ -90,4 +90,8 @@ class ATColors {
   static Color get hex666666 => const Color(0XFF666666);
 
   static Color get hexEA5489 => const Color(0XFFEA5489);
+
+  static Color get hex23221C => const Color(0XFF23221C);
+
+  static Color get hex090909 => const Color(0XFF090909);
 }

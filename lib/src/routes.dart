@@ -14,7 +14,6 @@ import 'package:amptive/src/views/screens/main_application_screens/sub_views/hom
 import 'package:amptive/src/views/screens/main_application_screens/sub_views/home_view/home_sub_view/go_live_views/show/create_show_form_screen.dart';
 import 'package:amptive/src/views/screens/main_application_screens/dashboard_screen.dart';
 import 'package:amptive/src/views/screens/main_application_screens/sub_views/home_view/home_sub_view/go_live_views/main_go_live_screen.dart';
-import 'package:amptive/src/views/screens/main_application_screens/sub_views/home_view/profile/presentation/views/edit_profile/switch_acct/views/creator_success.dart';
 import 'package:amptive/src/views/screens/main_application_screens/sub_views/home_view/profile/presentation/views/profile_views_export.dart';
 import 'package:amptive/src/views/screens/main_application_screens/sub_views/home_view/home_sub_view/scheduled_screen.dart';
 import 'package:amptive/src/views/screens/post_authentication_screens/crop_image_screen.dart';
@@ -274,19 +273,19 @@ final GoRouter amptiveAppRouter = GoRouter(
                 builder: (_, state) => const SwitchAccountScreen()
               ),
               GoRoute(
-                name: ATRoutes.CREATOR_LANDING,
-                path: ATRoutes.CREATOR_LANDING,
-                builder: (_, state) => const CreatorLandingScreen()
+                name: ATRoutes.SELECTED_ACCT_LANDING,
+                path: ATRoutes.SELECTED_ACCT_LANDING,
+                builder: (_, state) => SelectedAcctLandingScreen(isCreator: state.extra as bool)
               ),
               GoRoute(
                 name: ATRoutes.SELECT_CAT,
                 path: ATRoutes.SELECT_CAT,
-                builder: (_, state) => const SelectCategoryScreen()
+                builder: (_, __) => const SelectCategoryScreen()
               ),
               GoRoute(
                 name: ATRoutes.CREATOR_SUB_PLAN,
                 path: ATRoutes.CREATOR_SUB_PLAN,
-                builder: (_, state) => const CreatorSubPlanScreen()
+                builder: (_, __) => const CreatorSubPlanScreen()
               ),
               GoRoute(
                 name: ATRoutes.CO_HOST_FEE_SETUP,

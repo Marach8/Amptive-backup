@@ -2,6 +2,7 @@ import 'package:amptive/src/utils/constants/colors.dart';
 import 'package:amptive/src/utils/constants/font_sizes.dart';
 import 'package:amptive/src/utils/constants/strings/other_strings.dart';
 import 'package:amptive/src/utils/constants/strings/route_strings.dart';
+import 'package:amptive/src/views/screens/main_application_screens/sub_views/home_view/profile/presentation/profile_prez_export.dart';
 import 'package:amptive/src/views/widgets/common_widgets/annotated_region__widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/back_button.dart';
 import 'package:amptive/src/views/widgets/common_widgets/custom_container_widget.dart';
@@ -19,6 +20,7 @@ class SelectCategoryScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isCreator = AccountStatusProvider.of(context)?.isCreator ?? false;
     return ATAnnotatedRegion(
       child: Scaffold(     
         body: SafeArea(
@@ -46,7 +48,7 @@ class SelectCategoryScreen extends StatelessWidget {
                                   child: const ATRoundedBackBtn()
                                 ),
                                 Text(
-                                  ATStrings.AMPTIVE_4_CREATORS,
+                                  isCreator ? ATStrings.AMPTIVE_4_CREATORS : ATStrings.AMPTIVE_4_BIZ,
                                   style: Theme.of(context).textTheme.bodyMedium
                                 ),
                                 const Visibility(visible: false, child: ATRoundedBackBtn()),
@@ -75,12 +77,19 @@ class SelectCategoryScreen extends StatelessWidget {
                             padding: const EdgeInsets.fromLTRB(13, 0, 15, 0),
                             child: ATTextFormField(
                               onChanged: (input){},
+                              fillColor: ATColors.white.withValues(alpha: 0.1),
+                              textInputAction: TextInputAction.done,
+                              disableBlueBorder: true,
+                              hintText: ATStrings.SEARCH_CAT,
+                              contentPadding: EdgeInsets.zero,
+                              enabledBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(14),
+                                borderSide: BorderSide(color: ATColors.trsprnt)
+                              ),
                               prefixIcon: const Padding(
                                 padding: EdgeInsets.only(left: 10),
                                 child: Icon(Iconsax.search_normal_14),
                               ),
-                              hintText: ATStrings.SEARCH_CAT,
-                              contentPadding: EdgeInsets.zero,
                             ),
                           )
                         ],
