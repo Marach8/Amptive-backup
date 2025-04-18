@@ -1,0 +1,4 @@
+export 'data/wallet_data_export.dart';
+export 'bloc/wallet_bloc_export.dart';
+export 'presentation/views/wallet_views_export.dart';
+export 'presentation/widgets/wallets_widget_export.dart';

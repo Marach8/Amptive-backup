@@ -53,6 +53,11 @@ class ATStrings{
   static const CAT_WONT_BE_SHOWN = 'Selected category will not be shown on your public profile and can be changed anytime.';
   static const SEARCH_CAT = 'Search for a category';
   static const PROCEED = 'Proceed';
+  static const UR_WALLET = 'Your Wallet';
+  static const UR_WAY = 'Your Way';
+  static const SETUP_WALLET = 'Setup your Amptive wallet';
+  static const NO_WALLET_NO_EARNINGS = 'No Wallet, No Earnings';
+  static const SETUP_UR_WALLET = 'Set up your wallet to receive payments from events, gifts, and subscriptions.';
   static const ADDING_EMAIL = 'Adding Email Address...';
   static const CHANGING_EMAIL = 'Updating Email Address...';
   static const CHANGING_PHONE = 'Updating Phone Number...';
@@ -83,6 +88,7 @@ class ATStrings{
   static const COUNTRY = 'Country';
   static const PROFILE = 'Profile';
   static const SELECT_COUNTRY = 'Select Country';
+  static const BEGIN_SETUP = 'Begin setup';
 
   static const youEnteredInvalidCode = 'You entered an invalid code. ';
   static const passwordMustBeAtleast8 = 'Your password must be at least 8 characters';
