@@ -7,7 +7,7 @@ import 'package:amptive/src/views/widgets/other_widgets/main_application_widgets
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
-import '../../app.dart';
+import 'package:amptive/main.dart';
 import 'dart:developer' as marach show log;
 
 

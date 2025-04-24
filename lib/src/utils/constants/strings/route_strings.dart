@@ -29,7 +29,7 @@ class ATRoutes {
 
   //MAIN APPLICATION
   static const homeScreen = "home_screen";
-  static const showDetailedScreen = "show_detailed_screen";
+  static const SHOW_DETAILED = "show_detailed_screen";
   static const EVENT_DETAILED_SCREEN = "event_detailed_screen";
   static const SCHEDULED_EVENTS_OR_SHOWS_SCREEN = 'scheduled_events_or_shows';
   static const SUBSCRIBED_EVENTS_OR_SHOWS_SCREEN = 'subscribed_events_or_shows';
@@ -66,10 +66,11 @@ class ATRoutes {
   static const EDIT_USERNAME = 'edit_username';
   static const EDIT_BIO = 'edit_bio';
   static const EDIT_SOCIALS = 'edit_socials';
-  static const SWITCH_ACCT = 'switch_account';
-  static const SELECTED_ACCT_LANDING = 'creator_landing';
+  static const SELECT_ACCT_TYPE = 'switch_account';
+  static const SELECTED_ACCT = 'creator_landing';
   static const SELECT_CAT = 'select_category';
   static const CREATOR_SUB_PLAN = 'creator_sub_plan';
   static const CO_HOST_FEE_SETUP = 'co_host_fee_setup';
   static const CREATOR_SUCCESS = 'creator_success';
+  static const WALLET_LANDING = 'wallet_landing';
 }

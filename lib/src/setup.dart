@@ -11,9 +11,11 @@ import 'package:amptive/src/services/authentication_service.dart';
 import 'package:amptive/src/services/create_show/create_show_service.dart';
 import 'package:amptive/src/services/go_live_service/go_live_service.dart' hide getHostList;
 import 'package:amptive/src/services/preference_service.dart';
-import 'package:amptive/src/views/screens/main_application_screens/sub_views/home_view/profile/bloc/profile_bloc_export.dart';
+import 'package:amptive/src/views/features/main_app/profile/bloc/profile_bloc_export.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
+import 'package:go_router/go_router.dart';
 import 'package:provider/single_child_widget.dart';
 import 'bloc/authentication/email/email_auth_bloc.dart';
 import 'bloc/authentication/general/auth_bloc.dart';
@@ -69,9 +71,37 @@ List<SingleChildWidget> providers() {
     BlocProvider(create: (_) => DayViewHeadingBloc()),
     BlocProvider(create: (_) => HoursInADayBloc()),
     BlocProvider(create: (_) => ProfileTabViewBloc()),
-    BlocProvider(create: (_) => CreatorLandingAnimationBloc()),
+    BlocProvider(create: (_) => AcctTypeLandingAnimBloc()),
     BlocProvider(create: (_) => SwitchAcctSuccessAnimationBloc()),
     BlocProvider(create: (_) => SubPlanSetupBloc()),
     BlocProvider(create: (_) => CohostFeeSetupBloc()),
+    BlocProvider(create: (_) => AccountTypeBloc()),
   ];
+}
+
+
+
+
+class ATRouteTransition extends CustomTransitionPage {
+  final Offset? beginOffset;
+  ATRouteTransition({
+    required super.child,
+    this.beginOffset
+  }) : super(
+    transitionsBuilder: (_, animation, __, child) {
+      var tween =  Tween(
+        begin: beginOffset ?? const Offset(1.0, 0.0), 
+        end: Offset.zero
+      ).animate(
+        CurvedAnimation(parent: animation, curve: Curves.easeIn)
+      );
+
+      return SlideTransition(
+        position: tween,
+        child: child,
+      );
+    },
+    reverseTransitionDuration: const Duration(milliseconds: 700),
+    transitionDuration: const Duration(milliseconds: 700),
+  );
 }

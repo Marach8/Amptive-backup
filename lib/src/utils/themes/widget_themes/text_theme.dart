@@ -7,12 +7,17 @@ class AmptiveTextTheme{
   const AmptiveTextTheme._();
 
   static TextTheme darkTextTheme = TextTheme( 
- 
     displayMedium: TextStyle(
       color: ATColors.white,
       fontSize: ATFontSizes.size25,
       fontWeight: ATFontWeights.w700,
-      letterSpacing: 0.1,
+      overflow: TextOverflow.ellipsis
+    ),
+
+    displaySmall: TextStyle(
+      color: ATColors.white,
+      fontSize: ATFontSizes.size24,
+      fontWeight: ATFontWeights.w600,
       overflow: TextOverflow.ellipsis
     ),
 

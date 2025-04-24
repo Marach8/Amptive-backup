@@ -44,7 +44,9 @@ class AmptiveHomeViewWidget extends StatelessWidget {
           
             actions: [
               GestureDetector(
-                onTap: (){},
+                onTap: (){
+                  context.pushNamed(ATRoutes.WALLET_LANDING);
+                },
                 child: Stack(
                   children: [
                     const ATImgLoader(
@@ -109,7 +111,7 @@ class AmptiveHomeViewWidget extends StatelessWidget {
               (_) => Padding(
                 padding: const EdgeInsets.fromLTRB(15, 0, 15, 30),
                 child: GestureDetector(
-                  onTap: () => context.pushNamed(ATRoutes.showDetailedScreen),
+                  onTap: () => context.pushNamed(ATRoutes.SHOW_DETAILED),
                   child: const ATShowOrEventInfo()
                 ),
               )
