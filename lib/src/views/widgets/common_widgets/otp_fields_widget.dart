@@ -1,0 +1,142 @@
+import 'package:amptive/src/utils/constants/colors.dart';
+import 'package:flutter/material.dart';
+import '../../../utils/constants/font_weights.dart';
+import '../../../utils/constants/strings/other_strings.dart';
+
+
+class ATOTPFieldsWidget extends StatefulWidget {
+  const ATOTPFieldsWidget({
+    super.key,
+    required this.onPinComplete,
+    this.spacing = 10,
+    this.noOfFields = 4,
+    this.height = 50,
+    this.width = 57,
+    this.mainAxisAlignment = MainAxisAlignment.start
+  });
+
+  final Future<bool> Function(String pin) onPinComplete;
+  final double spacing, height, width;
+  final int noOfFields;
+  final MainAxisAlignment mainAxisAlignment;
+
+  @override
+  State<ATOTPFieldsWidget> createState() => _ATOTPFieldsWidgetState();
+}
+
+class _ATOTPFieldsWidgetState extends State<ATOTPFieldsWidget> {
+  List<String> pins = [];
+  bool isValidated = true;
+
+  @override 
+  void initState(){
+    super.initState();
+    pins = List.filled(widget.noOfFields, '');
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      mainAxisAlignment: widget.mainAxisAlignment,
+      spacing: widget.spacing,
+      children: List.generate(
+        widget.noOfFields,
+        (index){
+          return StatefulBuilder(
+            builder: (_, setter) {
+              return SizedBox(
+                height: widget.height, width: widget.width,
+                child: _OTPField(
+                  isValidated: isValidated,
+                  onChanged: (value)async{
+                    final parsedValue = int.tryParse(value);
+                    if(parsedValue != null){pins[index] = value;}
+                    else{pins[index] = '';}
+                
+                    if (pins.every((pin) => pin.isNotEmpty)) {
+                      FocusScope.of(context).unfocus();
+                      final result = await widget.onPinComplete(pins.join());
+                      setter(() => isValidated = result);
+                    }
+                
+                    else if (value.isNotEmpty && index != 3) {
+                      FocusScope.of(context).nextFocus();
+                    }
+                    else if (value.isEmpty && index != 0) {
+                      FocusScope.of(context).previousFocus();
+                    }
+                  },
+                ),
+              );
+            }
+          );
+        }
+      ),
+    );
+  }
+}
+
+class _OTPField extends StatelessWidget {
+  const _OTPField({
+    required this.onChanged,
+    required this.isValidated
+  });
+
+  final void Function(String)? onChanged;
+  final bool isValidated;
+
+  @override
+  Widget build(context) {
+    return TextFormField(
+      autofocus: true,
+      onChanged: onChanged,
+      keyboardType: TextInputType.number,
+      maxLength: 1,
+      textAlignVertical: TextAlignVertical.center,
+      cursorColor: ATColors.hex307FE2,
+      decoration: InputDecoration(
+        contentPadding: const EdgeInsets.fromLTRB(16, 12, 16, 12),
+        floatingLabelBehavior: FloatingLabelBehavior.never,
+        counterText: ATStrings.empty,
+        error: isValidated ? null : const SizedBox.shrink(),
+        label: Container(
+          alignment: Alignment.center,
+          padding: const EdgeInsets.only(top: 15),
+          child: const Text(ATStrings.hyphen),
+        ),
+        labelStyle:Theme.of(context).textTheme.headlineMedium?.copyWith(
+          fontWeight: ATFontWeights.w400,
+        ),
+        filled: true,
+        fillColor: ATColors.hex9E9E9E.withOpacity(0.3),
+        focusedBorder: OutlineInputBorder(
+          borderSide: BorderSide(
+            width: 2,
+            color: ATColors.hex307FE2,
+          ),
+          borderRadius: BorderRadius.circular(14),
+        ),
+        focusedErrorBorder: OutlineInputBorder(
+          borderSide: BorderSide(
+            width: 2,
+            color: ATColors.textRedColor,
+          ),
+          borderRadius: BorderRadius.circular(14),
+        ),
+        errorBorder: OutlineInputBorder(
+          borderSide: BorderSide(color: ATColors.textRedColor),
+          borderRadius: BorderRadius.circular(14),
+        ),
+        border: OutlineInputBorder(
+          borderSide: BorderSide(color: ATColors.trsprnt),
+          borderRadius: BorderRadius.circular(14),
+        ),
+      ),
+      style:Theme.of(context).textTheme.headlineMedium?.copyWith(
+        fontWeight: ATFontWeights.w400,
+      ),
+      textAlign: TextAlign.center,
+    );
+  }
+}

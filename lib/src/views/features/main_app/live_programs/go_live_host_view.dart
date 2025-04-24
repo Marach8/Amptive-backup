@@ -24,7 +24,6 @@ import '../../../../services/go_live_service/go_live_service.dart';
 import '../../../../utils/constants/colors.dart';
 import '../../../../utils/constants/strings/other_strings.dart';
 import '../../../../utils/dialogs/go_live/go_live_add_cohost_dialog.dart';
-import '../../../widgets/other_widgets/main_application_widgets/widgets_in_go_live/go_live_header_widget.dart';
 import '../../../widgets/other_widgets/main_application_widgets/widgets_in_go_live/go_live_host_widget_for_host_view.dart';
 import '../../../widgets/other_widgets/main_application_widgets/widgets_in_go_live/go_live_notification_widget.dart';
 

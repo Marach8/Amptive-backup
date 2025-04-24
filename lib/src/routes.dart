@@ -17,7 +17,9 @@ import 'package:amptive/src/views/features/main_app/dashboard_screen.dart';
 import 'package:amptive/src/views/features/main_app/go_live/main_go_live_screen.dart';
 import 'package:amptive/src/views/features/main_app/profile/presentation/views/profile_views_export.dart';
 import 'package:amptive/src/views/features/main_app/scheduled_screen.dart';
+import 'package:amptive/src/views/features/main_app/wallet/presentation/views/security_question_screen.dart';
 import 'package:amptive/src/views/features/main_app/wallet/presentation/views/wallet_landing_screen.dart';
+import 'package:amptive/src/views/features/main_app/wallet/presentation/views/wallet_pin_setup_screen.dart';
 import 'package:amptive/src/views/features/post_auth/crop_image_screen.dart';
 import 'package:amptive/src/views/features/post_auth/pre_homepage.dart';
 import 'package:amptive/src/views/features/post_auth/preference_screen.dart';
@@ -75,9 +77,9 @@ final GoRouter amptiveAppRouter = GoRouter(
       name: ATRoutes.OTP_SCREEN,
       path: ATRoutes.OTP_SCREEN.addSlash,
       builder: (_, state) {
-        final params = state.extra as List<String?>;
-        final emailOrPhone = params.first;
-        final title = params.last;
+        final params = state.extra as List<String?>?;
+        final emailOrPhone = params?.first;
+        final title = params?.last;
         return ATOTPScreen(emailOrPhone: emailOrPhone ?? '', title: title ?? '');
       }
     ),
@@ -145,7 +147,23 @@ final GoRouter amptiveAppRouter = GoRouter(
             path: ATRoutes.WALLET_LANDING.addSlash,
             pageBuilder: (_, __) => ATRouteTransition(
               child: const ATWalletLandingScreen()
-            )
+            ),
+            routes: [
+              GoRoute(
+                name: ATRoutes.WALLET_PIN_SETUP,
+                path: ATRoutes.WALLET_PIN_SETUP.addSlash,
+                pageBuilder: (_, __) => ATRouteTransition(
+                  child: const ATWalletPinSetupScreen()
+                ),
+              ),
+              GoRoute(
+                name: ATRoutes.SECURITY_QUEST,
+                path: ATRoutes.SECURITY_QUEST.addSlash,
+                pageBuilder: (_, __) => ATRouteTransition(
+                  child: const ATSecurityQuestionScreen()
+                ),
+              ),
+            ]
           ),
           
           GoRoute(

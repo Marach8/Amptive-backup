@@ -129,6 +129,8 @@ class ATStrings{
   static const DISABLED_HAND_RAISING = "You disabled hand raising";
   static const MSG_TITLE = 'message title';
   static const MSG_CONTENT = 'message content';
+  static const ALLOW_FACE_ID = 'Allow Facial Identification';
+  static const ALLOW_FACE_ID_DESC = 'Amptive strongly recommends Face ID for added security. Do you wish to proceed?';
 
 
   static const addProfilePicture = "Add a profile picture";
@@ -219,6 +221,12 @@ class ATStrings{
   static const POPULAR_CREATORS = 'Popular Creators';
   static const SPOTLIGHT = 'Spotlight';
   static const VIEW_ALL = 'View all';
+  static const WALLET_SETUP = 'Wallet Setup';
+  static const ENTER_4_DIGIT_PIN = 'Enter a 4-digit PIN';
+  static const PIN_NEEDED_4_TXNS = 'This pin is needed for all transactions';
+  static const ENABLE_BIOMETRICS = 'Enable Biometric Authentication';
+  static const RE_ENTER_PIN = 'Re-enter pin';
+  static const ADD_SECURITY_QUESTION = 'Add security question';
   static const MENU = 'Menu';
   static const VIEW_CALENDER = 'View calender';
   static const CALENDER = 'Calender';

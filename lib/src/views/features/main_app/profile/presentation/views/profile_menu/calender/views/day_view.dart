@@ -171,9 +171,9 @@ class _CurrentTimeIndicatorState extends State<CurrentTimeIndicator> {
           children: [
             Text(
               DateFormat.jm().format(_currentTime),
-              style: TextStyle(color: Colors.green),
+              style: const TextStyle(color: Colors.green),
             ),
-            Expanded(
+            const Expanded(
               child: Divider(color: Colors.green),
             ),
           ],

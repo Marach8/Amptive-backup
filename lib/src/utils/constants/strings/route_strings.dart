@@ -73,4 +73,6 @@ class ATRoutes {
   static const CO_HOST_FEE_SETUP = 'co_host_fee_setup';
   static const CREATOR_SUCCESS = 'creator_success';
   static const WALLET_LANDING = 'wallet_landing';
+  static const WALLET_PIN_SETUP = 'wallet_pin_setup';
+  static const SECURITY_QUEST = 'security_question';
 }

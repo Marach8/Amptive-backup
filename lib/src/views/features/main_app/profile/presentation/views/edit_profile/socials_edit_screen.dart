@@ -78,8 +78,6 @@ class _EditSocialsScreenState extends State<EditSocialsScreen> {
         );
     }
 
-    log(hintText);
-
     return ATAnnotatedRegion(
       child: Scaffold(
         appBar: ATAppBar(

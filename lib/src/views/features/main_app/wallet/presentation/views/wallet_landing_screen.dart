@@ -3,6 +3,7 @@ import 'package:amptive/src/utils/constants/font_sizes.dart';
 import 'package:amptive/src/utils/constants/font_weights.dart';
 import 'package:amptive/src/utils/constants/strings/image_strings.dart';
 import 'package:amptive/src/utils/constants/strings/other_strings.dart';
+import 'package:amptive/src/utils/constants/strings/route_strings.dart';
 import 'package:amptive/src/views/features/main_app/wallet/bloc/wallet_landing_anim_bloc.dart';
 import 'package:amptive/src/views/widgets/common_widgets/annotated_region__widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/app_bar_widget.dart';
@@ -12,6 +13,7 @@ import 'package:amptive/src/views/widgets/common_widgets/elevated_button_widget.
 import 'package:amptive/src/views/widgets/common_widgets/image_loader_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 
 class ATWalletLandingScreen extends StatelessWidget {
   const ATWalletLandingScreen({super.key});
@@ -135,7 +137,7 @@ class ATWalletLandingScreen extends StatelessWidget {
                             )
                           ),
                           ATPlainElevatedBtn(
-                            onPressed: (){},
+                            onPressed: (){context.pushReplacementNamed(ATRoutes.WALLET_PIN_SETUP);},
                             btnTitle: ATStrings.BEGIN_SETUP,
                           ),
                         ],
