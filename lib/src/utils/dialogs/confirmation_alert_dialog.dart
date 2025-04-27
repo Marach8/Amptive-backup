@@ -8,7 +8,6 @@ import 'package:amptive/src/views/widgets/common_widgets/elevated_button_widget.
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:go_router/go_router.dart';
-
 import '../../views/widgets/common_widgets/custom_container_widget.dart';
 import '../../views/widgets/common_widgets/image_loader_widget.dart';
 
@@ -50,8 +49,7 @@ Future<bool?> showConfirmationDialog({
           ),
           const ATDivider(),
           Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            spacing: 30,
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               GestureDetector(
                 onTap: () => context.pop(true),

@@ -45,7 +45,8 @@ class AmptiveHomeViewWidget extends StatelessWidget {
             actions: [
               GestureDetector(
                 onTap: (){
-                  context.pushNamed(ATRoutes.WALLET_LANDING);
+                  context.pushNamed(ATRoutes.WALLET);
+                  //context.pushNamed(ATRoutes.WALLET_LANDING);
                 },
                 child: Stack(
                   children: [

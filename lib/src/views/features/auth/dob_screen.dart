@@ -11,7 +11,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
-
 import '../../../bloc/authentication/general/auth_bloc.dart';
 import '../../../bloc/authentication/general/auth_states.dart';
 import '../../widgets/common_widgets/app_bar_widget.dart';
@@ -174,7 +173,7 @@ class _DateOfBirthScreenState extends State<DateOfBirthScreen> {
                   children: <Widget>[
                     CupertinoButton(
                       child: Text(
-                        ATStrings.done,
+                        ATStrings.DONE,
                         style: GoogleFonts.inter(
                             color: ATColors.white,
                             fontWeight: FontWeight.normal,

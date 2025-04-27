@@ -75,4 +75,6 @@ class ATRoutes {
   static const WALLET_LANDING = 'wallet_landing';
   static const WALLET_PIN_SETUP = 'wallet_pin_setup';
   static const SECURITY_QUEST = 'security_question';
+  static const WALLET_CREATION_ANIM = 'wallet_creation_animation';
+  static const WALLET = 'wallet';
 }

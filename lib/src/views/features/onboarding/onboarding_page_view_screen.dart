@@ -81,7 +81,7 @@ class _AmptiveOnboardingScreenState extends State<AmptiveOnboardingScreen> {
                       dotHeight: 10.h,
                       dotWidth: 10.w,
                       activeDotColor: ATColors.hexD9D9D9,
-                      dotColor: ATColors.inactiveDotColor,
+                      dotColor: ATColors.hex5B5B5B,
                     ),
                   ),
                   Gap(80.r),

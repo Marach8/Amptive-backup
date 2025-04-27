@@ -4,7 +4,9 @@ import 'package:amptive/src/utils/constants/font_weights.dart';
 import 'package:amptive/src/utils/constants/strings/image_strings.dart';
 import 'package:amptive/src/utils/constants/strings/other_strings.dart';
 import 'package:amptive/src/utils/constants/strings/route_strings.dart';
+import 'package:amptive/src/utils/helpers/helper_functions/helper_functions.dart';
 import 'package:amptive/src/views/features/main_app/wallet/bloc/wallet_landing_anim_bloc.dart';
+import 'package:amptive/src/views/widgets/animation_widgets/common_animation_widgets/animated_align_widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/annotated_region__widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/app_bar_widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/back_button.dart';
@@ -48,7 +50,7 @@ class ATWalletLandingScreen extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     BlocSelector<WalletLandingAnimBloc, List<bool>, bool>(
-                      selector: (state) => state.last,
+                      selector: (state) => state.elementAt(2),
                       builder: (_, isDone) {
                         return AnimatedOpacity(
                           duration: const Duration(milliseconds: 500),
@@ -75,7 +77,7 @@ class ATWalletLandingScreen extends StatelessWidget {
                     ),
 
                     BlocSelector<WalletLandingAnimBloc, List<bool>, bool>(
-                      selector: (state) => state.last,
+                      selector: (state) => state.elementAt(2),
                       builder: (_, isDone) {
                         if(isDone) return const SizedBox.shrink();
                         return Padding(
@@ -93,58 +95,69 @@ class ATWalletLandingScreen extends StatelessWidget {
                 )
               ),
 
-              bottomNavigationBar: Padding(
-                padding: const EdgeInsets.fromLTRB(15, 5, 15, 10),
-                child: BlocSelector<WalletLandingAnimBloc, List<bool>, bool>(
-                  selector: (state) => state.last,
-                  builder: (_, isDone) {
-                    return AnimatedOpacity(
-                      duration: const Duration(milliseconds: 500),
-                      opacity: isDone ? 1 : 0, curve: Curves.decelerate,
-                      child: Column(
-                        spacing:10,
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          ATContainer(
-                            radius: 14,
-                            padding: const EdgeInsets.fromLTRB(15, 10, 15, 10),
-                            color: ATColors.white.withValues(alpha: 0.05),
-                            child: Row(
-                              spacing: 10,
-                              children: [
-                                const ATImgLoader(imgPath: ATImgStrings.WARNING_ICON),
-                                Expanded(
-                                  child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        ATStrings.NO_WALLET_NO_EARNINGS,
-                                        style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                                          fontSize: ATFontSizes.size15
-                                        ),
+              bottomNavigationBar: Column(
+                spacing:10,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  BlocSelector<WalletLandingAnimBloc, List<bool>, bool>(
+                    selector: (state) => state.last,
+                    builder: (_, isDone) {
+                      return ATAnimatedAlign(
+                        condition: !isDone,
+                        startAlignment: Alignment(-ATHelperFuncs.getScreenWidth(context), 0),
+                        endAlignment: Alignment.center,
+                        child: ATContainer(
+                          radius: 14,
+                          padding: const EdgeInsets.fromLTRB(15, 10, 15, 10),
+                          width: ATHelperFuncs.getScreenWidth(context) * 0.92,
+                          color: ATColors.white.withValues(alpha: 0.05),
+                          child: Row(
+                            spacing: 10,
+                            children: [
+                              const ATImgLoader(imgPath: ATImgStrings.WARNING_ICON),
+                              Expanded(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      ATStrings.NO_WALLET_NO_EARNINGS,
+                                      style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                                        fontSize: ATFontSizes.size15
                                       ),
-                                      Text(
-                                        ATStrings.SETUP_UR_WALLET, maxLines: 3,
-                                        style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                                          fontSize: ATFontSizes.size13,
-                                          color: ATColors.hexC2C2C2
-                                        )
-                                      ),
-                                    ],
-                                  ),
-                                )
-                              ],
-                            )
-                          ),
-                          ATPlainElevatedBtn(
+                                    ),
+                                    Text(
+                                      ATStrings.SETUP_UR_WALLET, maxLines: 3,
+                                      style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                                        fontSize: ATFontSizes.size13,
+                                        color: ATColors.hexC2C2C2
+                                      )
+                                    ),
+                                  ],
+                                ),
+                              )
+                            ],
+                          )
+                        ),
+                      );
+                    }
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(15, 5, 15, 10),
+                    child: BlocSelector<WalletLandingAnimBloc, List<bool>, bool>(
+                      selector: (state) => state.elementAt(2),
+                      builder: (_, isDone) {
+                        return AnimatedOpacity(
+                          duration: const Duration(milliseconds: 500),
+                          opacity: isDone ? 1 : 0, curve: Curves.decelerate,
+                          child: ATPlainElevatedBtn(
                             onPressed: (){context.pushReplacementNamed(ATRoutes.WALLET_PIN_SETUP);},
                             btnTitle: ATStrings.BEGIN_SETUP,
                           ),
-                        ],
-                      ),
-                    );
-                  }
-                ),
+                        );
+                      }
+                    ),
+                  ),
+                ],
               ),
             )
           );

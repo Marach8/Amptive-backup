@@ -80,5 +80,6 @@ class ATImgStrings{
   static const BIZ_TICKETS = '$_pngPath/interface design window.png';
   static const BIZ_THUNDER = '$_pngPath/lightning.png';
   static const BIG_WALLET_ICON = '$_pngPath/wallet.png';
+  static const BIG_WALLET_COLORED_ICON = '$_pngPath/wallet (1).png';
   static const WARNING_ICON = '$_pngPath/warning.png';
 }

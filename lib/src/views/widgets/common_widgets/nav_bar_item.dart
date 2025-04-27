@@ -23,7 +23,7 @@ class AmptiveBottomAppBarItem extends StatelessWidget {
         final isSelected = itemIdentityIndex == currentNavIndex;
         return GestureDetector(
           onTap: () => context.read<AmptiveNavBarBloc>().goToPage(itemIdentityIndex),
-          child: AmptiveAnimatedCrossFadeWidget(
+          child: ATAnimatedCrossFade(
             condition: isSelected,
             firstChild: ATImgLoader(imgPath: selectedImagePath),
             secondChild: ATImgLoader(imgPath: unselectedImagePath)

@@ -6,8 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 
-class LoadingState extends StatelessWidget {
-  const LoadingState({super.key});
+class CreatorOrBizSetupLoading extends StatelessWidget {
+  const CreatorOrBizSetupLoading({super.key});
 
   static const creatorList = [ATStrings.CAT_SELECETED, ATStrings.SUB_FEE_SETUP, ATStrings.COHOST_FEE_SETUP];
   static const bizList = [ATStrings.CAT_SELECETED, ATStrings.SETTING_UP_ACCT, ATStrings.ALMOST_THERE];

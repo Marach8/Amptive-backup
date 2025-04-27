@@ -17,9 +17,11 @@ import 'package:amptive/src/views/features/main_app/dashboard_screen.dart';
 import 'package:amptive/src/views/features/main_app/go_live/main_go_live_screen.dart';
 import 'package:amptive/src/views/features/main_app/profile/presentation/views/profile_views_export.dart';
 import 'package:amptive/src/views/features/main_app/scheduled_screen.dart';
+import 'package:amptive/src/views/features/main_app/wallet/presentation/views/creating_wallet_anim_screen.dart';
 import 'package:amptive/src/views/features/main_app/wallet/presentation/views/security_question_screen.dart';
 import 'package:amptive/src/views/features/main_app/wallet/presentation/views/wallet_landing_screen.dart';
 import 'package:amptive/src/views/features/main_app/wallet/presentation/views/wallet_pin_setup_screen.dart';
+import 'package:amptive/src/views/features/main_app/wallet/presentation/views/wallet_screen.dart';
 import 'package:amptive/src/views/features/post_auth/crop_image_screen.dart';
 import 'package:amptive/src/views/features/post_auth/pre_homepage.dart';
 import 'package:amptive/src/views/features/post_auth/preference_screen.dart';
@@ -161,6 +163,20 @@ final GoRouter amptiveAppRouter = GoRouter(
                 path: ATRoutes.SECURITY_QUEST.addSlash,
                 pageBuilder: (_, __) => ATRouteTransition(
                   child: const ATSecurityQuestionScreen()
+                ),
+              ),
+              GoRoute(
+                name: ATRoutes.WALLET_CREATION_ANIM,
+                path: ATRoutes.WALLET_CREATION_ANIM.addSlash,
+                pageBuilder: (_, __) => ATRouteTransition(
+                  child: const ATWalletCreationAnimScreen()
+                ),
+              ),
+              GoRoute(
+                name: ATRoutes.WALLET,
+                path: ATRoutes.WALLET.addSlash,
+                pageBuilder: (_, __) => ATRouteTransition(
+                  child: const ATWalletScreen()
                 ),
               ),
             ]

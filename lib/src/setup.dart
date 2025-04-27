@@ -101,7 +101,7 @@ class ATRouteTransition extends CustomTransitionPage {
         child: child,
       );
     },
-    reverseTransitionDuration: const Duration(milliseconds: 700),
-    transitionDuration: const Duration(milliseconds: 700),
+    reverseTransitionDuration: const Duration(milliseconds: 200),
+    transitionDuration: const Duration(milliseconds: 200),
   );
 }

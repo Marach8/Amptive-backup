@@ -89,6 +89,18 @@ class ATStrings{
   static const PROFILE = 'Profile';
   static const SELECT_COUNTRY = 'Select Country';
   static const BEGIN_SETUP = 'Begin setup';
+  static const AVAILABLE_BAL = 'Available balance';
+  static const FUND_WALLET = 'Fund wallet';
+  static const TRSF = 'Transfer';
+  static const WITHDRAW = 'Withdraw';
+  static const PENDING_BAL = 'Pending balance';
+  static const TXN_HISTORY = 'Transaction History';
+  static const SUB_RECEIVED = 'Subscription Received';
+  static const GIFT_RECEIVED = 'Gift Received';
+  static const EVENT_ND_SHOW_VEST = 'Event & Show Vest';
+  static const VESTING_OVERVIEW = 'Vesting Overview';
+  static const MARKETPLACE = 'Marketplace';
+  static const EXPLORE_LISTINGS = 'Explore listings';
 
   static const youEnteredInvalidCode = 'You entered an invalid code. ';
   static const passwordMustBeAtleast8 = 'Your password must be at least 8 characters';
@@ -104,7 +116,7 @@ class ATStrings{
   static const whatIsYourDateOfBirth = "What is your date of birth?";
   static const selectDate = "Select Date";
   static const users13andOlderWarning = "Only users 13 and older may use this app";
-  static const done = 'Done';
+  static const DONE = 'Done';
 
   static const noteAboutProfilePic = "Note that this will appear on your profile.";
   static const termsOfService = "Terms of Service";
@@ -198,6 +210,12 @@ class ATStrings{
   static const TOP_LISTENERS = 'Top Listeners';
   static const TOP_LISTENERS_DESC = 'Top listeners are ranked by their level of interaction during the live session.';
   static const LISTENERS = 'Listeners';
+  static const SELECT_SECURITY_QUEST = 'Select a Security Question';
+  static const A_QUEST_U_CAN_REMEMBER = 'Select a question you can easily remember...';
+  static const WHAT_IS_UR_ANSWER = 'What is your answer?';
+  static const ENTER_UR_ANS = 'Enter your answer';
+  static const ANS_IS_CASE_SENSITIVE = 'Your answer is case-sensitive!';
+  static const U_MUST_ANS_SECURITY_QUEST = 'You must answer your security question when making withdrawals!';
   static const END_LIVE_SHOW = 'Are you sure you want to end your live show?';
 
   static const TECHNOLOGY = 'Technology';
@@ -227,6 +245,7 @@ class ATStrings{
   static const ENABLE_BIOMETRICS = 'Enable Biometric Authentication';
   static const RE_ENTER_PIN = 'Re-enter pin';
   static const ADD_SECURITY_QUESTION = 'Add security question';
+  static const FINISH_SETUP = 'Finish setup';
   static const MENU = 'Menu';
   static const VIEW_CALENDER = 'View calender';
   static const CALENDER = 'Calender';
@@ -408,4 +427,10 @@ class ATStrings{
   static const UR_BIZ_IS_READY = 'Your business is ready';
   static const EXPAND_UR_BIZ = 'Expand your business and connect with potential customers.';
   static const NOW_U_CAN_CREATE = 'Now, you can create live audio shows and events.';
+  static const CREATING_WALLET = 'Creating your wallet';
+  static const PREPARING_WALLET = 'Preparing your wallet';
+  static const FINALIZING_SETUP = 'Finalizing setup';
+  static const WALLET_CREATED = 'Your wallet has been created🎉';
+  static const RECEIVE_EARNINGS_WITH_WALLET = 'Receive earnings from events, gifts and subscriptions with your wallet.';
+  static const OPEN_WALLET = 'Open wallet';
 }
