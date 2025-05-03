@@ -74,7 +74,7 @@ class AmptiveAuthScreen extends StatelessWidget {
                   buttonTitle: (userSignUp ? ATStrings.signUpWith : ATStrings.signInWith) + ATStrings.google,
                   onPressed: (){},
                   leadingIcon: const ATImgLoader(
-                    imgPath: ATImgStrings.googleIcon,
+                    imgPath: ATImgStrings.GOOGLE_ICON,
                   )
                 )
               ],

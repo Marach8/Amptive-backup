@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:amptive/src/models/host.dart';
 import 'package:amptive/src/setup.dart';
 import 'package:amptive/src/utils/constants/strings/route_strings.dart';
 import 'package:amptive/src/utils/helpers/extensions/string_extensions.dart';
@@ -17,9 +18,12 @@ import 'package:amptive/src/views/features/main_app/dashboard_screen.dart';
 import 'package:amptive/src/views/features/main_app/go_live/main_go_live_screen.dart';
 import 'package:amptive/src/views/features/main_app/profile/presentation/views/profile_views_export.dart';
 import 'package:amptive/src/views/features/main_app/scheduled_screen.dart';
+import 'package:amptive/src/views/features/main_app/wallet/presentation/views/enter_amount_screen.dart';
 import 'package:amptive/src/views/features/main_app/wallet/presentation/views/creating_wallet_anim_screen.dart';
 import 'package:amptive/src/views/features/main_app/wallet/presentation/views/security_question_screen.dart';
-import 'package:amptive/src/views/features/main_app/wallet/presentation/views/wallet_landing_screen.dart';
+import 'package:amptive/src/views/features/main_app/wallet/presentation/views/select_banks_country_screen.dart';
+import 'package:amptive/src/views/features/main_app/wallet/presentation/views/select_recipient_screen.dart';
+import 'package:amptive/src/views/features/main_app/wallet/presentation/views/wallet_onboard_screen.dart';
 import 'package:amptive/src/views/features/main_app/wallet/presentation/views/wallet_pin_setup_screen.dart';
 import 'package:amptive/src/views/features/main_app/wallet/presentation/views/wallet_screen.dart';
 import 'package:amptive/src/views/features/post_auth/crop_image_screen.dart';
@@ -42,6 +46,7 @@ import 'views/features/main_app/go_live/show/choose_or_create_show_screen.dart';
 import 'views/features/main_app/go_live/show/show_creation_success_screen.dart';
 import 'views/features/main_app/show_detailed_screen.dart';
 import 'views/features/main_app/subscribed_screen.dart';
+import 'views/features/main_app/wallet/presentation/views/withdrawal_landing_screen.dart';
 
 // The route configuration.
 final GoRouter amptiveAppRouter = GoRouter(
@@ -148,7 +153,7 @@ final GoRouter amptiveAppRouter = GoRouter(
             name: ATRoutes.WALLET_LANDING,
             path: ATRoutes.WALLET_LANDING.addSlash,
             pageBuilder: (_, __) => ATRouteTransition(
-              child: const ATWalletLandingScreen()
+              child: const ATWalletOnboardScreen()
             ),
             routes: [
               GoRoute(
@@ -176,8 +181,41 @@ final GoRouter amptiveAppRouter = GoRouter(
                 name: ATRoutes.WALLET,
                 path: ATRoutes.WALLET.addSlash,
                 pageBuilder: (_, __) => ATRouteTransition(
-                  child: const ATWalletScreen()
+                  child: const ATWalletScreen(),
                 ),
+                routes: [
+                  GoRoute(
+                    name: ATRoutes.SELECT_RECIPIENT,
+                    path: ATRoutes.SELECT_RECIPIENT.addSlash,
+                    pageBuilder: (_, __) => ATRouteTransition(
+                      child: const ATSelectRecipientScreen()
+                    ),
+                  ),
+                  GoRoute(
+                    name: ATRoutes.AMOUNT_2_TRSF,
+                    path: ATRoutes.AMOUNT_2_TRSF.addSlash,
+                    pageBuilder: (_, state) => ATRouteTransition(
+                      child: ATEnterAmountScreen(
+                        receipient: state.extra as ObjectWithNotifier<Host>?,
+                      )
+                    ),
+                  ),
+                  GoRoute(
+                    name: ATRoutes.WITHDRAWAL,
+                    path: ATRoutes.WITHDRAWAL.addSlash,
+                    pageBuilder: (_, __) => ATRouteTransition(
+                      child: const ATWithdrwalLandingScreen()
+                    ),
+                  ),
+
+                  GoRoute(
+                    name: ATRoutes.SELECT_BANK_COUNTRY,
+                    path: ATRoutes.SELECT_BANK_COUNTRY.addSlash,
+                    pageBuilder: (_, __) => ATRouteTransition(
+                      child: const ATSelectBanksCountryScreen()
+                    ),
+                  ),
+                ]
               ),
             ]
           ),

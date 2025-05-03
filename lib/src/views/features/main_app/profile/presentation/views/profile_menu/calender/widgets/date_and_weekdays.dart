@@ -56,7 +56,7 @@ class DateAndWeekDaysState extends State<DateAndWeekDays> {
         if(state is DayViewHeadingLoading){
           return const SizedBox(
             height: 70,
-            child: ShimmerWidget(
+            child: ATShimmer(
               margin: EdgeInsets.fromLTRB(15, 0, 15, 10),
             ),
           );

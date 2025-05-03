@@ -28,6 +28,7 @@ class ATStrings{
       "Monetizable Live Audio Shows & Events ";
   static const ENTER_CODE = 'Enter the 4 digit code we just sent to';
   static const NEXT = 'Next';
+  static const ENTER_AMT = 'Enter Amount';
   static const or = 'or';
   static const and = 'and';
   static const emailSymbol = '@';
@@ -39,9 +40,19 @@ class ATStrings{
   static const CONTINUE = 'Continue';
   static const SEND_INVITE = 'Send invite';
   static const SET_FEE = 'Set fee';
+  static const ENTER_PIN = 'Enter pin';
+  static const SELECT_PAYMENT_METHOD = 'Select payment method';
+  static const INSUFFICIENT_FUNDS = 'Insufficient funds!';
+  static const INCORRECT_PIN = 'Incorrect pin!';
+  static const AMPTIVE_TRNSF_CHARGES = 'Amptive charges 0% on transfers';
+  static const AMPTIVE_FUNDING_FEE = 'Amptive charges a 0% funding fee';
+  static const KEEPS_WALLET_SECURE = 'This keeps your wallet secure';
 
   static const signUpWith = 'Sign up with ';
   static const signInWith = 'Sign in with ';
+  static const APPLE_PAY = 'Apple Pay';
+  static const FLUTTERWAVE = 'Flutterwave';
+  static const GOOGLE_PAY = 'Google Pay';
   static const EMAIL = 'Email';
   static const LIVE = 'Live';
   static const FONE_NO = 'Phone Number';
@@ -49,6 +60,7 @@ class ATStrings{
   static const VISIT_PROFILE = 'Visit profile';
   static const twitter = 'X(Twitter)';
   static const google = 'Google';
+  static const NO_MATCHING_RESULTS = 'No results found for this search!';
   static const SELECT_CAT = 'Select your category';
   static const CAT_WONT_BE_SHOWN = 'Selected category will not be shown on your public profile and can be changed anytime.';
   static const SEARCH_CAT = 'Search for a category';
@@ -85,6 +97,7 @@ class ATStrings{
   static String enterLink(String link) => "Enter your $link link";
   static const IS_UNBLOCKED = 'is now unblocked';
   static const IS_UNMUTED = 'is now unmuted';
+  static const TRANSFER_FUNDS = 'Transfer Funds';
   static const COUNTRY = 'Country';
   static const PROFILE = 'Profile';
   static const SELECT_COUNTRY = 'Select Country';
@@ -92,6 +105,10 @@ class ATStrings{
   static const AVAILABLE_BAL = 'Available balance';
   static const FUND_WALLET = 'Fund wallet';
   static const TRSF = 'Transfer';
+  static const WIRE_TRSF = 'Wire Transfer';
+  static const WIRE_TRSF_DESC = 'Funds will be transferred directly to your bank account';
+  static const PAYPAL = 'Paypal';
+  static const PAYPAL_DESC = 'Funds will be transferred to your Paypal account';
   static const WITHDRAW = 'Withdraw';
   static const PENDING_BAL = 'Pending balance';
   static const TXN_HISTORY = 'Transaction History';
@@ -288,6 +305,11 @@ class ATStrings{
   static const DISCOVER_COMMUNITIES = 'Discover communities with interesting shows and events';
 
   static const CREATE_SHOW_OR_EVENT = 'Create Show or Event';
+  static const CHOOSE_WITHDRWAL_METHOD = 'Choose your preferred withdrawal method.';
+  static const SELECT_BANK_DESC = 'Select the bank you would like to withdraw funds to.';
+  static const UR_ACCT_NO = 'What is your account number?';
+  static const SELECT_BANK = 'Select Bank';
+  static const SELECT_BANK_COUNTRY = 'Please select the country where your bank is located.';
   static const CHOOSE_2_CREATE_SHOW_OR_EVENT = "Choose whether you'd like to create a Show or an Event befor proceeding.";
   static const CREATE_SHOW = 'Create Show';
   static const CREATE_EVENT = 'Create Event';
@@ -311,12 +333,16 @@ class ATStrings{
   static const TOP_GIFTERS_DESC = 'Gifters are ranked base on the total amount they have contributed to the host during live sessions.';
   static const TOP_GIFTERS = 'Top Gifters';
   static const SEARCH_4_COHOSTS = 'Search for co-hosts';
+  static const SEARCH_4_USER = 'Search for user';
+  static const SEARCH_4_BANK = 'Search for bank';
   static const SEARCH_4_FOLLOWERS = 'Search for followers';
   static const SEARCH_4_SUBSCRIBERS = 'Search for subscribers';
   static const SEARCH_4_LISTENERS = 'Search for listeners';
   static const SEARCH_4_HASHTAGS = 'Search for hashtags';
   static const SUGGESTIONS = 'Suggestions';
   static const APP_LANG = 'App language';
+  static const NO_RECENT_RECEPIENT = 'No Recent Recipient';
+  static const TRY_SEARCHING_4_USER = 'Try searching for the user you want to send funds to.';
   static const NO_SUGGESTIONS = 'No Suggestions';
   static const NO_TRENDING_HASHTAGS = 'No Trending Hashtags';
   static const SEARCH_UR_HASHTAGS = 'Try searching for hashtag(s) in the search bar';

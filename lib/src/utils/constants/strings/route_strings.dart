@@ -77,4 +77,9 @@ class ATRoutes {
   static const SECURITY_QUEST = 'security_question';
   static const WALLET_CREATION_ANIM = 'wallet_creation_animation';
   static const WALLET = 'wallet';
+  static const SELECT_RECIPIENT = 'transfer_funds';
+  static const FUND_WALLET = 'fund_wallet';
+  static const WITHDRAWAL = 'withdraw';
+  static const SELECT_BANK_COUNTRY = 'select_bank_country';
+  static const AMOUNT_2_TRSF = 'amount_to_transfer';
 }

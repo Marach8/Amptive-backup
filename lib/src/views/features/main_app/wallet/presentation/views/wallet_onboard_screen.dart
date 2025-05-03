@@ -17,23 +17,23 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
-class ATWalletLandingScreen extends StatelessWidget {
-  const ATWalletLandingScreen({super.key});
+class ATWalletOnboardScreen extends StatelessWidget {
+  const ATWalletOnboardScreen({super.key});
 
   static const _list = <String>[ATStrings.UR_WALLET, ATStrings.UR_WAY];
 
   @override
   Widget build(_) {
     return BlocProvider(
-      create: (_) => WalletLandingAnimBloc(),
+      create: (_) => WalletOnboardAnimBloc(),
       child: Builder(
         builder: (context) {
           WidgetsBinding.instance.addPostFrameCallback(
             (_){
-              context.read<WalletLandingAnimBloc>().reset();
+              context.read<WalletOnboardAnimBloc>().reset();
               Future.delayed(
                 const Duration(milliseconds: 1000),
-                () => context.mounted ? context.read<WalletLandingAnimBloc>().triggerNext(0) : {}
+                () => context.mounted ? context.read<WalletOnboardAnimBloc>().triggerNext(0) : {}
               );
             }
           );
@@ -49,7 +49,7 @@ class ATWalletLandingScreen extends StatelessWidget {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    BlocSelector<WalletLandingAnimBloc, List<bool>, bool>(
+                    BlocSelector<WalletOnboardAnimBloc, List<bool>, bool>(
                       selector: (state) => state.elementAt(2),
                       builder: (_, isDone) {
                         return AnimatedOpacity(
@@ -76,7 +76,7 @@ class ATWalletLandingScreen extends StatelessWidget {
                       }
                     ),
 
-                    BlocSelector<WalletLandingAnimBloc, List<bool>, bool>(
+                    BlocSelector<WalletOnboardAnimBloc, List<bool>, bool>(
                       selector: (state) => state.elementAt(2),
                       builder: (_, isDone) {
                         if(isDone) return const SizedBox.shrink();
@@ -99,7 +99,7 @@ class ATWalletLandingScreen extends StatelessWidget {
                 spacing:10,
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  BlocSelector<WalletLandingAnimBloc, List<bool>, bool>(
+                  BlocSelector<WalletOnboardAnimBloc, List<bool>, bool>(
                     selector: (state) => state.last,
                     builder: (_, isDone) {
                       return ATAnimatedAlign(
@@ -143,7 +143,7 @@ class ATWalletLandingScreen extends StatelessWidget {
                   ),
                   Padding(
                     padding: const EdgeInsets.fromLTRB(15, 5, 15, 10),
-                    child: BlocSelector<WalletLandingAnimBloc, List<bool>, bool>(
+                    child: BlocSelector<WalletOnboardAnimBloc, List<bool>, bool>(
                       selector: (state) => state.elementAt(2),
                       builder: (_, isDone) {
                         return AnimatedOpacity(
@@ -181,13 +181,13 @@ class _CustomWidget extends StatelessWidget {
 
   @override
   Widget build(context) {
-    return BlocSelector<WalletLandingAnimBloc, List<bool>, bool>(
+    return BlocSelector<WalletOnboardAnimBloc, List<bool>, bool>(
       selector: (state) => state.elementAt(index),
       builder: (_, isVisible) {
         return AnimatedOpacity(
           duration: const Duration(milliseconds: 500),
           opacity: isVisible ? 1 : 0, curve: Curves.decelerate,
-          onEnd: () => isVisible? context.read<WalletLandingAnimBloc>().triggerNext(index + 1): null,
+          onEnd: () => isVisible? context.read<WalletOnboardAnimBloc>().triggerNext(index + 1): null,
           child: Padding(
             padding: const EdgeInsets.fromLTRB(30, 0, 30, 0),
             child: Text(

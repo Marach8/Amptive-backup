@@ -1,4 +1,3 @@
-
 import 'package:amptive/src/utils/helpers/helper_functions/helper_functions.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

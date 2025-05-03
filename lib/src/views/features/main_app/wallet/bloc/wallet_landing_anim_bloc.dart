@@ -1,7 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class WalletLandingAnimBloc extends Cubit<List<bool>>{
-  WalletLandingAnimBloc(): super(List.generate(4,(_) => false));
+class WalletOnboardAnimBloc extends Cubit<List<bool>>{
+  WalletOnboardAnimBloc(): super(List.generate(4,(_) => false));
   
   void triggerNext(int newIndex)async{
     if ((newIndex + 1) < 3) {

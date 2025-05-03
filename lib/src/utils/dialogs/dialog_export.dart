@@ -1,0 +1,1 @@
+export 'wallet/wallet_dialog_export.dart';
