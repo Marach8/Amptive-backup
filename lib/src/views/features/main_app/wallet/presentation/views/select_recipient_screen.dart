@@ -163,12 +163,19 @@ class _ATSelectRecipientScreenState extends State<ATSelectRecipientScreen> {
                     child: BlocBuilder<RecentRecipientsBloc, RecentRecipientsState>(
                       builder: (_, state) {
                         return ATPlainElevatedBtn(
-                          onPressed: (state is RecentRecipientsData && state.selectedRecipient != null) ? (){
+                          onPressed: (state is RecentRecipientsData && state.selectedRecipient != null) ? () async{
                             final recipient = state.selectedRecipient!;
-                            context.pushNamed(
-                              ATRoutes.AMOUNT_2_TRSF,
-                              extra: recipient
-                            );
+                            final shouldProceed = await context.pushNamed(
+                              ATRoutes.ENTER_AMOUNT_2_TRSF,
+                              extra: (1, recipient, null, null)
+                            ) as bool?;
+
+                            if((context.mounted) && (shouldProceed ?? false)){
+                              context.pushReplacementNamed(
+                                ATRoutes.PAPER_PLANE_SUCCESS,
+                                extra: [ATStrings.TRSF_SUCCESS, '${ATStrings.TRSF_SUCCESS_DESC}${recipient.obj.username}']
+                              );
+                            }
                           } : null,
                           btnTitle: ATStrings.ENTER_AMT,
                         );

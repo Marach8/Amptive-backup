@@ -4,9 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import '../../views/widgets/common_widgets/custom_container_widget.dart';
 
+
 Future<dynamic> showAppNotification({
   required BuildContext context,
-  Widget? icon,
+  Widget? icon = const Icon(Icons.check_circle),
   required String text,
   int? duration,
   Color? bgColor

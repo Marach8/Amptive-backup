@@ -18,21 +18,21 @@ class CreatorSuccessScreen extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider(create: (_) => AccountTypeBloc()),
-        BlocProvider(create: (_) => SwitchAcctSuccessAnimationBloc())
+        BlocProvider(create: (_) => SwitchAcctSuccessAnimBloc())
       ],
       child: Builder(
         builder: (blocsContext) {
           WidgetsBinding.instance.addPostFrameCallback(
             (_) => Future.delayed(
               const Duration(milliseconds: 500),
-              () => blocsContext.mounted ? blocsContext.read<SwitchAcctSuccessAnimationBloc>().triggerNext(0) : {}
+              () => blocsContext.mounted ? blocsContext.read<SwitchAcctSuccessAnimBloc>().triggerNext(0) : {}
             )
           );
           
           return ATAnnotatedRegion(
             statusBarColor: ATColors.trsprnt,
             child: Scaffold(
-              body: BlocSelector<SwitchAcctSuccessAnimationBloc, List<bool>, bool>(
+              body: BlocSelector<SwitchAcctSuccessAnimBloc, List<bool>, bool>(
                 selector: (state) => state.elementAt(3),
                 builder: (_, successState) {
                   if(successState){
@@ -44,17 +44,14 @@ class CreatorSuccessScreen extends StatelessWidget {
           
               bottomSheet: Padding(
                 padding: const EdgeInsets.fromLTRB(15, 5, 15, 10),
-                child: BlocSelector<SwitchAcctSuccessAnimationBloc, List<bool>, bool>(
+                child: BlocSelector<SwitchAcctSuccessAnimBloc, List<bool>, bool>(
                   selector: (state) => state.elementAt(3),
                   builder: (_, isVisible) {
-                    return ATAnimatedCrossFade(
-                      condition: isVisible,
-                      secondChild: const SizedBox.shrink(),
-                      firstChild: ATPlainElevatedBtn(
-                        onPressed: (){
-                          Navigator.popUntil(context, (route) => route.isFirst);
-                          context.pushNamed(ATRoutes.CREATOR_PROFILE_SCREEN);
-                        },
+                    return AnimatedSlide(
+                      offset: isVisible ? const Offset(0, 0): const Offset(0, 1.5),
+                      duration: const Duration(milliseconds: 500),
+                      child: ATPlainElevatedBtn(
+                        onPressed: (){},
                         btnTitle: ATStrings.VISIT_PROFILE
                       )
                     );

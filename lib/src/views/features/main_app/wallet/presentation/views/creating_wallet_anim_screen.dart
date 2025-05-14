@@ -1,7 +1,7 @@
 import 'package:amptive/src/utils/constants/colors.dart';
 import 'package:amptive/src/utils/constants/strings/other_strings.dart';
 import 'package:amptive/src/utils/constants/strings/route_strings.dart';
-import 'package:amptive/src/views/features/main_app/wallet/bloc/create_wallet_anim_bloc.dart';
+import 'package:amptive/src/views/features/main_app/wallet/bloc/wallet_creation_anim_bloc.dart';
 import 'package:amptive/src/views/features/main_app/wallet/presentation/widgets/wallets_widget_export.dart';
 import 'package:amptive/src/views/widgets/animation_widgets/common_animation_widgets/animated_crossfade_widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/annotated_region__widget.dart';
@@ -16,32 +16,32 @@ class ATWalletCreationAnimScreen extends StatelessWidget {
   @override
   Widget build(context) {
     return BlocProvider(
-      create: (_) => WalletSetupAnimBloc(),
+      create: (_) => WalletCreationAnimBloc(),
       child: Builder(
         builder: (blocContext) {
           WidgetsBinding.instance.addPostFrameCallback(
             (_) => Future.delayed(
               const Duration(milliseconds: 500),
-              () => blocContext.mounted ? blocContext.read<WalletSetupAnimBloc>().triggerNext(0) : {}
+              () => blocContext.mounted ? blocContext.read<WalletCreationAnimBloc>().triggerNext(0) : {}
             )
           );
           
           return ATAnnotatedRegion(
             statusBarColor: ATColors.trsprnt,
             child: Scaffold(
-              body: BlocSelector<WalletSetupAnimBloc, List<bool>, bool>(
+              body: BlocSelector<WalletCreationAnimBloc, List<bool>, bool>(
                 selector: (state) => state.elementAt(3),
                 builder: (_, successState) {
                   if(successState){
-                    return const WalletSetupSuccess();
+                    return const WalletCretionSuccess();
                   }
-                  return const Center(child: WalletSetupLoading());
+                  return const Center(child: WalletCreationLoading());
                 }
               ),
           
               bottomSheet: Padding(
                 padding: const EdgeInsets.fromLTRB(15, 5, 15, 10),
-                child: BlocSelector<WalletSetupAnimBloc, List<bool>, bool>(
+                child: BlocSelector<WalletCreationAnimBloc, List<bool>, bool>(
                   selector: (state) => state.elementAt(3),
                   builder: (_, isVisible) {
                     return ATAnimatedCrossFade(

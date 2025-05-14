@@ -47,6 +47,7 @@ import 'views/features/main_app/go_live/show/show_creation_success_screen.dart';
 import 'views/features/main_app/show_detailed_screen.dart';
 import 'views/features/main_app/subscribed_screen.dart';
 import 'views/features/main_app/wallet/presentation/views/withdrawal_landing_screen.dart';
+import 'views/features/main_app/wallet/wallet_export.dart';
 
 // The route configuration.
 final GoRouter amptiveAppRouter = GoRouter(
@@ -192,11 +193,11 @@ final GoRouter amptiveAppRouter = GoRouter(
                     ),
                   ),
                   GoRoute(
-                    name: ATRoutes.AMOUNT_2_TRSF,
-                    path: ATRoutes.AMOUNT_2_TRSF.addSlash,
+                    name: ATRoutes.ENTER_AMOUNT_2_TRSF,
+                    path: ATRoutes.ENTER_AMOUNT_2_TRSF.addSlash,
                     pageBuilder: (_, state) => ATRouteTransition(
                       child: ATEnterAmountScreen(
-                        receipient: state.extra as ObjectWithNotifier<Host>?,
+                        params: state.extra as (int, ObjectWithNotifier<Host>?, BankDetails?, String?),
                       )
                     ),
                   ),
@@ -207,13 +208,39 @@ final GoRouter amptiveAppRouter = GoRouter(
                       child: const ATWithdrwalLandingScreen()
                     ),
                   ),
-
                   GoRoute(
                     name: ATRoutes.SELECT_BANK_COUNTRY,
                     path: ATRoutes.SELECT_BANK_COUNTRY.addSlash,
                     pageBuilder: (_, __) => ATRouteTransition(
                       child: const ATSelectBanksCountryScreen()
                     ),
+                  ),
+                  GoRoute(
+                    name: ATRoutes.ENTER_ACCT_NO,
+                    path: ATRoutes.ENTER_ACCT_NO.addSlash,
+                    pageBuilder: (_, state) => ATRouteTransition(
+                      child: ATEnterAccountNoScreen(bankName: state.extra as String,)
+                    ),
+                  ),
+                  GoRoute(
+                    name: ATRoutes.PASS_SECURITY_QUEST,
+                    path: ATRoutes.PASS_SECURITY_QUEST.addSlash,
+                    pageBuilder: (_, state) => ATRouteTransition(
+                      child: const ATPassSecurityQuestionScreen()
+                    ),
+                  ),
+                  GoRoute(
+                    name: ATRoutes.PAPER_PLANE_SUCCESS,
+                    path: ATRoutes.PAPER_PLANE_SUCCESS.addSlash,
+                    pageBuilder: (_, state){
+                      final params = state.extra as List<String>;
+                      return ATRouteTransition(
+                        child: ATPaperPlaneSuccessScreen(
+                          title: params.first,
+                          subtitle: params.last,
+                        )
+                      );
+                    },
                   ),
                 ]
               ),

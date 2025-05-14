@@ -6,8 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 
-class WalletSetupLoading extends StatelessWidget {
-  const WalletSetupLoading({super.key});
+class WalletCreationLoading extends StatelessWidget {
+  const WalletCreationLoading({super.key});
 
   static const walletList = [ATStrings.CREATING_WALLET, ATStrings.PREPARING_WALLET, ATStrings.FINALIZING_SETUP];
 
@@ -23,7 +23,7 @@ class WalletSetupLoading extends StatelessWidget {
             children: walletList.map(
               (item){
                 final index = walletList.indexOf(item);
-                return BlocSelector<WalletSetupAnimBloc, List<bool>, bool>(
+                return BlocSelector<WalletCreationAnimBloc, List<bool>, bool>(
                   selector: (state) => state.elementAt(index),
                   builder: (_, isVisible) {
                     return AnimatedPositioned(
@@ -33,7 +33,7 @@ class WalletSetupLoading extends StatelessWidget {
                       onEnd: () => isVisible ? 
                         Future.delayed(
                           const Duration(milliseconds: 2500),
-                          () => context.mounted ? context.read<WalletSetupAnimBloc>().triggerNext(index + 1) : {}
+                          () => context.mounted ? context.read<WalletCreationAnimBloc>().triggerNext(index + 1) : {}
                         ) : null,
                       child: Row(
                         mainAxisSize: MainAxisSize.min,

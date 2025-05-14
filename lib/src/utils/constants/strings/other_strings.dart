@@ -45,7 +45,8 @@ class ATStrings{
   static const INSUFFICIENT_FUNDS = 'Insufficient funds!';
   static const INCORRECT_PIN = 'Incorrect pin!';
   static const AMPTIVE_TRNSF_CHARGES = 'Amptive charges 0% on transfers';
-  static const AMPTIVE_FUNDING_FEE = 'Amptive charges a 0% funding fee';
+  static const AMPTIVE_FUNDING_CHARGES = 'Amptive charges a 0% funding fee';
+  static const AMPTIVE_WITHDRAWAL_CHARGES = 'Amptive charges 2% on withdrawals';
   static const KEEPS_WALLET_SECURE = 'This keeps your wallet secure';
 
   static const signUpWith = 'Sign up with ';
@@ -55,11 +56,19 @@ class ATStrings{
   static const GOOGLE_PAY = 'Google Pay';
   static const EMAIL = 'Email';
   static const LIVE = 'Live';
+  static const TRSF_SUCCESS = 'Transfer Successful';
+  static const WITHDRAWAL_REQUEST_SENT = 'Withdrawal Request Sent';
+  static const WITHDRAWAL_REQUEST_DESC = 'Your withdrawal request has been sent. You will be notified once it is processed.';
+  static const TRSF_SUCCESS_DESC = 'Funds have been sent successfully to ';
+  static const BANK_DETAIL_SAVED = 'Bank details saved';
   static const FONE_NO = 'Phone Number';
+  static const SAVE_BANK_DETAILS_DESC = 'Do you want to save this bank detail to re-use it next time?';
+  static const SAVE_BANK_DETAILS = 'Save Bank Details';
   static const facebook = 'Facebook';
   static const VISIT_PROFILE = 'Visit profile';
   static const twitter = 'X(Twitter)';
   static const google = 'Google';
+  static const ANSWER_SECRET_QUEST = 'Answer Secret Question';
   static const NO_MATCHING_RESULTS = 'No results found for this search!';
   static const SELECT_CAT = 'Select your category';
   static const CAT_WONT_BE_SHOWN = 'Selected category will not be shown on your public profile and can be changed anytime.';
@@ -67,6 +76,8 @@ class ATStrings{
   static const PROCEED = 'Proceed';
   static const UR_WALLET = 'Your Wallet';
   static const UR_WAY = 'Your Way';
+  static const SEND_WITHDRAWAL_REQUEST = 'Send withdrawal request';
+  static const INVALID_ACCT_NO = 'Invalid account number!';
   static const SETUP_WALLET = 'Setup your Amptive wallet';
   static const NO_WALLET_NO_EARNINGS = 'No Wallet, No Earnings';
   static const SETUP_UR_WALLET = 'Set up your wallet to receive payments from events, gifts, and subscriptions.';
@@ -83,6 +94,8 @@ class ATStrings{
   static const CHANGE = 'Change';
   static const DELETE_PLAN = 'Delete plan';
   static const DELETE = 'Delete';
+  static const SAVE = 'Save';
+  static const CHANGE_BANK_DETAILS = 'Change bank details';
   static const DELETE_SUB_PLAN = 'Delete subscription plan?';
   static const DELETE_SUB_PLAN_DESC = 'Deleting plan will grant listeners free access to your shows.';
   static const ACCEPT_CHANGES = 'Accept Changes';
@@ -108,6 +121,10 @@ class ATStrings{
   static const WIRE_TRSF = 'Wire Transfer';
   static const WIRE_TRSF_DESC = 'Funds will be transferred directly to your bank account';
   static const PAYPAL = 'Paypal';
+  static const BACK_2_WALLET = 'Back to wallet';
+  static const FUNDING_WALLET = 'Funding wallet...';
+  static const WALLET_FUNDING_SUCCESS = 'Wallet Funded Successfully🎉';
+  static const WALLET_FUNDIND_FAILED = 'Wallet Funding Failed';
   static const PAYPAL_DESC = 'Funds will be transferred to your Paypal account';
   static const WITHDRAW = 'Withdraw';
   static const PENDING_BAL = 'Pending balance';
@@ -147,6 +164,8 @@ class ATStrings{
   static const warningOnClickingCreate = 'By clicking on ‘Create account’, you agree to the';
 
   static const CHECKER_LOADING = "Checker is loading...";
+  static const CORRECT_ANS = 'Answer is correct';
+  static const INCORRECT_ANS = 'Answer is incorrect!';
   static const USERNAME_AVAILABLE ="Username is available";
   static const whatShouldWeCallYou ="What should we call you?";
   static const ROLE = 'message notifier';
@@ -305,6 +324,8 @@ class ATStrings{
   static const DISCOVER_COMMUNITIES = 'Discover communities with interesting shows and events';
 
   static const CREATE_SHOW_OR_EVENT = 'Create Show or Event';
+  static const ENTER_10_DIGIT_ACCT_NO = 'Your 10-digit account number';
+
   static const CHOOSE_WITHDRWAL_METHOD = 'Choose your preferred withdrawal method.';
   static const SELECT_BANK_DESC = 'Select the bank you would like to withdraw funds to.';
   static const UR_ACCT_NO = 'What is your account number?';
@@ -449,7 +470,7 @@ class ATStrings{
   static const DEACTIVATE_ACCT = 'Deactivate your account';
   static const CAT_SELECETED = 'Category selected';
   static const SUB_FEE_SETUP = 'Subscription fee setup';
-  static const U_R_A_CREATOR = 'You are now a creator';
+  static const U_R_A_CREATOR = 'You are now a creator🎉';
   static const UR_BIZ_IS_READY = 'Your business is ready';
   static const EXPAND_UR_BIZ = 'Expand your business and connect with potential customers.';
   static const NOW_U_CAN_CREATE = 'Now, you can create live audio shows and events.';

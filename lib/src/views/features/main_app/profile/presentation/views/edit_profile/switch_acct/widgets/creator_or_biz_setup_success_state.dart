@@ -28,7 +28,7 @@ class CreatorOrBizSetupSuccess extends StatelessWidget {
             alignment: Alignment.topCenter,
             clipBehavior: Clip.none,
             children: [
-              BlocSelector<SwitchAcctSuccessAnimationBloc, List<bool>, bool>(
+              BlocSelector<SwitchAcctSuccessAnimBloc, List<bool>, bool>(
                 selector: (state) => state.elementAt(4),
                 builder: (_, isVisible) {
                   return SpotlightBeam(
@@ -52,7 +52,7 @@ class CreatorOrBizSetupSuccess extends StatelessWidget {
               ),
               Positioned(
                 bottom: 0,
-                child: BlocSelector<SwitchAcctSuccessAnimationBloc, List<bool>, bool>(
+                child: BlocSelector<SwitchAcctSuccessAnimBloc, List<bool>, bool>(
                   selector: (state) => state.elementAt(4),
                   builder: (_, isVisible) {
                     return AnimatedScale(

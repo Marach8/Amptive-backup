@@ -25,7 +25,7 @@ class CreatorOrBizSetupLoading extends StatelessWidget {
             children: (isCreator ? creatorList : bizList).map(
               (item){
                 final index = (isCreator ? creatorList : bizList).indexOf(item);
-                return BlocSelector<SwitchAcctSuccessAnimationBloc, List<bool>, bool>(
+                return BlocSelector<SwitchAcctSuccessAnimBloc, List<bool>, bool>(
                   selector: (state) => state.elementAt(index),
                   builder: (_, isVisible) {
                     return AnimatedPositioned(
@@ -35,7 +35,7 @@ class CreatorOrBizSetupLoading extends StatelessWidget {
                       onEnd: () => isVisible ? 
                         Future.delayed(
                           const Duration(milliseconds: 2500),
-                          () => context.mounted ? context.read<SwitchAcctSuccessAnimationBloc>().triggerNext(index + 1) : {}
+                          () => context.mounted ? context.read<SwitchAcctSuccessAnimBloc>().triggerNext(index + 1) : {}
                         ) : null,
                       child: Row(
                         mainAxisSize: MainAxisSize.min,

@@ -69,7 +69,7 @@ class ATShowOrEventInfo extends StatelessWidget {
                       style: Theme.of(context).textTheme.displayMedium?.copyWith(
                         fontSize: ATFontSizes.size24,
                         fontWeight: ATFontWeights.w600,
-                        height: 1.2.sp,
+                        height: 1.2,
                       ),
                     ),
                     Gap(12.h),

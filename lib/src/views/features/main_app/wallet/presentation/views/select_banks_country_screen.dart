@@ -1,8 +1,10 @@
 import 'package:amptive/src/utils/constants/font_sizes.dart';
+import 'package:amptive/src/utils/constants/strings/route_strings.dart';
 import 'package:amptive/src/utils/dialogs/wallet/select_withdrawal_bank_dialog.dart';
 import 'package:amptive/src/views/widgets/common_widgets/radio_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import '../../../../../../utils/constants/colors.dart';
 import '../../../../../../utils/constants/strings/other_strings.dart';
 import '../../../../../widgets/common_widgets/annotated_region__widget.dart';
@@ -90,6 +92,10 @@ class ATSelectBanksCountryScreen extends StatelessWidget {
                     return ATPlainElevatedBtn(
                       onPressed: state == null ? null : ()async{
                         final selectedBank = await selectWithdrawalBankDialog(context);
+                        if(context.mounted && selectedBank != null){
+                          context.pushNamed(
+                            ATRoutes.ENTER_ACCT_NO, extra: selectedBank);
+                        }
                       },
                       btnTitle: ATStrings.CONTINUE,
                     );

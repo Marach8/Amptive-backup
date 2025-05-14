@@ -7,3 +7,6 @@ export 'select_recipient_screen.dart';
 export 'enter_amount_screen.dart';
 export 'withdrawal_landing_screen.dart';
 export 'select_banks_country_screen.dart';
+export 'enter_acct_no_screen.dart';
+export 'pass_security_quest_screen.dart';
+export 'paper_plane_success_screen.dart';

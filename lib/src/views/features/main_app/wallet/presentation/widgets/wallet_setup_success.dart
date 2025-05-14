@@ -15,8 +15,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../bloc/wallet_bloc_export.dart';
 
 
-class WalletSetupSuccess extends StatelessWidget {
-  const WalletSetupSuccess({super.key});
+class WalletCretionSuccess extends StatelessWidget {
+  const WalletCretionSuccess({super.key});
 
   @override
   Widget build(context) {
@@ -30,7 +30,7 @@ class WalletSetupSuccess extends StatelessWidget {
             alignment: Alignment.topCenter,
             clipBehavior: Clip.none,
             children: [
-              BlocSelector<WalletSetupAnimBloc, List<bool>, bool>(
+              BlocSelector<WalletCreationAnimBloc, List<bool>, bool>(
                 selector: (state) => state.elementAt(3),
                 builder: (_, isVisible) {
                   return SpotlightBeam(

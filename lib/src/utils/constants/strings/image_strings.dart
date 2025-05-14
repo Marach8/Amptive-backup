@@ -86,4 +86,5 @@ class ATImgStrings{
   static const BIG_WALLET_COLORED_ICON = '$_pngPath/wallet (1).png';
   static const WARNING_ICON = '$_pngPath/warning.png';
   static const WIRE_TRANSFER = '$_pngPath/wiretransfer.png';
+  static const PAPER_PLANE = '$_pngPath/paper plane.png';
 }

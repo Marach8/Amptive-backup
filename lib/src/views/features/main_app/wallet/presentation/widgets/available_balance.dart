@@ -3,6 +3,7 @@ import 'package:amptive/src/utils/constants/font_sizes.dart';
 import 'package:amptive/src/utils/constants/strings/image_strings.dart';
 import 'package:amptive/src/utils/constants/strings/other_strings.dart';
 import 'package:amptive/src/utils/constants/strings/route_strings.dart';
+import 'package:amptive/src/utils/dialogs/wallet/process_wallet_funding_dialog.dart';
 import 'package:amptive/src/views/widgets/common_widgets/circular_image.dart';
 import 'package:amptive/src/views/widgets/common_widgets/custom_container_widget.dart';
 import 'package:flutter/material.dart';
@@ -101,12 +102,24 @@ class AvailableBalanceWidget extends StatelessWidget {
                           icon = Icons.add;
                       }
                       return InkWell(
-                        onTap: (){
-                          if(item == ATStrings.FUND_WALLET){
-                            context.pushNamed(ATRoutes.AMOUNT_2_TRSF);
+                        onTap: ()async{
+                          if(item == ATStrings.FUND_WALLET){                            
+                            final selectedMethod = await context.pushNamed(
+                              ATRoutes.ENTER_AMOUNT_2_TRSF,
+                              extra: (0, null, null, null)
+                            ) as String?;
+                            
+                            if(context.mounted){
+                              final processPayment = await processWalletFundingDialog(
+                                context: context,
+                                paymentMethod: selectedMethod
+                              );
+                            }
                           }
                           else if(item == ATStrings.TRSF){
-                            context.pushNamed(ATRoutes.SELECT_RECIPIENT);
+                            context.pushNamed(
+                              ATRoutes.SELECT_RECIPIENT
+                            );
                           }
                           else if(item == ATStrings.WITHDRAW){
                             context.pushNamed(ATRoutes.WITHDRAWAL);

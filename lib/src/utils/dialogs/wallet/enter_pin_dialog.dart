@@ -1,11 +1,17 @@
 import 'package:amptive/src/models/host.dart';
 import 'package:amptive/src/utils/constants/colors.dart';
 import 'package:amptive/src/utils/constants/font_sizes.dart';
+import 'package:amptive/src/utils/constants/strings/image_strings.dart';
 import 'package:amptive/src/utils/constants/strings/other_strings.dart';
+import 'package:amptive/src/utils/helpers/extensions/string_extensions.dart';
 import 'package:amptive/src/utils/helpers/helper_functions/helper_functions.dart';
+import 'package:amptive/src/views/features/main_app/wallet/presentation/views/wallet_views_export.dart';
 import 'package:amptive/src/views/widgets/animation_widgets/common_animation_widgets/animated_align_widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/back_button.dart';
 import 'package:amptive/src/views/widgets/common_widgets/custom_container_widget.dart';
+import 'package:amptive/src/views/widgets/common_widgets/divider_widget.dart';
+import 'package:amptive/src/views/widgets/common_widgets/image_loader_widget.dart';
+import 'package:amptive/src/views/widgets/common_widgets/with_leading_image_nd_trailing_more_icon.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -18,13 +24,19 @@ Future<bool?> inputTxnPinDialog({
   required BuildContext context,
   required Object? object
 }) {
-  ObjectWithNotifier<Host>? receipient;
+  ObjectWithNotifier<Host>? receipient; BankDetails? bankDetails;
   final isTransfer = object is ObjectWithNotifier<Host>;
+  final isWithdrawal = object is BankDetails;
+
   if(isTransfer){
     receipient = object;
   }
+  else if(isWithdrawal){
+    bankDetails = object;
+  }
 
   const digits = '123456789.0<';
+  
   return showCupertinoModalPopup<bool>(
     context: context,
     barrierColor: ATColors.black,
@@ -64,6 +76,20 @@ Future<bool?> inputTxnPinDialog({
                               imagePath: receipient?.obj.profilePicture ?? '',
                               diameter: 50,
                             ),
+                            if(isWithdrawal) WidgetWithLeadingImageAndTrailingMoreIcon(
+                              title: bankDetails?.bankName ?? '',
+                              subtitle: '${bankDetails?.accountNo} - ${bankDetails?.accountName}',
+                              leadingImgPath: ATImgStrings.WIRE_TRANSFER,
+                              btnText: ATStrings.CHANGE_BANK_DETAILS,
+                              btnOnTap: (){
+                                dialogContext.pop(); context.pop();
+                              },
+                              trailingMoreOnTap: (){},
+                              bottomTrailingText: bankDetails?.amount?.formatPrice(),
+                              //bottomTrailingWidget: const SizedBox.shrink(),
+                              imgSize: 40,
+                            ),
+
                             const SizedBox(height: 50,),
 
                             BlocConsumer<EnterPinBloc, (String, bool?)>(                              

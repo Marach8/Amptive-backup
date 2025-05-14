@@ -164,7 +164,7 @@ class _BottomSheetContent extends StatelessWidget {
             const SizedBox(height: 10),
             ATPlainElevatedBtn(
               onPressed: shouldActivate ? (){
-                context.read<SwitchAcctSuccessAnimationBloc>().reset();
+                context.read<SwitchAcctSuccessAnimBloc>().reset();
                 context.pushNamed(ATRoutes.CREATOR_SUCCESS);
               } : null,
               btnTitle: ATStrings.CONTINUE

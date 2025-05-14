@@ -1,5 +1,3 @@
-import 'package:amptive/src/models/host.dart';
-import 'package:amptive/src/services/create_show/create_show_service.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class WithdrawalBanksBloc extends Bloc<WithdrawalBanksEvents, WithdrawalBanksState>{
@@ -8,13 +6,8 @@ class WithdrawalBanksBloc extends Bloc<WithdrawalBanksEvents, WithdrawalBanksSta
     final banks = ['Access Bank', 'First Bank', 'Zenith Bank', 'GT Bank', 'UBA Bank', 'Fidelity Bank'];
 
     on<FetchBanksEvent>((event, emit)async{
-      emit(
-        WithdrawalBanksData(
-          banks: null,
-          selectedBank: null
-        )
-      );
-      await Future.delayed(const Duration(seconds: 3));
+      emit(FetchingBanks());
+      await Future.delayed(const Duration(seconds: 5));
       emit(
         WithdrawalBanksData(
           banks: banks,
@@ -82,6 +75,8 @@ abstract class WithdrawalBanksState{}
 class WithdrawalBanksInitial extends WithdrawalBanksState{}
 
 class SearchingBanks extends WithdrawalBanksState{}
+
+class FetchingBanks extends WithdrawalBanksState{}
 
 class WithdrawalBanksData extends WithdrawalBanksState{
   final List<String>? banks;

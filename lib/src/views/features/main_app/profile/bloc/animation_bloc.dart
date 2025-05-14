@@ -16,8 +16,8 @@ class AcctTypeLandingAnimBloc extends Cubit<List<bool>>{
 
 
 
-class SwitchAcctSuccessAnimationBloc extends Cubit<List<bool>>{
-  SwitchAcctSuccessAnimationBloc(): super(List.generate(5,(_) => false));
+class SwitchAcctSuccessAnimBloc extends Cubit<List<bool>>{
+  SwitchAcctSuccessAnimBloc(): super(List.filled(5, false));
   
   void triggerNext(int newIndex)async{
     if (newIndex < 3) {
@@ -40,5 +40,5 @@ class SwitchAcctSuccessAnimationBloc extends Cubit<List<bool>>{
     emit(List.from(state));
   }
 
-  void reset() => emit(List.generate(5,(_) => false));
+  void reset() => emit(List.filled(5, false));
 } 

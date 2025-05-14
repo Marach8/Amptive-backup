@@ -2,30 +2,58 @@ import 'package:amptive/src/models/host.dart';
 import 'package:amptive/src/utils/constants/colors.dart';
 import 'package:amptive/src/utils/constants/font_weights.dart';
 import 'package:amptive/src/utils/constants/strings/other_strings.dart';
+import 'package:amptive/src/utils/dialogs/app_notification_dialog.dart';
 import 'package:amptive/src/utils/dialogs/dialog_export.dart';
-import 'package:amptive/src/utils/dialogs/wallet/enter_pin_dialog.dart';
 import 'package:amptive/src/utils/helpers/extensions/string_extensions.dart';
 import 'package:amptive/src/utils/helpers/helper_functions/helper_functions.dart';
 import 'package:amptive/src/views/features/main_app/wallet/bloc/wallet_bloc_export.dart';
+import 'package:amptive/src/views/features/main_app/wallet/presentation/views/wallet_views_export.dart';
 import 'package:amptive/src/views/widgets/animation_widgets/common_animation_widgets/animated_align_widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/annotated_region__widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/circular_image.dart';
 import 'package:amptive/src/views/widgets/common_widgets/elevated_button_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import '../../../../../../utils/constants/font_sizes.dart';
 import '../../../../../widgets/common_widgets/app_bar_widget.dart';
 import '../../../../../widgets/common_widgets/back_button.dart';
 import '../../../../../widgets/common_widgets/custom_container_widget.dart';
 
 class ATEnterAmountScreen extends StatelessWidget {
-  const ATEnterAmountScreen({super.key, required this.receipient});
-  final ObjectWithNotifier<Host>? receipient;
+  const ATEnterAmountScreen({super.key, required this.params});
+
+  final (int, ObjectWithNotifier<Host>?, BankDetails?, String?) params;
 
   static String digits = '123456789.0<';
 
   @override
-  Widget build(BuildContext _) {
+  Widget build(BuildContext context) {
+    String title = ''; String notification = ''; String btnTitle = '';
+    switch (params.$1){
+      case 0:
+        title = ATStrings.FUND_WALLET;
+        notification = ATStrings.AMPTIVE_FUNDING_CHARGES;
+        btnTitle = ATStrings.SELECT_PAYMENT_METHOD;
+        break;
+      case 1:
+        title = '${ATStrings.TRANSFER_FUNDS} to ${params.$2?.obj.name ?? ''}';
+        notification = ATStrings.AMPTIVE_TRNSF_CHARGES;
+        btnTitle = ATStrings.ENTER_PIN;
+        break;
+      case 2:
+        title = '${ATStrings.WITHDRAW} to ${params.$3?.accountName.toUpperCase() ?? ''}';
+        notification = ATStrings.AMPTIVE_WITHDRAWAL_CHARGES;
+        btnTitle = ATStrings.ENTER_PIN;
+        break;
+    }
+
+    if(params.$4 != null){
+      WidgetsBinding.instance.addPostFrameCallback(
+        (_) => showAppNotification(context: context, text: params.$4!)
+      );
+    }
+
     return ATAnnotatedRegion(
       child: BlocProvider(
         create: (_) => EnterAmountBloc(),
@@ -36,8 +64,7 @@ class ATEnterAmountScreen extends StatelessWidget {
                 leading: const ATRoundedBackBtn(),
                 leadingWidth: 30,
                 padding: const EdgeInsets.only(left: 7),
-                titleText: receipient == null ? ATStrings.FUND_WALLET
-                : '${ATStrings.TRANSFER_FUNDS} to ${receipient?.obj.name}',
+                titleText: title,
               ),
               body: Center(
                 child: SingleChildScrollView(
@@ -45,10 +72,10 @@ class ATEnterAmountScreen extends StatelessWidget {
                   physics: const BouncingScrollPhysics(),
                   child: Column(
                     children: [
-                      if(receipient != null)Padding(
+                      if(params.$2 != null)Padding(
                         padding: const EdgeInsets.only(bottom: 20),
                         child: ATCircularImage(
-                          imagePath: receipient?.obj.profilePicture ?? '',
+                          imagePath: params.$2?.obj.profilePicture ?? '',
                           diameter: 50,
                         ),
                       ),
@@ -148,8 +175,7 @@ class ATEnterAmountScreen extends StatelessWidget {
                               Icon(Icons.info_outline, color: ATColors.hexC2C2C2),
                               Flexible(
                                 child: Text(
-                                  receipient == null ? ATStrings.AMPTIVE_FUNDING_FEE 
-                                    : ATStrings.AMPTIVE_TRNSF_CHARGES, maxLines: 3,
+                                  notification, maxLines: 3,
                                   style: Theme.of(context).textTheme.titleSmall?.copyWith(
                                     fontSize: ATFontSizes.size13,
                                     color: ATColors.hexC2C2C2
@@ -169,15 +195,27 @@ class ATEnterAmountScreen extends StatelessWidget {
                         return ATPlainElevatedBtn(
                           onPressed: (state.$1.isNotEmpty && state.$1 != '0' && state.$2 == true) 
                             ? () async{
-                              if(receipient != null){
-                                final shouldProceed = await inputTxnPinDialog(context: context, object: receipient);
+                              if(params.$1 == 0){
+                                final selectedPaymentMethod = await selectPaymentMethodDialog(context: context, amount: state.$1);
+                                if(context.mounted && selectedPaymentMethod != null){
+                                  context.pop(selectedPaymentMethod);
+                                }
                               }
-                              else{
-                                final selectMethod = await selectPaymentMethodDialog(context: context, amount: state.$1);
+
+                              else if(params.$1 == 1 || params.$1 == 2){
+                                final receipient = params.$2;
+                                final bankDetails = params.$3;
+                                if(bankDetails != null){
+                                  bankDetails.amount = state.$1;
+                                }
+
+                                final shouldProceed = await inputTxnPinDialog(context: context, object: receipient ?? bankDetails);
+                                if(context.mounted && (shouldProceed ?? false)){
+                                  context.pop(true);
+                                }
                               }
                             } : null,
-                          btnTitle: receipient != null ? 
-                            ATStrings.ENTER_PIN : ATStrings.SELECT_PAYMENT_METHOD
+                          btnTitle: btnTitle
                         );
                       }
                     ),
