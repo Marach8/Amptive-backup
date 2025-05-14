@@ -73,4 +73,13 @@ class ATRoutes {
   static const CO_HOST_FEE_SETUP = 'co_host_fee_setup';
   static const CREATOR_SUCCESS = 'creator_success';
   static const WALLET_LANDING = 'wallet_landing';
+  static const WALLET_PIN_SETUP = 'wallet_pin_setup';
+  static const SECURITY_QUEST = 'security_question';
+  static const WALLET_CREATION_ANIM = 'wallet_creation_animation';
+  static const WALLET = 'wallet';
+  static const SELECT_RECIPIENT = 'transfer_funds';
+  static const FUND_WALLET = 'fund_wallet';
+  static const WITHDRAWAL = 'withdraw';
+  static const SELECT_BANK_COUNTRY = 'select_bank_country';
+  static const AMOUNT_2_TRSF = 'amount_to_transfer';
 }

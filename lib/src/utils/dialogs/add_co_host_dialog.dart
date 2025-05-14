@@ -129,7 +129,7 @@ Future<Set<ObjectWithNotifier<Host>>?> showAddCoHostDialog(BuildContext context)
                             shouldDispose: true,
                             notifier: showSuffixIconNotifier,
                             builder: (_, shouldShow, __) {
-                              return AmptiveAnimatedCrossFadeWidget(
+                              return ATAnimatedCrossFade(
                                 condition: shouldShow,
                                 secondChild: const SizedBox.shrink(),
                                 firstChild: GestureDetector(
@@ -147,7 +147,7 @@ Future<Set<ObjectWithNotifier<Host>>?> showAddCoHostDialog(BuildContext context)
                         notifier: service.coHostSelectionStarted,
                         // shouldDispose: true,
                         builder: (_, selectionStarted, __) {                          
-                          return AmptiveAnimatedCrossFadeWidget(
+                          return ATAnimatedCrossFade(
                             condition: !selectionStarted,
                             firstChild: const SizedBox.shrink(),
                             secondChild: ATContainer(

@@ -5,17 +5,18 @@ import 'package:flutter/material.dart';
 import 'package:shimmer/shimmer.dart';
 
 
-class ShimmerWidget extends StatelessWidget {
-  const ShimmerWidget({
+class ATShimmer extends StatelessWidget {
+  const ATShimmer({
     super.key,
     this.height,
     this.width,
     this.baseColor,
     this.highlightColor,
-    this.margin
+    this.margin,
+    this.radius
   });
 
-  final double? height, width;
+  final double? height, width, radius;
   final EdgeInsetsGeometry? margin;
   final Color? highlightColor, baseColor;
 
@@ -26,7 +27,7 @@ class ShimmerWidget extends StatelessWidget {
       highlightColor: highlightColor ?? ATColors.hex9E9E9E,
       child: ATContainer(
         margin: margin,
-        height: height ?? 40, radius: 5,
+        height: height ?? 40, radius: radius ?? 5,
         color: baseColor ?? ATColors.white.withValues(alpha: 0.5),
         width: width ?? ATHelperFuncs.getScreenWidth(context),
         child: const SizedBox.shrink(),

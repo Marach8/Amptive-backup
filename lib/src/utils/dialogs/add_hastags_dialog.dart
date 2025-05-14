@@ -130,7 +130,7 @@ Future<Set<ObjectWithNotifier<Hashtag>>?> showAddHashtagDialog(
                               shouldDispose: true,
                               notifier: showSuffixIconNotifier,
                               builder: (_, shouldShow, __) {
-                                return AmptiveAnimatedCrossFadeWidget(
+                                return ATAnimatedCrossFade(
                                   condition: shouldShow,
                                   secondChild: const SizedBox.shrink(),
                                   firstChild: GestureDetector(
@@ -156,7 +156,7 @@ Future<Set<ObjectWithNotifier<Hashtag>>?> showAddHashtagDialog(
                           notifier: service.selectedHashtagLength,
                           builder: (_, val, __) {
                             var value = service.selectedHashtags.value;
-                            return AmptiveAnimatedCrossFadeWidget(
+                            return ATAnimatedCrossFade(
                               condition: value.isEmpty,
                               firstChild: const SizedBox.shrink(),
                               secondChild: SingleChildScrollView(

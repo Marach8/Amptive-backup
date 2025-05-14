@@ -289,7 +289,7 @@ class _HorizontalScrollCardsState extends State<_HorizontalScrollCards> {
                       return ATContainer(
                         margin: const EdgeInsets.only(left: 3),
                         radius: 8, height: 8,
-                        color: isActive ? ATColors.white : ATColors.inactiveDotColor, 
+                        color: isActive ? ATColors.white : ATColors.hex5B5B5B, 
                         width: isActive ? 25 : 8,
                         child: const SizedBox.shrink()
                       );

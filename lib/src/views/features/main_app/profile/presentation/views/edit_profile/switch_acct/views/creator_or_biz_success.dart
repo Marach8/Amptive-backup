@@ -2,6 +2,7 @@ import 'package:amptive/src/utils/constants/colors.dart';
 import 'package:amptive/src/utils/constants/strings/other_strings.dart';
 import 'package:amptive/src/utils/constants/strings/route_strings.dart';
 import 'package:amptive/src/views/features/main_app/profile/bloc/profile_bloc_export.dart';
+import 'package:amptive/src/views/widgets/animation_widgets/common_animation_widgets/animated_crossfade_widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/annotated_region__widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/elevated_button_widget.dart';
 import 'package:flutter/material.dart';
@@ -35,9 +36,9 @@ class CreatorSuccessScreen extends StatelessWidget {
                 selector: (state) => state.elementAt(3),
                 builder: (_, successState) {
                   if(successState){
-                    return const SuccesState();
+                    return const CreatorOrBizSetupSuccess();
                   }
-                  return const Center(child: LoadingState());
+                  return const Center(child: CreatorOrBizSetupLoading());
                 }
               ),
           
@@ -46,16 +47,17 @@ class CreatorSuccessScreen extends StatelessWidget {
                 child: BlocSelector<SwitchAcctSuccessAnimationBloc, List<bool>, bool>(
                   selector: (state) => state.elementAt(3),
                   builder: (_, isVisible) {
-                    if(isVisible){
-                      return ATPlainElevatedBtn(
+                    return ATAnimatedCrossFade(
+                      condition: isVisible,
+                      secondChild: const SizedBox.shrink(),
+                      firstChild: ATPlainElevatedBtn(
                         onPressed: (){
                           Navigator.popUntil(context, (route) => route.isFirst);
                           context.pushNamed(ATRoutes.CREATOR_PROFILE_SCREEN);
                         },
                         btnTitle: ATStrings.VISIT_PROFILE
-                      );
-                    }
-                    return const SizedBox.shrink();
+                      )
+                    );
                   }
                 ),
               ),

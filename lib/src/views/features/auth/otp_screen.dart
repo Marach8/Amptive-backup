@@ -1,21 +1,21 @@
 
 import 'package:amptive/src/bloc/authentication/otp/otp_auth_bloc.dart';
 import 'package:amptive/src/bloc/authentication/otp/otp_auth_states.dart';
-import 'package:amptive/src/services/auth/otp_service.dart';
 import 'package:amptive/src/utils/constants/colors.dart';
 import 'package:amptive/src/utils/constants/font_sizes.dart';
 import 'package:amptive/src/views/widgets/common_widgets/annotated_region__widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/common_widgets.dart';
+import 'package:amptive/src/views/widgets/common_widgets/otp_fields_widget.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
 import '../../../bloc/authentication/otp/otp_auth_events.dart';
 import '../../../utils/constants/font_weights.dart';
 import '../../../utils/constants/strings/other_strings.dart';
 import '../../widgets/common_widgets/app_bar_widget.dart';
 import '../../widgets/common_widgets/elevated_button_widget.dart';
+import 'dart:developer';
 
 class ATOTPScreen extends StatefulWidget {
   const ATOTPScreen({
@@ -69,6 +69,7 @@ class _ATOTPScreenState extends State<ATOTPScreen> {
   //   });
   // }
 
+  final correctPin = '1234';
   void resetTimer(BuildContext context) {
     context
         .read<AmptiveOTPAuthBloc>()
@@ -104,19 +105,17 @@ class _ATOTPScreenState extends State<ATOTPScreen> {
                   ),
                 ),
                 const SizedBox(height: 11),
-                Row(
-                  children: [
-                    _OTPTextFormField(index: 0,),
-                    const SizedBox(width: 10,),
-                    _OTPTextFormField(index: 1),
-                    const SizedBox(width: 10,),
-                    _OTPTextFormField(index: 2),
-                    const SizedBox(width: 10,),
-                    _OTPTextFormField(index: 3),
-                  ],
+                ATOTPFieldsWidget(
+                  onPinComplete: (pin) async{
+                    log(pin);
+                    if(pin == correctPin){
+                      return true;
+                    }
+                    return false;
+                  },
                 ),
 
-                const SizedBox(height: 20),
+                const SizedBox(height: 11),
 
                 BlocBuilder<AmptiveOTPAuthBloc, AmptiveOTPAuthState>(
                   buildWhen: (prev, curr) => curr is AmptiveOTPCounterState,
@@ -179,74 +178,6 @@ class _ATOTPScreenState extends State<ATOTPScreen> {
             },
           ),
         ),
-      ),
-    );
-  }
-}
-
-
-class _OTPTextFormField extends StatelessWidget {
-  _OTPTextFormField({required this.index});
-
-  final int index;
-  final OtpService service = GetIt.I<OtpService>();
-
-  @override
-  Widget build(context) {
-    return SizedBox(
-      height: 48,
-      width: 56.83,
-      child: TextFormField(
-        autofocus: true,
-        // textInputAction: TextInputAction.previous,
-        onChanged: (value) {
-          service.setOtp(value, index);
-          // trigger otp changed event
-          context
-              .read<AmptiveOTPAuthBloc>()
-              .add(OTPChangedAuthEvent(otpValid: service.isOTPValid));
-
-          if (value.length == 1 && index != 3) {
-            FocusScope.of(context).nextFocus();
-          } else if (value.isEmpty && index != 0) {
-            FocusScope.of(context).previousFocus();
-          }
-        },
-        keyboardType: TextInputType.number,
-        maxLength: 1,
-        textAlignVertical: TextAlignVertical.center,
-        cursorColor: ATColors.hex307FE2,
-        decoration: InputDecoration(
-          contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-          floatingLabelBehavior: FloatingLabelBehavior.never,
-          counterText: ATStrings.empty,
-          label: const Center(
-            child: Text(ATStrings.hyphen),
-          ),
-          labelStyle:Theme.of(context).textTheme.headlineMedium?.copyWith(
-          fontWeight: ATFontWeights.w400,
-        ),
-          filled: true,
-          fillColor: ATColors.hex9E9E9E.withOpacity(0.3),
-          focusedBorder: OutlineInputBorder(
-            borderSide: BorderSide(
-              width: 2,
-              color: ATColors.hex307FE2,
-            ),
-            borderRadius: BorderRadius.circular(14),
-          ),
-          border: OutlineInputBorder(
-            borderSide: BorderSide(
-              width: 2,
-              color: ATColors.trsprnt,
-            ),
-            borderRadius: BorderRadius.circular(14),
-          ),
-        ),
-        style:Theme.of(context).textTheme.headlineMedium?.copyWith(
-          fontWeight: ATFontWeights.w400,
-        ),
-        textAlign: TextAlign.center,
       ),
     );
   }

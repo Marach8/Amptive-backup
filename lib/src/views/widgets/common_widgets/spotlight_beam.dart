@@ -7,10 +7,13 @@ class SpotlightBeam extends StatelessWidget {
   const SpotlightBeam({
     super.key,
     required this.gradient,
-    this.duration
+    this.duration,
+    this.height,
+    this.width
   });
   final Gradient? gradient;
   final int? duration;
+  final double? height, width;
 
   @override
   Widget build(BuildContext context) {
@@ -18,8 +21,8 @@ class SpotlightBeam extends StatelessWidget {
       clipper: SpotlightClipper(),
       child: ATContainer(
         duration: duration,
-        height: ATHelperFuncs.getScreenHeight(context) * 0.4,
-        width: ATHelperFuncs.getScreenWidth(context) * 0.5,
+        height: height ?? ATHelperFuncs.getScreenHeight(context) * 0.4,
+        width: width ?? ATHelperFuncs.getScreenWidth(context) * 0.5,
         gradient: gradient
       ),
     );

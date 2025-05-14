@@ -50,7 +50,7 @@ class AmptiveDiscoverSliverHeader extends SliverPersistentHeaderDelegate{
                   builder: (_, value, __) {
                     return Padding(
                       padding: const EdgeInsets.only(right: 10),
-                      child: AmptiveAnimatedCrossFadeWidget(
+                      child: ATAnimatedCrossFade(
                         condition: value,
                         secondChild: const SizedBox.shrink(),
                         firstChild: GestureDetector(
@@ -68,7 +68,7 @@ class AmptiveDiscoverSliverHeader extends SliverPersistentHeaderDelegate{
               notifier: notifier,
               shouldDispose: true,
               builder: (_, value, __) {
-                return AmptiveAnimatedCrossFadeWidget(
+                return ATAnimatedCrossFade(
                   condition: value,
                   secondChild: const SizedBox.shrink(),
                   firstChild: Text(

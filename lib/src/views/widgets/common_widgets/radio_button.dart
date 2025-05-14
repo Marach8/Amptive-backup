@@ -6,13 +6,16 @@ class ATRadioButton extends StatelessWidget {
   const ATRadioButton({
     super.key,
     required this.isSelected,
+    this.duration
   });
 
   final bool isSelected;
+  final int? duration;
 
   @override
   Widget build(context) {
     return ATContainer(
+      duration: duration,
       height: 15, width: 15, boxShape: BoxShape.circle,
       padding: const EdgeInsets.all(5),
       color: isSelected ? ATColors.hex307FE2 : ATColors.trsprnt,

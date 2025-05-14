@@ -38,6 +38,9 @@ class ATImgStrings{
   static const SUBSCRIBER_BADGE = '$_svgPath/Subscribers badge.svg';
   static const BIZ_ACCT_LOGO = '$_svgPath/Simplification (3).svg';
   static const CREATOR_ACCT_LOGO = '$_svgPath/Simplification.svg';
+  static const FLUTTERWAVE = '$_svgPath/flutter_wave.svg';
+  static const APPLE_ICON = '$_svgPath/apple_icon.svg';
+  static const PAYPAL_ICON = '$_svgPath/paypal.svg';
   // static const CREATOR_MIC = '$_svgPath/creator-microphone.svg';
   // static const CREATOR_GIF = '$_svgPath/creatorgif.svg';
   // static const CREATOR_GLOBE = '$_svgPath/internet.svg';
@@ -49,7 +52,7 @@ class ATImgStrings{
   static const weCanDoHardThingsBgImage = '$_generalJpegImagePath/weCanDoAllThings.jpg';
 
   static const facebookIcon = '$_pngPath/facebook.png';
-  static const googleIcon = '$_pngPath/google_icon.png';
+  static const GOOGLE_ICON = '$_pngPath/google_icon.png';
   static const noAvatarImage = '$_pngPath/no_avatar_image.png';
   static const discoverPic1 = '$_pngPath/Frame 156.png';
   static const OFFICE_LADIES = '$_pngPath/Frame 22.png';
@@ -80,5 +83,7 @@ class ATImgStrings{
   static const BIZ_TICKETS = '$_pngPath/interface design window.png';
   static const BIZ_THUNDER = '$_pngPath/lightning.png';
   static const BIG_WALLET_ICON = '$_pngPath/wallet.png';
+  static const BIG_WALLET_COLORED_ICON = '$_pngPath/wallet (1).png';
   static const WARNING_ICON = '$_pngPath/warning.png';
+  static const WIRE_TRANSFER = '$_pngPath/wiretransfer.png';
 }

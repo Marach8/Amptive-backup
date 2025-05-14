@@ -118,7 +118,7 @@ class _AmptiveScheduledShowOrEventDataModelWidgetState extends State<AmptiveSche
                                 : ATStrings.addedToCalender
                             );
                           },
-                          child: AmptiveAnimatedCrossFadeWidget(
+                          child: ATAnimatedCrossFade(
                             condition: value,
                             secondChild: const AmptiveRowOfPaidShowAndPlayButtonWidget(
                               icon: Icons.add,

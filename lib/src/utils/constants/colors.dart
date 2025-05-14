@@ -25,7 +25,7 @@ class ATColors {
 
   static Color get grey4Color => const Color(0xFF5C5C5C);
 
-  static Color get inactiveDotColor => const Color(0xFF5B5B5B);
+  static Color get hex5B5B5B => const Color(0xFF5B5B5B);
 
   static Color get strokeGreyColor => const Color(0xFF838383);
 
@@ -94,4 +94,6 @@ class ATColors {
   static Color get hex23221C => const Color(0XFF23221C);
 
   static Color get hex090909 => const Color(0XFF090909);
+
+  static Color get hex292929 => const Color(0XFF292929);
 }

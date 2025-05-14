@@ -12,7 +12,6 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
 import 'package:iconsax/iconsax.dart';
-import 'dart:developer';
 
 
 class EditSocialsScreen  extends StatefulWidget {
@@ -77,8 +76,6 @@ class _EditSocialsScreenState extends State<EditSocialsScreen> {
           child: Icon(Icons.insert_link, color: ATColors.white, size: 20),
         );
     }
-
-    log(hintText);
 
     return ATAnnotatedRegion(
       child: Scaffold(

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
-class AmptiveAnimatedCrossFadeWidget extends StatelessWidget {
+class ATAnimatedCrossFade extends StatelessWidget {
   final Widget firstChild, secondChild;
   final bool condition;
   final int? duration;
-  const AmptiveAnimatedCrossFadeWidget({
+  const ATAnimatedCrossFade({
     super.key,
     required this.firstChild,
     required this.secondChild,
@@ -13,7 +13,7 @@ class AmptiveAnimatedCrossFadeWidget extends StatelessWidget {
   });
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(context) {
     return AnimatedCrossFade(
       firstCurve: Curves.easeIn,
       secondCurve: Curves.easeIn,

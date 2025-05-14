@@ -49,7 +49,7 @@ class HoursAndProgramsList extends StatelessWidget {
                     final initialState = state is NoProgramsState;
         
                     if(initialState) return const SizedBox(height: 30);
-                    if(isLoading) return const ShimmerWidget(margin: EdgeInsets.only(left: 58));
+                    if(isLoading) return const ATShimmer(margin: EdgeInsets.only(left: 58));
                     if(hasError) return const Text('Error occured');
         
                     final programs = state as ProgramsDataState;

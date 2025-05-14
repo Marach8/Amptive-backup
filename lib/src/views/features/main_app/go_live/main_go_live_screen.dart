@@ -62,7 +62,7 @@ class _AmptiveGoLiveScreenState extends State<AmptiveGoLiveScreen> {
                   color: ATColors.hexC2C2C2
                 ),
               ),
-              Gap(20.h),
+              const SizedBox(height: 20),
               Row(
                 children: [
                   Expanded(

@@ -32,6 +32,15 @@ class ATHelperFuncs{
     => ScaffoldMessenger.maybeOf(context)?.hideCurrentSnackBar();
 
 
+  static int getRandomNumber(double ceiling){
+    final int number = Random().nextInt(ceiling.toInt()) + 1;
+    if(number < 100){
+      return 100 + number;
+    }
+    return number;
+  }
+
+
   static startTimer({
     required Timer timer,
     required BuildContext context
