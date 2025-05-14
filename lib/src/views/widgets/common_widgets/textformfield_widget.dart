@@ -1,6 +1,7 @@
 import 'package:amptive/src/utils/constants/colors.dart';
 import 'package:amptive/src/utils/constants/font_sizes.dart';
 import 'package:amptive/src/utils/constants/font_weights.dart';
+import 'package:amptive/src/views/widgets/common_widgets/search_filter_widget.dart';
 import 'package:flutter/material.dart';
 
 
@@ -106,7 +107,7 @@ class ATTextFormField extends StatelessWidget {
           color: ATColors.strokeGreyColor,
         ),
         suffixIcon: suffixIcon,
-        prefixIcon: prefixIcon,
+        prefixIcon: prefixIcon ?? const ATSearchIcon(),
         prefix: prefix, suffix: suffix,
         prefixIconConstraints: prefixConstraints ?? const BoxConstraints(
           maxHeight: 35,

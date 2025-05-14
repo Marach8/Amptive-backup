@@ -11,7 +11,7 @@ class AmptiveInputDecorationTheme{
     errorMaxLines: 1,
     //isDense: true,
     filled: true,
-    fillColor: ATColors.hex9E9E9E.withOpacity(0.3),
+    fillColor: ATColors.white.withValues(alpha: 0.1),
     // prefixIconColor: AmptiveColors.deepOrange,
     // suffixIconColor: AmptiveColors.deepOrange,
     //labelStyle: const TextStyle().copyWith(fontSize: AmptiveFontSizes.size13),

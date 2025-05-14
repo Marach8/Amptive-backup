@@ -3,7 +3,6 @@ import 'package:amptive/src/utils/constants/colors.dart';
 import 'package:amptive/src/utils/constants/font_weights.dart';
 import 'package:amptive/src/utils/constants/strings/other_strings.dart';
 import 'package:amptive/src/utils/dialogs/dialog_export.dart';
-import 'package:amptive/src/utils/dialogs/wallet/enter_pin_dialog.dart';
 import 'package:amptive/src/utils/helpers/extensions/string_extensions.dart';
 import 'package:amptive/src/utils/helpers/helper_functions/helper_functions.dart';
 import 'package:amptive/src/views/features/main_app/wallet/bloc/wallet_bloc_export.dart';

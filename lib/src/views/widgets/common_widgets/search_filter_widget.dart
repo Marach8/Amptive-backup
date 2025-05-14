@@ -1,4 +1,5 @@
 import 'package:amptive/src/utils/constants/colors.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -49,4 +50,17 @@ class ATFilterWidget<B extends BlocBase<String>> extends StatelessWidget{
       },
     );
   }
+}
+
+
+class ATSearchIcon extends StatelessWidget {
+  const ATSearchIcon({super.key, this.size});
+
+  final double? size;
+
+  @override
+  Widget build(BuildContext context) => Padding(
+    padding: const EdgeInsets.fromLTRB(15, 0, 15, 0),
+    child: Icon(CupertinoIcons.search, size: size),
+  );
 }

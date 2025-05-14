@@ -7,3 +7,4 @@ export 'select_recipient_screen.dart';
 export 'enter_amount_screen.dart';
 export 'withdrawal_landing_screen.dart';
 export 'select_banks_country_screen.dart';
+export 'wallet_txns_screen.dart';

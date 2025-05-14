@@ -26,6 +26,7 @@ import 'package:amptive/src/views/features/main_app/wallet/presentation/views/se
 import 'package:amptive/src/views/features/main_app/wallet/presentation/views/wallet_onboard_screen.dart';
 import 'package:amptive/src/views/features/main_app/wallet/presentation/views/wallet_pin_setup_screen.dart';
 import 'package:amptive/src/views/features/main_app/wallet/presentation/views/wallet_screen.dart';
+import 'package:amptive/src/views/features/main_app/wallet/presentation/views/wallet_txns_screen.dart';
 import 'package:amptive/src/views/features/post_auth/crop_image_screen.dart';
 import 'package:amptive/src/views/features/post_auth/pre_homepage.dart';
 import 'package:amptive/src/views/features/post_auth/preference_screen.dart';
@@ -184,6 +185,13 @@ final GoRouter amptiveAppRouter = GoRouter(
                   child: const ATWalletScreen(),
                 ),
                 routes: [
+                  GoRoute(
+                    name: ATRoutes.WALLET_TXNS,
+                    path: ATRoutes.WALLET_TXNS.addSlash,
+                    pageBuilder: (_, __) => ATRouteTransition(
+                      child: const ATWalletTxnsScreen()
+                    ),
+                  ),
                   GoRoute(
                     name: ATRoutes.SELECT_RECIPIENT,
                     path: ATRoutes.SELECT_RECIPIENT.addSlash,

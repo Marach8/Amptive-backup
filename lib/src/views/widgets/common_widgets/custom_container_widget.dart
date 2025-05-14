@@ -43,8 +43,9 @@ class ATContainer extends StatelessWidget {
 
   @override
   Widget build(context) {
-    return GestureDetector(
+    return InkWell(
       onTap: onTap,
+      borderRadius: BorderRadius.circular(radius ?? 10),
       child: AnimatedContainer(
         duration: Duration(milliseconds: duration ?? 500),
         curve: curve,

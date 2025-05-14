@@ -14,7 +14,7 @@ class RenderTxnWidget extends StatelessWidget {
     required this.color,
     required this.icon,
     required this.imgPath,
-    required this.txnType
+    required this.txnType,
   });
 
   final String txnType, time, amount, imgPath;
@@ -24,9 +24,9 @@ class RenderTxnWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ATContainer(
+      onTap: (){},
       color: ATColors.white.withValues(alpha: 0.05),
-      radius: 15,
-      padding: const EdgeInsets.all(15),
+      radius: 15, padding: const EdgeInsets.all(15),
       child: Row(
         children: [
           SizedBox(

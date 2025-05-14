@@ -82,4 +82,5 @@ class ATRoutes {
   static const WITHDRAWAL = 'withdraw';
   static const SELECT_BANK_COUNTRY = 'select_bank_country';
   static const AMOUNT_2_TRSF = 'amount_to_transfer';
+  static const WALLET_TXNS = 'wallete_transactions';
 }

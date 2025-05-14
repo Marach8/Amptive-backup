@@ -6,7 +6,6 @@ import 'package:amptive/src/views/widgets/common_widgets/app_bar_widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/custom_rebuilder_widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/elevated_button_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 import 'package:go_router/go_router.dart';
 import '../../../../utils/constants/colors.dart';
