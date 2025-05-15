@@ -33,9 +33,9 @@ extension ExtString on String {
   bool get emailContainsEmailSymbol => contains(ATStrings.emailSymbol);
 
 
-  String formatPrice(){
-    final number = double.tryParse(this) ?? 0000;
-    final formatter = NumberFormat('#,###');
+  String formatPrice() {
+    final number = double.tryParse(this) ?? 0.0;
+    final formatter = NumberFormat('#,###.##');
     return formatter.format(number);
   }
 

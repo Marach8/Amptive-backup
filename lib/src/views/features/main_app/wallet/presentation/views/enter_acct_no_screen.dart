@@ -3,7 +3,9 @@ import 'package:amptive/src/utils/constants/font_sizes.dart';
 import 'package:amptive/src/utils/constants/strings/other_strings.dart';
 import 'package:amptive/src/utils/constants/strings/route_strings.dart';
 import 'package:amptive/src/utils/dialogs/confirmation_alert_dialog.dart';
+import 'package:amptive/src/utils/dialogs/dialog_export.dart';
 import 'package:amptive/src/utils/helpers/helper_functions/helper_functions.dart';
+import 'package:amptive/src/views/features/main_app/wallet/presentation/views/enter_amount_screen.dart';
 import 'package:amptive/src/views/widgets/common_widgets/annotated_region__widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/app_bar_widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/back_button.dart';
@@ -129,15 +131,32 @@ class ATEnterAccountNoScreen extends StatelessWidget {
                             yesString: ATStrings.SAVE,
                             noString: ATStrings.CANCEL
                           );
-                          if(context.mounted){
-                            final shouldProceed = await context.pushNamed(
-                              ATRoutes.ENTER_AMOUNT_2_TRSF,
-                              extra: (2, null, bankDetail,
-                                (shouldSave ?? false) ? ATStrings.BANK_DETAIL_SAVED : null)
-                            ) as bool?;
 
-                            if(context.mounted && (shouldProceed ?? false)){
-                              context.pushNamed(ATRoutes.PASS_SECURITY_QUEST);
+                          if(context.mounted){
+                            final amount = await context.pushNamed(
+                              ATRoutes.ENTER_AMOUNT_2_TRSF,
+                              extra: EnterAmountScreenParams(
+                                title: '${ATStrings.WITHDRAW} to ${bankDetail.accountName.toUpperCase()}',
+                                slidingNotif: ATStrings.AMPTIVE_WITHDRAWAL_CHARGES,
+                                btnTitle: ATStrings.ENTER_PIN,
+                                flushBarNotif: (shouldSave ?? false) ? ATStrings.BANK_DETAIL_SAVED : null
+                              ),
+                            ) as String?;
+
+                            if(context.mounted && (amount != null)){
+                              final shouldProceed = await inputTxnPinDialog(context: context, object: bankDetail);
+                              if(context.mounted && (shouldProceed ?? false)){
+                                final didPassQuest = await context.pushNamed(ATRoutes.PASS_SECURITY_QUEST) as bool?;
+                                if(context.mounted && (didPassQuest ?? false)){
+                                  await context.pushNamed(
+                                    ATRoutes.PAPER_PLANE_SUCCESS,
+                                    extra: [ATStrings.WITHDRAWAL_REQUEST_SENT, ATStrings.WITHDRAWAL_REQUEST_DESC]
+                                  );
+                                  if(context.mounted){
+                                    context.pop();
+                                  }
+                                }
+                              }
                             }
                           }
                         },

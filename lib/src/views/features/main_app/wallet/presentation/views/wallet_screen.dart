@@ -1,12 +1,14 @@
 import 'package:amptive/src/utils/constants/colors.dart';
 import 'package:amptive/src/utils/constants/strings/image_strings.dart';
 import 'package:amptive/src/utils/constants/strings/other_strings.dart';
+import 'package:amptive/src/utils/constants/strings/route_strings.dart';
 import 'package:amptive/src/views/features/main_app/wallet/presentation/widgets/wallets_widget_export.dart';
 import 'package:amptive/src/views/widgets/common_widgets/app_bar_widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/back_button.dart';
 import 'package:amptive/src/views/widgets/common_widgets/custom_container_widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/image_loader_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import '../../../../../widgets/common_widgets/annotated_region__widget.dart';
 
 class ATWalletScreen extends StatelessWidget {
@@ -17,12 +19,11 @@ class ATWalletScreen extends StatelessWidget {
     return ATAnnotatedRegion(
       child: Scaffold(
         appBar: const ATAppBar(
+          titleText: "Emmanuel's Account",
           leading: ATRoundedBackBtn(),
-          leadingWidth: 30,
           padding: EdgeInsets.only(left: 7),
-          titleText: "Emmanuel's Account"
+          leadingWidth: 30,
         ),
-
         body: Padding(
           padding: const EdgeInsets.fromLTRB(15, 10, 15, 20),
           child: Column(
@@ -40,19 +41,27 @@ class ATWalletScreen extends StatelessWidget {
                   ),
                   const Spacer(),
                   InkWell(
-                    onTap: (){},
-                    child: Text(
-                      ATStrings.VIEW_ALL,
-                      style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                        color: ATColors.hexC2C2C2
-                      )
+                    onTap: (){
+                      context.pushNamed(ATRoutes.WALLET_TXNS);
+                    },
+                    splashColor: ATColors.white,
+                    borderRadius: BorderRadius.circular(5),
+                    child: Row(
+                      children: [
+                        Text(
+                          ATStrings.VIEW_ALL,
+                          style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                            color: ATColors.hexC2C2C2
+                          )
+                        ),
+                        Icon(Icons.keyboard_arrow_right_outlined, color: ATColors.hexC2C2C2)
+                      ],
                     ),
                   ),
-                  Icon(Icons.keyboard_arrow_right_outlined, color: ATColors.hexC2C2C2)
                 ],
               ),
               const SizedBox(height: 10,),
-
+              
               RenderTxnWidget(
                 time: 'Today, 5:50 PM',
                 txnType: ATStrings.SUB_RECEIVED,

@@ -112,14 +112,7 @@ class ATPassSecurityQuestionScreen extends StatelessWidget {
                 child: BlocBuilder<_EnterSecretQuesBloc, int?>(
                   builder: (_, state){
                     return ATPlainElevatedBtn(
-                      onPressed: state == 1 ? 
-                        ()async{
-                          final result = await context.pushNamed(
-                            ATRoutes.PAPER_PLANE_SUCCESS,
-                            extra: [ATStrings.WITHDRAWAL_REQUEST_SENT, ATStrings.WITHDRAWAL_REQUEST_DESC]
-                          );
-                          log(result.toString());
-                        } : null,
+                      onPressed: state == 1 ? () => context.pop(true) : null,
                       btnTitle: ATStrings.SEND_WITHDRAWAL_REQUEST
                     );
                   }

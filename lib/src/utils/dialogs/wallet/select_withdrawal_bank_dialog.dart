@@ -9,6 +9,7 @@ import 'package:amptive/src/views/widgets/common_widgets/elevated_button_widget.
 import 'package:amptive/src/views/widgets/common_widgets/loading_indicator.dart';
 import 'package:amptive/src/views/widgets/common_widgets/radio_button.dart';
 import 'package:amptive/src/views/widgets/common_widgets/search_filter_widget.dart';
+import 'package:amptive/src/views/widgets/common_widgets/search_key_bloc.dart';
 import 'package:amptive/src/views/widgets/common_widgets/shimmer.dart';
 import 'package:amptive/src/views/widgets/common_widgets/textformfield_widget.dart';
 import 'package:flutter/cupertino.dart';
@@ -96,7 +97,7 @@ Future<String?> selectWithdrawalBankDialog(BuildContext context) {
                           return StatefulBuilder(
                             builder: (_, setter) {
                               return ATTextFormField(
-                                controller: cntrl,
+                                controller: cntrl, maxLines: 1,
                                 fillColor: ATColors.white.withValues(alpha: 0.1),
                                 hintText: ATStrings.SEARCH_4_BANK,
                                 prefixIcon: const Padding(

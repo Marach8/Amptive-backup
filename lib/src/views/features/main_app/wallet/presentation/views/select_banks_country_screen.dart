@@ -93,8 +93,7 @@ class ATSelectBanksCountryScreen extends StatelessWidget {
                       onPressed: state == null ? null : ()async{
                         final selectedBank = await selectWithdrawalBankDialog(context);
                         if(context.mounted && selectedBank != null){
-                          context.pushNamed(
-                            ATRoutes.ENTER_ACCT_NO, extra: selectedBank);
+                          context.pushReplacementNamed(ATRoutes.ENTER_ACCT_NO, extra: selectedBank);
                         }
                       },
                       btnTitle: ATStrings.CONTINUE,

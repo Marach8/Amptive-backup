@@ -4,11 +4,14 @@ import 'package:amptive/src/utils/constants/strings/image_strings.dart';
 import 'package:amptive/src/utils/constants/strings/other_strings.dart';
 import 'package:amptive/src/utils/constants/strings/route_strings.dart';
 import 'package:amptive/src/utils/dialogs/wallet/process_wallet_funding_dialog.dart';
+import 'package:amptive/src/utils/dialogs/wallet/select_payment_method_dialog.dart';
+import 'package:amptive/src/views/features/main_app/wallet/presentation/views/enter_amount_screen.dart';
 import 'package:amptive/src/views/widgets/common_widgets/circular_image.dart';
 import 'package:amptive/src/views/widgets/common_widgets/custom_container_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'dart:developer';
 
 class AvailableBalanceWidget extends StatelessWidget {
   const AvailableBalanceWidget({super.key});
@@ -104,25 +107,39 @@ class AvailableBalanceWidget extends StatelessWidget {
                       return InkWell(
                         onTap: ()async{
                           if(item == ATStrings.FUND_WALLET){                            
-                            final selectedMethod = await context.pushNamed(
+                            final inputPrice = await context.pushNamed(
                               ATRoutes.ENTER_AMOUNT_2_TRSF,
-                              extra: (0, null, null, null)
+                              extra: EnterAmountScreenParams(
+                                title: ATStrings.FUND_WALLET,
+                                slidingNotif: ATStrings.AMPTIVE_FUNDING_CHARGES,
+                                btnTitle: ATStrings.SELECT_PAYMENT_METHOD
+                              )
                             ) as String?;
-                            
-                            if(context.mounted){
-                              final processPayment = await processWalletFundingDialog(
-                                context: context,
-                                paymentMethod: selectedMethod
+
+                            if(context.mounted && inputPrice != null){
+                              final selectedPaymentMethod = await selectPaymentMethodDialog(context: context, amount: inputPrice);
+                              if(context.mounted && selectedPaymentMethod != null){
+                                final processPayment = await processWalletFundingDialog(
+                                  context: context,
+                                  paymentMethod: inputPrice
+                                );
+                              }
+                            }
+                          }
+
+                          else if(item == ATStrings.TRSF){
+                            final recipientName = await context.pushNamed(ATRoutes.SELECT_RECIPIENT) as String?;
+                            if(recipientName != null && context.mounted){
+                              context.pushNamed(
+                                ATRoutes.PAPER_PLANE_SUCCESS,
+                                extra: [ATStrings.TRSF_SUCCESS, '${ATStrings.TRSF_SUCCESS_DESC}$recipientName']
                               );
                             }
                           }
-                          else if(item == ATStrings.TRSF){
-                            context.pushNamed(
-                              ATRoutes.SELECT_RECIPIENT
-                            );
-                          }
+                          
                           else if(item == ATStrings.WITHDRAW){
-                            context.pushNamed(ATRoutes.WITHDRAWAL);
+                            final result = await context.pushNamed(ATRoutes.WITHDRAWAL_LANDING) as bool?;
+                            log(result.toString());
                           }
                         },
                         borderRadius: BorderRadius.circular(20),

@@ -92,11 +92,11 @@ class ATPaperPlaneSuccessScreen extends StatelessWidget {
                   duration: const Duration(milliseconds: 300),
                   offset: state == 1 ? const Offset(0, 0) : const Offset(0, 1.5),
                   child: ATPlainElevatedBtn(
-                    //onPressed: () => context.pop(),
-                    onPressed: () => Navigator.popUntil(
-                      context,
-                      (route) => route.settings.name == ATRoutes.WALLET
-                    ),
+                    onPressed: () => context.pop(),
+                    // onPressed: () => Navigator.popUntil(
+                    //   context,
+                    //   (route) => route.settings.name?.contains(ATRoutes.WALLET) ?? false
+                    // ),
                     btnTitle: ATStrings.BACK_2_WALLET,
                   ),
                 );

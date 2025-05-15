@@ -23,34 +23,15 @@ import '../../../../../widgets/common_widgets/custom_container_widget.dart';
 class ATEnterAmountScreen extends StatelessWidget {
   const ATEnterAmountScreen({super.key, required this.params});
 
-  final (int, ObjectWithNotifier<Host>?, BankDetails?, String?) params;
+  final EnterAmountScreenParams params;
 
   static String digits = '123456789.0<';
 
   @override
   Widget build(BuildContext context) {
-    String title = ''; String notification = ''; String btnTitle = '';
-    switch (params.$1){
-      case 0:
-        title = ATStrings.FUND_WALLET;
-        notification = ATStrings.AMPTIVE_FUNDING_CHARGES;
-        btnTitle = ATStrings.SELECT_PAYMENT_METHOD;
-        break;
-      case 1:
-        title = '${ATStrings.TRANSFER_FUNDS} to ${params.$2?.obj.name ?? ''}';
-        notification = ATStrings.AMPTIVE_TRNSF_CHARGES;
-        btnTitle = ATStrings.ENTER_PIN;
-        break;
-      case 2:
-        title = '${ATStrings.WITHDRAW} to ${params.$3?.accountName.toUpperCase() ?? ''}';
-        notification = ATStrings.AMPTIVE_WITHDRAWAL_CHARGES;
-        btnTitle = ATStrings.ENTER_PIN;
-        break;
-    }
-
-    if(params.$4 != null){
+    if(params.flushBarNotif != null){
       WidgetsBinding.instance.addPostFrameCallback(
-        (_) => showAppNotification(context: context, text: params.$4!)
+        (_) => showAppNotification(context: context, text: params.flushBarNotif!)
       );
     }
 
@@ -64,7 +45,7 @@ class ATEnterAmountScreen extends StatelessWidget {
                 leading: const ATRoundedBackBtn(),
                 leadingWidth: 30,
                 padding: const EdgeInsets.only(left: 7),
-                titleText: title,
+                titleText: params.title,
               ),
               body: Center(
                 child: SingleChildScrollView(
@@ -72,13 +53,14 @@ class ATEnterAmountScreen extends StatelessWidget {
                   physics: const BouncingScrollPhysics(),
                   child: Column(
                     children: [
-                      if(params.$2 != null)Padding(
+                      if(params.imgPath != null)Padding(
                         padding: const EdgeInsets.only(bottom: 20),
                         child: ATCircularImage(
-                          imagePath: params.$2?.obj.profilePicture ?? '',
+                          imagePath: params.imgPath!,
                           diameter: 50,
                         ),
                       ),
+
                       BlocBuilder<EnterAmountBloc, (String, bool)>(
                         builder: (_, state) {
                           return Column(
@@ -175,7 +157,7 @@ class ATEnterAmountScreen extends StatelessWidget {
                               Icon(Icons.info_outline, color: ATColors.hexC2C2C2),
                               Flexible(
                                 child: Text(
-                                  notification, maxLines: 3,
+                                  params.slidingNotif, maxLines: 3,
                                   style: Theme.of(context).textTheme.titleSmall?.copyWith(
                                     fontSize: ATFontSizes.size13,
                                     color: ATColors.hexC2C2C2
@@ -194,28 +176,8 @@ class ATEnterAmountScreen extends StatelessWidget {
                       builder: (_, state) {
                         return ATPlainElevatedBtn(
                           onPressed: (state.$1.isNotEmpty && state.$1 != '0' && state.$2 == true) 
-                            ? () async{
-                              if(params.$1 == 0){
-                                final selectedPaymentMethod = await selectPaymentMethodDialog(context: context, amount: state.$1);
-                                if(context.mounted && selectedPaymentMethod != null){
-                                  context.pop(selectedPaymentMethod);
-                                }
-                              }
-
-                              else if(params.$1 == 1 || params.$1 == 2){
-                                final receipient = params.$2;
-                                final bankDetails = params.$3;
-                                if(bankDetails != null){
-                                  bankDetails.amount = state.$1;
-                                }
-
-                                final shouldProceed = await inputTxnPinDialog(context: context, object: receipient ?? bankDetails);
-                                if(context.mounted && (shouldProceed ?? false)){
-                                  context.pop(true);
-                                }
-                              }
-                            } : null,
-                          btnTitle: btnTitle
+                            ? () => context.pop(state.$1) : null,
+                          btnTitle: params.btnTitle
                         );
                       }
                     ),
@@ -228,4 +190,19 @@ class ATEnterAmountScreen extends StatelessWidget {
       ),
     );
   }
+}
+
+
+class EnterAmountScreenParams{
+  final String title, slidingNotif,
+  btnTitle;
+  final String? imgPath, flushBarNotif;
+
+  EnterAmountScreenParams({
+    required this.title,
+    required this.slidingNotif,
+    required this.btnTitle,
+    this.flushBarNotif,
+    this.imgPath
+  });
 }

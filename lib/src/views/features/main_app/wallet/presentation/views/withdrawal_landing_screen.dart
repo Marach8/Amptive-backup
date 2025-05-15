@@ -82,7 +82,7 @@ class ATWithdrwalLandingScreen extends StatelessWidget {
                   builder: (_, state) {
                     return ATPlainElevatedBtn(
                       onPressed: state == null ? null : 
-                        () => context.pushNamed(ATRoutes.SELECT_BANK_COUNTRY),
+                        () => context.pushReplacementNamed(ATRoutes.SELECT_BANK_COUNTRY),
                       btnTitle: ATStrings.CONTINUE,
                     );
                   }
