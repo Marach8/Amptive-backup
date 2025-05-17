@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 class ATContainer extends StatelessWidget {
   final EdgeInsetsGeometry? padding, margin;
-  final Color? color;
+  final Color? color, splashColor;
   final double? height, width, radius;
   final BoxBorder? border;
   final Widget? child;
@@ -24,6 +24,7 @@ class ATContainer extends StatelessWidget {
     this.color,
     this.height,
     this.width,
+    this.splashColor,
     this.radius,
     this.border,
     this.margin,
@@ -44,7 +45,7 @@ class ATContainer extends StatelessWidget {
   @override
   Widget build(context) {
     return InkWell(
-      onTap: onTap,
+      onTap: onTap, splashColor: splashColor,
       borderRadius: BorderRadius.circular(radius ?? 10),
       child: AnimatedContainer(
         duration: Duration(milliseconds: duration ?? 500),

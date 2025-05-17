@@ -7,7 +7,7 @@ import 'package:amptive/src/views/widgets/common_widgets/custom_container_widget
 import 'package:amptive/src/views/widgets/common_widgets/elevated_button_widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/image_loader_widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/loading_indicator.dart';
-import 'package:amptive/src/views/widgets/common_widgets/two_texts_rich_text_widget.dart';
+import 'package:amptive/src/views/widgets/common_widgets/rich_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
@@ -143,26 +143,26 @@ Future<void> showHostEndShowDialog({
                           fontSize: ATFontSizes.size23
                         )
                       ),
-                      if(showNoOfListeners || showNoOfGifters)AmptiveTwoTextRichTextWidget(
-                        text1: 'You had a total of ',
-                        text2: '144k listeners',
-                        style1: Theme.of(context).textTheme.bodySmall?.copyWith(
-                          color: ATColors.hexC2C2C2
-                        ),
-                        style2: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                          fontSize: ATFontSizes.size14
-                        ),
+                      if(showNoOfListeners || showNoOfGifters)ATRichText(
+                        items: {
+                          'You had a total of ': Theme.of(context).textTheme.bodySmall!.copyWith(
+                            color: ATColors.hexC2C2C2
+                          ),
+                          '144k listeners' : Theme.of(context).textTheme.bodyMedium!.copyWith(
+                            fontSize: ATFontSizes.size14
+                          ),
+                        },
                       ),
                       const Gap(10),
-                      if(showNoOfGifters)AmptiveTwoTextRichTextWidget(
-                        text1: 'You received ',
-                        text2: '200 gifts',
-                        style1: Theme.of(context).textTheme.bodySmall?.copyWith(
-                          color: ATColors.hexC2C2C2
-                        ),
-                        style2: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                          fontSize: ATFontSizes.size14
-                        ),
+                      if(showNoOfGifters)ATRichText(
+                        items: {
+                          'You received ': Theme.of(context).textTheme.bodySmall!.copyWith(
+                            color: ATColors.hexC2C2C2
+                          ),
+                          '200 gifts': Theme.of(context).textTheme.bodyMedium!.copyWith(
+                            fontSize: ATFontSizes.size14
+                          ),
+                        },
                       ),
                     ],
                   ),

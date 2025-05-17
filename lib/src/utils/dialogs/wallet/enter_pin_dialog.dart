@@ -5,7 +5,7 @@ import 'package:amptive/src/utils/constants/strings/image_strings.dart';
 import 'package:amptive/src/utils/constants/strings/other_strings.dart';
 import 'package:amptive/src/utils/helpers/extensions/string_extensions.dart';
 import 'package:amptive/src/utils/helpers/helper_functions/helper_functions.dart';
-import 'package:amptive/src/views/features/main_app/wallet/presentation/views/wallet_views_export.dart';
+import 'package:amptive/src/views/features/wallet/presentation/views/wallet_views_export.dart';
 import 'package:amptive/src/views/widgets/animation_widgets/common_animation_widgets/animated_align_widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/back_button.dart';
 import 'package:amptive/src/views/widgets/common_widgets/custom_container_widget.dart';
@@ -16,7 +16,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import '../../../views/features/main_app/wallet/bloc/enter_pin_bloc.dart';
+import '../../../views/features/wallet/bloc/enter_pin_bloc.dart';
 import '../../../views/widgets/common_widgets/circular_image.dart';
 import '../../constants/font_weights.dart';
 

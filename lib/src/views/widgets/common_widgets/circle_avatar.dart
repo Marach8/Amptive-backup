@@ -8,11 +8,12 @@ class ATCircleAvatar extends StatelessWidget {
   final Widget? child;
   final int? animationDuration;
   final VoidCallback? onTap;
+  final EdgeInsetsGeometry? padding;
   const ATCircleAvatar({
     super.key,
     required this.diameter,
     this.color,
-    this.child,
+    this.child, this.padding,
     this.animationDuration,
     this.onTap
   });
@@ -21,11 +22,17 @@ class ATCircleAvatar extends StatelessWidget {
   Widget build(context) {
     return ATContainer(
       onTap: onTap,
+      padding: padding,
       duration: animationDuration,
       height: diameter, width: diameter,
       radius: diameter,
       color: color ?? ATColors.white,
-      child: child ?? const SizedBox.shrink()
+      child: Center(
+        child: FittedBox(
+          fit: BoxFit.fill,
+          child: child
+        ),
+      )
     );
   }
 }

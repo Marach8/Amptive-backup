@@ -37,6 +37,7 @@ class ATStrings{
   static const attendAsGuest = 'Attend as guest';
   static const skip = 'Skip';
   static const BACK = 'Back';
+  static const RESPOND = 'Respond';
   static const CONTINUE = 'Continue';
   static const SEND_INVITE = 'Send invite';
   static const SET_FEE = 'Set fee';
@@ -76,6 +77,11 @@ class ATStrings{
   static const PROCEED = 'Proceed';
   static const UR_WALLET = 'Your Wallet';
   static const UR_WAY = 'Your Way';
+  static const UR_WITHDRAWAL_REQUEST = 'Your withdrawal request of';
+  static const UR_DEPOSIT = 'Your deposit of';
+  static const WAS_SUCCESSFUL = 'was successful';
+  static const TO_UR_WALLET = 'to your wallet';
+  static const HAS_BEEN_PROCESSED = 'has been processed';
   static const SEND_WITHDRAWAL_REQUEST = 'Send withdrawal request';
   static const INVALID_ACCT_NO = 'Invalid account number!';
   static const SETUP_WALLET = 'Setup your Amptive wallet';
@@ -86,6 +92,7 @@ class ATStrings{
   static const CHANGING_PHONE = 'Updating Phone Number...';
   static const ADDING_PHONE = 'Adding Phone Number...';
   static const EMAIL_ADDED = 'Email Added';
+  static const DETAILS = 'Details';
   static const FONE_ADDED = 'Phone Number Added';
   static const FONE_CHANGED = 'Phone Number Updated';
   static const EMAIL_CHANGED = 'Email Updated';
@@ -118,6 +125,10 @@ class ATStrings{
   static const AVAILABLE_BAL = 'Available balance';
   static const FUND_WALLET = 'Fund wallet';
   static const TRSF = 'Transfer';
+  static const JUST_FOLLOWED_U = 'Just followed you';
+  static const JUST_SUBSCRIBED = 'Just subscribed';
+  static const WILL_B_GOING_2_UR = 'will be going to your';
+  static const SENT_U_A_GITF_DURING_LIVE = 'sent you a gift during your live';
   static const WIRE_TRSF = 'Wire Transfer';
   static const WIRE_TRSF_DESC = 'Funds will be transferred directly to your bank account';
   static const PAYPAL = 'Paypal';
@@ -129,11 +140,22 @@ class ATStrings{
   static const WITHDRAW = 'Withdraw';
   static const PENDING_BAL = 'Pending balance';
   static const TXN_HISTORY = 'Transaction History';
+  static const NOTIFICATIONS = 'Notifications';
   static const SUB_RECEIVED = 'Subscription Received';
   static const GIFT_RECEIVED = 'Gift Received';
   static const EVENT_ND_SHOW_VEST = 'Event & Show Vest';
   static const VESTING_OVERVIEW = 'Vesting Overview';
   static const MARKETPLACE = 'Marketplace';
+  static const D_EVENT = 'The event';
+  static const HAS_BEEN_RESCHEDULED = 'Has been rescheduled.';
+  static const HAS_ENDED = 'Has ended';
+  static const AGO = 'ago';
+  static const D_SHOW = 'The show';
+  static const IS_LIVE = 'is Live';
+  static const STARTS_IN = 'Starts in';
+  static const DECLINED_UR_COHOST_REQUEST = 'Declined your co-host request';
+  static const U_R_PAID_2_COHOST_A_LIVE = 'You have been paid to co-host a live';
+  static const INVITED_U_2_COHOST_IN_THE = 'Invited you to co-host in the';
   static const EXPLORE_LISTINGS = 'Explore listings';
 
   static const youEnteredInvalidCode = 'You entered an invalid code. ';
@@ -212,6 +234,8 @@ class ATStrings{
   static const LINKEDIN = 'LinkedIn';
   static const WEBSITE = 'Website';
   static const PAID_SHOWS = 'Paid Shows';
+  static const SHOW = 'Show';
+  static const EVENT = 'Event';
   static const FREE_EVENTS = 'Free Events';
   static const PAID_EVENTS = 'Paid Events';
   static const FREE_SHOWS = 'Free Shows';
