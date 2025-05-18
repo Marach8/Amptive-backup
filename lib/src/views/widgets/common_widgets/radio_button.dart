@@ -2,8 +2,8 @@ import 'package:amptive/src/utils/constants/colors.dart';
 import 'package:amptive/src/views/widgets/common_widgets/custom_container_widget.dart';
 import 'package:flutter/material.dart';
 
-class ATRadioButton extends StatelessWidget {
-  const ATRadioButton({
+class ATRadioBtn extends StatelessWidget {
+  const ATRadioBtn({
     super.key,
     required this.isSelected,
     this.duration

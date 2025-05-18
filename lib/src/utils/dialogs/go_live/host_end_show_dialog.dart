@@ -3,6 +3,7 @@ import 'package:amptive/src/utils/constants/font_sizes.dart';
 import 'package:amptive/src/utils/constants/strings/image_strings.dart';
 import 'package:amptive/src/utils/dialogs/app_notification_dialog.dart';
 import 'package:amptive/src/utils/helpers/helper_functions/helper_functions.dart';
+import 'package:amptive/src/views/features/main_app_navigation.dart';
 import 'package:amptive/src/views/widgets/common_widgets/custom_container_widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/elevated_button_widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/image_loader_widget.dart';
@@ -44,7 +45,7 @@ Future<void> showHostEndShowDialog({
                     const Duration(seconds: 2),
                     (){
                       if(context.mounted){
-                        context.read<AmptiveNavBarBloc>().goToPage(0);                        
+                        context.read<ATNavBarBloc>().goToPage(0);                        
                         context.pop();
                         showAppNotification(
                           context: context,

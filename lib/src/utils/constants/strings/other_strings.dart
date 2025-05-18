@@ -153,6 +153,7 @@ class ATStrings{
   static const D_SHOW = 'The show';
   static const IS_LIVE = 'is Live';
   static const STARTS_IN = 'Starts in';
+  static const SEND_RESPONSE = 'Send response';
   static const DECLINED_UR_COHOST_REQUEST = 'Declined your co-host request';
   static const U_R_PAID_2_COHOST_A_LIVE = 'You have been paid to co-host a live';
   static const INVITED_U_2_COHOST_IN_THE = 'Invited you to co-host in the';
@@ -210,6 +211,13 @@ class ATStrings{
   static const skipForNow = 'Skip for now';
   static const APPLY = 'Apply';
   static const ADD_NEW_PLAN = 'Add New Plan';
+  static const COHOST_REQUEST = 'Co-Host Request';
+  static const ACCEPT_WITH_FEE = 'Accept (With Fee)';
+  static const ACCEPT_WITH_FEE_DESC = 'Join as co-host once your fee is paid';
+  static const ACCEPT_WITHOUT_FEE = 'Accept (No Fee)';
+  static const ACCEPT_WITHOUT_FEE_DESC = 'Join as a co-host for this live program for free';
+  static const DECLINE_REQUEST = 'Decline Request';
+  static const REMEMBER_CHOICE_4_HOST = 'Remember my choice for this host';
   static const SPECIFY_FEE = 'Please specify the fee you wish to charge listeners monthly for your live shows.';
   static const AMPTIVE_CHARGES_4_CREATORS = 'Amptive charges a 2% fee on each subscription';
   static const MORE_SCHEDULE = 'More Schedule';
@@ -258,6 +266,7 @@ class ATStrings{
   static const PROFILE_PIC = 'Profile Picture';
   static const SHARE_PROFILE = 'Share profile';
   static const EDIT = 'Edit';
+  static const COHOST_FEE = 'Co-host fee';
   static const TASKS_WILL_APPEAR_HERE = 'Available tasks for the communities you follow will appear here';
   static const FOLLOWERS = 'Followers';
   static const FOLLOWING = 'Following';

@@ -104,7 +104,7 @@ class AvailableBalanceWidget extends StatelessWidget {
                         default:
                           icon = Icons.add;
                       }
-                      return InkWell(
+                      return ATContainer( 
                         onTap: ()async{
                           if(item == ATStrings.FUND_WALLET){                            
                             final inputPrice = await context.pushNamed(
@@ -141,21 +141,18 @@ class AvailableBalanceWidget extends StatelessWidget {
                             final result = await context.pushNamed(ATRoutes.WITHDRAWAL_LANDING) as bool?;
                             log(result.toString());
                           }
-                        },
-                        borderRadius: BorderRadius.circular(20),
-                        child: ATContainer(                          
-                          color: ATColors.white.withValues(alpha: 0.1),
-                          radius: 20,
-                          padding: const EdgeInsets.fromLTRB(10, 8, 10, 8),
-                          child: Row(
-                            children: [
-                              Icon(icon, size: 15,),
-                              Text(
-                                item,
-                                style: Theme.of(context).textTheme.labelSmall,
-                              ),
-                            ],
-                          ),
+                        },                         
+                        color: ATColors.white.withValues(alpha: 0.1),
+                        radius: 20,
+                        padding: const EdgeInsets.fromLTRB(10, 8, 10, 8),
+                        child: Row(
+                          children: [
+                            Icon(icon, size: 15,),
+                            Text(
+                              item,
+                              style: Theme.of(context).textTheme.labelSmall,
+                            ),
+                          ],
                         ),
                       );
                     }

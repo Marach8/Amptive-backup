@@ -72,7 +72,7 @@ class ATSelectBanksCountryScreen extends StatelessWidget {
                                 BlocBuilder<_PrivateBloc, String?>(
                                   buildWhen: (prev, curr) => prev == country || curr == country,
                                   builder: (_, state) {
-                                    return ATRadioButton(isSelected: state == country);
+                                    return ATRadioBtn(isSelected: state == country);
                                   }
                                 )
                               ],

@@ -9,8 +9,6 @@ import 'package:amptive/src/views/features/wallet/presentation/views/wallet_view
 import 'package:amptive/src/views/widgets/animation_widgets/common_animation_widgets/animated_align_widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/back_button.dart';
 import 'package:amptive/src/views/widgets/common_widgets/custom_container_widget.dart';
-import 'package:amptive/src/views/widgets/common_widgets/divider_widget.dart';
-import 'package:amptive/src/views/widgets/common_widgets/image_loader_widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/with_leading_image_nd_trailing_more_icon.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';

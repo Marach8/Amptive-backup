@@ -1,7 +1,6 @@
 import 'package:amptive/src/utils/constants/colors.dart';
 import 'package:amptive/src/views/widgets/common_widgets/back_button.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class ATAppBar extends StatelessWidget implements PreferredSizeWidget {
   const ATAppBar({

@@ -3,7 +3,6 @@ import 'package:amptive/src/utils/constants/font_sizes.dart';
 import 'package:amptive/src/utils/constants/strings/other_strings.dart';
 import 'package:amptive/src/utils/helpers/helper_functions/helper_functions.dart';
 import 'package:amptive/src/views/features/wallet/bloc/wallet_bloc_export.dart';
-import 'package:amptive/src/views/features/wallet/presentation/views/wallet_views_export.dart';
 import 'package:amptive/src/views/widgets/common_widgets/back_button.dart';
 import 'package:amptive/src/views/widgets/common_widgets/elevated_button_widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/loading_indicator.dart';
@@ -195,7 +194,7 @@ Future<String?> selectWithdrawalBankDialog(BuildContext context) {
                                           isFetchingBanks ? const ATShimmer(
                                             height: 20, width: 20, radius: 15,
                                             margin: EdgeInsets.zero,
-                                          ) : ATRadioButton(isSelected: selectedBank == bank, duration: 0,),
+                                          ) : ATRadioBtn(isSelected: selectedBank == bank, duration: 0,),
                                         ],
                                       ),
                                     ),

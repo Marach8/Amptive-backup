@@ -15,18 +15,20 @@ class RenderTxnWidget extends StatelessWidget {
     required this.icon,
     required this.imgPath,
     required this.txnType,
+    this.tileColor,
   });
 
   final String txnType, time, amount, imgPath;
   final IconData icon;
   final Color color;
+  final Color? tileColor;
 
   @override
   Widget build(BuildContext context) {
     return ATContainer(
       onTap: (){},
-      color: ATColors.white.withValues(alpha: 0.05),
-      radius: 15, padding: const EdgeInsets.all(15),
+      color: tileColor ?? ATColors.white.withValues(alpha: 0.05),
+      padding: const EdgeInsets.all(15),
       child: Row(
         children: [
           SizedBox(

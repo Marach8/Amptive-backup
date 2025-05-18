@@ -21,9 +21,7 @@ import 'package:amptive/src/views/widgets/common_widgets/textformfield_widget.da
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:iconsax/iconsax.dart';
 import '../../../../widgets/common_widgets/app_bar_widget.dart';
-import '../../../../widgets/common_widgets/back_button.dart';
 
 class ATSelectRecipientScreen extends StatefulWidget {
   const ATSelectRecipientScreen({super.key});
@@ -246,7 +244,7 @@ class _UserWithTrailingRadio extends StatelessWidget {
               builder: (_, state) {
                 final recipient = (state as RecentRecipientsData).selectedRecipient;
                 final isSelected = recipient != null && recipient.obj.name == user.obj.name;
-                return ATRadioButton(isSelected: isSelected);
+                return ATRadioBtn(isSelected: isSelected);
               }
             )
           ],

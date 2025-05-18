@@ -144,19 +144,16 @@ class _SelectAcct extends StatelessWidget {
           const SizedBox(height: 15),
           const ATDivider(),
           const SizedBox(height: 5),
-          InkWell(
+          ATContainer(
             onTap: onTap,
-            borderRadius: BorderRadius.circular(5),
-            child: ATContainer(
-              padding: const EdgeInsets.fromLTRB(10, 8, 10, 8),
-              color: ATColors.white.withValues(alpha: 0.1),
-              radius: 5,
-              child: Text(
-                ATStrings.setUpAcct(title.toLowerCase()),
-                style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                  fontSize: ATFontSizes.size12,
-                  color: ATColors.white.withValues(alpha: 0.7)
-                ),
+            padding: const EdgeInsets.fromLTRB(10, 8, 10, 8),
+            color: ATColors.white.withValues(alpha: 0.1),
+            radius: 5,
+            child: Text(
+              ATStrings.setUpAcct(title.toLowerCase()),
+              style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                fontSize: ATFontSizes.size12,
+                color: ATColors.white.withValues(alpha: 0.7)
               ),
             ),
           )

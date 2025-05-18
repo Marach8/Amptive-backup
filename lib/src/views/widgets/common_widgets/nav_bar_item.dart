@@ -1,4 +1,5 @@
 import 'package:amptive/src/bloc/main_app/nav_bar_bloc.dart';
+import 'package:amptive/src/views/features/main_app_navigation.dart';
 import 'package:amptive/src/views/widgets/animation_widgets/common_animation_widgets/animated_crossfade_widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/image_loader_widget.dart';
 import 'package:flutter/material.dart';
@@ -18,11 +19,12 @@ class AmptiveBottomAppBarItem extends StatelessWidget {
 
   @override
   Widget build(context) {
-    return BlocBuilder<AmptiveNavBarBloc, int>(
+    return BlocSelector<ATNavBarBloc, (int, bool), int>(
+      selector: (state) => state.$1,
       builder: (_, currentNavIndex) {
         final isSelected = itemIdentityIndex == currentNavIndex;
         return GestureDetector(
-          onTap: () => context.read<AmptiveNavBarBloc>().goToPage(itemIdentityIndex),
+          onTap: () => context.read<ATNavBarBloc>().goToPage(itemIdentityIndex),
           child: ATAnimatedCrossFade(
             condition: isSelected,
             firstChild: ATImgLoader(imgPath: selectedImagePath),

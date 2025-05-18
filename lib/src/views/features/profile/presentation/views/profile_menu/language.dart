@@ -92,7 +92,7 @@ class ATSelectLanguageScreen extends StatelessWidget {
                                   )
                                 ),
                               ),
-                              ATRadioButton(isSelected: isSelected)
+                              ATRadioBtn(isSelected: isSelected)
                             ],
                           ),
                         ),

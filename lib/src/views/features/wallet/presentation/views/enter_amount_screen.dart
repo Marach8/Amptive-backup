@@ -1,13 +1,10 @@
-import 'package:amptive/src/models/host.dart';
 import 'package:amptive/src/utils/constants/colors.dart';
 import 'package:amptive/src/utils/constants/font_weights.dart';
 import 'package:amptive/src/utils/constants/strings/other_strings.dart';
 import 'package:amptive/src/utils/dialogs/app_notification_dialog.dart';
-import 'package:amptive/src/utils/dialogs/dialog_export.dart';
 import 'package:amptive/src/utils/helpers/extensions/string_extensions.dart';
 import 'package:amptive/src/utils/helpers/helper_functions/helper_functions.dart';
 import 'package:amptive/src/views/features/wallet/bloc/wallet_bloc_export.dart';
-import 'package:amptive/src/views/features/wallet/presentation/views/wallet_views_export.dart';
 import 'package:amptive/src/views/widgets/animation_widgets/common_animation_widgets/animated_align_widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/annotated_region__widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/circular_image.dart';

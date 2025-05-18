@@ -2,6 +2,7 @@ import 'package:amptive/src/models/host.dart';
 import 'package:amptive/src/utils/constants/colors.dart';
 import 'package:amptive/src/utils/constants/font_sizes.dart';
 import 'package:amptive/src/utils/constants/strings/other_strings.dart';
+import 'package:amptive/src/utils/constants/strings/route_strings.dart';
 import 'package:amptive/src/utils/helpers/extensions/string_extensions.dart';
 import 'package:amptive/src/views/widgets/common_widgets/circle_avatar.dart';
 import 'package:amptive/src/views/widgets/common_widgets/custom_container_widget.dart';
@@ -10,6 +11,7 @@ import 'package:amptive/src/views/widgets/common_widgets/overlapping_images.dart
 import 'package:amptive/src/views/widgets/common_widgets/rich_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../../../widgets/common_widgets/circular_image.dart';
 
@@ -25,7 +27,7 @@ class NewFollowerNotif extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(bottom: 20),
+      padding: const EdgeInsets.only(top: 10, bottom: 10),
       child: Row(
         children: [
           Stack(
@@ -88,7 +90,7 @@ class NewSubscriberNotif extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(bottom: 20),
+      padding: const EdgeInsets.only(top: 10, bottom: 10),
       child: Row(
         children: [
           Stack(
@@ -143,7 +145,7 @@ class NewAttendeesNotif extends StatelessWidget {
     String firstName = attendees.first.obj.username ?? '';
     final oneAttendee = attendees.length == 1;
     return Padding(
-      padding: const EdgeInsets.only(bottom: 20),
+      padding: const EdgeInsets.only(top: 10, bottom: 10),
       child: Row(
         children: [
           if(oneAttendee)ATCircularImage(
@@ -199,7 +201,7 @@ class NewGiftersNotif extends StatelessWidget {
     String firstName = gifters.first.obj.username ?? '';
     final oneGifter = gifters.length == 1;
     return Padding(
-      padding: const EdgeInsets.only(bottom: 20),
+      padding: const EdgeInsets.only(top: 10, bottom: 10),
       child: Row(
         children: [
           if(oneGifter)ATCircularImage(
@@ -251,7 +253,7 @@ class DeclinedCohostInviteNotif extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(bottom: 20),
+      padding: const EdgeInsets.only(top: 10, bottom: 10),
       child: Row(
         children: [
           ATCircularImage(
@@ -291,7 +293,7 @@ class ProgramRescheduledNotif extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(bottom: 20),
+      padding: const EdgeInsets.only(top: 10, bottom: 10),
       child: Row(
         children: [
           ClipRRect(
@@ -344,7 +346,7 @@ class ProgramEndedNotif extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(bottom: 20),
+      padding: const EdgeInsets.only(top: 10, bottom: 10),
       child: Row(
         children: [
           ClipRRect(
@@ -390,7 +392,7 @@ class ProgramIsLiveNotif extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(bottom: 20),
+      padding: const EdgeInsets.only(top: 10, bottom: 10),
       child: Row(
         children: [
           ClipRRect(
@@ -435,7 +437,7 @@ class ProgramAbout2StartNotif extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(bottom: 20),
+      padding: const EdgeInsets.only(top: 10, bottom: 10),
       child: Row(
         children: [
           ClipRRect(
@@ -472,16 +474,18 @@ class CohostInviteNotif extends StatelessWidget {
     required this.progName,
     required this.inviteTime,
     required this.progOwner,
+    required this.onResponse,
     this.isEvent = true,
   });
   final String progName, inviteTime;
   final bool isEvent;
   final ObjectWithNotifier<Host> progOwner;
+  final VoidCallback onResponse;
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(bottom: 20),
+      padding: const EdgeInsets.only(top: 10, bottom: 10),
       child: Row(
         children: [
           ATCircularImage(
@@ -508,7 +512,7 @@ class CohostInviteNotif extends StatelessWidget {
           ),
           const SizedBox(width: 15,),
           ATContainer(
-            onTap: (){debugPrint('Hello');},
+            onTap: onResponse,
             radius: 20, padding: const EdgeInsets.fromLTRB(10, 5, 10, 5),
             color: ATColors.hex307FE2,
             child: Text(
@@ -538,7 +542,7 @@ class CohostInvitePaymentNotif extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(bottom: 20),
+      padding: const EdgeInsets.only(top: 10, bottom: 10),
       child: Row(
         children: [
           ATCircularImage(
@@ -577,8 +581,9 @@ class WithdrawalProcessedNotif extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(bottom: 20),
+    return ATContainer(
+      onTap: () => context.pushNamed(ATRoutes.WALLET_TXNS),
+      padding: const EdgeInsets.only(top: 10, bottom: 10),
       child: Row(
         children: [
           ATCircleAvatar(
@@ -617,8 +622,9 @@ class DepositSuccessNotif extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(bottom: 20),
+    return ATContainer(
+      onTap: () => context.pushNamed(ATRoutes.WALLET_TXNS),
+      padding: const EdgeInsets.only(top: 10, bottom: 10),
       child: Row(
         children: [
           ATCircleAvatar(
@@ -658,8 +664,9 @@ class MoneyReceivedNotif extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(bottom: 20),
+    return ATContainer(
+      onTap: () => context.pushNamed(ATRoutes.WALLET_TXNS),
+      padding: const EdgeInsets.only(top: 10, bottom: 10),
       child: Row(
         children: [
           ATCircleAvatar(

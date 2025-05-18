@@ -1,6 +1,5 @@
 import 'package:amptive/src/utils/constants/colors.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class ATFilterWidget<B extends BlocBase<String>> extends StatelessWidget{

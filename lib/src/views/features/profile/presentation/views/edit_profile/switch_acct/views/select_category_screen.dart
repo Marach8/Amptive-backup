@@ -117,7 +117,7 @@ class SelectCategoryScreen extends StatelessWidget {
                                   ),
                                 ),
                               ),
-                              const ATRadioButton(isSelected: false)
+                              const ATRadioBtn(isSelected: false)
                             ],
                           ),
                         ),

@@ -4,6 +4,7 @@ import 'package:amptive/src/utils/constants/strings/image_strings.dart';
 import 'package:amptive/src/utils/dialogs/app_notification_dialog.dart';
 import 'package:amptive/src/utils/dialogs/minimized_go_live_dialog.dart';
 import 'package:amptive/src/utils/helpers/helper_functions/helper_functions.dart';
+import 'package:amptive/src/views/features/main_app_navigation.dart';
 import 'package:amptive/src/views/widgets/common_widgets/annotated_region__widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/circular_image.dart';
 import 'package:amptive/src/views/widgets/common_widgets/custom_container_widget.dart';
@@ -89,7 +90,7 @@ class _ATLiveProgramsAudienceScreenState extends State<ATLiveProgramsAudienceScr
               AmptiveLiveViewHeaderWidget(
                 exitIcon: ATContainer(
                 onTap: (){
-                  context.read<AmptiveNavBarBloc>().goToPage(0);
+                  context.read<ATNavBarBloc>().goToPage(0);
                   showMinimizedGoLiveState();
                 },
                 color: ATColors.white.withOpacity(0.1),
