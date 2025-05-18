@@ -5,8 +5,8 @@ import 'package:amptive/src/views/widgets/common_widgets/nav_bar_item.dart';
 import 'package:flutter/material.dart';
 import '../../common_widgets/custom_container_widget.dart';
 
-class AmptiveDashboardBottomNavBarWidget extends StatelessWidget {
-  const AmptiveDashboardBottomNavBarWidget({super.key});
+class MainAppBottomNav extends StatelessWidget {
+  const MainAppBottomNav({super.key});
 
   @override
   Widget build(context) {

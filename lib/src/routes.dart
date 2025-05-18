@@ -1,5 +1,4 @@
 import 'dart:io';
-import 'package:amptive/src/models/host.dart';
 import 'package:amptive/src/setup.dart';
 import 'package:amptive/src/utils/constants/strings/route_strings.dart';
 import 'package:amptive/src/utils/helpers/extensions/string_extensions.dart';
@@ -12,21 +11,15 @@ import 'package:amptive/src/views/features/auth/password_auth_screen.dart';
 import 'package:amptive/src/views/features/auth/post_registration.dart';
 import 'package:amptive/src/views/features/auth/sign_in_or_sign_up_screen.dart';
 import 'package:amptive/src/views/features/auth/username_auth_screen.dart';
-import 'package:amptive/src/views/features/main_app/go_live/event/even_scheduled_screen.dart';
-import 'package:amptive/src/views/features/main_app/go_live/show/create_show_form_screen.dart';
-import 'package:amptive/src/views/features/main_app/dashboard_screen.dart';
-import 'package:amptive/src/views/features/main_app/go_live/main_go_live_screen.dart';
-import 'package:amptive/src/views/features/main_app/profile/presentation/views/profile_views_export.dart';
-import 'package:amptive/src/views/features/main_app/scheduled_screen.dart';
-import 'package:amptive/src/views/features/main_app/wallet/presentation/views/enter_amount_screen.dart';
-import 'package:amptive/src/views/features/main_app/wallet/presentation/views/creating_wallet_anim_screen.dart';
-import 'package:amptive/src/views/features/main_app/wallet/presentation/views/security_question_screen.dart';
-import 'package:amptive/src/views/features/main_app/wallet/presentation/views/select_banks_country_screen.dart';
-import 'package:amptive/src/views/features/main_app/wallet/presentation/views/select_recipient_screen.dart';
-import 'package:amptive/src/views/features/main_app/wallet/presentation/views/wallet_onboard_screen.dart';
-import 'package:amptive/src/views/features/main_app/wallet/presentation/views/wallet_pin_setup_screen.dart';
-import 'package:amptive/src/views/features/main_app/wallet/presentation/views/wallet_screen.dart';
-import 'package:amptive/src/views/features/main_app/wallet/presentation/views/wallet_txns_screen.dart';
+import 'package:amptive/src/views/features/discover/presentation/views/society_screen.dart';
+import 'package:amptive/src/views/features/discover/presentation/views/trending_hashtags_screen.dart';
+import 'package:amptive/src/views/features/go_live/event/even_scheduled_screen.dart';
+import 'package:amptive/src/views/features/go_live/show/create_show_form_screen.dart';
+import 'package:amptive/src/views/features/main_app_navigation.dart';
+import 'package:amptive/src/views/features/go_live/main_go_live_screen.dart';
+import 'package:amptive/src/views/features/profile/presentation/views/profile_views_export.dart';
+import 'package:amptive/src/views/features/home/presentation/views/scheduled_screen.dart';
+import 'package:amptive/src/views/features/wallet/presentation/views/wallet_txns_screen.dart';
 import 'package:amptive/src/views/features/post_auth/crop_image_screen.dart';
 import 'package:amptive/src/views/features/post_auth/pre_homepage.dart';
 import 'package:amptive/src/views/features/post_auth/preference_screen.dart';
@@ -35,19 +28,17 @@ import 'package:amptive/src/views/features/onboarding/welcome_screen.dart';
 import 'package:amptive/src/views/widgets/other_widgets/main_application_widgets/widgets_in_home_view/widgets_in_go_live/shows/show_type_visibility.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'views/features/main_app/discover/community_home_screen.dart';
-import 'views/features/main_app/discover/hashtag_full_screen.dart';
-import 'views/features/main_app/discover/society_screen.dart';
-import 'views/features/main_app/discover/trending_hashtags_screen.dart';
-import 'views/features/main_app/discover/trending_society_screen.dart';
-import 'views/features/main_app/event_detailed_screen.dart';
-import 'views/features/main_app/following_screen.dart';
-import 'views/features/main_app/go_live/event/choose_event_screen.dart';
-import 'views/features/main_app/go_live/show/choose_or_create_show_screen.dart';
-import 'views/features/main_app/go_live/show/show_creation_success_screen.dart';
-import 'views/features/main_app/show_detailed_screen.dart';
-import 'views/features/main_app/subscribed_screen.dart';
-import 'views/features/main_app/wallet/presentation/views/withdrawal_landing_screen.dart';
+import 'views/features/discover/presentation/views/community_home_screen.dart';
+import 'views/features/discover/presentation/views/hashtag_full_screen.dart';
+import 'views/features/discover/presentation/views/trending_society_screen.dart';
+import 'views/features/home/presentation/views/event_detailed_screen.dart';
+import 'views/features/home/presentation/views/following_screen.dart';
+import 'views/features/go_live/event/choose_event_screen.dart';
+import 'views/features/go_live/show/choose_or_create_show_screen.dart';
+import 'views/features/go_live/show/show_creation_success_screen.dart';
+import 'views/features/home/presentation/views/show_detailed_screen.dart';
+import 'views/features/home/presentation/views/subscribed_screen.dart';
+import 'views/features/wallet/wallet_export.dart';
 
 // The route configuration.
 final GoRouter amptiveAppRouter = GoRouter(
@@ -200,28 +191,54 @@ final GoRouter amptiveAppRouter = GoRouter(
                     ),
                   ),
                   GoRoute(
-                    name: ATRoutes.AMOUNT_2_TRSF,
-                    path: ATRoutes.AMOUNT_2_TRSF.addSlash,
+                    name: ATRoutes.ENTER_AMOUNT_2_TRSF,
+                    path: ATRoutes.ENTER_AMOUNT_2_TRSF.addSlash,
                     pageBuilder: (_, state) => ATRouteTransition(
                       child: ATEnterAmountScreen(
-                        receipient: state.extra as ObjectWithNotifier<Host>?,
+                        params: state.extra as EnterAmountScreenParams
                       )
                     ),
                   ),
                   GoRoute(
-                    name: ATRoutes.WITHDRAWAL,
-                    path: ATRoutes.WITHDRAWAL.addSlash,
+                    name: ATRoutes.WITHDRAWAL_LANDING,
+                    path: ATRoutes.WITHDRAWAL_LANDING.addSlash,
                     pageBuilder: (_, __) => ATRouteTransition(
                       child: const ATWithdrwalLandingScreen()
                     ),
                   ),
-
                   GoRoute(
                     name: ATRoutes.SELECT_BANK_COUNTRY,
                     path: ATRoutes.SELECT_BANK_COUNTRY.addSlash,
                     pageBuilder: (_, __) => ATRouteTransition(
                       child: const ATSelectBanksCountryScreen()
                     ),
+                  ),
+                  GoRoute(
+                    name: ATRoutes.ENTER_ACCT_NO,
+                    path: ATRoutes.ENTER_ACCT_NO.addSlash,
+                    pageBuilder: (_, state) => ATRouteTransition(
+                      child: ATEnterAccountNoScreen(bankName: state.extra as String,)
+                    ),
+                  ),
+                  GoRoute(
+                    name: ATRoutes.PASS_SECURITY_QUEST,
+                    path: ATRoutes.PASS_SECURITY_QUEST.addSlash,
+                    pageBuilder: (_, state) => ATRouteTransition(
+                      child: const ATPassSecurityQuestionScreen()
+                    ),
+                  ),
+                  GoRoute(
+                    name: ATRoutes.PAPER_PLANE_SUCCESS,
+                    path: ATRoutes.PAPER_PLANE_SUCCESS.addSlash,
+                    pageBuilder: (_, state){
+                      final params = state.extra as List<String>;
+                      return ATRouteTransition(
+                        child: ATPaperPlaneSuccessScreen(
+                          title: params.first,
+                          subtitle: params.last,
+                        )
+                      );
+                    },
                   ),
                 ]
               ),

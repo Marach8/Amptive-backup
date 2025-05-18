@@ -15,7 +15,7 @@ class ATTextFormField extends StatelessWidget {
   final TextAlign? textAlign;
   final double? cursorHeight;
   final Widget? suffixIcon, prefixIcon, prefix, suffix;
-  final bool? obscureText, disableBlueBorder, enabled;
+  final bool? obscureText, disableBlueBorder, enabled, filled;
   final Color? cursorColor, fillColor;
   final BoxConstraints? suffixConstraints,
   prefixConstraints, constraints;
@@ -65,7 +65,8 @@ class ATTextFormField extends StatelessWidget {
     this.enabled,
     this.maxLength,
     this.prefix,
-    this.suffix
+    this.suffix,
+    this.filled
   });
 
   @override
@@ -97,8 +98,8 @@ class ATTextFormField extends StatelessWidget {
         counterText: counterText,   
         hintText: hintText,
         constraints: constraints,
-        fillColor: fillColor, filled: fillColor != null,
-        contentPadding: contentPadding ?? const EdgeInsets.fromLTRB(16, 12, 16, 12),
+        fillColor: ATColors.white.withValues(alpha: 0.1), filled: filled ?? true,
+        contentPadding: contentPadding ?? EdgeInsets.zero,
         focusedBorder: disableBlueBorder ?? false ? OutlineInputBorder(
           borderRadius: BorderRadius.circular(14),
           borderSide: BorderSide(color: ATColors.trsprnt)

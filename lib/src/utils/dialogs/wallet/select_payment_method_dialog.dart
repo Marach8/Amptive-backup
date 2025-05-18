@@ -78,7 +78,7 @@ Future<String?> selectPaymentMethodDialog({
                                       ),
                                       BlocBuilder<_PaymentMethodBloc, String?>(
                                         builder: (_, state) {
-                                          return ATRadioButton(isSelected: state == entry.value);
+                                          return ATRadioBtn(isSelected: state == entry.value);
                                         }
                                       ),
                                     ],

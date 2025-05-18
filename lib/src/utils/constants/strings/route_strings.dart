@@ -79,8 +79,11 @@ class ATRoutes {
   static const WALLET = 'wallet';
   static const SELECT_RECIPIENT = 'transfer_funds';
   static const FUND_WALLET = 'fund_wallet';
-  static const WITHDRAWAL = 'withdraw';
+  static const WITHDRAWAL_LANDING = 'withdraw';
   static const SELECT_BANK_COUNTRY = 'select_bank_country';
-  static const AMOUNT_2_TRSF = 'amount_to_transfer';
-  static const WALLET_TXNS = 'wallete_transactions';
+  static const ENTER_AMOUNT_2_TRSF = 'amount_to_transfer';
+  static const ENTER_ACCT_NO = 'enter_account_number';
+  static const PASS_SECURITY_QUEST = 'pass_security_question';
+  static const PAPER_PLANE_SUCCESS = 'paper_plane_success';
+  static const WALLET_TXNS = 'wallet_transactions';
 }

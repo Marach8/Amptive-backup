@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import '../../../../../utils/constants/colors.dart';
 import '../../../common_widgets/custom_container_widget.dart';
-import '../../../common_widgets/two_texts_rich_text_widget.dart';
+import '../../../common_widgets/rich_text.dart';
 
 class AmptiveHashtagsWidget extends StatelessWidget {
   const AmptiveHashtagsWidget({
@@ -26,13 +26,13 @@ class AmptiveHashtagsWidget extends StatelessWidget {
                 alignment: Alignment.center,
                 radius: 10,
                 color: ATColors.white.withOpacity(0.1),
-                child: AmptiveTwoTextRichTextWidget(
-                  text1: '# ',
-                  text2: element,
-                  style1: Theme.of(context).textTheme.bodyMedium,
-                  style2: Theme.of(context).textTheme.bodySmall?.copyWith(
-                    color: ATColors.grey5Color,
-                  ),
+                child: ATRichText(
+                  items: {
+                    '# ': Theme.of(context).textTheme.bodyMedium!,
+                    element : Theme.of(context).textTheme.bodySmall!.copyWith(
+                      color: ATColors.grey5Color,
+                    ),
+                  },
                 )
               ),
             ),
