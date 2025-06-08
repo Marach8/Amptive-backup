@@ -3,7 +3,6 @@ import 'package:amptive/src/views/widgets/common_widgets/annotated_region__widge
 import 'package:amptive/src/views/widgets/common_widgets/loading_indicator.dart';
 import 'package:amptive/src/views/widgets/common_widgets/textformfield_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 import 'package:go_router/go_router.dart';
 import 'package:readmore/readmore.dart';
@@ -18,9 +17,9 @@ import '../../../../widgets/common_widgets/custom_container_widget.dart';
 import '../../../../widgets/common_widgets/elevated_button_widget.dart';
 import '../../../../widgets/common_widgets/list_tile_with_leading_picture_widget.dart';
 import '../../../../widgets/common_widgets/row_of_people_listening_widget.dart';
-import '../../../../widgets/other_widgets/main_application_widgets/widgets_in_show_or_event_full_details_view/audio_or_video_display_picture_widget.dart';
+import '../widgets/event_or_show_card.dart';
 import '../../../../widgets/other_widgets/main_application_widgets/widgets_in_show_or_event_full_details_view/hashtags_widget.dart';
-import '../../../../widgets/other_widgets/main_application_widgets/widgets_in_show_or_event_full_details_view/row_of_live_and_society_texts_widget.dart';
+import '../widgets/live_and_society_widget.dart';
 import '../../../../widgets/other_widgets/main_application_widgets/widgets_in_show_or_event_full_details_view/whispers_list_view_widget.dart';
 
 class AmptiveEventDetailedScreen extends StatelessWidget {
@@ -64,7 +63,7 @@ class AmptiveEventDetailedScreen extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     const ATEventOrShowCard(),
-                    Gap(15.h),
+                    const SizedBox(height: 15),
                     Text(
                       maxLines: 2,
                       "Figma Confiq 2024",
@@ -76,12 +75,12 @@ class AmptiveEventDetailedScreen extends StatelessWidget {
                       ),
                     ),
               
-                    Gap(20.h),
-                    const AmptiveRowOfTwoIconsAndTwoTextsWidget(
+                    const SizedBox(height: 20),
+                    const LiveAndSocietyWidget(
                       text2: ATStrings.TECHNOLOGY,
                     ),
               
-                    Gap(30.h),
+                    const SizedBox(height: 30),
               
                     Text(
                       ATStrings.hashtags,
@@ -90,10 +89,10 @@ class AmptiveEventDetailedScreen extends StatelessWidget {
                       ),  
                     ),
                     Divider(color: ATColors.white.withOpacity(0.1),),
-                    const Gap(5),
+                    const SizedBox(height: 5),
                     const AmptiveHashtagsWidget(),
               
-                    Gap(20.h),
+                    const SizedBox(height: 20),
               
                     Text(
                       ATStrings.hostedBy,
@@ -104,15 +103,15 @@ class AmptiveEventDetailedScreen extends StatelessWidget {
                     Divider(color: ATColors.white.withOpacity(0.1),),
                     ...List.generate(
                       1,
-                      (_) => AmptiveListTileWithLeadingPictureWidget(
-                        padding: const EdgeInsets.symmetric(vertical: 9).r,
+                      (_) => TileWithLeadingImage(
+                        padding: const EdgeInsets.symmetric(vertical: 9),
                         title: 'Gerald',
                         subtitle: 'Host',
                         diameter: 35,
                         leadingImagePath: ATImgStrings.jpeg1,
                       )
                     ),
-                    Gap(30.h),
+                    const SizedBox(height: 30),
               
                     Text(
                       '12528 Listening',
@@ -121,19 +120,19 @@ class AmptiveEventDetailedScreen extends StatelessWidget {
                       ),  
                     ),
                     Divider(color: ATColors.white.withOpacity(0.1),),
-                    Gap(10.h),
+                    const SizedBox(height: 10),
                     const AmptiveRowOfNumberOfPeopleListeningWidget(
                       showNumberInsideContainer: true,
                     ),
                     
-                    Gap(20.h),
+                    const SizedBox(height: 20),
                     Text(
                       'daniel, jessica, gerald, peter and 652 more',
                       style: Theme.of(context).textTheme.bodySmall?.copyWith(
                         color: ATColors.white.withOpacity(0.6)
                       ),
                     ),
-                    Gap(35.h),
+                    const SizedBox(height: 35),
               
                     Text(
                       'About Event',
@@ -155,7 +154,7 @@ class AmptiveEventDetailedScreen extends StatelessWidget {
                         fontWeight: ATFontWeights.w500,
                       ),
                     ),
-                    Gap(30.h),
+                    const SizedBox(height: 30),
               
                     Text(
                       ATStrings.WHISPERS,
@@ -168,7 +167,7 @@ class AmptiveEventDetailedScreen extends StatelessWidget {
                 ),
               ),
               const ATWhispers(),
-              Gap(30.h),
+              const SizedBox(height: 30),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 20),
                 child: Column(
@@ -181,7 +180,7 @@ class AmptiveEventDetailedScreen extends StatelessWidget {
                       ),  
                     ),
                     Divider(color: ATColors.white.withOpacity(0.1),),
-                    Gap(5.h),
+                    const SizedBox(height: 5),
                     ATTextFormField(
                       controller: TextEditingController(),
                       hintText: 'Enter your Ticked ID',
@@ -190,7 +189,7 @@ class AmptiveEventDetailedScreen extends StatelessWidget {
                         child: ATLoadingIndicator(),
                       ),
                     ),
-                    Gap(10.h),
+                    const SizedBox(height: 10),
                     ReadMoreText(
                       'If you already paid for this event on our website, you should have received a Ticket ID. Kindly enter your Ticket Id in the input field about to access the event...',
                       trimMode: TrimMode.Length,
@@ -204,7 +203,7 @@ class AmptiveEventDetailedScreen extends StatelessWidget {
                         fontWeight: ATFontWeights.w500,
                       ),
                     ),
-                    Gap(100.h)
+                    const SizedBox(height: 100),
                   ],
                 ),
               ),

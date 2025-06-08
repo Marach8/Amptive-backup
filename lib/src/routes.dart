@@ -35,7 +35,7 @@ import 'views/features/home/presentation/views/event_detailed_screen.dart';
 import 'views/features/home/presentation/views/following_screen.dart';
 import 'views/features/go_live/event/choose_event_screen.dart';
 import 'views/features/go_live/show/choose_or_create_show_screen.dart';
-import 'views/features/go_live/show/show_creation_success_screen.dart';
+import 'views/features/go_live/show/create_show_success_screen.dart';
 import 'views/features/home/presentation/views/show_detailed_screen.dart';
 import 'views/features/home/presentation/views/subscribed_screen.dart';
 import 'views/features/wallet/wallet_export.dart';
@@ -101,8 +101,10 @@ final GoRouter amptiveAppRouter = GoRouter(
                   title: "Cropper",
                   imageFile: imageFile,
                 );
-              }),
-        ]),
+              }
+            ),
+        ]
+      ),
     GoRoute(
       name: ATRoutes.passwordAuth,
       path: "/password",
@@ -250,7 +252,7 @@ final GoRouter amptiveAppRouter = GoRouter(
             path: ATRoutes.SHOW_DETAILED.addSlash,
             pageBuilder: (_, __) => ATRouteTransition(
               beginOffset: const Offset(0.0, 1.0),
-              child: const ATShowDetailedScreen()
+              child: const ATProgramDetailedScreen()
             )
           ),
           GoRoute(
@@ -512,7 +514,7 @@ final GoRouter amptiveAppRouter = GoRouter(
           GoRoute(
             name: ATRoutes.SCHEDULED_EVENTS_OR_SHOWS_SCREEN,
             path: ATRoutes.SCHEDULED_EVENTS_OR_SHOWS_SCREEN,
-            builder: (_, __) => const AmptiveScheduledEventOrShowViewWidget(),
+            builder: (_, __) => const ATScheduledPrograms(),
           ),
           GoRoute(
             name: ATRoutes.EVENT_SCHEDULED_SCREEN,
@@ -539,12 +541,12 @@ final GoRouter amptiveAppRouter = GoRouter(
           GoRoute(
             name: ATRoutes.SUBSCRIBED_EVENTS_OR_SHOWS_SCREEN,
             path: ATRoutes.SUBSCRIBED_EVENTS_OR_SHOWS_SCREEN,
-            builder: (_, __) => const AmptiveSubscribedEventOrShowViewWidget(),
+            builder: (_, __) => const ATSubscribedPrograms(),
           ),
           GoRoute(
             name: ATRoutes.FOLLOWING_EVENTS_OR_SHOWS_SCREEN,
             path: ATRoutes.FOLLOWING_EVENTS_OR_SHOWS_SCREEN,
-            builder: (_, __) => const AmptiveFollowingEvenstOrShowsViewWidget(),
+            builder: (_, __) => const ATFollowedPrograms(),
           ),
           GoRoute(
             name: ATRoutes.COMMUNITY_SCREEN,

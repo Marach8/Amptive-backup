@@ -3,7 +3,7 @@ import 'package:gap/gap.dart';
 import '../../../../../utils/constants/colors.dart';
 import '../../../../../utils/constants/font_sizes.dart';
 import '../../../../../utils/constants/strings/image_strings.dart';
-import '../../../common_widgets/image_loader_widget.dart';
+import '../../../../widgets/common_widgets/image_loader_widget.dart';
 
 class ShowOrEventIndicatorWithTitle extends StatelessWidget {
   const ShowOrEventIndicatorWithTitle({
@@ -14,7 +14,7 @@ class ShowOrEventIndicatorWithTitle extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       mainAxisSize: MainAxisSize.min,
-      children: [
+      children: <Widget>[
         const ATImgLoader(imgPath: ATImgStrings.SHOW_ICON),
         const Gap(5),
         Text(

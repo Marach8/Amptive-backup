@@ -12,8 +12,8 @@ import 'package:amptive/src/views/widgets/other_widgets/main_application_widgets
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
-import '../../../utils/constants/colors.dart';
-import '../../../utils/dialogs/options_dialog.dart';
+import '../../../../../utils/constants/colors.dart';
+import '../../../../../utils/dialogs/options_dialog.dart';
 
 class ATShowOrEventInfo extends StatelessWidget {
   const ATShowOrEventInfo({
@@ -24,9 +24,9 @@ class ATShowOrEventInfo extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        AmptiveListTileWithLeadingPictureWidget(
+        TileWithLeadingImage(
           leadingImagePath: ATImgStrings.jpeg3,
-          trailingOnPressed: () => showAudioOrVideoFullDetailsOptions(context),
+          trailingOnPressed: () => showProgramOptions(context),
           title: 'glennodoyle',
           subtitle: 'started a live show',
         ),
@@ -45,7 +45,7 @@ class ATShowOrEventInfo extends StatelessWidget {
                 gradient: LinearGradient(
                   begin: Alignment.topCenter,
                   end: Alignment.bottomCenter,
-                  colors: [
+                  colors: <Color>[
                     ATColors.trsprnt,
                     ATColors.trsprnt,
                     ATColors.trsprnt,
@@ -61,7 +61,7 @@ class ATShowOrEventInfo extends StatelessWidget {
                   children: [
                     const AmptiveWith2OthersWidget(),
                     const Spacer(),
-                    const AmptiveLiveIndicatorWithAnimatingDotWidget(),
+                    const LiveWithAnimatingDot(),
                     Gap(10.h),
                     Text(
                       maxLines: 2,

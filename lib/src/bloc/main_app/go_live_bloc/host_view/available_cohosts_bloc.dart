@@ -13,7 +13,8 @@ class AmptiveGoLiveAvailableCoHostsBloc extends Bloc<AmptiveCohostsEvent, Amptiv
 
       if (searchKey.isEmpty) {
         emit(InitialCohostsState(initialCohosts: hostList));
-      } else {
+      } 
+      else {
         final filteredCohosts = hostList.where((coHost) {
           final name = coHost.obj.name?.toLowerCase() ?? '';
           final username = coHost.obj.username?.toLowerCase() ?? '';

@@ -7,8 +7,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 
-class AmptiveLiveIndicatorWithAnimatingDotWidget extends StatelessWidget {
-  const AmptiveLiveIndicatorWithAnimatingDotWidget({
+class LiveWithAnimatingDot extends StatelessWidget {
+  const LiveWithAnimatingDot({
     super.key,
   });
 
@@ -20,7 +20,7 @@ class AmptiveLiveIndicatorWithAnimatingDotWidget extends StatelessWidget {
         gradient: LinearGradient(
           begin: Alignment.topCenter,
           end: Alignment.bottomCenter,
-          colors: [
+          colors: <Color>[
             ATColors.hexF91880,
             ATColors.orangeGradientColorB
           ]
@@ -31,9 +31,9 @@ class AmptiveLiveIndicatorWithAnimatingDotWidget extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.start,
         mainAxisSize: MainAxisSize.min,
         children: [
-          AmptiveAnimatedOpacityWidget(
+          ATAnimOpacity(
             child: CircleAvatar(
-              radius: 3.r,
+              radius: 3,
               backgroundColor: ATColors.white,
             ),
           ),

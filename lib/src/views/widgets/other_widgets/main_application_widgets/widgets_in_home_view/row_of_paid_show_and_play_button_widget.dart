@@ -19,31 +19,28 @@ class AmptiveRowOfPaidShowAndPlayButtonWidget extends StatelessWidget {
       children: [
         Padding(
           padding:  EdgeInsets.only(top: 18.0.h),
-          child: GestureDetector(
-            onTap: (){},
-            child: Container(
-              padding:  EdgeInsets.all(8.5.w),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(5),
-                color: ATColors.brandBlack
-              ),
-              child: Text(
-                ATStrings.PAID_SHOW.toUpperCase(),
-                style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                  fontWeight: ATFontWeights.w500,
-                  fontSize: ATFontSizes.size10
-                )
-              ),
+          child: Container(
+            padding:  EdgeInsets.all(8.5.w),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(5),
+              color: ATColors.brandBlack
+            ),
+            child: Text(
+              ATStrings.PAID_SHOW.toUpperCase(),
+              style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                fontWeight: ATFontWeights.w500,
+                fontSize: ATFontSizes.size10
+              )
             ),
           ),
         ),
         SizedBox(
-          height: 45.w,
-          width: 45.w,
+          height: 45,
+          width: 45,
           child: CircleAvatar(
             backgroundColor: ATColors.authHintColor,
             child: Icon(icon ?? Icons.play_arrow, color: ATColors.brandBlack,
-            size: 30.w,)
+            size: 30)
           ),
         )
       ],

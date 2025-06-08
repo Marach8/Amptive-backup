@@ -289,8 +289,8 @@ class ATStrings{
 
   static const TECHNOLOGY = 'Technology';
   static const gotATicketId = 'Got a Ticket ID? (coming soon)';
-  static const addedToCalender = 'Added to your calender';
-  static const removedFromCalender = 'Removed from your calender';
+  static const ADDED_2_CALL = 'Added to calender';
+  static const REMOVED_4RM_CAL = 'Removed from calender';
   static const VIEW = 'View';
   static const GIFTS = 'Gifts';
   static const ADD_LINK = 'Add Link';

@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import '../../../../../utils/constants/colors.dart';
@@ -16,24 +17,27 @@ class AmptiveHashtagsWidget extends StatelessWidget {
         'Society', 'Climate Change', 'JACKSCIPIO', 'attackingjacob',
         'Documentry',
       ].map(
-        (element) => Row(
+        (String element) => Row(
           mainAxisSize: MainAxisSize.min,
           children: [
             IntrinsicWidth(
               child: ATContainer(
                 margin: const EdgeInsets.only(bottom: 15,),
                 padding: const EdgeInsets.fromLTRB(15, 7, 15, 7),
-                alignment: Alignment.center,
-                radius: 10,
-                color: ATColors.white.withOpacity(0.1),
-                child: ATRichText(
-                  items: {
-                    '# ': Theme.of(context).textTheme.bodyMedium!,
-                    element : Theme.of(context).textTheme.bodySmall!.copyWith(
-                      color: ATColors.grey5Color,
-                    ),
-                  },
-                )
+                alignment: Alignment.center, radius: 10,
+                color: ATColors.white.withValues(alpha: 0.1),
+                child: Row(
+                  children: <Widget>[
+                    const Icon(CupertinoIcons.number, size: 15,),
+                    const SizedBox(width: 2,),
+                    Text(
+                      element,
+                      style: Theme.of(context).textTheme.bodySmall!.copyWith(
+                        color: ATColors.hexA8A8A8,
+                      ),
+                    )
+                  ],
+                ),
               ),
             ),
             const Gap(15)

@@ -40,7 +40,7 @@ class AmptiveRowOfTrendingHashTagTitle extends StatelessWidget {
               hashTagSubTitle,
               style: Theme.of(context).textTheme.titleSmall?.copyWith(
                 fontSize: ATFontSizes.size13,
-                color: ATColors.grey5Color
+                color: ATColors.hexA8A8A8
               ),
             ),
           ],

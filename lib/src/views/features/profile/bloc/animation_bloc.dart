@@ -28,11 +28,11 @@ class SwitchAcctSuccessAnimBloc extends Cubit<List<bool>>{
       emit(List.from(state));
     }
     else{
-      showSuccesState();
+      _showSuccesState();
     }
   }
 
-  void showSuccesState() async{
+  void _showSuccesState() async{
     state[3] = true;
     emit(List.from(state));
     await Future.delayed(const Duration(milliseconds: 50));

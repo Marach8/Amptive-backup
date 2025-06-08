@@ -42,7 +42,7 @@ class AmptiveFreeEventModel extends StatelessWidget {
                   'achidon',
                   style: Theme.of(context).textTheme.titleSmall?.copyWith(
                     fontSize: ATFontSizes.size13,
-                    color: ATColors.grey5Color,
+                    color: ATColors.hexA8A8A8,
                   ),
                 ),
               ),
@@ -52,13 +52,13 @@ class AmptiveFreeEventModel extends StatelessWidget {
                 alignment: Alignment.bottomCenter,
                 child: ATCircleAvatar(
                   diameter: 4,
-                  color: ATColors.grey5Color,
+                  color: ATColors.hexA8A8A8,
                 ),
               ),
               Text(
                 'LIVE',
                 style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                  color: ATColors.grey5Color,
+                  color: ATColors.hexA8A8A8,
                 ),
               ),
             ],

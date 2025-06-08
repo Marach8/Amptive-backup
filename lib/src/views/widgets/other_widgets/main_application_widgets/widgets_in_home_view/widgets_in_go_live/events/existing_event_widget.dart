@@ -62,7 +62,7 @@ class AmptiveExistingEventWidget extends StatelessWidget {
                       'glendonnoyle',
                       style: Theme.of(context).textTheme.titleSmall?.copyWith(
                         fontSize: ATFontSizes.size13,
-                        color: ATColors.grey5Color,
+                        color: ATColors.hexA8A8A8,
                       ),
                     ),
                   ),
@@ -72,13 +72,13 @@ class AmptiveExistingEventWidget extends StatelessWidget {
                     alignment: Alignment.bottomCenter,
                     child: ATCircleAvatar(
                       diameter: 5,
-                      color: ATColors.grey5Color,
+                      color: ATColors.hexA8A8A8,
                     ),
                   ),
                   Text(
                     'LIVE',
                     style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                      color: ATColors.grey5Color,
+                      color: ATColors.hexA8A8A8,
                     ),
                   ),
                 ],

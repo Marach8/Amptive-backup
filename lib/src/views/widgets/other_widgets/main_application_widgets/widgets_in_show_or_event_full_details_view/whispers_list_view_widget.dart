@@ -24,7 +24,7 @@ class ATWhispers extends StatelessWidget {
           color: ATColors.white.withOpacity(0.1),
           child: Column(
             children: [
-              const AmptiveListTileWithLeadingPictureWidget(
+              const TileWithLeadingImage(
                 title: 'karankabir',
                 subtitle: 'Listener',
                 leadingImagePath: ATImgStrings.jpeg1,

@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../../../utils/constants/colors.dart';
 import '../../../../../utils/constants/strings/image_strings.dart';
-import '../../../common_widgets/custom_container_widget.dart';
+import '../../../../widgets/common_widgets/custom_container_widget.dart';
 
 class ATEventOrShowCard extends StatelessWidget {
   const ATEventOrShowCard({
@@ -15,15 +15,14 @@ class ATEventOrShowCard extends StatelessWidget {
     return ATContainer(
       padding: const EdgeInsets.all(10),
       alignment: Alignment.topRight,
-      height: 360.h,
-      radius: 16,
+      height: 360, radius: 16,
       decorationImagePath: ATImgStrings.weCanDoHardThingsBgImage,
       child: GestureDetector(                      
-        onTap: () => showAudioOrVideoFullDetailsOptions(context),
+        onTap: () => showProgramOptions(context),
         child: ATContainer(
           height: 32, width: 32,
           boxShape: BoxShape.circle,
-          color: ATColors.brandBlack.withOpacity(0.7),
+          color: ATColors.brandBlack.withValues(alpha: 0.7),
           child: const Icon(Icons.more_horiz),
         ),
       ),

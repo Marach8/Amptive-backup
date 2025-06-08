@@ -6,13 +6,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 
-class AmptiveListTileWithLeadingPictureWidget extends StatelessWidget {
+class TileWithLeadingImage extends StatelessWidget {
   final VoidCallback? trailingOnPressed;
   final String title, subtitle, leadingImagePath;
   final EdgeInsetsGeometry? padding;
   final double? diameter;
 
-  const AmptiveListTileWithLeadingPictureWidget({
+  const TileWithLeadingImage({
     super.key,
     this.trailingOnPressed,
     required this.title,

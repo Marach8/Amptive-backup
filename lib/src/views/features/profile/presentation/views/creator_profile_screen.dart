@@ -106,7 +106,7 @@ class AmptiveCreatorProfileScreen extends StatelessWidget {
             SliverPersistentHeader(
               pinned: true,
               delegate: ATSliverHDelegate(
-                maxExt: 65, minExt: 65, rebuild: false,              
+                maxExt: 65, minExt: 65,
                 child: ProfileScreenTabs(tabs: _tabs),
               ),
             )

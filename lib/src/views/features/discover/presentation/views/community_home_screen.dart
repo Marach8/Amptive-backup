@@ -33,7 +33,7 @@ class AmptiveCommunityScreen extends StatelessWidget {
                   maxLines: 3,
                   ATStrings.DISCOVER_COMMUNITIES,
                   style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                    color: ATColors.grey5Color
+                    color: ATColors.hexA8A8A8
                   ),
                 ),
               ),

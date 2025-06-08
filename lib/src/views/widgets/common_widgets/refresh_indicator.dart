@@ -1,10 +1,10 @@
 import 'package:amptive/src/utils/constants/colors.dart';
 import 'package:flutter/material.dart';
 
-class AmptiveRefreshIndicatorWidget extends StatelessWidget {
+class ATRefreshIndicator extends StatelessWidget {
   final Widget child;
   final Future<void> Function()? onRefresh;
-  const AmptiveRefreshIndicatorWidget({
+  const ATRefreshIndicator({
     super.key,
     required this.child,
     this.onRefresh

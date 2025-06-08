@@ -9,7 +9,7 @@ import 'package:amptive/src/utils/constants/strings/image_strings.dart';
 import 'package:amptive/src/views/widgets/common_widgets/image_loader_widget.dart';
 
 
-void showAudioOrVideoFullDetailsOptions(BuildContext context)
+void showProgramOptions(BuildContext context)
   => showModalBottomSheet(
       context: context,
       barrierColor: ATColors.black.withOpacity(0.5),

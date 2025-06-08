@@ -1,18 +1,19 @@
 import 'package:flutter/material.dart';
 
-class AmptiveAnimatedOpacityWidget extends StatefulWidget {
-  final Widget child;
+class ATAnimOpacity extends StatefulWidget {
 
-  const AmptiveAnimatedOpacityWidget({
+  const ATAnimOpacity({
     super.key,
     required this.child
   });
 
+  final Widget child;
+
   @override
-  State<AmptiveAnimatedOpacityWidget> createState() => _SizeAnimationState();
+  State<ATAnimOpacity> createState() => _SizeAnimationState();
 }
 
-class _SizeAnimationState extends State<AmptiveAnimatedOpacityWidget> with 
+class _SizeAnimationState extends State<ATAnimOpacity> with 
 SingleTickerProviderStateMixin{
 
   late AnimationController opacityController;

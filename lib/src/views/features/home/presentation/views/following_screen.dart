@@ -9,11 +9,11 @@ import 'package:go_router/go_router.dart';
 import '../../../../../utils/constants/colors.dart';
 import '../../../../widgets/common_widgets/back_button.dart';
 import '../../../../widgets/common_widgets/custom_container_widget.dart';
-import '../../../../widgets/other_widgets/main_application_widgets/widgets_in_home_view/widgets_in_following/following_show_or_event_model_widget.dart';
+import '../widgets/followed_program.dart';
 
 
-class AmptiveFollowingEvenstOrShowsViewWidget extends StatelessWidget {
-  const AmptiveFollowingEvenstOrShowsViewWidget({
+class ATFollowedPrograms extends StatelessWidget {
+  const ATFollowedPrograms({
     super.key,
   });
 
@@ -21,56 +21,52 @@ class AmptiveFollowingEvenstOrShowsViewWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return ATAnnotatedRegion(
       child: Scaffold(
-        body: NestedScrollView(
-          floatHeaderSlivers: true,
-          headerSliverBuilder: (_, __) => [
-            SliverAppBar(
-              floating: true,   
-              leadingWidth: 150.w,
-              leading: Padding(
-                padding: const EdgeInsets.only(left: 20),
-                child: ATBackBtn(
-                  leadingText: ATStrings.FOLLOWING,
-                  leadingStyle: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                    fontSize: ATFontSizes.size23
-                  ),
-                )
-              ),
-              bottom: PreferredSize(
-                preferredSize: const Size.fromHeight(0),
-                child: ATContainer(
-                  color: ATColors.white,
-                  height: 0.15,
-                  width: double.infinity,
-                  child: const SizedBox.shrink(),
-                ),
-              ),     
-            ),
-      
-            // SliverPersistentHeader(
-            //   pinned: true,
-            //   delegate: AmptiveSliverHeader()
-            // )
-          ],
-           
-          body: AmptiveRefreshIndicatorWidget(
-            child: ListView(
-              physics: const BouncingScrollPhysics(),            
-              padding: EdgeInsets.zero,
-              children: [      
-                ...Iterable.generate(
-                  10,
-                  (_) => Padding(
-                    padding: const EdgeInsets.fromLTRB(20, 5, 20, 20),
-                    child: GestureDetector(
-                      onTap: () => context.pushNamed(ATRoutes.SHOW_DETAILED),
-                      child: const AmptiveFollowingShowOrEventDataModelWidget()
+        body: SafeArea(
+          child: NestedScrollView(
+            floatHeaderSlivers: true,
+            headerSliverBuilder: (_, __) => [
+              SliverAppBar(
+                floating: true,   
+                leadingWidth: 200.w,
+                leading: Padding(
+                  padding: const EdgeInsets.only(left: 20),
+                  child: ATBackBtn(
+                    leadingText: ATStrings.FOLLOWING,
+                    leadingStyle: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                      fontSize: ATFontSizes.size23
                     ),
                   )
-                )
-              ]
-            ),
-          )
+                ),
+                bottom: PreferredSize(
+                  preferredSize: const Size.fromHeight(0),
+                  child: ATContainer(
+                    color: ATColors.white,
+                    height: 0.15,
+                    width: double.infinity,
+                    child: const SizedBox.shrink(),
+                  ),
+                ),     
+              ),
+            ],
+             
+            body: ATRefreshIndicator(
+              child: ListView(              
+                padding: EdgeInsets.zero,
+                children: [      
+                  ...Iterable.generate(
+                    10,
+                    (_) => Padding(
+                      padding: const EdgeInsets.fromLTRB(20, 5, 20, 20),
+                      child: GestureDetector(
+                        onTap: () => context.pushNamed(ATRoutes.SHOW_DETAILED),
+                        child: const FollowedProgram()
+                      ),
+                    )
+                  )
+                ]
+              ),
+            )
+          ),
         ),
       ),
     );

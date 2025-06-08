@@ -43,7 +43,7 @@ class AmptiveFreeShowModel extends StatelessWidget {
                   'figma',
                   style: Theme.of(context).textTheme.titleSmall?.copyWith(
                     fontSize: ATFontSizes.size13,
-                    color: ATColors.grey5Color
+                    color: ATColors.hexA8A8A8
                   ),
                 ),
               ),
@@ -53,14 +53,14 @@ class AmptiveFreeShowModel extends StatelessWidget {
                 alignment: Alignment.bottomCenter,
                 child: ATCircleAvatar(
                   diameter: 4,
-                  color: ATColors.grey5Color
+                  color: ATColors.hexA8A8A8
                 ),
               ),
               const Gap(2),
               Text(
                 'LIVE',
                 style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                  color: ATColors.grey5Color
+                  color: ATColors.hexA8A8A8
                 ),
               ),
             ],

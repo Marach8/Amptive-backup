@@ -190,7 +190,7 @@ Future<Set<ObjectWithNotifier<Hashtag>>?> showAddHashtagDialog(
                                                 .bodySmall
                                                 ?.copyWith(
                                               color:
-                                              ATColors.grey5Color,
+                                              ATColors.hexA8A8A8,
                                             ),
                                           ),
                                           const Gap(5),

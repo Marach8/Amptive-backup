@@ -2,7 +2,7 @@ import 'package:amptive/src/utils/constants/colors.dart';
 import 'package:amptive/src/utils/constants/strings/route_strings.dart';
 import 'package:amptive/src/views/features/main_app_navigation.dart';
 import 'package:amptive/src/views/widgets/common_widgets/circle_avatar.dart';
-import 'package:amptive/src/views/widgets/common_widgets/show_or_event_data_model_widget.dart';
+import 'package:amptive/src/views/features/home/presentation/widgets/program_widget_in_home.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -90,8 +90,8 @@ class ATHomeScreen extends StatelessWidget {
                   shrinkWrap: true,
                   scrollDirection: Axis.horizontal,
                   children: [
-                    Padding(
-                      padding: EdgeInsets.only(left: 11.w, right: 14.w),
+                    const Padding(
+                      padding: EdgeInsets.only(left: 11, right: 14),
                       child: const AmptiveUserGoLiveWidget(),
                     ),
                     ...Iterable.generate(
