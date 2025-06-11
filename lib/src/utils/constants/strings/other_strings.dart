@@ -247,8 +247,8 @@ class ATStrings{
   static const FREE_EVENTS = 'Free Events';
   static const PAID_EVENTS = 'Paid Events';
   static const FREE_SHOWS = 'Free Shows';
-  static const hashtags = 'Hashtags';
-  static const hostedBy = 'Hosted by';
+  static const HASHTAGS = 'Hashtags';
+  static const HOSTED_BY = 'Hosted by';
   static const showLess = ' Show less';
   static const showMore = 'Show more';
   static const WHISPERS = 'Whispers';

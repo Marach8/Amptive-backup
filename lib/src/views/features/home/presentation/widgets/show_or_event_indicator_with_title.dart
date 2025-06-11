@@ -19,7 +19,7 @@ class ShowOrEventIndicatorWithTitle extends StatelessWidget {
         const Gap(5),
         Text(
           'We Can Do Hard Things',
-          style: Theme.of(context).textTheme.labelMedium?.copyWith(
+          style: Theme.of(context).textTheme.bodyMedium?.copyWith(
             fontSize: ATFontSizes.size15,
             color: ATColors.dimWhiteColor1
           ),

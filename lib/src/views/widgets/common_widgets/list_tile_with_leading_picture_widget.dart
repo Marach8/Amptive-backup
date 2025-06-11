@@ -7,10 +7,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 
 class TileWithLeadingImage extends StatelessWidget {
-  final VoidCallback? trailingOnPressed;
-  final String title, subtitle, leadingImagePath;
-  final EdgeInsetsGeometry? padding;
-  final double? diameter;
 
   const TileWithLeadingImage({
     super.key,
@@ -21,6 +17,11 @@ class TileWithLeadingImage extends StatelessWidget {
     this.diameter,
     required this.leadingImagePath
   });
+
+  final VoidCallback? trailingOnPressed;
+  final String title, subtitle, leadingImagePath;
+  final EdgeInsetsGeometry? padding;
+  final double? diameter;
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +37,7 @@ class TileWithLeadingImage extends StatelessWidget {
           Column(
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
+            children: <Widget>[
               Text(
                 title,
                 style: Theme.of(context).textTheme.titleMedium?.copyWith(
@@ -45,10 +46,9 @@ class TileWithLeadingImage extends StatelessWidget {
               ),
               Text(
                 subtitle,
-                style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                style: Theme.of(context).textTheme.titleLarge?.copyWith(
                   color: ATColors.hexC2C2C2,
-                  fontWeight: ATFontWeights.w500,
-                  fontSize: ATFontSizes.size13,
+                  fontSize: ATFontSizes.size12,
                   height: 1.5
                 ),
               ),

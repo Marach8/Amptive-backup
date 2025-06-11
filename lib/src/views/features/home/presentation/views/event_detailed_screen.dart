@@ -83,7 +83,7 @@ class AmptiveEventDetailedScreen extends StatelessWidget {
                     const SizedBox(height: 30),
               
                     Text(
-                      ATStrings.hashtags,
+                      ATStrings.HASHTAGS,
                       style: Theme.of(context).textTheme.bodySmall?.copyWith(
                         fontSize: ATFontSizes.size17
                       ),  
@@ -95,7 +95,7 @@ class AmptiveEventDetailedScreen extends StatelessWidget {
                     const SizedBox(height: 20),
               
                     Text(
-                      ATStrings.hostedBy,
+                      ATStrings.HOSTED_BY,
                       style: Theme.of(context).textTheme.bodySmall?.copyWith(
                         fontSize: ATFontSizes.size17
                       ),  
@@ -121,7 +121,7 @@ class AmptiveEventDetailedScreen extends StatelessWidget {
                     ),
                     Divider(color: ATColors.white.withOpacity(0.1),),
                     const SizedBox(height: 10),
-                    const AmptiveRowOfNumberOfPeopleListeningWidget(
+                    const PeopleListeningWidget(
                       showNumberInsideContainer: true,
                     ),
                     

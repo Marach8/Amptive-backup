@@ -10,7 +10,7 @@ class ATWhispers extends StatelessWidget {
   });
 
   @override
-  Widget build(context) {
+  Widget build(BuildContext context) {
     return SizedBox(
       height: 230,
       child: ListView.builder(
@@ -21,12 +21,12 @@ class ATWhispers extends StatelessWidget {
           margin: const EdgeInsets.only(left: 15),
           padding: const EdgeInsets.fromLTRB(15, 0, 15,  0),
           height: 230, width: 285, radius: 10,
-          color: ATColors.white.withOpacity(0.1),
+          color: ATColors.white.withValues(alpha: 0.1),
           child: Column(
             children: [
               const TileWithLeadingImage(
                 title: 'karankabir',
-                subtitle: 'Listener',
+                subtitle: 'Listener', diameter: 48,
                 leadingImagePath: ATImgStrings.jpeg1,
               ),
               const SizedBox(height: 10),

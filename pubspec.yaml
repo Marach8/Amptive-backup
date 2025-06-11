@@ -130,9 +130,9 @@ flutter:
           weight: 200
         - asset: assets/inter_fonts/Inter-Thin.ttf
           weight: 100
-    - family: CustomIcon
-      fonts:
-        - asset: assets/fonts/CustomIcon.ttf
+    # - family: CustomIcon
+    #   fonts:
+    #     - asset: assets/fonts/CustomIcon.ttf
   # fonts:
   #   - family: Schyler
   #     fonts:

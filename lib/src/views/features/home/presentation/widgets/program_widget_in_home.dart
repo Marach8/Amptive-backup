@@ -73,7 +73,7 @@ class ATShowOrEventInfo extends StatelessWidget {
                       ),
                     ),
                     Gap(12.h),
-                    const AmptiveRowOfNumberOfPeopleListeningWidget(),
+                    const PeopleListeningWidget(),
                     Gap(10.h),
                     const AmptiveRowOfPaidShowAndPlayButtonWidget(),
                   ],

@@ -1,3 +1,5 @@
+import 'package:amptive/src/utils/constants/strings/image_strings.dart';
+import 'package:amptive/src/views/widgets/common_widgets/image_loader_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
@@ -19,16 +21,16 @@ class AmptiveHashtagsWidget extends StatelessWidget {
       ].map(
         (String element) => Row(
           mainAxisSize: MainAxisSize.min,
-          children: [
+          children: <Widget>[
             IntrinsicWidth(
               child: ATContainer(
                 margin: const EdgeInsets.only(bottom: 15,),
-                padding: const EdgeInsets.fromLTRB(15, 7, 15, 7),
+                padding: const EdgeInsets.fromLTRB(10, 7, 10, 7),
                 alignment: Alignment.center, radius: 10,
                 color: ATColors.white.withValues(alpha: 0.1),
                 child: Row(
                   children: <Widget>[
-                    const Icon(CupertinoIcons.number, size: 15,),
+                    const ATImgLoader(imgPath: ATImgStrings.HASH_ICON),
                     const SizedBox(width: 2,),
                     Text(
                       element,

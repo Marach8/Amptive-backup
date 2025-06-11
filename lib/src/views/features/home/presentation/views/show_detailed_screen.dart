@@ -5,12 +5,14 @@ import 'package:amptive/src/utils/constants/strings/image_strings.dart';
 import 'package:amptive/src/utils/constants/strings/other_strings.dart';
 import 'package:amptive/src/utils/helpers/extensions/context_extensions.dart';
 import 'package:amptive/src/utils/helpers/helper_functions/helper_functions.dart';
+import 'package:amptive/src/views/features/home/home_export.dart';
 import 'package:amptive/src/views/features/home/presentation/widgets/show_or_event_indicator_with_title.dart';
 import 'package:amptive/src/views/widgets/common_widgets/annotated_region__widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/custom_container_widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/elevated_button_widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/image_loader_widget.dart';
 import 'package:amptive/src/views/features/home/presentation/widgets/event_or_show_card.dart';
+import 'package:amptive/src/views/widgets/common_widgets/overlapping_images.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -53,7 +55,7 @@ class ATProgramDetailedScreen extends StatelessWidget {
                       return NotificationListener<ScrollNotification>(
                         onNotification: blocContext.read<_PrivateBloc>().onNotification,
                         child: NestedScrollView(
-                          headerSliverBuilder: (_, __) => [
+                          headerSliverBuilder: (_, __) => <Widget>[
                             SliverPersistentHeader(
                               pinned: true,
                               delegate: ATSliverHDelegate(
@@ -62,6 +64,7 @@ class ATProgramDetailedScreen extends StatelessWidget {
                               ),
                             )
                           ],
+
                           body: SingleChildScrollView(
                             physics: const BouncingScrollPhysics(),
                             child: Column(
@@ -70,7 +73,7 @@ class ATProgramDetailedScreen extends StatelessWidget {
                                   padding: const EdgeInsets.fromLTRB(15, 10, 15, 5),
                                   child: Column(
                                     crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: [
+                                    children: <Widget>[
                                       const ATEventOrShowCard(),
                                       const SizedBox(height: 24),
                                       const ShowOrEventIndicatorWithTitle(),
@@ -91,31 +94,31 @@ class ATProgramDetailedScreen extends StatelessWidget {
                                       const SizedBox(height: 40,),
                                 
                                       Text(
-                                        ATStrings.hashtags,
+                                        ATStrings.HASHTAGS,
                                         style: Theme.of(context).textTheme.bodySmall?.copyWith(
                                           fontSize: ATFontSizes.size17
                                         ),  
                                       ),
-                                      Divider(color: ATColors.white.withOpacity(0.1),),
+                                      Divider(color: ATColors.white.withValues(alpha:0.1),),
                                       const SizedBox(height: 5),
                                       const AmptiveHashtagsWidget(),
                                 
-                                      const SizedBox(height: 20,),
+                                      const SizedBox(height: 30,),
                                 
                                       Text(
-                                        ATStrings.hostedBy,
+                                        ATStrings.HOSTED_BY,
                                         style: Theme.of(context).textTheme.bodySmall?.copyWith(
                                           fontSize: ATFontSizes.size17
                                         ),  
                                       ),
-                                      Divider(color: ATColors.white.withOpacity(0.1),),
-                                      ...List.generate(
+                                      Divider(color: ATColors.white.withValues(alpha:0.1),),
+                                      ...List<Widget>.generate(
                                         3,
                                         (_) => const TileWithLeadingImage(
                                           padding: EdgeInsets.symmetric(vertical: 9),
                                           title: 'Gerald',
                                           subtitle: 'Host',
-                                          diameter: 35,
+                                          diameter: 42,
                                           leadingImagePath: ATImgStrings.jpeg1,
                                         )
                                       ),
@@ -127,17 +130,16 @@ class ATProgramDetailedScreen extends StatelessWidget {
                                           fontSize: ATFontSizes.size17
                                         ),  
                                       ),
-                                      Divider(color: ATColors.white.withOpacity(0.1),),
+                                      Divider(color: ATColors.white.withValues(alpha: 0.1),),
                                       const SizedBox(height: 10,),
-                                      const AmptiveRowOfNumberOfPeopleListeningWidget(
-                                        showNumberInsideContainer: true,
-                                      ),
+                                      
+                                      const NoOfListenersWidget(),
                                       
                                       const SizedBox(height: 20,),
                                       Text(
                                         'daniel, jessica, gerald, peter and 652 more',
                                         style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                                          color: ATColors.white.withOpacity(0.6)
+                                          color: ATColors.white.withValues(alpha: 0.6)
                                         ),
                                       ),
                                       const SizedBox(height: 35,),

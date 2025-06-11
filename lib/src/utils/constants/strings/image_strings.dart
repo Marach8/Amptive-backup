@@ -41,6 +41,8 @@ class ATImgStrings{
   static const String FLUTTERWAVE = '$_svgPath/flutter_wave.svg';
   static const String APPLE_ICON = '$_svgPath/apple_icon.svg';
   static const String PAYPAL_ICON = '$_svgPath/paypal.svg';
+  static const String NAIRA_ICON = '$_svgPath/₦.svg';
+  static const String HASH_ICON = '$_svgPath/hash.svg';
   // static const String CREATOR_MIC = '$_svgPath/creator-microphone.svg';
   // static const String CREATOR_GIF = '$_svgPath/creatorgif.svg';
   // static const String CREATOR_GLOBE = '$_svgPath/internet.svg';

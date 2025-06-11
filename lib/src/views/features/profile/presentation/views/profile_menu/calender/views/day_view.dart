@@ -105,7 +105,7 @@ class CalenderDayView extends StatelessWidget {
   const CalenderDayView({super.key});
 
   @override
-  Widget build(context) {
+  Widget build(BuildContext context) {
     return const Column(
       children: [
         SizedBox(height: 70, child: DateAndWeekDays()),

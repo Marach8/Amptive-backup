@@ -17,7 +17,6 @@ class LiveAndSocietyWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     bool isDone = false;
-    print('I love God');
     return Row(
       mainAxisSize: MainAxisSize.min,
       children: <Widget>[
