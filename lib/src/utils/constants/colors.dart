@@ -11,7 +11,7 @@ class ATColors {
 
   static Color get hexFED601 => const Color(0xFFFED601);
 
-  static Color get brandBlack => const Color(0xFF0D0D0D);
+  static Color get hex0D0D0D => const Color(0xFF0D0D0D);
 
   static Color get hex252525 => const Color(0xFF252525);
 

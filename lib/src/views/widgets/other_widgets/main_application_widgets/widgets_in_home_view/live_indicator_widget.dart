@@ -27,7 +27,7 @@ class AmptiveLiveIndicatorWidget extends StatelessWidget {
         ),
         borderRadius: BorderRadius.circular(5),
         border: Border.all(
-          color: ATColors.brandBlack,
+          color: ATColors.hex0D0D0D,
           width: 2,
         )
       ),

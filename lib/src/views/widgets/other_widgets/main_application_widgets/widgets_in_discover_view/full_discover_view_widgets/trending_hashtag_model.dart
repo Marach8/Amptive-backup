@@ -45,7 +45,7 @@ class AmptiveTrendingHashtagModel extends StatelessWidget {
                   child: Text(
                     "P",
                     style: Theme.of(context).textTheme.displayMedium?.copyWith(
-                      color: ATColors.brandBlack
+                      color: ATColors.hex0D0D0D
                     ),
                   ),
                 ),

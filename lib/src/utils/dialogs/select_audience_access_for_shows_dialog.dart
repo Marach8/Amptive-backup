@@ -21,7 +21,7 @@ Future<String> showSelectAudienceAccessForShowsDialog(
   CreateShowService service = GetIt.I<CreateShowService>();
 
   return await showModalBottomSheet(
-    backgroundColor: ATColors.brandBlack,
+    backgroundColor: ATColors.hex0D0D0D,
     constraints: BoxConstraints.expand(height: ATHelperFuncs.getScreenHeight(context)),
     context: context,
     isScrollControlled: true,

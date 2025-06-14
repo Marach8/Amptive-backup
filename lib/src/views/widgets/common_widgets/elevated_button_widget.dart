@@ -43,18 +43,18 @@ class AmptiveElevatedButtonWidget extends StatelessWidget {
                       style: Theme.of(context)
                           .textTheme
                           .bodyMedium
-                          ?.copyWith(color: ATColors.brandBlack)),
+                          ?.copyWith(color: ATColors.hex0D0D0D)),
                   const Gap(5),
                   CircleAvatar(
                     radius: 2,
-                    backgroundColor: ATColors.brandBlack,
+                    backgroundColor: ATColors.hex0D0D0D,
                   ),
                   const Gap(5),
                   Text(text2!,
                       style: Theme.of(context)
                           .textTheme
                           .bodyMedium
-                          ?.copyWith(color: ATColors.brandBlack)),
+                          ?.copyWith(color: ATColors.hex0D0D0D)),
                 ],
               )
             : Text(buttonTitle!));

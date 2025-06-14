@@ -74,7 +74,7 @@ class AmptiveLiveHostAndCoHostWidgetForAudienceView extends StatelessWidget {
                                 fit: BoxFit.scaleDown,
                                 child: Icon(
                                   Icons.mic_off,
-                                  color: ATColors.brandBlack,
+                                  color: ATColors.hex0D0D0D,
                                   size: 15.h,
                                 )),
                           ),

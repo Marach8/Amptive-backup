@@ -95,7 +95,7 @@ class _AmptiveChooseOrCreateEventScreenState extends State<AmptiveChooseOrCreate
               physics: const BouncingScrollPhysics(),
               slivers: [
                 SliverAppBar(
-                  backgroundColor: ATColors.brandBlack.withOpacity(0.8),
+                  backgroundColor: ATColors.hex0D0D0D.withOpacity(0.8),
                   floating: true,
                   leading: GestureDetector(
                     onTap: (){context.pop();},

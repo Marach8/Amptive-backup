@@ -90,7 +90,7 @@ class ATCalenderScreen extends StatelessWidget {
             onPressed: (){},
             btnTitle: ATStrings.CREATE_SCHEDULE,
             bgColor: ATColors.white,
-            fgColor: ATColors.brandBlack
+            fgColor: ATColors.hex0D0D0D
           ),
         )
       ),

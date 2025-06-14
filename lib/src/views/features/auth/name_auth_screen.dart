@@ -40,7 +40,7 @@ class _NameAuthScreenState extends State<NameAuthScreen> {
   Widget build(BuildContext context) {
     return ATAnnotatedRegion(
       child: Scaffold(
-        backgroundColor: ATColors.brandBlack,
+        backgroundColor: ATColors.hex0D0D0D,
         appBar: const ATAppBar(),
         body: Padding(
           padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 20.h),

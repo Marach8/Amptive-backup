@@ -41,7 +41,7 @@ class _CropPageState extends State<CropPage> {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
-          backgroundColor: ATColors.brandBlack,
+          backgroundColor: ATColors.hex0D0D0D,
           elevation: 0.0,
           leadingWidth: 90.w,
           leading: GestureDetector(
@@ -108,12 +108,12 @@ class _CropPageState extends State<CropPage> {
             ],
           ),
         ),
-        backgroundColor: ATColors.brandBlack,
+        backgroundColor: ATColors.hex0D0D0D,
         body: Column(
           children: [
             Expanded(
               child: CustomImageCrop(
-                  backgroundColor: ATColors.brandBlack,
+                  backgroundColor: ATColors.hex0D0D0D,
                   cropController: controller,
                   drawPath: drawCropPath,
                   image: FileImage(widget.imageFile)),

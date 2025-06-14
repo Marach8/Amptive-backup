@@ -519,7 +519,7 @@ class _CreateShowScreenState extends State<CreateShowScreen> {
                     Divider(
                       height: 2.h,
                       thickness: 2.w,
-                      color: ATColors.brandBlack.withOpacity(0.10),
+                      color: ATColors.hex0D0D0D.withOpacity(0.10),
                     ),
                     SizedBox(height: 24.h),
 
@@ -734,7 +734,7 @@ class _CreateShowScreenState extends State<CreateShowScreen> {
                           if (states.contains(WidgetState.disabled)) {
                             return ATColors.strokeGreyColor;
                           }
-                          return ATColors.brandBlack;
+                          return ATColors.hex0D0D0D;
                         }),
                       ),
                     );
@@ -846,7 +846,7 @@ class OverlappingHosts extends StatelessWidget {
                       filter:
                       ImageFilter.blur(sigmaX: 53.4, sigmaY: 53.4),
                       child: Container(
-                        color: ATColors.brandBlack
+                        color: ATColors.hex0D0D0D
                             .withOpacity(0.2),
                       ),
                     ),

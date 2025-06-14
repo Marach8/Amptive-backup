@@ -11,7 +11,7 @@ void showTextAreaModal(BuildContext context) {
   CreateShowService service = GetIt.I<CreateShowService>();
 
   showModalBottomSheet(
-    backgroundColor: ATColors.brandBlack,
+    backgroundColor: ATColors.hex0D0D0D,
     constraints: BoxConstraints.expand(
         height: ATHelperFuncs.getScreenHeight(context)),
     context: context,

@@ -6,8 +6,8 @@ import '../../../../../utils/constants/strings/image_strings.dart';
 import '../../../../../utils/constants/strings/other_strings.dart';
 import '../../../../widgets/common_widgets/image_loader_widget.dart';
 
-class LiveAndSocietyWidget extends StatelessWidget {
-  const LiveAndSocietyWidget({
+class LiveIndicatorRow extends StatelessWidget {
+  const LiveIndicatorRow({
     super.key,
     this.text2
   });

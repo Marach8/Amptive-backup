@@ -42,7 +42,7 @@ class AmptiveTrendingHashTagFullScreen extends StatelessWidget {
                       child: Text(
                         ATStrings.HASH,
                         style: Theme.of(context).textTheme.displayMedium?.copyWith(
-                          color: ATColors.brandBlack
+                          color: ATColors.hex0D0D0D
                         )
                       ),
                     ),

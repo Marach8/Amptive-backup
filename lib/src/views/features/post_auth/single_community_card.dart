@@ -74,7 +74,7 @@ class SingleCommunityCardWidget extends StatelessWidget {
                           shape: OvalBorder(),
                         ),
                         child: Icon(
-                          color: ATColors.brandBlack,
+                          color: ATColors.hex0D0D0D,
                           Icons.check,
                           size: 20.h,
                           weight: 30,

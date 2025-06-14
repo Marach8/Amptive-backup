@@ -83,7 +83,7 @@ class _ATOTPScreenState extends State<ATOTPScreen> {
   Widget build(BuildContext context) {
     return ATAnnotatedRegion(
       child: Scaffold(
-        backgroundColor: ATColors.brandBlack,
+        backgroundColor: ATColors.hex0D0D0D,
         appBar: ATAppBar(
           title: Text(
             widget.title,

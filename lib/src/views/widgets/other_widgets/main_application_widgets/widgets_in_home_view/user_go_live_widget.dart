@@ -41,7 +41,7 @@ class AmptiveUserGoLiveWidget extends StatelessWidget {
                   height: 20, width: 20, radius: 10,
                   color: ATColors.hex307FE2,
                   border: Border.all(
-                    color: ATColors.brandBlack,
+                    color: ATColors.hex0D0D0D,
                     width: 2,
                   ),
                   child: const Icon(Icons.add, size: 15, applyTextScaling: true),

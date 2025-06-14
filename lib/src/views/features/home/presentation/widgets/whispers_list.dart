@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import '../../../../../utils/constants/colors.dart';
 import '../../../../../utils/constants/strings/image_strings.dart';
-import '../../../common_widgets/custom_container_widget.dart';
-import '../../../common_widgets/list_tile_with_leading_picture_widget.dart';
+import '../../../../widgets/common_widgets/custom_container_widget.dart';
+import '../../../../widgets/common_widgets/list_tile_with_leading_picture_widget.dart';
 
-class ATWhispers extends StatelessWidget {
-  const ATWhispers({
+class ATWhispersWidget extends StatelessWidget {
+  const ATWhispersWidget({
     super.key,
   });
 
@@ -20,10 +20,10 @@ class ATWhispers extends StatelessWidget {
         itemBuilder: (_, __) => ATContainer(
           margin: const EdgeInsets.only(left: 15),
           padding: const EdgeInsets.fromLTRB(15, 0, 15,  0),
-          height: 230, width: 285, radius: 10,
+          height: 230, width: 326, radius: 10,
           color: ATColors.white.withValues(alpha: 0.1),
           child: Column(
-            children: [
+            children: <Widget>[
               const TileWithLeadingImage(
                 title: 'karankabir',
                 subtitle: 'Listener', diameter: 48,
@@ -33,7 +33,9 @@ class ATWhispers extends StatelessWidget {
               Text(
                 maxLines: 100,
                 'I got so excited whan Jack spoke spanish for just no reason, like what!!!!!!>😂😂😂',
-                style: Theme.of(context).textTheme.labelMedium
+                style: Theme.of(context).textTheme.labelMedium?.copyWith(
+                  color: ATColors.white, height: 1.5
+                )
               ),
               const Spacer()
             ],

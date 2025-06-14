@@ -31,12 +31,12 @@ import 'package:go_router/go_router.dart';
 import 'views/features/discover/presentation/views/community_home_screen.dart';
 import 'views/features/discover/presentation/views/hashtag_full_screen.dart';
 import 'views/features/discover/presentation/views/trending_society_screen.dart';
-import 'views/features/home/presentation/views/event_detailed_screen.dart';
+import 'views/features/home/presentation/views/live_event_detailed_screen.dart';
 import 'views/features/home/presentation/views/following_screen.dart';
 import 'views/features/go_live/event/choose_event_screen.dart';
 import 'views/features/go_live/show/choose_or_create_show_screen.dart';
 import 'views/features/go_live/show/create_show_success_screen.dart';
-import 'views/features/home/presentation/views/show_detailed_screen.dart';
+import 'views/features/home/presentation/views/live_show_detailed_screen.dart';
 import 'views/features/home/presentation/views/subscribed_screen.dart';
 import 'views/features/wallet/wallet_export.dart';
 
@@ -248,18 +248,18 @@ final GoRouter amptiveAppRouter = GoRouter(
           ),
           
           GoRoute(
-            name: ATRoutes.SHOW_DETAILED,
-            path: ATRoutes.SHOW_DETAILED.addSlash,
+            name: ATRoutes.LIVE_SHOW_DETAILED,
+            path: ATRoutes.LIVE_SHOW_DETAILED.addSlash,
             pageBuilder: (_, __) => ATRouteTransition(
               beginOffset: const Offset(0.0, 1.0),
-              child: const ATProgramDetailedScreen()
+              child: const ATLiveShowDetailedScreen()
             )
           ),
           GoRoute(
-              name: ATRoutes.EVENT_DETAILED_SCREEN,
-              path: ATRoutes.EVENT_DETAILED_SCREEN,
+              name: ATRoutes.LIVE_EVENT_DETAILED,
+              path: ATRoutes.LIVE_EVENT_DETAILED,
               pageBuilder: (context, state) => CustomTransitionPage(
-                    child: const AmptiveEventDetailedScreen(),
+                    child: const ATLiveEventDetailedScreen(),
                     transitionsBuilder:
                         (context, animation, secondaryAnimation, child) {
                       var tween =

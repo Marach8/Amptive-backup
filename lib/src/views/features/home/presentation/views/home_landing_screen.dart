@@ -20,7 +20,7 @@ class ATHomeScreen extends StatelessWidget {
   const ATHomeScreen({super.key});
 
   @override
-  Widget build(context) {
+  Widget build(BuildContext context) {
     return SafeArea(
       child: NotificationListener<ScrollNotification>(
         onNotification: context.read<ATNavBarBloc>().ctrlNavVisibility,
@@ -29,7 +29,7 @@ class ATHomeScreen extends StatelessWidget {
           headerSliverBuilder: (_, __) => [
             SliverAppBar(
               floating: true, snap: true,
-              leadingWidth: 150.w,
+              leadingWidth: 150,
               leading: const Padding(
                 padding: EdgeInsets.only(left: 15),
                 child: ATHomeDropDown(
@@ -45,15 +45,15 @@ class ATHomeScreen extends StatelessWidget {
                 ),
               ),
             
-              actions: [
+              actions: <Widget>[
                 GestureDetector(
                   onTap: (){
                     context.pushNamed(ATRoutes.WALLET);
                   },
                   child: Stack(
-                    children: [
+                    children: <Widget>[
                       const ATImgLoader(
-                        imgPath: ATImgStrings.walletIcon, 
+                        imgPath: ATImgStrings.WALLET_ICON, 
                         height: 30, width: 30,
                       ),
                       Positioned(
@@ -89,12 +89,12 @@ class ATHomeScreen extends StatelessWidget {
                   padding: EdgeInsets.zero,
                   shrinkWrap: true,
                   scrollDirection: Axis.horizontal,
-                  children: [
+                  children:<Widget>[
                     const Padding(
                       padding: EdgeInsets.only(left: 11, right: 14),
-                      child: const AmptiveUserGoLiveWidget(),
+                      child: AmptiveUserGoLiveWidget(),
                     ),
-                    ...Iterable.generate(
+                    ...Iterable<Widget>.generate(
                       20,
                       (_) => Padding(
                         padding: EdgeInsets.only(right: 14.w),
@@ -109,12 +109,13 @@ class ATHomeScreen extends StatelessWidget {
                 child: const ATDivider(),
               ),
         
-              ...Iterable.generate(
+              ...Iterable<Widget>.generate(
                 10,
                 (_) => Padding(
                   padding: const EdgeInsets.fromLTRB(15, 0, 15, 30),
                   child: GestureDetector(
-                    onTap: () => context.pushNamed(ATRoutes.SHOW_DETAILED),
+                    onTap: () => context.pushNamed(ATRoutes.LIVE_EVENT_DETAILED),
+                    //onTap: () => context.pushNamed(ATRoutes.LIVE_SHOW_DETAILED),
                     child: const ATShowOrEventInfo()
                   ),
                 )

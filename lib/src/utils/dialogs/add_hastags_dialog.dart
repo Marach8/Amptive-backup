@@ -34,7 +34,7 @@ Future<Set<ObjectWithNotifier<Hashtag>>?> showAddHashtagDialog(
   final searchQueryNotifier = ValueNotifier('');
 
   return await showModalBottomSheet(
-      backgroundColor: ATColors.brandBlack,
+      backgroundColor: ATColors.hex0D0D0D,
       constraints: BoxConstraints.expand(
           height: ATHelperFuncs.getScreenHeight(context)),
       context: context,
@@ -371,7 +371,7 @@ class AmptiveAddHashtagWidget extends StatelessWidget {
                     style: Theme.of(context)
                         .textTheme
                         .displaySmall
-                        ?.copyWith(color: ATColors.brandBlack)),
+                        ?.copyWith(color: ATColors.hex0D0D0D)),
               ),
             ),
             const Gap(10),
@@ -408,7 +408,7 @@ class AmptiveAddHashtagWidget extends StatelessWidget {
                       width: 24,
                       child: Icon(
                         Icons.check,
-                        color: ATColors.brandBlack,
+                        color: ATColors.hex0D0D0D,
                         size: 20,
                       ));
                 })

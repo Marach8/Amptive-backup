@@ -6,34 +6,6 @@ import 'package:flutter/material.dart';
 
 
 class ATTextFormField extends StatelessWidget {
-  final TextEditingController? controller;
-  final void Function(String)? onChanged;
-  final void Function(String?)? onSaved;
-  final String? Function(String?)? validator;
-  final TextInputType? keyboardType;
-  final String? hintText, counterText;
-  final TextAlign? textAlign;
-  final double? cursorHeight;
-  final Widget? suffixIcon, prefixIcon, prefix, suffix;
-  final bool? obscureText, disableBlueBorder, enabled, filled;
-  final Color? cursorColor, fillColor;
-  final BoxConstraints? suffixConstraints,
-  prefixConstraints, constraints;
-  final InputDecoration? decoration;
-  final InputBorder? enabledBorder;
-  final FocusNode? focusNode;
-  final TextStyle? hintStyle;
-  final TextInputAction? textInputAction;
-  final int? maxLines, maxLength;
-  final EdgeInsetsGeometry? contentPadding;
-  final Widget? Function(
-    BuildContext, {
-      required int currentLength, 
-      required bool isFocused, 
-      required int? maxLength
-    }
-  )? buildCounter;
-
   const ATTextFormField({
     super.key,
     this.controller,
@@ -69,8 +41,37 @@ class ATTextFormField extends StatelessWidget {
     this.filled
   });
 
+  final TextEditingController? controller;
+  final void Function(String)? onChanged;
+  final void Function(String?)? onSaved;
+  final String? Function(String?)? validator;
+  final TextInputType? keyboardType;
+  final String? hintText, counterText;
+  final TextAlign? textAlign;
+  final double? cursorHeight;
+  final Widget? suffixIcon, prefixIcon, prefix, suffix;
+  final bool? obscureText, disableBlueBorder, enabled, filled;
+  final Color? cursorColor, fillColor;
+  final BoxConstraints? suffixConstraints,
+  prefixConstraints, constraints;
+  final InputDecoration? decoration;
+  final InputBorder? enabledBorder;
+  final FocusNode? focusNode;
+  final TextStyle? hintStyle;
+  final TextInputAction? textInputAction;
+  final int? maxLines, maxLength;
+  final EdgeInsetsGeometry? contentPadding;
+  final Widget? Function(
+    BuildContext, {
+      required int currentLength, 
+      required bool isFocused, 
+      required int? maxLength
+    }
+  )? buildCounter;
+
+
   @override
-  Widget build(context) {
+  Widget build(BuildContext context) {
     return TextFormField(
       controller: controller,
       enabled: enabled,      

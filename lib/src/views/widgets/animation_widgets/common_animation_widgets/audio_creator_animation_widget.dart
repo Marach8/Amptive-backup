@@ -66,7 +66,7 @@ class _AmptiveAudioCreatorWidgetState extends State<AmptiveAudioCreatorWidget>{
             backgroundColor:_isBorderColored ? ATColors.hex307FE2 : ATColors.trsprnt,
             child: CircleAvatar(
               radius: 34.814.r,
-              backgroundColor: ATColors.brandBlack,
+              backgroundColor: ATColors.hex0D0D0D,
               child: CircleAvatar(
                 radius: 33.0.r,
                 backgroundImage: AssetImage(widget.assetName),
@@ -84,7 +84,7 @@ class _AmptiveAudioCreatorWidgetState extends State<AmptiveAudioCreatorWidget>{
               backgroundColor: ATColors.white,
               child: Icon(
                 Icons.mic_off,
-                color: ATColors.brandBlack,
+                color: ATColors.hex0D0D0D,
                 size: 19.h,
               ),
             ),

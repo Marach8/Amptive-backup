@@ -10,7 +10,7 @@ class ATImgStrings{
   static const String emptyImage = '$_svgPath/empty_image.svg';
   static const String amptiveLogo = '$_svgPath/Logo.svg';
   static const String logo2 = '$_svgPath/amptive_logotype.svg';
-  static const String walletIcon = '$_svgPath/WALLET ICON.svg';
+  static const String WALLET_ICON = '$_svgPath/WALLET ICON.svg';
   static const String SHOW_ICON = '$_svgPath/Frame 79.svg';
   static const String WIFI_ICON = '$_svgPath/Start or Schedule.svg';
   static const String robot = '$_svgPath/delivery robot.svg';

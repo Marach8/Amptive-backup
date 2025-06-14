@@ -208,7 +208,7 @@ Future<void> showFollowHostOrCohostDialog({
                                 }
                               },
                               bgColor: ATColors.white,
-                              fgColor: ATColors.brandBlack,
+                              fgColor: ATColors.hex0D0D0D,
                               btnTitle:notFollowing ? ATStrings.FOLLOW : '',
                               child: isFollowing ? const ATImgLoader(
                                 imgPath: ATImgStrings.USER_FOLLOW
@@ -252,7 +252,7 @@ Future<void> showFollowHostOrCohostDialog({
                                 }
                               },
                               bgColor: ATColors.hexFED601,
-                              fgColor: ATColors.brandBlack,
+                              fgColor: ATColors.hex0D0D0D,
                               btnTitle: isSubscribed ? ATStrings.UNSUBSCRIBE : '',
                               child: isLoading ? ATLoadingIndicator(color: ATColors.white,) 
                                 : unSubscribed ? Row(
@@ -261,21 +261,21 @@ Future<void> showFollowHostOrCohostDialog({
                                     Text(
                                       ATStrings.SUBSCRIBE,
                                       style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                                        color: ATColors.brandBlack,
+                                        color: ATColors.hex0D0D0D,
                                         fontSize: ATFontSizes.size17
                                       ),
                                     ),
                                     const Gap(2),
                                     ATCircleAvatar(
                                       diameter: 4,
-                                      color: ATColors.brandBlack,
+                                      color: ATColors.hex0D0D0D,
                                     ),
                                     const Gap(2),
                                     Expanded(
                                       child: Text(
                                         'N1,900/month',
                                         style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                                          color: ATColors.brandBlack,
+                                          color: ATColors.hex0D0D0D,
                                           fontSize: ATFontSizes.size17
                                         ),
                                       ),

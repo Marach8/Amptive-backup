@@ -72,7 +72,7 @@ class _PreHomePageState extends State<PreHomePage>
   Widget build(BuildContext context) {
     return ATAnnotatedRegion(
       child: Scaffold(
-        backgroundColor: ATColors.brandBlack,
+        backgroundColor: ATColors.hex0D0D0D,
         body: Stack(
           children: [
             Positioned(
@@ -192,7 +192,7 @@ class _PreHomePageState extends State<PreHomePage>
               bottom: 0,
               child: Container(
                 width: MediaQuery.of(context).size.width,
-                color: ATColors.brandBlack,
+                color: ATColors.hex0D0D0D,
                 padding: EdgeInsets.only(left: 25.w),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,

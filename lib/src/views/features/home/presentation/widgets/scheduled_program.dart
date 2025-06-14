@@ -110,7 +110,7 @@ class _ScheduledProgramState extends State<ScheduledProgram> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         ATContainer(
-                          color: ATColors.brandBlack, radius: 5,
+                          color: ATColors.hex0D0D0D, radius: 5,
                           padding: const EdgeInsets.all(8.5),
                           child: Text(
                             ATStrings.PAID_SHOW.toUpperCase(),
@@ -137,7 +137,7 @@ class _ScheduledProgramState extends State<ScheduledProgram> {
                               color: ATColors.authHintColor,
                               child: Icon(
                                 isAdded2Calender ? Icons.check : Icons.add,
-                                color: ATColors.brandBlack, size: 30,
+                                color: ATColors.hex0D0D0D, size: 30,
                               )
                             );
                           }

@@ -99,7 +99,7 @@ class SubscribedProgram extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         ATContainer(
-                          color: ATColors.brandBlack, radius: 5,
+                          color: ATColors.hex0D0D0D, radius: 5,
                           padding: const EdgeInsets.all(8.5),
                           child: Text(
                             ATStrings.PAID_SHOW.toUpperCase(),
@@ -115,7 +115,7 @@ class SubscribedProgram extends StatelessWidget {
                           color: ATColors.authHintColor,
                           child: Icon(
                             Icons.play_arrow,
-                            color: ATColors.brandBlack, size: 30,
+                            color: ATColors.hex0D0D0D, size: 30,
                           )
                         )
                       ],

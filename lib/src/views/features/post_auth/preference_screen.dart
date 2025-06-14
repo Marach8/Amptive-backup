@@ -49,7 +49,7 @@ class _AmptivePreferenceScreenState extends State<AmptivePreferenceScreen> {
               state.selectedItems.length == Constants.kMaxNumberCommunities;
 
           return Scaffold(
-            backgroundColor: ATColors.brandBlack,
+            backgroundColor: ATColors.hex0D0D0D,
             appBar: state is SelectPreferenceCompletedState
                 ? null
                 : const ATAppBar(),

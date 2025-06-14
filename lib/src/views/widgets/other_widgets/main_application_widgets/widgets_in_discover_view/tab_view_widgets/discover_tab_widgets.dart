@@ -48,7 +48,7 @@ with SingleTickerProviderStateMixin{
           indicatorColor: ATColors.trsprnt,
           padding: const EdgeInsets.only(left: 15),
           isScrollable: true,
-          dividerColor: ATColors.brandBlack,
+          dividerColor: ATColors.hex0D0D0D,
           tabs: ['Top', 'Shows', 'Events', 'Users', 'Hashtags'].asMap().entries.map(
             (tab){              
               return Tab(
@@ -65,7 +65,7 @@ with SingleTickerProviderStateMixin{
                       child: Text(
                         tab.value,
                         style: Theme.of(context).textTheme.bodySmall?.copyWith(                        
-                          color: isSelected ? ATColors.brandBlack : ATColors.white                           
+                          color: isSelected ? ATColors.hex0D0D0D : ATColors.white                           
                         ),
                       ),
                     );

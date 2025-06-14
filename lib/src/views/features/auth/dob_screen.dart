@@ -34,7 +34,7 @@ class _DateOfBirthScreenState extends State<DateOfBirthScreen> {
 
     return ATAnnotatedRegion(
       child: Scaffold(
-        backgroundColor: ATColors.brandBlack,
+        backgroundColor: ATColors.hex0D0D0D,
         appBar: const ATAppBar(),
         body: Padding(
           padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 20.h),
@@ -187,13 +187,13 @@ class _DateOfBirthScreenState extends State<DateOfBirthScreen> {
                 ),
               ),
               Divider(
-                color: ATColors.brandBlack,
+                color: ATColors.hex0D0D0D,
                 height: 0.h,
                 thickness: 1.h,
               ),
               Expanded(
                 child: Container(
-                  color: ATColors.brandBlack,
+                  color: ATColors.hex0D0D0D,
                   child: CupertinoTheme(
                     data: const CupertinoThemeData(
                       brightness: Brightness.dark,

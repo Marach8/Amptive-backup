@@ -34,7 +34,7 @@ Future<Set<ObjectWithNotifier<Host>>?> showAddCoHostDialog(BuildContext context)
   final searchQueryNotifier = ValueNotifier('');
 
   return await showModalBottomSheet(
-      backgroundColor: ATColors.brandBlack,
+      backgroundColor: ATColors.hex0D0D0D,
       constraints: BoxConstraints.expand(
           height: ATHelperFuncs.getScreenHeight(context)),
       context: context,
@@ -408,7 +408,7 @@ class AmptiveCoHostWidget extends StatelessWidget {
                   height: 24, width: 24,
                   child: Icon(
                     Icons.check, size: 20,
-                    color: ATColors.brandBlack,
+                    color: ATColors.hex0D0D0D,
                   )
                 );
               }
