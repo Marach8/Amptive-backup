@@ -217,7 +217,8 @@ static List<String> generateHoursInADay(dynamic _) {
 
 
 
-  static Map<String, List<List<Map<DateTime?, List<CalenderProgram>>>>> transformDateTimes2Programs(List<dynamic> args) {
+  static Map<String, List<List<Map<DateTime?, List<CalenderProgram>>>>>
+    transformDateTimes2Programs(List<dynamic> args) {
 
     final date = args[0] as Map<String, List<List<DateTime?>>>;
     final name = args[1] as String;

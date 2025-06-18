@@ -15,6 +15,7 @@ import 'package:amptive/src/views/features/discover/presentation/views/society_s
 import 'package:amptive/src/views/features/discover/presentation/views/trending_hashtags_screen.dart';
 import 'package:amptive/src/views/features/go_live/event/even_scheduled_screen.dart';
 import 'package:amptive/src/views/features/go_live/show/create_show_form_screen.dart';
+import 'package:amptive/src/views/features/home/home_export.dart';
 import 'package:amptive/src/views/features/main_app_navigation.dart';
 import 'package:amptive/src/views/features/go_live/main_go_live_screen.dart';
 import 'package:amptive/src/views/features/profile/presentation/views/profile_views_export.dart';
@@ -143,6 +144,14 @@ final GoRouter amptiveAppRouter = GoRouter(
         path: "/home-screen",
         builder: (_, __) => const AmptiveDashboardScreen(),
         routes: [
+          GoRoute(
+            name: ATRoutes.SCHEDULE_DETAILED,
+            path: ATRoutes.SCHEDULE_DETAILED.addSlash,
+            pageBuilder: (_, __) => ATRouteTransition(
+              child: const ATScheduleDetailedScreen()
+            ),
+          ),
+          
           GoRoute(
             name: ATRoutes.WALLET_LANDING,
             path: ATRoutes.WALLET_LANDING.addSlash,

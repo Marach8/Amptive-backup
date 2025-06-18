@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import '../../../../../utils/constants/colors.dart';
@@ -47,6 +48,48 @@ class LiveIndicatorRow extends StatelessWidget {
         const Gap(5),
         Text(
           ATStrings.LIVE.toUpperCase(),
+          style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+            color: ATColors.hexA8A8A8,
+            fontSize: ATFontSizes.size14
+          ),  
+        ),
+        const Gap(20),
+        const ATImgLoader(
+          imgPath: ATImgStrings.GROUP_ICON,
+          height: 24, width: 24,
+        ),
+        const Gap(5),
+        Text(
+          text2?.toUpperCase() ?? ATStrings.SOCIETY.toUpperCase(),
+          style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+            color: ATColors.hexA8A8A8,
+            fontSize: ATFontSizes.size14
+          ),  
+        ),
+      ],
+    );
+  }
+}
+
+
+
+class NewWidget extends StatelessWidget {
+  const NewWidget({
+    super.key,
+    this.text2
+  });
+
+  final String? text2;
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      children: <Widget>[
+        const ATImgLoader(imgPath: ATImgStrings.FILLED_CALENDER_ICON,),
+        const Gap(5),
+        Text(
+          '27 Sep, 2025 at 18:00',
           style: Theme.of(context).textTheme.bodyMedium?.copyWith(
             color: ATColors.hexA8A8A8,
             fontSize: ATFontSizes.size14

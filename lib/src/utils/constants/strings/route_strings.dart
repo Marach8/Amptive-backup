@@ -86,4 +86,5 @@ class ATRoutes {
   static const String PASS_SECURITY_QUEST = 'pass_security_question';
   static const String PAPER_PLANE_SUCCESS = 'paper_plane_success';
   static const String WALLET_TXNS = 'wallet_transactions';
+  static const String SCHEDULE_DETAILED = 'schedule_detailed_screen';
 }

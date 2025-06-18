@@ -43,6 +43,7 @@ class ATImgStrings{
   static const String PAYPAL_ICON = '$_svgPath/paypal.svg';
   static const String NAIRA_ICON = '$_svgPath/₦.svg';
   static const String HASH_ICON = '$_svgPath/hash.svg';
+  static const String FILLED_CALENDER_ICON = '$_svgPath/Date_fill.svg';
   // static const String CREATOR_MIC = '$_svgPath/creator-microphone.svg';
   // static const String CREATOR_GIF = '$_svgPath/creatorgif.svg';
   // static const String CREATOR_GLOBE = '$_svgPath/internet.svg';
