@@ -6,8 +6,8 @@ import 'package:gap/gap.dart';
 import '../../../../../../utils/constants/strings/image_strings.dart';
 import '../../../../../../utils/constants/strings/other_strings.dart';
 
-class AmptiveRecentSearchesView extends StatelessWidget {
-  const AmptiveRecentSearchesView({
+class RecentSearchesView extends StatelessWidget {
+  const RecentSearchesView({
     super.key,
   });
 

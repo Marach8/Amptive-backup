@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 
-class AmptiveFadingAnimatedSwitcherWidget extends StatelessWidget {
-  final Widget child;
-  final int? duration;
-  const AmptiveFadingAnimatedSwitcherWidget({
+class ATFadingSwitcher extends StatelessWidget {
+  const ATFadingSwitcher({
     super.key,
     required this.child,
     this.duration
   });
+
+  final Widget child;
+  final int? duration;
 
   @override
   Widget build(BuildContext context) {
@@ -29,10 +30,10 @@ class AmptiveFadingAnimatedSwitcherWidget extends StatelessWidget {
 
 
 
-class AmptiveScalingAnimatedSwitcherWidget extends StatelessWidget {
+class ATScalingSwitcher extends StatelessWidget {
   final Widget child;
   final int? duration;
-  const AmptiveScalingAnimatedSwitcherWidget({
+  const ATScalingSwitcher({
     super.key,
     required this.child,
     this.duration

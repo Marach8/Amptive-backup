@@ -5,14 +5,14 @@ import '../../../../../../utils/constants/strings/image_strings.dart';
 import '../../../../../../utils/helpers/helper_functions/helper_functions.dart';
 import 'tab_view_listtile.dart';
 
-class AmptiveDiscoverTabView extends StatefulWidget {
-  const AmptiveDiscoverTabView({super.key});
+class SearchResultsTabsView extends StatefulWidget {
+  const SearchResultsTabsView({super.key});
 
   @override
-  State<AmptiveDiscoverTabView> createState() => _AmptiveDiscoverTabViewState();
+  State<SearchResultsTabsView> createState() => _SearchResultsTabsViewState();
 }
 
-class _AmptiveDiscoverTabViewState extends State<AmptiveDiscoverTabView> 
+class _SearchResultsTabsViewState extends State<SearchResultsTabsView> 
 with SingleTickerProviderStateMixin{
   late TabController _tabController;
   late ValueNotifier<int> _isTabSelected;
@@ -49,7 +49,7 @@ with SingleTickerProviderStateMixin{
           padding: const EdgeInsets.only(left: 15),
           isScrollable: true,
           dividerColor: ATColors.hex0D0D0D,
-          tabs: ['Top', 'Shows', 'Events', 'Users', 'Hashtags'].asMap().entries.map(
+          tabs: ['All', 'Shows', 'Events', 'Users', 'Hashtags'].asMap().entries.map(
             (tab){              
               return Tab(
                 child: ValueListenableBuilder(

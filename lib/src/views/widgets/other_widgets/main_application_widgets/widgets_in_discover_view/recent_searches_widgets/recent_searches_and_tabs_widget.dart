@@ -46,11 +46,11 @@ class _AmptiveRecentSearchesAndTabsViewState extends State<AmptiveRecentSearches
       builder: (_, value, __) {
         int index = value ? 1 : 0;
         final listOfWidgets = [
-          AmptiveRecentSearchesView(key: UniqueKey(),),
-          AmptiveDiscoverTabView(key: UniqueKey()),
+          RecentSearchesView(key: UniqueKey(),),
+          SearchResultsTabsView(key: UniqueKey()),
         ];
 
-        return AmptiveFadingAnimatedSwitcherWidget(
+        return ATFadingSwitcher(
           child: listOfWidgets.elementAt(index),
         );
       }

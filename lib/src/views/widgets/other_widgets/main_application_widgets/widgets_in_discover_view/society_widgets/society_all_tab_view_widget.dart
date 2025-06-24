@@ -11,8 +11,8 @@ import '../../events_and_shows_models_widgets/free_event_model.dart';
 import '../../events_and_shows_models_widgets/paid_event_model.dart';
 import '../../events_and_shows_models_widgets/paid_show_model.dart';
 import '../full_discover_view_widgets/top_creators_model.dart';
-import '../full_discover_view_widgets/trending_hashtag_model.dart';
-import '../row_of_title_with_view_all_trailing.dart';
+import '../../../../../../features/discover/presentation/widgets/render_trending_hashtag.dart';
+import '../../../../../../features/discover/presentation/widgets/hashtag_heading_row.dart';
 
 class AmptiveDiscoverSocietyAllTabViewWidget extends StatelessWidget {
   const AmptiveDiscoverSocietyAllTabViewWidget({
@@ -23,7 +23,7 @@ class AmptiveDiscoverSocietyAllTabViewWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        AmptiveRowOfTitleWithTrendingViewAll(
+        HastagHeadingRow(
           title: ATStrings.TRENDING,
           viewAllOnpressed: (){context.pushNamed(ATRoutes.TRENDING_SOCIETY_SCREEN);},
         ),
@@ -35,7 +35,7 @@ class AmptiveDiscoverSocietyAllTabViewWidget extends StatelessWidget {
             scrollDirection: Axis.horizontal,
             children: List.generate(
               5,
-              (_) => const AmptiveTrendingHashtagModel(
+              (_) => const RenderTrendingHashTag(
                 trendingPicture: ATImgStrings.weCanDoHardThingsBgImage,
               )
             ),
@@ -43,7 +43,7 @@ class AmptiveDiscoverSocietyAllTabViewWidget extends StatelessWidget {
         ),
     
         const Gap(35),
-        AmptiveRowOfTitleWithTrendingViewAll(
+        HastagHeadingRow(
           title: ATStrings.PAID_SHOWS,
           viewAllOnpressed: (){},
         ),
@@ -63,7 +63,7 @@ class AmptiveDiscoverSocietyAllTabViewWidget extends StatelessWidget {
         ),
     
         const Gap(35),
-        AmptiveRowOfTitleWithTrendingViewAll(
+        HastagHeadingRow(
           title: ATStrings.FREE_SHOWS,
           viewAllOnpressed: (){},
         ),
@@ -107,7 +107,7 @@ class AmptiveDiscoverSocietyAllTabViewWidget extends StatelessWidget {
         ),
     
         const Gap(35),
-        AmptiveRowOfTitleWithTrendingViewAll(
+        HastagHeadingRow(
           title: ATStrings.PAID_EVENTS,
           viewAllOnpressed: (){},
         ),
@@ -127,7 +127,7 @@ class AmptiveDiscoverSocietyAllTabViewWidget extends StatelessWidget {
         ),
         const Gap(35),
     
-        AmptiveRowOfTitleWithTrendingViewAll(
+        HastagHeadingRow(
           title: ATStrings.FREE_EVENTS,
           viewAllOnpressed: (){},
         ),

@@ -2,44 +2,44 @@ import 'dart:io';
 import 'package:amptive/src/setup.dart';
 import 'package:amptive/src/utils/constants/strings/route_strings.dart';
 import 'package:amptive/src/utils/helpers/extensions/string_extensions.dart';
-import 'package:amptive/src/views/features/auth/add_phone.dart';
-import 'package:amptive/src/views/features/auth/dob_screen.dart';
-import 'package:amptive/src/views/features/auth/email_auth_screen.dart';
-import 'package:amptive/src/views/features/auth/name_auth_screen.dart';
-import 'package:amptive/src/views/features/auth/otp_screen.dart';
-import 'package:amptive/src/views/features/auth/password_auth_screen.dart';
-import 'package:amptive/src/views/features/auth/post_registration.dart';
-import 'package:amptive/src/views/features/auth/sign_in_or_sign_up_screen.dart';
-import 'package:amptive/src/views/features/auth/username_auth_screen.dart';
-import 'package:amptive/src/views/features/discover/presentation/views/society_screen.dart';
-import 'package:amptive/src/views/features/discover/presentation/views/trending_hashtags_screen.dart';
-import 'package:amptive/src/views/features/go_live/event/even_scheduled_screen.dart';
-import 'package:amptive/src/views/features/go_live/show/create_show_form_screen.dart';
-import 'package:amptive/src/views/features/home/home_export.dart';
-import 'package:amptive/src/views/features/main_app_navigation.dart';
-import 'package:amptive/src/views/features/go_live/main_go_live_screen.dart';
-import 'package:amptive/src/views/features/profile/presentation/views/profile_views_export.dart';
-import 'package:amptive/src/views/features/home/presentation/views/scheduled_screen.dart';
-import 'package:amptive/src/views/features/wallet/presentation/views/wallet_txns_screen.dart';
-import 'package:amptive/src/views/features/post_auth/crop_image_screen.dart';
-import 'package:amptive/src/views/features/post_auth/pre_homepage.dart';
-import 'package:amptive/src/views/features/post_auth/preference_screen.dart';
-import 'package:amptive/src/views/features/onboarding/onboarding_page_view_screen.dart';
-import 'package:amptive/src/views/features/onboarding/welcome_screen.dart';
+import 'package:amptive/src/features/auth/add_phone.dart';
+import 'package:amptive/src/features/auth/dob_screen.dart';
+import 'package:amptive/src/features/auth/email_auth_screen.dart';
+import 'package:amptive/src/features/auth/name_auth_screen.dart';
+import 'package:amptive/src/features/auth/otp_screen.dart';
+import 'package:amptive/src/features/auth/password_auth_screen.dart';
+import 'package:amptive/src/features/auth/post_registration.dart';
+import 'package:amptive/src/features/auth/sign_in_or_sign_up_screen.dart';
+import 'package:amptive/src/features/auth/username_auth_screen.dart';
+import 'package:amptive/src/features/discover/presentation/views/society_screen.dart';
+import 'package:amptive/src/features/discover/presentation/views/trending_hashtags_screen.dart';
+import 'package:amptive/src/features/go_live/event/even_scheduled_screen.dart';
+import 'package:amptive/src/features/go_live/show/create_show_form_screen.dart';
+import 'package:amptive/src/features/home/home_export.dart';
+import 'package:amptive/src/features/main_app_shell.dart';
+import 'package:amptive/src/features/go_live/main_go_live_screen.dart';
+import 'package:amptive/src/features/profile/presentation/views/profile_views_export.dart';
+import 'package:amptive/src/features/home/presentation/views/scheduled_screen.dart';
+import 'package:amptive/src/features/wallet/presentation/views/wallet_txns_screen.dart';
+import 'package:amptive/src/features/post_auth/crop_image_screen.dart';
+import 'package:amptive/src/features/post_auth/pre_homepage.dart';
+import 'package:amptive/src/features/post_auth/preference_screen.dart';
+import 'package:amptive/src/features/onboarding/onboarding_page_view_screen.dart';
+import 'package:amptive/src/features/onboarding/welcome_screen.dart';
 import 'package:amptive/src/views/widgets/other_widgets/main_application_widgets/widgets_in_home_view/widgets_in_go_live/shows/show_type_visibility.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'views/features/discover/presentation/views/community_home_screen.dart';
-import 'views/features/discover/presentation/views/hashtag_full_screen.dart';
-import 'views/features/discover/presentation/views/trending_society_screen.dart';
-import 'views/features/home/presentation/views/live_event_detailed_screen.dart';
-import 'views/features/home/presentation/views/following_screen.dart';
-import 'views/features/go_live/event/choose_event_screen.dart';
-import 'views/features/go_live/show/choose_or_create_show_screen.dart';
-import 'views/features/go_live/show/create_show_success_screen.dart';
-import 'views/features/home/presentation/views/live_show_detailed_screen.dart';
-import 'views/features/home/presentation/views/subscribed_screen.dart';
-import 'views/features/wallet/wallet_export.dart';
+import 'features/discover/presentation/views/community_home_screen.dart';
+import 'features/discover/presentation/views/hashtag_full_screen.dart';
+import 'features/discover/presentation/views/trending_society_screen.dart';
+import 'features/home/presentation/views/live_event_detailed_screen.dart';
+import 'features/home/presentation/views/following_screen.dart';
+import 'features/go_live/event/choose_event_screen.dart';
+import 'features/go_live/show/choose_or_create_show_screen.dart';
+import 'features/go_live/show/create_show_success_screen.dart';
+import 'features/home/presentation/views/live_show_detailed_screen.dart';
+import 'features/home/presentation/views/subscribed_screen.dart';
+import 'features/wallet/wallet_export.dart';
 
 // The route configuration.
 final GoRouter amptiveAppRouter = GoRouter(
@@ -48,7 +48,7 @@ final GoRouter amptiveAppRouter = GoRouter(
   routes: <RouteBase>[
     GoRoute(
         path: ATRoutes.index,
-        builder: (_, __) => const AmptiveDashboardScreen()),
+        builder: (_, __) => const ATMainAppShell()),
     GoRoute(
       name: ATRoutes.welcome,
       path: "/welcome-route",
@@ -142,7 +142,7 @@ final GoRouter amptiveAppRouter = GoRouter(
     GoRoute(
         name: ATRoutes.homeScreen,
         path: "/home-screen",
-        builder: (_, __) => const AmptiveDashboardScreen(),
+        builder: (_, __) => const ATMainAppShell(),
         routes: [
           GoRoute(
             name: ATRoutes.SCHEDULE_DETAILED,

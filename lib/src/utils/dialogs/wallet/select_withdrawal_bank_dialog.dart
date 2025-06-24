@@ -2,7 +2,7 @@ import 'package:amptive/src/utils/constants/colors.dart';
 import 'package:amptive/src/utils/constants/font_sizes.dart';
 import 'package:amptive/src/utils/constants/strings/other_strings.dart';
 import 'package:amptive/src/utils/helpers/helper_functions/helper_functions.dart';
-import 'package:amptive/src/views/features/wallet/bloc/wallet_bloc_export.dart';
+import 'package:amptive/src/features/wallet/bloc/wallet_bloc_export.dart';
 import 'package:amptive/src/views/widgets/common_widgets/back_button.dart';
 import 'package:amptive/src/views/widgets/common_widgets/elevated_button_widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/loading_indicator.dart';

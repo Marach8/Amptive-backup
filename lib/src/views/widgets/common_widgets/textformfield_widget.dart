@@ -38,6 +38,7 @@ class ATTextFormField extends StatelessWidget {
     this.maxLength,
     this.prefix,
     this.suffix,
+    this.isDense,
     this.filled
   });
 
@@ -50,7 +51,8 @@ class ATTextFormField extends StatelessWidget {
   final TextAlign? textAlign;
   final double? cursorHeight;
   final Widget? suffixIcon, prefixIcon, prefix, suffix;
-  final bool? obscureText, disableBlueBorder, enabled, filled;
+  final bool? obscureText, disableBlueBorder,
+  enabled, filled, isDense;
   final Color? cursorColor, fillColor;
   final BoxConstraints? suffixConstraints,
   prefixConstraints, constraints;
@@ -98,6 +100,7 @@ class ATTextFormField extends StatelessWidget {
       decoration: decoration ?? InputDecoration(     
         counterText: counterText,   
         hintText: hintText,
+        isDense: isDense,
         constraints: constraints,
         fillColor: ATColors.white.withValues(alpha: 0.1), filled: filled ?? true,
         contentPadding: contentPadding ?? EdgeInsets.zero,

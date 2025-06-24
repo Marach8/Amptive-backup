@@ -28,8 +28,7 @@ class ATHomeDropDown extends StatelessWidget {
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(12)
       ),
-      child: child,
-      
+      child: child,      
       itemBuilder: (_) => [
         PopupMenuItem<String>(
           height: 40.h,
@@ -68,7 +67,7 @@ class ATHomeDropDown extends StatelessWidget {
           )
         ),
         PopupMenuItem<String>(
-          height: 40.h,
+          height: 40,
           onTap: (){
             context.pushNamed(ATRoutes.FOLLOWING_EVENTS_OR_SHOWS_SCREEN);
           },

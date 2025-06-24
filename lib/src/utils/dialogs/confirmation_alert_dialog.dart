@@ -28,7 +28,7 @@ Future<bool?> showConfirmationDialog({
       ),
       content: Column(
         mainAxisSize: MainAxisSize.min,
-        children: [
+        children: <Widget>[
           Padding(
             padding: const EdgeInsets.fromLTRB(20, 0, 20, 10),
             child: Text(

@@ -5,8 +5,8 @@ import '../../../../../../utils/constants/strings/image_strings.dart';
 import '../../../../../../utils/constants/strings/other_strings.dart';
 import '../../events_and_shows_models_widgets/free_event_model.dart';
 import '../../events_and_shows_models_widgets/paid_event_model.dart';
-import '../full_discover_view_widgets/trending_hashtag_model.dart';
-import '../row_of_title_with_view_all_trailing.dart';
+import '../../../../../../features/discover/presentation/widgets/render_trending_hashtag.dart';
+import '../../../../../../features/discover/presentation/widgets/hashtag_heading_row.dart';
 
 class AmptiveDiscoverSocietyEventsTabViewWidget extends StatelessWidget {
   const AmptiveDiscoverSocietyEventsTabViewWidget({
@@ -17,7 +17,7 @@ class AmptiveDiscoverSocietyEventsTabViewWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        AmptiveRowOfTitleWithTrendingViewAll(
+        HastagHeadingRow(
           title: ATStrings.TRENDING,
           viewAllOnpressed: (){},
         ),
@@ -29,7 +29,7 @@ class AmptiveDiscoverSocietyEventsTabViewWidget extends StatelessWidget {
             scrollDirection: Axis.horizontal,
             children: List.generate(
               5,
-              (_) => const AmptiveTrendingHashtagModel(
+              (_) => const RenderTrendingHashTag(
                 trendingPicture: ATImgStrings.weCanDoHardThingsBgImage,
               )
             ),
@@ -37,7 +37,7 @@ class AmptiveDiscoverSocietyEventsTabViewWidget extends StatelessWidget {
         ),    
         const Gap(35),
         
-        AmptiveRowOfTitleWithTrendingViewAll(
+        HastagHeadingRow(
           title: ATStrings.PAID_EVENTS,
           viewAllOnpressed: (){},
         ),
@@ -57,7 +57,7 @@ class AmptiveDiscoverSocietyEventsTabViewWidget extends StatelessWidget {
         ),
         const Gap(35),
     
-        AmptiveRowOfTitleWithTrendingViewAll(
+        HastagHeadingRow(
           title: ATStrings.FREE_EVENTS,
           viewAllOnpressed: (){},
         ),

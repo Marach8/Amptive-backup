@@ -8,7 +8,7 @@ import 'package:get_it/get_it.dart';
 import '../../../../models/preferences.dart';
 import '../../../../services/preference_service.dart';
 import '../../../../utils/constants/strings/other_strings.dart';
-import '../../../features/post_auth/single_community_card.dart';
+import '../../../../features/post_auth/single_community_card.dart';
 
 class ProcessingPreferenceWidget extends StatefulWidget {
   const ProcessingPreferenceWidget({

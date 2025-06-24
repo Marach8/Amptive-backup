@@ -9,19 +9,19 @@ class MainAppBottomNav extends StatelessWidget {
   const MainAppBottomNav({super.key});
 
   @override
-  Widget build(context) {
+  Widget build(BuildContext context) {
     return ATContainer(
       color: ATColors.black,
       padding: const EdgeInsets.fromLTRB(20, 10, 20, 10),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: listOfIcons.map(
-          (list){
-            final index = listOfIcons.indexOf(list);
+          (List<String> list){
+            final int index = listOfIcons.indexOf(list);
             if(index == 3){
               return Stack(
-                children: [
-                  AmptiveBottomAppBarItem(
+                children: <Widget>[
+                  ATBottomNavItem(
                     selectedImagePath: list.first,
                     unselectedImagePath: list.last,
                     itemIdentityIndex: index,
@@ -47,7 +47,8 @@ class MainAppBottomNav extends StatelessWidget {
                 ],
               );
             }
-            return AmptiveBottomAppBarItem(
+
+            return ATBottomNavItem(
               selectedImagePath: list.first,
               unselectedImagePath: list.last,
               itemIdentityIndex: index,
@@ -63,7 +64,7 @@ class MainAppBottomNav extends StatelessWidget {
 
 final listOfIcons = [
   [ATImgStrings.filledHome, ATImgStrings.outlinedHome],
-  [ATImgStrings.filledSearch, ATImgStrings.outlinedSearch],
+  [ATImgStrings.filledSearch, ATImgStrings.OUTLINED_SEARCH],
   [ATImgStrings.filledBroadCast, ATImgStrings.outlinedBroadCast],
   [ATImgStrings.filledBell, ATImgStrings.outlinedBell],
 ];

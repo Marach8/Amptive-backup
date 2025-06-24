@@ -1,12 +1,12 @@
 import 'package:amptive/src/bloc/main_app/nav_bar_bloc.dart';
-import 'package:amptive/src/views/features/main_app_navigation.dart';
+import 'package:amptive/src/features/main_app_shell.dart';
 import 'package:amptive/src/views/widgets/animation_widgets/common_animation_widgets/animated_crossfade_widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/image_loader_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class AmptiveBottomAppBarItem extends StatelessWidget {
-  const AmptiveBottomAppBarItem({
+class ATBottomNavItem extends StatelessWidget {
+  const ATBottomNavItem({
     super.key,
     required this.selectedImagePath,
     required this.unselectedImagePath,
