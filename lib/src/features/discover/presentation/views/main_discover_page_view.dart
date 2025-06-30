@@ -1,3 +1,4 @@
+import 'package:amptive/src/features/discover/presentation/widgets/follow_unfollow_dropdown.dart';
 import 'package:amptive/src/features/discover/presentation/widgets/horizontal_scroll_cards.dart';
 import 'package:amptive/src/utils/constants/strings/route_strings.dart';
 import 'package:amptive/src/utils/helpers/helper_functions/helper_functions.dart';
@@ -86,7 +87,7 @@ class MainDiscoverView extends StatelessWidget {
           child: ListView(
             physics: const BouncingScrollPhysics(),
             scrollDirection: Axis.horizontal,
-            children: List.generate(
+            children: List<Widget>.generate(
               5,
               (_) => const RenderTrendingHashTag(
                 trendingPicture: ATImgStrings.OFFICE_LADIES
@@ -97,8 +98,14 @@ class MainDiscoverView extends StatelessWidget {
     
         const SizedBox(height: 48),
     
-        const AmptiveDiscoverCategoriesTitleWidget(
-          categoryName: ATStrings.TECHNOLOGY
+        DiscoverCategoriesTile(
+          categoryName: ATStrings.TECHNOLOGY,
+          trailing: FollowUnfollowDropDown(
+            text: ATStrings.FOLLOW,
+            onSelected: (String po){},
+            popUpTrailingIcon: const Icon(Icons.add_circle_outline),
+            child: Icon(Icons.more_horiz, color: ATColors.white,),
+          ),
         ),
         const SizedBox(height: 15,),
         SizedBox(
@@ -117,8 +124,14 @@ class MainDiscoverView extends StatelessWidget {
     
         const SizedBox(height: 48),
     
-        const AmptiveDiscoverCategoriesTitleWidget(
+        DiscoverCategoriesTile(
           categoryName: ATStrings.SPORTS,
+          trailing: FollowUnfollowDropDown(
+            text: ATStrings.UNFOLLOW,
+            onSelected: (String po){},
+            popUpTrailingIcon: const Icon(Icons.remove_circle_outline),
+            child: Icon(Icons.more_horiz, color: ATColors.white,),
+          ),
         ),
         const SizedBox(height: 15,),
         SizedBox(
@@ -126,7 +139,7 @@ class MainDiscoverView extends StatelessWidget {
           child: ListView(
             physics: const BouncingScrollPhysics(),
             scrollDirection: Axis.horizontal,
-            children: List.generate(
+            children: List<Widget>.generate(
               5,
               (_) => const AmptiveTechnologyModel(
                 trendingPicture: ATImgStrings.JOE_POMP_SHOW
@@ -137,8 +150,14 @@ class MainDiscoverView extends StatelessWidget {
     
         const SizedBox(height: 48,),
     
-        const AmptiveDiscoverCategoriesTitleWidget(
+        DiscoverCategoriesTile(
           categoryName: ATStrings.TRUE_CRIME,
+          trailing: FollowUnfollowDropDown(
+            text: ATStrings.FOLLOW,
+            onSelected: (String po){},
+            popUpTrailingIcon: const Icon(Icons.remove_circle_outline),
+            child: Icon(Icons.more_horiz, color: ATColors.white,),
+          ),
         ),
         const SizedBox(height: 15,),
         SizedBox(
@@ -146,7 +165,7 @@ class MainDiscoverView extends StatelessWidget {
           child: ListView(
             physics: const BouncingScrollPhysics(),
             scrollDirection: Axis.horizontal,
-            children: List.generate(
+            children: List<Widget>.generate(
               5,
               (_) => const AmptiveTechnologyModel(
                 trendingPicture: ATImgStrings.CRIMINAL
@@ -167,7 +186,7 @@ class MainDiscoverView extends StatelessWidget {
           child: ListView(
             physics: const BouncingScrollPhysics(),
             scrollDirection: Axis.horizontal,
-            children: List.generate(
+            children: List<Widget>.generate(
               5,
               (_) => const AmptiveMore2DiscoverModel(
                 picture: ATImgStrings.COMMUNITY_CARD

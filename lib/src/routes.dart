@@ -565,7 +565,7 @@ final GoRouter amptiveAppRouter = GoRouter(
           GoRoute(
               name: ATRoutes.SOCIETY_SCREEN,
               path: ATRoutes.SOCIETY_SCREEN,
-              builder: (_, __) => const AmptiveSocietyScreen(),
+              builder: (_, __) => const DiscoverSocietyScreen(),
               routes: [
                 GoRoute(
                   name: ATRoutes.TRENDING_SOCIETY_SCREEN,

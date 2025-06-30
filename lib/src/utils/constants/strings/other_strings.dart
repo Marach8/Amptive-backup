@@ -273,6 +273,7 @@ class ATStrings{
   static const String ADD_UR_EMAIL = 'Add your email address';
   static const String ADD_UR_PHONE = 'Add your phone number';
   static const String FOLLOW = 'Follow';
+  static const String UNFOLLOW = 'Unfollow';
   static const String MANAGE = 'Manage';
   static const String UNSUBSCRIBE = 'Unsubscribe';
   static const String COHOST_INVITE_SENT = 'Co-host invitation sent';
