@@ -18,23 +18,23 @@ class RenderEachWeekHeading extends StatelessWidget {
   final List<DateTime?>? eachWeek;
 
   @override
-  Widget build(context) {
-    const weekDays = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+  Widget build(BuildContext context) {
+    const List<String> weekDays = <String>['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
     return Padding(
       padding: const EdgeInsets.fromLTRB(20, 0, 15, 0),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: (eachWeek ?? []).asMap().entries.map(
-          (day){
-            final dayHeading = weekDays.elementAtOrNull(day.key);
-            final now = DateTime.now();
-            final isToday = (day.value?.year == now.year) &&
+        children: (eachWeek ?? <DateTime?>[]).asMap().entries.map(
+          (MapEntry<int, DateTime?> day){
+            final String? dayHeading = weekDays.elementAtOrNull(day.key);
+            final DateTime now = DateTime.now();
+            final bool isToday = (day.value?.year == now.year) &&
               (day.value?.month == now.month) && (day.value?.day == now.day);
       
             return Column(
               mainAxisSize: MainAxisSize.min,
-              children: [
+              children: <Widget>[
                 Text(
                   dayHeading ?? '',
                   textAlign: TextAlign.center,
@@ -42,8 +42,8 @@ class RenderEachWeekHeading extends StatelessWidget {
                 ),
             
                 if(day.value != null) BlocBuilder<SelectedCalenderDateBloc, DateTime?>(
-                  builder: (_, state) {
-                    final isSelected = state == day.value;
+                  builder: (_, DateTime? state) {
+                    final bool isSelected = state == day.value;
                     return ATContainer(
                       onTap: () {
                         context.read<SelectedCalenderDateBloc>().pickADate(day.value);

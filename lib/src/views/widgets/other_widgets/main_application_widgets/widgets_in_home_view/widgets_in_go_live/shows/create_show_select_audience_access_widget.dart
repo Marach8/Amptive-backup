@@ -9,8 +9,8 @@ class AmptiveCreateShowSelectAudienceAccessWidget extends StatelessWidget {
   const AmptiveCreateShowSelectAudienceAccessWidget({super.key});
 
   @override
-  Widget build(context) {
-    final selectAudienceAccessNotifier = ValueNotifier<String>('');
+  Widget build(BuildContext context) {
+    final ValueNotifier<String> selectAudienceAccessNotifier = ValueNotifier<String>('');
     return ATContainer(
       radius: 14,
       padding: const EdgeInsets.fromLTRB(17, 15, 17, 15),
@@ -18,10 +18,10 @@ class AmptiveCreateShowSelectAudienceAccessWidget extends StatelessWidget {
       child: AmptiveRebuilderWidget(
         shouldDispose: true,
         notifier: selectAudienceAccessNotifier,
-        builder: (_, selectedAudienceAccess, __){
+        builder: (_, String selectedAudienceAccess, __){
           return Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
+            children: <Widget>[
               Text(
                 selectedAudienceAccess.isEmpty ? "Select who can access this show" 
                   : selectedAudienceAccess,
@@ -31,7 +31,7 @@ class AmptiveCreateShowSelectAudienceAccessWidget extends StatelessWidget {
               ),
               GestureDetector(
                 onTap: ()async{
-                  final result = await showSelectAudienceAccessForShowsDialog(context);
+                  final String result = await showSelectAudienceAccessForShowsDialog(context);
                   selectAudienceAccessNotifier.value = result;
                 },
                 child: Icon(

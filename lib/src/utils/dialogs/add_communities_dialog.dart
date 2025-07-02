@@ -20,11 +20,11 @@ Future<Community> showAddCommunitiesDialog(BuildContext context) async {
       isScrollControlled: true,
       useSafeArea: true,
       builder: (_) {
-        final listOfItems = service.generateCommunities();
+        final List<Community> listOfItems = service.generateCommunities();
         return SingleChildScrollView(
           physics: const BouncingScrollPhysics(),
           padding: const EdgeInsets.all(15),
-          child: Column(children: [
+          child: Column(children: <Widget>[
             const Gap(20),
             Text(
               ATStrings.ADD_COMMUNITY,
@@ -40,14 +40,14 @@ Future<Community> showAddCommunitiesDialog(BuildContext context) async {
                   ?.copyWith(color: ATColors.hexC2C2C2),
             ),
             const Gap(20),
-            ...listOfItems.map((item) => GestureDetector(
+            ...listOfItems.map((Community item) => GestureDetector(
                   onTap: () {
                     Navigator.pop(context, item);
                   },
                   child: Padding(
                     padding: const EdgeInsets.only(bottom: 20),
                     child: Row(
-                      children: [
+                      children: <Widget>[
                         SizedBox(
                             height: 48,
                             width: 67,

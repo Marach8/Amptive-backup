@@ -23,8 +23,8 @@ Future<bool?> inputTxnPinDialog({
   required Object? object
 }) {
   ObjectWithNotifier<Host>? receipient; BankDetails? bankDetails;
-  final isTransfer = object is ObjectWithNotifier<Host>;
-  final isWithdrawal = object is BankDetails;
+  final bool isTransfer = object is ObjectWithNotifier<Host>;
+  final bool isWithdrawal = object is BankDetails;
 
   if(isTransfer){
     receipient = object;
@@ -33,27 +33,27 @@ Future<bool?> inputTxnPinDialog({
     bankDetails = object;
   }
 
-  const digits = '123456789.0<';
+  const String digits = '123456789.0<';
   
   return showCupertinoModalPopup<bool>(
     context: context,
     barrierColor: ATColors.black,
-    builder: (dialogContext) {
+    builder: (BuildContext dialogContext) {
       return BlocProvider(
         create: (_) => EnterPinBloc(),
         child: Builder(
-          builder: (blocContext) {
+          builder: (BuildContext blocContext) {
             return Material(
               color: ATColors.trsprnt,
               child: SizedBox(
                 height: ATHelperFuncs.getScreenHeight(context),
                 child: Column(
-                  children: [
+                  children: <Widget>[
                     Padding(
                       padding: const EdgeInsets.fromLTRB(7, 40, 15, 30),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
+                        children: <Widget>[
                           const ATRoundedBackBtn(),
                           Text(
                             ATStrings.ENTER_PIN,
@@ -69,7 +69,7 @@ Future<bool?> inputTxnPinDialog({
                         physics: const BouncingScrollPhysics(),
                         padding: const EdgeInsets.fromLTRB(15, 10, 15, 10),
                         child: Column(
-                          children: [
+                          children: <Widget>[
                             if(isTransfer)ATCircularImage(
                               imagePath: receipient?.obj.profilePicture ?? '',
                               diameter: 50,
@@ -91,24 +91,24 @@ Future<bool?> inputTxnPinDialog({
                             const SizedBox(height: 50,),
 
                             BlocConsumer<EnterPinBloc, (String, bool?)>(                              
-                              listener: (_, state){
+                              listener: (_, (String, bool?) state){
                                 if(state.$1.length == 4 && state.$2 == true){
                                   dialogContext.pop(true);
                                 }
                               },
-                              builder: (_, state) {
-                                final pins = state.$1.characters;
+                              builder: (_, (String, bool?) state) {
+                                final Characters pins = state.$1.characters;
                                 return Column(
                                   spacing: 20,
                                   mainAxisSize: MainAxisSize.min,
-                                  children: [
+                                  children: <Widget>[
                                     Row(
                                       mainAxisAlignment: MainAxisAlignment.center,
                                       spacing: 20,
                                       children: List.generate(
                                         4,
-                                        (index){
-                                          final eachPin = pins.elementAtOrNull(index);
+                                        (int index){
+                                          final String? eachPin = pins.elementAtOrNull(index);
                                           return ATContainer(
                                             duration: 200,
                                             border: Border.all(
@@ -144,12 +144,12 @@ Future<bool?> inputTxnPinDialog({
                               ),
                               
                               children: digits.characters.map(
-                                (digit){
+                                (String digit){
                                   if(digit == '.') return const SizedBox.shrink();
                       
                                   if(digits.indexOf(digit) == 11){
                                     return BlocBuilder<EnterPinBloc, (String, bool?)>(                              
-                                      builder: (_, state){
+                                      builder: (_, (String, bool?) state){
                                         return InkWell(
                                           borderRadius: BorderRadius.circular(5),
                                           onTap: state.$1.isEmpty ? null : () => blocContext.read<EnterPinBloc>().deletePin(),                          
@@ -188,8 +188,8 @@ Future<bool?> inputTxnPinDialog({
 
                     FutureBuilder(
                       future: Future.delayed(const Duration(seconds: 2)),
-                      builder: (_, snapshot) {
-                        final isDone = snapshot.connectionState == ConnectionState.done;
+                      builder: (_, AsyncSnapshot snapshot) {
+                        final bool isDone = snapshot.connectionState == ConnectionState.done;
                         return ATAnimatedAlign(
                           condition: !isDone,
                           startAlignment: Alignment(-ATHelperFuncs.getScreenWidth(dialogContext) * 3, 0),
@@ -201,7 +201,7 @@ Future<bool?> inputTxnPinDialog({
                             color: ATColors.white.withValues(alpha: 0.05),
                             child: Row(
                               spacing: 10,
-                              children: [
+                              children: <Widget>[
                                 Icon(Icons.info_outline, color: ATColors.hexC2C2C2),
                                 Flexible(
                                   child: Text(

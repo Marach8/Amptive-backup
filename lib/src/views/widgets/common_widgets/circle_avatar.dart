@@ -3,12 +3,6 @@ import '../../../utils/constants/colors.dart';
 import 'custom_container_widget.dart';
 
 class ATCircleAvatar extends StatelessWidget {
-  final double diameter;
-  final Color? color;
-  final Widget? child;
-  final int? animationDuration;
-  final VoidCallback? onTap;
-  final EdgeInsetsGeometry? padding;
   const ATCircleAvatar({
     super.key,
     required this.diameter,
@@ -17,9 +11,15 @@ class ATCircleAvatar extends StatelessWidget {
     this.animationDuration,
     this.onTap
   });
+  final double diameter;
+  final Color? color;
+  final Widget? child;
+  final int? animationDuration;
+  final VoidCallback? onTap;
+  final EdgeInsetsGeometry? padding;
 
   @override
-  Widget build(context) {
+  Widget build(BuildContext context) {
     return ATContainer(
       onTap: onTap,
       padding: padding,

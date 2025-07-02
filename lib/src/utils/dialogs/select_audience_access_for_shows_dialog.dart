@@ -17,7 +17,7 @@ import '../constants/strings/other_strings.dart';
 Future<String> showSelectAudienceAccessForShowsDialog(
   BuildContext context
 )async{
-  final notifier = ValueNotifier<String>('');
+  final ValueNotifier<String> notifier = ValueNotifier<String>('');
   CreateShowService service = GetIt.I<CreateShowService>();
 
   return await showModalBottomSheet(
@@ -32,7 +32,7 @@ Future<String> showSelectAudienceAccessForShowsDialog(
         padding: const EdgeInsets.fromLTRB(15, 20, 15, 10),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
+          children: <Widget>[
             Center(
               child: GestureDetector(
                 onTap: () => context.pop(''),
@@ -67,8 +67,8 @@ Future<String> showSelectAudienceAccessForShowsDialog(
         
             AmptiveRebuilderWidget(
               notifier: notifier,
-              builder: (_, value, __) {
-                final isActive = value == ATStrings.FREE;
+              builder: (_, String value, __) {
+                final bool isActive = value == ATStrings.FREE;
                 return ATContainer(
                   duration: 100,
                   onTap: (){
@@ -87,14 +87,14 @@ Future<String> showSelectAudienceAccessForShowsDialog(
                     color: isActive ? ATColors.hex307FE2 : ATColors.trsprnt
                   ),
                   child: Row(
-                    children: [
+                    children: <Widget>[
                       const ATImgLoader(imgPath: ATImgStrings.PEOPLE),
                       const Gap(10),
                       Expanded(
                         child: Column(
                           mainAxisSize: MainAxisSize.min,
                           crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
+                          children: <Widget>[
                             Text(
                               ATStrings.FREE,
                               style: Theme.of(context).textTheme.bodyMedium
@@ -130,8 +130,8 @@ Future<String> showSelectAudienceAccessForShowsDialog(
         
             AmptiveRebuilderWidget(
               notifier: notifier,
-              builder: (_, value, __) {
-                final isActive = value == ATStrings.SUBSCRIBERS_ONLY;
+              builder: (_, String value, __) {
+                final bool isActive = value == ATStrings.SUBSCRIBERS_ONLY;
                 return ATContainer(
                   onTap: (){
                     if(value != ATStrings.SUBSCRIBERS_ONLY){
@@ -151,16 +151,16 @@ Future<String> showSelectAudienceAccessForShowsDialog(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisSize: MainAxisSize.min,
-                    children: [
+                    children: <Widget>[
                       Row(
-                        children: [
+                        children: <Widget>[
                           const ATImgLoader(imgPath: ATImgStrings.PADLOCK),
                           const Gap(10),
                           Expanded(
                             child: Column(
                               mainAxisSize: MainAxisSize.min,
                               crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
+                              children: <Widget>[
                                 Text(
                                   ATStrings.SUBSCRIBERS_ONLY,
                                   style: Theme.of(context).textTheme.bodyMedium
@@ -193,7 +193,7 @@ Future<String> showSelectAudienceAccessForShowsDialog(
                       const Divider(height: 0.5),
                       const Gap(15),
                       Row(
-                        children: [
+                        children: <Widget>[
                           ATContainer(
                             padding: const EdgeInsets.fromLTRB(10, 5, 10, 5),
                             color: ATColors.grey2Color,
@@ -219,8 +219,8 @@ Future<String> showSelectAudienceAccessForShowsDialog(
         
             AmptiveRebuilderWidget(
               notifier: notifier,
-              builder: (_, value, __) {
-                final isActive = value == ATStrings.FREE 
+              builder: (_, String value, __) {
+                final bool isActive = value == ATStrings.FREE 
                   || value == ATStrings.SUBSCRIBERS_ONLY;
                 return AmptiveElevatedButtonWidget(
                   margin: EdgeInsets.zero,

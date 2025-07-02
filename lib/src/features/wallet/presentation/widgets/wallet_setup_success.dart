@@ -19,27 +19,27 @@ class WalletCretionSuccess extends StatelessWidget {
   const WalletCretionSuccess({super.key});
 
   @override
-  Widget build(context) {
+  Widget build(BuildContext context) {
     return Column(
       mainAxisSize: MainAxisSize.min,
-      children: [
+      children: <Widget>[
         SizedBox(
           height: ATHelperFuncs.getScreenHeight(context) * 0.5,
           width: ATHelperFuncs.getScreenWidth(context),
           child: Stack(
             alignment: Alignment.topCenter,
             clipBehavior: Clip.none,
-            children: [
+            children: <Widget>[
               BlocSelector<WalletCreationAnimBloc, List<bool>, bool>(
-                selector: (state) => state.elementAt(3),
-                builder: (_, isVisible) {
+                selector: (List<bool> state) => state.elementAt(3),
+                builder: (_, bool isVisible) {
                   return SpotlightBeam(
                     width: ATHelperFuncs.getScreenWidth(context),
                     height: ATHelperFuncs.getScreenHeight(context) * 0.45,
                     gradient: isVisible ? LinearGradient(
                       begin: Alignment.topCenter,
                       end: Alignment.bottomCenter,
-                      colors: [
+                      colors: <Color>[
                         ATColors.hex23221C,
                         ATColors.black
                       ],

@@ -19,7 +19,6 @@ import 'package:gap/gap.dart';
 import 'package:get_it/get_it.dart';
 import '../../../../bloc/main_app/go_live_bloc/audience_view/host_moderation_control_bloc.dart';
 import '../../../../bloc/main_app/go_live_bloc/host_view/cohosts_display_bloc.dart';
-import '../../../../bloc/main_app/nav_bar_bloc.dart';
 import '../../../../services/go_live_service/go_live_service.dart';
 import '../../../../utils/constants/colors.dart';
 import '../../../../utils/constants/strings/other_strings.dart';
@@ -30,8 +29,8 @@ import '../../../../views/widgets/other_widgets/main_application_widgets/widgets
 
 
 class ATLiveProgramsAudienceScreen extends StatefulWidget {
-  final ObjectWithNotifier<Host> goLiveHost;
   const ATLiveProgramsAudienceScreen({super.key, required this.goLiveHost});
+  final ObjectWithNotifier<Host> goLiveHost;
 
   @override
   State<ATLiveProgramsAudienceScreen> createState() => _ATLiveProgramsAudienceScreenState();
@@ -78,13 +77,13 @@ class _ATLiveProgramsAudienceScreenState extends State<ATLiveProgramsAudienceScr
 
 
   @override
-  Widget build(context) {
+  Widget build(BuildContext context) {
     // final screenWidth = AmptiveHelperFunctions.getScreenWidth(context);
     return ATAnnotatedRegion(
       child: Scaffold(
         body: SafeArea(
           child: Column(
-            children: [
+            children: <Widget>[
               
               const Gap(10),
               AmptiveLiveViewHeaderWidget(
@@ -95,7 +94,7 @@ class _ATLiveProgramsAudienceScreenState extends State<ATLiveProgramsAudienceScr
                 },
                 color: ATColors.white.withOpacity(0.1),
                 height: 35, width: 35, boxShape: BoxShape.circle,
-                boxShadow: [
+                boxShadow: <BoxShadow>[
                   BoxShadow(
                     color: ATColors.black,
                     blurRadius: 10, spreadRadius: 30,
@@ -116,7 +115,7 @@ class _ATLiveProgramsAudienceScreenState extends State<ATLiveProgramsAudienceScr
                   color: ATColors.white.withOpacity(0.1),
                   child: Row(
                     mainAxisSize: MainAxisSize.min,
-                    children: [
+                    children: <Widget>[
                       const ATImgLoader(imgPath: ATImgStrings.GROUP_ICON),
                       const Gap(5),
                       Text(
@@ -134,11 +133,11 @@ class _ATLiveProgramsAudienceScreenState extends State<ATLiveProgramsAudienceScr
                 
               Expanded(
                 child: Stack(
-                  children: [
+                  children: <Widget>[
                     SizedBox(
                       height: ATHelperFuncs.getScreenHeight(context),
                       child: Column(
-                        children: [
+                        children: <Widget>[
                           SizedBox(
                             height: ATHelperFuncs.getScreenHeight(context) * 0.3,
                           ),
@@ -148,8 +147,8 @@ class _ATLiveProgramsAudienceScreenState extends State<ATLiveProgramsAudienceScr
                               controller: _scrollController,
                               padding: const EdgeInsets.fromLTRB(0, 50, 0, 50),
                               itemCount: service.coHostsListData.length,
-                              itemBuilder: (_, listIndex){
-                                final string = service.coHostsListData.elementAt(listIndex);
+                              itemBuilder: (_, int listIndex){
+                                final ObjectWithNotifier<Host> string = service.coHostsListData.elementAt(listIndex);
                                 return ListTile(
                                   horizontalTitleGap: 10,
                                   minTileHeight: 50,
@@ -181,7 +180,7 @@ class _ATLiveProgramsAudienceScreenState extends State<ATLiveProgramsAudienceScr
                       height: 250,
                       width: ATHelperFuncs.getScreenWidth(context),
                       padding: const EdgeInsets.only(left: 20, right: 20),
-                      boxShadow: [
+                      boxShadow: <BoxShadow>[
                         BoxShadow(
                           color: ATColors.black,
                           spreadRadius: 10, blurRadius: 40,
@@ -189,34 +188,34 @@ class _ATLiveProgramsAudienceScreenState extends State<ATLiveProgramsAudienceScr
                         )
                       ],
                       child: LayoutBuilder(
-                        builder: (_, constraints) {
-                          final width = constraints.maxWidth;
+                        builder: (_, BoxConstraints constraints) {
+                          final double width = constraints.maxWidth;
           
                           return BlocBuilder<AmptiveGoLiveSelectCoHostBloc, List<ObjectWithNotifier<Host>>>(
-                            builder: (_, listOfHosts) {
+                            builder: (_, List<ObjectWithNotifier<Host>> listOfHosts) {
           
-                              final cohost1 = listOfHosts.elementAtOrNull(0);
-                              final cohost2 = listOfHosts.elementAtOrNull(1);
-                              final cohost3 = listOfHosts.elementAtOrNull(2);
-                              final cohost4 = listOfHosts.elementAtOrNull(3);
-                              final cohost5 = listOfHosts.elementAtOrNull(4);
+                              final ObjectWithNotifier<Host>? cohost1 = listOfHosts.elementAtOrNull(0);
+                              final ObjectWithNotifier<Host>? cohost2 = listOfHosts.elementAtOrNull(1);
+                              final ObjectWithNotifier<Host>? cohost3 = listOfHosts.elementAtOrNull(2);
+                              final ObjectWithNotifier<Host>? cohost4 = listOfHosts.elementAtOrNull(3);
+                              final ObjectWithNotifier<Host>? cohost5 = listOfHosts.elementAtOrNull(4);
 
 
-                              final onlyHost = listOfHosts.every((a) => a.obj.profilePicture == null);
-                              final hostAndACohost = listOfHosts.where((a) => a.obj.profilePicture != null).length == 1;
-                              final hostAnd2Cohosts = listOfHosts.where((a) => a.obj.profilePicture != null).length == 2;
-                              final hostAnd3Cohosts = listOfHosts.where((a) => a.obj.profilePicture != null).length == 3;
-                              final hostAnd4Cohosts = listOfHosts.where((a) => a.obj.profilePicture != null).length == 4;
-                              final hostAnd5Cohosts = listOfHosts.every((a) => a.obj.profilePicture != null);
+                              final bool onlyHost = listOfHosts.every((ObjectWithNotifier<Host> a) => a.obj.profilePicture == null);
+                              final bool hostAndACohost = listOfHosts.where((ObjectWithNotifier<Host> a) => a.obj.profilePicture != null).length == 1;
+                              final bool hostAnd2Cohosts = listOfHosts.where((ObjectWithNotifier<Host> a) => a.obj.profilePicture != null).length == 2;
+                              final bool hostAnd3Cohosts = listOfHosts.where((ObjectWithNotifier<Host> a) => a.obj.profilePicture != null).length == 3;
+                              final bool hostAnd4Cohosts = listOfHosts.where((ObjectWithNotifier<Host> a) => a.obj.profilePicture != null).length == 4;
+                              final bool hostAnd5Cohosts = listOfHosts.every((ObjectWithNotifier<Host> a) => a.obj.profilePicture != null);
                 
                               return Stack(
                                 alignment: Alignment.center,
-                                children: [
+                                children: <Widget>[
                                   AmptiveLiveHostAndCoHostWidgetForAudienceView(
                                     top: onlyHost ? 80 : 6, isHost: true, index: 0,
                                     hostOrCohost: widget.goLiveHost,
                                     service: service,
-                                    onTap: (hostOrCohost){},
+                                    onTap: (ObjectWithNotifier<Host>? hostOrCohost){},
                                   ),
 
                                   AmptiveLiveHostAndCoHostWidgetForAudienceView(
@@ -225,7 +224,7 @@ class _ATLiveProgramsAudienceScreenState extends State<ATLiveProgramsAudienceScr
                                     left: hostAnd2Cohosts || hostAnd4Cohosts ? width * 0.1 : null,
                                     index: 1, service: service,
                                     hostOrCohost: cohost1,
-                                    onTap: (hostOrCohost){},
+                                    onTap: (ObjectWithNotifier<Host>? hostOrCohost){},
                                   ),
                                   AmptiveLiveHostAndCoHostWidgetForAudienceView(
                                     bottom: hostAnd2Cohosts || hostAnd3Cohosts || hostAnd4Cohosts || hostAnd5Cohosts ? 30 : null,
@@ -233,7 +232,7 @@ class _ATLiveProgramsAudienceScreenState extends State<ATLiveProgramsAudienceScr
                                     right: hostAnd2Cohosts || hostAnd3Cohosts || hostAnd4Cohosts ? width * 0.1 : null,
                                     index: 2, service: service,
                                     hostOrCohost: cohost2,
-                                    onTap: (hostOrCohost){},
+                                    onTap: (ObjectWithNotifier<Host>? hostOrCohost){},
                                   ),
                                   AmptiveLiveHostAndCoHostWidgetForAudienceView(
                                     bottom: hostAnd3Cohosts || hostAnd5Cohosts ? 30 : hostAnd4Cohosts ? 127: null,
@@ -242,21 +241,21 @@ class _ATLiveProgramsAudienceScreenState extends State<ATLiveProgramsAudienceScr
                                     left: hostAnd3Cohosts ? width * 0.1 : hostAnd4Cohosts ? 0 : null, 
                                     index: 3, service: service,
                                     hostOrCohost: cohost3,
-                                    onTap: (hostOrCohost){},
+                                    onTap: (ObjectWithNotifier<Host>? hostOrCohost){},
                                   ),
                                   AmptiveLiveHostAndCoHostWidgetForAudienceView(
                                     top: hostAnd4Cohosts || hostAnd5Cohosts ? 35 : null,
                                     right: hostAnd4Cohosts || hostAnd5Cohosts ? 0 : null, 
                                     index: 4, service: service,
                                     hostOrCohost: cohost4,
-                                    onTap: (hostOrCohost){},
+                                    onTap: (ObjectWithNotifier<Host>? hostOrCohost){},
                                   ),
                                   AmptiveLiveHostAndCoHostWidgetForAudienceView(
                                     top: hostAnd5Cohosts ? 35 : null,
                                     left: hostAnd5Cohosts ? 0 : null, 
                                     index: 5, service: service,
                                     hostOrCohost: cohost5,
-                                    onTap: (hostOrCohost){},
+                                    onTap: (ObjectWithNotifier<Host>? hostOrCohost){},
                                   ),
                                 ],
                               );
@@ -268,7 +267,7 @@ class _ATLiveProgramsAudienceScreenState extends State<ATLiveProgramsAudienceScr
           
                     AmptiveRebuilderWidget(
                       notifier: _scroll2BottomNotifier,
-                      builder: (_, showIcon, __) {
+                      builder: (_, bool showIcon, __) {
                         return Positioned(
                           bottom: 70, right: 15,
                           child: ATScalingSwitcher(
@@ -338,15 +337,15 @@ class _GoLiveAudienViewControlsWidgetState extends State<GoLiveAudienViewControl
   }
 
   @override
-  Widget build(context) {
+  Widget build(BuildContext context) {
     return ATContainer(
       padding: const EdgeInsets.fromLTRB(15, 10, 15, 10),
       color: ATColors.black,
       child: Row(
-        children: [
+        children: <Widget>[
           AmptiveRebuilderWidget(
             notifier: _isFocused,
-            builder: (_, value, __) {
+            builder: (_, bool value, __) {
               if(value){
                 return Padding(
                   padding: const EdgeInsets.only(right: 15),
@@ -365,8 +364,8 @@ class _GoLiveAudienViewControlsWidgetState extends State<GoLiveAudienViewControl
           ),
 
           BlocBuilder<AmptiveGoLiveHostModerationToolsBloc, List<bool>>(
-            builder: (_, state) {
-              final commentIsEnabled = state.first;
+            builder: (_, List<bool> state) {
+              final bool commentIsEnabled = state.first;
               return Flexible(
                 child: Padding(
                   padding: EdgeInsets.only(right: 5.w),
@@ -394,11 +393,11 @@ class _GoLiveAudienViewControlsWidgetState extends State<GoLiveAudienViewControl
       
           AmptiveRebuilderWidget(
             notifier: _isFocused,
-            builder: (_, value, __) {
+            builder: (_, bool value, __) {
               if(value){
                 return AmptiveRebuilderWidget(
                   notifier: _hasText,
-                  builder: (_, value, __) {
+                  builder: (_, bool value, __) {
                     return GestureDetector(
                       onTap: value ? (){
                         _cntrl.clear();
@@ -417,14 +416,14 @@ class _GoLiveAudienViewControlsWidgetState extends State<GoLiveAudienViewControl
               }
 
               return BlocBuilder<AmptiveGoLiveHostModerationToolsBloc, List<bool>>(
-                buildWhen: (prev, curr) => prev[1] != curr[1] || prev.last != curr.last,
-                builder: (_, state) {
-                  final micIsEnabled = state[1];
-                  final handRaiseIsEnabled = state.last;
+                buildWhen: (List<bool> prev, List<bool> curr) => prev[1] != curr[1] || prev.last != curr.last,
+                builder: (_, List<bool> state) {
+                  final bool micIsEnabled = state[1];
+                  final bool handRaiseIsEnabled = state.last;
                     
                   return Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
+                    children: <Widget>[
                       if(micIsEnabled)_RenderAudienceViewButtons(
                         onTap: (){
                           showFollowHostOrCohostDialog(context: context, host: getHostList().first);
@@ -465,17 +464,17 @@ class _GoLiveAudienViewControlsWidgetState extends State<GoLiveAudienViewControl
 
 
 class _RenderAudienceViewButtons extends StatelessWidget {
-  final VoidCallback onTap;
-  final Widget child;
-  final bool addMargin;
   const _RenderAudienceViewButtons({
     required this.onTap,
     required this.child,
     this.addMargin = true, 
   });
+  final VoidCallback onTap;
+  final Widget child;
+  final bool addMargin;
 
   @override
-  Widget build(context) {
+  Widget build(BuildContext context) {
     return ATContainer(
       onTap: onTap,
       margin: addMargin ? EdgeInsets.only(right: 5.w) : EdgeInsets.zero,

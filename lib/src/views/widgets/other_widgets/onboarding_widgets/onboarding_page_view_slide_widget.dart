@@ -8,9 +8,6 @@ import 'package:gap/gap.dart';
 import '../../common_widgets/image_loader_widget.dart';
 
 class AmptiveCustomOnboardingPageViewSlideWidget extends StatelessWidget {
-  final String title;
-  final String description;
-  final Color? pictureBgColor;
 
   const AmptiveCustomOnboardingPageViewSlideWidget({
     super.key,
@@ -18,11 +15,14 @@ class AmptiveCustomOnboardingPageViewSlideWidget extends StatelessWidget {
     required this.description,
     required this.pictureBgColor
   });
+  final String title;
+  final String description;
+  final Color? pictureBgColor;
 
   @override
   Widget build(BuildContext context) {
     return Column(
-      children: [
+      children: <Widget>[
         Container(
           color: pictureBgColor,
           width: ATHelperFuncs.getScreenWidth(context),

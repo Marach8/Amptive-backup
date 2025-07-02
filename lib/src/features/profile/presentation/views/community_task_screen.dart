@@ -10,7 +10,7 @@ class AmptiveCommunityTaskScreen extends StatelessWidget {
   const AmptiveCommunityTaskScreen({super.key});
 
   @override
-  Widget build(context) {
+  Widget build(BuildContext context) {
     return ATAnnotatedRegion(
       child: Scaffold(
         appBar: ATAppBar(
@@ -27,7 +27,7 @@ class AmptiveCommunityTaskScreen extends StatelessWidget {
           padding: const EdgeInsets.all(15),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
+            children: <Widget>[
               Text(
                 ATStrings.NO_TASK,
                 style: Theme.of(context).textTheme.bodySmall?.copyWith(

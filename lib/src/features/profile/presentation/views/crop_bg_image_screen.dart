@@ -33,20 +33,20 @@ class _CropPageState extends State<CropProfileBgImageScreen > {
   }
 
   @override
-  Widget build(context) {
+  Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
         body: Column(
-          children: [
+          children: <Widget>[
             Padding(
               padding: const EdgeInsets.fromLTRB(15, kToolbarHeight * 0.3, 15, 0),
               child: Row(
-                children: [
+                children: <Widget>[
                   const ATBackBtn(iconSize: 15),
                   const Spacer(),
                   ATContainer(
                     onTap: () async{
-                      final image = await controller.onCropImage();
+                      final MemoryImage? image = await controller.onCropImage();
                       if(context.mounted) context.pop(image);
                     },
                     padding: const EdgeInsets.fromLTRB(10, 3, 10, 3),

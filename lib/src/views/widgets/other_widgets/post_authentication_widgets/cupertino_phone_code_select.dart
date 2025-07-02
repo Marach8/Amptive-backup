@@ -23,8 +23,8 @@ class CupertinoPhoneCodeSelectWidget extends StatelessWidget {
     return SizedBox(
       height: 252.h,
       child: BlocBuilder<AmptiveAuthBloc, AmptiveAuthState>(
-          buildWhen: (_, curr) => curr is OpenCountryBottomSheetState,
-          builder: (context, state) {
+          buildWhen: (_, AmptiveAuthState curr) => curr is OpenCountryBottomSheetState,
+          builder: (BuildContext context, AmptiveAuthState state) {
             Country? selectedCountry =
                 state is SelectCountryCodeState ? state.selectedCountry : null;
 
@@ -72,13 +72,13 @@ class CupertinoPhoneCodeSelectWidget extends StatelessWidget {
                               backgroundColor: ATColors.hex0D0D0D,
                               diameterRatio: 3.r,
                               pickerItemHeight: 65.h,
-                              itemBuilder: (country) =>
+                              itemBuilder: (Country country) =>
                                   _buildCupertinoSelectedItem(context, country),
                               onValuePicked: (Country country) {
                                 selectedCountry = country;
                               },
                               initialCountry: state.selectedCountry,
-                              itemFilter: (c) =>
+                              itemFilter: (Country c) =>
                                   Constants.kCountryList.contains(c.isoCode),
                             ),
                           ),

@@ -1,11 +1,8 @@
 import 'package:amptive/src/utils/constants/strings/image_strings.dart';
 import 'package:amptive/src/views/widgets/common_widgets/image_loader_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:gap/gap.dart';
 import '../../../../utils/constants/colors.dart';
 import '../../../../utils/constants/font_sizes.dart';
-import '../../../../utils/constants/strings/other_strings.dart';
 
 class HashTagsSubtitleRow extends StatelessWidget {
   const HashTagsSubtitleRow({

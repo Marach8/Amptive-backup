@@ -16,25 +16,26 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:nested/nested.dart';
 
 
 Future<String?> selectWithdrawalBankDialog(BuildContext context) {
-  final cntrl = TextEditingController();
+  final TextEditingController cntrl = TextEditingController();
   bool showCancelIcon = false;
 
   return showCupertinoModalPopup<String>(
     context: context,
     barrierColor: ATColors.black,
-    builder: (dialogContext) {
+    builder: (BuildContext dialogContext) {
       return MultiBlocProvider(
-        providers: [
+        providers: <SingleChildWidget>[
           BlocProvider(create: (_) => WithdrawalBanksBloc()),
           BlocProvider(create: (_) => SearchkeyBloc())
         ],
         child: Material(
           color: ATColors.trsprnt,
           child: Builder(
-            builder: (context) {
+            builder: (BuildContext context) {
               WidgetsBinding.instance.addPostFrameCallback((_) {
                 context.read<WithdrawalBanksBloc>().add(FetchBanksEvent());
               });
@@ -42,12 +43,12 @@ Future<String?> selectWithdrawalBankDialog(BuildContext context) {
               return SizedBox(
                 height: ATHelperFuncs.getScreenHeight(context),
                 child: Column(
-                  children: [
+                  children: <Widget>[
                     Padding(
                       padding: const EdgeInsets.fromLTRB(7, 40, 15, 20),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
+                        children: <Widget>[
                           const ATRoundedBackBtn(),
                           Text(
                             ATStrings.SELECT_BANK,
@@ -61,9 +62,9 @@ Future<String?> selectWithdrawalBankDialog(BuildContext context) {
                     Padding(
                       padding: const EdgeInsets.fromLTRB(15, 0, 15, 20),
                       child: BlocBuilder<WithdrawalBanksBloc, WithdrawalBanksState>(
-                        buildWhen: (prev, curr) => (prev is WithdrawalBanksInitial && curr is FetchingBanks)
+                        buildWhen: (WithdrawalBanksState prev, WithdrawalBanksState curr) => (prev is WithdrawalBanksInitial && curr is FetchingBanks)
                           || (prev is FetchingBanks && curr is WithdrawalBanksData),
-                        builder: (_, state) {
+                        builder: (_, WithdrawalBanksState state) {
                           if(state is FetchingBanks){
                             return const ATShimmer(
                               height: 15, radius: 5,
@@ -84,9 +85,9 @@ Future<String?> selectWithdrawalBankDialog(BuildContext context) {
                     Padding(
                       padding: const EdgeInsets.fromLTRB(15, 10, 15, 15),
                       child: BlocBuilder<WithdrawalBanksBloc, WithdrawalBanksState>(
-                        buildWhen: (prev, curr) => (prev is WithdrawalBanksInitial && curr is FetchingBanks)
+                        buildWhen: (WithdrawalBanksState prev, WithdrawalBanksState curr) => (prev is WithdrawalBanksInitial && curr is FetchingBanks)
                           || (prev is FetchingBanks && curr is WithdrawalBanksData),
-                        builder: (_, state) {
+                        builder: (_, WithdrawalBanksState state) {
                           if(state is FetchingBanks){
                             return const ATShimmer(
                               height: 40, radius: 5,
@@ -113,7 +114,7 @@ Future<String?> selectWithdrawalBankDialog(BuildContext context) {
                                   ),
                                   icon: const Icon(Icons.close, size: 20,),
                                 ) : null,
-                                onChanged: (text){
+                                onChanged: (String text){
                                   if(text.isEmpty && showCancelIcon){
                                     setter(() => showCancelIcon = false);
                                   }
@@ -139,9 +140,9 @@ Future<String?> selectWithdrawalBankDialog(BuildContext context) {
                   
                     Expanded(
                       child: LayoutBuilder(
-                        builder: (_, kst) {
+                        builder: (_, BoxConstraints kst) {
                           return BlocBuilder<WithdrawalBanksBloc, WithdrawalBanksState>(
-                            builder: (_, state) {
+                            builder: (_, WithdrawalBanksState state) {
                               if(state is SearchingBanks){
                                 return const Center(child: ATLoadingIndicator());
                               }
@@ -155,8 +156,8 @@ Future<String?> selectWithdrawalBankDialog(BuildContext context) {
                               }
 
                               List<String>? banks; String? selectedBank;
-                              final isFetchingBanks = state is FetchingBanks;
-                              final hasBanks = state is WithdrawalBanksData;
+                              final bool isFetchingBanks = state is FetchingBanks;
+                              final bool hasBanks = state is WithdrawalBanksData;
                               if(hasBanks){
                                 banks = state.banks;
                                 selectedBank = state.selectedBank;
@@ -166,8 +167,8 @@ Future<String?> selectWithdrawalBankDialog(BuildContext context) {
                                 padding: EdgeInsets.zero,
                                 physics: const BouncingScrollPhysics(),
                                 itemCount: banks?.length ?? (kst.maxHeight ~/ 40),
-                                itemBuilder: (_, index){
-                                  final bank = banks?[index];
+                                itemBuilder: (_, int index){
+                                  final String? bank = banks?[index];
                                   return InkWell(
                                     onTap: isFetchingBanks ? null : () => context.read<WithdrawalBanksBloc>().add(
                                       SelectBankEvent(selectedBank == bank ? null : bank)
@@ -176,7 +177,7 @@ Future<String?> selectWithdrawalBankDialog(BuildContext context) {
                                       padding: const EdgeInsets.fromLTRB(15, 10, 15, 10),
                                       child: Row(
                                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                        children: [
+                                        children: <Widget>[
                                           isFetchingBanks ? Flexible(
                                             child: ATShimmer(
                                             height: 15, margin: EdgeInsets.zero,
@@ -210,7 +211,7 @@ Future<String?> selectWithdrawalBankDialog(BuildContext context) {
                     Padding(
                       padding: const EdgeInsets.fromLTRB(15, 10, 15, 10),
                       child: BlocBuilder<WithdrawalBanksBloc, WithdrawalBanksState>(
-                          builder: (_, state) {
+                          builder: (_, WithdrawalBanksState state) {
                           return ATPlainElevatedBtn(
                             onPressed: (state is WithdrawalBanksData && state.selectedBank != null) ? (){
                               context.pop(state.selectedBank!);

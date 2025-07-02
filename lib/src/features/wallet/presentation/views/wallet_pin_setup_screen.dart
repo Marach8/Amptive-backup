@@ -23,7 +23,7 @@ class ATWalletPinSetupScreen extends StatelessWidget {
       child: BlocProvider(
         create: (_) => _WalletPinsBloc(),
         child: Builder(
-          builder: (context) {
+          builder: (BuildContext context) {
             WidgetsBinding.instance.addPostFrameCallback(
               (_) => context.read<_WalletPinsBloc>().reset()
             );
@@ -40,9 +40,9 @@ class ATWalletPinSetupScreen extends StatelessWidget {
                 padding: const EdgeInsets.fromLTRB(15, 0, 15, 15),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
+                  children: <Widget>[
                     BlocBuilder<_WalletPinsBloc, List<String?>>(
-                      builder: (_, state) {
+                      builder: (_, List<String?> state) {
                         return Text(
                           state.isEmpty ? ATStrings.ENTER_4_DIGIT_PIN :
                             ATStrings.RE_ENTER_PIN,
@@ -53,12 +53,12 @@ class ATWalletPinSetupScreen extends StatelessWidget {
                     const SizedBox(height: 10,),
             
                     BlocBuilder<_WalletPinsBloc, List<String?>>(
-                      builder: (_, state) {
+                      builder: (_, List<String?> state) {
                         //Enter pin
                         if(state.isEmpty){
                           return ATOTPFieldsWidget(
                             key: const Key('1'),
-                            onPinComplete: (pin)async{
+                            onPinComplete: (String pin)async{
                               context.read<_WalletPinsBloc>().grabPin(pin);
                               return true;
                             }
@@ -67,7 +67,7 @@ class ATWalletPinSetupScreen extends StatelessWidget {
                         //Re-enter pin
                         return ATOTPFieldsWidget(
                           key: const Key('2'),
-                          onPinComplete: (pin)async{
+                          onPinComplete: (String pin)async{
                             if(pin == state.first){
                               context.read<_WalletPinsBloc>().grabPin(pin);
                               return true;
@@ -90,15 +90,15 @@ class ATWalletPinSetupScreen extends StatelessWidget {
               bottomSheet: Padding(
                 padding: const EdgeInsets.fromLTRB(15, 5, 15, 10),
                 child: BlocBuilder<_WalletPinsBloc, List<String?>>(
-                  builder: (_, state) {
+                  builder: (_, List<String?> state) {
                     return Column(
                       spacing:10,
                       mainAxisSize: MainAxisSize.min,
-                      children: [
+                      children: <Widget>[
                         if(state.length == 2) ATContainer(
                           radius: 14,
                           onTap: ()async{
-                            final result = await showConfirmationDialog(
+                            final bool? result = await showConfirmationDialog(
                               context: context,
                               title: ATStrings.ALLOW_FACE_ID,
                               content: ATStrings.ALLOW_FACE_ID_DESC,
@@ -110,7 +110,7 @@ class ATWalletPinSetupScreen extends StatelessWidget {
                           color: ATColors.white.withValues(alpha: 0.05),
                           child: Row(
                             spacing: 10,
-                            children: [
+                            children: <Widget>[
                               const Icon(Iconsax.scan_barcode),
                               Expanded(
                                 child: Text(
@@ -144,9 +144,9 @@ class ATWalletPinSetupScreen extends StatelessWidget {
 
 
 class _WalletPinsBloc extends Cubit<List<String?>>{
-  _WalletPinsBloc() : super([]);
+  _WalletPinsBloc() : super(<String?>[]);
 
-  void grabPin(String pin) => emit([...state, pin]);
+  void grabPin(String pin) => emit(<String?>[...state, pin]);
 
-  void reset() => emit([]);
+  void reset() => emit(<String?>[]);
 }

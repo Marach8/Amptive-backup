@@ -28,7 +28,7 @@ class DiscoverCategoriesTile extends StatelessWidget {
           const Spacer(),
           trailing ?? InkWell(
             onTap: (){},
-            child: Icon(Icons.more_horiz, color: ATColors.authHintColor,),
+            child: Icon(Icons.more_horiz, color: ATColors.hexB6B6B6,),
           )
         ],
       ),

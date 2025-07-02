@@ -26,7 +26,7 @@ class ATHomeScreen extends StatelessWidget {
         onNotification: context.read<ATNavBarBloc>().ctrlNavVisibility,
         child: NestedScrollView(
           floatHeaderSlivers: true,
-          headerSliverBuilder: (_, __) => [
+          headerSliverBuilder: (_, __) => <Widget>[
             SliverAppBar(
               floating: true, snap: true,
               leadingWidth: 150,
@@ -81,7 +81,7 @@ class ATHomeScreen extends StatelessWidget {
           body: ListView( 
             physics: const BouncingScrollPhysics(),
             padding: EdgeInsets.zero,
-            children: [
+            children: <Widget>[
               SizedBox(
                 height: 100,
                 child: ListView(

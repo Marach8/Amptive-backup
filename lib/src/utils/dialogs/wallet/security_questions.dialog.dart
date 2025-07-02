@@ -10,12 +10,12 @@ Future<String?> showSecurityQuestionsDialog(BuildContext context, List<String> i
 
   return showCupertinoModalPopup<String>(
     context: context,
-    builder: (dialogContext) {
+    builder: (BuildContext dialogContext) {
       return ATContainer(
         height: 220,
         color: ATColors.hex292929,
         child: Column(
-          children: [
+          children: <Widget>[
             ATContainer(
               height: 40, color: ATColors.hex9E9E9E.withValues(alpha: 0.3),
               padding: const EdgeInsets.only(right: 15),
@@ -36,7 +36,7 @@ Future<String?> showSecurityQuestionsDialog(BuildContext context, List<String> i
                 looping: true,
                 onSelectedItemChanged: (int index) => selectedIndex = index,
                 children: items.map(
-                  (item) => Center(
+                  (String item) => Center(
                     child: Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 20),
                       child: Text(

@@ -3,9 +3,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 
 class AmptiveOutlinedButtonWithLeadingIconWidget extends StatelessWidget {
-  final String buttonTitle;
-  final Widget leadingIcon;
-  final void Function()? onPressed;
 
   const AmptiveOutlinedButtonWithLeadingIconWidget({
     super.key,
@@ -13,6 +10,9 @@ class AmptiveOutlinedButtonWithLeadingIconWidget extends StatelessWidget {
     required this.onPressed,
     required this.leadingIcon
   });
+  final String buttonTitle;
+  final Widget leadingIcon;
+  final void Function()? onPressed;
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +24,7 @@ class AmptiveOutlinedButtonWithLeadingIconWidget extends StatelessWidget {
         style: ElevatedButton.styleFrom(padding: const EdgeInsets.only(left: 5)),
         onPressed: onPressed,
         child: Row(
-          children: [
+          children: <Widget>[
             leadingIcon,
             Gap(50.w),
             Text(buttonTitle)

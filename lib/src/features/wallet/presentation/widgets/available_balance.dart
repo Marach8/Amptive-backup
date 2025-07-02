@@ -16,7 +16,7 @@ import 'dart:developer';
 class AvailableBalanceWidget extends StatelessWidget {
   const AvailableBalanceWidget({super.key});
 
-  static const list = [ATStrings.FUND_WALLET, ATStrings.TRSF, ATStrings.WITHDRAW];
+  static const List<String> list = <String>[ATStrings.FUND_WALLET, ATStrings.TRSF, ATStrings.WITHDRAW];
 
   @override
   Widget build(BuildContext context) {
@@ -27,17 +27,17 @@ class AvailableBalanceWidget extends StatelessWidget {
       child: BlocProvider(
         create: (_) => _VisibilityBloc(),
         child: Builder(
-          builder: (context) {
+          builder: (BuildContext context) {
             return Column(
               crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
+              children: <Widget>[
                 Row(
-                  children: [
+                  children: <Widget>[
                     InkWell(
                       onTap: () => context.read<_VisibilityBloc>().toggleBalanceVisibility(),
                       borderRadius: BorderRadius.circular(10),
                       child: Row(
-                        children: [
+                        children: <Widget>[
                           Text(
                             ATStrings.AVAILABLE_BAL,
                             style: Theme.of(context).textTheme.bodySmall?.copyWith(
@@ -46,7 +46,7 @@ class AvailableBalanceWidget extends StatelessWidget {
                           ),
                           const SizedBox(width: 5,),
                           BlocBuilder<_VisibilityBloc, bool>(
-                            builder: (_, state) {
+                            builder: (_, bool state) {
                               return Icon(
                                 state ? Icons.visibility_off_outlined : Icons.visibility_outlined,
                                 color: ATColors.hexC2C2C2
@@ -64,7 +64,7 @@ class AvailableBalanceWidget extends StatelessWidget {
                 ),
                 
                 BlocBuilder<_VisibilityBloc, bool>(
-                  builder: (_, state) {
+                  builder: (_, bool state) {
                     return Text(
                       state ? 'N 2,345,737.18' : '******',
                       style: Theme.of(context).textTheme.displaySmall?.copyWith(
@@ -75,7 +75,7 @@ class AvailableBalanceWidget extends StatelessWidget {
                 ),
                 const SizedBox(height: 5),
                 BlocBuilder<_VisibilityBloc, bool>(
-                  builder: (_, state) {
+                  builder: (_, bool state) {
                     return Text(
                       'Pending balance: ${state ? 'N13,438.00' : '******'}',
                       style: Theme.of(context).textTheme.bodySmall?.copyWith(
@@ -89,7 +89,7 @@ class AvailableBalanceWidget extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: list.map(
-                    (item){
+                    (String item){
                       IconData icon;
                       switch(item){
                         case ATStrings.FUND_WALLET:
@@ -107,7 +107,7 @@ class AvailableBalanceWidget extends StatelessWidget {
                       return ATContainer( 
                         onTap: ()async{
                           if(item == ATStrings.FUND_WALLET){                            
-                            final inputPrice = await context.pushNamed(
+                            final String? inputPrice = await context.pushNamed(
                               ATRoutes.ENTER_AMOUNT_2_TRSF,
                               extra: EnterAmountScreenParams(
                                 title: ATStrings.FUND_WALLET,
@@ -117,9 +117,9 @@ class AvailableBalanceWidget extends StatelessWidget {
                             ) as String?;
 
                             if(context.mounted && inputPrice != null){
-                              final selectedPaymentMethod = await selectPaymentMethodDialog(context: context, amount: inputPrice);
+                              final String? selectedPaymentMethod = await selectPaymentMethodDialog(context: context, amount: inputPrice);
                               if(context.mounted && selectedPaymentMethod != null){
-                                final processPayment = await processWalletFundingDialog(
+                                final bool? processPayment = await processWalletFundingDialog(
                                   context: context,
                                   paymentMethod: inputPrice
                                 );
@@ -128,17 +128,17 @@ class AvailableBalanceWidget extends StatelessWidget {
                           }
 
                           else if(item == ATStrings.TRSF){
-                            final recipientName = await context.pushNamed(ATRoutes.SELECT_RECIPIENT) as String?;
+                            final String? recipientName = await context.pushNamed(ATRoutes.SELECT_RECIPIENT) as String?;
                             if(recipientName != null && context.mounted){
                               context.pushNamed(
                                 ATRoutes.PAPER_PLANE_SUCCESS,
-                                extra: [ATStrings.TRSF_SUCCESS, '${ATStrings.TRSF_SUCCESS_DESC}$recipientName']
+                                extra: <String>[ATStrings.TRSF_SUCCESS, '${ATStrings.TRSF_SUCCESS_DESC}$recipientName']
                               );
                             }
                           }
                           
                           else if(item == ATStrings.WITHDRAW){
-                            final result = await context.pushNamed(ATRoutes.WITHDRAWAL_LANDING) as bool?;
+                            final bool? result = await context.pushNamed(ATRoutes.WITHDRAWAL_LANDING) as bool?;
                             log(result.toString());
                           }
                         },                         
@@ -146,7 +146,7 @@ class AvailableBalanceWidget extends StatelessWidget {
                         radius: 20,
                         padding: const EdgeInsets.fromLTRB(10, 8, 10, 8),
                         child: Row(
-                          children: [
+                          children: <Widget>[
                             Icon(icon, size: 15,),
                             Text(
                               item,

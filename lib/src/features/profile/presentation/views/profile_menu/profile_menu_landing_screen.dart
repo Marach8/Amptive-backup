@@ -20,7 +20,7 @@ class AmptiveProfileMenuScreen extends StatelessWidget {
   const AmptiveProfileMenuScreen({super.key});
 
   @override
-  Widget build(context) {
+  Widget build(BuildContext context) {
     return ATAnnotatedRegion(
       child: Scaffold(
         appBar: ATAppBar(
@@ -42,7 +42,7 @@ class AmptiveProfileMenuScreen extends StatelessWidget {
           physics: const BouncingScrollPhysics(),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
+            children: <Widget>[
               const MenuHeading(text: ATStrings.CALENDER),
               MenuItem(
                 firstIcon: const ATImgLoader(imgPath: ATImgStrings.CALEND_ICON),
@@ -55,7 +55,7 @@ class AmptiveProfileMenuScreen extends StatelessWidget {
                 middleText: ATStrings.ALLOW_SEE_CALENDER,
                 margin: const EdgeInsets.fromLTRB(15, 0, 5, 5),
                 lastIcon: BlocConsumer<CalenderVisibleBloc, bool>(
-                  listener: (_, state){
+                  listener: (_, bool state){
                     if(state){
                       showAppNotification(
                         context: context,
@@ -64,9 +64,9 @@ class AmptiveProfileMenuScreen extends StatelessWidget {
                       );
                     }
                   },
-                  builder: (_, state)  => AmptiveSwitch(
+                  builder: (_, bool state)  => AmptiveSwitch(
                     value: state,
-                    onChanged: (value){
+                    onChanged: (bool value){
                       context.read<CalenderVisibleBloc>().toggleSeeCalender();
                     }
                   )
@@ -139,11 +139,6 @@ class AmptiveProfileMenuScreen extends StatelessWidget {
 
 
 class MenuItem extends StatelessWidget {
-  final Widget firstIcon;
-  final Widget? lastIcon;
-  final String middleText;
-  final VoidCallback onTap;
-  final EdgeInsetsGeometry? margin;
   const MenuItem({
     super.key,
     required this.firstIcon,
@@ -152,14 +147,19 @@ class MenuItem extends StatelessWidget {
     this.margin,
     required this.onTap
   });
+  final Widget firstIcon;
+  final Widget? lastIcon;
+  final String middleText;
+  final VoidCallback onTap;
+  final EdgeInsetsGeometry? margin;
 
   @override
-  Widget build(context) {
+  Widget build(BuildContext context) {
     return ATContainer(
       margin: margin ?? const EdgeInsets.fromLTRB(15, 0, 15, 20),
       onTap: onTap,
       child: Row(
-        children: [
+        children: <Widget>[
           firstIcon,
           const Gap(15),
           Expanded(
@@ -179,8 +179,8 @@ class MenuItem extends StatelessWidget {
 
 
 class MenuHeading extends StatelessWidget {
-  final String text;
   const MenuHeading({super.key, required this.text});
+  final String text;
 
   @override
   Widget build(BuildContext context) 

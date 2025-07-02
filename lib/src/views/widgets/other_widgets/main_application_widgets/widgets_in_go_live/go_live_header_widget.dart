@@ -18,22 +18,22 @@ import '../../../../../utils/dialogs/go_live/host_view_of_listeners_dialog.dart'
 
 
 class AmptiveLiveViewHeaderWidget extends StatelessWidget {
-  final Widget? exitIcon;
   const AmptiveLiveViewHeaderWidget({
     super.key,
     this.exitIcon
   });
+  final Widget? exitIcon;
 
   @override
   Widget build(BuildContext context) {
     return Stack(
       clipBehavior: Clip.none,
       alignment: Alignment.center,
-      children: [
+      children: <Widget>[
         AmptiveHorizSliderAnimationWidget(
           duration: 15.w,
           child: Row(
-            children: [
+            children: <Widget>[
               Text(
                 ATStrings.LIVE,
                 style: Theme.of(context).textTheme.bodyMedium,
@@ -65,7 +65,7 @@ class AmptiveLiveViewHeaderWidget extends StatelessWidget {
             },
             color: ATColors.hexECO404.withOpacity(0.3),
             height: 35, width: 35, boxShape: BoxShape.circle,
-            boxShadow: [
+            boxShadow: <BoxShadow>[
               BoxShadow(
                 color: ATColors.black,
                 blurRadius: 10, spreadRadius: 30,
@@ -79,7 +79,7 @@ class AmptiveLiveViewHeaderWidget extends StatelessWidget {
         Positioned(
           right: 15,
           child: ATContainer(
-            boxShadow: [
+            boxShadow: <BoxShadow>[
               BoxShadow(
                 color: ATColors.black,
                 blurRadius: 10, spreadRadius: 30,
@@ -87,7 +87,7 @@ class AmptiveLiveViewHeaderWidget extends StatelessWidget {
               )
             ],
             child: Row(
-              children: [
+              children: <Widget>[
                 ATContainer(
                   onTap: () => exitIcon == null ? showHostViewOfTopGiftersDialog(context)
                     : showAudienceViewOfTopGiftersDialog(context),
@@ -95,7 +95,7 @@ class AmptiveLiveViewHeaderWidget extends StatelessWidget {
                   radius: 30,
                   color: ATColors.white.withOpacity(0.1),
                   child: Row(
-                    children: [
+                    children: <Widget>[
                       Text(
                         "🎁",
                         style: Theme.of(context).textTheme.bodyMedium?.copyWith(
@@ -128,7 +128,7 @@ class AmptiveLiveViewHeaderWidget extends StatelessWidget {
                   radius: 30,
                   color: ATColors.white.withOpacity(0.1),
                   child: Row(
-                    children: [
+                    children: <Widget>[
                       const ATImgLoader(imgPath: ATImgStrings.USER_ICON),
                       Text(
                         "144k",

@@ -15,7 +15,7 @@ import '../../../../views/widgets/common_widgets/elevated_button_widget.dart';
 class ATSelectBanksCountryScreen extends StatelessWidget {
   const ATSelectBanksCountryScreen({super.key});
 
-  static List<String> countries = ['Nigeria', 'Ghana', 'Kenya', 'South Africa', 'Tanzania'];
+  static List<String> countries = <String>['Nigeria', 'Ghana', 'Kenya', 'South Africa', 'Tanzania'];
 
   @override
   Widget build(BuildContext _) {
@@ -23,7 +23,7 @@ class ATSelectBanksCountryScreen extends StatelessWidget {
       child: BlocProvider(
         create: (_) => _PrivateBloc(),
         child: Builder(
-          builder: (context) {
+          builder: (BuildContext context) {
             return Scaffold(
               appBar: const ATAppBar(
                 leading: ATRoundedBackBtn(),
@@ -36,7 +36,7 @@ class ATSelectBanksCountryScreen extends StatelessWidget {
                 physics: const BouncingScrollPhysics(),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
+                  children: <Widget>[
                     Padding(
                       padding: const EdgeInsets.fromLTRB(15, 10, 15, 20),
                       child: Text(
@@ -49,10 +49,10 @@ class ATSelectBanksCountryScreen extends StatelessWidget {
                     ),
         
                     ...countries.map(
-                      (country){
+                      (String country){
                         return InkWell(
                           onTap: (){
-                            final isSelected = context.read<_PrivateBloc>().state == country;
+                            final bool isSelected = context.read<_PrivateBloc>().state == country;
                             context.read<_PrivateBloc>().selectCountry(
                               isSelected ? null : country,
                             );
@@ -60,7 +60,7 @@ class ATSelectBanksCountryScreen extends StatelessWidget {
                           child: Padding(
                             padding: const EdgeInsets.fromLTRB(15, 10, 15, 10),
                             child: Row(
-                              children: [
+                              children: <Widget>[
                                 Expanded(
                                   child: Text(
                                     country,
@@ -70,8 +70,8 @@ class ATSelectBanksCountryScreen extends StatelessWidget {
                                   ),
                                 ),
                                 BlocBuilder<_PrivateBloc, String?>(
-                                  buildWhen: (prev, curr) => prev == country || curr == country,
-                                  builder: (_, state) {
+                                  buildWhen: (String? prev, String? curr) => prev == country || curr == country,
+                                  builder: (_, String? state) {
                                     return ATRadioBtn(isSelected: state == country);
                                   }
                                 )
@@ -88,10 +88,10 @@ class ATSelectBanksCountryScreen extends StatelessWidget {
               bottomNavigationBar: Padding(
                 padding: const EdgeInsets.fromLTRB(15, 5, 15, 10),
                 child: BlocBuilder<_PrivateBloc, String?>(
-                  builder: (_, state) {
+                  builder: (_, String? state) {
                     return ATPlainElevatedBtn(
                       onPressed: state == null ? null : ()async{
-                        final selectedBank = await selectWithdrawalBankDialog(context);
+                        final String? selectedBank = await selectWithdrawalBankDialog(context);
                         if(context.mounted && selectedBank != null){
                           context.pushReplacementNamed(ATRoutes.ENTER_ACCT_NO, extra: selectedBank);
                         }

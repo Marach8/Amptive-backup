@@ -24,7 +24,7 @@ class TopCreatorBadge extends StatelessWidget {
       gradient: LinearGradient(
         begin: Alignment.topCenter,
         end: Alignment.bottomCenter,
-        colors: [
+        colors: <Color>[
           ATColors.white.withOpacity(0.1),
           ATColors.hex303030.withOpacity(0.1),
           ATColors.white.withOpacity(0.1),
@@ -32,7 +32,7 @@ class TopCreatorBadge extends StatelessWidget {
       ),
       child: Row(
         mainAxisSize: MainAxisSize.min,
-        children: [
+        children: <Widget>[
           const ATImgLoader(imgPath: ATImgStrings.TOP_CREATOR_BADGE),
           const SizedBox(width: 5,),
           Text(

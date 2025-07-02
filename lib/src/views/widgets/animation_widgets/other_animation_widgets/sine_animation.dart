@@ -33,7 +33,7 @@ class _SineWaveImplementerState extends State<SineWaveImplementer>
   @override
   Widget build(BuildContext context) {
     return AnimatedBuilder(
-      builder: (context, child) {
+      builder: (BuildContext context, Widget? child) {
         return CustomPaint(
           painter: SinePainter(_sineController),
           size: const Size(double.infinity, 200),
@@ -44,18 +44,18 @@ class _SineWaveImplementerState extends State<SineWaveImplementer>
   }
 }
 
-class SinePainter extends CustomPainter {
-  final AnimationController controller;
-  final List<int> amplitudeValues = [ 8, 40, 10, 20, 80, 5, 10, 20, 7,  120, 8,
-    20,  160, 80, 250, 10, 20, 40, 80,
-    10, 20, 120, 160, 20,  250, 5, 10, 20]; // Define amplitude values
+class SinePainter extends CustomPainter { // Define amplitude values
 
 
   SinePainter(this.controller);
+  final AnimationController controller;
+  final List<int> amplitudeValues = <int>[ 8, 40, 10, 20, 80, 5, 10, 20, 7,  120, 8,
+    20,  160, 80, 250, 10, 20, 40, 80,
+    10, 20, 120, 160, 20,  250, 5, 10, 20];
 
   @override
   void paint(Canvas canvas, Size size) {
-    var paint = Paint()
+    Paint paint = Paint()
       ..color = ATColors.hex307FE2
       ..style = PaintingStyle.stroke
       ..strokeWidth = 2.0;

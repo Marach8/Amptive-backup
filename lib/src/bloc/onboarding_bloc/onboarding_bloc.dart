@@ -6,8 +6,8 @@ class AmptiveOnboardingBloc extends Bloc<AmptiveOnboardingEvents, AmptiveOnboard
   AmptiveOnboardingBloc(): super(CurrentOnboardingPageViewIndexState(currentPageIndex: 0)){
     
 
-    on<SwipeToAnotherPageOnboardingEvent>((event, emit) {
-      final currentPageIndex = event.indexOfDestinationPage;
+    on<SwipeToAnotherPageOnboardingEvent>((SwipeToAnotherPageOnboardingEvent event, Emitter<AmptiveOnboardingState> emit) {
+      final int currentPageIndex = event.indexOfDestinationPage;
       emit(CurrentOnboardingPageViewIndexState(currentPageIndex: currentPageIndex));
     });
   }

@@ -24,10 +24,10 @@ Future<(int?, bool)?> viewCoHostInviteDetails({
 })async{
   return await showCupertinoModalPopup<(int, bool)>(
     context: context,
-    builder: (dialogContext) => BlocProvider(
+    builder: (BuildContext dialogContext) => BlocProvider(
       create: (_) => _PrivatBloc(),
       child: Builder(
-        builder: (blocContext) {
+        builder: (BuildContext blocContext) {
           return Container(
             padding: const EdgeInsets.fromLTRB(15, 5, 15, 10),
             decoration: BoxDecoration(
@@ -39,7 +39,7 @@ Future<(int?, bool)?> viewCoHostInviteDetails({
             ),
             child: Column(
               mainAxisSize: MainAxisSize.min,
-              children: [
+              children: <Widget>[
                 const ATModalDismisser(),
                 const SizedBox(height: 15),
                 ATCircularImage(diameter: 40, imagePath: hostImg),
@@ -60,8 +60,8 @@ Future<(int?, bool)?> viewCoHostInviteDetails({
           
                 if(coHostFee != null)const SizedBox(height: 15),
                 if(coHostFee != null)BlocSelector<_PrivatBloc, (int?, bool), int?>(
-                  selector: (st) => st.$1,
-                  builder: (_, state) {
+                  selector: ((int?, bool) st) => st.$1,
+                  builder: (_, int? state) {
                     return _PrivateWidget(
                       onTapTitle: '${ATStrings.EDIT} ${ATStrings.COHOST_FEE}'.capitalize,
                       title: ATStrings.ACCEPT_WITH_FEE,
@@ -77,8 +77,8 @@ Future<(int?, bool)?> viewCoHostInviteDetails({
           
                 const SizedBox(height: 15),
                 BlocSelector<_PrivatBloc, (int?, bool), int?>(
-                  selector: (st) => st.$1,
-                  builder: (_, state) {
+                  selector: ((int?, bool) st) => st.$1,
+                  builder: (_, int? state) {
                     return _PrivateWidget(
                       onTapTitle: ATStrings.SETUP_COHOST_FEE,
                       title: ATStrings.ACCEPT_WITHOUT_FEE,
@@ -94,8 +94,8 @@ Future<(int?, bool)?> viewCoHostInviteDetails({
           
                 const SizedBox(height: 15),
                 BlocSelector<_PrivatBloc, (int?, bool), int?>(
-                  selector: (st) => st.$1,
-                  builder: (_, state) {
+                  selector: ((int?, bool) st) => st.$1,
+                  builder: (_, int? state) {
                     return _PrivateWidget(
                       title: ATStrings.DECLINE_REQUEST,
                       isSelected: state == 2, color: ATColors.textRedColor,
@@ -115,10 +115,10 @@ Future<(int?, bool)?> viewCoHostInviteDetails({
                       onTap: () => blocContext.read<_PrivatBloc>().rememberChoice(),
                       child: Row(
                         mainAxisSize: MainAxisSize.min,
-                        children: [
+                        children: <Widget>[
                           BlocSelector<_PrivatBloc, (int?, bool), bool>(
-                            selector: (st) => st.$2,
-                            builder: (_, state) {
+                            selector: ((int?, bool) st) => st.$2,
+                            builder: (_, bool state) {
                               return ATContainer(
                                 duration: 0,
                                 height: 15, width: 15, radius: 3,
@@ -155,7 +155,7 @@ Future<(int?, bool)?> viewCoHostInviteDetails({
                 ),
                 const SizedBox(height: 15),
                 BlocBuilder<_PrivatBloc, (int?, bool)>(
-                  builder: (_, state) {
+                  builder: (_, (int?, bool) state) {
                     return ATPlainElevatedBtn(
                       fgColor: ATColors.black, bgColor: ATColors.white,
                       onPressed: state.$1 != null ? () => dialogContext.pop(state) : null,
@@ -203,7 +203,7 @@ class _PrivateWidget extends StatelessWidget {
 
 
   @override
-  Widget build(context) {
+  Widget build(BuildContext context) {
     return ATContainer(
       onTap: onSelected,
       color: color ?? ATColors.hex9E9E9E.withValues(alpha: 0.3),
@@ -212,14 +212,14 @@ class _PrivateWidget extends StatelessWidget {
       border: isSelected ? Border.all(color: ATColors.hex307FE2, width: 0.5) : null,
       width: double.infinity,
       child: Column(
-        children: [
+        children: <Widget>[
           Row(
-            children: [
+            children: <Widget>[
               Expanded(
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
+                  children: <Widget>[
                     Text(
                       title,
                       style: Theme.of(context).textTheme.bodySmall?.copyWith(
@@ -246,7 +246,7 @@ class _PrivateWidget extends StatelessWidget {
             padding: const EdgeInsets.only(top: 10),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
+              children: <Widget>[
                 ATContainer(
                   onTap: leadingOntap,
                   padding: const EdgeInsets.fromLTRB(10, 8, 10, 8),

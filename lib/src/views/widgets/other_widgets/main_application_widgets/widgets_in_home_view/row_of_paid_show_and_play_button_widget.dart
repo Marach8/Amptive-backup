@@ -6,17 +6,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class AmptiveRowOfPaidShowAndPlayButtonWidget extends StatelessWidget {
-  final IconData? icon;
   const AmptiveRowOfPaidShowAndPlayButtonWidget({
     super.key,
     this.icon
   });
+  final IconData? icon;
 
   @override
   Widget build(BuildContext context) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
+      children: <Widget>[
         Padding(
           padding:  EdgeInsets.only(top: 18.0.h),
           child: Container(
@@ -38,7 +38,7 @@ class AmptiveRowOfPaidShowAndPlayButtonWidget extends StatelessWidget {
           height: 45,
           width: 45,
           child: CircleAvatar(
-            backgroundColor: ATColors.authHintColor,
+            backgroundColor: ATColors.hexB6B6B6,
             child: Icon(icon ?? Icons.play_arrow, color: ATColors.hex0D0D0D,
             size: 30)
           ),

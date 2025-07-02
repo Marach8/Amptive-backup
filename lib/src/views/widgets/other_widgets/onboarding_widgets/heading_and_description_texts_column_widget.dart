@@ -3,14 +3,14 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 
 class AmptiveOnboardingHeadingAndDescriptionTextsColumnWidget extends StatelessWidget {
-  final String title;
-  final String description;
 
   const AmptiveOnboardingHeadingAndDescriptionTextsColumnWidget({
     super.key,
     required this.title,
     required this.description,
   });
+  final String title;
+  final String description;
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +19,7 @@ class AmptiveOnboardingHeadingAndDescriptionTextsColumnWidget extends StatelessW
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       crossAxisAlignment: CrossAxisAlignment.start,
       
-      children: [
+      children: <Widget>[
         Text(
           title,
           style: Theme.of(context).textTheme.displayMedium,

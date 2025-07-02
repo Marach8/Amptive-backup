@@ -21,7 +21,7 @@ class NoOfFollowers extends StatelessWidget {
       onTap: () => context.pushNamed(ATRoutes.PROFILE_FOLLOWING_SCREEN),
       child: Row(
         mainAxisSize: MainAxisSize.min,
-        children: [
+        children: <Widget>[
           CustomPaint(
             size: const Size(16, 16),
             painter: RoundedScallopedPainter(

@@ -2,23 +2,23 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 class AmptiveEndShowBloc extends Bloc<EndShowEvent, EndShowState>{
   AmptiveEndShowBloc(): super(ConfirmEndShowState()){
-    on<Proceed2EndShowEvent>((_, emit){
+    on<Proceed2EndShowEvent>((_, Emitter<EndShowState> emit){
       emit(EndShowIsLoadingState());
     });
 
-    on<ShowNoOfListenersEvent>((_, emit){
+    on<ShowNoOfListenersEvent>((_, Emitter<EndShowState> emit){
       emit(ShowNoOfListenersState());
     });
 
-    on<ShowNoOfGiftsEvent>((_, emit){
+    on<ShowNoOfGiftsEvent>((_, Emitter<EndShowState> emit){
       emit(ShowNoOfGiftsState());
     });
 
-    on<ShowBlankScreenEvent>((_, emit){
+    on<ShowBlankScreenEvent>((_, Emitter<EndShowState> emit){
       emit(ShowBlankScreenState());
     });
 
-    on<Reset2IntialStateEvent>((_, emit){
+    on<Reset2IntialStateEvent>((_, Emitter<EndShowState> emit){
       emit(ConfirmEndShowState());
     });
   }

@@ -66,7 +66,7 @@ class _TempLState extends State<TempL> with SingleTickerProviderStateMixin {
       child: Scaffold(
         backgroundColor: ATColors.hex0D0D0D,
         body: Stack(
-          children: [
+          children: <Widget>[
             Positioned(
               top: 57.h,
               left: -108.w,
@@ -78,7 +78,7 @@ class _TempLState extends State<TempL> with SingleTickerProviderStateMixin {
                 ),
                 child: AnimatedBuilder(
                   animation: _animation,
-                  builder: (child, animation){
+                  builder: (BuildContext child, Widget? animation){
                     return Opacity(
                       opacity: _animation.value,
                       child: _isFirstImage
@@ -104,7 +104,7 @@ class _TempLState extends State<TempL> with SingleTickerProviderStateMixin {
 
                   child:  AnimatedBuilder(
                   animation: _animation,
-                  builder: (child, animation){
+                  builder: (BuildContext child, Widget? animation){
                     return Opacity(
                       opacity: _animation.value,
                       child: _isFirstImage

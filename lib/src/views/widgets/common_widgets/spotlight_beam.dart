@@ -32,7 +32,7 @@ class SpotlightBeam extends StatelessWidget {
 class SpotlightClipper extends CustomClipper<Path> {
   @override
   Path getClip(Size size) {
-    final path = Path();
+    final Path path = Path();
     path.moveTo(size.width / 2 - 30, 0);
     path.lineTo(0, size.height);
     path.lineTo(size.width, size.height);

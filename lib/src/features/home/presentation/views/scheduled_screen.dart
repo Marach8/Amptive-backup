@@ -4,7 +4,6 @@ import 'package:amptive/src/utils/constants/strings/route_strings.dart';
 import 'package:amptive/src/views/widgets/common_widgets/annotated_region__widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/refresh_indicator.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import '../../../../utils/constants/colors.dart';
 import '../../../../views/widgets/common_widgets/back_button.dart';
@@ -24,7 +23,7 @@ class ATScheduledPrograms extends StatelessWidget {
         body: SafeArea(
           child: NestedScrollView(
             floatHeaderSlivers: true,
-            headerSliverBuilder: (_, __) => [
+            headerSliverBuilder: (_, __) => <Widget>[
               SliverAppBar(
                 floating: true,   
                 leadingWidth: 200,
@@ -53,7 +52,7 @@ class ATScheduledPrograms extends StatelessWidget {
               child: ListView( 
                 physics: const BouncingScrollPhysics(),             
                 padding: EdgeInsets.zero,
-                children: [      
+                children: <Widget>[      
                   ...Iterable.generate(
                     10,
                     (_) => Padding(

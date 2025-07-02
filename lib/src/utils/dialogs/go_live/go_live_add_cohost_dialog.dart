@@ -28,10 +28,10 @@ import '../add_co_host_dialog.dart';
 Future<bool?> showGoLiveHostAddCoHostDialog({
   required BuildContext context,
 }) async {
-final focusNode = FocusNode();
-final controller = TextEditingController();
+final FocusNode focusNode = FocusNode();
+final TextEditingController controller = TextEditingController();
 
-final showSuffixIconNotifier = ValueNotifier(false);
+final ValueNotifier<bool> showSuffixIconNotifier = ValueNotifier(false);
   focusNode.addListener(
     () => focusNode.hasFocus
       ? showSuffixIconNotifier.value = true
@@ -47,11 +47,11 @@ final showSuffixIconNotifier = ValueNotifier(false);
       isScrollControlled: true,
       useSafeArea: true,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(0)),
-      builder: (context) {
+      builder: (BuildContext context) {
         return BackdropFilter(
           filter: ImageFilter.blur(sigmaX: 1, sigmaY: 1),
           child: Stack(
-            children: [
+            children: <Widget>[
               Positioned.fill(
                 child: SingleChildScrollView(
                   physics: const BouncingScrollPhysics(),
@@ -61,7 +61,7 @@ final showSuffixIconNotifier = ValueNotifier(false);
                   ),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
+                    children: <Widget>[
                       Center(
                         child: GestureDetector(
                           onTap: () => context.pop(false),
@@ -80,16 +80,16 @@ final showSuffixIconNotifier = ValueNotifier(false);
                         ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.end,
-                          children: [
+                          children: <Widget>[
                             Text(
                               ATStrings.ADD_CO_HOST,
                               style: Theme.of(context).textTheme.bodyLarge,
                             ),
                             Gap(60.w),
                             BlocBuilder<AmptiveGoLiveSelectCoHostBloc, List<ObjectWithNotifier<Host>>>(
-                              builder: (_, listOfCoHosts) {
-                                final number = listOfCoHosts.where(
-                                  (coHost) => (coHost.obj.profilePicture ?? '').isNotEmpty
+                              builder: (_, List<ObjectWithNotifier<Host>> listOfCoHosts) {
+                                final int number = listOfCoHosts.where(
+                                  (ObjectWithNotifier<Host> coHost) => (coHost.obj.profilePicture ?? '').isNotEmpty
                                 ).length;
           
                                 return Text(
@@ -118,7 +118,7 @@ final showSuffixIconNotifier = ValueNotifier(false);
                           controller: controller,
                           focusNode: focusNode,
                           disableBlueBorder: true,
-                          onChanged: (text) => ATHelperFuncs.callDebouncer(
+                          onChanged: (String text) => ATHelperFuncs.callDebouncer(
                             200,
                             () => context.read<AmptiveGoLiveAvailableCoHostsBloc>().add(
                               SearchCohostEvent(searchKey: text)
@@ -132,7 +132,7 @@ final showSuffixIconNotifier = ValueNotifier(false);
                           ),
                           suffixIcon: AmptiveRebuilderWidget(
                             notifier: showSuffixIconNotifier,
-                            builder: (_, shouldShow, __) {
+                            builder: (_, bool shouldShow, __) {
                               return ATAnimatedCrossFade(
                                 condition: shouldShow,
                                 secondChild: const SizedBox.shrink(),
@@ -150,9 +150,9 @@ final showSuffixIconNotifier = ValueNotifier(false);
           
           
                         BlocBuilder<AmptiveGoLiveSelectCoHostBloc, List<ObjectWithNotifier<Host>>>(
-                          builder: (_, listOfCohosts) {
-                            final showSelectedCohosts = listOfCohosts.any(
-                              (cohost) => (cohost.obj.profilePicture ?? '').isNotEmpty
+                          builder: (_, List<ObjectWithNotifier<Host>> listOfCohosts) {
+                            final bool showSelectedCohosts = listOfCohosts.any(
+                              (ObjectWithNotifier<Host> cohost) => (cohost.obj.profilePicture ?? '').isNotEmpty
                             );
           
                             return ATAnimatedCrossFade(
@@ -165,9 +165,9 @@ final showSuffixIconNotifier = ValueNotifier(false);
                                   scrollDirection: Axis.horizontal,
                                   child: Row(
                                     children: listOfCohosts.map(
-                                      (cohost) {
-                                        final showCoHost = (cohost.obj.profilePicture ?? '').isNotEmpty;
-                                        final index = listOfCohosts.indexOf(cohost);
+                                      (ObjectWithNotifier<Host> cohost) {
+                                        final bool showCoHost = (cohost.obj.profilePicture ?? '').isNotEmpty;
+                                        final int index = listOfCohosts.indexOf(cohost);
                                         
                                         if(!showCoHost){
                                           return ATContainer(
@@ -188,7 +188,7 @@ final showSuffixIconNotifier = ValueNotifier(false);
                                           padding: const EdgeInsets.only(right: 15),
                                           child: Stack(
                                             clipBehavior: Clip.none,
-                                            children: [
+                                            children: <Widget>[
                                               ATContainer(
                                                 clipBehavior: Clip.hardEdge,
                                                 height: 43, width: 43, radius: 30,
@@ -228,13 +228,13 @@ final showSuffixIconNotifier = ValueNotifier(false);
           
                         //Column of cohosts
                         BlocBuilder<AmptiveGoLiveAvailableCoHostsBloc, AmptiveCohostsState>(
-                          builder: (_, cohostState) {
+                          builder: (_, AmptiveCohostsState cohostState) {
                             if(cohostState is CohostsLoadingState){
                               return const ATLoadingIndicator();
                             }
                             
                             return AmptiveListOfCoHostsWidget(
-                              availableCoHosts: cohostState.cohosts ?? []
+                              availableCoHosts: cohostState.cohosts ?? <ObjectWithNotifier<Host>>[]
                             );
                           }
                         ),
@@ -262,9 +262,9 @@ final showSuffixIconNotifier = ValueNotifier(false);
                   padding: const EdgeInsets.symmetric(horizontal: 15),
                   width: ATHelperFuncs.getScreenWidth(context),
                   child: BlocBuilder<AmptiveGoLiveSelectCoHostBloc, List<ObjectWithNotifier<Host>>>(
-                    builder: (_, listOfCohosts) {
-                      final shouldActivateBtn = listOfCohosts.any(
-                        (cohost) => (cohost.obj.profilePicture ?? '').isNotEmpty
+                    builder: (_, List<ObjectWithNotifier<Host>> listOfCohosts) {
+                      final bool shouldActivateBtn = listOfCohosts.any(
+                        (ObjectWithNotifier<Host> cohost) => (cohost.obj.profilePicture ?? '').isNotEmpty
                       );
                       return AmptiveElevatedButtonWidget(
                         margin: EdgeInsets.zero,
@@ -287,20 +287,20 @@ final showSuffixIconNotifier = ValueNotifier(false);
 
 
 class AmptiveListOfCoHostsWidget extends StatelessWidget {
-  final List<ObjectWithNotifier<Host>> availableCoHosts;
-  final CreateShowService service = GetIt.I<CreateShowService>();
 
   AmptiveListOfCoHostsWidget({
     super.key,
     required this.availableCoHosts,
   });
+  final List<ObjectWithNotifier<Host>> availableCoHosts;
+  final CreateShowService service = GetIt.I<CreateShowService>();
 
   @override
-  Widget build(context) {
+  Widget build(BuildContext context) {
     if (availableCoHosts.isEmpty) {
       return Column(
         crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
+        children: <Widget>[
           Text(
             ATStrings.NO_SUGGESTIONS,
             style: Theme.of(context).textTheme.bodyMedium
@@ -321,11 +321,11 @@ class AmptiveListOfCoHostsWidget extends StatelessWidget {
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: availableCoHosts.map(
-        (coHost) {
+        (ObjectWithNotifier<Host> coHost) {
           //final index = availableCoHosts.indexOf(coHost);
           return AmptiveCoHostWidget(
             coHostDetail: coHost,
-            onTap: (host, isSelected) {
+            onTap: (ObjectWithNotifier<Host> host, bool isSelected) {
               if (isSelected) {         
                 context.read<AmptiveGoLiveSelectCoHostBloc>().hostRemoveCohost(coHost);
               } else {

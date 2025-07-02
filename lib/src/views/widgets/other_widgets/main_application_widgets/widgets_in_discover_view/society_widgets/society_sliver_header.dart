@@ -4,15 +4,15 @@ import '../../../../../../utils/constants/colors.dart';
 import '../../../../common_widgets/custom_container_widget.dart';
 
 class AmptiveSocietySliverHeader extends SliverPersistentHeaderDelegate{
-  final TabController tabController;
-  final ValueNotifier<int> notifier;
-  final TabBar? tabBar;
 
   AmptiveSocietySliverHeader({
     required this.tabController,
     required this.notifier,
     this.tabBar
   });
+  final TabController tabController;
+  final ValueNotifier<int> notifier;
+  final TabBar? tabBar;
 
   @override
   Widget build(BuildContext context, double shrinkOffset, bool overlapsContent) {
@@ -29,13 +29,13 @@ class AmptiveSocietySliverHeader extends SliverPersistentHeaderDelegate{
         padding: const EdgeInsets.only(left: 15),
         isScrollable: true,
         dividerColor: ATColors.hex0D0D0D,
-        tabs: ['All', 'Shows', 'Events'].asMap().entries.map(
-          (tab){              
+        tabs: <String>['All', 'Shows', 'Events'].asMap().entries.map(
+          (MapEntry<int, String> tab){              
             return Tab(
               child: ValueListenableBuilder(
               valueListenable: notifier,
-              builder: (_, value, __) {
-                final isSelected = tab.key == value;
+              builder: (_, int value, __) {
+                final bool isSelected = tab.key == value;
                   return ATContainer(
                     radius: 20,
                     margin: const EdgeInsets.only(right: 10),

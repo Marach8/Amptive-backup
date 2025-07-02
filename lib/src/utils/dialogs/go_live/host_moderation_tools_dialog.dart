@@ -26,7 +26,7 @@ Future<void> showHostModerationToolsDialog(BuildContext context) async {
       borderRadius: BorderRadius.only(
       topLeft: Radius.circular(15), topRight: Radius.circular(15),
     )),
-    builder: (context) {
+    builder: (BuildContext context) {
       return ClipRRect(
         borderRadius: const BorderRadius.only(
           topLeft: Radius.circular(15), topRight: Radius.circular(15),
@@ -39,7 +39,7 @@ Future<void> showHostModerationToolsDialog(BuildContext context) async {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisSize: MainAxisSize.min,
-              children: [
+              children: <Widget>[
                 Center(
                   child: GestureDetector(
                     onTap: () => context.pop(),
@@ -66,9 +66,9 @@ Future<void> showHostModerationToolsDialog(BuildContext context) async {
                     title: ATStrings.ALLOW_COMMENTS,
                     icon: Iconsax.message,
                     trailing: BlocConsumer<AmptiveGoLiveHostModerationToolsBloc, List<bool>>(
-                      listenWhen: (prev, curr) => prev.first != curr.first,
-                      buildWhen: (prev, curr) => prev.first != curr.first,
-                      listener: (_, state){
+                      listenWhen: (List<bool> prev, List<bool> curr) => prev.first != curr.first,
+                      buildWhen: (List<bool> prev, List<bool> curr) => prev.first != curr.first,
+                      listener: (_, List<bool> state){
                         if(state[1]){
                           showAppNotification(
                           context: context,
@@ -84,10 +84,10 @@ Future<void> showHostModerationToolsDialog(BuildContext context) async {
                           );
                         }
                       },
-                      builder: (_, state) {
+                      builder: (_, List<bool> state) {
                         return AmptiveSwitch(
                           value: state.first,
-                          onChanged: (value) => value ?
+                          onChanged: (bool value) => value ?
                           context.read<AmptiveGoLiveHostModerationToolsBloc>().allowComments()
                           : context.read<AmptiveGoLiveHostModerationToolsBloc>().disableComments()
                         );
@@ -100,9 +100,9 @@ Future<void> showHostModerationToolsDialog(BuildContext context) async {
                     icon: Icons.mic,
                     subtitle: ATStrings.NEED_2_ENABLE_LISTENERS_MIC,
                     trailing: BlocConsumer<AmptiveGoLiveHostModerationToolsBloc, List<bool>>(
-                      listenWhen: (prev, curr) => prev[1] != curr[1],
-                      buildWhen: (prev, curr) => prev[1] != curr[1],
-                      listener: (_, state){
+                      listenWhen: (List<bool> prev, List<bool> curr) => prev[1] != curr[1],
+                      buildWhen: (List<bool> prev, List<bool> curr) => prev[1] != curr[1],
+                      listener: (_, List<bool> state){
                         if(state[1]){
                           showAppNotification(
                           context: context,
@@ -118,10 +118,10 @@ Future<void> showHostModerationToolsDialog(BuildContext context) async {
                           );
                         }
                       },
-                      builder: (_, state) {
+                      builder: (_, List<bool> state) {
                         return AmptiveSwitch(
                           value: state[1],
-                          onChanged: (value) => value ?
+                          onChanged: (bool value) => value ?
                           context.read<AmptiveGoLiveHostModerationToolsBloc>().allowAudienceMic()
                           : context.read<AmptiveGoLiveHostModerationToolsBloc>().disableAudienceMic()
                         );
@@ -133,9 +133,9 @@ Future<void> showHostModerationToolsDialog(BuildContext context) async {
                     title: ATStrings.ALLOW_COMMENTS,
                     icon: Icons.front_hand_outlined,
                     trailing: BlocConsumer<AmptiveGoLiveHostModerationToolsBloc, List<bool>>(
-                      listenWhen: (prev, curr) => prev.last != curr.last,
-                      buildWhen: (prev, curr) => prev.last != curr.last,
-                      listener: (_, state){
+                      listenWhen: (List<bool> prev, List<bool> curr) => prev.last != curr.last,
+                      buildWhen: (List<bool> prev, List<bool> curr) => prev.last != curr.last,
+                      listener: (_, List<bool> state){
                         if(state.last){
                           showAppNotification(
                             context: context,
@@ -151,10 +151,10 @@ Future<void> showHostModerationToolsDialog(BuildContext context) async {
                           );
                         }
                       },
-                      builder: (_, state) {
+                      builder: (_, List<bool> state) {
                         return AmptiveSwitch(
                           value: state.last,
-                          onChanged: (value) => value ?
+                          onChanged: (bool value) => value ?
                           context.read<AmptiveGoLiveHostModerationToolsBloc>().allowHandRaising()
                           : context.read<AmptiveGoLiveHostModerationToolsBloc>().disableHandRaising()
                         );
@@ -173,30 +173,30 @@ Future<void> showHostModerationToolsDialog(BuildContext context) async {
 
 
 class _CustomRow extends StatelessWidget {
-  final IconData icon;
-  final String title;
-  final Widget trailing;
-  final String? subtitle;
   const _CustomRow({
     required this.icon,
     required this.title,
     required this.trailing,
     this.subtitle
   });
+  final IconData icon;
+  final String title;
+  final Widget trailing;
+  final String? subtitle;
 
   @override
-  Widget build(context) {
+  Widget build(BuildContext context) {
     return SizedBox(
       width: ATHelperFuncs.getScreenWidth(context),
       child: Row(
-        children: [
+        children: <Widget>[
           Icon(icon),
           const Gap(10),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisSize: MainAxisSize.min,
-              children: [
+              children: <Widget>[
                 Text(
                   title,
                   style: Theme.of(context).textTheme.titleLarge?.copyWith(

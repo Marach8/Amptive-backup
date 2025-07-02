@@ -27,7 +27,7 @@ class ATScaleUpAndDownWidget extends StatelessWidget {
       borderRadius: BorderRadius.circular(5),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
+        children: <Widget>[
           ATContainer(
             duration: 200, height: 120, radius: 5,
             clipBehavior: Clip.hardEdge,

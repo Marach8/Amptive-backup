@@ -50,7 +50,7 @@ Future<bool?> showConfirmationDialog({
           const ATDivider(),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
+            children: <Widget>[
               GestureDetector(
                 onTap: () => context.pop(true),
                 child: Text(
@@ -103,10 +103,10 @@ Future<bool?> showKickOutConfirmationDialog({
 
       content: Column(
         mainAxisSize: MainAxisSize.min,
-        children: [
+        children: <Widget>[
           Stack(
             clipBehavior: Clip.none,
-            children: [
+            children: <Widget>[
               ATContainer(
                 clipBehavior: Clip.hardEdge,
                 height: 43, width: 43, radius: 30,

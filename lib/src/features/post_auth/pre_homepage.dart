@@ -74,7 +74,7 @@ class _PreHomePageState extends State<PreHomePage>
       child: Scaffold(
         backgroundColor: ATColors.hex0D0D0D,
         body: Stack(
-          children: [
+          children: <Widget>[
             Positioned(
               top: 104.h,
               left: -178.w,
@@ -100,7 +100,7 @@ class _PreHomePageState extends State<PreHomePage>
             Container(
               padding: EdgeInsets.symmetric(horizontal: 35.w),
               child: Column(
-                children: [
+                children: <Widget>[
                   SizedBox(
                     height: 73.h,
                   ),
@@ -152,7 +152,7 @@ class _PreHomePageState extends State<PreHomePage>
                               topRight: Radius.circular(40.r),
                             ),
                           ),
-                          shadows: [
+                          shadows: <BoxShadow>[
                             BoxShadow(
                               color: const Color(0x3F000000),
                               blurRadius: 4.r,
@@ -165,7 +165,7 @@ class _PreHomePageState extends State<PreHomePage>
                             mainAxisSize: MainAxisSize.min,
                             mainAxisAlignment: MainAxisAlignment.end,
                             crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
+                            children: <Widget>[
                               Container(
                                 width: 60.w,
                                 height: 18.h,
@@ -196,7 +196,7 @@ class _PreHomePageState extends State<PreHomePage>
                 padding: EdgeInsets.only(left: 25.w),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
+                  children: <Widget>[
                     SizedBox(
                       height: 22.h,
                     ),

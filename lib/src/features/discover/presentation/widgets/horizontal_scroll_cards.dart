@@ -16,7 +16,7 @@ class HorizontalScrollCards extends StatefulWidget {
 
 class _HorizontalScrollCardsState extends State<HorizontalScrollCards> {
   final ValueNotifier<int> _indexNotifier = ValueNotifier(0);
-  final _adverts = [
+  final List<String> _adverts = <String>[
     ATImgStrings.discoverPic1,
     ATImgStrings.discoverPic1,
     ATImgStrings.discoverPic1
@@ -30,16 +30,16 @@ class _HorizontalScrollCardsState extends State<HorizontalScrollCards> {
   }
 
   @override
-  Widget build(context) {
+  Widget build(BuildContext context) {
     return SizedBox(
       height: 260,
       width: ATHelperFuncs.getScreenWidth(context),
       child: Column(
-        children: [
+        children: <Widget>[
           CarouselSlider.builder(
             itemCount: _adverts.length,
-            itemBuilder: (_, pageIndex, __){
-              final advert = _adverts.elementAtOrNull(pageIndex);
+            itemBuilder: (_, int pageIndex, __){
+              final String? advert = _adverts.elementAtOrNull(pageIndex);
               return ATImgLoader(imgPath: advert ?? '');
             },
             options: CarouselOptions(
@@ -47,7 +47,7 @@ class _HorizontalScrollCardsState extends State<HorizontalScrollCards> {
               scrollPhysics: const BouncingScrollPhysics(),
               autoPlayCurve: Curves.decelerate,
               autoPlayInterval: const Duration(seconds: 5),
-              onPageChanged: (pageIndex, _) => _indexNotifier.value = pageIndex
+              onPageChanged: (int pageIndex, _) => _indexNotifier.value = pageIndex
             )
           ),
           const Spacer(),
@@ -57,11 +57,11 @@ class _HorizontalScrollCardsState extends State<HorizontalScrollCards> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: List.generate(
                 3,
-                (index){
+                (int index){
                   return AmptiveRebuilderWidget(
                     notifier: _indexNotifier,
-                    builder: (_, value, __){
-                      final isActive = index == value;
+                    builder: (_, int value, __){
+                      final bool isActive = index == value;
                       return ATContainer(
                         margin: const EdgeInsets.only(left: 3),
                         radius: 8, height: 8,

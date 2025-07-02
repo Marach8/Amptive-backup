@@ -1,0 +1,130 @@
+import 'package:amptive/src/features/home/home_export.dart';
+import 'package:amptive/src/views/widgets/common_widgets/back_button.dart';
+import 'package:amptive/src/views/widgets/common_widgets/custom_container_widget.dart';
+import 'package:amptive/src/views/widgets/common_widgets/image_loader_widget.dart';
+import 'package:flutter/material.dart';
+import 'package:amptive/src/utils/constants/strings/other_strings.dart';
+import 'package:amptive/src/views/widgets/common_widgets/annotated_region__widget.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import '../../../../utils/constants/colors.dart';
+import '../../../../utils/constants/font_sizes.dart';
+import '../../../../utils/constants/strings/image_strings.dart';
+import '../../../../views/widgets/common_widgets/sliver_header_delegate.dart';
+import '../widgets/trending_society_hashtag_widget.dart';
+
+class SocietyHastagScreen extends StatelessWidget {
+  const SocietyHastagScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return ATAnnotatedRegion(
+      statusBarColor: ATColors.trsprnt,
+      child: Scaffold(
+        body: BlocProvider<ScrollResponsiveBlurredHeaderBloc>(
+          create: (_) => ScrollResponsiveBlurredHeaderBloc(),
+          child: Builder(
+            builder: (BuildContext blocContext) {
+              return NotificationListener<ScrollNotification>(
+                onNotification: blocContext.read<ScrollResponsiveBlurredHeaderBloc>().onScrollNotification,
+                child: CustomScrollView(
+                  physics: const BouncingScrollPhysics(),
+                  slivers: <Widget>[
+                    SliverPersistentHeader(
+                      pinned: true,
+                      delegate: ATSliverHDelegate(
+                        maxExt: kToolbarHeight + MediaQuery.paddingOf(context).top,
+                        minExt: kToolbarHeight + MediaQuery.paddingOf(context).top,
+                        child: ScrollResponsiveBlurredHeader(
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: <Widget>[
+                              Padding(
+                                padding: const EdgeInsets.only(left: 4),
+                                child: ATRoundedBackBtn(bgColor: ATColors.trsprnt,),
+                              ),
+                              Text(
+                                ATStrings.HASH + ATStrings.SOCIETY.toLowerCase(),
+                                style: Theme.of(context).textTheme.bodyMedium,
+                              ),
+                              const SizedBox(width: 30,)
+                            ],
+                          ),
+                        )
+                      ),
+                    ),
+        
+                    SliverToBoxAdapter(
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 15),
+                        child: Row(
+                          children: <Widget>[
+                            ATContainer(
+                              alignment: Alignment.center,
+                              height: 40, width: 40,
+                              boxShape: BoxShape.circle,
+                              color: ATColors.white,
+                              child: ColorFiltered(
+                                colorFilter: ColorFilter.mode(
+                                  ATColors.black,
+                                  BlendMode.srcATop
+                                ),
+                                child: const ATImgLoader(
+                                  imgPath: ATImgStrings.HASH_ICON,
+                                  height: 25, width: 25,
+                                ),
+                              ),
+                            ),
+                            const SizedBox(width: 10,),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: <Widget>[
+                                Text(
+                                  ATStrings.HASH + ATStrings.SOCIETY,
+                                  style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                                    fontSize: ATFontSizes.size15
+                                  ),
+                                ),
+                                Text(
+                                 'ankira22, emmanuel, and 15k others are live',
+                                  style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                                    fontSize: ATFontSizes.size13,
+                                    color: ATColors.hexA8A8A8
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                          
+                    const SliverToBoxAdapter(child: SizedBox(height: 15,)),
+                          
+                    SliverPadding(
+                      padding: const EdgeInsets.symmetric(horizontal: 15),
+                      sliver: SliverGrid(
+                        delegate: SliverChildListDelegate.fixed(
+                          List<Widget>.generate(
+                            28,
+                            (_) => const TrendingSocietyHashtagWidget(trendingPicture: ATImgStrings.weCanDoHardThingsBgImage)
+                          ).toList()
+                        ),
+                        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 2,
+                          crossAxisSpacing: 15,
+                          mainAxisSpacing: 18,
+                          childAspectRatio: 0.72
+                        )
+                      ),
+                    )
+                  ],
+                ),
+              );
+            }
+          ),
+        ),
+      ),
+    );
+
+  }
+}

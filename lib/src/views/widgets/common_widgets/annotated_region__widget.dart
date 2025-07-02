@@ -3,14 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 class ATAnnotatedRegion extends StatelessWidget {
-  final Widget child;
-  final Color? statusBarColor;
 
   const ATAnnotatedRegion({
     super.key,
     required this.child,
     this.statusBarColor
   });
+  final Widget child;
+  final Color? statusBarColor;
 
   @override
   Widget build(BuildContext context) {

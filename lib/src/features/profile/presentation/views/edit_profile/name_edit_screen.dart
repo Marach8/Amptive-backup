@@ -28,7 +28,7 @@ class _EditNameScreen extends State<EditNameScreen > {
   }
 
   void _handleTextChange() {
-    final isDifferent = _cntrl.text.isNotEmpty && 
+    final bool isDifferent = _cntrl.text.isNotEmpty && 
       (_cntrl.text.trim() != widget.initialName);
     if (btnActive != isDifferent) {
       setState(() => btnActive = isDifferent);
@@ -56,7 +56,7 @@ class _EditNameScreen extends State<EditNameScreen > {
           padding: const EdgeInsets.fromLTRB(15, 10, 15, 0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
+            children: <Widget>[
               ATTextFormField(controller: _cntrl),
               const SizedBox(height: 10),
               Text(

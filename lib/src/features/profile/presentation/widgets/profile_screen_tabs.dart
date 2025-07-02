@@ -15,22 +15,22 @@ class ProfileScreenTabs extends StatelessWidget {
   final List<String> tabs;
 
   @override
-  Widget build(context) {
+  Widget build(BuildContext context) {
     return ATContainer(
       color: ATColors.black,             
       child: BlocBuilder<ProfileTabViewBloc, int>(
-        builder: (_, state) {
+        builder: (_, int state) {
           return SingleChildScrollView(
             scrollDirection: Axis.horizontal,
             physics: const BouncingScrollPhysics(),
             child: Row(        
               mainAxisAlignment: MainAxisAlignment.spaceBetween,            
-              children: [
+              children: <Widget>[
                 const SizedBox(width: 15,),
                 ...tabs.map(
-                  (string){
-                    final index = tabs.indexOf(string);
-                    final isSelected = index == state;
+                  (String string){
+                    final int index = tabs.indexOf(string);
+                    final bool isSelected = index == state;
                     return ATContainer(
                       curve: Curves.decelerate,
                       alignment: Alignment.center, radius: 50,

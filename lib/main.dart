@@ -28,7 +28,7 @@ class AmptiveApp extends StatelessWidget {
       designSize: const Size(390, 844),
       minTextAdapt: true,
       splitScreenMode: true,
-      builder: (_, child) {
+      builder: (_, Widget? child) {
         return MaterialApp.router(
           scaffoldMessengerKey: scaffoldMessengerKey,
           debugShowCheckedModeBanner: false,
@@ -46,4 +46,4 @@ class AmptiveApp extends StatelessWidget {
 }
 
 
-final scaffoldMessengerKey = GlobalKey<ScaffoldMessengerState>();
+final GlobalKey<ScaffoldMessengerState> scaffoldMessengerKey = GlobalKey<ScaffoldMessengerState>();

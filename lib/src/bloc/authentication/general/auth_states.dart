@@ -5,17 +5,17 @@ import 'package:country_pickers/country.dart';
 abstract class AmptiveAuthState {}
 
 abstract class SelectCountryCodeState extends AmptiveAuthState {
-  final Country selectedCountry;
 
   SelectCountryCodeState({required this.selectedCountry});
+  final Country selectedCountry;
 }
 
 class InitialAuthState extends AmptiveAuthState {}
 
 class EditDOBAuthState extends AmptiveAuthState {
-  DateTime? dob;
 
   EditDOBAuthState({this.dob});
+  DateTime? dob;
 }
 
 class HideOrShowPasswordAuthState extends AmptiveAuthState {}
@@ -29,15 +29,15 @@ class NameChangedState extends AmptiveAuthState {}
 class AddProfilePictureState extends AmptiveAuthState {}
 
 class ProfilePictureAddedState extends AmptiveAuthState {
-  final Uint8List? image;
 
   ProfilePictureAddedState({required this.image});
+  final Uint8List? image;
 }
 
 class AddPhoneNumberState extends AmptiveAuthState {
-  final bool isPhoneValid;
 
   AddPhoneNumberState({required this.isPhoneValid});
+  final bool isPhoneValid;
 }
 
 class OpenCountryBottomSheetState extends SelectCountryCodeState {

@@ -29,8 +29,8 @@ import '../../../../views/widgets/other_widgets/main_application_widgets/widgets
 
 
 class AmptiveGoLiveHostView extends StatefulWidget {
-  final ObjectWithNotifier<Host> goLiveHost;
   const AmptiveGoLiveHostView({super.key, required this.goLiveHost});
+  final ObjectWithNotifier<Host> goLiveHost;
 
   @override
   State<AmptiveGoLiveHostView> createState() => _AmptiveGoLiveHostViewState();
@@ -80,12 +80,12 @@ class _AmptiveGoLiveHostViewState extends State<AmptiveGoLiveHostView> {
 
 
   @override
-  Widget build(context) {
+  Widget build(BuildContext context) {
     return ATAnnotatedRegion(
       child: Scaffold(
         body: SafeArea(
           child: Column(
-            children: [
+            children: <Widget>[
               const Gap(10),
               //const AmptiveLiveViewHeaderWidget(),
               const Gap(30),
@@ -99,7 +99,7 @@ class _AmptiveGoLiveHostViewState extends State<AmptiveGoLiveHostView> {
                   color: ATColors.white.withOpacity(0.1),
                   child: Row(
                     mainAxisSize: MainAxisSize.min,
-                    children: [
+                    children: <Widget>[
                       const ATImgLoader(imgPath: ATImgStrings.GROUP_ICON),
                       const Gap(5),
                       Text(
@@ -117,11 +117,11 @@ class _AmptiveGoLiveHostViewState extends State<AmptiveGoLiveHostView> {
           
               Expanded(
                 child: Stack(
-                  children: [
+                  children: <Widget>[
                     SizedBox(
                       height: ATHelperFuncs.getScreenHeight(context),
                       child: Column(
-                        children: [
+                        children: <Widget>[
                           SizedBox(
                             height: ATHelperFuncs.getScreenHeight(context) * 0.3,
                           ),
@@ -131,8 +131,8 @@ class _AmptiveGoLiveHostViewState extends State<AmptiveGoLiveHostView> {
                               controller: _scrollController,
                               padding: const EdgeInsets.fromLTRB(0, 50, 0, 50),
                               itemCount: service.coHostsListData.length,
-                              itemBuilder: (_, listIndex){
-                                final string = service.coHostsListData.elementAt(listIndex);
+                              itemBuilder: (_, int listIndex){
+                                final ObjectWithNotifier<Host> string = service.coHostsListData.elementAt(listIndex);
                                 return ListTile(
                                   horizontalTitleGap: 10,
                                   minTileHeight: 50,
@@ -163,7 +163,7 @@ class _AmptiveGoLiveHostViewState extends State<AmptiveGoLiveHostView> {
                     ATContainer(
                       height: 250,
                       padding: const EdgeInsets.only(left: 20, right: 20),
-                      boxShadow: [
+                      boxShadow: <BoxShadow>[
                         BoxShadow(
                           color: ATColors.black,
                           spreadRadius: 10, blurRadius: 40,
@@ -171,49 +171,49 @@ class _AmptiveGoLiveHostViewState extends State<AmptiveGoLiveHostView> {
                         )
                       ],
                       child: LayoutBuilder(
-                        builder: (_, constraints) {
-                          final width = constraints.maxWidth;
+                        builder: (_, BoxConstraints constraints) {
+                          final double width = constraints.maxWidth;
           
                           return BlocBuilder<AmptiveGoLiveSelectCoHostBloc, List<ObjectWithNotifier<Host>>>(
-                            builder: (_, listOfCoHosts) {                
+                            builder: (_, List<ObjectWithNotifier<Host>> listOfCoHosts) {                
                               return Stack(
                                 alignment: Alignment.center,
-                                children: [
+                                children: <Widget>[
                                   AmptiveLiveHostAndCoHostWidget(
                                     top: 6, isHost: true, index: 0,
                                     hostOrCohost: widget.goLiveHost,
                                     service: service,
-                                    onTap: (hostOrCohost){},
+                                    onTap: (ObjectWithNotifier<Host>? hostOrCohost){},
                                   ),
 
                                   AmptiveLiveHostAndCoHostWidget(
                                     top: 35, left: 0, index: 1,
                                     hostOrCohost: listOfCoHosts.elementAtOrNull(0),
                                     service: service,
-                                    onTap: (hostOrCohost){},
+                                    onTap: (ObjectWithNotifier<Host>? hostOrCohost){},
                                   ),
                                   AmptiveLiveHostAndCoHostWidget(
                                     top: 35, right: 0, index: 2,
                                     hostOrCohost: listOfCoHosts.elementAtOrNull(1),
                                     service: service,
-                                    onTap: (hostOrCohost){},
+                                    onTap: (ObjectWithNotifier<Host>? hostOrCohost){},
                                   ),
                                   AmptiveLiveHostAndCoHostWidget(
                                     bottom: 30, right: width * 0.1, index: 3,
                                     hostOrCohost: listOfCoHosts.elementAtOrNull(2),
                                     service: service,
-                                    onTap: (hostOrCohost){},
+                                    onTap: (ObjectWithNotifier<Host>? hostOrCohost){},
                                   ),
                                   AmptiveLiveHostAndCoHostWidget(
                                     bottom: 30, left: width * 0.1, index: 4,
                                     hostOrCohost: listOfCoHosts.elementAtOrNull(3),
                                     service: service,
-                                    onTap: (hostOrCohost){},
+                                    onTap: (ObjectWithNotifier<Host>? hostOrCohost){},
                                   ),
                                   AmptiveLiveHostAndCoHostWidget(
                                     bottom: 0, index: 5, service: service,
                                     hostOrCohost: listOfCoHosts.elementAtOrNull(4),
-                                    onTap: (hostOrCohost){},
+                                    onTap: (ObjectWithNotifier<Host>? hostOrCohost){},
                                   ),
                                 ],
                               );
@@ -224,7 +224,7 @@ class _AmptiveGoLiveHostViewState extends State<AmptiveGoLiveHostView> {
                     ),
 
                     BlocBuilder<AmptiveGoLiveNotificationBloc, AmptiveGoLiveNotificationModel>(
-                      builder: (_, state) {
+                      builder: (_, AmptiveGoLiveNotificationModel state) {
                         if(state.notificationType == ATStrings.PINNED){
                           return Positioned(
                             top: 260,
@@ -245,7 +245,7 @@ class _AmptiveGoLiveHostViewState extends State<AmptiveGoLiveHostView> {
           
                     AmptiveRebuilderWidget(
                       notifier: _scroll2BottomNotifier,
-                      builder: (_, showIcon, __) {
+                      builder: (_, bool showIcon, __) {
                         return Positioned(
                           bottom: 70, right: 15,
                           child: ATScalingSwitcher(
@@ -314,17 +314,17 @@ class _GoLiveHostViewBottomSheetState extends State<GoLiveHostViewBottomSheet> {
   }
 
   @override
-  Widget build(context) {
+  Widget build(BuildContext context) {
     return ATContainer(
       padding: const EdgeInsets.fromLTRB(15, 10, 15, 10),
       color: ATColors.black,
      // height: 35,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
+        children: <Widget>[
           AmptiveRebuilderWidget(
             notifier: _isFocused,
-            builder: (_, value, __) {
+            builder: (_, bool value, __) {
               if(value){
                 return Padding(
                   padding: const EdgeInsets.only(right: 15),
@@ -365,11 +365,11 @@ class _GoLiveHostViewBottomSheetState extends State<GoLiveHostViewBottomSheet> {
 
           AmptiveRebuilderWidget(
             notifier: _isFocused,
-            builder: (_, value, __) {
+            builder: (_, bool value, __) {
               if(value){
                 return AmptiveRebuilderWidget(
                   notifier: _hasText,
-                  builder: (_, value, __) {
+                  builder: (_, bool value, __) {
                     return GestureDetector(
                       onTap: value ? (){
                         _cntrl.clear();
@@ -388,7 +388,7 @@ class _GoLiveHostViewBottomSheetState extends State<GoLiveHostViewBottomSheet> {
               }
 
               return Row(
-                children: [
+                children: <Widget>[
                   _RenderBottomSheetButtonsWidget(
                     onTap: (){
                       context.read<AmptiveGoLiveNotificationBloc>().addGiftingNotification(
@@ -411,7 +411,7 @@ class _GoLiveHostViewBottomSheetState extends State<GoLiveHostViewBottomSheet> {
                   ),
                   _RenderBottomSheetButtonsWidget(
                     onTap: ()async{
-                      final sendInvite = await showGoLiveHostAddCoHostDialog(context: context);
+                      final bool? sendInvite = await showGoLiveHostAddCoHostDialog(context: context);
                       if(context.mounted && (sendInvite ?? false)){
                         showAppNotification(
                           context: context,
@@ -436,17 +436,17 @@ class _GoLiveHostViewBottomSheetState extends State<GoLiveHostViewBottomSheet> {
 
 
 class _RenderBottomSheetButtonsWidget extends StatelessWidget {
-  final Widget child;
-  final EdgeInsetsGeometry? margin;
-  final VoidCallback onTap;
   const _RenderBottomSheetButtonsWidget({
     required this.child,
     required this.onTap,
     this.margin
   });
+  final Widget child;
+  final EdgeInsetsGeometry? margin;
+  final VoidCallback onTap;
 
   @override
-  Widget build(context) {
+  Widget build(BuildContext context) {
     return ATContainer(
       onTap: onTap,
       margin: margin ?? EdgeInsets.only(right: 5.w),

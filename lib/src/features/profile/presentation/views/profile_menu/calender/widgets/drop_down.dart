@@ -6,18 +6,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class CalenderDropDown extends StatelessWidget {
-  final int currIndex;
   const CalenderDropDown({
     super.key,
     required this.currIndex
   });
+  final int currIndex;
 
   @override
-  Widget build(context) {  
+  Widget build(BuildContext context) {  
     return PopupMenuButton<String>(
       offset: const Offset(0, 35),
       padding: EdgeInsets.zero,
-      onSelected: (item){},
+      onSelected: (String item){},
       color: ATColors.containerGradientColorB,
       elevation: 0,
       shape: RoundedRectangleBorder(
@@ -28,13 +28,13 @@ class CalenderDropDown extends StatelessWidget {
         : currIndex == 1 ? const Icon(Icons.calendar_view_month_outlined)
         : const Icon(Icons.schedule_outlined),
       
-      itemBuilder: (_) => [
+      itemBuilder: (_) => <PopupMenuEntry<String>>[
         PopupMenuItem<String>(
           height: 40,
           onTap: () => context.read<CalenderViewsBloc>().selectView(0),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
+            children: <Widget>[
               Text(
                 ATStrings.DAY_VIEW,
                 style: Theme.of(context).textTheme.bodySmall?.copyWith(
@@ -50,7 +50,7 @@ class CalenderDropDown extends StatelessWidget {
           onTap: () => context.read<CalenderViewsBloc>().selectView(1),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
+            children: <Widget>[
               Text(
                 ATStrings.MONTH_VIEW,
                 style: Theme.of(context).textTheme.bodySmall?.copyWith(
@@ -66,7 +66,7 @@ class CalenderDropDown extends StatelessWidget {
           onTap: () => context.read<CalenderViewsBloc>().selectView(2),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
+            children: <Widget>[
               Text(
                 ATStrings.SCHEDULED,
                 style: Theme.of(context).textTheme.bodySmall?.copyWith(

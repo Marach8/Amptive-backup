@@ -11,9 +11,9 @@ import '../../../utils/constants/strings/route_strings.dart';
 import '../../../views/widgets/common_widgets/elevated_button_widget.dart';
 
 class ATCreateShowSuccessScreen extends StatefulWidget {
-  final String imageFilePath;
 
   const ATCreateShowSuccessScreen({super.key, required this.imageFilePath});
+  final String imageFilePath;
 
   @override
   State<ATCreateShowSuccessScreen> createState() =>
@@ -55,7 +55,7 @@ class _ATCreateShowSuccessScreenState
           padding: const EdgeInsets.all(15),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
+            children: <Widget>[
               const Icon(Icons.check_circle_sharp, size: 45),
               const Gap(15),
               Text(
@@ -74,7 +74,7 @@ class _ATCreateShowSuccessScreenState
               const Gap(30),
               AmptiveRebuilderWidget(
                 notifier: _normalSize,
-                builder: (_, val, __) {
+                builder: (_, double val, __) {
                   return AnimatedCreateShowSuccessImage(
                     width: val,
                     height: val,
@@ -88,7 +88,7 @@ class _ATCreateShowSuccessScreenState
         ),
         bottomNavigationBar: Column(
           mainAxisSize: MainAxisSize.min,
-          children: [
+          children: <Widget>[
             AmptiveElevatedButtonWidget(
               onPressed: () async {
                 await context.pushNamed(ATRoutes.CREATE_EPISODE_FORM);

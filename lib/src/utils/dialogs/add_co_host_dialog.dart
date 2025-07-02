@@ -24,14 +24,14 @@ Future<Set<ObjectWithNotifier<Host>>?> showAddCoHostDialog(BuildContext context)
 
   final List<ObjectWithNotifier<Host>> coHostsData = service.coHostsListData;
 
-  final focusNode = FocusNode();
-  final controller = TextEditingController();
-  final showSuffixIconNotifier = ValueNotifier(false);
+  final FocusNode focusNode = FocusNode();
+  final TextEditingController controller = TextEditingController();
+  final ValueNotifier<bool> showSuffixIconNotifier = ValueNotifier(false);
   focusNode.addListener(() => focusNode.hasFocus
       ? showSuffixIconNotifier.value = true
       : showSuffixIconNotifier.value = false);
 
-  final searchQueryNotifier = ValueNotifier('');
+  final ValueNotifier<String> searchQueryNotifier = ValueNotifier('');
 
   return await showModalBottomSheet(
       backgroundColor: ATColors.hex0D0D0D,
@@ -41,9 +41,9 @@ Future<Set<ObjectWithNotifier<Host>>?> showAddCoHostDialog(BuildContext context)
       isScrollControlled: true,
       useSafeArea: true,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(0)),
-      builder: (context) {
+      builder: (BuildContext context) {
         return Stack(
-          children: [
+          children: <Widget>[
             Positioned.fill(
               child: SingleChildScrollView(
                 physics: const BouncingScrollPhysics(),
@@ -54,7 +54,7 @@ Future<Set<ObjectWithNotifier<Host>>?> showAddCoHostDialog(BuildContext context)
                     top: 20.h),
                 child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
+                    children: <Widget>[
                       Center(
                         child: GestureDetector(
                           onTap: () => context.pop(),
@@ -78,7 +78,7 @@ Future<Set<ObjectWithNotifier<Host>>?> showAddCoHostDialog(BuildContext context)
                       ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.end,
-                        children: [
+                        children: <Widget>[
                           Text(
                             ATStrings.ADD_CO_HOST,
                             style: Theme.of(context).textTheme.bodyLarge,
@@ -87,7 +87,7 @@ Future<Set<ObjectWithNotifier<Host>>?> showAddCoHostDialog(BuildContext context)
                           AmptiveRebuilderWidget(
                               notifier: service.selectedCoHostLength,
                               // shouldDispose: true,
-                              builder: (_, number, __) {
+                              builder: (_, int number, __) {
                                 return Text(
                                   '$number ${ATStrings.SELECTED}',
                                   style: Theme.of(context)
@@ -116,7 +116,7 @@ Future<Set<ObjectWithNotifier<Host>>?> showAddCoHostDialog(BuildContext context)
                         controller: controller,
                         focusNode: focusNode,
                         disableBlueBorder: true,
-                        onChanged: (text) {
+                        onChanged: (String text) {
                           searchQueryNotifier.value = text;
                         },
                         hintText: ATStrings.SEARCH_4_COHOSTS,
@@ -128,7 +128,7 @@ Future<Set<ObjectWithNotifier<Host>>?> showAddCoHostDialog(BuildContext context)
                         suffixIcon: AmptiveRebuilderWidget(
                             shouldDispose: true,
                             notifier: showSuffixIconNotifier,
-                            builder: (_, shouldShow, __) {
+                            builder: (_, bool shouldShow, __) {
                               return ATAnimatedCrossFade(
                                 condition: shouldShow,
                                 secondChild: const SizedBox.shrink(),
@@ -146,7 +146,7 @@ Future<Set<ObjectWithNotifier<Host>>?> showAddCoHostDialog(BuildContext context)
                       AmptiveRebuilderWidget(
                         notifier: service.coHostSelectionStarted,
                         // shouldDispose: true,
-                        builder: (_, selectionStarted, __) {                          
+                        builder: (_, bool selectionStarted, __) {                          
                           return ATAnimatedCrossFade(
                             condition: !selectionStarted,
                             firstChild: const SizedBox.shrink(),
@@ -157,13 +157,13 @@ Future<Set<ObjectWithNotifier<Host>>?> showAddCoHostDialog(BuildContext context)
                                 scrollDirection: Axis.horizontal,
                                 child: AmptiveRebuilderWidget(
                                   notifier: service.selectedCoHosts,
-                                  builder: (_, selectedCoHosts, __) {
+                                  builder: (_, Set<ObjectWithNotifier<Host>> selectedCoHosts, __) {
                                     return Row(
-                                      children: selectedCoHosts.map((selectedCoHost) {
-                                        final showCoHost = selectedCoHost.obj.profilePicture != null;
+                                      children: selectedCoHosts.map((ObjectWithNotifier<Host> selectedCoHost) {
+                                        final bool showCoHost = selectedCoHost.obj.profilePicture != null;
                                         
                                         if(!showCoHost){
-                                          final index = selectedCoHosts.toList().indexOf(selectedCoHost);
+                                          final int index = selectedCoHosts.toList().indexOf(selectedCoHost);
                                     
                                           return ATContainer(
                                             alignment: Alignment.center,
@@ -183,7 +183,7 @@ Future<Set<ObjectWithNotifier<Host>>?> showAddCoHostDialog(BuildContext context)
                                           padding: const EdgeInsets.only(right: 15),
                                           child: Stack(
                                             clipBehavior: Clip.none,
-                                            children: [
+                                            children: <Widget>[
                                               ATContainer(
                                                 clipBehavior: Clip.hardEdge,
                                                 height: 43, width: 43, radius: 30,
@@ -227,14 +227,14 @@ Future<Set<ObjectWithNotifier<Host>>?> showAddCoHostDialog(BuildContext context)
                       //Column of cohosts
                       AmptiveRebuilderWidget(
                           notifier: searchQueryNotifier,
-                          builder: (_, searchString, __) {
+                          builder: (_, String searchString, __) {
                             List<ObjectWithNotifier<Host>> filteredCoHosts;
 
                             if (searchString.isEmpty || controller.text.isEmpty) {
                               filteredCoHosts = coHostsData;
                             } 
                             else {
-                              filteredCoHosts = coHostsData.where((coHost) {
+                              filteredCoHosts = coHostsData.where((ObjectWithNotifier<Host> coHost) {
                                 return coHost.obj.name!
                                         .toLowerCase()
                                         .contains(searchString.toLowerCase()) ||
@@ -273,13 +273,13 @@ Future<Set<ObjectWithNotifier<Host>>?> showAddCoHostDialog(BuildContext context)
                 child: AmptiveRebuilderWidget(
                   notifier: service.coHostSelectionStarted,
                   // shouldDispose: true,
-                  builder: (_, value, __) {
+                  builder: (_, bool value, __) {
                     return AmptiveElevatedButtonWidget(
                       margin: EdgeInsets.zero,
                       onPressed: value
                         ? (){
-                        final selectedCoHosts = service.selectedCoHosts.value.where(
-                          (coHost) => coHost.obj.profilePicture != null
+                        final Iterable<ObjectWithNotifier<Host>> selectedCoHosts = service.selectedCoHosts.value.where(
+                          (ObjectWithNotifier<Host> coHost) => coHost.obj.profilePicture != null
                         );
                         context.pop(selectedCoHosts.toSet());
                         } : null,
@@ -300,20 +300,20 @@ Future<Set<ObjectWithNotifier<Host>>?> showAddCoHostDialog(BuildContext context)
 
 
 class AmptiveListOfCoHostsWidget extends StatelessWidget {
-  final List<ObjectWithNotifier<Host>> availableCoHosts;
-  final CreateShowService service = GetIt.I<CreateShowService>();
 
   AmptiveListOfCoHostsWidget({
     super.key,
     required this.availableCoHosts,
   });
+  final List<ObjectWithNotifier<Host>> availableCoHosts;
+  final CreateShowService service = GetIt.I<CreateShowService>();
 
   @override
-  Widget build(context) {
+  Widget build(BuildContext context) {
     if (availableCoHosts.isEmpty) {
       return Column(
         crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
+        children: <Widget>[
           Text(
             ATStrings.NO_SUGGESTIONS,
             style: Theme.of(context).textTheme.bodyMedium
@@ -333,10 +333,10 @@ class AmptiveListOfCoHostsWidget extends StatelessWidget {
 
     return Column(
       mainAxisSize: MainAxisSize.min,
-      children: availableCoHosts.map((coHost) {
+      children: availableCoHosts.map((ObjectWithNotifier<Host> coHost) {
         return AmptiveCoHostWidget(
           coHostDetail: coHost,
-          onTap: (host, isSelected) {
+          onTap: (ObjectWithNotifier<Host> host, bool isSelected) {
             if (isSelected) {              
               service.removeSelectedCoHost(host);
             } else {
@@ -352,23 +352,23 @@ class AmptiveListOfCoHostsWidget extends StatelessWidget {
 
 
 class AmptiveCoHostWidget extends StatelessWidget {
-  final void Function(ObjectWithNotifier<Host>, bool) onTap;
-  final ObjectWithNotifier<Host> coHostDetail;
 
   const AmptiveCoHostWidget({
     super.key,
     required this.onTap,
     required this.coHostDetail,
   });
+  final void Function(ObjectWithNotifier<Host>, bool) onTap;
+  final ObjectWithNotifier<Host> coHostDetail;
 
   @override
-  Widget build(context) {
+  Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 15),
       child: GestureDetector(
         onTap: () => onTap(coHostDetail, coHostDetail.notifier.value),
         child: Row(
-          children: [
+          children: <Widget>[
             ATContainer(
               clipBehavior: Clip.hardEdge,
               height: 50, width: 50, radius: 30,
@@ -381,7 +381,7 @@ class AmptiveCoHostWidget extends StatelessWidget {
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
+                children: <Widget>[
                   Text(
                     coHostDetail.obj.name ?? '',
                     style: Theme.of(context).textTheme.bodySmall?.copyWith(
@@ -399,7 +399,7 @@ class AmptiveCoHostWidget extends StatelessWidget {
             ),
             AmptiveRebuilderWidget(
               notifier: coHostDetail.notifier,
-              builder: (_, value, __) {
+              builder: (_, bool value, __) {
                 return ATContainer(
                   duration: 200,
                   color: value ? ATColors.white : ATColors.trsprnt,

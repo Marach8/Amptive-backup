@@ -3,6 +3,7 @@ import 'dart:typed_data';
 import 'dart:ui';
 
 import 'package:amptive/src/models/community.dart';
+import 'package:amptive/src/models/hashtag.dart';
 import 'package:amptive/src/services/create_show/create_show_service.dart';
 import 'package:amptive/src/utils/constants/colors.dart';
 import 'package:amptive/src/utils/constants/constants.dart';
@@ -37,9 +38,9 @@ import '../../../views/widgets/other_widgets/main_application_widgets/widgets_in
 import '../../../views/widgets/other_widgets/main_application_widgets/widgets_in_create_show_event/selected_community.dart';
 
 class CreateShowScreen extends StatefulWidget {
-  final ShowType showType;
 
   const CreateShowScreen({super.key, this.showType = ShowType.show});
+  final ShowType showType;
 
   @override
   State<CreateShowScreen> createState() => _CreateShowScreenState();
@@ -47,7 +48,7 @@ class CreateShowScreen extends StatefulWidget {
 
 class _CreateShowScreenState extends State<CreateShowScreen> {
   final ImagePicker _picker = ImagePicker();
-  List<dynamic> selectedHosts = [1, 2, 3, 4, 5];
+  List<dynamic> selectedHosts = <dynamic>[1, 2, 3, 4, 5];
   CreateShowService service = GetIt.I<CreateShowService>();
   String? showTypeTitle;
   final ValueNotifier<bool> _communitySelected = ValueNotifier(false);
@@ -71,7 +72,7 @@ class _CreateShowScreenState extends State<CreateShowScreen> {
     super.dispose();
   }
 
-  setShowTypeTitle() {
+  void setShowTypeTitle() {
     if (widget.showType == ShowType.episode) {
       showTypeTitle = "Episode";
     } else if (widget.showType == ShowType.event) {
@@ -83,8 +84,8 @@ class _CreateShowScreenState extends State<CreateShowScreen> {
 
   //Image Picker function to get image from gallery
   Future getImageFromGallery() async {
-    final pickedFile = await _picker.pickImage(source: ImageSource.gallery);
-    final croppedFile = await _customCrop(pickedFile);
+    final XFile? pickedFile = await _picker.pickImage(source: ImageSource.gallery);
+    final MemoryImage? croppedFile = await _customCrop(pickedFile);
 
     await handlePickedFile(croppedFile);
   }
@@ -117,7 +118,7 @@ class _CreateShowScreenState extends State<CreateShowScreen> {
           backgroundColor: ATColors.black.withOpacity(0.05),
           title: Row(
             mainAxisAlignment: MainAxisAlignment.start,
-            children: [
+            children: <Widget>[
               Padding(
                 padding: EdgeInsets.only(left: 50.w),
                 child: Text(
@@ -127,10 +128,10 @@ class _CreateShowScreenState extends State<CreateShowScreen> {
               ),
             ],
           ),
-          actions: [
+          actions: <Widget>[
             ShowTypeVisibilityWidget(
               showType: widget.showType,
-              allowedShowTypes: const [ShowType.event],
+              allowedShowTypes: const <ShowType>[ShowType.event],
               child: IconButton(
                 icon: const Icon(Iconsax.calendar_2),
                 onPressed: () async {
@@ -141,10 +142,10 @@ class _CreateShowScreenState extends State<CreateShowScreen> {
           ],
         ),
         body: Stack(
-          children: [
+          children: <Widget>[
             AmptiveRebuilderWidget(
               notifier: service.selectedImage,
-              builder: (ctx, selectedImage, _) {
+              builder: (BuildContext ctx, Uint8List? selectedImage, _) {
                 return Positioned.fill(
                   child: _imageSelected()
                       ? Image.memory(
@@ -173,7 +174,7 @@ class _CreateShowScreenState extends State<CreateShowScreen> {
               child: Padding(
                 padding: EdgeInsets.symmetric(horizontal: 15.w),
                 child: Column(
-                  children: [
+                  children: <Widget>[
                     Container(
                       alignment: Alignment.center,
                       margin: EdgeInsets.only(top: 16.h, bottom: 34.h),
@@ -186,10 +187,10 @@ class _CreateShowScreenState extends State<CreateShowScreen> {
                             borderRadius: BorderRadius.circular(10.r),
                           ),
                           child: Stack(
-                            children: [
+                            children: <Widget>[
                               AmptiveRebuilderWidget(
                                 notifier: service.selectedImage,
-                                builder: (ctx, selectedImage, _) {
+                                builder: (BuildContext ctx, Uint8List? selectedImage, _) {
                                   return Positioned.fill(
                                     child: ClipRRect(
                                       borderRadius: BorderRadius.circular(10.r),
@@ -227,8 +228,8 @@ class _CreateShowScreenState extends State<CreateShowScreen> {
                     ),
                     AmptiveRebuilderWidget(
                         notifier: service.titleCharLength,
-                        builder: (ctx, len, _) {
-                          var noRemaining = Constants.kMaxTitleCharacters - len;
+                        builder: (BuildContext ctx, int len, _) {
+                          int noRemaining = Constants.kMaxTitleCharacters - len;
                           return CreateShowTextFieldTitle(
                             title: "Title",
                             otherInfo: "$noRemaining remaining",
@@ -239,7 +240,7 @@ class _CreateShowScreenState extends State<CreateShowScreen> {
                       controller: service.titleController,
                       hintText: "What is the title of your show?",
                       maxLength: Constants.kMaxTitleCharacters,
-                      onChanged: (val) {
+                      onChanged: (String val) {
                         service.titleCharLength.value =
                             service.titleController.text.length;
                       },
@@ -248,8 +249,8 @@ class _CreateShowScreenState extends State<CreateShowScreen> {
 
                     AmptiveRebuilderWidget(
                         notifier: service.descCharactersLength,
-                        builder: (ctx, len, _) {
-                          var noRemaining =
+                        builder: (BuildContext ctx, int len, _) {
+                          int noRemaining =
                               Constants.kMaxDescriptionCharacters - len;
                           return CreateShowTextFieldTitle(
                             title: "Description",
@@ -266,7 +267,7 @@ class _CreateShowScreenState extends State<CreateShowScreen> {
                         size: 20.w,
                         color: ATColors.white.withOpacity(0.4),
                       ),
-                      onChanged: (val) {
+                      onChanged: (String val) {
                         service.descCharactersLength.value =
                             service.descController.text.length;
                       },
@@ -281,7 +282,7 @@ class _CreateShowScreenState extends State<CreateShowScreen> {
                     SizedBox(height: 11.5.h),
                     ATContainer(
                       child: AmptiveRebuilderWidget(
-                        builder: (ctx, selected, _) {
+                        builder: (BuildContext ctx, bool selected, _) {
                           return selected && _selectedCommunityCard != null
                               ? SelectedCommunity(
                             selectedCommunity: _selectedCommunityCard!,
@@ -333,7 +334,7 @@ class _CreateShowScreenState extends State<CreateShowScreen> {
                     SizedBox(height: 11.5.h),
                     AmptiveRebuilderWidget(
                       notifier: service.coHostSelected,
-                      builder: (ctx, selected, _) {
+                      builder: (BuildContext ctx, bool selected, _) {
                         return selected
                             ? Container(
                           height: 98.h,
@@ -345,9 +346,9 @@ class _CreateShowScreenState extends State<CreateShowScreen> {
                               borderRadius: BorderRadius.circular(14.r)),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
+                            children: <Widget>[
                               Row(
-                                children: [
+                                children: <Widget>[
                                   Expanded(
                                       child: OverlappingHosts(
                                         items: selectedHosts,
@@ -446,19 +447,19 @@ class _CreateShowScreenState extends State<CreateShowScreen> {
                     ),
                     AmptiveRebuilderWidget(
                         notifier: service.selectedHashtagLength,
-                        builder: (ctx, value, _) {
+                        builder: (BuildContext ctx, int value, _) {
                           return SizedBox(height: value > 0 ? 8.h : 0);
                         }),
                     AmptiveRebuilderWidget(
                       notifier: service.selectedHashtagLength,
-                      builder: (ctx, selected, _) {
+                      builder: (BuildContext ctx, int selected, _) {
                         return selected > 0
                             ? AmptiveRebuilderWidget(
                           notifier: service.selectedHashtags,
-                          builder: (ctx, hashtags, _) {
+                          builder: (BuildContext ctx, Set<ObjectWithNotifier<Hashtag>> hashtags, _) {
                             return SelectedHashTags(
                               hashtags: hashtags,
-                              onRemove: (hashtag) {
+                              onRemove: (ObjectWithNotifier<Hashtag> hashtag) {
                                 service.removeSelectedHashtags(hashtag);
                               },
                             );
@@ -582,7 +583,7 @@ class _CreateShowScreenState extends State<CreateShowScreen> {
                     // Capacity
                     ShowTypeVisibilityWidget(
                       showType: widget.showType,
-                      allowedShowTypes: const [ShowType.event],
+                      allowedShowTypes: const <ShowType>[ShowType.event],
                       child: Container(
                         margin: EdgeInsets.only(bottom: 12.h),
                         child: const CreateShowTextFieldTitle(
@@ -593,7 +594,7 @@ class _CreateShowScreenState extends State<CreateShowScreen> {
                     ),
                     ShowTypeVisibilityWidget(
                       showType: widget.showType,
-                      allowedShowTypes: const [ShowType.event],
+                      allowedShowTypes: const <ShowType>[ShowType.event],
                       child: CreateShowTextFormField(
                         readOnly: true,
                         controller: service.capacityController,
@@ -611,7 +612,7 @@ class _CreateShowScreenState extends State<CreateShowScreen> {
                     ),
                     ShowTypeVisibilityWidget(
                       showType: widget.showType,
-                      allowedShowTypes: const [ShowType.event],
+                      allowedShowTypes: const <ShowType>[ShowType.event],
                       child: Container(
                         margin: EdgeInsets.only(top: 8.h, bottom: 30.h),
                         width: 360.w,
@@ -633,7 +634,7 @@ class _CreateShowScreenState extends State<CreateShowScreen> {
                     // Whispers
                     ShowTypeVisibilityWidget(
                       showType: widget.showType,
-                      allowedShowTypes: const [
+                      allowedShowTypes: const <ShowType>[
                         ShowType.event,
                         ShowType.episode
                       ],
@@ -647,7 +648,7 @@ class _CreateShowScreenState extends State<CreateShowScreen> {
                     ),
                     ShowTypeVisibilityWidget(
                       showType: widget.showType,
-                      allowedShowTypes: const [
+                      allowedShowTypes: const <ShowType>[
                         ShowType.event,
                         ShowType.episode
                       ],
@@ -667,7 +668,7 @@ class _CreateShowScreenState extends State<CreateShowScreen> {
                     ),
                     ShowTypeVisibilityWidget(
                       showType: widget.showType,
-                      allowedShowTypes: const [
+                      allowedShowTypes: const <ShowType>[
                         ShowType.event,
                         ShowType.episode
                       ],
@@ -711,7 +712,7 @@ class _CreateShowScreenState extends State<CreateShowScreen> {
               left: 0,
               child: AmptiveRebuilderWidget(
                   notifier: service.selectedImage,
-                  builder: (_, val, __) {
+                  builder: (_, Uint8List? val, __) {
                     return AmptiveElevatedButtonWidget(
                       height: 50.w,
                       buttonTitle: getSubmitButtonTileText(),
@@ -723,14 +724,14 @@ class _CreateShowScreenState extends State<CreateShowScreen> {
                           : null,
                       buttonStyle: ButtonStyle(
                         backgroundColor:
-                        WidgetStateProperty.resolveWith((states) {
+                        WidgetStateProperty.resolveWith((Set<WidgetState> states) {
                           if (states.contains(WidgetState.disabled)) {
                             return ATColors.hex2D2D2D;
                           }
                           return ATColors.hexD9D9D9;
                         }),
                         foregroundColor:
-                        WidgetStateProperty.resolveWith((states) {
+                        WidgetStateProperty.resolveWith((Set<WidgetState> states) {
                           if (states.contains(WidgetState.disabled)) {
                             return ATColors.strokeGreyColor;
                           }
@@ -752,7 +753,7 @@ class _CreateShowScreenState extends State<CreateShowScreen> {
   }
 
   Future<void> _editCoHosts(BuildContext context) async {
-    var temp = await showAddCoHostDialog(context);
+    Set<ObjectWithNotifier<Host>>? temp = await showAddCoHostDialog(context);
 
     if (temp != null) {
       service.coHostSelected.value = false;
@@ -761,11 +762,11 @@ class _CreateShowScreenState extends State<CreateShowScreen> {
     }
   }
 
-  _imageSelected() {
+  bool _imageSelected() {
     return service.selectedImage.value != null;
   }
 
-  processSelectedHost(List<ObjectWithNotifier<Host>> ls) {
+  List processSelectedHost(List<ObjectWithNotifier<Host>> ls) {
     if (ls.length >= 5) {
       return ls.sublist(0, 5);
     } else {
@@ -781,7 +782,7 @@ class _CreateShowScreenState extends State<CreateShowScreen> {
     return !selectedHosts.every((element) => element is int);
   }
 
-  getSubmitButtonTileText() {
+  String getSubmitButtonTileText() {
     if (widget.showType == ShowType.show) {
       return "Go LIVE";
     } else if (widget.showType == ShowType.event) {
@@ -789,6 +790,7 @@ class _CreateShowScreenState extends State<CreateShowScreen> {
     } else if (widget.showType == ShowType.episode) {
       return "Go LIVE";
     }
+    return '';
   }
 
   void navigateToSuccessPage() {
@@ -819,7 +821,7 @@ class OverlappingHosts extends StatelessWidget {
       height: 50.w,
       width: 180.w,
       child: Stack(
-        children: items.asMap().entries.map((entry) {
+        children: items.asMap().entries.map((MapEntry<int, dynamic> entry) {
           int index = entry.key;
           var item = entry.value;
 
@@ -841,7 +843,7 @@ class OverlappingHosts extends StatelessWidget {
                   fit: BoxFit.cover,
                 )
                     : Stack(
-                  children: [
+                  children: <Widget>[
                     BackdropFilter(
                       filter:
                       ImageFilter.blur(sigmaX: 53.4, sigmaY: 53.4),

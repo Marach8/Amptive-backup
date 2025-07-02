@@ -22,15 +22,15 @@ class EditProfileBgImage extends StatelessWidget {
   Widget build(BuildContext context) {
     Uint8List? imageBytes;
     return StatefulBuilder(
-      builder: (context, setter) {
+      builder: (BuildContext context, setter) {
         return Stack(
           alignment: Alignment.center,
           clipBehavior: Clip.none,
-          children: [
+          children: <Widget>[
             GestureDetector(
               onTap: () async{
                 File? file;
-                final status = await showImageSourceOptions(context);
+                final bool? status = await showImageSourceOptions(context);
                 if(status == null){return;}
                 else if(context.mounted && status){
                   file = await ATHelperFuncs.getImageFromGallery();
@@ -41,7 +41,7 @@ class EditProfileBgImage extends StatelessWidget {
                 
                 if(file == null) return;
                 if(context.mounted){
-                  final imageData = await context
+                  final MemoryImage? imageData = await context
                     .pushNamed(ATRoutes.PROFILE_BG_CROP, extra: file) as MemoryImage?;
                   if(imageData != null){
                     setter(() => imageBytes = imageData.bytes);
@@ -64,7 +64,7 @@ class EditProfileBgImage extends StatelessWidget {
               child: Stack(
                 clipBehavior: Clip.hardEdge,
                 alignment: Alignment.center,
-                children: [
+                children: <Widget>[
                   ATCircularImage(
                     onTap: () => context.pushNamed(
                       ATRoutes.PROFILE_PIC_SCREEN,

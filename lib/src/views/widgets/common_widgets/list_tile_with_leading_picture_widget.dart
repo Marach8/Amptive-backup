@@ -28,7 +28,7 @@ class TileWithLeadingImage extends StatelessWidget {
     return Padding(
       padding: padding ?? const EdgeInsets.fromLTRB(0, 15, 0, 10),
       child: Row(
-        children: [
+        children: <Widget>[
           ATCircularImage(
             imagePath: leadingImagePath,
             diameter: diameter ?? 40,

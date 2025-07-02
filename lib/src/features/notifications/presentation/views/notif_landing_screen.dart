@@ -21,7 +21,7 @@ class ATNotificationScreen extends StatelessWidget {
           onNotification: context.read<ATNavBarBloc>().ctrlNavVisibility,
             child: NestedScrollView(
               floatHeaderSlivers: true,
-              headerSliverBuilder: (_, __) => [
+              headerSliverBuilder: (_, __) => <Widget>[
                 const ATSliverAppBar(
                   titleText: ATStrings.TXN_HISTORY,
                   leading: SizedBox.shrink(),
@@ -30,7 +30,7 @@ class ATNotificationScreen extends StatelessWidget {
             
               body: ListView(
                 padding: const EdgeInsets.fromLTRB(15, 10, 15, 20),
-                children: [
+                children: <Widget>[
                   NewFollowerNotif(
                     follower: getHostList().first,
                     timeOfFollow: '20s',
@@ -82,7 +82,7 @@ class ATNotificationScreen extends StatelessWidget {
                     progName: 'Sports Weekly',
                     inviteTime: '54m', isEvent: false,
                     onResponse: ()async{
-                      final result = await viewCoHostInviteDetails(
+                      final (int?, bool)? result = await viewCoHostInviteDetails(
                         context: context, coHostFee: '5,000',
                         hostImg: getHostList()[6].obj.profilePicture ?? '',
                         progName: 'Sports Weekly',
@@ -132,7 +132,7 @@ class ATNotificationScreen extends StatelessWidget {
                     progName: 'Nigerains In Diaspora',
                     inviteTime: '5m',
                     onResponse: ()async{
-                      final result = await viewCoHostInviteDetails(
+                      final (int?, bool)? result = await viewCoHostInviteDetails(
                         context: context,
                         hostImg: getHostList()[9].obj.profilePicture ?? '',
                         progName: 'Nigerains In Diaspora',

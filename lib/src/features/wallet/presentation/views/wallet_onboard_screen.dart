@@ -20,20 +20,20 @@ import 'package:go_router/go_router.dart';
 class ATWalletOnboardScreen extends StatelessWidget {
   const ATWalletOnboardScreen({super.key});
 
-  static const _list = <String>[ATStrings.UR_WALLET, ATStrings.UR_WAY];
+  static const List<String> _list = <String>[ATStrings.UR_WALLET, ATStrings.UR_WAY];
 
   @override
   Widget build(_) {
     return BlocProvider(
       create: (_) => WalletOnboardAnimBloc(),
       child: Builder(
-        builder: (context) {
+        builder: (BuildContext context) {
           WidgetsBinding.instance.addPostFrameCallback(
             (_){
               context.read<WalletOnboardAnimBloc>().reset();
               Future.delayed(
                 const Duration(milliseconds: 1000),
-                () => context.mounted ? context.read<WalletOnboardAnimBloc>().triggerNext(0) : {}
+                () => context.mounted ? context.read<WalletOnboardAnimBloc>().triggerNext(0) : <dynamic, dynamic>{}
               );
             }
           );
@@ -48,17 +48,17 @@ class ATWalletOnboardScreen extends StatelessWidget {
               body: Center(
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
+                  children: <Widget>[
                     BlocSelector<WalletOnboardAnimBloc, List<bool>, bool>(
-                      selector: (state) => state.elementAt(2),
-                      builder: (_, isDone) {
+                      selector: (List<bool> state) => state.elementAt(2),
+                      builder: (_, bool isDone) {
                         return AnimatedOpacity(
                           duration: const Duration(milliseconds: 500),
                           opacity: isDone ? 1 : 0, curve: Curves.decelerate,
                           child: Column(
                             spacing: 10,
                             mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
+                            children: <Widget>[
                               const ATImgLoader(imgPath: ATImgStrings.BIG_WALLET_ICON),
                               Text(
                                 ATStrings.SETUP_WALLET,
@@ -77,15 +77,15 @@ class ATWalletOnboardScreen extends StatelessWidget {
                     ),
 
                     BlocSelector<WalletOnboardAnimBloc, List<bool>, bool>(
-                      selector: (state) => state.elementAt(2),
-                      builder: (_, isDone) {
+                      selector: (List<bool> state) => state.elementAt(2),
+                      builder: (_, bool isDone) {
                         if(isDone) return const SizedBox.shrink();
                         return Padding(
                           padding: const EdgeInsets.only(bottom: 150),
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: _list.map(
-                              (item) => _CustomWidget(text: item, index: _list.indexOf(item))
+                              (String item) => _CustomWidget(text: item, index: _list.indexOf(item))
                             ).toList(),
                           ),
                         );                       
@@ -98,10 +98,10 @@ class ATWalletOnboardScreen extends StatelessWidget {
               bottomNavigationBar: Column(
                 spacing:10,
                 mainAxisSize: MainAxisSize.min,
-                children: [
+                children: <Widget>[
                   BlocSelector<WalletOnboardAnimBloc, List<bool>, bool>(
-                    selector: (state) => state.last,
-                    builder: (_, isDone) {
+                    selector: (List<bool> state) => state.last,
+                    builder: (_, bool isDone) {
                       return ATAnimatedAlign(
                         condition: !isDone,
                         startAlignment: Alignment(-ATHelperFuncs.getScreenWidth(context), 0),
@@ -113,12 +113,12 @@ class ATWalletOnboardScreen extends StatelessWidget {
                           color: ATColors.white.withValues(alpha: 0.05),
                           child: Row(
                             spacing: 10,
-                            children: [
+                            children: <Widget>[
                               const ATImgLoader(imgPath: ATImgStrings.WARNING_ICON),
                               Expanded(
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
+                                  children: <Widget>[
                                     Text(
                                       ATStrings.NO_WALLET_NO_EARNINGS,
                                       style: Theme.of(context).textTheme.bodySmall?.copyWith(
@@ -144,8 +144,8 @@ class ATWalletOnboardScreen extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.fromLTRB(15, 5, 15, 10),
                     child: BlocSelector<WalletOnboardAnimBloc, List<bool>, bool>(
-                      selector: (state) => state.elementAt(2),
-                      builder: (_, isDone) {
+                      selector: (List<bool> state) => state.elementAt(2),
+                      builder: (_, bool isDone) {
                         return AnimatedOpacity(
                           duration: const Duration(milliseconds: 500),
                           opacity: isDone ? 1 : 0, curve: Curves.decelerate,
@@ -180,10 +180,10 @@ class _CustomWidget extends StatelessWidget {
   final int index;
 
   @override
-  Widget build(context) {
+  Widget build(BuildContext context) {
     return BlocSelector<WalletOnboardAnimBloc, List<bool>, bool>(
-      selector: (state) => state.elementAt(index),
-      builder: (_, isVisible) {
+      selector: (List<bool> state) => state.elementAt(index),
+      builder: (_, bool isVisible) {
         return AnimatedOpacity(
           duration: const Duration(milliseconds: 500),
           opacity: isVisible ? 1 : 0, curve: Curves.decelerate,

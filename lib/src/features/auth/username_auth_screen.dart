@@ -31,7 +31,7 @@ class _UserNameAuthScreenState extends State<UserNameAuthScreen> {
   TextEditingController usernameController = TextEditingController();
   bool _isLoading = false;
 
-  final _formKey = GlobalKey<FormState>();
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   @override
   void initState() {
@@ -48,7 +48,7 @@ class _UserNameAuthScreenState extends State<UserNameAuthScreen> {
         body: Padding(
           padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 20.h),
           child: BlocListener<AmptiveAuthBloc, AmptiveAuthState>(
-            listener: (context, state) {
+            listener: (BuildContext context, AmptiveAuthState state) {
               if (state is VerifyingUsernameState) {
                 _isLoading = true;
               } else if (state is UsernameVerifiedState) {
@@ -59,7 +59,7 @@ class _UserNameAuthScreenState extends State<UserNameAuthScreen> {
               key: _formKey,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
+                children: <Widget>[
                   Text(
                     ATStrings.whatShouldWeCallYou,
                     style: Theme.of(context).textTheme.headlineMedium?.copyWith(
@@ -70,12 +70,12 @@ class _UserNameAuthScreenState extends State<UserNameAuthScreen> {
                     height: 11.h,
                   ),
                   BlocBuilder<AmptiveAuthBloc, AmptiveAuthState>(
-                      buildWhen: (p, current) {
+                      buildWhen: (AmptiveAuthState p, AmptiveAuthState current) {
                     return true;
-                  }, builder: (_, state) {
+                  }, builder: (_, AmptiveAuthState state) {
                     return ATTextFormField(
                       controller: usernameController,
-                      onChanged: (val) {
+                      onChanged: (String val) {
                         context
                             .read<AmptiveAuthBloc>()
                             .add(UsernameChangedEvent(val));
@@ -203,7 +203,7 @@ class _UserNameAuthScreenState extends State<UserNameAuthScreen> {
         bottomSheet: Padding(
           padding: EdgeInsets.only(bottom: 16.h),
           child: BlocBuilder<AmptiveAuthBloc, AmptiveAuthState>(
-              builder: (context, state) {
+              builder: (BuildContext context, AmptiveAuthState state) {
             return AmptiveElevatedButtonWidget(
               height: 50.w,
               onPressed: service.isUsernameValid

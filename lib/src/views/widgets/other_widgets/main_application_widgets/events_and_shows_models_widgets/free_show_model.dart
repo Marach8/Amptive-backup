@@ -8,11 +8,11 @@ import '../../../common_widgets/image_loader_widget.dart';
 
 
 class AmptiveFreeShowModel extends StatelessWidget {
-  final String trendingPicture;
   const AmptiveFreeShowModel({
     super.key,
     required this.trendingPicture
   });
+  final String trendingPicture;
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +21,7 @@ class AmptiveFreeShowModel extends StatelessWidget {
       padding: const EdgeInsets.only(left: 15),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
+        children: <Widget>[
           ClipRRect(
             clipBehavior: Clip.hardEdge,
             borderRadius: BorderRadius.circular(5),
@@ -37,7 +37,7 @@ class AmptiveFreeShowModel extends StatelessWidget {
           ),
           Row(
             mainAxisSize: MainAxisSize.min,
-            children: [              
+            children: <Widget>[              
               Expanded(
                 child: Text(
                   'figma',

@@ -15,15 +15,15 @@ class ATSelectLanguageScreen extends StatelessWidget {
   const ATSelectLanguageScreen({super.key});
 
   @override
-  Widget build(context) {
+  Widget build(BuildContext context) {
     return ATAnnotatedRegion(
       child: Scaffold(
         body: Column(
-          children: [
+          children: <Widget>[
             Padding(
               padding: const EdgeInsets.fromLTRB(7, kToolbarHeight, 15, 15),
               child: Row(
-                children: [
+                children: <Widget>[
                   ATCircleAvatar(
                     onTap: () => context.pop(),
                     diameter: 30, color: ATColors.trsprnt,
@@ -47,14 +47,14 @@ class ATSelectLanguageScreen extends StatelessWidget {
               radius: 14,
               padding: const EdgeInsets.fromLTRB(15, 10, 15, 10),
               child: Row(
-                children: [
+                children: <Widget>[
                   Text(
                     ATStrings.APP_LANG,
                     style: Theme.of(context).textTheme.bodySmall,
                   ),
                   const Spacer(),
                   BlocBuilder<AmptiveLanguageBloc, List>(
-                    builder: (_, state) {
+                    builder: (_, List state) {
                       return Text(
                         state.first as String,
                         style: Theme.of(context).textTheme.bodySmall?.copyWith(
@@ -69,21 +69,21 @@ class ATSelectLanguageScreen extends StatelessWidget {
             ),
 
             BlocBuilder<AmptiveLanguageBloc, List>(
-              builder: (_, state) {
-                final showLangs = state.last as bool;
+              builder: (_, List state) {
+                final bool showLangs = state.last as bool;
                 if(!showLangs){
                   return const SizedBox.shrink();
                 }
                 return Column(
                   children: langs.map(
-                    (lang){
-                      final isSelected = lang.toLowerCase() == (state.first as String).toLowerCase();
+                    (String lang){
+                      final bool isSelected = lang.toLowerCase() == (state.first as String).toLowerCase();
                       return Padding(
                         padding: const EdgeInsets.fromLTRB(30, 15, 30, 15),
                         child: GestureDetector(
                           onTap: () => context.read<AmptiveLanguageBloc>().selectLanguage(lang),
                           child: Row(
-                            children: [
+                            children: <Widget>[
                               Expanded(
                                 child: Text(
                                   lang,
@@ -110,4 +110,4 @@ class ATSelectLanguageScreen extends StatelessWidget {
 }
 
 
-final langs = ['English', 'China', 'Francais'];
+final List<String> langs = <String>['English', 'China', 'Francais'];

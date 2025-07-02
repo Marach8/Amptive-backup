@@ -16,13 +16,13 @@ class ATHelperFuncs{
     => ScaffoldMessenger.maybeOf(context)?.hideCurrentSnackBar();
 
 
-  static startTimer({
+  static void startTimer({
     required Timer timer,
     required BuildContext context
   }){
     timer = Timer.periodic(
       const Duration(seconds: 1),
-      (timer) {
+      (Timer timer) {
         if(timer.tick == 61){timer.cancel();}
         else{
           // context.read<AmptiveAuthBloc>().add(

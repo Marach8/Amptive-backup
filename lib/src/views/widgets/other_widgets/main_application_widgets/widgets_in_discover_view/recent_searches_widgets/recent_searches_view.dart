@@ -12,14 +12,14 @@ class RecentSearchesView extends StatelessWidget {
   });
 
   @override
-  Widget build(context) {
+  Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 15),
       child: SingleChildScrollView(
         child: Column(
-          children: [
+          children: <Widget>[
             Row(
-              children: [
+              children: <Widget>[
                 Text(
                   ATStrings.RECENT_SEARCHES,
                   style: Theme.of(context).textTheme.bodyLarge
@@ -28,7 +28,7 @@ class RecentSearchesView extends StatelessWidget {
                 Text(
                   ATStrings.CLEAR,
                   style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                    color: ATColors.authHintColor
+                    color: ATColors.hexB6B6B6
                   ),
                 ),
               ],

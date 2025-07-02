@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 
 class AmptiveHorizSliderAnimationWidget extends StatefulWidget {
-  final Widget child;
-  final double duration;
 
   const AmptiveHorizSliderAnimationWidget({
     super.key,
     required this.child,
     required this.duration
   });
+  final Widget child;
+  final double duration;
 
   @override
   State<AmptiveHorizSliderAnimationWidget> createState() => _SliderAnimationState();

@@ -28,7 +28,7 @@ class _SplashScreenState extends State<SplashScreen> {
     return Scaffold(
       backgroundColor: ATColors.hex0D0D0D,
       body: Stack(
-        children: [
+        children: <Widget>[
           Center(
             child: SizedBox(
               width: 78.w,

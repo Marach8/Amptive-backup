@@ -13,9 +13,9 @@ import '../../views/widgets/common_widgets/elevated_button_widget.dart';
 import '../constants/strings/other_strings.dart';
 
 Future<void> showWhispersDialog(BuildContext context) async {
-  final allowNotifier = ValueNotifier(false);
-  final doNotAllowNotifier = ValueNotifier(false);
-  final activateBtnNotifier = ValueNotifier(false);
+  final ValueNotifier<bool> allowNotifier = ValueNotifier(false);
+  final ValueNotifier<bool> doNotAllowNotifier = ValueNotifier(false);
+  final ValueNotifier<bool> activateBtnNotifier = ValueNotifier(false);
   CreateShowService service = GetIt.I<CreateShowService>();
 
   return await showModalBottomSheet(
@@ -30,7 +30,7 @@ Future<void> showWhispersDialog(BuildContext context) async {
         return Padding(
           padding: const EdgeInsets.fromLTRB(15, 20, 15, 10),
           child:
-              Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+              Column(crossAxisAlignment: CrossAxisAlignment.start, children: <Widget>[
             Center(
               child: GestureDetector(
                 onTap: () => context.pop(),
@@ -53,7 +53,7 @@ Future<void> showWhispersDialog(BuildContext context) async {
               alignment: Alignment.center,
               child: Row(
                 mainAxisSize: MainAxisSize.min,
-                children: [
+                children: <Widget>[
                   const Icon(Iconsax.message),
                   const Gap(5),
                   Text(
@@ -85,7 +85,7 @@ Future<void> showWhispersDialog(BuildContext context) async {
             AmptiveRebuilderWidget(
                 notifier: allowNotifier,
                 shouldDispose: true,
-                builder: (_, value, __) {
+                builder: (_, bool value, __) {
                   return ATContainer(
                     duration: 100,
                     onTap: () {
@@ -104,7 +104,7 @@ Future<void> showWhispersDialog(BuildContext context) async {
                             ? ATColors.hex307FE2
                             : ATColors.trsprnt),
                     child: Row(
-                      children: [
+                      children: <Widget>[
                         ATContainer(
                             height: 20,
                             width: 20,
@@ -124,7 +124,7 @@ Future<void> showWhispersDialog(BuildContext context) async {
                           child: Column(
                             mainAxisSize: MainAxisSize.min,
                             crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
+                            children: <Widget>[
                               Text(ATStrings.TURN_ON,
                                   style:
                                       Theme.of(context).textTheme.bodyMedium),
@@ -148,7 +148,7 @@ Future<void> showWhispersDialog(BuildContext context) async {
             AmptiveRebuilderWidget(
                 shouldDispose: true,
                 notifier: doNotAllowNotifier,
-                builder: (_, value, __) {
+                builder: (_, bool value, __) {
                   return ATContainer(
                     onTap: () {
                       activateBtnNotifier.value = !value;
@@ -169,9 +169,9 @@ Future<void> showWhispersDialog(BuildContext context) async {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisSize: MainAxisSize.min,
-                      children: [
+                      children: <Widget>[
                         Row(
-                          children: [
+                          children: <Widget>[
                             ATContainer(
                                 height: 20,
                                 width: 20,
@@ -191,7 +191,7 @@ Future<void> showWhispersDialog(BuildContext context) async {
                               child: Column(
                                 mainAxisSize: MainAxisSize.min,
                                 crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
+                                children: <Widget>[
                                   Text(ATStrings.TURN_OFF,
                                       style: Theme.of(context)
                                           .textTheme
@@ -218,7 +218,7 @@ Future<void> showWhispersDialog(BuildContext context) async {
             AmptiveRebuilderWidget(
                 notifier: activateBtnNotifier,
                 shouldDispose: true,
-                builder: (_, value, __) {
+                builder: (_, bool value, __) {
                   return AmptiveElevatedButtonWidget(
                     margin: EdgeInsets.zero,
                     onPressed: value

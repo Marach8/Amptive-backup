@@ -12,12 +12,6 @@ import '../../../../../utils/constants/colors.dart';
 import '../../../../../utils/constants/strings/other_strings.dart';
 
 class AmptiveLiveHostAndCoHostWidgetForAudienceView extends StatelessWidget {
-  final double? top, bottom, left, right;
-  final ObjectWithNotifier<Host>? hostOrCohost;
-  final GoLiveService service;
-  final bool isHost;
-  final int index;
-  final Function(ObjectWithNotifier<Host>? host) onTap;
 
   const AmptiveLiveHostAndCoHostWidgetForAudienceView(
       {super.key,
@@ -30,9 +24,15 @@ class AmptiveLiveHostAndCoHostWidgetForAudienceView extends StatelessWidget {
       required this.onTap,
       required this.service,
       required this.index});
+  final double? top, bottom, left, right;
+  final ObjectWithNotifier<Host>? hostOrCohost;
+  final GoLiveService service;
+  final bool isHost;
+  final int index;
+  final Function(ObjectWithNotifier<Host>? host) onTap;
 
   @override
-  Widget build(context) {
+  Widget build(BuildContext context) {
     return AnimatedPositioned(
         duration: const Duration(seconds: 1),
         curve: Curves.decelerate,
@@ -45,7 +45,7 @@ class AmptiveLiveHostAndCoHostWidgetForAudienceView extends StatelessWidget {
             : Column(
                 mainAxisSize: MainAxisSize.min,
                 mainAxisAlignment: MainAxisAlignment.start,
-                children: [
+                children: <Widget>[
                   GestureDetector(
                     onTap: () {
                       if (hostOrCohost != null) {
@@ -57,7 +57,7 @@ class AmptiveLiveHostAndCoHostWidgetForAudienceView extends StatelessWidget {
                     child: Stack(
                       clipBehavior: Clip.none,
                       alignment: Alignment.center,
-                      children: [
+                      children: <Widget>[
                         ATCircularImage(
                             diameter: isHost ? 94.h : 64.h,
                             addBorder: true,
@@ -99,7 +99,7 @@ class AmptiveLiveHostAndCoHostWidgetForAudienceView extends StatelessWidget {
                           gradient: LinearGradient(
                               begin: Alignment.topCenter,
                               end: Alignment.bottomCenter,
-                              colors: [
+                              colors: <Color>[
                                 ATColors.orangeGradientColorB,
                                 ATColors.orangeGradientColorB
                               ]),

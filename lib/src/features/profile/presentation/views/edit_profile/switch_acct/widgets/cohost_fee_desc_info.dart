@@ -22,7 +22,7 @@ class CohostFeeDescInfo extends StatelessWidget {
       color: ATColors.hex9E9E9E.withValues(alpha: 0.3),
       padding: const EdgeInsets.fromLTRB(10, 10, 10, 15),
       child: Column(
-        children: [
+        children: <Widget>[
           Align(
             alignment: Alignment.centerRight,
             child: GestureDetector(
@@ -31,13 +31,13 @@ class CohostFeeDescInfo extends StatelessWidget {
             ),
           ),
           Row(
-            children: [
+            children: <Widget>[
               const ATImgLoader(imgPath: ATImgStrings.INFO_ICON),
               const SizedBox(width: 10),
               Flexible(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
+                  children: <Widget>[
                     Text(
                       ATStrings.WHAT_IS_COHOST_FEE,
                       style: Theme.of(context).textTheme.bodySmall?.copyWith(

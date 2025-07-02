@@ -18,15 +18,15 @@ class AmptivePrivacyScreen extends StatelessWidget {
   const AmptivePrivacyScreen({super.key});
 
   @override
-  Widget build(context) {
+  Widget build(BuildContext context) {
     return ATAnnotatedRegion(
       child: Scaffold(
         body: Column(
-          children: [
+          children: <Widget>[
             Padding(
               padding: const EdgeInsets.fromLTRB(7, kToolbarHeight, 15, 15),
               child: Row(
-                children: [
+                children: <Widget>[
                   ATCircleAvatar(
                     onTap: () => context.pop(),
                     diameter: 30, color: ATColors.trsprnt,
@@ -47,11 +47,11 @@ class AmptivePrivacyScreen extends StatelessWidget {
               physics: const BouncingScrollPhysics(),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
+                children: <Widget>[
                   Padding(
                     padding: const EdgeInsets.fromLTRB(15, 5, 0, 0),
                     child: Row(
-                      children: [
+                      children: <Widget>[
                         Text(
                           ATStrings.PRIVATE_ACCT,
                           style: Theme.of(context).textTheme.labelMedium?.copyWith(
@@ -60,7 +60,7 @@ class AmptivePrivacyScreen extends StatelessWidget {
                         ),
                         const Spacer(),
                         BlocConsumer<PrivateAccountBloc, bool>(
-                          listener: (_, state){
+                          listener: (_, bool state){
                             if(state){
                               showAppNotification(
                                 context: context,
@@ -69,9 +69,9 @@ class AmptivePrivacyScreen extends StatelessWidget {
                               );
                             }
                           },
-                          builder: (_, state)  => AmptiveSwitch(
+                          builder: (_, bool state)  => AmptiveSwitch(
                             value: state,
-                            onChanged: (value){
+                            onChanged: (bool value){
                               context.read<PrivateAccountBloc>().togglePrivateAcct();
                             }
                           )

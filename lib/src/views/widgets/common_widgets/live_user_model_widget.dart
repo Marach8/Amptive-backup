@@ -10,15 +10,15 @@ class ATLiveUser extends StatelessWidget {
   });
 
   @override
-  Widget build(context) {
+  Widget build(BuildContext context) {
     return Column(
       mainAxisSize: MainAxisSize.min,
       mainAxisAlignment: MainAxisAlignment.end,
-      children: [
+      children: <Widget>[
         const Stack(
           clipBehavior: Clip.none,
           alignment: Alignment.center,
-          children: [
+          children: <Widget>[
             AmptiveAnimatedPaddingOnPictureWidget(
               imagePath: ATImgStrings.jpeg3,
             ),

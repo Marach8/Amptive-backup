@@ -8,8 +8,8 @@ class ATModalDismisser extends StatelessWidget {
   const ATModalDismisser({super.key});
 
   @override
-  Widget build(context) {
-    final isAndroid = ATHelperFuncs.getPlatform();
+  Widget build(BuildContext context) {
+    final bool isAndroid = ATHelperFuncs.getPlatform();
     if(isAndroid){
       return GestureDetector(
         onTap: () => context.pop(),

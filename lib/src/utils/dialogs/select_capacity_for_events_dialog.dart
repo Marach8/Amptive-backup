@@ -17,7 +17,7 @@ Future<void> showEventCapacitySelectionDialog({
   // required ValueNotifier<String> notifier
 })async{
   //final activateSetFeeBtn = ValueNotifier(false);
-  final formKey = GlobalKey<FormState>();
+  final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   CreateShowService service = GetIt.I<CreateShowService>();
 
 
@@ -40,7 +40,7 @@ Future<void> showEventCapacitySelectionDialog({
         child: Column(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
+          children: <Widget>[
             Center(
               child: GestureDetector(
                 onTap: () => context.pop(),
@@ -61,7 +61,7 @@ Future<void> showEventCapacitySelectionDialog({
               alignment: Alignment.center,
               child: Row(
                 mainAxisSize: MainAxisSize.min,
-                children: [
+                children: <Widget>[
                   const Icon(Icons.group_outlined),
                   Text(
                     ATStrings.CAPACITY,
@@ -88,7 +88,7 @@ Future<void> showEventCapacitySelectionDialog({
                 //hintText: '0',
                 hintStyle: Theme.of(context).textTheme.bodyMedium,
                 keyboardType: TextInputType.number,
-                validator: (text){
+                validator: (String? text){
                   if(text?.isEmpty ?? false){
                     return ATStrings.EMPTY_FIELD;
                   }
@@ -109,7 +109,7 @@ Future<void> showEventCapacitySelectionDialog({
             const Gap(20),
             Column(
               mainAxisSize: MainAxisSize.min,
-              children: [
+              children: <Widget>[
                 AmptiveElevatedButtonWidget(
                   margin: EdgeInsets.zero,
                   onPressed: () async{

@@ -23,7 +23,7 @@ class ATShowOrEventInfo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
-      children: [
+      children: <Widget>[
         TileWithLeadingImage(
           leadingImagePath: ATImgStrings.jpeg3,
           trailingOnPressed: () => showProgramOptions(context),
@@ -36,7 +36,7 @@ class ATShowOrEventInfo extends StatelessWidget {
           clipBehavior: Clip.hardEdge,
           radius: 15.r,
           child: Stack(
-            children: [
+            children: <Widget>[
               const ATImgLoader(imgPath: ATImgStrings.weCanDoHardThingsBgImage),
               ATContainer(
                 width: ATHelperFuncs.getScreenWidth(context),
@@ -58,7 +58,7 @@ class ATShowOrEventInfo extends StatelessWidget {
                 ),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
+                  children: <Widget>[
                     const AmptiveWith2OthersWidget(),
                     const Spacer(),
                     const LiveWithAnimatingDot(),

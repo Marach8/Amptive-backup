@@ -24,13 +24,13 @@ class DateOfBirthScreen extends StatefulWidget {
 
 class _DateOfBirthScreenState extends State<DateOfBirthScreen> {
   final TextEditingController _dobController = TextEditingController();
-  final _formKey = GlobalKey<FormState>();
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   bool _isBottomSheetOpened = false;
   DateTime? _selectedDate;
 
   @override
   Widget build(BuildContext context) {
-    var bottomSheetHeight = 232.h;
+    double bottomSheetHeight = 232.h;
 
     return ATAnnotatedRegion(
       child: Scaffold(
@@ -42,7 +42,7 @@ class _DateOfBirthScreenState extends State<DateOfBirthScreen> {
             key: _formKey,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
+              children: <Widget>[
                 Text(
                   ATStrings.whatIsYourDateOfBirth,
                   style: GoogleFonts.inter(
@@ -55,9 +55,9 @@ class _DateOfBirthScreenState extends State<DateOfBirthScreen> {
                   height: 11.h,
                 ),
                 BlocBuilder<AmptiveAuthBloc, AmptiveAuthState>(
-                    buildWhen: (p, current) {
+                    buildWhen: (AmptiveAuthState p, AmptiveAuthState current) {
                   return current is EditDOBAuthState;
-                }, builder: (_, state) {
+                }, builder: (_, AmptiveAuthState state) {
                   state is EditDOBAuthState && state.dob != null
                       ? _dobController.text = _formatDate(state.dob!)
                       : _dobController.clear();
@@ -78,7 +78,7 @@ class _DateOfBirthScreenState extends State<DateOfBirthScreen> {
                       hintText: ATStrings.selectDate,
                       hintStyle: GoogleFonts.inter(
                         fontSize: 16.sp,
-                        color: ATColors.authHintColor,
+                        color: ATColors.hexB6B6B6,
                         fontWeight: FontWeight.normal,
                       ),
                       errorStyle: GoogleFonts.inter(
@@ -135,8 +135,8 @@ class _DateOfBirthScreenState extends State<DateOfBirthScreen> {
           padding: EdgeInsets.only(
               bottom: _isBottomSheetOpened ? bottomSheetHeight : 16.h),
           child: BlocBuilder<AmptiveAuthBloc, AmptiveAuthState>(
-              buildWhen: (prev, curr) => curr is EditDOBAuthState,
-              builder: (context, state) {
+              buildWhen: (AmptiveAuthState prev, AmptiveAuthState curr) => curr is EditDOBAuthState,
+              builder: (BuildContext context, AmptiveAuthState state) {
                 return AmptiveElevatedButtonWidget(
                   height: 50.w,
                   onPressed: state is EditDOBAuthState && state.dob != null
@@ -152,15 +152,15 @@ class _DateOfBirthScreenState extends State<DateOfBirthScreen> {
     );
   }
 
-  _selectDate(bottomSheetHeight) async {
+  Future<void> _selectDate(bottomSheetHeight) async {
     _onBottomSheetOpened();
 
     DateTime? pickedDate = await showModalBottomSheet<DateTime>(
       context: context,
-      builder: (context) {
+      builder: (BuildContext context) {
         DateTime tempPickedDate = DateTime.now();
-        var now = DateTime.now();
-        var maxDate = DateTime(now.year - 13, now.month, now.day);
+        DateTime now = DateTime.now();
+        DateTime maxDate = DateTime(now.year - 13, now.month, now.day);
 
         return SizedBox(
           height: bottomSheetHeight,

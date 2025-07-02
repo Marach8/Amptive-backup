@@ -13,8 +13,6 @@ import '../../../views/widgets/common_widgets/elevated_button_widget.dart';
 import '../../../views/widgets/other_widgets/main_application_widgets/widgets_in_home_view/widgets_in_go_live/shows/show_type_visibility.dart';
 
 class AmptiveShowScheduledScreen extends StatefulWidget {
-  late final ShowType showType;
-  final String imageFilePath;
 
   AmptiveShowScheduledScreen(
       {super.key, showType = ShowType.event, required this.imageFilePath}) {
@@ -24,6 +22,8 @@ class AmptiveShowScheduledScreen extends StatefulWidget {
       this.showType = showType;
     }
   }
+  late final ShowType showType;
+  final String imageFilePath;
 
   @override
   State<AmptiveShowScheduledScreen> createState() =>
@@ -48,7 +48,7 @@ class _AmptiveShowScheduledScreenState
   }
 
   @override
-  Widget build(context) {
+  Widget build(BuildContext context) {
     return ATAnnotatedRegion(
       child: Scaffold(
         appBar: ATAppBar(
@@ -68,7 +68,7 @@ class _AmptiveShowScheduledScreenState
             padding: const EdgeInsets.all(15),
             physics: const BouncingScrollPhysics(),
             child: Column(
-              children: [
+              children: <Widget>[
                 ATCircleAvatar(
                   diameter: 45,
                   color: ATColors.white,
@@ -96,7 +96,7 @@ class _AmptiveShowScheduledScreenState
                 const Gap(30),
                 AmptiveRebuilderWidget(
                   notifier: _normalSize,
-                  builder: (_, val, __) {
+                  builder: (_, double val, __) {
                     return AnimatedCreateShowSuccessImage(
                       width: val,
                       height: val,
@@ -111,7 +111,7 @@ class _AmptiveShowScheduledScreenState
         ),
         bottomNavigationBar: Column(
           mainAxisSize: MainAxisSize.min,
-          children: [
+          children: <Widget>[
             AmptiveElevatedButtonWidget(
               onPressed: () {},
               buttonTitle:

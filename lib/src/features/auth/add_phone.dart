@@ -31,7 +31,7 @@ class AddPhoneScreen extends StatefulWidget {
 class _AddPhoneScreenState extends State<AddPhoneScreen> {
   bool _bottomSheetOpened = false;
   final TextEditingController _phoneController = TextEditingController();
-  final _formKey = GlobalKey<FormState>();
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   @override
   void initState() {
@@ -54,7 +54,7 @@ class _AddPhoneScreenState extends State<AddPhoneScreen> {
             key: _formKey,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
+              children: <Widget>[
                 Text(
                   ATStrings.UR_FON_NUMBER,
                   style: Theme.of(context).textTheme.headlineMedium?.copyWith(
@@ -64,10 +64,10 @@ class _AddPhoneScreenState extends State<AddPhoneScreen> {
                 const SizedBox(height: 11),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
+                  children: <Widget>[
                     BlocBuilder<AmptiveAuthBloc, AmptiveAuthState>(
-                      buildWhen: (_, curr) => curr is SelectCountryCodeState,
-                      builder: (_, state) {
+                      buildWhen: (_, AmptiveAuthState curr) => curr is SelectCountryCodeState,
+                      builder: (_, AmptiveAuthState state) {
                         Country selectedCountry = state is SelectCountryCodeState
                           ? state.selectedCountry : CountryPickerUtils.getCountryByIsoCode(
                               Constants.kDefaultCountrySelected);
@@ -83,7 +83,7 @@ class _AddPhoneScreenState extends State<AddPhoneScreen> {
                           ),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
+                            children: <Widget>[
                               SizedBox(
                                 height: 13, width: 17,
                                 child: Image.asset(
@@ -114,7 +114,7 @@ class _AddPhoneScreenState extends State<AddPhoneScreen> {
                         controller: _phoneController,
                         keyboardType: TextInputType.number,
                         cursorColor: ATColors.hex307FE2,
-                        onChanged: (val) {
+                        onChanged: (String val) {
                           context.read<AmptiveAuthBloc>().add(AddPhoneNumberEvent(value: val));
                         },
                         decoration: InputDecoration(
@@ -152,8 +152,8 @@ class _AddPhoneScreenState extends State<AddPhoneScreen> {
         bottomSheet: Padding(
           padding: const EdgeInsets.fromLTRB(15, 0, 15, 10),
           child: BlocBuilder<AmptiveAuthBloc, AmptiveAuthState>(
-            buildWhen: (_, curr) => curr is AddPhoneNumberState,
-            builder: (context, state) {
+            buildWhen: (_, AmptiveAuthState curr) => curr is AddPhoneNumberState,
+            builder: (BuildContext context, AmptiveAuthState state) {
               Country selectedCountry = state is SelectCountryCodeState
                 ? state.selectedCountry : CountryPickerUtils.getCountryByIsoCode(
                     Constants.kDefaultCountrySelected);
@@ -162,10 +162,10 @@ class _AddPhoneScreenState extends State<AddPhoneScreen> {
                 btnTitle: ATStrings.VERIFY_FONE,
                 onPressed: state is AddPhoneNumberState && state.isPhoneValid
                   ? () {
-                    final phoneNo = ATStrings.plus + selectedCountry.phoneCode + _phoneController.text.trim();
+                    final String phoneNo = ATStrings.plus + selectedCountry.phoneCode + _phoneController.text.trim();
                     context.pushNamed(
                       ATRoutes.OTP_SCREEN,
-                      extra: [phoneNo, widget.title ?? '']
+                      extra: <String>[phoneNo, widget.title ?? '']
                     );
                   } : null,
               );
@@ -176,13 +176,13 @@ class _AddPhoneScreenState extends State<AddPhoneScreen> {
     );
   }
 
-  _selectCountry() async {
+  Future<void> _selectCountry() async {
     _bottomSheetOpened = true;
     context.read<AmptiveAuthBloc>().add(OpenCountryBottomSheetEvent());
 
     await showModalBottomSheet<Country>(
       context: context,
-      builder: (context) {
+      builder: (BuildContext context) {
         return const CupertinoPhoneCodeSelectWidget();
       },
     ).whenComplete(() => _bottomSheetOpened = false);

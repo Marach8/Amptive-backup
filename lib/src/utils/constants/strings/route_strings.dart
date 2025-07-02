@@ -38,7 +38,7 @@ class ATRoutes {
   static const String SOCIETY_SCREEN = 'society_screen';
   static const String TRENDING_SOCIETY_SCREEN = 'trending_society_screen';
   static const String TRENDING_HASHTAGS_SCREEN = 'trending_hashtags_screen';
-  static const String TRENDING_HASHTAG_FULL_SCREEN = 'trending_hashtag_full_screen';
+  static const String SOCIETY_HASHTAG_SCREEN = 'trending_hashtag_full_screen';
   static const String GO_LIVE_SCREEN = 'go_live';
   static const String CREATOR_PROFILE_SCREEN = 'creator_profile';
   static const String PROFILE_MENU_SCREEN = 'profile_menu_screen';

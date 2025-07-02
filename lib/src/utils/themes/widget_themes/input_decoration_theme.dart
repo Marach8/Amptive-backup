@@ -17,7 +17,7 @@ class AmptiveInputDecorationTheme{
     //labelStyle: const TextStyle().copyWith(fontSize: AmptiveFontSizes.size13),
     hintStyle: TextStyle(
       fontSize: ATFontSizes.size16,
-      color: ATColors.authHintColor,
+      color: ATColors.hexB6B6B6,
       fontWeight: ATFontWeights.w400
     ),
     contentPadding: const EdgeInsets.fromLTRB(16, 12, 16, 12),

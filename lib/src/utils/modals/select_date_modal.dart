@@ -19,7 +19,7 @@ Future<void> selectDateModal(
 
   AssetImage? defaultAssetImage =
       const AssetImage(ATImgStrings.createShowPlaceholderImage);
-  var now = DateTime.now();
+  DateTime now = DateTime.now();
 
   DateTime selectedDateTime =
       service.isValidEventDateTime() ? service.eventDateTime! : now;
@@ -32,9 +32,9 @@ Future<void> selectDateModal(
       isScrollControlled: true,
       useSafeArea: true,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(0)),
-      builder: (context) {
+      builder: (BuildContext context) {
         return Stack(
-          children: [
+          children: <Widget>[
             Positioned.fill(
               child: selectedImage != null
                   ? Image.memory(
@@ -57,10 +57,10 @@ Future<void> selectDateModal(
             ),
             Positioned(
               child: Column(
-                children: [
+                children: <Widget>[
                   Row(
                     crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
+                    children: <Widget>[
                       const BackButton(),
                       Padding(
                         padding: EdgeInsets.only(left: 60.w, top: 4.h),

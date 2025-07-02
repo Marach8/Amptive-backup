@@ -24,7 +24,7 @@ class AmptiveWelcomeScreen extends StatelessWidget {
         child: SingleChildScrollView(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
-            children: [
+            children: <Widget>[
               const ATImgLoader(imgPath: ATImgStrings.amptiveLogo),
               Gap(80.h),
 
@@ -32,7 +32,7 @@ class AmptiveWelcomeScreen extends StatelessWidget {
                 padding: EdgeInsets.symmetric(horizontal: 30),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
+                  children: <Widget>[
                     AmptiveAudioCreatorWidget(
                       assetName: ATImgStrings.jpeg2,
                       delay: 3,

@@ -350,6 +350,7 @@ class ATStrings{
   static const String LOGOUT = 'Log out';
   static const String CODE_SENT = 'Code has been sent. You can request another in';
   static const String SEE_COMMUNITIES = 'See communities on Amptive';
+  static const String COMMUNITIES = 'Communities';
   static const String RECENT_SEARCHES = 'Recent Searches';
   static const String CLEAR = 'Clear';
   static const String KICK_OUT_LISTENER = 'Kickout listener';

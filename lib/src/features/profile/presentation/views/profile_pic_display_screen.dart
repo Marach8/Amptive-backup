@@ -13,7 +13,7 @@ class AmptiveViewProfilePicScreen extends StatelessWidget {
   final String imgPath;
 
   @override
-  Widget build(context) {
+  Widget build(BuildContext context) {
     return ATAnnotatedRegion(
       child: Scaffold(
         appBar: ATAppBar(
@@ -22,7 +22,7 @@ class AmptiveViewProfilePicScreen extends StatelessWidget {
             child: const Icon(Icons.close),
           ),
           leadingWidth: 30,
-          actions: [
+          actions: <Widget>[
             Text(
               ATStrings.EDIT,
               style: Theme.of(context).textTheme.bodyMedium

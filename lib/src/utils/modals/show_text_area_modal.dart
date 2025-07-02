@@ -19,7 +19,7 @@ void showTextAreaModal(BuildContext context) {
     isScrollControlled: true,
     builder: (BuildContext context) {
       return Column(
-        children: [
+        children: <Widget>[
           Gap(50.h),
           Text(
             "Description",

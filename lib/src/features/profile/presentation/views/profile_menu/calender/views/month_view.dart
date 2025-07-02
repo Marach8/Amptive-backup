@@ -42,16 +42,16 @@ class _CalenderMonthViewState extends State<CalenderMonthView> {
   }
 
   @override
-  Widget build(context) {
+  Widget build(BuildContext context) {
 
     return BlocConsumer<CalenderMonthViewBloc, CalenderMonthViewState>(
-      listenWhen: (_, curr) => (curr is CalenderMonthViewDataState) && curr.errorMsg != null,
-      listener: (_, curr) => showAppNotification(
+      listenWhen: (_, CalenderMonthViewState curr) => (curr is CalenderMonthViewDataState) && curr.errorMsg != null,
+      listener: (_, CalenderMonthViewState curr) => showAppNotification(
         context: context,
         icon: const Icon(Icons.warning),
         text: (curr as CalenderMonthViewDataState).errorMsg ?? ''
       ),
-      builder: (_, state) {
+      builder: (_, CalenderMonthViewState state) {
         if(state is InitialCalenderMonthViewState){
           return const SizedBox.shrink();
         }
@@ -63,16 +63,16 @@ class _CalenderMonthViewState extends State<CalenderMonthView> {
           return const Text('Could not load items');
         }
     
-        final calenderData = (state as CalenderMonthViewDataState).calenderData;
+        final Map<String, List<List<Map<DateTime?, List<CalenderProgram>>>>> calenderData = (state as CalenderMonthViewDataState).calenderData;
     
         return ListView.builder(
           physics: const BouncingScrollPhysics(),
           padding: const EdgeInsets.only(bottom: kBottomNavigationBarHeight),
           controller: _scrollController,
           itemCount: calenderData.length + (state.hasMoreData ? 1 : 0),
-          itemBuilder: (_, index) {
+          itemBuilder: (_, int index) {
             if(index < calenderData.length){
-              final monthData = calenderData.entries.elementAtOrNull(index);
+              final MapEntry<String, List<List<Map<DateTime?, List<CalenderProgram>>>>>? monthData = calenderData.entries.elementAtOrNull(index);
               return EachMonthWidget(monthData: monthData, key: ValueKey(index));
             }
     
@@ -104,7 +104,7 @@ class EachMonthWidget extends StatelessWidget {
   final MapEntry<String, List<List<Map<DateTime?, List<CalenderProgram>>>>>? monthData;
 
   @override
-  Widget build(context) {
+  Widget build(BuildContext context) {
     return StickyHeaderBuilder(
       builder: (_, __){
         return StickyHeaderWidget(
@@ -117,8 +117,8 @@ class EachMonthWidget extends StatelessWidget {
         padding: const EdgeInsets.fromLTRB(5, 0, 5, 50),
         child: Column(
           spacing: 20,
-          children: (monthData?.value ?? []).map(
-            (week) => EachWeekData(week: week, key: ObjectKey(week)),
+          children: (monthData?.value ?? <List<Map<DateTime?, List<CalenderProgram>>>>[]).map(
+            (List<Map<DateTime?, List<CalenderProgram>>> week) => EachWeekData(week: week, key: ObjectKey(week)),
           ).toList(),
         ),
       ),
@@ -139,11 +139,11 @@ class StickyHeaderWidget extends StatelessWidget {
     return Material(
       color: ATColors.black,
       child: Column(
-        children: [
+        children: <Widget>[
           Padding(
             padding: const EdgeInsets.fromLTRB(15, 0, 15, 0),
             child: Row(
-              children: [
+              children: <Widget>[
                 Text(
                   monthName,
                   style: Theme.of(context).textTheme.bodyLarge?.copyWith(
@@ -172,7 +172,7 @@ class StickyHeaderWidget extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: _weekDays.map(
-                (day) => Expanded(
+                (String day) => Expanded(
                   child: Center(
                     child: Text(
                       day,
@@ -204,7 +204,7 @@ class EachWeekData extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: week.map(
-        (mapOfProg){
+        (Map<DateTime?, List<CalenderProgram>> mapOfProg){
           if(mapOfProg.keys.first != null){
             return Expanded(
               key: ValueKey('${week.indexOf(mapOfProg)}A'),
@@ -230,13 +230,13 @@ class EachDayWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final day = mapOfProg.keys.first;
-    final now = DateTime.now();
-    final isToday = (day?.year == now.year) &&
+    final DateTime? day = mapOfProg.keys.first;
+    final DateTime now = DateTime.now();
+    final bool isToday = (day?.year == now.year) &&
       (day?.month == now.month) && (day?.day == now.day);
 
     return Column(
-      children: [
+      children: <Widget>[
         CircleAvatar(
           backgroundColor: isToday ? ATColors.hex307FE2 : ATColors.trsprnt,
           child: Text(
@@ -246,7 +246,7 @@ class EachDayWidget extends StatelessWidget {
         ),
         
         ...mapOfProg.values.first.map(
-          (program){
+          (CalenderProgram program){
             return ATContainer(
               radius: 3,
               margin: const EdgeInsets.only(bottom: 2),
@@ -274,4 +274,4 @@ class EachDayWidget extends StatelessWidget {
 }
 
 
-final _weekDays = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+final List<String> _weekDays = <String>['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];

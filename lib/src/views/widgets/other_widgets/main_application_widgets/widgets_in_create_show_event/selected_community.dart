@@ -27,7 +27,7 @@ class SelectedCommunity extends StatelessWidget {
           borderRadius: BorderRadius.circular(14.r)),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
+        children: <Widget>[
           SizedBox(
             width: 100.328.w,
             height: 72.h,
@@ -44,7 +44,7 @@ class SelectedCommunity extends StatelessWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
+              children: <Widget>[
                 Text(
                   _selectedCommunity.name!,
                   style: Theme.of(context).textTheme.bodySmall,

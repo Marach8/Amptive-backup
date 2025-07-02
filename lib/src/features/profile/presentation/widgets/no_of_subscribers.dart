@@ -16,7 +16,7 @@ class NoOfSubscribers extends StatelessWidget {
     return GestureDetector(
       onTap: () => context.pushNamed(ATRoutes.PROFILE_SUBSCRIBERS_SCREEN),
       child: Row(
-        children: [
+        children: <Widget>[
           CustomPaint(
             size: const Size(16, 16),
             painter: RoundedScallopedPainter(

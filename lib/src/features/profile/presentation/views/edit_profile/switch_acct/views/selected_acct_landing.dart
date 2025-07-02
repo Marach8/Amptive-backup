@@ -18,30 +18,30 @@ import '../../edit_profile_export.dart' show SpotlightBeam;
 class SelectedAcctLandingScreen extends StatelessWidget {
   const SelectedAcctLandingScreen({super.key});
 
-  static const creatorList = <List<String>>[
-    [ATImgStrings.CREATOR_MIC, ATStrings.CREATE_LIVE_SHOWS_ND_EVENTS, ATStrings.HOST_CAPTIVATING_PROGRAMS],
-    [ATImgStrings.CREATOR_GIF, ATStrings.RECEIVE_GIFTS_4RM_AUDIENCE, ATStrings.GET_SUPPORT_4RM_FANS],
-    [ATImgStrings.CREATOR_GLOBE, ATStrings.EARN_BY_COMPLETING_TASKS, ATStrings.TAKE_TASK_ND_GET_REWARDS],
-    [ATImgStrings.CREATOR_LOCK, ATStrings.ENABLE_SUB_4_UR_SHOW, ATStrings.OFFER_XCLUSIVE_CONTENT]
+  static const List<List<String>> creatorList = <List<String>>[
+    <String>[ATImgStrings.CREATOR_MIC, ATStrings.CREATE_LIVE_SHOWS_ND_EVENTS, ATStrings.HOST_CAPTIVATING_PROGRAMS],
+    <String>[ATImgStrings.CREATOR_GIF, ATStrings.RECEIVE_GIFTS_4RM_AUDIENCE, ATStrings.GET_SUPPORT_4RM_FANS],
+    <String>[ATImgStrings.CREATOR_GLOBE, ATStrings.EARN_BY_COMPLETING_TASKS, ATStrings.TAKE_TASK_ND_GET_REWARDS],
+    <String>[ATImgStrings.CREATOR_LOCK, ATStrings.ENABLE_SUB_4_UR_SHOW, ATStrings.OFFER_XCLUSIVE_CONTENT]
   ];
 
-  static const businessList = <List<String>>[
-    [ATImgStrings.BIZ_THUNDER, ATStrings.PARTNER_WITH_CREATORS, ATStrings.COLLABORATE_WITH_CREATORS],
-    [ATImgStrings.BIZ_TICKETS, ATStrings.SELL_TICKETS, ATStrings.MONETIZE_EVENTS],
-    [ATImgStrings.CREATOR_MIC, ATStrings.HOST_BRANDED_AUDIO, ATStrings.ENGAGE_AUDIENCE],
-    [ATImgStrings.BIZ_ARROW, ATStrings.PROMOTE_UR_BUSINESS, ATStrings.SHOWCASE_UR_PRODUCTS]
+  static const List<List<String>> businessList = <List<String>>[
+    <String>[ATImgStrings.BIZ_THUNDER, ATStrings.PARTNER_WITH_CREATORS, ATStrings.COLLABORATE_WITH_CREATORS],
+    <String>[ATImgStrings.BIZ_TICKETS, ATStrings.SELL_TICKETS, ATStrings.MONETIZE_EVENTS],
+    <String>[ATImgStrings.CREATOR_MIC, ATStrings.HOST_BRANDED_AUDIO, ATStrings.ENGAGE_AUDIENCE],
+    <String>[ATImgStrings.BIZ_ARROW, ATStrings.PROMOTE_UR_BUSINESS, ATStrings.SHOWCASE_UR_PRODUCTS]
   ];
 
   @override
-  Widget build(context) {
+  Widget build(BuildContext context) {
     WidgetsBinding.instance.addPostFrameCallback(
       (_) => Future.delayed(
         const Duration(milliseconds: 500),
-        () => context.mounted ? context.read<AcctTypeLandingAnimBloc>().triggerNext(0) : {}
+        () => context.mounted ? context.read<AcctTypeLandingAnimBloc>().triggerNext(0) : <dynamic, dynamic>{}
       )
     );
     
-    final isCreator = context.read<AccountTypeBloc>().state;
+    final bool isCreator = context.read<AccountTypeBloc>().state;
 
     return ATAnnotatedRegion(
       statusBarColor: ATColors.trsprnt,
@@ -49,22 +49,22 @@ class SelectedAcctLandingScreen extends StatelessWidget {
         body: SingleChildScrollView(
           physics: const BouncingScrollPhysics(),
           child: Column(
-            children: [
+            children: <Widget>[
               SizedBox(
                 height: ATHelperFuncs.getScreenHeight(context) * 0.3,
                 width: ATHelperFuncs.getScreenWidth(context),
                 child: Stack(
                   alignment: Alignment.topCenter,
-                  children: [
+                  children: <Widget>[
                     BlocSelector<AcctTypeLandingAnimBloc, List<bool>, bool>(
-                      selector: (state) => state.elementAt(0),
-                      builder: (_, isVisible) {
+                      selector: (List<bool> state) => state.elementAt(0),
+                      builder: (_, bool isVisible) {
                         return SpotlightBeam(
                           duration: 1500,
                           gradient: isVisible ? LinearGradient(
                             begin: Alignment.topCenter,
                             end: Alignment.bottomCenter,
-                            colors: [
+                            colors: <Color>[
                               ATColors.hex23221C,
                               ATColors.black
                             ],
@@ -110,9 +110,9 @@ class SelectedAcctLandingScreen extends StatelessWidget {
               const SizedBox(height: 20,),
               
               ...(isCreator ? creatorList : businessList).asMap().entries.map(
-                (entry){
-                  final index = entry.key;
-                  final eachList = entry.value;
+                (MapEntry<int, List<String>> entry){
+                  final int index = entry.key;
+                  final List<String> eachList = entry.value;
                   return _CustomWidget(
                     imgPath: eachList.first,
                     subTitle: eachList.last,
@@ -128,8 +128,8 @@ class SelectedAcctLandingScreen extends StatelessWidget {
         bottomSheet: Padding(
           padding: const EdgeInsets.fromLTRB(15, 5, 15, 10),
           child: BlocSelector<AcctTypeLandingAnimBloc, List<bool>, bool>(
-            selector: (state) => state.last,
-            builder: (_, isVisible) {
+            selector: (List<bool> state) => state.last,
+            builder: (_, bool isVisible) {
               return ATPlainElevatedBtn(
                 onPressed: isVisible ? () => context.pushNamed(
                   ATRoutes.SELECT_CAT, extra: isCreator
@@ -157,10 +157,10 @@ class _CustomWidget extends StatelessWidget {
   final int index;
 
   @override
-  Widget build(context) {
+  Widget build(BuildContext context) {
     return BlocSelector<AcctTypeLandingAnimBloc, List<bool>, bool>(
-      selector: (state) => state.elementAt(index),
-      builder: (_, isVisible) {
+      selector: (List<bool> state) => state.elementAt(index),
+      builder: (_, bool isVisible) {
         return AnimatedOpacity(
           duration: const Duration(milliseconds: 500),
           opacity: isVisible ? 1 : 0, curve: Curves.decelerate,
@@ -168,13 +168,13 @@ class _CustomWidget extends StatelessWidget {
           child: Padding(
             padding: const EdgeInsets.fromLTRB(30, 0, 30, 20),
             child: Row(
-              children: [
+              children: <Widget>[
                 ATImgLoader(imgPath: imgPath),
                 const SizedBox(width: 15),
                 Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
+                    children: <Widget>[
                       Text(
                         title, maxLines: 2,
                         style: Theme.of(context).textTheme.bodySmall?.copyWith(

@@ -16,9 +16,9 @@ import '../constants/strings/other_strings.dart';
 
 Future<void> showSelectAudienceAccessForEventsDialog(
     BuildContext context) async {
-  final freeAccesNotifier = ValueNotifier(false);
-  final paidAccessNotifier = ValueNotifier(false);
-  final activateBtnNotifier = ValueNotifier(false);
+  final ValueNotifier<bool> freeAccesNotifier = ValueNotifier(false);
+  final ValueNotifier<bool> paidAccessNotifier = ValueNotifier(false);
+  final ValueNotifier<bool> activateBtnNotifier = ValueNotifier(false);
 
   CreateShowService service = GetIt.I<CreateShowService>();
 
@@ -34,7 +34,7 @@ Future<void> showSelectAudienceAccessForEventsDialog(
         return Padding(
           padding: const EdgeInsets.fromLTRB(15, 20, 15, 10),
           child:
-              Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+              Column(crossAxisAlignment: CrossAxisAlignment.start, children: <Widget>[
             Center(
               child: GestureDetector(
                 onTap: () => context.pop(),
@@ -73,7 +73,7 @@ Future<void> showSelectAudienceAccessForEventsDialog(
             AmptiveRebuilderWidget(
                 notifier: freeAccesNotifier,
                 shouldDispose: true,
-                builder: (_, value, __) {
+                builder: (_, bool value, __) {
                   return ATContainer(
                     duration: 100,
                     onTap: () {
@@ -90,7 +90,7 @@ Future<void> showSelectAudienceAccessForEventsDialog(
                             ? ATColors.hex307FE2
                             : ATColors.trsprnt),
                     child: Row(
-                      children: [
+                      children: <Widget>[
                         const ATImgLoader(
                             imgPath: ATImgStrings.PEOPLE),
                         const Gap(10),
@@ -98,7 +98,7 @@ Future<void> showSelectAudienceAccessForEventsDialog(
                           child: Column(
                             mainAxisSize: MainAxisSize.min,
                             crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
+                            children: <Widget>[
                               Text(ATStrings.FREE,
                                   style:
                                       Theme.of(context).textTheme.bodyMedium),
@@ -137,7 +137,7 @@ Future<void> showSelectAudienceAccessForEventsDialog(
             AmptiveRebuilderWidget(
                 shouldDispose: true,
                 notifier: paidAccessNotifier,
-                builder: (_, value, __) {
+                builder: (_, bool value, __) {
                   return ATContainer(
                     onTap: () {
                       activateBtnNotifier.value = !value;
@@ -156,9 +156,9 @@ Future<void> showSelectAudienceAccessForEventsDialog(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisSize: MainAxisSize.min,
-                      children: [
+                      children: <Widget>[
                         Row(
-                          children: [
+                          children: <Widget>[
                             const ATImgLoader(
                                 imgPath: ATImgStrings.PADLOCK),
                             const Gap(10),
@@ -166,7 +166,7 @@ Future<void> showSelectAudienceAccessForEventsDialog(
                               child: Column(
                                 mainAxisSize: MainAxisSize.min,
                                 crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
+                                children: <Widget>[
                                   Text(ATStrings.PAID,
                                       style: Theme.of(context)
                                           .textTheme
@@ -204,7 +204,7 @@ Future<void> showSelectAudienceAccessForEventsDialog(
                         const Divider(height: 0.5),
                         const Gap(15),
                         Row(
-                          children: [
+                          children: <Widget>[
                             ATContainer(
                               onTap: () async {
                                 freeAccesNotifier.value = false;
@@ -223,7 +223,7 @@ Future<void> showSelectAudienceAccessForEventsDialog(
                             const Spacer(),
                             AmptiveRebuilderWidget(
                                 notifier: service.eventPaymentController,
-                                builder: (_, val, __) {
+                                builder: (_, TextEditingValue val, __) {
                                   return Text('₦${service.eventPaymentController.text}',
                                       style: Theme.of(context)
                                           .textTheme
@@ -239,7 +239,7 @@ Future<void> showSelectAudienceAccessForEventsDialog(
             AmptiveRebuilderWidget(
                 notifier: activateBtnNotifier,
                 shouldDispose: true,
-                builder: (_, value, __) {
+                builder: (_, bool value, __) {
                   return AmptiveElevatedButtonWidget(
                     margin: EdgeInsets.zero,
                     onPressed: value

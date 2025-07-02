@@ -15,8 +15,8 @@ class RowOfCustomFees extends StatelessWidget {
   final void Function(int) onFeeTap;
 
   @override
-  Widget build(context) {
-    final list = [100, 500, 1000, 5000, 10000];
+  Widget build(BuildContext context) {
+    final List<int> list = <int>[100, 500, 1000, 5000, 10000];
 
     return SizedBox(
       height: 30,
@@ -26,7 +26,7 @@ class RowOfCustomFees extends StatelessWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: list.map(
-            (item){
+            (int item){
               return ATContainer(
                 onTap: () => onFeeTap(item),
                 duration: 50,

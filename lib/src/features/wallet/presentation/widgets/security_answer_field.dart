@@ -17,7 +17,7 @@ class SecurityAnswerField extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
+      children: <Widget>[
         Text(
           ATStrings.WHAT_IS_UR_ANSWER,
           style: Theme.of(context).textTheme.bodyMedium
@@ -26,7 +26,7 @@ class SecurityAnswerField extends StatelessWidget {
         ATTextFormField(
           hintText: ATStrings.ENTER_UR_ANS,
           fillColor: ATColors.hex9E9E9E.withValues(alpha: 0.3),
-          onChanged: (text){
+          onChanged: (String text){
             ATHelperFuncs.callDebouncer(
               1000,
               () => context.read<SecQuestionBloc>().setSecAnswer(text)

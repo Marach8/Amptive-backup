@@ -30,12 +30,12 @@ class _AddSubPlanWidget extends StatefulWidget {
 
 class _AddSubPlanWidgetState extends State<_AddSubPlanWidget> {
   late final TextEditingController _cntrl;
-  final defaultPrice = '0';
+  final String defaultPrice = '0';
   
   @override 
   void initState(){
     super.initState();
-    final selectedPrice = context.read<SubPlanSetupBloc>().state.last;
+    final int? selectedPrice = context.read<SubPlanSetupBloc>().state.last;
     _cntrl = TextEditingController(
       text: selectedPrice != null ? selectedPrice.toString() : defaultPrice
     )..addListener(_handleBtnActivation);
@@ -57,7 +57,7 @@ class _AddSubPlanWidgetState extends State<_AddSubPlanWidget> {
   }
 
   @override
-  Widget build(context) {
+  Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.fromLTRB(15, 5, 15, 10),
       decoration: BoxDecoration(
@@ -69,7 +69,7 @@ class _AddSubPlanWidgetState extends State<_AddSubPlanWidget> {
       ),
       child: Column(
         mainAxisSize: MainAxisSize.min,
-        children: [
+        children: <Widget>[
           const ATModalDismisser(),
           const SizedBox(height: 20),
           const ATImgLoader(imgPath: ATImgStrings.PADLOCK),
@@ -107,11 +107,11 @@ class _AddSubPlanWidgetState extends State<_AddSubPlanWidget> {
           ),
           const SizedBox(height: 20),
           BlocSelector<SubPlanSetupBloc,List<int?>, int?>(
-            selector: (state) => state.first,
-            builder: (_, state) {
+            selector: (List<int?> state) => state.first,
+            builder: (_, int? state) {
               return RowOfCustomFees(
                 selectedFee: state,
-                onFeeTap: (tappedFee){
+                onFeeTap: (int tappedFee){
                   _cntrl.text = tappedFee.toString();
                   context.read<SubPlanSetupBloc>().selectFee(tappedFee);
                 },
@@ -127,13 +127,13 @@ class _AddSubPlanWidgetState extends State<_AddSubPlanWidget> {
           ),
           const SizedBox(height: 15),
           BlocSelector<SubPlanSetupBloc,List<int?>, int?>(
-            selector: (state) => state.first,
-            builder: (_, state) {
-              final shouldActivate = state != null && state != 0;
+            selector: (List<int?> state) => state.first,
+            builder: (_, int? state) {
+              final bool shouldActivate = state != null && state != 0;
               return ATPlainElevatedBtn(
                 fgColor: ATColors.black, bgColor: ATColors.white,
                 onPressed: shouldActivate ? (){
-                  final selectdFee = int.tryParse(_cntrl.text.trim());
+                  final int? selectdFee = int.tryParse(_cntrl.text.trim());
                   context.read<SubPlanSetupBloc>().setSelectedFee(selectdFee);
                   context.pop();
                 } : null,

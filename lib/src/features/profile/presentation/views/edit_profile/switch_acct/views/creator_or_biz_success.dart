@@ -5,24 +5,25 @@ import 'package:amptive/src/views/widgets/common_widgets/annotated_region__widge
 import 'package:amptive/src/views/widgets/common_widgets/elevated_button_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:nested/nested.dart';
 import '../switch_acct_export.dart';
 
 class CreatorSuccessScreen extends StatelessWidget {
   const CreatorSuccessScreen({super.key});
 
   @override
-  Widget build(context) {
+  Widget build(BuildContext context) {
     return MultiBlocProvider(
-      providers: [
+      providers: <SingleChildWidget>[
         BlocProvider(create: (_) => AccountTypeBloc()),
         BlocProvider(create: (_) => SwitchAcctSuccessAnimBloc())
       ],
       child: Builder(
-        builder: (blocsContext) {
+        builder: (BuildContext blocsContext) {
           WidgetsBinding.instance.addPostFrameCallback(
             (_) => Future.delayed(
               const Duration(milliseconds: 500),
-              () => blocsContext.mounted ? blocsContext.read<SwitchAcctSuccessAnimBloc>().triggerNext(0) : {}
+              () => blocsContext.mounted ? blocsContext.read<SwitchAcctSuccessAnimBloc>().triggerNext(0) : <dynamic, dynamic>{}
             )
           );
           
@@ -30,8 +31,8 @@ class CreatorSuccessScreen extends StatelessWidget {
             statusBarColor: ATColors.trsprnt,
             child: Scaffold(
               body: BlocSelector<SwitchAcctSuccessAnimBloc, List<bool>, bool>(
-                selector: (state) => state.elementAt(3),
-                builder: (_, successState) {
+                selector: (List<bool> state) => state.elementAt(3),
+                builder: (_, bool successState) {
                   if(successState){
                     return const CreatorOrBizSetupSuccess();
                   }
@@ -42,8 +43,8 @@ class CreatorSuccessScreen extends StatelessWidget {
               bottomSheet: Padding(
                 padding: const EdgeInsets.fromLTRB(15, 5, 15, 10),
                 child: BlocSelector<SwitchAcctSuccessAnimBloc, List<bool>, bool>(
-                  selector: (state) => state.elementAt(3),
-                  builder: (_, isVisible) {
+                  selector: (List<bool> state) => state.elementAt(3),
+                  builder: (_, bool isVisible) {
                     return AnimatedSlide(
                       offset: isVisible ? const Offset(0, 0): const Offset(0, 1.5),
                       duration: const Duration(milliseconds: 500),

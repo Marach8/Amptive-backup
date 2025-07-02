@@ -8,11 +8,11 @@ import '../../../common_widgets/image_loader_widget.dart';
 
 
 class AmptivePaidShowModel extends StatelessWidget {
-  final String trendingPicture;
   const AmptivePaidShowModel({
     super.key,
     required this.trendingPicture
   });
+  final String trendingPicture;
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +21,7 @@ class AmptivePaidShowModel extends StatelessWidget {
       padding: const EdgeInsets.only(left: 15),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
+        children: <Widget>[
           ClipRRect(
             clipBehavior: Clip.hardEdge,
             borderRadius: BorderRadius.circular(5),
@@ -36,10 +36,10 @@ class AmptivePaidShowModel extends StatelessWidget {
             ),
           ),
           Row(
-            children: [
+            children: <Widget>[
               ATContainer(
                 height: 12, width: 12,
-                color: ATColors.authHintColor,
+                color: ATColors.hexB6B6B6,
                 child: FittedBox(
                   fit: BoxFit.scaleDown,
                   child: Text(

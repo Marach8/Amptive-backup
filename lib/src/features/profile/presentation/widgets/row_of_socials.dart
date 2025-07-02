@@ -16,7 +16,7 @@ class RowOfSocials extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       mainAxisSize: MainAxisSize.min,
-      children: [
+      children: <Widget>[
         Icon(Iconsax.instagram, color: ATColors.hexC2C2C2, size: 15,),
         const SizedBox(width: 3),
         Text(

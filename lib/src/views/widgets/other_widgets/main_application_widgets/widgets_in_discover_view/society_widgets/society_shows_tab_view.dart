@@ -16,7 +16,7 @@ class AmptiveDiscoverSocietyShowsTabViewWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
-      children: [
+      children: <Widget>[
         HastagHeadingRow(
           title: ATStrings.TRENDING,
           viewAllOnpressed: (){},

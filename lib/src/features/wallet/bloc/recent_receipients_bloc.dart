@@ -4,7 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 class RecentRecipientsBloc extends Bloc<RecentRecipientsEvents, RecentRecipientsState>{
   RecentRecipientsBloc() : super(RecentRecipientsInitial()){
-    on<SearchRecentRecipients>((event, emit)async{
+    on<SearchRecentRecipients>((SearchRecentRecipients event, Emitter<RecentRecipientsState> emit)async{
       if(event.query.isEmpty){
         emit(RecentRecipientsInitial());
         return;
@@ -12,8 +12,8 @@ class RecentRecipientsBloc extends Bloc<RecentRecipientsEvents, RecentRecipients
 
       emit(RecentRecipientsLoading());
       await Future.delayed(const Duration(seconds: 3));
-      final searchResult = getHostList().where(
-        (host) => (host.obj.name ?? '').toLowerCase().contains(event.query.toLowerCase())
+      final List<ObjectWithNotifier<Host>> searchResult = getHostList().where(
+        (ObjectWithNotifier<Host> host) => (host.obj.name ?? '').toLowerCase().contains(event.query.toLowerCase())
       ).toList();
       
       if(searchResult.isEmpty){
@@ -29,9 +29,9 @@ class RecentRecipientsBloc extends Bloc<RecentRecipientsEvents, RecentRecipients
       );
     });
 
-    on<SelectRecipient>((event, emit)async{
+    on<SelectRecipient>((SelectRecipient event, Emitter<RecentRecipientsState> emit)async{
       if(state is RecentRecipientsData){
-        final currentState = state as RecentRecipientsData;
+        final RecentRecipientsData currentState = state as RecentRecipientsData;
         emit(
           RecentRecipientsData(
             recipients: currentState.recipients,
@@ -41,7 +41,7 @@ class RecentRecipientsBloc extends Bloc<RecentRecipientsEvents, RecentRecipients
       }
     });
 
-    on<ResetRecipientsEvent>((_, emit){
+    on<ResetRecipientsEvent>((_, Emitter<RecentRecipientsState> emit){
       emit(RecentRecipientsInitial());
     });
   }
@@ -55,12 +55,12 @@ class RecentRecipientsInitial extends RecentRecipientsState{}
 class RecentRecipientsLoading extends RecentRecipientsState{}
 
 class RecentRecipientsData extends RecentRecipientsState{
-  final List<ObjectWithNotifier<Host>> recipients;
-  final ObjectWithNotifier<Host>? selectedRecipient;
   RecentRecipientsData({
     required this.recipients,
     required this.selectedRecipient
   });
+  final List<ObjectWithNotifier<Host>> recipients;
+  final ObjectWithNotifier<Host>? selectedRecipient;
 }
 
 
@@ -68,13 +68,13 @@ class RecentRecipientsData extends RecentRecipientsState{
 abstract class RecentRecipientsEvents{}
 
 class SearchRecentRecipients extends RecentRecipientsEvents{
-  final String query;
   SearchRecentRecipients(this.query);
+  final String query;
 }
 
 class SelectRecipient extends RecentRecipientsEvents{
-  final ObjectWithNotifier<Host> recipient;
   SelectRecipient(this.recipient);
+  final ObjectWithNotifier<Host> recipient;
 }
 
 class ResetRecipientsEvent extends RecentRecipientsEvents{}

@@ -1,61 +1,95 @@
 import 'package:amptive/src/utils/constants/colors.dart';
 import 'package:amptive/src/utils/constants/strings/image_strings.dart';
 import 'package:amptive/src/views/widgets/common_widgets/annotated_region__widget.dart';
-import 'package:amptive/src/views/widgets/other_widgets/main_application_widgets/widgets_in_discover_view/full_discover_view_widgets/more_2_discover_model.dart';
+import 'package:amptive/src/features/discover/presentation/widgets/community_card_widget.dart';
+import 'package:amptive/src/views/widgets/common_widgets/back_button.dart';
+import 'package:amptive/src/views/widgets/common_widgets/sliver_header_delegate.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
 import 'package:go_router/go_router.dart';
 import '../../../../utils/constants/strings/other_strings.dart';
+import '../../../home/presentation/widgets/scroll_responsive_blurred_header.dart';
 
-class AmptiveCommunityScreen extends StatelessWidget {
-  const AmptiveCommunityScreen({super.key});
+class ATCommunityScreen extends StatelessWidget {
+  const ATCommunityScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     return ATAnnotatedRegion(
+      statusBarColor: ATColors.trsprnt,
       child: Scaffold(
-        body: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 15),
-          child: CustomScrollView(
-            physics: const BouncingScrollPhysics(),
-            slivers: [
-              SliverAppBar(
-                title: const Text('Communities'),
-                centerTitle: true,
-                floating: true,
-                leading: GestureDetector(
-                  onTap: () => context.pop(),
-                  child: const Icon(Icons.keyboard_arrow_left, size: 20)
-                ),
-              ),
-              SliverToBoxAdapter(
-                child: Text(
-                  maxLines: 3,
-                  ATStrings.DISCOVER_COMMUNITIES,
-                  style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                    color: ATColors.hexA8A8A8
-                  ),
-                ),
-              ),
-              const SliverToBoxAdapter(child: Gap(10)),
-              SliverGrid(
-                delegate: SliverChildListDelegate.fixed(
-                  List.generate(
-                    28,
-                    (_) => const AmptiveMore2DiscoverModel(
-                      picture: ATImgStrings.COMMUNITY_CARD,
-                      padding: EdgeInsets.zero,
+        body: BlocProvider<ScrollResponsiveBlurredHeaderBloc>(
+          create: (_) => ScrollResponsiveBlurredHeaderBloc(),
+          child: Builder(
+            builder: (BuildContext blocContext) {
+              return NotificationListener<ScrollNotification>(
+                onNotification: blocContext.read<ScrollResponsiveBlurredHeaderBloc>().onScrollNotification,
+                child: CustomScrollView(
+                  physics: const BouncingScrollPhysics(),
+                  slivers: <Widget>[
+                    SliverPersistentHeader(
+                      pinned: true,
+                      delegate: ATSliverHDelegate(
+                        maxExt: kToolbarHeight + MediaQuery.paddingOf(context).top,
+                        minExt: kToolbarHeight + MediaQuery.paddingOf(context).top,
+                        child: ScrollResponsiveBlurredHeader(
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: <Widget>[
+                              Padding(
+                                padding: const EdgeInsets.only(left: 4),
+                                child: ATRoundedBackBtn(bgColor: ATColors.trsprnt,),
+                              ),
+                              Text(
+                                ATStrings.COMMUNITIES,
+                                style: Theme.of(context).textTheme.bodyMedium,
+                              ),
+                              const SizedBox(width: 30,)
+                            ],
+                          ),
+                        )
+                      ),
+                    ),
+                    
+                    SliverToBoxAdapter(
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 15),
+                        child: Text(
+                          maxLines: 3,
+                          ATStrings.DISCOVER_COMMUNITIES,
+                          style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                            color: ATColors.hexA8A8A8
+                          ),
+                        ),
+                      ),
+                    ),
+                    const SliverToBoxAdapter(child: SizedBox(height: 10,)),
+                    
+                    SliverPadding(
+                      padding: const EdgeInsets.symmetric(horizontal: 15),
+                      sliver: SliverGrid(
+                        delegate: SliverChildListDelegate.fixed(
+                          List<Widget>.generate(
+                            28,
+                            (_) => const CommunityCardWidget(
+                              picture: ATImgStrings.COMMUNITY_CARD,
+                              padding: EdgeInsets.zero,
+                            )
+                          ).toList()
+                        ),
+                        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 2,
+                          crossAxisSpacing: 10,
+                          mainAxisSpacing: 0,
+                          childAspectRatio: 1.28
+                        )
+                      ),
                     )
-                  ).toList()
+                  ],
                 ),
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2,
-                  crossAxisSpacing: 10,
-                  mainAxisSpacing: 0,
-                  childAspectRatio: 1.28
-                )
-              )
-            ],
+              );
+            }
           ),
         ),
       ),

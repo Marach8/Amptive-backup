@@ -23,7 +23,7 @@ class ATPassSecurityQuestionScreen extends StatelessWidget {
       child: BlocProvider(
         create: (_) => _EnterSecretQuesBloc(),
         child: Builder(
-          builder: (context) {
+          builder: (BuildContext context) {
             return Scaffold(
               appBar: const ATAppBar(
                 leading: ATRoundedBackBtn(),
@@ -37,7 +37,7 @@ class ATPassSecurityQuestionScreen extends StatelessWidget {
                 physics: const BouncingScrollPhysics(),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
+                  children: <Widget>[
                     Text(
                       maxLines: 2,
                       quest,
@@ -45,14 +45,14 @@ class ATPassSecurityQuestionScreen extends StatelessWidget {
                     ),
                     const SizedBox(height: 10),
                     BlocBuilder<_EnterSecretQuesBloc, int?>(
-                      buildWhen: (prev, _) => prev == null || prev == 0,
-                      builder: (_, state){
+                      buildWhen: (int? prev, _) => prev == null || prev == 0,
+                      builder: (_, int? state){
                         return ATTextFormField(
                           enabled: state != 0,
                           fillColor: ATColors.white.withValues(alpha: 0.1),
                           hintText: ATStrings.ENTER_UR_ANS,
                           suffixIcon: const _SuffixIcon(),
-                          onChanged: (text) => ATHelperFuncs.callDebouncer(
+                          onChanged: (String text) => ATHelperFuncs.callDebouncer(
                             2000,
                             () => context.read<_EnterSecretQuesBloc>().checkAnswer(text)
                           )
@@ -61,7 +61,7 @@ class ATPassSecurityQuestionScreen extends StatelessWidget {
                     ),
                     const SizedBox(height: 10),
                     BlocBuilder<_EnterSecretQuesBloc, int?>(
-                      builder: (_, state){
+                      builder: (_, int? state){
                         if(state == null){
                           return Text(
                             ATStrings.ANS_IS_CASE_SENSITIVE,
@@ -106,7 +106,7 @@ class ATPassSecurityQuestionScreen extends StatelessWidget {
               bottomSheet: Padding(
                 padding: const EdgeInsets.fromLTRB(15, 5, 15, 10),
                 child: BlocBuilder<_EnterSecretQuesBloc, int?>(
-                  builder: (_, state){
+                  builder: (_, int? state){
                     return ATPlainElevatedBtn(
                       onPressed: state == 1 ? () => context.pop(true) : null,
                       btnTitle: ATStrings.SEND_WITHDRAWAL_REQUEST
@@ -129,7 +129,7 @@ class _SuffixIcon extends StatelessWidget {
   Widget build(BuildContext context) {
     return Center(
       child: BlocBuilder<_EnterSecretQuesBloc, int?>(
-        builder: (_, state){
+        builder: (_, int? state){
           if(state == null){
             return const SizedBox.shrink();
           }

@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'dart:ui';
+import 'package:amptive/src/models/community.dart';
 import 'package:amptive/src/utils/constants/colors.dart';
 import 'package:amptive/src/utils/helpers/helper_functions/helper_functions.dart';
 import 'package:amptive/src/views/widgets/common_widgets/custom_container_widget.dart';
@@ -14,7 +15,7 @@ import '../../constants/strings/other_strings.dart';
 
 Future<void> showTopCreatorSocietiesDialog(BuildContext context) async {
   CreateShowService service = GetIt.I<CreateShowService>();
-  final communities = service.generateCommunities();
+  final List<Community> communities = service.generateCommunities();
 
   return await showModalBottomSheet(
     backgroundColor: ATColors.hex202020,
@@ -26,7 +27,7 @@ Future<void> showTopCreatorSocietiesDialog(BuildContext context) async {
       borderRadius: BorderRadius.only(
       topLeft: Radius.circular(15), topRight: Radius.circular(15),
     )),
-    builder: (context) {
+    builder: (BuildContext context) {
       return ClipRRect(
         borderRadius: const BorderRadius.only(
           topLeft: Radius.circular(15), topRight: Radius.circular(15),
@@ -39,7 +40,7 @@ Future<void> showTopCreatorSocietiesDialog(BuildContext context) async {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisSize: MainAxisSize.min,
-              children: [
+              children: <Widget>[
                 Center(
                   child: GestureDetector(
                     onTap: () => context.pop(),
@@ -63,7 +64,7 @@ Future<void> showTopCreatorSocietiesDialog(BuildContext context) async {
                   ),
                   const Gap(20),
                   ...communities.take(3).map(
-                    (community) => _CustomRow(
+                    (Community community) => _CustomRow(
                       communityImage: community.coverPic ?? '',
                       communityName: community.name ?? ''
                     )
@@ -80,19 +81,19 @@ Future<void> showTopCreatorSocietiesDialog(BuildContext context) async {
 
 
 class _CustomRow extends StatelessWidget {
-  final String communityName, communityImage;
   const _CustomRow({
     required this.communityImage,
     required this.communityName
   });
+  final String communityName, communityImage;
 
   @override
-  Widget build(context) {
+  Widget build(BuildContext context) {
     return ATContainer(
       margin: const EdgeInsets.only(bottom: 20),
       width: ATHelperFuncs.getScreenWidth(context),
       child: Row(
-        children: [
+        children: <Widget>[
           SizedBox(
             height: 50, width: 70,
             child: ATImgLoader(imgPath: communityImage),

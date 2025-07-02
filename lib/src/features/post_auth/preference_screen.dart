@@ -36,7 +36,7 @@ class _AmptivePreferenceScreenState extends State<AmptivePreferenceScreen> {
   Widget build(BuildContext context) {
     return ATAnnotatedRegion(
       child: BlocListener<AmptivePreferenceBloc, AmptivePreferenceState>(
-        listener: (context, state) {
+        listener: (BuildContext context, AmptivePreferenceState state) {
           if (state is PreferencePersonalizedState) {
             // context.goNamed(AmptiveRoutes.homeScreen);
             context.goNamed(ATRoutes.preHomepage);
@@ -44,8 +44,8 @@ class _AmptivePreferenceScreenState extends State<AmptivePreferenceScreen> {
           }
         },
         child: BlocBuilder<AmptivePreferenceBloc, AmptivePreferenceState>(
-            builder: (context, state) {
-          var isOpaque =
+            builder: (BuildContext context, AmptivePreferenceState state) {
+          bool isOpaque =
               state.selectedItems.length == Constants.kMaxNumberCommunities;
 
           return Scaffold(
@@ -62,7 +62,7 @@ class _AmptivePreferenceScreenState extends State<AmptivePreferenceScreen> {
                     : Padding(
                         padding: EdgeInsets.symmetric(horizontal: 22.w),
                         child: Column(
-                          children: [
+                          children: <Widget>[
                             Container(
                               margin: EdgeInsets.only(top: 20.h, bottom: 11.h),
                               alignment: Alignment.centerLeft,
@@ -86,7 +86,7 @@ class _AmptivePreferenceScreenState extends State<AmptivePreferenceScreen> {
                             ),
                             Expanded(
                               child: Stack(
-                                children: [
+                                children: <Widget>[
                                   GridView.builder(
                                     // shrinkWrap: true,
                                     gridDelegate:
@@ -95,7 +95,7 @@ class _AmptivePreferenceScreenState extends State<AmptivePreferenceScreen> {
                                             mainAxisSpacing: 4.h,
                                             crossAxisCount: 2,
                                             childAspectRatio: 169.w / 122.h),
-                                    itemBuilder: (_, index) =>
+                                    itemBuilder: (_, int index) =>
                                         CommunityCardPreferenceWidget(
                                       width: 169.w,
                                       height: 122.h,

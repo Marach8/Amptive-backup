@@ -8,14 +8,14 @@ import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class CropPage extends StatefulWidget {
-  final String title;
-  final File imageFile;
 
   const CropPage({
     super.key,
     required this.title,
     required this.imageFile,
   });
+  final String title;
+  final File imageFile;
 
   @override
   State<CropPage> createState() => _CropPageState();
@@ -50,7 +50,7 @@ class _CropPageState extends State<CropPage> {
               padding: EdgeInsets.symmetric(vertical: 11.h, horizontal: 8.w),
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
+                children: <Widget>[
                   Container(
                     margin: EdgeInsets.only(left: 8.w),
                     width: 20.h,
@@ -79,7 +79,7 @@ class _CropPageState extends State<CropPage> {
 
 
           title: Row(
-            children: [
+            children: <Widget>[
               Expanded(
                 child: SizedBox(
                   width: 1.w,
@@ -87,7 +87,7 @@ class _CropPageState extends State<CropPage> {
               ),
               ElevatedButton(
                 onPressed: () async {
-                  final image = await controller.onCropImage();
+                  final MemoryImage? image = await controller.onCropImage();
                   if (image != null && context.mounted) {
                     // Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext context) => ResultScreen(image: image)));
                     context.pop(image);
@@ -110,7 +110,7 @@ class _CropPageState extends State<CropPage> {
         ),
         backgroundColor: ATColors.hex0D0D0D,
         body: Column(
-          children: [
+          children: <Widget>[
             Expanded(
               child: CustomImageCrop(
                   backgroundColor: ATColors.hex0D0D0D,

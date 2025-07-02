@@ -21,7 +21,7 @@ class ATShimmer extends StatelessWidget {
   final Color? highlightColor, baseColor;
 
   @override
-  Widget build(context) {
+  Widget build(BuildContext context) {
     return Shimmer.fromColors(
       baseColor: baseColor ?? ATColors.white.withValues(alpha: 0.5),
       highlightColor: highlightColor ?? ATColors.hex9E9E9E,

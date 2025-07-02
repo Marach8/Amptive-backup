@@ -30,7 +30,7 @@ class LiveWithAnimatingDot extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.start,
         mainAxisSize: MainAxisSize.min,
-        children: [
+        children: <Widget>[
           ATAnimOpacity(
             child: CircleAvatar(
               radius: 3,

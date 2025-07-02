@@ -2,22 +2,21 @@ import 'package:amptive/src/models/host.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class AmptiveGoLiveAvailableCoHostsBloc extends Bloc<AmptiveCohostsEvent, AmptiveCohostsState> {
-  final List<ObjectWithNotifier<Host>> hostList;
 
   AmptiveGoLiveAvailableCoHostsBloc({required this.hostList})
       : super(InitialCohostsState(initialCohosts: hostList)) {
         
-    on<SearchCohostEvent>((event, emit) {
+    on<SearchCohostEvent>((SearchCohostEvent event, Emitter<AmptiveCohostsState> emit) {
       emit(CohostsLoadingState());
-      final searchKey = event.searchKey.trim().toLowerCase();
+      final String searchKey = event.searchKey.trim().toLowerCase();
 
       if (searchKey.isEmpty) {
         emit(InitialCohostsState(initialCohosts: hostList));
       } 
       else {
-        final filteredCohosts = hostList.where((coHost) {
-          final name = coHost.obj.name?.toLowerCase() ?? '';
-          final username = coHost.obj.username?.toLowerCase() ?? '';
+        final List<ObjectWithNotifier<Host>> filteredCohosts = hostList.where((ObjectWithNotifier<Host> coHost) {
+          final String name = coHost.obj.name?.toLowerCase() ?? '';
+          final String username = coHost.obj.username?.toLowerCase() ?? '';
           return name.contains(searchKey) || username.contains(searchKey);
         }).toList();
 
@@ -25,6 +24,7 @@ class AmptiveGoLiveAvailableCoHostsBloc extends Bloc<AmptiveCohostsEvent, Amptiv
       }
     });
   }
+  final List<ObjectWithNotifier<Host>> hostList;
 }
 
 
@@ -32,24 +32,24 @@ class AmptiveGoLiveAvailableCoHostsBloc extends Bloc<AmptiveCohostsEvent, Amptiv
 abstract class AmptiveCohostsEvent {}
 
 class SearchCohostEvent extends AmptiveCohostsEvent {
-  final String searchKey;
 
   SearchCohostEvent({this.searchKey = ''});
+  final String searchKey;
 }
 
 
 abstract class AmptiveCohostsState {
-  final bool isLooading;
-  final List<ObjectWithNotifier<Host>>? cohosts;
   
   AmptiveCohostsState(this.isLooading, this.cohosts);
+  final bool isLooading;
+  final List<ObjectWithNotifier<Host>>? cohosts;
 }
 
 class InitialCohostsState extends AmptiveCohostsState {
-  final List<ObjectWithNotifier<Host>> initialCohosts;
   InitialCohostsState({required this.initialCohosts}):super(
     false, initialCohosts
   );
+  final List<ObjectWithNotifier<Host>> initialCohosts;
 }
 
 class CohostsLoadingState extends AmptiveCohostsState{
@@ -57,8 +57,8 @@ class CohostsLoadingState extends AmptiveCohostsState{
 }
 
 class FilteredCohostsState extends AmptiveCohostsState {
-  final List<ObjectWithNotifier<Host>> filteredCohosts;
   FilteredCohostsState({required this.filteredCohosts}): super(
     false, filteredCohosts
   );
+  final List<ObjectWithNotifier<Host>> filteredCohosts;
 }

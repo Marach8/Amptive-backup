@@ -17,15 +17,15 @@ class AmptiveBlockedAcctsScreen extends StatelessWidget {
   const AmptiveBlockedAcctsScreen({super.key});
 
   @override
-  Widget build(context) {
+  Widget build(BuildContext context) {
     return ATAnnotatedRegion(
       child: Scaffold(
         body: Column(
-          children: [
+          children: <Widget>[
             Padding(
               padding: const EdgeInsets.fromLTRB(7, kToolbarHeight, 15, 0),
               child: Row(
-                children: [
+                children: <Widget>[
                   ATCircleAvatar(
                     onTap: () => context.pop(),
                     diameter: 30, color: ATColors.trsprnt,
@@ -43,19 +43,19 @@ class AmptiveBlockedAcctsScreen extends StatelessWidget {
             ),
 
             BlocBuilder<AmptiveProfileFollowersBloc, List<ObjectWithNotifier<Host>>>(
-              builder: (_, state) {
+              builder: (_, List<ObjectWithNotifier<Host>> state) {
                 return Expanded(
                   child: ListView.builder(
                     padding: const EdgeInsets.fromLTRB(15, 0, 15, 50),
                     physics: const BouncingScrollPhysics(),
                     itemCount: state.length,
-                    itemBuilder: (_, listIndex){
-                      final subscriber = state.elementAt(listIndex);
+                    itemBuilder: (_, int listIndex){
+                      final ObjectWithNotifier<Host> subscriber = state.elementAt(listIndex);
                       return AmptiveBlockedOrMutedAcctWidget(
                         subscriber: subscriber,
                         text: ATStrings.UNBLOCK,
-                        onTap: (follower, isSelected) async{
-                          final shouldUnblock = await showConfirmationDialog(
+                        onTap: (ObjectWithNotifier<Host> follower, bool isSelected) async{
+                          final bool? shouldUnblock = await showConfirmationDialog(
                             context: context,
                             title: '${ATStrings.UNBLOCK} ${follower.obj.username}',
                             content: '${follower.obj.username} ${ATStrings.UNBLOCK_DESC}',
@@ -87,9 +87,6 @@ class AmptiveBlockedAcctsScreen extends StatelessWidget {
 
 
 class AmptiveBlockedOrMutedAcctWidget extends StatelessWidget {
-  final void Function(ObjectWithNotifier<Host>, bool) onTap;
-  final ObjectWithNotifier<Host> subscriber;
-  final String text;
 
   const AmptiveBlockedOrMutedAcctWidget({
     super.key,
@@ -97,14 +94,17 @@ class AmptiveBlockedOrMutedAcctWidget extends StatelessWidget {
     required this.subscriber,
     required this.text
   });
+  final void Function(ObjectWithNotifier<Host>, bool) onTap;
+  final ObjectWithNotifier<Host> subscriber;
+  final String text;
 
   @override
-  Widget build(context) {
+  Widget build(BuildContext context) {
 
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 15),
       child: Row(
-        children: [
+        children: <Widget>[
           ATContainer(
             clipBehavior: Clip.hardEdge,
             height: 50, width: 50, radius: 30,

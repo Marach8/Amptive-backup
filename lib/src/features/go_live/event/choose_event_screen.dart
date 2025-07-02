@@ -29,7 +29,7 @@ class _AmptiveChooseOrCreateEventScreenState extends State<AmptiveChooseOrCreate
   int? selectedIndex;
 
   late List<ValueNotifier<bool>> listOfValueNotifiers;
-  final listOfImageStrings = [
+  final List<String> listOfImageStrings = <String>[
     ATImgStrings.weCanDoHardThingsBgImage,
     ATImgStrings.OFFICE_LADIES,
     ATImgStrings.JOE_POMP_SHOW,
@@ -46,18 +46,18 @@ class _AmptiveChooseOrCreateEventScreenState extends State<AmptiveChooseOrCreate
     super.initState();
     listOfValueNotifiers = List.generate(
       listOfImageStrings.length,
-      (index) => ValueNotifier(false)
+      (int index) => ValueNotifier(false)
     );
 
     activateButton.addListener(
-      () => !activateButton.value ? selectedImage.value = '' : {}
+      () => !activateButton.value ? selectedImage.value = '' : <dynamic, dynamic>{}
     );
   }
   
   @override 
   void dispose(){
     activateButton.dispose();
-    for (var notifier in listOfValueNotifiers) {
+    for (ValueNotifier<bool> notifier in listOfValueNotifiers) {
       notifier.dispose();
     }
     super.dispose();
@@ -65,15 +65,15 @@ class _AmptiveChooseOrCreateEventScreenState extends State<AmptiveChooseOrCreate
 
 
   @override
-  Widget build(context) {
+  Widget build(BuildContext context) {
     return ATAnnotatedRegion(
       child: Scaffold(
         body: Stack(
-          children: [
+          children: <Widget>[
             Positioned.fill(
               child: AmptiveRebuilderWidget(
                 notifier: selectedImage,
-                builder: (_, value, __) {
+                builder: (_, String value, __) {
                   return ATImgLoader(
                     imgPath: value,
                     boxFit: BoxFit.cover,
@@ -93,7 +93,7 @@ class _AmptiveChooseOrCreateEventScreenState extends State<AmptiveChooseOrCreate
             
             CustomScrollView(
               physics: const BouncingScrollPhysics(),
-              slivers: [
+              slivers: <Widget>[
                 SliverAppBar(
                   backgroundColor: ATColors.hex0D0D0D.withOpacity(0.8),
                   floating: true,
@@ -125,13 +125,13 @@ class _AmptiveChooseOrCreateEventScreenState extends State<AmptiveChooseOrCreate
                   padding: const EdgeInsets.symmetric(horizontal: 15),
                   sliver: SliverGrid(
                     delegate: SliverChildBuilderDelegate(
-                      (_, gridIndex){
+                      (_, int gridIndex){
                         return LayoutBuilder(
-                          builder: (_, constraints) {
+                          builder: (_, BoxConstraints constraints) {
                             if(gridIndex == listOfImageStrings.length - 1){
                               return Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
+                                children: <Widget>[
                                   ATContainer(
                                     onTap: (){
                                       activateButton.value = false;
@@ -155,10 +155,10 @@ class _AmptiveChooseOrCreateEventScreenState extends State<AmptiveChooseOrCreate
                               );
                             }
             
-                            final eachNotifier = listOfValueNotifiers.elementAt(gridIndex);
+                            final ValueNotifier<bool> eachNotifier = listOfValueNotifiers.elementAt(gridIndex);
                             return AmptiveExistingEventWidget(
                               eachButtonNotifier: eachNotifier,
-                              onTap: (isSelected){
+                              onTap: (bool isSelected){
                                 //Toggle the border of the tapped item
                                 eachNotifier.value = !isSelected;                           
                                 //Set this variable to get hold of a property of the selected show
@@ -196,7 +196,7 @@ class _AmptiveChooseOrCreateEventScreenState extends State<AmptiveChooseOrCreate
         
         bottomNavigationBar: AmptiveRebuilderWidget(
           notifier: activateButton,
-          builder: (_, activate, __) => AmptiveElevatedButtonWidget(
+          builder: (_, bool activate, __) => AmptiveElevatedButtonWidget(
             onPressed: activate ? () async{
               //await showAddCoHostDialog(context);
               //await showAddHashtagDialog(context);

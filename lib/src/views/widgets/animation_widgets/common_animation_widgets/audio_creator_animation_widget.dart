@@ -43,7 +43,7 @@ class _AmptiveAudioCreatorWidgetState extends State<AmptiveAudioCreatorWidget>{
   @override
   Widget build(BuildContext context) {
     return Stack(
-      children: [
+      children: <Widget>[
         Positioned(
           child: SizedBox(
             width: 74.99.w,

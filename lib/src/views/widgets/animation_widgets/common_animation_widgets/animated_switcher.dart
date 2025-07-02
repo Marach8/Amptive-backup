@@ -17,7 +17,7 @@ class ATFadingSwitcher extends StatelessWidget {
       reverseDuration: Duration(milliseconds: duration ?? 1000),
       switchInCurve: Curves.easeIn,
       switchOutCurve: Curves.easeIn,
-      transitionBuilder: (child, animation) {
+      transitionBuilder: (Widget child, Animation<double> animation) {
         return FadeTransition(
           opacity: animation,
           child: child
@@ -31,22 +31,22 @@ class ATFadingSwitcher extends StatelessWidget {
 
 
 class ATScalingSwitcher extends StatelessWidget {
-  final Widget child;
-  final int? duration;
   const ATScalingSwitcher({
     super.key,
     required this.child,
     this.duration
   });
+  final Widget child;
+  final int? duration;
 
   @override
-  Widget build(context) {
+  Widget build(BuildContext context) {
     return AnimatedSwitcher(
       duration: Duration(milliseconds: duration ?? 1000),
       reverseDuration: Duration(milliseconds: duration ?? 1000),
       switchInCurve: Curves.easeIn,
       switchOutCurve: Curves.easeIn,
-      transitionBuilder: (child, animation) {
+      transitionBuilder: (Widget child, Animation<double> animation) {
         return ScaleTransition(
           scale: animation,
           child: child

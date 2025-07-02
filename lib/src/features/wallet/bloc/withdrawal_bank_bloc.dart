@@ -3,9 +3,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 class WithdrawalBanksBloc extends Bloc<WithdrawalBanksEvents, WithdrawalBanksState>{
   WithdrawalBanksBloc () : super(WithdrawalBanksInitial()){
 
-    final banks = ['Access Bank', 'First Bank', 'Zenith Bank', 'GT Bank', 'UBA Bank', 'Fidelity Bank'];
+    final List<String> banks = <String>['Access Bank', 'First Bank', 'Zenith Bank', 'GT Bank', 'UBA Bank', 'Fidelity Bank'];
 
-    on<FetchBanksEvent>((event, emit)async{
+    on<FetchBanksEvent>((FetchBanksEvent event, Emitter<WithdrawalBanksState> emit)async{
       emit(FetchingBanks());
       await Future.delayed(const Duration(seconds: 5));
       emit(
@@ -16,7 +16,7 @@ class WithdrawalBanksBloc extends Bloc<WithdrawalBanksEvents, WithdrawalBanksSta
       );
     });
 
-    on<SearchBanksEvent>((event, emit)async{
+    on<SearchBanksEvent>((SearchBanksEvent event, Emitter<WithdrawalBanksState> emit)async{
       if(event.query.isEmpty){
         emit(
           WithdrawalBanksData(
@@ -29,8 +29,8 @@ class WithdrawalBanksBloc extends Bloc<WithdrawalBanksEvents, WithdrawalBanksSta
 
       emit(SearchingBanks());
       await Future.delayed(const Duration(seconds: 3));
-      final searchResult = banks.where(
-        (bank) => bank.toLowerCase().contains(event.query.toLowerCase())
+      final List<String> searchResult = banks.where(
+        (String bank) => bank.toLowerCase().contains(event.query.toLowerCase())
       ).toList();
       
       if(searchResult.isEmpty){
@@ -46,9 +46,9 @@ class WithdrawalBanksBloc extends Bloc<WithdrawalBanksEvents, WithdrawalBanksSta
       );
     });
 
-    on<SelectBankEvent>((event, emit)async{
+    on<SelectBankEvent>((SelectBankEvent event, Emitter<WithdrawalBanksState> emit)async{
       if(state is WithdrawalBanksData){
-        final currentState = state as WithdrawalBanksData;
+        final WithdrawalBanksData currentState = state as WithdrawalBanksData;
         emit(
           WithdrawalBanksData(
             banks: currentState.banks,
@@ -58,7 +58,7 @@ class WithdrawalBanksBloc extends Bloc<WithdrawalBanksEvents, WithdrawalBanksSta
       }
     });
 
-    on<ResetBanksSearchEvent>((_, emit){
+    on<ResetBanksSearchEvent>((_, Emitter<WithdrawalBanksState> emit){
       emit(
         WithdrawalBanksData(
           banks: banks,
@@ -79,12 +79,12 @@ class SearchingBanks extends WithdrawalBanksState{}
 class FetchingBanks extends WithdrawalBanksState{}
 
 class WithdrawalBanksData extends WithdrawalBanksState{
-  final List<String>? banks;
-  final String? selectedBank;
   WithdrawalBanksData({
     required this.banks,
     required this.selectedBank
   });
+  final List<String>? banks;
+  final String? selectedBank;
 }
 
 
@@ -92,13 +92,13 @@ class WithdrawalBanksData extends WithdrawalBanksState{
 abstract class WithdrawalBanksEvents{}
 
 class SearchBanksEvent extends WithdrawalBanksEvents{
-  final String query;
   SearchBanksEvent(this.query);
+  final String query;
 }
 
 class SelectBankEvent extends WithdrawalBanksEvents{
-  final String? bank;
   SelectBankEvent(this.bank);
+  final String? bank;
 }
 
 class FetchBanksEvent extends WithdrawalBanksEvents{}

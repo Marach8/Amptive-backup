@@ -9,10 +9,6 @@ import '../../../../../common_widgets/image_loader_widget.dart';
 
 
 class AmptiveExistingEventWidget extends StatelessWidget {
-  final String trendingPicture;
-  final double imageHeight, imageWidth;
-  final ValueNotifier<bool> eachButtonNotifier;
-  final void Function(bool) onTap;
   const AmptiveExistingEventWidget({
     super.key,
     required this.trendingPicture,
@@ -21,12 +17,16 @@ class AmptiveExistingEventWidget extends StatelessWidget {
     required this.eachButtonNotifier,
     required this.onTap
   });
+  final String trendingPicture;
+  final double imageHeight, imageWidth;
+  final ValueNotifier<bool> eachButtonNotifier;
+  final void Function(bool) onTap;
 
   @override
   Widget build(BuildContext context) {
     return AmptiveRebuilderWidget(
       notifier: eachButtonNotifier,
-      builder: (_, isSelected, __) {
+      builder: (_, bool isSelected, __) {
         return ATContainer(
           onTap: () => onTap(isSelected),
           radius: 5,
@@ -36,7 +36,7 @@ class AmptiveExistingEventWidget extends StatelessWidget {
           ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
+            children: <Widget>[
               ATContainer(
                 radius: 5, height: imageHeight,
                 width: imageWidth,
@@ -56,7 +56,7 @@ class AmptiveExistingEventWidget extends StatelessWidget {
                 style: Theme.of(context).textTheme.bodyMedium,
               ),
               Row(
-                children: [
+                children: <Widget>[
                   Expanded(
                     child: Text(
                       'glendonnoyle',

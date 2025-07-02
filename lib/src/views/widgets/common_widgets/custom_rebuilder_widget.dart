@@ -1,10 +1,6 @@
 import 'package:flutter/material.dart';
 
 class AmptiveRebuilderWidget<T> extends StatefulWidget {
-  final ValueNotifier<T> notifier;
-  final bool shouldDispose;
-  final Widget Function(BuildContext, T, Widget?) builder;
-  final Widget? child;
 
   const AmptiveRebuilderWidget({
     super.key,
@@ -13,6 +9,10 @@ class AmptiveRebuilderWidget<T> extends StatefulWidget {
     this.shouldDispose = false,
     this.child
   });
+  final ValueNotifier<T> notifier;
+  final bool shouldDispose;
+  final Widget Function(BuildContext, T, Widget?) builder;
+  final Widget? child;
 
   @override
   State<AmptiveRebuilderWidget<T>> createState() => _AmptiveRebuilderWidgetState<T>();
@@ -29,7 +29,7 @@ class _AmptiveRebuilderWidgetState<T> extends State<AmptiveRebuilderWidget<T>> {
 
   @override
   void dispose() {
-    widget.shouldDispose ? notifier.dispose() : {};
+    widget.shouldDispose ? notifier.dispose() : <dynamic, dynamic>{};
     super.dispose();
   }
 

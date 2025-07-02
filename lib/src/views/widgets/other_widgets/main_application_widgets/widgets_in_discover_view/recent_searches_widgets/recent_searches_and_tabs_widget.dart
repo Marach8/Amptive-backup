@@ -4,11 +4,11 @@ import 'package:flutter/material.dart';
 import 'recent_searches_view.dart';
 
 class AmptiveRecentSearchesAndTabsView extends StatefulWidget {
-  final TextEditingController controller;
   const AmptiveRecentSearchesAndTabsView({
     super.key,
     required this.controller
   });
+  final TextEditingController controller;
 
   @override
   State<AmptiveRecentSearchesAndTabsView> createState() => _AmptiveRecentSearchesAndTabsViewState();
@@ -43,9 +43,9 @@ class _AmptiveRecentSearchesAndTabsViewState extends State<AmptiveRecentSearches
   Widget build(BuildContext context) {
     return ValueListenableBuilder(
       valueListenable: _showTabs,
-      builder: (_, value, __) {
+      builder: (_, bool value, __) {
         int index = value ? 1 : 0;
-        final listOfWidgets = [
+        final List<Widget> listOfWidgets = <Widget>[
           RecentSearchesView(key: UniqueKey(),),
           SearchResultsTabsView(key: UniqueKey()),
         ];

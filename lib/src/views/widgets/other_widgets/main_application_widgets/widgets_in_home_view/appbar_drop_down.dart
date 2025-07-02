@@ -9,27 +9,27 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 
 class ATHomeDropDown extends StatelessWidget {
-  final Widget child;
-  final Offset? offset;
   const ATHomeDropDown({
     super.key,
     required this.child,
     this.offset
   });
+  final Widget child;
+  final Offset? offset;
 
   @override
-  Widget build(context) {  
+  Widget build(BuildContext context) {  
     return PopupMenuButton<String>(
       offset: offset ?? const Offset(-80, 35),
       padding: EdgeInsets.zero,
-      onSelected: (selectedSearchChoice){},
+      onSelected: (String selectedSearchChoice){},
       color: ATColors.containerGradientColorB,
       elevation: 0,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(12)
       ),
       child: child,      
-      itemBuilder: (_) => [
+      itemBuilder: (_) => <PopupMenuEntry<String>>[
         PopupMenuItem<String>(
           height: 40.h,
           onTap: (){
@@ -37,7 +37,7 @@ class ATHomeDropDown extends StatelessWidget {
           },
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
+            children: <Widget>[
               Text(
                 ATStrings.SCHEDULED,
                 style: Theme.of(context).textTheme.bodySmall?.copyWith(
@@ -55,7 +55,7 @@ class ATHomeDropDown extends StatelessWidget {
           },
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
+            children: <Widget>[
               Text(
                 ATStrings.SUBSCRIBED,
                 style: Theme.of(context).textTheme.bodySmall?.copyWith(
@@ -73,7 +73,7 @@ class ATHomeDropDown extends StatelessWidget {
           },
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
+            children: <Widget>[
               Text(
                 ATStrings.FOLLOWING,
                 style: Theme.of(context).textTheme.bodySmall?.copyWith(

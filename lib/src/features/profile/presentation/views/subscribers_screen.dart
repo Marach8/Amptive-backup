@@ -18,7 +18,7 @@ class AmptiveProfileSubScribersScreen extends StatelessWidget {
   const AmptiveProfileSubScribersScreen({super.key});
 
   @override
-  Widget build(context) {
+  Widget build(BuildContext context) {
     return ATAnnotatedRegion(
       child: Scaffold(
         appBar: ATAppBar(
@@ -40,7 +40,7 @@ class AmptiveProfileSubScribersScreen extends StatelessWidget {
           padding: const EdgeInsets.all(15),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
+            children: <Widget>[
               ATTextFormField(
                 controller: TextEditingController(),
                 disableBlueBorder: true,
@@ -58,14 +58,14 @@ class AmptiveProfileSubScribersScreen extends StatelessWidget {
               const Gap(20),
               Expanded(
                 child: BlocBuilder<AmptiveProfileFollowersBloc, List<ObjectWithNotifier<Host>>>(
-                  builder: (_, state) {
+                  builder: (_, List<ObjectWithNotifier<Host>> state) {
                     return ListView.builder(
                       itemCount: state.length,
-                      itemBuilder: (_, listIndex){
-                        final subscriber = state.elementAt(listIndex);
+                      itemBuilder: (_, int listIndex){
+                        final ObjectWithNotifier<Host> subscriber = state.elementAt(listIndex);
                         return _AmptiveSubscriberWidget(
                           subscriber: subscriber,
-                          onTap: (follower, isSelected){},
+                          onTap: (ObjectWithNotifier<Host> follower, bool isSelected){},
                         );
                       }
                     );
@@ -83,23 +83,23 @@ class AmptiveProfileSubScribersScreen extends StatelessWidget {
 
 
 class _AmptiveSubscriberWidget extends StatelessWidget {
-  final void Function(ObjectWithNotifier<Host>, bool) onTap;
-  final ObjectWithNotifier<Host> subscriber;
 
   const _AmptiveSubscriberWidget({
     required this.onTap,
     required this.subscriber,
   });
+  final void Function(ObjectWithNotifier<Host>, bool) onTap;
+  final ObjectWithNotifier<Host> subscriber;
 
   @override
-  Widget build(context) {
+  Widget build(BuildContext context) {
 
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 15),
       child: GestureDetector(
         onTap: () => onTap(subscriber, subscriber.notifier.value),
         child: Row(
-          children: [
+          children: <Widget>[
             ATContainer(
               clipBehavior: Clip.hardEdge,
               height: 50, width: 50, radius: 30,

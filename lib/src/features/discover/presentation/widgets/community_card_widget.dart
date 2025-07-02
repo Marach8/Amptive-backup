@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
-import '../../../../common_widgets/image_loader_widget.dart';
+import '../../../../views/widgets/common_widgets/image_loader_widget.dart';
 
-class AmptiveMore2DiscoverModel extends StatelessWidget {
-  final String picture;
-  final EdgeInsetsGeometry? padding;
-  const AmptiveMore2DiscoverModel({
+class CommunityCardWidget extends StatelessWidget {
+  const CommunityCardWidget({
     super.key,
     required this.picture,
     this.padding
   });
+  final String picture;
+  final EdgeInsetsGeometry? padding;
 
   @override
   Widget build(BuildContext context) {

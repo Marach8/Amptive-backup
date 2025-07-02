@@ -8,8 +8,6 @@ import 'package:gap/gap.dart';
 import '../recent_searches_widgets/container_with_picture.dart';
 
 class AmptiveTabViewListTileWidget extends StatelessWidget {
-  final String title, leadingImagePath;
-  final bool isCircular, addPlayButton;
 
   const AmptiveTabViewListTileWidget({
     super.key,
@@ -18,6 +16,8 @@ class AmptiveTabViewListTileWidget extends StatelessWidget {
     this.isCircular = false,
     this.addPlayButton = false
   });
+  final String title, leadingImagePath;
+  final bool isCircular, addPlayButton;
 
   @override
   Widget build(BuildContext context) {
@@ -42,7 +42,7 @@ class AmptiveTabViewListTileWidget extends StatelessWidget {
           ),
         ),
         subtitle: Row(
-          children: [
+          children: <Widget>[
             Text(
               'Show',
               style: Theme.of(context).textTheme.titleSmall?.copyWith(
@@ -73,10 +73,10 @@ class AmptiveTabViewListTileWidget extends StatelessWidget {
             ? ATContainer(
               boxShape: BoxShape.circle,
               height: 24, width: 24,
-              color: ATColors.authHintColor,
+              color: ATColors.hexB6B6B6,
               child: Icon(Icons.play_arrow, size: 15, color: ATColors.hex0D0D0D,),
             )
-            : Icon(Icons.keyboard_arrow_right, size: 24, color: ATColors.authHintColor,) 
+            : Icon(Icons.keyboard_arrow_right, size: 24, color: ATColors.hexB6B6B6,) 
         )
       ),
     );

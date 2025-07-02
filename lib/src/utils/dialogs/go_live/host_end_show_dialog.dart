@@ -14,7 +14,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
 import 'package:go_router/go_router.dart';
 import '../../../bloc/main_app/go_live_bloc/host_view/host_end_show_bloc.dart';
-import '../../../bloc/main_app/nav_bar_bloc.dart';
 import '../../constants/strings/other_strings.dart';
 
 Future<void> showHostEndShowDialog({
@@ -30,16 +29,16 @@ Future<void> showHostEndShowDialog({
       borderRadius: BorderRadius.only(
       topLeft: Radius.circular(15), topRight: Radius.circular(15),
     )),
-    builder: (context) {
+    builder: (BuildContext context) {
       return ATContainer(
         height: ATHelperFuncs.getScreenHeight(context),
         width: ATHelperFuncs.getScreenWidth(context),
         color: ATColors.black,
         child: Stack(
           alignment: Alignment.center,
-          children: [            
+          children: <Widget>[            
             BlocConsumer<AmptiveEndShowBloc, EndShowState>(
-              listener: (_, state){
+              listener: (_, EndShowState state){
                 if(state is ShowBlankScreenState){
                   Future.delayed(
                     const Duration(seconds: 2),
@@ -97,9 +96,9 @@ Future<void> showHostEndShowDialog({
                   );
                 }
               },
-              builder: (_, state) {
-                final initialState = state is ConfirmEndShowState;
-                final finalState = state is ShowBlankScreenState;
+              builder: (_, EndShowState state) {
+                final bool initialState = state is ConfirmEndShowState;
+                final bool finalState = state is ShowBlankScreenState;
 
                 if(finalState){
                   return const SizedBox.shrink();
@@ -121,11 +120,11 @@ Future<void> showHostEndShowDialog({
             ),
 
             BlocBuilder<AmptiveEndShowBloc, EndShowState>(
-              builder: (_, state) {
-                final showNoOfListeners = state is ShowNoOfListenersState; 
-                final showNoOfGifters = state is ShowNoOfGiftsState;
-                final initialState = state is ConfirmEndShowState;
-                final finalState = state is ShowBlankScreenState;
+              builder: (_, EndShowState state) {
+                final bool showNoOfListeners = state is ShowNoOfListenersState; 
+                final bool showNoOfGifters = state is ShowNoOfGiftsState;
+                final bool initialState = state is ConfirmEndShowState;
+                final bool finalState = state is ShowBlankScreenState;
 
                 if(finalState){
                   return const SizedBox.shrink();
@@ -136,7 +135,7 @@ Future<void> showHostEndShowDialog({
                   top: (showNoOfListeners || showNoOfGifters) ? 140 :100, 
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
-                    children: [
+                    children: <Widget>[
                       if(initialState)Text(
                         ATStrings.END_LIVE_SHOW,
                         maxLines: 2, textAlign: TextAlign.center,
@@ -145,7 +144,7 @@ Future<void> showHostEndShowDialog({
                         )
                       ),
                       if(showNoOfListeners || showNoOfGifters)ATRichText(
-                        items: {
+                        items: <String, TextStyle>{
                           'You had a total of ': Theme.of(context).textTheme.bodySmall!.copyWith(
                             color: ATColors.hexC2C2C2
                           ),
@@ -156,7 +155,7 @@ Future<void> showHostEndShowDialog({
                       ),
                       const Gap(10),
                       if(showNoOfGifters)ATRichText(
-                        items: {
+                        items: <String, TextStyle>{
                           'You received ': Theme.of(context).textTheme.bodySmall!.copyWith(
                             color: ATColors.hexC2C2C2
                           ),
@@ -172,11 +171,11 @@ Future<void> showHostEndShowDialog({
             ),
 
             BlocBuilder<AmptiveEndShowBloc, EndShowState>(
-              builder: (_, state) {
-                final isLoading = state is EndShowIsLoadingState 
+              builder: (_, EndShowState state) {
+                final bool isLoading = state is EndShowIsLoadingState 
                   || state is ShowNoOfListenersState 
                   || state is ShowNoOfGiftsState;
-                final finalState = state is ShowBlankScreenState;
+                final bool finalState = state is ShowBlankScreenState;
 
                 if(isLoading){
                   return Positioned(
@@ -197,7 +196,7 @@ Future<void> showHostEndShowDialog({
                   bottom: 0,
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
-                    children: [
+                    children: <Widget>[
                       ATContainer(
                         padding: const EdgeInsets.only(left: 15, right: 15),
                         width: ATHelperFuncs.getScreenWidth(context),

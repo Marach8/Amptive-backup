@@ -16,9 +16,9 @@ class ScheduledEventsView extends StatelessWidget {
   const ScheduledEventsView({super.key});
 
   @override
-  Widget build(context) {
+  Widget build(BuildContext context) {
     return Column(
-      children: [
+      children: <Widget>[
         Divider(
           color: ATColors.white.withValues(alpha: 0.2),
           height: 0, thickness: 0.3,
@@ -28,9 +28,9 @@ class ScheduledEventsView extends StatelessWidget {
             physics: const BouncingScrollPhysics(),
             padding: const EdgeInsets.fromLTRB(15, 5, 10, kBottomNavigationBarHeight),
             itemCount: _map.entries.length,
-            itemBuilder: (_, listIndex){
-              final programs = _map.entries.elementAt(listIndex);
-              final day = _formatDay(programs.key);  
+            itemBuilder: (_, int listIndex){
+              final MapEntry<DateTime, List<CalenderProgram>> programs = _map.entries.elementAt(listIndex);
+              final String day = _formatDay(programs.key);  
           
               return StickyHeaderBuilder(
                 builder: (_, __){
@@ -38,7 +38,7 @@ class ScheduledEventsView extends StatelessWidget {
                     color: ATColors.black,
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
+                      children: <Widget>[
                         Text(
                           day,
                           style: Theme.of(context).textTheme.bodyLarge,
@@ -58,7 +58,7 @@ class ScheduledEventsView extends StatelessWidget {
                     mainAxisSize: MainAxisSize.min,
                     spacing: 15,
                     children: programs.value.map(
-                      (program){
+                      (CalenderProgram program){
                         return _CalenderProgramDisplay(program: program);
                       }
                     ).toList(),
@@ -75,15 +75,15 @@ class ScheduledEventsView extends StatelessWidget {
 
 
 String _formatDay(DateTime date){
-  final dayName = DateFormat.E().format(date);
-  final dayNumber = date.day;
+  final String dayName = DateFormat.E().format(date);
+  final int dayNumber = date.day;
   return '$dayName - $dayNumber';
 }
 
 
 
-final _map = <DateTime, List<CalenderProgram>>{
-  DateTime(2025, 3, 20) : [
+final Map<DateTime, List<CalenderProgram>> _map = <DateTime, List<CalenderProgram>>{
+  DateTime(2025, 3, 20) : <CalenderProgram>[
     CalenderProgram(
       name: 'Former CIA Agent On Trump Assasination Has Repented',
       id: 1, isEvent: true,
@@ -99,7 +99,7 @@ final _map = <DateTime, List<CalenderProgram>>{
       hosts: getHostList().take(2).toList()
     ),
   ],
-  DateTime(2025, 3, 21) : [
+  DateTime(2025, 3, 21) : <CalenderProgram>[
     CalenderProgram(
       name: 'Sporting Defect of Manchester',
       id: 3, isEvent: true,
@@ -115,7 +115,7 @@ final _map = <DateTime, List<CalenderProgram>>{
       hosts: getHostList().take(1).toList()
     ),
   ],
-  DateTime(2025, 3, 26) : [
+  DateTime(2025, 3, 26) : <CalenderProgram>[
     CalenderProgram(
       name: 'Config 2025',
       id: 3, isEvent: false,
@@ -138,7 +138,7 @@ final _map = <DateTime, List<CalenderProgram>>{
       hosts: getHostList().take(5).toList()
     ),
   ],
-  DateTime(2025, 3, 26) : [
+  DateTime(2025, 3, 26) : <CalenderProgram>[
     CalenderProgram(
       name: 'Config 2025',
       id: 3, isEvent: false,
@@ -182,18 +182,18 @@ final _map = <DateTime, List<CalenderProgram>>{
 
 
 class _CalenderProgramDisplay extends StatelessWidget {
-  final CalenderProgram program;
   const _CalenderProgramDisplay({
     required this.program
   });
+  final CalenderProgram program;
 
   @override
-  Widget build(context) {
-    final title = program.name;
-    final isEvent = program.isEvent;
-    final isPaid = program.isPaid;
-    final type = program.eventType;
-    final hostsImgs = program.hosts.map((host) => (host.obj as Host).profilePicture ?? '');
+  Widget build(BuildContext context) {
+    final String title = program.name;
+    final bool isEvent = program.isEvent;
+    final bool isPaid = program.isPaid;
+    final String type = program.eventType;
+    final Iterable<String> hostsImgs = program.hosts.map((ObjectWithNotifier host) => (host.obj as Host).profilePicture ?? '');
 
     return ATContainer(
       radius: 5, clipBehavior: Clip.hardEdge,
@@ -207,10 +207,10 @@ class _CalenderProgramDisplay extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisSize: MainAxisSize.min,
-            children: [
+            children: <Widget>[
               const SizedBox(height: 5),
               Row(
-                children: [
+                children: <Widget>[
                   isEvent ? const EventIcon() : const ShowIcon(),
                   const SizedBox(width: 2),
                   Expanded(
@@ -228,7 +228,7 @@ class _CalenderProgramDisplay extends StatelessWidget {
               ),
                               
               Row(
-                children: [
+                children: <Widget>[
                   if(isPaid) const PaidIndicatorIcon(),
                   if(isPaid) const SizedBox(width: 5),
                   Expanded(

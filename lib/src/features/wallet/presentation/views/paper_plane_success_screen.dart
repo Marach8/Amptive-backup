@@ -25,11 +25,11 @@ class ATPaperPlaneSuccessScreen extends StatelessWidget {
         child: Scaffold(
           body: Stack(
             alignment: Alignment.center,
-            children: [
+            children: <Widget>[
               BlocBuilder<_SlidingPaperPlaneBloc, int?>(
-                builder: (_, state){
+                builder: (_, int? state){
                   return LayoutBuilder(
-                    builder: (_, kst) {
+                    builder: (_, BoxConstraints kst) {
                       return AnimatedSlide(
                         duration: const Duration(milliseconds: 500),
                         offset: state == null ? Offset(-1, kst.maxHeight/400) :
@@ -46,7 +46,7 @@ class ATPaperPlaneSuccessScreen extends StatelessWidget {
 
               Center(
                 child: BlocBuilder<_SlidingPaperPlaneBloc, int?>(
-                  builder: (_, state){
+                  builder: (_, int? state){
                     return AnimatedOpacity(
                       duration: const Duration(milliseconds: 300),
                       opacity: state == 1 ? 1 : 0,
@@ -55,7 +55,7 @@ class ATPaperPlaneSuccessScreen extends StatelessWidget {
                         child: Column(
                           mainAxisSize: MainAxisSize.min,
                           mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
+                          children: <Widget>[
                             const ATImgLoader(imgPath: ATImgStrings.PAPER_PLANE,),
                             const SizedBox(height: 10,),
                             Text(
@@ -84,7 +84,7 @@ class ATPaperPlaneSuccessScreen extends StatelessWidget {
           bottomSheet: Padding(
             padding: const EdgeInsets.fromLTRB(15, 5, 15, 10),
             child: BlocBuilder<_SlidingPaperPlaneBloc, int?>(
-              builder: (_, state) {
+              builder: (_, int? state) {
                 return AnimatedSlide(
                   duration: const Duration(milliseconds: 300),
                   offset: state == 1 ? const Offset(0, 0) : const Offset(0, 1.5),

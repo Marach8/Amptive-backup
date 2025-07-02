@@ -8,19 +8,19 @@ import 'package:flutter/material.dart';
 import '../../../../../../../views/widgets/common_widgets/overlapping_images.dart';
 
 class CalenderProgramDisplay extends StatelessWidget {
-  final CalenderProgram program;
   const CalenderProgramDisplay({
     super.key,
     required this.program
   });
+  final CalenderProgram program;
 
   @override
-  Widget build(context) {
-    final title = program.name;
-    final isEvent = program.isEvent;
-    final isPaid = program.isPaid;
-    final type = program.eventType;
-    final hostsImgs = program.hosts.map((host) => (host.obj as Host).profilePicture ?? '');
+  Widget build(BuildContext context) {
+    final String title = program.name;
+    final bool isEvent = program.isEvent;
+    final bool isPaid = program.isPaid;
+    final String type = program.eventType;
+    final Iterable<String> hostsImgs = program.hosts.map((ObjectWithNotifier host) => (host.obj as Host).profilePicture ?? '');
 
     return ATContainer(
       margin: const EdgeInsets.only(left: 55),
@@ -36,9 +36,9 @@ class CalenderProgramDisplay extends StatelessWidget {
           padding: const EdgeInsets.fromLTRB(7, 2, 0, 5),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
+            children: <Widget>[
               Row(
-                children: [
+                children: <Widget>[
                   isEvent ? const EventIcon() : const ShowIcon(),
                   const SizedBox(width: 5),
                   Expanded(
@@ -59,7 +59,7 @@ class CalenderProgramDisplay extends StatelessWidget {
               ),
                               
               Row(
-                children: [
+                children: <Widget>[
                   if(isPaid) const PaidIndicatorIcon(),
                   if(isPaid) const SizedBox(width: 5),
                   Expanded(
@@ -81,14 +81,14 @@ class CalenderProgramDisplay extends StatelessWidget {
 
 
 class LeftBorderPainter extends CustomPainter {
+
+  LeftBorderPainter({required this.color, this.width = 3.0});
   final Color color;
   final double width;
 
-  LeftBorderPainter({required this.color, this.width = 3.0});
-
   @override
   void paint(Canvas canvas, Size size) {
-    final paint = Paint()
+    final Paint paint = Paint()
       ..color = color
       ..strokeWidth = width
       ..style = PaintingStyle.stroke;

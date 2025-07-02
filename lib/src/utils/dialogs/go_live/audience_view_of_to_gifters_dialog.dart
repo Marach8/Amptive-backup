@@ -16,7 +16,7 @@ import '../../../services/create_show/create_show_service.dart';
 import '../../constants/strings/other_strings.dart';
 
 Future<void> showAudienceViewOfTopGiftersDialog(BuildContext context) async {
-  final randomUser = getHostList()[4];
+  final ObjectWithNotifier<Host> randomUser = getHostList()[4];
 
   return await showModalBottomSheet(
       backgroundColor: ATColors.white.withOpacity(0.08),
@@ -31,9 +31,9 @@ Future<void> showAudienceViewOfTopGiftersDialog(BuildContext context) async {
         borderRadius: BorderRadius.only(
         topLeft: Radius.circular(50), topRight: Radius.circular(50),
       )),
-      builder: (context) {
+      builder: (BuildContext context) {
         return Stack(
-          children: [
+          children: <Widget>[
             Positioned.fill(
               child: ClipRRect(
                 borderRadius: const BorderRadius.only(
@@ -50,7 +50,7 @@ Future<void> showAudienceViewOfTopGiftersDialog(BuildContext context) async {
               padding: const EdgeInsets.all(15),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
+                children: <Widget>[
                   Center(
                     child: GestureDetector(
                       onTap: () => context.pop(),
@@ -72,7 +72,7 @@ Future<void> showAudienceViewOfTopGiftersDialog(BuildContext context) async {
                       alignment: Alignment.center,
                       child: Row(
                         mainAxisSize: MainAxisSize.min,
-                        children: [
+                        children: <Widget>[
                           Text(
                             "🎁",
                             style: Theme.of(context).textTheme.bodyMedium
@@ -106,8 +106,8 @@ Future<void> showAudienceViewOfTopGiftersDialog(BuildContext context) async {
                         padding: EdgeInsets.zero,
                         physics: const BouncingScrollPhysics(),
                         itemCount: getHostList().length,
-                        itemBuilder: (_, listIndex){
-                          final gifter = getHostList().elementAt(listIndex);
+                        itemBuilder: (_, int listIndex){
+                          final ObjectWithNotifier<Host> gifter = getHostList().elementAt(listIndex);
                           return AmptiveGifterWidget(
                             onTap: (_, __){},
                             gifter: gifter,
@@ -129,7 +129,7 @@ Future<void> showAudienceViewOfTopGiftersDialog(BuildContext context) async {
                     padding: const EdgeInsets.only(left: 25, right: 15, bottom: 20, top: 15),
                     width: ATHelperFuncs.getScreenWidth(context),
                     child: Row(
-                      children: [
+                      children: <Widget>[
                         ATCircularImage(
                           imagePath: randomUser.obj.profilePicture ?? '',
                           diameter:50,
@@ -139,7 +139,7 @@ Future<void> showAudienceViewOfTopGiftersDialog(BuildContext context) async {
                           child: Column(
                             mainAxisSize: MainAxisSize.min,
                             crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
+                            children: <Widget>[
                               Text(
                                 randomUser.obj.name ?? '',
                                 style: Theme.of(context).textTheme.bodySmall?.copyWith(
@@ -184,9 +184,6 @@ Future<void> showAudienceViewOfTopGiftersDialog(BuildContext context) async {
 
 
 class AmptiveGifterWidget extends StatelessWidget {
-  final void Function(ObjectWithNotifier<Host>, bool) onTap;
-  final ObjectWithNotifier<Host> gifter;
-  final int index;
 
   const AmptiveGifterWidget({
     super.key,
@@ -194,18 +191,21 @@ class AmptiveGifterWidget extends StatelessWidget {
     required this.gifter,
     required this.index
   });
+  final void Function(ObjectWithNotifier<Host>, bool) onTap;
+  final ObjectWithNotifier<Host> gifter;
+  final int index;
 
   @override
-  Widget build(context) {
-    final amountGifted = 10000 / (index);
-    final isInTop3Gifter = index == 1 || index == 2 || index == 3;
+  Widget build(BuildContext context) {
+    final double amountGifted = 10000 / (index);
+    final bool isInTop3Gifter = index == 1 || index == 2 || index == 3;
 
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 15),
       child: GestureDetector(
         onTap: () => onTap(gifter, gifter.notifier.value),
         child: Row(
-          children: [
+          children: <Widget>[
             isInTop3Gifter ? Text(
               index.toString(),
               style: Theme.of(context).textTheme.bodyMedium?.copyWith(

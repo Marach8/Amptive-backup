@@ -10,11 +10,10 @@ import 'otp_auth_states.dart';
 
 
 class AmptiveOTPAuthBloc extends Bloc<AmptiveOTPAuthEvent, AmptiveOTPAuthState> {
-  StreamSubscription<int>? _tickerSubscription;
 
   AmptiveOTPAuthBloc() : super(InitialAuthState()) {
 
-    on<OTPChangedAuthEvent>((event, emit) {
+    on<OTPChangedAuthEvent>((OTPChangedAuthEvent event, Emitter<AmptiveOTPAuthState> emit) {
       if (event.otpValid) {
         emit(ValidOTPAuthState());
       } else {
@@ -22,10 +21,10 @@ class AmptiveOTPAuthBloc extends Bloc<AmptiveOTPAuthEvent, AmptiveOTPAuthState> 
       }
     });
 
-    on<VerifyOTPAuthEvent>((event, emit) async {
+    on<VerifyOTPAuthEvent>((VerifyOTPAuthEvent event, Emitter<AmptiveOTPAuthState> emit) async {
       emit(LoadingAuthState());
 
-      final processed = await GetIt.I<OtpService>().validateOtp();
+      final bool processed = await GetIt.I<OtpService>().validateOtp();
 
       if (processed) {
         emit(VerifiedOTPAuthState());
@@ -34,17 +33,17 @@ class AmptiveOTPAuthBloc extends Bloc<AmptiveOTPAuthEvent, AmptiveOTPAuthState> 
       }
     });
 
-    on<AmptiveOtpCountDownStartEvent>((event, emit)  {
+    on<AmptiveOtpCountDownStartEvent>((AmptiveOtpCountDownStartEvent event, Emitter<AmptiveOTPAuthState> emit)  {
       emit(AmptiveOTPCounterState(timeLeft: Constants.kTimerLimit));
       _tickerSubscription?.cancel();
-      _tickerSubscription = _tick(Constants.kTimerLimit).listen((duration){
+      _tickerSubscription = _tick(Constants.kTimerLimit).listen((int duration){
         add(AmptiveOtpCountDownEvent(secondsLeft: duration));
       });
 
     });
 
 
-    on<AmptiveOtpCountDownEvent>((event, emit) {
+    on<AmptiveOtpCountDownEvent>((AmptiveOtpCountDownEvent event, Emitter<AmptiveOTPAuthState> emit) {
 
       emit(event.secondsLeft >= 0
           ? AmptiveOTPCounterState(timeLeft: event.secondsLeft)
@@ -55,9 +54,10 @@ class AmptiveOTPAuthBloc extends Bloc<AmptiveOTPAuthEvent, AmptiveOTPAuthState> 
 
 
   }
+  StreamSubscription<int>? _tickerSubscription;
 
   Stream<int> _tick(int ticks) {
-    return Stream.periodic(const Duration(seconds: 1), (x) => ticks - x - 1).take(ticks);
+    return Stream.periodic(const Duration(seconds: 1), (int x) => ticks - x - 1).take(ticks);
   }
 
   @override

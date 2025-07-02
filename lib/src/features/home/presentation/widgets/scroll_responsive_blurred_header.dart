@@ -12,7 +12,12 @@ import 'package:go_router/go_router.dart';
 import '../../../../utils/constants/colors.dart';
 
 class ScrollResponsiveBlurredHeader extends StatelessWidget {
-  const ScrollResponsiveBlurredHeader({super.key});
+  const ScrollResponsiveBlurredHeader({
+    super.key,
+    this.child,
+  });
+
+  final Widget? child;
 
   @override
   Widget build(BuildContext context) {
@@ -23,10 +28,10 @@ class ScrollResponsiveBlurredHeader extends StatelessWidget {
             filter: state ? ImageFilter.blur(sigmaX: 53, sigmaY: 53)
               : ImageFilter.blur(sigmaX: 0, sigmaY: 0),
             child: ATContainer(
-              height: kToolbarHeight,
+              padding: const EdgeInsets.only(top: 40),
+              height: kToolbarHeight + MediaQuery.paddingOf(context).top,
               width: context.screenWidth,
-              alignment: Alignment.center,
-              child: GestureDetector(
+              child: child ?? GestureDetector(
                 onTap: () {
                   ATHelperFuncs.hideAnyMountedSnackbar(context);
                   context.pop();

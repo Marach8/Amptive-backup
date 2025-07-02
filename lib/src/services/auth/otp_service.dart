@@ -1,11 +1,11 @@
 import '../../utils/helpers/helper_classes/otp_model.dart';
 
 class OtpService {
+
+  factory OtpService() => _instance;
   OtpService._();
 
   static final OtpService _instance = OtpService._();
-
-  factory OtpService() => _instance;
 
   final OTPModel otpModel = OTPModel();
 

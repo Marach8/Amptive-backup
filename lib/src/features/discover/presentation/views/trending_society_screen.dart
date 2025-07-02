@@ -3,7 +3,7 @@ import 'package:amptive/src/views/widgets/common_widgets/annotated_region__widge
 import 'package:amptive/src/views/widgets/common_widgets/back_button.dart';
 import 'package:flutter/material.dart';
 import '../../../../utils/constants/strings/other_strings.dart';
-import '../../../../views/widgets/other_widgets/main_application_widgets/widgets_in_discover_view/society_widgets/trending_society_model.dart';
+import '../widgets/trending_society_hashtag_widget.dart';
 
 class AmptiveTrendingSocietyScreen extends StatelessWidget {
   const AmptiveTrendingSocietyScreen({super.key});
@@ -16,7 +16,7 @@ class AmptiveTrendingSocietyScreen extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: 15),
           child: CustomScrollView(
             physics: const BouncingScrollPhysics(),
-            slivers: [
+            slivers: <Widget>[
               SliverAppBar(
                 title: Text(
                   'Trending',
@@ -30,9 +30,9 @@ class AmptiveTrendingSocietyScreen extends StatelessWidget {
 
               SliverGrid(
                 delegate: SliverChildListDelegate.fixed(
-                  List.generate(
+                  List<Widget>.generate(
                     28,
-                    (_) => const AmptiveTrendingSocietyModel(trendingPicture: ATImgStrings.jpeg2)
+                    (_) => const TrendingSocietyHashtagWidget(trendingPicture: ATImgStrings.jpeg2)
                   ).toList()
                 ),
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(

@@ -22,7 +22,7 @@ class AmptiveGoLiveNotificationBloc extends Cubit<AmptiveGoLiveNotificationModel
     AmptiveGoLiveNotificationModel(
       user: user,
       notificationType: ATStrings.IS_GIFTING,
-      extraDetail: {ATStrings.GIFTED_AMNT: '10,000'}
+      extraDetail: <String, String>{ATStrings.GIFTED_AMNT: '10,000'}
     )
   );
 
@@ -30,7 +30,7 @@ class AmptiveGoLiveNotificationBloc extends Cubit<AmptiveGoLiveNotificationModel
     AmptiveGoLiveNotificationModel(
       user: user,
       notificationType: ATStrings.PINNED,
-      extraDetail: {
+      extraDetail: <String, String>{
         ATStrings.ROLE: role,
         ATStrings.MSG_TITLE: 'Get our newsletter here',
         ATStrings.MSG_CONTENT: 'http://emmanuel.com'

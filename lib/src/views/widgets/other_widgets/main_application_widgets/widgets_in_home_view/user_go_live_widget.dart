@@ -15,17 +15,17 @@ class AmptiveUserGoLiveWidget extends StatelessWidget {
   });
 
   @override
-  Widget build(context) {
+  Widget build(BuildContext context) {
     return GestureDetector(
       onTap: (){context.pushNamed(ATRoutes.GO_LIVE_SCREEN);},
       child: Column(
         mainAxisSize: MainAxisSize.min,
         mainAxisAlignment: MainAxisAlignment.end,
-        children: [
+        children: <Widget>[
           Stack(
             clipBehavior: Clip.none,
             alignment: Alignment.bottomCenter,
-            children: [
+            children: <Widget>[
               ClipRRect(
                 borderRadius: BorderRadius.circular(30),
                 child: const ATImgLoader(

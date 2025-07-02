@@ -26,11 +26,11 @@ class ATUserProfileScreen extends StatelessWidget {
       child: Scaffold(
         body: NestedScrollView(
           floatHeaderSlivers: true,
-          headerSliverBuilder: (_, __) => [
+          headerSliverBuilder: (_, __) => <Widget>[
             SliverAppBar(
               expandedHeight: 340.0, pinned: true,
               automaticallyImplyLeading: false,
-              actions: [
+              actions: <Widget>[
                 const Gap(15),
                 ATCircleAvatar(
                   onTap: () => context.pop(),
@@ -49,7 +49,7 @@ class ATUserProfileScreen extends StatelessWidget {
               flexibleSpace: FlexibleSpaceBar(
                 background: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
+                  children: <Widget>[
                     const UserBgProfileWidget(),
                     const Gap(40),
                 
@@ -98,7 +98,7 @@ class ATUserProfileScreen extends StatelessWidget {
           ],
 
           body: BlocBuilder<ProfileTabViewBloc, int>(
-            builder: (_, state) {
+            builder: (_, int state) {
               return IndexedStack(
                 index: state,
                 children: List.generate(
@@ -107,7 +107,7 @@ class ATUserProfileScreen extends StatelessWidget {
                     physics: const BouncingScrollPhysics(),
                     padding: const EdgeInsets.fromLTRB(15, 0, 15, 50),
                     itemCount: 10,
-                    itemBuilder: (_, listIndex){
+                    itemBuilder: (_, int listIndex){
                       return ProfileEventOrShowDisplay(key: ValueKey('A$listIndex'),);
                     },
                   ),
@@ -121,4 +121,4 @@ class ATUserProfileScreen extends StatelessWidget {
   }
 }
 
-final _tabs = [ATStrings.ATTENDED, ATStrings.UPCOMING];
+final List<String> _tabs = <String>[ATStrings.ATTENDED, ATStrings.UPCOMING];

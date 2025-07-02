@@ -28,7 +28,7 @@ class ATAppBar extends StatelessWidget implements PreferredSizeWidget {
   final PreferredSizeWidget? bottom;
 
   @override
-  Widget build(context) {
+  Widget build(BuildContext context) {
     return Padding(
       padding: padding ?? const EdgeInsets.symmetric(horizontal: 15),
       child: AppBar(
@@ -81,7 +81,7 @@ class ATSliverAppBar extends StatelessWidget{
   final PreferredSizeWidget? bottom;
 
   @override
-  Widget build(context) {
+  Widget build(BuildContext context) {
     return SliverAppBar(
       automaticallyImplyLeading: false,
       backgroundColor: bgColor ?? ATColors.black,

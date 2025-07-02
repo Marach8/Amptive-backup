@@ -21,18 +21,18 @@ class CreatorSubPlanScreen extends StatelessWidget {
   const CreatorSubPlanScreen({super.key});
 
   @override
-  Widget build(context) {
+  Widget build(BuildContext context) {
     return ATAnnotatedRegion(
       child: Scaffold(     
         body: Padding(
           padding: const EdgeInsets.fromLTRB(0, kToolbarHeight * 0.8, 0, kBottomNavigationBarHeight),
           child: Column(
-            children: [
+            children: <Widget>[
               Padding(
                 padding: const EdgeInsets.fromLTRB(7, 0, 15, 0),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
+                  children: <Widget>[
                     const ATRoundedBackBtn(),
                     Text(
                       ATStrings.SUB_PLAN,
@@ -59,12 +59,12 @@ class CreatorSubPlanScreen extends StatelessWidget {
         bottomSheet: Padding(
           padding: const EdgeInsets.fromLTRB(15, 5, 15, 10),
           child: BlocSelector<SubPlanSetupBloc, List<int?>, int?>(
-            selector: (state) => state.last,
-            builder: (_, state) {
-              final shouldActivate = state != null && state != 0;
+            selector: (List<int?> state) => state.last,
+            builder: (_, int? state) {
+              final bool shouldActivate = state != null && state != 0;
               return Column(
                 mainAxisSize: MainAxisSize.min,
-                children: [
+                children: <Widget>[
                   ATPlainElevatedBtn(
                     onPressed: shouldActivate ? () => context.pushNamed(ATRoutes.CO_HOST_FEE_SETUP) : null,
                     btnTitle: ATStrings.SETUP_COHOST_FEE
@@ -95,10 +95,10 @@ class _AddNewSubPlan extends StatelessWidget {
   const _AddNewSubPlan();
 
   @override
-  Widget build(context) {
+  Widget build(BuildContext context) {
     return BlocSelector<SubPlanSetupBloc,List<int?>, int?>(
-      selector: (state) => state.last,
-      builder: (_, state) {
+      selector: (List<int?> state) => state.last,
+      builder: (_, int? state) {
         return ATContainer(
           color: ATColors.hex9E9E9E.withValues(alpha: 0.3),
           radius: 14, alignment: Alignment.center,
@@ -109,7 +109,7 @@ class _AddNewSubPlan extends StatelessWidget {
             onTap: () => showCreatorSubPlans(context),
             child: Row(
               mainAxisSize: MainAxisSize.min,
-              children: [
+              children: <Widget>[
                 const Icon(Icons.add),
                 Text(
                   ATStrings.ADD_NEW,
@@ -120,15 +120,15 @@ class _AddNewSubPlan extends StatelessWidget {
               ],
             ),
           ) : Column(
-            children: [
+            children: <Widget>[
               Row(
-                children: [
+                children: <Widget>[
                   const ATImgLoader(imgPath: ATImgStrings.PADLOCK),
                   const SizedBox(width: 5),
                   Expanded(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
+                      children: <Widget>[
                         Text(
                           ATStrings.SUB_OVERVIEW,
                           style: Theme.of(context).textTheme.bodySmall?.copyWith(
@@ -148,9 +148,9 @@ class _AddNewSubPlan extends StatelessWidget {
         
                   IconButton(
                     onPressed: ()async{
-                      final shouldDelete = await showDeletePlanOption(context);
+                      final bool? shouldDelete = await showDeletePlanOption(context);
                       if(context.mounted && shouldDelete == true){
-                        final delete = await showConfirmationDialog(
+                        final bool? delete = await showConfirmationDialog(
                           context: context,
                           title: ATStrings.DELETE_SUB_PLAN,
                           content: ATStrings.DELETE_SUB_PLAN_DESC,
@@ -173,7 +173,7 @@ class _AddNewSubPlan extends StatelessWidget {
                 padding: const EdgeInsets.only(right: 15),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
+                  children: <Widget>[
                     InkWell(
                       onTap: () => showCreatorSubPlans(context),
                       borderRadius: BorderRadius.circular(5),

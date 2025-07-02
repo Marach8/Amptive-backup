@@ -2,7 +2,7 @@
 import 'package:flutter/material.dart';
 
 class LoggingNavigatorObserver extends NavigatorObserver {
-  List<String?> routeStack = [];
+  List<String?> routeStack = <String?>[];
 
   @override
   void didPush(Route route, Route? previousRoute) {

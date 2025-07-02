@@ -59,7 +59,7 @@ class _ATEmailAuthScreenState extends State<ATEmailAuthScreen> {
           padding: const EdgeInsets.all(15),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
+            children: <Widget>[
               Text(
                 ATStrings.UR_EMAIL,
                 style: Theme.of(context).textTheme.headlineMedium
@@ -68,14 +68,14 @@ class _ATEmailAuthScreenState extends State<ATEmailAuthScreen> {
               Form(
                 key: _formKey,
                 child: BlocBuilder<ATEmailAuthBloc, ATAuthState>(
-                    builder: (_, state) {
+                    builder: (_, ATAuthState state) {
                   return ATTextFormField(
                     controller: _controller,
                     cursorColor: service.email.error == null
                         ? ATColors.hex307FE2
                         : ATColors.textRedColor,
                     keyboardType: TextInputType.emailAddress,
-                    onChanged: (currentText) {
+                    onChanged: (String currentText) {
                       service.validateEmail(currentText);
                       context.read<ATEmailAuthBloc>().add(
                         EmailFieldChangedAuthEvent(currentTextEntered: currentText)
@@ -86,7 +86,7 @@ class _ATEmailAuthScreenState extends State<ATEmailAuthScreen> {
                       hintText: ATStrings.enterYourEmail,
                       hintStyle: TextStyle(
                         fontSize: ATFontSizes.size16,
-                        color: ATColors.authHintColor,
+                        color: ATColors.hexB6B6B6,
                         fontWeight: ATFontWeights.w400,
                       ),
                       errorText: service.email.error,
@@ -118,8 +118,8 @@ class _ATEmailAuthScreenState extends State<ATEmailAuthScreen> {
                 }),
               ),
               BlocBuilder<ATEmailAuthBloc, ATAuthState>(
-                  builder: (context, state) {
-                var height = service.customEmailStatus.value != null ? 20 : 0;
+                  builder: (BuildContext context, ATAuthState state) {
+                int height = service.customEmailStatus.value != null ? 20 : 0;
                 return Container(
                   height: height.toDouble(),
                   margin: const EdgeInsets.symmetric(vertical: 11),
@@ -137,16 +137,16 @@ class _ATEmailAuthScreenState extends State<ATEmailAuthScreen> {
         bottomSheet: Padding(
           padding: const EdgeInsets.fromLTRB(15, 0, 15, 15),
           child: BlocConsumer<ATEmailAuthBloc, ATAuthState>(
-            listener: (context, state) {
+            listener: (BuildContext context, ATAuthState state) {
               if (state is ValidEmailAuthState && context.mounted) {
                 context.pushNamed(
                   ATRoutes.OTP_SCREEN,
-                  extra: [_controller.text.trim(), widget.title]
+                  extra: <String?>[_controller.text.trim(), widget.title]
                 );
               }
             },
-            builder: (context, state) {
-              final enableBtn = service.isEmailValid;
+            builder: (BuildContext context, ATAuthState state) {
+              final bool enableBtn = service.isEmailValid;
         
               return state is LoadingAuthState && context.mounted
                 ? const AmptiveLoadingButtonWidget()

@@ -41,13 +41,13 @@ class ATHelperFuncs{
   }
 
 
-  static startTimer({
+  static void startTimer({
     required Timer timer,
     required BuildContext context
   }){
     timer = Timer.periodic(
       const Duration(seconds: 1),
-      (timer) {
+      (Timer timer) {
         if(timer.tick == 61){timer.cancel();}
         else{
           // context.read<AmptiveAuthBloc>().add(
@@ -88,7 +88,7 @@ class ATHelperFuncs{
 
 
 static List<String> generateHoursInADay(dynamic _) {
-  final List<String> timeList = [];
+  final List<String> timeList = <String>[];
 
   for (int index = 0; index < 24; index++) {
     DateTime time = DateTime(2025, 3, 12, index);
@@ -104,24 +104,24 @@ static List<String> generateHoursInADay(dynamic _) {
 
 
   static List<List<DateTime?>> getWeeksInAMonth(List<int> args) {
-    final year = args[0];
-    final month = args[1];
+    final int year = args[0];
+    final int month = args[1];
 
-    final firstDayOfMonth = DateTime(year, month, 1);
+    final DateTime firstDayOfMonth = DateTime(year, month, 1);
 
-    final firstWeekday = firstDayOfMonth.weekday % 7;
+    final int firstWeekday = firstDayOfMonth.weekday % 7;
 
-    final daysInMonth = DateTime(year, month + 1, 0).day;
+    final int daysInMonth = DateTime(year, month + 1, 0).day;
 
-    final allDays = List<DateTime>.generate(
+    final List<DateTime> allDays = List<DateTime>.generate(
       daysInMonth,
-      (index) => DateTime(year, month, index + 1),
+      (int index) => DateTime(year, month, index + 1),
     );
 
-    final List<List<DateTime?>> weeks = [];
+    final List<List<DateTime?>> weeks = <List<DateTime?>>[];
 
     if (firstWeekday != 0) {
-      final firstWeek = List<DateTime?>.filled(7, null);
+      final List<DateTime?> firstWeek = List<DateTime?>.filled(7, null);
       for (int i = firstWeekday; i < 7; i++) {
         if (allDays.isNotEmpty) {
           firstWeek[i] = allDays.removeAt(0);
@@ -131,7 +131,7 @@ static List<String> generateHoursInADay(dynamic _) {
     }
 
     while (allDays.isNotEmpty) {
-      final week = List<DateTime?>.filled(7, null);
+      final List<DateTime?> week = List<DateTime?>.filled(7, null);
       for (int i = 0; i < 7; i++) {
         if (allDays.isNotEmpty) {
           week[i] = allDays.removeAt(0);
@@ -145,8 +145,8 @@ static List<String> generateHoursInADay(dynamic _) {
 
 
   static Map<String, List<List<DateTime?>>> generateCalendarData(List<int> args) {
-    final year = args[0];
-    final month = args[1];
+    final int year = args[0];
+    final int month = args[1];
 
     int getDaysInMonth(int year, int month) {
       return DateTime(year, month + 1, 0).day;
@@ -157,11 +157,11 @@ static List<String> generateHoursInADay(dynamic _) {
     }
 
     List<List<DateTime?>> generateCalendarDays(int year, int month) {
-      final daysInMonth = getDaysInMonth(year, month);
-      final firstWeekday = getFirstWeekday(year, month);
+      final int daysInMonth = getDaysInMonth(year, month);
+      final int firstWeekday = getFirstWeekday(year, month);
 
-      List<List<DateTime?>> calendarWeeks = [];
-      List<DateTime?> currentWeek = [];
+      List<List<DateTime?>> calendarWeeks = <List<DateTime?>>[];
+      List<DateTime?> currentWeek = <DateTime?>[];
 
       for (int i = 0; i < firstWeekday; i++) {
         currentWeek.add(null);
@@ -172,7 +172,7 @@ static List<String> generateHoursInADay(dynamic _) {
 
         if (currentWeek.length == 7) {
           calendarWeeks.add(currentWeek);
-          currentWeek = [];
+          currentWeek = <DateTime?>[];
         }
       }
 
@@ -187,19 +187,19 @@ static List<String> generateHoursInADay(dynamic _) {
     }
 
     String getMonthName(int year, int month) {
-      final date = DateTime(year, month);
+      final DateTime date = DateTime(year, month);
       return DateFormat('MMMM').format(date);
     }
 
-    final monthName = getMonthName(year, month);
-    final calendarDays = generateCalendarDays(year, month);
+    final String monthName = getMonthName(year, month);
+    final List<List<DateTime?>> calendarDays = generateCalendarDays(year, month);
 
-    return {monthName: calendarDays};
+    return <String, List<List<DateTime?>>>{monthName: calendarDays};
   }
 
   static Future<File?> getImageFromGallery() async {
-    final picker = ImagePicker();
-    final pickedFile = await picker.pickImage(source: ImageSource.gallery);
+    final ImagePicker picker = ImagePicker();
+    final XFile? pickedFile = await picker.pickImage(source: ImageSource.gallery);
     if (pickedFile != null) {
       return File(pickedFile.path);
     }
@@ -207,8 +207,8 @@ static List<String> generateHoursInADay(dynamic _) {
   }
 
   static Future<File?> getImageFromCamera() async {
-    final picker = ImagePicker();
-    final pickedFile = await picker.pickImage(source: ImageSource.camera);
+    final ImagePicker picker = ImagePicker();
+    final XFile? pickedFile = await picker.pickImage(source: ImageSource.camera);
     if (pickedFile != null) {
       return File(pickedFile.path);
     }
@@ -220,15 +220,15 @@ static List<String> generateHoursInADay(dynamic _) {
   static Map<String, List<List<Map<DateTime?, List<CalenderProgram>>>>>
     transformDateTimes2Programs(List<dynamic> args) {
 
-    final date = args[0] as Map<String, List<List<DateTime?>>>;
-    final name = args[1] as String;
-    final isEvent = args[2] as bool;
+    final Map<String, List<List<DateTime?>>> date = args[0] as Map<String, List<List<DateTime?>>>;
+    final String name = args[1] as String;
+    final bool isEvent = args[2] as bool;
     final Random random = Random();
 
-    return date.map((key, value) {
-      final transformedValue = value.map((week) {
-        return week.map((dateTime) {
-          final programs = List.generate(
+    return date.map((String key, List<List<DateTime?>> value) {
+      final List<List<Map<DateTime?, List<CalenderProgram>>>> transformedValue = value.map((List<DateTime?> week) {
+        return week.map((DateTime? dateTime) {
+          final List<CalenderProgram> programs = List.generate(
             random.nextInt(3),
             (_) => CalenderProgram(
               name: name, id: 1, isEvent: isEvent,
@@ -238,7 +238,7 @@ static List<String> generateHoursInADay(dynamic _) {
             ),
           );
 
-          return {dateTime: programs};
+          return <DateTime?, List<CalenderProgram>>{dateTime: programs};
         }).toList();
       }).toList();
 

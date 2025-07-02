@@ -30,12 +30,12 @@ class RenderTxnWidget extends StatelessWidget {
       color: tileColor ?? ATColors.white.withValues(alpha: 0.05),
       padding: const EdgeInsets.all(15),
       child: Row(
-        children: [
+        children: <Widget>[
           SizedBox(
             height: 35, width: 35,
             child: Stack(
               clipBehavior: Clip.none,
-              children: [
+              children: <Widget>[
                 ATCircularImage(
                   imagePath: imgPath,
                   diameter: 35,
@@ -53,7 +53,7 @@ class RenderTxnWidget extends StatelessWidget {
           const SizedBox(width: 10,),
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
+            children: <Widget>[
               Text(
                 txnType,
                 style: Theme.of(context).textTheme.bodySmall

@@ -9,8 +9,8 @@ class AmptiveIndentedDividerWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final screenWidth = ATHelperFuncs.getScreenWidth(context);
-    final margin = (screenWidth - 170)/2;
+    final double screenWidth = ATHelperFuncs.getScreenWidth(context);
+    final double margin = (screenWidth - 170)/2;
 
     return Container(
       margin: EdgeInsets.symmetric(horizontal: margin),

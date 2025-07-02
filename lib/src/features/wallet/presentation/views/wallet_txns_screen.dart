@@ -18,7 +18,7 @@ class ATWalletTxnsScreen extends StatelessWidget {
         body: SafeArea(
           child: NestedScrollView(
             floatHeaderSlivers: true,
-            headerSliverBuilder: (_, __) => [
+            headerSliverBuilder: (_, __) => <Widget>[
               const ATSliverAppBar(titleText: ATStrings.TXN_HISTORY,),
               SliverPersistentHeader(
                 pinned: true,
@@ -30,7 +30,7 @@ class ATWalletTxnsScreen extends StatelessWidget {
                     padding: const EdgeInsets.fromLTRB(15, 0, 15, 25),
                     child: ATTextFormField(
                       fillColor: ATColors.white.withValues(alpha: 0.1),
-                      onChanged: (text){},
+                      onChanged: (String text){},
                     ),
                   )
                 ),
@@ -40,13 +40,13 @@ class ATWalletTxnsScreen extends StatelessWidget {
             body: ListView.builder(
               itemCount: 20,
               padding: EdgeInsets.zero,
-              itemBuilder: (_, index){
+              itemBuilder: (_, int index){
                 return Padding(
                   padding: const EdgeInsets.only(bottom: 25),
                   child: Column(
                     spacing: 15,
                     crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
+                    children: <Widget>[
                       Padding(
                         padding: const EdgeInsets.fromLTRB(15, 0, 15, 0),
                         child: Text(

@@ -38,9 +38,9 @@ class DateAndWeekDaysState extends State<DateAndWeekDays> {
   }
 
   @override
-  Widget build(context) {
+  Widget build(BuildContext context) {
     return BlocConsumer<DayViewHeadingBloc, DayViewHeadingState>(
-      listener: (_, curr){
+      listener: (_, DayViewHeadingState curr){
         if(curr is DayViewHeadingData){
           ATHelperFuncs.callDebouncer(
             500,
@@ -52,7 +52,7 @@ class DateAndWeekDaysState extends State<DateAndWeekDays> {
           );
         }
       },
-      builder: (_, state) {
+      builder: (_, DayViewHeadingState state) {
         if(state is DayViewHeadingLoading){
           return const SizedBox(
             height: 70,
@@ -70,7 +70,7 @@ class DateAndWeekDaysState extends State<DateAndWeekDays> {
           return Text(state.error);
         }
 
-        final weeks = (state as DayViewHeadingData).weeks;
+        final List<List<DateTime?>> weeks = (state as DayViewHeadingData).weeks;
 
         return PageView.builder(
           controller: _pageController,
@@ -78,8 +78,8 @@ class DateAndWeekDaysState extends State<DateAndWeekDays> {
           allowImplicitScrolling: true,
           physics: const BouncingScrollPhysics(),
           itemCount: weeks.length,
-          itemBuilder: (_, pageIndex) {
-            final eachWeek = weeks.elementAtOrNull(pageIndex);
+          itemBuilder: (_, int pageIndex) {
+            final List<DateTime?>? eachWeek = weeks.elementAtOrNull(pageIndex);
             return RenderEachWeekHeading(eachWeek: eachWeek, key: ValueKey(pageIndex));
           },
         );

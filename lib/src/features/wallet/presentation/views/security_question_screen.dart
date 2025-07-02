@@ -20,7 +20,7 @@ import '../../bloc/security_question_bloc.dart';
 class ATSecurityQuestionScreen extends StatelessWidget {
   const ATSecurityQuestionScreen({super.key});
 
-  static const items = [
+  static const List<String> items = <String>[
     'What is the name of your mother?',
     'What is the name of your father?',
     'What is the name of your first uncle?',
@@ -36,7 +36,7 @@ class ATSecurityQuestionScreen extends StatelessWidget {
       child: BlocProvider(
         create: (_) => SecQuestionBloc(),
         child: Builder(
-          builder: (context) {
+          builder: (BuildContext context) {
             return Scaffold(
               appBar: const ATAppBar(
                 leading: ATRoundedBackBtn(),
@@ -49,7 +49,7 @@ class ATSecurityQuestionScreen extends StatelessWidget {
                 padding: const EdgeInsets.fromLTRB(15, 0, 15, 15),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
+                  children: <Widget>[
                     Text(
                       ATStrings.SELECT_SECURITY_QUEST,
                       style: Theme.of(context).textTheme.bodyMedium
@@ -59,7 +59,7 @@ class ATSecurityQuestionScreen extends StatelessWidget {
                       onTap: ()async {
                         context.read<SecQuestionBloc>().toggleIcon();
 
-                        final result = await showSecurityQuestionsDialog(context, items);
+                        final String? result = await showSecurityQuestionsDialog(context, items);
                         if(result != null && context.mounted){
                           context.read<SecQuestionBloc>().setSecQuestion(result);
                         }
@@ -73,10 +73,10 @@ class ATSecurityQuestionScreen extends StatelessWidget {
                       width: ATHelperFuncs.getScreenWidth(context),
                       padding: const EdgeInsets.fromLTRB(15, 10, 15, 10),
                       child: Row(
-                        children: [
+                        children: <Widget>[
                           BlocSelector<SecQuestionBloc, (String?, bool, String), String?>(
-                            selector: (state) => state.$1,
-                            builder: (_, state) {
+                            selector: ((String?, bool, String) state) => state.$1,
+                            builder: (_, String? state) {
                               return Expanded(
                                 child: Text(
                                   state ?? ATStrings.A_QUEST_U_CAN_REMEMBER, maxLines: 3,
@@ -89,8 +89,8 @@ class ATSecurityQuestionScreen extends StatelessWidget {
                           ),
                           const SizedBox(width: 20,),
                           BlocSelector<SecQuestionBloc, (String?, bool, String), bool>(
-                            selector: (state) => state.$2,
-                            builder: (_, state) {
+                            selector: ((String?, bool, String) state) => state.$2,
+                            builder: (_, bool state) {
                               return Icon(
                                 state ? Icons.keyboard_arrow_up_rounded : Icons.keyboard_arrow_down_rounded, 
                                 size: 30,
@@ -104,8 +104,8 @@ class ATSecurityQuestionScreen extends StatelessWidget {
                     const SizedBox(height: 20,),
 
                     BlocSelector<SecQuestionBloc, (String?, bool, String), String?>(
-                      selector: (state) => state.$1,
-                      builder: (_, state) {
+                      selector: ((String?, bool, String) state) => state.$1,
+                      builder: (_, String? state) {
                         return ATAnimatedCrossFade(
                           condition: state == null,
                           firstChild: const SizedBox.shrink(),
@@ -120,8 +120,8 @@ class ATSecurityQuestionScreen extends StatelessWidget {
               bottomSheet: Padding(
                 padding: const EdgeInsets.fromLTRB(15, 5, 15, 10),
                 child: BlocSelector<SecQuestionBloc, (String?, bool, String), String>(
-                  selector: (state) => state.$3,
-                  builder: (_, state) {
+                  selector: ((String?, bool, String) state) => state.$3,
+                  builder: (_, String state) {
                     return ATPlainElevatedBtn(
                       onPressed: state.isEmpty ? null : ()
                         => context.pushReplacementNamed(ATRoutes.WALLET_CREATION_ANIM),

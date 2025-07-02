@@ -16,15 +16,15 @@ class AmptiveMutedAcctsScreen extends StatelessWidget {
   const AmptiveMutedAcctsScreen({super.key});
 
   @override
-  Widget build(context) {
+  Widget build(BuildContext context) {
     return ATAnnotatedRegion(
       child: Scaffold(
         body: Column(
-          children: [
+          children: <Widget>[
             Padding(
               padding: const EdgeInsets.fromLTRB(7, kToolbarHeight, 15, 15),
               child: Row(
-                children: [
+                children: <Widget>[
                   ATCircleAvatar(
                     onTap: () => context.pop(),
                     diameter: 30, color: ATColors.trsprnt,
@@ -42,19 +42,19 @@ class AmptiveMutedAcctsScreen extends StatelessWidget {
             ),
 
             BlocBuilder<AmptiveProfileFollowersBloc, List<ObjectWithNotifier<Host>>>(
-              builder: (_, state) {
+              builder: (_, List<ObjectWithNotifier<Host>> state) {
                 return Expanded(
                   child: ListView.builder(
                     physics: const BouncingScrollPhysics(),
                     padding: const EdgeInsets.fromLTRB(15, 0, 15, 50),
                     itemCount: state.length,
-                    itemBuilder: (_, listIndex){
-                      final subscriber = state.elementAt(listIndex);
+                    itemBuilder: (_, int listIndex){
+                      final ObjectWithNotifier<Host> subscriber = state.elementAt(listIndex);
                       return AmptiveBlockedOrMutedAcctWidget(
                         subscriber: subscriber,
                         text: ATStrings.UNMUTE,
-                        onTap: (follower, isSelected)async{
-                          final shouldUnmute = await showConfirmationDialog(
+                        onTap: (ObjectWithNotifier<Host> follower, bool isSelected)async{
+                          final bool? shouldUnmute = await showConfirmationDialog(
                             context: context,
                             title: '${ATStrings.UNMUTE} ${follower.obj.username}',
                             content: ATStrings.unMuteDesc(follower.obj.username ?? ''),

@@ -2,22 +2,6 @@ import 'package:amptive/src/utils/constants/colors.dart';
 import 'package:flutter/material.dart';
 
 class ATContainer extends StatelessWidget {
-  final EdgeInsetsGeometry? padding, margin;
-  final Color? color, splashColor;
-  final double? height, width, radius;
-  final BoxBorder? border;
-  final Widget? child;
-  final BoxShape? boxShape;
-  final BoxConstraints? constraints;
-  final Gradient? gradient;
-  final AlignmentGeometry? alignment;
-  final String? decorationImagePath;
-  final BoxFit? decorationImageFit;
-  final Clip clipBehavior;
-  final int? duration;
-  final VoidCallback? onTap;
-  final Curve curve;
-  final List<BoxShadow>? boxShadow;
 
   const ATContainer({
     super.key,
@@ -42,9 +26,25 @@ class ATContainer extends StatelessWidget {
     this.boxShadow,
     this.child
   });
+  final EdgeInsetsGeometry? padding, margin;
+  final Color? color, splashColor;
+  final double? height, width, radius;
+  final BoxBorder? border;
+  final Widget? child;
+  final BoxShape? boxShape;
+  final BoxConstraints? constraints;
+  final Gradient? gradient;
+  final AlignmentGeometry? alignment;
+  final String? decorationImagePath;
+  final BoxFit? decorationImageFit;
+  final Clip clipBehavior;
+  final int? duration;
+  final VoidCallback? onTap;
+  final Curve curve;
+  final List<BoxShadow>? boxShadow;
 
   @override
-  Widget build(context) {
+  Widget build(BuildContext context) {
     return Material(
       color: ATColors.trsprnt,
       child: InkWell(

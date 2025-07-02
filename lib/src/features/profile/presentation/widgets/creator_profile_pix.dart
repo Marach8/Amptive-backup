@@ -23,13 +23,13 @@ class CreatorProfilePix extends StatelessWidget {
         child: Stack(
           alignment: Alignment.center,
           clipBehavior: Clip.none,
-          children: [
+          children: <Widget>[
             ATContainer(
               height: 150,
               gradient: LinearGradient(
                 begin: Alignment.topCenter,
                 end: Alignment.bottomCenter,
-                colors: [
+                colors: <Color>[
                   ATColors.black,
                   ATColors.trsprnt,
                   ATColors.trsprnt

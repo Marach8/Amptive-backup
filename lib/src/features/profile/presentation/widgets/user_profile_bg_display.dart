@@ -20,7 +20,7 @@ class UserBgProfileWidget extends StatelessWidget {
       gradient: LinearGradient(
         begin: Alignment.topCenter,
         end: Alignment.bottomCenter,
-        colors: [
+        colors: <Color>[
           ATColors.black,
           ATColors.white.withOpacity(0.5),
           ATColors.hexD9D9D9
@@ -30,7 +30,7 @@ class UserBgProfileWidget extends StatelessWidget {
       child: Stack(
         alignment: Alignment.center,
         clipBehavior: Clip.none,
-        children: [
+        children: <Widget>[
           Positioned(
             bottom: -35,
             child: ATCircularImage(

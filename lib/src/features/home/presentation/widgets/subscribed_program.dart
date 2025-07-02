@@ -1,23 +1,18 @@
+import 'package:amptive/src/models/host.dart';
 import 'package:amptive/src/services/create_show/create_show_service.dart' show getHostList;
 import 'package:amptive/src/utils/constants/colors.dart';
 import 'package:amptive/src/utils/constants/font_sizes.dart';
 import 'package:amptive/src/utils/constants/font_weights.dart';
 import 'package:amptive/src/utils/constants/strings/image_strings.dart';
 import 'package:amptive/src/utils/constants/strings/other_strings.dart';
-import 'package:amptive/src/utils/dialogs/added_or_removed_from_calender_dialog.dart';
 import 'package:amptive/src/utils/dialogs/options_dialog.dart';
 import 'package:amptive/src/views/widgets/common_widgets/custom_container_widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/image_loader_widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/live_indicator_with_animating_dot_widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/list_tile_with_leading_picture_widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/overlapping_images.dart';
-import 'package:amptive/src/views/widgets/other_widgets/main_application_widgets/widgets_in_home_view/row_of_paid_show_and_play_button_widget.dart';
-import 'package:amptive/src/views/widgets/common_widgets/row_of_people_listening_widget.dart';
 import 'package:amptive/src/views/widgets/other_widgets/main_application_widgets/widgets_in_home_view/with_2_others_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:gap/gap.dart';
-import 'package:go_router/go_router.dart';
-import '../../../../utils/constants/strings/route_strings.dart';
 
 class SubscribedProgram extends StatelessWidget {
   const SubscribedProgram({
@@ -27,7 +22,7 @@ class SubscribedProgram extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
-      children: [
+      children: <Widget>[
         TileWithLeadingImage(
           leadingImagePath: ATImgStrings.jpeg3,
           trailingOnPressed: (){
@@ -40,7 +35,7 @@ class SubscribedProgram extends StatelessWidget {
         ATContainer(
           height: 425, clipBehavior: Clip.hardEdge, radius: 15,
           child: Stack(
-            children: [
+            children: <Widget>[
               const ATImgLoader(imgPath: ATImgStrings.weCanDoHardThingsBgImage),
               ATContainer(
                 padding: const EdgeInsets.fromLTRB(15, 10, 15, 10),
@@ -48,7 +43,7 @@ class SubscribedProgram extends StatelessWidget {
                 gradient: LinearGradient(
                   begin: Alignment.topCenter,
                   end: Alignment.bottomCenter,
-                  colors: [
+                  colors: <Color>[
                     ATColors.trsprnt,
                     ATColors.trsprnt,
                     ATColors.trsprnt,
@@ -61,7 +56,7 @@ class SubscribedProgram extends StatelessWidget {
                 ),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
+                  children: <Widget>[
                     const AmptiveWith2OthersWidget(),
                     const Spacer(),
                     const LiveWithAnimatingDot(),
@@ -78,10 +73,10 @@ class SubscribedProgram extends StatelessWidget {
                     const SizedBox(height: 12,),
                     Row(
                       mainAxisSize: MainAxisSize.min,
-                      children: [
+                      children: <Widget>[
                         ATOverlappingImages(
                           imgPaths: getHostList().take(3).map(
-                            (host) => host.obj.profilePicture ?? ''
+                            (ObjectWithNotifier<Host> host) => host.obj.profilePicture ?? ''
                           ).toList(),
                           imgSize: 30, overlapOffset: 18,
                         ),
@@ -97,7 +92,7 @@ class SubscribedProgram extends StatelessWidget {
                     const SizedBox(height: 12,),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
+                      children: <Widget>[
                         ATContainer(
                           color: ATColors.hex0D0D0D, radius: 5,
                           padding: const EdgeInsets.all(8.5),
@@ -112,7 +107,7 @@ class SubscribedProgram extends StatelessWidget {
                         ATContainer(
                           onTap: (){},
                           height: 45, width: 45, radius: 30,
-                          color: ATColors.authHintColor,
+                          color: ATColors.hexB6B6B6,
                           child: Icon(
                             Icons.play_arrow,
                             color: ATColors.hex0D0D0D, size: 30,

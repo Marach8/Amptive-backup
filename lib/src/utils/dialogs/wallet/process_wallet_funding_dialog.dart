@@ -17,23 +17,23 @@ Future<bool?> processWalletFundingDialog({
   return showCupertinoModalPopup<bool>(
     context: context,
     barrierColor: ATColors.black.withValues(alpha: 0.95),
-    builder: (dialogContext) {
+    builder: (BuildContext dialogContext) {
       return BlocProvider(
         create: (_) => _WalletFundingBloc()..processWalletFunding(),
         child: Builder(
-          builder: (blocContext) => SizedBox(
+          builder: (BuildContext blocContext) => SizedBox(
             height: ATHelperFuncs.getScreenHeight(context),
             child: Padding(
               padding: const EdgeInsets.fromLTRB(15, 10, 15, 10),
               child: BlocBuilder<_WalletFundingBloc, bool?>(
-                builder: (_, state) {
+                builder: (_, bool? state) {
                   return Column(
-                    children: [
+                    children: <Widget>[
                       Expanded(
                         child: Center(
                           child: Column(
                             mainAxisSize: MainAxisSize.min,
-                            children: [
+                            children: <Widget>[
                               if(state == null) const ATLoadingIndicator(),
                               if(state == null) const SizedBox(height: 20,),
                               if(state == null) Text(
@@ -59,7 +59,7 @@ Future<bool?> processWalletFundingDialog({
                       ),
               
                       BlocBuilder<_WalletFundingBloc, bool?>(
-                        builder: (_, state) {
+                        builder: (_, bool? state) {
                           return ATAnimatedSlide(
                             condition: state == null,
                             startOffset: const Offset(0, 1.5), 

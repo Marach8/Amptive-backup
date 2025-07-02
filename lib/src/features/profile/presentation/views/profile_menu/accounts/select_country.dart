@@ -9,24 +9,24 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
 class ATSelectCountryScreen extends StatelessWidget {
-  final String? selectedCountry;
-  final List<String> countries;
   const ATSelectCountryScreen({
     super.key,
     this.selectedCountry,
     required this.countries
   });
+  final String? selectedCountry;
+  final List<String> countries;
 
   @override
-  Widget build(context) {
+  Widget build(BuildContext context) {
     return ATAnnotatedRegion(
       child: Scaffold(
         body: Column(
-          children: [
+          children: <Widget>[
             Padding(
               padding: const EdgeInsets.fromLTRB(7, kToolbarHeight, 15, 15),
               child: Row(
-                children: [
+                children: <Widget>[
                   ATCircleAvatar(
                     onTap: () => context.pop(),
                     diameter: 30, color: ATColors.trsprnt,
@@ -49,16 +49,16 @@ class ATSelectCountryScreen extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: countries.map(
-                  (country){
+                  (String country){
                     return BlocBuilder<ATSelectCountryBloc, String?>(
-                      builder: (_, state) {
-                        final isSelected = country == (state ?? selectedCountry ?? '');
+                      builder: (_, String? state) {
+                        final bool isSelected = country == (state ?? selectedCountry ?? '');
                         return Padding(
                           padding: const EdgeInsets.only(bottom: 30),
                           child: GestureDetector(
                             onTap: () => context.read<ATSelectCountryBloc>().selectCountry(country),
                             child: Row(
-                              children: [
+                              children: <Widget>[
                                 Expanded(
                                   child: Text(
                                     country,

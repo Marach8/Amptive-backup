@@ -16,26 +16,26 @@ class CreatorOrBizSetupSuccess extends StatelessWidget {
   const CreatorOrBizSetupSuccess({super.key});
 
   @override
-  Widget build(context) {
-    final isCreator = context.read<AccountTypeBloc>().state;
+  Widget build(BuildContext context) {
+    final bool isCreator = context.read<AccountTypeBloc>().state;
     return Column(
       mainAxisSize: MainAxisSize.min,
-      children: [
+      children: <Widget>[
         SizedBox(
           height: ATHelperFuncs.getScreenHeight(context) * 0.4,
           width: ATHelperFuncs.getScreenWidth(context),
           child: Stack(
             alignment: Alignment.topCenter,
             clipBehavior: Clip.none,
-            children: [
+            children: <Widget>[
               BlocSelector<SwitchAcctSuccessAnimBloc, List<bool>, bool>(
-                selector: (state) => state.elementAt(4),
-                builder: (_, isVisible) {
+                selector: (List<bool> state) => state.elementAt(4),
+                builder: (_, bool isVisible) {
                   return SpotlightBeam(
                     gradient: isVisible ? LinearGradient(
                       begin: Alignment.topCenter,
                       end: Alignment.bottomCenter,
-                      colors: [
+                      colors: <Color>[
                         ATColors.hex23221C,
                         ATColors.black
                       ],
@@ -53,8 +53,8 @@ class CreatorOrBizSetupSuccess extends StatelessWidget {
               Positioned(
                 bottom: 0,
                 child: BlocSelector<SwitchAcctSuccessAnimBloc, List<bool>, bool>(
-                  selector: (state) => state.elementAt(4),
-                  builder: (_, isVisible) {
+                  selector: (List<bool> state) => state.elementAt(4),
+                  builder: (_, bool isVisible) {
                     return AnimatedScale(
                       duration: const Duration(milliseconds: 200),
                       scale: isVisible ? 1 : 20,

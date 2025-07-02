@@ -4,7 +4,7 @@ import 'package:amptive/src/utils/helpers/helper_classes/base_api.dart';
 import 'package:http/testing.dart';
 import 'package:http/http.dart' as http;
 
-MockClient integrationTestMockClient = MockClient((request) async {
+MockClient integrationTestMockClient = MockClient((http.Request request) async {
   switch (request.url.toString()) {
     case 'https://staging.company.com/api/customer/123':
       return http.Response('{"customer": "123", "name": "Jane Jimmy"}', 200);
@@ -18,8 +18,8 @@ MockClient integrationTestMockClient = MockClient((request) async {
 class APIHandler extends BaseAPI {
   Future<RegisterResponse?> register(
       String name, String username, String email, String password) async {
-    var body = jsonEncode({
-      'user': {
+    String body = jsonEncode(<String, Map<String, String>>{
+      'user': <String, String>{
         'name': name,
         'email': email,
         'username': username,
@@ -32,7 +32,7 @@ class APIHandler extends BaseAPI {
     //     headers: super.headers, body: body);
 
     return await Future.delayed(const Duration(seconds: 5), () {
-      var temp = RegisterResponse();
+      RegisterResponse temp = RegisterResponse();
       temp.id = 452;
       temp.username = username;
       temp.email = email;
@@ -44,7 +44,7 @@ class APIHandler extends BaseAPI {
     // todo: call api with login details
 
     return await Future.delayed(const Duration(seconds: 3), () {
-      var temp = LoginResponse();
+      LoginResponse temp = LoginResponse();
       temp.id = 101;
       temp.username = "James";
       temp.email = email;
@@ -53,7 +53,7 @@ class APIHandler extends BaseAPI {
   }
 
   Future<bool> checkEmailExists(String email) async {
-    List<String> dummyEmailList = [
+    List<String> dummyEmailList = <String>[
       "peter@gmail.com",
       "paul@gmail.com",
       "magnus@gmail.com",
@@ -67,9 +67,6 @@ class APIHandler extends BaseAPI {
 }
 
 class LoginResponse {
-  int? id;
-  String? username;
-  String? email;
 
   LoginResponse({this.id, this.email, this.username});
 
@@ -82,12 +79,12 @@ class LoginResponse {
       username: json['username'],
     );
   }
-}
-
-class RegisterResponse {
   int? id;
   String? username;
   String? email;
+}
+
+class RegisterResponse {
 
   RegisterResponse({this.id, this.email, this.username});
 
@@ -100,4 +97,7 @@ class RegisterResponse {
       username: json['username'],
     );
   }
+  int? id;
+  String? username;
+  String? email;
 }

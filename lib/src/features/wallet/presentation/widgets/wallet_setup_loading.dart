@@ -9,23 +9,23 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 class WalletCreationLoading extends StatelessWidget {
   const WalletCreationLoading({super.key});
 
-  static const walletList = [ATStrings.CREATING_WALLET, ATStrings.PREPARING_WALLET, ATStrings.FINALIZING_SETUP];
+  static const List<String> walletList = <String>[ATStrings.CREATING_WALLET, ATStrings.PREPARING_WALLET, ATStrings.FINALIZING_SETUP];
 
   @override
   Widget build(BuildContext context) {   
     return Column(
       mainAxisSize: MainAxisSize.min,
-      children: [
+      children: <Widget>[
         SizedBox(
           height: 30,
           child: Stack(
             alignment: Alignment.center,
             children: walletList.map(
-              (item){
-                final index = walletList.indexOf(item);
+              (String item){
+                final int index = walletList.indexOf(item);
                 return BlocSelector<WalletCreationAnimBloc, List<bool>, bool>(
-                  selector: (state) => state.elementAt(index),
-                  builder: (_, isVisible) {
+                  selector: (List<bool> state) => state.elementAt(index),
+                  builder: (_, bool isVisible) {
                     return AnimatedPositioned(
                       bottom: isVisible ? 0 : -30,
                       curve: Curves.decelerate,
@@ -33,12 +33,12 @@ class WalletCreationLoading extends StatelessWidget {
                       onEnd: () => isVisible ? 
                         Future.delayed(
                           const Duration(milliseconds: 2500),
-                          () => context.mounted ? context.read<WalletCreationAnimBloc>().triggerNext(index + 1) : {}
+                          () => context.mounted ? context.read<WalletCreationAnimBloc>().triggerNext(index + 1) : <dynamic, dynamic>{}
                         ) : null,
                       child: Row(
                         mainAxisSize: MainAxisSize.min,
                         spacing: 10,
-                        children: [
+                        children: <Widget>[
                           Text(
                             item, 
                             style: Theme.of(context).textTheme.bodyMedium?.copyWith(

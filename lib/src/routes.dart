@@ -30,15 +30,11 @@ import 'package:amptive/src/views/widgets/other_widgets/main_application_widgets
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'features/discover/presentation/views/community_home_screen.dart';
-import 'features/discover/presentation/views/hashtag_full_screen.dart';
+import 'features/discover/presentation/views/society_hashtag_screen.dart';
 import 'features/discover/presentation/views/trending_society_screen.dart';
-import 'features/home/presentation/views/live_event_detailed_screen.dart';
-import 'features/home/presentation/views/following_screen.dart';
 import 'features/go_live/event/choose_event_screen.dart';
 import 'features/go_live/show/choose_or_create_show_screen.dart';
 import 'features/go_live/show/create_show_success_screen.dart';
-import 'features/home/presentation/views/live_show_detailed_screen.dart';
-import 'features/home/presentation/views/subscribed_screen.dart';
 import 'features/wallet/wallet_export.dart';
 
 // The route configuration.
@@ -71,22 +67,22 @@ final GoRouter amptiveAppRouter = GoRouter(
     GoRoute(
       name: ATRoutes.EMAIL_SCREEN,
       path: ATRoutes.EMAIL_SCREEN.addSlash,
-      builder: (_, state) => ATEmailAuthScreen(title: state.extra as String?)
+      builder: (_, GoRouterState state) => ATEmailAuthScreen(title: state.extra as String?)
     ),
     GoRoute(
       name: ATRoutes.OTP_SCREEN,
       path: ATRoutes.OTP_SCREEN.addSlash,
-      builder: (_, state) {
-        final params = state.extra as List<String?>?;
-        final emailOrPhone = params?.first;
-        final title = params?.last;
+      builder: (_, GoRouterState state) {
+        final List<String?>? params = state.extra as List<String?>?;
+        final String? emailOrPhone = params?.first;
+        final String? title = params?.last;
         return ATOTPScreen(emailOrPhone: emailOrPhone ?? '', title: title ?? '');
       }
     ),
     GoRoute(
       name: ATRoutes.ADD_FONE_NO_SCREEN,
       path: ATRoutes.ADD_FONE_NO_SCREEN.addSlash,
-      builder: (_, state) => AddPhoneScreen(title: state.extra as String?),
+      builder: (_, GoRouterState state) => AddPhoneScreen(title: state.extra as String?),
     ),
     GoRoute(
         name: ATRoutes.addProfilePic,
@@ -143,7 +139,7 @@ final GoRouter amptiveAppRouter = GoRouter(
         name: ATRoutes.homeScreen,
         path: "/home-screen",
         builder: (_, __) => const ATMainAppShell(),
-        routes: [
+        routes: <RouteBase>[
           GoRoute(
             name: ATRoutes.SCHEDULE_DETAILED,
             path: ATRoutes.SCHEDULE_DETAILED.addSlash,
@@ -158,7 +154,7 @@ final GoRouter amptiveAppRouter = GoRouter(
             pageBuilder: (_, __) => ATRouteTransition(
               child: const ATWalletOnboardScreen()
             ),
-            routes: [
+            routes: <RouteBase>[
               GoRoute(
                 name: ATRoutes.WALLET_PIN_SETUP,
                 path: ATRoutes.WALLET_PIN_SETUP.addSlash,
@@ -186,7 +182,7 @@ final GoRouter amptiveAppRouter = GoRouter(
                 pageBuilder: (_, __) => ATRouteTransition(
                   child: const ATWalletScreen(),
                 ),
-                routes: [
+                routes: <RouteBase>[
                   GoRoute(
                     name: ATRoutes.WALLET_TXNS,
                     path: ATRoutes.WALLET_TXNS.addSlash,
@@ -204,7 +200,7 @@ final GoRouter amptiveAppRouter = GoRouter(
                   GoRoute(
                     name: ATRoutes.ENTER_AMOUNT_2_TRSF,
                     path: ATRoutes.ENTER_AMOUNT_2_TRSF.addSlash,
-                    pageBuilder: (_, state) => ATRouteTransition(
+                    pageBuilder: (_, GoRouterState state) => ATRouteTransition(
                       child: ATEnterAmountScreen(
                         params: state.extra as EnterAmountScreenParams
                       )
@@ -227,22 +223,22 @@ final GoRouter amptiveAppRouter = GoRouter(
                   GoRoute(
                     name: ATRoutes.ENTER_ACCT_NO,
                     path: ATRoutes.ENTER_ACCT_NO.addSlash,
-                    pageBuilder: (_, state) => ATRouteTransition(
+                    pageBuilder: (_, GoRouterState state) => ATRouteTransition(
                       child: ATEnterAccountNoScreen(bankName: state.extra as String,)
                     ),
                   ),
                   GoRoute(
                     name: ATRoutes.PASS_SECURITY_QUEST,
                     path: ATRoutes.PASS_SECURITY_QUEST.addSlash,
-                    pageBuilder: (_, state) => ATRouteTransition(
+                    pageBuilder: (_, GoRouterState state) => ATRouteTransition(
                       child: const ATPassSecurityQuestionScreen()
                     ),
                   ),
                   GoRoute(
                     name: ATRoutes.PAPER_PLANE_SUCCESS,
                     path: ATRoutes.PAPER_PLANE_SUCCESS.addSlash,
-                    pageBuilder: (_, state){
-                      final params = state.extra as List<String>;
+                    pageBuilder: (_, GoRouterState state){
+                      final List<String> params = state.extra as List<String>;
                       return ATRouteTransition(
                         child: ATPaperPlaneSuccessScreen(
                           title: params.first,
@@ -267,11 +263,11 @@ final GoRouter amptiveAppRouter = GoRouter(
           GoRoute(
               name: ATRoutes.LIVE_EVENT_DETAILED,
               path: ATRoutes.LIVE_EVENT_DETAILED,
-              pageBuilder: (context, state) => CustomTransitionPage(
+              pageBuilder: (BuildContext context, GoRouterState state) => CustomTransitionPage(
                     child: const ATLiveEventDetailedScreen(),
                     transitionsBuilder:
-                        (context, animation, secondaryAnimation, child) {
-                      var tween =
+                        (BuildContext context, Animation<double> animation, Animation<double> secondaryAnimation, Widget child) {
+                      Animation<Offset> tween =
                           Tween(begin: const Offset(0.0, 1.0), end: Offset.zero)
                               .animate(
                         CurvedAnimation(
@@ -338,32 +334,32 @@ final GoRouter amptiveAppRouter = GoRouter(
             name: ATRoutes.EDIT_PROFILE,
             path: ATRoutes.EDIT_PROFILE.addSlash,
             builder: (_, __) => const EditProfileScreen(),
-            routes: [
+            routes: <RouteBase>[
               GoRoute(
                 name: ATRoutes.PROFILE_BG_CROP,
                 path: ATRoutes.PROFILE_BG_CROP,
-                builder: (_, state) => CropProfileBgImageScreen(file: state.extra as File)
+                builder: (_, GoRouterState state) => CropProfileBgImageScreen(file: state.extra as File)
               ),
               GoRoute(
                 name: ATRoutes.EDIT_NAME,
                 path: ATRoutes.EDIT_NAME,
-                builder: (_, state) => EditNameScreen(initialName: state.extra as String),
+                builder: (_, GoRouterState state) => EditNameScreen(initialName: state.extra as String),
               ),
               GoRoute(
                 name: ATRoutes.EDIT_USERNAME,
                 path: ATRoutes.EDIT_USERNAME,
-                builder: (_, state) => EditUsernameScreen(initialUsername: state.extra as String),
+                builder: (_, GoRouterState state) => EditUsernameScreen(initialUsername: state.extra as String),
               ),
               GoRoute(
                 name: ATRoutes.EDIT_BIO,
                 path: ATRoutes.EDIT_BIO,
-                builder: (_, state) => EditBioScreen(initialBio: state.extra as String),
+                builder: (_, GoRouterState state) => EditBioScreen(initialBio: state.extra as String),
               ),
               GoRoute(
                 name: ATRoutes.EDIT_SOCIALS,
                 path: ATRoutes.EDIT_SOCIALS,
-                builder: (_, state){
-                  final params = state.extra as List<String?>;
+                builder: (_, GoRouterState state){
+                  final List<String?> params = state.extra as List<String?>;
                   return EditSocialsScreen(
                     initialLink: params.first,
                     socialName: params.last as String
@@ -373,12 +369,12 @@ final GoRouter amptiveAppRouter = GoRouter(
               GoRoute(
                 name: ATRoutes.SELECT_ACCT_TYPE,
                 path: ATRoutes.SELECT_ACCT_TYPE,
-                builder: (_, state) => const SelectAcctTypeScreen(),
-                routes: [
+                builder: (_, GoRouterState state) => const SelectAcctTypeScreen(),
+                routes: <RouteBase>[
                   GoRoute(
                     name: ATRoutes.SELECTED_ACCT,
                     path: ATRoutes.SELECTED_ACCT,
-                    builder: (_, state) => const SelectedAcctLandingScreen()
+                    builder: (_, GoRouterState state) => const SelectedAcctLandingScreen()
                   ),
                 ]
               ),
@@ -396,12 +392,12 @@ final GoRouter amptiveAppRouter = GoRouter(
               GoRoute(
                 name: ATRoutes.CO_HOST_FEE_SETUP,
                 path: ATRoutes.CO_HOST_FEE_SETUP,
-                builder: (_, state) => const CoHostFeeSetupScreen()
+                builder: (_, GoRouterState state) => const CoHostFeeSetupScreen()
               ),
               GoRoute(
                 name: ATRoutes.CREATOR_SUCCESS,
                 path: ATRoutes.CREATOR_SUCCESS,
-                builder: (_, state) => const CreatorSuccessScreen()
+                builder: (_, GoRouterState state) => const CreatorSuccessScreen()
               ),
             ]
           ),
@@ -410,7 +406,7 @@ final GoRouter amptiveAppRouter = GoRouter(
             name: ATRoutes.PROFILE_MENU_SCREEN,
             path: ATRoutes.PROFILE_MENU_SCREEN,
             builder: (_, __) => const AmptiveProfileMenuScreen(),
-            routes: [
+            routes: <RouteBase>[
               GoRoute(
                 name: ATRoutes.CALENDER_SCREEN,
                 path: ATRoutes.CALENDER_SCREEN,
@@ -427,7 +423,7 @@ final GoRouter amptiveAppRouter = GoRouter(
                 name: ATRoutes.PRIVACY_SCREEN,
                 path: ATRoutes.PRIVACY_SCREEN,
                 builder: (_, __) => const AmptivePrivacyScreen(),
-                routes: [
+                routes: <RouteBase>[
                   GoRoute(
                     name: ATRoutes.BLOCKED_ACCTS_SCREEN,
                     path: ATRoutes.BLOCKED_ACCTS_SCREEN,
@@ -448,15 +444,15 @@ final GoRouter amptiveAppRouter = GoRouter(
             name: ATRoutes.ACCT_SCREEN,
             path: ATRoutes.ACCT_SCREEN,
             builder: (_, __) => const ATAccountScreen(),
-            routes: [
+            routes: <RouteBase>[
               GoRoute(
                 name: ATRoutes.ACCT_INFO_SCREEN,
                 path: ATRoutes.ACCT_INFO_SCREEN,
-                builder: (_, state){
-                  final params = state.extra as List<String?>?;
-                  final email = params?.first;
-                  final phone = params?.elementAtOrNull(1);
-                  final country = params?.last;
+                builder: (_, GoRouterState state){
+                  final List<String?>? params = state.extra as List<String?>?;
+                  final String? email = params?.first;
+                  final String? phone = params?.elementAtOrNull(1);
+                  final String? country = params?.last;
                   return ATAccountInfoScreen(
                     country: country,
                     email: email,
@@ -468,10 +464,10 @@ final GoRouter amptiveAppRouter = GoRouter(
               GoRoute(
                 name: ATRoutes.SELECT_COUNTRY_SCREEN,
                 path: ATRoutes.SELECT_COUNTRY_SCREEN,
-                builder: (_, state){
-                  final params = state.extra as List;
-                  final countries = params.last as List<String>;
-                  final selectedCountry = params.first as String;
+                builder: (_, GoRouterState state){
+                  final List params = state.extra as List;
+                  final List<String> countries = params.last as List<String>;
+                  final String selectedCountry = params.first as String;
 
                   return ATSelectCountryScreen(
                     countries: countries,
@@ -497,8 +493,8 @@ final GoRouter amptiveAppRouter = GoRouter(
           GoRoute(
             name: ATRoutes.PROFILE_PIC_SCREEN,
             path: ATRoutes.PROFILE_PIC_SCREEN,
-            builder: (_, state){
-              final imgPath = state.extra as String;
+            builder: (_, GoRouterState state){
+              final String imgPath = state.extra as String;
               return AmptiveViewProfilePicScreen(imgPath: imgPath);
             }
           ),
@@ -560,13 +556,13 @@ final GoRouter amptiveAppRouter = GoRouter(
           GoRoute(
             name: ATRoutes.COMMUNITY_SCREEN,
             path: ATRoutes.COMMUNITY_SCREEN,
-            builder: (_, __) => const AmptiveCommunityScreen(),
+            builder: (_, __) => const ATCommunityScreen(),
           ),
           GoRoute(
               name: ATRoutes.SOCIETY_SCREEN,
               path: ATRoutes.SOCIETY_SCREEN,
               builder: (_, __) => const DiscoverSocietyScreen(),
-              routes: [
+              routes: <RouteBase>[
                 GoRoute(
                   name: ATRoutes.TRENDING_SOCIETY_SCREEN,
                   path: ATRoutes.TRENDING_SOCIETY_SCREEN,
@@ -575,12 +571,12 @@ final GoRouter amptiveAppRouter = GoRouter(
                 GoRoute(
                   name: ATRoutes.TRENDING_HASHTAGS_SCREEN,
                   path: ATRoutes.TRENDING_HASHTAGS_SCREEN,
-                  builder: (_, __) => const AmptiveTrendingHashTagsScreen(),
+                  builder: (_, __) => const TrendingHashTagsScreen(),
                 ),
                 GoRoute(
-                  name: ATRoutes.TRENDING_HASHTAG_FULL_SCREEN,
-                  path: ATRoutes.TRENDING_HASHTAG_FULL_SCREEN,
-                  builder: (_, __) => const AmptiveTrendingHashTagFullScreen(),
+                  name: ATRoutes.SOCIETY_HASHTAG_SCREEN,
+                  path: ATRoutes.SOCIETY_HASHTAG_SCREEN,
+                  builder: (_, __) => const SocietyHastagScreen(),
                 ),
               ]),
         ]),

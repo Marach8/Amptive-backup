@@ -53,7 +53,7 @@ class _AmptiveGoLiveScreenState extends State<AmptiveGoLiveScreen> {
           padding: const EdgeInsets.fromLTRB(15, 10, 15, 0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
+            children: <Widget>[
               Text(
                 maxLines: 3,
                 ATStrings.CHOOSE_2_CREATE_SHOW_OR_EVENT,
@@ -63,7 +63,7 @@ class _AmptiveGoLiveScreenState extends State<AmptiveGoLiveScreen> {
               ),
               const SizedBox(height: 20),
               Row(
-                children: [
+                children: <Widget>[
                   Expanded(
                     child: AmptiveCreateShowOrEventSelectionWidget(
                       activateBtn: activateButton,
@@ -95,7 +95,7 @@ class _AmptiveGoLiveScreenState extends State<AmptiveGoLiveScreen> {
         
         bottomNavigationBar: AmptiveRebuilderWidget(
           notifier: activateButton,
-          builder: (_, activate, __) => AmptiveElevatedButtonWidget(
+          builder: (_, bool activate, __) => AmptiveElevatedButtonWidget(
             onPressed: activate ? (){
               showSelected.value ?
                 context.pushNamed(ATRoutes.CHOOSE_OR_CREATE_SHOW_SCREEN)

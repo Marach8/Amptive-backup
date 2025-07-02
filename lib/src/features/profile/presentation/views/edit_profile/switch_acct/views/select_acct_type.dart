@@ -37,7 +37,7 @@ class SelectAcctTypeScreen extends StatelessWidget {
               physics: const BouncingScrollPhysics(),
               padding: const EdgeInsets.fromLTRB(15, 10, 15, 15),
               child: Column(
-                children: [
+                children: <Widget>[
                   Text(
                     ATStrings.SELECT_ACCT_TYPE, maxLines: 3,
                     style: Theme.of(context).textTheme.bodySmall?.copyWith(
@@ -105,7 +105,7 @@ class _SelectAcct extends StatelessWidget {
   final bool isSelected;
 
   @override
-  Widget build(context) {
+  Widget build(BuildContext context) {
     return ATContainer(
       radius: 14,
       duration: 200,
@@ -117,7 +117,7 @@ class _SelectAcct extends StatelessWidget {
       color: ATColors.white.withValues(alpha: 0.1),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
+        children: <Widget>[
           Text(
             title,
             style: Theme.of(context).textTheme.bodySmall?.copyWith(
@@ -127,7 +127,7 @@ class _SelectAcct extends StatelessWidget {
           const SizedBox(height: 8),
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
+            children: <Widget>[
               Expanded(
                 child: Text(
                   subTitle, maxLines: 3,

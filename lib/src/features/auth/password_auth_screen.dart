@@ -28,7 +28,7 @@ class _PasswordAuthScreenState extends State<PasswordAuthScreen> {
   bool _passwordVisible = false;
   TextEditingController passwordController = TextEditingController();
 
-  final _formKey = GlobalKey<FormState>();
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   @override
   void initState() {
@@ -46,7 +46,7 @@ class _PasswordAuthScreenState extends State<PasswordAuthScreen> {
             key: _formKey,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
+              children: <Widget>[
                 Text(
                   ATStrings.createPasswordForAccount,
                   style: Theme.of(context).textTheme.headlineMedium,
@@ -55,16 +55,16 @@ class _PasswordAuthScreenState extends State<PasswordAuthScreen> {
                   height: 11.h,
                 ),
                 BlocBuilder<AmptiveAuthBloc, AmptiveAuthState>(
-                    buildWhen: (previous, current) =>
+                    buildWhen: (AmptiveAuthState previous, AmptiveAuthState current) =>
                         current is HideOrShowPasswordAuthState,
-                    builder: (_, state) {
+                    builder: (_, AmptiveAuthState state) {
                       if (state is HideOrShowPasswordAuthState) {
                         // toggle password visibility
                         _passwordVisible = !_passwordVisible;
                       }
                       return ATTextFormField(
                         controller: passwordController,
-                        onChanged: (value) {
+                        onChanged: (String value) {
                           // trigger password changed event
                           context
                               .read<AmptivePasswordAuthBloc>()
@@ -109,8 +109,8 @@ class _PasswordAuthScreenState extends State<PasswordAuthScreen> {
                       );
                     }),
                 BlocBuilder<AmptivePasswordAuthBloc, AmptivePasswordAuthState>(
-                    builder: (_, state) {
-                  var height = state.error != null ? 20.h : 0.h;
+                    builder: (_, AmptivePasswordAuthState state) {
+                  double height = state.error != null ? 20.h : 0.h;
                   return Container(
                     height: height,
                     margin: EdgeInsets.symmetric(vertical: 11.h),
@@ -132,7 +132,7 @@ class _PasswordAuthScreenState extends State<PasswordAuthScreen> {
         bottomSheet: Padding(
           padding: EdgeInsets.only(bottom: 16.h),
           child: BlocBuilder<AmptivePasswordAuthBloc, AmptivePasswordAuthState>(
-            builder: (context, state) {
+            builder: (BuildContext context, AmptivePasswordAuthState state) {
               return AmptiveElevatedButtonWidget(
                 height: 50.w,
                 buttonTitle: ATStrings.NEXT,

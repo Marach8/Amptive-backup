@@ -36,7 +36,7 @@ class ATEnterAmountScreen extends StatelessWidget {
       child: BlocProvider(
         create: (_) => EnterAmountBloc(),
         child: Builder(
-          builder: (context) {
+          builder: (BuildContext context) {
             return Scaffold(
               appBar: ATAppBar(
                 leading: const ATRoundedBackBtn(),
@@ -49,7 +49,7 @@ class ATEnterAmountScreen extends StatelessWidget {
                   padding: const EdgeInsets.all(15),
                   physics: const BouncingScrollPhysics(),
                   child: Column(
-                    children: [
+                    children: <Widget>[
                       if(params.imgPath != null)Padding(
                         padding: const EdgeInsets.only(bottom: 20),
                         child: ATCircularImage(
@@ -59,11 +59,11 @@ class ATEnterAmountScreen extends StatelessWidget {
                       ),
 
                       BlocBuilder<EnterAmountBloc, (String, bool)>(
-                        builder: (_, state) {
+                        builder: (_, (String, bool) state) {
                           return Column(
                             spacing: 10,
                             mainAxisSize: MainAxisSize.min,
-                            children: [
+                            children: <Widget>[
                               Text(
                                 state.$1.isEmpty ? 'N 0' : 'N ${state.$1.formatPrice()}', maxLines: 2,
                                 style: Theme.of(context).textTheme.displayMedium?.copyWith(
@@ -93,11 +93,11 @@ class ATEnterAmountScreen extends StatelessWidget {
                         ),
                         
                         children: digits.characters.map(
-                          (digit){
+                          (String digit){
                             if(digits.indexOf(digit) == 11){
                               return BlocBuilder<EnterAmountBloc, (String, bool)>(
-                                builder: (_, state) {
-                                  final shouldDisable = state.$1.isEmpty;
+                                builder: (_, (String, bool) state) {
+                                  final bool shouldDisable = state.$1.isEmpty;
                                   return InkWell(
                                     borderRadius: BorderRadius.circular(5),
                                     onTap: () => shouldDisable ? null : context.read<EnterAmountBloc>().removeLast(),                          
@@ -134,11 +134,11 @@ class ATEnterAmountScreen extends StatelessWidget {
               bottomNavigationBar: Column(
                 spacing:10,
                 mainAxisSize: MainAxisSize.min,
-                children: [
+                children: <Widget>[
                   FutureBuilder(
                     future: Future.delayed(const Duration(seconds: 2)),
-                    builder: (_, snapshot) {
-                      final isDone = snapshot.connectionState == ConnectionState.done;
+                    builder: (_, AsyncSnapshot snapshot) {
+                      final bool isDone = snapshot.connectionState == ConnectionState.done;
                       return ATAnimatedAlign(
                         condition: !isDone,
                         startAlignment: Alignment(-ATHelperFuncs.getScreenWidth(context), 0),
@@ -150,7 +150,7 @@ class ATEnterAmountScreen extends StatelessWidget {
                           color: ATColors.white.withValues(alpha: 0.05),
                           child: Row(
                             spacing: 10,
-                            children: [
+                            children: <Widget>[
                               Icon(Icons.info_outline, color: ATColors.hexC2C2C2),
                               Flexible(
                                 child: Text(
@@ -170,7 +170,7 @@ class ATEnterAmountScreen extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.fromLTRB(15, 5, 15, 10),
                     child: BlocBuilder<EnterAmountBloc, (String, bool)>(
-                      builder: (_, state) {
+                      builder: (_, (String, bool) state) {
                         return ATPlainElevatedBtn(
                           onPressed: (state.$1.isNotEmpty && state.$1 != '0' && state.$2 == true) 
                             ? () => context.pop(state.$1) : null,
@@ -191,9 +191,6 @@ class ATEnterAmountScreen extends StatelessWidget {
 
 
 class EnterAmountScreenParams{
-  final String title, slidingNotif,
-  btnTitle;
-  final String? imgPath, flushBarNotif;
 
   EnterAmountScreenParams({
     required this.title,
@@ -202,4 +199,7 @@ class EnterAmountScreenParams{
     this.flushBarNotif,
     this.imgPath
   });
+  final String title, slidingNotif,
+  btnTitle;
+  final String? imgPath, flushBarNotif;
 }

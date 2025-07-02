@@ -28,7 +28,7 @@ class ATEnterAccountNoScreen extends StatelessWidget {
       child: BlocProvider(
         create: (_) => _EnterAccountNoBloc(),
         child: Builder(
-          builder: (context) {
+          builder: (BuildContext context) {
             return Scaffold(
               appBar: ATAppBar(
                 leading: const ATRoundedBackBtn(),
@@ -42,7 +42,7 @@ class ATEnterAccountNoScreen extends StatelessWidget {
                 physics: const BouncingScrollPhysics(),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
+                  children: <Widget>[
                     Text(
                       maxLines: 2,
                       ATStrings.UR_ACCT_NO,
@@ -52,15 +52,15 @@ class ATEnterAccountNoScreen extends StatelessWidget {
                     ),
                     const SizedBox(height: 10),
                     BlocBuilder<_EnterAccountNoBloc, (String?, int?)>(
-                      buildWhen: (prev, curr) => prev.$2 != curr.$2,
-                      builder: (_, state){
+                      buildWhen: ((String?, int?) prev, (String?, int?) curr) => prev.$2 != curr.$2,
+                      builder: (_, (String?, int?) state){
                         return ATTextFormField(
                           keyboardType: TextInputType.number,
                           enabled: state.$2 != 0,
                           fillColor: ATColors.white.withValues(alpha: 0.1),
                           hintText: ATStrings.ENTER_10_DIGIT_ACCT_NO,
                           suffixIcon: const _SuffixIcon(),
-                          onChanged: (text){
+                          onChanged: (String text){
                             if(text.length == 9 || text.length == 10 || text.length == 11){
                               context.read<_EnterAccountNoBloc>().checkAccountNo(text);
                               acctNo = text;
@@ -71,8 +71,8 @@ class ATEnterAccountNoScreen extends StatelessWidget {
                     ),
                     const SizedBox(height: 10),
                     BlocSelector<_EnterAccountNoBloc, (String?, int?), int?>(
-                      selector: (state) => state.$2,
-                      builder: (_, state){
+                      selector: ((String?, int?) state) => state.$2,
+                      builder: (_, int? state){
                         if(state == null){
                           return const SizedBox.shrink();
                         }
@@ -85,7 +85,7 @@ class ATEnterAccountNoScreen extends StatelessWidget {
                           );
                         }
                         else if(state == 1){
-                          final name = context.read<_EnterAccountNoBloc>().state.$1;
+                          final String? name = context.read<_EnterAccountNoBloc>().state.$1;
                           return Text(
                             name ?? '',
                             style: Theme.of(context).textTheme.bodySmall?.copyWith(
@@ -111,18 +111,18 @@ class ATEnterAccountNoScreen extends StatelessWidget {
               bottomSheet: Padding(
                 padding: const EdgeInsets.fromLTRB(15, 5, 15, 10),
                 child: BlocSelector<_EnterAccountNoBloc, (String?, int?), String?>(
-                  selector: (state) => state.$1,
-                  builder: (_, state){
+                  selector: ((String?, int?) state) => state.$1,
+                  builder: (_, String? state){
                     return ATPlainElevatedBtn(
                       onPressed: state == null ? null : 
                         ()async{
-                          final bankDetail = BankDetails(
+                          final BankDetails bankDetail = BankDetails(
                             bankName: bankName,
                             accountNo: acctNo,
                             accountName: state
                           );
 
-                          final shouldSave = await showConfirmationDialog(
+                          final bool? shouldSave = await showConfirmationDialog(
                             context: context,
                             title: ATStrings.SAVE_BANK_DETAILS,
                             content: ATStrings.SAVE_BANK_DETAILS_DESC,
@@ -131,7 +131,7 @@ class ATEnterAccountNoScreen extends StatelessWidget {
                           );
 
                           if(context.mounted){
-                            final amount = await context.pushNamed(
+                            final String? amount = await context.pushNamed(
                               ATRoutes.ENTER_AMOUNT_2_TRSF,
                               extra: EnterAmountScreenParams(
                                 title: '${ATStrings.WITHDRAW} to ${bankDetail.accountName.toUpperCase()}',
@@ -142,13 +142,13 @@ class ATEnterAccountNoScreen extends StatelessWidget {
                             ) as String?;
 
                             if(context.mounted && (amount != null)){
-                              final shouldProceed = await inputTxnPinDialog(context: context, object: bankDetail);
+                              final bool? shouldProceed = await inputTxnPinDialog(context: context, object: bankDetail);
                               if(context.mounted && (shouldProceed ?? false)){
-                                final didPassQuest = await context.pushNamed(ATRoutes.PASS_SECURITY_QUEST) as bool?;
+                                final bool? didPassQuest = await context.pushNamed(ATRoutes.PASS_SECURITY_QUEST) as bool?;
                                 if(context.mounted && (didPassQuest ?? false)){
                                   await context.pushNamed(
                                     ATRoutes.PAPER_PLANE_SUCCESS,
-                                    extra: [ATStrings.WITHDRAWAL_REQUEST_SENT, ATStrings.WITHDRAWAL_REQUEST_DESC]
+                                    extra: <String>[ATStrings.WITHDRAWAL_REQUEST_SENT, ATStrings.WITHDRAWAL_REQUEST_DESC]
                                   );
                                   if(context.mounted){
                                     context.pop();
@@ -178,8 +178,8 @@ class _SuffixIcon extends StatelessWidget {
   Widget build(BuildContext context) {
     return Center(
       child: BlocSelector<_EnterAccountNoBloc, (String?, int?), int?>(
-        selector: (state) => state.$2,
-        builder: (_, state){
+        selector: ((String?, int?) state) => state.$2,
+        builder: (_, int? state){
           if(state == null){
             return const SizedBox.shrink();
           }
@@ -233,8 +233,6 @@ class _EnterAccountNoBloc extends Cubit<(String?, int?)> {
 
 
 class BankDetails {
-  final String bankName, accountNo, accountName;
-  String? amount;
 
   BankDetails({
     required this.bankName,
@@ -242,4 +240,6 @@ class BankDetails {
     required this.accountName,
     this.amount
   });
+  final String bankName, accountNo, accountName;
+  String? amount;
 }

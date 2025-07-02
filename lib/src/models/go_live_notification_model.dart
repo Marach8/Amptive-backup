@@ -2,15 +2,15 @@ import 'package:amptive/src/models/host.dart';
 
 
 class AmptiveGoLiveNotificationModel {
-  final ObjectWithNotifier<Host> user;
-  final String notificationType;
-  final dynamic extraDetail;
 
   const AmptiveGoLiveNotificationModel({
     required this.user,
     required this.notificationType,
     this.extraDetail,
   });
+  final ObjectWithNotifier<Host> user;
+  final String notificationType;
+  final dynamic extraDetail;
 
   @override
   bool operator ==(Object other) {

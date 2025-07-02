@@ -28,7 +28,7 @@ class NameAuthScreen extends StatefulWidget {
 class _NameAuthScreenState extends State<NameAuthScreen> {
   TextEditingController nameController = TextEditingController();
   late AuthFieldService service;
-  final _formKey = GlobalKey<FormState>();
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   @override
   void initState() {
@@ -48,7 +48,7 @@ class _NameAuthScreenState extends State<NameAuthScreen> {
             key: _formKey,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
+              children: <Widget>[
                 Text(
                   ATStrings.whatIsYourName,
                   style: Theme.of(context).textTheme.headlineMedium?.copyWith(
@@ -60,7 +60,7 @@ class _NameAuthScreenState extends State<NameAuthScreen> {
                 ),
                 ATTextFormField(
                   controller: nameController,
-                  onChanged: (val) {
+                  onChanged: (String val) {
                     context.read<AmptiveAuthBloc>().add(NameChangedEvent());
                     service.validateName(val);
                   },
@@ -115,7 +115,7 @@ class _NameAuthScreenState extends State<NameAuthScreen> {
                     text: TextSpan(
                       text: ATStrings.warningOnClickingCreate +
                           ATStrings.space,
-                      children: [
+                      children: <InlineSpan>[
                         TextSpan(
                           text: ATStrings.termsOfService +
                               ATStrings.space,
@@ -145,7 +145,7 @@ class _NameAuthScreenState extends State<NameAuthScreen> {
           ),
         ),
         bottomSheet: BlocBuilder<AmptiveAuthBloc, AmptiveAuthState>(
-            builder: (context, state) {
+            builder: (BuildContext context, AmptiveAuthState state) {
           return AmptiveElevatedButtonWidget(
             height: 50.w,
             margin: EdgeInsets.only(bottom: 29.h),

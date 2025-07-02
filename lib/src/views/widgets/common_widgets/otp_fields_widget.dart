@@ -25,7 +25,7 @@ class ATOTPFieldsWidget extends StatefulWidget {
 }
 
 class _ATOTPFieldsWidgetState extends State<ATOTPFieldsWidget> {
-  List<String> pins = [];
+  List<String> pins = <String>[];
   bool isValidated = true;
 
   @override 
@@ -42,21 +42,21 @@ class _ATOTPFieldsWidgetState extends State<ATOTPFieldsWidget> {
       spacing: widget.spacing,
       children: List.generate(
         widget.noOfFields,
-        (index){
+        (int index){
           return StatefulBuilder(
             builder: (_, setter) {
               return SizedBox(
                 height: widget.height, width: widget.width,
                 child: _OTPField(
                   isValidated: isValidated,
-                  onChanged: (value)async{
-                    final parsedValue = int.tryParse(value);
+                  onChanged: (String value)async{
+                    final int? parsedValue = int.tryParse(value);
                     if(parsedValue != null){pins[index] = value;}
                     else{pins[index] = '';}
                 
-                    if (pins.every((pin) => pin.isNotEmpty)) {
+                    if (pins.every((String pin) => pin.isNotEmpty)) {
                       FocusScope.of(context).unfocus();
-                      final result = await widget.onPinComplete(pins.join());
+                      final bool result = await widget.onPinComplete(pins.join());
                       setter(() => isValidated = result);
                     }
                 
@@ -87,7 +87,7 @@ class _OTPField extends StatelessWidget {
   final bool isValidated;
 
   @override
-  Widget build(context) {
+  Widget build(BuildContext context) {
     return TextFormField(
       autofocus: true,
       onChanged: onChanged,

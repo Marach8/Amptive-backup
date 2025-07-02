@@ -7,8 +7,8 @@ import 'package:go_router/go_router.dart';
 Future<bool?> showImageSourceOptions(BuildContext context) async{
   return await showCupertinoModalPopup<bool>(
     context: context,
-    builder: (dialogContext) => CupertinoActionSheet(
-      actions: [
+    builder: (BuildContext dialogContext) => CupertinoActionSheet(
+      actions: <Widget>[
         CupertinoActionSheetAction(
           child: Text(
             ATStrings.PHOTO_GALLERY,

@@ -23,12 +23,12 @@ class CoHostFeeSetupScreen extends StatefulWidget {
 
 class _CoHostFeeSetupScreenState extends State<CoHostFeeSetupScreen> {
   late final TextEditingController _cntrl;
-  final defaultFee = '0';
+  final String defaultFee = '0';
   
   @override 
   void initState(){
     super.initState();
-    final selectedFee = context.read<CohostFeeSetupBloc>().state.first;
+    final int? selectedFee = context.read<CohostFeeSetupBloc>().state.first;
     _cntrl = TextEditingController(
       text: selectedFee != null ? selectedFee.toString() : defaultFee
     )..addListener(_handleBtnActivation);
@@ -50,18 +50,18 @@ class _CoHostFeeSetupScreenState extends State<CoHostFeeSetupScreen> {
   }
 
   @override
-  Widget build(context) {
+  Widget build(BuildContext context) {
     return ATAnnotatedRegion(
       child: Scaffold(     
         body: Padding(
           padding: const EdgeInsets.fromLTRB(0, kToolbarHeight * 0.8, 0, kBottomNavigationBarHeight),
           child: Column(
-            children: [
+            children: <Widget>[
               Padding(
                 padding: const EdgeInsets.fromLTRB(7, 0, 15, 0),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
+                  children: <Widget>[
                     Material(
                       color: ATColors.black,
                       child: const ATRoundedBackBtn()
@@ -80,10 +80,10 @@ class _CoHostFeeSetupScreenState extends State<CoHostFeeSetupScreen> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisSize: MainAxisSize.min,
-                  children: [
+                  children: <Widget>[
                     BlocSelector<CohostFeeSetupBloc, List<int?>, int?>(
-                      selector: (state) => state.last,
-                      builder: (_, state) {
+                      selector: (List<int?> state) => state.last,
+                      builder: (_, int? state) {
                         if(state == null) return const SizedBox.shrink();
                         return const CohostFeeDescInfo();
                       }
@@ -107,11 +107,11 @@ class _CoHostFeeSetupScreenState extends State<CoHostFeeSetupScreen> {
                     ),
                     const SizedBox(height: 10),
                     BlocSelector<CohostFeeSetupBloc,List<int?>, int?>(
-                      selector: (state) => state.first,
-                      builder: (_, state) {
+                      selector: (List<int?> state) => state.first,
+                      builder: (_, int? state) {
                         return RowOfCustomFees(
                           selectedFee: state,
-                          onFeeTap: (tappedFee){
+                          onFeeTap: (int tappedFee){
                             _cntrl.text = tappedFee.toString();
                             context.read<CohostFeeSetupBloc>().selectFee(tappedFee);
                           },
@@ -149,12 +149,12 @@ class _BottomSheetContent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocSelector<CohostFeeSetupBloc, List<int?>, int?>(
-      selector: (state) => state.first,
-      builder: (_, state) {
-        final shouldActivate = state != null && state != 0;
+      selector: (List<int?> state) => state.first,
+      builder: (_, int? state) {
+        final bool shouldActivate = state != null && state != 0;
         return Column(
           mainAxisSize: MainAxisSize.min,
-          children: [
+          children: <Widget>[
             Text(
               ATStrings.AMTPIVE_CHARGES_4_COHOSTING, maxLines: 2,
               style: Theme.of(context).textTheme.labelSmall?.copyWith(

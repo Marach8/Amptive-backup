@@ -36,6 +36,7 @@ with SingleTickerProviderStateMixin{
     _tabController.dispose();
     super.dispose();
   }
+
   @override
   Widget build(BuildContext context) {
     return ATAnnotatedRegion(
@@ -43,12 +44,12 @@ with SingleTickerProviderStateMixin{
         body: SafeArea(
           child: NestedScrollView(
             physics: const BouncingScrollPhysics(),
-            headerSliverBuilder: (_, __) => [
+            headerSliverBuilder: (_, __) => <Widget>[
               SliverAppBar(
                 automaticallyImplyLeading: false,
                 floating: true,
                 centerTitle: true,
-                actions: [
+                actions: <Widget>[
                   GestureDetector(
                     onTap: (){},
                     child: const Icon(Icons.add)
@@ -70,10 +71,11 @@ with SingleTickerProviderStateMixin{
               ),
               
             ],
+
             body: TabBarView(
               controller: _tabController,
               physics: const BouncingScrollPhysics(),
-              children: const [
+              children: const <Widget>[
                 SingleChildScrollView(
                   physics: BouncingScrollPhysics(),
                   child: AmptiveDiscoverSocietyAllTabViewWidget(),

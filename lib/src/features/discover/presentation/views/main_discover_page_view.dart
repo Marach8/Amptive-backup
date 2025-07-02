@@ -13,10 +13,10 @@ import '../../../../utils/constants/strings/image_strings.dart';
 import '../../../../utils/constants/strings/other_strings.dart';
 import '../widgets/hashtag_heading_row.dart';
 import '../../../../views/widgets/other_widgets/main_application_widgets/widgets_in_discover_view/full_discover_view_widgets/discover_categories_title.dart';
-import '../../../../views/widgets/other_widgets/main_application_widgets/widgets_in_discover_view/full_discover_view_widgets/more_2_discover_model.dart';
+import '../widgets/community_card_widget.dart';
 import '../../../../views/widgets/other_widgets/main_application_widgets/widgets_in_discover_view/full_discover_view_widgets/more_to_discover_title.dart';
 import '../widgets/hastags_subtitle_row.dart';
-import '../../../../views/widgets/other_widgets/main_application_widgets/widgets_in_discover_view/full_discover_view_widgets/technology_model.dart';
+import '../widgets/trending_technology_widget.dart';
 import '../../../../views/widgets/other_widgets/main_application_widgets/widgets_in_discover_view/full_discover_view_widgets/top_creators_model.dart';
 import '../widgets/render_trending_hashtag.dart';
 import 'package:amptive/src/views/widgets/common_widgets/custom_container_widget.dart';
@@ -95,8 +95,12 @@ class MainDiscoverView extends StatelessWidget {
             ),
           ),
         ),
+        Divider(
+          indent: 15, endIndent: 15,
+          color: ATColors.hex252525
+        ),
     
-        const SizedBox(height: 48),
+        const SizedBox(height: 40),
     
         DiscoverCategoriesTile(
           categoryName: ATStrings.TECHNOLOGY,
@@ -108,21 +112,29 @@ class MainDiscoverView extends StatelessWidget {
           ),
         ),
         const SizedBox(height: 15,),
+        
         SizedBox(
           height: 300,
           child: ListView(
             physics: const BouncingScrollPhysics(),
             scrollDirection: Axis.horizontal,
-            children: List.generate(
-              5,
-              (_) => const AmptiveTechnologyModel(
-                trendingPicture: ATImgStrings.endlessThread
-              )
-            ),
+            children: <Widget>[
+              const SizedBox(width: 5,),
+              ...List<Widget>.generate(
+                5,
+                (_) => const TrendingTechnologyWidget(
+                  trendingPicture: ATImgStrings.ENDLESS_THREAD
+                )
+              ),
+            ]
           ),
         ),
+        Divider(
+          indent: 15, endIndent: 15,
+          color: ATColors.hex252525
+        ),
     
-        const SizedBox(height: 48),
+        const SizedBox(height: 40),
     
         DiscoverCategoriesTile(
           categoryName: ATStrings.SPORTS,
@@ -139,16 +151,23 @@ class MainDiscoverView extends StatelessWidget {
           child: ListView(
             physics: const BouncingScrollPhysics(),
             scrollDirection: Axis.horizontal,
-            children: List<Widget>.generate(
-              5,
-              (_) => const AmptiveTechnologyModel(
-                trendingPicture: ATImgStrings.JOE_POMP_SHOW
-              )
-            ),
+            children: <Widget>[
+              const SizedBox(width: 5,),
+              ...List<Widget>.generate(
+                5,
+                (_) => const TrendingTechnologyWidget(
+                  trendingPicture: ATImgStrings.JOE_POMP_SHOW
+                )
+              ),
+            ]
           ),
         ),
+        Divider(
+          indent: 15, endIndent: 15,
+          color: ATColors.hex252525
+        ),
     
-        const SizedBox(height: 48,),
+        const SizedBox(height: 40),
     
         DiscoverCategoriesTile(
           categoryName: ATStrings.TRUE_CRIME,
@@ -165,16 +184,23 @@ class MainDiscoverView extends StatelessWidget {
           child: ListView(
             physics: const BouncingScrollPhysics(),
             scrollDirection: Axis.horizontal,
-            children: List<Widget>.generate(
-              5,
-              (_) => const AmptiveTechnologyModel(
-                trendingPicture: ATImgStrings.CRIMINAL
-              )
-            ),
+            children: <Widget>[
+              const SizedBox(width: 5,),
+              ...List<Widget>.generate(
+                5,
+                (_) => const TrendingTechnologyWidget(
+                  trendingPicture: ATImgStrings.CRIMINAL
+                )
+              ),
+            ]
           ),
         ),
+        Divider(
+          indent: 15, endIndent: 15,
+          color: ATColors.hex252525
+        ),
     
-        const SizedBox(height: 48,),
+        const SizedBox(height: 40,),
     
         const Padding(
           padding: EdgeInsets.symmetric(horizontal: 15),
@@ -186,16 +212,23 @@ class MainDiscoverView extends StatelessWidget {
           child: ListView(
             physics: const BouncingScrollPhysics(),
             scrollDirection: Axis.horizontal,
-            children: List<Widget>.generate(
-              5,
-              (_) => const AmptiveMore2DiscoverModel(
-                picture: ATImgStrings.COMMUNITY_CARD
-              )
-            ),
+            children: <Widget>[
+              const SizedBox(width: 5,),
+              ...List<Widget>.generate(
+                5,
+                (_) => const CommunityCardWidget(
+                  picture: ATImgStrings.COMMUNITY_CARD
+                )
+              ),
+            ]
           ),
         ),
+        Divider(
+          indent: 15, endIndent: 15,
+          color: ATColors.hex252525
+        ),
     
-        const SizedBox(height: 48,),
+        const SizedBox(height: 40,),
     
         ATContainer(
           padding: const EdgeInsets.only(left: 15),

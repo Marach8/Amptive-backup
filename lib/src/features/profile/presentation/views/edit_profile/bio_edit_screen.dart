@@ -30,7 +30,7 @@ class _EditBioScreenState extends State<EditBioScreen> {
   }
 
   void _handleTextChange() {
-    final isDifferent = _cntrl.text.isNotEmpty && 
+    final bool isDifferent = _cntrl.text.isNotEmpty && 
       (_cntrl.text.trim() != widget.initialBio);
     if (btnActive != isDifferent) {
       setState(() => btnActive = isDifferent);
@@ -45,7 +45,7 @@ class _EditBioScreenState extends State<EditBioScreen> {
   }
 
   @override
-  Widget build(context) {
+  Widget build(BuildContext context) {
     return ATAnnotatedRegion(
       child: Scaffold(
         appBar: const ATAppBar(

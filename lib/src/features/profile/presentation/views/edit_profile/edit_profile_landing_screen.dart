@@ -15,7 +15,7 @@ class EditProfileScreen extends StatelessWidget {
   const EditProfileScreen({super.key});
 
   @override
-  Widget build(context) {
+  Widget build(BuildContext context) {
     
     return ATAnnotatedRegion(
       child: Scaffold(
@@ -28,7 +28,7 @@ class EditProfileScreen extends StatelessWidget {
 
         body: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
+          children: <Widget>[
             const EditProfileBgImage(),
             const SizedBox(height: 20),
             Expanded(
@@ -36,7 +36,7 @@ class EditProfileScreen extends StatelessWidget {
                 physics: const BouncingScrollPhysics(),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
+                  children: <Widget>[
                     const SizedBox(height: 30),
                     const _MenuHeading(text: ATStrings.ABT_U),
                     const SizedBox(height: 10),
@@ -75,7 +75,7 @@ class EditProfileScreen extends StatelessWidget {
                       title: ATStrings.INSTAGRAM, isLink: true,
                       initialValue: 'www.instagram.com/alieubaba1',
                       onTap: ()async => await context.pushNamed(
-                        ATRoutes.EDIT_SOCIALS, extra:[
+                        ATRoutes.EDIT_SOCIALS, extra:<String?>[
                           null,
                           //'www.instagram.com/alieubaba1',
                           ATStrings.INSTAGRAM,
@@ -87,7 +87,7 @@ class EditProfileScreen extends StatelessWidget {
                       title: 'X',isLink: true,
                       initialValue: 'www.x.com/alieubaba',
                       onTap: ()async => await context.pushNamed(
-                        ATRoutes.EDIT_SOCIALS, extra:[
+                        ATRoutes.EDIT_SOCIALS, extra:<String?>[
                           null,//'www.x.com/alieubaba',
                           ATStrings.X,
                         ]
@@ -98,7 +98,7 @@ class EditProfileScreen extends StatelessWidget {
                       title: ATStrings.LINKEDIN, isLink: true,
                       initialValue: 'www.linkedIn.com/alieubaba',
                       onTap: ()async => await context.pushNamed(
-                        ATRoutes.EDIT_SOCIALS, extra:[
+                        ATRoutes.EDIT_SOCIALS, extra:<String>[
                           'www.linkedIn.com/alieubaba',
                           ATStrings.LINKEDIN,
                         ]
@@ -109,7 +109,7 @@ class EditProfileScreen extends StatelessWidget {
                       title: ATStrings.WEBSITE, isLink: true,
                       initialValue: 'www.palbucks.co',
                       onTap: ()async => await context.pushNamed(
-                        ATRoutes.EDIT_SOCIALS, extra:[
+                        ATRoutes.EDIT_SOCIALS, extra:<String?>[
                           null,//'www.palbucks.co',
                           ATStrings.WEBSITE
                         ]
@@ -149,7 +149,7 @@ class _MenuHeading extends StatelessWidget {
   final String text;
 
   @override
-  Widget build(context) {
+  Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.fromLTRB(15, 0, 10, 0),
       child: Text(
@@ -178,7 +178,7 @@ class _MenuItem extends StatelessWidget {
   final Future<String?> Function() onTap;
 
   @override
-  Widget build(context) {
+  Widget build(BuildContext context) {
     String currentValue = initialValue;
 
     return Padding(
@@ -188,13 +188,13 @@ class _MenuItem extends StatelessWidget {
           return InkWell(
             borderRadius: BorderRadius.circular(10),
             onTap: () async {
-              final newValue = await onTap();
+              final String? newValue = await onTap();
               if (newValue != null && newValue != currentValue) {
                 setter(() => currentValue = newValue);
               }
             },
             child: Row(
-              children: [
+              children: <Widget>[
                 Text(title, style: Theme.of(context).textTheme.bodySmall),
                 SizedBox(width: ATHelperFuncs.getScreenWidth(context) * 0.2),
                 Expanded(

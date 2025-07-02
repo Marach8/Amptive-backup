@@ -13,7 +13,7 @@ class ATRadioBtn extends StatelessWidget {
   final int? duration;
 
   @override
-  Widget build(context) {
+  Widget build(BuildContext context) {
     return ATContainer(
       duration: duration,
       height: 15, width: 15, boxShape: BoxShape.circle,

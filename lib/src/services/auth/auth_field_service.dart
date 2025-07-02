@@ -7,6 +7,11 @@ import '../../models/validation_model.dart';
 import '../authentication_service.dart';
 
 class AuthFieldService {
+
+  factory AuthFieldService() => _instance;
+
+  // constructor
+  AuthFieldService._(this.authenticationService);
   final AuthenticationService authenticationService;
   ValidationModel _password =
       ValidationModel(null, "Your password should be at least 8 characters.");
@@ -57,11 +62,6 @@ class AuthFieldService {
   static final AuthFieldService _instance =
       AuthFieldService._(AuthenticationService());
 
-  // constructor
-  AuthFieldService._(this.authenticationService);
-
-  factory AuthFieldService() => _instance;
-
   // setters
   void setDOB(DateTime? val) {
     _dob = val;
@@ -73,7 +73,7 @@ class AuthFieldService {
 
   // process fields
   Future<bool> processEmail() async {
-    final email = _email.value;
+    final String? email = _email.value;
     if (await authenticationService.checkUniqueEmail(email!)) {
       _customEmailStatus = ValidationModel("This email already exist!.", null);
       return false;

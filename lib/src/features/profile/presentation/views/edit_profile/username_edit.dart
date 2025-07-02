@@ -48,7 +48,7 @@ class _EditNameScreen extends State<EditUsernameScreen> {
   }
 
   @override
-  Widget build(context) {
+  Widget build(BuildContext context) {
     return ATAnnotatedRegion(
       child: Scaffold(
         appBar: const ATAppBar(
@@ -61,7 +61,7 @@ class _EditNameScreen extends State<EditUsernameScreen> {
           padding: const EdgeInsets.fromLTRB(15, 10, 15, 0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
+            children: <Widget>[
               ATTextFormField(
                 controller: _cntrl,
                 prefixIcon: Padding(
@@ -74,7 +74,7 @@ class _EditNameScreen extends State<EditUsernameScreen> {
                 suffixIcon: Padding(
                   padding: const EdgeInsets.only(right: 15),
                   child: BlocBuilder<AmptiveAuthBloc, AmptiveAuthState>(
-                    builder: (_, state) {
+                    builder: (_, AmptiveAuthState state) {
                       if(state is VerifyingUsernameState) return const ATLoadingIndicator(size: 20,);
                       if(state is UsernameVerifiedState) return Icon(Icons.check, color: ATColors.green1);
                       return const SizedBox.shrink();
@@ -84,7 +84,7 @@ class _EditNameScreen extends State<EditUsernameScreen> {
               ),
               const SizedBox(height: 10),
               BlocBuilder<AmptiveAuthBloc, AmptiveAuthState>(
-                builder: (_, state) {
+                builder: (_, AmptiveAuthState state) {
                   return Text(
                     (state is VerifyingUsernameState) ? ATStrings.CHECKER_LOADING 
                       : (state is UsernameVerifiedState) ? ATStrings.USERNAME_AVAILABLE : '',
@@ -102,7 +102,7 @@ class _EditNameScreen extends State<EditUsernameScreen> {
         bottomSheet: Padding(
           padding: const EdgeInsets.fromLTRB(15, 5, 15, 10),
           child: BlocBuilder<AmptiveAuthBloc, AmptiveAuthState>(
-            builder: (_, state) {
+            builder: (_, AmptiveAuthState state) {
               return ATPlainElevatedBtn(
                 onPressed: (state is UsernameVerifiedState) ? () => context.pop(_cntrl.text.trim()) : null,
                 btnTitle: ATStrings.ACCEPT_CHANGES,

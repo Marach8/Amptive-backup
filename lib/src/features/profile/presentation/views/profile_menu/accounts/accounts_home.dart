@@ -13,15 +13,15 @@ class ATAccountScreen extends StatelessWidget {
   const ATAccountScreen({super.key});
 
   @override
-  Widget build(context) {
+  Widget build(BuildContext context) {
     return ATAnnotatedRegion(
       child: Scaffold(
         body: Column(
-          children: [
+          children: <Widget>[
             Padding(
               padding: const EdgeInsets.fromLTRB(7, kToolbarHeight, 15, 15),
               child: Row(
-                children: [
+                children: <Widget>[
                   ATCircleAvatar(
                     onTap: () => context.pop(),
                     diameter: 30, color: ATColors.trsprnt,
@@ -43,7 +43,7 @@ class ATAccountScreen extends StatelessWidget {
               padding: const EdgeInsets.fromLTRB(15, 10, 15, 0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
+                children: <Widget>[
                   ATContainer(
                     onTap: () => context.pushNamed(
                       ATRoutes.ACCT_INFO_SCREEN,
@@ -54,11 +54,11 @@ class ATAccountScreen extends StatelessWidget {
                     radius: 14,
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
+                      children: <Widget>[
                         Flexible(
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
+                            children: <Widget>[
                               Text(
                                 ATStrings.ACCT_INFO,
                                 style: Theme.of(context).textTheme.bodySmall,
@@ -85,7 +85,7 @@ class ATAccountScreen extends StatelessWidget {
                     radius: 14,
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
+                      children: <Widget>[
                         Text(
                           ATStrings.DEACTIVATE_ACCT,
                           style: Theme.of(context).textTheme.bodySmall,

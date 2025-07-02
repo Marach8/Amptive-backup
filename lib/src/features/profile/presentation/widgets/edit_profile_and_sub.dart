@@ -16,7 +16,7 @@ class EditProfileAndSubscriptionRow extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
+      children: <Widget>[
         Expanded(
           child: ATContainer(
             onTap: () => context.pushNamed(ATRoutes.EDIT_PROFILE),

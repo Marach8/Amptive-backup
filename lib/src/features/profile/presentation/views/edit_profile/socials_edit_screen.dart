@@ -39,7 +39,7 @@ class _EditSocialsScreenState extends State<EditSocialsScreen> {
   }
 
   void _handleTextChange() {
-    final isDifferent = _cntrl.text.isNotEmpty && 
+    final bool isDifferent = _cntrl.text.isNotEmpty && 
       (_cntrl.text.trim() != widget.initialLink);
     if (btnActive != isDifferent) {
       setState(() => btnActive = isDifferent);
@@ -54,7 +54,7 @@ class _EditSocialsScreenState extends State<EditSocialsScreen> {
   }
 
   @override
-  Widget build(context) {
+  Widget build(BuildContext context) {
     Widget prefix = const SizedBox.shrink();
     String hintText = '';
 

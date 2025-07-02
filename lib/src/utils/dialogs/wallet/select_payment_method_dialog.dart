@@ -18,7 +18,7 @@ Future<String?> selectPaymentMethodDialog({
   required BuildContext context,
   required String amount
 }) {
-  final paymentMethods = {
+  final Map<String, String> paymentMethods = <String, String>{
     ATImgStrings.APPLE_ICON : ATStrings.APPLE_PAY,
     ATImgStrings.FLUTTERWAVE: ATStrings.FLUTTERWAVE,
     ATImgStrings.GOOGLE_ICON: ATStrings.GOOGLE_PAY,
@@ -26,22 +26,22 @@ Future<String?> selectPaymentMethodDialog({
   return showCupertinoModalPopup<String>(
     context: context,
     barrierColor: ATColors.black,
-    builder: (dialogContext) {
+    builder: (BuildContext dialogContext) {
       return BlocProvider(
         create: (_) => _PaymentMethodBloc(),
         child: Material(
           color: ATColors.trsprnt,
           child: Builder(
-            builder: (context) {
+            builder: (BuildContext context) {
               return SizedBox(
                 height: ATHelperFuncs.getScreenHeight(context),
                 child: Column(
-                  children: [
+                  children: <Widget>[
                     Padding(
                       padding: const EdgeInsets.fromLTRB(7, 40, 15, 30),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
+                        children: <Widget>[
                           const ATRoundedBackBtn(),
                           Text(
                             'Funding N${amount.formatPrice()}',
@@ -59,7 +59,7 @@ Future<String?> selectPaymentMethodDialog({
                         child: Column(
                           spacing: 15,
                           children: paymentMethods.entries.map(
-                            (entry){
+                            (MapEntry<String, String> entry){
                               return InkWell(
                                 borderRadius: BorderRadius.circular(50),
                                 onTap: () => context.read<_PaymentMethodBloc>().setPaymentMethod(entry.value),
@@ -70,14 +70,14 @@ Future<String?> selectPaymentMethodDialog({
                                   border: Border.all(color: ATColors.white.withValues(alpha: 0.2)),
                                   child: Row(
                                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                    children: [
+                                    children: <Widget>[
                                       ATImgLoader(imgPath: entry.key, width: 30, height: 30),
                                       Text(
                                         'Pay with ${entry.value}',
                                         style: Theme.of(context).textTheme.bodyMedium
                                       ),
                                       BlocBuilder<_PaymentMethodBloc, String?>(
-                                        builder: (_, state) {
+                                        builder: (_, String? state) {
                                           return ATRadioBtn(isSelected: state == entry.value);
                                         }
                                       ),
@@ -94,7 +94,7 @@ Future<String?> selectPaymentMethodDialog({
                     Padding(
                       padding: const EdgeInsets.fromLTRB(15, 10, 15, 10),
                       child: BlocBuilder<_PaymentMethodBloc, String?>(
-                        builder: (_, state) {
+                        builder: (_, String? state) {
                           return ATPlainElevatedBtn(
                             onPressed: state == null ? null : () => dialogContext.pop(state),
                             btnTitle: ATStrings.CONTINUE,

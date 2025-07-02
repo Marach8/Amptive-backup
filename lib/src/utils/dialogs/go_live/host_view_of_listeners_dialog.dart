@@ -26,10 +26,10 @@ Future<void> showListenersDialog({
   bool? enableKickOut
 }) async {
 
-  final focusNode = FocusNode();
-  final controller = TextEditingController();
+  final FocusNode focusNode = FocusNode();
+  final TextEditingController controller = TextEditingController();
 
-  final showSuffixIconNotifier = ValueNotifier(false);
+  final ValueNotifier<bool> showSuffixIconNotifier = ValueNotifier(false);
     focusNode.addListener(
       () => focusNode.hasFocus
         ? showSuffixIconNotifier.value = true
@@ -46,7 +46,7 @@ Future<void> showListenersDialog({
       borderRadius: BorderRadius.only(
       topLeft: Radius.circular(15), topRight: Radius.circular(15),
     )),
-    builder: (context) {
+    builder: (BuildContext context) {
       return ClipRRect(
         borderRadius: const BorderRadius.only(
           topLeft: Radius.circular(15), topRight: Radius.circular(15),
@@ -57,7 +57,7 @@ Future<void> showListenersDialog({
             width: ATHelperFuncs.getScreenWidth(context),
             padding: const EdgeInsets.fromLTRB(15, 10, 15, 10),
             child: Column(
-              children: [
+              children: <Widget>[
                 Center(
                   child: GestureDetector(
                     onTap: () => context.pop(),
@@ -79,7 +79,7 @@ Future<void> showListenersDialog({
                     alignment: Alignment.center,
                     child: Row(
                       mainAxisSize: MainAxisSize.min,
-                      children: [
+                      children: <Widget>[
                         const ATImgLoader(
                           imgPath: ATImgStrings.USER_ICON
                         ),
@@ -107,7 +107,7 @@ Future<void> showListenersDialog({
                     controller: controller,
                     focusNode: focusNode,
                     disableBlueBorder: true,
-                    onChanged: (text) => ATHelperFuncs.callDebouncer(
+                    onChanged: (String text) => ATHelperFuncs.callDebouncer(
                       200,
                       () => context.read<AmptiveGoLiveAvailableCoHostsBloc>().add(
                         SearchCohostEvent(searchKey: text)
@@ -121,7 +121,7 @@ Future<void> showListenersDialog({
                     ),
                     suffixIcon: AmptiveRebuilderWidget(
                       notifier: showSuffixIconNotifier,
-                      builder: (_, shouldShow, __) {
+                      builder: (_, bool shouldShow, __) {
                         return ATAnimatedCrossFade(
                           condition: shouldShow,
                           secondChild: const SizedBox.shrink(),
@@ -152,8 +152,8 @@ Future<void> showListenersDialog({
                       padding: EdgeInsets.zero,
                       physics: const BouncingScrollPhysics(),
                       itemCount: getHostList().length,
-                      itemBuilder: (_, listIndex){
-                        final listener = getHostList().elementAt(listIndex);
+                      itemBuilder: (_, int listIndex){
+                        final ObjectWithNotifier<Host> listener = getHostList().elementAt(listIndex);
                         return AmptiveListenerWidget(
                           onTap: (_, __){},
                           listener: listener,
@@ -177,10 +177,6 @@ Future<void> showListenersDialog({
 
 
 class AmptiveListenerWidget extends StatelessWidget {
-  final void Function(ObjectWithNotifier<Host>, bool) onTap;
-  final ObjectWithNotifier<Host> listener;
-  final bool? enableKickOut;
-  final int index;
 
   const AmptiveListenerWidget({
     super.key,
@@ -189,16 +185,20 @@ class AmptiveListenerWidget extends StatelessWidget {
     required this.index,
     this.enableKickOut
   });
+  final void Function(ObjectWithNotifier<Host>, bool) onTap;
+  final ObjectWithNotifier<Host> listener;
+  final bool? enableKickOut;
+  final int index;
 
   @override
-  Widget build(context) {
+  Widget build(BuildContext context) {
 
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 15),
       child: GestureDetector(
         onTap: () => onTap(listener, listener.notifier.value),
         child: Row(
-          children: [
+          children: <Widget>[
             ATContainer(
               clipBehavior: Clip.hardEdge,
               height: 50, width: 50, radius: 30,
@@ -216,7 +216,7 @@ class AmptiveListenerWidget extends StatelessWidget {
             ),
             if(enableKickOut ?? true) ATContainer(
               onTap: ()async{
-                final shouldKickOut = await showKickOutConfirmationDialog(
+                final bool? shouldKickOut = await showKickOutConfirmationDialog(
                   context: context,
                   title: 'Are you kicking out ${listener.obj.name}?',
                   content: ATStrings.KICK_OUT_DESC,

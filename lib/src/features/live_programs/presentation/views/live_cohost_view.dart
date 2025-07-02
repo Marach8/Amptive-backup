@@ -1,4 +1,5 @@
 
+import 'package:amptive/src/models/host.dart';
 import 'package:amptive/src/utils/constants/font_sizes.dart';
 import 'package:amptive/src/utils/constants/strings/image_strings.dart';
 import 'package:amptive/src/utils/helpers/helper_functions/helper_functions.dart';
@@ -79,17 +80,17 @@ class _AmptiveGoLiveCohostViewState extends State<AmptiveGoLiveCohostView> {
 
 
   @override
-  Widget build(context) {
+  Widget build(BuildContext context) {
     return ATAnnotatedRegion(
       child: Scaffold(
         appBar: AppBar(),
         body: Column(
-          children: [
+          children: <Widget>[
             
             AmptiveHorizSliderAnimationWidget(
                     duration: 15.w,
                     child: Row(
-                      children: [
+                      children: <Widget>[
                         Text(
                           ATStrings.LIVE,
                           style: Theme.of(context).textTheme.bodyMedium,
@@ -111,11 +112,11 @@ class _AmptiveGoLiveCohostViewState extends State<AmptiveGoLiveCohostView> {
         
             Expanded(
               child: Stack(
-                children: [
+                children: <Widget>[
                   SizedBox(
                     height: ATHelperFuncs.getScreenHeight(context),
                     child: Column(
-                      children: [
+                      children: <Widget>[
                         SizedBox(
                           height: ATHelperFuncs.getScreenHeight(context) * 0.3,
                         ),
@@ -125,8 +126,8 @@ class _AmptiveGoLiveCohostViewState extends State<AmptiveGoLiveCohostView> {
                             controller: _scrollController,
                             padding: const EdgeInsets.fromLTRB(0, 50, 0, 50),
                             itemCount: service.coHostsListData.length,
-                            itemBuilder: (_, listIndex){
-                              final string = service.coHostsListData.elementAt(listIndex);
+                            itemBuilder: (_, int listIndex){
+                              final ObjectWithNotifier<Host> string = service.coHostsListData.elementAt(listIndex);
                               return ListTile(
                                 horizontalTitleGap: 10,
                                 minTileHeight: 50,
@@ -157,7 +158,7 @@ class _AmptiveGoLiveCohostViewState extends State<AmptiveGoLiveCohostView> {
                   ATContainer(
                     height: 250,
                     padding: const EdgeInsets.only(left: 20, right: 20),
-                    boxShadow: [
+                    boxShadow: <BoxShadow>[
                       BoxShadow(
                         color: ATColors.black,
                         spreadRadius: 10, blurRadius: 40,
@@ -165,13 +166,13 @@ class _AmptiveGoLiveCohostViewState extends State<AmptiveGoLiveCohostView> {
                       )
                     ],
                     child: LayoutBuilder(
-                      builder: (_, constraints) {
-                        final width = constraints.maxWidth;
+                      builder: (_, BoxConstraints constraints) {
+                        final double width = constraints.maxWidth;
 
                         return AmptiveRebuilderWidget(
                           notifier: service.goLiveHostListNotifier,
                           shouldDispose: true,
-                          builder: (_, listOfHosts, __) {
+                          builder: (_, Set<ObjectWithNotifier<Host>> listOfHosts, __) {
                             // final onlyHost = listOfHosts.length == 1;
                             // final hostAndACohost = listOfHosts.length == 2;
                             // final hostAndT2Cohosts = listOfHosts.length == 3;
@@ -181,41 +182,41 @@ class _AmptiveGoLiveCohostViewState extends State<AmptiveGoLiveCohostView> {
               
                             return Stack(
                               alignment: Alignment.center,
-                              children: [
+                              children: <Widget>[
                                 AmptiveLiveHostAndCoHostWidget(
                                   top: 6, isHost: true, index: 0,
                                   hostOrCohost: listOfHosts.elementAt(0),
                                   service: service,
-                                  onTap: (hostOrCohost){},
+                                  onTap: (ObjectWithNotifier<Host>? hostOrCohost){},
                                 ),
                                 AmptiveLiveHostAndCoHostWidget(
                                   top: 35, left: 0, index: 1,
                                   hostOrCohost: listOfHosts.elementAt(1),
                                   service: service,
-                                  onTap: (hostOrCohost){},
+                                  onTap: (ObjectWithNotifier<Host>? hostOrCohost){},
                                 ),
                                 AmptiveLiveHostAndCoHostWidget(
                                   top: 35, right: 0, index: 2,
                                   hostOrCohost: listOfHosts.elementAt(2),
                                   service: service,
-                                  onTap: (hostOrCohost){},
+                                  onTap: (ObjectWithNotifier<Host>? hostOrCohost){},
                                 ),
                                 AmptiveLiveHostAndCoHostWidget(
                                   bottom: 30, right: width * 0.1, index: 3,
                                   hostOrCohost: listOfHosts.elementAt(3),
                                   service: service,
-                                  onTap: (hostOrCohost){},
+                                  onTap: (ObjectWithNotifier<Host>? hostOrCohost){},
                                 ),
                                 AmptiveLiveHostAndCoHostWidget(
                                   bottom: 30, left: width * 0.1, index: 4,
                                   hostOrCohost: listOfHosts.elementAt(4),
                                   service: service,
-                                  onTap: (hostOrCohost){},
+                                  onTap: (ObjectWithNotifier<Host>? hostOrCohost){},
                                 ),
                                 AmptiveLiveHostAndCoHostWidget(
                                   bottom: 0, index: 5, service: service,
                                   hostOrCohost: listOfHosts.elementAt(5),
-                                  onTap: (hostOrCohost){},
+                                  onTap: (ObjectWithNotifier<Host>? hostOrCohost){},
                                 ),
                               ],
                             );
@@ -227,7 +228,7 @@ class _AmptiveGoLiveCohostViewState extends State<AmptiveGoLiveCohostView> {
 
                   AmptiveRebuilderWidget(
                     notifier: service.scroll2Bottom,
-                    builder: (_, showIcon, __) {
+                    builder: (_, bool showIcon, __) {
                       return AnimatedPositioned(
                         right: showIcon ? 15 : -50, bottom: 70,
                         duration: const Duration(milliseconds: 500),
@@ -254,8 +255,8 @@ class _AmptiveGoLiveCohostViewState extends State<AmptiveGoLiveCohostView> {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: _listOfWidgets.map(
-              (widget){
-                final index = _listOfWidgets.indexOf(widget);
+              (Widget widget){
+                final int index = _listOfWidgets.indexOf(widget);
                 if(index == 1){
                   return Expanded(
                     child: Padding(
@@ -291,7 +292,7 @@ class _AmptiveGoLiveCohostViewState extends State<AmptiveGoLiveCohostView> {
 
 
 
-List<Widget> _listOfWidgets = [
+List<Widget> _listOfWidgets = <Widget>[
   const Icon(Icons.settings),
   const Icon(Icons.mic),
   const Icon(Icons.mic),

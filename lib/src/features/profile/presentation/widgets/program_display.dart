@@ -12,12 +12,12 @@ class ProfileEventOrShowDisplay extends StatelessWidget {
   const ProfileEventOrShowDisplay({super.key});
 
   @override
-  Widget build(context) {
+  Widget build(BuildContext context) {
     return ATContainer(
       margin: const EdgeInsets.only(bottom: 15),
       height: 80,
       child: Row(
-        children: [
+        children: <Widget>[
           ClipRRect(
             borderRadius: BorderRadius.circular(5),
             child: const ATImgLoader(
@@ -31,10 +31,10 @@ class ProfileEventOrShowDisplay extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
+              children: <Widget>[
                 //Row 1
                 Row(
-                  children: [
+                  children: <Widget>[
                     ATCircleAvatar(
                       diameter: 15,
                       color: ATColors.hexF91880,
@@ -61,7 +61,7 @@ class ProfileEventOrShowDisplay extends StatelessWidget {
       
                 //Row 3
                 Row(
-                  children: [
+                  children: <Widget>[
                     ATContainer(
                       alignment: Alignment.center,
                       height: 10, width: 10, radius: 1,

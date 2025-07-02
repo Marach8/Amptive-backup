@@ -22,16 +22,16 @@ import '../constants/strings/other_strings.dart';
 Future<Set<ObjectWithNotifier<Hashtag>>?> showAddHashtagDialog(
     BuildContext context) async {
   CreateShowService service = GetIt.I<CreateShowService>();
-  final availableHashtags = service.hashTagListData;
+  final List<ObjectWithNotifier<Hashtag>> availableHashtags = service.hashTagListData;
 
-  final focusNode = FocusNode();
-  final controller = TextEditingController();
-  final showSuffixIconNotifier = ValueNotifier(false);
+  final FocusNode focusNode = FocusNode();
+  final TextEditingController controller = TextEditingController();
+  final ValueNotifier<bool> showSuffixIconNotifier = ValueNotifier(false);
   focusNode.addListener(() => focusNode.hasFocus
       ? showSuffixIconNotifier.value = true
       : showSuffixIconNotifier.value = false);
 
-  final searchQueryNotifier = ValueNotifier('');
+  final ValueNotifier<String> searchQueryNotifier = ValueNotifier('');
 
   return await showModalBottomSheet(
       backgroundColor: ATColors.hex0D0D0D,
@@ -43,7 +43,7 @@ Future<Set<ObjectWithNotifier<Hashtag>>?> showAddHashtagDialog(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(0)),
       builder: (_) {
         return Stack(
-          children: [
+          children: <Widget>[
             Positioned.fill(
               child: SingleChildScrollView(
                 physics: const BouncingScrollPhysics(),
@@ -51,7 +51,7 @@ Future<Set<ObjectWithNotifier<Hashtag>>?> showAddHashtagDialog(
                     bottom: MediaQuery.viewInsetsOf(context).bottom, top: 20.h),
                 child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
+                    children: <Widget>[
                       Center(
                         child: GestureDetector(
                           onTap: () => context.pop(),
@@ -77,7 +77,7 @@ Future<Set<ObjectWithNotifier<Hashtag>>?> showAddHashtagDialog(
                         padding: const EdgeInsets.fromLTRB(15, 0, 15, 20),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.end,
-                          children: [
+                          children: <Widget>[
                             Text(
                               ATStrings.ADD_HASHTAG,
                               style: Theme.of(context).textTheme.bodyLarge,
@@ -85,7 +85,7 @@ Future<Set<ObjectWithNotifier<Hashtag>>?> showAddHashtagDialog(
                             Gap(60.w),
                             AmptiveRebuilderWidget(
                                 notifier: service.selectedHashtagLength,
-                                builder: (_, number, __) {
+                                builder: (_, int number, __) {
                                   return Text(
                                     '$number ${ATStrings.SELECTED}',
                                     style: Theme.of(context)
@@ -117,7 +117,7 @@ Future<Set<ObjectWithNotifier<Hashtag>>?> showAddHashtagDialog(
                           disableBlueBorder: true,
                           controller: controller,
                           focusNode: focusNode,
-                          onChanged: (text) {
+                          onChanged: (String text) {
                             searchQueryNotifier.value = text;
                           },
                           hintText: ATStrings.SEARCH_4_COHOSTS,
@@ -129,7 +129,7 @@ Future<Set<ObjectWithNotifier<Hashtag>>?> showAddHashtagDialog(
                           suffixIcon: AmptiveRebuilderWidget(
                               shouldDispose: true,
                               notifier: showSuffixIconNotifier,
-                              builder: (_, shouldShow, __) {
+                              builder: (_, bool shouldShow, __) {
                                 return ATAnimatedCrossFade(
                                   condition: shouldShow,
                                   secondChild: const SizedBox.shrink(),
@@ -154,8 +154,8 @@ Future<Set<ObjectWithNotifier<Hashtag>>?> showAddHashtagDialog(
                         alignment: Alignment.center,
                         child: AmptiveRebuilderWidget(
                           notifier: service.selectedHashtagLength,
-                          builder: (_, val, __) {
-                            var value = service.selectedHashtags.value;
+                          builder: (_, int val, __) {
+                            Set<ObjectWithNotifier<Hashtag>> value = service.selectedHashtags.value;
                             return ATAnimatedCrossFade(
                               condition: value.isEmpty,
                               firstChild: const SizedBox.shrink(),
@@ -163,7 +163,7 @@ Future<Set<ObjectWithNotifier<Hashtag>>?> showAddHashtagDialog(
                                 padding: const EdgeInsets.only(bottom: 20),
                                 scrollDirection: Axis.horizontal,
                                 child: Row(
-                                  children: value.map((selectedHashtag) {
+                                  children: value.map((ObjectWithNotifier<Hashtag> selectedHashtag) {
                                     //Get the index of this HashTag in the original list of images
                                     // final indexOfTappedHashtag = availableHashtags.indexWhere(
                                     //   (item) => item.first == hashtagTitle
@@ -182,7 +182,7 @@ Future<Set<ObjectWithNotifier<Hashtag>>?> showAddHashtagDialog(
                                           .withOpacity(0.1),
                                       child: Row(
                                         mainAxisSize: MainAxisSize.min,
-                                        children: [
+                                        children: <Widget>[
                                           Text(
                                             selectedHashtag.obj.name,
                                             style: Theme.of(context)
@@ -219,7 +219,7 @@ Future<Set<ObjectWithNotifier<Hashtag>>?> showAddHashtagDialog(
                       //Column of hashtags
                       AmptiveRebuilderWidget(
                           notifier: searchQueryNotifier,
-                          builder: (_, searchString, __) {
+                          builder: (_, String searchString, __) {
                             List<ObjectWithNotifier<Hashtag>>
                             filteredHashtagTitles;
 
@@ -228,7 +228,7 @@ Future<Set<ObjectWithNotifier<Hashtag>>?> showAddHashtagDialog(
                               filteredHashtagTitles = availableHashtags;
                             } else {
                               filteredHashtagTitles = availableHashtags
-                                  .where((hashtag) => hashtag.obj.name
+                                  .where((ObjectWithNotifier<Hashtag> hashtag) => hashtag.obj.name
                                   .toLowerCase()
                                   .contains(searchString.toLowerCase()))
                                   .toList();
@@ -271,7 +271,7 @@ Future<Set<ObjectWithNotifier<Hashtag>>?> showAddHashtagDialog(
                 width: ATHelperFuncs.getScreenWidth(context),
                 child: AmptiveRebuilderWidget(
                     notifier: service.selectedHashtagLength,
-                    builder: (_, value, __) {
+                    builder: (_, int value, __) {
                       return AmptiveElevatedButtonWidget(
                         margin: EdgeInsets.zero,
                         onPressed: value > 0
@@ -293,20 +293,20 @@ Future<Set<ObjectWithNotifier<Hashtag>>?> showAddHashtagDialog(
 }
 
 class AmptiveListOfHashtagsWidget extends StatelessWidget {
-  final List<ObjectWithNotifier<Hashtag>> hashtags;
-  final CreateShowService service = GetIt.I<CreateShowService>();
 
   AmptiveListOfHashtagsWidget({
     super.key,
     required this.hashtags,
   });
+  final List<ObjectWithNotifier<Hashtag>> hashtags;
+  final CreateShowService service = GetIt.I<CreateShowService>();
 
   @override
-  Widget build(context) {
+  Widget build(BuildContext context) {
     return Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
+        children: <Widget>[
           Text(
               hashtags.isEmpty
                   ? ATStrings.NO_TRENDING_HASHTAGS
@@ -323,11 +323,11 @@ class AmptiveListOfHashtagsWidget extends StatelessWidget {
                 ?.copyWith(color: ATColors.hexC2C2C2),
           )
               : const SizedBox.shrink(),
-          ...hashtags.map((hashtagData) {
+          ...hashtags.map((ObjectWithNotifier<Hashtag> hashtagData) {
 
             return AmptiveAddHashtagWidget(
               hashtagDetail: hashtagData,
-              onTap: (hashtagTitle) {
+              onTap: (ObjectWithNotifier<Hashtag> hashtagTitle) {
                 if (hashtagTitle.notifier.value) {
                   service.removeSelectedHashtags(hashtagTitle);
                 } else {
@@ -341,14 +341,14 @@ class AmptiveListOfHashtagsWidget extends StatelessWidget {
 }
 
 class AmptiveAddHashtagWidget extends StatelessWidget {
-  final void Function(ObjectWithNotifier<Hashtag>) onTap;
-  final ObjectWithNotifier<Hashtag> hashtagDetail;
 
   const AmptiveAddHashtagWidget({
     super.key,
     required this.onTap,
     required this.hashtagDetail,
   });
+  final void Function(ObjectWithNotifier<Hashtag>) onTap;
+  final ObjectWithNotifier<Hashtag> hashtagDetail;
 
   @override
   Widget build(BuildContext context) {
@@ -359,7 +359,7 @@ class AmptiveAddHashtagWidget extends StatelessWidget {
           onTap(hashtagDetail);
         },
         child: Row(
-          children: [
+          children: <Widget>[
             ATContainer(
               height: 50,
               width: 50,
@@ -378,7 +378,7 @@ class AmptiveAddHashtagWidget extends StatelessWidget {
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
+                children: <Widget>[
                   Text('#${hashtagDetail.obj.name}',
                       style: Theme.of(context)
                           .textTheme
@@ -396,7 +396,7 @@ class AmptiveAddHashtagWidget extends StatelessWidget {
             ),
             AmptiveRebuilderWidget(
                 notifier: hashtagDetail.notifier,
-                builder: (_, value, __) {
+                builder: (_, bool value, __) {
                   return ATContainer(
                       duration: 200,
                       color: value

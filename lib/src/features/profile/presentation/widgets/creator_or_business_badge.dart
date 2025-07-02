@@ -16,7 +16,7 @@ class CreatorOrBizBadge extends StatelessWidget {
   final bool? isCreator;
 
   @override
-  Widget build(context) {
+  Widget build(BuildContext context) {
     return ATContainer(
       height: height, width: width,
       color: ATColors.hexFED601,

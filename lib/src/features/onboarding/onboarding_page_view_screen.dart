@@ -41,14 +41,14 @@ class _AmptiveOnboardingScreenState extends State<AmptiveOnboardingScreen> {
     return ATAnnotatedRegion(
       child: Scaffold(
         body: Stack(
-          children: [
+          children: <Widget>[
             PageView(
               controller: _controller,
-              onPageChanged: (index) => context
+              onPageChanged: (int index) => context
                   .read<AmptiveOnboardingBloc>()
                   .add(SwipeToAnotherPageOnboardingEvent(
                       indexOfDestinationPage: index)),
-              children: [
+              children: <Widget>[
                 AmptiveCustomOnboardingPageViewSlideWidget(
                   title: ATStrings.goLiveLikeNeverBefore,
                   description:
@@ -73,7 +73,7 @@ class _AmptiveOnboardingScreenState extends State<AmptiveOnboardingScreen> {
               right: 20,
               child: Row(
                 mainAxisSize: MainAxisSize.min,
-                children: [
+                children: <Widget>[
                   SmoothPageIndicator(
                     controller: _controller,
                     count: 3,
@@ -95,10 +95,10 @@ class _AmptiveOnboardingScreenState extends State<AmptiveOnboardingScreen> {
                         onPressed: () =>
                             context.pushReplacementNamed(ATRoutes.welcome),
                         child: BlocBuilder<AmptiveOnboardingBloc,
-                            AmptiveOnboardingState>(builder: (_, state) {
-                          final currentState =
+                            AmptiveOnboardingState>(builder: (_, AmptiveOnboardingState state) {
+                          final CurrentOnboardingPageViewIndexState currentState =
                               state as CurrentOnboardingPageViewIndexState;
-                          final currentPageIndex =
+                          final int currentPageIndex =
                               currentState.currentPageIndex;
                           return Text(currentPageIndex > 1
                               ? ATStrings.NEXT

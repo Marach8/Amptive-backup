@@ -1,3 +1,4 @@
+import 'package:amptive/src/features/discover/presentation/widgets/render_trending_hashtag.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import '../../../../utils/constants/colors.dart';
@@ -6,19 +7,18 @@ import '../../../../views/widgets/common_widgets/circle_avatar.dart';
 import '../../../../views/widgets/common_widgets/custom_container_widget.dart';
 import '../../../../views/widgets/common_widgets/image_loader_widget.dart';
 
-class RenderTrendingHashTag extends StatelessWidget {
-  const RenderTrendingHashTag({
+class TrendingTechnologyWidget extends StatelessWidget {
+  const TrendingTechnologyWidget({
     super.key,
     required this.trendingPicture
   });
-
   final String trendingPicture;
 
   @override
   Widget build(BuildContext context) {
     return ATContainer(
-      width: 145,
-      padding: const EdgeInsets.only(left: 16),
+      width: 250,
+      padding: const EdgeInsets.only(left: 10),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
@@ -29,76 +29,49 @@ class RenderTrendingHashTag extends StatelessWidget {
               child: ATImgLoader(
                 imgPath: trendingPicture,
                 boxFit: BoxFit.fill,
-                width: 145
               ),
             ),
           ),
-          const SizedBox(height: 10,),
-          SizedBox(
-            width: 145,
-            child: Text(
-              "Don't forget who you are",
-              style: Theme.of(context).textTheme.bodySmall,
-            ),
+          const SizedBox(height: 12,),
+          LayoutBuilder(
+            builder: (_, BoxConstraints kst) {
+              return SizedBox(
+                width: kst.maxWidth,
+                child: Text(
+                  "Don't forget who you are",
+                  style: Theme.of(context).textTheme.bodySmall,
+                ),
+              );
+            }
           ),
           Row(
-            mainAxisSize: MainAxisSize.min,
             children: <Widget>[
               const PaidIcon(),
-              const SizedBox(width: 4,),
+              const SizedBox(width: 5,),
               Flexible(
                 child: Text(
-                  'glendonnoyle',
+                  'glendonnor',
                   style: Theme.of(context).textTheme.titleSmall?.copyWith(
                     fontSize: ATFontSizes.size13,
-                    color: ATColors.hexA8A8A8,
+                    color: ATColors.hexCDCDCD
                   ),
                 ),
               ),
-              const Gap(5),
-              
-              Align(
-                alignment: Alignment.bottomCenter,
-                child: ATCircleAvatar(
-                  diameter: 4,
-                  color: ATColors.hexA8A8A8,
-                ),
+              const SizedBox(width: 5,),
+              ATCircleAvatar(
+                diameter: 4,
+                color: ATColors.hexCDCDCD
               ),
-              const Gap(5),
+              const SizedBox(width: 5,),
               Text(
-                'LIVE',
+                'FRIDAY',
                 style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                  color: ATColors.hexA8A8A8,
+                  color: ATColors.hexCDCDCD
                 ),
               ),
             ],
           )
         ],
-      ),
-    );
-  }
-}
-
-
-
-class PaidIcon extends StatelessWidget {
-  const PaidIcon({super.key, this.size});
-  final double? size;
-
-  @override
-  Widget build(BuildContext context) {
-    return ATContainer(
-      height: size ?? 12, width: size ?? 12,
-      color: ATColors.hexB6B6B6,
-      child: FittedBox(
-        fit: BoxFit.scaleDown,
-        child: Text(
-          "P",
-          style: Theme.of(context).textTheme.displayMedium?.copyWith(
-            color: ATColors.hex0D0D0D,
-            fontWeight: FontWeight.w800
-          ),
-        ),
       ),
     );
   }

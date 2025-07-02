@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import '../models/preferences.dart';
 
 class PreferenceService {
-  final List<Preferences> _items = [
+  final List<Preferences> _items = <Preferences>[
     Preferences.card("Music", const Color(0xFFEF8C62), const Color(0xFFEF6262)),
     Preferences.card("Art", const Color(0xFFD95335), const Color(0xFFD93535)),
     Preferences.card(
@@ -35,7 +35,7 @@ class PreferenceService {
   }
 
   List<Preferences> getSelected() {
-    return _items.where((obj) => obj.isSelected).toList();
+    return _items.where((Preferences obj) => obj.isSelected).toList();
   }
 
   Future<void> getAll() async {

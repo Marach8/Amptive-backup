@@ -38,7 +38,7 @@ with SingleTickerProviderStateMixin{
   @override
   Widget build(BuildContext context) {
     return Column(
-      children: [
+      children: <Widget>[
         TabBar(
           controller: _tabController,
           physics: const BouncingScrollPhysics(),
@@ -49,13 +49,13 @@ with SingleTickerProviderStateMixin{
           padding: const EdgeInsets.only(left: 15),
           isScrollable: true,
           dividerColor: ATColors.hex0D0D0D,
-          tabs: ['All', 'Shows', 'Events', 'Users', 'Hashtags'].asMap().entries.map(
-            (tab){              
+          tabs: <String>['All', 'Shows', 'Events', 'Users', 'Hashtags'].asMap().entries.map(
+            (MapEntry<int, String> tab){              
               return Tab(
                 child: ValueListenableBuilder(
                 valueListenable: _isTabSelected,
-                builder: (_, value, __) {
-                  final isSelected = tab.key == value;
+                builder: (_, int value, __) {
+                  final bool isSelected = tab.key == value;
                     return ATContainer(
                       radius: 20,
                       margin: const EdgeInsets.only(right: 10),
@@ -82,7 +82,7 @@ with SingleTickerProviderStateMixin{
           height: ATHelperFuncs.getScreenHeight(context),
           child: TabBarView(
             controller: _tabController,
-            children: [
+            children: <Widget>[
               Column(
                 children: List.generate(
                   10,

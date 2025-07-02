@@ -10,10 +10,6 @@ import '../../../../common_widgets/custom_rebuilder_widget.dart';
 import '../../../../common_widgets/image_loader_widget.dart';
 
 class AmptiveCreateShowOrEventSelectionWidget extends StatelessWidget {
-  final String onSelectedImagePath,
-  title, subtitle, alphabet;
-  final  ValueNotifier<bool> activateBtn,
-  showSelected, eventSelected;
   const AmptiveCreateShowOrEventSelectionWidget({
     super.key,
     required this.activateBtn,
@@ -24,13 +20,17 @@ class AmptiveCreateShowOrEventSelectionWidget extends StatelessWidget {
     required this.showSelected,
     required this.eventSelected
   });
+  final String onSelectedImagePath,
+  title, subtitle, alphabet;
+  final  ValueNotifier<bool> activateBtn,
+  showSelected, eventSelected;
 
   @override
   Widget build(BuildContext context) {
-    final isShow = title == ATStrings.CREATE_SHOW;
+    final bool isShow = title == ATStrings.CREATE_SHOW;
     return AmptiveRebuilderWidget(
       notifier: isShow ? showSelected : eventSelected,
-      builder: (_, value, __) {
+      builder: (_, bool value, __) {
         return GestureDetector(
           onTap: (){
             if(isShow){
@@ -46,7 +46,7 @@ class AmptiveCreateShowOrEventSelectionWidget extends StatelessWidget {
           },
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
+            children: <Widget>[
               ATContainer(
                 duration: 200,
                 height: 120.h,
@@ -66,7 +66,7 @@ class AmptiveCreateShowOrEventSelectionWidget extends StatelessWidget {
               Gap(20.h),
               Row(
                 mainAxisSize: MainAxisSize.min,
-                children: [
+                children: <Widget>[
                   ATCircleAvatar(
                     animationDuration: 200,
                     diameter: 15,

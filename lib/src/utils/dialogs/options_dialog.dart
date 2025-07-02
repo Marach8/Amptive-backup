@@ -28,7 +28,7 @@ void showProgramOptions(BuildContext context)
             mainAxisSize: MainAxisSize.min,
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
+            children: <Widget>[
               Align(
                 alignment: Alignment.center,
                 child: GestureDetector(
@@ -47,11 +47,11 @@ void showProgramOptions(BuildContext context)
               ),
               const Gap(20),
               ...mapOfOptions.entries.map(
-                (entry) => Padding(
+                (MapEntry<String, Widget> entry) => Padding(
                   padding: const EdgeInsets.only(bottom: 30),
                   child: Row(
                     mainAxisSize: MainAxisSize.min,
-                    children: [
+                    children: <Widget>[
                       entry.value,
                       const Gap(15),
                       Text(
@@ -72,7 +72,7 @@ void showProgramOptions(BuildContext context)
   );
 
 
-  Map<String, Widget> mapOfOptions = {
+  Map<String, Widget> mapOfOptions = <String, Widget>{
   'Subscribe to glennodoyle': const Icon(Icons.favorite_border_outlined),
   'Follow glennodoyle': const ATImgLoader(imgPath: ATImgStrings.FOLLOW_ICON),
   'Share live': const ATImgLoader(imgPath: ATImgStrings.SHARE_LIVE),

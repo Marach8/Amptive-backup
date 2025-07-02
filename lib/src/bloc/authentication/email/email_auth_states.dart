@@ -3,9 +3,9 @@ abstract class ATAuthState {}
 class InitialAuthState extends ATAuthState {}
 
 class MainAuthState extends ATAuthState {
-  String? userEmail;
 
   MainAuthState({this.userEmail});
+  String? userEmail;
 }
 
 class LoadingAuthState extends ATAuthState {}

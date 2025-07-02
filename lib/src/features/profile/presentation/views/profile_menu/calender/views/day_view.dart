@@ -19,24 +19,24 @@ class ATCalenderScreen extends StatelessWidget {
   const ATCalenderScreen({super.key});
 
   @override
-  Widget build(context) {
+  Widget build(BuildContext context) {
     return ATAnnotatedRegion(
       child: Scaffold(
         body: Padding(
           padding: const EdgeInsets.fromLTRB(0, kToolbarHeight, 0, kBottomNavigationBarHeight),
           child: Column(
-            children: [
+            children: <Widget>[
               Padding(
                 padding: const EdgeInsets.fromLTRB(5, 0,15, 10),
                 child: Row(
-                  children: [
+                  children: <Widget>[
                     GestureDetector(
                       onTap: () => context.pop(),
                       child: const Icon(Icons.keyboard_arrow_left, size: 30),
                     ),
                     BlocSelector<CalenderViewsBloc, CalenderViewsState, String>(
-                      selector: (curr) => curr.$2,
-                      builder: (_, state) {
+                      selector: (CalenderViewsState curr) => curr.$2,
+                      builder: (_, String state) {
                         return Text(
                           state,
                           style: Theme.of(context).textTheme.bodyLarge?.copyWith(
@@ -47,8 +47,8 @@ class ATCalenderScreen extends StatelessWidget {
                     ),
                     const Spacer(),
                     BlocSelector<CalenderViewsBloc, CalenderViewsState, int>(
-                      selector: (curr) => curr.$1,
-                      builder: (_, state) {
+                      selector: (CalenderViewsState curr) => curr.$1,
+                      builder: (_, int state) {
                         return CalenderDropDown(currIndex: state);
                       }
                     ),
@@ -58,7 +58,7 @@ class ATCalenderScreen extends StatelessWidget {
           
               Expanded(
                 child: BlocConsumer<CalenderViewsBloc, CalenderViewsState>(
-                  listener: (_, state){
+                  listener: (_, CalenderViewsState state){
                     if(state.$1 == 1){
                       context.read<CalenderViewsBloc>().showOnlyYear();
                     }
@@ -66,12 +66,12 @@ class ATCalenderScreen extends StatelessWidget {
                       context.read<CalenderViewsBloc>().showMonthAndYear();
                     }
                   },
-                  buildWhen: (prev, curr) => prev.$1 != curr.$1,
-                  listenWhen: (prev, curr) => prev.$1 != curr.$1,
-                  builder: (_, state) {
+                  buildWhen: (CalenderViewsState prev, CalenderViewsState curr) => prev.$1 != curr.$1,
+                  listenWhen: (CalenderViewsState prev, CalenderViewsState curr) => prev.$1 != curr.$1,
+                  builder: (_, CalenderViewsState state) {
                     return IndexedStack(
                       index: state.$1,
-                      children: const [
+                      children: const <Widget>[
                         CalenderDayView(),
                         CalenderMonthView(),
                         ScheduledEventsView()
@@ -107,13 +107,13 @@ class CalenderDayView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const Column(
-      children: [
+      children: <Widget>[
         SizedBox(height: 70, child: DateAndWeekDays()),
 
         Expanded(
           child: Stack(
             alignment: Alignment.topCenter,
-            children: [
+            children: <Widget>[
               HoursAndProgramsList(),
               CurrentTimeIndicator()
             ],
@@ -157,8 +157,8 @@ class _CurrentTimeIndicatorState extends State<CurrentTimeIndicator> {
   @override
   Widget build(BuildContext context) {
     // Calculate position based on current time
-    final totalMinutes = _currentTime.hour * 60 + _currentTime.minute;
-    final position = (totalMinutes / 1440) * (60 * 24); // 60px per hour * 24 hours
+    final int totalMinutes = _currentTime.hour * 60 + _currentTime.minute;
+    final double position = (totalMinutes / 1440) * (60 * 24); // 60px per hour * 24 hours
 
     return Positioned(
       top: 0,
@@ -168,7 +168,7 @@ class _CurrentTimeIndicatorState extends State<CurrentTimeIndicator> {
         height: 2,
         color: Colors.green,
         child: Row(
-          children: [
+          children: <Widget>[
             Text(
               DateFormat.jm().format(_currentTime),
               style: const TextStyle(color: Colors.green),

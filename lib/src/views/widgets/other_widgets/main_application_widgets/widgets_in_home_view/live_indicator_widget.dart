@@ -20,7 +20,7 @@ class AmptiveLiveIndicatorWidget extends StatelessWidget {
         gradient: LinearGradient(
           begin: Alignment.topCenter,
           end: Alignment.bottomCenter,
-          colors: [
+          colors: <Color>[
             ATColors.hexF91880,
             ATColors.orangeGradientColorB
           ]

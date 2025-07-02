@@ -1,10 +1,6 @@
 import 'package:flutter/material.dart';
 
 class ATOutlinedBtn extends StatelessWidget {
-  final String buttonTitle;
-  final Color? fgColor, bgColor;
-  final void Function()? onPressed;
-  final double? height;
 
   const ATOutlinedBtn({
     super.key,
@@ -14,9 +10,13 @@ class ATOutlinedBtn extends StatelessWidget {
     this.bgColor,
     this.height
   });
+  final String buttonTitle;
+  final Color? fgColor, bgColor;
+  final void Function()? onPressed;
+  final double? height;
 
   @override
-  Widget build(context) {
+  Widget build(BuildContext context) {
     return OutlinedButton(
       style: ElevatedButton.styleFrom(
         foregroundColor: fgColor,

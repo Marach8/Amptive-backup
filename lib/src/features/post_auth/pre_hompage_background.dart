@@ -5,14 +5,14 @@ import 'package:amptive/src/utils/constants/colors.dart';
 import 'package:flutter/material.dart';
 
 class PreHomePageBackground extends StatefulWidget {
-  final Color? color;
-  final double angle;
   
   const PreHomePageBackground({
     super.key,
     this.color,
     this.angle = 0.0
   });
+  final Color? color;
+  final double angle;
 
 
   @override
@@ -83,25 +83,25 @@ class _PreHomePageBackgroundState extends State<PreHomePageBackground>
 }
 
 class HalfMoonPainter extends CustomPainter {
+
+  HalfMoonPainter({required this.animation, required this.stretchedMode, required this.color})
+      : super(repaint: animation);
   final Animation<double> animation;
   final bool stretchedMode;
   final Color color;
 
-  HalfMoonPainter({required this.animation, required this.stretchedMode, required this.color})
-      : super(repaint: animation);
-
   @override
   void paint(Canvas canvas, Size size) {
-    var w = size.width;
-    var h = size.height;
+    double w = size.width;
+    double h = size.height;
 
-    final paint = Paint()
+    final Paint paint = Paint()
       ..color = color
       ..style = PaintingStyle.fill
       ..maskFilter =
           MaskFilter.blur(BlurStyle.normal, convertRadiusToSigma(1000));
 
-    final path = Path();
+    final Path path = Path();
 
     path.moveTo(w * 0.3, h * 0.7);
     path.lineTo(w * 0.2, h * 0.8);

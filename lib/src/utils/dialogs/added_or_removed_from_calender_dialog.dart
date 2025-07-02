@@ -20,7 +20,7 @@ Future<bool?> showAddedOrRemovedSnackbar({
         radius: 15, color: ATColors.snackBarBgColor,
         padding: const EdgeInsets.all(15),
         child: Row(
-          children: [
+          children: <Widget>[
             const Icon(Icons.check_circle), 
             const SizedBox(width: 10,),
             Expanded(
@@ -33,7 +33,7 @@ Future<bool?> showAddedOrRemovedSnackbar({
             InkWell(
               onTap: () => context.pop(true),
               child: Row(
-                children: [
+                children: <Widget>[
                   Text(
                     ATStrings.VIEW,
                     style: Theme.of(context).textTheme.bodySmall?.copyWith(

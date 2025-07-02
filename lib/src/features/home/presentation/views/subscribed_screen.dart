@@ -23,7 +23,7 @@ class ATSubscribedPrograms extends StatelessWidget {
         body: SafeArea(
           child: NestedScrollView(
             floatHeaderSlivers: true,
-            headerSliverBuilder: (_, __) => [
+            headerSliverBuilder: (_, __) => <Widget>[
               SliverAppBar(
                 floating: true,   
                 leadingWidth: 200,
@@ -51,7 +51,7 @@ class ATSubscribedPrograms extends StatelessWidget {
             body: ATRefreshIndicator(
               child: ListView(              
                 padding: EdgeInsets.zero,
-                children: [      
+                children: <Widget>[      
                   ...Iterable.generate(
                     10,
                     (_) => Padding(

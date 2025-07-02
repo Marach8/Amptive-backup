@@ -13,9 +13,9 @@ import '../calender_export.dart' show CalenderProgramDisplay;
 class HoursAndProgramsList extends StatelessWidget {
   const HoursAndProgramsList({super.key});
   @override
-  Widget build(context) {
+  Widget build(BuildContext context) {
     return BlocBuilder<HoursInADayBloc, HoursInADayState?>(
-      builder: (_, state) {
+      builder: (_, HoursInADayState? state) {
         if(state == null) return const SizedBox.shrink();
         if(!state.$1) return const Center(child: ATLoadingIndicator(size: 30));
 
@@ -23,12 +23,12 @@ class HoursAndProgramsList extends StatelessWidget {
           physics: const BouncingScrollPhysics(),
           padding: const EdgeInsets.only(left: 15),
           itemCount: state.$2.length,
-          itemBuilder: (_, index) {
-            final formattedTime = state.$2.elementAt(index);
+          itemBuilder: (_, int index) {
+            final String formattedTime = state.$2.elementAt(index);
             return Column(
-              children: [
+              children: <Widget>[
                 Row(
-                  children: [
+                  children: <Widget>[
                     Text(
                       formattedTime, 
                       style: Theme.of(context).textTheme.bodyMedium?.copyWith(
@@ -43,17 +43,17 @@ class HoursAndProgramsList extends StatelessWidget {
                   ],
                 ),
                 BlocBuilder<CalenderProgramBloc, ProgramsState>(
-                  builder: (_, state) {
-                    final isLoading = state is ProgramsLoadingState;
-                    final hasError = state is ProgramsErrorState;
-                    final initialState = state is NoProgramsState;
+                  builder: (_, ProgramsState state) {
+                    final bool isLoading = state is ProgramsLoadingState;
+                    final bool hasError = state is ProgramsErrorState;
+                    final bool initialState = state is NoProgramsState;
         
                     if(initialState) return const SizedBox(height: 30);
                     if(isLoading) return const ATShimmer(margin: EdgeInsets.only(left: 58));
                     if(hasError) return const Text('Error occured');
         
-                    final programs = state as ProgramsDataState;
-                    final listOfProgs = programs.programs[formattedTime];
+                    final ProgramsDataState programs = state as ProgramsDataState;
+                    final List<CalenderProgram>? listOfProgs = programs.programs[formattedTime];
         
                     if(listOfProgs == null) return const SizedBox(height: 30);
                                   
@@ -61,7 +61,7 @@ class HoursAndProgramsList extends StatelessWidget {
                       mainAxisSize: MainAxisSize.min,
                       spacing: 5,
                       children: listOfProgs.map(
-                        (program) => CalenderProgramDisplay(program: program),
+                        (CalenderProgram program) => CalenderProgramDisplay(program: program),
                       ).toList()
                     );
                   }

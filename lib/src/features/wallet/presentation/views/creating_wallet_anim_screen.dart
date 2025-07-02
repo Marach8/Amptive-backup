@@ -14,15 +14,15 @@ class ATWalletCreationAnimScreen extends StatelessWidget {
   const ATWalletCreationAnimScreen({super.key});
 
   @override
-  Widget build(context) {
+  Widget build(BuildContext context) {
     return BlocProvider(
       create: (_) => WalletCreationAnimBloc(),
       child: Builder(
-        builder: (blocContext) {
+        builder: (BuildContext blocContext) {
           WidgetsBinding.instance.addPostFrameCallback(
             (_) => Future.delayed(
               const Duration(milliseconds: 500),
-              () => blocContext.mounted ? blocContext.read<WalletCreationAnimBloc>().triggerNext(0) : {}
+              () => blocContext.mounted ? blocContext.read<WalletCreationAnimBloc>().triggerNext(0) : <dynamic, dynamic>{}
             )
           );
           
@@ -30,8 +30,8 @@ class ATWalletCreationAnimScreen extends StatelessWidget {
             statusBarColor: ATColors.trsprnt,
             child: Scaffold(
               body: BlocSelector<WalletCreationAnimBloc, List<bool>, bool>(
-                selector: (state) => state.elementAt(3),
-                builder: (_, successState) {
+                selector: (List<bool> state) => state.elementAt(3),
+                builder: (_, bool successState) {
                   if(successState){
                     return const WalletCretionSuccess();
                   }
@@ -42,8 +42,8 @@ class ATWalletCreationAnimScreen extends StatelessWidget {
               bottomSheet: Padding(
                 padding: const EdgeInsets.fromLTRB(15, 5, 15, 10),
                 child: BlocSelector<WalletCreationAnimBloc, List<bool>, bool>(
-                  selector: (state) => state.elementAt(3),
-                  builder: (_, isVisible) {
+                  selector: (List<bool> state) => state.elementAt(3),
+                  builder: (_, bool isVisible) {
                     return ATAnimatedCrossFade(
                       condition: isVisible,
                       secondChild: const SizedBox.shrink(),

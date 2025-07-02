@@ -55,7 +55,7 @@ class LoadingAccountWidget extends StatefulWidget {
 class _LoadingAccountWidgetState extends State<LoadingAccountWidget> {
   late String text;
 
-  var textList = [
+  List<String> textList = <String>[
     "We are creating your account",
     "Join or create live audio events",
     "Subscribe and support creators"
@@ -83,14 +83,14 @@ class _LoadingAccountWidgetState extends State<LoadingAccountWidget> {
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
+      children: <Widget>[
         Container(
           margin: EdgeInsets.only(top: 270.h),
           child: Center(
             child: AnimatedSwitcher(
               duration: const Duration(milliseconds: 300),
               transitionBuilder: (Widget child, Animation<double> animation) {
-                final inAnimation = TweenSequence([
+                final Animation<Offset> inAnimation = TweenSequence(<TweenSequenceItem<Offset>>[
                   TweenSequenceItem(
                       tween: ConstantTween(const Offset(0.0, 1.0)), weight: 2),
                   TweenSequenceItem(
@@ -101,7 +101,7 @@ class _LoadingAccountWidgetState extends State<LoadingAccountWidget> {
                       weight: 1),
                 ]).animate(animation);
 
-                final outAnimation = TweenSequence([
+                final Animation<Offset> outAnimation = TweenSequence(<TweenSequenceItem<Offset>>[
                   TweenSequenceItem(
                       tween: ConstantTween(const Offset(0.0, 1.0)), weight: 1),
                   TweenSequenceItem(

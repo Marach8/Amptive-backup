@@ -7,8 +7,6 @@ import 'package:gap/gap.dart';
 import 'container_with_picture.dart';
 
 class AmptiveRecentSearchesListTileWidget extends StatelessWidget {
-  final String title, leadingImagePath;
-  final bool isCircular;
 
   const AmptiveRecentSearchesListTileWidget({
     super.key,
@@ -16,9 +14,11 @@ class AmptiveRecentSearchesListTileWidget extends StatelessWidget {
     required this.leadingImagePath,
     this.isCircular = false
   });
+  final String title, leadingImagePath;
+  final bool isCircular;
 
   @override
-  Widget build(context) {
+  Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only(bottom: 15),
       child: ListTile(
@@ -40,7 +40,7 @@ class AmptiveRecentSearchesListTileWidget extends StatelessWidget {
           ),
         ),
         subtitle: Row(
-          children: [
+          children: <Widget>[
             Text(
               'Show',
               style: Theme.of(context).textTheme.titleSmall?.copyWith(
@@ -67,7 +67,7 @@ class AmptiveRecentSearchesListTileWidget extends StatelessWidget {
 
         trailing: GestureDetector(
           onTap: (){},
-          child: Icon(Icons.close, size: 14, color: ATColors.authHintColor,),
+          child: Icon(Icons.close, size: 14, color: ATColors.hexB6B6B6,),
         )
       ),
     );

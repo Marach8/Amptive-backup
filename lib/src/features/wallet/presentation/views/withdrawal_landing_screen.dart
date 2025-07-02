@@ -14,9 +14,9 @@ import '../widgets/wallets_widget_export.dart';
 class ATWithdrwalLandingScreen extends StatelessWidget {
   const ATWithdrwalLandingScreen({super.key});
 
-  static Map<String, List<String>> map = {
-    ATImgStrings.WIRE_TRANSFER: [ATStrings.WIRE_TRSF, ATStrings.WIRE_TRSF_DESC],
-    ATImgStrings.PAYPAL_ICON: [ATStrings.PAYPAL, ATStrings.PAYPAL_DESC],
+  static Map<String, List<String>> map = <String, List<String>>{
+    ATImgStrings.WIRE_TRANSFER: <String>[ATStrings.WIRE_TRSF, ATStrings.WIRE_TRSF_DESC],
+    ATImgStrings.PAYPAL_ICON: <String>[ATStrings.PAYPAL, ATStrings.PAYPAL_DESC],
   };
 
   @override
@@ -25,7 +25,7 @@ class ATWithdrwalLandingScreen extends StatelessWidget {
       child: BlocProvider(
         create: (_) => _PrivateBloc(),
         child: Builder(
-          builder: (context) {
+          builder: (BuildContext context) {
             return Scaffold(
               appBar: const ATAppBar(
                 leading: ATRoundedBackBtn(),
@@ -39,7 +39,7 @@ class ATWithdrwalLandingScreen extends StatelessWidget {
                 physics: const BouncingScrollPhysics(),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
+                  children: <Widget>[
                     Text(
                       maxLines: 2,
                       ATStrings.CHOOSE_WITHDRWAL_METHOD,
@@ -52,11 +52,11 @@ class ATWithdrwalLandingScreen extends StatelessWidget {
                     Row(
                       spacing: 10,
                       children: map.entries.indexed.map(
-                        (entry) {
+                        ((int, MapEntry<String, List<String>>) entry) {
                           return Expanded(
                             child: BlocBuilder<_PrivateBloc, int?>(
-                              builder: (_, state) {
-                                final isSelected = state == entry.$1;
+                              builder: (_, int? state) {
+                                final bool isSelected = state == entry.$1;
                                 return ATScaleUpAndDownWidget(
                                   imgPath: entry.$2.key,
                                   title: entry.$2.value.first,
@@ -79,7 +79,7 @@ class ATWithdrwalLandingScreen extends StatelessWidget {
               bottomNavigationBar: Padding(
                 padding: const EdgeInsets.fromLTRB(15, 5, 15, 10),
                 child: BlocBuilder<_PrivateBloc, int?>(
-                  builder: (_, state) {
+                  builder: (_, int? state) {
                     return ATPlainElevatedBtn(
                       onPressed: state == null ? null : 
                         () => context.pushReplacementNamed(ATRoutes.SELECT_BANK_COUNTRY),

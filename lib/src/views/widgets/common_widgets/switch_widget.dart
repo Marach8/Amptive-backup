@@ -12,7 +12,7 @@ class AmptiveSwitch extends StatelessWidget {
   final void Function(bool p1) onChanged;
 
   @override
-  Widget build(context) {
+  Widget build(BuildContext context) {
     return Transform.scale(
       scale: 0.6,
       child: Switch.adaptive(

@@ -18,17 +18,17 @@ class AmptiveCreatorProfileScreen extends StatelessWidget {
   const AmptiveCreatorProfileScreen({super.key});
 
   @override
-  Widget build(context) {
+  Widget build(BuildContext context) {
     
     return ATAnnotatedRegion(
       statusBarColor: ATColors.trsprnt,
       child: Scaffold(
         body: NestedScrollView(
-          headerSliverBuilder: (_, __) => [
+          headerSliverBuilder: (_, __) => <Widget>[
             SliverAppBar(
               expandedHeight: 500.0, pinned: true,
               automaticallyImplyLeading: false,
-              actions: [
+              actions: <Widget>[
                 const Gap(15),
                 ATCircleAvatar(
                   onTap: () => context.pop(),
@@ -37,7 +37,7 @@ class AmptiveCreatorProfileScreen extends StatelessWidget {
                 ),
                 const Spacer(),
                 Stack(
-                  children: [
+                  children: <Widget>[
                     ATCircleAvatar(
                       onTap: () => context.pushNamed(ATRoutes.COMMUNITY_TASK_SCREEN),
                       //onTap: () => context.pushNamed(AmptiveRoutes.USER_PROFILE_SCREEN),
@@ -60,10 +60,10 @@ class AmptiveCreatorProfileScreen extends StatelessWidget {
               ],
               backgroundColor: ATColors.black, stretch: true,
               flexibleSpace: FlexibleSpaceBar(
-                stretchModes: const [StretchMode.zoomBackground],
+                stretchModes: const <StretchMode>[StretchMode.zoomBackground],
                 background: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
+                  children: <Widget>[
                     const CreatorProfilePix(),                    
                     const SizedBox(height: 50),                
                     Text(
@@ -84,7 +84,7 @@ class AmptiveCreatorProfileScreen extends StatelessWidget {
                     const Row(
                       mainAxisSize: MainAxisSize.min,
                       spacing: 20,
-                      children: [
+                      children: <Widget>[
                         NoOfFollowers(noOfFollowers: '1.1m'),
                         NoOfSubscribers(),
                       ],
@@ -113,7 +113,7 @@ class AmptiveCreatorProfileScreen extends StatelessWidget {
           ],
 
           body: BlocBuilder<ProfileTabViewBloc, int>(
-            builder: (_, state) {
+            builder: (_, int state) {
               return IndexedStack(
                 index: state,
                 children: List.generate(
@@ -122,7 +122,7 @@ class AmptiveCreatorProfileScreen extends StatelessWidget {
                     physics: const BouncingScrollPhysics(),
                     padding: const EdgeInsets.fromLTRB(15, 0, 15, 50),
                     itemCount: 10,
-                    itemBuilder: (_, listIndex){
+                    itemBuilder: (_, int listIndex){
                       return ProfileEventOrShowDisplay(key: ValueKey('B$listIndex'),);
                     },
                   ),
@@ -145,7 +145,7 @@ class _ProfileDesc extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.fromLTRB(15, 0, 15, 0),
       child: ATRichText(
-        items: {
+        items: <String, TextStyle>{
           'Author of UNTAMED & LOVE WARRIOR. Host of WE CAN DO HARD THINGS. Founder of'
           : Theme.of(context).textTheme.titleMedium!.copyWith(
             fontSize: ATFontSizes.size13
@@ -159,7 +159,7 @@ class _ProfileDesc extends StatelessWidget {
           ),
         },
         textAlign: TextAlign.center,
-        textOnTap: (index){
+        textOnTap: (String index){
           if(index == 1){
             print("Hello");
           }
@@ -170,7 +170,7 @@ class _ProfileDesc extends StatelessWidget {
 }
 
 
-final _tabs = [
+final List<String> _tabs = <String>[
   ATStrings.SCHEDULED, ATStrings.ENDED,
   ATStrings.SHOWS, ATStrings.EVENTS
 ];

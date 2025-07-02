@@ -8,7 +8,7 @@ class EnterPinBloc extends Cubit<(String, bool?)> {
 
     if((state.$1 + input).length == 4){
       emit(((state.$1 + input), null));
-      final isValid = await _validatePin(state.$1);
+      final bool isValid = await _validatePin(state.$1);
       if(isValid){
         emit(((state.$1), isValid));
         return;
@@ -23,7 +23,7 @@ class EnterPinBloc extends Cubit<(String, bool?)> {
 
   void deletePin() {
     if (state.$1.isEmpty) return;
-    final newPin = state.$1.substring(0, state.$1.length - 1);
+    final String newPin = state.$1.substring(0, state.$1.length - 1);
     emit((newPin, state.$2));
   }
 

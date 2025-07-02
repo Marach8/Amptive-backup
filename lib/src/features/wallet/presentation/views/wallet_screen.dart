@@ -28,11 +28,11 @@ class ATWalletScreen extends StatelessWidget {
           padding: const EdgeInsets.fromLTRB(15, 10, 15, 20),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
+            children: <Widget>[
               const AvailableBalanceWidget(),
               const SizedBox(height: 20,),
               Row(
-                children: [
+                children: <Widget>[
                   Text(
                     ATStrings.TXN_HISTORY,
                     style: Theme.of(context).textTheme.bodySmall?.copyWith(
@@ -47,7 +47,7 @@ class ATWalletScreen extends StatelessWidget {
                     splashColor: ATColors.white,
                     borderRadius: BorderRadius.circular(5),
                     child: Row(
-                      children: [
+                      children: <Widget>[
                         Text(
                           ATStrings.VIEW_ALL,
                           style: Theme.of(context).textTheme.bodySmall?.copyWith(
@@ -88,7 +88,7 @@ class ATWalletScreen extends StatelessWidget {
               const SizedBox(height: 20),
               Expanded(
                 child: LayoutBuilder(
-                  builder: (_, kst){
+                  builder: (_, BoxConstraints kst){
                     return Row(
                       spacing: 10,
                       children: List.filled(

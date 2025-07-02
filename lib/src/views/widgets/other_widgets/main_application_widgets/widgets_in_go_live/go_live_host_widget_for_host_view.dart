@@ -14,12 +14,6 @@ import '../../../../../utils/dialogs/go_live/go_live_add_cohost_dialog.dart';
 import '../../../common_widgets/circle_avatar.dart';
 
 class AmptiveLiveHostAndCoHostWidget extends StatelessWidget {
-  final double? top, bottom, left, right;
-  final ObjectWithNotifier<Host>? hostOrCohost;
-  final GoLiveService service;
-  final bool isHost;
-  final int index;
-  final Function(ObjectWithNotifier<Host>? host) onTap;
   const AmptiveLiveHostAndCoHostWidget({
     super.key,
     this.top, this.bottom,
@@ -30,10 +24,16 @@ class AmptiveLiveHostAndCoHostWidget extends StatelessWidget {
     required this.service,
     required this.index
   });
+  final double? top, bottom, left, right;
+  final ObjectWithNotifier<Host>? hostOrCohost;
+  final GoLiveService service;
+  final bool isHost;
+  final int index;
+  final Function(ObjectWithNotifier<Host>? host) onTap;
 
   @override
-  Widget build(context) {
-    final showAddIcon = hostOrCohost?.obj.profilePicture == null;
+  Widget build(BuildContext context) {
+    final bool showAddIcon = hostOrCohost?.obj.profilePicture == null;
 
     return AnimatedPositioned(
       duration: const Duration(milliseconds: 500),
@@ -56,7 +56,7 @@ class AmptiveLiveHostAndCoHostWidget extends StatelessWidget {
         child : Column(
           mainAxisSize: MainAxisSize.min,
           mainAxisAlignment: MainAxisAlignment.start,
-          children: [
+          children: <Widget>[
             showAddIcon ? ATContainer(
               height: 64.h, width: 64.h, radius: 40.h,
               border: Border.all(color: ATColors.white, width: 0.5),
@@ -64,7 +64,7 @@ class AmptiveLiveHostAndCoHostWidget extends StatelessWidget {
             : Stack(
               clipBehavior: Clip.none,
               alignment: Alignment.center,
-              children: [
+              children: <Widget>[
                 ATCircularImage(
                   diameter: isHost ? 94.h : 64.h, addBorder: true,
                   borderColor: ATColors.white,
@@ -102,7 +102,7 @@ class AmptiveLiveHostAndCoHostWidget extends StatelessWidget {
               gradient: LinearGradient(
                 begin: Alignment.topCenter,
                 end: Alignment.bottomCenter,
-                colors: [
+                colors: <Color>[
                   ATColors.hexF91880,
                   ATColors.orangeGradientColorB
                 ]

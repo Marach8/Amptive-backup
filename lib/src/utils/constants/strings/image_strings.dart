@@ -59,7 +59,7 @@ class ATImgStrings{
   static const String noAvatarImage = '$_pngPath/no_avatar_image.png';
   static const String discoverPic1 = '$_pngPath/Frame 156.png';
   static const String OFFICE_LADIES = '$_pngPath/Frame 22.png';
-  static const String endlessThread = '$_pngPath/Frame 71.png';
+  static const String ENDLESS_THREAD = '$_pngPath/Frame 71.png';
   static const String GROUP_ICON_BLUE = '$_pngPath/Group_fill.png';
   static const String JOE_POMP_SHOW = '$_pngPath/Frame 71 (1).png';
   static const String CRIMINAL = '$_pngPath/Frame 71 (2).png';

@@ -69,7 +69,7 @@ class _ATOTPScreenState extends State<ATOTPScreen> {
   //   });
   // }
 
-  final correctPin = '1234';
+  final String correctPin = '1234';
   void resetTimer(BuildContext context) {
     context
         .read<AmptiveOTPAuthBloc>()
@@ -96,7 +96,7 @@ class _ATOTPScreenState extends State<ATOTPScreen> {
           child: Form(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
+              children: <Widget>[
                 Text(
                   '${ATStrings.ENTER_CODE} ${widget.emailOrPhone}',
                   maxLines: 2,
@@ -106,7 +106,7 @@ class _ATOTPScreenState extends State<ATOTPScreen> {
                 ),
                 const SizedBox(height: 11),
                 ATOTPFieldsWidget(
-                  onPinComplete: (pin) async{
+                  onPinComplete: (String pin) async{
                     log(pin);
                     if(pin == correctPin){
                       return true;
@@ -118,8 +118,8 @@ class _ATOTPScreenState extends State<ATOTPScreen> {
                 const SizedBox(height: 11),
 
                 BlocBuilder<AmptiveOTPAuthBloc, AmptiveOTPAuthState>(
-                  buildWhen: (prev, curr) => curr is AmptiveOTPCounterState,
-                  builder: (context, state) {
+                  buildWhen: (AmptiveOTPAuthState prev, AmptiveOTPAuthState curr) => curr is AmptiveOTPCounterState,
+                  builder: (BuildContext context, AmptiveOTPAuthState state) {
                     debugPrint(state.toString());
                     if (state is AmptiveOTPCounterState && state.timeLeft <= 0) {
                       _resendButtonEnabled = true;
@@ -127,7 +127,7 @@ class _ATOTPScreenState extends State<ATOTPScreen> {
                     if (state is AmptiveOTPCounterState) {
                       return _resendButtonEnabled ? RichText(
                         text: TextSpan(
-                          children: [
+                          children: <InlineSpan>[
                             TextSpan(
                               text: ATStrings.DID_NOT_GET_CODE,
                               style: Theme.of(context).textTheme.titleSmall
@@ -159,14 +159,14 @@ class _ATOTPScreenState extends State<ATOTPScreen> {
         bottomSheet: Padding(
           padding: const EdgeInsets.fromLTRB(15, 0, 15, 15),
           child: BlocConsumer<AmptiveOTPAuthBloc, AmptiveOTPAuthState>(
-            listener: (context, state) {
+            listener: (BuildContext context, AmptiveOTPAuthState state) {
               if (state is VerifiedOTPAuthState && context.mounted) {
                 //Remove this screen and the email input screen
                 context.pop(); context.pop(true);
               }
             },
-            buildWhen: (prev, curr) => curr is! AmptiveOTPCounterState,
-            builder: (context, state) {
+            buildWhen: (AmptiveOTPAuthState prev, AmptiveOTPAuthState curr) => curr is! AmptiveOTPCounterState,
+            builder: (BuildContext context, AmptiveOTPAuthState state) {
               return state is LoadingAuthState && context.mounted
                 ? const AmptiveLoadingButtonWidget()
                 : ATPlainElevatedBtn(

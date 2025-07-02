@@ -9,25 +9,25 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 class CreatorOrBizSetupLoading extends StatelessWidget {
   const CreatorOrBizSetupLoading({super.key});
 
-  static const creatorList = [ATStrings.CAT_SELECETED, ATStrings.SUB_FEE_SETUP, ATStrings.COHOST_FEE_SETUP];
-  static const bizList = [ATStrings.CAT_SELECETED, ATStrings.SETTING_UP_ACCT, ATStrings.ALMOST_THERE];
+  static const List<String> creatorList = <String>[ATStrings.CAT_SELECETED, ATStrings.SUB_FEE_SETUP, ATStrings.COHOST_FEE_SETUP];
+  static const List<String> bizList = <String>[ATStrings.CAT_SELECETED, ATStrings.SETTING_UP_ACCT, ATStrings.ALMOST_THERE];
 
   @override
   Widget build(BuildContext context) {   
-    final isCreator = context.read<AccountTypeBloc>().state;
+    final bool isCreator = context.read<AccountTypeBloc>().state;
     return Column(
       mainAxisSize: MainAxisSize.min,
-      children: [
+      children: <Widget>[
         SizedBox(
           height: 30,
           child: Stack(
             alignment: Alignment.center,
             children: (isCreator ? creatorList : bizList).map(
-              (item){
-                final index = (isCreator ? creatorList : bizList).indexOf(item);
+              (String item){
+                final int index = (isCreator ? creatorList : bizList).indexOf(item);
                 return BlocSelector<SwitchAcctSuccessAnimBloc, List<bool>, bool>(
-                  selector: (state) => state.elementAt(index),
-                  builder: (_, isVisible) {
+                  selector: (List<bool> state) => state.elementAt(index),
+                  builder: (_, bool isVisible) {
                     return AnimatedPositioned(
                       bottom: isVisible ? 0 : -30,
                       curve: Curves.decelerate,
@@ -35,12 +35,12 @@ class CreatorOrBizSetupLoading extends StatelessWidget {
                       onEnd: () => isVisible ? 
                         Future.delayed(
                           const Duration(milliseconds: 2500),
-                          () => context.mounted ? context.read<SwitchAcctSuccessAnimBloc>().triggerNext(index + 1) : {}
+                          () => context.mounted ? context.read<SwitchAcctSuccessAnimBloc>().triggerNext(index + 1) : <dynamic, dynamic>{}
                         ) : null,
                       child: Row(
                         mainAxisSize: MainAxisSize.min,
                         spacing: 10,
-                        children: [
+                        children: <Widget>[
                           Text(
                             item, 
                             style: Theme.of(context).textTheme.bodyMedium?.copyWith(

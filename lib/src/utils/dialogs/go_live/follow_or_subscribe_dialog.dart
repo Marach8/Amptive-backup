@@ -35,7 +35,7 @@ Future<void> showFollowHostOrCohostDialog({
       borderRadius: BorderRadius.only(
       topLeft: Radius.circular(15), topRight: Radius.circular(15),
     )),
-    builder: (context) {
+    builder: (BuildContext context) {
       return ClipRRect(
         borderRadius: const BorderRadius.only(
           topLeft: Radius.circular(15), topRight: Radius.circular(15),
@@ -48,7 +48,7 @@ Future<void> showFollowHostOrCohostDialog({
             child: Column(
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
+              children: <Widget>[
                 Center(
                   child: GestureDetector(
                     onTap: () => context.pop(),
@@ -67,7 +67,7 @@ Future<void> showFollowHostOrCohostDialog({
                 ),
                   const Gap(10),
                   Row(
-                    children: [
+                    children: <Widget>[
                       ATCircularImage(
                         imagePath: host.obj.profilePicture ?? '',
                         diameter: 70,
@@ -77,7 +77,7 @@ Future<void> showFollowHostOrCohostDialog({
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           mainAxisSize: MainAxisSize.min,
-                          children: [
+                          children: <Widget>[
                             Text(
                               host.obj.name ?? '',
                               style: Theme.of(context).textTheme.bodyMedium?.copyWith(
@@ -104,7 +104,7 @@ Future<void> showFollowHostOrCohostDialog({
                   const Gap(15),
                     
                   Row(
-                    children: [
+                    children: <Widget>[
                       CustomPaint(
                         size: const Size(16, 16),
                         painter: RoundedScallopedPainter(
@@ -169,9 +169,9 @@ Future<void> showFollowHostOrCohostDialog({
                     
                   const Gap(30),
                   Row(
-                    children: [
+                    children: <Widget>[
                       BlocConsumer<AmptiveFollowingBloc, FollowingState>(
-                        listener: (_, state){
+                        listener: (_, FollowingState state){
                           if(state is IsFollowingState){
                             context.read<AmptiveSubscriptionBloc>().add(
                               ReadyToSubscribeEvent()
@@ -183,10 +183,10 @@ Future<void> showFollowHostOrCohostDialog({
                             );
                           }
                         },
-                        builder: (_, state) {
-                          final isFollowing = state is IsFollowingState;
-                          final isLoading = state is FollowLoadingState;
-                          final notFollowing = state is IsNotFollowingState;
+                        builder: (_, FollowingState state) {
+                          final bool isFollowing = state is IsFollowingState;
+                          final bool isLoading = state is FollowLoadingState;
+                          final bool notFollowing = state is IsNotFollowingState;
 
                           return Flexible(
                             child: ATPlainElevatedBtn(
@@ -195,7 +195,7 @@ Future<void> showFollowHostOrCohostDialog({
                                   context.read<AmptiveFollowingBloc>().add(ShouldFollowEvent());
                                 }
                                 else if(isFollowing){
-                                  final shouldUnfollow = await showConfirmationDialog(
+                                  final bool? shouldUnfollow = await showConfirmationDialog(
                                     context: context,
                                     title: 'Unfollowing ${host.obj.name ?? ''}?',
                                     content: 'Unfollowing will automatically cancell your subscription to their content.',
@@ -220,11 +220,11 @@ Future<void> showFollowHostOrCohostDialog({
                       const Gap(10),
 
                       BlocBuilder<AmptiveSubscriptionBloc, SubscriptionState>(
-                        builder: (_, state) {
-                          final isSubscribed = state is SubscribedState;
-                          final isLoading = state is SubscriptionLoadingState;
-                          final unSubscribed = state is Ready2SubscribeState;
-                          final initialState = state is InitialSubState;
+                        builder: (_, SubscriptionState state) {
+                          final bool isSubscribed = state is SubscribedState;
+                          final bool isLoading = state is SubscriptionLoadingState;
+                          final bool unSubscribed = state is Ready2SubscribeState;
+                          final bool initialState = state is InitialSubState;
 
                           if(initialState){
                             return const SizedBox.shrink();
@@ -238,7 +238,7 @@ Future<void> showFollowHostOrCohostDialog({
                                   context.read<AmptiveSubscriptionBloc>().add(ShouldSubscribeEvent());
                                 }
                                 else if(isSubscribed){
-                                  final shouldUnSubscribe = await showConfirmationDialog(
+                                  final bool? shouldUnSubscribe = await showConfirmationDialog(
                                     context: context,
                                     title: "Are your sure you want to unsubscribe from ${host.obj.name ?? ''}'s content?",
                                     content: 'Unsubscribing will remove your access to "subscribers-only" live shows!',
@@ -257,7 +257,7 @@ Future<void> showFollowHostOrCohostDialog({
                               child: isLoading ? ATLoadingIndicator(color: ATColors.white,) 
                                 : unSubscribed ? Row(
                                   mainAxisSize: MainAxisSize.min,
-                                  children: [
+                                  children: <Widget>[
                                     Text(
                                       ATStrings.SUBSCRIBE,
                                       style: Theme.of(context).textTheme.bodyMedium?.copyWith(
@@ -302,18 +302,18 @@ Future<void> showFollowHostOrCohostDialog({
 
 
 class RoundedScallopedPainter extends CustomPainter {
-  final Color color;
   const RoundedScallopedPainter({required this.color});
+  final Color color;
 
   @override
   void paint(Canvas canvas, Size size) {
-    final paint = Paint()..color = color..style = PaintingStyle.fill;
+    final Paint paint = Paint()..color = color..style = PaintingStyle.fill;
 
-    final path = Path();
-    final center = Offset(size.width / 2, size.height / 2);
-    final radius = size.width / 2; // Radius of the main circle
-    const scallopCount = 10; // Number of scallops
-    final scallopRadius = size.width / 10; // Radius of each scallop
+    final Path path = Path();
+    final Offset center = Offset(size.width / 2, size.height / 2);
+    final double radius = size.width / 2; // Radius of the main circle
+    const int scallopCount = 10; // Number of scallops
+    final double scallopRadius = size.width / 10; // Radius of each scallop
 
     for (int i = 0; i < scallopCount; i++) {
       double theta1 = (2 * pi / scallopCount) * i; // Start angle of the scallop

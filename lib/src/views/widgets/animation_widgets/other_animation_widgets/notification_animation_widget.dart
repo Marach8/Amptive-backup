@@ -9,16 +9,16 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class CardData {
+
+  CardData(this.title, this.description, this.pics);
   late String title;
   late String description;
   late String pics;
-
-  CardData(this.title, this.description, this.pics);
 }
 
-List<CardData> _removedItems = [];
+List<CardData> _removedItems = <CardData>[];
 
-final List<CardData> _notifies = [
+final List<CardData> _notifies = <CardData>[
   CardData(
       "The HonestBunch is live now!",
       "Join the live show happening now:\nFrom Ghetto To Glory Featuring Daddy Showkey. Tap to listen and engage.",
@@ -66,12 +66,12 @@ class _AmptiveNotificationAnimationWidgetState extends State<AmptiveNotification
   Widget build(BuildContext context) {
     return Column(
         crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
+        children: <Widget>[
           Expanded(
             child: AnimatedList(
               key: _listKey,
               initialItemCount: _notifies.length,
-              itemBuilder: (context, index, animation) {
+              itemBuilder: (BuildContext context, int index, Animation<double> animation) {
                 return _buildItem(_notifies[index], animation, index);
               },
             ),
@@ -106,7 +106,7 @@ class _AmptiveNotificationAnimationWidgetState extends State<AmptiveNotification
             child: Container(
                 width: width.w,
                 decoration: index == 0 ? BoxDecoration(
-                  boxShadow: [
+                  boxShadow: <BoxShadow>[
                     BoxShadow(
                       color: ATColors.trsprnt,
                       spreadRadius: 10,
@@ -137,7 +137,7 @@ class _AmptiveNotificationAnimationWidgetState extends State<AmptiveNotification
       _removedItems.add(removedItem);
       _listKey.currentState?.removeItem(
         removeIndex,
-        (context, animation) => _buildItem(removedItem, animation, removeIndex),
+        (BuildContext context, Animation<double> animation) => _buildItem(removedItem, animation, removeIndex),
         duration: const Duration(milliseconds: 600),
       );
     }
@@ -158,10 +158,10 @@ class _AmptiveNotificationAnimationWidgetState extends State<AmptiveNotification
 }
 
 class CardWidget extends StatelessWidget {
-  final CardData item;
-  final double itemWidth;
 
   const CardWidget(this.item, this.itemWidth, {super.key});
+  final CardData item;
+  final double itemWidth;
 
   @override
   Widget build(BuildContext context) {
@@ -177,7 +177,7 @@ class CardWidget extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
+        children: <Widget>[
           Container(
             width: 30 * sf,
             height: 30.w,
@@ -197,12 +197,12 @@ class CardWidget extends StatelessWidget {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
+                children: <Widget>[
                   Container(
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
+                      children: <Widget>[
                         SizedBox(
                           width: 175 * sf,
                           child: Text(
@@ -231,7 +231,7 @@ class CardWidget extends StatelessWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
+                    children: <Widget>[
                       SizedBox(
                         width: 177 * sf,
                         child: Text(

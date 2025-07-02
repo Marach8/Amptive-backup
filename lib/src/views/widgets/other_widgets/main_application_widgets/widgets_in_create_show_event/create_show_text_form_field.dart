@@ -79,10 +79,6 @@ class CreateShowTextFormField extends ATTextFormField {
 
 
 class CreateShowTextFieldTitle extends StatelessWidget {
-  final String title;
-  final String? otherInfo;
-  final IconData? prefixIcon;
-  final TextStyle? titleStyle;
 
   const CreateShowTextFieldTitle({
     super.key,
@@ -91,11 +87,15 @@ class CreateShowTextFieldTitle extends StatelessWidget {
     this.prefixIcon,
     this.titleStyle,
   });
+  final String title;
+  final String? otherInfo;
+  final IconData? prefixIcon;
+  final TextStyle? titleStyle;
 
   @override
   Widget build(BuildContext context) {
     return Row(
-      children: [
+      children: <Widget>[
         Visibility(
           visible: prefixIcon != null,
           child: Padding(
@@ -146,7 +146,7 @@ class SelectedHashTags extends StatelessWidget {
     return SingleChildScrollView(
       scrollDirection: Axis.horizontal,
       child: Row(
-        children: hashtags.map((hashtag) {
+        children: hashtags.map((ObjectWithNotifier<Hashtag> hashtag) {
           return Padding(
             padding: const EdgeInsets.symmetric(horizontal: 4.0),
             child: Container(
@@ -156,7 +156,7 @@ class SelectedHashTags extends StatelessWidget {
                 borderRadius: BorderRadius.circular(10.r),
               ),
               child: Row(
-                children: [
+                children: <Widget>[
                   Text(
                     hashtag.obj.name,
                     style: Theme.of(context).textTheme.bodySmall?.copyWith(

@@ -2,16 +2,16 @@ import 'package:flutter/material.dart';
 import '../../../utils/constants/colors.dart';
 
 class ATLoadingIndicator extends StatelessWidget {
-  final Color? color;
-  final double size;
   const ATLoadingIndicator({
     super.key,
     this.color,
     this.size = 25
   });
+  final Color? color;
+  final double size;
 
   @override
-  Widget build(context) {
+  Widget build(BuildContext context) {
     return SizedBox(
       height: size, width: size,
       child: CircularProgressIndicator(

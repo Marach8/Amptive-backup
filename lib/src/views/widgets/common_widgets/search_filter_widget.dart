@@ -3,9 +3,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class ATFilterWidget<B extends BlocBase<String>> extends StatelessWidget{
-  final String title;
-  final TextStyle? style;
-  final String? padLeft, padRight;
 
   const ATFilterWidget({
     super.key,
@@ -14,23 +11,26 @@ class ATFilterWidget<B extends BlocBase<String>> extends StatelessWidget{
     this.padLeft,
     this.padRight,
   });
+  final String title;
+  final TextStyle? style;
+  final String? padLeft, padRight;
 
   @override
-  Widget build(context) {
+  Widget build(BuildContext context) {
     return BlocBuilder<B, String>(
-      builder: (_, state) {
-        final listOfStrings = title.trim().split('');
+      builder: (_, String state) {
+        final List<String> listOfStrings = title.trim().split('');
 
         return Text.rich(
           TextSpan(
-            children: [
+            children: <InlineSpan>[
               if (padLeft != null) TextSpan(
                 text: padLeft,
                 style: style,
               ),
               ...listOfStrings.map(
-                (stringOfText) {
-                  final shouldHighlightString = state.toLowerCase().contains(stringOfText.toLowerCase());
+                (String stringOfText) {
+                  final bool shouldHighlightString = state.toLowerCase().contains(stringOfText.toLowerCase());
                   return TextSpan(
                     text: stringOfText,
                     style: shouldHighlightString 

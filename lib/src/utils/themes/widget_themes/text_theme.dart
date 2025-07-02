@@ -57,7 +57,7 @@ class AmptiveTextTheme{
     ),
     
     labelMedium: TextStyle(
-      color: ATColors.authHintColor,
+      color: ATColors.hexB6B6B6,
       fontSize: ATFontSizes.size16,
       fontWeight: ATFontWeights.w400,
       overflow: TextOverflow.ellipsis

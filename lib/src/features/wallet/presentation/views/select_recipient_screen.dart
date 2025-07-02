@@ -21,6 +21,7 @@ import 'package:amptive/src/views/widgets/common_widgets/textformfield_widget.da
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:nested/nested.dart';
 import '../../../../views/widgets/common_widgets/app_bar_widget.dart';
 
 class ATSelectRecipientScreen extends StatefulWidget {
@@ -51,17 +52,17 @@ class _ATSelectRecipientScreenState extends State<ATSelectRecipientScreen> {
   Widget build(BuildContext _) {
     return ATAnnotatedRegion(
       child: MultiBlocProvider(
-        providers: [
+        providers: <SingleChildWidget>[
           BlocProvider(create: (_) => RecentRecipientsBloc()),
           BlocProvider(create: (_) => SearchkeyBloc())
         ],
         child: Builder(
-          builder: (context) {
+          builder: (BuildContext context) {
             return Scaffold(
               body: SafeArea(
                 child: NestedScrollView(
                   floatHeaderSlivers: true,
-                  headerSliverBuilder: (_, __) => [
+                  headerSliverBuilder: (_, __) => <Widget>[
                     const ATSliverAppBar(titleText: ATStrings.TRANSFER_FUNDS,),
                     SliverPersistentHeader(
                       pinned: true,
@@ -85,7 +86,7 @@ class _ATSelectRecipientScreenState extends State<ATSelectRecipientScreen> {
                                   ),
                                   icon: const Icon(Icons.close, size: 20,),
                                 ) : null,
-                                onChanged: (text){
+                                onChanged: (String text){
                                   if(text.isEmpty && showCancelIcon){
                                     setter(() => showCancelIcon = false);
                                   }
@@ -110,14 +111,14 @@ class _ATSelectRecipientScreenState extends State<ATSelectRecipientScreen> {
                     )
                   ],
                   body: BlocBuilder<RecentRecipientsBloc, RecentRecipientsState>(
-                    builder: (_, state) {
+                    builder: (_, RecentRecipientsState state) {
                       switch (state){
                         case RecentRecipientsInitial _:
                           return Padding(
                             padding: const EdgeInsets.fromLTRB(15, 0, 15, 20),
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
+                              children: <Widget>[
                                 Text(
                                   ATStrings.NO_RECENT_RECEPIENT,
                                   style: Theme.of(context).textTheme.bodyMedium?.copyWith(
@@ -142,8 +143,8 @@ class _ATSelectRecipientScreenState extends State<ATSelectRecipientScreen> {
                             physics: const BouncingScrollPhysics(),
                             padding: const EdgeInsets.only(bottom: kBottomNavigationBarHeight),
                             itemCount: state.recipients.length,
-                            itemBuilder: (_, index){
-                              final recipient = state.recipients.elementAt(index);
+                            itemBuilder: (_, int index){
+                              final ObjectWithNotifier<Host> recipient = state.recipients.elementAt(index);
                               return _UserWithTrailingRadio(user: recipient);
                             },
                           );
@@ -161,11 +162,11 @@ class _ATSelectRecipientScreenState extends State<ATSelectRecipientScreen> {
                   child: Padding(
                     padding: const EdgeInsets.fromLTRB(15, 5, 15, 10),
                     child: BlocBuilder<RecentRecipientsBloc, RecentRecipientsState>(
-                      builder: (_, state) {
+                      builder: (_, RecentRecipientsState state) {
                         return ATPlainElevatedBtn(
                           onPressed: (state is RecentRecipientsData && state.selectedRecipient != null) ? () async{
-                            final recipient = state.selectedRecipient!;
-                            final trsfAmount = await context.pushNamed(
+                            final ObjectWithNotifier<Host> recipient = state.selectedRecipient!;
+                            final String? trsfAmount = await context.pushNamed(
                               ATRoutes.ENTER_AMOUNT_2_TRSF,
                               extra: EnterAmountScreenParams(
                                 title: '${ATStrings.TRANSFER_FUNDS} to ${recipient.obj.name ?? ''}',
@@ -175,7 +176,7 @@ class _ATSelectRecipientScreenState extends State<ATSelectRecipientScreen> {
                             ) as String?;
 
                             if(context.mounted && trsfAmount != null){
-                              final shouldProceed = await inputTxnPinDialog(context: context, object: recipient);
+                              final bool? shouldProceed = await inputTxnPinDialog(context: context, object: recipient);
                               if(context.mounted && (shouldProceed ?? false)){
                                 context.pop(recipient.obj.username);
                               }
@@ -200,18 +201,18 @@ class _ATSelectRecipientScreenState extends State<ATSelectRecipientScreen> {
 
 
 class _UserWithTrailingRadio extends StatelessWidget {
-  final ObjectWithNotifier<Host> user;
 
   const _UserWithTrailingRadio({required this.user});
+  final ObjectWithNotifier<Host> user;
 
   @override
-  Widget build(context) {
+  Widget build(BuildContext context) {
     return InkWell(
       onTap: () => context.read<RecentRecipientsBloc>().add(SelectRecipient(user)),
       child: Padding(
         padding: const EdgeInsets.fromLTRB(15, 10, 15, 10),
         child: Row(
-          children: [
+          children: <Widget>[
             ATContainer(
               clipBehavior: Clip.hardEdge,
               height: 50, width: 50, radius: 30,
@@ -224,7 +225,7 @@ class _UserWithTrailingRadio extends StatelessWidget {
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
+                children: <Widget>[
                   ATFilterWidget<SearchkeyBloc>(
                     title: user.obj.name ?? '',
                     style: Theme.of(context).textTheme.bodySmall?.copyWith(
@@ -241,9 +242,9 @@ class _UserWithTrailingRadio extends StatelessWidget {
               ),
             ),
             BlocBuilder<RecentRecipientsBloc, RecentRecipientsState>(
-              builder: (_, state) {
-                final recipient = (state as RecentRecipientsData).selectedRecipient;
-                final isSelected = recipient != null && recipient.obj.name == user.obj.name;
+              builder: (_, RecentRecipientsState state) {
+                final ObjectWithNotifier<Host>? recipient = (state as RecentRecipientsData).selectedRecipient;
+                final bool isSelected = recipient != null && recipient.obj.name == user.obj.name;
                 return ATRadioBtn(isSelected: isSelected);
               }
             )

@@ -26,7 +26,7 @@ Future<void> showMinimizedGoLiveState() async {
       ),
       content: Row(
         mainAxisSize: MainAxisSize.min,
-        children: [
+        children: <Widget>[
           const AmptivePictureWidget(
             imagePath: ATImgStrings.weCanDoHardThingsBgImage,
             diameter: 40, radius: 2,            
@@ -35,7 +35,7 @@ Future<void> showMinimizedGoLiveState() async {
           Flexible(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
+              children: <Widget>[
                 Text(
                   'glennodoyle and 2 others',
                   style: TextStyle(
@@ -45,7 +45,7 @@ Future<void> showMinimizedGoLiveState() async {
                   ),
                 ),
                 Row(
-                  children: [
+                  children: <Widget>[
                     const ATImgLoader(
                       imgPath: ATImgStrings.filledBroadCast,
                       height: 15, width: 15,
@@ -86,9 +86,9 @@ Future<void> showMinimizedGoLiveState() async {
 
 
 class _HorizontalScrollCards extends StatefulWidget {
-  final Widget child;
   //final double spaceSize;
   const _HorizontalScrollCards({required this.child, /*required this.spaceSize*/});
+  final Widget child;
 
   @override
   State<_HorizontalScrollCards> createState() => _HorizontalScrollCardsState();
@@ -109,7 +109,7 @@ class _HorizontalScrollCardsState extends State<_HorizontalScrollCards> {
     if (renderBox != null && mounted) {
       final double childWidth = renderBox.size.width;
       final double screenWidth = MediaQuery.sizeOf(context).width;
-      final foo = (childWidth / screenWidth).clamp(0.1, 1.0);
+      final double foo = (childWidth / screenWidth).clamp(0.1, 1.0);
       
       marach.log(childWidth.toString());
       marach.log(foo.toString());
@@ -121,9 +121,9 @@ class _HorizontalScrollCardsState extends State<_HorizontalScrollCards> {
   }
 
   @override
-  Widget build(context) {
+  Widget build(BuildContext context) {
     return Stack(
-      children: [
+      children: <Widget>[
         // Hidden widget for measurement (Doesn't interfere with Carousel)
         Offstage(
           child: IntrinsicWidth(
@@ -136,7 +136,7 @@ class _HorizontalScrollCardsState extends State<_HorizontalScrollCards> {
 
         // CarouselSlider with actual child (without GlobalKey issue)
         CarouselSlider(
-          items: [widget.child],
+          items: <Widget>[widget.child],
           options: CarouselOptions(
             aspectRatio: 15,
             autoPlay: true,

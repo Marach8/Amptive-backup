@@ -1,4 +1,3 @@
-import 'package:amptive/src/bloc/main_app/nav_bar_bloc.dart';
 import 'package:amptive/src/features/discover/presentation/views/discover_landing_screen.dart';
 import 'package:amptive/src/features/live_programs/presentation/views/live_audience_view.dart';
 import 'package:amptive/src/views/widgets/animation_widgets/common_animation_widgets/animated_slide.dart';
@@ -19,11 +18,11 @@ class ATMainAppShell extends StatelessWidget {
     return ATAnnotatedRegion(
       child: Scaffold(
         body: BlocSelector<ATNavBarBloc, (int, bool), int>(
-          selector: (st) => st.$1,
-          builder: (_, index) {
+          selector: ((int, bool) st) => st.$1,
+          builder: (_, int index) {
             return IndexedStack(
               index: index,
-              children: [
+              children: <Widget>[
                 const ATHomeScreen(),
                 const ATDiscoverScreen(),
                 ATLiveProgramsAudienceScreen(goLiveHost: getHostList().first),

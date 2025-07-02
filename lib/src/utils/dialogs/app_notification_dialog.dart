@@ -22,7 +22,7 @@ Future<dynamic> showAppNotification({
         padding: const EdgeInsets.all(10),
         child: Row(
           mainAxisSize: MainAxisSize.min,
-          children: [
+          children: <Widget>[
             if(icon != null) icon,
             if(icon != null) const Gap(10),
             Flexible(

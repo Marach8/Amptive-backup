@@ -21,15 +21,15 @@ class ATAccountInfoScreen extends StatelessWidget {
   final String? email, phone, country;
 
   @override
-  Widget build(context) {
+  Widget build(BuildContext context) {
     return ATAnnotatedRegion(
       child: Scaffold(
         body: Column(
-          children: [
+          children: <Widget>[
             Padding(
               padding: const EdgeInsets.fromLTRB(7, kToolbarHeight, 15, 15),
               child: Row(
-                children: [
+                children: <Widget>[
                   ATCircleAvatar(
                     onTap: () => context.pop(),
                     diameter: 30, color: ATColors.trsprnt,
@@ -51,13 +51,13 @@ class ATAccountInfoScreen extends StatelessWidget {
               padding: const EdgeInsets.all(15),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
+                children: <Widget>[
                   RenderRowInfo(
                     title: ATStrings.EMAIL,
                     value: email ?? ATStrings.ADD_UR_EMAIL,
                     onTap: ()async{
                       if(email != null){
-                        final shouldChangeEmail = await showConfirmationDialog(
+                        final bool? shouldChangeEmail = await showConfirmationDialog(
                           context: context,
                           title: ATStrings.WANT_2_CHANGE_EMAIL,
                           content: '',
@@ -67,7 +67,7 @@ class ATAccountInfoScreen extends StatelessWidget {
                         if(!(shouldChangeEmail ?? true)){return;}
                       }
                       if(context.mounted){
-                        final emailResult = await context.pushNamed(
+                        final bool? emailResult = await context.pushNamed(
                           ATRoutes.EMAIL_SCREEN, 
                           extra: email == null ? ATStrings.ADDING_EMAIL : ATStrings.CHANGING_EMAIL,
                         ) as bool?;
@@ -86,7 +86,7 @@ class ATAccountInfoScreen extends StatelessWidget {
                     value: phone ?? ATStrings.ADD_UR_PHONE,
                     onTap: ()async{
                       if(phone != null){
-                        final shouldChangeEmail = await showConfirmationDialog(
+                        final bool? shouldChangeEmail = await showConfirmationDialog(
                           context: context,
                           title: ATStrings.WANT_2_CHANGE_FONE,
                           content: '',
@@ -96,7 +96,7 @@ class ATAccountInfoScreen extends StatelessWidget {
                         if(!(shouldChangeEmail ?? true)){return;}
                       }
                       if(context.mounted){
-                        final phoneResult = await context.pushNamed(
+                        final bool? phoneResult = await context.pushNamed(
                           ATRoutes.ADD_FONE_NO_SCREEN,
                           extra: phone == null ? ATStrings.ADDING_PHONE : ATStrings.CHANGING_PHONE,
                         ) as bool?;
@@ -112,13 +112,13 @@ class ATAccountInfoScreen extends StatelessWidget {
                   ),
                   
                   BlocBuilder<ATSelectCountryBloc, String?>(
-                    builder: (_, state) {
+                    builder: (_, String? state) {
                       return RenderRowInfo(
                         title: ATStrings.COUNTRY,
                         value: state ?? 'Nigeria',
                         onTap: () => context.pushNamed(
                           ATRoutes.SELECT_COUNTRY_SCREEN,
-                          extra: [
+                          extra: <Object>[
                             'Nigeria',
                             _listOfCountries
                           ]
@@ -149,12 +149,12 @@ class RenderRowInfo extends StatelessWidget {
   final VoidCallback onTap;
 
   @override
-  Widget build(context) {
+  Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only(bottom: 20),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
+        children: <Widget>[
           Text(
             title,
             style: Theme.of(context).textTheme.bodySmall,
@@ -162,7 +162,7 @@ class RenderRowInfo extends StatelessWidget {
           GestureDetector(
             onTap: onTap,
             child: Row(
-              children: [
+              children: <Widget>[
                 Text(
                   value,
                   style: Theme.of(context).textTheme.bodySmall?.copyWith(
@@ -181,7 +181,7 @@ class RenderRowInfo extends StatelessWidget {
 
 
 
-final _listOfCountries = [
+final List<String> _listOfCountries = <String>[
   'Afghanistan', 'Albania', 'Algeria', 'Angola', 'Antigua and Barbuda',
   'Austria', 'Azerbaijan', 'Bahamas', 'Nigeria', 'Bangladesh'
 ];

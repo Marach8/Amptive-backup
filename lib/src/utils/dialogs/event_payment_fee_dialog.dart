@@ -17,8 +17,8 @@ import '../constants/strings/other_strings.dart';
 Future<void> showEventPaymentFeeDialog({
   required BuildContext context,
 }) async {
-  final activateSetFeeBtn = ValueNotifier(false);
-  final formKey = GlobalKey<FormState>();
+  final ValueNotifier<bool> activateSetFeeBtn = ValueNotifier(false);
+  final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   CreateShowService service = GetIt.I<CreateShowService>();
 
   return await showModalBottomSheet(
@@ -36,7 +36,7 @@ Future<void> showEventPaymentFeeDialog({
           child: Column(
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
+              children: <Widget>[
                 Center(
                   child: GestureDetector(
                     onTap: () => context.pop(),
@@ -86,7 +86,7 @@ Future<void> showEventPaymentFeeDialog({
                     hintText: '0',
                     hintStyle: Theme.of(context).textTheme.bodyMedium,
                     keyboardType: TextInputType.number,
-                    validator: (text) {
+                    validator: (String? text) {
                       if (text?.isEmpty ?? false) {
                         return ATStrings.EMPTY_FIELD;
                       }
@@ -96,12 +96,12 @@ Future<void> showEventPaymentFeeDialog({
                       padding: EdgeInsets.only(left: 15),
                       child: Text('₦'),
                     ),
-                    onChanged: (text) {
+                    onChanged: (String text) {
                       text.isNotEmpty
                           ? activateSetFeeBtn.value = true
                           : activateSetFeeBtn.value = false;
                     },
-                    onSaved: (text) {
+                    onSaved: (String? text) {
                       if (text == null || text == "") return;
 
                       service.userEventFee =
@@ -113,7 +113,7 @@ Future<void> showEventPaymentFeeDialog({
                 AmptiveRebuilderWidget(
                     notifier: activateSetFeeBtn,
                     shouldDispose: true,
-                    builder: (_, value, __) {
+                    builder: (_, bool value, __) {
                       return AmptiveElevatedButtonWidget(
                         margin: EdgeInsets.zero,
                         onPressed: value

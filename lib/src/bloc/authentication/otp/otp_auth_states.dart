@@ -13,9 +13,9 @@ class VerifiedOTPAuthState extends AmptiveOTPAuthState {}
 class UnverifiedOTPAuthState extends AmptiveOTPAuthState {}
 
 class AmptiveOTPCounterState extends AmptiveOTPAuthState {
-  final int timeLeft;
 
   AmptiveOTPCounterState({required this.timeLeft});
+  final int timeLeft;
 }
 
 class AmptiveOTPCounterCompleteState extends AmptiveOTPAuthState {}

@@ -23,7 +23,7 @@ Future<bool?> showDeletePlanOption(BuildContext context)async{
       child: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
+        children: <Widget>[
           const Align(
             alignment: Alignment.center,
             child: ATModalDismisser()
@@ -36,7 +36,7 @@ Future<bool?> showDeletePlanOption(BuildContext context)async{
               borderRadius: BorderRadius.circular(10),
               child: Row(
                 mainAxisSize: MainAxisSize.min,
-                children: [
+                children: <Widget>[
                   Icon(Icons.remove_circle_outline, color: ATColors.hexC2C2C2),
                   const SizedBox(width: 10),
                   Text(

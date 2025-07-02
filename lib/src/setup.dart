@@ -27,7 +27,6 @@ import 'bloc/main_app/go_live_bloc/host_view/available_cohosts_bloc.dart';
 import 'bloc/main_app/go_live_bloc/host_view/cohosts_display_bloc.dart';
 import 'bloc/main_app/go_live_bloc/host_view/host_end_show_bloc.dart';
 import 'bloc/main_app/go_live_bloc/host_view/notifications_bloc.dart';
-import 'bloc/main_app/nav_bar_bloc.dart';
 import 'bloc/main_app/profile/private_account_bloc.dart';
 import 'bloc/main_app/profile/profile_followers_bloc.dart';
 import 'bloc/main_app/profile/profile_menu/calender/calender_programs_bloc.dart';
@@ -46,7 +45,7 @@ void setup() {
 }
 
 List<SingleChildWidget> providers() {
-  return [
+  return <SingleChildWidget>[
     BlocProvider(create: (_) => AmptiveOnboardingBloc()),
     BlocProvider(create: (_) => AmptiveAuthBloc()),
     BlocProvider(create: (_) => ATEmailAuthBloc()),
@@ -84,13 +83,12 @@ List<SingleChildWidget> providers() {
 
 
 class ATRouteTransition extends CustomTransitionPage {
-  final Offset? beginOffset;
   ATRouteTransition({
     required super.child,
     this.beginOffset
   }) : super(
-    transitionsBuilder: (_, animation, __, child) {
-      var tween =  Tween(
+    transitionsBuilder: (_, Animation<double> animation, __, Widget child) {
+      Animation<Offset> tween =  Tween(
         begin: beginOffset ?? const Offset(1.0, 0.0), 
         end: Offset.zero
       ).animate(
@@ -105,4 +103,5 @@ class ATRouteTransition extends CustomTransitionPage {
     reverseTransitionDuration: const Duration(milliseconds: 200),
     transitionDuration: const Duration(milliseconds: 200),
   );
+  final Offset? beginOffset;
 }

@@ -20,7 +20,7 @@ class SelectCategoryScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isCreator = context.read<AccountTypeBloc>().state;
+    final bool isCreator = context.read<AccountTypeBloc>().state;
     return ATAnnotatedRegion(
       child: Scaffold(     
         body: SafeArea(
@@ -28,7 +28,7 @@ class SelectCategoryScreen extends StatelessWidget {
             padding: const EdgeInsets.fromLTRB(0, kToolbarHeight * 0.3, 0, kBottomNavigationBarHeight),
             child: CustomScrollView(
               physics: const BouncingScrollPhysics(),
-              slivers: [
+              slivers: <Widget>[
                 SliverPersistentHeader(
                   floating: true,
                   delegate: ATSliverHDelegate(
@@ -37,12 +37,12 @@ class SelectCategoryScreen extends StatelessWidget {
                       color: ATColors.black,
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
+                        children: <Widget>[
                           Padding(
                             padding: const EdgeInsets.fromLTRB(7, 0, 15, 0),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
+                              children: <Widget>[
                                 Material(
                                   color: ATColors.black,
                                   child: const ATRoundedBackBtn()
@@ -76,7 +76,7 @@ class SelectCategoryScreen extends StatelessWidget {
                           Padding(
                             padding: const EdgeInsets.fromLTRB(13, 0, 15, 0),
                             child: ATTextFormField(
-                              onChanged: (input){},
+                              onChanged: (String input){},
                               fillColor: ATColors.white.withValues(alpha: 0.1),
                               textInputAction: TextInputAction.done,
                               disableBlueBorder: true,
@@ -101,14 +101,14 @@ class SelectCategoryScreen extends StatelessWidget {
                 SliverList(
                   delegate: SliverChildBuilderDelegate(
                     childCount: 30,
-                    (_, index){
+                    (_, int index){
                       return Padding(
                         padding: const EdgeInsets.fromLTRB(15, 0, 18, 20),
                         child: GestureDetector(
                           onTap: (){},
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
+                            children: <Widget>[
                               Flexible(
                                 child: Text(
                                   'AI & Machine Learning',

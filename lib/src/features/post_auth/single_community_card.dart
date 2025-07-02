@@ -33,7 +33,7 @@ class SingleCommunityCardWidget extends StatelessWidget {
         gradient: LinearGradient(
             begin: const Alignment(0.00, -1.00),
             end: const Alignment(0, 1),
-            colors: [preference.primary, preference.secondary]),
+            colors: <Color>[preference.primary, preference.secondary]),
       ),
       margin: EdgeInsets.only(
         top: 4.h,
@@ -42,7 +42,7 @@ class SingleCommunityCardWidget extends StatelessWidget {
         right: index % 2 == 0 ? 4.w : 4.w,
       ),
       child: Stack(
-        children: [
+        children: <Widget>[
           Positioned(
             top: 80.h,
             left: 16.w,
@@ -62,7 +62,7 @@ class SingleCommunityCardWidget extends StatelessWidget {
                 width: 28.w,
                 height: 28.h,
                 child: Stack(
-                  children: [
+                  children: <Widget>[
                     Positioned(
                       left: 0,
                       top: 0,
