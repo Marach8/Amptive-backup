@@ -25,6 +25,7 @@ class ATLiveEventDetailedScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final double blurredHeaderHeight = kToolbarHeight + MediaQuery.paddingOf(context).top;
     return ATAnnotatedRegion(
       statusBarColor: ATColors.trsprnt,
       child: Scaffold(
@@ -42,28 +43,28 @@ class ATLiveEventDetailedScreen extends StatelessWidget {
             
             ATContainer(
               color: ATColors.hex0D0D0D.withValues(alpha: 0.75),
-              child: BlocProvider<ScrollResponsiveBlurredHeaderBloc>(
-                create: (_) => ScrollResponsiveBlurredHeaderBloc(),
+              child: BlocProvider<BlurredHeaderBloc>(
+                create: (_) => BlurredHeaderBloc(),
                 child: Builder(
                   builder: (BuildContext blocContext) {
                     return NotificationListener<ScrollNotification>(
-                      onNotification: blocContext.read<ScrollResponsiveBlurredHeaderBloc>().onScrollNotification,
+                      onNotification: blocContext.read<BlurredHeaderBloc>().onScrollNotification,
                       child: NestedScrollView(
                         headerSliverBuilder: (_, __) => <Widget>[
                           SliverPersistentHeader(
                             pinned: true,
                             delegate: ATSliverHDelegate(
-                              maxExt: kToolbarHeight + MediaQuery.paddingOf(context).top,
-                              minExt: kToolbarHeight + MediaQuery.paddingOf(context).top,
+                              maxExt: blurredHeaderHeight, minExt: blurredHeaderHeight,
                               child: SizedBox(
-                                height: kToolbarHeight + MediaQuery.paddingOf(context).top,
-                                child: const ScrollResponsiveBlurredHeader()
+                                height: blurredHeaderHeight,
+                                child: const ATBlurredHeaderWidget()
                               )
                             ),
                           )
                         ],
                         
                         body: SingleChildScrollView(
+                          physics: const BouncingScrollPhysics(),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: <Widget>[
@@ -94,7 +95,7 @@ class ATLiveEventDetailedScreen extends StatelessWidget {
                                         fontSize: ATFontSizes.size17
                                       ),  
                                     ),
-                                    Divider(color: ATColors.white.withOpacity(0.1),),
+                                    Divider(color: ATColors.white.withValues(alpha: 0.1),),
                                     const SizedBox(height: 5),
                                     const AmptiveHashtagsWidget(),
                               
@@ -106,7 +107,7 @@ class ATLiveEventDetailedScreen extends StatelessWidget {
                                         fontSize: ATFontSizes.size17
                                       ),  
                                     ),
-                                    Divider(color: ATColors.white.withOpacity(0.1),),
+                                    Divider(color: ATColors.white.withValues(alpha: 0.1),),
                                     ...List<Widget>.generate(
                                       1,
                                       (_) => const TileWithLeadingImage(
@@ -125,7 +126,7 @@ class ATLiveEventDetailedScreen extends StatelessWidget {
                                         fontSize: ATFontSizes.size17
                                       ),  
                                     ),
-                                    Divider(color: ATColors.white.withOpacity(0.1),),
+                                    Divider(color: ATColors.white.withValues(alpha: 0.1),),
                                     const SizedBox(height: 10),
                                     const PeopleListeningWidget(
                                       showNumberInsideContainer: true,
@@ -135,7 +136,7 @@ class ATLiveEventDetailedScreen extends StatelessWidget {
                                     Text(
                                       'daniel, jessica, gerald, peter and 652 more',
                                       style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                                        color: ATColors.white.withOpacity(0.6)
+                                        color: ATColors.white.withValues(alpha: 0.6)
                                       ),
                                     ),
                                     const SizedBox(height: 35),
@@ -146,7 +147,7 @@ class ATLiveEventDetailedScreen extends StatelessWidget {
                                         fontSize: ATFontSizes.size17
                                       ),  
                                     ),
-                                    Divider(color: ATColors.white.withOpacity(0.1),),
+                                    Divider(color: ATColors.white.withValues(alpha: 0.1),),
                                     ReadMoreText(
                                       'Jessica Yellin, founder of the Webby-Award Winning Independent News Brand, News Not Noise, returns to walk us through what is going on right now in the political landscape.',
                                       trimMode: TrimMode.Length,
@@ -155,7 +156,7 @@ class ATLiveEventDetailedScreen extends StatelessWidget {
                                       colorClickableText: ATColors.white,
                                       trimLength: 100,
                                       style: TextStyle(
-                                        color: ATColors.white.withOpacity(0.6),
+                                        color: ATColors.white.withValues(alpha: 0.6),
                                         fontSize: ATFontSizes.size14,
                                         fontWeight: ATFontWeights.w500,
                                       ),
@@ -168,7 +169,7 @@ class ATLiveEventDetailedScreen extends StatelessWidget {
                                         fontSize: ATFontSizes.size17
                                       ),  
                                     ),
-                                    Divider(color: ATColors.white.withOpacity(0.1),),
+                                    Divider(color: ATColors.white.withValues(alpha: 0.1),),
                                   ],
                                 ),
                               ),
@@ -186,7 +187,7 @@ class ATLiveEventDetailedScreen extends StatelessWidget {
                                         fontSize: ATFontSizes.size17
                                       ),  
                                     ),
-                                    Divider(color: ATColors.white.withOpacity(0.1),),
+                                    Divider(color: ATColors.white.withValues(alpha: 0.1),),
                                     const SizedBox(height: 5),
                                     ATTextFormField(
                                       controller: TextEditingController(),
@@ -214,7 +215,7 @@ class ATLiveEventDetailedScreen extends StatelessWidget {
                                       colorClickableText: ATColors.white,
                                       trimLength: 100,
                                       style: TextStyle(
-                                        color: ATColors.white.withOpacity(0.6),
+                                        color: ATColors.white.withValues(alpha: 0.6),
                                         fontSize: ATFontSizes.size14,
                                         fontWeight: ATFontWeights.w500,
                                       ),

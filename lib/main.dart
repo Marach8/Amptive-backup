@@ -1,5 +1,6 @@
 
 import 'package:amptive/src/setup.dart';
+import 'package:device_preview/device_preview.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:amptive/src/routes.dart';
@@ -8,10 +9,20 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 void main() {
   setup();
+  // runApp(
+  //   MultiBlocProvider(
+  //     providers: providers(),
+  //     child: const AmptiveApp(),
+  //   ),
+  // );
+
   runApp(
-    MultiBlocProvider(
-      providers: providers(),
-      child: const AmptiveApp(),
+    DevicePreview(
+      enabled: true,
+      builder: (_) => MultiBlocProvider(
+        providers: providers(),
+        child: const AmptiveApp(),
+      ),
     ),
   );
 }
@@ -20,8 +31,6 @@ void main() {
 
 class AmptiveApp extends StatelessWidget {
   const AmptiveApp({super.key});
-
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return ScreenUtilInit(
@@ -36,9 +45,6 @@ class AmptiveApp extends StatelessWidget {
           darkTheme: AmptiveThemeData.darkTheme,
           theme: AmptiveThemeData.darkTheme,
           routerConfig: amptiveAppRouter,
-          // routeInformationParser: amptiveAppRouter.routeInformationParser,
-          // routerDelegate: amptiveAppRouter.routerDelegate,
-          // routeInformationProvider: amptiveAppRouter.routeInformationProvider,
         );
       },
     );

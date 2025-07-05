@@ -8,11 +8,10 @@ import 'package:amptive/src/views/widgets/common_widgets/custom_container_widget
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-
 import '../../../../utils/constants/colors.dart';
 
-class ScrollResponsiveBlurredHeader extends StatelessWidget {
-  const ScrollResponsiveBlurredHeader({
+class ATBlurredHeaderWidget extends StatelessWidget {
+  const ATBlurredHeaderWidget({
     super.key,
     this.child,
   });
@@ -22,7 +21,7 @@ class ScrollResponsiveBlurredHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ClipRect(
-      child: BlocBuilder<ScrollResponsiveBlurredHeaderBloc, bool>(
+      child: BlocBuilder<BlurredHeaderBloc, bool>(
         builder: (_, bool state) {
           return BackdropFilter(
             filter: state ? ImageFilter.blur(sigmaX: 53, sigmaY: 53)
@@ -56,8 +55,8 @@ class ScrollResponsiveBlurredHeader extends StatelessWidget {
   }
 }
 
-class ScrollResponsiveBlurredHeaderBloc extends Cubit<bool>{
-  ScrollResponsiveBlurredHeaderBloc():super(false);
+class BlurredHeaderBloc extends Cubit<bool>{
+  BlurredHeaderBloc():super(false);
 
 
   bool onScrollNotification(ScrollNotification notification) {

@@ -19,12 +19,12 @@ class ATCommunityScreen extends StatelessWidget {
     return ATAnnotatedRegion(
       statusBarColor: ATColors.trsprnt,
       child: Scaffold(
-        body: BlocProvider<ScrollResponsiveBlurredHeaderBloc>(
-          create: (_) => ScrollResponsiveBlurredHeaderBloc(),
+        body: BlocProvider<BlurredHeaderBloc>(
+          create: (_) => BlurredHeaderBloc(),
           child: Builder(
             builder: (BuildContext blocContext) {
               return NotificationListener<ScrollNotification>(
-                onNotification: blocContext.read<ScrollResponsiveBlurredHeaderBloc>().onScrollNotification,
+                onNotification: blocContext.read<BlurredHeaderBloc>().onScrollNotification,
                 child: CustomScrollView(
                   physics: const BouncingScrollPhysics(),
                   slivers: <Widget>[
@@ -33,7 +33,7 @@ class ATCommunityScreen extends StatelessWidget {
                       delegate: ATSliverHDelegate(
                         maxExt: kToolbarHeight + MediaQuery.paddingOf(context).top,
                         minExt: kToolbarHeight + MediaQuery.paddingOf(context).top,
-                        child: ScrollResponsiveBlurredHeader(
+                        child: ATBlurredHeaderWidget(
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: <Widget>[

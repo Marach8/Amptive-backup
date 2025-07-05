@@ -38,19 +38,19 @@ class ATLiveShowDetailedScreen extends StatelessWidget {
               ),
               ATContainer(
                 color: ATColors.hex0D0D0D.withValues(alpha: 0.75),
-                child: BlocProvider<ScrollResponsiveBlurredHeaderBloc>(
-                  create: (_) => ScrollResponsiveBlurredHeaderBloc(),
+                child: BlocProvider<BlurredHeaderBloc>(
+                  create: (_) => BlurredHeaderBloc(),
                   child: Builder(
                     builder: (BuildContext blocContext) {
                       return NotificationListener<ScrollNotification>(
-                        onNotification: blocContext.read<ScrollResponsiveBlurredHeaderBloc>().onScrollNotification,
+                        onNotification: blocContext.read<BlurredHeaderBloc>().onScrollNotification,
                         child: NestedScrollView(
                           headerSliverBuilder: (_, __) => <Widget>[
                             SliverPersistentHeader(
                               pinned: true,
                               delegate: ATSliverHDelegate(
                                 maxExt: kToolbarHeight, minExt: kToolbarHeight,
-                                child:const ScrollResponsiveBlurredHeader()
+                                child:const ATBlurredHeaderWidget()
                               ),
                             )
                           ],
