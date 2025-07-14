@@ -1,3 +1,4 @@
+import 'package:amptive/src/views/widgets/common_widgets/custom_container_widget.dart';
 import 'package:flutter/material.dart';
 import '../../../../views/widgets/common_widgets/image_loader_widget.dart';
 
@@ -5,20 +6,21 @@ class CommunityCardWidget extends StatelessWidget {
   const CommunityCardWidget({
     super.key,
     required this.picture,
-    this.padding
+    this.padding,
+    this.onTap,
   });
   final String picture;
   final EdgeInsetsGeometry? padding;
+  final VoidCallback? onTap;
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: padding ?? const EdgeInsets.only(left: 10),
-      child: ClipRRect(
-        clipBehavior: Clip.hardEdge,
-        borderRadius: BorderRadius.circular(5),
-        child: ATImgLoader(imgPath: picture),
-      ),
+    return ATContainer(
+      margin: padding ?? const EdgeInsets.only(left: 10),
+      clipBehavior: Clip.hardEdge,
+      radius: 5,
+      onTap: onTap,
+      child: ATImgLoader(imgPath: picture),
     );
   }
 }

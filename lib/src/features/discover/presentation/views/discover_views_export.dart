@@ -1,3 +1,9 @@
 export 'discover_landing_screen.dart';
-export 'main_discover_page_view.dart';
+export 'discover_page_view.dart';
 export 'community_home_screen.dart';
+export 'recent_searches_page_view.dart';
+export 'society_hashtag_screen.dart';
+export 'society_screen.dart';
+export 'trending_hashtags_screen.dart';
+export 'trending_society_screen.dart';
+export 'search_results_page_view.dart';

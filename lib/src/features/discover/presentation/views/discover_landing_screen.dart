@@ -2,10 +2,10 @@ import 'package:amptive/src/utils/constants/font_sizes.dart';
 import 'package:amptive/src/views/widgets/animation_widgets/common_animation_widgets/animated_switcher.dart';
 import 'package:amptive/src/views/widgets/common_widgets/annotated_region__widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/sliver_header_delegate.dart';
-import 'package:amptive/src/features/discover/presentation/views/main_discover_page_view.dart';
+import 'package:amptive/src/features/discover/presentation/views/discover_page_view.dart';
 import 'package:amptive/src/features/discover/presentation/widgets/discover_search_field.dart';
-import 'package:amptive/src/views/widgets/other_widgets/main_application_widgets/widgets_in_discover_view/recent_searches_widgets/recent_searches_view.dart';
-import 'package:amptive/src/views/widgets/other_widgets/main_application_widgets/widgets_in_discover_view/tab_view_widgets/discover_tab_widgets.dart';
+import 'package:amptive/src/features/discover/presentation/views/recent_searches_page_view.dart';
+import 'package:amptive/src/features/discover/presentation/views/search_results_page_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

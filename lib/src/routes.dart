@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:amptive/src/features/post_auth/presentation/views/anim_experiment.dart';
 import 'package:amptive/src/setup.dart';
 import 'package:amptive/src/utils/constants/strings/route_strings.dart';
 import 'package:amptive/src/utils/helpers/extensions/string_extensions.dart';
@@ -21,9 +22,9 @@ import 'package:amptive/src/features/go_live/main_go_live_screen.dart';
 import 'package:amptive/src/features/profile/presentation/views/profile_views_export.dart';
 import 'package:amptive/src/features/home/presentation/views/scheduled_screen.dart';
 import 'package:amptive/src/features/wallet/presentation/views/wallet_txns_screen.dart';
-import 'package:amptive/src/features/post_auth/crop_image_screen.dart';
-import 'package:amptive/src/features/post_auth/pre_homepage.dart';
-import 'package:amptive/src/features/post_auth/preference_screen.dart';
+import 'package:amptive/src/features/post_auth/presentation/views/crop_image_screen.dart';
+import 'package:amptive/src/features/post_auth/presentation/views/pre_homepage.dart';
+import 'package:amptive/src/features/post_auth/presentation/views/preference_screen.dart';
 import 'package:amptive/src/features/onboarding/onboarding_page_view_screen.dart';
 import 'package:amptive/src/features/onboarding/welcome_screen.dart';
 import 'package:amptive/src/views/widgets/other_widgets/main_application_widgets/widgets_in_home_view/widgets_in_go_live/shows/show_type_visibility.dart';
@@ -40,7 +41,7 @@ import 'features/wallet/wallet_export.dart';
 // The route configuration.
 final GoRouter amptiveAppRouter = GoRouter(
   initialLocation: ATRoutes.index,
-  //initialLocation: "/add-profile-pic",
+  //initialLocation: "/pre-homepage",
   routes: <RouteBase>[
     GoRoute(
         path: ATRoutes.index,
@@ -131,7 +132,8 @@ final GoRouter amptiveAppRouter = GoRouter(
     GoRoute(
       name: ATRoutes.preHomepage,
       path: "/pre-homepage",
-      builder: (_, __) => const PreHomePage(),
+      builder: (_, __) => const AnimExperiment()
+      //builder: (_, __) => const PreHomePage(),
     ),
 
     //MAIN APPLICATION SCREENS
@@ -566,7 +568,7 @@ final GoRouter amptiveAppRouter = GoRouter(
                 GoRoute(
                   name: ATRoutes.TRENDING_SOCIETY_SCREEN,
                   path: ATRoutes.TRENDING_SOCIETY_SCREEN,
-                  builder: (_, __) => const AmptiveTrendingSocietyScreen(),
+                  builder: (_, __) => const TrendingSocietyScreen(),
                 ),
                 GoRoute(
                   name: ATRoutes.TRENDING_HASHTAGS_SCREEN,

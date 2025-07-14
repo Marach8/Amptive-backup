@@ -57,6 +57,7 @@ class ATStrings{
   static const String GOOGLE_PAY = 'Google Pay';
   static const String EMAIL = 'Email';
   static const String LIVE = 'Live';
+  static const String ALL = 'All';
   static const String TRSF_SUCCESS = 'Transfer Successful';
   static const String WITHDRAWAL_REQUEST_SENT = 'Withdrawal Request Sent';
   static const String WITHDRAWAL_REQUEST_DESC = 'Your withdrawal request has been sent. You will be notified once it is processed.';
@@ -248,6 +249,7 @@ class ATStrings{
   static const String PAID_EVENTS = 'Paid Events';
   static const String FREE_SHOWS = 'Free Shows';
   static const String HASHTAGS = 'Hashtags';
+  static const String HASHTAG = 'Hashtag';
   static const String HOSTED_BY = 'Hosted by';
   static const String showLess = ' Show less';
   static const String showMore = 'Show more';

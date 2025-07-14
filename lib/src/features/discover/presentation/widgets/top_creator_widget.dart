@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
-import '../../../../common_widgets/custom_container_widget.dart';
-import '../../../../common_widgets/image_loader_widget.dart';
+import '../../../../views/widgets/common_widgets/custom_container_widget.dart';
+import '../../../../views/widgets/common_widgets/image_loader_widget.dart';
 
-class AmptiveTopCreatorsModel extends StatelessWidget {
-  const AmptiveTopCreatorsModel({
+class TopCreatorWidget extends StatelessWidget {
+  const TopCreatorWidget({
     super.key,
     required this.picture
   });

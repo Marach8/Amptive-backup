@@ -6,10 +6,10 @@ import 'package:amptive/src/views/widgets/common_widgets/back_button.dart';
 import 'package:amptive/src/views/widgets/common_widgets/sliver_header_delegate.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:gap/gap.dart';
 import 'package:go_router/go_router.dart';
 import '../../../../utils/constants/strings/other_strings.dart';
-import '../../../home/presentation/widgets/scroll_responsive_blurred_header.dart';
+import '../../../../utils/constants/strings/route_strings.dart';
+import '../../../home/presentation/widgets/blurred_header.dart';
 
 class ATCommunityScreen extends StatelessWidget {
   const ATCommunityScreen({super.key});
@@ -72,9 +72,10 @@ class ATCommunityScreen extends StatelessWidget {
                         delegate: SliverChildListDelegate.fixed(
                           List<Widget>.generate(
                             28,
-                            (_) => const CommunityCardWidget(
+                            (_) => CommunityCardWidget(
                               picture: ATImgStrings.COMMUNITY_CARD,
                               padding: EdgeInsets.zero,
+                              onTap: () => context.pushNamed(ATRoutes.SOCIETY_SCREEN),
                             )
                           ).toList()
                         ),

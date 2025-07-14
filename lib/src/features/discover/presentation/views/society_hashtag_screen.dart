@@ -125,6 +125,5 @@ class SocietyHastagScreen extends StatelessWidget {
         ),
       ),
     );
-
   }
 }

@@ -1,4 +1,3 @@
-
 import 'package:amptive/src/setup.dart';
 import 'package:device_preview/device_preview.dart';
 import 'package:flutter/material.dart';
@@ -9,22 +8,22 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 void main() {
   setup();
-  // runApp(
-  //   MultiBlocProvider(
-  //     providers: providers(),
-  //     child: const AmptiveApp(),
-  //   ),
-  // );
-
   runApp(
-    DevicePreview(
-      enabled: true,
-      builder: (_) => MultiBlocProvider(
-        providers: providers(),
-        child: const AmptiveApp(),
-      ),
+    MultiBlocProvider(
+      providers: providers(),
+      child: const AmptiveApp(),
     ),
   );
+
+  // runApp(
+  //   DevicePreview(
+  //     enabled: true,
+  //     builder: (_) => MultiBlocProvider(
+  //       providers: providers(),
+  //       child: const AmptiveApp(),
+  //     ),
+  //   ),
+  // );
 }
 
 

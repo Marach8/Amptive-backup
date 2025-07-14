@@ -1,94 +1,100 @@
+import 'package:amptive/src/features/home/presentation/widgets/blurred_header.dart';
 import 'package:amptive/src/utils/constants/strings/other_strings.dart';
 import 'package:amptive/src/views/widgets/common_widgets/annotated_region__widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/app_bar_back_arrow_widget.dart';
-import 'package:amptive/src/views/widgets/other_widgets/main_application_widgets/widgets_in_discover_view/society_widgets/society_events_tab_view.dart';
-import 'package:amptive/src/views/widgets/other_widgets/main_application_widgets/widgets_in_discover_view/society_widgets/society_shows_tab_view.dart';
-import 'package:amptive/src/views/widgets/other_widgets/main_application_widgets/widgets_in_discover_view/society_widgets/society_sliver_header.dart';
+import 'package:amptive/src/views/widgets/common_widgets/back_button.dart';
+import 'package:amptive/src/views/widgets/common_widgets/sliver_header_delegate.dart';
+import 'package:amptive/src/features/discover/presentation/widgets/society_events_tab_view.dart';
+import 'package:amptive/src/features/discover/presentation/widgets/society_shows_tab_view.dart';
+import 'package:amptive/src/features/discover/presentation/widgets/society_tabs_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:gap/gap.dart';
-import '../../../../views/widgets/other_widgets/main_application_widgets/widgets_in_discover_view/society_widgets/society_all_tab_view_widget.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import '../../../../utils/constants/colors.dart';
+import '../widgets/society_all_tab_view.dart';
 
-class DiscoverSocietyScreen extends StatefulWidget {
+class DiscoverSocietyScreen extends StatelessWidget {
   const DiscoverSocietyScreen({super.key});
-
-  @override
-  State<DiscoverSocietyScreen> createState() => _DiscoverSocietyScreenState();
-}
-
-class _DiscoverSocietyScreenState extends State<DiscoverSocietyScreen> 
-with SingleTickerProviderStateMixin{
-  late TabController _tabController;
-  late ValueNotifier<int> _isTabSelected;
-
-  @override
-  void initState(){
-    super.initState();
-    _tabController = TabController(length: 3, vsync: this);
-    _isTabSelected = ValueNotifier(0);
-    
-    _tabController.addListener(
-      () => _isTabSelected.value = _tabController.index
-    );
-  }
-
-  @override 
-  void dispose(){
-    _tabController.dispose();
-    super.dispose();
-  }
 
   @override
   Widget build(BuildContext context) {
     return ATAnnotatedRegion(
-      child: Scaffold(
-        body: SafeArea(
-          child: NestedScrollView(
-            physics: const BouncingScrollPhysics(),
-            headerSliverBuilder: (_, __) => <Widget>[
-              SliverAppBar(
-                automaticallyImplyLeading: false,
-                floating: true,
-                centerTitle: true,
-                actions: <Widget>[
-                  GestureDetector(
-                    onTap: (){},
-                    child: const Icon(Icons.add)
+      statusBarColor: ATColors.trsprnt,
+      child: DefaultTabController(
+        length: 3,
+        child: Scaffold(
+          body: BlocProvider<BlurredHeaderBloc>(
+            create: (_) => BlurredHeaderBloc(),
+            child: Builder(
+              builder: (BuildContext blocContext) {
+                final TabController tabController = DefaultTabController.of(blocContext);
+                return NotificationListener<ScrollNotification>(
+                  onNotification: blocContext.read<BlurredHeaderBloc>().onScrollNotification,
+                  child: NestedScrollView(
+                    physics: const BouncingScrollPhysics(),
+                    headerSliverBuilder: (_, __) =>  <Widget>[
+                      SliverPersistentHeader(
+                        pinned: true,
+                        delegate: ATSliverHDelegate(
+                          maxExt: kToolbarHeight + MediaQuery.paddingOf(context).top,
+                          minExt: kToolbarHeight + MediaQuery.paddingOf(context).top,
+                          child: ATBlurredHeaderWidget(
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: <Widget>[
+                                Padding(
+                                  padding: const EdgeInsets.only(left: 4),
+                                  child: ATRoundedBackBtn(bgColor: ATColors.trsprnt,),
+                                ),
+                                Text(
+                                  ATStrings.SOCIETY,
+                                  style: Theme.of(context).textTheme.bodyMedium,
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.only(right: 15),
+                                  child: InkWell(
+                                    onTap: (){},
+                                    child: const Icon(Icons.add)
+                                  ),
+                                ),
+                              ],
+                            ),
+                          )
+                        ),
+                      ),
+        
+                      SliverPersistentHeader(
+                        floating: true,
+                        delegate: ATSliverHDelegate(
+                          minExt: 60, maxExt: 60,
+                          child: const Padding(
+                            padding: EdgeInsets.only(top: 10),
+                            child: SocietyTabsWidget(),
+                          )
+                        ),
+                      ),
+                    ],
+        
+                    body: TabBarView(
+                      controller: tabController,
+                      physics: const BouncingScrollPhysics(),
+                      children: const <Widget>[
+                        SingleChildScrollView(
+                          physics: BouncingScrollPhysics(),
+                          child: SocietyAllTabView(),
+                        ),
+                        SingleChildScrollView(
+                          physics: BouncingScrollPhysics(),
+                          child: SocietyShowsTabView()
+                        ),
+                        SingleChildScrollView(
+                          physics: BouncingScrollPhysics(),
+                          child: SocietyEventsTabView(),
+                        ),
+                      ]
+                    ),
                   ),
-                  const Gap(15)
-                ],
-                leading: const AmptiveBackArrowWidget(),
-                title: Text(
-                  ATStrings.SOCIETY,
-                  style: Theme.of(context).textTheme.bodyMedium,
-                ),
-              ),
-              SliverPersistentHeader(
-                pinned: true,
-                delegate: AmptiveSocietySliverHeader(
-                  tabController: _tabController,
-                  notifier: _isTabSelected
-                )
-              ),
-              
-            ],
-
-            body: TabBarView(
-              controller: _tabController,
-              physics: const BouncingScrollPhysics(),
-              children: const <Widget>[
-                SingleChildScrollView(
-                  physics: BouncingScrollPhysics(),
-                  child: AmptiveDiscoverSocietyAllTabViewWidget(),
-                ),
-                SingleChildScrollView(
-                  physics: BouncingScrollPhysics(),
-                  child: AmptiveDiscoverSocietyShowsTabViewWidget()
-                ),
-                SingleChildScrollView(
-                  physics: BouncingScrollPhysics(),
-                  child: AmptiveDiscoverSocietyEventsTabViewWidget(),
-                ),
-              ]
+                );
+              }
             ),
           ),
         ),

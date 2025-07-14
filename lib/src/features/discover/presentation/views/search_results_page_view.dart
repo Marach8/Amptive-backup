@@ -1,9 +1,12 @@
+
+
+import 'package:amptive/src/features/discover/presentation/widgets/search_item_tile.dart';
 import 'package:amptive/src/utils/constants/colors.dart';
+import 'package:amptive/src/utils/helpers/helper_functions/helper_functions.dart';
 import 'package:amptive/src/views/widgets/common_widgets/custom_container_widget.dart';
 import 'package:flutter/material.dart';
-import '../../../../../../utils/constants/strings/image_strings.dart';
-import '../../../../../../utils/helpers/helper_functions/helper_functions.dart';
-import 'tab_view_listtile.dart';
+
+import '../../../../utils/constants/strings/image_strings.dart';
 
 class SearchResultsTabsView extends StatefulWidget {
   const SearchResultsTabsView({super.key});
@@ -84,52 +87,80 @@ with SingleTickerProviderStateMixin{
             controller: _tabController,
             children: <Widget>[
               Column(
-                children: List.generate(
+                children: List<Widget>.generate(
                   10,
-                  (_) => const AmptiveTabViewListTileWidget(
+                  (_) => SearchItemTile(
                     leadingImagePath: ATImgStrings.weCanDoHardThingsBgImage,
-                    addPlayButton: true,
                     title: 'We Can Do Hard Things',
+                    trailing: ATContainer(
+                      onTap: (){},
+                      boxShape: BoxShape.circle,
+                      height: 24, width: 24,
+                      color: ATColors.hexB6B6B6,
+                      child: Icon(Icons.play_arrow, size: 15, color: ATColors.hex0D0D0D,),
+                    ),
                   ),
                 )
               ),
               Column(
-                children: List.generate(
+                children: List<Widget>.generate(
                   10,
-                  (_) => const AmptiveTabViewListTileWidget(
+                  (_) => SearchItemTile(
                     leadingImagePath: ATImgStrings.OFFICE_LADIES,
                     isCircular: true,
-                    addPlayButton: true,
                     title: 'We Can Do Hard Things',
+                    trailing: ATContainer(
+                      onTap: (){},
+                      boxShape: BoxShape.circle,
+                      height: 24, width: 24,
+                      color: ATColors.hexB6B6B6,
+                      child: Icon(Icons.play_arrow, size: 15, color: ATColors.hex0D0D0D,),
+                    ),
                   ),
                 )
               ),
               Column(
-                children: List.generate(
+                children: List<Widget>.generate(
                   10,
-                  (_) => const AmptiveTabViewListTileWidget(
+                  (_) => SearchItemTile(
                     leadingImagePath: ATImgStrings.weCanDoHardThingsBgImage,
-                    addPlayButton: true,
                     title: 'We Can Do Hard Things',
+                    trailing: ATContainer(
+                      onTap: (){},
+                      boxShape: BoxShape.circle,
+                      height: 24, width: 24,
+                      color: ATColors.hexB6B6B6,
+                      child: Icon(Icons.play_arrow, size: 15, color: ATColors.hex0D0D0D,),
+                    ),
                   ),
                 )
               ),
               Column(
-                children: List.generate(
+                children: List<Widget>.generate(
                   10,
-                  (_) => const AmptiveTabViewListTileWidget(
+                  (_) => SearchItemTile(
                     leadingImagePath: ATImgStrings.MAN_PHOTO,
                     title: 'We Can Do Hard Things',
+                    trailing: InkWell(
+                      onTap: (){},
+                      child: Icon(Icons.keyboard_arrow_right, size: 24, color: ATColors.hexB6B6B6,),
+                    ),
                   ),
                 )
               ),
               Column(
-                children: List.generate(
+                children: List<Widget>.generate(
                   10,
-                  (_) => const AmptiveTabViewListTileWidget(
+                  (_) => SearchItemTile(
                     leadingImagePath: ATImgStrings.CRIMINAL,
-                    addPlayButton: true,
                     title: 'We Can Do Hard Things',
+                    trailing: ATContainer(
+                      onTap: (){},
+                      boxShape: BoxShape.circle,
+                      height: 24, width: 24,
+                      color: ATColors.hexB6B6B6,
+                      child: Icon(Icons.play_arrow, size: 15, color: ATColors.hex0D0D0D,),
+                    ),
                   ),
                 )
               ),

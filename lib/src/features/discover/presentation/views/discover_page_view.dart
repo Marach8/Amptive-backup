@@ -17,7 +17,7 @@ import '../widgets/community_card_widget.dart';
 import '../../../../views/widgets/other_widgets/main_application_widgets/widgets_in_discover_view/full_discover_view_widgets/more_to_discover_title.dart';
 import '../widgets/hastags_subtitle_row.dart';
 import '../widgets/trending_technology_widget.dart';
-import '../../../../views/widgets/other_widgets/main_application_widgets/widgets_in_discover_view/full_discover_view_widgets/top_creators_model.dart';
+import '../widgets/top_creator_widget.dart';
 import '../widgets/render_trending_hashtag.dart';
 import 'package:amptive/src/views/widgets/common_widgets/custom_container_widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/image_loader_widget.dart';
@@ -43,7 +43,7 @@ class MainDiscoverView extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 15),
           child: HashTagsSubtitleRow(
-            trailingOnpressed: () => context.pushNamed(ATRoutes.SOCIETY_SCREEN),
+            trailingOnpressed: () => context.pushNamed(ATRoutes.SOCIETY_HASHTAG_SCREEN),
             hashTagTitle: ATStrings.SOCIETY,
             hashTagSubTitle: 'ankira22, glendonnor, and 15k other are live',
           ),
@@ -246,7 +246,7 @@ class MainDiscoverView extends StatelessWidget {
             scrollDirection: Axis.horizontal,
             children: List<Widget>.generate(
               5,
-              (_) => const AmptiveTopCreatorsModel(
+              (_) => const TopCreatorWidget(
                 picture: ATImgStrings.MAN_PHOTO
               )
             ),

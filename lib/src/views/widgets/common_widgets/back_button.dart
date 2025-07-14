@@ -16,8 +16,9 @@ class ATBackBtn extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
+    return InkWell(
       onTap: () => context.pop(),
+      borderRadius: BorderRadius.circular(5),
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
