@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import '../../../../utils/constants/colors.dart';
-import '../../../../utils/constants/strings/other_strings.dart';
+import '../../../../config/utils/colors.dart';
+import '../../../../config/utils/other_strings.dart';
 
 class HastagHeadingRow extends StatelessWidget {
   const HastagHeadingRow({

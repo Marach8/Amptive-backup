@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import '../../../../utils/constants/colors.dart';
-import '../../../../utils/constants/strings/image_strings.dart';
+import '../../../../config/utils/colors.dart';
+import '../../../../config/utils/image_strings.dart';
 import '../../../../views/widgets/common_widgets/custom_container_widget.dart';
 import '../../../../views/widgets/common_widgets/list_tile_with_leading_picture_widget.dart';
 

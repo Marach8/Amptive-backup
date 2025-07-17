@@ -1,7 +1,7 @@
-import 'package:amptive/src/utils/dialogs/select_audience_access_for_shows_dialog.dart';
+import 'package:amptive/src/config/utils/dialogs/select_audience_access_for_shows_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import '../../../../../../../utils/constants/colors.dart';
+import '../../../../../../../config/utils/colors.dart';
 import '../../../../../common_widgets/custom_container_widget.dart';
 import '../../../../../common_widgets/custom_rebuilder_widget.dart';
 

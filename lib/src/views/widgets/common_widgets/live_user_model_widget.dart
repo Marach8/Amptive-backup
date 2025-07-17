@@ -1,11 +1,11 @@
-import 'package:amptive/src/utils/constants/strings/image_strings.dart';
+import 'package:amptive/src/config/utils/image_strings.dart';
 import 'package:amptive/src/views/widgets/animation_widgets/other_animation_widgets/live_user_animation.dart';
 import 'package:amptive/src/views/widgets/other_widgets/main_application_widgets/widgets_in_home_view/live_indicator_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 
-class ATLiveUser extends StatelessWidget {
-  const ATLiveUser({
+class LiveUserWidget extends StatelessWidget {
+  const LiveUserWidget({
     super.key,
   });
 

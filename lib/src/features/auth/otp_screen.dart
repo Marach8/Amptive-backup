@@ -1,8 +1,8 @@
 
 import 'package:amptive/src/bloc/authentication/otp/otp_auth_bloc.dart';
 import 'package:amptive/src/bloc/authentication/otp/otp_auth_states.dart';
-import 'package:amptive/src/utils/constants/colors.dart';
-import 'package:amptive/src/utils/constants/font_sizes.dart';
+import 'package:amptive/src/config/utils/colors.dart';
+import 'package:amptive/src/config/utils/font_sizes.dart';
 import 'package:amptive/src/views/widgets/common_widgets/annotated_region__widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/common_widgets.dart';
 import 'package:amptive/src/views/widgets/common_widgets/otp_fields_widget.dart';
@@ -11,8 +11,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import '../../bloc/authentication/otp/otp_auth_events.dart';
-import '../../utils/constants/font_weights.dart';
-import '../../utils/constants/strings/other_strings.dart';
+import '../../config/utils/font_weights.dart';
+import '../../config/utils/other_strings.dart';
 import '../../views/widgets/common_widgets/app_bar_widget.dart';
 import '../../views/widgets/common_widgets/elevated_button_widget.dart';
 import 'dart:developer';

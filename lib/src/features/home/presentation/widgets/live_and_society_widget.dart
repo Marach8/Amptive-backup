@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
-import '../../../../utils/constants/colors.dart';
-import '../../../../utils/constants/font_sizes.dart';
-import '../../../../utils/constants/strings/image_strings.dart';
-import '../../../../utils/constants/strings/other_strings.dart';
+import '../../../../config/utils/colors.dart';
+import '../../../../config/utils/font_sizes.dart';
+import '../../../../config/utils/image_strings.dart';
+import '../../../../config/utils/other_strings.dart';
 import '../../../../views/widgets/common_widgets/image_loader_widget.dart';
 
 class LiveIndicatorRow extends StatelessWidget {

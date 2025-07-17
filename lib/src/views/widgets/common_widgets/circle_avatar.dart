@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../../utils/constants/colors.dart';
+import '../../../config/utils/colors.dart';
 import 'custom_container_widget.dart';
 
 class ATCircleAvatar extends StatelessWidget {

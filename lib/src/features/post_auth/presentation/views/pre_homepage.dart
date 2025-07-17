@@ -1,22 +1,13 @@
 import 'dart:async';
 
-import 'package:amptive/src/utils/constants/colors.dart';
-import 'package:amptive/src/utils/constants/font_weights.dart';
-import 'package:amptive/src/utils/constants/strings/image_strings.dart';
-import 'package:amptive/src/utils/constants/strings/other_strings.dart';
-import 'package:amptive/src/utils/helpers/extensions/context_extensions.dart';
-import 'package:amptive/src/views/widgets/animation_widgets/other_animation_widgets/notification_animation_widget.dart';
+import 'package:amptive/src/config/utils/colors.dart';
+import 'package:amptive/src/config/utils/font_weights.dart';
+import 'package:amptive/src/config/utils/extensions/context_extensions.dart';
 import 'package:amptive/src/features/post_auth/presentation/widgets/pre_hompage_background.dart';
 import 'package:amptive/src/views/widgets/common_widgets/annotated_region__widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/custom_container_widget.dart';
-import 'package:amptive/src/views/widgets/common_widgets/elevated_button_widget.dart';
-import 'package:amptive/src/views/widgets/common_widgets/image_loader_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:go_router/go_router.dart';
-import 'package:google_fonts/google_fonts.dart';
 
-import '../../../../utils/constants/strings/route_strings.dart';
 
 class PreHomePage extends StatefulWidget {
   const PreHomePage({super.key});
@@ -127,8 +118,8 @@ class _PreHomePageState extends State<PreHomePage> with SingleTickerProviderStat
                     width: context.screenWidth * 0.85,
                       clipBehavior: Clip.antiAlias,
                       decoration: const ShapeDecoration(
-                        color: const Color(0xB50C0C0C),
-                        shape: const RoundedRectangleBorder(
+                        color: Color(0xB50C0C0C),
+                        shape: RoundedRectangleBorder(
                           side: BorderSide(width: 5, color: Color(0x4C323033)),
                           borderRadius: BorderRadius.only(
                             topLeft: Radius.circular(40),
@@ -137,7 +128,7 @@ class _PreHomePageState extends State<PreHomePage> with SingleTickerProviderStat
                         ),
                         shadows: <BoxShadow>[
                           BoxShadow(
-                            color: const Color(0x3F000000),
+                            color: Color(0x3F000000),
                             blurRadius: 4,
                             offset: Offset(0, 4),
                             spreadRadius: 0,

@@ -1,11 +1,11 @@
 import 'package:amptive/src/features/discover/presentation/views/discover_landing_screen.dart';
-import 'package:amptive/src/utils/constants/strings/image_strings.dart';
+import 'package:amptive/src/config/utils/image_strings.dart';
 import 'package:amptive/src/views/widgets/common_widgets/custom_container_widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/image_loader_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../../../utils/constants/colors.dart';
-import '../../../../utils/constants/strings/other_strings.dart';
+import '../../../../config/utils/colors.dart';
+import '../../../../config/utils/other_strings.dart';
 import '../../../../views/widgets/animation_widgets/common_animation_widgets/animated_crossfade_widget.dart';
 import '../../../../views/widgets/common_widgets/textformfield_widget.dart';
 

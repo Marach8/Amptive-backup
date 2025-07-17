@@ -1,11 +1,11 @@
 import 'package:amptive/src/models/host.dart';
-import 'package:amptive/src/utils/constants/font_sizes.dart';
+import 'package:amptive/src/config/utils/font_sizes.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
+import '../../../../../config/utils/other_strings.dart';
 import '../../../../../models/go_live_notification_model.dart';
-import '../../../../../utils/constants/colors.dart';
-import '../../../../../utils/constants/strings/image_strings.dart';
-import '../../../../../utils/constants/strings/other_strings.dart';
+import '../../../../../config/utils/colors.dart';
+import '../../../../../config/utils/image_strings.dart';
 import '../../../common_widgets/circular_image.dart';
 import '../../../common_widgets/custom_container_widget.dart';
 import '../../../common_widgets/image_loader_widget.dart';

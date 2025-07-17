@@ -1,7 +1,7 @@
-import 'package:amptive/src/utils/constants/font_sizes.dart';
-import 'package:amptive/src/utils/constants/font_weights.dart';
-import 'package:amptive/src/utils/constants/strings/image_strings.dart';
-import 'package:amptive/src/utils/helpers/helper_functions/helper_functions.dart';
+import 'package:amptive/src/config/utils/font_sizes.dart';
+import 'package:amptive/src/config/utils/font_weights.dart';
+import 'package:amptive/src/config/utils/image_strings.dart';
+import 'package:amptive/src/config/utils/helper_functions.dart';
 import 'package:amptive/src/views/widgets/common_widgets/custom_container_widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/image_loader_widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/live_indicator_with_animating_dot_widget.dart';
@@ -12,8 +12,8 @@ import 'package:amptive/src/views/widgets/other_widgets/main_application_widgets
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
-import '../../../../utils/constants/colors.dart';
-import '../../../../utils/dialogs/options_dialog.dart';
+import '../../../../config/utils/colors.dart';
+import '../../../../config/utils/dialogs/options_dialog.dart';
 
 class ATShowOrEventInfo extends StatelessWidget {
   const ATShowOrEventInfo({

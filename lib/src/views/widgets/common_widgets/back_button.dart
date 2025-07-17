@@ -1,5 +1,5 @@
-import 'package:amptive/src/utils/constants/colors.dart';
-import 'package:amptive/src/utils/constants/strings/other_strings.dart';
+import 'package:amptive/src/config/utils/colors.dart';
+import 'package:amptive/src/config/utils/other_strings.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 

@@ -5,7 +5,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../../bloc/preference/bloc.dart';
 import '../../../../bloc/preference/events.dart';
 import '../../../../bloc/preference/states.dart';
-import '../../../../utils/constants/colors.dart';
+import '../../../../config/utils/colors.dart';
 import '../../../../features/post_auth/presentation/views/single_community_card.dart';
 
 class CommunityCardPreferenceWidget extends StatelessWidget {

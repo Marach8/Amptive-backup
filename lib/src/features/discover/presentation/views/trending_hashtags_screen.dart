@@ -1,10 +1,10 @@
-import 'package:amptive/src/utils/constants/strings/other_strings.dart';
-import 'package:amptive/src/utils/constants/strings/route_strings.dart';
+import 'package:amptive/src/config/utils/other_strings.dart';
+import 'package:amptive/src/config/routing/route_strings.dart';
 import 'package:amptive/src/views/widgets/common_widgets/annotated_region__widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/back_button.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import '../../../../utils/constants/strings/image_strings.dart';
+import '../../../../config/utils/image_strings.dart';
 import '../widgets/hastags_subtitle_row.dart';
 import '../widgets/render_trending_hashtag.dart';
 

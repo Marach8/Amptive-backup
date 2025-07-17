@@ -1,7 +1,7 @@
-import 'package:amptive/src/utils/dialogs/options_dialog.dart';
+import 'package:amptive/src/config/utils/dialogs/options_dialog.dart';
 import 'package:flutter/material.dart';
-import '../../../../utils/constants/colors.dart';
-import '../../../../utils/constants/strings/image_strings.dart';
+import '../../../../config/utils/colors.dart';
+import '../../../../config/utils/image_strings.dart';
 import '../../../../views/widgets/common_widgets/custom_container_widget.dart';
 
 class ATEventOrShowCard extends StatelessWidget {

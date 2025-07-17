@@ -9,11 +9,11 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:image_picker/image_picker.dart';
 import '../../../../bloc/authentication/general/auth_events.dart';
-import '../../../../utils/constants/colors.dart';
-import '../../../../utils/constants/font_weights.dart';
-import '../../../../utils/constants/strings/image_strings.dart';
-import '../../../../utils/constants/strings/other_strings.dart';
-import '../../../../utils/constants/strings/route_strings.dart';
+import '../../../../config/utils/colors.dart';
+import '../../../../config/utils/font_weights.dart';
+import '../../../../config/utils/image_strings.dart';
+import '../../../../config/utils/other_strings.dart';
+import '../../../../config/routing/route_strings.dart';
 
 class AddPictureWidget extends StatefulWidget {
   const AddPictureWidget({super.key});

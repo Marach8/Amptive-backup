@@ -1,12 +1,12 @@
 
 
 import 'package:amptive/src/features/discover/presentation/widgets/search_item_tile.dart';
-import 'package:amptive/src/utils/constants/colors.dart';
-import 'package:amptive/src/utils/helpers/helper_functions/helper_functions.dart';
+import 'package:amptive/src/config/utils/colors.dart';
+import 'package:amptive/src/config/utils/helper_functions.dart';
 import 'package:amptive/src/views/widgets/common_widgets/custom_container_widget.dart';
 import 'package:flutter/material.dart';
 
-import '../../../../utils/constants/strings/image_strings.dart';
+import '../../../../config/utils/image_strings.dart';
 
 class SearchResultsTabsView extends StatefulWidget {
   const SearchResultsTabsView({super.key});

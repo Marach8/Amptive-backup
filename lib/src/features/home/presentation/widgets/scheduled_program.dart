@@ -1,17 +1,17 @@
 import 'package:amptive/src/models/host.dart';
 import 'package:amptive/src/services/create_show/create_show_service.dart';
-import 'package:amptive/src/utils/constants/font_sizes.dart';
-import 'package:amptive/src/utils/constants/font_weights.dart';
-import 'package:amptive/src/utils/constants/strings/image_strings.dart';
-import 'package:amptive/src/utils/constants/strings/other_strings.dart';
+import 'package:amptive/src/config/utils/font_sizes.dart';
+import 'package:amptive/src/config/utils/font_weights.dart';
+import 'package:amptive/src/config/utils/image_strings.dart';
+import 'package:amptive/src/config/utils/other_strings.dart';
 import 'package:amptive/src/views/widgets/common_widgets/custom_container_widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/list_tile_with_leading_picture_widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/overlapping_images.dart';
 import 'package:amptive/src/views/widgets/other_widgets/main_application_widgets/widgets_in_home_view/with_2_others_widget.dart';
 import 'package:flutter/material.dart';
-import '../../../../utils/constants/colors.dart';
-import '../../../../utils/dialogs/added_or_removed_from_calender_dialog.dart';
-import '../../../../utils/dialogs/options_dialog.dart';
+import '../../../../config/utils/colors.dart';
+import '../../../../config/utils/dialogs/added_or_removed_from_calender_dialog.dart';
+import '../../../../config/utils/dialogs/options_dialog.dart';
 import '../../../../views/widgets/common_widgets/image_loader_widget.dart';
 
 

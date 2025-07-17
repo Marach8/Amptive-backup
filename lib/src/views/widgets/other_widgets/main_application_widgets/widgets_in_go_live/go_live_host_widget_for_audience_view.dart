@@ -1,5 +1,5 @@
-import 'package:amptive/src/utils/constants/font_sizes.dart';
-import 'package:amptive/src/utils/dialogs/go_live/follow_or_subscribe_dialog.dart';
+import 'package:amptive/src/config/utils/font_sizes.dart';
+import 'package:amptive/src/config/utils/dialogs/go_live/follow_or_subscribe_dialog.dart';
 import 'package:amptive/src/views/widgets/common_widgets/circle_avatar.dart';
 import 'package:amptive/src/views/widgets/common_widgets/circular_image.dart';
 import 'package:amptive/src/views/widgets/common_widgets/custom_container_widget.dart';
@@ -8,8 +8,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 import '../../../../../models/host.dart';
 import '../../../../../services/go_live_service/go_live_service.dart';
-import '../../../../../utils/constants/colors.dart';
-import '../../../../../utils/constants/strings/other_strings.dart';
+import '../../../../../config/utils/colors.dart';
+import '../../../../../config/utils/other_strings.dart';
 
 class AmptiveLiveHostAndCoHostWidgetForAudienceView extends StatelessWidget {
 

@@ -1,11 +1,11 @@
-import 'package:amptive/src/utils/constants/strings/other_strings.dart';
-import 'package:amptive/src/utils/dialogs/profile/show_top_creator_societies.dart';
+import 'package:amptive/src/config/utils/other_strings.dart';
+import 'package:amptive/src/config/utils/dialogs/profile/show_top_creator_societies.dart';
 import 'package:amptive/src/views/widgets/common_widgets/custom_container_widget.dart';
-import 'package:amptive/src/utils/constants/colors.dart';
-import 'package:amptive/src/utils/constants/font_sizes.dart';
+import 'package:amptive/src/config/utils/colors.dart';
+import 'package:amptive/src/config/utils/font_sizes.dart';
 import 'package:flutter/material.dart';
 
-import '../../../../utils/constants/strings/image_strings.dart';
+import '../../../../config/utils/image_strings.dart';
 import '../../../../views/widgets/common_widgets/image_loader_widget.dart';
 
 

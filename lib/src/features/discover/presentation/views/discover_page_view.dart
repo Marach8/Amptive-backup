@@ -1,16 +1,12 @@
 import 'package:amptive/src/features/discover/presentation/widgets/follow_unfollow_dropdown.dart';
 import 'package:amptive/src/features/discover/presentation/widgets/horizontal_scroll_cards.dart';
-import 'package:amptive/src/utils/constants/strings/route_strings.dart';
-import 'package:amptive/src/utils/helpers/helper_functions/helper_functions.dart';
-import 'package:amptive/src/views/widgets/common_widgets/custom_rebuilder_widget.dart';
-import 'package:carousel_slider/carousel_slider.dart';
+import 'package:amptive/src/config/routing/route_strings.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 import 'package:go_router/go_router.dart';
-import '../../../../utils/constants/colors.dart';
-import '../../../../utils/constants/strings/image_strings.dart';
-import '../../../../utils/constants/strings/other_strings.dart';
+import '../../../../config/utils/colors.dart';
+import '../../../../config/utils/image_strings.dart';
+import '../../../../config/utils/other_strings.dart';
 import '../widgets/hashtag_heading_row.dart';
 import '../../../../views/widgets/other_widgets/main_application_widgets/widgets_in_discover_view/full_discover_view_widgets/discover_categories_title.dart';
 import '../widgets/community_card_widget.dart';
@@ -20,7 +16,6 @@ import '../widgets/trending_technology_widget.dart';
 import '../widgets/top_creator_widget.dart';
 import '../widgets/render_trending_hashtag.dart';
 import 'package:amptive/src/views/widgets/common_widgets/custom_container_widget.dart';
-import 'package:amptive/src/views/widgets/common_widgets/image_loader_widget.dart';
 
 class MainDiscoverView extends StatelessWidget {
   const MainDiscoverView({super.key});

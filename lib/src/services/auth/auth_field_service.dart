@@ -1,5 +1,5 @@
-import 'package:amptive/src/utils/constants/constants.dart';
-import 'package:amptive/src/utils/helpers/extensions/string_extensions.dart';
+import 'package:amptive/src/config/utils/constants.dart';
+import 'package:amptive/src/config/utils/extensions/string_extensions.dart';
 import 'package:country_pickers/country.dart';
 import 'package:country_pickers/utils/utils.dart';
 import 'package:flutter/material.dart';

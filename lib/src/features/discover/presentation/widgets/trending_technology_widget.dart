@@ -1,8 +1,7 @@
 import 'package:amptive/src/features/discover/presentation/widgets/render_trending_hashtag.dart';
 import 'package:flutter/material.dart';
-import 'package:gap/gap.dart';
-import '../../../../utils/constants/colors.dart';
-import '../../../../utils/constants/font_sizes.dart';
+import '../../../../config/utils/colors.dart';
+import '../../../../config/utils/font_sizes.dart';
 import '../../../../views/widgets/common_widgets/circle_avatar.dart';
 import '../../../../views/widgets/common_widgets/custom_container_widget.dart';
 import '../../../../views/widgets/common_widgets/image_loader_widget.dart';

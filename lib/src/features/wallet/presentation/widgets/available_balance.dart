@@ -1,10 +1,10 @@
-import 'package:amptive/src/utils/constants/colors.dart';
-import 'package:amptive/src/utils/constants/font_sizes.dart';
-import 'package:amptive/src/utils/constants/strings/image_strings.dart';
-import 'package:amptive/src/utils/constants/strings/other_strings.dart';
-import 'package:amptive/src/utils/constants/strings/route_strings.dart';
-import 'package:amptive/src/utils/dialogs/wallet/process_wallet_funding_dialog.dart';
-import 'package:amptive/src/utils/dialogs/wallet/select_payment_method_dialog.dart';
+import 'package:amptive/src/config/utils/colors.dart';
+import 'package:amptive/src/config/utils/font_sizes.dart';
+import 'package:amptive/src/config/utils/image_strings.dart';
+import 'package:amptive/src/config/utils/other_strings.dart';
+import 'package:amptive/src/config/routing/route_strings.dart';
+import 'package:amptive/src/config/utils/dialogs/wallet/process_wallet_funding_dialog.dart';
+import 'package:amptive/src/config/utils/dialogs/wallet/select_payment_method_dialog.dart';
 import 'package:amptive/src/features/wallet/presentation/views/enter_amount_screen.dart';
 import 'package:amptive/src/views/widgets/common_widgets/circular_image.dart';
 import 'package:amptive/src/views/widgets/common_widgets/custom_container_widget.dart';

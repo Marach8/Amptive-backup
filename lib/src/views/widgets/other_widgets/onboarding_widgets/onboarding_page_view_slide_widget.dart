@@ -1,5 +1,5 @@
-import 'package:amptive/src/utils/constants/strings/image_strings.dart';
-import 'package:amptive/src/utils/helpers/helper_functions/helper_functions.dart';
+import 'package:amptive/src/config/utils/image_strings.dart';
+import 'package:amptive/src/config/utils/helper_functions.dart';
 import 'package:amptive/src/views/widgets/other_widgets/onboarding_widgets/heading_and_description_texts_column_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';

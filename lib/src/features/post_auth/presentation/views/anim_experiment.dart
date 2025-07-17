@@ -1,10 +1,10 @@
 import 'dart:async';
 import 'dart:developer' show log;
 
-import 'package:amptive/src/utils/constants/colors.dart';
-import 'package:amptive/src/utils/constants/font_weights.dart';
-import 'package:amptive/src/utils/constants/strings/image_strings.dart';
-import 'package:amptive/src/utils/helpers/extensions/context_extensions.dart';
+import 'package:amptive/src/config/utils/colors.dart';
+import 'package:amptive/src/config/utils/font_weights.dart';
+import 'package:amptive/src/config/utils/image_strings.dart';
+import 'package:amptive/src/config/utils/extensions/context_extensions.dart';
 import 'package:amptive/src/views/widgets/common_widgets/annotated_region__widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/custom_container_widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/image_loader_widget.dart';
@@ -70,7 +70,7 @@ class _AnimExperimentState extends State<AnimExperiment> with TickerProviderStat
     _animationController = AnimationController(
       vsync: this,
       duration: const Duration(milliseconds: 500),
-    )..addStatusListener((status) {
+    )..addStatusListener((AnimationStatus status) {
       if (status == AnimationStatus.completed) {
         setState(() {
           _items.removeAt(0);
@@ -150,7 +150,7 @@ class _AnimExperimentState extends State<AnimExperiment> with TickerProviderStat
 
   void _startAutoRemoval() {
     _timer?.cancel();
-    _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
+    _timer = Timer.periodic(const Duration(seconds: 1), (Timer timer) {
       _removeFirstItem();
     });
   }
@@ -255,7 +255,7 @@ class _AnimExperimentState extends State<AnimExperiment> with TickerProviderStat
                                   final int index = entry.key;
                                   final ({String description, String title}) item = entry.value;
 
-                                  final isRemoving = index == _removingIndex;
+                                  final bool isRemoving = index == _removingIndex;
                                   double topPosition;
 
                                   if (_isResetting) {
@@ -265,7 +265,7 @@ class _AnimExperimentState extends State<AnimExperiment> with TickerProviderStat
                                     } else {
                                       initialY = -500.0;
                                     }
-                                    final finalY = _notifItemsPositon4rmTop.isNotEmpty ? _notifItemsPositon4rmTop[index] : _baseHeight;
+                                    final double finalY = _notifItemsPositon4rmTop.isNotEmpty ? _notifItemsPositon4rmTop[index] : _baseHeight;
                                     topPosition = initialY + (finalY - initialY) * _rainingAnimation.value;
                                   } else {
                                     topPosition = isRemoving
@@ -333,7 +333,7 @@ class NotifTile extends StatelessWidget {
       //margin: const EdgeInsets.only(bottom: 8),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
+        children: <Widget>[
           ClipRRect(
             borderRadius: BorderRadius.circular(20),
             child: const ATImgLoader(
@@ -346,7 +346,7 @@ class NotifTile extends StatelessWidget {
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
+              children: <Widget>[
                 Text(
                   title,
                   style: Theme.of(context).textTheme.bodyMedium?.copyWith(
@@ -364,7 +364,7 @@ class NotifTile extends StatelessWidget {
           const SizedBox(width: 8,),
           Column(
             crossAxisAlignment: CrossAxisAlignment.end,
-            children: [
+            children: <Widget>[
               Text(
                 '08:00 am',
                 style: Theme.of(context).textTheme.titleSmall?.copyWith(

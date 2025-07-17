@@ -1,9 +1,9 @@
-import 'package:amptive/src/utils/constants/strings/route_strings.dart';
+import 'package:amptive/src/config/routing/route_strings.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import '../../../../../../utils/constants/colors.dart';
-import '../../../../../../utils/constants/font_sizes.dart';
-import '../../../../../../utils/constants/strings/other_strings.dart';
+import '../../../../../../config/utils/colors.dart';
+import '../../../../../../config/utils/font_sizes.dart';
+import '../../../../../../config/utils/other_strings.dart';
 
 class AmptiveMore2DiscoverTitle extends StatelessWidget {
   const AmptiveMore2DiscoverTitle({super.key});

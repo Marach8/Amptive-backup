@@ -1,5 +1,5 @@
-import 'package:amptive/src/utils/constants/colors.dart';
-import 'package:amptive/src/utils/constants/strings/image_strings.dart';
+import 'package:amptive/src/config/utils/colors.dart';
+import 'package:amptive/src/config/utils/image_strings.dart';
 import 'package:amptive/src/views/widgets/common_widgets/annotated_region__widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/image_loader_widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/textformfield_widget.dart';
@@ -9,8 +9,8 @@ import 'package:gap/gap.dart';
 import 'package:go_router/go_router.dart';
 import '../../../../bloc/main_app/profile/profile_followers_bloc.dart';
 import '../../../../models/host.dart';
-import '../../../../utils/constants/font_sizes.dart';
-import '../../../../utils/constants/strings/other_strings.dart';
+import '../../../../config/utils/font_sizes.dart';
+import '../../../../config/utils/other_strings.dart';
 import '../../../../views/widgets/common_widgets/app_bar_widget.dart';
 import '../../../../views/widgets/common_widgets/custom_container_widget.dart';
 

@@ -1,13 +1,13 @@
 import 'package:amptive/src/bloc/main_app/profile/profile_menu/select_country_bloc.dart';
-import 'package:amptive/src/utils/constants/colors.dart';
-import 'package:amptive/src/utils/dialogs/app_notification_dialog.dart';
-import 'package:amptive/src/utils/dialogs/confirmation_alert_dialog.dart';
+import 'package:amptive/src/config/utils/colors.dart';
+import 'package:amptive/src/config/utils/dialogs/app_notification_dialog.dart';
+import 'package:amptive/src/config/utils/dialogs/confirmation_alert_dialog.dart';
 import 'package:amptive/src/views/widgets/common_widgets/annotated_region__widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import '../../../../../../utils/constants/strings/other_strings.dart';
-import '../../../../../../utils/constants/strings/route_strings.dart';
+import '../../../../../../config/utils/other_strings.dart';
+import '../../../../../../config/routing/route_strings.dart';
 import '../../../../../../views/widgets/common_widgets/circle_avatar.dart';
 
 

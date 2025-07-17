@@ -1,7 +1,6 @@
-import 'package:amptive/src/utils/helpers/extensions/context_extensions.dart';
-import 'package:amptive/src/utils/helpers/helper_functions/helper_functions.dart';
+import 'package:amptive/src/config/utils/extensions/context_extensions.dart';
 import 'package:flutter/material.dart';
-import '../../../utils/constants/colors.dart';
+import '../../../config/utils/colors.dart';
 
 class ATDivider extends StatelessWidget {
   const ATDivider({

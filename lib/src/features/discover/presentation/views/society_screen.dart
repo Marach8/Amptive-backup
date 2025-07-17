@@ -1,7 +1,6 @@
 import 'package:amptive/src/features/home/presentation/widgets/blurred_header.dart';
-import 'package:amptive/src/utils/constants/strings/other_strings.dart';
+import 'package:amptive/src/config/utils/other_strings.dart';
 import 'package:amptive/src/views/widgets/common_widgets/annotated_region__widget.dart';
-import 'package:amptive/src/views/widgets/common_widgets/app_bar_back_arrow_widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/back_button.dart';
 import 'package:amptive/src/views/widgets/common_widgets/sliver_header_delegate.dart';
 import 'package:amptive/src/features/discover/presentation/widgets/society_events_tab_view.dart';
@@ -9,7 +8,7 @@ import 'package:amptive/src/features/discover/presentation/widgets/society_shows
 import 'package:amptive/src/features/discover/presentation/widgets/society_tabs_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../../../utils/constants/colors.dart';
+import '../../../../config/utils/colors.dart';
 import '../widgets/society_all_tab_view.dart';
 
 class DiscoverSocietyScreen extends StatelessWidget {

@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 
 import '../../models/community.dart';
 import '../../models/host.dart';
-import '../../utils/constants/strings/image_strings.dart';
+import '../../config/utils/image_strings.dart';
 
 class CreateShowService {
 

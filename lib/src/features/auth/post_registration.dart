@@ -1,12 +1,12 @@
 import 'dart:async';
 
-import 'package:amptive/src/utils/constants/colors.dart';
+import 'package:amptive/src/config/utils/colors.dart';
 import 'package:amptive/src/views/widgets/common_widgets/loading_indicator.dart';
 import 'package:amptive/src/views/widgets/other_widgets/post_authentication_widgets/add_picture.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import '../../utils/constants/font_sizes.dart';
+import '../../config/utils/font_sizes.dart';
 
 class PostRegistrationScreen extends StatefulWidget {
   const PostRegistrationScreen({super.key});

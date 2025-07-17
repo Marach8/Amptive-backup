@@ -1,10 +1,10 @@
-import 'package:amptive/src/utils/constants/colors.dart';
-import 'package:amptive/src/utils/constants/strings/other_strings.dart';
+import 'package:amptive/src/config/utils/colors.dart';
+import 'package:amptive/src/config/utils/other_strings.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:iconsax/iconsax.dart';
 
-import '../../../../utils/constants/strings/image_strings.dart';
+import '../../../../config/utils/image_strings.dart';
 import '../../../../views/widgets/common_widgets/image_loader_widget.dart' show ATImgLoader;
 
 class RowOfSocials extends StatelessWidget {

@@ -1,5 +1,5 @@
-import 'package:amptive/src/utils/constants/strings/image_strings.dart';
-import 'package:amptive/src/utils/dialogs/go_live/host_view_of_top_gifters.dart';
+import 'package:amptive/src/config/utils/image_strings.dart';
+import 'package:amptive/src/config/utils/dialogs/go_live/host_view_of_top_gifters.dart';
 import 'package:amptive/src/views/widgets/animation_widgets/horiz_slider_animation.dart';
 import 'package:amptive/src/views/widgets/common_widgets/circle_avatar.dart';
 import 'package:amptive/src/views/widgets/common_widgets/custom_container_widget.dart';
@@ -9,11 +9,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 import '../../../../../bloc/main_app/go_live_bloc/host_view/host_end_show_bloc.dart';
-import '../../../../../utils/constants/colors.dart';
-import '../../../../../utils/constants/strings/other_strings.dart';
-import '../../../../../utils/dialogs/go_live/audience_view_of_to_gifters_dialog.dart';
-import '../../../../../utils/dialogs/go_live/host_end_show_dialog.dart';
-import '../../../../../utils/dialogs/go_live/host_view_of_listeners_dialog.dart';
+import '../../../../../config/utils/colors.dart';
+import '../../../../../config/utils/other_strings.dart';
+import '../../../../../config/utils/dialogs/go_live/audience_view_of_to_gifters_dialog.dart';
+import '../../../../../config/utils/dialogs/go_live/host_end_show_dialog.dart';
+import '../../../../../config/utils/dialogs/go_live/host_view_of_listeners_dialog.dart';
 
 
 

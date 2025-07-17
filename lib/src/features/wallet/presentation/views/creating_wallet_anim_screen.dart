@@ -1,6 +1,6 @@
-import 'package:amptive/src/utils/constants/colors.dart';
-import 'package:amptive/src/utils/constants/strings/other_strings.dart';
-import 'package:amptive/src/utils/constants/strings/route_strings.dart';
+import 'package:amptive/src/config/utils/colors.dart';
+import 'package:amptive/src/config/utils/other_strings.dart';
+import 'package:amptive/src/config/routing/route_strings.dart';
 import 'package:amptive/src/features/wallet/bloc/wallet_creation_anim_bloc.dart';
 import 'package:amptive/src/features/wallet/presentation/widgets/wallets_widget_export.dart';
 import 'package:amptive/src/views/widgets/animation_widgets/common_animation_widgets/animated_crossfade_widget.dart';

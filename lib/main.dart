@@ -1,9 +1,8 @@
-import 'package:amptive/src/setup.dart';
-import 'package:device_preview/device_preview.dart';
+import 'package:amptive/src/config/setup.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:amptive/src/routes.dart';
-import 'package:amptive/src/utils/themes/app_theme_data.dart';
+import 'package:amptive/src/config/routing/routes.dart';
+import 'package:amptive/src/config/themes/app_theme_data.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 void main() {

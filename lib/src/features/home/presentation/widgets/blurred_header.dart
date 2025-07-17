@@ -2,13 +2,13 @@ import 'dart:developer' show log;
 import 'dart:io';
 import 'dart:ui';
 
-import 'package:amptive/src/utils/helpers/extensions/context_extensions.dart';
-import 'package:amptive/src/utils/helpers/helper_functions/helper_functions.dart';
+import 'package:amptive/src/config/utils/extensions/context_extensions.dart';
+import 'package:amptive/src/config/utils/helper_functions.dart';
 import 'package:amptive/src/views/widgets/common_widgets/custom_container_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import '../../../../utils/constants/colors.dart';
+import '../../../../config/utils/colors.dart';
 
 class ATBlurredHeaderWidget extends StatelessWidget {
   const ATBlurredHeaderWidget({

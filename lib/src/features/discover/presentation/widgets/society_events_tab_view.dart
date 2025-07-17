@@ -1,7 +1,7 @@
 import 'package:amptive/src/features/discover/presentation/widgets/society_all_tab_view.dart' show SeparatorDivider;
 import 'package:flutter/material.dart';
-import '../../../../utils/constants/strings/image_strings.dart';
-import '../../../../utils/constants/strings/other_strings.dart';
+import '../../../../config/utils/image_strings.dart';
+import '../../../../config/utils/other_strings.dart';
 import 'render_trending_hashtag.dart';
 import 'hashtag_heading_row.dart';
 

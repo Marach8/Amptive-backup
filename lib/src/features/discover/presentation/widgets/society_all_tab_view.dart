@@ -1,16 +1,11 @@
-import 'package:amptive/src/utils/constants/colors.dart';
-import 'package:amptive/src/utils/constants/strings/route_strings.dart';
-import 'package:amptive/src/views/widgets/other_widgets/main_application_widgets/events_and_shows_models_widgets/free_show_model.dart';
+import 'package:amptive/src/config/utils/colors.dart';
+import 'package:amptive/src/config/routing/route_strings.dart';
 import 'package:flutter/material.dart';
-import 'package:gap/gap.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../../../utils/constants/strings/image_strings.dart';
-import '../../../../utils/constants/strings/other_strings.dart';
+import '../../../../config/utils/image_strings.dart';
+import '../../../../config/utils/other_strings.dart';
 import '../../../../views/widgets/common_widgets/custom_container_widget.dart';
-import '../../../../views/widgets/other_widgets/main_application_widgets/events_and_shows_models_widgets/free_event_model.dart';
-import '../../../../views/widgets/other_widgets/main_application_widgets/events_and_shows_models_widgets/paid_event_model.dart';
-import '../../../../views/widgets/other_widgets/main_application_widgets/events_and_shows_models_widgets/paid_show_model.dart';
 import 'top_creator_widget.dart';
 import 'render_trending_hashtag.dart';
 import 'hashtag_heading_row.dart';

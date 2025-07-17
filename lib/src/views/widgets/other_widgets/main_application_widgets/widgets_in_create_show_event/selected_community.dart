@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../../../models/community.dart';
-import '../../../../../utils/constants/colors.dart';
-import '../../../../../utils/constants/font_weights.dart';
+import '../../../../../config/utils/colors.dart';
+import '../../../../../config/utils/font_weights.dart';
 
 class SelectedCommunity extends StatelessWidget {
   const SelectedCommunity({

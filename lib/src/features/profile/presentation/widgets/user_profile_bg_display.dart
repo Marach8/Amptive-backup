@@ -1,11 +1,11 @@
-import 'package:amptive/src/utils/constants/strings/route_strings.dart';
+import 'package:amptive/src/config/routing/route_strings.dart';
+import 'package:amptive/src/config/utils/extensions/context_extensions.dart';
 import 'package:amptive/src/views/widgets/common_widgets/circular_image.dart';
 import 'package:amptive/src/views/widgets/common_widgets/custom_container_widget.dart';
-import 'package:amptive/src/utils/constants/colors.dart';
+import 'package:amptive/src/config/utils/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import '../../../../utils/constants/strings/image_strings.dart';
-import '../../../../utils/helpers/helper_functions/other_functions.dart';
+import '../../../../config/utils/image_strings.dart';
 
 class UserBgProfileWidget extends StatelessWidget {
   const UserBgProfileWidget({
@@ -26,7 +26,7 @@ class UserBgProfileWidget extends StatelessWidget {
           ATColors.hexD9D9D9
         ]
       ),
-      width: ATHelperFuncs.getScreenWidth(context),
+      width: context.screenWidth,
       child: Stack(
         alignment: Alignment.center,
         clipBehavior: Clip.none,

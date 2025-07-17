@@ -1,4 +1,5 @@
 import 'dart:ui';
+import 'package:amptive/src/features/home/presentation/widgets/home_widgets_export.dart';
 import 'package:amptive/src/views/widgets/common_widgets/annotated_region__widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/image_loader_widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/loading_indicator.dart';
@@ -7,11 +8,11 @@ import 'package:amptive/src/views/widgets/common_widgets/textformfield_widget.da
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:readmore/readmore.dart';
-import '../../../../utils/constants/colors.dart';
-import '../../../../utils/constants/font_sizes.dart';
-import '../../../../utils/constants/font_weights.dart';
-import '../../../../utils/constants/strings/image_strings.dart';
-import '../../../../utils/constants/strings/other_strings.dart';
+import '../../../../config/utils/colors.dart';
+import '../../../../config/utils/font_sizes.dart';
+import '../../../../config/utils/font_weights.dart';
+import '../../../../config/utils/image_strings.dart';
+import '../../../../config/utils/other_strings.dart';
 import '../../../../views/widgets/common_widgets/circle_avatar.dart';
 import '../../../../views/widgets/common_widgets/custom_container_widget.dart';
 import '../../../../views/widgets/common_widgets/elevated_button_widget.dart';

@@ -1,7 +1,7 @@
 import 'dart:ui';
-import 'package:amptive/src/utils/constants/colors.dart';
-import 'package:amptive/src/utils/constants/strings/image_strings.dart';
-import 'package:amptive/src/utils/constants/strings/other_strings.dart';
+import 'package:amptive/src/config/utils/colors.dart';
+import 'package:amptive/src/config/utils/image_strings.dart';
+import 'package:amptive/src/config/utils/other_strings.dart';
 import 'package:amptive/src/features/home/home_export.dart';
 import 'package:amptive/src/views/widgets/common_widgets/annotated_region__widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/circle_avatar.dart';
@@ -11,11 +11,12 @@ import 'package:amptive/src/views/widgets/common_widgets/image_loader_widget.dar
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:readmore/readmore.dart';
-import '../../../../utils/constants/font_sizes.dart';
-import '../../../../utils/constants/font_weights.dart';
+import '../../../../config/utils/font_sizes.dart';
+import '../../../../config/utils/font_weights.dart';
 import '../../../../views/widgets/common_widgets/list_tile_with_leading_picture_widget.dart';
 import '../../../../views/widgets/common_widgets/sliver_header_delegate.dart';
 import '../../../../views/widgets/other_widgets/main_application_widgets/widgets_in_show_or_event_full_details_view/hashtags_widget.dart';
+import '../widgets/home_widgets_export.dart';
 
 class ATLiveShowDetailedScreen extends StatelessWidget {
   const ATLiveShowDetailedScreen({super.key});

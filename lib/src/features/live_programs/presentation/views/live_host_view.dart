@@ -1,10 +1,11 @@
 import 'package:amptive/src/bloc/main_app/go_live_bloc/host_view/notifications_bloc.dart';
+import 'package:amptive/src/config/utils/other_strings.dart';
 import 'package:amptive/src/models/host.dart';
-import 'package:amptive/src/utils/constants/font_sizes.dart';
-import 'package:amptive/src/utils/constants/strings/image_strings.dart';
-import 'package:amptive/src/utils/dialogs/app_notification_dialog.dart';
-import 'package:amptive/src/utils/dialogs/go_live/host_moderation_tools_dialog.dart';
-import 'package:amptive/src/utils/helpers/helper_functions/helper_functions.dart';
+import 'package:amptive/src/config/utils/font_sizes.dart';
+import 'package:amptive/src/config/utils/image_strings.dart';
+import 'package:amptive/src/config/utils/dialogs/app_notification_dialog.dart';
+import 'package:amptive/src/config/utils/dialogs/go_live/host_moderation_tools_dialog.dart';
+import 'package:amptive/src/config/utils/helper_functions.dart';
 import 'package:amptive/src/views/widgets/animation_widgets/common_animation_widgets/animated_switcher.dart';
 import 'package:amptive/src/views/widgets/common_widgets/annotated_region__widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/circular_image.dart';
@@ -21,9 +22,8 @@ import 'package:get_it/get_it.dart';
 import '../../../../bloc/main_app/go_live_bloc/host_view/cohosts_display_bloc.dart';
 import '../../../../models/go_live_notification_model.dart';
 import '../../../../services/go_live_service/go_live_service.dart';
-import '../../../../utils/constants/colors.dart';
-import '../../../../utils/constants/strings/other_strings.dart';
-import '../../../../utils/dialogs/go_live/go_live_add_cohost_dialog.dart';
+import '../../../../config/utils/colors.dart';
+import '../../../../config/utils/dialogs/go_live/go_live_add_cohost_dialog.dart';
 import '../../../../views/widgets/other_widgets/main_application_widgets/widgets_in_go_live/go_live_host_widget_for_host_view.dart';
 import '../../../../views/widgets/other_widgets/main_application_widgets/widgets_in_go_live/go_live_notification_widget.dart';
 

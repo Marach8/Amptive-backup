@@ -1,6 +1,6 @@
 import 'dart:math';
 
-import 'package:amptive/src/utils/constants/colors.dart';
+import 'package:amptive/src/config/utils/colors.dart';
 import 'package:flutter/material.dart';
 
 

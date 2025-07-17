@@ -1,10 +1,10 @@
-import 'package:amptive/src/utils/constants/colors.dart';
-import 'package:amptive/src/utils/constants/font_sizes.dart';
+import 'package:amptive/src/config/utils/colors.dart';
+import 'package:amptive/src/config/utils/font_sizes.dart';
 import 'package:amptive/src/views/widgets/common_widgets/circle_avatar.dart';
 import 'package:flutter/material.dart';
 
-import '../../../../utils/constants/font_weights.dart';
-import '../../../../utils/constants/strings/image_strings.dart';
+import '../../../../config/utils/font_weights.dart';
+import '../../../../config/utils/image_strings.dart';
 import '../../../../views/widgets/common_widgets/custom_container_widget.dart' show ATContainer;
 import '../../../../views/widgets/common_widgets/image_loader_widget.dart' show ATImgLoader;
 

@@ -1,7 +1,7 @@
-import 'package:amptive/src/utils/constants/colors.dart';
+import 'package:amptive/src/config/utils/colors.dart';
 import 'package:flutter/material.dart';
-import '../../../utils/constants/font_weights.dart';
-import '../../../utils/constants/strings/other_strings.dart';
+import '../../../config/utils/font_weights.dart';
+import '../../../config/utils/other_strings.dart';
 
 
 class ATOTPFieldsWidget extends StatefulWidget {

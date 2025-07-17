@@ -1,12 +1,12 @@
-import 'package:amptive/src/utils/constants/font_sizes.dart';
-import 'package:amptive/src/utils/constants/strings/route_strings.dart';
-import 'package:amptive/src/utils/dialogs/wallet/select_withdrawal_bank_dialog.dart';
+import 'package:amptive/src/config/utils/font_sizes.dart';
+import 'package:amptive/src/config/routing/route_strings.dart';
+import 'package:amptive/src/config/utils/dialogs/wallet/select_withdrawal_bank_dialog.dart';
 import 'package:amptive/src/views/widgets/common_widgets/radio_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import '../../../../utils/constants/colors.dart';
-import '../../../../utils/constants/strings/other_strings.dart';
+import '../../../../config/utils/colors.dart';
+import '../../../../config/utils/other_strings.dart';
 import '../../../../views/widgets/common_widgets/annotated_region__widget.dart';
 import '../../../../views/widgets/common_widgets/app_bar_widget.dart';
 import '../../../../views/widgets/common_widgets/back_button.dart';
