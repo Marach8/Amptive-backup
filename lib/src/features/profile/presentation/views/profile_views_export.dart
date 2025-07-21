@@ -6,4 +6,4 @@ export 'profile_pic_display_screen.dart';
 export 'subscribers_screen.dart';
 export 'user_profile_screen.dart';
 export 'edit_profile/edit_profile_export.dart';
-export 'crop_bg_image_screen.dart';
+export 'rectangular_image_cropper_screen.dart';

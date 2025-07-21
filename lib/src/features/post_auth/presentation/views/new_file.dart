@@ -1,6 +1,6 @@
+
 import 'dart:async';
 import 'dart:developer' show log;
-
 import 'package:amptive/src/config/utils/colors.dart';
 import 'package:amptive/src/config/utils/font_weights.dart';
 import 'package:amptive/src/config/utils/image_strings.dart';
@@ -9,7 +9,7 @@ import 'package:amptive/src/views/widgets/common_widgets/annotated_region__widge
 import 'package:amptive/src/views/widgets/common_widgets/custom_container_widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/image_loader_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
+
 
 class AnimExperiment extends StatefulWidget {
   const AnimExperiment({super.key});
@@ -54,6 +54,9 @@ class _AnimExperimentState extends State<AnimExperiment> with TickerProviderStat
   late List<GlobalKey> _notifItemKeys;
   late List<double> _notifItemsPositon4rmTop;
   static const double _baseHeight = 150;
+  static const double _normalPicSize = 30;
+  static const double _normalTitleFontSize = 12;
+  static const double _normalTrailingFontSize = 10;
   Timer? _timer;
   bool _isResetting = false;
   ({String title, String description})? _lastSurvivor;
@@ -232,77 +235,71 @@ class _AnimExperimentState extends State<AnimExperiment> with TickerProviderStat
                       )
                     ],
                   ),
-                  child: BlocProvider<NotifBloc>(
-                    create: (_) => NotifBloc(),
-                    child: Builder(
-                      builder: (_) {
-                        return BlocBuilder<NotifBloc, dynamic>(
-                          builder: (_, dynamic state) {
-                            return Stack(
-                              alignment: Alignment.center,
-                              children: <Widget>[
-                              Positioned(
-                                top: 20,
-                                child: ATContainer(
-                                  width: 80, height: 18,
-                                  color: ATColors.hex2F2F2F,
-                                  radius: 30,
-                                )
-                              ),
-
-                              ..._items.asMap().entries.map(
-                                (MapEntry<int, ({String description, String title})> entry) {
-                                  final int index = entry.key;
-                                  final ({String description, String title}) item = entry.value;
-
-                                  final bool isRemoving = index == _removingIndex;
-                                  double topPosition;
-
-                                  if (_isResetting) {
-                                    double initialY;
-                                    if (_lastSurvivor != null && item.title == _lastSurvivor!.title && item.description == _lastSurvivor!.description) {
-                                      initialY = _baseHeight;
-                                    } else {
-                                      initialY = -500.0;
-                                    }
-                                    final double finalY = _notifItemsPositon4rmTop.isNotEmpty ? _notifItemsPositon4rmTop[index] : _baseHeight;
-                                    topPosition = initialY + (finalY - initialY) * _rainingAnimation.value;
-                                  } else {
-                                    topPosition = isRemoving
-                                        ? _notifItemsPositon4rmTop[index] - (150 * _animation.value)
-                                        : (_notifItemsPositon4rmTop.isNotEmpty ? _notifItemsPositon4rmTop[index] : _baseHeight);
-                                  }
-
-                                  return AnimatedPositioned(
-                                    duration: isRemoving ? Duration.zero : const Duration(milliseconds: 500),
-                                    left: isRemoving
-                                        ? ((index * 8) + 10) + (50 * _animation.value)
-                                        : (index * 8) + 10,
-                                    right: isRemoving
-                                        ? ((index * 8) + 10) + (50 * _animation.value)
-                                        : (index * 8) + 10,
-                                    key: _notifItemKeys[index],
-                                    top: topPosition,
-                                    child: NotificationListener<SizeChangedLayoutNotification>(
-                                      onNotification: (SizeChangedLayoutNotification notification){
-                                        WidgetsBinding.instance.addPostFrameCallback((_) => _initializePositions4rmTop());
-                                        return true;
-                                      },
-                                      child: SizeChangedLayoutNotifier(
-                                        child: NotifTile(
-                                          title: item.title, subtitle: item.description,
-                                        ),
-                                      ),
-                                    ),
-                                  );
-                                }
-                              )
-                            ]
-                            );
+                  child: Stack(
+                    alignment: Alignment.center,
+                    children: <Widget>[
+                    Positioned(
+                      top: 20,
+                      child: ATContainer(
+                        width: 80, height: 18,
+                        color: ATColors.hex2F2F2F,
+                        radius: 30,
+                      )
+                    ),
+                                
+                    ..._items.asMap().entries.map(
+                      (MapEntry<int, ({String description, String title})> entry) {
+                        final int index = entry.key;
+                        final ({String description, String title}) item = entry.value;
+                                
+                        final bool isRemoving = index == _removingIndex;
+                        double topPosition;
+                                
+                        if (_isResetting) {
+                          double initialY;
+                          if (_lastSurvivor != null && item.title == _lastSurvivor!.title && item.description == _lastSurvivor!.description) {
+                            initialY = _baseHeight;
+                          } else {
+                            initialY = -500.0;
                           }
+                          final double finalY = _notifItemsPositon4rmTop.isNotEmpty ? _notifItemsPositon4rmTop[index] : _baseHeight;
+                          topPosition = initialY + (finalY - initialY) * _rainingAnimation.value;
+                        } else {
+                          topPosition = isRemoving
+                              ? _notifItemsPositon4rmTop[index] - (150 * _animation.value)
+                              : (_notifItemsPositon4rmTop.isNotEmpty ? _notifItemsPositon4rmTop[index] : _baseHeight);
+                        }
+                                
+                        return AnimatedPositioned(
+                          duration: isRemoving ? Duration.zero : const Duration(milliseconds: 500),
+                          left: isRemoving
+                              ? ((index * 8) + 10) + (50 * _animation.value)
+                              : (index * 8) + 10,
+                          right: isRemoving
+                              ? ((index * 8) + 10) + (50 * _animation.value)
+                              : (index * 8) + 10,
+                          key: _notifItemKeys[index],
+                          top: topPosition,
+                          child: NotificationListener<SizeChangedLayoutNotification>(
+                            onNotification: (SizeChangedLayoutNotification notification){
+                              WidgetsBinding.instance.addPostFrameCallback((_) => _initializePositions4rmTop());
+                              return true;
+                            },
+                            child: SizeChangedLayoutNotifier(
+                              child: NotifTile(
+                                pictureSize: _normalPicSize * (1.0 - (0.1 * index)),
+                                titleFontSize: _normalTitleFontSize * (1.0 - (0.1 * index)),
+                                subTitleFontSize: _normalTitleFontSize * (1.0 - (0.1 * index)),
+                                timeFontSize: _normalTrailingFontSize * (1.0 - (0.1 * index)),
+                                title: item.title,
+                                subtitle: item.description,
+                              ),
+                            ),
+                          ),
                         );
                       }
-                    ),
+                    )
+                  ]
                   )
               ),
             ),
@@ -318,11 +315,17 @@ class NotifTile extends StatelessWidget {
     super.key,
     required this.title,
     required this.subtitle,
+    required this.pictureSize,
+    required this.timeFontSize,
+    required this.subTitleFontSize,
+    required this.titleFontSize,
     this.onTap
   });
 
   final String title, subtitle;
   final VoidCallback? onTap;
+  final double pictureSize,
+  titleFontSize, subTitleFontSize, timeFontSize;
 
   @override
   Widget build(BuildContext context) {
@@ -334,11 +337,13 @@ class NotifTile extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          ClipRRect(
-            borderRadius: BorderRadius.circular(20),
+          ATContainer(
+            radius: 5,
+            height: pictureSize,
+            clipBehavior: Clip.hardEdge,
+            width: pictureSize,
             child: const ATImgLoader(
               imgPath: ATImgStrings.jpeg1,
-              height: 30, width: 30,
               boxFit: BoxFit.cover,
             ),
           ),
@@ -347,16 +352,20 @@ class NotifTile extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                Text(
-                  title,
-                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                    fontSize: 11.49
+                AnimatedDefaultTextStyle(
+                  duration: const Duration(milliseconds: 500),
+                  style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                    fontSize: titleFontSize
                   ),
+                  child: Text(title),
                 ),
-                Text(
-                  subtitle,
-                  maxLines: 4,
-                  style: Theme.of(context).textTheme.titleSmall,
+                AnimatedDefaultTextStyle(
+                  duration: const Duration(milliseconds: 500),
+                  maxLines: 4, overflow: TextOverflow.ellipsis,
+                  style: Theme.of(context).textTheme.titleSmall!.copyWith(
+                    fontSize: subTitleFontSize,
+                  ),
+                  child: Text(subtitle,),
                 )
               ],
             ),
@@ -365,18 +374,23 @@ class NotifTile extends StatelessWidget {
           Column(
             crossAxisAlignment: CrossAxisAlignment.end,
             children: <Widget>[
-              Text(
-                '08:00 am',
-                style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                  fontSize: 10,
+              AnimatedDefaultTextStyle(
+                duration: const Duration(milliseconds: 500),
+                style: Theme.of(context).textTheme.titleSmall!.copyWith(
+                  fontSize: timeFontSize,
                   color: ATColors.hexC2C2C2
                 ),
+                child: const Text('08:00 am'),
               ),
-              ClipRRect(
-                borderRadius: BorderRadius.circular(20),
+              const SizedBox(height: 2,),
+              ATContainer(
+                radius: 5,
+                clipBehavior: Clip.hardEdge,
+                height: pictureSize,
+                width: pictureSize,
                 child: const ATImgLoader(
                   imgPath: ATImgStrings.jpeg2,
-                  height: 30, width: 30, boxFit: BoxFit.cover,
+                  boxFit: BoxFit.cover,
                 ),
               ),
             ],
@@ -386,8 +400,4 @@ class NotifTile extends StatelessWidget {
     );
   }
 }
-class NotifBloc extends Cubit<int>{
-  NotifBloc():super(0);
 
-  
-}

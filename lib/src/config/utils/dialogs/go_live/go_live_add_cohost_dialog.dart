@@ -22,7 +22,7 @@ import '../../../../services/create_show/create_show_service.dart';
 import '../../../../views/widgets/common_widgets/loading_indicator.dart';
 import '../../../../views/widgets/common_widgets/custom_rebuilder_widget.dart';
 import '../../../../views/widgets/common_widgets/elevated_button_widget.dart';
-import '../add_co_host_dialog.dart';
+import '../../../../features/go_live/presentation/widgets/add_co_host_dialog.dart';
 
 
 Future<bool?> showGoLiveHostAddCoHostDialog({

@@ -19,8 +19,7 @@ class ATRoutes {
 
   //POST AUTHENTICATION
   static const String addProfilePic = "add_profile_pic";
-  static const String cropImage = "crop_image";
-  static const String cropImageSquare = "crop_image_square";
+  static const String CIRCLE_IMG_CROPPER_SCREEN = "crop_image";
   static const String preHomepage = "pre-homepage";
   static const String CREATE_SHOW_FORM = "create-show-form";
   static const String CREATE_EVENT_FORM = "create-event-form";
@@ -60,7 +59,7 @@ class ATRoutes {
   static const String ACCT_INFO_SCREEN = 'account_infomation_screen';
   static const String ACCT_SCREEN = 'account_screen';
   static const String EDIT_PROFILE = 'edit_profile';
-  static const String PROFILE_BG_CROP = 'profile_bg_crop';
+  static const String RECT_IMG_CROPPER_SCREEN = 'profile_bg_crop';
   static const String EDIT_NAME = 'edit_name';
   static const String EDIT_USERNAME = 'edit_username';
   static const String EDIT_BIO = 'edit_bio';

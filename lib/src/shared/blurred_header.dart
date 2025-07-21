@@ -1,4 +1,3 @@
-import 'dart:developer' show log;
 import 'dart:io';
 import 'dart:ui';
 
@@ -8,7 +7,7 @@ import 'package:amptive/src/views/widgets/common_widgets/custom_container_widget
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import '../../../../config/utils/colors.dart';
+import '../config/utils/colors.dart';
 
 class ATBlurredHeaderWidget extends StatelessWidget {
   const ATBlurredHeaderWidget({
@@ -55,6 +54,7 @@ class ATBlurredHeaderWidget extends StatelessWidget {
   }
 }
 
+
 class BlurredHeaderBloc extends Cubit<bool>{
   BlurredHeaderBloc():super(false);
 
@@ -63,12 +63,12 @@ class BlurredHeaderBloc extends Cubit<bool>{
     if (notification is ScrollUpdateNotification) {
       final double extentBefore = notification.metrics.extentBefore;
       if(extentBefore > 0.0 && !state){
-        log('backdrop is shown');
-        log(notification.metrics.extentInside.toString());
+        // log('backdrop is shown');
+        // log(notification.metrics.extentInside.toString());
         emit(true);
       }
       else if(extentBefore == 0.0 && state){
-        log('Backdrop is hidden');
+        //log('Backdrop is hidden');
         emit(false);
       }
     }

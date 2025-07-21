@@ -13,10 +13,8 @@ import 'package:amptive/src/services/go_live_service/go_live_service.dart' hide 
 import 'package:amptive/src/services/preference_service.dart';
 import 'package:amptive/src/features/main_app_shell.dart';
 import 'package:amptive/src/features/profile/bloc/profile_bloc_export.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
-import 'package:go_router/go_router.dart';
 import 'package:provider/single_child_widget.dart';
 import '../bloc/authentication/email/email_auth_bloc.dart';
 import '../bloc/authentication/general/auth_bloc.dart';

@@ -43,7 +43,7 @@ class _AddPictureWidgetState extends State<AddPictureWidget> {
     if (pickedFile != null && mounted) {
       File image = File(pickedFile.path);
       MemoryImage? img =
-          await context.pushNamed(ATRoutes.cropImage, extra: image);
+          await context.pushNamed(ATRoutes.CIRCLE_IMG_CROPPER_SCREEN, extra: image);
 
       if (img != null && mounted) {
         context

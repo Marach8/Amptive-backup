@@ -329,6 +329,11 @@ class ATStrings{
   static const String ABT_U = 'About you';
   static const String USERNAME = 'Username';
   static const String NAME = 'Name';
+  static const String TITLE_OF_UR_SHOW = 'What is the title of your show?';
+  static const String TELL_LISTENERS_ABOUT_SHOW = 'Tell your listeners what your show is about';
+  static const String SELECT_COMMUNITY_4_UR_SHOW = 'Select a community for your show';
+  static const String TITLE = 'Title';
+  static const String DESCRIPTION = 'Description';
   static const String BIO = 'Bio';
   static const String SELECT_ACCT_TYPE = 'Select your choice account type to proceed.';
   static const String CREATOR_ACCT = 'Creator Account';
@@ -353,6 +358,7 @@ class ATStrings{
   static const String CODE_SENT = 'Code has been sent. You can request another in';
   static const String SEE_COMMUNITIES = 'See communities on Amptive';
   static const String COMMUNITIES = 'Communities';
+  static const String COMMUNITY = 'Community';
   static const String RECENT_SEARCHES = 'Recent Searches';
   static const String CLEAR = 'Clear';
   static const String KICK_OUT_LISTENER = 'Kickout listener';
@@ -379,6 +385,8 @@ class ATStrings{
   static const String CREATE_NEW_EVENT = 'Create new event';
   static const String CHOOSE_SHOW = 'Choose Show';
   static const String CHOOSE_EVENT = 'Choose Event';
+  static const String CREATE_UR_SHOW = 'Create your show';
+  static const String CREATE_UR_EVENT = 'Create your event';
   static const String ADD_COMMUNITY = 'Add Community';
   static const String ADD_CO_HOST = 'Add Cohost';
   static const String ADD_HASHTAG = 'Add Hashtag';

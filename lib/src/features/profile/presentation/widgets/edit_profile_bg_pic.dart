@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:amptive/src/config/utils/colors.dart';
 import 'package:amptive/src/config/utils/image_strings.dart';
 import 'package:amptive/src/config/routing/route_strings.dart';
-import 'package:amptive/src/config/utils/dialogs/image_source_selection_dialog.dart';
+import 'package:amptive/src/shared/image_source_selection_dialog.dart';
 import 'package:amptive/src/config/utils/helper_functions.dart';
 import 'package:amptive/src/views/widgets/common_widgets/circular_image.dart';
 import 'package:amptive/src/views/widgets/common_widgets/custom_container_widget.dart';
@@ -11,6 +11,7 @@ import 'package:amptive/src/views/widgets/common_widgets/image_loader_widget.dar
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:go_router/go_router.dart';
+import 'package:image_picker/image_picker.dart' show ImageSource, XFile;
 
 
 class EditProfileBgImage extends StatelessWidget {
@@ -22,27 +23,18 @@ class EditProfileBgImage extends StatelessWidget {
   Widget build(BuildContext context) {
     Uint8List? imageBytes;
     return StatefulBuilder(
-      builder: (BuildContext context, setter) {
+      builder: (BuildContext context, void Function(void Function())  setter) {
         return Stack(
           alignment: Alignment.center,
           clipBehavior: Clip.none,
           children: <Widget>[
             GestureDetector(
               onTap: () async{
-                File? file;
-                final bool? status = await showImageSourceOptions(context);
-                if(status == null){return;}
-                else if(context.mounted && status){
-                  file = await ATHelperFuncs.getImageFromGallery();
-                }
-                else if(context.mounted){
-                  file = await ATHelperFuncs.getImageFromCamera();
-                }
-                
-                if(file == null) return;
-                if(context.mounted){
-                  final MemoryImage? imageData = await context
-                    .pushNamed(ATRoutes.PROFILE_BG_CROP, extra: file) as MemoryImage?;
+                final ImageSource? selectedSrc = await showImageSourceOptions(context);
+                final XFile? selectedFile = await ATHelperFuncs.pickImage(selectedSrc);
+                if(context.mounted && selectedFile != null){
+                  final File file = File(selectedFile.path);
+                  final MemoryImage? imageData = await context.pushNamed(ATRoutes.RECT_IMG_CROPPER_SCREEN, extra: file) as MemoryImage?;
                   if(imageData != null){
                     setter(() => imageBytes = imageData.bytes);
                   }

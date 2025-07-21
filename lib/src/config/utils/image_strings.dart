@@ -75,7 +75,7 @@ class ATImgStrings{
   //static const String event4 = '$_pngPath/Group 31.png';
   static const String PADLOCK = '$_pngPath/metalic padlock.png';
   static const String PEOPLE = '$_pngPath/people.png';
-  static const String createShowPlaceholderImage = '$_pngPath/create-show-placeholder.png';
+  static const String CREATE_SHOW_PLACEHOLDER = '$_pngPath/create-show-placeholder.png';
   static const String artCard = '$_pngPath/art-card.png';
   static const String techCard= '$_pngPath/tech-card.png';
   static const String societyCard = '$_pngPath/society-card.png';

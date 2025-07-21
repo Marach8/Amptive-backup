@@ -7,4 +7,4 @@ export 'program_widget_in_home.dart';
 export 'live_and_society_widget.dart';
 export 'people_listening.dart';
 export 'whispers_list.dart';
-export 'blurred_header.dart';
+export '../../../../shared/blurred_header.dart';

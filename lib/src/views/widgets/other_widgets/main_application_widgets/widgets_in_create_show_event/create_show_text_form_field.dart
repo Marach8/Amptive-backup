@@ -11,7 +11,7 @@ import '../../../common_widgets/textformfield_widget.dart';
 class CreateShowTextFormField extends ATTextFormField {
   const CreateShowTextFormField(
       {super.key,
-        required super.controller,
+        super.controller,
         super.hintText,
         super.prefixIcon,
         super.suffixIcon,

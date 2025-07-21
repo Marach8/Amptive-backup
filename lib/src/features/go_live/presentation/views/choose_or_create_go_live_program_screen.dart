@@ -9,7 +9,7 @@ import 'package:amptive/src/views/widgets/common_widgets/back_button.dart';
 import 'package:amptive/src/views/widgets/common_widgets/custom_container_widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/elevated_button_widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/image_loader_widget.dart';
-import 'package:amptive/src/features/go_live/presentation/widgets/existing_show_widget.dart';
+import 'package:amptive/src/features/go_live/presentation/widgets/existing_go_live_program_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:nested/nested.dart' show SingleChildWidget;
@@ -17,6 +17,8 @@ import '../../../../config/utils/colors.dart';
 import 'package:amptive/src/features/home/presentation/widgets/home_widgets_export.dart';
 import 'package:amptive/src/views/widgets/common_widgets/sliver_header_delegate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
+import '../widgets/add_co_host_dialog.dart';
 
 enum GoLiveProgramType {event, show}
 
@@ -182,7 +184,7 @@ class ChooseOrCreateGoLiveProgramScreen extends StatelessWidget {
           resizeToAvoidBottomInset: false,
 
           bottomSheet: ATContainer(
-            height: 90,
+            height: 70,
             gradient: LinearGradient(
               begin: Alignment.topCenter,
               end: Alignment.bottomCenter,
@@ -191,7 +193,7 @@ class ChooseOrCreateGoLiveProgramScreen extends StatelessWidget {
                 ATColors.hex0D0D0D
               ]
             ),
-            padding: const EdgeInsets.fromLTRB(15, 10, 15, 30),
+            padding: const EdgeInsets.fromLTRB(15, 10, 15, 10),
             child: BlocBuilder<_PrivateBloc, String?>(
               builder: (_, String? selectedImgPath) {
                 return ATPlainElevatedBtn(
@@ -199,7 +201,7 @@ class ChooseOrCreateGoLiveProgramScreen extends StatelessWidget {
                   fgColor: ATColors.hex0D0D0D,
                   btnTitle: ATStrings.NEXT,
                   onPressed: selectedImgPath == null ? null : () async{
-                    //await showAddCoHostDialog(context);
+                    await showAddCoHostDialog(context);
                     //await showAddHashtagDialog(context);
                     //await showHandRaisingDialog(context);
                     //showAddCommunitiesDialog(context);

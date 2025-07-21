@@ -21,11 +21,12 @@ import 'package:amptive/src/features/go_live/presentation/views/go_live_welcome_
 import 'package:amptive/src/features/profile/presentation/views/profile_views_export.dart';
 import 'package:amptive/src/features/home/presentation/views/scheduled_screen.dart';
 import 'package:amptive/src/features/wallet/presentation/views/wallet_txns_screen.dart';
-import 'package:amptive/src/features/post_auth/presentation/views/crop_image_screen.dart';
+import 'package:amptive/src/features/post_auth/presentation/views/circle_image_cropper_screen.dart';
 import 'package:amptive/src/features/post_auth/presentation/views/preference_screen.dart';
 import 'package:amptive/src/features/onboarding/onboarding_page_view_screen.dart';
 import 'package:amptive/src/features/onboarding/welcome_screen.dart';
 import 'package:amptive/src/views/widgets/other_widgets/main_application_widgets/widgets_in_home_view/widgets_in_go_live/shows/show_type_visibility.dart';
+import 'package:custom_image_crop/custom_image_crop.dart' show Ratio;
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import '../../features/discover/presentation/views/community_home_screen.dart';
@@ -83,23 +84,19 @@ final GoRouter amptiveAppRouter = GoRouter(
       builder: (_, GoRouterState state) => AddPhoneScreen(title: state.extra as String?),
     ),
     GoRoute(
-        name: ATRoutes.addProfilePic,
-        path: "/add-profile-pic",
-        builder: (_, __) => const PostRegistrationScreen(),
-        routes: <RouteBase>[
-          GoRoute(
-              name: ATRoutes.cropImage,
-              path: "crop-image",
-              builder: (_, GoRouterState state) {
-                File imageFile = state.extra as File;
-                return CropPage(
-                  title: "Cropper",
-                  imageFile: imageFile,
-                );
-              }
-            ),
-        ]
-      ),
+      name: ATRoutes.addProfilePic,
+      path: "/add-profile-pic",
+      builder: (_, __) => const PostRegistrationScreen(),
+    ),
+
+    GoRoute(
+      name: ATRoutes.CIRCLE_IMG_CROPPER_SCREEN,
+      path: ATRoutes.CIRCLE_IMG_CROPPER_SCREEN.addSlash,
+      pageBuilder: (_, GoRouterState st) => ATRouteTransition<MemoryImage?>(
+        child: CircleImageCropperScreen(imageFile: st.extra as File)
+      )
+    ),
+
     GoRoute(
       name: ATRoutes.passwordAuth,
       path: "/password",
@@ -289,24 +286,20 @@ final GoRouter amptiveAppRouter = GoRouter(
           ),
 
           GoRoute(
-              name: ATRoutes.CREATE_SHOW_FORM,
-              path: ATRoutes.CREATE_SHOW_FORM,
-              builder: (_, __) {
-                return const CreateShowScreen(showType: ShowType.show);
-              }),
+            name: ATRoutes.CREATE_SHOW_FORM,
+            path: ATRoutes.CREATE_SHOW_FORM,
+            builder: (_, __) => const CreateShowFormScreen()
+          ),
           GoRoute(
-              name: ATRoutes.CREATE_EVENT_FORM,
-              path: ATRoutes.CREATE_EVENT_FORM,
-              builder: (_, GoRouterState state) {
-                return const CreateShowScreen(
-                  showType: ShowType.event,
-                );
-              }),
+            name: ATRoutes.CREATE_EVENT_FORM,
+            path: ATRoutes.CREATE_EVENT_FORM,
+            builder: (_, __) => const CreateShowFormScreen(),
+          ),
           GoRoute(
               name: ATRoutes.CREATE_EPISODE_FORM,
               path: ATRoutes.CREATE_EPISODE_FORM,
               builder: (_, __) {
-                return const CreateShowScreen(showType: ShowType.episode);
+                return const CreateShowFormScreen();
               }),
           GoRoute(
             name: ATRoutes.CREATE_SHOW_SUCCESS,
@@ -331,9 +324,14 @@ final GoRouter amptiveAppRouter = GoRouter(
             builder: (_, __) => const EditProfileScreen(),
             routes: <RouteBase>[
               GoRoute(
-                name: ATRoutes.PROFILE_BG_CROP,
-                path: ATRoutes.PROFILE_BG_CROP,
-                builder: (_, GoRouterState state) => CropProfileBgImageScreen(file: state.extra as File)
+                name: ATRoutes.RECT_IMG_CROPPER_SCREEN,
+                path: ATRoutes.RECT_IMG_CROPPER_SCREEN.addSlash,
+                pageBuilder: (_, GoRouterState state){
+                  final (File, Ratio?) params = state.extra as (File, Ratio?);
+                  return ATRouteTransition<MemoryImage>(
+                    child: RectImageCropperScreen(imageFile: params.$1, ratio: params.$2,)
+                  );
+                }
               ),
               GoRoute(
                 name: ATRoutes.EDIT_NAME,

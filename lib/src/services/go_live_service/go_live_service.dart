@@ -145,7 +145,7 @@ List<ObjectWithNotifier<Host>> getHostList() {
     ATImgStrings.MAN_PHOTO: <String>['Daniel Adesua', 'myownbrother'],
     ATImgStrings.COMMUNITY_CARD: <String>['Erica Nwosu', 'ricababygirl'],
     ATImgStrings.CRIMINAL: <String>['Peter Nwokeji', 'sirpee'],
-    ATImgStrings.createShowPlaceholderImage: <String>[
+    ATImgStrings.CREATE_SHOW_PLACEHOLDER: <String>[
       'Arlan Walker',
       'walkerboss'
     ],

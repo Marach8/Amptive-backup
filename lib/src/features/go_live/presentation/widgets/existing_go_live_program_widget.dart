@@ -47,40 +47,47 @@ class ExistingGoLiveProgramWidget extends StatelessWidget {
                   ),
                 ),
               ),
-              const SizedBox(height: 5,),
-              Text(
-                maxLines: 2,
-                "We Can Do Hard Things",
-                style: Theme.of(context).textTheme.bodyMedium,
-              ),
-              Row(
-                children: <Widget>[
-                  Text(
-                    'Created',
-                    style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                      fontSize: ATFontSizes.size13,
-                      color: ATColors.hexA8A8A8,
+              ATContainer(
+                padding: const EdgeInsets.only(top: 5),
+                color: isSelected ? ATColors.hex1F1F23 : ATColors.trsprnt,
+                child: Column(
+                  children: <Widget>[
+                    Text(
+                      maxLines: 2,
+                      "We Can Do Hard Things",
+                      style: Theme.of(context).textTheme.bodyMedium,
                     ),
-                  ),
-                  const SizedBox(width: 5,),
-                  
-                  Align(
-                    alignment: Alignment.bottomCenter,
-                    child: ATCircleAvatar(
-                      diameter: 5,
-                      color: ATColors.hexA8A8A8,
-                    ),
-                  ),
-                  const SizedBox(width: 5,),
-                  Flexible(
-                    child: Text(
-                      '26 March 2024',
-                      style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                        color: ATColors.hexA8A8A8,
-                      ),
-                    ),
-                  ),
-                ],
+                    Row(
+                      children: <Widget>[
+                        Text(
+                          'Created',
+                          style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                            fontSize: ATFontSizes.size13,
+                            color: ATColors.hexA8A8A8,
+                          ),
+                        ),
+                        const SizedBox(width: 5,),
+                        
+                        Align(
+                          alignment: Alignment.bottomCenter,
+                          child: ATCircleAvatar(
+                            diameter: 5,
+                            color: ATColors.hexA8A8A8,
+                          ),
+                        ),
+                        const SizedBox(width: 5,),
+                        Flexible(
+                          child: Text(
+                            '26 March 2024',
+                            style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                              color: ATColors.hexA8A8A8,
+                            ),
+                          ),
+                        ),
+                      ],
+                    )
+                  ],
+                ),
               )
             ],
           ),

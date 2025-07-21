@@ -1,4 +1,4 @@
-import 'package:amptive/src/features/home/presentation/widgets/blurred_header.dart';
+import 'package:amptive/src/shared/blurred_header.dart';
 import 'package:amptive/src/config/utils/other_strings.dart';
 import 'package:amptive/src/views/widgets/common_widgets/annotated_region__widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/back_button.dart';

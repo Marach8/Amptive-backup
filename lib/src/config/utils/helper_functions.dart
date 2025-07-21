@@ -3,9 +3,11 @@ import 'dart:io';
 import 'dart:math';
 import 'package:amptive/src/bloc/main_app/profile/profile_menu/calender/calender_programs_bloc.dart';
 import 'package:amptive/src/services/create_show/create_show_service.dart';
+import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 
 class ATHelperFuncs{
@@ -194,6 +196,55 @@ class ATHelperFuncs{
 
     return <String, List<List<DateTime?>>>{monthName: calendarDays};
   }
+
+
+  static Future<XFile?> pickImage(ImageSource? imageSource) async{
+    if(imageSource == null) return null;
+
+    Permission? permission;
+
+    if(imageSource == ImageSource.camera){
+      permission = Permission.camera;
+    }
+    else{
+      if (Platform.isAndroid) {
+        final DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
+        final AndroidDeviceInfo androidInfo = await deviceInfo.androidInfo;
+        if (androidInfo.version.sdkInt <= 32) {
+          permission = Permission.storage;
+        }
+        else{
+          permission = Permission.photos;
+        }
+      }
+      else{
+        permission = Permission.photos;
+      } 
+    }
+
+    final PermissionStatus permStatus = await permission.request();
+    if(permStatus == PermissionStatus.permanentlyDenied){
+      openAppSettings();
+      return null;
+    }
+    else if (!permStatus.isGranted){
+      return null;
+    }
+
+    final ImagePicker picker = ImagePicker();
+    final XFile? pickedFile = await picker.pickImage(source: imageSource);
+
+    // if (pickedFile != null) {
+    //   final file = File(pickedFile.path);
+    //   final sizeInBytes = await file.length();
+    //   final sizeInKB = sizeInBytes / 1024;
+    //   final sizeInMB = sizeInKB / 1024;
+    //   log(sizeInMB.toString());
+    // }
+
+    return pickedFile;
+  }
+
 
   static Future<File?> getImageFromGallery() async {
     final ImagePicker picker = ImagePicker();

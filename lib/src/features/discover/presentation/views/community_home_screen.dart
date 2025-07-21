@@ -9,7 +9,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import '../../../../config/utils/other_strings.dart';
 import '../../../../config/routing/route_strings.dart';
-import '../../../home/presentation/widgets/blurred_header.dart';
+import '../../../../shared/blurred_header.dart';
 
 class ATCommunityScreen extends StatelessWidget {
   const ATCommunityScreen({super.key});
