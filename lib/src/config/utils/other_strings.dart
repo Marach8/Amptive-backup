@@ -252,6 +252,7 @@ class ATStrings{
   static const String HASHTAG = 'Hashtag';
   static const String HOSTED_BY = 'Hosted by';
   static const String showLess = ' Show less';
+  static const String LEARN_MORE = 'Learn more';
   static const String showMore = 'Show more';
   static const String WHISPERS = 'Whispers';
   static const String ATTENDED = 'Attended';
@@ -359,6 +360,7 @@ class ATStrings{
   static const String SEE_COMMUNITIES = 'See communities on Amptive';
   static const String COMMUNITIES = 'Communities';
   static const String COMMUNITY = 'Community';
+  static const String VIEW_COMMUNITY = 'View Community';
   static const String RECENT_SEARCHES = 'Recent Searches';
   static const String CLEAR = 'Clear';
   static const String KICK_OUT_LISTENER = 'Kickout listener';
@@ -394,7 +396,7 @@ class ATStrings{
   static const String USERS_CAN_SEE_UR_CALENDER = 'Users can see your calender';
   static const String ADD_HASHTAG_DESC = 'You can add up to 4 hashtags, with each hashtag not more that 25 characaters long, without spaces or special characters';
   static const String SELECTED = 'Selected';
-  static const String ADD_COMMUNITY_DESC = 'Communities will help your Shows and Events reach more listeners. They can also use communites to find your Shows and Events easily. kfkjkajdjkjadjfjakjka';
+  static const String ADD_COMMUNITY_DESC = 'Communities will help your Shows and Events reach more listeners. Your audience can also use communites to find your Shows and Events easily. ';
   static const String ADD_COHOST_DESC = 'Added users must accept your invitation before they are added as your co-hosts.';
   static const String TOP_GIFTERS_DESC = 'Gifters are ranked base on the total amount they have contributed to the host during live sessions.';
   static const String TOP_GIFTERS = 'Top Gifters';

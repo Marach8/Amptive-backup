@@ -19,6 +19,8 @@ import 'package:amptive/src/config/utils/dialogs/select_hand_raising_dialog.dart
 import 'package:amptive/src/config/utils/dialogs/select_whispers_dialog.dart';
 import 'package:amptive/src/config/utils/modals/select_date_modal.dart';
 import 'package:amptive/src/features/go_live/presentation/widgets/enter_show_description_widget.dart';
+import 'package:amptive/src/views/widgets/animation_widgets/common_animation_widgets/animated_slide.dart';
+import 'package:amptive/src/views/widgets/animation_widgets/common_animation_widgets/animated_switcher.dart';
 import 'package:amptive/src/views/widgets/common_widgets/annotated_region__widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/textformfield_widget.dart';
 import 'package:amptive/src/views/widgets/other_widgets/main_application_widgets/widgets_in_home_view/widgets_in_go_live/shows/show_type_visibility.dart';
@@ -51,6 +53,7 @@ import 'package:amptive/src/features/home/presentation/widgets/home_widgets_expo
 import 'package:amptive/src/views/widgets/common_widgets/sliver_header_delegate.dart';
 import '../../../../models/host.dart';
 import '../../../../config/utils/font_weights.dart';
+import '../../../../views/widgets/common_widgets/rich_text.dart';
 import '../../../home/presentation/widgets/home_widgets_export.dart';
 import '../widgets/add_co_host_dialog.dart';
 import '../../../../config/utils/dialogs/add_communities_dialog.dart';
@@ -59,7 +62,7 @@ import '../../../../views/widgets/common_widgets/custom_container_widget.dart';
 import '../../../../views/widgets/common_widgets/custom_rebuilder_widget.dart';
 import '../../../../views/widgets/common_widgets/elevated_button_widget.dart';
 import '../../../../views/widgets/other_widgets/main_application_widgets/widgets_in_create_show_event/create_show_text_form_field.dart';
-import '../../../../views/widgets/other_widgets/main_application_widgets/widgets_in_create_show_event/selected_community.dart';
+import '../widgets/selected_community.dart';
 
 //     ShowTypeVisibilityWidget(
           //       showType: widget.showType,
@@ -88,6 +91,7 @@ class _CreateShowFormScreenState extends State<CreateShowFormScreen> {
   final StreamController<String> _titleStreamCntrl = StreamController<String>();
   final StreamController<String> _descStreamCntrl = StreamController<String>();
   String programDesc = ATStrings.TELL_LISTENERS_ABOUT_SHOW;
+  Community? selectedCommunity;
   CreateShowService service = GetIt.I<CreateShowService>();
 
   @override 
@@ -238,72 +242,42 @@ class _CreateShowFormScreenState extends State<CreateShowFormScreen> {
                               
                               const SizedBox(height: 30),
 
-                              const RowWith2Texts(text1: ATStrings.COMMUNITIES),
+                              const RowWith2Texts(text1: ATStrings.COMMUNITY),
                               const SizedBox(height: 10),
                               StatefulBuilder(
                                 builder: (_, void Function(void Function()) setter) {
-                                  return CreateShowItem(
-                                    description: programDesc,
-                                    onTap: ()async{
-                                      //final com = await _openCommunitySelection(context);
-                                    },
+                                  return ATScalingSwitcher(
+                                    duration: 300,
+                                    child: selectedCommunity == null ? CreateShowItem(
+                                      description: ATStrings.SELECT_COMMUNITY_4_UR_SHOW,
+                                      onTap: ()async{
+                                        final Community? selectedCom = await showCommunitiesDialog(context);
+                                        if(selectedCom != null){
+                                          setter(() => selectedCommunity = selectedCom);
+                                        }
+                                      },
+                                    ) : SelectedCommunityWidget(
+                                      selectedCommunity: selectedCommunity!,
+                                      onClose: () => setter(() => selectedCommunity = null),
+                                      onView: (){}
+                                    )
                                   );
                                 }
                               ),
-
-                              // AmptiveRebuilderWidget(
-                              //   builder: (BuildContext ctx, bool selected, _) {
-                              //     return selected && _selectedCommunityCard != null
-                              //         ? SelectedCommunity(
-                              //       selectedCommunity: _selectedCommunityCard!,
-                              //       onClose: () {
-                              //         _communitySelected.value = false;
-                              //       },
-                              //       onView: () async {
-
-                              //       },
-                              //     )
-                              //         : CreateShowTextFormField(
-                              //       controller: TextEditingController(),
-                              //       hintText: "Select a community for your show",
-                              //       suffixIcon: Icon(
-                              //         Icons.arrow_forward_ios,
-                              //         size: 20.w,
-                              //         color: ATColors.white
-                              //             .withOpacity(0.4),
-                              //       ),
-                              //       readOnly: true,
-                              //       onTap: () async {
-                              //         await _openCommunitySelection(context);
-                              //       },
-                              //     );
-                              //   },
-                              //   notifier: _communitySelected,
-                              // ),
-                              CreateShowTextFormField(
-                                controller: TextEditingController(),
-                                hintText: "Select a community for your show",
-                                suffixIcon: Icon(
-                                  Icons.arrow_forward_ios,
-                                  size: 20,
-                                  color: ATColors.white.withOpacity(0.4),
-                                ),
-                                readOnly: true,
-                                onTap: () async {
-                                  //await _openCommunitySelection(context);
-                                },
-                              ),
-
-                              Container(
-                                margin: const EdgeInsets.only(top: 8),
-                                child: Text(
-                                  "Communities will help your Shows and Events reach more listeners. Listeners can also use communities to find your Shows and Events, easily. Learn more",
-                                  overflow: TextOverflow.visible,
-                                  style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                                    fontWeight: ATFontWeights.w500,
-                                    color: ATColors.white.withOpacity(0.4),
+                              const SizedBox(height: 10,),
+                              ATRichText(
+                                maxLines: 4,
+                                items: <String, TextStyle>{
+                                  ATStrings.ADD_COMMUNITY_DESC: Theme.of(context).textTheme.labelSmall!.copyWith(
+                                    color: ATColors.hexC2C2C2.withValues(alpha: 0.76)
                                   ),
-                                ),
+                                  ATStrings.LEARN_MORE: Theme.of(context).textTheme.labelSmall!
+                                },
+                                textOnTap: (String text){
+                                  if(text == ATStrings.LEARN_MORE){
+
+                                  }
+                                },
                               ),
                               const SizedBox(height: 30),
                                                     

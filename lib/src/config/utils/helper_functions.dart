@@ -19,7 +19,7 @@ class ATHelperFuncs{
   static double getScreenHeight(BuildContext context)
     => MediaQuery.sizeOf(context).height;
 
-  static bool getPlatform() => Platform.isAndroid;
+  static bool platformIsAndroid() => Platform.isAndroid;
 
   static String enter4DigitSentFrom(String location) {
     return "Enter the 4 digit code we just sent to your $location";

@@ -9,7 +9,7 @@ class ATModalDismisser extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final bool isAndroid = ATHelperFuncs.getPlatform();
+    final bool isAndroid = ATHelperFuncs.platformIsAndroid();
     if(isAndroid){
       return GestureDetector(
         onTap: () => context.pop(),
