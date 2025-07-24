@@ -1,14 +1,14 @@
 import 'dart:async';
 
-import 'package:amptive/src/utils/constants/font_sizes.dart';
+import 'package:amptive/src/config/utils/font_sizes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get_it/get_it.dart';
 
 import '../../../../models/preferences.dart';
 import '../../../../services/preference_service.dart';
-import '../../../../utils/constants/strings/other_strings.dart';
-import '../../../features/post_auth/single_community_card.dart';
+import '../../../../config/utils/other_strings.dart';
+import '../../../../features/post_auth/presentation/views/single_community_card.dart';
 
 class ProcessingPreferenceWidget extends StatefulWidget {
   const ProcessingPreferenceWidget({
@@ -51,14 +51,14 @@ class _ProcessingPreferenceWidgetState
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
+      children: <Widget>[
         Container(
           margin: EdgeInsets.only(top: 184.h),
           child: Center(
             child: AnimatedSwitcher(
               duration: const Duration(milliseconds: 300),
               transitionBuilder: (Widget child, Animation<double> animation) {
-                final inAnimation = TweenSequence([
+                final Animation<Offset> inAnimation = TweenSequence(<TweenSequenceItem<Offset>>[
                   TweenSequenceItem(
                       tween: ConstantTween(const Offset(0.0, 1.0)), weight: 2),
                   TweenSequenceItem(
@@ -69,7 +69,7 @@ class _ProcessingPreferenceWidgetState
                       weight: 1),
                 ]).animate(animation);
 
-                final outAnimation = TweenSequence([
+                final Animation<Offset> outAnimation = TweenSequence(<TweenSequenceItem<Offset>>[
                   TweenSequenceItem(
                       tween: ConstantTween(const Offset(0.0, 1.0)), weight: 1),
                   TweenSequenceItem(

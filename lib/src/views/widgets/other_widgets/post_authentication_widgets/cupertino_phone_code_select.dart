@@ -9,11 +9,11 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../../bloc/authentication/general/auth_bloc.dart';
 import '../../../../bloc/authentication/general/auth_events.dart';
 import '../../../../bloc/authentication/general/auth_states.dart';
-import '../../../../utils/constants/colors.dart';
-import '../../../../utils/constants/constants.dart';
-import '../../../../utils/constants/font_sizes.dart';
-import '../../../../utils/constants/font_weights.dart';
-import '../../../../utils/constants/strings/other_strings.dart';
+import '../../../../config/utils/colors.dart';
+import '../../../../config/utils/constants.dart';
+import '../../../../config/utils/font_sizes.dart';
+import '../../../../config/utils/font_weights.dart';
+import '../../../../config/utils/other_strings.dart';
 
 class CupertinoPhoneCodeSelectWidget extends StatelessWidget {
   const CupertinoPhoneCodeSelectWidget({super.key});
@@ -23,8 +23,8 @@ class CupertinoPhoneCodeSelectWidget extends StatelessWidget {
     return SizedBox(
       height: 252.h,
       child: BlocBuilder<AmptiveAuthBloc, AmptiveAuthState>(
-          buildWhen: (_, curr) => curr is OpenCountryBottomSheetState,
-          builder: (context, state) {
+          buildWhen: (_, AmptiveAuthState curr) => curr is OpenCountryBottomSheetState,
+          builder: (BuildContext context, AmptiveAuthState state) {
             Country? selectedCountry =
                 state is SelectCountryCodeState ? state.selectedCountry : null;
 
@@ -57,7 +57,7 @@ class CupertinoPhoneCodeSelectWidget extends StatelessWidget {
                         ),
                       ),
                       Divider(
-                        color: ATColors.brandBlack,
+                        color: ATColors.hex0D0D0D,
                         height: 0.h,
                         thickness: 1.h,
                       ),
@@ -67,18 +67,18 @@ class CupertinoPhoneCodeSelectWidget extends StatelessWidget {
                             brightness: Brightness.dark,
                           ),
                           child: Container(
-                            color: ATColors.brandBlack,
+                            color: ATColors.hex0D0D0D,
                             child: CountryPickerCupertino(
-                              backgroundColor: ATColors.brandBlack,
+                              backgroundColor: ATColors.hex0D0D0D,
                               diameterRatio: 3.r,
                               pickerItemHeight: 65.h,
-                              itemBuilder: (country) =>
+                              itemBuilder: (Country country) =>
                                   _buildCupertinoSelectedItem(context, country),
                               onValuePicked: (Country country) {
                                 selectedCountry = country;
                               },
                               initialCountry: state.selectedCountry,
-                              itemFilter: (c) =>
+                              itemFilter: (Country c) =>
                                   Constants.kCountryList.contains(c.isoCode),
                             ),
                           ),

@@ -1,6 +1,6 @@
-import 'package:amptive/src/utils/constants/colors.dart';
-import 'package:amptive/src/utils/constants/font_sizes.dart';
-import 'package:amptive/src/utils/constants/strings/image_strings.dart';
+import 'package:amptive/src/config/utils/colors.dart';
+import 'package:amptive/src/config/utils/font_sizes.dart';
+import 'package:amptive/src/config/utils/image_strings.dart';
 import 'package:amptive/src/views/widgets/common_widgets/nav_bar_item.dart';
 import 'package:flutter/material.dart';
 import '../../common_widgets/custom_container_widget.dart';
@@ -9,19 +9,19 @@ class MainAppBottomNav extends StatelessWidget {
   const MainAppBottomNav({super.key});
 
   @override
-  Widget build(context) {
+  Widget build(BuildContext context) {
     return ATContainer(
       color: ATColors.black,
       padding: const EdgeInsets.fromLTRB(20, 10, 20, 10),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: listOfIcons.map(
-          (list){
-            final index = listOfIcons.indexOf(list);
+          (List<String> list){
+            final int index = listOfIcons.indexOf(list);
             if(index == 3){
               return Stack(
-                children: [
-                  AmptiveBottomAppBarItem(
+                children: <Widget>[
+                  ATBottomNavItem(
                     selectedImagePath: list.first,
                     unselectedImagePath: list.last,
                     itemIdentityIndex: index,
@@ -47,7 +47,8 @@ class MainAppBottomNav extends StatelessWidget {
                 ],
               );
             }
-            return AmptiveBottomAppBarItem(
+
+            return ATBottomNavItem(
               selectedImagePath: list.first,
               unselectedImagePath: list.last,
               itemIdentityIndex: index,
@@ -61,9 +62,9 @@ class MainAppBottomNav extends StatelessWidget {
 
 
 
-final listOfIcons = [
-  [ATImgStrings.filledHome, ATImgStrings.outlinedHome],
-  [ATImgStrings.filledSearch, ATImgStrings.outlinedSearch],
-  [ATImgStrings.filledBroadCast, ATImgStrings.outlinedBroadCast],
-  [ATImgStrings.filledBell, ATImgStrings.outlinedBell],
+final List<List<String>> listOfIcons = <List<String>>[
+  <String>[ATImgStrings.filledHome, ATImgStrings.outlinedHome],
+  <String>[ATImgStrings.filledSearch, ATImgStrings.OUTLINED_SEARCH],
+  <String>[ATImgStrings.filledBroadCast, ATImgStrings.outlinedBroadCast],
+  <String>[ATImgStrings.filledBell, ATImgStrings.outlinedBell],
 ];

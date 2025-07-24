@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
-import '../../../../../utils/constants/colors.dart';
-import '../../../../../utils/constants/font_sizes.dart';
+import '../../../../../config/utils/colors.dart';
+import '../../../../../config/utils/font_sizes.dart';
 import '../../../common_widgets/circle_avatar.dart';
 import '../../../common_widgets/custom_container_widget.dart';
 import '../../../common_widgets/image_loader_widget.dart';
 
 
 class AmptiveFreeShowModel extends StatelessWidget {
-  final String trendingPicture;
   const AmptiveFreeShowModel({
     super.key,
     required this.trendingPicture
   });
+  final String trendingPicture;
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +21,7 @@ class AmptiveFreeShowModel extends StatelessWidget {
       padding: const EdgeInsets.only(left: 15),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
+        children: <Widget>[
           ClipRRect(
             clipBehavior: Clip.hardEdge,
             borderRadius: BorderRadius.circular(5),
@@ -37,7 +37,7 @@ class AmptiveFreeShowModel extends StatelessWidget {
           ),
           Row(
             mainAxisSize: MainAxisSize.min,
-            children: [              
+            children: <Widget>[              
               Expanded(
                 child: Text(
                   'figma',

@@ -1,33 +1,34 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:gap/gap.dart';
-import '../../../../../../utils/constants/colors.dart';
-import '../../../../../../utils/constants/strings/image_strings.dart';
+import '../../../../../../config/utils/colors.dart';
+import '../../../../../../config/utils/image_strings.dart';
 import '../../../../common_widgets/image_loader_widget.dart';
 
-class AmptiveDiscoverCategoriesTitleWidget extends StatelessWidget {
-  final String categoryName;
-  const AmptiveDiscoverCategoriesTitleWidget({
+class DiscoverCategoriesTile extends StatelessWidget {
+  const DiscoverCategoriesTile({
     super.key,
-    required this.categoryName
+    required this.categoryName,
+    this.trailing
   });
+
+  final String categoryName;
+  final Widget? trailing;
 
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 15),
       child: Row(
-        children: [
+        children: <Widget>[
           const ATImgLoader(imgPath: ATImgStrings.GROUP_ICON_BLUE),
-          Gap(10.h),
+          const SizedBox(width: 10,),
           Text(
             categoryName,
             style: Theme.of(context).textTheme.bodyLarge 
           ),
           const Spacer(),
-          GestureDetector(
+          trailing ?? InkWell(
             onTap: (){},
-            child: Icon(Icons.more_horiz, color: ATColors.authHintColor,),
+            child: Icon(Icons.more_horiz, color: ATColors.hexB6B6B6,),
           )
         ],
       ),

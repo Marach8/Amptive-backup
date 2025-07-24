@@ -2,21 +2,21 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 class AmptiveSubscriptionBloc extends Bloc<SubscriptionEvent, SubscriptionState>{
   AmptiveSubscriptionBloc(): super(InitialSubState()){
-    on<UnSubscribeEvent>((_, emit) async{
+    on<UnSubscribeEvent>((_, Emitter<SubscriptionState> emit) async{
       emit(SubscriptionLoadingState());
       await Future.delayed(const Duration(seconds: 2));
       emit(Ready2SubscribeState());
     });
 
-    on<ReadyToSubscribeEvent>((_, emit) {
+    on<ReadyToSubscribeEvent>((_, Emitter<SubscriptionState> emit) {
       emit(Ready2SubscribeState());
     });
 
-    on<Restet2InitialSubStateEvent>((_, emit) {
+    on<Restet2InitialSubStateEvent>((_, Emitter<SubscriptionState> emit) {
       emit(InitialSubState());
     });
 
-    on<ShouldSubscribeEvent>((_, emit) async{
+    on<ShouldSubscribeEvent>((_, Emitter<SubscriptionState> emit) async{
       emit(SubscriptionLoadingState());
       await Future.delayed(const Duration(seconds: 2));
       emit(SubscribedState());

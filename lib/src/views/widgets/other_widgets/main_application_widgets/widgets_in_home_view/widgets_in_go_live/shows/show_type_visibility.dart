@@ -3,16 +3,16 @@ import 'package:flutter/material.dart';
 enum ShowType { event, episode, show, all }
 
 class ShowTypeVisibilityWidget extends StatelessWidget {
-  final ShowType showType;
-  final Widget child;
-  final List<ShowType> allowedShowTypes;
 
   ShowTypeVisibilityWidget({
     super.key,
     required this.showType,
     required this.child,
     List<ShowType>? allowedShowTypes,
-  }) : allowedShowTypes = allowedShowTypes ?? [];
+  }) : allowedShowTypes = allowedShowTypes ?? <ShowType>[];
+  final ShowType showType;
+  final Widget child;
+  final List<ShowType> allowedShowTypes;
 
   @override
   Widget build(BuildContext context) {

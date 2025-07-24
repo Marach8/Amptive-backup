@@ -5,8 +5,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../../bloc/preference/bloc.dart';
 import '../../../../bloc/preference/events.dart';
 import '../../../../bloc/preference/states.dart';
-import '../../../../utils/constants/colors.dart';
-import '../../../features/post_auth/single_community_card.dart';
+import '../../../../config/utils/colors.dart';
+import '../../../../features/post_auth/presentation/views/single_community_card.dart';
 
 class CommunityCardPreferenceWidget extends StatelessWidget {
   const CommunityCardPreferenceWidget({
@@ -25,7 +25,7 @@ class CommunityCardPreferenceWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<AmptivePreferenceBloc, AmptivePreferenceState>(
-        builder: (context, state) {
+        builder: (BuildContext context, AmptivePreferenceState state) {
       return Opacity(
         opacity: !state.items[index].isSelected && isOpaque ? 0.6 : 1.0,
         child: GestureDetector(
@@ -39,7 +39,7 @@ class CommunityCardPreferenceWidget extends StatelessWidget {
                 .add(SelectPreferenceEvent(selectedIndex: index));
           },
           child: Stack(
-            children: [
+            children: <Widget>[
               SingleCommunityCardWidget(
                 height: height,
                 width: width,

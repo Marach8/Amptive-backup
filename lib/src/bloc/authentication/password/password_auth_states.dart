@@ -1,7 +1,7 @@
 abstract class AmptivePasswordAuthState {
-  String? error;
 
   AmptivePasswordAuthState({this.error});
+  String? error;
 }
 
 class InitialAuthState extends AmptivePasswordAuthState {}

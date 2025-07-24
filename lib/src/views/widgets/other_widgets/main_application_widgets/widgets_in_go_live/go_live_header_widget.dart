@@ -1,5 +1,5 @@
-import 'package:amptive/src/utils/constants/strings/image_strings.dart';
-import 'package:amptive/src/utils/dialogs/go_live/host_view_of_top_gifters.dart';
+import 'package:amptive/src/config/utils/image_strings.dart';
+import 'package:amptive/src/config/utils/dialogs/go_live/host_view_of_top_gifters.dart';
 import 'package:amptive/src/views/widgets/animation_widgets/horiz_slider_animation.dart';
 import 'package:amptive/src/views/widgets/common_widgets/circle_avatar.dart';
 import 'package:amptive/src/views/widgets/common_widgets/custom_container_widget.dart';
@@ -9,31 +9,31 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 import '../../../../../bloc/main_app/go_live_bloc/host_view/host_end_show_bloc.dart';
-import '../../../../../utils/constants/colors.dart';
-import '../../../../../utils/constants/strings/other_strings.dart';
-import '../../../../../utils/dialogs/go_live/audience_view_of_to_gifters_dialog.dart';
-import '../../../../../utils/dialogs/go_live/host_end_show_dialog.dart';
-import '../../../../../utils/dialogs/go_live/host_view_of_listeners_dialog.dart';
+import '../../../../../config/utils/colors.dart';
+import '../../../../../config/utils/other_strings.dart';
+import '../../../../../config/utils/dialogs/go_live/audience_view_of_to_gifters_dialog.dart';
+import '../../../../../config/utils/dialogs/go_live/host_end_show_dialog.dart';
+import '../../../../../config/utils/dialogs/go_live/host_view_of_listeners_dialog.dart';
 
 
 
 class AmptiveLiveViewHeaderWidget extends StatelessWidget {
-  final Widget? exitIcon;
   const AmptiveLiveViewHeaderWidget({
     super.key,
     this.exitIcon
   });
+  final Widget? exitIcon;
 
   @override
   Widget build(BuildContext context) {
     return Stack(
       clipBehavior: Clip.none,
       alignment: Alignment.center,
-      children: [
+      children: <Widget>[
         AmptiveHorizSliderAnimationWidget(
           duration: 15.w,
           child: Row(
-            children: [
+            children: <Widget>[
               Text(
                 ATStrings.LIVE,
                 style: Theme.of(context).textTheme.bodyMedium,
@@ -65,7 +65,7 @@ class AmptiveLiveViewHeaderWidget extends StatelessWidget {
             },
             color: ATColors.hexECO404.withOpacity(0.3),
             height: 35, width: 35, boxShape: BoxShape.circle,
-            boxShadow: [
+            boxShadow: <BoxShadow>[
               BoxShadow(
                 color: ATColors.black,
                 blurRadius: 10, spreadRadius: 30,
@@ -79,7 +79,7 @@ class AmptiveLiveViewHeaderWidget extends StatelessWidget {
         Positioned(
           right: 15,
           child: ATContainer(
-            boxShadow: [
+            boxShadow: <BoxShadow>[
               BoxShadow(
                 color: ATColors.black,
                 blurRadius: 10, spreadRadius: 30,
@@ -87,7 +87,7 @@ class AmptiveLiveViewHeaderWidget extends StatelessWidget {
               )
             ],
             child: Row(
-              children: [
+              children: <Widget>[
                 ATContainer(
                   onTap: () => exitIcon == null ? showHostViewOfTopGiftersDialog(context)
                     : showAudienceViewOfTopGiftersDialog(context),
@@ -95,7 +95,7 @@ class AmptiveLiveViewHeaderWidget extends StatelessWidget {
                   radius: 30,
                   color: ATColors.white.withOpacity(0.1),
                   child: Row(
-                    children: [
+                    children: <Widget>[
                       Text(
                         "🎁",
                         style: Theme.of(context).textTheme.bodyMedium?.copyWith(
@@ -128,7 +128,7 @@ class AmptiveLiveViewHeaderWidget extends StatelessWidget {
                   radius: 30,
                   color: ATColors.white.withOpacity(0.1),
                   child: Row(
-                    children: [
+                    children: <Widget>[
                       const ATImgLoader(imgPath: ATImgStrings.USER_ICON),
                       Text(
                         "144k",

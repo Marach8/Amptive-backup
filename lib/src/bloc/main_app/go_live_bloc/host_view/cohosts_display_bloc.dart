@@ -10,17 +10,17 @@ class AmptiveGoLiveSelectCoHostBloc extends Cubit<List<ObjectWithNotifier<Host>>
     )
   );
 
-  static const maxCoHost = 5;
+  static const int maxCoHost = 5;
 
   void hostAddCohost(ObjectWithNotifier<Host> coHost){
-    final newState = List<ObjectWithNotifier<Host>>.from(state).where(
-      (member) => (member.obj.profilePicture ?? '').isNotEmpty
+    final List<ObjectWithNotifier<Host>> newState = List<ObjectWithNotifier<Host>>.from(state).where(
+      (ObjectWithNotifier<Host> member) => (member.obj.profilePicture ?? '').isNotEmpty
     ).toList();
 
     if(newState.length < 5 && !newState.contains(coHost)){
       newState.add(coHost);
 
-      final difference = maxCoHost - newState.length;
+      final int difference = maxCoHost - newState.length;
       newState.addAll(
         List.generate(
           difference,
@@ -35,14 +35,14 @@ class AmptiveGoLiveSelectCoHostBloc extends Cubit<List<ObjectWithNotifier<Host>>
 
   void hostAddCohostWithIndex(ObjectWithNotifier<Host> coHost, int index){
     coHost.notifier.value = true;
-    final newState = List<ObjectWithNotifier<Host>>.from(state);
+    final List<ObjectWithNotifier<Host>> newState = List<ObjectWithNotifier<Host>>.from(state);
     newState[index] = coHost;
     emit(newState);
   }
 
   void hostRemoveCohost(ObjectWithNotifier<Host>? coHost){
     coHost?.notifier.value = false;
-    final newState = List<ObjectWithNotifier<Host>>.from(state);
+    final List<ObjectWithNotifier<Host>> newState = List<ObjectWithNotifier<Host>>.from(state);
     newState.remove(coHost);
     newState.add(ObjectWithNotifier(obj: Host.empty()));
     emit(newState);
@@ -50,7 +50,7 @@ class AmptiveGoLiveSelectCoHostBloc extends Cubit<List<ObjectWithNotifier<Host>>
 
   void hostRemoveCohostWithIndex(ObjectWithNotifier<Host>? coHost, int index){
     coHost?.notifier.value = false;
-    final newState = List<ObjectWithNotifier<Host>>.from(state);
+    final List<ObjectWithNotifier<Host>> newState = List<ObjectWithNotifier<Host>>.from(state);
     newState[index] = ObjectWithNotifier(obj: Host.empty());
     emit(newState);
   }

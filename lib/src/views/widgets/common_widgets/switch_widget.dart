@@ -1,4 +1,4 @@
-import 'package:amptive/src/utils/constants/colors.dart';
+import 'package:amptive/src/config/utils/colors.dart';
 import 'package:flutter/material.dart';
 
 class AmptiveSwitch extends StatelessWidget {
@@ -12,7 +12,7 @@ class AmptiveSwitch extends StatelessWidget {
   final void Function(bool p1) onChanged;
 
   @override
-  Widget build(context) {
+  Widget build(BuildContext context) {
     return Transform.scale(
       scale: 0.6,
       child: Switch.adaptive(

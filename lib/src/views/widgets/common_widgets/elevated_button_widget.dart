@@ -1,16 +1,9 @@
-import 'package:amptive/src/utils/constants/colors.dart';
-import 'package:amptive/src/utils/helpers/helper_functions/helper_functions.dart';
+import 'package:amptive/src/config/utils/colors.dart';
+import 'package:amptive/src/config/utils/helper_functions.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 
 class AmptiveElevatedButtonWidget extends StatelessWidget {
-  final String? buttonTitle, text1, text2;
-  final void Function()? onPressed;
-  final EdgeInsetsGeometry? margin;
-  final double? height;
-  final Color? bgColor, fgColor;
-  final ButtonStyle? buttonStyle;
-  final Widget? child;
 
   const AmptiveElevatedButtonWidget({
     super.key,
@@ -25,10 +18,17 @@ class AmptiveElevatedButtonWidget extends StatelessWidget {
     this.buttonStyle,
     this.child
   });
+  final String? buttonTitle, text1, text2;
+  final void Function()? onPressed;
+  final EdgeInsetsGeometry? margin;
+  final double? height;
+  final Color? bgColor, fgColor;
+  final ButtonStyle? buttonStyle;
+  final Widget? child;
 
   @override
-  Widget build(context) {
-    final shouldAddMiddleDot = text1 != null && text2 != null;
+  Widget build(BuildContext context) {
+    final bool shouldAddMiddleDot = text1 != null && text2 != null;
     return ElevatedButton(
         onPressed: onPressed,
         style: buttonStyle ?? ElevatedButton.styleFrom(
@@ -38,23 +38,23 @@ class AmptiveElevatedButtonWidget extends StatelessWidget {
         child: shouldAddMiddleDot
             ? Row(
                 mainAxisSize: MainAxisSize.min,
-                children: [
+                children: <Widget>[
                   Text(text1!,
                       style: Theme.of(context)
                           .textTheme
                           .bodyMedium
-                          ?.copyWith(color: ATColors.brandBlack)),
+                          ?.copyWith(color: ATColors.hex0D0D0D)),
                   const Gap(5),
                   CircleAvatar(
                     radius: 2,
-                    backgroundColor: ATColors.brandBlack,
+                    backgroundColor: ATColors.hex0D0D0D,
                   ),
                   const Gap(5),
                   Text(text2!,
                       style: Theme.of(context)
                           .textTheme
                           .bodyMedium
-                          ?.copyWith(color: ATColors.brandBlack)),
+                          ?.copyWith(color: ATColors.hex0D0D0D)),
                 ],
               )
             : Text(buttonTitle!));
@@ -64,11 +64,6 @@ class AmptiveElevatedButtonWidget extends StatelessWidget {
 
 
 class ATPlainElevatedBtn extends StatelessWidget {
-  final String? btnTitle;
-  final void Function()? onPressed;
-  final double? height;
-  final Color? bgColor, fgColor;
-  final Widget? child;
 
   const ATPlainElevatedBtn({
     super.key,
@@ -79,9 +74,14 @@ class ATPlainElevatedBtn extends StatelessWidget {
     this.fgColor,
     this.child
   });
+  final String? btnTitle;
+  final void Function()? onPressed;
+  final double? height;
+  final Color? bgColor, fgColor;
+  final Widget? child;
 
   @override
-  Widget build(context) {
+  Widget build(BuildContext context) {
     return ElevatedButton(
       onPressed: onPressed,
       style: ElevatedButton.styleFrom(

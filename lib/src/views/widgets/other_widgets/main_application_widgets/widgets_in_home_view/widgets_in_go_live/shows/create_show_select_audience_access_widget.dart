@@ -1,7 +1,6 @@
-import 'package:amptive/src/utils/dialogs/select_audience_access_for_shows_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import '../../../../../../../utils/constants/colors.dart';
+import '../../../../../../../config/utils/colors.dart';
 import '../../../../../common_widgets/custom_container_widget.dart';
 import '../../../../../common_widgets/custom_rebuilder_widget.dart';
 
@@ -9,8 +8,8 @@ class AmptiveCreateShowSelectAudienceAccessWidget extends StatelessWidget {
   const AmptiveCreateShowSelectAudienceAccessWidget({super.key});
 
   @override
-  Widget build(context) {
-    final selectAudienceAccessNotifier = ValueNotifier<String>('');
+  Widget build(BuildContext context) {
+    final ValueNotifier<String> selectAudienceAccessNotifier = ValueNotifier<String>('');
     return ATContainer(
       radius: 14,
       padding: const EdgeInsets.fromLTRB(17, 15, 17, 15),
@@ -18,10 +17,10 @@ class AmptiveCreateShowSelectAudienceAccessWidget extends StatelessWidget {
       child: AmptiveRebuilderWidget(
         shouldDispose: true,
         notifier: selectAudienceAccessNotifier,
-        builder: (_, selectedAudienceAccess, __){
+        builder: (_, String selectedAudienceAccess, __){
           return Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
+            children: <Widget>[
               Text(
                 selectedAudienceAccess.isEmpty ? "Select who can access this show" 
                   : selectedAudienceAccess,
@@ -31,8 +30,8 @@ class AmptiveCreateShowSelectAudienceAccessWidget extends StatelessWidget {
               ),
               GestureDetector(
                 onTap: ()async{
-                  final result = await showSelectAudienceAccessForShowsDialog(context);
-                  selectAudienceAccessNotifier.value = result;
+                  // final String? result = await chooseAudienceAccess4ShowModal(context);
+                  // selectAudienceAccessNotifier.value = result!;
                 },
                 child: Icon(
                   Icons.arrow_forward_ios, size: 20.w,

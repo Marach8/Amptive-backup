@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import '../../models/host.dart';
-import '../../utils/constants/strings/image_strings.dart';
+import '../../config/utils/image_strings.dart';
 import 'dart:developer' as marach show log;
 
 class GoLiveService {
-  // Class Initializer
-  static final GoLiveService _instance = GoLiveService._();
 
   factory GoLiveService() => _instance;
 
   // constructorÏ
   GoLiveService._();
+  // Class Initializer
+  static final GoLiveService _instance = GoLiveService._();
 
   late List<ObjectWithNotifier<Host>> coHostsListData;
   late TextEditingController titleController;
@@ -25,7 +25,7 @@ class GoLiveService {
   late ValueNotifier<List<ObjectWithNotifier<Host>>> goLiveHostList4AudienceNotifier;
 
 
-  initFormControl() {
+  void initFormControl() {
     coHostSelectionStarted = ValueNotifier(false);
     selectedCoHostLength = ValueNotifier(0);
     scroll2Bottom = ValueNotifier(false);
@@ -53,12 +53,12 @@ class GoLiveService {
     coHostsListData = getHostList();
   }
 
-  dispose() {
+  void dispose() {
     selectedCoHostLength.dispose();
     selectedCoHosts.dispose();
     titleController.dispose();
 
-    for (var coHostNotifier in coHostsListData) {
+    for (ObjectWithNotifier<Host> coHostNotifier in coHostsListData) {
       coHostNotifier.notifier.dispose();
     }
   }
@@ -96,7 +96,7 @@ class GoLiveService {
   
   int counter = 1;
 
-  hostAddCohost(ObjectWithNotifier<Host> host, int index){
+  void hostAddCohost(ObjectWithNotifier<Host> host, int index){
     // final newList = List<HostWithNotifier>.from(goLiveHostListNotifier.value);
     // newList[index] = host;
     // host.notifier.value = true;
@@ -105,7 +105,7 @@ class GoLiveService {
 
     if(counter <= 5){
       marach.log(counter.toString());
-      final audienceList = goLiveHostList4AudienceNotifier.value;
+      final List<ObjectWithNotifier<Host>> audienceList = goLiveHostList4AudienceNotifier.value;
       audienceList.add(coHostsListData[counter]);
       goLiveHostList4AudienceNotifier.value = List.from(audienceList);
       counter ++;
@@ -113,7 +113,7 @@ class GoLiveService {
   }
   
 
-  hostRemoveCohost(ObjectWithNotifier<Host> host, int index){
+  void hostRemoveCohost(ObjectWithNotifier<Host> host, int index){
     // final newList = List<HostWithNotifier>.from(goLiveHostListNotifier.value);
     // newList[index] = HostWithNotifier(host: Host.empty());
     // host.notifier.value = false;
@@ -121,7 +121,7 @@ class GoLiveService {
 
 
     if(counter > 1){
-      final audienceList = goLiveHostList4AudienceNotifier.value;
+      final List<ObjectWithNotifier<Host>> audienceList = goLiveHostList4AudienceNotifier.value;
       audienceList.removeAt(counter - 1);
       goLiveHostList4AudienceNotifier.value = List.from(audienceList);
       counter --;
@@ -134,25 +134,25 @@ class GoLiveService {
 
 
 List<ObjectWithNotifier<Host>> getHostList() {
-  List<ObjectWithNotifier<Host>> hostsList = [];
+  List<ObjectWithNotifier<Host>> hostsList = <ObjectWithNotifier<Host>>[];
 
-  final coHostsData = <String, List<String>>{
-    ATImgStrings.jpeg1: ['Emmanuel Ajah', 'nnanna😍💕'],
-    ATImgStrings.jpeg2: ['Tochukwu Iwuzed', 'tobaby'],
-    ATImgStrings.jpeg3: ['Ekene Okoro', 'kendo boss🦋'],
-    ATImgStrings.discoverPic1: ['Rita Waltson', 'rita4life🐎'],
-    ATImgStrings.OFFICE_LADIES: ['Lee Parker', 'therealguy'],
-    ATImgStrings.MAN_PHOTO: ['Daniel Adesua', 'myownbrother'],
-    ATImgStrings.COMMUNITY_CARD: ['Erica Nwosu', 'ricababygirl'],
-    ATImgStrings.CRIMINAL: ['Peter Nwokeji', 'sirpee'],
-    ATImgStrings.createShowPlaceholderImage: [
+  final Map<String, List<String>> coHostsData = <String, List<String>>{
+    ATImgStrings.jpeg1: <String>['Emmanuel Ajah', 'nnanna😍💕'],
+    ATImgStrings.jpeg2: <String>['Tochukwu Iwuzed', 'tobaby'],
+    ATImgStrings.jpeg3: <String>['Ekene Okoro', 'kendo boss🦋'],
+    ATImgStrings.discoverPic1: <String>['Rita Waltson', 'rita4life🐎'],
+    ATImgStrings.OFFICE_LADIES: <String>['Lee Parker', 'therealguy'],
+    ATImgStrings.MAN_PHOTO: <String>['Daniel Adesua', 'myownbrother'],
+    ATImgStrings.COMMUNITY_CARD: <String>['Erica Nwosu', 'ricababygirl'],
+    ATImgStrings.CRIMINAL: <String>['Peter Nwokeji', 'sirpee'],
+    ATImgStrings.CREATE_SHOW_PLACEHOLDER: <String>[
       'Arlan Walker',
       'walkerboss'
     ],
-    ATImgStrings.JOE_POMP_SHOW: ['Man Drone', 'ikennegodadi'],
+    ATImgStrings.JOE_POMP_SHOW: <String>['Man Drone', 'ikennegodadi'],
   };
 
-  coHostsData.forEach((pics, details) {
+  coHostsData.forEach((String pics, List<String> details) {
     if (details.length >= 2) {
       String name = details[0];
       String username = details[1];

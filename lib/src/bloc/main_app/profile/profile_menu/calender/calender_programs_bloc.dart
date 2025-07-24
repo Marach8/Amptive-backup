@@ -4,14 +4,14 @@ import '../../../../../services/go_live_service/go_live_service.dart';
 
 class CalenderProgramBloc extends Bloc<ProgramsEvents, ProgramsState>{
   CalenderProgramBloc():super(NoProgramsState()){
-    on<LoadProgramsEvent>((event, emit)async{
+    on<LoadProgramsEvent>((LoadProgramsEvent event, Emitter<ProgramsState> emit)async{
       emit(ProgramsLoadingState());
       try{
         await Future.delayed(const Duration(seconds: 5));
         emit(
           ProgramsDataState(
-            programs:{
-              '06:00 am': [
+            programs:<String, List<CalenderProgram>>{
+              '06:00 am': <CalenderProgram>[
                 CalenderProgram(
                   name: 'Former CIA Agent On Trump Assasination Has Repented',
                   id: 1, isEvent: true,
@@ -34,7 +34,7 @@ class CalenderProgramBloc extends Bloc<ProgramsEvents, ProgramsState>{
                   hosts: getHostList().take(5).toList()
                 ),
               ],
-              '05:00 pm': [
+              '05:00 pm': <CalenderProgram>[
                 CalenderProgram(
                   name: 'Give Us The Wheel',
                   id: 2, isEvent: false,
@@ -61,8 +61,8 @@ abstract class ProgramsState{}
 class NoProgramsState extends ProgramsState{}
 class ProgramsLoadingState extends ProgramsState{}
 class ProgramsDataState extends ProgramsState{
-  final Map<String, List<CalenderProgram>> programs;
   ProgramsDataState({required this.programs});
+  final Map<String, List<CalenderProgram>> programs;
 }
 
 class ProgramsErrorState extends ProgramsState{}
@@ -71,19 +71,14 @@ class ProgramsErrorState extends ProgramsState{}
 abstract class ProgramsEvents{}
 
 class LoadProgramsEvent extends ProgramsEvents{
-  final DateTime? programDate;
   LoadProgramsEvent({required this.programDate});
+  final DateTime? programDate;
 }
 
 
 
 
 class CalenderProgram{
-  final String name, eventType;
-  final int id;
-  final List<ObjectWithNotifier> hosts;
-  final bool isEvent, isPaid;
-  final DateTime? dateTime;
 
   const CalenderProgram({
     required this.name,
@@ -94,4 +89,9 @@ class CalenderProgram{
     required this.hosts,
     required this.dateTime
   });
+  final String name, eventType;
+  final int id;
+  final List<ObjectWithNotifier> hosts;
+  final bool isEvent, isPaid;
+  final DateTime? dateTime;
 }

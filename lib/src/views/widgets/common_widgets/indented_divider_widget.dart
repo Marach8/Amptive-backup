@@ -1,5 +1,5 @@
-import 'package:amptive/src/utils/constants/colors.dart';
-import 'package:amptive/src/utils/helpers/helper_functions/helper_functions.dart';
+import 'package:amptive/src/config/utils/colors.dart';
+import 'package:amptive/src/config/utils/helper_functions.dart';
 import 'package:flutter/material.dart';
 
 class AmptiveIndentedDividerWidget extends StatelessWidget {
@@ -9,8 +9,8 @@ class AmptiveIndentedDividerWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final screenWidth = ATHelperFuncs.getScreenWidth(context);
-    final margin = (screenWidth - 170)/2;
+    final double screenWidth = ATHelperFuncs.getScreenWidth(context);
+    final double margin = (screenWidth - 170)/2;
 
     return Container(
       margin: EdgeInsets.symmetric(horizontal: margin),

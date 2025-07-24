@@ -1,42 +1,43 @@
-import 'package:amptive/src/utils/constants/font_sizes.dart';
+import 'package:amptive/src/models/host.dart';
+import 'package:amptive/src/config/utils/font_sizes.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
+import '../../../../../config/utils/other_strings.dart';
 import '../../../../../models/go_live_notification_model.dart';
-import '../../../../../utils/constants/colors.dart';
-import '../../../../../utils/constants/strings/image_strings.dart';
-import '../../../../../utils/constants/strings/other_strings.dart';
+import '../../../../../config/utils/colors.dart';
+import '../../../../../config/utils/image_strings.dart';
 import '../../../common_widgets/circular_image.dart';
 import '../../../common_widgets/custom_container_widget.dart';
 import '../../../common_widgets/image_loader_widget.dart';
 
 class AmptiveGoLiveNotificationsWidget extends StatelessWidget {
-  final AmptiveGoLiveNotificationModel state;
   const AmptiveGoLiveNotificationsWidget({super.key, required this.state});
+  final AmptiveGoLiveNotificationModel state;
 
   @override
-  Widget build(context) {
-    final user = state.user.obj;
-    final isTalking = state.notificationType == ATStrings.IS_TALKING;
-    final isGifting = state.notificationType == ATStrings.IS_GIFTING;
-    final giftedAmount = (state.extraDetail as Map<String, String>?)?.values.first;
+  Widget build(BuildContext context) {
+    final Host user = state.user.obj;
+    final bool isTalking = state.notificationType == ATStrings.IS_TALKING;
+    final bool isGifting = state.notificationType == ATStrings.IS_GIFTING;
+    final String? giftedAmount = (state.extraDetail as Map<String, String>?)?.values.first;
 
     return ATContainer(
       padding: const EdgeInsets.fromLTRB(2, 0, 0, 0),
       height: 35, radius: 30,
       gradient: isTalking ? LinearGradient(
-        colors: [
+        colors: <Color>[
           ATColors.hexF91880.withOpacity(1),
           ATColors.orangeColor2.withOpacity(0),
         ]
       ) :  isGifting ? LinearGradient(
-        colors: [
+        colors: <Color>[
           ATColors.green1.withOpacity(1),
           ATColors.hex009C80.withOpacity(0)
         ]
       ) : null,
       child: Row(
         mainAxisSize: MainAxisSize.min,
-        children: [
+        children: <Widget>[
           ATCircularImage(
             diameter: 30,
             imagePath: user.profilePicture ?? ''
@@ -70,29 +71,29 @@ class AmptiveGoLiveNotificationsWidget extends StatelessWidget {
 
 
 class AmptiveGoLivePinnedMsgNtfctnWidget extends StatelessWidget {
-  final AmptiveGoLiveNotificationModel state;
   const AmptiveGoLivePinnedMsgNtfctnWidget({super.key, required this.state});
+  final AmptiveGoLiveNotificationModel state;
 
   @override
-  Widget build(context) {
-    final user = state.user.obj;
-    final extraDetails = state.extraDetail as Map<String, String>?;
-    final role = extraDetails?[ATStrings.ROLE];
-    final msgTitle = extraDetails?[ATStrings.MSG_TITLE];
-    final msgContent = extraDetails?[ATStrings.MSG_CONTENT];
+  Widget build(BuildContext context) {
+    final Host user = state.user.obj;
+    final Map<String, String>? extraDetails = state.extraDetail as Map<String, String>?;
+    final String? role = extraDetails?[ATStrings.ROLE];
+    final String? msgTitle = extraDetails?[ATStrings.MSG_TITLE];
+    final String? msgContent = extraDetails?[ATStrings.MSG_CONTENT];
 
     return ATContainer(
       padding: const EdgeInsets.fromLTRB(5, 10, 5, 5),
       margin: const EdgeInsets.only(left: 15, right: 15),
       color: ATColors.white.withOpacity(0.15),
-      boxShadow: [
+      boxShadow: <BoxShadow>[
         BoxShadow(
           color: ATColors.black,
         )
       ],
       radius: 10,
       child: Row(
-        children: [
+        children: <Widget>[
           ATCircularImage(
             diameter: 30,
             imagePath: user.profilePicture ?? ''
@@ -102,9 +103,9 @@ class AmptiveGoLivePinnedMsgNtfctnWidget extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisSize: MainAxisSize.min,
-              children: [
+              children: <Widget>[
                 Row(
-                  children: [
+                  children: <Widget>[
                     Expanded(
                       child: Text(
                         user.name ?? '',
@@ -129,7 +130,7 @@ class AmptiveGoLivePinnedMsgNtfctnWidget extends StatelessWidget {
                       color: ATColors.white.withOpacity(0.2),
                       padding: const EdgeInsets.all(2), radius: 4,
                       child: Row(
-                        children: [
+                        children: <Widget>[
                           Transform.rotate(
                             angle: 44.5,
                             child: const Icon(Icons.push_pin, size: 14)
@@ -151,7 +152,7 @@ class AmptiveGoLivePinnedMsgNtfctnWidget extends StatelessWidget {
                 const Gap(5),
             
                 Row(
-                  children: [
+                  children: <Widget>[
                     Text(
                       '$msgTitle: ',
                       style: Theme.of(context).textTheme.titleMedium?.copyWith(

@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
 
 class ATAnimatedCrossFade extends StatelessWidget {
-  final Widget firstChild, secondChild;
-  final bool condition;
-  final int? duration;
   const ATAnimatedCrossFade({
     super.key,
     required this.firstChild,
@@ -11,9 +8,12 @@ class ATAnimatedCrossFade extends StatelessWidget {
     required this.condition,
     this.duration
   });
+  final Widget firstChild, secondChild;
+  final bool condition;
+  final int? duration;
 
   @override
-  Widget build(context) {
+  Widget build(BuildContext context) {
     return AnimatedCrossFade(
       firstCurve: Curves.easeIn,
       secondCurve: Curves.easeIn,

@@ -6,16 +6,16 @@ import '../../../services/auth/auth_field_service.dart';
 
 class ATEmailAuthBloc extends Bloc<ATEmailAuthEvent, ATAuthState> {
   ATEmailAuthBloc() : super(InitialAuthState()) {
-    on<EmailFieldChangedAuthEvent>((event, emit) {
-      final currentTextEntered = event.currentTextEntered;
+    on<EmailFieldChangedAuthEvent>((EmailFieldChangedAuthEvent event, Emitter<ATAuthState> emit) {
+      final String? currentTextEntered = event.currentTextEntered;
 
       emit(MainAuthState(userEmail: currentTextEntered));
     });
 
-    on<VerifyEmailAuthEvent>((event, emit) async {
+    on<VerifyEmailAuthEvent>((VerifyEmailAuthEvent event, Emitter<ATAuthState> emit) async {
       emit(LoadingAuthState());
 
-      final processed = await GetIt.I<AuthFieldService>().processEmail();
+      final bool processed = await GetIt.I<AuthFieldService>().processEmail();
 
       if (processed) {
         emit(ValidEmailAuthState());

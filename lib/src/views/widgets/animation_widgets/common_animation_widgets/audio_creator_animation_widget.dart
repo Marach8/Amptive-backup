@@ -1,6 +1,6 @@
 import 'dart:async';
-import 'package:amptive/src/utils/constants/colors.dart';
-import 'package:amptive/src/utils/constants/strings/lottie_animation_strings.dart';
+import 'package:amptive/src/config/utils/colors.dart';
+import 'package:amptive/src/config/utils/lottie_animation_strings.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:lottie/lottie.dart';
@@ -43,7 +43,7 @@ class _AmptiveAudioCreatorWidgetState extends State<AmptiveAudioCreatorWidget>{
   @override
   Widget build(BuildContext context) {
     return Stack(
-      children: [
+      children: <Widget>[
         Positioned(
           child: SizedBox(
             width: 74.99.w,
@@ -66,7 +66,7 @@ class _AmptiveAudioCreatorWidgetState extends State<AmptiveAudioCreatorWidget>{
             backgroundColor:_isBorderColored ? ATColors.hex307FE2 : ATColors.trsprnt,
             child: CircleAvatar(
               radius: 34.814.r,
-              backgroundColor: ATColors.brandBlack,
+              backgroundColor: ATColors.hex0D0D0D,
               child: CircleAvatar(
                 radius: 33.0.r,
                 backgroundImage: AssetImage(widget.assetName),
@@ -84,7 +84,7 @@ class _AmptiveAudioCreatorWidgetState extends State<AmptiveAudioCreatorWidget>{
               backgroundColor: ATColors.white,
               child: Icon(
                 Icons.mic_off,
-                color: ATColors.brandBlack,
+                color: ATColors.hex0D0D0D,
                 size: 19.h,
               ),
             ),

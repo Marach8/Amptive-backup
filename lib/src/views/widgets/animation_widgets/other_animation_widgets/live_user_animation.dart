@@ -1,14 +1,14 @@
-import 'package:amptive/src/utils/constants/colors.dart';
+import 'package:amptive/src/config/utils/colors.dart';
 import 'package:amptive/src/views/widgets/common_widgets/image_loader_widget.dart';
 import 'package:flutter/material.dart';
 
 class AmptiveAnimatedPaddingOnPictureWidget extends StatefulWidget {
-  final String imagePath;
 
   const AmptiveAnimatedPaddingOnPictureWidget({
     super.key,
     required this.imagePath
   });
+  final String imagePath;
 
   @override
   State<AmptiveAnimatedPaddingOnPictureWidget> createState() => _SizeAnimationState();

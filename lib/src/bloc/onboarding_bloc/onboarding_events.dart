@@ -2,8 +2,8 @@ abstract class AmptiveOnboardingEvents{}
 
 
 class SwipeToAnotherPageOnboardingEvent extends AmptiveOnboardingEvents{
-  int indexOfDestinationPage;
   SwipeToAnotherPageOnboardingEvent({required this.indexOfDestinationPage});
+  int indexOfDestinationPage;
 }
 
 class SkipButtonClickedOnboardingEvent extends AmptiveOnboardingEvents{}

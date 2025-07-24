@@ -1,4 +1,4 @@
-import 'package:amptive/src/utils/constants/colors.dart';
+import 'package:amptive/src/config/utils/colors.dart';
 import 'package:amptive/src/views/widgets/common_widgets/custom_container_widget.dart';
 import 'package:flutter/material.dart';
 
@@ -13,7 +13,7 @@ class ATRadioBtn extends StatelessWidget {
   final int? duration;
 
   @override
-  Widget build(context) {
+  Widget build(BuildContext context) {
     return ATContainer(
       duration: duration,
       height: 15, width: 15, boxShape: BoxShape.circle,

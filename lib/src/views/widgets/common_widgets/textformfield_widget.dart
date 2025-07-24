@@ -1,39 +1,11 @@
-import 'package:amptive/src/utils/constants/colors.dart';
-import 'package:amptive/src/utils/constants/font_sizes.dart';
-import 'package:amptive/src/utils/constants/font_weights.dart';
+import 'package:amptive/src/config/utils/colors.dart';
+import 'package:amptive/src/config/utils/font_sizes.dart';
+import 'package:amptive/src/config/utils/font_weights.dart';
 import 'package:amptive/src/views/widgets/common_widgets/search_filter_widget.dart';
 import 'package:flutter/material.dart';
 
 
 class ATTextFormField extends StatelessWidget {
-  final TextEditingController? controller;
-  final void Function(String)? onChanged;
-  final void Function(String?)? onSaved;
-  final String? Function(String?)? validator;
-  final TextInputType? keyboardType;
-  final String? hintText, counterText;
-  final TextAlign? textAlign;
-  final double? cursorHeight;
-  final Widget? suffixIcon, prefixIcon, prefix, suffix;
-  final bool? obscureText, disableBlueBorder, enabled, filled;
-  final Color? cursorColor, fillColor;
-  final BoxConstraints? suffixConstraints,
-  prefixConstraints, constraints;
-  final InputDecoration? decoration;
-  final InputBorder? enabledBorder;
-  final FocusNode? focusNode;
-  final TextStyle? hintStyle;
-  final TextInputAction? textInputAction;
-  final int? maxLines, maxLength;
-  final EdgeInsetsGeometry? contentPadding;
-  final Widget? Function(
-    BuildContext, {
-      required int currentLength, 
-      required bool isFocused, 
-      required int? maxLength
-    }
-  )? buildCounter;
-
   const ATTextFormField({
     super.key,
     this.controller,
@@ -66,11 +38,42 @@ class ATTextFormField extends StatelessWidget {
     this.maxLength,
     this.prefix,
     this.suffix,
+    this.isDense,
     this.filled
   });
 
+  final TextEditingController? controller;
+  final void Function(String)? onChanged;
+  final void Function(String?)? onSaved;
+  final String? Function(String?)? validator;
+  final TextInputType? keyboardType;
+  final String? hintText, counterText;
+  final TextAlign? textAlign;
+  final double? cursorHeight;
+  final Widget? suffixIcon, prefixIcon, prefix, suffix;
+  final bool? obscureText, disableBlueBorder,
+  enabled, filled, isDense;
+  final Color? cursorColor, fillColor;
+  final BoxConstraints? suffixConstraints,
+  prefixConstraints, constraints;
+  final InputDecoration? decoration;
+  final InputBorder? enabledBorder;
+  final FocusNode? focusNode;
+  final TextStyle? hintStyle;
+  final TextInputAction? textInputAction;
+  final int? maxLines, maxLength;
+  final EdgeInsetsGeometry? contentPadding;
+  final Widget? Function(
+    BuildContext, {
+      required int currentLength, 
+      required bool isFocused, 
+      required int? maxLength
+    }
+  )? buildCounter;
+
+
   @override
-  Widget build(context) {
+  Widget build(BuildContext context) {
     return TextFormField(
       controller: controller,
       enabled: enabled,      
@@ -97,6 +100,7 @@ class ATTextFormField extends StatelessWidget {
       decoration: decoration ?? InputDecoration(     
         counterText: counterText,   
         hintText: hintText,
+        isDense: isDense,
         constraints: constraints,
         fillColor: ATColors.white.withValues(alpha: 0.1), filled: filled ?? true,
         contentPadding: contentPadding ?? EdgeInsets.zero,
@@ -123,8 +127,3 @@ class ATTextFormField extends StatelessWidget {
     );
   }
 }
-
-
-
-
-

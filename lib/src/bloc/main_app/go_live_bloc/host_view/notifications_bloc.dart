@@ -1,7 +1,7 @@
 import 'package:amptive/src/models/host.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../models/go_live_notification_model.dart';
-import '../../../../utils/constants/strings/other_strings.dart';
+import '../../../../config/utils/other_strings.dart';
 
 class AmptiveGoLiveNotificationBloc extends Cubit<AmptiveGoLiveNotificationModel>{
   AmptiveGoLiveNotificationBloc(): super(
@@ -22,7 +22,7 @@ class AmptiveGoLiveNotificationBloc extends Cubit<AmptiveGoLiveNotificationModel
     AmptiveGoLiveNotificationModel(
       user: user,
       notificationType: ATStrings.IS_GIFTING,
-      extraDetail: {ATStrings.GIFTED_AMNT: '10,000'}
+      extraDetail: <String, String>{ATStrings.GIFTED_AMNT: '10,000'}
     )
   );
 
@@ -30,7 +30,7 @@ class AmptiveGoLiveNotificationBloc extends Cubit<AmptiveGoLiveNotificationModel
     AmptiveGoLiveNotificationModel(
       user: user,
       notificationType: ATStrings.PINNED,
-      extraDetail: {
+      extraDetail: <String, String>{
         ATStrings.ROLE: role,
         ATStrings.MSG_TITLE: 'Get our newsletter here',
         ATStrings.MSG_CONTENT: 'http://emmanuel.com'

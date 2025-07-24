@@ -1,14 +1,14 @@
-import 'package:amptive/src/utils/constants/colors.dart';
+import 'package:amptive/src/config/utils/colors.dart';
 import 'package:flutter/material.dart';
 
 class ATRefreshIndicator extends StatelessWidget {
-  final Widget child;
-  final Future<void> Function()? onRefresh;
   const ATRefreshIndicator({
     super.key,
     required this.child,
     this.onRefresh
   });
+  final Widget child;
+  final Future<void> Function()? onRefresh;
 
   @override
   Widget build(BuildContext context) {

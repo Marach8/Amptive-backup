@@ -1,6 +1,6 @@
-import 'package:amptive/src/utils/constants/colors.dart';
-import 'package:amptive/src/utils/constants/font_weights.dart';
-import 'package:amptive/src/utils/constants/strings/other_strings.dart';
+import 'package:amptive/src/config/utils/colors.dart';
+import 'package:amptive/src/config/utils/font_weights.dart';
+import 'package:amptive/src/config/utils/other_strings.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -20,14 +20,14 @@ class AmptiveLiveIndicatorWidget extends StatelessWidget {
         gradient: LinearGradient(
           begin: Alignment.topCenter,
           end: Alignment.bottomCenter,
-          colors: [
+          colors: <Color>[
             ATColors.hexF91880,
             ATColors.orangeGradientColorB
           ]
         ),
         borderRadius: BorderRadius.circular(5),
         border: Border.all(
-          color: ATColors.brandBlack,
+          color: ATColors.hex0D0D0D,
           width: 2,
         )
       ),

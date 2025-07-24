@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'dart:ui';
 
-import 'package:amptive/src/utils/constants/colors.dart';
+import 'package:amptive/src/config/utils/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -64,9 +64,9 @@ class _TempLState extends State<TempL> with SingleTickerProviderStateMixin {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        backgroundColor: ATColors.brandBlack,
+        backgroundColor: ATColors.hex0D0D0D,
         body: Stack(
-          children: [
+          children: <Widget>[
             Positioned(
               top: 57.h,
               left: -108.w,
@@ -78,7 +78,7 @@ class _TempLState extends State<TempL> with SingleTickerProviderStateMixin {
                 ),
                 child: AnimatedBuilder(
                   animation: _animation,
-                  builder: (child, animation){
+                  builder: (BuildContext child, Widget? animation){
                     return Opacity(
                       opacity: _animation.value,
                       child: _isFirstImage
@@ -104,7 +104,7 @@ class _TempLState extends State<TempL> with SingleTickerProviderStateMixin {
 
                   child:  AnimatedBuilder(
                   animation: _animation,
-                  builder: (child, animation){
+                  builder: (BuildContext child, Widget? animation){
                     return Opacity(
                       opacity: _animation.value,
                       child: _isFirstImage

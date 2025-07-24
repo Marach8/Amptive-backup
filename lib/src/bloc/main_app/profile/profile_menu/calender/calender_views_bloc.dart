@@ -1,7 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 
-final now = DateTime.now();
+final DateTime now = DateTime.now();
 
 typedef CalenderViewsState = (int index, String viewName);
 

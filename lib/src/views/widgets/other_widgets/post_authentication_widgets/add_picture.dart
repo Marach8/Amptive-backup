@@ -9,11 +9,11 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:image_picker/image_picker.dart';
 import '../../../../bloc/authentication/general/auth_events.dart';
-import '../../../../utils/constants/colors.dart';
-import '../../../../utils/constants/font_weights.dart';
-import '../../../../utils/constants/strings/image_strings.dart';
-import '../../../../utils/constants/strings/other_strings.dart';
-import '../../../../utils/constants/strings/route_strings.dart';
+import '../../../../config/utils/colors.dart';
+import '../../../../config/utils/font_weights.dart';
+import '../../../../config/utils/image_strings.dart';
+import '../../../../config/utils/other_strings.dart';
+import '../../../../config/routing/route_strings.dart';
 
 class AddPictureWidget extends StatefulWidget {
   const AddPictureWidget({super.key});
@@ -29,13 +29,13 @@ class _AddPictureWidgetState extends State<AddPictureWidget> {
 
   //Image Picker function to get image from gallery
   Future getImageFromGallery() async {
-    final pickedFile = await _picker.pickImage(source: ImageSource.gallery);
+    final XFile? pickedFile = await _picker.pickImage(source: ImageSource.gallery);
     await handlePickedFile(pickedFile);
   }
 
   //Image Picker function to get image from camera
   Future getImageFromCamera() async {
-    final pickedFile = await _picker.pickImage(source: ImageSource.camera);
+    final XFile? pickedFile = await _picker.pickImage(source: ImageSource.camera);
     await handlePickedFile(pickedFile);
   }
 
@@ -43,7 +43,7 @@ class _AddPictureWidgetState extends State<AddPictureWidget> {
     if (pickedFile != null && mounted) {
       File image = File(pickedFile.path);
       MemoryImage? img =
-          await context.pushNamed(ATRoutes.cropImage, extra: image);
+          await context.pushNamed(ATRoutes.CIRCLE_IMG_CROPPER_SCREEN, extra: image);
 
       if (img != null && mounted) {
         context
@@ -56,8 +56,8 @@ class _AddPictureWidgetState extends State<AddPictureWidget> {
   Future showOptions() async {
     showCupertinoModalPopup(
       context: context,
-      builder: (context) => CupertinoActionSheet(
-        actions: [
+      builder: (BuildContext context) => CupertinoActionSheet(
+        actions: <Widget>[
           CupertinoActionSheetAction(
             child: Text(
               ATStrings.PHOTO_GALLERY,
@@ -98,7 +98,7 @@ class _AddPictureWidgetState extends State<AddPictureWidget> {
   @override
   Widget build(BuildContext context) {
     return BlocListener<AmptiveAuthBloc, AmptiveAuthState>(
-      listener: (context, state) {
+      listener: (BuildContext context, AmptiveAuthState state) {
         if (state is AddProfilePictureState) {
           showOptions();
         } else if (state is ProfilePictureAddedState) {
@@ -112,7 +112,7 @@ class _AddPictureWidgetState extends State<AddPictureWidget> {
       },
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
+        children: <Widget>[
           Text(
             ATStrings.addProfilePicture,
             textAlign: TextAlign.start,
@@ -131,13 +131,13 @@ class _AddPictureWidgetState extends State<AddPictureWidget> {
                 ),
           ),
           BlocBuilder<AmptiveAuthBloc, AmptiveAuthState>(
-              builder: (context, state) {
+              builder: (BuildContext context, AmptiveAuthState state) {
             return Container(
               margin: EdgeInsets.only(top: 79.h, left: 105.w),
               height: 153.h,
               width: 132.h,
               child: Stack(
-                children: [
+                children: <Widget>[
                   SizedBox(
                     height: 132.h,
                     width: 132.w,
@@ -216,7 +216,7 @@ class _AddPictureWidgetState extends State<AddPictureWidget> {
             ),
           ),
           BlocBuilder<AmptiveAuthBloc, AmptiveAuthState>(
-              builder: (context, state) {
+              builder: (BuildContext context, AmptiveAuthState state) {
             return Container(
               width: 350.w,
               height: 50.w,

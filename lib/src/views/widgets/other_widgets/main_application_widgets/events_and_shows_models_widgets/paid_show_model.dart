@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
-import '../../../../../utils/constants/colors.dart';
-import '../../../../../utils/constants/font_sizes.dart';
+import '../../../../../config/utils/colors.dart';
+import '../../../../../config/utils/font_sizes.dart';
 import '../../../common_widgets/circle_avatar.dart';
 import '../../../common_widgets/custom_container_widget.dart';
 import '../../../common_widgets/image_loader_widget.dart';
 
 
 class AmptivePaidShowModel extends StatelessWidget {
-  final String trendingPicture;
   const AmptivePaidShowModel({
     super.key,
     required this.trendingPicture
   });
+  final String trendingPicture;
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +21,7 @@ class AmptivePaidShowModel extends StatelessWidget {
       padding: const EdgeInsets.only(left: 15),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
+        children: <Widget>[
           ClipRRect(
             clipBehavior: Clip.hardEdge,
             borderRadius: BorderRadius.circular(5),
@@ -36,16 +36,16 @@ class AmptivePaidShowModel extends StatelessWidget {
             ),
           ),
           Row(
-            children: [
+            children: <Widget>[
               ATContainer(
                 height: 12, width: 12,
-                color: ATColors.authHintColor,
+                color: ATColors.hexB6B6B6,
                 child: FittedBox(
                   fit: BoxFit.scaleDown,
                   child: Text(
                     "P",
                     style: Theme.of(context).textTheme.displayMedium?.copyWith(
-                      color: ATColors.brandBlack
+                      color: ATColors.hex0D0D0D
                     ),
                   ),
                 ),

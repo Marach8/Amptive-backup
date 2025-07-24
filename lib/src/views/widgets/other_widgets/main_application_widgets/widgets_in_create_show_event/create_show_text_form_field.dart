@@ -3,15 +3,15 @@ import 'package:amptive/src/models/host.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import '../../../../../utils/constants/colors.dart';
-import '../../../../../utils/constants/font_sizes.dart';
-import '../../../../../utils/constants/font_weights.dart';
+import '../../../../../config/utils/colors.dart';
+import '../../../../../config/utils/font_sizes.dart';
+import '../../../../../config/utils/font_weights.dart';
 import '../../../common_widgets/textformfield_widget.dart';
 
 class CreateShowTextFormField extends ATTextFormField {
   const CreateShowTextFormField(
       {super.key,
-        required super.controller,
+        super.controller,
         super.hintText,
         super.prefixIcon,
         super.suffixIcon,
@@ -79,10 +79,6 @@ class CreateShowTextFormField extends ATTextFormField {
 
 
 class CreateShowTextFieldTitle extends StatelessWidget {
-  final String title;
-  final String? otherInfo;
-  final IconData? prefixIcon;
-  final TextStyle? titleStyle;
 
   const CreateShowTextFieldTitle({
     super.key,
@@ -91,11 +87,15 @@ class CreateShowTextFieldTitle extends StatelessWidget {
     this.prefixIcon,
     this.titleStyle,
   });
+  final String title;
+  final String? otherInfo;
+  final IconData? prefixIcon;
+  final TextStyle? titleStyle;
 
   @override
   Widget build(BuildContext context) {
     return Row(
-      children: [
+      children: <Widget>[
         Visibility(
           visible: prefixIcon != null,
           child: Padding(
@@ -146,7 +146,7 @@ class SelectedHashTags extends StatelessWidget {
     return SingleChildScrollView(
       scrollDirection: Axis.horizontal,
       child: Row(
-        children: hashtags.map((hashtag) {
+        children: hashtags.map((ObjectWithNotifier<Hashtag> hashtag) {
           return Padding(
             padding: const EdgeInsets.symmetric(horizontal: 4.0),
             child: Container(
@@ -156,7 +156,7 @@ class SelectedHashTags extends StatelessWidget {
                 borderRadius: BorderRadius.circular(10.r),
               ),
               child: Row(
-                children: [
+                children: <Widget>[
                   Text(
                     hashtag.obj.name,
                     style: Theme.of(context).textTheme.bodySmall?.copyWith(

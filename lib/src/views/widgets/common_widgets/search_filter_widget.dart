@@ -1,11 +1,8 @@
-import 'package:amptive/src/utils/constants/colors.dart';
+import 'package:amptive/src/config/utils/colors.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class ATFilterWidget<B extends BlocBase<String>> extends StatelessWidget{
-  final String title;
-  final TextStyle? style;
-  final String? padLeft, padRight;
 
   const ATFilterWidget({
     super.key,
@@ -14,25 +11,28 @@ class ATFilterWidget<B extends BlocBase<String>> extends StatelessWidget{
     this.padLeft,
     this.padRight,
   });
+  final String title;
+  final TextStyle? style;
+  final String? padLeft, padRight;
 
   @override
-  Widget build(context) {
+  Widget build(BuildContext context) {
     return BlocBuilder<B, String>(
-      builder: (_, state) {
-        final listOfStrings = title.trim().split('');
+      builder: (_, String state) {
+        final Characters characters = title.trim().characters;
 
         return Text.rich(
           TextSpan(
-            children: [
+            children: <InlineSpan>[
               if (padLeft != null) TextSpan(
                 text: padLeft,
                 style: style,
               ),
-              ...listOfStrings.map(
-                (stringOfText) {
-                  final shouldHighlightString = state.toLowerCase().contains(stringOfText.toLowerCase());
+              ...characters.map(
+                (String char) {
+                  final bool shouldHighlightString = state.toLowerCase().contains(char.toLowerCase());
                   return TextSpan(
-                    text: stringOfText,
+                    text: char,
                     style: shouldHighlightString 
                       ? style?.copyWith(color: ATColors.hex307FE2)
                       : style,
@@ -62,4 +62,14 @@ class ATSearchIcon extends StatelessWidget {
     padding: const EdgeInsets.fromLTRB(15, 0, 20, 0),
     child: Icon(CupertinoIcons.search, size: size),
   );
+}
+
+
+
+class SearchkeyBloc extends Cubit<String>{
+  SearchkeyBloc() : super('');
+
+  void updateSearchKey(String searchKey) => emit(searchKey);
+
+  void resetSearch() => emit('');
 }

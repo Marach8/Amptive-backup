@@ -1,0 +1,97 @@
+import 'package:amptive/src/config/utils/colors.dart';
+import 'package:amptive/src/config/utils/font_sizes.dart';
+import 'package:amptive/src/config/utils/font_weights.dart';
+import 'package:flutter/material.dart';
+
+class AmptiveTextTheme{
+  const AmptiveTextTheme._();
+
+  static TextTheme darkTextTheme = TextTheme( 
+    displayMedium: TextStyle(
+      color: ATColors.white,
+      fontSize: ATFontSizes.size25,
+      fontWeight: ATFontWeights.w700,
+      overflow: TextOverflow.ellipsis
+    ),
+
+    displaySmall: TextStyle(
+      color: ATColors.white,
+      fontSize: ATFontSizes.size24,
+      fontWeight: ATFontWeights.w600,
+      overflow: TextOverflow.ellipsis
+    ),
+
+    headlineLarge: TextStyle(
+      color: ATColors.white,
+      fontSize: ATFontSizes.size22,
+      fontWeight: ATFontWeights.w700,
+      overflow: TextOverflow.ellipsis
+    ),
+
+    headlineMedium: TextStyle(
+      color: ATColors.white,
+      fontSize: ATFontSizes.size18,
+      fontWeight: ATFontWeights.w700,
+      overflow: TextOverflow.ellipsis
+    ),
+
+    bodyLarge : TextStyle(
+      color: ATColors.white,
+      fontSize: ATFontSizes.size18,
+      fontWeight: ATFontWeights.w600,
+      overflow: TextOverflow.ellipsis
+    ),
+
+    bodyMedium : TextStyle(
+      color: ATColors.white,
+      fontSize: ATFontSizes.size16,
+      fontWeight: ATFontWeights.w600,
+      overflow: TextOverflow.ellipsis
+    ), 
+
+    bodySmall : TextStyle(
+      color: ATColors.white,
+      fontSize: ATFontSizes.size14,
+      fontWeight: ATFontWeights.w500,
+      overflow: TextOverflow.ellipsis
+    ),
+    
+    labelMedium: TextStyle(
+      color: ATColors.hexB6B6B6,
+      fontSize: ATFontSizes.size16,
+      fontWeight: ATFontWeights.w400,
+      overflow: TextOverflow.ellipsis
+    ),
+
+    labelSmall: TextStyle(
+      color: ATColors.white,
+      fontSize: ATFontSizes.size12,
+      fontWeight: ATFontWeights.w500,
+      overflow: TextOverflow.ellipsis
+    ),
+
+    titleLarge: TextStyle(
+      color: ATColors.white,
+      fontSize: ATFontSizes.size15,
+      fontWeight: ATFontWeights.w400,
+      overflow: TextOverflow.ellipsis
+    ),
+
+    titleMedium: TextStyle(
+      color: ATColors.white,
+      fontSize: ATFontSizes.size14,
+      fontWeight: ATFontWeights.w400,
+      overflow: TextOverflow.ellipsis
+    ),
+
+    titleSmall: TextStyle(
+      color: ATColors.white,
+      fontSize: ATFontSizes.size12,
+      fontWeight: ATFontWeights.w400,
+      overflow: TextOverflow.ellipsis
+    ),
+  );
+
+
+  //implement lightTextTheme here
+}

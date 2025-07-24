@@ -1,24 +1,24 @@
-import 'package:amptive/src/utils/constants/strings/image_strings.dart';
+import 'package:amptive/src/config/utils/image_strings.dart';
 import 'package:amptive/src/views/widgets/animation_widgets/other_animation_widgets/live_user_animation.dart';
 import 'package:amptive/src/views/widgets/other_widgets/main_application_widgets/widgets_in_home_view/live_indicator_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 
-class ATLiveUser extends StatelessWidget {
-  const ATLiveUser({
+class LiveUserWidget extends StatelessWidget {
+  const LiveUserWidget({
     super.key,
   });
 
   @override
-  Widget build(context) {
+  Widget build(BuildContext context) {
     return Column(
       mainAxisSize: MainAxisSize.min,
       mainAxisAlignment: MainAxisAlignment.end,
-      children: [
+      children: <Widget>[
         const Stack(
           clipBehavior: Clip.none,
           alignment: Alignment.center,
-          children: [
+          children: <Widget>[
             AmptiveAnimatedPaddingOnPictureWidget(
               imagePath: ATImgStrings.jpeg3,
             ),

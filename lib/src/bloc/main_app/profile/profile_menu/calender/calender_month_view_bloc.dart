@@ -1,5 +1,5 @@
 import 'package:amptive/src/bloc/main_app/profile/profile_menu/calender/calender_programs_bloc.dart';
-import 'package:amptive/src/utils/helpers/helper_functions/helper_functions.dart';
+import 'package:amptive/src/config/utils/helper_functions.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -8,24 +8,24 @@ class CalenderMonthViewBloc extends Bloc<CalenderMonthViewEvent, CalenderMonthVi
   CalenderMonthViewBloc(): super(
     InitialCalenderMonthViewState()
   ){
-    const chunkSize = 4;
+    const int chunkSize = 4;
     int noOfChunksFetched = 0;
     bool hasMoreData = true;
-    const currentYear = 2025;
+    const int currentYear = 2025;
 
-    on<LoadInitialCalenderDataEvent>((_, emit)async{
+    on<LoadInitialCalenderDataEvent>((_, Emitter<CalenderMonthViewState> emit)async{
       hasMoreData = true;
       emit(CalenderMonthViewLoadingState());
-      final result = <String, List<List<Map<DateTime?, List<CalenderProgram>>>>>{};
+      final Map<String, List<List<Map<DateTime?, List<CalenderProgram>>>>> result = <String, List<List<Map<DateTime?, List<CalenderProgram>>>>>{};
       try{
         for (int month = 1; month <= chunkSize; month++) {
-          final monthData = await compute(
+          final Map<String, List<List<DateTime?>>> monthData = await compute(
             ATHelperFuncs.generateCalendarData,
-            [currentYear, month],
+            <int>[currentYear, month],
           );
-          final treatedMonthData = await compute(
+          final Map<String, List<List<Map<DateTime?, List<CalenderProgram>>>>> treatedMonthData = await compute(
             ATHelperFuncs.transformDateTimes2Programs,
-            [monthData, 'Give it await', true]
+            <Object>[monthData, 'Give it await', true]
           );
           result.addAll(treatedMonthData);
         }
@@ -46,10 +46,10 @@ class CalenderMonthViewBloc extends Bloc<CalenderMonthViewEvent, CalenderMonthVi
     });
 
 
-    on<LoadMoreCalenderDataEvent>((_, emit)async{
+    on<LoadMoreCalenderDataEvent>((_, Emitter<CalenderMonthViewState> emit)async{
       if(!hasMoreData) return;
 
-      final dataState = (state as CalenderMonthViewDataState);
+      final CalenderMonthViewDataState dataState = (state as CalenderMonthViewDataState);
       if(dataState.isLoadingMore) return;
 
       emit(
@@ -61,10 +61,10 @@ class CalenderMonthViewBloc extends Bloc<CalenderMonthViewEvent, CalenderMonthVi
       );
 
       try {
-        final startMonth = noOfChunksFetched * chunkSize + 1;
-        final endMonth = startMonth + chunkSize - 1;
+        final int startMonth = noOfChunksFetched * chunkSize + 1;
+        final int endMonth = startMonth + chunkSize - 1;
 
-        final newCalenderData = Map<String, List<List<Map<DateTime?, List<CalenderProgram>>>>>.from(dataState.calenderData);
+        final Map<String, List<List<Map<DateTime?, List<CalenderProgram>>>>> newCalenderData = Map<String, List<List<Map<DateTime?, List<CalenderProgram>>>>>.from(dataState.calenderData);
 
         for (int month = startMonth; month <= endMonth; month++) {
           if (month > 12) {
@@ -72,14 +72,14 @@ class CalenderMonthViewBloc extends Bloc<CalenderMonthViewEvent, CalenderMonthVi
             break;
           }
 
-          final monthData = await compute(
+          final Map<String, List<List<DateTime?>>> monthData = await compute(
             ATHelperFuncs.generateCalendarData,
-            [currentYear, month],
+            <int>[currentYear, month],
           );
 
-          final treatedMonthData = await compute(
+          final Map<String, List<List<Map<DateTime?, List<CalenderProgram>>>>> treatedMonthData = await compute(
             ATHelperFuncs.transformDateTimes2Programs,
-            [monthData, "Don't forget who you are", false]
+            <Object>[monthData, "Don't forget who you are", false]
           );
           newCalenderData.addAll(treatedMonthData);
         }
@@ -116,15 +116,15 @@ abstract class CalenderMonthViewState{}
 class InitialCalenderMonthViewState extends CalenderMonthViewState{}
 
 class CalenderMonthViewDataState extends CalenderMonthViewState{
-  final Map<String, List<List<Map<DateTime?, List<CalenderProgram>>>>> calenderData;
-  final bool hasMoreData, isLoadingMore;
-  final String? errorMsg;
   CalenderMonthViewDataState({
     required this.calenderData,
     required this.hasMoreData,
     required this.isLoadingMore,
     this.errorMsg
   });
+  final Map<String, List<List<Map<DateTime?, List<CalenderProgram>>>>> calenderData;
+  final bool hasMoreData, isLoadingMore;
+  final String? errorMsg;
 }
 
 class CalenderMonthViewErrorState extends CalenderMonthViewState{}

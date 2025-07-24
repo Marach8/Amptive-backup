@@ -3,10 +3,6 @@ import 'package:amptive/src/views/widgets/common_widgets/image_loader_widget.dar
 import 'package:flutter/material.dart';
 
 class AmptivePictureWidget extends StatelessWidget {
-  final String imagePath;
-  final double? radius;
-  final double diameter;
-  final bool? isCircular;
 
   const AmptivePictureWidget({
     super.key,
@@ -15,9 +11,13 @@ class AmptivePictureWidget extends StatelessWidget {
     required this.diameter,
     this.isCircular,
   });
+  final String imagePath;
+  final double? radius;
+  final double diameter;
+  final bool? isCircular;
 
   @override
-  Widget build(context) {
+  Widget build(BuildContext context) {
     return ATContainer(
       clipBehavior: Clip.hardEdge,
       height: diameter,

@@ -1,5 +1,5 @@
-import 'package:amptive/src/utils/constants/colors.dart';
-import 'package:amptive/src/utils/constants/font_sizes.dart';
+import 'package:amptive/src/config/utils/colors.dart';
+import 'package:amptive/src/config/utils/font_sizes.dart';
 import 'package:amptive/src/views/widgets/common_widgets/custom_container_widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/divider_widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/image_loader_widget.dart';
@@ -26,22 +26,22 @@ class WidgetWithLeadingImageAndTrailingMoreIcon extends StatelessWidget {
   final double? imgSize;
 
   @override
-  Widget build(context) {
+  Widget build(BuildContext context) {
     return ATContainer(
       color: ATColors.hex9E9E9E.withValues(alpha: 0.3),
       radius: 14, alignment: Alignment.center,
       padding: const EdgeInsets.fromLTRB(10, 10, 0, 10),
       width: double.infinity,
       child: Column(
-        children: [
+        children: <Widget>[
           Row(
-            children: [
+            children: <Widget>[
               ATImgLoader(imgPath: leadingImgPath, height: imgSize, width: imgSize,),
               const SizedBox(width: 5),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
+                  children: <Widget>[
                     Text(
                       title,
                       style: Theme.of(context).textTheme.bodySmall?.copyWith(
@@ -72,7 +72,7 @@ class WidgetWithLeadingImageAndTrailingMoreIcon extends StatelessWidget {
             padding: const EdgeInsets.only(right: 15),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
+              children: <Widget>[
                 InkWell(
                   onTap: btnOnTap,
                   borderRadius: BorderRadius.circular(5),

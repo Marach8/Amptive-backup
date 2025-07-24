@@ -1,14 +1,14 @@
 import 'package:amptive/src/views/widgets/animation_widgets/common_animation_widgets/animated_switcher.dart';
-import 'package:amptive/src/views/widgets/other_widgets/main_application_widgets/widgets_in_discover_view/tab_view_widgets/discover_tab_widgets.dart';
+import 'package:amptive/src/features/discover/presentation/views/search_results_page_view.dart';
 import 'package:flutter/material.dart';
-import 'recent_searches_view.dart';
+import '../../../../../../features/discover/presentation/views/recent_searches_page_view.dart';
 
 class AmptiveRecentSearchesAndTabsView extends StatefulWidget {
-  final TextEditingController controller;
   const AmptiveRecentSearchesAndTabsView({
     super.key,
     required this.controller
   });
+  final TextEditingController controller;
 
   @override
   State<AmptiveRecentSearchesAndTabsView> createState() => _AmptiveRecentSearchesAndTabsViewState();
@@ -43,14 +43,14 @@ class _AmptiveRecentSearchesAndTabsViewState extends State<AmptiveRecentSearches
   Widget build(BuildContext context) {
     return ValueListenableBuilder(
       valueListenable: _showTabs,
-      builder: (_, value, __) {
+      builder: (_, bool value, __) {
         int index = value ? 1 : 0;
-        final listOfWidgets = [
-          AmptiveRecentSearchesView(key: UniqueKey(),),
-          AmptiveDiscoverTabView(key: UniqueKey()),
+        final List<Widget> listOfWidgets = <Widget>[
+          RecentSearchesView(key: UniqueKey(),),
+          SearchResultsTabsView(key: UniqueKey()),
         ];
 
-        return AmptiveFadingAnimatedSwitcherWidget(
+        return ATFadingSwitcher(
           child: listOfWidgets.elementAt(index),
         );
       }

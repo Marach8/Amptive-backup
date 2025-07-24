@@ -1,4 +1,4 @@
-import 'package:amptive/src/utils/helpers/helper_functions/helper_functions.dart';
+import 'package:amptive/src/config/utils/helper_functions.dart';
 import 'package:amptive/src/views/widgets/common_widgets/custom_container_widget.dart';
 import 'package:flutter/material.dart';
 
@@ -32,7 +32,7 @@ class SpotlightBeam extends StatelessWidget {
 class SpotlightClipper extends CustomClipper<Path> {
   @override
   Path getClip(Size size) {
-    final path = Path();
+    final Path path = Path();
     path.moveTo(size.width / 2 - 30, 0);
     path.lineTo(0, size.height);
     path.lineTo(size.width, size.height);

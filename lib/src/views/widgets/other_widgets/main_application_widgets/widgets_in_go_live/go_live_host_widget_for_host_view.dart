@@ -1,5 +1,6 @@
+import 'package:amptive/src/config/utils/other_strings.dart';
 import 'package:amptive/src/models/host.dart';
-import 'package:amptive/src/utils/constants/font_sizes.dart';
+import 'package:amptive/src/config/utils/font_sizes.dart';
 import 'package:amptive/src/views/widgets/common_widgets/circular_image.dart';
 import 'package:amptive/src/views/widgets/common_widgets/custom_container_widget.dart';
 import 'package:flutter/material.dart';
@@ -8,18 +9,11 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 import '../../../../../bloc/main_app/go_live_bloc/host_view/cohosts_display_bloc.dart';
 import '../../../../../services/go_live_service/go_live_service.dart';
-import '../../../../../utils/constants/colors.dart';
-import '../../../../../utils/constants/strings/other_strings.dart';
-import '../../../../../utils/dialogs/go_live/go_live_add_cohost_dialog.dart';
+import '../../../../../config/utils/colors.dart';
+import '../../../../../config/utils/dialogs/go_live/go_live_add_cohost_dialog.dart';
 import '../../../common_widgets/circle_avatar.dart';
 
 class AmptiveLiveHostAndCoHostWidget extends StatelessWidget {
-  final double? top, bottom, left, right;
-  final ObjectWithNotifier<Host>? hostOrCohost;
-  final GoLiveService service;
-  final bool isHost;
-  final int index;
-  final Function(ObjectWithNotifier<Host>? host) onTap;
   const AmptiveLiveHostAndCoHostWidget({
     super.key,
     this.top, this.bottom,
@@ -30,10 +24,16 @@ class AmptiveLiveHostAndCoHostWidget extends StatelessWidget {
     required this.service,
     required this.index
   });
+  final double? top, bottom, left, right;
+  final ObjectWithNotifier<Host>? hostOrCohost;
+  final GoLiveService service;
+  final bool isHost;
+  final int index;
+  final Function(ObjectWithNotifier<Host>? host) onTap;
 
   @override
-  Widget build(context) {
-    final showAddIcon = hostOrCohost?.obj.profilePicture == null;
+  Widget build(BuildContext context) {
+    final bool showAddIcon = hostOrCohost?.obj.profilePicture == null;
 
     return AnimatedPositioned(
       duration: const Duration(milliseconds: 500),
@@ -56,7 +56,7 @@ class AmptiveLiveHostAndCoHostWidget extends StatelessWidget {
         child : Column(
           mainAxisSize: MainAxisSize.min,
           mainAxisAlignment: MainAxisAlignment.start,
-          children: [
+          children: <Widget>[
             showAddIcon ? ATContainer(
               height: 64.h, width: 64.h, radius: 40.h,
               border: Border.all(color: ATColors.white, width: 0.5),
@@ -64,7 +64,7 @@ class AmptiveLiveHostAndCoHostWidget extends StatelessWidget {
             : Stack(
               clipBehavior: Clip.none,
               alignment: Alignment.center,
-              children: [
+              children: <Widget>[
                 ATCircularImage(
                   diameter: isHost ? 94.h : 64.h, addBorder: true,
                   borderColor: ATColors.white,
@@ -78,7 +78,7 @@ class AmptiveLiveHostAndCoHostWidget extends StatelessWidget {
                     child: FittedBox(
                       fit: BoxFit.scaleDown,
                       child: Icon(
-                        Icons.mic_off, color: ATColors.brandBlack,
+                        Icons.mic_off, color: ATColors.hex0D0D0D,
                         size: 15.h,
                       )
                     ),
@@ -102,7 +102,7 @@ class AmptiveLiveHostAndCoHostWidget extends StatelessWidget {
               gradient: LinearGradient(
                 begin: Alignment.topCenter,
                 end: Alignment.bottomCenter,
-                colors: [
+                colors: <Color>[
                   ATColors.hexF91880,
                   ATColors.orangeGradientColorB
                 ]

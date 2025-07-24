@@ -2,13 +2,13 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 class AmptiveFollowingBloc extends Bloc<FollowingEvent, FollowingState>{
   AmptiveFollowingBloc(): super(IsNotFollowingState()){
-    on<ShouldFollowEvent>((_, emit)async{
+    on<ShouldFollowEvent>((_, Emitter<FollowingState> emit)async{
       emit(FollowLoadingState());
       await Future.delayed(const Duration(seconds: 2));
       emit(IsFollowingState());
     });
 
-    on<ShouldUnFollowEvent>((_, emit) async{
+    on<ShouldUnFollowEvent>((_, Emitter<FollowingState> emit) async{
       emit(FollowLoadingState());
       await Future.delayed(const Duration(seconds: 2));
       emit(IsNotFollowingState());

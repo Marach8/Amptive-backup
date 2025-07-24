@@ -5,7 +5,7 @@ import 'api_handler.dart';
 class AuthenticationService {
 
 
-  final _apiHandler = APIHandler();
+  final APIHandler _apiHandler = APIHandler();
 
   Future<AmptiveUser?> registerUser({
     required String name,

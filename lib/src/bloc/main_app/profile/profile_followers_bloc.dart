@@ -6,8 +6,8 @@ class AmptiveProfileFollowersBloc extends Cubit<List<ObjectWithNotifier<Host>>>{
   AmptiveProfileFollowersBloc(): super(getHostList());
 
   void removeFollower(String profilePic){
-    final newState = List<ObjectWithNotifier<Host>>.from(state);
-    newState.removeWhere((follower) => follower.obj.profilePicture == profilePic);
+    final List<ObjectWithNotifier<Host>> newState = List<ObjectWithNotifier<Host>>.from(state);
+    newState.removeWhere((ObjectWithNotifier<Host> follower) => follower.obj.profilePicture == profilePic);
     emit(newState);
   }
 }
