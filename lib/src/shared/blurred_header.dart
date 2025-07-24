@@ -60,7 +60,7 @@ class BlurredHeaderBloc extends Cubit<bool>{
 
 
   bool onScrollNotification(ScrollNotification notification) {
-    if (notification is ScrollUpdateNotification) {
+    if (notification is ScrollUpdateNotification && notification.metrics.axis == Axis.vertical) {
       final double extentBefore = notification.metrics.extentBefore;
       if(extentBefore > 0.0 && !state){
         // log('backdrop is shown');

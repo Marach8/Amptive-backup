@@ -8,15 +8,21 @@ import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
-import '../../../services/create_show/create_show_service.dart';
-import '../../../views/widgets/common_widgets/custom_rebuilder_widget.dart';
-import '../../../views/widgets/common_widgets/elevated_button_widget.dart';
-import '../other_strings.dart';
+import '../../../../services/create_show/create_show_service.dart';
+import '../../../../views/widgets/common_widgets/custom_rebuilder_widget.dart';
+import '../../../../views/widgets/common_widgets/elevated_button_widget.dart';
+import '../../../../config/utils/other_strings.dart';
+import 'package:amptive/src/features/go_live/go_live_export.dart';
+import 'package:amptive/src/global_export.dart';
+import 'package:amptive/src/views/widgets/common_widgets/dismiss_modal.dart';
+import 'package:amptive/src/views/widgets/common_widgets/search_filter_widget.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
+import '../../../../models/host.dart';
 
 
-Future<String> showSelectAudienceAccessForShowsDialog(
-  BuildContext context
-)async{
+Future<String> chooseAudienceAccess4ShowModal(BuildContext context)async{
   final ValueNotifier<String> notifier = ValueNotifier<String>('');
   CreateShowService service = GetIt.I<CreateShowService>();
 
@@ -58,7 +64,7 @@ Future<String> showSelectAudienceAccessForShowsDialog(
             const Gap(20),
             Text(
               maxLines: 5,
-              ATStrings.SHOW_AUDIENCE_ACCESS_DESC,
+              ATStrings.PROMPTED_2_SETUP_SUB_PLAN,
               style: Theme.of(context).textTheme.titleMedium?.copyWith(
                 color: ATColors.hexC2C2C2
               ),
@@ -238,3 +244,70 @@ Future<String> showSelectAudienceAccessForShowsDialog(
   );
 }
 
+
+
+
+
+
+
+Future<void> showAvailable(BuildContext context) async {
+  return await showModalBottomSheet(
+    context: context,
+    isScrollControlled: true,
+    backgroundColor: ATColors.black,
+    builder: (BuildContext dContext) {
+      return BlocProvider<_AudienceAccessBloc>(
+        create: (_) => _AudienceAccessBloc(),
+        child: DraggableScrollableSheet(
+          expand: false,
+          initialChildSize: 1,
+          builder: (BuildContext bContext, _) {
+            return Container(
+              margin: const EdgeInsets.fromLTRB(8, kToolbarHeight, 8, 10),
+              padding: const EdgeInsets.all(15),
+              height: context.screenHeight,
+              width: context.screenWidth,
+              decoration: BoxDecoration(
+                color: ATColors.hex202020,
+                borderRadius: const BorderRadius.only(
+                  topLeft: Radius.circular(15),
+                  topRight: Radius.circular(15),
+                ),
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  const Align(alignment: Alignment.center, child: ATModalDismisser()),
+                  Align(
+                    alignment: Alignment.center,
+                    child: Text(
+                      ATStrings.AUDIENCE_ACCESS,
+                      style: Theme.of(context).textTheme.bodyLarge,
+                    ),
+                  ),
+                  const SizedBox(height: 15,),
+                  Text(
+                    maxLines: 5,
+                    ATStrings.PROMPTED_2_SETUP_SUB_PLAN,
+                    style: Theme.of(context).textTheme.labelSmall?.copyWith(
+                      color: ATColors.hexC2C2C2.withValues(alpha: 0.76)
+                    ),
+                  ),
+                ],
+              )
+            );
+          },
+        ),
+      );
+    },
+  );
+}
+
+
+enum AudienceAccessType {free, subscription}
+class _AudienceAccessBloc extends Cubit<AudienceAccessType?>{
+  _AudienceAccessBloc(): super(null);
+
+  void chooseAudAccessType(AudienceAccessType? type)
+    => emit(type);
+}

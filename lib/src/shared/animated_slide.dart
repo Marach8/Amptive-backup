@@ -21,7 +21,7 @@ class ATAnimatedSlide extends StatelessWidget {
   Widget build(BuildContext context) {
     return AnimatedSlide(
       curve: curve ?? Curves.decelerate,
-      offset: condition ? startOffset : endOffset,
+      offset: condition ? endOffset : startOffset,
       duration: Duration(milliseconds: duration ?? 500),
       child: child,
     );

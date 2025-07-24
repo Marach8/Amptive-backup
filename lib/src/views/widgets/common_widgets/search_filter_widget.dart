@@ -19,7 +19,7 @@ class ATFilterWidget<B extends BlocBase<String>> extends StatelessWidget{
   Widget build(BuildContext context) {
     return BlocBuilder<B, String>(
       builder: (_, String state) {
-        final List<String> listOfStrings = title.trim().split('');
+        final Characters characters = title.trim().characters;
 
         return Text.rich(
           TextSpan(
@@ -28,11 +28,11 @@ class ATFilterWidget<B extends BlocBase<String>> extends StatelessWidget{
                 text: padLeft,
                 style: style,
               ),
-              ...listOfStrings.map(
-                (String stringOfText) {
-                  final bool shouldHighlightString = state.toLowerCase().contains(stringOfText.toLowerCase());
+              ...characters.map(
+                (String char) {
+                  final bool shouldHighlightString = state.toLowerCase().contains(char.toLowerCase());
                   return TextSpan(
-                    text: stringOfText,
+                    text: char,
                     style: shouldHighlightString 
                       ? style?.copyWith(color: ATColors.hex307FE2)
                       : style,
@@ -62,4 +62,14 @@ class ATSearchIcon extends StatelessWidget {
     padding: const EdgeInsets.fromLTRB(15, 0, 20, 0),
     child: Icon(CupertinoIcons.search, size: size),
   );
+}
+
+
+
+class SearchkeyBloc extends Cubit<String>{
+  SearchkeyBloc() : super('');
+
+  void updateSearchKey(String searchKey) => emit(searchKey);
+
+  void resetSearch() => emit('');
 }

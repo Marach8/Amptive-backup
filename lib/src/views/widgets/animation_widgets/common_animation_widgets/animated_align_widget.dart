@@ -21,7 +21,7 @@ class ATAnimatedAlign extends StatelessWidget {
   Widget build(BuildContext context) {
     return AnimatedAlign(
       curve: curve ?? Curves.decelerate,
-      alignment: condition ? startAlignment : endAlignment,
+      alignment: condition ? endAlignment : startAlignment,
       duration: Duration(milliseconds: duration ?? 1000),
       child: child,
     );

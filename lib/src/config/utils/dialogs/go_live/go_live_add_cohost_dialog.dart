@@ -22,7 +22,6 @@ import '../../../../services/create_show/create_show_service.dart';
 import '../../../../views/widgets/common_widgets/loading_indicator.dart';
 import '../../../../views/widgets/common_widgets/custom_rebuilder_widget.dart';
 import '../../../../views/widgets/common_widgets/elevated_button_widget.dart';
-import '../../../../features/go_live/presentation/widgets/add_co_host_dialog.dart';
 
 
 Future<bool?> showGoLiveHostAddCoHostDialog({
@@ -323,16 +322,17 @@ class AmptiveListOfCoHostsWidget extends StatelessWidget {
       children: availableCoHosts.map(
         (ObjectWithNotifier<Host> coHost) {
           //final index = availableCoHosts.indexOf(coHost);
-          return AmptiveCoHostWidget(
-            coHostDetail: coHost,
-            onTap: (ObjectWithNotifier<Host> host, bool isSelected) {
-              if (isSelected) {         
-                context.read<AmptiveGoLiveSelectCoHostBloc>().hostRemoveCohost(coHost);
-              } else {
-                context.read<AmptiveGoLiveSelectCoHostBloc>().hostAddCohost(coHost);
-              }
-            },
-          );
+          return Container();
+          // return CohostWithCheckIconWidget(
+          //   coHost: coHost,
+          //   onCohostTap: (bool isSelected) {
+          //     if (isSelected) {         
+          //       context.read<AmptiveGoLiveSelectCoHostBloc>().hostRemoveCohost(coHost);
+          //     } else {
+          //       context.read<AmptiveGoLiveSelectCoHostBloc>().hostAddCohost(coHost);
+          //     }
+          //   },
+          // );
       }
     ).toList());
   }

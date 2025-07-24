@@ -2,7 +2,7 @@ import 'package:amptive/src/config/utils/colors.dart';
 import 'package:amptive/src/config/utils/font_sizes.dart';
 import 'package:amptive/src/config/utils/other_strings.dart';
 import 'package:amptive/src/config/utils/helper_functions.dart';
-import 'package:amptive/src/views/widgets/animation_widgets/common_animation_widgets/animated_slide.dart';
+import 'package:amptive/src/shared/animated_slide.dart';
 import 'package:amptive/src/views/widgets/common_widgets/elevated_button_widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/loading_indicator.dart';
 import 'package:flutter/cupertino.dart';

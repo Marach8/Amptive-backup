@@ -9,6 +9,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../config/utils/colors.dart';
 import '../../../../config/utils/font_sizes.dart';
 import '../../../../config/utils/image_strings.dart';
+import '../../../../shared/hashtag_badge.dart';
 import '../../../../views/widgets/common_widgets/sliver_header_delegate.dart';
 import '../../../home/presentation/widgets/home_widgets_export.dart';
 import '../widgets/trending_society_hashtag_widget.dart';
@@ -59,22 +60,7 @@ class SocietyHastagScreen extends StatelessWidget {
                         padding: const EdgeInsets.symmetric(horizontal: 15),
                         child: Row(
                           children: <Widget>[
-                            ATContainer(
-                              alignment: Alignment.center,
-                              height: 40, width: 40,
-                              boxShape: BoxShape.circle,
-                              color: ATColors.white,
-                              child: ColorFiltered(
-                                colorFilter: ColorFilter.mode(
-                                  ATColors.black,
-                                  BlendMode.srcATop
-                                ),
-                                child: const ATImgLoader(
-                                  imgPath: ATImgStrings.HASH_ICON,
-                                  height: 25, width: 25,
-                                ),
-                              ),
-                            ),
+                            const ATHashtagBadge(),
                             const SizedBox(width: 10,),
                             Column(
                               crossAxisAlignment: CrossAxisAlignment.start,

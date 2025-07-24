@@ -391,16 +391,18 @@ class ATStrings{
   static const String CREATE_UR_EVENT = 'Create your event';
   static const String ADD_COMMUNITY = 'Add Community';
   static const String ADD_CO_HOST = 'Add Cohost';
+  static const String EDIT_COHOST = 'Edit cohosts';
   static const String ADD_HASHTAG = 'Add Hashtag';
   static const String ACCT_PRIVATE = 'Your account is now private';
   static const String USERS_CAN_SEE_UR_CALENDER = 'Users can see your calender';
-  static const String ADD_HASHTAG_DESC = 'You can add up to 4 hashtags, with each hashtag not more that 25 characaters long, without spaces or special characters';
+  static const String ADD_HASHTAG_DESC = 'You can add up to 5 hashtags, with each hashtag not more that 25 characaters long, without spaces or special characters';
   static const String SELECTED = 'Selected';
   static const String ADD_COMMUNITY_DESC = 'Communities will help your Shows and Events reach more listeners. Your audience can also use communites to find your Shows and Events easily. ';
   static const String ADD_COHOST_DESC = 'Added users must accept your invitation before they are added as your co-hosts.';
   static const String TOP_GIFTERS_DESC = 'Gifters are ranked base on the total amount they have contributed to the host during live sessions.';
   static const String TOP_GIFTERS = 'Top Gifters';
   static const String SEARCH_4_COHOSTS = 'Search for co-hosts';
+  static const String SEARCH_ND_ADD_COHOSTS_4_SHOW = 'Search and add co-hosts for your show';
   static const String SEARCH_4_USER = 'Search for user';
   static const String SEARCH_4_BANK = 'Search for bank';
   static const String SEARCH_4_FOLLOWERS = 'Search for followers';
@@ -416,6 +418,7 @@ class ATStrings{
   static const String SEARCH_UR_HASHTAGS = 'Try searching for hashtag(s) in the search bar';
   static const String SEARCH_UR_COHOSTS = 'Try searching for your co-host(s) in the search bar';
   static const String AUDIENCE_ACCESS = 'Audience Access';
+  static const String SELECT_WHO_CAN_ACCESS_SHOW = 'Choose who can access this show';
   static const String CAPACITY = 'Capacity';
   static const String ALL_FOLLOWERS = 'All Followers';
   static const String ALL_SUBSCRIBERS = 'All Subscribers';
@@ -448,7 +451,7 @@ class ATStrings{
   static const String DISALLOW = "Don't Allow";
   static const String AUDIENCE_CAN_RAISE_HAND = 'Audience can raise their hands during your live show.';
   static const String AUDIENCE_CANNOT_RAISE_HAND = 'Audience cannot raise their hands during your live show.';
-  static const String SHOW_AUDIENCE_ACCESS_DESC = "You will be prompted to setup subscription plan if you haven't set it up yet";
+  static const String PROMPTED_2_SETUP_SUB_PLAN = "You will be prompted to setup subscription plan if you haven't set it up yet";
   static const String EVENT_AUDIENCE_ACCESS_DESC = 'You will be prompted to setup your payment fee for your event';
   static const String AMOUNT_2_CHARGE_4_EVENT = 'Kindly enter the amount you would want to charge users for your event';
   static const String PAID = 'Paid';

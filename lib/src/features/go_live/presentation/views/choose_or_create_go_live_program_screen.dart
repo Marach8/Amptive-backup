@@ -18,7 +18,6 @@ import 'package:amptive/src/features/home/presentation/widgets/home_widgets_expo
 import 'package:amptive/src/views/widgets/common_widgets/sliver_header_delegate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../widgets/add_co_host_dialog.dart';
 
 enum GoLiveProgramType {event, show}
 
@@ -201,7 +200,7 @@ class ChooseOrCreateGoLiveProgramScreen extends StatelessWidget {
                   fgColor: ATColors.hex0D0D0D,
                   btnTitle: ATStrings.NEXT,
                   onPressed: selectedImgPath == null ? null : () async{
-                    await showAddCoHostDialog(context);
+                    //await showAddCoHostDialog(context);
                     //await showAddHashtagDialog(context);
                     //await showHandRaisingDialog(context);
                     //showAddCommunitiesDialog(context);

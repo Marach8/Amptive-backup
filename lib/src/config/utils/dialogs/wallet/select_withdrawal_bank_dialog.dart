@@ -8,7 +8,6 @@ import 'package:amptive/src/views/widgets/common_widgets/elevated_button_widget.
 import 'package:amptive/src/views/widgets/common_widgets/loading_indicator.dart';
 import 'package:amptive/src/views/widgets/common_widgets/radio_button.dart';
 import 'package:amptive/src/views/widgets/common_widgets/search_filter_widget.dart';
-import 'package:amptive/src/views/widgets/common_widgets/search_key_bloc.dart';
 import 'package:amptive/src/views/widgets/common_widgets/shimmer.dart';
 import 'package:amptive/src/views/widgets/common_widgets/textformfield_widget.dart';
 import 'package:flutter/cupertino.dart';

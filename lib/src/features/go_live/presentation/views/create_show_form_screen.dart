@@ -1,25 +1,15 @@
 import 'dart:async';
-import 'dart:io';
 import 'dart:typed_data';
 import 'dart:ui';
 
+import 'package:amptive/src/features/go_live/presentation/widgets/audience_access_4_shows_modal.dart';
 import 'package:amptive/src/features/go_live/go_live_export.dart';
 import 'package:amptive/src/models/community.dart';
 import 'package:amptive/src/models/hashtag.dart';
 import 'package:amptive/src/services/create_show/create_show_service.dart';
 import 'package:amptive/src/config/utils/colors.dart';
-import 'package:amptive/src/config/utils/constants.dart';
-import 'package:amptive/src/config/utils/font_sizes.dart';
 import 'package:amptive/src/config/utils/image_strings.dart';
-import 'package:amptive/src/config/routing/route_strings.dart';
-import 'package:amptive/src/config/utils/dialogs/select_audience_access_for_events_dialog.dart';
-import 'package:amptive/src/config/utils/dialogs/select_audience_access_for_shows_dialog.dart';
-import 'package:amptive/src/config/utils/dialogs/select_capacity_for_events_dialog.dart';
 import 'package:amptive/src/config/utils/dialogs/select_hand_raising_dialog.dart';
-import 'package:amptive/src/config/utils/dialogs/select_whispers_dialog.dart';
-import 'package:amptive/src/config/utils/modals/select_date_modal.dart';
-import 'package:amptive/src/features/go_live/presentation/widgets/enter_show_description_widget.dart';
-import 'package:amptive/src/views/widgets/animation_widgets/common_animation_widgets/animated_slide.dart';
 import 'package:amptive/src/views/widgets/animation_widgets/common_animation_widgets/animated_switcher.dart';
 import 'package:amptive/src/views/widgets/common_widgets/annotated_region__widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/textformfield_widget.dart';
@@ -28,41 +18,24 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get_it/get_it.dart';
-import 'package:go_router/go_router.dart';
-import 'package:iconsax/iconsax.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:nested/nested.dart';
 
-import 'dart:ui';
 
-import 'package:amptive/src/config/utils/image_strings.dart';
 import 'package:amptive/src/config/utils/other_strings.dart';
-import 'package:amptive/src/config/routing/route_strings.dart';
-import 'package:amptive/src/config/utils/extensions/context_extensions.dart';
-import 'package:amptive/src/views/widgets/common_widgets/annotated_region__widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/back_button.dart';
 import 'package:amptive/src/views/widgets/common_widgets/custom_container_widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/elevated_button_widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/image_loader_widget.dart';
-import 'package:amptive/src/features/go_live/presentation/widgets/existing_go_live_program_widget.dart';
-import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 import 'package:nested/nested.dart' show SingleChildWidget;
-import '../../../../config/utils/colors.dart';
 import 'package:amptive/src/features/home/presentation/widgets/home_widgets_export.dart';
 import 'package:amptive/src/views/widgets/common_widgets/sliver_header_delegate.dart';
 import '../../../../models/host.dart';
 import '../../../../config/utils/font_weights.dart';
 import '../../../../views/widgets/common_widgets/rich_text.dart';
-import '../../../home/presentation/widgets/home_widgets_export.dart';
-import '../widgets/add_co_host_dialog.dart';
 import '../../../../config/utils/dialogs/add_communities_dialog.dart';
-import '../../../../config/utils/dialogs/add_hastags_dialog.dart';
-import '../../../../views/widgets/common_widgets/custom_container_widget.dart';
+import '../widgets/add_hastags_modal.dart';
 import '../../../../views/widgets/common_widgets/custom_rebuilder_widget.dart';
-import '../../../../views/widgets/common_widgets/elevated_button_widget.dart';
 import '../../../../views/widgets/other_widgets/main_application_widgets/widgets_in_create_show_event/create_show_text_form_field.dart';
-import '../widgets/selected_community.dart';
 
 //     ShowTypeVisibilityWidget(
           //       showType: widget.showType,
@@ -91,6 +64,7 @@ class _CreateShowFormScreenState extends State<CreateShowFormScreen> {
   final StreamController<String> _titleStreamCntrl = StreamController<String>();
   final StreamController<String> _descStreamCntrl = StreamController<String>();
   String programDesc = ATStrings.TELL_LISTENERS_ABOUT_SHOW;
+  String audienceAccess = ATStrings.SELECT_WHO_CAN_ACCESS_SHOW;
   Community? selectedCommunity;
   CreateShowService service = GetIt.I<CreateShowService>();
 
@@ -118,7 +92,7 @@ class _CreateShowFormScreenState extends State<CreateShowFormScreen> {
     return MultiBlocProvider(
       providers: <SingleChildWidget>[
         BlocProvider<BlurredHeaderBloc>(create: (_) => BlurredHeaderBloc(),),
-        BlocProvider<_PrivateBloc>(create: (_) => _PrivateBloc())
+        BlocProvider<_BgImageBloc>(create: (_) => _BgImageBloc())
       ],
       child: ATAnnotatedRegion(
         statusBarColor: ATColors.trsprnt,
@@ -128,14 +102,14 @@ class _CreateShowFormScreenState extends State<CreateShowFormScreen> {
               return Stack(
                 children: <Widget>[
                   Positioned.fill(
-                    child: BlocBuilder<_PrivateBloc, String>(
-                      builder: (_, String selectedImgString) {
+                    child: BlocBuilder<_BgImageBloc, (String, Uint8List?)>(
+                      builder: (_, (String, Uint8List?) state) {
                         return ImageFiltered(
-                          imageFilter: ImageFilter.blur(sigmaX: 250, sigmaY: 250),
-                          child: ATImgLoader(
+                          imageFilter: ImageFilter.blur(sigmaX: 200, sigmaY: 200),
+                          child: state.$2 == null ? ATImgLoader(
                             boxFit: BoxFit.fill,
-                            imgPath: selectedImgString
-                          ),
+                            imgPath: state.$1,
+                          ) : Image.memory(state.$2!, fit: BoxFit.fill)
                         );
                       }
                     ),
@@ -175,303 +149,233 @@ class _CreateShowFormScreenState extends State<CreateShowFormScreen> {
                         ],
                         
                         body: SingleChildScrollView(
-                          padding: const EdgeInsets.fromLTRB(15, 10, 15, 100),
+                          padding: const EdgeInsets.fromLTRB(0, 10, 0, 100),
                           physics: const BouncingScrollPhysics(),
                           child: Column(
                             children: <Widget>[
-                              SelectProgramCoverArt(
-                                onImageSelected: (Uint8List imageBytes){}
-                              ),
-                              const SizedBox(height: 30,),
-
-                              StreamBuilder<String>(
-                                stream: _titleStreamCntrl.stream,
-                                builder: (_, AsyncSnapshot<String> snapshot) {
-                                  final int remaining = 140 - (snapshot.data?.length ?? 0);
-                                  return RowWith2Texts(
-                                    text1: ATStrings.TITLE,
-                                    text2: '$remaining remaining',
-                                  );
-                                }
-                              ),
-                              const SizedBox(height: 10),
-                              ATTextFormField(
-                                controller: _titleCntrl,
-                                hintText: ATStrings.TITLE_OF_UR_SHOW,
-                                prefixIcon: const SizedBox(width: 12,),
-                                hintStyle: Theme.of(context).textTheme.bodySmall?.copyWith(
-                                  color: ATColors.white.withValues(alpha: 0.4),
-                                ),
-                                disableBlueBorder: true,
-                                enabledBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(14),
-                                  borderSide: BorderSide(color: ATColors.trsprnt)
+                              Padding(
+                                padding: const EdgeInsets.fromLTRB(15, 0, 15, 30),
+                                child: SelectProgramCoverArt(
+                                  onImageSelected: blocContext.read<_BgImageBloc>().setBgImage,
                                 ),
                               ),
 
-                              const SizedBox(height: 30),                                                    
-                              StreamBuilder<String>(
-                                stream: _descStreamCntrl.stream,
-                                builder: (_, AsyncSnapshot<String> snapshot) {
-                                  final int remaining = 4000 - (snapshot.data?.length ?? 0);
-                                  return RowWith2Texts(
-                                    text1: ATStrings.DESCRIPTION,
-                                    text2: '$remaining remaining',
-                                  );
-                                }
+                              Padding(
+                                padding: const EdgeInsets.fromLTRB(15, 0, 15, 10),
+                                child: StreamBuilder<String>(
+                                  stream: _titleStreamCntrl.stream,
+                                  builder: (_, AsyncSnapshot<String> snapshot) {
+                                    final int remaining = 140 - (snapshot.data?.length ?? 0);
+                                    return RowWith2Texts(
+                                      text1: ATStrings.TITLE,
+                                      text2: '$remaining remaining',
+                                    );
+                                  }
+                                ),
                               ),
-                              const SizedBox(height: 10),
-                              StatefulBuilder(
-                                builder: (_, void Function(void Function()) setter) {
-                                  return CreateShowItem(
-                                    description: programDesc,
-                                    onTap: ()async{
-                                      final String? description = await showEnterDescriptionModal(context);
-                                      if(description != null){
-                                        setter(
-                                          (){
-                                            programDesc = description;
-                                            _descStreamCntrl.add(description);
-                                          }
-                                        );
-                                      }
-                                    },
-                                  );
-                                }
+                              Padding(
+                                padding: const EdgeInsets.fromLTRB(15, 0, 15, 30),
+                                child: ATTextFormField(
+                                  controller: _titleCntrl,
+                                  hintText: ATStrings.TITLE_OF_UR_SHOW,
+                                  prefixIcon: const SizedBox(width: 12,),
+                                  hintStyle: Theme.of(context).textTheme.bodySmall?.copyWith(
+                                    color: ATColors.white.withValues(alpha: 0.4),
+                                  ),
+                                  disableBlueBorder: true,
+                                  enabledBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(14),
+                                    borderSide: BorderSide(color: ATColors.trsprnt)
+                                  ),
+                                ),
                               ),
-                              
-                              const SizedBox(height: 30),
 
-                              const RowWith2Texts(text1: ATStrings.COMMUNITY),
-                              const SizedBox(height: 10),
-                              StatefulBuilder(
-                                builder: (_, void Function(void Function()) setter) {
-                                  return ATScalingSwitcher(
-                                    duration: 300,
-                                    child: selectedCommunity == null ? CreateShowItem(
-                                      description: ATStrings.SELECT_COMMUNITY_4_UR_SHOW,
+
+                              Padding(
+                                padding: const EdgeInsets.fromLTRB(15, 0, 15, 10),
+                                child: StreamBuilder<String>(
+                                  stream: _descStreamCntrl.stream,
+                                  builder: (_, AsyncSnapshot<String> snapshot) {
+                                    final int remaining = 4000 - (snapshot.data?.length ?? 0);
+                                    return RowWith2Texts(
+                                      text1: ATStrings.DESCRIPTION,
+                                      text2: '$remaining remaining',
+                                    );
+                                  }
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.fromLTRB(15, 0, 15, 30),
+                                child: StatefulBuilder(
+                                  builder: (_, void Function(void Function()) setter) {
+                                    return CreateShowItem(
+                                      description: programDesc,
                                       onTap: ()async{
-                                        final Community? selectedCom = await showCommunitiesDialog(context);
-                                        if(selectedCom != null){
-                                          setter(() => selectedCommunity = selectedCom);
+                                        final String? description = await showEnterDescriptionModal(context);
+                                        if(description != null){
+                                          setter(
+                                            (){
+                                              programDesc = description;
+                                              _descStreamCntrl.add(description);
+                                            }
+                                          );
                                         }
                                       },
-                                    ) : SelectedCommunityWidget(
-                                      selectedCommunity: selectedCommunity!,
-                                      onClose: () => setter(() => selectedCommunity = null),
-                                      onView: (){}
-                                    )
-                                  );
-                                }
+                                    );
+                                  }
+                                ),
                               ),
-                              const SizedBox(height: 10,),
-                              ATRichText(
-                                maxLines: 4,
-                                items: <String, TextStyle>{
-                                  ATStrings.ADD_COMMUNITY_DESC: Theme.of(context).textTheme.labelSmall!.copyWith(
+
+
+                              const Padding(
+                                padding: EdgeInsets.fromLTRB(15, 0, 15, 10),
+                                child: RowWith2Texts(text1: ATStrings.COMMUNITY),
+                              ),
+
+                              Padding(
+                                padding: const EdgeInsets.fromLTRB(15, 0, 15, 10),
+                                child: StatefulBuilder(
+                                  builder: (_, void Function(void Function()) setter) {
+                                    return ATScalingSwitcher(
+                                      duration: 300,
+                                      child: selectedCommunity == null ? CreateShowItem(
+                                        description: ATStrings.SELECT_COMMUNITY_4_UR_SHOW,
+                                        onTap: ()async{
+                                          final Community? selectedCom = await showCommunitiesDialog(context);
+                                          if(selectedCom != null){
+                                            setter(() => selectedCommunity = selectedCom);
+                                          }
+                                        },
+                                      ) : SelectedCommunityWidget(
+                                        selectedCommunity: selectedCommunity!,
+                                        onClose: () => setter(() => selectedCommunity = null),
+                                        onView: (){}
+                                      )
+                                    );
+                                  }
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.fromLTRB(15, 0, 15, 30),
+                                child: ATRichText(
+                                  maxLines: 4,
+                                  items: <String, TextStyle>{
+                                    ATStrings.ADD_COMMUNITY_DESC: Theme.of(context).textTheme.labelSmall!.copyWith(
+                                      color: ATColors.hexC2C2C2.withValues(alpha: 0.76)
+                                    ),
+                                    ATStrings.LEARN_MORE: Theme.of(context).textTheme.labelSmall!
+                                  },
+                                  textOnTap: (String text){
+                                    if(text == ATStrings.LEARN_MORE){}
+                                  },
+                                ),
+                              ),
+
+
+                              const Padding(
+                                padding: EdgeInsets.fromLTRB(15, 0, 15, 10),
+                                child: RowWith2Texts(text1: ATStrings.ADD_CO_HOST, text2: '5 max',),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.fromLTRB(15, 0, 15, 10),
+                                child: BlocSelector<CohostServiceBloc, (List<ATCohost<bool>>, List<ATCohost<bool>>), List<ATCohost<bool>>>(
+                                  selector: ((List<ATCohost<bool>>, List<ATCohost<bool>>) state) => state.$2,
+                                  builder: (_, List<ATCohost<bool>> selectedCoHosts) { 
+                                    final bool coHostExists = selectedCoHosts.any(
+                                      (ATCohost<bool> cohost) => cohost.profilePicture != null
+                                    );
+                                
+                                    return ATScalingSwitcher(
+                                      duration: 300,
+                                      child: coHostExists ? SelectedCoHostsWidget(
+                                          onEdit: () => showAvailableCoHostsModal(context),
+                                          selectedCohosts: selectedCoHosts,
+                                        ) : CreateShowItem(
+                                          leading: const ATImgLoader(
+                                            height: 20, width: 20,
+                                            imgPath: ATImgStrings.OUTLINED_SEARCH,
+                                          ),
+                                          trailing: Flexible(
+                                            child: Text(
+                                              ATStrings.SEARCH_ND_ADD_COHOSTS_4_SHOW,
+                                              style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                                                color: ATColors.white.withValues(alpha: 0.4),
+                                              ),
+                                            ),
+                                          ),
+                                          onTap: () => showAvailableCoHostsModal(context),
+                                        ),
+                                    );
+                                  }
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.fromLTRB(15, 0, 15, 30),
+                                child: Text(
+                                  ATStrings.ADD_COHOST_DESC, maxLines: 5,
+                                  style: Theme.of(context).textTheme.labelSmall!.copyWith(
                                     color: ATColors.hexC2C2C2.withValues(alpha: 0.76)
                                   ),
-                                  ATStrings.LEARN_MORE: Theme.of(context).textTheme.labelSmall!
-                                },
-                                textOnTap: (String text){
-                                  if(text == ATStrings.LEARN_MORE){
+                                ),
+                              ),
+                              
+                                                    
+                              const Padding(
+                                padding: EdgeInsets.fromLTRB(15, 0, 15, 10),
+                                child: RowWith2Texts(text1: ATStrings.HASHTAGS),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.fromLTRB(15, 0, 15, 10),
+                                child: CreateShowItem(
+                                  description: '${ATStrings.ADD_HASHTAG}s',
+                                  onTap: () => showTrendingHashtagsModal(context),
+                                ),
+                              ),
 
-                                  }
-                                },
-                              ),
-                              const SizedBox(height: 30),
-                                                    
-                              // add widget here
-                                                    
-                              const CreateShowTextFieldTitle(
-                                title: "Add Co-hosts",
-                                otherInfo: "5 max",
-                              ),
-                              const SizedBox(height: 12),
-                              AmptiveRebuilderWidget(
-                                notifier: service.coHostSelected,
-                                builder: (BuildContext ctx, bool selected, _) {
-                                  return selected
-                                      ? Container(
-                                    height: 98.h,
-                                    padding: EdgeInsets.symmetric(
-                                        vertical: 13.h, horizontal: 16.w),
-                                    decoration: BoxDecoration(
-                                        color: ATColors.white
-                                            .withOpacity(0.1),
-                                        borderRadius: BorderRadius.circular(14.r)),
-                                    child: Column(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                      children: <Widget>[
-                                        Row(
-                                          children: <Widget>[
-                                            // Expanded(
-                                            //     child: OverlappingHosts(
-                                            //       items: selectedHosts,
-                                            //     )),
-                                            ElevatedButton(
-                                              onPressed: () async {
-                                                //await _editCoHosts(context);
-                                              },
-                                              style: ElevatedButton.styleFrom(
-                                                backgroundColor: ATColors
-                                                    .white
-                                                    .withOpacity(0.1),
-                                                shape: RoundedRectangleBorder(
-                                                  borderRadius:
-                                                  BorderRadius.circular(5.r),
-                                                ),
-                                              ),
-                                              child: Text("Edit co-host",
-                                                  style: Theme.of(context)
-                                                      .textTheme
-                                                      .titleSmall
-                                                      ?.copyWith(
-                                                      color: ATColors
-                                                          .white
-                                                          .withOpacity(0.7),
-                                                      fontWeight:
-                                                      ATFontWeights
-                                                          .w500)),
-                                            )
-                                          ],
-                                        ),
-                                        Text(
-                                          "ABBYWAMBACH will be notified",
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .titleSmall
-                                              ?.copyWith(
-                                              fontSize: ATFontSizes.size13,
-                                              color: ATColors.white
-                                                  .withOpacity(0.6),
-                                              fontWeight:
-                                              ATFontWeights.w500),
-                                        )
-                                      ],
-                                    ),
-                                  )
-                                      : CreateShowTextFormField(
-                                    controller: TextEditingController(),
-                                    hintText:
-                                    "Search and add co-hosts for your show",
-                                    readOnly: true,
-                                    onTap: () async {
-                                      //await _editCoHosts(context);
-                                    },
-                                    prefixIcon: Icon(
-                                      Icons.search,
-                                      size: 20.w,
-                                      color:
-                                      ATColors.white.withOpacity(0.4),
-                                    ),
-                                  );
-                                },
-                              ),
-                              Container(
-                                margin: EdgeInsets.only(top: 8.h),
+                              const SelectedHashtagsRowInModal(margin: EdgeInsets.only(bottom: 10)),
+
+                              Padding(
+                                padding: const EdgeInsets.fromLTRB(15, 0, 15, 30),
                                 child: Text(
-                                  "Added users must accept your invitation before they are added as your co-hosts.",
-                                  overflow: TextOverflow.visible,
-                                  style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                                    fontWeight: ATFontWeights.w500,
-                                    color: ATColors.white.withOpacity(0.4),
+                                  ATStrings.ADD_HASHTAG_DESC, maxLines: 5,
+                                  style: Theme.of(context).textTheme.labelSmall?.copyWith(
+                                    color: ATColors.hexC2C2C2.withValues(alpha: 0.76)
                                   ),
                                 ),
                               ),
-                              SizedBox(height: 30.h),
-                                                    
-                              const CreateShowTextFieldTitle(
-                                title: "Hashtags",
+                              
+                              
+                              const Padding(
+                                padding: EdgeInsets.fromLTRB(15, 0, 15, 10),
+                                child: RowWith2Texts(text1: ATStrings.AUDIENCE_ACCESS),
                               ),
-                              SizedBox(height: 11.5.h),
-                              CreateShowTextFormField(
-                                controller: TextEditingController(),
-                                hintText: "Enter your own hashtag",
-                                readOnly: true,
-                                onTap: () async {
-                                  // service.hashtags.value =
-                                  await showAddHashtagDialog(context);
-                                  service.hashTagSelected.value =
-                                      service.selectedHashtagLength.value > 0;
-                                },
-                                suffixIcon: Icon(
-                                  Icons.arrow_forward_ios,
-                                  size: 20.w,
-                                  color: ATColors.white.withOpacity(0.4),
-                                ),
-                              ),
-                              AmptiveRebuilderWidget(
-                                  notifier: service.selectedHashtagLength,
-                                  builder: (BuildContext ctx, int value, _) {
-                                    return SizedBox(height: value > 0 ? 8.h : 0);
-                                  }),
-                              AmptiveRebuilderWidget(
-                                notifier: service.selectedHashtagLength,
-                                builder: (BuildContext ctx, int selected, _) {
-                                  return selected > 0
-                                      ? AmptiveRebuilderWidget(
-                                    notifier: service.selectedHashtags,
-                                    builder: (BuildContext ctx, Set<ObjectWithNotifier<Hashtag>> hashtags, _) {
-                                      return SelectedHashTags(
-                                        hashtags: hashtags,
-                                        onRemove: (ObjectWithNotifier<Hashtag> hashtag) {
-                                          service.removeSelectedHashtags(hashtag);
+                              Padding(
+                                padding: const EdgeInsets.fromLTRB(15, 0, 15, 10),
+                                child: StatefulBuilder(
+                                  builder: (_, void Function(void Function()) setter) {
+                                    return ATScalingSwitcher(
+                                      duration: 300,
+                                      child: CreateShowItem(
+                                        description: audienceAccess,
+                                        onTap: ()async{
+                                          //showSelectAudienceAccessForEventsDialog(context);
+                                          //final selectedCom = await chooseAudienceAccess4ShowModal(context);
+                                          showAvailable(context);
                                         },
-                                      );
-                                    },
-                                  )
-                                      : const SizedBox();
-                                },
+                                      )
+                                    );
+                                  }
+                                ),
                               ),
-                              Container(
-                                margin: EdgeInsets.only(top: 8.h),
+                              Padding(
+                                padding: const EdgeInsets.fromLTRB(15, 0, 15, 30),
                                 child: Text(
-                                  "You can add up to 5 hashtags, with each hashtag being up to 25 characters long and free of spaces or special characters.",
-                                  overflow: TextOverflow.visible,
-                                  style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                                    fontWeight: ATFontWeights.w500,
-                                    color: ATColors.white.withOpacity(0.4),
+                                  ATStrings.PROMPTED_2_SETUP_SUB_PLAN, maxLines: 5,
+                                  style: Theme.of(context).textTheme.labelSmall!.copyWith(
+                                    color: ATColors.hexC2C2C2.withValues(alpha: 0.76)
                                   ),
                                 ),
                               ),
-                              SizedBox(height: 30.h),
-                                                    
-                              const CreateShowTextFieldTitle(
-                                title: "Audience Access",
-                              ),
-                              SizedBox(height: 11.5.h),
-                              CreateShowTextFormField(
-                                readOnly: true,
-                                controller: service.audienceAccessController,
-                                hintText: "Select who can access this show",
-                                suffixIcon: Icon(
-                                  Icons.arrow_forward_ios,
-                                  size: 20.w,
-                                  color: ATColors.white.withOpacity(0.4),
-                                ),
-                                onTap: () async {
-                                  // if (widget.showType == ShowType.show) {
-                                  //   await showSelectAudienceAccessForShowsDialog(context);
-                                  // } else {
-                                  //   await showSelectAudienceAccessForEventsDialog(
-                                  //       context);
-                                  // }
-                                },
-                              ),
-                              Container(
-                                margin: EdgeInsets.only(top: 8.h),
-                                width: 360.w,
-                                child: Text(
-                                  "You will be prompted to setup your subscription plan, if you haven't set it up yet.  ",
-                                  overflow: TextOverflow.visible,
-                                  style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                                    fontWeight: ATFontWeights.w500,
-                                    color: ATColors.white.withOpacity(0.4),
-                                  ),
-                                ),
-                              ),
-                              SizedBox(height: 30.h),
                                                     
                               Divider(
                                 height: 2.h,
@@ -669,14 +573,14 @@ class _CreateShowFormScreenState extends State<CreateShowFormScreen> {
               ]
             ),
             padding: const EdgeInsets.fromLTRB(15, 10, 15, 10),
-            child: BlocBuilder<_PrivateBloc, String?>(
-              builder: (_, String? selectedImgPath) {
+            child: BlocBuilder<_BgImageBloc, (String, Uint8List?)>(
+              builder: (_, (String, Uint8List?) selectedImgPath) {
                 return ATPlainElevatedBtn(
                   bgColor: ATColors.white,
                   fgColor: ATColors.hex0D0D0D,
                   btnTitle: ATStrings.NEXT,
                   onPressed: selectedImgPath == null ? null : () async{
-                    await showAddCoHostDialog(context);
+                    //await showAddCoHostDialog(context);
                     //await showAddHashtagDialog(context);
                     //await showHandRaisingDialog(context);
                     //showAddCommunitiesDialog(context);
@@ -706,13 +610,14 @@ class _CreateShowFormScreenState extends State<CreateShowFormScreen> {
 class CreateShowItem extends StatelessWidget {
   const CreateShowItem({
     super.key,
-    required this.description,
+    this.description = '',
     required this.onTap,
     this.trailing,
+    this.leading
   });
 
   final VoidCallback onTap;
-  final Widget? trailing;
+  final Widget? trailing, leading;
   final String description;
 
   @override
@@ -724,7 +629,7 @@ class CreateShowItem extends StatelessWidget {
       color: ATColors.white.withValues(alpha: 0.1),
       child: Row(
         children: <Widget>[
-          Expanded(
+          leading ?? Expanded(
             child: Text(
               description,
               style: Theme.of(context).textTheme.bodySmall?.copyWith(
@@ -732,7 +637,7 @@ class CreateShowItem extends StatelessWidget {
               ),
             ),
           ),
-          const SizedBox(width: 20,),
+          const SizedBox(width: 10,),
     
           trailing ?? Icon(
             Icons.arrow_forward_ios,
@@ -746,9 +651,9 @@ class CreateShowItem extends StatelessWidget {
 }
 
 
-class _PrivateBloc extends Cubit<String>{
-  _PrivateBloc(): super(ATImgStrings.CREATE_SHOW_PLACEHOLDER);
+class _BgImageBloc extends Cubit<(String, Uint8List?)>{
+  _BgImageBloc(): super((ATImgStrings.CREATE_SHOW_PLACEHOLDER, null));
 
-  void setBgImage(String image) => emit(image);
+  void setBgImage(Uint8List imageBytes) => emit((state.$1, imageBytes));
 
 }

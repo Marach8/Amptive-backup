@@ -1,9 +1,7 @@
 import 'package:amptive/src/config/config_export.dart';
-import 'package:amptive/src/views/widgets/common_widgets/back_button.dart';
 import 'package:amptive/src/views/widgets/common_widgets/custom_container_widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/image_loader_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../../models/community.dart';
 
@@ -49,7 +47,7 @@ class SelectedCommunityWidget extends StatelessWidget {
                 ATContainer(
                   onTap: onView, radius: 5,
                   color: ATColors.white.withValues(alpha: 0.1),
-                  padding: const EdgeInsets.fromLTRB(10, 5, 10, 5),
+                  padding: const EdgeInsets.fromLTRB(10, 8, 10, 8),
                   child: Text(
                     ATStrings.VIEW_COMMUNITY,
                     style: Theme.of(context).textTheme.labelSmall?.copyWith(

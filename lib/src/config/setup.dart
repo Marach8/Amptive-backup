@@ -5,6 +5,8 @@ import 'package:amptive/src/bloc/main_app/profile/profile_menu/calender/calender
 import 'package:amptive/src/bloc/main_app/profile/profile_menu/calender/calender_views_bloc.dart';
 import 'package:amptive/src/bloc/main_app/profile/profile_menu/calender/day_view_bloc.dart';
 import 'package:amptive/src/bloc/preference/bloc.dart';
+import 'package:amptive/src/features/go_live/bloc/cohost_service_bloc.dart';
+import 'package:amptive/src/features/go_live/go_live_export.dart';
 import 'package:amptive/src/services/auth/auth_field_service.dart';
 import 'package:amptive/src/services/auth/otp_service.dart';
 import 'package:amptive/src/services/authentication_service.dart';
@@ -74,5 +76,7 @@ List<SingleChildWidget> providers() {
     BlocProvider(create: (_) => SubPlanSetupBloc()),
     BlocProvider(create: (_) => CohostFeeSetupBloc()),
     BlocProvider(create: (_) => AccountTypeBloc()),
+    BlocProvider(create: (_) => CohostServiceBloc()),
+    BlocProvider(create: (_) => HashtagServiceBloc()),
   ];
 }

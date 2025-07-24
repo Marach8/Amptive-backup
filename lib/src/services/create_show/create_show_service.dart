@@ -1,4 +1,4 @@
-import 'dart:math';
+import 'dart:math' hide log;
 import 'dart:typed_data';
 
 import 'package:amptive/src/models/hashtag.dart';
@@ -260,6 +260,7 @@ class CreateShowService {
   }
 }
 
+
 List<ObjectWithNotifier<Host>> getHostList() {
   List<ObjectWithNotifier<Host>> hostsList = <ObjectWithNotifier<Host>>[];
 
@@ -279,23 +280,84 @@ List<ObjectWithNotifier<Host>> getHostList() {
     ATImgStrings.JOE_POMP_SHOW: <String>['Man Drone', 'ikennegodadi'],
   };
 
-  coHostsData.forEach((String pics, List<String> details) {
-    if (details.length >= 2) {
-      String name = details[0];
-      String username = details[1];
-      Host host = Host(
-          id: 0,
-          name: name,
-          username: username,
-          email: '',
-          profilePicture: pics);
+  for (int i = 0; i < coHostsData.entries.length; i++){
+    final MapEntry<String, List<String>> item = coHostsData.entries.elementAt(i);
+    String name = item.value[0];
+    String username = item.value[1];
+    Host host = Host(
+      id: i, name: name,
+      username: username,
+      email: '',
+      profilePicture: item.key
+    );
 
-      hostsList.add(ObjectWithNotifier<Host>(obj: host));
-    }
-  });
+    hostsList.add(ObjectWithNotifier<Host>(obj: host));
+  }
 
   return hostsList;
 }
+
+
+List<ATCohost<bool>> getCoHostList() {
+  List<ATCohost<bool>> coHostsList = <ATCohost<bool>>[];
+
+  final Map<String, List<String>> coHostsData = <String, List<String>>{
+    ATImgStrings.jpeg1: <String>['Emmanuel Ajah', 'nnanna😍💕'],
+    ATImgStrings.jpeg2: <String>['Tochukwu Iwuzed', 'tobaby'],
+    ATImgStrings.jpeg3: <String>['Ekene Okoro', 'kendo boss🦋'],
+    ATImgStrings.discoverPic1: <String>['Rita Waltson', 'rita4life🐎'],
+    ATImgStrings.OFFICE_LADIES: <String>['Lee Parker', 'therealguy'],
+    ATImgStrings.MAN_PHOTO: <String>['Daniel Adesua', 'myownbrother'],
+    ATImgStrings.COMMUNITY_CARD: <String>['Erica Nwosu', 'ricababygirl'],
+    ATImgStrings.CRIMINAL: <String>['Peter Nwokeji', 'sirpee'],
+    ATImgStrings.CREATE_SHOW_PLACEHOLDER: <String>[
+      'Arlan Walker',
+      'walkerboss'
+    ],
+    ATImgStrings.JOE_POMP_SHOW: <String>['Man Drone', 'ikennegodadi'],
+  };
+
+  for (int i = 0; i < coHostsData.entries.length; i++){
+    final MapEntry<String, List<String>> item = coHostsData.entries.elementAt(i);
+    String name = item.value[0];
+    String username = item.value[1];
+    ATCohost<bool> coHost = ATCohost<bool>(
+      id: i, name: name,
+      username: username,
+      email: '',
+      profilePicture: item.key,
+      intialNotifierValue: false,
+    );
+
+    coHostsList.add(coHost);
+  }
+
+  return coHostsList;
+}
+
+List<ATHashtag<bool>> getHashTagsList(){
+  List<ATHashtag<bool>> hashTagsList = <ATHashtag<bool>>[];
+
+  final List<String> stringTags = <String>[
+    'wecandohardthings', 'society', 'trumpisdead',
+    'documentary', 'amptiveliveshow', 'heavenisgood',
+    'theworldsfirstjet', 'everythingyouwant', 'buggati',
+    'thingsfallapart'
+  ];
+
+  for (int i = 0; i < stringTags.length; i++){
+    final String stringTag = stringTags.elementAt(i);
+    final ATHashtag<bool> hashtag = ATHashtag<bool>(
+      title: stringTag,
+      id: i,
+      intialNotifierValue: false,
+    );
+
+    hashTagsList.add(hashtag);
+  }
+  return hashTagsList;
+}
+
 
 List<ObjectWithNotifier<Hashtag>> getHashTags() {
   List<ObjectWithNotifier<Hashtag>> hashTagList = <ObjectWithNotifier<Hashtag>>[];
