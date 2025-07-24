@@ -39,7 +39,15 @@ Future<void> showAvailableCoHostsModal(BuildContext context) async {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: <Widget>[
-                            const SizedBox(width: 100,),
+                            Opacity(
+                              opacity: 0.0,
+                              child: Text(
+                                '3 selected',
+                                style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                                  color: ATColors.hexC2C2C2
+                                )
+                              ),
+                            ),
                             Text(
                               ATStrings.ADD_CO_HOST,
                               style: Theme.of(context).textTheme.bodyLarge
@@ -47,11 +55,11 @@ Future<void> showAvailableCoHostsModal(BuildContext context) async {
                             BlocSelector<CohostServiceBloc, (List<ATCohost<bool>>, List<ATCohost<bool>>), List<ATCohost<bool>>>(
                               selector: ((List<ATCohost<bool>>, List<ATCohost<bool>>) state) => state.$2,
                               builder: (_, List<ATCohost<bool>> selectedCoHosts) {
-                                final Iterable<ATCohost<bool>> emptyCohosts = selectedCoHosts.where(
-                                  (ATCohost<bool> coHost) => coHost.profilePicture == null
+                                final Iterable<ATCohost<bool>> realCohosts = selectedCoHosts.where(
+                                  (ATCohost<bool> coHost) => coHost.profilePicture != null
                                 );
                                 return Text(
-                                  '${emptyCohosts.length} remaining',
+                                  '${realCohosts.length} selected',
                                   style: Theme.of(context).textTheme.titleSmall?.copyWith(
                                     color: ATColors.hexC2C2C2
                                   )
@@ -77,7 +85,10 @@ Future<void> showAvailableCoHostsModal(BuildContext context) async {
                         padding: const EdgeInsets.fromLTRB(15, 0, 15, 10),
                         child: SearchFieldWithXSuffix(
                           hintText: ATStrings.SEARCH_4_COHOSTS,
-                          onClear: () => bContext.read<SearchkeyBloc>().resetSearch(),
+                          onClear: (){
+                            bContext.read<SearchkeyBloc>().resetSearch();
+                            dContext.read<CohostServiceBloc>().resetCohostSearch();
+                          },
                           onChanged: (String searchKey){
                             ATHelperFuncs.callDebouncer(
                               500,
@@ -109,7 +120,7 @@ Future<void> showAvailableCoHostsModal(BuildContext context) async {
                   (ATCohost<bool> coHost) => coHost.profilePicture != null
                 );
 
-                return ButtonWithBgBlur(
+                return ATBgBlurredBtn(
                   onPressed: activateBtn ? () => dContext.pop() : null,
                   btnTitle: ATStrings.CONTINUE,
                 );

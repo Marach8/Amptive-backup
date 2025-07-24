@@ -2,9 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:amptive/src/features/go_live/go_live_export.dart';
 import 'package:amptive/src/global_export.dart';
 import 'package:amptive/src/views/widgets/common_widgets/custom_container_widget.dart';
-import 'package:amptive/src/views/widgets/common_widgets/image_loader_widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/search_filter_widget.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../models/host.dart';
 

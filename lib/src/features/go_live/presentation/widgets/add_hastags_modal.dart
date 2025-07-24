@@ -1,31 +1,11 @@
-import 'dart:io';
-import 'dart:ui';
-import 'package:amptive/src/models/hashtag.dart';
-import 'package:amptive/src/config/utils/colors.dart';
-import 'package:amptive/src/config/utils/font_sizes.dart';
-import 'package:amptive/src/config/utils/helper_functions.dart';
-import 'package:amptive/src/views/widgets/animation_widgets/common_animation_widgets/animated_crossfade_widget.dart';
-import 'package:amptive/src/views/widgets/common_widgets/custom_container_widget.dart';
-import 'package:amptive/src/views/widgets/common_widgets/textformfield_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:gap/gap.dart';
-import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
-import 'package:iconsax/iconsax.dart';
 import '../../../../models/host.dart';
-import '../../../../services/create_show/create_show_service.dart';
-import '../../../../views/widgets/common_widgets/custom_rebuilder_widget.dart';
-import '../../../../views/widgets/common_widgets/elevated_button_widget.dart';
-import '../../../../config/utils/other_strings.dart';
 import 'package:amptive/src/features/go_live/go_live_export.dart';
 import 'package:amptive/src/global_export.dart';
 import 'package:amptive/src/views/widgets/common_widgets/dismiss_modal.dart';
 import 'package:amptive/src/views/widgets/common_widgets/search_filter_widget.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:go_router/go_router.dart';
-import '../../../../models/host.dart';
 
 
 Future<void> showTrendingHashtagsModal(BuildContext context) async {
@@ -60,7 +40,15 @@ Future<void> showTrendingHashtagsModal(BuildContext context) async {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: <Widget>[
-                            const SizedBox(width: 100,),
+                            Opacity(
+                              opacity: 0.0,
+                              child: Text(
+                                '3 selected',
+                                style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                                  color: ATColors.hexC2C2C2
+                                )
+                              ),
+                            ),
                             Text(
                               '${ATStrings.ADD_HASHTAG}s',
                               style: context.textTheme.bodyLarge
@@ -69,7 +57,7 @@ Future<void> showTrendingHashtagsModal(BuildContext context) async {
                               selector: ((List<ATHashtag<bool>>, List<ATHashtag<bool>>) state) => state.$2,
                               builder: (_, List<ATHashtag<bool>> selectedHashtags) {
                                 return Text(
-                                  '${5 - selectedHashtags.length} remaining',
+                                  '${selectedHashtags.length} selected',
                                   style: context.textTheme.titleSmall?.copyWith(
                                     color: ATColors.hexC2C2C2
                                   )
@@ -95,7 +83,10 @@ Future<void> showTrendingHashtagsModal(BuildContext context) async {
                         padding: const EdgeInsets.fromLTRB(15, 0, 15, 10),
                         child: SearchFieldWithXSuffix(
                           hintText: ATStrings.SEARCH_4_HASHTAGS,
-                          onClear: () => bContext.read<SearchkeyBloc>().resetSearch(),
+                          onClear: (){
+                            bContext.read<SearchkeyBloc>().resetSearch();
+                            dContext.read<HashtagServiceBloc>().resetHashtagsSearch();
+                          },
                           onChanged: (String searchKey){
                             ATHelperFuncs.callDebouncer(
                               500,
@@ -108,7 +99,7 @@ Future<void> showTrendingHashtagsModal(BuildContext context) async {
                         ),
                       ),
                       
-                      const SelectedHashtagsRowInModal(),
+                      const SelectedHashtagsRow(),
                       
                       Expanded(child: TrendingHashtagsList(scrollController: scrollController,)),
                     ],
@@ -127,7 +118,7 @@ Future<void> showTrendingHashtagsModal(BuildContext context) async {
                   (ATHashtag<bool> hashtag) => hashtag.title != null
                 );
 
-                return ButtonWithBgBlur(
+                return ATBgBlurredBtn(
                   onPressed: activateBtn ? () => dContext.pop() : null,
                   btnTitle: '${ATStrings.ADD_HASHTAG}s',
                 );

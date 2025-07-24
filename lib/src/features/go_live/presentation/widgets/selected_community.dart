@@ -20,7 +20,7 @@ class SelectedCommunityWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return ATContainer(
       radius: 14,
-      padding: const EdgeInsets.all(10),
+      padding: const EdgeInsets.all(15),
       color: ATColors.white.withValues(alpha: 0.1),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,

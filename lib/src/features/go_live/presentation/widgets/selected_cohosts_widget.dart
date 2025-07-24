@@ -25,44 +25,42 @@ class SelectedCoHostsWidget extends StatelessWidget {
 
     return ATContainer(
       radius: 14,
-      padding: const EdgeInsets.all(10),
+      padding: const EdgeInsets.all(15),
       color: ATColors.white.withValues(alpha: 0.1),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
+      child: Column(
         children: <Widget>[
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                OverlappingCohosts<bool>(
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Expanded(
+                child: OverlappingCohosts<bool>(
                   cohosts: selectedCohosts
                 ),
-                const SizedBox(height: 5,),
-                Text(
-                  '${cohostNames.join(', ')} will be notified',
-                  maxLines: 5,
+              ),
+              const SizedBox(width: 20,),
+              ATContainer(
+                onTap: onEdit, radius: 5,
+                color: ATColors.white.withValues(alpha: 0.1),
+                padding: const EdgeInsets.fromLTRB(15, 10, 15, 10),
+                child: Text(
+                  ATStrings.EDIT_COHOST,
                   style: Theme.of(context).textTheme.labelSmall?.copyWith(
-                    color: ATColors.white.withValues(alpha: 0.6),
-                    fontSize: ATFontSizes.size13,
+                    color: ATColors.white.withValues(alpha: 0.7),
+                    height: 1.1
                   ),
                 ),
-              ],
+              )            
+            ],
+          ),
+          const SizedBox(height: 15,),
+          Text(
+            '${cohostNames.join(', ')} will be notified',
+            maxLines: 5,
+            style: Theme.of(context).textTheme.labelSmall?.copyWith(
+              color: ATColors.white.withValues(alpha: 0.6),
+              fontSize: ATFontSizes.size13,
             ),
           ),
-
-          const SizedBox(width: 18,),
-          ATContainer(
-            onTap: onEdit, radius: 5,
-            color: ATColors.white.withValues(alpha: 0.1),
-            padding: const EdgeInsets.fromLTRB(10, 8, 10, 8),
-            child: Text(
-              ATStrings.EDIT_COHOST,
-              style: Theme.of(context).textTheme.labelSmall?.copyWith(
-                color: ATColors.white.withValues(alpha: 0.7),
-                height: 1.1
-              ),
-            ),
-          )
         ],
       ),
     );
@@ -106,16 +104,12 @@ class OverlappingCohosts<T> extends StatelessWidget {
                 clipBehavior: Clip.hardEdge,
                 radius: imgSize,
                 border: Border.all(
-                  color: borderColor ?? ATColors.white,
+                  color: borderColor ?? ATColors.white.withValues(alpha: 0.4),
                   width: borderWidth,
                 ) ,
-                child: entry.$2.profilePicture != null ? ATImgLoader(
-                  imgPath: entry.$2.profilePicture!,
-                  height: imgSize, width: imgSize,
-                  boxFit: BoxFit.cover,
-                ) : ClipRRect(
+                child: ClipRRect(
                   borderRadius: BorderRadiusGeometry.circular(20),
-                  child: BackdropFilter(
+                  child: entry.$2.profilePicture == null ? BackdropFilter(
                     filter: ImageFilter.blur(sigmaX: 10.0, sigmaY: 10.0),
                     child: Center(
                       child: Text(
@@ -125,7 +119,11 @@ class OverlappingCohosts<T> extends StatelessWidget {
                         )
                       ),
                     ),
-                  ),
+                  ) : ATImgLoader(
+                    imgPath: entry.$2.profilePicture!,
+                    height: imgSize, width: imgSize,
+                    boxFit: BoxFit.cover,
+                  )
                 ),
               ),
             );

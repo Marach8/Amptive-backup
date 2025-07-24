@@ -12,6 +12,7 @@ class ATStrings{
   static const String plus  = '+';
   static const String HASH = '#';
   static const String AT_SIGN = '@';
+  static const String NAIRA_TEXT = '₦';
 
 
   static const String goLiveLikeNeverBefore = "Go Live, Like Never Before";
@@ -233,6 +234,7 @@ class ATStrings{
   static const String UR_FON_NUMBER = "What is your phone number?";
 
   static const String ALLOW  = 'Allow';
+  static const String DONT_ALLOW = "Don't Allow";
   static const String noThanks = "No thanks";
 
   static const String SOCIETY = 'Society';
@@ -391,7 +393,7 @@ class ATStrings{
   static const String CREATE_UR_EVENT = 'Create your event';
   static const String ADD_COMMUNITY = 'Add Community';
   static const String ADD_CO_HOST = 'Add Cohost';
-  static const String EDIT_COHOST = 'Edit cohosts';
+  static const String EDIT_COHOST = 'Edit cohost';
   static const String ADD_HASHTAG = 'Add Hashtag';
   static const String ACCT_PRIVATE = 'Your account is now private';
   static const String USERS_CAN_SEE_UR_CALENDER = 'Users can see your calender';
@@ -420,6 +422,9 @@ class ATStrings{
   static const String AUDIENCE_ACCESS = 'Audience Access';
   static const String SELECT_WHO_CAN_ACCESS_SHOW = 'Choose who can access this show';
   static const String CAPACITY = 'Capacity';
+  static const String CHOOSE_2_ALLOW_HAND_RASING = 'Choose whether to allow hand-rasing';
+  static const String AUDIENCE_INTERACTION = 'Select audience interaction';
+  static const String U_WILL_HAVE_ACCESS_2_MODERATION_TOOLS = "While you're live, you'll have full access to your moderation tools so you can control and manage audience interactions throught the session.";
   static const String ALL_FOLLOWERS = 'All Followers';
   static const String ALL_SUBSCRIBERS = 'All Subscribers';
   static const String MAX_CAPACITY = 'Kindly enter the maximun number of users/listeners that can access your event.';

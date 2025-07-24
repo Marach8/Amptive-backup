@@ -56,7 +56,7 @@ class SelectedCohostsRow extends StatelessWidget {
                           ClipRRect(
                             borderRadius: BorderRadius.circular(30),
                             child: ATImgLoader(
-                              height: 43, width: 43, boxFit: BoxFit.fill,
+                              height: 43, width: 43, boxFit: BoxFit.cover,
                               imgPath: entry.$2.profilePicture ?? ''
                             ),
                           ),

@@ -2,26 +2,20 @@ import 'dart:async';
 import 'dart:typed_data';
 import 'dart:ui';
 
-import 'package:amptive/src/features/go_live/presentation/widgets/audience_access_4_shows_modal.dart';
+import 'package:amptive/src/config/config_export.dart';
 import 'package:amptive/src/features/go_live/go_live_export.dart';
 import 'package:amptive/src/models/community.dart';
-import 'package:amptive/src/models/hashtag.dart';
 import 'package:amptive/src/services/create_show/create_show_service.dart';
-import 'package:amptive/src/config/utils/colors.dart';
-import 'package:amptive/src/config/utils/image_strings.dart';
-import 'package:amptive/src/config/utils/dialogs/select_hand_raising_dialog.dart';
 import 'package:amptive/src/views/widgets/animation_widgets/common_animation_widgets/animated_switcher.dart';
 import 'package:amptive/src/views/widgets/common_widgets/annotated_region__widget.dart';
+import 'package:amptive/src/views/widgets/common_widgets/divider_widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/textformfield_widget.dart';
-import 'package:amptive/src/views/widgets/other_widgets/main_application_widgets/widgets_in_home_view/widgets_in_go_live/shows/show_type_visibility.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get_it/get_it.dart';
 import 'package:nested/nested.dart';
 
 
-import 'package:amptive/src/config/utils/other_strings.dart';
 import 'package:amptive/src/views/widgets/common_widgets/back_button.dart';
 import 'package:amptive/src/views/widgets/common_widgets/custom_container_widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/elevated_button_widget.dart';
@@ -30,12 +24,8 @@ import 'package:nested/nested.dart' show SingleChildWidget;
 import 'package:amptive/src/features/home/presentation/widgets/home_widgets_export.dart';
 import 'package:amptive/src/views/widgets/common_widgets/sliver_header_delegate.dart';
 import '../../../../models/host.dart';
-import '../../../../config/utils/font_weights.dart';
 import '../../../../views/widgets/common_widgets/rich_text.dart';
 import '../../../../config/utils/dialogs/add_communities_dialog.dart';
-import '../widgets/add_hastags_modal.dart';
-import '../../../../views/widgets/common_widgets/custom_rebuilder_widget.dart';
-import '../../../../views/widgets/other_widgets/main_application_widgets/widgets_in_create_show_event/create_show_text_form_field.dart';
 
 //     ShowTypeVisibilityWidget(
           //       showType: widget.showType,
@@ -63,8 +53,11 @@ class _CreateShowFormScreenState extends State<CreateShowFormScreen> {
   late final TextEditingController _titleCntrl;
   final StreamController<String> _titleStreamCntrl = StreamController<String>();
   final StreamController<String> _descStreamCntrl = StreamController<String>();
+
   String programDesc = ATStrings.TELL_LISTENERS_ABOUT_SHOW;
-  String audienceAccess = ATStrings.SELECT_WHO_CAN_ACCESS_SHOW;
+  String chooseAudienceAccess = ATStrings.SELECT_WHO_CAN_ACCESS_SHOW;
+  String shouldAllowHandRasing = ATStrings.CHOOSE_2_ALLOW_HAND_RASING;
+
   Community? selectedCommunity;
   CreateShowService service = GetIt.I<CreateShowService>();
 
@@ -92,7 +85,7 @@ class _CreateShowFormScreenState extends State<CreateShowFormScreen> {
     return MultiBlocProvider(
       providers: <SingleChildWidget>[
         BlocProvider<BlurredHeaderBloc>(create: (_) => BlurredHeaderBloc(),),
-        BlocProvider<_BgImageBloc>(create: (_) => _BgImageBloc())
+        BlocProvider<BgImageBloc>(create: (_) => BgImageBloc())
       ],
       child: ATAnnotatedRegion(
         statusBarColor: ATColors.trsprnt,
@@ -102,7 +95,7 @@ class _CreateShowFormScreenState extends State<CreateShowFormScreen> {
               return Stack(
                 children: <Widget>[
                   Positioned.fill(
-                    child: BlocBuilder<_BgImageBloc, (String, Uint8List?)>(
+                    child: BlocBuilder<BgImageBloc, (String, Uint8List?)>(
                       builder: (_, (String, Uint8List?) state) {
                         return ImageFiltered(
                           imageFilter: ImageFilter.blur(sigmaX: 200, sigmaY: 200),
@@ -137,7 +130,7 @@ class _CreateShowFormScreenState extends State<CreateShowFormScreen> {
                                       ),
                                       Text(
                                         ATStrings.CREATE_SHOW,
-                                        style: Theme.of(context).textTheme.bodyMedium,
+                                        style: context.textTheme.bodyMedium,
                                       ),
                                       const SizedBox(width: 30,)
                                     ],
@@ -156,7 +149,7 @@ class _CreateShowFormScreenState extends State<CreateShowFormScreen> {
                               Padding(
                                 padding: const EdgeInsets.fromLTRB(15, 0, 15, 30),
                                 child: SelectProgramCoverArt(
-                                  onImageSelected: blocContext.read<_BgImageBloc>().setBgImage,
+                                  onImageSelected: blocContext.read<BgImageBloc>().setBgImage,
                                 ),
                               ),
 
@@ -176,10 +169,10 @@ class _CreateShowFormScreenState extends State<CreateShowFormScreen> {
                               Padding(
                                 padding: const EdgeInsets.fromLTRB(15, 0, 15, 30),
                                 child: ATTextFormField(
-                                  controller: _titleCntrl,
+                                  controller: _titleCntrl, maxLines: 1, cursorHeight: 20,
                                   hintText: ATStrings.TITLE_OF_UR_SHOW,
                                   prefixIcon: const SizedBox(width: 12,),
-                                  hintStyle: Theme.of(context).textTheme.bodySmall?.copyWith(
+                                  hintStyle: context.textTheme.bodySmall?.copyWith(
                                     color: ATColors.white.withValues(alpha: 0.4),
                                   ),
                                   disableBlueBorder: true,
@@ -208,7 +201,7 @@ class _CreateShowFormScreenState extends State<CreateShowFormScreen> {
                                 padding: const EdgeInsets.fromLTRB(15, 0, 15, 30),
                                 child: StatefulBuilder(
                                   builder: (_, void Function(void Function()) setter) {
-                                    return CreateShowItem(
+                                    return CreateProgramSelectionItem(
                                       description: programDesc,
                                       onTap: ()async{
                                         final String? description = await showEnterDescriptionModal(context);
@@ -238,7 +231,7 @@ class _CreateShowFormScreenState extends State<CreateShowFormScreen> {
                                   builder: (_, void Function(void Function()) setter) {
                                     return ATScalingSwitcher(
                                       duration: 300,
-                                      child: selectedCommunity == null ? CreateShowItem(
+                                      child: selectedCommunity == null ? CreateProgramSelectionItem(
                                         description: ATStrings.SELECT_COMMUNITY_4_UR_SHOW,
                                         onTap: ()async{
                                           final Community? selectedCom = await showCommunitiesDialog(context);
@@ -260,10 +253,10 @@ class _CreateShowFormScreenState extends State<CreateShowFormScreen> {
                                 child: ATRichText(
                                   maxLines: 4,
                                   items: <String, TextStyle>{
-                                    ATStrings.ADD_COMMUNITY_DESC: Theme.of(context).textTheme.labelSmall!.copyWith(
+                                    ATStrings.ADD_COMMUNITY_DESC: context.textTheme.labelSmall!.copyWith(
                                       color: ATColors.hexC2C2C2.withValues(alpha: 0.76)
                                     ),
-                                    ATStrings.LEARN_MORE: Theme.of(context).textTheme.labelSmall!
+                                    ATStrings.LEARN_MORE: context.textTheme.labelSmall!
                                   },
                                   textOnTap: (String text){
                                     if(text == ATStrings.LEARN_MORE){}
@@ -290,7 +283,7 @@ class _CreateShowFormScreenState extends State<CreateShowFormScreen> {
                                       child: coHostExists ? SelectedCoHostsWidget(
                                           onEdit: () => showAvailableCoHostsModal(context),
                                           selectedCohosts: selectedCoHosts,
-                                        ) : CreateShowItem(
+                                        ) : CreateProgramSelectionItem(
                                           leading: const ATImgLoader(
                                             height: 20, width: 20,
                                             imgPath: ATImgStrings.OUTLINED_SEARCH,
@@ -298,7 +291,7 @@ class _CreateShowFormScreenState extends State<CreateShowFormScreen> {
                                           trailing: Flexible(
                                             child: Text(
                                               ATStrings.SEARCH_ND_ADD_COHOSTS_4_SHOW,
-                                              style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                                              style: context.textTheme.bodySmall?.copyWith(
                                                 color: ATColors.white.withValues(alpha: 0.4),
                                               ),
                                             ),
@@ -313,7 +306,7 @@ class _CreateShowFormScreenState extends State<CreateShowFormScreen> {
                                 padding: const EdgeInsets.fromLTRB(15, 0, 15, 30),
                                 child: Text(
                                   ATStrings.ADD_COHOST_DESC, maxLines: 5,
-                                  style: Theme.of(context).textTheme.labelSmall!.copyWith(
+                                  style: context.textTheme.labelSmall!.copyWith(
                                     color: ATColors.hexC2C2C2.withValues(alpha: 0.76)
                                   ),
                                 ),
@@ -326,19 +319,19 @@ class _CreateShowFormScreenState extends State<CreateShowFormScreen> {
                               ),
                               Padding(
                                 padding: const EdgeInsets.fromLTRB(15, 0, 15, 10),
-                                child: CreateShowItem(
+                                child: CreateProgramSelectionItem(
                                   description: '${ATStrings.ADD_HASHTAG}s',
                                   onTap: () => showTrendingHashtagsModal(context),
                                 ),
                               ),
 
-                              const SelectedHashtagsRowInModal(margin: EdgeInsets.only(bottom: 10)),
+                              const SelectedHashtagsRow(margin: EdgeInsets.zero),
 
                               Padding(
                                 padding: const EdgeInsets.fromLTRB(15, 0, 15, 30),
                                 child: Text(
                                   ATStrings.ADD_HASHTAG_DESC, maxLines: 5,
-                                  style: Theme.of(context).textTheme.labelSmall?.copyWith(
+                                  style: context.textTheme.labelSmall?.copyWith(
                                     color: ATColors.hexC2C2C2.withValues(alpha: 0.76)
                                   ),
                                 ),
@@ -355,12 +348,25 @@ class _CreateShowFormScreenState extends State<CreateShowFormScreen> {
                                   builder: (_, void Function(void Function()) setter) {
                                     return ATScalingSwitcher(
                                       duration: 300,
-                                      child: CreateShowItem(
-                                        description: audienceAccess,
+                                      child: CreateProgramSelectionItem(
+                                        description: chooseAudienceAccess,
+                                        descStyle: chooseAudienceAccess == ATStrings.SELECT_WHO_CAN_ACCESS_SHOW ? null
+                                          : context.textTheme.bodySmall,
                                         onTap: ()async{
                                           //showSelectAudienceAccessForEventsDialog(context);
-                                          //final selectedCom = await chooseAudienceAccess4ShowModal(context);
-                                          showAvailable(context);
+                                          final String? selectedAccessType = await chooseAudienceAccess4ShowModal(
+                                            context: context, initialAccessType: chooseAudienceAccess
+                                          );
+                                          setter(
+                                            (){
+                                              if(selectedAccessType == null){
+                                                chooseAudienceAccess = ATStrings.SELECT_WHO_CAN_ACCESS_SHOW;
+                                              }
+                                              else{
+                                                chooseAudienceAccess = selectedAccessType;
+                                              }
+                                            }
+                                          );
                                         },
                                       )
                                     );
@@ -371,184 +377,87 @@ class _CreateShowFormScreenState extends State<CreateShowFormScreen> {
                                 padding: const EdgeInsets.fromLTRB(15, 0, 15, 30),
                                 child: Text(
                                   ATStrings.PROMPTED_2_SETUP_SUB_PLAN, maxLines: 5,
-                                  style: Theme.of(context).textTheme.labelSmall!.copyWith(
+                                  style: context.textTheme.labelSmall!.copyWith(
                                     color: ATColors.hexC2C2C2.withValues(alpha: 0.76)
                                   ),
                                 ),
                               ),
                                                     
-                              Divider(
-                                height: 2.h,
-                                thickness: 2.w,
-                                color: ATColors.hex0D0D0D.withOpacity(0.10),
+                              const Padding(
+                                padding: EdgeInsets.fromLTRB(15, 0, 15, 30),
+                                child: ATDivider(height: 1.1,),
                               ),
-                              SizedBox(height: 24.h),
-                                                    
-                              CreateShowTextFieldTitle(
-                                title: "Moderation Tools",
-                                titleStyle: Theme.of(context)
-                                    .textTheme
-                                    .titleMedium
-                                    ?.copyWith(fontWeight: ATFontWeights.w500),
-                              ),
-                              SizedBox(height: 16.h),
-                                                    
-                              // Hand Raising
-                              ShowTypeVisibilityWidget(
-                                showType: ShowType.all,
-                                child: Container(
-                                  margin: EdgeInsets.only(bottom: 12.h),
-                                  child: const CreateShowTextFieldTitle(
-                                    prefixIcon: Icons.front_hand_outlined,
-                                    title: "Hand Raising",
-                                  ),
-                                ),
-                              ),
-                              ShowTypeVisibilityWidget(
-                                showType: ShowType.all,
-                                child: CreateShowTextFormField(
-                                  readOnly: true,
-                                  controller: service.handRaisingController,
-                                  hintText: "Select audience interaction",
-                                  suffixIcon: Icon(
-                                    Icons.arrow_forward_ios,
-                                    size: 20.w,
-                                    color: ATColors.white.withOpacity(0.4),
-                                  ),
-                                  onTap: () async {
-                                    await showHandRaisingDialog(context);
-                                  },
-                                ),
-                              ),
-                              ShowTypeVisibilityWidget(
-                                showType: ShowType.all,
-                                child: Container(
-                                  margin: EdgeInsets.only(top: 8.h, bottom: 30.h),
-                                  width: 360.w,
+
+                              Align(
+                                alignment: Alignment.centerLeft,
+                                child: Padding(
+                                  padding: const EdgeInsets.only(left: 15, right: 15),
                                   child: Text(
-                                    "While you're live, you’ll have full access to your moderation tools, allowing you to manage interactions and maintain control throughout the session. Learn more",
-                                    overflow: TextOverflow.visible,
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .titleSmall
-                                        ?.copyWith(
-                                      fontWeight: ATFontWeights.w500,
-                                      color:
-                                      ATColors.white.withOpacity(0.4),
+                                    ATStrings.MODERATION_TOOLS,
+                                    style: context.textTheme.labelSmall?.copyWith(
+                                      fontSize: ATFontSizes.size13,
                                     ),
                                   ),
                                 ),
                               ),
-                                                    
-                              // Capacity
-                              // ShowTypeVisibilityWidget(
-                              //   showType: widget.showType,
-                              //   allowedShowTypes: const <ShowType>[ShowType.event],
-                              //   child: Container(
-                              //     margin: EdgeInsets.only(bottom: 12.h),
-                              //     child: const CreateShowTextFieldTitle(
-                              //       prefixIcon: Icons.people_outline,
-                              //       title: "Capacity",
-                              //     ),
-                              //   ),
-                              // ),
-                              // ShowTypeVisibilityWidget(
-                              //   showType: widget.showType,
-                              //   allowedShowTypes: const <ShowType>[ShowType.event],
-                              //   child: CreateShowTextFormField(
-                              //     readOnly: true,
-                              //     controller: service.capacityController,
-                              //     hintText: "Unlimited",
-                              //     suffixIcon: Icon(
-                              //       Icons.arrow_forward_ios,
-                              //       size: 20.w,
-                              //       color: ATColors.white.withOpacity(0.4),
-                              //     ),
-                              //     onTap: () async {
-                              //       await showEventCapacitySelectionDialog(
-                              //           context: context);
-                              //     },
-                              //   ),
-                              // ),
-                              // ShowTypeVisibilityWidget(
-                              //   showType: widget.showType,
-                              //   allowedShowTypes: const <ShowType>[ShowType.event],
-                              //   child: Container(
-                              //     margin: EdgeInsets.only(top: 8.h, bottom: 30.h),
-                              //     width: 360.w,
-                              //     child: Text(
-                              //       "Set the maximum number of listeners for your event. Once the limit is reached, no additional participants can join or pay.",
-                              //       overflow: TextOverflow.visible,
-                              //       style: Theme.of(context)
-                              //           .textTheme
-                              //           .titleSmall
-                              //           ?.copyWith(
-                              //         fontWeight: ATFontWeights.w500,
-                              //         color:
-                              //         ATColors.white.withOpacity(0.4),
-                              //       ),
-                              //     ),
-                              //   ),
-                              // ),
-                                                    
-                              // Whispers
-                              // ShowTypeVisibilityWidget(
-                              //   showType: widget.showType,
-                              //   allowedShowTypes: const <ShowType>[
-                              //     ShowType.event,
-                              //     ShowType.episode
-                              //   ],
-                              //   child: Container(
-                              //     margin: EdgeInsets.only(bottom: 12.h),
-                              //     child: const CreateShowTextFieldTitle(
-                              //       prefixIcon: Iconsax.message,
-                              //       title: "Whispers",
-                              //     ),
-                              //   ),
-                              // ),
-                              // ShowTypeVisibilityWidget(
-                              //   showType: widget.showType,
-                              //   allowedShowTypes: const <ShowType>[
-                              //     ShowType.event,
-                              //     ShowType.episode
-                              //   ],
-                              //   child: CreateShowTextFormField(
-                              //     readOnly: true,
-                              //     controller: service.whisperController,
-                              //     hintText: "Turn whispers on or off for this event",
-                              //     suffixIcon: Icon(
-                              //       Icons.arrow_forward_ios,
-                              //       size: 20.w,
-                              //       color: ATColors.white.withOpacity(0.4),
-                              //     ),
-                              //     onTap: () async {
-                              //       await showWhispersDialog(context);
-                              //     },
-                              //   ),
-                              // ),
-                              // ShowTypeVisibilityWidget(
-                              //   showType: widget.showType,
-                              //   allowedShowTypes: const <ShowType>[
-                              //     ShowType.event,
-                              //     ShowType.episode
-                              //   ],
-                              //   child: Container(
-                              //     margin: EdgeInsets.only(top: 8.h, bottom: 30.h),
-                              //     width: 360.w,
-                              //     child: Text(
-                              //       "Whispers are randomly selected comments from your live audience that appear on your event page while you are live. \n \nNon-attending users can see these comments, encouraging them to join your live event.",
-                              //       overflow: TextOverflow.visible,
-                              //       style: Theme.of(context)
-                              //           .textTheme
-                              //           .titleSmall
-                              //           ?.copyWith(
-                              //         fontWeight: ATFontWeights.w500,
-                              //         color:
-                              //         ATColors.white.withOpacity(0.4),
-                              //       ),
-                              //     ),
-                              //   ),
-                              // ),
+
+
+                              Padding(
+                                padding: const EdgeInsets.fromLTRB(15, 15, 15, 10),
+                                child: Row(
+                                  children: <Widget>[
+                                    const Icon(Icons.front_hand_outlined, size: 18,),
+                                    const SizedBox(width: 5,),
+                                    Text(
+                                      ATStrings.HAND_RAISING,
+                                      style: context.textTheme.titleLarge?.copyWith(
+                                        fontWeight: ATFontWeights.w500
+                                      ),
+                                    ),
+                                  ],
+                                )
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.fromLTRB(15, 0, 15, 10),
+                                child: StatefulBuilder(
+                                  builder: (_, void Function(void Function()) setter) {
+                                    return ATScalingSwitcher(
+                                      duration: 300,
+                                      child: CreateProgramSelectionItem(
+                                        description: shouldAllowHandRasing,
+                                        descStyle: shouldAllowHandRasing == ATStrings.CHOOSE_2_ALLOW_HAND_RASING ? null
+                                          : context.textTheme.bodySmall,
+                                        onTap: ()async{
+                                          final String? selectedHandRaising = await choose2AllowHandRaisingModal(
+                                            context: context, initialHandRaising: shouldAllowHandRasing
+                                          );
+                                          setter(
+                                            (){
+                                              if(selectedHandRaising == null){
+                                                shouldAllowHandRasing = ATStrings.SELECT_WHO_CAN_ACCESS_SHOW;
+                                              }
+                                              else{
+                                                shouldAllowHandRasing = selectedHandRaising;
+                                              }
+                                            }
+                                          );
+                                        },
+                                      )
+                                    );
+                                  }
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.fromLTRB(15, 0, 15, 30),
+                                child: ATRichText(
+                                  items: <String, TextStyle>{
+                                    ATStrings.U_WILL_HAVE_ACCESS_2_MODERATION_TOOLS: context.textTheme.labelSmall!.copyWith(
+                                      color: ATColors.hexC2C2C2.withValues(alpha: 0.76)
+                                    ),
+                                    ' ${ATStrings.LEARN_MORE}': context.textTheme.labelSmall!
+                                  },
+                                )
+                              ),
                             ],
                           ),
                         ),
@@ -573,7 +482,7 @@ class _CreateShowFormScreenState extends State<CreateShowFormScreen> {
               ]
             ),
             padding: const EdgeInsets.fromLTRB(15, 10, 15, 10),
-            child: BlocBuilder<_BgImageBloc, (String, Uint8List?)>(
+            child: BlocBuilder<BgImageBloc, (String, Uint8List?)>(
               builder: (_, (String, Uint8List?) selectedImgPath) {
                 return ATPlainElevatedBtn(
                   bgColor: ATColors.white,
@@ -605,55 +514,4 @@ class _CreateShowFormScreenState extends State<CreateShowFormScreen> {
       ),
     );
   }
-}
-
-class CreateShowItem extends StatelessWidget {
-  const CreateShowItem({
-    super.key,
-    this.description = '',
-    required this.onTap,
-    this.trailing,
-    this.leading
-  });
-
-  final VoidCallback onTap;
-  final Widget? trailing, leading;
-  final String description;
-
-  @override
-  Widget build(BuildContext context) {
-    return ATContainer(
-      onTap: onTap,
-      padding: const EdgeInsets.all(15),
-      radius: 14,
-      color: ATColors.white.withValues(alpha: 0.1),
-      child: Row(
-        children: <Widget>[
-          leading ?? Expanded(
-            child: Text(
-              description,
-              style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                color: ATColors.white.withValues(alpha: 0.4),
-              ),
-            ),
-          ),
-          const SizedBox(width: 10,),
-    
-          trailing ?? Icon(
-            Icons.arrow_forward_ios,
-            size: 20,
-            color: ATColors.white.withValues(alpha: 0.4),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-
-class _BgImageBloc extends Cubit<(String, Uint8List?)>{
-  _BgImageBloc(): super((ATImgStrings.CREATE_SHOW_PLACEHOLDER, null));
-
-  void setBgImage(Uint8List imageBytes) => emit((state.$1, imageBytes));
-
 }

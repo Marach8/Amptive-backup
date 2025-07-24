@@ -41,4 +41,6 @@ class HashtagServiceBloc extends Cubit<(List<ATHashtag<bool>>, List<ATHashtag<bo
   }
 
   void resetBloc() => emit((initialHashtags, <ATHashtag<bool>>[]));
+
+  void resetHashtagsSearch() => emit((initialHashtags, state.$2));
 }

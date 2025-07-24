@@ -55,4 +55,6 @@ class CohostServiceBloc extends Cubit<(List<ATCohost<bool>>, List<ATCohost<bool>
   }
 
   void resetBloc() => emit((initialCohosts, initialSelectedCohosts));
+
+  void resetCohostSearch() => emit((initialCohosts, state.$2));
 }

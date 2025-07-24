@@ -4,8 +4,8 @@ import 'package:amptive/src/views/widgets/common_widgets/custom_container_widget
 import 'package:amptive/src/views/widgets/common_widgets/elevated_button_widget.dart';
 import 'package:flutter/material.dart';
 
-class ButtonWithBgBlur extends StatelessWidget {
-  const ButtonWithBgBlur({
+class ATBgBlurredBtn extends StatelessWidget {
+  const ATBgBlurredBtn({
     super.key,
     required this.onPressed,
     this.btnTitle,

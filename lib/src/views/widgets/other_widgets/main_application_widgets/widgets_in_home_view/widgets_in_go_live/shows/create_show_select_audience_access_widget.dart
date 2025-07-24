@@ -1,4 +1,3 @@
-import 'package:amptive/src/features/go_live/presentation/widgets/audience_access_4_shows_modal.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../../../../../config/utils/colors.dart';
@@ -31,8 +30,8 @@ class AmptiveCreateShowSelectAudienceAccessWidget extends StatelessWidget {
               ),
               GestureDetector(
                 onTap: ()async{
-                  final String result = await chooseAudienceAccess4ShowModal(context);
-                  selectAudienceAccessNotifier.value = result;
+                  // final String? result = await chooseAudienceAccess4ShowModal(context);
+                  // selectAudienceAccessNotifier.value = result!;
                 },
                 child: Icon(
                   Icons.arrow_forward_ios, size: 20.w,

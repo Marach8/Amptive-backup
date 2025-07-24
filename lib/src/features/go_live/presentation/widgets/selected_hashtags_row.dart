@@ -3,33 +3,18 @@ import 'package:amptive/src/features/go_live/go_live_export.dart';
 import 'package:amptive/src/global_export.dart';
 import 'package:amptive/src/models/host.dart';
 import 'package:amptive/src/views/widgets/animation_widgets/common_animation_widgets/animated_crossfade_widget.dart';
-import 'package:amptive/src/views/widgets/common_widgets/back_button.dart';
 import 'package:amptive/src/views/widgets/common_widgets/custom_container_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../../../views/widgets/common_widgets/image_loader_widget.dart';
 
 
-class SelectedHashtagsRowInModal extends StatefulWidget {
-  const SelectedHashtagsRowInModal({
+class SelectedHashtagsRow extends StatelessWidget {
+  const SelectedHashtagsRow({
     super.key,
     this.margin,
   });
 
   final EdgeInsetsGeometry? margin;
-
-  @override
-  State<SelectedHashtagsRowInModal> createState() => _SelectedHashtagsRowInModalState();
-}
-
-class _SelectedHashtagsRowInModalState extends State<SelectedHashtagsRowInModal> {
-  late final ScrollController _sCntrl = ScrollController();
-
-  @override 
-  void dispose(){
-    _sCntrl.dispose();
-    super.dispose();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -42,25 +27,20 @@ class _SelectedHashtagsRowInModalState extends State<SelectedHashtagsRowInModal>
           secondChild: const SizedBox.shrink(),
           firstChild: ATContainer(
             height: 45,
-            margin: widget.margin ?? const EdgeInsets.fromLTRB(0, 15, 0, 10),
-            child: ATScrollBar(
-              scrollController: _sCntrl,
-              thickness: 8, mainAxisMargin: 15.0,
-              child: SingleChildScrollView(
-                padding: const EdgeInsets.only(bottom: 15),
-                controller: _sCntrl,
-                physics: const BouncingScrollPhysics(),
-                scrollDirection: Axis.horizontal,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: selectedHashtags.indexed.map(
-                    ((int, ATHashtag<bool>) entry) => Padding(
-                      padding: entry.$1 == (selectedHashtags.length - 1) ? 
-                        const EdgeInsets.only(right: 15) : EdgeInsets.zero,
-                      child: SelectedHashtag(hashtag: entry.$2),
-                    )
-                  ).toList(),
-                ),
+            margin: margin ?? const EdgeInsets.fromLTRB(0, 15, 0, 10),
+            child: SingleChildScrollView(
+              padding: const EdgeInsets.only(bottom: 15),
+              physics: const BouncingScrollPhysics(),
+              scrollDirection: Axis.horizontal,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: selectedHashtags.indexed.map(
+                  ((int, ATHashtag<bool>) entry) => Padding(
+                    padding: entry.$1 == (selectedHashtags.length - 1) ? 
+                      const EdgeInsets.only(right: 15) : EdgeInsets.zero,
+                    child: SelectedHashtag(hashtag: entry.$2),
+                  )
+                ).toList(),
               ),
             ),
           ),
@@ -69,7 +49,6 @@ class _SelectedHashtagsRowInModalState extends State<SelectedHashtagsRowInModal>
     );
   }
 }
-
 
 class SelectedHashtag extends StatelessWidget {
   const SelectedHashtag({super.key, required this.hashtag});
