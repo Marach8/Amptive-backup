@@ -20,7 +20,7 @@ class SelectedCohostsRow extends StatelessWidget {
           (ATCohost<bool> cohost) => cohost.profilePicture != null
         );
         
-        return ATAnimatedCrossFade(
+        return ATAnimatedXFade(
           condition: coHostExists,
           secondChild: const SizedBox.shrink(),
           firstChild: ATContainer(

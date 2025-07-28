@@ -122,7 +122,7 @@ Future<void> showListenersDialog({
                     suffixIcon: AmptiveRebuilderWidget(
                       notifier: showSuffixIconNotifier,
                       builder: (_, bool shouldShow, __) {
-                        return ATAnimatedCrossFade(
+                        return ATAnimatedXFade(
                           condition: shouldShow,
                           secondChild: const SizedBox.shrink(),
                           firstChild: GestureDetector(

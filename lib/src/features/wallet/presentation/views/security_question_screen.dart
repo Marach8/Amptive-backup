@@ -106,7 +106,7 @@ class ATSecurityQuestionScreen extends StatelessWidget {
                     BlocSelector<SecQuestionBloc, (String?, bool, String), String?>(
                       selector: ((String?, bool, String) state) => state.$1,
                       builder: (_, String? state) {
-                        return ATAnimatedCrossFade(
+                        return ATAnimatedXFade(
                           condition: state == null,
                           firstChild: const SizedBox.shrink(),
                           secondChild: const SecurityAnswerField(),

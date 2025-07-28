@@ -10,8 +10,6 @@ import 'package:amptive/src/views/widgets/other_widgets/main_application_widgets
 import 'package:amptive/src/views/widgets/common_widgets/row_of_people_listening_widget.dart';
 import 'package:amptive/src/views/widgets/other_widgets/main_application_widgets/widgets_in_home_view/with_2_others_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:gap/gap.dart';
 import '../../../../config/utils/colors.dart';
 import '../../../../config/utils/dialogs/options_dialog.dart';
 
@@ -30,11 +28,11 @@ class ATShowOrEventInfo extends StatelessWidget {
           title: 'glennodoyle',
           subtitle: 'started a live show',
         ),
-        Gap(2.h),
+        const SizedBox(height: 2,),
         ATContainer(
-          height: 425.h,
+          height: 425,
           clipBehavior: Clip.hardEdge,
-          radius: 15.r,
+          radius: 15,
           child: Stack(
             children: <Widget>[
               const ATImgLoader(imgPath: ATImgStrings.weCanDoHardThingsBgImage),
@@ -62,7 +60,7 @@ class ATShowOrEventInfo extends StatelessWidget {
                     const AmptiveWith2OthersWidget(),
                     const Spacer(),
                     const LiveWithAnimatingDot(),
-                    Gap(10.h),
+                    const SizedBox(height: 10),
                     Text(
                       maxLines: 2,
                       "Don't Forget Who You Are ft. Jacob Scipio",
@@ -72,10 +70,10 @@ class ATShowOrEventInfo extends StatelessWidget {
                         height: 1.2,
                       ),
                     ),
-                    Gap(12.h),
+                    const SizedBox(height: 12,),
                     const PeopleListeningWidget(),
-                    Gap(10.h),
-                    const AmptiveRowOfPaidShowAndPlayButtonWidget(),
+                    const SizedBox(height: 10,),
+                    const PaidShowAndPlayBtnWidget(),
                   ],
                 ),
               ),
@@ -86,47 +84,3 @@ class ATShowOrEventInfo extends StatelessWidget {
     );
   }
 }
-
-
-
-// AmptiveCustomContainer(
-//             padding: const EdgeInsets.fromLTRB(15, 10, 15, 10),
-//             radius: 15.r,
-//             gradient: LinearGradient(
-//               begin: Alignment.topCenter,
-//               end: Alignment.bottomCenter,
-//               colors: [
-//                 AmptiveColors.transparentColor,
-//                 AmptiveColors.transparentColor,
-//                 AmptiveColors.transparentColor,
-//                 AmptiveColors.transparentColor,
-//                 AmptiveColors.containerGradientColorB.withOpacity(0.5),
-//                 AmptiveColors.containerGradientColorB,
-//                 AmptiveColors.containerGradientColorB,
-//                 AmptiveColors.containerGradientColorB,
-//               ]
-//             ),
-//             child: Column(
-//               crossAxisAlignment: CrossAxisAlignment.start,
-//               children: [
-//                 const AmptiveWith2OthersWidget(),
-//                 const Spacer(),
-//                 const AmptiveLiveIndicatorWithAnimatingDotWidget(),
-//                 Gap(10.h),
-//                 Text(
-//                   maxLines: 2,
-//                   "Don't Forget Who You Are ft. Jacob Scipio",
-//                   overflow: TextOverflow.clip,
-//                   style: Theme.of(context).textTheme.displayMedium?.copyWith(
-//                     fontSize: AmptiveFontSizes.size24,
-//                     fontWeight: AmptiveFontWeights.semiBold,
-//                     fontFamily: "Bricolage Grotesque"
-//                   ),
-//                 ),
-//                 Gap(12.h),
-//                 const AmptiveRowOfNumberOfPeopleListeningWidget(),
-//                 Gap(10.h),
-//                 const AmptiveRowOfPaidShowAndPlayButtonWidget(),
-//               ],
-//             ),
-//           ),

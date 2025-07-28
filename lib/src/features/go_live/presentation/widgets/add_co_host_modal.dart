@@ -120,7 +120,7 @@ Future<void> showAvailableCoHostsModal(BuildContext context) async {
                   (ATCohost<bool> coHost) => coHost.profilePicture != null
                 );
 
-                return ATBgBlurredBtn(
+                return ATBlurredBgBtn(
                   onPressed: activateBtn ? () => dContext.pop() : null,
                   btnTitle: ATStrings.CONTINUE,
                 );

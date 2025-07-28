@@ -1,4 +1,5 @@
 import 'package:amptive/src/config/utils/colors.dart';
+import 'package:amptive/src/config/utils/extensions/context_extensions.dart';
 import 'package:amptive/src/config/utils/image_strings.dart';
 import 'package:amptive/src/config/utils/other_strings.dart';
 import 'package:amptive/src/config/utils/helper_functions.dart';
@@ -14,21 +15,21 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
 
-void showCreatorSubPlans(BuildContext context) {
+void showSubPlanSetupModal(BuildContext context) {
   showCupertinoModalPopup(
     context: context,
-    builder: (_) => const _AddSubPlanWidget()
+    builder: (_) => const _SubPlanWidget()
   );
 }
 
-class _AddSubPlanWidget extends StatefulWidget {
-  const _AddSubPlanWidget();
+class _SubPlanWidget extends StatefulWidget {
+  const _SubPlanWidget();
 
   @override
-  State<_AddSubPlanWidget> createState() => _AddSubPlanWidgetState();
+  State<_SubPlanWidget> createState() => _AddSubPlanWidgetState();
 }
 
-class _AddSubPlanWidgetState extends State<_AddSubPlanWidget> {
+class _AddSubPlanWidgetState extends State<_SubPlanWidget> {
   late final TextEditingController _cntrl;
   final String defaultPrice = '0';
   
@@ -45,13 +46,12 @@ class _AddSubPlanWidgetState extends State<_AddSubPlanWidget> {
     ATHelperFuncs.callDebouncer(
       500,
       () => context.read<SubPlanSetupBloc>()
-        .selectFee(int.tryParse(_cntrl.text.trim()))
+        .selectAFee(int.tryParse(_cntrl.text.trim()))
     );
   }
 
   @override 
   void dispose(){
-    _cntrl.removeListener(_handleBtnActivation);
     _cntrl.dispose();
     super.dispose();
   }
@@ -76,12 +76,12 @@ class _AddSubPlanWidgetState extends State<_AddSubPlanWidget> {
           const SizedBox(height: 15),
           Text(
             ATStrings.ADD_NEW_PLAN,
-            style: Theme.of(context).textTheme.bodyLarge
+            style: context.textTheme.bodyLarge
           ),
           const SizedBox(height: 15),
           Text(
             ATStrings.SPECIFY_FEE, maxLines: 2,
-            style: Theme.of(context).textTheme.labelSmall?.copyWith(
+            style: context.textTheme.labelSmall?.copyWith(
               color: ATColors.hexC2C2C2.withValues(alpha: 0.76)
             )
           ),
@@ -100,7 +100,7 @@ class _AddSubPlanWidgetState extends State<_AddSubPlanWidget> {
               ),
               prefixIcon: Padding(
                 padding: const EdgeInsets.only(left: 15),
-                child: Text('N', style: Theme.of(context).textTheme.headlineMedium),
+                child: Text(ATStrings.NAIRA_TEXT, style: context.textTheme.headlineMedium),
               ),
               contentPadding: EdgeInsets.zero
             ),
@@ -113,7 +113,7 @@ class _AddSubPlanWidgetState extends State<_AddSubPlanWidget> {
                 selectedFee: state,
                 onFeeTap: (int tappedFee){
                   _cntrl.text = tappedFee.toString();
-                  context.read<SubPlanSetupBloc>().selectFee(tappedFee);
+                  context.read<SubPlanSetupBloc>().selectAFee(tappedFee);
                 },
               );
             }
@@ -121,7 +121,7 @@ class _AddSubPlanWidgetState extends State<_AddSubPlanWidget> {
           const SizedBox(height: 80),
           Text(
             ATStrings.AMPTIVE_CHARGES_4_CREATORS, maxLines: 2,
-            style: Theme.of(context).textTheme.labelSmall?.copyWith(
+            style: context.textTheme.labelSmall?.copyWith(
               color: ATColors.white.withValues(alpha: 0.4),
             )
           ),

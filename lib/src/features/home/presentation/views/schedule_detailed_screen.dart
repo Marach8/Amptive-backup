@@ -14,7 +14,7 @@ import '../../../../config/utils/font_sizes.dart';
 import '../../../../config/utils/font_weights.dart';
 import '../../../../views/widgets/common_widgets/list_tile_with_leading_picture_widget.dart';
 import '../../../../views/widgets/common_widgets/sliver_header_delegate.dart';
-import '../../../../views/widgets/other_widgets/main_application_widgets/widgets_in_show_or_event_full_details_view/hashtags_widget.dart';
+import '../../../../shared/hashtags_widget.dart';
 import '../widgets/home_widgets_export.dart';
 
 class ATScheduleDetailedScreen extends StatelessWidget {
@@ -76,7 +76,7 @@ class ATScheduleDetailedScreen extends StatelessWidget {
                                 ),
                                                         
                                 const SizedBox(height: 12,),
-                                const NewWidget(),
+                                const ScheduleDateIndicator(),
                                 const SizedBox(height: 40,),
                                                         
                                 Text(
@@ -87,7 +87,7 @@ class ATScheduleDetailedScreen extends StatelessWidget {
                                 ),
                                 Divider(color: ATColors.white.withValues(alpha:0.1),),
                                 const SizedBox(height: 5),
-                                const AmptiveHashtagsWidget(),
+                                const ATHashtagsWidget(),
                                 const SizedBox(height: 30,),
                                                         
                                 Text(

@@ -13,11 +13,8 @@ import 'package:amptive/src/features/auth/sign_in_or_sign_up_screen.dart';
 import 'package:amptive/src/features/auth/username_auth_screen.dart';
 import 'package:amptive/src/features/discover/presentation/views/society_screen.dart';
 import 'package:amptive/src/features/discover/presentation/views/trending_hashtags_screen.dart';
-import 'package:amptive/src/features/go_live/presentation/views/even_scheduled_screen.dart';
-import 'package:amptive/src/features/go_live/presentation/views/create_show_form_screen.dart';
 import 'package:amptive/src/features/home/home_export.dart';
 import 'package:amptive/src/features/main_app_shell.dart';
-import 'package:amptive/src/features/go_live/presentation/views/go_live_welcome_screen.dart';
 import 'package:amptive/src/features/profile/presentation/views/profile_views_export.dart';
 import 'package:amptive/src/features/home/presentation/views/scheduled_screen.dart';
 import 'package:amptive/src/features/wallet/presentation/views/wallet_txns_screen.dart';
@@ -25,7 +22,6 @@ import 'package:amptive/src/features/post_auth/presentation/views/circle_image_c
 import 'package:amptive/src/features/post_auth/presentation/views/preference_screen.dart';
 import 'package:amptive/src/features/onboarding/onboarding_page_view_screen.dart';
 import 'package:amptive/src/features/onboarding/welcome_screen.dart';
-import 'package:amptive/src/views/widgets/other_widgets/main_application_widgets/widgets_in_home_view/widgets_in_go_live/shows/show_type_visibility.dart';
 import 'package:custom_image_crop/custom_image_crop.dart' show Ratio;
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -34,8 +30,6 @@ import '../../features/discover/presentation/views/community_home_screen.dart';
 import '../../features/discover/presentation/views/society_hashtag_screen.dart';
 import '../../features/discover/presentation/views/trending_society_screen.dart';
 import '../../features/go_live/go_live_export.dart';
-import '../../features/go_live/presentation/views/choose_or_create_go_live_program_screen.dart';
-import '../../features/go_live/presentation/views/go_live_program_creation_success_screen.dart';
 import '../../features/wallet/wallet_export.dart';
 
 // The route configuration.
@@ -392,7 +386,10 @@ final GoRouter amptiveAppRouter = GoRouter(
               GoRoute(
                 name: ATRoutes.CREATOR_SUB_PLAN,
                 path: ATRoutes.CREATOR_SUB_PLAN,
-                builder: (_, __) => const CreatorSubPlanScreen()
+                pageBuilder: (_, GoRouterState st){
+                  final SubPlanScreenEntryPoint? entryPoint = st.extra as SubPlanScreenEntryPoint?;
+                  return ATRouteTransition<void>(child: CreatorSubPlanScreen(entryPoint: entryPoint));
+                }
               ),
               GoRoute(
                 name: ATRoutes.CO_HOST_FEE_SETUP,
@@ -527,26 +524,21 @@ final GoRouter amptiveAppRouter = GoRouter(
             builder: (_, __) => const ATScheduledPrograms(),
           ),
           GoRoute(
-            name: ATRoutes.EVENT_SCHEDULED_SCREEN,
-            path: ATRoutes.EVENT_SCHEDULED_SCREEN,
-            builder: (_, GoRouterState state) {
-              String imageFilePath = state.extra as String;
-              return AmptiveShowScheduledScreen(
-                showType: ShowType.event,
-                imageFilePath: imageFilePath,
+            name: ATRoutes.SHOW_PREVIEW_SCREEN,
+            path: ATRoutes.SHOW_PREVIEW_SCREEN,
+            pageBuilder: (_, GoRouterState state) {
+              String coverArt = state.extra as String;
+              return ATRouteTransition<void>(
+                child: PreviewShowScreen(coverArt: coverArt,)
               );
             },
           ),
           GoRoute(
-            name: ATRoutes.EPISODE_SCHEDULED_SCREEN,
-            path: ATRoutes.EPISODE_SCHEDULED_SCREEN,
-            builder: (_, GoRouterState state) {
-              String imageFilePath = state.extra as String;
-              return AmptiveShowScheduledScreen(
-                showType: ShowType.episode,
-                imageFilePath: imageFilePath,
-              );
-            },
+            name: ATRoutes.EPISODE_PREVIEW_SCREEN,
+            path: ATRoutes.EPISODE_PREVIEW_SCREEN,
+            pageBuilder: (_, GoRouterState st) => ATRouteTransition<void>(
+              child: EpisodeDetailPreviewScreen(coverArtBytes: st.extra as Uint8List,)
+            ),
           ),
           GoRoute(
             name: ATRoutes.SUBSCRIBED_EVENTS_OR_SHOWS_SCREEN,

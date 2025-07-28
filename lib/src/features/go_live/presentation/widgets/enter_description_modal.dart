@@ -1,10 +1,7 @@
 import 'dart:async';
-import 'dart:developer';
 import 'dart:ui';
 import 'package:amptive/src/config/config_export.dart';
 import 'package:amptive/src/features/go_live/go_live_export.dart';
-import 'package:amptive/src/views/widgets/animation_widgets/common_animation_widgets/animated_align_widget.dart';
-import 'package:amptive/src/views/widgets/common_widgets/back_button.dart';
 import 'package:amptive/src/views/widgets/common_widgets/custom_container_widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/dismiss_modal.dart';
 import 'package:flutter/cupertino.dart';

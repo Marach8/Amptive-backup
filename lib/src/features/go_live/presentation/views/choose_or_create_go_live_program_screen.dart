@@ -1,20 +1,13 @@
 import 'dart:ui';
-
-import 'package:amptive/src/config/utils/image_strings.dart';
-import 'package:amptive/src/config/utils/other_strings.dart';
-import 'package:amptive/src/config/routing/route_strings.dart';
-import 'package:amptive/src/config/utils/extensions/context_extensions.dart';
+import 'package:amptive/src/global_export.dart';
 import 'package:amptive/src/views/widgets/common_widgets/annotated_region__widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/back_button.dart';
 import 'package:amptive/src/views/widgets/common_widgets/custom_container_widget.dart';
-import 'package:amptive/src/views/widgets/common_widgets/elevated_button_widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/image_loader_widget.dart';
 import 'package:amptive/src/features/go_live/presentation/widgets/existing_go_live_program_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:nested/nested.dart' show SingleChildWidget;
-import '../../../../config/utils/colors.dart';
-import 'package:amptive/src/features/home/presentation/widgets/home_widgets_export.dart';
 import 'package:amptive/src/views/widgets/common_widgets/sliver_header_delegate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -92,7 +85,7 @@ class ChooseOrCreateGoLiveProgramScreen extends StatelessWidget {
                                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                     children: <Widget>[
                                       Padding(
-                                        padding: const EdgeInsets.only(left: 4),
+                                        padding: const EdgeInsets.only(left: 5),
                                         child: ATRoundedBackBtn(bgColor: ATColors.trsprnt,),
                                       ),
                                       Text(
@@ -182,45 +175,32 @@ class ChooseOrCreateGoLiveProgramScreen extends StatelessWidget {
           
           resizeToAvoidBottomInset: false,
 
-          bottomSheet: ATContainer(
-            height: 70,
-            gradient: LinearGradient(
-              begin: Alignment.topCenter,
-              end: Alignment.bottomCenter,
-              colors: <Color>[
-                ATColors.hex0D0D0D.withValues(alpha: 0.1),
-                ATColors.hex0D0D0D
-              ]
-            ),
-            padding: const EdgeInsets.fromLTRB(15, 10, 15, 10),
-            child: BlocBuilder<_PrivateBloc, String?>(
-              builder: (_, String? selectedImgPath) {
-                return ATPlainElevatedBtn(
-                  bgColor: ATColors.white,
-                  fgColor: ATColors.hex0D0D0D,
-                  btnTitle: ATStrings.NEXT,
-                  onPressed: selectedImgPath == null ? null : () async{
-                    //await showAddCoHostDialog(context);
-                    //await showAddHashtagDialog(context);
-                    //await showHandRaisingDialog(context);
-                    //showAddCommunitiesDialog(context);
-                    //showSelectAudienceAccessForShowsDialog(context);
-                    //context.pushNamed(AmptiveRoutes.CREATE_SHOW_SUCCESS);
-                  },
-                  
+          bottomSheet: BlocBuilder<_PrivateBloc, String?>(
+            builder: (_, String? selectedImgPath) {
+              return ATBlurredBgBtn(
+                btnTitle: ATStrings.NEXT,
+                onPressed: selectedImgPath == null ? null : (){
+                  context.pushNamed(ATRoutes.SHOW_PREVIEW_SCREEN, extra: selectedImgPath);
+                  //await showAddCoHostDialog(context);
+                  //await showAddHashtagDialog(context);
+                  //await showHandRaisingDialog(context);
+                  //showAddCommunitiesDialog(context);
+                  //showSelectAudienceAccessForShowsDialog(context);
+                  //context.pushNamed(AmptiveRoutes.CREATE_SHOW_SUCCESS);
+
                   //onPressed: activate ? () async{
-                    //await showAddCoHostDialog(context);
-                    //await showAddHashtagDialog(context);
-                    //showAddCommunitiesDialog(context);
-                    //showSelectAudienceAccessForEventsDialog(context);
-                    //showWhispersDialog(context);
-                    //await showEventCapacitySelectionDialog(context: context);
-                    //context.pushNamed(ATRoutes.EVENT_SCHEDULED_SCREEN);
-                  //} : null,
-                );
-              }
-            ),
-          ),
+                  //await showAddCoHostDialog(context);
+                  //await showAddHashtagDialog(context);
+                  //showAddCommunitiesDialog(context);
+                  //showSelectAudienceAccessForEventsDialog(context);
+                  //showWhispersDialog(context);
+                  //await showEventCapacitySelectionDialog(context: context);
+                  //context.pushNamed(ATRoutes.EVENT_SCHEDULED_SCREEN);
+                //} : null,
+                },
+              );
+            }
+          )
         ),
       ),
     );

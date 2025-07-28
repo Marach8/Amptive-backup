@@ -2,6 +2,7 @@ import 'dart:ui';
 import 'package:amptive/src/features/home/home_export.dart';
 import 'package:amptive/src/global_export.dart';
 import 'package:amptive/src/views/widgets/common_widgets/annotated_region__widget.dart';
+import 'package:amptive/src/views/widgets/common_widgets/back_button.dart';
 import 'package:amptive/src/views/widgets/common_widgets/circle_avatar.dart';
 import 'package:amptive/src/views/widgets/common_widgets/custom_container_widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/image_loader_widget.dart';
@@ -10,27 +11,31 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:readmore/readmore.dart';
 import '../../../../views/widgets/common_widgets/list_tile_with_leading_picture_widget.dart';
 import '../../../../views/widgets/common_widgets/sliver_header_delegate.dart';
-import '../widgets/home_widgets_export.dart';
 
-class ATLiveShowDetailedScreen extends StatelessWidget {
-  const ATLiveShowDetailedScreen({super.key});
+class PreviewShowScreen extends StatelessWidget {
+
+  const PreviewShowScreen({super.key, required this.coverArt});
+
+  final String coverArt;
 
   @override
   Widget build(BuildContext context) {
     final double blurredHeaderHeight = kToolbarHeight + MediaQuery.paddingOf(context).top;
     return ATAnnotatedRegion(
+      statusBarColor: ATColors.trsprnt,
       child: Scaffold(
         body: Stack(
           children: <Widget>[
             Positioned.fill(
               child: ImageFiltered(
                 imageFilter: ImageFilter.blur(sigmaX: 250, sigmaY: 250),
-                child: const ATImgLoader(
+                child: ATImgLoader(
                   boxFit: BoxFit.fill,
-                  imgPath: ATImgStrings.weCanDoHardThingsBgImage,
+                  imgPath: coverArt
                 ),
               ),
             ),
+        
             ATContainer(
               color: ATColors.hex0D0D0D.withValues(alpha: 0.75),
               child: BlocProvider<BlurredHeaderBloc>(
@@ -45,7 +50,22 @@ class ATLiveShowDetailedScreen extends StatelessWidget {
                             pinned: true,
                             delegate: ATSliverHDelegate(
                               maxExt: blurredHeaderHeight, minExt: blurredHeaderHeight,
-                              child:const ATBlurredHeaderWidget()
+                              child: ATBlurredHeaderWidget(
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  children: <Widget>[
+                                    Padding(
+                                      padding: const EdgeInsets.only(left: 5),
+                                      child: ATRoundedBackBtn(bgColor: ATColors.trsprnt,),
+                                    ),
+                                    Text(
+                                      'We can do hard things',
+                                      style: Theme.of(context).textTheme.bodyMedium,
+                                    ),
+                                    const SizedBox(width: 30,)
+                                  ],
+                                ),
+                              )
                             ),
                           )
                         ],
@@ -59,9 +79,15 @@ class ATLiveShowDetailedScreen extends StatelessWidget {
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: <Widget>[
-                                    const ATEventOrShowCard(),
+                                    ATEventOrShowCard(imgPath: coverArt,),
                                     const SizedBox(height: 24),
-                                    const ShowOrEventIndicatorWithTitle(),
+                                    ShowOrEventIndicatorWithTitle(
+                                      leading: ATContainer(
+                                        height: 20, width: 20,
+                                        color: ATColors.hexFF6482,
+                                        child: const ATImgLoader(imgPath: ATImgStrings.CALENDER_ICON),
+                                      )
+                                    ),
                                     const SizedBox(height: 12,),
                                     Text(
                                       maxLines: 2,

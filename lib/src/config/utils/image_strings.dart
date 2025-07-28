@@ -22,7 +22,7 @@ class ATImgStrings{
   static const String outlinedHome = '$_svgPath/Home.svg';
   static const String filledBroadCast = '$_svgPath/Broadcast icon=Fill.svg';
   static const String outlinedBroadCast = '$_svgPath/Broadcast icon=Outline.svg';
-  static const String CALEND_ICON = '$_svgPath/Contextual menu icon.svg';
+  static const String CALENDER_ICON = '$_svgPath/Contextual menu icon.svg';
   static const String PERSON_CHECKED = '$_svgPath/Contextual menu icon (1).svg';
   static const String SHARE_LIVE = '$_svgPath/Icon.svg';
   static const String FOLLOW_ICON = '$_svgPath/Icon (1).svg';

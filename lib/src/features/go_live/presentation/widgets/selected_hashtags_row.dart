@@ -22,7 +22,7 @@ class SelectedHashtagsRow extends StatelessWidget {
       selector: ((List<ATHashtag<bool>>, List<ATHashtag<bool>>) state) => state.$2,
       builder: (_, List<ATHashtag<bool>> selectedHashtags) {  
         
-        return ATAnimatedCrossFade(
+        return ATAnimatedXFade(
           condition: selectedHashtags.isNotEmpty,
           secondChild: const SizedBox.shrink(),
           firstChild: ATContainer(

@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:developer';
 import 'dart:typed_data';
 import 'dart:ui';
 import 'package:amptive/src/features/go_live/go_live_export.dart';
@@ -9,7 +8,6 @@ import 'package:amptive/src/views/widgets/animation_widgets/common_animation_wid
 import 'package:amptive/src/views/widgets/common_widgets/annotated_region__widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/divider_widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/textformfield_widget.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -24,10 +22,9 @@ import 'package:nested/nested.dart' show SingleChildWidget;
 import 'package:amptive/src/views/widgets/common_widgets/sliver_header_delegate.dart';
 import '../../../../models/host.dart';
 import '../../../../views/widgets/common_widgets/rich_text.dart';
-import '../../../../config/utils/dialogs/add_communities_dialog.dart';
 
 
-
+enum BtnOnTap{goLive, scheduleEvent}
 class CreateEpisodeFormScreen extends StatefulWidget {
   const CreateEpisodeFormScreen({super.key});
 
@@ -40,9 +37,11 @@ class _CreateShowFormScreenState extends State<CreateEpisodeFormScreen> {
   final StreamController<String> _titleStreamCntrl = StreamController<String>();
   final StreamController<String> _descStreamCntrl = StreamController<String>();
 
+  final ValueNotifier<(bool, BtnOnTap)> _activateBtn = ValueNotifier<(bool, BtnOnTap)>((false, BtnOnTap.goLive));
+
   String programDesc = ATStrings.TELL_LISTENERS_ABOUT_SHOW;
-  String displayedWhisperState = ATStrings.TOGGLE_WHISPERS;
-  String shouldAllowHandRasing = ATStrings.CHOOSE_2_ALLOW_HAND_RASING;
+  String whispersDesc = ATStrings.TOGGLE_WHISPERS;
+  String handRaisingDesc = ATStrings.CHOOSE_2_ALLOW_HAND_RASING;
 
   Community? selectedCommunity;
 
@@ -54,11 +53,39 @@ class _CreateShowFormScreenState extends State<CreateEpisodeFormScreen> {
     );
   }
 
+  void _check4BtnActivation(BuildContext ctx){
+    final bool cohostIsSelected = ctx.read<CohostServiceBloc>().state.$2.any(
+      (ATCohost<bool> cohost) => cohost.profilePicture != null);
+
+    _activateBtn.value = (
+      ctx.read<BgImageBloc>().state.$2 != null,
+      // &&
+      // ctx.read<HashtagServiceBloc>().state.$2.isNotEmpty &&
+      // cohostIsSelected &&
+      // programDesc != ATStrings.TELL_LISTENERS_ABOUT_SHOW && 
+      // whispersDesc != ATStrings.TOGGLE_WHISPERS &&
+      // handRaisingDesc != ATStrings.CHOOSE_2_ALLOW_HAND_RASING &&
+      // _titleCntrl.text.trim().isNotEmpty,
+      _activateBtn.value.$2
+    );
+  }
+
+  void _toggleBtnOnTap(){
+    final BtnOnTap initialOnTap = _activateBtn.value.$2;
+    if(initialOnTap == BtnOnTap.goLive){
+      _activateBtn.value = (_activateBtn.value.$1, BtnOnTap.scheduleEvent);
+    }
+    else{
+      _activateBtn.value = (_activateBtn.value.$1, BtnOnTap.goLive);
+    }
+  }
+
   @override 
   void dispose(){
     _titleCntrl.dispose();
     _titleStreamCntrl.close();
     _descStreamCntrl.close();
+    _activateBtn.dispose();
     super.dispose();
   }
 
@@ -116,7 +143,14 @@ class _CreateShowFormScreenState extends State<CreateEpisodeFormScreen> {
                                         ATStrings.CREATE_AN_EPISODE,
                                         style: context.textTheme.bodyMedium,
                                       ),
-                                      const SizedBox(width: 30,)
+                                      Padding(
+                                        padding: const EdgeInsets.only(right: 15),
+                                        child: InkWell(
+                                          onTap: _toggleBtnOnTap,
+                                          borderRadius: BorderRadius.circular(30),
+                                          child: const ScheduleIcon()
+                                        ),
+                                      )
                                     ],
                                   ),
                                 )
@@ -133,7 +167,10 @@ class _CreateShowFormScreenState extends State<CreateEpisodeFormScreen> {
                               Padding(
                                 padding: const EdgeInsets.fromLTRB(15, 0, 15, 30),
                                 child: SelectProgramCoverArt(
-                                  onImageSelected: blocContext.read<BgImageBloc>().setBgImage,
+                                  onImageSelected: (Uint8List imgBytes) {
+                                    blocContext.read<BgImageBloc>().setBgImage(imgBytes);
+                                    _check4BtnActivation(blocContext);
+                                  }
                                 ),
                               ),
 
@@ -156,6 +193,7 @@ class _CreateShowFormScreenState extends State<CreateEpisodeFormScreen> {
                                   controller: _titleCntrl, maxLines: 1, cursorHeight: 20,
                                   hintText: ATStrings.TITLE_OF_UR_SHOW,
                                   prefixIcon: const SizedBox(width: 12,),
+                                  onChanged: (_) => _check4BtnActivation(blocContext),
                                   hintStyle: context.textTheme.bodySmall?.copyWith(
                                     color: ATColors.white.withValues(alpha: 0.4),
                                   ),
@@ -197,6 +235,7 @@ class _CreateShowFormScreenState extends State<CreateEpisodeFormScreen> {
                                             (){
                                               programDesc = description!;
                                               _descStreamCntrl.add(description);
+                                              _check4BtnActivation(blocContext);
                                             }
                                           );
                                         }
@@ -320,21 +359,22 @@ class _CreateShowFormScreenState extends State<CreateEpisodeFormScreen> {
                                     return ATScalingSwitcher(
                                       duration: 300,
                                       child: CreateProgramSelectionItem(
-                                        description: shouldAllowHandRasing,
-                                        descStyle: shouldAllowHandRasing == ATStrings.CHOOSE_2_ALLOW_HAND_RASING ? null
+                                        description: handRaisingDesc,
+                                        descStyle: handRaisingDesc == ATStrings.CHOOSE_2_ALLOW_HAND_RASING ? null
                                           : context.textTheme.bodySmall,
                                         onTap: ()async{
                                           final String? selectedHandRaising = await choose2AllowHandRaisingModal(
-                                            context: context, initialHandRaising: shouldAllowHandRasing
+                                            context: context, initialHandRaising: handRaisingDesc
                                           );
                                           setter(
                                             (){
                                               if(selectedHandRaising == null){
-                                                shouldAllowHandRasing = ATStrings.SELECT_WHO_CAN_ACCESS_SHOW;
+                                                handRaisingDesc = ATStrings.SELECT_WHO_CAN_ACCESS_SHOW;
                                               }
                                               else{
-                                                shouldAllowHandRasing = selectedHandRaising;
+                                                handRaisingDesc = selectedHandRaising;
                                               }
+                                              _check4BtnActivation(blocContext);
                                             }
                                           );
                                         },
@@ -378,22 +418,23 @@ class _CreateShowFormScreenState extends State<CreateEpisodeFormScreen> {
                                     return ATScalingSwitcher(
                                       duration: 300,
                                       child: CreateProgramSelectionItem(
-                                        description: displayedWhisperState,
-                                        descStyle: displayedWhisperState == ATStrings.TOGGLE_WHISPERS ? null
+                                        description: whispersDesc,
+                                        descStyle: whispersDesc == ATStrings.TOGGLE_WHISPERS ? null
                                           : context.textTheme.bodySmall,
                                         onTap: ()async{                                          
                                           final WhispersState? whispersResult = await controlWhispersModal(
-                                            context: context, initialWhisper: displayedWhisperState,
+                                            context: context, initialWhisper: whispersDesc,
                                           );
                                           setter(
                                             (){
                                               if(whispersResult == null){
-                                                displayedWhisperState = ATStrings.TOGGLE_WHISPERS;
+                                                whispersDesc = ATStrings.TOGGLE_WHISPERS;
                                               }
                                               else{
-                                                displayedWhisperState = whispersResult == WhispersState.turnedOn 
+                                                whispersDesc = whispersResult == WhispersState.turnedOn 
                                                   ? ATStrings.TURNED_ON : ATStrings.TURNED_OFF;
                                               }
+                                              _check4BtnActivation(blocContext);
                                             }
                                           );
                                         },
@@ -435,38 +476,49 @@ class _CreateShowFormScreenState extends State<CreateEpisodeFormScreen> {
           
           resizeToAvoidBottomInset: false,
 
-          bottomSheet: BlocBuilder<BgImageBloc, (String, Uint8List?)>(
-            builder: (_, (String, Uint8List?) state) {
-              return ATBgBlurredBtn(
-                onPressed: state.$2 == null ? null : (){
-                  final dynamic params = (
-                    coverArtBytes: state.$2,
-                    title: ATStrings.EPISODE_CREATED,
-                    subtitle: ATStrings.SHARE_EPISODE_LINK_DESC,
-                    btnTitle: ATStrings.SHARE_EPISODE,
-                    txtBtnTitle: ATStrings.VIEW_EPISODE_DETAILS,
-                    btnOnPressed: (){},
-                    txtBtnOnPressed: (){},
-                    topLogo: ATContainer(
-                      color: ATColors.white,
-                      radius: 22.5, height: 40, width: 40,
-                      padding: const EdgeInsets.all(8),
-                      child: ColorFiltered(
-                        colorFilter: ColorFilter.mode(ATColors.black, BlendMode.srcATop),
-                        child: const ATImgLoader(
-                          imgPath: ATImgStrings.CALEND_ICON,
-                          boxFit: BoxFit.cover,
-                        ),
-                      ),
-                    )
-                  );
+          bottomSheet: ValueListenableBuilder<(bool, BtnOnTap)>(
+            valueListenable: _activateBtn,
+            builder: (BuildContext ctx, (bool, BtnOnTap) value, __) {
+              final bool btnOnTapIsGoLive = value.$2 == BtnOnTap.goLive;
 
-                  context.pushNamed(
-                    ATRoutes.GO_LIVE_PROGRAM_CREATION_SUCCESS,
-                    extra: params
-                  );
-                },
-                btnTitle: ATStrings.DONE
+              return ATBlurredBgBtn(
+                onPressed: value.$1 ? (){
+                  if(btnOnTapIsGoLive){}
+                  else{
+                    final dynamic params = (
+                      coverArtBytes: ctx.read<BgImageBloc>().state.$2,
+                      title: ATStrings.EPISODE_CREATED,
+                      subtitle: ATStrings.SHARE_EPISODE_LINK_DESC,
+                      btnTitle: ATStrings.SHARE_EPISODE,
+                      txtBtnTitle: ATStrings.VIEW_EPISODE_DETAILS,
+                      btnOnPressed: (){},
+                      txtBtnOnPressed: (){
+                        context.pushReplacementNamed(
+                          ATRoutes.EPISODE_PREVIEW_SCREEN,
+                          extra: ctx.read<BgImageBloc>().state.$2,
+                        );
+                      },
+                      topLogo: ATContainer(
+                        color: ATColors.white,
+                        radius: 22.5, height: 40, width: 40,
+                        padding: const EdgeInsets.all(8),
+                        child: ColorFiltered(
+                          colorFilter: ColorFilter.mode(ATColors.black, BlendMode.srcATop),
+                          child: const ATImgLoader(
+                            imgPath: ATImgStrings.CALENDER_ICON,
+                            boxFit: BoxFit.cover,
+                          ),
+                        ),
+                      )
+                    );
+                    
+                    context.pushNamed(
+                      ATRoutes.GO_LIVE_PROGRAM_CREATION_SUCCESS,
+                      extra: params
+                    );
+                  }
+                } : null,
+                btnTitle: btnOnTapIsGoLive ? ATStrings.GO_LIVE : '${ATStrings.SCHEDULE} ${ATStrings.EVENT.toLowerCase()}'
               );
             }
           ),

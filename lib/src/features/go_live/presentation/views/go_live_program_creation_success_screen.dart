@@ -1,14 +1,12 @@
 import 'dart:async';
 import 'dart:typed_data';
 import 'package:amptive/src/config/config_export.dart';
-import 'package:amptive/src/features/profile/presentation/views/edit_profile/switch_acct/switch_acct_export.dart';
 import 'package:amptive/src/views/widgets/common_widgets/annotated_region__widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/app_bar_widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/back_button.dart';
 import 'package:amptive/src/views/widgets/common_widgets/custom_container_widget.dart';
+import 'package:amptive/src/views/widgets/common_widgets/spotlight_beam.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:go_router/go_router.dart';
 import '../../../../views/widgets/common_widgets/elevated_button_widget.dart';
 
 enum _AnimStage{start, end}

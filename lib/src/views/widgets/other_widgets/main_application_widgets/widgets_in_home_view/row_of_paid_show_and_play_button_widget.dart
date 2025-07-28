@@ -5,8 +5,8 @@ import 'package:amptive/src/config/utils/other_strings.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-class AmptiveRowOfPaidShowAndPlayButtonWidget extends StatelessWidget {
-  const AmptiveRowOfPaidShowAndPlayButtonWidget({
+class PaidShowAndPlayBtnWidget extends StatelessWidget {
+  const PaidShowAndPlayBtnWidget({
     super.key,
     this.icon
   });

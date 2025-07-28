@@ -7,7 +7,7 @@ import 'package:amptive/src/config/utils/extensions/string_extensions.dart';
 import 'package:amptive/src/views/widgets/common_widgets/circle_avatar.dart';
 import 'package:amptive/src/views/widgets/common_widgets/custom_container_widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/image_loader_widget.dart';
-import 'package:amptive/src/views/widgets/common_widgets/overlapping_images.dart';
+import 'package:amptive/src/shared/overlapping_widgetsdart';
 import 'package:amptive/src/views/widgets/common_widgets/rich_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -151,7 +151,7 @@ class NewAttendeesNotif extends StatelessWidget {
           if(oneAttendee)ATCircularImage(
             diameter: 40,
             imagePath: attendees.first.obj.profilePicture ?? ''
-          ) else ATOverlappingImages(
+          ) else ATOverlappingWidgets(
             overlapOffset: 7, imgSize: 25,
             imgPaths: attendees.map((ObjectWithNotifier<Host> attendee) => attendee.obj.profilePicture ?? '')
               .take(3).toList(),
@@ -207,7 +207,7 @@ class NewGiftersNotif extends StatelessWidget {
           if(oneGifter)ATCircularImage(
             diameter: 40,
             imagePath: gifters.first.obj.profilePicture ?? ''
-          ) else ATOverlappingImages(
+          ) else ATOverlappingWidgets(
             overlapOffset: 7, imgSize: 25,
             imgPaths: gifters.map((ObjectWithNotifier<Host> gifter) => gifter.obj.profilePicture ?? '')
               .take(3).toList(),

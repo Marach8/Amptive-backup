@@ -132,7 +132,7 @@ final ValueNotifier<bool> showSuffixIconNotifier = ValueNotifier(false);
                           suffixIcon: AmptiveRebuilderWidget(
                             notifier: showSuffixIconNotifier,
                             builder: (_, bool shouldShow, __) {
-                              return ATAnimatedCrossFade(
+                              return ATAnimatedXFade(
                                 condition: shouldShow,
                                 secondChild: const SizedBox.shrink(),
                                 firstChild: GestureDetector(
@@ -154,7 +154,7 @@ final ValueNotifier<bool> showSuffixIconNotifier = ValueNotifier(false);
                               (ObjectWithNotifier<Host> cohost) => (cohost.obj.profilePicture ?? '').isNotEmpty
                             );
           
-                            return ATAnimatedCrossFade(
+                            return ATAnimatedXFade(
                               condition: showSelectedCohosts,
                               secondChild: const SizedBox.shrink(),
                               firstChild: ATContainer(

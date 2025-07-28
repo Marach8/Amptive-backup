@@ -5,7 +5,7 @@ import 'package:amptive/src/config/utils/font_sizes.dart';
 import 'package:amptive/src/views/widgets/common_widgets/custom_container_widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/show_event_nd_paid_icons.dart';
 import 'package:flutter/material.dart';
-import '../../../../../../../views/widgets/common_widgets/overlapping_images.dart';
+import '../../../../../../../shared/overlapping_widgetsdart';
 
 class CalenderProgramDisplay extends StatelessWidget {
   const CalenderProgramDisplay({
@@ -53,7 +53,7 @@ class CalenderProgramDisplay extends StatelessWidget {
     
                   Padding(
                     padding: const EdgeInsets.fromLTRB(20, 0, 5, 0),
-                    child: ATOverlappingImages(imgPaths: hostsImgs.toList()),
+                    child: ATOverlappingWidgets(imgPaths: hostsImgs.toList()),
                   )
                 ],
               ),

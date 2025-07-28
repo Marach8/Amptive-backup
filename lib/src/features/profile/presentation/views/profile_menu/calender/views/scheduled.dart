@@ -2,7 +2,7 @@ import 'package:amptive/src/bloc/main_app/profile/profile_menu/calender/calender
 import 'package:amptive/src/models/host.dart';
 import 'package:amptive/src/services/go_live_service/go_live_service.dart';
 import 'package:amptive/src/config/utils/colors.dart';
-import 'package:amptive/src/views/widgets/common_widgets/overlapping_images.dart';
+import 'package:amptive/src/shared/overlapping_widgetsdart';
 import 'package:amptive/src/views/widgets/common_widgets/show_event_nd_paid_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -222,7 +222,7 @@ class _CalenderProgramDisplay extends StatelessWidget {
     
                   Padding(
                     padding: const EdgeInsets.fromLTRB(20, 0, 5, 0),
-                    child: ATOverlappingImages(imgPaths: hostsImgs.toList()),
+                    child: ATOverlappingWidgets(imgPaths: hostsImgs.toList()),
                   )
                 ],
               ),

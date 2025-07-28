@@ -263,6 +263,7 @@ class ATStrings{
   static const String ATTENDED = 'Attended';
   static const String UPCOMING = 'Upcoming';
   static const String SCHEDULED = 'Scheduled';
+  static const String SCHEDULE = 'Schedule';
   static const String SUBSCRIBED = 'Subscribed';
   static const String SUBSCRIBE = 'Subscribe';
   static const String DAY_VIEW = 'Day view';
@@ -493,12 +494,15 @@ class ATStrings{
   static const String COMMENT = 'Comment';
   static const String END_NOW = 'End now';
   static const String HOST = 'Host';
+  static const String EDIT_EPISODE = 'Edit episode';
+  static const String ATTENDEES_WILL_SHOW_HERE = 'Attendees will appear here!';
   static const String EPISODE_CREATED = 'Your episode has been scheduled!';
   static const String SHARE_EPISODE_LINK_DESC = 'Share your episode link to build excitement and attract more attendees';
   static const String VIEW_EPISODE_DETAILS = 'View episode details';
   static const String SHARE_EPISODE = 'Share episode';
   static const String UNBLOCK = 'Unblock';
   static const String UNMUTE = 'Unmute';
+  static const String ABOUT_EPISODE = 'About Episode';
   static const String AMPTIVE_4_CREATORS = 'Amptive for Creators';
   static const String AMPTIVE_4_BIZ = 'Amptive for Business';
   static const String CONNECT_SELL = 'Connect, sell and grow';

@@ -101,7 +101,7 @@ class _ATDiscoverSearchFieldState extends State<ATDiscoverSearchField> {
                 ),
                 suffixIcon: Padding(
                   padding: const EdgeInsets.only(right: 10,),
-                  child: ATAnimatedCrossFade(
+                  child: ATAnimatedXFade(
                     condition: _hasInput,
                     secondChild: const SizedBox.shrink(),
                     firstChild: GestureDetector(
@@ -113,7 +113,7 @@ class _ATDiscoverSearchFieldState extends State<ATDiscoverSearchField> {
               ),
             ),
             const SizedBox(width: 10,),
-            ATAnimatedCrossFade(
+            ATAnimatedXFade(
               condition: _hasFocus,
               secondChild: const SizedBox.shrink(),
               firstChild: InkWell(

@@ -47,7 +47,8 @@ class ATRoutes {
   static const String CHOOSE_OR_CREATE_GO_LIVE_PROGRAM_SCREEN = 'choose_or_create_show';
   static const String GO_LIVE_PROGRAM_CREATION_SUCCESS = 'create_show_success_screen';
   static const String EVENT_SCHEDULED_SCREEN = 'event_scheduled';
-  static const String EPISODE_SCHEDULED_SCREEN = 'episode_scheduled';
+  static const String SHOW_PREVIEW_SCREEN = 'show_preview';
+  static const String EPISODE_PREVIEW_SCREEN = 'episode_preview';
   static const String COMMUNITY_TASK_SCREEN = 'community_task';
   static const String PROFILE_PIC_SCREEN = 'profile_picture';
   static const String LANGUAGE_SCREEN = 'language_screen';

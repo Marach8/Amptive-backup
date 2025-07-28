@@ -351,7 +351,9 @@ class _CreateShowFormScreenState extends State<CreateShowFormScreen> {
                                         descStyle: chooseAudienceAccess == ATStrings.SELECT_WHO_CAN_ACCESS_SHOW ? null
                                           : context.textTheme.bodySmall,
                                         onTap: ()async{
-                                          //showSelectAudienceAccessForEventsDialog(context);
+                                          // context.read<SubPlanSetupBloc>().selectAFee(1000);
+                                          // context.read<SubPlanSetupBloc>().setSelectedFee(1000);
+
                                           final String? selectedAccessType = await chooseAudienceAccess4ShowModal(
                                             context: context, initialAccessType: chooseAudienceAccess
                                           );
@@ -471,7 +473,7 @@ class _CreateShowFormScreenState extends State<CreateShowFormScreen> {
 
           bottomSheet: BlocBuilder<BgImageBloc, (String, Uint8List?)>(
             builder: (_, (String, Uint8List?) state) {
-              return ATBgBlurredBtn(
+              return ATBlurredBgBtn(
                 onPressed: state.$2 == null ? null : (){
                   final dynamic params = (
                     coverArtBytes: state.$2,

@@ -4,25 +4,29 @@ import 'package:amptive/src/views/widgets/common_widgets/custom_container_widget
 import 'package:amptive/src/views/widgets/common_widgets/elevated_button_widget.dart';
 import 'package:flutter/material.dart';
 
-class ATBgBlurredBtn extends StatelessWidget {
-  const ATBgBlurredBtn({
+class ATBlurredBgBtn extends StatelessWidget {
+  const ATBlurredBgBtn({
     super.key,
     required this.onPressed,
     this.btnTitle,
     this.child,
     this.bgColor,
     this.fgColor,
+    this.height,
+    this.padding
   });
 
   final VoidCallback? onPressed;
   final String? btnTitle;
   final Widget? child;
   final Color? bgColor, fgColor;
+  final double? height; 
+  final EdgeInsetsGeometry? padding;
 
   @override
   Widget build(BuildContext context) {
     return ATContainer(
-      height: 70,
+      height: height ?? 70,
       gradient: LinearGradient(
         begin: Alignment.topCenter,
         end: Alignment.bottomCenter,
@@ -31,12 +35,13 @@ class ATBgBlurredBtn extends StatelessWidget {
           ATColors.hex0D0D0D
         ]
       ),
-      padding: const EdgeInsets.fromLTRB(15, 10, 15, 10),
+      padding: padding ?? const EdgeInsets.fromLTRB(15, 10, 15, 10),
       child: ATPlainElevatedBtn(
         bgColor: bgColor ?? ATColors.white,
         fgColor: fgColor ?? ATColors.hex0D0D0D,
         btnTitle: btnTitle,
         onPressed: onPressed,
+        child: child,
       ),
     );
   }

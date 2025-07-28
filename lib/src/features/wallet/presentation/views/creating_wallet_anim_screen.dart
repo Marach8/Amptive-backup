@@ -44,7 +44,7 @@ class ATWalletCreationAnimScreen extends StatelessWidget {
                 child: BlocSelector<WalletCreationAnimBloc, List<bool>, bool>(
                   selector: (List<bool> state) => state.elementAt(3),
                   builder: (_, bool isVisible) {
-                    return ATAnimatedCrossFade(
+                    return ATAnimatedXFade(
                       condition: isVisible,
                       secondChild: const SizedBox.shrink(),
                       firstChild: ATPlainElevatedBtn(

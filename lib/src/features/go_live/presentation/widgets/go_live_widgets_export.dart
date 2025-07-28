@@ -18,3 +18,4 @@ export 'choose_audience_access_modal.dart';
 export 'choose_2_allow_handraising_modal.dart';
 export 'add_link_modal.dart';
 export 'control_whispers_modal.dart';
+export 'schedule_icon.dart';

@@ -4,5 +4,6 @@ export 'go_live_program_creation_success_screen.dart';
 export 'even_scheduled_screen.dart';
 export 'go_live_welcome_screen.dart';
 export 'create_event_form_screen.dart';
-export 'new_screen.dart';
+export 'preview_episode_screen.dart';
 export 'create_episode_form_screen.dart';
+export 'preview_show_screen.dart';
