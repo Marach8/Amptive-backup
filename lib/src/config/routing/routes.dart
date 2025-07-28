@@ -27,13 +27,15 @@ import 'package:amptive/src/features/onboarding/onboarding_page_view_screen.dart
 import 'package:amptive/src/features/onboarding/welcome_screen.dart';
 import 'package:amptive/src/views/widgets/other_widgets/main_application_widgets/widgets_in_home_view/widgets_in_go_live/shows/show_type_visibility.dart';
 import 'package:custom_image_crop/custom_image_crop.dart' show Ratio;
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import '../../features/discover/presentation/views/community_home_screen.dart';
 import '../../features/discover/presentation/views/society_hashtag_screen.dart';
 import '../../features/discover/presentation/views/trending_society_screen.dart';
+import '../../features/go_live/go_live_export.dart';
 import '../../features/go_live/presentation/views/choose_or_create_go_live_program_screen.dart';
-import '../../features/go_live/presentation/views/create_show_success_screen.dart';
+import '../../features/go_live/presentation/views/go_live_program_creation_success_screen.dart';
 import '../../features/wallet/wallet_export.dart';
 
 // The route configuration.
@@ -282,32 +284,42 @@ final GoRouter amptiveAppRouter = GoRouter(
           GoRoute(
             name: ATRoutes.CHOOSE_OR_CREATE_GO_LIVE_PROGRAM_SCREEN,
             path: ATRoutes.CHOOSE_OR_CREATE_GO_LIVE_PROGRAM_SCREEN,
-            builder: (_, GoRouterState st) => ChooseOrCreateGoLiveProgramScreen(programType: st.extra as GoLiveProgramType,),
+            pageBuilder: (_, GoRouterState st) => ATRouteTransition<void>(
+              child: ChooseOrCreateGoLiveProgramScreen(programType: st.extra as GoLiveProgramType,),
+            )
           ),
 
           GoRoute(
             name: ATRoutes.CREATE_SHOW_FORM,
             path: ATRoutes.CREATE_SHOW_FORM,
-            builder: (_, __) => const CreateShowFormScreen()
+            pageBuilder: (_, __) => ATRouteTransition<void>(child: const CreateShowFormScreen())
           ),
           GoRoute(
             name: ATRoutes.CREATE_EVENT_FORM,
             path: ATRoutes.CREATE_EVENT_FORM,
-            builder: (_, __) => const CreateShowFormScreen(),
+            pageBuilder: (_, __) => ATRouteTransition<void>(child: const CreateEventFormScreen(),)
           ),
           GoRoute(
-              name: ATRoutes.CREATE_EPISODE_FORM,
-              path: ATRoutes.CREATE_EPISODE_FORM,
-              builder: (_, __) {
-                return const CreateShowFormScreen();
-              }),
+            name: ATRoutes.CREATE_EPISODE_FORM,
+            path: ATRoutes.CREATE_EPISODE_FORM,
+            pageBuilder: (_, __) => ATRouteTransition<void>(child: const CreateEpisodeFormScreen())
+          ),
           GoRoute(
-            name: ATRoutes.CREATE_SHOW_SUCCESS,
-            path: ATRoutes.CREATE_SHOW_SUCCESS,
-            builder: (_, GoRouterState state) {
-              String imageFilePath = state.extra as String;
-              return ATCreateShowSuccessScreen(
-                imageFilePath: imageFilePath,
+            name: ATRoutes.GO_LIVE_PROGRAM_CREATION_SUCCESS,
+            path: ATRoutes.GO_LIVE_PROGRAM_CREATION_SUCCESS,
+            pageBuilder: (_, GoRouterState state) {
+              final dynamic params = state.extra as ({
+                Uint8List coverArtBytes,
+                String title,
+                String subtitle,
+                String btnTitle,
+                String txtBtnTitle,
+                VoidCallback btnOnPressed,
+                VoidCallback txtBtnOnPressed,
+                Widget topLogo
+              });
+              return ATRouteTransition<void>(
+                child: GoLiveProgramCreationSuccessScreen(params: params,),
               );
             },
           ),

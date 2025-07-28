@@ -4,3 +4,4 @@ export 'scrollbar_widget.dart';
 export 'animated_slide.dart';
 export 'btn_with_bg_blur_widget.dart';
 export 'hashtag_badge.dart';
+export 'animated_positioned.dart';

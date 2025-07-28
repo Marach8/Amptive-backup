@@ -64,14 +64,15 @@ class ATRoundedBackBtn extends StatelessWidget {
 
 
 class ATXBackBtn extends StatelessWidget {
-  const ATXBackBtn({super.key});
+  const ATXBackBtn({super.key, this.onTapOverride});
+  final VoidCallback? onTapOverride;
 
   @override
   Widget build(BuildContext context) {
     return Align(
       alignment: Alignment.center,
       child: InkWell(
-        onTap: () => context.pop(),
+        onTap: onTapOverride ?? () => context.pop(),
         splashColor: ATColors.hex303030,
         borderRadius: BorderRadius.circular(30),
         child: const SizedBox(

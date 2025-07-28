@@ -1,13 +1,10 @@
-import 'dart:io';
 import 'dart:ui';
 
 import 'package:amptive/src/config/utils/extensions/context_extensions.dart';
-import 'package:amptive/src/config/utils/helper_functions.dart';
 import 'package:amptive/src/views/widgets/common_widgets/custom_container_widget.dart';
+import 'package:amptive/src/views/widgets/common_widgets/dismiss_modal.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:go_router/go_router.dart';
-import '../config/utils/colors.dart';
 
 class ATBlurredHeaderWidget extends StatelessWidget {
   const ATBlurredHeaderWidget({
@@ -29,23 +26,7 @@ class ATBlurredHeaderWidget extends StatelessWidget {
               padding: const EdgeInsets.only(top: 40),
               height: kToolbarHeight + MediaQuery.paddingOf(context).top,
               width: context.screenWidth,
-              child: child ?? GestureDetector(
-                onTap: () {
-                  ATHelperFuncs.hideAnyMountedSnackbar(context);
-                  context.pop();
-                },
-                child: Platform.isAndroid
-                  ? Icon(
-                    Icons.keyboard_arrow_down, size: 30,
-                    color: ATColors.white.withValues(alpha: 0.6),
-                  )
-                  : ATContainer(
-                    margin: const EdgeInsets.symmetric(vertical: 10),
-                    radius: 5, height: 4, width: 30,
-                    color: ATColors.white.withValues(alpha: 0.6),
-                    child: const SizedBox.shrink(),
-                  ),
-              ),
+              child: child ?? const ATModalDismisser(),
             ),
           );
         }

@@ -37,8 +37,8 @@ class ATHomeScreen extends StatelessWidget {
                   child: Row(
                     mainAxisSize: MainAxisSize.min,
                     children: <Widget>[
-                      ATImgLoader(imgPath: ATImgStrings.logo2, height: 20.906, width: 86.32,),
-                      Gap(4.0),
+                      ATImgLoader(imgPath: ATImgStrings.logo2, height: 21, width: 86),
+                      SizedBox(width: 4.0,),
                       Icon(Icons.keyboard_arrow_down_outlined, size: 25,),
                     ],
                   ),

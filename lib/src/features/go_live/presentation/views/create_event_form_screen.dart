@@ -204,7 +204,7 @@ class _CreateShowFormScreenState extends State<CreateEventFormScreen> {
                                     return CreateProgramSelectionItem(
                                       description: programDesc,
                                       onTap: ()async{
-                                        final String? description = await showEnterDescriptionModal(context);
+                                        final String? description = await enterDescriptionModal(context: context);
                                         if(description != null){
                                           setter(
                                             (){

@@ -25,8 +25,8 @@ class GoLiveWelcomeScreen extends StatelessWidget {
             final bool isBtnActive = state != null;
             return Scaffold(
               appBar: ATAppBar(
-                leading: const ATXBackBtn(),
-                leadingWidth: 30,
+                leading: const ATXBackBtn(), leadingWidth: 30,
+                padding: const EdgeInsets.fromLTRB(7, 0, 15, 0),
                 title: Text(
                   ATStrings.CREATE_SHOW_OR_EVENT,
                   style: Theme.of(context).textTheme.bodyMedium,

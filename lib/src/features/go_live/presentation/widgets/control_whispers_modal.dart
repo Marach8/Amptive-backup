@@ -1,27 +1,36 @@
+import 'dart:io';
+import 'package:amptive/src/config/utils/colors.dart';
+import 'package:amptive/src/config/utils/helper_functions.dart';
+import 'package:amptive/src/views/widgets/common_widgets/custom_container_widget.dart';
+import 'package:flutter/material.dart';
+import 'package:gap/gap.dart';
+import 'package:get_it/get_it.dart';
+import 'package:go_router/go_router.dart';
+import 'package:iconsax/iconsax.dart';
+import '../../../../views/widgets/common_widgets/elevated_button_widget.dart';
+
 import 'package:amptive/src/views/widgets/common_widgets/custom_container_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import '../../../../views/widgets/common_widgets/elevated_button_widget.dart';
 
 import 'package:amptive/src/views/widgets/common_widgets/radio_button.dart';
 import 'package:amptive/src/global_export.dart';
 import 'package:amptive/src/views/widgets/common_widgets/dismiss_modal.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../../views/widgets/common_widgets/rich_text.dart';
 
 
-Future<String?> choose2AllowHandRaisingModal({
+Future<WhispersState?> controlWhispersModal({
   required BuildContext context,
-  required String initialHandRaising
+  required String initialWhisper
 }) async {
-  return await showModalBottomSheet<String>(
+  return await showModalBottomSheet<WhispersState>(
     context: context,
     isScrollControlled: true,
     backgroundColor: ATColors.black,
     builder: (BuildContext dContext) {
-      return BlocProvider<_HandRaisingBloc>(
-        create: (_) => _HandRaisingBloc()..initializeHandRaising(initialHandRaising),
+      return BlocProvider<_WhispersBloc>(
+        create: (_) => _WhispersBloc()..initializeWhispers(initialWhisper),
         child: DraggableScrollableSheet(
           expand: false,
           initialChildSize: 1,
@@ -45,23 +54,28 @@ Future<String?> choose2AllowHandRaisingModal({
                     mainAxisAlignment: MainAxisAlignment.center,
                     mainAxisSize: MainAxisSize.min,
                     children: <Widget>[
-                      const Icon(Icons.front_hand_outlined),
+                      const Icon(Iconsax.message),
                       const SizedBox(width: 5,),
                       Text(
-                        ATStrings.HAND_RAISING,
+                        ATStrings.WHISPERS,
                         style: Theme.of(context).textTheme.bodyLarge,
                       ),
                     ],
                   ),
                   const SizedBox(height: 15,),
-                  
-                  ATRichText(
-                    items: <String, TextStyle>{
-                      ATStrings.U_WILL_HAVE_ACCESS_2_MODERATION_TOOLS: context.textTheme.labelSmall!.copyWith(
-                        color: ATColors.hexC2C2C2.withValues(alpha: 0.76)
-                      ),
-                      ' ${ATStrings.LEARN_MORE}': context.textTheme.labelSmall!
-                    },
+                  Text(
+                    ATStrings.WHISPERS_DESC, maxLines: 5,
+                    style: Theme.of(context).textTheme.labelSmall?.copyWith(
+                      color: ATColors.hexC2C2C2.withValues(alpha: 0.76)
+                    ),
+                  ),
+
+                  const SizedBox(height: 15,),
+                  Text(
+                    ATStrings.NON_ATTENDING_ENCOURAGED_2_JOIN, maxLines: 5,
+                    style: Theme.of(context).textTheme.labelSmall?.copyWith(
+                      color: ATColors.hexC2C2C2.withValues(alpha: 0.76)
+                    ),
                   ),
 
                   const SizedBox(height: 15,),
@@ -69,42 +83,42 @@ Future<String?> choose2AllowHandRaisingModal({
                   Expanded(
                     child: SingleChildScrollView(
                       physics: const BouncingScrollPhysics(),
-                      child: BlocBuilder<_HandRaisingBloc, String?>(
-                        builder: (_, String? state) {
-                          final bool shouldAllow = state == ATStrings.ALLOW;
-                          final bool shouldNotAllow = state == ATStrings.DONT_ALLOW;
+                      child: BlocBuilder<_WhispersBloc, WhispersState?>(
+                        builder: (_, WhispersState? state) {
+                          final bool whispersIsOn = state == WhispersState.turnedOn;
+                          final bool whispersIsOff = state == WhispersState.turnedOff;
 
                           return Column(
                             children: <Widget>[
                               ATContainer(
                                 duration: 100,
-                                onTap: () => bContext.read<_HandRaisingBloc>().chooseHandRaising(
-                                  shouldAllow ? null : ATStrings.ALLOW,
+                                onTap: () => bContext.read<_WhispersBloc>().toggleWhispers(
+                                  whispersIsOn ? null : WhispersState.turnedOn,
                                 ),
                                 padding: const EdgeInsets.fromLTRB(10, 13, 15, 13),
                                 radius: 15, color: ATColors.hex2D2D2D,
                                 border: Border.all(
                                   width: 2,
-                                  color: shouldAllow ? ATColors.hex307FE2 : ATColors.trsprnt
+                                  color: whispersIsOn ? ATColors.hex307FE2 : ATColors.trsprnt
                                 ),
                                 child: Row(
                                   children: <Widget>[
-                                    ATRadioBtn(isSelected: shouldAllow),
-                                    const SizedBox(width: 15,),
+                                    ATRadioBtn(isSelected: whispersIsOn),
+                                    const SizedBox(width: 10,),
                                     Expanded(
                                       child: Column(
                                         mainAxisSize: MainAxisSize.min,
                                         crossAxisAlignment: CrossAxisAlignment.start,
                                         children: <Widget>[
                                           Text(
-                                            ATStrings.ALLOW,
+                                            ATStrings.TURN_ON,
                                             style: Theme.of(context).textTheme.bodySmall?.copyWith(
                                               fontSize: ATFontSizes.size15
                                             )
                                           ),
                                           Text(
                                             maxLines: 5,
-                                            ATStrings.AUDIENCE_CAN_RAISE_HAND,
+                                            ATStrings.WHISPERS_ENABLED,
                                             style: Theme.of(context).textTheme.titleMedium?.copyWith(
                                               color: ATColors.hexC2C2C2, fontSize: ATFontSizes.size13
                                             ),
@@ -119,14 +133,14 @@ Future<String?> choose2AllowHandRaisingModal({
                               const SizedBox(height: 15,),
 
                               ATContainer(
-                                onTap: () => bContext.read<_HandRaisingBloc>().chooseHandRaising(
-                                  shouldNotAllow ? null : ATStrings.DONT_ALLOW,
+                                onTap: () => bContext.read<_WhispersBloc>().toggleWhispers(
+                                  whispersIsOff ? null : WhispersState.turnedOff,
                                 ),
                                 padding: const EdgeInsets.fromLTRB(10, 13, 15, 13),
                                 radius: 15, duration: 100, color: ATColors.hex2D2D2D,
                                 border: Border.all(
                                   width: 2,
-                                  color: shouldNotAllow ? ATColors.hex307FE2 : ATColors.trsprnt
+                                  color: whispersIsOff ? ATColors.hex307FE2 : ATColors.trsprnt
                                 ),
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -134,22 +148,22 @@ Future<String?> choose2AllowHandRaisingModal({
                                   children: <Widget>[
                                     Row(
                                       children: <Widget>[
-                                        ATRadioBtn(isSelected: shouldNotAllow),
-                                        const SizedBox(width: 15,),
+                                        ATRadioBtn(isSelected: whispersIsOff),
+                                        const SizedBox(width: 10,),
                                         Expanded(
                                           child: Column(
                                             mainAxisSize: MainAxisSize.min,
                                             crossAxisAlignment: CrossAxisAlignment.start,
                                             children: <Widget>[
                                               Text(
-                                                ATStrings.DONT_ALLOW,
+                                                ATStrings.TURN_OFF,
                                                 style: Theme.of(context).textTheme.bodySmall?.copyWith(
                                                   fontSize: ATFontSizes.size15
                                                 )
                                               ),
                                               Text(
                                                 maxLines: 5,
-                                                ATStrings.AUDIENCE_CANNOT_RAISE_HAND,
+                                                ATStrings.WHISPERS_DISABLED,
                                                 style: Theme.of(context).textTheme.titleMedium?.copyWith(
                                                   color: ATColors.hexC2C2C2, fontSize: ATFontSizes.size13
                                                 ),
@@ -170,8 +184,8 @@ Future<String?> choose2AllowHandRaisingModal({
                   ),
                   const SizedBox(height: 15,),
 
-                  BlocBuilder<_HandRaisingBloc, String?>(
-                    builder: (_, String? state) {
+                  BlocBuilder<_WhispersBloc, WhispersState?>(
+                    builder: (_, WhispersState? state) {
                       return ATPlainElevatedBtn(
                         onPressed: state == null ? null : () => dContext.pop(state),
                         btnTitle: ATStrings.CONTINUE,
@@ -190,18 +204,24 @@ Future<String?> choose2AllowHandRaisingModal({
 
 
 
-class _HandRaisingBloc extends Cubit<String?>{
-  _HandRaisingBloc(): super(null);
+enum WhispersState{turnedOn, turnedOff}
+class _WhispersBloc extends Cubit<WhispersState?>{
+  _WhispersBloc(): super(null);
 
-  void chooseHandRaising(String? type)
-    => emit(type);
+  void toggleWhispers(WhispersState? st)
+    => emit(st);
 
-  void initializeHandRaising(String initialHandRasing){
-    if(initialHandRasing == ATStrings.CHOOSE_2_ALLOW_HAND_RASING){
+  void initializeWhispers(String initialWhisper){
+    if(initialWhisper == ATStrings.TOGGLE_WHISPERS){
       emit(null);
     }
     else{
-      emit(initialHandRasing);
+      if(initialWhisper == ATStrings.TURNED_ON){
+        emit(WhispersState.turnedOn);
+      }
+      else{
+        emit(WhispersState.turnedOff);
+      }
     }
   }
 }
