@@ -1,4 +1,4 @@
-import 'package:amptive/src/views/widgets/animation_widgets/common_animation_widgets/animated_switcher.dart';
+import 'package:amptive/src/shared/animated_switcher.dart';
 import 'package:amptive/src/features/discover/presentation/views/search_results_page_view.dart';
 import 'package:flutter/material.dart';
 import '../../../../../../features/discover/presentation/views/recent_searches_page_view.dart';

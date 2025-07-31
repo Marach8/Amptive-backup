@@ -53,6 +53,8 @@ class ATColors {
 
   static Color get hexECO404 => const Color(0xFFEC0404);
 
+  static Color get hexF92018 => const Color(0xFFF92018);
+
   static Color get notifBg => const Color(0xFF303439);
 
   static Color get successColor => const Color(0xFF54C981);

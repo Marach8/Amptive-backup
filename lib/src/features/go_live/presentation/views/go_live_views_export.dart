@@ -7,3 +7,4 @@ export 'create_event_form_screen.dart';
 export 'preview_episode_screen.dart';
 export 'create_episode_form_screen.dart';
 export 'preview_show_screen.dart';
+export 'go_live_onboarding_screen.dart';

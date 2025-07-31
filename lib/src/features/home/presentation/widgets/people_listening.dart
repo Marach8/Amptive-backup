@@ -3,8 +3,9 @@ import 'dart:ui';
 import 'package:amptive/src/config/utils/colors.dart';
 import 'package:amptive/src/config/utils/font_sizes.dart';
 import 'package:amptive/src/config/utils/image_strings.dart';
+import 'package:amptive/src/shared/overlapping_widgets.dart';
 import 'package:amptive/src/views/widgets/common_widgets/custom_container_widget.dart';
-import 'package:amptive/src/shared/overlapping_widgetsdart';
+import 'package:amptive/src/shared/overlapping_widgets.dart';
 import 'package:flutter/material.dart';
 
 class NoOfListenersWidget extends StatelessWidget {
@@ -24,7 +25,7 @@ class NoOfListenersWidget extends StatelessWidget {
       alignment: Alignment.centerLeft,
       clipBehavior: Clip.none,
       children: <Widget>[
-        ATOverlappingWidgets(
+        ATOverlappingImages(
           imgPaths: const <String>[ATImgStrings.jpeg1, ATImgStrings.jpeg2, ATImgStrings.jpeg3, ATImgStrings.JOE_POMP_SHOW],
           imgSize: 42, overlapOffset: 30, borderWidth: 1,
           borderColor: ATColors.white.withValues(alpha: 0.4)

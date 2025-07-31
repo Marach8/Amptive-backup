@@ -23,7 +23,7 @@ import '../../../../services/go_live_service/go_live_service.dart';
 import '../../../../config/utils/colors.dart';
 import '../../../../config/utils/other_strings.dart';
 import '../../../../config/utils/dialogs/go_live/follow_or_subscribe_dialog.dart';
-import '../../../../views/widgets/animation_widgets/common_animation_widgets/animated_switcher.dart';
+import '../../../../shared/animated_switcher.dart';
 import '../../../../views/widgets/other_widgets/main_application_widgets/widgets_in_go_live/go_live_header_widget.dart';
 import '../../../../views/widgets/other_widgets/main_application_widgets/widgets_in_go_live/go_live_host_widget_for_audience_view.dart';
 

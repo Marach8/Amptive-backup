@@ -16,6 +16,7 @@ import '../../../../views/widgets/common_widgets/live_user_model_widget.dart';
 import '../../../../views/widgets/other_widgets/main_application_widgets/widgets_in_home_view/appbar_drop_down.dart';
 import '../../../go_live/presentation/widgets/user_go_live_widget.dart';
 
+
 class ATHomeScreen extends StatelessWidget {
   const ATHomeScreen({super.key});
 
@@ -48,7 +49,8 @@ class ATHomeScreen extends StatelessWidget {
               actions: <Widget>[
                 GestureDetector(
                   onTap: (){
-                    context.pushNamed(ATRoutes.WALLET);
+                    context.pushNamed(ATRoutes.GO_LIVE_ONBOARDING);
+                    //context.pushNamed(ATRoutes.WALLET);
                   },
                   child: Stack(
                     children: <Widget>[
@@ -96,9 +98,9 @@ class ATHomeScreen extends StatelessWidget {
                     ),
                     ...Iterable<Widget>.generate(
                       20,
-                      (_) => Padding(
-                        padding: EdgeInsets.only(right: 14.w),
-                        child: const LiveUserWidget(),
+                      (_) => const Padding(
+                        padding: EdgeInsets.only(right: 14),
+                        child: LiveUserWidget(),
                       )
                     ),
                   ]

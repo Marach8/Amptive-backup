@@ -8,7 +8,8 @@ class ATAnimatedSlide extends StatelessWidget {
     required this.endOffset,
     required this.condition,
     this.curve,
-    this.duration
+    this.duration,
+    this.onEnd
   });
 
   final Widget child;
@@ -16,6 +17,7 @@ class ATAnimatedSlide extends StatelessWidget {
   final bool condition;
   final int? duration;
   final Curve? curve;
+  final void Function()? onEnd;
 
   @override
   Widget build(BuildContext context) {
@@ -23,6 +25,7 @@ class ATAnimatedSlide extends StatelessWidget {
       curve: curve ?? Curves.decelerate,
       offset: condition ? endOffset : startOffset,
       duration: Duration(milliseconds: duration ?? 500),
+      onEnd: onEnd,
       child: child,
     );
   }

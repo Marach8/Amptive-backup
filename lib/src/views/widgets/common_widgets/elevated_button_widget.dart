@@ -1,3 +1,4 @@
+import 'package:amptive/src/config/config_export.dart';
 import 'package:amptive/src/config/utils/colors.dart';
 import 'package:amptive/src/config/utils/helper_functions.dart';
 import 'package:flutter/material.dart';
@@ -70,13 +71,14 @@ class ATPlainElevatedBtn extends StatelessWidget {
     this.btnTitle,
     required this.onPressed,
     this.height,
+    this.width,
     this.bgColor,
     this.fgColor,
     this.child
   });
   final String? btnTitle;
   final void Function()? onPressed;
-  final double? height;
+  final double? height, width;
   final Color? bgColor, fgColor;
   final Widget? child;
 
@@ -91,7 +93,7 @@ class ATPlainElevatedBtn extends StatelessWidget {
           borderRadius: BorderRadius.circular(30)
         ),
         //padding: const EdgeInsets.fromLTRB(),
-        fixedSize: Size(ATHelperFuncs.getScreenWidth(context), height ?? 45)
+        fixedSize: Size(width ?? context.screenWidth, height ?? 45)
       ),
       child: child ?? Text(btnTitle ?? ''),
     );

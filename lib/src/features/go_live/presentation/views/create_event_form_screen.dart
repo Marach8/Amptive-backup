@@ -6,7 +6,7 @@ import 'package:amptive/src/config/config_export.dart';
 import 'package:amptive/src/features/go_live/go_live_export.dart';
 import 'package:amptive/src/models/community.dart';
 import 'package:amptive/src/services/create_show/create_show_service.dart';
-import 'package:amptive/src/views/widgets/animation_widgets/common_animation_widgets/animated_switcher.dart';
+import 'package:amptive/src/shared/animated_switcher.dart';
 import 'package:amptive/src/views/widgets/common_widgets/annotated_region__widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/divider_widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/textformfield_widget.dart';

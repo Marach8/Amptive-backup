@@ -34,6 +34,7 @@ class ATStrings{
   static const String and = 'and';
   static const String emailSymbol = '@';
   static const String signUp = 'Sign up';
+  static const String RECORD = 'Record';
   static const String LAUNCH_SHOW = 'Launch show';
   static const String signIn = 'Sign in';
   static const String attendAsGuest = 'Attend as guest';
@@ -61,6 +62,7 @@ class ATStrings{
   static const String EMAIL = 'Email';
   static const String LIVE = 'Live';
   static const String ALL = 'All';
+  static const String RECORDING_WILL_AUTOPLAY = 'Your recording will play in';
   static const String ENTER_VALID_URL = 'Please, enter a valid URL!';
   static const String TRSF_SUCCESS = 'Transfer Successful';
   static const String WITHDRAWAL_REQUEST_SENT = 'Withdrawal Request Sent';
@@ -107,6 +109,10 @@ class ATStrings{
   static const String DELETE_PLAN = 'Delete plan';
   static const String DELETE = 'Delete';
   static const String SAVE = 'Save';
+  static const String TAP_D_RECORD_BTN = 'Tap the record button';
+  static const String SPEAK_IN_2_MIC = 'Speak into the mic';
+  static const String SOUND_CHECK = 'Sound check';
+  static const String GOING_LIVE_ON_AIR = 'Going live on air';
   static const String CHANGE_BANK_DETAILS = 'Change bank details';
   static const String DELETE_SUB_PLAN = 'Delete subscription plan?';
   static const String DELETE_SUB_PLAN_DESC = 'Deleting plan will grant listeners free access to your shows.';

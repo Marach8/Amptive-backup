@@ -34,18 +34,20 @@ class ATScalingSwitcher extends StatelessWidget {
   const ATScalingSwitcher({
     super.key,
     required this.child,
-    this.duration
+    this.duration,
+    this.curve,
   });
   final Widget child;
   final int? duration;
+  final Curve? curve;
 
   @override
   Widget build(BuildContext context) {
     return AnimatedSwitcher(
-      duration: Duration(milliseconds: duration ?? 1000),
-      reverseDuration: Duration(milliseconds: duration ?? 1000),
-      switchInCurve: Curves.easeIn,
-      switchOutCurve: Curves.easeIn,
+      duration: Duration(milliseconds: duration ?? 500),
+      reverseDuration: Duration(milliseconds: duration ?? 500),
+      switchInCurve: curve ?? Curves.easeIn,
+      switchOutCurve: curve ?? Curves.easeIn,
       transitionBuilder: (Widget child, Animation<double> animation) {
         return ScaleTransition(
           scale: animation,

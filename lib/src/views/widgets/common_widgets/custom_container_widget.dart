@@ -26,6 +26,7 @@ class ATContainer extends StatelessWidget {
     this.duration,
     this.onTap,
     this.boxShadow,
+    this.onEnd,
     this.child,
   });
 
@@ -45,6 +46,7 @@ class ATContainer extends StatelessWidget {
   final VoidCallback? onTap;
   final Curve curve;
   final List<BoxShadow>? boxShadow;
+  final VoidCallback? onEnd;
 
   @override
   Widget build(BuildContext context) {
@@ -61,6 +63,7 @@ class ATContainer extends StatelessWidget {
           curve: curve,
           alignment: alignment,
           margin: margin,
+          onEnd: onEnd,
           clipBehavior: clipBehavior,
           padding: padding,
           height: height,
