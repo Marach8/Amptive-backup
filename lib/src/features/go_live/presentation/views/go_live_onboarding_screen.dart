@@ -2,6 +2,7 @@ import 'dart:async' show StreamSubscription, Timer, StreamController;
 import 'dart:developer' show log;
 import 'dart:io' show Directory, File;
 
+import 'package:amptive/src/features/go_live/presentation/widgets/one_two_three_animation.dart';
 import 'package:amptive/src/global_export.dart';
 import 'package:amptive/src/views/widgets/common_widgets/annotated_region__widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/app_bar_widget.dart';
@@ -13,12 +14,13 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_sound/flutter_sound.dart';
+import 'package:go_router/go_router.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 import '../../../../views/widgets/common_widgets/image_loader_widget.dart';
-import 'single_ring_ripple_animation.dart';
+import '../widgets/single_ring_ripple_animation.dart';
 
 
 class GoLiveOnboardingScreen extends StatelessWidget {
@@ -57,22 +59,24 @@ class __SubWidgetState extends State<_SubWidget> {
   String? _currentRecordingPath;
 
   void _startAudioPlayCountDown(){
+    log('countdown started');
     _timer?.cancel();
     _maxTime = 10;
     _timeRemainingStremCntrl.add(_maxTime);
     _timer = Timer.periodic(
       const Duration(seconds: 1), 
-      (_) {
+      (Timer tm) {
         _maxTime --;
         if (_maxTime >= 0) {
           _timeRemainingStremCntrl.add(_maxTime);
         } else {
           //When we are done with the recording countdown, we want to hide
           //the info, then start playing the recorded audio.
-          _timer?.cancel();
-          _countDownIsVisibleNotifier.value = false;
-          _startPlaying();
-          context.read<_PrivateBloc>().setStage(OnboardStage.isPlaying);
+          if(_maxTime == -1){
+            _countDownIsVisibleNotifier.value = false;
+            _startPlaying();
+            context.read<_PrivateBloc>().setStage(OnboardStage.isPlaying);
+          }
         }
       }
     );
@@ -199,6 +203,8 @@ class __SubWidgetState extends State<_SubWidget> {
             builder: (_, OnboardStage state) {
               final bool showPicture = state == OnboardStage.isRecording ||
                 state == OnboardStage.isPlaying;
+              final bool show123CountDown = state == OnboardStage.isGoingLive;
+
               return Column(
                 children: <Widget>[
                   Text(
@@ -215,12 +221,22 @@ class __SubWidgetState extends State<_SubWidget> {
                       fontWeight: ATFontWeights.w800
                     )
                   ),
+                  
                   const SizedBox(height: 50),
+                  
                   SizedBox(
                     height: 200, width: 200,
                     child: ATScalingSwitcher(
                       curve: Curves.decelerate,
-                      child: showPicture ? Stack(
+                      child: show123CountDown ? OneTwoThreeCountDown(
+                        key: const ValueKey<double>(1.04),
+                        onCountDownFinished: (){
+                          context.pushReplacementNamed(
+                            ATRoutes.MAIN_GO_LIVE_PROGRAM,
+                            extra: GoLiveUserType.audience
+                          );
+                        },
+                      ) : showPicture ? Stack(
                         key: const ValueKey<double>(1.01),
                         alignment: Alignment.center,
                         clipBehavior: Clip.none,
@@ -311,46 +327,56 @@ class __SubWidgetState extends State<_SubWidget> {
                 }
               ),
               const SizedBox(height: 10,),
-              Row(
-                children: <Widget>[
-                  Flexible(
-                    child: BlocBuilder<_PrivateBloc, (OnboardStage, bool)>(
-                      builder: (_, (OnboardStage, bool) state) {
-                        final bool shouldRecord = state.$1 == OnboardStage.initial;
-                        final bool shouldActivateBtn = state.$2;
-                        return ATPlainElevatedBtn(
-                          onPressed: shouldActivateBtn ? (){
-                            if(shouldRecord){
-                              _startRecording();
-                              context.read<_PrivateBloc>().setFullState((OnboardStage.isRecording, false));
-                            }
-                          } : null,
-                          btnTitle: shouldRecord ? ATStrings.RECORD : ATStrings.DONE,
-                          fgColor: shouldRecord ? ATColors.white : ATColors.black,
-                          bgColor: shouldRecord ? ATColors.hexF92018 : ATColors.white
-                        );
-                      }
+              BlocBuilder<_PrivateBloc, (OnboardStage, bool)>(
+                builder: (_, (OnboardStage, bool) state) {
+                  final bool shouldRecord = state.$1 == OnboardStage.initial;
+                  final bool shouldActivateBtn = state.$2;
+                  final bool hideRow = state.$1 == OnboardStage.isGoingLive;
+
+                  return ATAnimatedSlide(
+                    condition: hideRow,
+                    startOffset: const Offset(0, 0),
+                    endOffset: const Offset(0, 1.5),
+                    child: Row(
+                      children: <Widget>[
+                        Flexible(
+                          child: ATPlainElevatedBtn(
+                            onPressed: shouldActivateBtn ? (){
+                              if(shouldRecord){
+                                _startRecording();
+                                context.read<_PrivateBloc>().setFullState((OnboardStage.isRecording, false));
+                              }
+                              else{
+                                context.read<_PrivateBloc>().setStage(OnboardStage.isGoingLive);
+                              }
+                            } : null,
+                            btnTitle: shouldRecord ? ATStrings.RECORD : ATStrings.DONE,
+                            fgColor: shouldRecord ? ATColors.white : ATColors.black,
+                            bgColor: shouldRecord ? ATColors.hexF92018 : ATColors.white
+                          ),
+                        ),
+                        ValueListenableBuilder<bool>(
+                          valueListenable: _reRecordBtnNotifier,
+                          builder: (_, bool showBtn, __) {
+                            return ATScalingSwitcher(
+                              duration: 500,
+                              child: showBtn ? ATContainer(
+                                onTap: (){
+                                  _reRecordBtnNotifier.value = false;
+                                  context.read<_PrivateBloc>().setFullState((OnboardStage.initial, true));
+                                },
+                                margin: const EdgeInsets.only(left: 15),
+                                color: ATColors.hexF92018, radius: 25,
+                                height: 45, width: 45,
+                                child: const Icon(Iconsax.refresh,),
+                              ) : const SizedBox.shrink()
+                            );
+                          }
+                        )
+                      ],
                     ),
-                  ),
-                  ValueListenableBuilder<bool>(
-                    valueListenable: _reRecordBtnNotifier,
-                    builder: (_, bool showBtn, __) {
-                      return ATScalingSwitcher(
-                        duration: 500,
-                        child: showBtn ? ATContainer(
-                          onTap: (){
-                            _reRecordBtnNotifier.value = false;
-                            context.read<_PrivateBloc>().setFullState((OnboardStage.initial, true));
-                          },
-                          margin: const EdgeInsets.only(left: 15),
-                          color: ATColors.hexF92018, radius: 25,
-                          height: 45, width: 45,
-                          child: const Icon(Iconsax.refresh,),
-                        ) : const SizedBox.shrink()
-                      );
-                    }
-                  )
-                ],
+                  );
+                }
               )
             ],
           ),

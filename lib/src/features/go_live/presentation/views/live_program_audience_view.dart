@@ -28,15 +28,15 @@ import '../../../../views/widgets/other_widgets/main_application_widgets/widgets
 import '../../../../views/widgets/other_widgets/main_application_widgets/widgets_in_go_live/go_live_host_widget_for_audience_view.dart';
 
 
-class ATLiveProgramsAudienceScreen extends StatefulWidget {
-  const ATLiveProgramsAudienceScreen({super.key, required this.goLiveHost});
+class LiveProgramAudienceView extends StatefulWidget {
+  const LiveProgramAudienceView({super.key, required this.goLiveHost});
   final ObjectWithNotifier<Host> goLiveHost;
 
   @override
-  State<ATLiveProgramsAudienceScreen> createState() => _ATLiveProgramsAudienceScreenState();
+  State<LiveProgramAudienceView> createState() => _LiveProgramAudienceViewState();
 }
 
-class _ATLiveProgramsAudienceScreenState extends State<ATLiveProgramsAudienceScreen> {
+class _LiveProgramAudienceViewState extends State<LiveProgramAudienceView> {
   late GoLiveService service;
   late ScrollController _scrollController;
   late ValueNotifier<bool> _scroll2BottomNotifier;

@@ -14,8 +14,8 @@ import 'package:iconsax/iconsax.dart';
 import '../../bloc/profile_bloc_export.dart';
 import '../widgets/profile_widgets_export.dart';
 
-class AmptiveCreatorProfileScreen extends StatelessWidget {
-  const AmptiveCreatorProfileScreen({super.key});
+class CreatorProfileScreen extends StatelessWidget {
+  const CreatorProfileScreen({super.key});
 
   @override
   Widget build(BuildContext context) {

@@ -1,5 +1,4 @@
 import 'package:amptive/src/features/discover/presentation/views/discover_landing_screen.dart';
-import 'package:amptive/src/features/live_programs/presentation/views/live_audience_view.dart';
 import 'package:amptive/src/shared/animated_slide.dart';
 import 'package:amptive/src/views/widgets/common_widgets/annotated_region__widget.dart';
 import 'package:amptive/src/views/widgets/other_widgets/main_application_widgets/dashboard_nav_bar_widget.dart';
@@ -7,7 +6,28 @@ import 'package:amptive/src/features/home/presentation/views/home_landing_screen
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../services/go_live_service/go_live_service.dart';
+import 'go_live/go_live_export.dart';
 import 'notifications/presentation/views/notif_landing_screen.dart';
+
+
+enum GoLiveUserType{audience, cohost, host}
+class GoLiveScreen extends StatelessWidget {
+  const GoLiveScreen({
+    super.key,
+    required this.userType
+  });
+
+  final GoLiveUserType userType;
+
+  @override
+  Widget build(BuildContext context) {
+    return switch(userType){
+      GoLiveUserType.audience => LiveProgramAudienceView(goLiveHost: getHostList().first),
+      GoLiveUserType.cohost => const LiveProgramCohostView(),
+      GoLiveUserType.host => LiveProgramHostView(goLiveHost: getHostList().first),
+    };
+  }
+}
 
 
 class ATMainAppShell extends StatelessWidget {
@@ -22,13 +42,11 @@ class ATMainAppShell extends StatelessWidget {
           builder: (_, int index) {
             return IndexedStack(
               index: index,
-              children: <Widget>[
-                const ATHomeScreen(),
-                const ATDiscoverScreen(),
-                ATLiveProgramsAudienceScreen(goLiveHost: getHostList().first),
-                //const AmptiveGoLiveCohostView(),
-                //AmptiveGoLiveHostView(goLiveHost: getHostList().first),
-                const ATNotificationScreen()
+              children: const <Widget>[
+                ATHomeScreen(),
+                ATDiscoverScreen(),
+                SizedBox.shrink(),
+                ATNotificationScreen()
               ]
             );
           }

@@ -28,15 +28,15 @@ import '../../../../views/widgets/other_widgets/main_application_widgets/widgets
 import '../../../../views/widgets/other_widgets/main_application_widgets/widgets_in_go_live/go_live_notification_widget.dart';
 
 
-class AmptiveGoLiveHostView extends StatefulWidget {
-  const AmptiveGoLiveHostView({super.key, required this.goLiveHost});
+class LiveProgramHostView extends StatefulWidget {
+  const LiveProgramHostView({super.key, required this.goLiveHost});
   final ObjectWithNotifier<Host> goLiveHost;
 
   @override
-  State<AmptiveGoLiveHostView> createState() => _AmptiveGoLiveHostViewState();
+  State<LiveProgramHostView> createState() => _LiveProgramHostViewState();
 }
 
-class _AmptiveGoLiveHostViewState extends State<AmptiveGoLiveHostView> {
+class _LiveProgramHostViewState extends State<LiveProgramHostView> {
   late GoLiveService service;
   late ScrollController _scrollController;
   late ValueNotifier<bool> _scroll2BottomNotifier;

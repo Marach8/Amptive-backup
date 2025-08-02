@@ -87,4 +87,5 @@ class ATRoutes {
   static const String WALLET_TXNS = 'wallet_transactions';
   static const String SCHEDULE_DETAILED = 'schedule_detailed_screen';
   static const String GO_LIVE_ONBOARDING = 'go_live_onboarding_screen';
+  static const String MAIN_GO_LIVE_PROGRAM = 'main_go_live_program';
 }

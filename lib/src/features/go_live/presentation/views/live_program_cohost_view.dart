@@ -22,14 +22,14 @@ import '../../../../config/utils/colors.dart';
 import '../../../../views/widgets/other_widgets/main_application_widgets/widgets_in_go_live/go_live_host_widget_for_host_view.dart';
 
 
-class AmptiveGoLiveCohostView extends StatefulWidget {
-  const AmptiveGoLiveCohostView({super.key});
+class LiveProgramCohostView extends StatefulWidget {
+  const LiveProgramCohostView({super.key});
 
   @override
-  State<AmptiveGoLiveCohostView> createState() => _AmptiveGoLiveCohostViewState();
+  State<LiveProgramCohostView> createState() => _LiveProgramCohostViewState();
 }
 
-class _AmptiveGoLiveCohostViewState extends State<AmptiveGoLiveCohostView> {
+class _LiveProgramCohostViewState extends State<LiveProgramCohostView> {
   late GoLiveService service;
   late ScrollController _scrollController;
 
