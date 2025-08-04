@@ -93,7 +93,7 @@ class ATPlainElevatedBtn extends StatelessWidget {
           borderRadius: BorderRadius.circular(30)
         ),
         //padding: const EdgeInsets.fromLTRB(),
-        fixedSize: Size(width ?? context.screenWidth, height ?? 45)
+        fixedSize: Size(width ?? context.screenWidth, height ?? 54)
       ),
       child: child ?? Text(btnTitle ?? ''),
     );

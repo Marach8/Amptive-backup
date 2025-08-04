@@ -21,3 +21,6 @@ export 'control_whispers_modal.dart';
 export 'schedule_icon.dart';
 export 'one_two_three_animation.dart';
 export 'single_ring_ripple_animation.dart';
+export 'blurred_rotating_radial_lines.dart';
+export 'txt_instructions_switcher.dart';
+export 'play_progress_indicator.dart';

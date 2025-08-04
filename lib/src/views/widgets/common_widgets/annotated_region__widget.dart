@@ -7,16 +7,17 @@ class ATAnnotatedRegion extends StatelessWidget {
   const ATAnnotatedRegion({
     super.key,
     required this.child,
-    this.statusBarColor
+    this.statusBarColor,
+    this.systemBarColor,
   });
   final Widget child;
-  final Color? statusBarColor;
+  final Color? statusBarColor, systemBarColor;
 
   @override
   Widget build(BuildContext context) {
     return AnnotatedRegion<SystemUiOverlayStyle>(
       value: SystemUiOverlayStyle(
-        systemNavigationBarColor: ATColors.black,
+        systemNavigationBarColor: systemBarColor ?? ATColors.black,
         statusBarColor: statusBarColor ?? ATColors.black,
         statusBarIconBrightness: Brightness.light,
         systemNavigationBarIconBrightness: Brightness.light

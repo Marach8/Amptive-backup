@@ -49,6 +49,10 @@ class ATHomeScreen extends StatelessWidget {
               actions: <Widget>[
                 GestureDetector(
                   onTap: (){
+                    // context.pushReplacementNamed(
+                    //   ATRoutes.MAIN_GO_LIVE_PROGRAM,
+                    //   extra: GoLiveUserType.audience
+                    // );
                     context.pushNamed(ATRoutes.GO_LIVE_ONBOARDING);
                     //context.pushNamed(ATRoutes.WALLET);
                   },
@@ -67,7 +71,13 @@ class ATHomeScreen extends StatelessWidget {
                 ),
                 const Gap(24),
                 GestureDetector(
-                  onTap: () => context.pushNamed(ATRoutes.CREATOR_PROFILE_SCREEN),
+                  onTap: (){
+                    context.pushReplacementNamed(
+                      ATRoutes.MAIN_GO_LIVE_PROGRAM,
+                      extra: GoLiveUserType.audience
+                    );
+                  },
+                 // onTap: () => context.pushNamed(ATRoutes.CREATOR_PROFILE_SCREEN),
                   //onTap: () => context.pushNamed(ATRoutes.USER_PROFILE_SCREEN),
                   child: const Padding(
                     padding: EdgeInsets.only(right: 15),

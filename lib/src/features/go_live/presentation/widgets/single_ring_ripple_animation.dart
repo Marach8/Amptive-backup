@@ -32,7 +32,7 @@ class SingleRingRippleAnimation extends StatelessWidget {
                 shape: BoxShape.circle,
                 border: Border.all(
                   color: ATColors.white.withValues(alpha: opacity * 0.3),
-                  width: 1.5
+                  width: 2
                 ),
               ),
             );

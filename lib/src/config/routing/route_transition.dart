@@ -11,7 +11,7 @@ class ATSlidingRouteTransition<T> extends CustomTransitionPage<T>{
         begin: beginOffset ?? const Offset(1.0, 0.0), 
         end: Offset.zero
       ).animate(
-        CurvedAnimation(parent: animation, curve: Curves.decelerate)
+        CurvedAnimation(parent: animation, curve: Curves.easeIn)
       );
 
       return SlideTransition(
@@ -37,7 +37,7 @@ class ATFadingRouteTransition<T> extends CustomTransitionPage<T>{
         begin: beginOffset ?? 0.0,
         end: 1.0,
       ).animate(
-        CurvedAnimation(parent: animation, curve: Curves.decelerate)
+        CurvedAnimation(parent: animation, curve: Curves.easeIn)
       );
 
       return FadeTransition(

@@ -9,7 +9,7 @@ class OneTwoThreeCountDown extends StatelessWidget {
 
   final VoidCallback onCountDownFinished;
 
-  Stream<(double?, double?, double?)> _show123BottomValues() async* {
+  Stream<(double?, double?, double?)> _generate123BottomValues() async* {
     await Future<void>.delayed(const Duration(seconds: 2));
     yield (50, 0, -50);
     await Future<void>.delayed(const Duration(seconds: 2));
@@ -25,7 +25,7 @@ class OneTwoThreeCountDown extends StatelessWidget {
         height: 45, width: 45,
         child: StreamBuilder<(double?, double?, double?)>(
           initialData: (0, -50, -100),
-          stream: _show123BottomValues(),
+          stream: _generate123BottomValues(),
           builder: (_, AsyncSnapshot<(double?, double?, double?)> snap) {
             final (double?, double?, double?) values = snap.data!;
             return Stack(
@@ -76,3 +76,49 @@ class _PText extends StatelessWidget {
     );
   }
 }
+
+
+
+// class TextInstructionSwitcher extends StatelessWidget {
+//   const TextInstructionSwitcher({super.key, required this.text});
+
+//   final String text;
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return AnimatedSwitcher(
+//       duration: const Duration(milliseconds: 500),
+//       reverseDuration: const Duration(milliseconds: 500),
+//       switchInCurve: Curves.easeIn, switchOutCurve: Curves.easeIn,
+//       transitionBuilder: (Widget child, Animation<double> animation) {
+//         // Current text slides out to left
+//         final Animation<Offset> outAnimation = Tween<Offset>(
+//           begin: Offset.zero,
+//           end: const Offset(-1.0, 0.0),
+//         ).animate(animation);
+        
+//         // New text slides in from right
+//         final Animation<Offset> inAnimation = Tween<Offset>(
+//           begin: const Offset(1.0, 0.0),
+//           end: Offset.zero,
+//         ).animate(animation);
+        
+//         // Determine which animation to use
+//         return SlideTransition(
+//           position: child.key == ValueKey<String>(text) ? inAnimation : outAnimation,
+//           child: child,
+//         );
+//       },
+//       child: Text(
+//         text.toUpperCase(),
+//         key: ValueKey<String>(text),
+//         textAlign: TextAlign.center, maxLines: 3,
+//         style: context.textTheme.displayMedium?.copyWith(
+//           color: ATColors.hexC2C2C2,
+//           fontSize: 38, height: 0.85,
+//           fontWeight: ATFontWeights.w800
+//         )
+//       ),
+//     );
+//   }
+// }

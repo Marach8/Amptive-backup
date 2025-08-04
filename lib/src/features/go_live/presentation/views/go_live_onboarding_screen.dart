@@ -1,8 +1,9 @@
 import 'dart:async' show StreamSubscription, Timer, StreamController;
 import 'dart:developer' show log;
 import 'dart:io' show Directory, File;
-
+import 'package:amptive/src/features/go_live/go_live_export.dart';
 import 'package:amptive/src/features/go_live/presentation/widgets/one_two_three_animation.dart';
+import 'package:amptive/src/features/go_live/presentation/widgets/blurred_rotating_radial_lines.dart';
 import 'package:amptive/src/global_export.dart';
 import 'package:amptive/src/views/widgets/common_widgets/annotated_region__widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/app_bar_widget.dart';
@@ -10,6 +11,7 @@ import 'package:amptive/src/views/widgets/common_widgets/back_button.dart';
 import 'package:amptive/src/views/widgets/common_widgets/custom_container_widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/elevated_button_widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/rich_text.dart';
+import 'package:carousel_slider/carousel_controller.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -18,9 +20,7 @@ import 'package:go_router/go_router.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
-
 import '../../../../views/widgets/common_widgets/image_loader_widget.dart';
-import '../widgets/single_ring_ripple_animation.dart';
 
 
 class GoLiveOnboardingScreen extends StatelessWidget {
@@ -44,12 +44,13 @@ class _SubWidget extends StatefulWidget {
 }
 
 class __SubWidgetState extends State<_SubWidget> {
-  late final FlutterSoundRecorder _recorder = FlutterSoundRecorder();
-  late final FlutterSoundPlayer _player = FlutterSoundPlayer();
+  final FlutterSoundRecorder _recorder = FlutterSoundRecorder();
+  final FlutterSoundPlayer _player = FlutterSoundPlayer();
   final ValueNotifier<double> _amplitudeNotifier = ValueNotifier<double>(0.0);
   final ValueNotifier<bool> _rippleRingNotifier = ValueNotifier<bool>(false);
   final ValueNotifier<bool> _countDownIsVisibleNotifier = ValueNotifier<bool>(false);
   final ValueNotifier<bool> _reRecordBtnNotifier = ValueNotifier<bool>(false);
+  final  CarouselSliderController carouselCntrl =  CarouselSliderController();
 
   int _maxTime = 10;
   final StreamController<int> _timeRemainingStremCntrl = StreamController<int>();
@@ -57,9 +58,9 @@ class __SubWidgetState extends State<_SubWidget> {
 
   StreamSubscription<RecordingDisposition>? _progressSub;
   String? _currentRecordingPath;
+  bool _hasPlayedAlready = false;
 
   void _startAudioPlayCountDown(){
-    log('countdown started');
     _timer?.cancel();
     _maxTime = 10;
     _timeRemainingStremCntrl.add(_maxTime);
@@ -72,10 +73,12 @@ class __SubWidgetState extends State<_SubWidget> {
         } else {
           //When we are done with the recording countdown, we want to hide
           //the info, then start playing the recorded audio.
+          tm.cancel();
+          _timer = null;
           if(_maxTime == -1){
+            _hasPlayedAlready = true;
             _countDownIsVisibleNotifier.value = false;
             _startPlaying();
-            context.read<_PrivateBloc>().setStage(OnboardStage.isPlaying);
           }
         }
       }
@@ -97,7 +100,7 @@ class __SubWidgetState extends State<_SubWidget> {
         _progressSub = _recorder.onProgress?.listen(
           (RecordingDisposition disposition){
             _amplitudeNotifier.value = disposition.decibels ?? 0.0;
-            if((disposition.decibels ?? 0.0) >= 60){
+            if((disposition.decibels ?? 0.0) >= 68){
               _rippleRingNotifier.value = true;
               Future<void>.delayed(
                 const Duration(milliseconds: 1000),
@@ -147,6 +150,9 @@ class __SubWidgetState extends State<_SubWidget> {
           }
         },
       );
+      if(mounted){
+        context.read<_PrivateBloc>().setStage(OnboardStage.isPlaying);
+      }
     }
   }
 
@@ -196,90 +202,125 @@ class __SubWidgetState extends State<_SubWidget> {
           leadingWidth: 30, leading: ATXBackBtn(),
           padding: EdgeInsets.fromLTRB(7, 0, 15, 0),
         ),
-        body: SingleChildScrollView(
-          padding: const EdgeInsets.fromLTRB(50, 50, 50, 100),
-          child: BlocSelector<_PrivateBloc, (OnboardStage, bool), OnboardStage>(
-            selector: ((OnboardStage, bool) state) => state.$1,
-            builder: (_, OnboardStage state) {
-              final bool showPicture = state == OnboardStage.isRecording ||
-                state == OnboardStage.isPlaying;
-              final bool show123CountDown = state == OnboardStage.isGoingLive;
 
-              return Column(
-                children: <Widget>[
-                  Text(
-                    (
-                      state == OnboardStage.initial ? ATStrings.TAP_D_RECORD_BTN
-                      : state == OnboardStage.isRecording ? ATStrings.SPEAK_IN_2_MIC
-                      : state == OnboardStage.isPlaying ? ATStrings.SOUND_CHECK 
-                      : ATStrings.GOING_LIVE_ON_AIR
-                    ).toUpperCase(),
-                    textAlign: TextAlign.center, maxLines: 3,
-                    style: context.textTheme.displayMedium?.copyWith(
-                      color: ATColors.hexC2C2C2,
-                      fontSize: 38, height: 0.85,
-                      fontWeight: ATFontWeights.w800
-                    )
+        body: Stack(
+          alignment: Alignment.center,
+          children: <Widget>[
+            Positioned(
+              bottom: -50, right: -context.screenWidth * 0.3,
+              child: BlurredRotatingRadialLines(
+                child: CustomPaint(
+                  size: const Size(300, 300),
+                  painter: RadialLinesPainter(),
+                ),
+              ),
+            ),
+            Positioned(
+              bottom: -50, left: -context.screenWidth * 0.2,
+              child: BlurredRotatingRadialLines(
+                child: CustomPaint(
+                  size: const Size(300, 300),
+                  painter: RadialLinesPainter(
+                    startAngle: 210, endAngle: 20
                   ),
-                  
-                  const SizedBox(height: 50),
-                  
-                  SizedBox(
-                    height: 200, width: 200,
-                    child: ATScalingSwitcher(
-                      curve: Curves.decelerate,
-                      child: show123CountDown ? OneTwoThreeCountDown(
-                        key: const ValueKey<double>(1.04),
-                        onCountDownFinished: (){
-                          context.pushReplacementNamed(
-                            ATRoutes.MAIN_GO_LIVE_PROGRAM,
-                            extra: GoLiveUserType.audience
+                ),
+              ),
+            ),
+            Positioned.fill(
+              child: SingleChildScrollView(
+                padding: const EdgeInsets.fromLTRB(0, 50, 0, 100),
+                child: Column(
+                  children: <Widget>[
+                    BlocListener<_PrivateBloc, (OnboardStage, bool)>(
+                      listenWhen: ((OnboardStage, bool) prev, (OnboardStage, bool) curr) => prev.$1 != curr.$1,
+                      listener: (_, (OnboardStage, bool) state){
+                        if(state.$1 == OnboardStage.initial){
+                          carouselCntrl.animateToPage(
+                            0, curve: Curves.decelerate,
+                            duration: const Duration(milliseconds: 1000),
                           );
-                        },
-                      ) : showPicture ? Stack(
-                        key: const ValueKey<double>(1.01),
-                        alignment: Alignment.center,
-                        clipBehavior: Clip.none,
-                        children: <Widget>[
-                          SingleRingRippleAnimation(rippleNotifier: _rippleRingNotifier),
-                          ValueListenableBuilder<double>(
-                            valueListenable: _amplitudeNotifier,
-                            builder: (_, double value, __) {
-                              final double width = 10 * (value / 70);
-                              return Container(
-                                height: 130, width: 130,
-                                padding: const EdgeInsets.all(3),
-                                decoration: BoxDecoration(
-                                  boxShadow: <BoxShadow>[
-                                    BoxShadow(
-                                      spreadRadius: width, blurRadius: 1,
-                                      color: ATColors.white.withValues(alpha: 0.3),
-                                    )
-                                  ],
-                                  shape: BoxShape.circle,
-                                ),
-                                child: const SizedBox(),
-                              );
-                            }
-                          ),
-                          CircleAvatar(radius: 65, backgroundColor: ATColors.black),
-                          ClipRRect(
-                            borderRadius: BorderRadiusGeometry.circular(100),
-                            child: const ATImgLoader(
-                              height: 123, width: 123,
-                              imgPath: ATImgStrings.jpeg1,
-                              boxFit: BoxFit.cover
-                            ),
-                          ),
-                        ],
-                      ) : const SizedBox.shrink(key: ValueKey<double>(1.02),),
+                          return;
+                        }
+                        carouselCntrl.nextPage(
+                          duration: const Duration(milliseconds: 1500),
+                          curve: Curves.decelerate
+                        );
+                      },
+                      child: InstructionsSwitcher(carouselCntrl: carouselCntrl)
                     ),
-                  )
-                ],
-              );
-            }
-          ),
+
+                    const SizedBox(height: 30),
+
+                    BlocSelector<_PrivateBloc, (OnboardStage, bool), OnboardStage>(
+                      selector: ((OnboardStage, bool) state) => state.$1,
+                      builder: (BuildContext ctx, OnboardStage state) {
+                        final bool showPicture = state == OnboardStage.isRecording ||
+                          state == OnboardStage.isPlaying;
+                        final bool isPlaying = state == OnboardStage.isPlaying;
+                        final bool show123CountDown = state == OnboardStage.isGoingLive;
+                                  
+                        return SizedBox(
+                          height: 200, width: 200,
+                          child: ATScalingSwitcher(
+                            curve: Curves.decelerate,
+                            duration: 800,
+                            child: show123CountDown ? OneTwoThreeCountDown(
+                              key: const ValueKey<double>(1.04),
+                              onCountDownFinished: (){
+                                context.pushReplacementNamed(
+                                  ATRoutes.MAIN_GO_LIVE_PROGRAM,
+                                  extra: GoLiveUserType.host
+                                );
+                              },
+                            ) : showPicture ? Stack(
+                              key: const ValueKey<double>(1.01),
+                              alignment: Alignment.center,
+                              clipBehavior: Clip.none,
+                              children: <Widget>[
+                                SingleRingRippleAnimation(rippleNotifier: _rippleRingNotifier),
+                                if(isPlaying) const PlayProgressIndicator(),
+                                ValueListenableBuilder<double>(
+                                  valueListenable: _amplitudeNotifier,
+                                  builder: (_, double value, __) {
+                                    final double width = 10 * ((value - 35) / (70 - 35));
+                                    return Container(
+                                      height: 130, width: 130,
+                                      padding: const EdgeInsets.all(3),
+                                      decoration: BoxDecoration(
+                                        boxShadow: <BoxShadow>[
+                                          BoxShadow(
+                                            spreadRadius: width, blurRadius: 1,
+                                            color: ATColors.white.withValues(alpha: 0.3),
+                                          )
+                                        ],
+                                        shape: BoxShape.circle,
+                                      ),
+                                      child: const SizedBox(),
+                                    );
+                                  }
+                                ),
+                                CircleAvatar(radius: 65, backgroundColor: ATColors.black),
+                                ClipRRect(
+                                  borderRadius: BorderRadiusGeometry.circular(100),
+                                  child: const ATImgLoader(
+                                    height: 123, width: 123,
+                                    imgPath: ATImgStrings.jpeg1,
+                                    boxFit: BoxFit.cover
+                                  ),
+                                ),
+                              ],
+                            ) : const SizedBox.shrink(key: ValueKey<double>(1.02),),
+                          ),
+                        );
+                      }
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ],
         ),
+  
       
         bottomSheet: Padding(
           padding: const EdgeInsets.fromLTRB(15, 5, 15, 10),
@@ -316,12 +357,11 @@ class __SubWidgetState extends State<_SubWidget> {
                   ),
                 ),
                 builder: (_, bool shouldShowInfo, Widget? child) {
-                  return ATAnimatedSlide(
-                    condition: shouldShowInfo,
-                    startOffset: const Offset(-1.5, 0),
-                    endOffset: const Offset(0, 0),
+                  return AnimatedScale(
+                    duration: const Duration(milliseconds: 500),
+                    scale: shouldShowInfo ? 1.0 : 0.0,
                     //After this widget is slided into view, we kick of the countdown.
-                    onEnd: () => _startAudioPlayCountDown(),
+                    onEnd: () => _hasPlayedAlready ? null : _startAudioPlayCountDown(),
                     child: child!
                   );
                 }
@@ -363,11 +403,12 @@ class __SubWidgetState extends State<_SubWidget> {
                               child: showBtn ? ATContainer(
                                 onTap: (){
                                   _reRecordBtnNotifier.value = false;
+                                  _hasPlayedAlready = false;
                                   context.read<_PrivateBloc>().setFullState((OnboardStage.initial, true));
                                 },
                                 margin: const EdgeInsets.only(left: 15),
-                                color: ATColors.hexF92018, radius: 25,
-                                height: 45, width: 45,
+                                color: ATColors.white.withValues(alpha: 0.1), radius: 30,
+                                height: 54, width: 54,
                                 child: const Icon(Iconsax.refresh,),
                               ) : const SizedBox.shrink()
                             );

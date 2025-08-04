@@ -1,3 +1,4 @@
+import 'package:amptive/src/config/config_export.dart';
 import 'package:amptive/src/config/utils/colors.dart';
 import 'package:amptive/src/config/utils/image_strings.dart';
 import 'package:amptive/src/config/utils/helper_functions.dart';
@@ -33,7 +34,7 @@ class _HorizontalScrollCardsState extends State<HorizontalScrollCards> {
   Widget build(BuildContext context) {
     return SizedBox(
       height: 260,
-      width: ATHelperFuncs.getScreenWidth(context),
+      width: context.screenWidth,
       child: Column(
         children: <Widget>[
           CarouselSlider.builder(

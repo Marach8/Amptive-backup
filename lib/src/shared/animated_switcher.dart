@@ -37,6 +37,7 @@ class ATScalingSwitcher extends StatelessWidget {
     this.duration,
     this.curve,
   });
+  
   final Widget child;
   final int? duration;
   final Curve? curve;
