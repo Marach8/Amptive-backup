@@ -92,7 +92,6 @@ class ATPlainElevatedBtn extends StatelessWidget {
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(30)
         ),
-        //padding: const EdgeInsets.fromLTRB(),
         fixedSize: Size(width ?? context.screenWidth, height ?? 54)
       ),
       child: child ?? Text(btnTitle ?? ''),

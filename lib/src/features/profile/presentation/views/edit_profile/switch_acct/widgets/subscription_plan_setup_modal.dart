@@ -6,7 +6,7 @@ import 'package:amptive/src/config/utils/helper_functions.dart';
 import 'package:amptive/src/features/profile/bloc/fees_setup_bloc.dart';
 import 'package:amptive/src/features/profile/presentation/views/profile_views_export.dart';
 import 'package:amptive/src/views/widgets/common_widgets/dismiss_modal.dart';
-import 'package:amptive/src/views/widgets/common_widgets/elevated_button_widget.dart';
+import 'package:amptive/src/shared/elevated_button_widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/image_loader_widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/textformfield_widget.dart';
 import 'package:flutter/cupertino.dart';

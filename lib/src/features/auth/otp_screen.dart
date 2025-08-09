@@ -14,7 +14,7 @@ import '../../bloc/authentication/otp/otp_auth_events.dart';
 import '../../config/utils/font_weights.dart';
 import '../../config/utils/other_strings.dart';
 import '../../views/widgets/common_widgets/app_bar_widget.dart';
-import '../../views/widgets/common_widgets/elevated_button_widget.dart';
+import '../../shared/elevated_button_widget.dart';
 import 'dart:developer';
 
 class ATOTPScreen extends StatefulWidget {

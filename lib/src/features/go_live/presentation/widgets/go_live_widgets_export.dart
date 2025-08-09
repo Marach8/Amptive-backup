@@ -24,3 +24,4 @@ export 'single_ring_ripple_animation.dart';
 export 'blurred_rotating_radial_lines.dart';
 export 'txt_instructions_switcher.dart';
 export 'play_progress_indicator.dart';
+export 'bottom_infos.dart';

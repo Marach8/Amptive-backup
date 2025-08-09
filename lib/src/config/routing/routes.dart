@@ -15,13 +15,13 @@ import 'package:amptive/src/features/discover/presentation/views/society_screen.
 import 'package:amptive/src/features/discover/presentation/views/trending_hashtags_screen.dart';
 import 'package:amptive/src/features/home/home_export.dart';
 import 'package:amptive/src/features/main_app_shell.dart';
+import 'package:amptive/src/features/post_auth/presentation/views/new_file.dart';
+import 'package:amptive/src/features/post_auth/presentation/views/post_auth_prez_export.dart';
 import 'package:amptive/src/features/profile/presentation/views/profile_views_export.dart';
 import 'package:amptive/src/features/home/presentation/views/scheduled_screen.dart';
 import 'package:amptive/src/features/wallet/presentation/views/wallet_txns_screen.dart';
-import 'package:amptive/src/features/post_auth/presentation/views/circle_image_cropper_screen.dart';
-import 'package:amptive/src/features/post_auth/presentation/views/preference_screen.dart';
-import 'package:amptive/src/features/onboarding/onboarding_page_view_screen.dart';
-import 'package:amptive/src/features/onboarding/welcome_screen.dart';
+import 'package:amptive/src/features/onboarding/presentation/views/onboarding_screen.dart';
+import 'package:amptive/src/features/onboarding/presentation/views/post_onboarding_screen.dart';
 import 'package:custom_image_crop/custom_image_crop.dart' show Ratio;
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -34,26 +34,24 @@ import '../../features/wallet/wallet_export.dart';
 
 // The route configuration.
 final GoRouter amptiveAppRouter = GoRouter(
-  initialLocation: ATRoutes.index,
-  //initialLocation: "/pre-homepage",
+  initialLocation: ATRoutes.POST_ONBOARDING_SCREEN.addSlash,
   routes: <RouteBase>[
     GoRoute(
-        path: ATRoutes.index,
-        builder: (_, __) => const ATMainAppShell()),
-    GoRoute(
-      name: ATRoutes.welcome,
-      path: "/welcome-route",
-      builder: (_, __) => const AmptiveWelcomeScreen(),
+      name: ATRoutes.POST_ONBOARDING_SCREEN,
+      path: ATRoutes.POST_ONBOARDING_SCREEN.addSlash,
+      pageBuilder: (_, __) => ATSlidingRouteTransition<void>(
+        child: const ATPostOnboardingScreen(),
+      )
     ),
     GoRoute(
-      name: ATRoutes.onboarding,
-      path: "/onboarding-route",
-      builder: (_, __) => const AmptiveOnboardingScreen(),
+      name: ATRoutes.ONBOARDING_SCREEN,
+      path: ATRoutes.ONBOARDING_SCREEN.addSlash,
+      builder: (_, __) => const ATOnboardingScreen(),
     ),
 
     //AUTHENTICATION SCREENS
     GoRoute(
-      name: ATRoutes.authScreen,
+      name: ATRoutes.CHOOSE_AUTH_TYPE_SCREEN,
       path: "/auth-route",
       builder: (_, GoRouterState state) => AmptiveAuthScreen(
         userSignUp: state.extra as bool,
@@ -122,14 +120,14 @@ final GoRouter amptiveAppRouter = GoRouter(
     GoRoute(
       name: ATRoutes.preHomepage,
       path: "/pre-homepage",
-      builder: (_, __) => const AnimExperiment()
+      builder: (_, __) => const NotificationsPromptScreen()
       //builder: (_, __) => const PreHomePage(),
     ),
 
     //MAIN APPLICATION SCREENS
     GoRoute(
-        name: ATRoutes.homeScreen,
-        path: "/home-screen",
+        name: ATRoutes.MAIN_APP_SHELL,
+        path: ATRoutes.MAIN_APP_SHELL.addSlash,
         builder: (_, __) => const ATMainAppShell(),
         routes: <RouteBase>[
           GoRoute(
@@ -275,10 +273,15 @@ final GoRouter amptiveAppRouter = GoRouter(
             pageBuilder: (_, GoRouterState st){
               final GoLiveUserType? userType = st.extra as GoLiveUserType?;
               return ATFadingRouteTransition<void>(
-                //beginOffset: const Offset(0.0, 1.0),
                 child: GoLiveScreen(userType: userType ?? GoLiveUserType.host)
               );
             }
+          ),
+
+          GoRoute(
+            name: ATRoutes.GO_LIVE_TYPE_SELECTION,
+            path: ATRoutes.GO_LIVE_TYPE_SELECTION,
+            builder: (_, __) => const GoLiveTypeSelectionScreen(),
           ),
 
           GoRoute(
@@ -519,11 +522,6 @@ final GoRouter amptiveAppRouter = GoRouter(
             builder: (_, __) => const ATUserProfileScreen(),
           ),
 
-          GoRoute(
-            name: ATRoutes.GO_LIVE_WELCOME_SCREEN,
-            path: ATRoutes.GO_LIVE_WELCOME_SCREEN,
-            builder: (_, __) => const GoLiveWelcomeScreen(),
-          ),
           GoRoute(
             name: ATRoutes.SCHEDULED_EVENTS_OR_SHOWS_SCREEN,
             path: ATRoutes.SCHEDULED_EVENTS_OR_SHOWS_SCREEN,

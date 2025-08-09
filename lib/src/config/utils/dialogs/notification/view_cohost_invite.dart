@@ -4,7 +4,7 @@ import 'package:amptive/src/config/utils/other_strings.dart';
 import 'package:amptive/src/config/utils/extensions/string_extensions.dart';
 import 'package:amptive/src/views/widgets/common_widgets/circular_image.dart';
 import 'package:amptive/src/views/widgets/common_widgets/dismiss_modal.dart';
-import 'package:amptive/src/views/widgets/common_widgets/elevated_button_widget.dart';
+import 'package:amptive/src/shared/elevated_button_widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/radio_button.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';

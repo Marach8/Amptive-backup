@@ -1,66 +1,100 @@
-import 'dart:math';
+import 'dart:math' hide log;
 import 'package:amptive/src/global_export.dart';
 import 'package:flutter/material.dart';
 
+class RotatingRadialLines extends StatefulWidget {
+  const RotatingRadialLines({
+    super.key,
+    required this.child,
+    this.duration = const Duration(seconds: 5),
+  });
 
-class BlurredRotatingRadialLines extends StatefulWidget {
-  const BlurredRotatingRadialLines({super.key, required this.child});
   final Widget child;
+  final Duration duration;
 
   @override
-  State<BlurredRotatingRadialLines> createState() => _BlurredRotatingRadialLinesState();
+  State<RotatingRadialLines> createState() => _RotatingRadialLinesState();
 }
-
-class _BlurredRotatingRadialLinesState extends State<BlurredRotatingRadialLines> {
-  double _turns = 0.0;
+class _RotatingRadialLinesState extends State<RotatingRadialLines> with SingleTickerProviderStateMixin {
+  late final AnimationController _controller;
 
   @override
-  void initState(){
+  void initState() {
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback(
-      (_) => _toggleDirection()
-    );
+    _controller = AnimationController(
+      duration: widget.duration,
+      lowerBound: -0.25,
+      upperBound: 0.0,
+      vsync: this,
+    )..repeat(reverse: true);
   }
 
-  void _toggleDirection() 
-    => setState(() => _turns = _turns == 0.0 ? -0.25 : 0.0);
-
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
-    return AnimatedRotation(
-      turns: _turns,
-      duration: const Duration(seconds: 5),
-      curve: Curves.easeInOut,
-      onEnd: () => _toggleDirection(),
-      child: widget.child,
+    return AnimatedBuilder(
+      animation: _controller,
+      builder: (_, Widget? child) {
+        return Transform.rotate(
+          angle: _controller.value * 2 * pi,
+          child: child,
+        );
+      },
+      child: RepaintBoundary(child: widget.child),
     );
   }
 }
 
 
+class RadialLinesWidget extends StatelessWidget {
+  const RadialLinesWidget({
+    super.key,
+    this.startAngle = 130.0,
+    this.endAngle = -20.0,
+  });
+
+  final double startAngle, endAngle;
+
+  @override
+  Widget build(BuildContext context) {
+    return CustomPaint(
+      isComplex: true,
+      size: Size(context.screenWidth * 0.7, context.screenHeight * 0.3),
+      painter: RadialLinesPainter(
+        startAngle: startAngle,
+        endAngle: endAngle,
+        lineLength: context.screenHeight * 0.45
+      ),
+    );
+  }
+}
 
 
 class RadialLinesPainter extends CustomPainter {
   RadialLinesPainter({
-    this.startAngle = 130.0,
-    this.endAngle = -20.0,
+    required this.lineLength,
+    required this.startAngle,
+    required this.endAngle,
     this.noOfFanLines = 20,
     this.radius = 50,
   });
   
-  final double startAngle, endAngle, radius;
+  final double startAngle, endAngle, radius, lineLength;
   final int noOfFanLines;
 
   @override
   void paint(Canvas canvas, Size size) {
     final Paint paint = Paint()
       ..color = ATColors.white
-      ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 50)
       ..strokeWidth = 3;
 
     final double centerX = size.width / 2;
-    final double originY = size.height; // bottom center
+    final double originY = size.height;
 
     final double angleStep = (endAngle - startAngle) / (noOfFanLines - 1);
 
@@ -75,7 +109,6 @@ class RadialLinesPainter extends CustomPainter {
       );
 
       // Calculate end point of the line
-      const double lineLength = 300.0;
       final Offset end = Offset(
         start.dx + lineLength * cos(angleRad),
         start.dy - lineLength * sin(angleRad),
@@ -86,5 +119,5 @@ class RadialLinesPainter extends CustomPainter {
   }
 
   @override
-  bool shouldRepaint(covariant CustomPainter oldDelegate) => false;
+  bool shouldRepaint(_) => false;
 }

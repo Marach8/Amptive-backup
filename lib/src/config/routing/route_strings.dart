@@ -2,14 +2,13 @@
 
 class ATRoutes {
   //WELCOME AND ONBOARDING
-  static const String index = "/";
-  static const String welcome = "welcome";
-  static const String onboarding = "onboarding";
+  static const String POST_ONBOARDING_SCREEN = "post_onboarding";
+  static const String ONBOARDING_SCREEN = "onboarding";
 
   //AUTHENTICATION
   static const String EMAIL_SCREEN = "email_auth";
   static const String preference = "preference";
-  static const String authScreen = "auth_screen";
+  static const String CHOOSE_AUTH_TYPE_SCREEN = "auth_screen";
   static const String passwordAuth = "password_auth";
   static const String dobAuth = "dob_auth";
   static const String OTP_SCREEN = "otp";
@@ -27,7 +26,7 @@ class ATRoutes {
 
 
   //MAIN APPLICATION
-  static const String homeScreen = "home_screen";
+  static const String MAIN_APP_SHELL = "main_app_shell";
   static const String LIVE_SHOW_DETAILED = "show_detailed_screen";
   static const String LIVE_EVENT_DETAILED = "event_detailed_screen";
   static const String SCHEDULED_EVENTS_OR_SHOWS_SCREEN = 'scheduled_events_or_shows';
@@ -38,7 +37,7 @@ class ATRoutes {
   static const String TRENDING_SOCIETY_SCREEN = 'trending_society_screen';
   static const String TRENDING_HASHTAGS_SCREEN = 'trending_hashtags_screen';
   static const String SOCIETY_HASHTAG_SCREEN = 'trending_hashtag_full_screen';
-  static const String GO_LIVE_WELCOME_SCREEN = 'go_live_welcome_screen';
+  static const String GO_LIVE_TYPE_SELECTION = 'go_live_welcome_screen';
   static const String CREATOR_PROFILE_SCREEN = 'creator_profile';
   static const String PROFILE_MENU_SCREEN = 'profile_menu_screen';
   static const String PROFILE_FOLLOWING_SCREEN = 'profile_following_screen';

@@ -15,8 +15,8 @@ class ATStrings{
   static const String NAIRA_TEXT = '₦';
 
 
-  static const String goLiveLikeNeverBefore = "Go Live, Like Never Before";
-  static const String monetizeYouLiveShowsAndEvents =
+  static const String GO_LIVE_LIKE_NEVER_B4 = "Go Live, Like Never Before";
+  static const String READILY_MONETIZE_UR_LIVE_AUDIO_PROGS =
       "Readily monetize your live audio shows and events according to your unique taste while also creating the best for your subscribers.";
   static const String experienceItUniquely = "Experience it Uniquely";
   static const String joinTheLargerAudience =
@@ -38,7 +38,7 @@ class ATStrings{
   static const String LAUNCH_SHOW = 'Launch show';
   static const String signIn = 'Sign in';
   static const String attendAsGuest = 'Attend as guest';
-  static const String skip = 'Skip';
+  static const String SKIP = 'Skip';
   static const String BACK = 'Back';
   static const String TEXT = 'Text';
   static const String RESPOND = 'Respond';
@@ -84,6 +84,7 @@ class ATStrings{
   static const String PROCEED = 'Proceed';
   static const String UR_WALLET = 'Your Wallet';
   static const String UR_WAY = 'Your Way';
+  static const String NO_THANKS = 'No thanks';
   static const String UR_WITHDRAWAL_REQUEST = 'Your withdrawal request of';
   static const String UR_DEPOSIT = 'Your deposit of';
   static const String WAS_SUCCESSFUL = 'was successful';
@@ -111,6 +112,7 @@ class ATStrings{
   static const String SAVE = 'Save';
   static const String TAP_D_RECORD_BTN = 'Tap the record button';
   static const String SPEAK_IN_2_MIC = 'Speak into the mic';
+  static const String MIC_ENHANCE_SOUND = 'Microphones enhance sound quality.';
   static const String SOUND_CHECK = 'Sound check';
   static const String GOING_LIVE_ON_AIR = 'Going live on air';
   static const String CHANGE_BANK_DETAILS = 'Change bank details';
@@ -131,6 +133,8 @@ class ATStrings{
   static const String TRANSFER_FUNDS = 'Transfer Funds';
   static const String COUNTRY = 'Country';
   static const String PROFILE = 'Profile';
+  static const String STAY_ON_LOOP = 'STAY ON THE LOOP';
+  static const String ALLOW_NOTIFICATIONS = 'Allow Amptive to send notifications of live audio shows & events';
   static const String SELECT_COUNTRY = 'Select Country';
   static const String BEGIN_SETUP = 'Begin setup';
   static const String AVAILABLE_BAL = 'Available balance';
@@ -557,4 +561,18 @@ class ATStrings{
   static const String WALLET_CREATED = 'Your wallet has been created🎉';
   static const String RECEIVE_EARNINGS_WITH_WALLET = 'Receive earnings from events, gifts and subscriptions with your wallet.';
   static const String OPEN_WALLET = 'Open wallet';
+  static const String NOTIF1 = 'The HonestBunch is live now!';
+  static const String NOTIF1_DESC = 'Join the live show happening now: From Ghetto To Glory Featuring Daddy Showkey. Tap to listen and engage.';
+  static const String NOTIF2 = 'New Subscriber!';
+  static const String NOTIF2_DESC = 'joseph has just subscribed to your channel!';
+  static const String NOTIF3 = 'New Payment for The Rest is For You show';
+  static const String NOTIF3_DESC = 'dubhem has just paid for access to your event: The Rest is Football show.';
+  static const String NOTIF4 = 'New Follower!';
+  static const String NOTIF4_DESC = 'nonye is now following you.';
+  static const String NOTIF5 = 'Invitation to Cohost Lowkey Relationships in Nigeria.';
+  static const String NOTIF5_DESC = 'tgrabs has invited you to cohost the show: Knowing when to let go. Accept the invitation to join them live!';
+  static const String NOTIF6 = 'Technology: TED Tech is Live!';
+  static const String NOTIF6_DESC = "Don't miss out! TED Tech is live in the Technology community. Tap to listen and engage.";
+  static const String NOTIF7 = 'Scheduled Show: Crimehub in Nigeria is cool';
+  static const String NOTIF7_DESC = 'Get ready! Your event, The Boys on the Tracks, is happening in just 2 days. Make any final preparations needed';
 }

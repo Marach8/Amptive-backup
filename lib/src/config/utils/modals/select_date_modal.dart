@@ -9,9 +9,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get_it/get_it.dart';
 import '../../../services/create_show/create_show_service.dart';
 import '../../../views/widgets/common_widgets/custom_container_widget.dart';
-import '../../../views/widgets/common_widgets/elevated_button_widget.dart';
 import '../image_strings.dart';
 import '../other_strings.dart';
+import 'package:amptive/src/shared/elevated_button_widget.dart';
 
 Future<void> selectDateModal(
     BuildContext context, Uint8List? selectedImage) async {

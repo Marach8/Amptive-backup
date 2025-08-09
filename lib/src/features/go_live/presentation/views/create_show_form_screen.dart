@@ -90,16 +90,16 @@ class _CreateShowFormScreenState extends State<CreateShowFormScreen> {
               return Stack(
                 children: <Widget>[
                   Positioned.fill(
-                    child: BlocBuilder<BgImageBloc, (String, Uint8List?)>(
-                      builder: (_, (String, Uint8List?) state) {
-                        return ImageFiltered(
-                          imageFilter: ImageFilter.blur(sigmaX: 200, sigmaY: 200),
-                          child: state.$2 == null ? ATImgLoader(
+                    child: ImageFiltered(
+                      imageFilter: ImageFilter.blur(sigmaX: 100, sigmaY: 100),
+                      child: BlocBuilder<BgImageBloc, (String, Uint8List?)>(
+                        builder: (_, (String, Uint8List?) state) {
+                          return state.$2 == null ? ATImgLoader(
                             boxFit: BoxFit.fill,
                             imgPath: state.$1,
-                          ) : Image.memory(state.$2!, fit: BoxFit.fill)
-                        );
-                      }
+                          ) : Image.memory(state.$2!, fit: BoxFit.fill);
+                        }
+                      ),
                     ),
                   ),
                   

@@ -15,7 +15,7 @@ import '../../bloc/authentication/password/password_auth_bloc.dart';
 import '../../bloc/authentication/password/password_auth_events.dart';
 import '../../config/utils/other_strings.dart';
 import '../../views/widgets/common_widgets/app_bar_widget.dart';
-import '../../views/widgets/common_widgets/elevated_button_widget.dart';
+import '../../shared/elevated_button_widget.dart';
 
 class PasswordAuthScreen extends StatefulWidget {
   const PasswordAuthScreen({super.key});

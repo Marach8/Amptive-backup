@@ -63,8 +63,7 @@ class CircleBorderPainter extends CustomPainter {
     final Paint paint = Paint()
       ..color = ATColors.hex307FE2
       ..style = PaintingStyle.stroke
-      ..strokeCap = StrokeCap.butt
-      ..strokeJoin = StrokeJoin.bevel
+      ..strokeCap = StrokeCap.round
       ..strokeWidth = 4;
 
     final Offset center = Offset(size.width / 2, size.height / 2);

@@ -7,7 +7,7 @@ import 'package:amptive/src/views/widgets/common_widgets/back_button.dart';
 import 'package:amptive/src/views/widgets/common_widgets/custom_container_widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/spotlight_beam.dart';
 import 'package:flutter/material.dart';
-import '../../../../views/widgets/common_widgets/elevated_button_widget.dart';
+import '../../../../shared/elevated_button_widget.dart';
 
 enum _AnimStage{start, end}
 

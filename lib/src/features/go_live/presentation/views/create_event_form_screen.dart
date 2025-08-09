@@ -20,7 +20,7 @@ import 'package:nested/nested.dart';
 
 import 'package:amptive/src/views/widgets/common_widgets/back_button.dart';
 import 'package:amptive/src/views/widgets/common_widgets/custom_container_widget.dart';
-import 'package:amptive/src/views/widgets/common_widgets/elevated_button_widget.dart';
+import 'package:amptive/src/shared/elevated_button_widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/image_loader_widget.dart';
 import 'package:nested/nested.dart' show SingleChildWidget;
 import 'package:amptive/src/features/home/presentation/widgets/home_widgets_export.dart';

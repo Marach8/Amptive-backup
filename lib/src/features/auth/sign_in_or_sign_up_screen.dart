@@ -3,8 +3,8 @@ import 'package:amptive/src/config/utils/other_strings.dart';
 import 'package:amptive/src/config/routing/route_strings.dart';
 import 'package:amptive/src/views/widgets/common_widgets/annotated_region__widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/app_bar_widget.dart';
-import 'package:amptive/src/views/widgets/common_widgets/elevated_button_widget.dart';
-import 'package:amptive/src/views/widgets/common_widgets/outlined_button_widget.dart';
+import 'package:amptive/src/shared/elevated_button_widget.dart';
+import 'package:amptive/src/shared/outlined_button_widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/outlined_button_with_leading_icon_widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/image_loader_widget.dart';
 import 'package:flutter/material.dart';
@@ -42,7 +42,7 @@ class AmptiveAuthScreen extends StatelessWidget {
                 Gap(15.h),
 
                 ATOutlinedBtn(
-                  buttonTitle: (userSignUp ? ATStrings.signUpWith : ATStrings.signInWith) + ATStrings.FONE_NO,
+                  btnTitle: (userSignUp ? ATStrings.signUpWith : ATStrings.signInWith) + ATStrings.FONE_NO,
                   onPressed: () => context.pushNamed(ATRoutes.ADD_FONE_NO_SCREEN)
                 ),
 

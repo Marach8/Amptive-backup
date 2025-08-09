@@ -1,18 +1,14 @@
 import 'dart:async' show StreamSubscription, Timer, StreamController;
-import 'dart:developer' show log;
 import 'dart:io' show Directory, File;
+import 'dart:ui';
 import 'package:amptive/src/features/go_live/go_live_export.dart';
-import 'package:amptive/src/features/go_live/presentation/widgets/one_two_three_animation.dart';
-import 'package:amptive/src/features/go_live/presentation/widgets/blurred_rotating_radial_lines.dart';
 import 'package:amptive/src/global_export.dart';
 import 'package:amptive/src/views/widgets/common_widgets/annotated_region__widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/app_bar_widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/back_button.dart';
 import 'package:amptive/src/views/widgets/common_widgets/custom_container_widget.dart';
-import 'package:amptive/src/views/widgets/common_widgets/elevated_button_widget.dart';
-import 'package:amptive/src/views/widgets/common_widgets/rich_text.dart';
+import 'package:amptive/src/shared/elevated_button_widget.dart';
 import 'package:carousel_slider/carousel_controller.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_sound/flutter_sound.dart';
@@ -28,8 +24,8 @@ class GoLiveOnboardingScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider<_PrivateBloc>(
-      create: (_) => _PrivateBloc(),
+    return BlocProvider<GoLiveOnboardBloc>(
+      create: (_) => GoLiveOnboardBloc(),
       child: const _SubWidget(),
     );
   }
@@ -40,20 +36,21 @@ class _SubWidget extends StatefulWidget {
   const _SubWidget();
 
   @override
-  State<_SubWidget> createState() => __SubWidgetState();
+  State<_SubWidget> createState() => _SubWidgetState();
 }
 
-class __SubWidgetState extends State<_SubWidget> {
+class _SubWidgetState extends State<_SubWidget> {
   final FlutterSoundRecorder _recorder = FlutterSoundRecorder();
   final FlutterSoundPlayer _player = FlutterSoundPlayer();
   final ValueNotifier<double> _amplitudeNotifier = ValueNotifier<double>(0.0);
   final ValueNotifier<bool> _rippleRingNotifier = ValueNotifier<bool>(false);
   final ValueNotifier<bool> _countDownIsVisibleNotifier = ValueNotifier<bool>(false);
   final ValueNotifier<bool> _reRecordBtnNotifier = ValueNotifier<bool>(false);
-  final  CarouselSliderController carouselCntrl =  CarouselSliderController();
+  final CarouselSliderController _carouselCntrl = CarouselSliderController();
+  final ScrollController _scrollCntrl = ScrollController();
 
   int _maxTime = 10;
-  final StreamController<int> _timeRemainingStremCntrl = StreamController<int>();
+  final StreamController<int> _timeRemainingStreamCntrl = StreamController<int>();
   Timer? _timer;
 
   StreamSubscription<RecordingDisposition>? _progressSub;
@@ -63,13 +60,13 @@ class __SubWidgetState extends State<_SubWidget> {
   void _startAudioPlayCountDown(){
     _timer?.cancel();
     _maxTime = 10;
-    _timeRemainingStremCntrl.add(_maxTime);
+    _timeRemainingStreamCntrl.add(_maxTime);
     _timer = Timer.periodic(
       const Duration(seconds: 1), 
       (Timer tm) {
         _maxTime --;
         if (_maxTime >= 0) {
-          _timeRemainingStremCntrl.add(_maxTime);
+          _timeRemainingStreamCntrl.add(_maxTime);
         } else {
           //When we are done with the recording countdown, we want to hide
           //the info, then start playing the recorded audio.
@@ -122,7 +119,7 @@ class __SubWidgetState extends State<_SubWidget> {
         );
       }
       catch(e){
-        log(e.toString());
+        debugPrint(e.toString());
       }
     }
     else if(permStatus.isPermanentlyDenied){
@@ -145,13 +142,13 @@ class __SubWidgetState extends State<_SubWidget> {
           final bool hasCleanedUp = await _cleanUpRecording();
           if(mounted && hasCleanedUp){
             //When we are done playing audio, we want to activate our button.
-            context.read<_PrivateBloc>().activateBtn(true);
+            context.read<GoLiveOnboardBloc>().activateBtn(true);
             _reRecordBtnNotifier.value = true;
           }
         },
       );
       if(mounted){
-        context.read<_PrivateBloc>().setStage(OnboardStage.isPlaying);
+        context.read<GoLiveOnboardBloc>().setStage(OnboardStage.isPlaying);
       }
     }
   }
@@ -184,9 +181,10 @@ class __SubWidgetState extends State<_SubWidget> {
   void dispose(){
     _progressSub?.cancel();
     _timer?.cancel();
-    _timeRemainingStremCntrl.close();
+    _timeRemainingStreamCntrl.close();
     _amplitudeNotifier.dispose();
     _countDownIsVisibleNotifier.dispose();
+    _scrollCntrl.dispose();
     _reRecordBtnNotifier.dispose();
     _recorder.closeRecorder();
     _player.closePlayer();
@@ -208,113 +206,110 @@ class __SubWidgetState extends State<_SubWidget> {
           children: <Widget>[
             Positioned(
               bottom: -50, right: -context.screenWidth * 0.3,
-              child: BlurredRotatingRadialLines(
-                child: CustomPaint(
-                  size: const Size(300, 300),
-                  painter: RadialLinesPainter(),
-                ),
+              child: const RotatingRadialLines(
+                duration: Duration(seconds: 8),
+                child: RadialLinesWidget(),
               ),
             ),
             Positioned(
               bottom: -50, left: -context.screenWidth * 0.2,
-              child: BlurredRotatingRadialLines(
-                child: CustomPaint(
-                  size: const Size(300, 300),
-                  painter: RadialLinesPainter(
-                    startAngle: 210, endAngle: 20
-                  ),
-                ),
+              child: const RotatingRadialLines(
+                child: RadialLinesWidget(startAngle: 210, endAngle: 20),
               ),
             ),
+
             Positioned.fill(
-              child: SingleChildScrollView(
-                padding: const EdgeInsets.fromLTRB(0, 50, 0, 100),
-                child: Column(
-                  children: <Widget>[
-                    BlocListener<_PrivateBloc, (OnboardStage, bool)>(
-                      listenWhen: ((OnboardStage, bool) prev, (OnboardStage, bool) curr) => prev.$1 != curr.$1,
-                      listener: (_, (OnboardStage, bool) state){
-                        if(state.$1 == OnboardStage.initial){
-                          carouselCntrl.animateToPage(
-                            0, curve: Curves.decelerate,
-                            duration: const Duration(milliseconds: 1000),
+              child: ATScrollBar(
+                scrollController: _scrollCntrl,
+                child: SingleChildScrollView(
+                  controller: _scrollCntrl,
+                  padding: const EdgeInsets.fromLTRB(0, 50, 0, 100),
+                  child: Column(
+                    children: <Widget>[
+                      BlocListener<GoLiveOnboardBloc, (OnboardStage, bool)>(
+                        listenWhen: ((OnboardStage, bool) prev, (OnboardStage, bool) curr) => prev.$1 != curr.$1,
+                        listener: (_, (OnboardStage, bool) state){
+                          if(state.$1 == OnboardStage.initial){
+                            _carouselCntrl.animateToPage(
+                              0, curve: Curves.decelerate,
+                              duration: const Duration(milliseconds: 1000),
+                            );
+                            return;
+                          }
+                          _carouselCntrl.nextPage(
+                            duration: const Duration(milliseconds: 1500),
+                            curve: Curves.decelerate
                           );
-                          return;
-                        }
-                        carouselCntrl.nextPage(
-                          duration: const Duration(milliseconds: 1500),
-                          curve: Curves.decelerate
-                        );
-                      },
-                      child: InstructionsSwitcher(carouselCntrl: carouselCntrl)
-                    ),
-
-                    const SizedBox(height: 30),
-
-                    BlocSelector<_PrivateBloc, (OnboardStage, bool), OnboardStage>(
-                      selector: ((OnboardStage, bool) state) => state.$1,
-                      builder: (BuildContext ctx, OnboardStage state) {
-                        final bool showPicture = state == OnboardStage.isRecording ||
-                          state == OnboardStage.isPlaying;
-                        final bool isPlaying = state == OnboardStage.isPlaying;
-                        final bool show123CountDown = state == OnboardStage.isGoingLive;
-                                  
-                        return SizedBox(
-                          height: 200, width: 200,
-                          child: ATScalingSwitcher(
-                            curve: Curves.decelerate,
-                            duration: 800,
-                            child: show123CountDown ? OneTwoThreeCountDown(
-                              key: const ValueKey<double>(1.04),
-                              onCountDownFinished: (){
-                                context.pushReplacementNamed(
-                                  ATRoutes.MAIN_GO_LIVE_PROGRAM,
-                                  extra: GoLiveUserType.host
-                                );
-                              },
-                            ) : showPicture ? Stack(
-                              key: const ValueKey<double>(1.01),
-                              alignment: Alignment.center,
-                              clipBehavior: Clip.none,
-                              children: <Widget>[
-                                SingleRingRippleAnimation(rippleNotifier: _rippleRingNotifier),
-                                if(isPlaying) const PlayProgressIndicator(),
-                                ValueListenableBuilder<double>(
-                                  valueListenable: _amplitudeNotifier,
-                                  builder: (_, double value, __) {
-                                    final double width = 10 * ((value - 35) / (70 - 35));
-                                    return Container(
-                                      height: 130, width: 130,
-                                      padding: const EdgeInsets.all(3),
-                                      decoration: BoxDecoration(
-                                        boxShadow: <BoxShadow>[
-                                          BoxShadow(
-                                            spreadRadius: width, blurRadius: 1,
-                                            color: ATColors.white.withValues(alpha: 0.3),
-                                          )
-                                        ],
-                                        shape: BoxShape.circle,
-                                      ),
-                                      child: const SizedBox(),
-                                    );
-                                  }
-                                ),
-                                CircleAvatar(radius: 65, backgroundColor: ATColors.black),
-                                ClipRRect(
-                                  borderRadius: BorderRadiusGeometry.circular(100),
-                                  child: const ATImgLoader(
-                                    height: 123, width: 123,
-                                    imgPath: ATImgStrings.jpeg1,
-                                    boxFit: BoxFit.cover
+                        },
+                        child: InstructionsSwitcher(carouselCntrl: _carouselCntrl)
+                      ),
+                
+                      const SizedBox(height: 30),
+                
+                      BlocSelector<GoLiveOnboardBloc, (OnboardStage, bool), OnboardStage>(
+                        selector: ((OnboardStage, bool) state) => state.$1,
+                        builder: (_, OnboardStage state) {
+                          final bool showPicture = state == OnboardStage.isRecording ||
+                            state == OnboardStage.isPlaying;
+                          final bool isPlaying = state == OnboardStage.isPlaying;
+                          final bool show123CountDown = state == OnboardStage.isGoingLive;
+                                    
+                          return SizedBox(
+                            height: 200, width: 200,
+                            child: ATScalingSwitcher(
+                              curve: Curves.decelerate, duration: 800,
+                              child: show123CountDown ? OneTwoThreeCountDown(
+                                key: const ValueKey<double>(1.04),
+                                onCountDownFinished: (){
+                                  context.pushReplacementNamed(
+                                    ATRoutes.MAIN_GO_LIVE_PROGRAM,
+                                    extra: GoLiveUserType.host
+                                  );
+                                },
+                              ) : showPicture ? Stack(
+                                key: const ValueKey<double>(1.01),
+                                alignment: Alignment.center,
+                                clipBehavior: Clip.none,
+                                children: <Widget>[
+                                  SingleRingRippleAnimation(rippleNotifier: _rippleRingNotifier),
+                                  if(isPlaying) const PlayProgressIndicator(),
+                                  ValueListenableBuilder<double>(
+                                    valueListenable: _amplitudeNotifier,
+                                    builder: (_, double value, __) {
+                                      final double width = 10 * ((value - 35) / (70 - 35));
+                                      return Container(
+                                        height: 130, width: 130,
+                                        padding: const EdgeInsets.all(3),
+                                        decoration: BoxDecoration(
+                                          boxShadow: <BoxShadow>[
+                                            BoxShadow(
+                                              spreadRadius: width, blurRadius: 1,
+                                              color: ATColors.white.withValues(alpha: 0.3),
+                                            )
+                                          ],
+                                          shape: BoxShape.circle,
+                                        ),
+                                        child: const SizedBox(),
+                                      );
+                                    }
                                   ),
-                                ),
-                              ],
-                            ) : const SizedBox.shrink(key: ValueKey<double>(1.02),),
-                          ),
-                        );
-                      }
-                    ),
-                  ],
+                                  CircleAvatar(radius: 65, backgroundColor: ATColors.black),
+                                  ClipRRect(
+                                    borderRadius: BorderRadiusGeometry.circular(100),
+                                    child: const ATImgLoader(
+                                      height: 123, width: 123,
+                                      imgPath: ATImgStrings.jpeg1,
+                                      boxFit: BoxFit.cover
+                                    ),
+                                  ),
+                                ],
+                              ) : const SizedBox.shrink(key: ValueKey<double>(1.02),),
+                            ),
+                          );
+                        }
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),
@@ -327,67 +322,32 @@ class __SubWidgetState extends State<_SubWidget> {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
-              ValueListenableBuilder<bool>(
-                valueListenable: _countDownIsVisibleNotifier,
-                child: ATContainer(
-                  padding: const EdgeInsets.fromLTRB(15, 10, 15, 10),
-                  color: ATColors.white.withValues(alpha: 0.1),
-                  radius: 14,
-                  child: Row(
-                    children: <Widget>[
-                      const Icon(CupertinoIcons.info),
-                      const SizedBox(width: 10,),
-                      Flexible(
-                        child: StreamBuilder<int>(
-                          stream: _timeRemainingStremCntrl.stream,
-                          builder: (_, AsyncSnapshot<int> snapshot) {
-                            final int value = snapshot.data ?? 30;
-                            return ATRichText(
-                              maxLines: 2,
-                              items: <String, TextStyle>{
-                                '${ATStrings.RECORDING_WILL_AUTOPLAY} in ': context.textTheme.bodySmall!,
-                                value.toString() : context.textTheme.bodyMedium!,
-                                value == 1 ? ' second' : ' seconds': context.textTheme.bodySmall!,
-                              },
-                            );
-                          }
-                        ),
-                      )
-                    ],
-                  ),
-                ),
-                builder: (_, bool shouldShowInfo, Widget? child) {
-                  return AnimatedScale(
-                    duration: const Duration(milliseconds: 500),
-                    scale: shouldShowInfo ? 1.0 : 0.0,
-                    //After this widget is slided into view, we kick of the countdown.
-                    onEnd: () => _hasPlayedAlready ? null : _startAudioPlayCountDown(),
-                    child: child!
-                  );
-                }
+              AutoplayCountdownWidget(
+                isVisibleNotifier: _countDownIsVisibleNotifier,
+                timeRemainingStreamCntrl: _timeRemainingStreamCntrl,
+                onEnd: () => _hasPlayedAlready ? null : _startAudioPlayCountDown(),
               ),
+
               const SizedBox(height: 10,),
-              BlocBuilder<_PrivateBloc, (OnboardStage, bool)>(
+              BlocBuilder<GoLiveOnboardBloc, (OnboardStage, bool)>(
                 builder: (_, (OnboardStage, bool) state) {
                   final bool shouldRecord = state.$1 == OnboardStage.initial;
                   final bool shouldActivateBtn = state.$2;
-                  final bool hideRow = state.$1 == OnboardStage.isGoingLive;
+                  final bool isGoingLive = state.$1 == OnboardStage.isGoingLive;
 
-                  return ATAnimatedSlide(
-                    condition: hideRow,
-                    startOffset: const Offset(0, 0),
-                    endOffset: const Offset(0, 1.5),
-                    child: Row(
+                  return ATSlidingSwitcher(
+                    duration: 800,
+                    child: isGoingLive ? const IsGoingLiveInfo() : Row(
                       children: <Widget>[
                         Flexible(
                           child: ATPlainElevatedBtn(
                             onPressed: shouldActivateBtn ? (){
                               if(shouldRecord){
                                 _startRecording();
-                                context.read<_PrivateBloc>().setFullState((OnboardStage.isRecording, false));
+                                context.read<GoLiveOnboardBloc>().setFullState((OnboardStage.isRecording, false));
                               }
                               else{
-                                context.read<_PrivateBloc>().setStage(OnboardStage.isGoingLive);
+                                context.read<GoLiveOnboardBloc>().setStage(OnboardStage.isGoingLive);
                               }
                             } : null,
                             btnTitle: shouldRecord ? ATStrings.RECORD : ATStrings.DONE,
@@ -399,12 +359,11 @@ class __SubWidgetState extends State<_SubWidget> {
                           valueListenable: _reRecordBtnNotifier,
                           builder: (_, bool showBtn, __) {
                             return ATScalingSwitcher(
-                              duration: 500,
                               child: showBtn ? ATContainer(
                                 onTap: (){
                                   _reRecordBtnNotifier.value = false;
                                   _hasPlayedAlready = false;
-                                  context.read<_PrivateBloc>().setFullState((OnboardStage.initial, true));
+                                  context.read<GoLiveOnboardBloc>().setFullState((OnboardStage.initial, true));
                                 },
                                 margin: const EdgeInsets.only(left: 15),
                                 color: ATColors.white.withValues(alpha: 0.1), radius: 30,
@@ -431,8 +390,8 @@ class __SubWidgetState extends State<_SubWidget> {
 
 enum OnboardStage{initial, isRecording, isPlaying, isGoingLive}
 
-class _PrivateBloc extends Cubit<(OnboardStage, bool)>{
-  _PrivateBloc(): super((OnboardStage.initial, true));
+class GoLiveOnboardBloc extends Cubit<(OnboardStage, bool)>{
+  GoLiveOnboardBloc(): super((OnboardStage.initial, true));
 
   void setFullState((OnboardStage?, bool?) input) => emit(
     (input.$1 ?? state.$1, input.$2 ?? state.$2)

@@ -5,15 +5,15 @@ import 'package:amptive/src/config/routing/route_strings.dart';
 import 'package:amptive/src/views/widgets/common_widgets/annotated_region__widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/app_bar_widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/back_button.dart';
-import 'package:amptive/src/views/widgets/common_widgets/elevated_button_widget.dart';
+import 'package:amptive/src/shared/elevated_button_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import '../../../../config/utils/colors.dart';
 import '../widgets/go_live_type_selection_widget.dart';
 
-class GoLiveWelcomeScreen extends StatelessWidget {
-  const GoLiveWelcomeScreen({super.key});
+class GoLiveTypeSelectionScreen extends StatelessWidget {
+  const GoLiveTypeSelectionScreen({super.key});
 
   @override
   Widget build(BuildContext context) {

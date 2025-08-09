@@ -19,14 +19,16 @@ class ATBlurredHeaderWidget extends StatelessWidget {
     return ClipRect(
       child: BlocBuilder<BlurredHeaderBloc, bool>(
         builder: (_, bool state) {
-          return BackdropFilter(
-            filter: state ? ImageFilter.blur(sigmaX: 53, sigmaY: 53)
-              : ImageFilter.blur(sigmaX: 0, sigmaY: 0),
-            child: ATContainer(
-              padding: const EdgeInsets.only(top: 40),
-              height: kToolbarHeight + MediaQuery.paddingOf(context).top,
-              width: context.screenWidth,
-              child: child ?? const ATModalDismisser(),
+          return RepaintBoundary(
+            child: BackdropFilter(
+              filter: state ? ImageFilter.blur(sigmaX: 53, sigmaY: 53)
+                : ImageFilter.blur(sigmaX: 0, sigmaY: 0),
+              child: ATContainer(
+                padding: const EdgeInsets.only(top: 40),
+                height: kToolbarHeight + MediaQuery.paddingOf(context).top,
+                width: context.screenWidth,
+                child: child ?? const ATModalDismisser(),
+              ),
             ),
           );
         }

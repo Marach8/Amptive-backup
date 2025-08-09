@@ -8,7 +8,7 @@ import 'package:amptive/src/views/widgets/common_widgets/back_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import '../../../../views/widgets/common_widgets/elevated_button_widget.dart';
+import '../../../../shared/elevated_button_widget.dart';
 import '../widgets/wallets_widget_export.dart';
 
 class ATWithdrwalLandingScreen extends StatelessWidget {
