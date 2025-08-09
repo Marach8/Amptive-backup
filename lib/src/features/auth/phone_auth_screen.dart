@@ -5,6 +5,7 @@ import 'package:amptive/src/config/routing/route_strings.dart';
 import 'package:amptive/src/config/utils/colors.dart';
 import 'package:amptive/src/views/widgets/common_widgets/annotated_region__widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/app_bar_widget.dart';
+import 'package:amptive/src/views/widgets/common_widgets/back_button.dart';
 import 'package:amptive/src/views/widgets/common_widgets/custom_container_widget.dart';
 import 'package:amptive/src/shared/elevated_button_widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/textformfield_widget.dart';
@@ -18,7 +19,7 @@ import 'package:go_router/go_router.dart';
 import '../../bloc/authentication/general/auth_bloc.dart';
 import '../../bloc/authentication/general/auth_events.dart';
 import '../../bloc/authentication/general/auth_states.dart';
-import '../../views/widgets/other_widgets/post_authentication_widgets/cupertino_phone_code_select.dart';
+import '../post_auth/post_authentication_widgets/cupertino_phone_code_select.dart';
 
 class AddPhoneScreen extends StatefulWidget {
   const AddPhoneScreen({super.key, this.title});
@@ -43,15 +44,14 @@ class _AddPhoneScreenState extends State<AddPhoneScreen> {
     return ATAnnotatedRegion(
       child: Scaffold(
         appBar: ATAppBar(
-          title: Text(
-            widget.title ?? '',
-            style: Theme.of(context).textTheme.bodyMedium,
-          ),
+          leading: const ATBackBtn(),
+          titleText: widget.title,
         ),
-        body: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
-          child: Form(
-            key: _formKey,
+        body: Form(
+          key: _formKey,
+          child: SingleChildScrollView(
+            physics: const BouncingScrollPhysics(),
+            padding: const EdgeInsets.all(15),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
@@ -71,7 +71,7 @@ class _AddPhoneScreenState extends State<AddPhoneScreen> {
                         Country selectedCountry = state is SelectCountryCodeState
                           ? state.selectedCountry : CountryPickerUtils.getCountryByIsoCode(
                               Constants.kDefaultCountrySelected);
-
+            
                         return ATContainer(
                           onTap: () => _selectCountry(),
                           padding: const EdgeInsets.fromLTRB(16, 12, 16, 12),
@@ -138,7 +138,7 @@ class _AddPhoneScreenState extends State<AddPhoneScreen> {
                     ),
                   ],
                 ),
-
+            
                 const SizedBox(height: 10),
                 Text(
                   ATStrings.NO_WILL_BE_VERIFIED,
@@ -149,6 +149,7 @@ class _AddPhoneScreenState extends State<AddPhoneScreen> {
           ),
         ),
 
+
         bottomSheet: Padding(
           padding: const EdgeInsets.fromLTRB(15, 0, 15, 10),
           child: BlocBuilder<AmptiveAuthBloc, AmptiveAuthState>(
@@ -158,7 +159,6 @@ class _AddPhoneScreenState extends State<AddPhoneScreen> {
                 ? state.selectedCountry : CountryPickerUtils.getCountryByIsoCode(
                     Constants.kDefaultCountrySelected);
               return ATPlainElevatedBtn(
-                height: 50,
                 btnTitle: ATStrings.VERIFY_FONE,
                 onPressed: state is AddPhoneNumberState && state.isPhoneValid
                   ? () {

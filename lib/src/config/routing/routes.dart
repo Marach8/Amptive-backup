@@ -1,15 +1,15 @@
 import 'dart:io';
 import 'package:amptive/src/config/routing/routing_export.dart';
+import 'package:amptive/src/features/auth/phone_auth_screen.dart';
 import 'package:amptive/src/features/post_auth/presentation/views/anim_experiment.dart';
 import 'package:amptive/src/config/utils/extensions/string_extensions.dart';
-import 'package:amptive/src/features/auth/add_phone.dart';
 import 'package:amptive/src/features/auth/dob_screen.dart';
 import 'package:amptive/src/features/auth/email_auth_screen.dart';
 import 'package:amptive/src/features/auth/name_auth_screen.dart';
 import 'package:amptive/src/features/auth/otp_screen.dart';
 import 'package:amptive/src/features/auth/password_auth_screen.dart';
-import 'package:amptive/src/features/auth/post_registration.dart';
-import 'package:amptive/src/features/auth/sign_in_or_sign_up_screen.dart';
+import 'package:amptive/src/features/auth/add_profile_pic.dart';
+import 'package:amptive/src/features/auth/auth_options_screen.dart';
 import 'package:amptive/src/features/auth/username_auth_screen.dart';
 import 'package:amptive/src/features/discover/presentation/views/society_screen.dart';
 import 'package:amptive/src/features/discover/presentation/views/trending_hashtags_screen.dart';
@@ -34,7 +34,8 @@ import '../../features/wallet/wallet_export.dart';
 
 // The route configuration.
 final GoRouter amptiveAppRouter = GoRouter(
-  initialLocation: ATRoutes.POST_ONBOARDING_SCREEN.addSlash,
+  initialLocation: ATRoutes.MAIN_APP_SHELL.addSlash,
+  //initialLocation: ATRoutes.ONBOARDING_SCREEN.addSlash,
   routes: <RouteBase>[
     GoRoute(
       name: ATRoutes.POST_ONBOARDING_SCREEN,
@@ -51,10 +52,10 @@ final GoRouter amptiveAppRouter = GoRouter(
 
     //AUTHENTICATION SCREENS
     GoRoute(
-      name: ATRoutes.CHOOSE_AUTH_TYPE_SCREEN,
-      path: "/auth-route",
-      builder: (_, GoRouterState state) => AmptiveAuthScreen(
-        userSignUp: state.extra as bool,
+      name: ATRoutes.AUTH_OPTIONS_SCREEN,
+      path: ATRoutes.AUTH_OPTIONS_SCREEN.addSlash,
+      pageBuilder: (_, GoRouterState st) => ATSlidingRouteTransition<void>(
+        child: ATAuthOptionsScreen(authType: st.extra as AuthType,)
       ),
     ),
     GoRoute(
@@ -75,12 +76,17 @@ final GoRouter amptiveAppRouter = GoRouter(
     GoRoute(
       name: ATRoutes.ADD_FONE_NO_SCREEN,
       path: ATRoutes.ADD_FONE_NO_SCREEN.addSlash,
-      builder: (_, GoRouterState state) => AddPhoneScreen(title: state.extra as String?),
+      pageBuilder: (_, GoRouterState st) => ATSlidingRouteTransition<void>(
+        child: AddPhoneScreen(title: st.extra as String?),
+      )
     ),
+
     GoRoute(
-      name: ATRoutes.addProfilePic,
-      path: "/add-profile-pic",
-      builder: (_, __) => const PostRegistrationScreen(),
+      name: ATRoutes.ADD_PROFILE_PIC_SCREEN,
+      path: ATRoutes.ADD_PROFILE_PIC_SCREEN.addSlash,
+      pageBuilder: (_, GoRouterState st) => ATSlidingRouteTransition<void>(
+        child: const AddProfilePictureScreen(),
+      )
     ),
 
     GoRoute(
@@ -92,36 +98,48 @@ final GoRouter amptiveAppRouter = GoRouter(
     ),
 
     GoRoute(
-      name: ATRoutes.passwordAuth,
-      path: "/password",
-      builder: (_, __) => const PasswordAuthScreen(),
-    ),
-    GoRoute(
-      name: ATRoutes.dobAuth,
-      path: "/dob",
-      builder: (_, __) => const DateOfBirthScreen(),
-    ),
-    GoRoute(
-      name: ATRoutes.addUsername,
-      path: "/username-add",
-      builder: (_, __) => const UserNameAuthScreen(),
-    ),
-    GoRoute(
-      name: ATRoutes.addName,
-      path: "/name-add",
-      builder: (_, __) => const NameAuthScreen(),
-    ),
-    GoRoute(
-      name: ATRoutes.preference,
-      path: "/preference-route",
-      builder: (_, __) => const AmptivePreferenceScreen(),
+      name: ATRoutes.PSWRD_AUTH_SCREEN,
+      path: ATRoutes.PSWRD_AUTH_SCREEN.addSlash,
+      pageBuilder: (_, __) => ATSlidingRouteTransition<void>(
+        child: const PasswordAuthScreen(),
+      )
     ),
 
     GoRoute(
-      name: ATRoutes.preHomepage,
-      path: "/pre-homepage",
-      builder: (_, __) => const NotificationsPromptScreen()
-      //builder: (_, __) => const PreHomePage(),
+      name: ATRoutes.DOB_AUTH_SCREEN,
+      path: ATRoutes.DOB_AUTH_SCREEN.addSlash,
+      pageBuilder: (_, __) => ATSlidingRouteTransition<void>(
+        child: const AddDOBScreen(),
+      )
+    ),
+    GoRoute(
+      name: ATRoutes.ADD_USERNAME_AUTH_SCREEN,
+      path: ATRoutes.ADD_USERNAME_AUTH_SCREEN.addSlash,
+      pageBuilder: (_, __) => ATSlidingRouteTransition<void>(
+        child: const AddUsernameScreen(),
+      )
+    ),
+    GoRoute(
+      name: ATRoutes.ADD_NAME_AUTH_SCREEN,
+      path: ATRoutes.ADD_NAME_AUTH_SCREEN.addSlash,
+      pageBuilder: (_, __) => ATSlidingRouteTransition<void>(
+        child: const AddNameScreen(),
+      )
+    ),
+    GoRoute(
+      name: ATRoutes.SELECT_5_COMMUNITIES_SCREEN,
+      path: ATRoutes.SELECT_5_COMMUNITIES_SCREEN.addSlash,
+      pageBuilder: (_, __) => ATSlidingRouteTransition<void>(
+        child: const Select5CommunitiesScreen(),
+      )
+    ),
+
+    GoRoute(
+      name: ATRoutes.ALLOW_NOTIFICATIONS_SCREEN,
+      path: ATRoutes.ALLOW_NOTIFICATIONS_SCREEN.addSlash,
+      pageBuilder: (_, __) => ATSlidingRouteTransition<void>(
+        child: const NotificationsPromptScreen(),
+      )
     ),
 
     //MAIN APPLICATION SCREENS

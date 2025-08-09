@@ -6,14 +6,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import '../../../../bloc/authentication/general/auth_bloc.dart';
-import '../../../../bloc/authentication/general/auth_events.dart';
-import '../../../../bloc/authentication/general/auth_states.dart';
-import '../../../../config/utils/colors.dart';
-import '../../../../config/utils/constants.dart';
-import '../../../../config/utils/font_sizes.dart';
-import '../../../../config/utils/font_weights.dart';
-import '../../../../config/utils/other_strings.dart';
+import '../../../bloc/authentication/general/auth_bloc.dart';
+import '../../../bloc/authentication/general/auth_events.dart';
+import '../../../bloc/authentication/general/auth_states.dart';
+import '../../../config/utils/colors.dart';
+import '../../../config/utils/constants.dart';
+import '../../../config/utils/font_sizes.dart';
+import '../../../config/utils/font_weights.dart';
+import '../../../config/utils/other_strings.dart';
 
 class CupertinoPhoneCodeSelectWidget extends StatelessWidget {
   const CupertinoPhoneCodeSelectWidget({super.key});

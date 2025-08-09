@@ -7,19 +7,19 @@ class ATRoutes {
 
   //AUTHENTICATION
   static const String EMAIL_SCREEN = "email_auth";
-  static const String preference = "preference";
-  static const String CHOOSE_AUTH_TYPE_SCREEN = "auth_screen";
-  static const String passwordAuth = "password_auth";
-  static const String dobAuth = "dob_auth";
+  static const String SELECT_5_COMMUNITIES_SCREEN = "preference";
+  static const String AUTH_OPTIONS_SCREEN = "auth_screen";
+  static const String PSWRD_AUTH_SCREEN = "password_auth";
+  static const String DOB_AUTH_SCREEN = "dob_auth";
   static const String OTP_SCREEN = "otp";
-  static const String addName = "name_auth";
-  static const String addUsername = "username_auth";
+  static const String ADD_NAME_AUTH_SCREEN = "name_auth";
+  static const String ADD_USERNAME_AUTH_SCREEN = "username_auth";
   static const String ADD_FONE_NO_SCREEN = "add_phone_auth";
 
   //POST AUTHENTICATION
-  static const String addProfilePic = "add_profile_pic";
+  static const String ADD_PROFILE_PIC_SCREEN = "add_profile_pic";
   static const String CIRCLE_IMG_CROPPER_SCREEN = "crop_image";
-  static const String preHomepage = "pre-homepage";
+  static const String ALLOW_NOTIFICATIONS_SCREEN = "pre-homepage";
   static const String CREATE_SHOW_FORM = "create-show-form";
   static const String CREATE_EVENT_FORM = "create-event-form";
   static const String CREATE_EPISODE_FORM = "create-episode-form";

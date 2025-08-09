@@ -1,10 +1,13 @@
 
 import 'package:amptive/src/bloc/authentication/otp/otp_auth_bloc.dart';
 import 'package:amptive/src/bloc/authentication/otp/otp_auth_states.dart';
+import 'package:amptive/src/config/routing/route_strings.dart';
 import 'package:amptive/src/config/utils/colors.dart';
 import 'package:amptive/src/config/utils/font_sizes.dart';
 import 'package:amptive/src/views/widgets/common_widgets/annotated_region__widget.dart';
+import 'package:amptive/src/views/widgets/common_widgets/back_button.dart';
 import 'package:amptive/src/views/widgets/common_widgets/common_widgets.dart';
+import 'package:amptive/src/views/widgets/common_widgets/loading_indicator.dart';
 import 'package:amptive/src/views/widgets/common_widgets/otp_fields_widget.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -85,10 +88,8 @@ class _ATOTPScreenState extends State<ATOTPScreen> {
       child: Scaffold(
         backgroundColor: ATColors.hex0D0D0D,
         appBar: ATAppBar(
-          title: Text(
-            widget.title,
-            style: Theme.of(context).textTheme.bodyMedium,
-          ),
+          titleText: widget.title,
+          leading: const ATBackBtn(),
         ),
 
         body: Padding(
@@ -109,6 +110,7 @@ class _ATOTPScreenState extends State<ATOTPScreen> {
                   onPinComplete: (String pin) async{
                     log(pin);
                     if(pin == correctPin){
+                      context.read<AmptiveOTPAuthBloc>().add(ValidOTPAuthEvent());
                       return true;
                     }
                     return false;
@@ -156,25 +158,27 @@ class _ATOTPScreenState extends State<ATOTPScreen> {
             ),
           ),
         ),
+
         bottomSheet: Padding(
           padding: const EdgeInsets.fromLTRB(15, 0, 15, 15),
           child: BlocConsumer<AmptiveOTPAuthBloc, AmptiveOTPAuthState>(
             listener: (BuildContext context, AmptiveOTPAuthState state) {
               if (state is VerifiedOTPAuthState && context.mounted) {
+                context.pushNamed(ATRoutes.PSWRD_AUTH_SCREEN,);
                 //Remove this screen and the email input screen
-                context.pop(); context.pop(true);
+                // context.pop(); context.pop(true);
               }
             },
             buildWhen: (AmptiveOTPAuthState prev, AmptiveOTPAuthState curr) => curr is! AmptiveOTPCounterState,
             builder: (BuildContext context, AmptiveOTPAuthState state) {
-              return state is LoadingAuthState && context.mounted
-                ? const AmptiveLoadingButtonWidget()
-                : ATPlainElevatedBtn(
-                  height: 50,
-                  btnTitle: ATStrings.NEXT,
-                  onPressed: state is ValidOTPAuthState
-                    ? () => context.read<AmptiveOTPAuthBloc>().add(VerifyOTPAuthEvent()) : null,
-                );
+              return ATPlainElevatedBtn(
+                onPressed: state is! ValidOTPAuthState ? null:
+                  () => context.read<AmptiveOTPAuthBloc>().add(VerifyOTPAuthEvent()) ,
+                btnTitle: ATStrings.NEXT,
+                child: state is LoadingAuthState ? ATLoadingIndicator(
+                  color: ATColors.white,
+                ) : null,
+              );
             },
           ),
         ),

@@ -9,6 +9,7 @@ import 'package:amptive/src/shared/elevated_button_widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/image_loader_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import '../widgets/notification_card_widget.dart';
 
 
@@ -217,8 +218,7 @@ class _AnimExperimentState extends State<_SubWidget> with TickerProviderStateMix
                       ATStrings.STAY_ON_LOOP, maxLines: 2,
                       textAlign: TextAlign.center,
                       style: Theme.of(context).textTheme.headlineMedium?.copyWith(
-                        fontSize: 45,
-                        fontWeight: ATFontWeights.w800
+                        fontSize: 45, fontWeight: ATFontWeights.w800
                       ),
                     ),
                   ),
@@ -318,11 +318,15 @@ class _AnimExperimentState extends State<_SubWidget> with TickerProviderStateMix
                   spacing: 15,
                   children: <Widget>[
                     ATPlainElevatedBtn(
-                      onPressed: (){},
+                      onPressed: (){
+                        context.goNamed(ATRoutes.MAIN_APP_SHELL);
+                      },
                       btnTitle: ATStrings.ALLOW,
                     ),
                     InkWell(
-                      onTap: (){},
+                      onTap: (){
+                        context.goNamed(ATRoutes.MAIN_APP_SHELL);
+                      },
                       borderRadius: BorderRadius.circular(5),
                       child: Text(
                         ATStrings.NO_THANKS,

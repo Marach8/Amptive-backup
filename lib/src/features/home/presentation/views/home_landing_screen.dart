@@ -38,7 +38,7 @@ class ATHomeScreen extends StatelessWidget {
                   child: Row(
                     mainAxisSize: MainAxisSize.min,
                     children: <Widget>[
-                      ATImgLoader(imgPath: ATImgStrings.logo2, height: 21, width: 86),
+                      ATImgLoader(imgPath: ATImgStrings.AMPTIVE_NAME_LOGO, height: 21, width: 86),
                       SizedBox(width: 4.0,),
                       Icon(Icons.keyboard_arrow_down_outlined, size: 25,),
                     ],
@@ -49,12 +49,7 @@ class ATHomeScreen extends StatelessWidget {
               actions: <Widget>[
                 GestureDetector(
                   onTap: (){
-                    // context.pushReplacementNamed(
-                    //   ATRoutes.MAIN_GO_LIVE_PROGRAM,
-                    //   extra: GoLiveUserType.audience
-                    // );
-                    context.pushNamed(ATRoutes.GO_LIVE_ONBOARDING);
-                    //context.pushNamed(ATRoutes.WALLET);
+                    context.pushNamed(ATRoutes.WALLET);
                   },
                   child: Stack(
                     children: <Widget>[
@@ -71,13 +66,13 @@ class ATHomeScreen extends StatelessWidget {
                 ),
                 const Gap(24),
                 GestureDetector(
-                  onTap: (){
-                    context.pushReplacementNamed(
-                      ATRoutes.MAIN_GO_LIVE_PROGRAM,
-                      extra: GoLiveUserType.audience
-                    );
-                  },
-                 // onTap: () => context.pushNamed(ATRoutes.CREATOR_PROFILE_SCREEN),
+                  // onTap: (){
+                  //   context.pushReplacementNamed(
+                  //     ATRoutes.MAIN_GO_LIVE_PROGRAM,
+                  //     extra: GoLiveUserType.audience
+                  //   );
+                  // },
+                 onTap: () => context.pushNamed(ATRoutes.CREATOR_PROFILE_SCREEN),
                   //onTap: () => context.pushNamed(ATRoutes.USER_PROFILE_SCREEN),
                   child: const Padding(
                     padding: EdgeInsets.only(right: 15),

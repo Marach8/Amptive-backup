@@ -33,10 +33,10 @@ class ATStrings{
   static const String or = 'or';
   static const String and = 'and';
   static const String emailSymbol = '@';
-  static const String signUp = 'Sign up';
+  static const String SIGN_UP = 'Sign up';
   static const String RECORD = 'Record';
   static const String LAUNCH_SHOW = 'Launch show';
-  static const String signIn = 'Sign in';
+  static const String SIGN_IN = 'Sign in';
   static const String attendAsGuest = 'Attend as guest';
   static const String SKIP = 'Skip';
   static const String BACK = 'Back';
@@ -57,6 +57,7 @@ class ATStrings{
   static const String signUpWith = 'Sign up with ';
   static const String signInWith = 'Sign in with ';
   static const String APPLE_PAY = 'Apple Pay';
+  static const String APPLE = 'Apple';
   static const String FLUTTERWAVE = 'Flutterwave';
   static const String GOOGLE_PAY = 'Google Pay';
   static const String EMAIL = 'Email';
@@ -72,10 +73,10 @@ class ATStrings{
   static const String FONE_NO = 'Phone Number';
   static const String SAVE_BANK_DETAILS_DESC = 'Do you want to save this bank detail to re-use it next time?';
   static const String SAVE_BANK_DETAILS = 'Save Bank Details';
-  static const String facebook = 'Facebook';
+  static const String FACEBOOK = 'Facebook';
   static const String VISIT_PROFILE = 'Visit profile';
-  static const String twitter = 'X(Twitter)';
-  static const String google = 'Google';
+  static const String TWITTER = 'X(Twitter)';
+  static const String GOOGLE = 'Google';
   static const String ANSWER_SECRET_QUEST = 'Answer Secret Question';
   static const String NO_MATCHING_RESULTS = 'No results found for this search!';
   static const String SELECT_CAT = 'Select your category';
@@ -124,7 +125,7 @@ class ATStrings{
   static const String UR_EMAIL = 'What is your email?';
   static const String enterYourEmail = 'Enter your email...';
   static const String thisEmailWillBeVerified = 'This email will be verified in the next step';
-  static const String verifyEmail = 'Verify email';
+  static const String VERIFY_EMAIL = 'Verify email';
   static const String UNBLOCK_DESC = 'will be able to follow, subscribe and see your app activities';
   static String unMuteDesc(String text) => "You will be able to see $text's app activities";
   static String enterLink(String link) => "Enter your $link link";
@@ -191,15 +192,15 @@ class ATStrings{
   static const String DONE = 'Done';
 
   static const String noteAboutProfilePic = "Note that this will appear on your profile.";
-  static const String termsOfService = "Terms of Service";
+  static const String TERMS_OF_SERVICE = "Terms of Service";
   static const String enterYourName = 'Enter your name';
   static const String whatIsYourName = 'What is your name?';
-  static const String createAccount = 'Create account';
-  static const String privacyPolicy = 'Privacy Policy.';
+  static const String CREATE_ACCT = 'Create account';
+  static const String PRIVACY_POLICY = 'Privacy Policy.';
   static const String CREATE_SCHEDULE = 'Create a Schedule';
   static const String SUB_OVERVIEW = 'Subscription Plan Overview';
   static const String SUB_OVERVIEW_DESC = 'Only subscribers will have access to your shows';
-  static const String warningOnClickingCreate = 'By clicking on ‘Create account’, you agree to the';
+  static const String BY_CLICKING_ON_CREATE_ACCT = 'By clicking on ‘Create account’, you agree to the';
 
   static const String CHECKER_LOADING = "Checker is loading...";
   static const String CORRECT_ANS = 'Answer is correct';

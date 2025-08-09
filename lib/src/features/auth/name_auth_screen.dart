@@ -1,3 +1,4 @@
+import 'package:amptive/src/config/utils/utils_export.dart';
 import 'package:amptive/src/services/auth/auth_field_service.dart';
 import 'package:amptive/src/config/utils/font_sizes.dart';
 import 'package:amptive/src/config/utils/font_weights.dart';
@@ -6,6 +7,8 @@ import 'package:amptive/src/config/routing/route_strings.dart';
 import 'package:amptive/src/config/utils/colors.dart';
 import 'package:amptive/src/views/widgets/common_widgets/annotated_region__widget.dart';
 import 'package:amptive/src/shared/elevated_button_widget.dart';
+import 'package:amptive/src/views/widgets/common_widgets/back_button.dart';
+import 'package:amptive/src/views/widgets/common_widgets/rich_text.dart';
 import 'package:amptive/src/views/widgets/common_widgets/textformfield_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -18,14 +21,14 @@ import '../../bloc/authentication/general/auth_events.dart';
 import '../../bloc/authentication/general/auth_states.dart';
 import '../../views/widgets/common_widgets/app_bar_widget.dart';
 
-class NameAuthScreen extends StatefulWidget {
-  const NameAuthScreen({super.key});
+class AddNameScreen extends StatefulWidget {
+  const AddNameScreen({super.key});
 
   @override
-  State<NameAuthScreen> createState() => _NameAuthScreenState();
+  State<AddNameScreen> createState() => _AddNameScreenState();
 }
 
-class _NameAuthScreenState extends State<NameAuthScreen> {
+class _AddNameScreenState extends State<AddNameScreen> {
   TextEditingController nameController = TextEditingController();
   late AuthFieldService service;
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
@@ -41,11 +44,12 @@ class _NameAuthScreenState extends State<NameAuthScreen> {
     return ATAnnotatedRegion(
       child: Scaffold(
         backgroundColor: ATColors.hex0D0D0D,
-        appBar: const ATAppBar(),
-        body: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 20.h),
-          child: Form(
-            key: _formKey,
+        appBar: const ATAppBar(leading: ATBackBtn(),),
+        body: Form(
+          key: _formKey,
+          child: SingleChildScrollView(
+            physics: const BouncingScrollPhysics(),
+            padding: const EdgeInsets.all(15),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
@@ -103,59 +107,46 @@ class _NameAuthScreenState extends State<NameAuthScreen> {
                     style: Theme.of(context).textTheme.titleSmall,
                   ),
                 ),
-                Expanded(
-                  child: SizedBox(
-                    height: 1.h,
-                  ),
-                ),
-                Container(
-                  margin: EdgeInsets.only(bottom: 22.h),
-                  alignment: Alignment.centerLeft,
-                  child: RichText(
-                    text: TextSpan(
-                      text: ATStrings.warningOnClickingCreate +
-                          ATStrings.space,
-                      children: <InlineSpan>[
-                        TextSpan(
-                          text: ATStrings.termsOfService +
-                              ATStrings.space,
-                          style:
-                              Theme.of(context).textTheme.titleSmall?.copyWith(
-                                    fontWeight: ATFontWeights.w700,
-                                  ),
-                        ),
-                        const TextSpan(
-                          text: ATStrings.and +
-                              ATStrings.space,
-                        ),
-                        TextSpan(
-                          text: ATStrings.privacyPolicy,
-                          style:
-                              Theme.of(context).textTheme.titleSmall?.copyWith(
-                                    fontWeight: ATFontWeights.w700,
-                                  ),
-                        ),
-                      ],
-                      style: Theme.of(context).textTheme.titleSmall,
-                    ),
-                  ),
-                ),
               ],
             ),
           ),
         ),
+
         bottomSheet: BlocBuilder<AmptiveAuthBloc, AmptiveAuthState>(
             builder: (BuildContext context, AmptiveAuthState state) {
-          return AmptiveElevatedButtonWidget(
-            height: 50.w,
-            margin: EdgeInsets.only(bottom: 29.h),
-            buttonTitle: ATStrings.createAccount,
-            onPressed: service.isNameValid
-                ? () {
-                    // Validate returns true if the form is valid, or false otherwise.
-                    context.goNamed(ATRoutes.addProfilePic);
-                  }
-                : null,
+          return Padding(
+            padding: const EdgeInsets.all(15),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              spacing: 20,
+              children: [
+                ATRichText(
+                  items: {
+                    '${ATStrings.BY_CLICKING_ON_CREATE_ACCT} ': context.textTheme.titleSmall!.copyWith(
+                      fontSize: ATFontSizes.size11
+                    ),
+                    ATStrings.TERMS_OF_SERVICE: context.textTheme.displayMedium!.copyWith(
+                      fontSize: ATFontSizes.size11
+                    ),
+                    ' and ': context.textTheme.titleSmall!.copyWith(
+                      fontSize: ATFontSizes.size11
+                    ),
+                    ATStrings.PRIVACY_POLICY: context.textTheme.displayMedium!.copyWith(
+                      fontSize: ATFontSizes.size11
+                    ),
+                  },
+                ),
+                ATPlainElevatedBtn(
+                  btnTitle: ATStrings.CREATE_ACCT,
+                  onPressed: service.isNameValid
+                      ? () {
+                          // Validate returns true if the form is valid, or false otherwise.
+                          context.goNamed(ATRoutes.ADD_PROFILE_PIC_SCREEN);
+                        }
+                      : null,
+                ),
+              ],
+            ),
           );
         }),
       ),

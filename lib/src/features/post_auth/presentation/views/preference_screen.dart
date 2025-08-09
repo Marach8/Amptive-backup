@@ -5,7 +5,9 @@ import 'package:amptive/src/config/utils/colors.dart';
 import 'package:amptive/src/config/utils/constants.dart';
 import 'package:amptive/src/config/utils/other_strings.dart';
 import 'package:amptive/src/config/routing/route_strings.dart';
+import 'package:amptive/src/shared/elevated_button_widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/annotated_region__widget.dart';
+import 'package:amptive/src/views/widgets/common_widgets/back_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -14,18 +16,18 @@ import 'package:go_router/go_router.dart';
 import '../../../../config/utils/font_weights.dart';
 import '../../../../views/widgets/common_widgets/app_bar_widget.dart';
 import '../../../../views/widgets/common_widgets/loading_indicator.dart';
-import '../../../../views/widgets/other_widgets/post_authentication_widgets/community_card_preference.dart';
-import '../../../../views/widgets/other_widgets/post_authentication_widgets/processing_preference_widget.dart';
+import '../../post_authentication_widgets/community_card_preference.dart';
+import '../../post_authentication_widgets/processing_preference_widget.dart';
 
-class AmptivePreferenceScreen extends StatefulWidget {
-  const AmptivePreferenceScreen({super.key});
+class Select5CommunitiesScreen extends StatefulWidget {
+  const Select5CommunitiesScreen({super.key});
 
   @override
-  State<AmptivePreferenceScreen> createState() =>
-      _AmptivePreferenceScreenState();
+  State<Select5CommunitiesScreen> createState() =>
+      _Select5CommunitiesScreenState();
 }
 
-class _AmptivePreferenceScreenState extends State<AmptivePreferenceScreen> {
+class _Select5CommunitiesScreenState extends State<Select5CommunitiesScreen> {
   @override
   void initState() {
     context.read<AmptivePreferenceBloc>().add(LoadPreferencesEvent());
@@ -39,7 +41,7 @@ class _AmptivePreferenceScreenState extends State<AmptivePreferenceScreen> {
         listener: (BuildContext context, AmptivePreferenceState state) {
           if (state is PreferencePersonalizedState) {
             // context.goNamed(AmptiveRoutes.homeScreen);
-            context.goNamed(ATRoutes.preHomepage);
+            context.goNamed(ATRoutes.ALLOW_NOTIFICATIONS_SCREEN);
 
           }
         },
@@ -52,7 +54,7 @@ class _AmptivePreferenceScreenState extends State<AmptivePreferenceScreen> {
             backgroundColor: ATColors.hex0D0D0D,
             appBar: state is SelectPreferenceCompletedState
                 ? null
-                : const ATAppBar(),
+                : const ATAppBar(leading: ATBackBtn(),),
             body: state is InitialState
                 ? const Center(
                     child: ATLoadingIndicator(),
@@ -116,30 +118,14 @@ class _AmptivePreferenceScreenState extends State<AmptivePreferenceScreen> {
                                         padding: EdgeInsets.symmetric(
                                             horizontal: 25.w),
                                         margin: EdgeInsets.only(bottom: 16.h),
-                                        child: ElevatedButton(
+                                        child: ATPlainElevatedBtn(
                                           onPressed: () {
                                             context
                                                 .read<AmptivePreferenceBloc>()
                                                 .add(
                                                     SelectPreferenceCompletedEvent());
                                           },
-                                          style: ElevatedButton.styleFrom(
-                                            backgroundColor:
-                                                ATColors.hex307FE2,
-                                            padding: EdgeInsets.symmetric(
-                                                vertical: 11.5.h),
-                                          ),
-                                          child: Text(
-                                            ATStrings.NEXT,
-                                            textAlign: TextAlign.center,
-                                            style: Theme.of(context)
-                                                .textTheme
-                                                .headlineMedium
-                                                ?.copyWith(
-                                                  fontWeight: ATFontWeights
-                                                      .w600,
-                                                ),
-                                          ),
+                                          btnTitle: ATStrings.NEXT,
                                         ),
                                       ),
                                     ),

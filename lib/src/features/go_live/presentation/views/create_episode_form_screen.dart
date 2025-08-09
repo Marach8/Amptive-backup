@@ -483,7 +483,9 @@ class _CreateShowFormScreenState extends State<CreateEpisodeFormScreen> {
 
               return ATBlurredBgBtn(
                 onPressed: value.$1 ? (){
-                  if(btnOnTapIsGoLive){}
+                  if(btnOnTapIsGoLive){
+                    context.pushReplacementNamed(ATRoutes.GO_LIVE_ONBOARDING);
+                  }
                   else{
                     final dynamic params = (
                       coverArtBytes: ctx.read<BgImageBloc>().state.$2,

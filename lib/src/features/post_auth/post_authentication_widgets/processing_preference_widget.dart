@@ -5,10 +5,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get_it/get_it.dart';
 
-import '../../../../models/preferences.dart';
-import '../../../../services/preference_service.dart';
-import '../../../../config/utils/other_strings.dart';
-import '../../../../features/post_auth/presentation/views/single_community_card.dart';
+import '../../../models/preferences.dart';
+import '../../../services/preference_service.dart';
+import '../../../config/utils/other_strings.dart';
+import '../presentation/views/single_community_card.dart';
 
 class ProcessingPreferenceWidget extends StatefulWidget {
   const ProcessingPreferenceWidget({

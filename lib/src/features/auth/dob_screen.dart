@@ -4,6 +4,7 @@ import 'package:amptive/src/config/routing/route_strings.dart';
 import 'package:amptive/src/config/utils/colors.dart';
 import 'package:amptive/src/views/widgets/common_widgets/annotated_region__widget.dart';
 import 'package:amptive/src/shared/elevated_button_widget.dart';
+import 'package:amptive/src/views/widgets/common_widgets/back_button.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -15,14 +16,14 @@ import '../../bloc/authentication/general/auth_bloc.dart';
 import '../../bloc/authentication/general/auth_states.dart';
 import '../../views/widgets/common_widgets/app_bar_widget.dart';
 
-class DateOfBirthScreen extends StatefulWidget {
-  const DateOfBirthScreen({super.key});
+class AddDOBScreen extends StatefulWidget {
+  const AddDOBScreen({super.key});
 
   @override
-  State<DateOfBirthScreen> createState() => _DateOfBirthScreenState();
+  State<AddDOBScreen> createState() => _AddDOBScreenState();
 }
 
-class _DateOfBirthScreenState extends State<DateOfBirthScreen> {
+class _AddDOBScreenState extends State<AddDOBScreen> {
   final TextEditingController _dobController = TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   bool _isBottomSheetOpened = false;
@@ -35,11 +36,12 @@ class _DateOfBirthScreenState extends State<DateOfBirthScreen> {
     return ATAnnotatedRegion(
       child: Scaffold(
         backgroundColor: ATColors.hex0D0D0D,
-        appBar: const ATAppBar(),
-        body: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 20.h),
-          child: Form(
-            key: _formKey,
+        appBar: const ATAppBar(leading: ATBackBtn(),),
+        body: Form(
+          key: _formKey,
+          child: SingleChildScrollView(
+            physics: const BouncingScrollPhysics(),
+            padding: const EdgeInsets.all(15),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
@@ -61,7 +63,7 @@ class _DateOfBirthScreenState extends State<DateOfBirthScreen> {
                   state is EditDOBAuthState && state.dob != null
                       ? _dobController.text = _formatDate(state.dob!)
                       : _dobController.clear();
-
+            
                   return TextFormField(
                     controller: _dobController,
                     readOnly: true,
@@ -122,31 +124,27 @@ class _DateOfBirthScreenState extends State<DateOfBirthScreen> {
                     ),
                   ),
                 ),
-                Expanded(
-                  child: SizedBox(
-                    height: 1.h,
-                  ),
-                ),
               ],
             ),
           ),
         ),
+
+
         bottomSheet: Padding(
-          padding: EdgeInsets.only(
-              bottom: _isBottomSheetOpened ? bottomSheetHeight : 16.h),
+          padding: const EdgeInsets.all(15),
           child: BlocBuilder<AmptiveAuthBloc, AmptiveAuthState>(
               buildWhen: (AmptiveAuthState prev, AmptiveAuthState curr) => curr is EditDOBAuthState,
               builder: (BuildContext context, AmptiveAuthState state) {
-                return AmptiveElevatedButtonWidget(
-                  height: 50.w,
-                  onPressed: state is EditDOBAuthState && state.dob != null
-                      ? () {
-                          context.pushNamed(ATRoutes.addUsername);
-                        }
-                      : null,
-                  buttonTitle: ATStrings.NEXT,
-                );
-              }),
+                return ATPlainElevatedBtn(
+                btnTitle: ATStrings.NEXT,
+                onPressed: state is EditDOBAuthState && state.dob != null
+                  ? () {
+                      context.pushNamed(ATRoutes.ADD_USERNAME_AUTH_SCREEN);
+                    }
+                  : null,
+              );
+            }
+          ),
         ),
       ),
     );

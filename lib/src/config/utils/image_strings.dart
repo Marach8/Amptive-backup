@@ -9,7 +9,7 @@ class ATImgStrings{
 
   static const String emptyImage = '$_svgPath/empty_image.svg';
   static const String AMPTIVE_LOGO = '$_svgPath/Logo.svg';
-  static const String logo2 = '$_svgPath/amptive_logotype.svg';
+  static const String AMPTIVE_NAME_LOGO = '$_svgPath/amptive_logotype.svg';
   static const String WALLET_ICON = '$_svgPath/WALLET ICON.svg';
   static const String SHOW_ICON = '$_svgPath/Frame 79.svg';
   static const String WIFI_ICON = '$_svgPath/Start or Schedule.svg';
@@ -61,7 +61,7 @@ class ATImgStrings{
   static const String jpeg3 = '$_generalJpegImagePath/welcomeAvatar3.jpeg';
   static const String weCanDoHardThingsBgImage = '$_generalJpegImagePath/weCanDoAllThings.jpg';
 
-  static const String facebookIcon = '$_pngPath/facebook.png';
+  static const String FB_ICON = '$_pngPath/facebook.png';
   static const String GOOGLE_ICON = '$_pngPath/google_icon.png';
   static const String noAvatarImage = '$_pngPath/no_avatar_image.png';
   static const String discoverPic1 = '$_pngPath/Frame 156.png';

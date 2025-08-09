@@ -11,19 +11,23 @@ class ATOutlinedBtn extends StatelessWidget {
     this.bgColor,
     this.height,
     this.width,
-    this.child
+    this.child,
+    this.padding
   });
+  
   final String? btnTitle;
   final Color? fgColor, bgColor;
   final void Function()? onPressed;
   final double? height, width;
   final Widget? child;
+  final EdgeInsetsGeometry? padding;
 
   @override
   Widget build(BuildContext context) {
     return OutlinedButton(
       onPressed: onPressed,
       style: ElevatedButton.styleFrom(
+        padding: padding,
         foregroundColor: fgColor,
         backgroundColor: bgColor,
         shape: RoundedRectangleBorder(

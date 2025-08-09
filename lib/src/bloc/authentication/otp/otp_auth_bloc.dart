@@ -51,8 +51,9 @@ class AmptiveOTPAuthBloc extends Bloc<AmptiveOTPAuthEvent, AmptiveOTPAuthState> 
 
     });
 
-
-
+    on<ValidOTPAuthEvent>((_, emit){
+      emit(VerifiedOTPAuthState());
+    });
   }
   StreamSubscription<int>? _tickerSubscription;
 

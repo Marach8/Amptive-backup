@@ -2,20 +2,20 @@ import 'dart:async';
 
 import 'package:amptive/src/config/utils/colors.dart';
 import 'package:amptive/src/views/widgets/common_widgets/loading_indicator.dart';
-import 'package:amptive/src/views/widgets/other_widgets/post_authentication_widgets/add_picture.dart';
+import 'package:amptive/src/features/post_auth/post_authentication_widgets/add_picture.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../config/utils/font_sizes.dart';
 
-class PostRegistrationScreen extends StatefulWidget {
-  const PostRegistrationScreen({super.key});
+class AddProfilePictureScreen extends StatefulWidget {
+  const AddProfilePictureScreen({super.key});
 
   @override
-  State<PostRegistrationScreen> createState() => _PostRegistrationScreenState();
+  State<AddProfilePictureScreen> createState() => _AddProfilePictureScreenState();
 }
 
-class _PostRegistrationScreenState extends State<PostRegistrationScreen> {
+class _AddProfilePictureScreenState extends State<AddProfilePictureScreen> {
   bool _isLoading = true;
 
   @override

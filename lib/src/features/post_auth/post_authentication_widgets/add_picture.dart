@@ -2,18 +2,19 @@ import 'dart:io';
 import 'dart:typed_data';
 import 'package:amptive/src/bloc/authentication/general/auth_bloc.dart';
 import 'package:amptive/src/bloc/authentication/general/auth_states.dart';
+import 'package:amptive/src/shared/elevated_button_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:image_picker/image_picker.dart';
-import '../../../../bloc/authentication/general/auth_events.dart';
-import '../../../../config/utils/colors.dart';
-import '../../../../config/utils/font_weights.dart';
-import '../../../../config/utils/image_strings.dart';
-import '../../../../config/utils/other_strings.dart';
-import '../../../../config/routing/route_strings.dart';
+import '../../../bloc/authentication/general/auth_events.dart';
+import '../../../config/utils/colors.dart';
+import '../../../config/utils/font_weights.dart';
+import '../../../config/utils/image_strings.dart';
+import '../../../config/utils/other_strings.dart';
+import '../../../config/routing/route_strings.dart';
 
 class AddPictureWidget extends StatefulWidget {
   const AddPictureWidget({super.key});
@@ -199,12 +200,12 @@ class _AddPictureWidgetState extends State<AddPictureWidget> {
             ),
           ),
           Container(
-            margin: EdgeInsets.only(bottom: 20.h),
+            margin: const EdgeInsets.only(bottom: 20),
             padding: EdgeInsets.symmetric(vertical: 7.h),
             alignment: Alignment.center,
             child: GestureDetector(
               onTap: () {
-                context.pushNamed(ATRoutes.preference);
+                context.pushNamed(ATRoutes.SELECT_5_COMMUNITIES_SCREEN);
               },
               child: Text(
                 ATStrings.skipForNow,
@@ -217,24 +218,13 @@ class _AddPictureWidgetState extends State<AddPictureWidget> {
           ),
           BlocBuilder<AmptiveAuthBloc, AmptiveAuthState>(
               builder: (BuildContext context, AmptiveAuthState state) {
-            return Container(
-              width: 350.w,
-              height: 50.w,
-              margin: EdgeInsets.only(bottom: 29.h),
-              child: ElevatedButton(
-                onPressed:
-                    state is ProfilePictureAddedState && state.image != null
-                        ? () => context.pushNamed(ATRoutes.preference)
-                        : null,
-                style: ElevatedButton.styleFrom(
-                    backgroundColor: ATColors.hex307FE2),
-                child: Text(
-                  ATStrings.NEXT,
-                  style: Theme.of(context).textTheme.headlineMedium?.copyWith(
-                        fontWeight: ATFontWeights.w600,
-                      ),
-                ),
-              ),
+            return ATPlainElevatedBtn(
+              btnTitle: ATStrings.NEXT,
+              onPressed:
+                  state is ProfilePictureAddedState && state.image != null
+                      ? () => context.pushNamed(ATRoutes.SELECT_5_COMMUNITIES_SCREEN)
+                      : null,
+                      
             );
           }),
         ],
