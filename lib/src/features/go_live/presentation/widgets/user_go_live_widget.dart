@@ -15,7 +15,7 @@ class GoLiveWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: (){context.pushNamed(ATRoutes.GO_LIVE_WELCOME_SCREEN);},
+      onTap: (){context.pushNamed(ATRoutes.GO_LIVE_TYPE_SELECTION);},
       child: Column(
         mainAxisSize: MainAxisSize.min,
         mainAxisAlignment: MainAxisAlignment.end,

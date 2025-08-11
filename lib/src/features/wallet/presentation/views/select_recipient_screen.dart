@@ -10,7 +10,7 @@ import 'package:amptive/src/features/wallet/bloc/recent_receipients_bloc.dart';
 import 'package:amptive/src/features/wallet/presentation/views/enter_amount_screen.dart' show EnterAmountScreenParams;
 import 'package:amptive/src/views/widgets/common_widgets/annotated_region__widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/custom_container_widget.dart';
-import 'package:amptive/src/views/widgets/common_widgets/elevated_button_widget.dart';
+import 'package:amptive/src/shared/elevated_button_widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/image_loader_widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/loading_indicator.dart';
 import 'package:amptive/src/views/widgets/common_widgets/radio_button.dart';

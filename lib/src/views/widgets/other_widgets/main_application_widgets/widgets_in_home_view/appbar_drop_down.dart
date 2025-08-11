@@ -44,7 +44,7 @@ class ATHomeDropDown extends StatelessWidget {
                   fontSize: ATFontSizes.size15
                 ),
               ),
-              const ATImgLoader(imgPath: ATImgStrings.CALEND_ICON)
+              const ATImgLoader(imgPath: ATImgStrings.CALENDER_ICON)
             ],
           )
         ),

@@ -16,18 +16,21 @@ class ATBackBtn extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      onTap: () => context.pop(),
-      borderRadius: BorderRadius.circular(5),
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: <Widget>[
-          Icon(Icons.arrow_back_ios, size: iconSize ?? 20),
-          Text(
-            leadingText ?? ATStrings.BACK,
-            style: leadingStyle ?? Theme.of(context).textTheme.titleMedium,
-          )
-        ],
+    return Align(
+      alignment: Alignment.center,
+      child: InkWell(
+        onTap: () => context.pop(),
+        borderRadius: BorderRadius.circular(10),
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: <Widget>[
+            Icon(Icons.arrow_back_ios, size: iconSize ?? 20),
+            Text(
+              leadingText ?? ATStrings.BACK,
+              style: leadingStyle ?? Theme.of(context).textTheme.titleMedium,
+            )
+          ],
+        ),
       ),
     );
   }
@@ -64,14 +67,15 @@ class ATRoundedBackBtn extends StatelessWidget {
 
 
 class ATXBackBtn extends StatelessWidget {
-  const ATXBackBtn({super.key});
+  const ATXBackBtn({super.key, this.onTapOverride});
+  final VoidCallback? onTapOverride;
 
   @override
   Widget build(BuildContext context) {
     return Align(
       alignment: Alignment.center,
       child: InkWell(
-        onTap: () => context.pop(),
+        onTap: onTapOverride ?? () => context.pop(),
         splashColor: ATColors.hex303030,
         borderRadius: BorderRadius.circular(30),
         child: const SizedBox(

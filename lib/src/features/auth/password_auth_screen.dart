@@ -3,6 +3,7 @@ import 'package:amptive/src/bloc/authentication/password/password_auth_states.da
 import 'package:amptive/src/config/routing/route_strings.dart';
 import 'package:amptive/src/config/utils/colors.dart';
 import 'package:amptive/src/views/widgets/common_widgets/annotated_region__widget.dart';
+import 'package:amptive/src/views/widgets/common_widgets/back_button.dart';
 import 'package:amptive/src/views/widgets/common_widgets/textformfield_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -15,7 +16,7 @@ import '../../bloc/authentication/password/password_auth_bloc.dart';
 import '../../bloc/authentication/password/password_auth_events.dart';
 import '../../config/utils/other_strings.dart';
 import '../../views/widgets/common_widgets/app_bar_widget.dart';
-import '../../views/widgets/common_widgets/elevated_button_widget.dart';
+import '../../shared/elevated_button_widget.dart';
 
 class PasswordAuthScreen extends StatefulWidget {
   const PasswordAuthScreen({super.key});
@@ -39,11 +40,12 @@ class _PasswordAuthScreenState extends State<PasswordAuthScreen> {
   Widget build(BuildContext context) {
     return ATAnnotatedRegion(
       child: Scaffold(
-        appBar: const ATAppBar(),
-        body: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 20.h),
-          child: Form(
-            key: _formKey,
+        appBar: const ATAppBar(leading: ATBackBtn(),),
+        body: Form(
+          key: _formKey,
+          child: SingleChildScrollView(
+            physics: const BouncingScrollPhysics(),
+            padding: const EdgeInsets.all(15),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
@@ -70,7 +72,7 @@ class _PasswordAuthScreenState extends State<PasswordAuthScreen> {
                               .read<AmptivePasswordAuthBloc>()
                               .add(PasswordChangedAuthEvent(value: value));
                         },
-                        obscureText: !_passwordVisible,
+                        obscureText: !_passwordVisible, maxLines: 1,
                         keyboardType: TextInputType.visiblePassword,
                         cursorColor: ATColors.hex307FE2,
                         decoration: InputDecoration(
@@ -120,27 +122,19 @@ class _PasswordAuthScreenState extends State<PasswordAuthScreen> {
                     ),
                   );
                 }),
-                Expanded(
-                  child: SizedBox(
-                    height: 1.h,
-                  ),
-                ),
               ],
             ),
           ),
         ),
+
         bottomSheet: Padding(
-          padding: EdgeInsets.only(bottom: 16.h),
+          padding: const EdgeInsets.fromLTRB(15, 10, 15, 10),
           child: BlocBuilder<AmptivePasswordAuthBloc, AmptivePasswordAuthState>(
             builder: (BuildContext context, AmptivePasswordAuthState state) {
-              return AmptiveElevatedButtonWidget(
-                height: 50.w,
-                buttonTitle: ATStrings.NEXT,
-                onPressed: state is ValidPasswordAuthState
-                    ? () {
-                        context.pushNamed(ATRoutes.dobAuth);
-                      }
-                    : null,
+              return ATPlainElevatedBtn(
+                onPressed: state is! ValidPasswordAuthState ? null:
+                  () => context.pushNamed(ATRoutes.DOB_AUTH_SCREEN),
+                btnTitle: ATStrings.NEXT,
               );
             },
           ),

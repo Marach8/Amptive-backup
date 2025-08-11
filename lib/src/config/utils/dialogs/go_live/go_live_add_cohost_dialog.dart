@@ -21,7 +21,7 @@ import '../../../../models/host.dart';
 import '../../../../services/create_show/create_show_service.dart';
 import '../../../../views/widgets/common_widgets/loading_indicator.dart';
 import '../../../../views/widgets/common_widgets/custom_rebuilder_widget.dart';
-import '../../../../views/widgets/common_widgets/elevated_button_widget.dart';
+import '../../../../shared/elevated_button_widget.dart';
 
 
 Future<bool?> showGoLiveHostAddCoHostDialog({
@@ -132,7 +132,7 @@ final ValueNotifier<bool> showSuffixIconNotifier = ValueNotifier(false);
                           suffixIcon: AmptiveRebuilderWidget(
                             notifier: showSuffixIconNotifier,
                             builder: (_, bool shouldShow, __) {
-                              return ATAnimatedCrossFade(
+                              return ATAnimatedXFade(
                                 condition: shouldShow,
                                 secondChild: const SizedBox.shrink(),
                                 firstChild: GestureDetector(
@@ -154,7 +154,7 @@ final ValueNotifier<bool> showSuffixIconNotifier = ValueNotifier(false);
                               (ObjectWithNotifier<Host> cohost) => (cohost.obj.profilePicture ?? '').isNotEmpty
                             );
           
-                            return ATAnimatedCrossFade(
+                            return ATAnimatedXFade(
                               condition: showSelectedCohosts,
                               secondChild: const SizedBox.shrink(),
                               firstChild: ATContainer(

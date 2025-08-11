@@ -16,6 +16,7 @@ import '../../../../views/widgets/common_widgets/live_user_model_widget.dart';
 import '../../../../views/widgets/other_widgets/main_application_widgets/widgets_in_home_view/appbar_drop_down.dart';
 import '../../../go_live/presentation/widgets/user_go_live_widget.dart';
 
+
 class ATHomeScreen extends StatelessWidget {
   const ATHomeScreen({super.key});
 
@@ -37,8 +38,8 @@ class ATHomeScreen extends StatelessWidget {
                   child: Row(
                     mainAxisSize: MainAxisSize.min,
                     children: <Widget>[
-                      ATImgLoader(imgPath: ATImgStrings.logo2, height: 20.906, width: 86.32,),
-                      Gap(4.0),
+                      ATImgLoader(imgPath: ATImgStrings.AMPTIVE_NAME_LOGO, height: 21, width: 86),
+                      SizedBox(width: 4.0,),
                       Icon(Icons.keyboard_arrow_down_outlined, size: 25,),
                     ],
                   ),
@@ -65,7 +66,13 @@ class ATHomeScreen extends StatelessWidget {
                 ),
                 const Gap(24),
                 GestureDetector(
-                  onTap: () => context.pushNamed(ATRoutes.CREATOR_PROFILE_SCREEN),
+                  // onTap: (){
+                  //   context.pushReplacementNamed(
+                  //     ATRoutes.MAIN_GO_LIVE_PROGRAM,
+                  //     extra: GoLiveUserType.audience
+                  //   );
+                  // },
+                 onTap: () => context.pushNamed(ATRoutes.CREATOR_PROFILE_SCREEN),
                   //onTap: () => context.pushNamed(ATRoutes.USER_PROFILE_SCREEN),
                   child: const Padding(
                     padding: EdgeInsets.only(right: 15),
@@ -96,9 +103,9 @@ class ATHomeScreen extends StatelessWidget {
                     ),
                     ...Iterable<Widget>.generate(
                       20,
-                      (_) => Padding(
-                        padding: EdgeInsets.only(right: 14.w),
-                        child: const LiveUserWidget(),
+                      (_) => const Padding(
+                        padding: EdgeInsets.only(right: 14),
+                        child: LiveUserWidget(),
                       )
                     ),
                   ]

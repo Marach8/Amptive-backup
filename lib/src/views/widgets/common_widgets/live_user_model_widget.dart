@@ -19,7 +19,7 @@ class LiveUserWidget extends StatelessWidget {
           clipBehavior: Clip.none,
           alignment: Alignment.center,
           children: <Widget>[
-            AmptiveAnimatedPaddingOnPictureWidget(
+            AnimatedPicPaddingWidget(
               imagePath: ATImgStrings.jpeg3,
             ),
             Positioned(

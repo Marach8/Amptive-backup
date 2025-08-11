@@ -15,8 +15,8 @@ class ATStrings{
   static const String NAIRA_TEXT = '₦';
 
 
-  static const String goLiveLikeNeverBefore = "Go Live, Like Never Before";
-  static const String monetizeYouLiveShowsAndEvents =
+  static const String GO_LIVE_LIKE_NEVER_B4 = "Go Live, Like Never Before";
+  static const String READILY_MONETIZE_UR_LIVE_AUDIO_PROGS =
       "Readily monetize your live audio shows and events according to your unique taste while also creating the best for your subscribers.";
   static const String experienceItUniquely = "Experience it Uniquely";
   static const String joinTheLargerAudience =
@@ -33,11 +33,14 @@ class ATStrings{
   static const String or = 'or';
   static const String and = 'and';
   static const String emailSymbol = '@';
-  static const String signUp = 'Sign up';
-  static const String signIn = 'Sign in';
+  static const String SIGN_UP = 'Sign up';
+  static const String RECORD = 'Record';
+  static const String LAUNCH_SHOW = 'Launch show';
+  static const String SIGN_IN = 'Sign in';
   static const String attendAsGuest = 'Attend as guest';
-  static const String skip = 'Skip';
+  static const String SKIP = 'Skip';
   static const String BACK = 'Back';
+  static const String TEXT = 'Text';
   static const String RESPOND = 'Respond';
   static const String CONTINUE = 'Continue';
   static const String SEND_INVITE = 'Send invite';
@@ -54,11 +57,14 @@ class ATStrings{
   static const String signUpWith = 'Sign up with ';
   static const String signInWith = 'Sign in with ';
   static const String APPLE_PAY = 'Apple Pay';
+  static const String APPLE = 'Apple';
   static const String FLUTTERWAVE = 'Flutterwave';
   static const String GOOGLE_PAY = 'Google Pay';
   static const String EMAIL = 'Email';
   static const String LIVE = 'Live';
   static const String ALL = 'All';
+  static const String RECORDING_WILL_AUTOPLAY = 'Your recording will play in';
+  static const String ENTER_VALID_URL = 'Please, enter a valid URL!';
   static const String TRSF_SUCCESS = 'Transfer Successful';
   static const String WITHDRAWAL_REQUEST_SENT = 'Withdrawal Request Sent';
   static const String WITHDRAWAL_REQUEST_DESC = 'Your withdrawal request has been sent. You will be notified once it is processed.';
@@ -67,10 +73,10 @@ class ATStrings{
   static const String FONE_NO = 'Phone Number';
   static const String SAVE_BANK_DETAILS_DESC = 'Do you want to save this bank detail to re-use it next time?';
   static const String SAVE_BANK_DETAILS = 'Save Bank Details';
-  static const String facebook = 'Facebook';
+  static const String FACEBOOK = 'Facebook';
   static const String VISIT_PROFILE = 'Visit profile';
-  static const String twitter = 'X(Twitter)';
-  static const String google = 'Google';
+  static const String TWITTER = 'X(Twitter)';
+  static const String GOOGLE = 'Google';
   static const String ANSWER_SECRET_QUEST = 'Answer Secret Question';
   static const String NO_MATCHING_RESULTS = 'No results found for this search!';
   static const String SELECT_CAT = 'Select your category';
@@ -79,6 +85,7 @@ class ATStrings{
   static const String PROCEED = 'Proceed';
   static const String UR_WALLET = 'Your Wallet';
   static const String UR_WAY = 'Your Way';
+  static const String NO_THANKS = 'No thanks';
   static const String UR_WITHDRAWAL_REQUEST = 'Your withdrawal request of';
   static const String UR_DEPOSIT = 'Your deposit of';
   static const String WAS_SUCCESSFUL = 'was successful';
@@ -104,6 +111,11 @@ class ATStrings{
   static const String DELETE_PLAN = 'Delete plan';
   static const String DELETE = 'Delete';
   static const String SAVE = 'Save';
+  static const String TAP_D_RECORD_BTN = 'Tap the record button';
+  static const String SPEAK_IN_2_MIC = 'Speak into the mic';
+  static const String MIC_ENHANCE_SOUND = 'Microphones enhance sound quality.';
+  static const String SOUND_CHECK = 'Sound check';
+  static const String GOING_LIVE_ON_AIR = 'Going live on air';
   static const String CHANGE_BANK_DETAILS = 'Change bank details';
   static const String DELETE_SUB_PLAN = 'Delete subscription plan?';
   static const String DELETE_SUB_PLAN_DESC = 'Deleting plan will grant listeners free access to your shows.';
@@ -113,7 +125,7 @@ class ATStrings{
   static const String UR_EMAIL = 'What is your email?';
   static const String enterYourEmail = 'Enter your email...';
   static const String thisEmailWillBeVerified = 'This email will be verified in the next step';
-  static const String verifyEmail = 'Verify email';
+  static const String VERIFY_EMAIL = 'Verify email';
   static const String UNBLOCK_DESC = 'will be able to follow, subscribe and see your app activities';
   static String unMuteDesc(String text) => "You will be able to see $text's app activities";
   static String enterLink(String link) => "Enter your $link link";
@@ -122,6 +134,8 @@ class ATStrings{
   static const String TRANSFER_FUNDS = 'Transfer Funds';
   static const String COUNTRY = 'Country';
   static const String PROFILE = 'Profile';
+  static const String STAY_ON_LOOP = 'STAY ON THE LOOP';
+  static const String ALLOW_NOTIFICATIONS = 'Allow Amptive to send notifications of live audio shows & events';
   static const String SELECT_COUNTRY = 'Select Country';
   static const String BEGIN_SETUP = 'Begin setup';
   static const String AVAILABLE_BAL = 'Available balance';
@@ -178,15 +192,15 @@ class ATStrings{
   static const String DONE = 'Done';
 
   static const String noteAboutProfilePic = "Note that this will appear on your profile.";
-  static const String termsOfService = "Terms of Service";
+  static const String TERMS_OF_SERVICE = "Terms of Service";
   static const String enterYourName = 'Enter your name';
   static const String whatIsYourName = 'What is your name?';
-  static const String createAccount = 'Create account';
-  static const String privacyPolicy = 'Privacy Policy.';
+  static const String CREATE_ACCT = 'Create account';
+  static const String PRIVACY_POLICY = 'Privacy Policy.';
   static const String CREATE_SCHEDULE = 'Create a Schedule';
   static const String SUB_OVERVIEW = 'Subscription Plan Overview';
   static const String SUB_OVERVIEW_DESC = 'Only subscribers will have access to your shows';
-  static const String warningOnClickingCreate = 'By clicking on ‘Create account’, you agree to the';
+  static const String BY_CLICKING_ON_CREATE_ACCT = 'By clicking on ‘Create account’, you agree to the';
 
   static const String CHECKER_LOADING = "Checker is loading...";
   static const String CORRECT_ANS = 'Answer is correct';
@@ -260,6 +274,7 @@ class ATStrings{
   static const String ATTENDED = 'Attended';
   static const String UPCOMING = 'Upcoming';
   static const String SCHEDULED = 'Scheduled';
+  static const String SCHEDULE = 'Schedule';
   static const String SUBSCRIBED = 'Subscribed';
   static const String SUBSCRIBE = 'Subscribe';
   static const String DAY_VIEW = 'Day view';
@@ -300,6 +315,8 @@ class ATStrings{
   static const String VIEW = 'View';
   static const String GIFTS = 'Gifts';
   static const String ADD_LINK = 'Add Link';
+  static const String LINK_NAME = 'What is the name of your link';
+  static const String LINK_URL = 'What is the URL of your link';
 
   static const String SEARCH_FOR_EVENTS_ND_SHOWS = 'Search for events, shows and more';
   static const String CANCEL = 'Cancel';
@@ -333,9 +350,10 @@ class ATStrings{
   static const String USERNAME = 'Username';
   static const String NAME = 'Name';
   static const String TITLE_OF_UR_SHOW = 'What is the title of your show?';
-  static const String TELL_LISTENERS_ABOUT_SHOW = 'Tell your listeners what your show is about';
+  static const String TELL_LISTENERS_ABOUT_SHOW = 'Tell your listeners what your show is about.';
   static const String SELECT_COMMUNITY_4_UR_SHOW = 'Select a community for your show';
   static const String TITLE = 'Title';
+  static const String TOGGLE_WHISPERS = 'Activate or de-activate whispers';
   static const String DESCRIPTION = 'Description';
   static const String BIO = 'Bio';
   static const String SELECT_ACCT_TYPE = 'Select your choice account type to proceed.';
@@ -345,6 +363,7 @@ class ATStrings{
   static const String BIZ_ACCT_DESC = 'Best for brands, organizations, service providers, local businesses etc.';
   static String setUpAcct(String acct) => "Set up $acct";
   static const String LINKS = 'Links';
+  static const String LINK = 'Link';
   static const String SWITCH_ACCT = 'Switch Account Type';
   static const String PSWRD_ND_SECURITY = 'Password and Security';
   static const String APP_SETTINGS = 'App Settings';
@@ -392,7 +411,7 @@ class ATStrings{
   static const String CREATE_UR_SHOW = 'Create your show';
   static const String CREATE_UR_EVENT = 'Create your event';
   static const String ADD_COMMUNITY = 'Add Community';
-  static const String ADD_CO_HOST = 'Add Cohost';
+  static const String ADD_CO_HOST = 'Add Co-hosts';
   static const String EDIT_COHOST = 'Edit cohost';
   static const String ADD_HASHTAG = 'Add Hashtag';
   static const String ACCT_PRIVATE = 'Your account is now private';
@@ -424,7 +443,7 @@ class ATStrings{
   static const String CAPACITY = 'Capacity';
   static const String CHOOSE_2_ALLOW_HAND_RASING = 'Choose whether to allow hand-rasing';
   static const String AUDIENCE_INTERACTION = 'Select audience interaction';
-  static const String U_WILL_HAVE_ACCESS_2_MODERATION_TOOLS = "While you're live, you'll have full access to your moderation tools so you can control and manage audience interactions throught the session.";
+  static const String U_WILL_HAVE_ACCESS_2_MODERATION_TOOLS = "While you're live, you'll have full access to your moderation tools so you can control and manage audience interactions throughout the session.";
   static const String ALL_FOLLOWERS = 'All Followers';
   static const String ALL_SUBSCRIBERS = 'All Subscribers';
   static const String MAX_CAPACITY = 'Kindly enter the maximun number of users/listeners that can access your event.';
@@ -433,7 +452,7 @@ class ATStrings{
   static const String REMOVE = 'Remove';
   static const String SEND_GIFT_2_HOST = 'Send a gift to the host';
   static const String WHISPERS_DESC = 'Whispers are randomly selected comments from your live audience that appear on your event page while your are live.';
-  static const String USERS_WOULD_WANT_2_JOIN = 'Non-attending users can see these comments, encouraging them to join your live event.';
+  static const String NON_ATTENDING_ENCOURAGED_2_JOIN = 'Non-attending users can see these comments, encouraging them to join your live event.';
   static const String TURN_ON = 'Turn On';
   static const String TURNED_ON = 'Turned On';
   static const String TURN_OFF = 'Turn Off';
@@ -454,8 +473,8 @@ class ATStrings{
   static const String HAND_RAISING = 'Hand Raising';
   static const String CNTRL_HAND_RAISING = "While you're live, you'll have full access to your moderation tools, allowing you to manage interactions and maintain control throughout the session.";
   static const String DISALLOW = "Don't Allow";
-  static const String AUDIENCE_CAN_RAISE_HAND = 'Audience can raise their hands during your live show.';
-  static const String AUDIENCE_CANNOT_RAISE_HAND = 'Audience cannot raise their hands during your live show.';
+  static const String AUDIENCE_CAN_RAISE_HAND = 'Audience can raise their hands during your live.';
+  static const String AUDIENCE_CANNOT_RAISE_HAND = 'Audience cannot raise their hands during your live.';
   static const String PROMPTED_2_SETUP_SUB_PLAN = "You will be prompted to setup subscription plan if you haven't set it up yet";
   static const String EVENT_AUDIENCE_ACCESS_DESC = 'You will be prompted to setup your payment fee for your event';
   static const String AMOUNT_2_CHARGE_4_EVENT = 'Kindly enter the amount you would want to charge users for your event';
@@ -476,6 +495,7 @@ class ATStrings{
   static const String SHOW_IS_SETUP = 'Your Show is setup and airing!';
   static const String BEGIN_JOURNEY = 'Begin your journey by creating your first episode';
   static const String CREATE_1ST_EPISODE = 'Create first epidode';
+  static const String CREATE_AN_EPISODE = 'Create an episode';
   static const String VIEW_SHOW_PAGE = 'View show page';
   static const String VIEW_EVENT_PAGE = 'View event page';
   static const String EVENT_SCHEDULED = 'Your Event is scheduled!';
@@ -485,8 +505,15 @@ class ATStrings{
   static const String COMMENT = 'Comment';
   static const String END_NOW = 'End now';
   static const String HOST = 'Host';
+  static const String EDIT_EPISODE = 'Edit episode';
+  static const String ATTENDEES_WILL_SHOW_HERE = 'Attendees will appear here!';
+  static const String EPISODE_CREATED = 'Your episode has been scheduled!';
+  static const String SHARE_EPISODE_LINK_DESC = 'Share your episode link to build excitement and attract more attendees';
+  static const String VIEW_EPISODE_DETAILS = 'View episode details';
+  static const String SHARE_EPISODE = 'Share episode';
   static const String UNBLOCK = 'Unblock';
   static const String UNMUTE = 'Unmute';
+  static const String ABOUT_EPISODE = 'About Episode';
   static const String AMPTIVE_4_CREATORS = 'Amptive for Creators';
   static const String AMPTIVE_4_BIZ = 'Amptive for Business';
   static const String CONNECT_SELL = 'Connect, sell and grow';
@@ -535,4 +562,18 @@ class ATStrings{
   static const String WALLET_CREATED = 'Your wallet has been created🎉';
   static const String RECEIVE_EARNINGS_WITH_WALLET = 'Receive earnings from events, gifts and subscriptions with your wallet.';
   static const String OPEN_WALLET = 'Open wallet';
+  static const String NOTIF1 = 'The HonestBunch is live now!';
+  static const String NOTIF1_DESC = 'Join the live show happening now: From Ghetto To Glory Featuring Daddy Showkey. Tap to listen and engage.';
+  static const String NOTIF2 = 'New Subscriber!';
+  static const String NOTIF2_DESC = 'joseph has just subscribed to your channel!';
+  static const String NOTIF3 = 'New Payment for The Rest is For You show';
+  static const String NOTIF3_DESC = 'dubhem has just paid for access to your event: The Rest is Football show.';
+  static const String NOTIF4 = 'New Follower!';
+  static const String NOTIF4_DESC = 'nonye is now following you.';
+  static const String NOTIF5 = 'Invitation to Cohost Lowkey Relationships in Nigeria.';
+  static const String NOTIF5_DESC = 'tgrabs has invited you to cohost the show: Knowing when to let go. Accept the invitation to join them live!';
+  static const String NOTIF6 = 'Technology: TED Tech is Live!';
+  static const String NOTIF6_DESC = "Don't miss out! TED Tech is live in the Technology community. Tap to listen and engage.";
+  static const String NOTIF7 = 'Scheduled Show: Crimehub in Nigeria is cool';
+  static const String NOTIF7_DESC = 'Get ready! Your event, The Boys on the Tracks, is happening in just 2 days. Make any final preparations needed';
 }

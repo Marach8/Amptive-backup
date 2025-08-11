@@ -24,7 +24,7 @@ class ATBottomNavItem extends StatelessWidget {
         final bool isSelected = itemIdentityIndex == currentNavIndex;
         return GestureDetector(
           onTap: () => context.read<ATNavBarBloc>().goToPage(itemIdentityIndex),
-          child: ATAnimatedCrossFade(
+          child: ATAnimatedXFade(
             condition: isSelected,
             firstChild: ATImgLoader(imgPath: selectedImagePath),
             secondChild: ATImgLoader(imgPath: unselectedImagePath)

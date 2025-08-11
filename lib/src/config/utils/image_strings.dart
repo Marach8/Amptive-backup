@@ -8,8 +8,8 @@ class ATImgStrings{
   static const String _pngPath = 'assets/images/png_images';
 
   static const String emptyImage = '$_svgPath/empty_image.svg';
-  static const String amptiveLogo = '$_svgPath/Logo.svg';
-  static const String logo2 = '$_svgPath/amptive_logotype.svg';
+  static const String AMPTIVE_LOGO = '$_svgPath/Logo.svg';
+  static const String AMPTIVE_NAME_LOGO = '$_svgPath/amptive_logotype.svg';
   static const String WALLET_ICON = '$_svgPath/WALLET ICON.svg';
   static const String SHOW_ICON = '$_svgPath/Frame 79.svg';
   static const String WIFI_ICON = '$_svgPath/Start or Schedule.svg';
@@ -22,7 +22,7 @@ class ATImgStrings{
   static const String outlinedHome = '$_svgPath/Home.svg';
   static const String filledBroadCast = '$_svgPath/Broadcast icon=Fill.svg';
   static const String outlinedBroadCast = '$_svgPath/Broadcast icon=Outline.svg';
-  static const String CALEND_ICON = '$_svgPath/Contextual menu icon.svg';
+  static const String CALENDER_ICON = '$_svgPath/Contextual menu icon.svg';
   static const String PERSON_CHECKED = '$_svgPath/Contextual menu icon (1).svg';
   static const String SHARE_LIVE = '$_svgPath/Icon.svg';
   static const String FOLLOW_ICON = '$_svgPath/Icon (1).svg';
@@ -48,6 +48,9 @@ class ATImgStrings{
   static const String CREATE_SHOW_ICON2 = '$_svgPath/Frame 20217.svg';
   static const String CREATE_EVENT_ICON1 = '$_svgPath/Simplification (4).svg';
   static const String CREATE_EVENT_ICON2 = '$_svgPath/Simplification (5).svg';
+  static const String ROTOR_IMG = '$_svgPath/Group 50.svg';
+  static const String ROTOR_IMG1 = '$_svgPath/Group 51.svg';
+  static const String BLUE_ROTOR_IMG = '$_svgPath/Moving Gradient Animation.svg';
   // static const String CREATOR_MIC = '$_svgPath/creator-microphone.svg';
   // static const String CREATOR_GIF = '$_svgPath/creatorgif.svg';
   // static const String CREATOR_GLOBE = '$_svgPath/internet.svg';
@@ -58,7 +61,7 @@ class ATImgStrings{
   static const String jpeg3 = '$_generalJpegImagePath/welcomeAvatar3.jpeg';
   static const String weCanDoHardThingsBgImage = '$_generalJpegImagePath/weCanDoAllThings.jpg';
 
-  static const String facebookIcon = '$_pngPath/facebook.png';
+  static const String FB_ICON = '$_pngPath/facebook.png';
   static const String GOOGLE_ICON = '$_pngPath/google_icon.png';
   static const String noAvatarImage = '$_pngPath/no_avatar_image.png';
   static const String discoverPic1 = '$_pngPath/Frame 156.png';
@@ -94,4 +97,11 @@ class ATImgStrings{
   static const String WARNING_ICON = '$_pngPath/warning.png';
   static const String WIRE_TRANSFER = '$_pngPath/wiretransfer.png';
   static const String PAPER_PLANE = '$_pngPath/paper plane.png';
+  static const String ONBOARD_NOTIF_IMG1 = '$_pngPath/image 5.png';
+  static const String ONBOARD_NOTIF_IMG2 = '$_pngPath/image 5 (1).png';
+  static const String ONBOARD_NOTIF_IMG3 = '$_pngPath/image 5 (2).png';
+  static const String ONBOARD_NOTIF_IMG4 = '$_pngPath/image 5 (3).png';
+  static const String ONBOARD_NOTIF_IMG5 = '$_pngPath/image 5 (4).png';
+  static const String ONBOARD_NOTIF_IMG7 = '$_pngPath/image 5 (5).png';
+  static const String ONBOARD_NOTIF_IMG6 = '$_pngPath/image 5 (6).png';
 }

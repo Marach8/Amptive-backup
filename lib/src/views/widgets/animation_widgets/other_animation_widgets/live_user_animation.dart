@@ -2,19 +2,19 @@ import 'package:amptive/src/config/utils/colors.dart';
 import 'package:amptive/src/views/widgets/common_widgets/image_loader_widget.dart';
 import 'package:flutter/material.dart';
 
-class AmptiveAnimatedPaddingOnPictureWidget extends StatefulWidget {
+class AnimatedPicPaddingWidget extends StatefulWidget {
 
-  const AmptiveAnimatedPaddingOnPictureWidget({
+  const AnimatedPicPaddingWidget({
     super.key,
     required this.imagePath
   });
   final String imagePath;
 
   @override
-  State<AmptiveAnimatedPaddingOnPictureWidget> createState() => _SizeAnimationState();
+  State<AnimatedPicPaddingWidget> createState() => _SizeAnimationState();
 }
 
-class _SizeAnimationState extends State<AmptiveAnimatedPaddingOnPictureWidget> with 
+class _SizeAnimationState extends State<AnimatedPicPaddingWidget> with 
 SingleTickerProviderStateMixin{
 
   late AnimationController sizeController;
@@ -28,10 +28,7 @@ SingleTickerProviderStateMixin{
       duration: const Duration(seconds: 1),
     )..repeat(reverse: true);
 
-    paddingAnimation = Tween<double> (
-      begin: 1,
-      end: 5
-    ).animate(
+    paddingAnimation = Tween<double>(begin: 1, end: 5).animate(
       CurvedAnimation(
         parent: sizeController,
         curve: Curves.ease
@@ -50,8 +47,7 @@ SingleTickerProviderStateMixin{
     animation: paddingAnimation,
     builder: (_, __) => Container(
       padding: EdgeInsets.all(paddingAnimation.value),
-      height: 70,
-      width: 70,
+      height: 70, width: 70,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(35),
         border: Border.all(
@@ -64,8 +60,7 @@ SingleTickerProviderStateMixin{
         child: ATImgLoader(
           imgPath: widget.imagePath,
           boxFit: BoxFit.cover,
-          height: 60,
-          width: 60,
+          height: 60, width: 60,
         ),
       ),
     ),

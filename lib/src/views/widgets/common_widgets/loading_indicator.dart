@@ -16,7 +16,7 @@ class ATLoadingIndicator extends StatelessWidget {
       height: size, width: size,
       child: CircularProgressIndicator(
         color: color ?? ATColors.hex307FE2,
-        backgroundColor: ATColors.hex307FE2.withOpacity(0.5),
+        backgroundColor: (color ?? ATColors.hex307FE2).withValues(alpha: 0.5),
         strokeWidth: 3,
       ),
     );

@@ -33,7 +33,7 @@ class SelectedCoHostsWidget extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               Expanded(
-                child: OverlappingCohosts<bool>(
+                child: _OverlappingCohosts<bool>(
                   cohosts: selectedCohosts
                 ),
               ),
@@ -44,7 +44,7 @@ class SelectedCoHostsWidget extends StatelessWidget {
                 padding: const EdgeInsets.fromLTRB(15, 10, 15, 10),
                 child: Text(
                   ATStrings.EDIT_COHOST,
-                  style: Theme.of(context).textTheme.labelSmall?.copyWith(
+                  style: context.textTheme.labelSmall?.copyWith(
                     color: ATColors.white.withValues(alpha: 0.7),
                     height: 1.1
                   ),
@@ -56,7 +56,7 @@ class SelectedCoHostsWidget extends StatelessWidget {
           Text(
             '${cohostNames.join(', ')} will be notified',
             maxLines: 5,
-            style: Theme.of(context).textTheme.labelSmall?.copyWith(
+            style: context.textTheme.labelSmall?.copyWith(
               color: ATColors.white.withValues(alpha: 0.6),
               fontSize: ATFontSizes.size13,
             ),
@@ -68,9 +68,9 @@ class SelectedCoHostsWidget extends StatelessWidget {
 }
 
 
-class OverlappingCohosts<T> extends StatelessWidget {
+class _OverlappingCohosts<T> extends StatelessWidget {
 
-  const OverlappingCohosts({
+  const _OverlappingCohosts({
     super.key,
     required this.cohosts,
     this.imgSize = 42.0,
@@ -106,7 +106,7 @@ class OverlappingCohosts<T> extends StatelessWidget {
                 border: Border.all(
                   color: borderColor ?? ATColors.white.withValues(alpha: 0.4),
                   width: borderWidth,
-                ) ,
+                ),
                 child: ClipRRect(
                   borderRadius: BorderRadiusGeometry.circular(20),
                   child: entry.$2.profilePicture == null ? BackdropFilter(
@@ -114,7 +114,7 @@ class OverlappingCohosts<T> extends StatelessWidget {
                     child: Center(
                       child: Text(
                         (entry.$1 + 1).toString(),
-                        style: Theme.of(context).textTheme.labelSmall?.copyWith(
+                        style: context.textTheme.labelSmall?.copyWith(
                           fontSize: ATFontSizes.size11
                         )
                       ),

@@ -2,32 +2,31 @@
 
 class ATRoutes {
   //WELCOME AND ONBOARDING
-  static const String index = "/";
-  static const String welcome = "welcome";
-  static const String onboarding = "onboarding";
+  static const String POST_ONBOARDING_SCREEN = "post_onboarding";
+  static const String ONBOARDING_SCREEN = "onboarding";
 
   //AUTHENTICATION
   static const String EMAIL_SCREEN = "email_auth";
-  static const String preference = "preference";
-  static const String authScreen = "auth_screen";
-  static const String passwordAuth = "password_auth";
-  static const String dobAuth = "dob_auth";
+  static const String SELECT_5_COMMUNITIES_SCREEN = "preference";
+  static const String AUTH_OPTIONS_SCREEN = "auth_screen";
+  static const String PSWRD_AUTH_SCREEN = "password_auth";
+  static const String DOB_AUTH_SCREEN = "dob_auth";
   static const String OTP_SCREEN = "otp";
-  static const String addName = "name_auth";
-  static const String addUsername = "username_auth";
+  static const String ADD_NAME_AUTH_SCREEN = "name_auth";
+  static const String ADD_USERNAME_AUTH_SCREEN = "username_auth";
   static const String ADD_FONE_NO_SCREEN = "add_phone_auth";
 
   //POST AUTHENTICATION
-  static const String addProfilePic = "add_profile_pic";
+  static const String ADD_PROFILE_PIC_SCREEN = "add_profile_pic";
   static const String CIRCLE_IMG_CROPPER_SCREEN = "crop_image";
-  static const String preHomepage = "pre-homepage";
+  static const String ALLOW_NOTIFICATIONS_SCREEN = "pre-homepage";
   static const String CREATE_SHOW_FORM = "create-show-form";
   static const String CREATE_EVENT_FORM = "create-event-form";
   static const String CREATE_EPISODE_FORM = "create-episode-form";
 
 
   //MAIN APPLICATION
-  static const String homeScreen = "home_screen";
+  static const String MAIN_APP_SHELL = "main_app_shell";
   static const String LIVE_SHOW_DETAILED = "show_detailed_screen";
   static const String LIVE_EVENT_DETAILED = "event_detailed_screen";
   static const String SCHEDULED_EVENTS_OR_SHOWS_SCREEN = 'scheduled_events_or_shows';
@@ -38,16 +37,17 @@ class ATRoutes {
   static const String TRENDING_SOCIETY_SCREEN = 'trending_society_screen';
   static const String TRENDING_HASHTAGS_SCREEN = 'trending_hashtags_screen';
   static const String SOCIETY_HASHTAG_SCREEN = 'trending_hashtag_full_screen';
-  static const String GO_LIVE_WELCOME_SCREEN = 'go_live_welcome_screen';
+  static const String GO_LIVE_TYPE_SELECTION = 'go_live_welcome_screen';
   static const String CREATOR_PROFILE_SCREEN = 'creator_profile';
   static const String PROFILE_MENU_SCREEN = 'profile_menu_screen';
   static const String PROFILE_FOLLOWING_SCREEN = 'profile_following_screen';
   static const String PROFILE_SUBSCRIBERS_SCREEN = 'profile_sub_screen';
   static const String USER_PROFILE_SCREEN = 'user_profile';
   static const String CHOOSE_OR_CREATE_GO_LIVE_PROGRAM_SCREEN = 'choose_or_create_show';
-  static const String CREATE_SHOW_SUCCESS = 'create_show_success_screen';
+  static const String GO_LIVE_PROGRAM_CREATION_SUCCESS = 'create_show_success_screen';
   static const String EVENT_SCHEDULED_SCREEN = 'event_scheduled';
-  static const String EPISODE_SCHEDULED_SCREEN = 'episode_scheduled';
+  static const String SHOW_PREVIEW_SCREEN = 'show_preview';
+  static const String EPISODE_PREVIEW_SCREEN = 'episode_preview';
   static const String COMMUNITY_TASK_SCREEN = 'community_task';
   static const String PROFILE_PIC_SCREEN = 'profile_picture';
   static const String LANGUAGE_SCREEN = 'language_screen';
@@ -85,4 +85,6 @@ class ATRoutes {
   static const String PAPER_PLANE_SUCCESS = 'paper_plane_success';
   static const String WALLET_TXNS = 'wallet_transactions';
   static const String SCHEDULE_DETAILED = 'schedule_detailed_screen';
+  static const String GO_LIVE_ONBOARDING = 'go_live_onboarding_screen';
+  static const String MAIN_GO_LIVE_PROGRAM = 'main_go_live_program';
 }

@@ -7,7 +7,7 @@ import 'package:amptive/src/config/utils/extensions/string_extensions.dart';
 import 'package:amptive/src/views/widgets/common_widgets/circle_avatar.dart';
 import 'package:amptive/src/views/widgets/common_widgets/custom_container_widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/image_loader_widget.dart';
-import 'package:amptive/src/views/widgets/common_widgets/overlapping_images.dart';
+import 'package:amptive/src/shared/overlapping_widgets.dart';
 import 'package:amptive/src/views/widgets/common_widgets/rich_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -209,7 +209,8 @@ class NewGiftersNotif extends StatelessWidget {
             imagePath: gifters.first.obj.profilePicture ?? ''
           ) else ATOverlappingImages(
             overlapOffset: 7, imgSize: 25,
-            imgPaths: gifters.map((ObjectWithNotifier<Host> gifter) => gifter.obj.profilePicture ?? '')
+            imgPaths: gifters.map(
+              (ObjectWithNotifier<Host> gifter) => gifter.obj.profilePicture ?? '')
               .take(3).toList(),
           ),
           const SizedBox(width: 10,),

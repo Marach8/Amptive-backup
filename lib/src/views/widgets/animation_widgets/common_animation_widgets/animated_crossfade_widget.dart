@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class ATAnimatedCrossFade extends StatelessWidget {
-  const ATAnimatedCrossFade({
+class ATAnimatedXFade extends StatelessWidget {
+  const ATAnimatedXFade({
     super.key,
     required this.firstChild,
     required this.secondChild,

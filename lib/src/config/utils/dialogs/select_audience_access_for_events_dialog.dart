@@ -11,7 +11,7 @@ import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
 import '../../../services/create_show/create_show_service.dart';
 import '../../../views/widgets/common_widgets/custom_rebuilder_widget.dart';
-import '../../../views/widgets/common_widgets/elevated_button_widget.dart';
+import 'package:amptive/src/shared/elevated_button_widget.dart';
 import '../other_strings.dart';
 
 Future<void> showSelectAudienceAccessForEventsDialog(

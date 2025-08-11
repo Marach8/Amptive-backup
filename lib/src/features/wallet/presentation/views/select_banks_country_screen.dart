@@ -10,7 +10,7 @@ import '../../../../config/utils/other_strings.dart';
 import '../../../../views/widgets/common_widgets/annotated_region__widget.dart';
 import '../../../../views/widgets/common_widgets/app_bar_widget.dart';
 import '../../../../views/widgets/common_widgets/back_button.dart';
-import '../../../../views/widgets/common_widgets/elevated_button_widget.dart';
+import '../../../../shared/elevated_button_widget.dart';
 
 class ATSelectBanksCountryScreen extends StatelessWidget {
   const ATSelectBanksCountryScreen({super.key});

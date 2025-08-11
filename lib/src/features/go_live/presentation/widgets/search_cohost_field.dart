@@ -75,7 +75,7 @@ class _SearchFieldWithXSuffixState extends State<SearchFieldWithXSuffix> {
       ),
       suffixIcon: Padding(
         padding: const EdgeInsets.only(right: 10,),
-        child: ATAnimatedCrossFade(
+        child: ATAnimatedXFade(
           condition: _hasInput,
           secondChild: const SizedBox.shrink(),
           firstChild: GestureDetector(

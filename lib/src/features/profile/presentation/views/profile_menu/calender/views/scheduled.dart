@@ -2,7 +2,7 @@ import 'package:amptive/src/bloc/main_app/profile/profile_menu/calender/calender
 import 'package:amptive/src/models/host.dart';
 import 'package:amptive/src/services/go_live_service/go_live_service.dart';
 import 'package:amptive/src/config/utils/colors.dart';
-import 'package:amptive/src/views/widgets/common_widgets/overlapping_images.dart';
+import 'package:amptive/src/shared/overlapping_widgets.dart';
 import 'package:amptive/src/views/widgets/common_widgets/show_event_nd_paid_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';

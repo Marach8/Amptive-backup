@@ -246,6 +246,17 @@ class ATHelperFuncs{
   }
 
 
+  static Future<PermissionStatus> requestUserPermission(Permission permType) async {
+    PermissionStatus status = await permType.status;
+
+    if (status.isGranted || status.isPermanentlyDenied || status.isRestricted) {
+      return status;
+    }
+
+    return await permType.request();
+  }
+
+
   static Future<File?> getImageFromGallery() async {
     final ImagePicker picker = ImagePicker();
     final XFile? pickedFile = await picker.pickImage(source: ImageSource.gallery);

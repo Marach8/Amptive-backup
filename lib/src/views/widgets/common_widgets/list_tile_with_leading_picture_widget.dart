@@ -1,10 +1,6 @@
-import 'package:amptive/src/config/utils/colors.dart';
-import 'package:amptive/src/config/utils/font_sizes.dart';
-import 'package:amptive/src/config/utils/font_weights.dart';
+import 'package:amptive/src/config/config_export.dart';
 import 'package:amptive/src/views/widgets/common_widgets/circular_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:gap/gap.dart';
 
 class TileWithLeadingImage extends StatelessWidget {
 
@@ -33,20 +29,20 @@ class TileWithLeadingImage extends StatelessWidget {
             imagePath: leadingImagePath,
             diameter: diameter ?? 40,
           ),
-          Gap(10.w),
+          const SizedBox(width: 12,),
           Column(
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               Text(
                 title,
-                style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                style: context.textTheme.titleMedium?.copyWith(
                   fontWeight: ATFontWeights.w500,
                 ),
               ),
               Text(
                 subtitle,
-                style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                style: context.textTheme.titleLarge?.copyWith(
                   color: ATColors.hexC2C2C2,
                   fontSize: ATFontSizes.size12,
                   height: 1.5

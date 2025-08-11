@@ -5,7 +5,9 @@ import 'package:amptive/src/config/utils/font_sizes.dart';
 import 'package:amptive/src/config/utils/font_weights.dart';
 import 'package:amptive/src/config/utils/other_strings.dart';
 import 'package:amptive/src/views/widgets/common_widgets/annotated_region__widget.dart';
-import 'package:amptive/src/views/widgets/common_widgets/elevated_button_widget.dart';
+import 'package:amptive/src/shared/elevated_button_widget.dart';
+import 'package:amptive/src/views/widgets/common_widgets/back_button.dart';
+import 'package:amptive/src/views/widgets/common_widgets/loading_indicator.dart';
 import 'package:amptive/src/views/widgets/common_widgets/textformfield_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -27,20 +29,21 @@ class ATEmailAuthScreen extends StatefulWidget {
 
 class _ATEmailAuthScreenState extends State<ATEmailAuthScreen> {
   late AuthFieldService service;
-  late TextEditingController _controller;
-  late GlobalKey<FormState> _formKey;
+  final TextEditingController _controller = TextEditingController();
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   @override
   void initState() {
     super.initState();
     service = GetIt.I<AuthFieldService>();
-    _controller = TextEditingController();
-    _formKey = GlobalKey<FormState>();
+    
+    
   }
 
   @override
   void dispose() {
     _controller.dispose();
+    _formKey.currentState?.dispose();
     super.dispose();
   }
 
@@ -49,10 +52,8 @@ class _ATEmailAuthScreenState extends State<ATEmailAuthScreen> {
     return ATAnnotatedRegion(
       child: Scaffold(
         appBar: ATAppBar(
-          title: Text(
-            widget.title ?? '',
-            style: Theme.of(context).textTheme.bodyMedium,
-          ),
+          leading: const ATBackBtn(),
+          titleText: widget.title ?? ''
         ),
         body: SingleChildScrollView(
           physics: const BouncingScrollPhysics(),
@@ -65,12 +66,13 @@ class _ATEmailAuthScreenState extends State<ATEmailAuthScreen> {
                 style: Theme.of(context).textTheme.headlineMedium
               ),
               const SizedBox(height: 10),
+
               Form(
                 key: _formKey,
                 child: BlocBuilder<ATEmailAuthBloc, ATAuthState>(
                     builder: (_, ATAuthState state) {
                   return ATTextFormField(
-                    controller: _controller,
+                    controller: _controller, maxLines: 1,
                     cursorColor: service.email.error == null
                         ? ATColors.hex307FE2
                         : ATColors.textRedColor,
@@ -147,17 +149,15 @@ class _ATEmailAuthScreenState extends State<ATEmailAuthScreen> {
             },
             builder: (BuildContext context, ATAuthState state) {
               final bool enableBtn = service.isEmailValid;
-        
-              return state is LoadingAuthState && context.mounted
-                ? const AmptiveLoadingButtonWidget()
-                : ATPlainElevatedBtn(
-                    height: 50,
-                    btnTitle: ATStrings.verifyEmail,
-                    onPressed: enableBtn ? (){
-                      context.read<ATEmailAuthBloc>()
-                        .add(VerifyEmailAuthEvent());
-                    }: null
-                  );
+
+              return ATPlainElevatedBtn(
+                onPressed: !enableBtn ? null:
+                  () => context.read<ATEmailAuthBloc>().add(VerifyEmailAuthEvent()),
+                btnTitle: ATStrings.VERIFY_EMAIL,
+                child: state is LoadingAuthState ? ATLoadingIndicator(
+                  color: ATColors.white,
+                ) : null,
+              );
             },
           ),
         ),

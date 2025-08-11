@@ -6,7 +6,8 @@ import 'package:amptive/src/config/routing/route_strings.dart';
 import 'package:amptive/src/config/utils/colors.dart';
 import 'package:amptive/src/views/widgets/common_widgets/annotated_region__widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/app_bar_widget.dart';
-import 'package:amptive/src/views/widgets/common_widgets/elevated_button_widget.dart';
+import 'package:amptive/src/shared/elevated_button_widget.dart';
+import 'package:amptive/src/views/widgets/common_widgets/back_button.dart';
 import 'package:amptive/src/views/widgets/common_widgets/textformfield_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -18,14 +19,14 @@ import '../../bloc/authentication/general/auth_bloc.dart';
 import '../../bloc/authentication/general/auth_events.dart';
 import '../../bloc/authentication/general/auth_states.dart';
 
-class UserNameAuthScreen extends StatefulWidget {
-  const UserNameAuthScreen({super.key});
+class AddUsernameScreen extends StatefulWidget {
+  const AddUsernameScreen({super.key});
 
   @override
-  State<UserNameAuthScreen> createState() => _UserNameAuthScreenState();
+  State<AddUsernameScreen> createState() => _AddUsernameScreenState();
 }
 
-class _UserNameAuthScreenState extends State<UserNameAuthScreen> {
+class _AddUsernameScreenState extends State<AddUsernameScreen> {
   late final AuthFieldService service;
 
   TextEditingController usernameController = TextEditingController();
@@ -44,7 +45,7 @@ class _UserNameAuthScreenState extends State<UserNameAuthScreen> {
     return ATAnnotatedRegion(
       child: Scaffold(
         backgroundColor: ATColors.hex0D0D0D,
-        appBar: const ATAppBar(),
+        appBar: const ATAppBar(leading: ATBackBtn(),),
         body: Padding(
           padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 20.h),
           child: BlocListener<AmptiveAuthBloc, AmptiveAuthState>(
@@ -200,18 +201,18 @@ class _UserNameAuthScreenState extends State<UserNameAuthScreen> {
             ),
           ),
         ),
+
         bottomSheet: Padding(
-          padding: EdgeInsets.only(bottom: 16.h),
+          padding: const EdgeInsets.all(15),
           child: BlocBuilder<AmptiveAuthBloc, AmptiveAuthState>(
               builder: (BuildContext context, AmptiveAuthState state) {
-            return AmptiveElevatedButtonWidget(
-              height: 50.w,
+            return ATPlainElevatedBtn(
               onPressed: service.isUsernameValid
                   ? () {
-                      context.pushNamed(ATRoutes.addName);
+                      context.pushNamed(ATRoutes.ADD_NAME_AUTH_SCREEN);
                     }
                   : null,
-              buttonTitle: ATStrings.NEXT,
+              btnTitle: ATStrings.NEXT,
             );
           }),
         ),

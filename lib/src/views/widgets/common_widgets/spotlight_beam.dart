@@ -1,4 +1,4 @@
-import 'package:amptive/src/config/utils/helper_functions.dart';
+import 'package:amptive/src/config/config_export.dart';
 import 'package:amptive/src/views/widgets/common_widgets/custom_container_widget.dart';
 import 'package:flutter/material.dart';
 
@@ -9,20 +9,21 @@ class SpotlightBeam extends StatelessWidget {
     required this.gradient,
     this.duration,
     this.height,
-    this.width
+    this.width,
+    this.halfWidthOfSpot,
   });
   final Gradient? gradient;
   final int? duration;
-  final double? height, width;
+  final double? height, width, halfWidthOfSpot;
 
   @override
   Widget build(BuildContext context) {
     return ClipPath(
-      clipper: SpotlightClipper(),
+      clipper: SpotlightClipper(halfWidthOfSpot: halfWidthOfSpot ?? 30.0),
       child: ATContainer(
         duration: duration,
-        height: height ?? ATHelperFuncs.getScreenHeight(context) * 0.4,
-        width: width ?? ATHelperFuncs.getScreenWidth(context) * 0.5,
+        height: height ?? context.screenHeight * 0.4,
+        width: width ?? context.screenWidth * 0.5,
         gradient: gradient
       ),
     );
@@ -30,13 +31,17 @@ class SpotlightBeam extends StatelessWidget {
 }
 
 class SpotlightClipper extends CustomClipper<Path> {
+  SpotlightClipper({required this.halfWidthOfSpot});
+
+  final double halfWidthOfSpot;
+
   @override
   Path getClip(Size size) {
     final Path path = Path();
-    path.moveTo(size.width / 2 - 30, 0);
+    path.moveTo((size.width / 2) - halfWidthOfSpot, 0);
     path.lineTo(0, size.height);
     path.lineTo(size.width, size.height);
-    path.lineTo(size.width / 2 + 30, 0);
+    path.lineTo((size.width / 2) + halfWidthOfSpot, 0);
     path.close();
     return path;
   }

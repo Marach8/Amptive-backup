@@ -24,7 +24,7 @@ class AmptiveThemeData{
     brightness: Brightness.dark,
     scaffoldBackgroundColor: ATColors.black,
     // listTileTheme: AmptiveListTileTheme.darkListTileTheme,
-    textTheme: AmptiveTextTheme.darkTextTheme,
+    textTheme: ATTextTheme.darkTextTheme,
     elevatedButtonTheme: AmptiveElevatedButtonTheme.darkElevatedButtonTheme,
     textButtonTheme: AmptiveTextButtonTheme.darkTextButtonTheme,
     appBarTheme: AmptiveAppBarTheme.darkAppBarTheme,

@@ -2,26 +2,23 @@ import 'dart:async';
 import 'dart:typed_data';
 import 'dart:ui';
 
-import 'package:amptive/src/config/config_export.dart';
 import 'package:amptive/src/features/go_live/go_live_export.dart';
+import 'package:amptive/src/global_export.dart';
 import 'package:amptive/src/models/community.dart';
-import 'package:amptive/src/services/create_show/create_show_service.dart';
-import 'package:amptive/src/views/widgets/animation_widgets/common_animation_widgets/animated_switcher.dart';
+import 'package:amptive/src/shared/animated_switcher.dart';
 import 'package:amptive/src/views/widgets/common_widgets/annotated_region__widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/divider_widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/textformfield_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:get_it/get_it.dart';
+import 'package:go_router/go_router.dart';
 import 'package:nested/nested.dart';
 
 
 import 'package:amptive/src/views/widgets/common_widgets/back_button.dart';
 import 'package:amptive/src/views/widgets/common_widgets/custom_container_widget.dart';
-import 'package:amptive/src/views/widgets/common_widgets/elevated_button_widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/image_loader_widget.dart';
 import 'package:nested/nested.dart' show SingleChildWidget;
-import 'package:amptive/src/features/home/presentation/widgets/home_widgets_export.dart';
 import 'package:amptive/src/views/widgets/common_widgets/sliver_header_delegate.dart';
 import '../../../../models/host.dart';
 import '../../../../views/widgets/common_widgets/rich_text.dart';
@@ -59,12 +56,10 @@ class _CreateShowFormScreenState extends State<CreateShowFormScreen> {
   String shouldAllowHandRasing = ATStrings.CHOOSE_2_ALLOW_HAND_RASING;
 
   Community? selectedCommunity;
-  CreateShowService service = GetIt.I<CreateShowService>();
 
   @override 
   void initState(){
     super.initState();
-    service.initFormControl();
     _titleCntrl = TextEditingController()..addListener(
       () => _titleStreamCntrl.add(_titleCntrl.text.trim())
     );
@@ -95,16 +90,16 @@ class _CreateShowFormScreenState extends State<CreateShowFormScreen> {
               return Stack(
                 children: <Widget>[
                   Positioned.fill(
-                    child: BlocBuilder<BgImageBloc, (String, Uint8List?)>(
-                      builder: (_, (String, Uint8List?) state) {
-                        return ImageFiltered(
-                          imageFilter: ImageFilter.blur(sigmaX: 200, sigmaY: 200),
-                          child: state.$2 == null ? ATImgLoader(
+                    child: ImageFiltered(
+                      imageFilter: ImageFilter.blur(sigmaX: 100, sigmaY: 100),
+                      child: BlocBuilder<BgImageBloc, (String, Uint8List?)>(
+                        builder: (_, (String, Uint8List?) state) {
+                          return state.$2 == null ? ATImgLoader(
                             boxFit: BoxFit.fill,
                             imgPath: state.$1,
-                          ) : Image.memory(state.$2!, fit: BoxFit.fill)
-                        );
-                      }
+                          ) : Image.memory(state.$2!, fit: BoxFit.fill);
+                        }
+                      ),
                     ),
                   ),
                   
@@ -204,11 +199,14 @@ class _CreateShowFormScreenState extends State<CreateShowFormScreen> {
                                     return CreateProgramSelectionItem(
                                       description: programDesc,
                                       onTap: ()async{
-                                        final String? description = await showEnterDescriptionModal(context);
-                                        if(description != null){
+                                        final String? description = await enterDescriptionModal(
+                                          context: context, 
+                                          initialDesc: programDesc == ATStrings.TELL_LISTENERS_ABOUT_SHOW ? null : programDesc,
+                                        );
+                                        if((description ?? '').isNotEmpty){
                                           setter(
                                             (){
-                                              programDesc = description;
+                                              programDesc = description!;
                                               _descStreamCntrl.add(description);
                                             }
                                           );
@@ -353,7 +351,9 @@ class _CreateShowFormScreenState extends State<CreateShowFormScreen> {
                                         descStyle: chooseAudienceAccess == ATStrings.SELECT_WHO_CAN_ACCESS_SHOW ? null
                                           : context.textTheme.bodySmall,
                                         onTap: ()async{
-                                          //showSelectAudienceAccessForEventsDialog(context);
+                                          // context.read<SubPlanSetupBloc>().selectAFee(1000);
+                                          // context.read<SubPlanSetupBloc>().setSelectedFee(1000);
+
                                           final String? selectedAccessType = await chooseAudienceAccess4ShowModal(
                                             context: context, initialAccessType: chooseAudienceAccess
                                           );
@@ -471,44 +471,31 @@ class _CreateShowFormScreenState extends State<CreateShowFormScreen> {
           
           resizeToAvoidBottomInset: false,
 
-          bottomSheet: ATContainer(
-            height: 70,
-            gradient: LinearGradient(
-              begin: Alignment.topCenter,
-              end: Alignment.bottomCenter,
-              colors: <Color>[
-                ATColors.hex0D0D0D.withValues(alpha: 0.1),
-                ATColors.hex0D0D0D
-              ]
-            ),
-            padding: const EdgeInsets.fromLTRB(15, 10, 15, 10),
-            child: BlocBuilder<BgImageBloc, (String, Uint8List?)>(
-              builder: (_, (String, Uint8List?) selectedImgPath) {
-                return ATPlainElevatedBtn(
-                  bgColor: ATColors.white,
-                  fgColor: ATColors.hex0D0D0D,
-                  btnTitle: ATStrings.NEXT,
-                  onPressed: selectedImgPath == null ? null : () async{
-                    //await showAddCoHostDialog(context);
-                    //await showAddHashtagDialog(context);
-                    //await showHandRaisingDialog(context);
-                    //showAddCommunitiesDialog(context);
-                    //showSelectAudienceAccessForShowsDialog(context);
-                    //context.pushNamed(AmptiveRoutes.CREATE_SHOW_SUCCESS);
-                  },
-                  
-                  //onPressed: activate ? () async{
-                    //await showAddCoHostDialog(context);
-                    //await showAddHashtagDialog(context);
-                    //showAddCommunitiesDialog(context);
-                    //showSelectAudienceAccessForEventsDialog(context);
-                    //showWhispersDialog(context);
-                    //await showEventCapacitySelectionDialog(context: context);
-                    //context.pushNamed(ATRoutes.EVENT_SCHEDULED_SCREEN);
-                  //} : null,
-                );
-              }
-            ),
+          bottomSheet: BlocBuilder<BgImageBloc, (String, Uint8List?)>(
+            builder: (_, (String, Uint8List?) state) {
+              return ATBlurredBgBtn(
+                onPressed: state.$2 == null ? null : (){
+                  final dynamic params = (
+                    coverArtBytes: state.$2,
+                    title: ATStrings.SHOW_IS_SETUP,
+                    subtitle: ATStrings.BEGIN_JOURNEY,
+                    btnTitle: ATStrings.CREATE_1ST_EPISODE,
+                    txtBtnTitle: ATStrings.VIEW_SHOW_PAGE,
+                    btnOnPressed: () => context.pushReplacementNamed(ATRoutes.CREATE_EPISODE_FORM),
+                    txtBtnOnPressed: () {
+                      // handle text button press
+                    },
+                    topLogo: const Icon(Icons.check_circle_sharp, size: 45),
+                  );
+
+                  context.pushNamed(
+                    ATRoutes.GO_LIVE_PROGRAM_CREATION_SUCCESS,
+                    extra: params
+                  );
+                },
+                btnTitle: ATStrings.LAUNCH_SHOW,
+              );
+            }
           ),
         ),
       ),

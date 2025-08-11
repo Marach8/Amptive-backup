@@ -118,7 +118,7 @@ Future<void> showTrendingHashtagsModal(BuildContext context) async {
                   (ATHashtag<bool> hashtag) => hashtag.title != null
                 );
 
-                return ATBgBlurredBtn(
+                return ATBlurredBgBtn(
                   onPressed: activateBtn ? () => dContext.pop() : null,
                   btnTitle: '${ATStrings.ADD_HASHTAG}s',
                 );

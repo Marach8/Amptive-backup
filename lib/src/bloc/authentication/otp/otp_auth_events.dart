@@ -16,3 +16,6 @@ class AmptiveOtpCountDownEvent extends AmptiveOTPAuthEvent {
 }
 
 class AmptiveOtpCountDownStartEvent extends AmptiveOTPAuthEvent {}
+
+
+class ValidOTPAuthEvent extends AmptiveOTPAuthEvent{}

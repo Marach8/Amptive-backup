@@ -7,7 +7,7 @@ class ATFontWeights{
 
   static const FontWeight w200 = FontWeight.w200;
 
-  static const FontWeight light = FontWeight.w300;
+  static const FontWeight w300 = FontWeight.w300;
 
   static const FontWeight w400 = FontWeight.w400;
 

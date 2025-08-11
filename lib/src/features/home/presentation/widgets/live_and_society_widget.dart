@@ -1,9 +1,5 @@
+import 'package:amptive/src/config/config_export.dart';
 import 'package:flutter/material.dart';
-import 'package:gap/gap.dart';
-import '../../../../config/utils/colors.dart';
-import '../../../../config/utils/font_sizes.dart';
-import '../../../../config/utils/image_strings.dart';
-import '../../../../config/utils/other_strings.dart';
 import '../../../../views/widgets/common_widgets/image_loader_widget.dart';
 
 class LiveIndicatorRow extends StatelessWidget {
@@ -44,23 +40,23 @@ class LiveIndicatorRow extends StatelessWidget {
             );
           }
         ),
-        const Gap(5),
+        const SizedBox(width: 5,),
         Text(
           ATStrings.LIVE.toUpperCase(),
-          style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+          style: context.textTheme.bodyMedium?.copyWith(
             color: ATColors.hexA8A8A8,
             fontSize: ATFontSizes.size14
           ),  
         ),
-        const Gap(20),
+        const SizedBox(width: 20,),
         const ATImgLoader(
           imgPath: ATImgStrings.GROUP_ICON,
           height: 24, width: 24,
         ),
-        const Gap(5),
+        const SizedBox(width: 5,),
         Text(
-          text2?.toUpperCase() ?? ATStrings.SOCIETY.toUpperCase(),
-          style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+          (text2 ?? ATStrings.SOCIETY).toUpperCase(),
+          style: context.textTheme.bodyMedium?.copyWith(
             color: ATColors.hexA8A8A8,
             fontSize: ATFontSizes.size14
           ),  
@@ -72,13 +68,14 @@ class LiveIndicatorRow extends StatelessWidget {
 
 
 
-class NewWidget extends StatelessWidget {
-  const NewWidget({
+class ScheduleDateIndicator extends StatelessWidget {
+  const ScheduleDateIndicator({
     super.key,
-    this.text2
+    this.text2 = ATStrings.SOCIETY,
+    this.text1 = '27 Sep, 2025 at 18:00'
   });
 
-  final String? text2;
+  final String text1, text2;
 
   @override
   Widget build(BuildContext context) {
@@ -86,23 +83,25 @@ class NewWidget extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       children: <Widget>[
         const ATImgLoader(imgPath: ATImgStrings.FILLED_CALENDER_ICON,),
-        const Gap(5),
-        Text(
-          '27 Sep, 2025 at 18:00',
-          style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-            color: ATColors.hexA8A8A8,
-            fontSize: ATFontSizes.size14
-          ),  
+        const SizedBox(width: 5,),
+        Flexible(
+          child: Text(
+            text1,
+            style: context.textTheme.bodyMedium?.copyWith(
+              color: ATColors.hexA8A8A8,
+              fontSize: ATFontSizes.size14
+            ),  
+          ),
         ),
-        const Gap(20),
+        const SizedBox(width: 20),
         const ATImgLoader(
           imgPath: ATImgStrings.GROUP_ICON,
           height: 24, width: 24,
         ),
-        const Gap(5),
+        const SizedBox(width: 5,),
         Text(
-          text2?.toUpperCase() ?? ATStrings.SOCIETY.toUpperCase(),
-          style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+          text2.toUpperCase(),
+          style: context.textTheme.bodyMedium?.copyWith(
             color: ATColors.hexA8A8A8,
             fontSize: ATFontSizes.size14
           ),  

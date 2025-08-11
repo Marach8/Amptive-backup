@@ -1,3 +1,5 @@
+import 'package:amptive/src/features/profile/bloc/fees_setup_bloc.dart';
+import 'package:amptive/src/features/profile/presentation/views/profile_views_export.dart';
 import 'package:amptive/src/views/widgets/common_widgets/custom_container_widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/divider_widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/image_loader_widget.dart';
@@ -5,7 +7,7 @@ import 'package:amptive/src/views/widgets/common_widgets/radio_button.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:go_router/go_router.dart';
-import '../../../../views/widgets/common_widgets/elevated_button_widget.dart';
+import '../../../../shared/elevated_button_widget.dart';
 import 'package:amptive/src/global_export.dart';
 import 'package:amptive/src/views/widgets/common_widgets/dismiss_modal.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -13,7 +15,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 Future<String?> chooseAudienceAccess4ShowModal({
   required BuildContext context,
-  required String initialAccessType
+  required String initialAccessType,
 }) async {
   return await showModalBottomSheet<String>(
     context: context,
@@ -162,31 +164,41 @@ Future<String?> chooseAudienceAccess4ShowModal({
                                     const ATDivider(),
                                     const SizedBox(height: 15,),
 
-                                    Row(
-                                      children: <Widget>[
-                                        ATContainer(
-                                          padding: const EdgeInsets.fromLTRB(10, 5, 10, 5),
-                                          color: ATColors.white.withValues(alpha: 0.1), radius: 5,
-                                          child: Text(
-                                            ATStrings.EDIT_SUB_PLAN,
-                                            style: Theme.of(context).textTheme.labelSmall?.copyWith(
-                                              color: ATColors.white.withValues(alpha: 0.7)
-                                            )
-                                          ),
-                                        ),
-                                        const SizedBox(width: 10,),
-                                        Expanded(
-                                          child: Align(
-                                            alignment: Alignment.centerRight,
-                                            child: Text(
-                                              '${ATStrings.NAIRA_TEXT}1,900/month',
-                                              style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                                                fontSize: ATFontSizes.size14,
-                                              )
+                                    BlocBuilder<SubPlanSetupBloc, List<int?>>(
+                                      builder: (_, List<int?> state) {
+                                        return Row(
+                                          children: <Widget>[
+                                            ATContainer(
+                                              onTap: (){                                            
+                                                context.pushNamed(
+                                                  ATRoutes.CREATOR_SUB_PLAN,
+                                                  extra: SubPlanScreenEntryPoint.programCreationSetup,
+                                                );
+                                              },
+                                              padding: const EdgeInsets.fromLTRB(10, 5, 10, 5),
+                                              color: ATColors.white.withValues(alpha: 0.1), radius: 5,
+                                              child: Text(
+                                                state.first == null ? ATStrings.SETUP_SUB_PLAN : ATStrings.EDIT_SUB_PLAN,
+                                                style: Theme.of(context).textTheme.labelSmall?.copyWith(
+                                                  color: ATColors.white.withValues(alpha: 0.7)
+                                                )
+                                              ),
                                             ),
-                                          ),
-                                        ),
-                                      ],
+                                            const SizedBox(width: 10,),
+                                            Expanded(
+                                              child: Align(
+                                                alignment: Alignment.centerRight,
+                                                child: Text(
+                                                  state.first == null ? '' : '${ATStrings.NAIRA_TEXT}${state.first}/month',
+                                                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                                                    fontSize: ATFontSizes.size14,
+                                                  )
+                                                ),
+                                              ),
+                                            ),
+                                          ],
+                                        );
+                                      }
                                     )
                                   ],
                                 ),

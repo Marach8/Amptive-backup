@@ -3,8 +3,8 @@ import 'package:amptive/src/config/utils/font_sizes.dart';
 import 'package:amptive/src/config/utils/font_weights.dart';
 import 'package:flutter/material.dart';
 
-class AmptiveTextTheme{
-  const AmptiveTextTheme._();
+class ATTextTheme{
+  const ATTextTheme._();
 
   static TextTheme darkTextTheme = TextTheme( 
     displayMedium: TextStyle(

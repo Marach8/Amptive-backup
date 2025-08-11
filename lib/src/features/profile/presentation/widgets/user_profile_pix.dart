@@ -16,7 +16,7 @@ class CreatorProfilePix extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ATContainer(
-      decorationImagePath: ATImgStrings.weCanDoHardThingsBgImage,
+      decorImage: ATImgStrings.weCanDoHardThingsBgImage,
       height: 150,                
       width: context.screenWidth,
       child: GestureDetector(

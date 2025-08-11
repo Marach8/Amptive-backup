@@ -9,16 +9,18 @@ class ShowOrEventIndicatorWithTitle extends StatelessWidget {
     super.key,
     this.title = 'We Can Do Hard Things',
     this.eventOrShowImgPath = ATImgStrings.SHOW_ICON,
+    this.leading,
   });
 
   final String eventOrShowImgPath, title;
+  final Widget? leading;
 
   @override
   Widget build(BuildContext context) {
     return Row(
       mainAxisSize: MainAxisSize.min,
       children: <Widget>[
-        ATImgLoader(imgPath: eventOrShowImgPath),
+        leading ?? ATImgLoader(imgPath: eventOrShowImgPath),
         const SizedBox(width: 5,),
         Text(
           title,

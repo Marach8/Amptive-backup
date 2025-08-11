@@ -189,7 +189,7 @@ class CardWidget extends StatelessWidget {
                   borderRadius: BorderRadius.circular(7.r)),
             ),
             child: SvgPicture.asset(
-              ATImgStrings.logo2,
+              ATImgStrings.AMPTIVE_NAME_LOGO,
             ),
           ),
           Expanded(

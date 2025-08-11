@@ -1,12 +1,14 @@
 import 'package:amptive/src/views/widgets/common_widgets/custom_container_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import '../../../../views/widgets/common_widgets/elevated_button_widget.dart';
+import '../../../../shared/elevated_button_widget.dart';
 
 import 'package:amptive/src/views/widgets/common_widgets/radio_button.dart';
 import 'package:amptive/src/global_export.dart';
 import 'package:amptive/src/views/widgets/common_widgets/dismiss_modal.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
+import '../../../../views/widgets/common_widgets/rich_text.dart';
 
 
 Future<String?> choose2AllowHandRaisingModal({
@@ -37,7 +39,6 @@ Future<String?> choose2AllowHandRaisingModal({
                 ),
               ),
               child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   const Align(alignment: Alignment.center, child: ATModalDismisser()),
                   Row(
@@ -53,11 +54,14 @@ Future<String?> choose2AllowHandRaisingModal({
                     ],
                   ),
                   const SizedBox(height: 15,),
-                  Text(
-                    ATStrings.U_WILL_HAVE_ACCESS_2_MODERATION_TOOLS, maxLines: 5,
-                    style: Theme.of(context).textTheme.labelSmall?.copyWith(
-                      color: ATColors.hexC2C2C2.withValues(alpha: 0.76)
-                    ),
+                  
+                  ATRichText(
+                    items: <String, TextStyle>{
+                      ATStrings.U_WILL_HAVE_ACCESS_2_MODERATION_TOOLS: context.textTheme.labelSmall!.copyWith(
+                        color: ATColors.hexC2C2C2.withValues(alpha: 0.76)
+                      ),
+                      ' ${ATStrings.LEARN_MORE}': context.textTheme.labelSmall!
+                    },
                   ),
 
                   const SizedBox(height: 15,),
@@ -86,7 +90,7 @@ Future<String?> choose2AllowHandRaisingModal({
                                 child: Row(
                                   children: <Widget>[
                                     ATRadioBtn(isSelected: shouldAllow),
-                                    const SizedBox(width: 10,),
+                                    const SizedBox(width: 15,),
                                     Expanded(
                                       child: Column(
                                         mainAxisSize: MainAxisSize.min,
@@ -131,7 +135,7 @@ Future<String?> choose2AllowHandRaisingModal({
                                     Row(
                                       children: <Widget>[
                                         ATRadioBtn(isSelected: shouldNotAllow),
-                                        const SizedBox(width: 10,),
+                                        const SizedBox(width: 15,),
                                         Expanded(
                                           child: Column(
                                             mainAxisSize: MainAxisSize.min,
