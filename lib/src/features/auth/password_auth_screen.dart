@@ -78,7 +78,7 @@ class _PasswordAuthScreenState extends State<PasswordAuthScreen> {
                         decoration: InputDecoration(
                           contentPadding: EdgeInsets.symmetric(
                               vertical: 12.h, horizontal: 16.w),
-                          hintText: ATStrings.enterYourPassword,
+                          hintText: ATStrings.ENTER_UR_PSWRD,
                           hintStyle: Theme.of(context).textTheme.labelMedium,
                           filled: true,
                           fillColor:

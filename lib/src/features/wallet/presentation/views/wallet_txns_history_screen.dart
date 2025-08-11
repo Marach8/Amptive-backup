@@ -8,8 +8,8 @@ import 'package:amptive/src/views/widgets/common_widgets/textformfield_widget.da
 import 'package:flutter/material.dart';
 import '../../../../views/widgets/common_widgets/annotated_region__widget.dart';
 
-class ATWalletTxnsScreen extends StatelessWidget {
-  const ATWalletTxnsScreen({super.key});
+class ATWalletTxnsHistoryScreen extends StatelessWidget {
+  const ATWalletTxnsHistoryScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -62,7 +62,7 @@ class ATWalletTxnsScreen extends StatelessWidget {
                           tileColor: ATColors.trsprnt,
                           time: 'Today, 5:50 PM',
                           txnType: ATStrings.SUB_RECEIVED,
-                          amount: '+N5,000.00',
+                          amount: '+${ATStrings.NAIRA_TEXT}5,000.00',
                           color: ATColors.yellowColor,
                           icon: Icons.favorite,
                           imgPath: ATImgStrings.jpeg1,

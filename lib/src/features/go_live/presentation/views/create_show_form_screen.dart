@@ -76,7 +76,12 @@ class _CreateShowFormScreenState extends State<CreateShowFormScreen> {
   @override
   Widget build(BuildContext context) {
     final double blurredHeaderHeight = kToolbarHeight + MediaQuery.paddingOf(context).top;
-
+    WidgetsBinding.instance.addPostFrameCallback(
+      (_){
+        context.read<CohostServiceBloc>().resetBloc();
+        context.read<HashtagServiceBloc>().resetBloc();
+      }
+    );
     return MultiBlocProvider(
       providers: <SingleChildWidget>[
         BlocProvider<BlurredHeaderBloc>(create: (_) => BlurredHeaderBloc(),),

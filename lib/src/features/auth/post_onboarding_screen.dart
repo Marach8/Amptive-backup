@@ -8,7 +8,7 @@ import 'package:amptive/src/shared/elevated_button_widget.dart';
 import 'package:amptive/src/shared/outlined_button_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import '../../../../views/widgets/common_widgets/image_loader_widget.dart';
+import '../../views/widgets/common_widgets/image_loader_widget.dart';
 
 
 class ATPostOnboardingScreen extends StatelessWidget {

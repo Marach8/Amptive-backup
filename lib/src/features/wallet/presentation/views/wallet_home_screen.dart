@@ -1,7 +1,4 @@
-import 'package:amptive/src/config/utils/colors.dart';
-import 'package:amptive/src/config/utils/image_strings.dart';
-import 'package:amptive/src/config/utils/other_strings.dart';
-import 'package:amptive/src/config/routing/route_strings.dart';
+import 'package:amptive/src/config/config_export.dart';
 import 'package:amptive/src/features/wallet/presentation/widgets/wallets_widget_export.dart';
 import 'package:amptive/src/views/widgets/common_widgets/app_bar_widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/back_button.dart';
@@ -35,14 +32,14 @@ class ATWalletScreen extends StatelessWidget {
                 children: <Widget>[
                   Text(
                     ATStrings.TXN_HISTORY,
-                    style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                    style: context.textTheme.bodySmall?.copyWith(
                       color: ATColors.hexC2C2C2
                     )
                   ),
                   const Spacer(),
                   InkWell(
                     onTap: (){
-                      context.pushNamed(ATRoutes.WALLET_TXNS);
+                      context.pushNamed(ATRoutes.WALLET_TXNS_HISTORY_SCREEN);
                     },
                     splashColor: ATColors.white,
                     borderRadius: BorderRadius.circular(5),
@@ -50,7 +47,7 @@ class ATWalletScreen extends StatelessWidget {
                       children: <Widget>[
                         Text(
                           ATStrings.VIEW_ALL,
-                          style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                          style: context.textTheme.bodySmall?.copyWith(
                             color: ATColors.hexC2C2C2
                           )
                         ),
@@ -65,7 +62,7 @@ class ATWalletScreen extends StatelessWidget {
               RenderTxnWidget(
                 time: 'Today, 5:50 PM',
                 txnType: ATStrings.SUB_RECEIVED,
-                amount: '+N5,000.00',
+                amount: '+${ATStrings.NAIRA_TEXT}5,000.00',
                 color: ATColors.yellowColor,
                 icon: Icons.favorite,
                 imgPath: ATImgStrings.jpeg1,
@@ -74,7 +71,7 @@ class ATWalletScreen extends StatelessWidget {
               RenderTxnWidget(
                 time: 'Today, 7:00 PM',
                 txnType: ATStrings.SUB_RECEIVED,
-                amount: '+N1,000,000.00',
+                amount: '+${ATStrings.NAIRA_TEXT}1,000,000.00',
                 color: ATColors.hex307FE2,
                 icon: Icons.sync,
                 imgPath: ATImgStrings.jpeg3,
@@ -83,7 +80,7 @@ class ATWalletScreen extends StatelessWidget {
               const SizedBox(height: 20,),
               Text(
                 ATStrings.EVENT_ND_SHOW_VEST,
-                style: Theme.of(context).textTheme.bodyLarge
+                style: context.textTheme.bodyLarge
               ),
               const SizedBox(height: 20),
               Expanded(

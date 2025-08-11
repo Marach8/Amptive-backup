@@ -30,6 +30,7 @@ class ATScheduledPrograms extends StatelessWidget {
                 leading: Padding(
                   padding: const EdgeInsets.only(left: 20),
                   child: ATBackBtn(
+                    alignment: Alignment.centerLeft,
                     leadingText: ATStrings.SCHEDULED,
                     leadingStyle: Theme.of(context).textTheme.bodyMedium?.copyWith(
                       fontSize: ATFontSizes.size23

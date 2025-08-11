@@ -1,3 +1,4 @@
+import 'package:amptive/src/features/main_app_nav_bar.dart';
 import 'package:amptive/src/models/host.dart';
 import 'package:amptive/src/config/utils/font_sizes.dart';
 import 'package:amptive/src/config/utils/image_strings.dart';
@@ -89,7 +90,7 @@ class _LiveProgramAudienceViewState extends State<LiveProgramAudienceView> {
               AmptiveLiveViewHeaderWidget(
                 exitIcon: ATContainer(
                 onTap: (){
-                  context.read<ATNavBarBloc>().goToPage(0);
+                  context.read<ATNavBarBloc>().goToPage(0, context);
                   showMinimizedGoLiveState();
                 },
                 color: ATColors.white.withOpacity(0.1),

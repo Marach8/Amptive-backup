@@ -85,7 +85,7 @@ class _ATEmailAuthScreenState extends State<ATEmailAuthScreen> {
                     },
                     decoration: InputDecoration(
                       contentPadding: const EdgeInsets.fromLTRB(16, 12, 16, 12),
-                      hintText: ATStrings.enterYourEmail,
+                      hintText: ATStrings.ENTER_UR_EMAIL,
                       hintStyle: TextStyle(
                         fontSize: ATFontSizes.size16,
                         color: ATColors.hexB6B6B6,

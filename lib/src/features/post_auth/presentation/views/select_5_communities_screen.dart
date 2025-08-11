@@ -69,7 +69,7 @@ class _Select5CommunitiesScreenState extends State<Select5CommunitiesScreen> {
                               margin: EdgeInsets.only(top: 20.h, bottom: 11.h),
                               alignment: Alignment.centerLeft,
                               child: Text(
-                                ATStrings.select5Communities,
+                                ATStrings.select5Communities, maxLines: 3,
                                 style:
                                     Theme.of(context).textTheme.headlineLarge,
                               ),
@@ -78,7 +78,7 @@ class _Select5CommunitiesScreenState extends State<Select5CommunitiesScreen> {
                               margin: EdgeInsets.only(bottom: 30.h),
                               alignment: Alignment.centerLeft,
                               child: Text(
-                                ATStrings.selectedInterestNote,
+                                ATStrings.selectedInterestNote, maxLines: 3,
                                 style: Theme.of(context)
                                     .textTheme
                                     .titleMedium

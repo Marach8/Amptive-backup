@@ -13,8 +13,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:nested/nested.dart';
-
-
 import 'package:amptive/src/views/widgets/common_widgets/back_button.dart';
 import 'package:amptive/src/views/widgets/common_widgets/custom_container_widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/image_loader_widget.dart';
@@ -92,7 +90,12 @@ class _CreateShowFormScreenState extends State<CreateEpisodeFormScreen> {
   @override
   Widget build(BuildContext context) {
     final double blurredHeaderHeight = kToolbarHeight + MediaQuery.paddingOf(context).top;
-
+    WidgetsBinding.instance.addPostFrameCallback(
+      (_){
+        context.read<CohostServiceBloc>().resetBloc();
+        context.read<HashtagServiceBloc>().resetBloc();
+      }
+    );
     return MultiBlocProvider(
       providers: <SingleChildWidget>[
         BlocProvider<BlurredHeaderBloc>(create: (_) => BlurredHeaderBloc(),),

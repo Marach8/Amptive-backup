@@ -100,7 +100,7 @@ class ATTextFormField extends StatelessWidget {
       decoration: decoration ?? InputDecoration(     
         counterText: counterText,   
         hintText: hintText,
-        isDense: isDense,
+        isDense: isDense, errorMaxLines: 5,
         constraints: constraints,
         fillColor: ATColors.white.withValues(alpha: 0.1), filled: filled ?? true,
         contentPadding: contentPadding ?? EdgeInsets.zero,

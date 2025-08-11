@@ -29,6 +29,8 @@ class ATStrings{
       "Monetizable Live Audio Shows & Events ";
   static const String ENTER_CODE = 'Enter the 4 digit code we just sent to';
   static const String NEXT = 'Next';
+  static const String SHOULD_REDIRECT = 'should Redirect';
+  static const String IS_NEW_USER = 'Is First time user';
   static const String ENTER_AMT = 'Enter Amount';
   static const String or = 'or';
   static const String and = 'and';
@@ -123,7 +125,8 @@ class ATStrings{
   static const String NO_WILL_BE_VERIFIED = 'This phone number will be verified in the next step.';
 
   static const String UR_EMAIL = 'What is your email?';
-  static const String enterYourEmail = 'Enter your email...';
+  static const String UR_PSWRD = 'What is your password?';
+  static const String ENTER_UR_EMAIL = 'Enter your email...';
   static const String thisEmailWillBeVerified = 'This email will be verified in the next step';
   static const String VERIFY_EMAIL = 'Verify email';
   static const String UNBLOCK_DESC = 'will be able to follow, subscribe and see your app activities';
@@ -184,7 +187,7 @@ class ATStrings{
   static const String THIS_WILL_APPEAR_ON_PROFILE = 'Note that this will appear on your profile';
 
   static const String createPasswordForAccount = 'Create a password for your account';
-  static const String enterYourPassword = 'Enter your password';
+  static const String ENTER_UR_PSWRD = 'Enter your password...';
 
   static const String whatIsYourDateOfBirth = "What is your date of birth?";
   static const String selectDate = "Select Date";
@@ -501,6 +504,8 @@ class ATStrings{
   static const String EVENT_SCHEDULED = 'Your Event is scheduled!';
   static const String SHARE_EVENT_LINK = 'Share your event link to build excitement and attract more attendees.';
   static const String EMPTY_FIELD = 'Field(s) cannot be empty';
+  static const String INVALID_EMAIL = 'Please enter a valid email address!';
+  static const String WEAK_PSWRD = 'Password must contain at least one upper and lower case letters, one special character and must be at least 8 characters!';
   static const String SHARE_EVENT = 'Share event';
   static const String COMMENT = 'Comment';
   static const String END_NOW = 'End now';

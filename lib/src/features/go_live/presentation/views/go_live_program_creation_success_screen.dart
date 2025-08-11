@@ -65,9 +65,11 @@ class _GoLiveProgramCreationSuccessScreenState extends State<GoLiveProgramCreati
           leadingWidth: 30, leading: ATXBackBtn(),
           padding: EdgeInsets.fromLTRB(7, 0, 15, 0),
         ),
-        body: Padding(
+        body: Container(
+          height: context.screenHeight,
+          width: context.screenWidth,
           padding: const EdgeInsets.fromLTRB(15, 0, 15, 0),
-          child: Column(
+          child: Column(           
             children: <Widget>[
               widget.params.topLogo,
               const SizedBox(height: 15,),
@@ -112,6 +114,7 @@ class _GoLiveProgramCreationSuccessScreenState extends State<GoLiveProgramCreati
                             }
                           ),
                         ),
+
                         StreamBuilder<_AnimStage>(
                           stream: _streamCntrl.stream,
                           builder: (_, AsyncSnapshot<_AnimStage> snapshot) {
@@ -141,9 +144,11 @@ class _GoLiveProgramCreationSuccessScreenState extends State<GoLiveProgramCreati
                         
                         Positioned(
                           bottom: 10,
-                          child: SizedBox(
-                            width: context.screenWidth - 30.0,
+                          child: Container(
+                            width: context.screenWidth,
+                            padding: const EdgeInsets.fromLTRB(15, 0, 15, 0),
                             child: Column(
+                              mainAxisSize: MainAxisSize.min,
                               children: <Widget>[
                                 ATPlainElevatedBtn(
                                   onPressed: widget.params.btnOnPressed,
@@ -174,6 +179,11 @@ class _GoLiveProgramCreationSuccessScreenState extends State<GoLiveProgramCreati
             ],
           ),
         ),
+
+        // bottomSheet: Container(
+        //   color: ATColors.trsprnt,
+        //   child: ,
+        // ),
       ),
     );
   }

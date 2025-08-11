@@ -1,3 +1,4 @@
+import 'package:amptive/src/config/config_export.dart';
 import 'package:amptive/src/config/setup.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -5,24 +6,36 @@ import 'package:amptive/src/config/routing/routes.dart';
 import 'package:amptive/src/config/themes/app_theme_data.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:device_preview/device_preview.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
-void main() {
+void main() async{
+  WidgetsFlutterBinding.ensureInitialized();
   setup();
+  await _initializeRedirect();
+  runApp(
+    MultiBlocProvider(
+      providers: providers(),
+      child: const AmptiveApp(),
+    ),
+  );
+
   // runApp(
-  //   MultiBlocProvider(
-  //     providers: providers(),
-  //     child: const AmptiveApp(),
+  //   DevicePreview(
+  //     enabled: true,
+  //     builder: (_) => MultiBlocProvider(
+  //       providers: providers(),
+  //       child: const AmptiveApp(),
+  //     ),
   //   ),
   // );
+}
 
-  runApp(
-    DevicePreview(
-      enabled: true,
-      builder: (_) => MultiBlocProvider(
-        providers: providers(),
-        child: const AmptiveApp(),
-      ),
-    ),
+
+Future<void> _initializeRedirect()async{
+  const FlutterSecureStorage storage = FlutterSecureStorage();
+  await storage.write(
+    key: ATStrings.SHOULD_REDIRECT,
+    value: true.toString()
   );
 }
 

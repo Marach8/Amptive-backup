@@ -8,16 +8,18 @@ class ATBackBtn extends StatelessWidget {
     super.key,
     this.leadingText,
     this.leadingStyle,
-    this.iconSize
+    this.iconSize,
+    this.alignment,
   });
   final String? leadingText;
   final TextStyle? leadingStyle;
   final double? iconSize;
+  final AlignmentGeometry? alignment;
 
   @override
   Widget build(BuildContext context) {
     return Align(
-      alignment: Alignment.center,
+      alignment: alignment ?? Alignment.center,
       child: InkWell(
         onTap: () => context.pop(),
         borderRadius: BorderRadius.circular(10),

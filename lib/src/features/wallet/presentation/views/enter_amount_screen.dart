@@ -65,7 +65,7 @@ class ATEnterAmountScreen extends StatelessWidget {
                             mainAxisSize: MainAxisSize.min,
                             children: <Widget>[
                               Text(
-                                state.$1.isEmpty ? 'N 0' : 'N ${state.$1.formatPrice()}', maxLines: 2,
+                                state.$1.isEmpty ? '${ATStrings.NAIRA_TEXT} 0' : '${ATStrings.NAIRA_TEXT} ${state.$1.formatPrice()}', maxLines: 2,
                                 style: Theme.of(context).textTheme.displayMedium?.copyWith(
                                   fontSize: 50,
                                   color: state.$2 == false ? ATColors.textRedColor : null,

@@ -1,4 +1,8 @@
+import 'dart:async';
+
+import 'package:amptive/src/config/config_export.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:go_router/go_router.dart';
 
 class ATSlidingRouteTransition<T> extends CustomTransitionPage<T>{
@@ -49,4 +53,30 @@ class ATFadingRouteTransition<T> extends CustomTransitionPage<T>{
     transitionDuration: const Duration(milliseconds: 500),
   );
   final double? beginOffset;
+}
+
+
+
+
+
+FutureOr<String?> tempRedirect(BuildContext context, GoRouterState state) async {
+  const FlutterSecureStorage storage = FlutterSecureStorage();
+  final String? shouldRedirect = await storage.read(key: ATStrings.SHOULD_REDIRECT,);
+  final String? isNewUser = await storage.read(key: ATStrings.IS_NEW_USER);
+
+  if(shouldRedirect == 'true'){
+    await storage.write(
+      key: ATStrings.SHOULD_REDIRECT,
+      value: false.toString()
+    );
+
+    if(isNewUser == 'false'){
+      return ATRoutes.POST_ONBOARDING_SCREEN.addSlash;
+    }
+    else{
+      return ATRoutes.ONBOARDING_SCREEN.addSlash;
+    }
+  }
+
+  return null;
 }

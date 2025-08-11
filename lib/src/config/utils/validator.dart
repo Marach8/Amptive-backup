@@ -28,4 +28,49 @@ mixin ATValidators{
     }
     return ATStrings.ENTER_VALID_URL;
   }
+
+
+  String? validateField(String? text){
+    if(text == null || text.isEmpty){
+      return ATStrings.EMPTY_FIELD;
+    }
+    return null;
+  }
+
+  // String? validateUsername(String? username){
+  //   final RegExp regex = RegExp(r'^[a-zA-Z0-9_]{3,30}$');
+    
+  //   if(username == null || username.isEmpty){
+  //     return ATStrings.EMPTY_FIELD;
+  //   }
+  //   else if(!regex.hasMatch(username)){
+  //     return ATStrings.INVALID_USERNAME;
+  //   }
+  //   return null;
+  // }
+
+  String? validatePassword(String? password){
+    final RegExp regex = RegExp(r'^(?=.*[A-Z])(?=.*[a-z])(?=.*[!@#$%^&*(),.?":{}|<>]).{8,}$');
+    
+    if(password == null || password.isEmpty){
+      return ATStrings.EMPTY_FIELD;
+    }
+    else if(!regex.hasMatch(password)){
+      return ATStrings.WEAK_PSWRD;
+    }
+    return null;
+  }
+
+  String? validateEmail(String? email){
+    final RegExp regexExpression = RegExp(r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$');
+
+    if(email == null || email.isEmpty){
+      return ATStrings.EMPTY_FIELD;
+    }
+    else if(!regexExpression.hasMatch(email)){
+      return ATStrings.INVALID_EMAIL;
+    }
+    return null;
+  }
 }
+

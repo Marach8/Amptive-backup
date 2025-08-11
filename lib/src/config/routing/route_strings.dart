@@ -15,6 +15,7 @@ class ATRoutes {
   static const String ADD_NAME_AUTH_SCREEN = "name_auth";
   static const String ADD_USERNAME_AUTH_SCREEN = "username_auth";
   static const String ADD_FONE_NO_SCREEN = "add_phone_auth";
+  static const String TEMP_LOGIN_SCREEN = 'temporary_login';
 
   //POST AUTHENTICATION
   static const String ADD_PROFILE_PIC_SCREEN = "add_profile_pic";
@@ -70,7 +71,7 @@ class ATRoutes {
   static const String CREATOR_SUB_PLAN = 'creator_sub_plan';
   static const String CO_HOST_FEE_SETUP = 'co_host_fee_setup';
   static const String CREATOR_SUCCESS = 'creator_success';
-  static const String WALLET_LANDING = 'wallet_landing';
+  static const String WALLET_ONBOARDING = 'wallet_landing';
   static const String WALLET_PIN_SETUP = 'wallet_pin_setup';
   static const String SECURITY_QUEST = 'security_question';
   static const String WALLET_CREATION_ANIM = 'wallet_creation_animation';
@@ -83,7 +84,7 @@ class ATRoutes {
   static const String ENTER_ACCT_NO = 'enter_account_number';
   static const String PASS_SECURITY_QUEST = 'pass_security_question';
   static const String PAPER_PLANE_SUCCESS = 'paper_plane_success';
-  static const String WALLET_TXNS = 'wallet_transactions';
+  static const String WALLET_TXNS_HISTORY_SCREEN = 'wallet_transactions';
   static const String SCHEDULE_DETAILED = 'schedule_detailed_screen';
   static const String GO_LIVE_ONBOARDING = 'go_live_onboarding_screen';
   static const String MAIN_GO_LIVE_PROGRAM = 'main_go_live_program';

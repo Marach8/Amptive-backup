@@ -205,17 +205,31 @@ class _SubWidgetState extends State<_SubWidget> {
           alignment: Alignment.center,
           children: <Widget>[
             Positioned(
-              bottom: -50, right: -context.screenWidth * 0.3,
-              child: const RotatingRadialLines(
-                duration: Duration(seconds: 8),
-                child: RadialLinesWidget(),
-              ),
+              bottom: 0, right: -context.screenWidth * 0.3,
+              child: ImageFiltered(
+                imageFilter: ImageFilter.blur(sigmaX: 30, sigmaY: 30),
+                child: const ATImgLoader(
+                  imgPath: ATImgStrings.ROTOR_IMG,
+                  height: 350, width: 350,
+                ),
+              )
+              // child: const RotatingRadialLines(
+              //   duration: Duration(seconds: 8),
+              //   child: RadialLinesWidget(),
+              // ),
             ),
             Positioned(
-              bottom: -50, left: -context.screenWidth * 0.2,
-              child: const RotatingRadialLines(
-                child: RadialLinesWidget(startAngle: 210, endAngle: 20),
-              ),
+              bottom: 0, left: -context.screenWidth * 0.2,
+              child: ImageFiltered(
+                imageFilter: ImageFilter.blur(sigmaX: 30, sigmaY: 30),
+                child: const ATImgLoader(
+                  imgPath: ATImgStrings.ROTOR_IMG1,
+                  height: 350, width: 350,
+                ),
+              )
+              // child: const RotatingRadialLines(
+              //   child: RadialLinesWidget(startAngle: 210, endAngle: 20),
+              // ),
             ),
 
             Positioned.fill(

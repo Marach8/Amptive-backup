@@ -6,8 +6,8 @@ import 'package:amptive/src/views/widgets/common_widgets/back_button.dart';
 import 'package:amptive/src/views/widgets/common_widgets/circle_avatar.dart';
 import 'package:amptive/src/views/widgets/common_widgets/custom_container_widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/image_loader_widget.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:readmore/readmore.dart';
 import '../../../../views/widgets/common_widgets/list_tile_with_leading_picture_widget.dart';
 import '../../../../views/widgets/common_widgets/sliver_header_delegate.dart';
@@ -200,29 +200,10 @@ class PreviewShowScreen extends StatelessWidget {
         ),
 
         bottomSheet: ATBlurredBgBtn(
-          onPressed: (){},
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              Text(
-                ATStrings.SUBSCRIBE,
-                style: context.textTheme.bodyMedium?.copyWith(
-                  fontSize: ATFontSizes.size17,
-                  color: ATColors.black
-                ),
-              ),
-              const SizedBox(width: 5,),
-              ATCircleAvatar(diameter: 5, color: ATColors.black,),
-              const SizedBox(width: 5,),
-              Text(
-                '₦1,900/month',
-                style: context.textTheme.bodyMedium?.copyWith(
-                  fontSize: ATFontSizes.size17,
-                  color: ATColors.black
-                ),
-              ),
-            ],
-          ),
+          onPressed: (){
+            context.pushNamed(ATRoutes.CREATE_EPISODE_FORM);
+          },
+          btnTitle: 'Add Episode',
         ),
       ),
     );

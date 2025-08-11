@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:amptive/src/config/routing/routing_export.dart';
 import 'package:amptive/src/features/auth/phone_auth_screen.dart';
+import 'package:amptive/src/features/auth/temp_login_screen.dart';
 import 'package:amptive/src/features/post_auth/presentation/views/anim_experiment.dart';
 import 'package:amptive/src/config/utils/extensions/string_extensions.dart';
 import 'package:amptive/src/features/auth/dob_screen.dart';
@@ -15,13 +16,12 @@ import 'package:amptive/src/features/discover/presentation/views/society_screen.
 import 'package:amptive/src/features/discover/presentation/views/trending_hashtags_screen.dart';
 import 'package:amptive/src/features/home/home_export.dart';
 import 'package:amptive/src/features/main_app_shell.dart';
-import 'package:amptive/src/features/post_auth/presentation/views/new_file.dart';
 import 'package:amptive/src/features/post_auth/presentation/views/post_auth_prez_export.dart';
 import 'package:amptive/src/features/profile/presentation/views/profile_views_export.dart';
 import 'package:amptive/src/features/home/presentation/views/scheduled_screen.dart';
-import 'package:amptive/src/features/wallet/presentation/views/wallet_txns_screen.dart';
+import 'package:amptive/src/features/wallet/presentation/views/wallet_txns_history_screen.dart';
 import 'package:amptive/src/features/onboarding/presentation/views/onboarding_screen.dart';
-import 'package:amptive/src/features/onboarding/presentation/views/post_onboarding_screen.dart';
+import 'package:amptive/src/features/auth/post_onboarding_screen.dart';
 import 'package:custom_image_crop/custom_image_crop.dart' show Ratio;
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -34,8 +34,9 @@ import '../../features/wallet/wallet_export.dart';
 
 // The route configuration.
 final GoRouter amptiveAppRouter = GoRouter(
-  initialLocation: ATRoutes.MAIN_APP_SHELL.addSlash,
-  //initialLocation: ATRoutes.ONBOARDING_SCREEN.addSlash,
+  //initialLocation: ATRoutes.MAIN_APP_SHELL.addSlash,
+  redirect: tempRedirect,
+  initialLocation: ATRoutes.ONBOARDING_SCREEN.addSlash,
   routes: <RouteBase>[
     GoRoute(
       name: ATRoutes.POST_ONBOARDING_SCREEN,
@@ -61,8 +62,19 @@ final GoRouter amptiveAppRouter = GoRouter(
     GoRoute(
       name: ATRoutes.EMAIL_SCREEN,
       path: ATRoutes.EMAIL_SCREEN.addSlash,
-      builder: (_, GoRouterState state) => ATEmailAuthScreen(title: state.extra as String?)
+      pageBuilder: (_, GoRouterState st) => ATSlidingRouteTransition<void>(
+        child: ATEmailAuthScreen(title: st.extra as String?)
+      )
     ),
+    
+    GoRoute(
+      name: ATRoutes.TEMP_LOGIN_SCREEN,
+      path: ATRoutes.TEMP_LOGIN_SCREEN.addSlash,
+      pageBuilder: (_, GoRouterState st) => ATSlidingRouteTransition<void>(
+        child: const TempLoginScreen()
+      )
+    ),
+
     GoRoute(
       name: ATRoutes.OTP_SCREEN,
       path: ATRoutes.OTP_SCREEN.addSlash,
@@ -157,8 +169,8 @@ final GoRouter amptiveAppRouter = GoRouter(
           ),
           
           GoRoute(
-            name: ATRoutes.WALLET_LANDING,
-            path: ATRoutes.WALLET_LANDING.addSlash,
+            name: ATRoutes.WALLET_ONBOARDING,
+            path: ATRoutes.WALLET_ONBOARDING.addSlash,
             pageBuilder: (_, __) => ATSlidingRouteTransition<void>(
               child: const ATWalletOnboardScreen()
             ),
@@ -192,10 +204,10 @@ final GoRouter amptiveAppRouter = GoRouter(
                 ),
                 routes: <RouteBase>[
                   GoRoute(
-                    name: ATRoutes.WALLET_TXNS,
-                    path: ATRoutes.WALLET_TXNS.addSlash,
+                    name: ATRoutes.WALLET_TXNS_HISTORY_SCREEN,
+                    path: ATRoutes.WALLET_TXNS_HISTORY_SCREEN.addSlash,
                     pageBuilder: (_, __) => ATSlidingRouteTransition<void>(
-                      child: const ATWalletTxnsScreen()
+                      child: const ATWalletTxnsHistoryScreen()
                     ),
                   ),
                   GoRoute(

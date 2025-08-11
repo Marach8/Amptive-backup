@@ -9,6 +9,7 @@ import 'package:amptive/src/shared/elevated_button_widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/image_loader_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:go_router/go_router.dart';
 import '../widgets/notification_card_widget.dart';
 
@@ -68,6 +69,7 @@ class _AnimExperimentState extends State<_SubWidget> with TickerProviderStateMix
   ];
 
   final GlobalKey<AnimatedListState> _animListKey = GlobalKey<AnimatedListState>();
+  final FlutterSecureStorage storage = const FlutterSecureStorage();
 
   final ScrollController _scrollCntrl = ScrollController();
   late final Timer _timer;
@@ -319,12 +321,20 @@ class _AnimExperimentState extends State<_SubWidget> with TickerProviderStateMix
                   children: <Widget>[
                     ATPlainElevatedBtn(
                       onPressed: (){
+                        storage.write(
+                          key: ATStrings.IS_NEW_USER,
+                          value: false.toString()
+                        );
                         context.goNamed(ATRoutes.MAIN_APP_SHELL);
                       },
                       btnTitle: ATStrings.ALLOW,
                     ),
                     InkWell(
                       onTap: (){
+                        storage.write(
+                          key: ATStrings.IS_NEW_USER,
+                          value: false.toString()
+                        );
                         context.goNamed(ATRoutes.MAIN_APP_SHELL);
                       },
                       borderRadius: BorderRadius.circular(5),
