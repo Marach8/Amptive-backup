@@ -1,4 +1,3 @@
-
 import 'package:amptive/src/config/utils/colors.dart';
 import 'package:amptive/src/config/utils/font_sizes.dart';
 import 'package:amptive/src/views/widgets/common_widgets/circle_avatar.dart';
@@ -81,4 +80,3 @@ class RenderTxnWidget extends StatelessWidget {
     );
   }
 }
-

@@ -15,7 +15,7 @@ import '../../../../views/widgets/common_widgets/divider_widget.dart';
 import '../../../../views/widgets/common_widgets/image_loader_widget.dart';
 import '../../../../views/widgets/common_widgets/live_user_model_widget.dart';
 import '../../../../views/widgets/other_widgets/main_application_widgets/widgets_in_home_view/appbar_drop_down.dart';
-import '../../../go_live/presentation/widgets/user_go_live_widget.dart';
+import '../widgets/go_live_widget.dart';
 
 
 class HomeTabView extends StatelessWidget {
@@ -68,13 +68,13 @@ class HomeTabView extends StatelessWidget {
               ),
               const Gap(24),
               GestureDetector(
-                // onTap: (){
-                //   context.pushReplacementNamed(
-                //     ATRoutes.MAIN_GO_LIVE_PROGRAM,
-                //     extra: GoLiveUserType.audience
-                //   );
-                // },
-               onTap: () => context.pushNamed(ATRoutes.CREATOR_PROFILE_SCREEN),
+                onTap: (){
+                  context.pushReplacementNamed(
+                    ATRoutes.MAIN_GO_LIVE_PROGRAM,
+                    extra: GoLiveUserType.host
+                  );
+                },
+                //onTap: () => context.pushNamed(ATRoutes.CREATOR_PROFILE_SCREEN),
                 //onTap: () => context.pushNamed(ATRoutes.USER_PROFILE_SCREEN),
                 child: const Padding(
                   padding: EdgeInsets.only(right: 15),

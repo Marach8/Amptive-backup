@@ -9,7 +9,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 class WalletCreationLoading extends StatelessWidget {
   const WalletCreationLoading({super.key});
 
-  static const List<String> walletList = <String>[ATStrings.CREATING_WALLET, ATStrings.PREPARING_WALLET, ATStrings.FINALIZING_SETUP];
+  static const List<String> walletList = 
+  <String>[ATStrings.CREATING_WALLET, ATStrings.PREPARING_WALLET, ATStrings.FINALIZING_SETUP];
 
   @override
   Widget build(BuildContext context) {   
@@ -31,7 +32,7 @@ class WalletCreationLoading extends StatelessWidget {
                       curve: Curves.decelerate,
                       duration: const Duration(milliseconds: 500),
                       onEnd: () => isVisible ? 
-                        Future.delayed(
+                        Future<void>.delayed(
                           const Duration(milliseconds: 2500),
                           () => context.mounted ? context.read<WalletCreationAnimBloc>().triggerNext(index + 1) : <dynamic, dynamic>{}
                         ) : null,

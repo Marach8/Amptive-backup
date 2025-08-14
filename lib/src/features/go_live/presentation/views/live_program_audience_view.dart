@@ -25,7 +25,7 @@ import '../../../../config/utils/colors.dart';
 import '../../../../config/utils/other_strings.dart';
 import '../../../../config/utils/dialogs/go_live/follow_or_subscribe_dialog.dart';
 import '../../../../shared/animated_switcher.dart';
-import '../../../../views/widgets/other_widgets/main_application_widgets/widgets_in_go_live/go_live_header_widget.dart';
+import '../widgets/go_live_screen_header.dart';
 import '../../../../views/widgets/other_widgets/main_application_widgets/widgets_in_go_live/go_live_host_widget_for_audience_view.dart';
 
 
@@ -87,7 +87,7 @@ class _LiveProgramAudienceViewState extends State<LiveProgramAudienceView> {
             children: <Widget>[
               
               const Gap(10),
-              AmptiveLiveViewHeaderWidget(
+              GoLiveScreenHeader(
                 exitIcon: ATContainer(
                 onTap: (){
                   context.read<ATNavBarBloc>().goToPage(0, context);

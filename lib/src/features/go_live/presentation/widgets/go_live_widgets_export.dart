@@ -1,4 +1,3 @@
-export 'user_go_live_widget.dart';
 export 'go_live_type_selection_widget.dart';
 export 'existing_go_live_program_widget.dart';
 export 'add_co_host_modal.dart';
@@ -25,3 +24,7 @@ export 'blurred_rotating_radial_lines.dart';
 export 'txt_instructions_switcher.dart';
 export 'play_progress_indicator.dart';
 export 'bottom_infos.dart';
+export 'go_live_screen_title.dart';
+export 'host_moderation_tools.dart';
+export 'go_live_comments.dart';
+export 'host_and_cohost_display.dart';
