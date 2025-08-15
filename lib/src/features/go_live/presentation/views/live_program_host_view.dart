@@ -6,7 +6,6 @@ import 'package:amptive/src/config/utils/other_strings.dart';
 import 'package:amptive/src/features/go_live/presentation/widgets/go_live_screen_title.dart';
 import 'package:amptive/src/models/host.dart';
 import 'package:amptive/src/config/utils/font_sizes.dart';
-import 'package:amptive/src/config/utils/image_strings.dart';
 import 'package:amptive/src/config/utils/dialogs/app_notification_dialog.dart';
 import 'package:amptive/src/config/utils/dialogs/go_live/host_moderation_tools_dialog.dart';
 import 'package:amptive/src/config/utils/helper_functions.dart';
