@@ -46,7 +46,6 @@ class TrendingHashtagsList extends StatelessWidget {
         return LayoutBuilder(
           builder: (_, BoxConstraints kst) {
             return ATScrollBar(
-              scrollController: scrollController,
               child: ListView.builder(
                 controller: scrollController,
                 itemCount: hashtags.length + 1,

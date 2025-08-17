@@ -58,7 +58,6 @@ Future<Community?> showCommunitiesDialog(BuildContext context) async {
                   child: LayoutBuilder(
                     builder: (_, BoxConstraints kst) {
                       return ATScrollBar(
-                        scrollController: scrollController,
                         child: ListView.builder(
                           controller: scrollController,
                           itemCount: communities.length,

@@ -47,7 +47,6 @@ class AvailableCohostsList extends StatelessWidget {
         return LayoutBuilder(
           builder: (_, BoxConstraints kst) {
             return ATScrollBar(
-              scrollController: scrollController,
               child: ListView.builder(
                 controller: scrollController,
                 itemCount: coHosts.length + 1,

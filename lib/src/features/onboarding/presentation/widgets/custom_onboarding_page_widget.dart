@@ -1,6 +1,4 @@
 import 'package:amptive/src/global_export.dart';
-import 'package:flutter/material.dart';
-
 import '../../../../views/widgets/common_widgets/image_loader_widget.dart';
 
 class CustomOnboardPageWidget extends StatelessWidget {
@@ -10,20 +8,17 @@ class CustomOnboardPageWidget extends StatelessWidget {
     required this.title,
     required this.description,
     required this.pictureBgColor,
-    required this.scrollCntrl
   });
 
   final String title;
   final String description;
   final Color? pictureBgColor;
-  final ScrollController scrollCntrl;
 
   @override
   Widget build(BuildContext context) {
     return ATScrollBar(
-      scrollController: scrollCntrl,
       child: SingleChildScrollView(
-        controller: scrollCntrl,
+        primary: true,
         physics: const BouncingScrollPhysics(),
         child: Column(
           mainAxisSize: MainAxisSize.min,

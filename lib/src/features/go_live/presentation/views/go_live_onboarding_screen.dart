@@ -1,4 +1,5 @@
 import 'dart:async' show StreamSubscription, Timer, StreamController;
+import 'dart:developer' show log;
 import 'dart:io' show Directory, File;
 import 'dart:ui';
 import 'package:amptive/src/features/go_live/go_live_export.dart';
@@ -7,9 +8,7 @@ import 'package:amptive/src/views/widgets/common_widgets/annotated_region__widge
 import 'package:amptive/src/views/widgets/common_widgets/app_bar_widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/back_button.dart';
 import 'package:amptive/src/views/widgets/common_widgets/custom_container_widget.dart';
-import 'package:amptive/src/shared/elevated_button_widget.dart';
 import 'package:carousel_slider/carousel_controller.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_sound/flutter_sound.dart';
 import 'package:go_router/go_router.dart';
@@ -46,8 +45,7 @@ class _SubWidgetState extends State<_SubWidget> {
   final ValueNotifier<bool> _rippleRingNotifier = ValueNotifier<bool>(false);
   final ValueNotifier<bool> _countDownIsVisibleNotifier = ValueNotifier<bool>(false);
   final ValueNotifier<bool> _reRecordBtnNotifier = ValueNotifier<bool>(false);
-  final CarouselSliderController _carouselCntrl = CarouselSliderController();
-  final ScrollController _scrollCntrl = ScrollController();
+  final PageController _pageCntrl = PageController();
 
   int _maxTime = 10;
   final StreamController<int> _timeRemainingStreamCntrl = StreamController<int>();
@@ -184,7 +182,6 @@ class _SubWidgetState extends State<_SubWidget> {
     _timeRemainingStreamCntrl.close();
     _amplitudeNotifier.dispose();
     _countDownIsVisibleNotifier.dispose();
-    _scrollCntrl.dispose();
     _reRecordBtnNotifier.dispose();
     _recorder.closeRecorder();
     _player.closePlayer();
@@ -234,9 +231,9 @@ class _SubWidgetState extends State<_SubWidget> {
 
             Positioned.fill(
               child: ATScrollBar(
-                scrollController: _scrollCntrl,
                 child: SingleChildScrollView(
-                  controller: _scrollCntrl,
+                  primary: true,
+                  physics: const BouncingScrollPhysics(),
                   padding: const EdgeInsets.fromLTRB(0, 50, 0, 100),
                   child: Column(
                     children: <Widget>[
@@ -244,18 +241,18 @@ class _SubWidgetState extends State<_SubWidget> {
                         listenWhen: ((OnboardStage, bool) prev, (OnboardStage, bool) curr) => prev.$1 != curr.$1,
                         listener: (_, (OnboardStage, bool) state){
                           if(state.$1 == OnboardStage.initial){
-                            _carouselCntrl.animateToPage(
+                            _pageCntrl.animateToPage(
                               0, curve: Curves.decelerate,
-                              duration: const Duration(milliseconds: 1000),
+                              duration: const Duration(milliseconds: 800),
                             );
                             return;
                           }
-                          _carouselCntrl.nextPage(
+                          _pageCntrl.nextPage(
                             duration: const Duration(milliseconds: 1500),
                             curve: Curves.decelerate
                           );
                         },
-                        child: InstructionsSwitcher(carouselCntrl: _carouselCntrl)
+                        child: InstructionsSwitcher(pageCntrl: _pageCntrl)
                       ),
                 
                       const SizedBox(height: 30),

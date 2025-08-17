@@ -2,7 +2,6 @@ import 'dart:io';
 import 'package:amptive/src/config/routing/routing_export.dart';
 import 'package:amptive/src/features/auth/phone_auth_screen.dart';
 import 'package:amptive/src/features/auth/temp_login_screen.dart';
-import 'package:amptive/src/features/post_auth/presentation/views/anim_experiment.dart';
 import 'package:amptive/src/config/utils/extensions/string_extensions.dart';
 import 'package:amptive/src/features/auth/dob_screen.dart';
 import 'package:amptive/src/features/auth/email_auth_screen.dart';
@@ -21,7 +20,7 @@ import 'package:amptive/src/features/profile/presentation/views/profile_views_ex
 import 'package:amptive/src/features/home/presentation/views/scheduled_screen.dart';
 import 'package:amptive/src/features/wallet/presentation/views/wallet_txns_history_screen.dart';
 import 'package:amptive/src/features/onboarding/presentation/views/onboarding_screen.dart';
-import 'package:amptive/src/features/auth/post_onboarding_screen.dart';
+import 'package:amptive/src/features/onboarding/presentation/views/post_onboarding_screen.dart';
 import 'package:custom_image_crop/custom_image_crop.dart' show Ratio;
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -34,9 +33,9 @@ import '../../features/wallet/wallet_export.dart';
 
 // The route configuration.
 final GoRouter amptiveAppRouter = GoRouter(
- // initialLocation: ATRoutes.MAIN_APP_SHELL.addSlash,
+  initialLocation: ATRoutes.MAIN_APP_SHELL.addSlash,
   //redirect: tempRedirect,
-  initialLocation: ATRoutes.ONBOARDING_SCREEN.addSlash,
+  //initialLocation: ATRoutes.ONBOARDING_SCREEN.addSlash,
   routes: <RouteBase>[
     GoRoute(
       name: ATRoutes.POST_ONBOARDING_SCREEN,
