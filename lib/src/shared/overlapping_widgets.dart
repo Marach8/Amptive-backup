@@ -2,7 +2,6 @@ import 'dart:ui' show ImageFilter;
 import 'package:amptive/src/global_export.dart';
 import 'package:amptive/src/views/widgets/common_widgets/circular_image.dart';
 import 'package:amptive/src/views/widgets/common_widgets/custom_container_widget.dart';
-import 'package:flutter/material.dart';
 
 
 class ATOverlappingImages extends StatelessWidget {

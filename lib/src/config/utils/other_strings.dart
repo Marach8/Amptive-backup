@@ -88,6 +88,7 @@ class ATStrings{
   static const String UR_WALLET = 'Your Wallet';
   static const String UR_WAY = 'Your Way';
   static const String NO_THANKS = 'No thanks';
+  static const String CONFIRM_COHOST_REMOVAL = 'Are you sure you want to remove ';
   static const String UR_WITHDRAWAL_REQUEST = 'Your withdrawal request of';
   static const String UR_DEPOSIT = 'Your deposit of';
   static const String WAS_SUCCESSFUL = 'was successful';
@@ -125,6 +126,7 @@ class ATStrings{
   static const String NO_WILL_BE_VERIFIED = 'This phone number will be verified in the next step.';
 
   static const String UR_EMAIL = 'What is your email?';
+  static const String COHOST = 'Cohost';
   static const String UR_PSWRD = 'What is your password?';
   static const String ENTER_UR_EMAIL = 'Enter your email...';
   static const String thisEmailWillBeVerified = 'This email will be verified in the next step';
@@ -414,7 +416,7 @@ class ATStrings{
   static const String CREATE_UR_SHOW = 'Create your show';
   static const String CREATE_UR_EVENT = 'Create your event';
   static const String ADD_COMMUNITY = 'Add Community';
-  static const String ADD_CO_HOST = 'Add Co-hosts';
+  static const String ADD_CO_HOST = 'Add Co-host';
   static const String EDIT_COHOST = 'Edit cohost';
   static const String ADD_HASHTAG = 'Add Hashtag';
   static const String ACCT_PRIVATE = 'Your account is now private';

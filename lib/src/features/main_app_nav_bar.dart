@@ -1,7 +1,4 @@
 import 'package:amptive/src/config/config_export.dart';
-import 'package:amptive/src/config/utils/colors.dart';
-import 'package:amptive/src/config/utils/font_sizes.dart';
-import 'package:amptive/src/config/utils/image_strings.dart';
 import 'package:amptive/src/shared/animated_slide.dart';
 import 'package:amptive/src/views/widgets/animation_widgets/common_animation_widgets/animated_crossfade_widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/image_loader_widget.dart';

@@ -5,7 +5,6 @@ import 'package:amptive/src/config/utils/font_sizes.dart';
 import 'package:amptive/src/config/utils/image_strings.dart';
 import 'package:amptive/src/shared/overlapping_widgets.dart';
 import 'package:amptive/src/views/widgets/common_widgets/custom_container_widget.dart';
-import 'package:amptive/src/shared/overlapping_widgets.dart';
 import 'package:flutter/material.dart';
 
 class NoOfListenersWidget extends StatelessWidget {

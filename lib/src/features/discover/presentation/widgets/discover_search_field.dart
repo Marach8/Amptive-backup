@@ -9,7 +9,6 @@ import '../../../../config/utils/other_strings.dart';
 import '../../../../views/widgets/animation_widgets/common_animation_widgets/animated_crossfade_widget.dart';
 import '../../../../views/widgets/common_widgets/textformfield_widget.dart';
 
-
 class ATDiscoverSearchField extends StatefulWidget {
   const ATDiscoverSearchField({super.key});
 

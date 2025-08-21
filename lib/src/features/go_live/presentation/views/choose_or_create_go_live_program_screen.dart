@@ -5,7 +5,6 @@ import 'package:amptive/src/views/widgets/common_widgets/back_button.dart';
 import 'package:amptive/src/views/widgets/common_widgets/custom_container_widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/image_loader_widget.dart';
 import 'package:amptive/src/features/go_live/presentation/widgets/existing_go_live_program_widget.dart';
-import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:nested/nested.dart' show SingleChildWidget;
 import 'package:amptive/src/views/widgets/common_widgets/sliver_header_delegate.dart';

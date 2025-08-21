@@ -13,7 +13,6 @@ import 'package:amptive/src/services/authentication_service.dart';
 import 'package:amptive/src/services/create_show/create_show_service.dart';
 import 'package:amptive/src/services/go_live_service/go_live_service.dart' hide getHostList;
 import 'package:amptive/src/services/preference_service.dart';
-import 'package:amptive/src/features/main_app_shell.dart';
 import 'package:amptive/src/features/profile/bloc/profile_bloc_export.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';

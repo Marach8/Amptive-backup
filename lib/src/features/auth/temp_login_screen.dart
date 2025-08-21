@@ -1,27 +1,12 @@
-import 'dart:async';
 
-import 'package:amptive/src/bloc/authentication/email/email_auth_states.dart';
 import 'package:amptive/src/config/config_export.dart';
-import 'package:amptive/src/services/auth/auth_field_service.dart';
-import 'package:amptive/src/config/utils/colors.dart';
-import 'package:amptive/src/config/utils/font_sizes.dart';
-import 'package:amptive/src/config/utils/font_weights.dart';
-import 'package:amptive/src/config/utils/other_strings.dart';
 import 'package:amptive/src/views/widgets/common_widgets/annotated_region__widget.dart';
 import 'package:amptive/src/shared/elevated_button_widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/back_button.dart';
-import 'package:amptive/src/views/widgets/common_widgets/loading_indicator.dart';
 import 'package:amptive/src/views/widgets/common_widgets/textformfield_widget.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
-import '../../bloc/authentication/email/email_auth_bloc.dart';
-import '../../bloc/authentication/email/email_auth_events.dart';
-import '../../config/routing/route_strings.dart';
 import '../../views/widgets/common_widgets/app_bar_widget.dart';
-import '../../views/widgets/common_widgets/common_widgets.dart';
 
 class TempLoginScreen extends StatefulWidget {
   const TempLoginScreen({super.key, this.title});

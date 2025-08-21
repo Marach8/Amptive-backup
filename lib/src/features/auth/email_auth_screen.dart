@@ -17,7 +17,6 @@ import '../../bloc/authentication/email/email_auth_bloc.dart';
 import '../../bloc/authentication/email/email_auth_events.dart';
 import '../../config/routing/route_strings.dart';
 import '../../views/widgets/common_widgets/app_bar_widget.dart';
-import '../../views/widgets/common_widgets/common_widgets.dart';
 
 class ATEmailAuthScreen extends StatefulWidget {
   const ATEmailAuthScreen({super.key, this.title});

@@ -1,5 +1,4 @@
 import 'dart:async' show StreamSubscription, Timer, StreamController;
-import 'dart:developer' show log;
 import 'dart:io' show Directory, File;
 import 'dart:ui';
 import 'package:amptive/src/features/go_live/go_live_export.dart';
@@ -8,7 +7,6 @@ import 'package:amptive/src/views/widgets/common_widgets/annotated_region__widge
 import 'package:amptive/src/views/widgets/common_widgets/app_bar_widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/back_button.dart';
 import 'package:amptive/src/views/widgets/common_widgets/custom_container_widget.dart';
-import 'package:carousel_slider/carousel_controller.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_sound/flutter_sound.dart';
 import 'package:go_router/go_router.dart';

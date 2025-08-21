@@ -262,7 +262,7 @@ class _CreateShowFormScreenState extends State<CreateEpisodeFormScreen> {
                                     return ATScalingSwitcher(
                                       duration: 300,
                                       child: coHostExists ? SelectedCoHostsWidget(
-                                          onEdit: () => showAvailableCoHostsModal(context),
+                                          onEdit: () => showAvailableCoHostsModal(context: context),
                                           selectedCohosts: selectedCoHosts,
                                         ) : CreateProgramSelectionItem(
                                           leading: const ATImgLoader(
@@ -277,7 +277,7 @@ class _CreateShowFormScreenState extends State<CreateEpisodeFormScreen> {
                                               ),
                                             ),
                                           ),
-                                          onTap: () => showAvailableCoHostsModal(context),
+                                          onTap: () => showAvailableCoHostsModal(context: context),
                                         ),
                                     );
                                   }

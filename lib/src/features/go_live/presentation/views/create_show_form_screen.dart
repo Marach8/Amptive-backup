@@ -5,11 +5,9 @@ import 'dart:ui';
 import 'package:amptive/src/features/go_live/go_live_export.dart';
 import 'package:amptive/src/global_export.dart';
 import 'package:amptive/src/models/community.dart';
-import 'package:amptive/src/shared/animated_switcher.dart';
 import 'package:amptive/src/views/widgets/common_widgets/annotated_region__widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/divider_widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/textformfield_widget.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:nested/nested.dart';
@@ -284,7 +282,7 @@ class _CreateShowFormScreenState extends State<CreateShowFormScreen> {
                                     return ATScalingSwitcher(
                                       duration: 300,
                                       child: coHostExists ? SelectedCoHostsWidget(
-                                          onEdit: () => showAvailableCoHostsModal(context),
+                                          onEdit: () => showAvailableCoHostsModal(context: context),
                                           selectedCohosts: selectedCoHosts,
                                         ) : CreateProgramSelectionItem(
                                           leading: const ATImgLoader(
@@ -299,7 +297,7 @@ class _CreateShowFormScreenState extends State<CreateShowFormScreen> {
                                               ),
                                             ),
                                           ),
-                                          onTap: () => showAvailableCoHostsModal(context),
+                                          onTap: () => showAvailableCoHostsModal(context: context),
                                         ),
                                     );
                                   }

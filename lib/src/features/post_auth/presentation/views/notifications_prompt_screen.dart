@@ -151,7 +151,7 @@ class _AnimExperimentState extends State<_SubWidget> with TickerProviderStateMix
       precacheImage(
         AssetImage(item.trailingPic),
         context,
-        onError: (e, w) => log('$e, $w'),
+        onError: (Object e, StackTrace? w) => log('$e, $w'),
       );
     }
   }

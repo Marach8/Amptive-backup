@@ -19,7 +19,6 @@ import 'package:get_it/get_it.dart';
 import '../../../../services/go_live_service/go_live_service.dart';
 import '../../../../config/utils/colors.dart';
 
-import '../../../../views/widgets/other_widgets/main_application_widgets/widgets_in_go_live/go_live_host_widget_for_host_view.dart';
 
 
 class LiveProgramCohostView extends StatefulWidget {
@@ -180,44 +179,44 @@ class _LiveProgramCohostViewState extends State<LiveProgramCohostView> {
                             // final hostAnd4Cohosts = listOfHosts.length == 5;
                             // final hostAnd5Cohosts = listOfHosts.length == 6;
               
-                            return Stack(
+                            return const Stack(
                               alignment: Alignment.center,
                               children: <Widget>[
-                                AmptiveLiveHostAndCoHostWidget(
-                                  top: 6, isHost: true, index: 0,
-                                  hostOrCohost: listOfHosts.elementAt(0),
-                                  service: service,
-                                  onTap: (ObjectWithNotifier<Host>? hostOrCohost){},
-                                ),
-                                AmptiveLiveHostAndCoHostWidget(
-                                  top: 35, left: 0, index: 1,
-                                  hostOrCohost: listOfHosts.elementAt(1),
-                                  service: service,
-                                  onTap: (ObjectWithNotifier<Host>? hostOrCohost){},
-                                ),
-                                AmptiveLiveHostAndCoHostWidget(
-                                  top: 35, right: 0, index: 2,
-                                  hostOrCohost: listOfHosts.elementAt(2),
-                                  service: service,
-                                  onTap: (ObjectWithNotifier<Host>? hostOrCohost){},
-                                ),
-                                AmptiveLiveHostAndCoHostWidget(
-                                  bottom: 30, right: width * 0.1, index: 3,
-                                  hostOrCohost: listOfHosts.elementAt(3),
-                                  service: service,
-                                  onTap: (ObjectWithNotifier<Host>? hostOrCohost){},
-                                ),
-                                AmptiveLiveHostAndCoHostWidget(
-                                  bottom: 30, left: width * 0.1, index: 4,
-                                  hostOrCohost: listOfHosts.elementAt(4),
-                                  service: service,
-                                  onTap: (ObjectWithNotifier<Host>? hostOrCohost){},
-                                ),
-                                AmptiveLiveHostAndCoHostWidget(
-                                  bottom: 0, index: 5, service: service,
-                                  hostOrCohost: listOfHosts.elementAt(5),
-                                  onTap: (ObjectWithNotifier<Host>? hostOrCohost){},
-                                ),
+                                // CohostWidget4HostView(
+                                //   top: 6, isHost: true, index: 0,
+                                //   hostOrCohost: listOfHosts.elementAt(0),
+                                //   service: service,
+                                //   onTap: (ObjectWithNotifier<Host>? hostOrCohost){},
+                                // ),
+                                // CohostWidget4HostView(
+                                //   top: 35, left: 0, index: 1,
+                                //   hostOrCohost: listOfHosts.elementAt(1),
+                                //   service: service,
+                                //   onTap: (ObjectWithNotifier<Host>? hostOrCohost){},
+                                // ),
+                                // CohostWidget4HostView(
+                                //   top: 35, right: 0, index: 2,
+                                //   hostOrCohost: listOfHosts.elementAt(2),
+                                //   service: service,
+                                //   onTap: (ObjectWithNotifier<Host>? hostOrCohost){},
+                                // ),
+                                // CohostWidget4HostView(
+                                //   bottom: 30, right: width * 0.1, index: 3,
+                                //   hostOrCohost: listOfHosts.elementAt(3),
+                                //   service: service,
+                                //   onTap: (ObjectWithNotifier<Host>? hostOrCohost){},
+                                // ),
+                                // CohostWidget4HostView(
+                                //   bottom: 30, left: width * 0.1, index: 4,
+                                //   hostOrCohost: listOfHosts.elementAt(4),
+                                //   service: service,
+                                //   onTap: (ObjectWithNotifier<Host>? hostOrCohost){},
+                                // ),
+                                // CohostWidget4HostView(
+                                //   bottom: 0, index: 5, service: service,
+                                //   hostOrCohost: listOfHosts.elementAt(5),
+                                //   onTap: (ObjectWithNotifier<Host>? hostOrCohost){},
+                                // ),
                               ],
                             );
                           }

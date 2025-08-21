@@ -281,7 +281,7 @@ class _CreateShowFormScreenState extends State<CreateEventFormScreen> {
                                     return ATScalingSwitcher(
                                       duration: 300,
                                       child: coHostExists ? SelectedCoHostsWidget(
-                                          onEdit: () => showAvailableCoHostsModal(context),
+                                          onEdit: () => showAvailableCoHostsModal(context: context),
                                           selectedCohosts: selectedCoHosts,
                                         ) : CreateProgramSelectionItem(
                                           leading: const ATImgLoader(
@@ -296,7 +296,7 @@ class _CreateShowFormScreenState extends State<CreateEventFormScreen> {
                                               ),
                                             ),
                                           ),
-                                          onTap: () => showAvailableCoHostsModal(context),
+                                          onTap: () => showAvailableCoHostsModal(context: context),
                                         ),
                                     );
                                   }
@@ -642,7 +642,7 @@ class _CreateShowFormScreenState extends State<CreateEventFormScreen> {
                   bgColor: ATColors.white,
                   fgColor: ATColors.hex0D0D0D,
                   btnTitle: ATStrings.NEXT,
-                  onPressed: selectedImgPath == null ? null : () async{
+                  onPressed: () async{
                     //await showAddCoHostDialog(context);
                     //await showAddHashtagDialog(context);
                     //await showHandRaisingDialog(context);
