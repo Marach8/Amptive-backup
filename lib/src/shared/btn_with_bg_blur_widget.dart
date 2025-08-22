@@ -1,6 +1,6 @@
 
 import 'package:amptive/src/config/config_export.dart';
-import 'package:amptive/src/views/widgets/common_widgets/custom_container_widget.dart';
+import 'package:amptive/src/shared/custom_container_widget.dart';
 import 'package:amptive/src/shared/elevated_button_widget.dart';
 import 'package:flutter/material.dart';
 
@@ -26,7 +26,7 @@ class ATBlurredBgBtn extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ATContainer(
-      height: height ?? 70,
+      height: height ?? 110,
       gradient: LinearGradient(
         begin: Alignment.topCenter,
         end: Alignment.bottomCenter,
@@ -35,7 +35,7 @@ class ATBlurredBgBtn extends StatelessWidget {
           ATColors.hex0D0D0D
         ]
       ),
-      padding: padding ?? const EdgeInsets.fromLTRB(15, 10, 15, 10),
+      padding: padding ?? const EdgeInsets.fromLTRB(15, 10, 15, 50),
       child: ATPlainElevatedBtn(
         bgColor: bgColor ?? ATColors.white,
         fgColor: fgColor ?? ATColors.hex0D0D0D,

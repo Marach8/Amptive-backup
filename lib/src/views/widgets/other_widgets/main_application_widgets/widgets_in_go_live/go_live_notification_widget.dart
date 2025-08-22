@@ -7,7 +7,7 @@ import '../../../../../models/go_live_notification_model.dart';
 import '../../../../../config/utils/colors.dart';
 import '../../../../../config/utils/image_strings.dart';
 import '../../../common_widgets/circular_image.dart';
-import '../../../common_widgets/custom_container_widget.dart';
+import '../../../../../shared/custom_container_widget.dart';
 import '../../../common_widgets/image_loader_widget.dart';
 
 class AmptiveGoLiveNotificationsWidget extends StatelessWidget {

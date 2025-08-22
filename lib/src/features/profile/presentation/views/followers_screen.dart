@@ -13,7 +13,7 @@ import '../../../../bloc/main_app/profile/profile_followers_bloc.dart';
 import '../../../../models/host.dart';
 import '../../../../config/utils/other_strings.dart';
 import '../../../../views/widgets/common_widgets/app_bar_widget.dart';
-import '../../../../views/widgets/common_widgets/custom_container_widget.dart';
+import '../../../../shared/custom_container_widget.dart';
 
 class ATProfileFollowersScreen extends StatelessWidget {
   const ATProfileFollowersScreen({super.key});

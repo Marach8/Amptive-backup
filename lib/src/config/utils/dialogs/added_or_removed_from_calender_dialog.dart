@@ -2,7 +2,7 @@ import 'package:amptive/src/config/utils/other_strings.dart';
 import 'package:another_flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import '../../../views/widgets/common_widgets/custom_container_widget.dart';
+import '../../../shared/custom_container_widget.dart';
 import '../colors.dart';
 
 

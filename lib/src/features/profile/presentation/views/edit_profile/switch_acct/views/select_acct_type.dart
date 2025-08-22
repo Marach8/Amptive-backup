@@ -6,7 +6,7 @@ import 'package:amptive/src/config/routing/route_strings.dart';
 import 'package:amptive/src/views/widgets/common_widgets/annotated_region__widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/app_bar_widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/back_button.dart';
-import 'package:amptive/src/views/widgets/common_widgets/custom_container_widget.dart';
+import 'package:amptive/src/shared/custom_container_widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/divider_widget.dart';
 import 'package:amptive/src/shared/elevated_button_widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/image_loader_widget.dart';

@@ -6,7 +6,7 @@ import 'package:amptive/src/config/utils/dialogs/app_notification_dialog.dart';
 import 'package:amptive/src/config/utils/dialogs/confirmation_alert_dialog.dart';
 import 'package:amptive/src/config/utils/helper_functions.dart';
 import 'package:amptive/src/views/widgets/animation_widgets/common_animation_widgets/animated_crossfade_widget.dart';
-import 'package:amptive/src/views/widgets/common_widgets/custom_container_widget.dart';
+import 'package:amptive/src/shared/custom_container_widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/image_loader_widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/textformfield_widget.dart';
 import 'package:flutter/material.dart';

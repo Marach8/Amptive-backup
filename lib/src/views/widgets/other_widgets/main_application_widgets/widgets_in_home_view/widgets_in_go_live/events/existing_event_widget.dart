@@ -1,4 +1,4 @@
-import 'package:amptive/src/views/widgets/common_widgets/custom_container_widget.dart';
+import 'package:amptive/src/shared/custom_container_widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/custom_rebuilder_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';

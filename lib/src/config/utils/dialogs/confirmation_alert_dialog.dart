@@ -8,7 +8,7 @@ import 'package:amptive/src/shared/elevated_button_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:go_router/go_router.dart';
-import '../../../views/widgets/common_widgets/custom_container_widget.dart';
+import '../../../shared/custom_container_widget.dart';
 import '../../../views/widgets/common_widgets/image_loader_widget.dart';
 
 Future<bool?> showConfirmationDialog({

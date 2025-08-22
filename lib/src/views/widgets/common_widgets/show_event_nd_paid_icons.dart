@@ -1,6 +1,6 @@
 import 'package:amptive/src/config/utils/colors.dart';
 import 'package:amptive/src/config/utils/font_weights.dart';
-import 'package:amptive/src/views/widgets/common_widgets/custom_container_widget.dart';
+import 'package:amptive/src/shared/custom_container_widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/image_loader_widget.dart' show ATImgLoader;
 import 'package:flutter/material.dart';
 import '../../../config/utils/image_strings.dart';

@@ -8,7 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:sticky_headers/sticky_headers.dart';
 
-import '../../../../../../../views/widgets/common_widgets/custom_container_widget.dart';
+import '../../../../../../../shared/custom_container_widget.dart';
 import '../calender_export.dart';
 
 

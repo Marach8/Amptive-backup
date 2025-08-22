@@ -4,6 +4,7 @@ import 'package:amptive/src/features/main_app_nav_bar.dart';
 import 'package:amptive/src/features/home/presentation/views/home_landing_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import '../global_export.dart';
 import '../services/go_live_service/go_live_service.dart';
 import 'go_live/go_live_export.dart';
 import 'notifications/presentation/views/notif_landing_screen.dart';
@@ -35,12 +36,13 @@ class ATMainAppShell extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ATAnnotatedRegion(
-      child: Scaffold(
-        body: BlocSelector<ATNavBarBloc, (int, bool), int>(
-          selector: ((int, bool) st) => st.$1,
-          builder: (_, int index) {
-            return SafeArea(
-              child: IndexedStack(
+      child: SafeArea(
+        bottom: false, top: false,
+        child: Scaffold(
+          body: BlocSelector<ATNavBarBloc, (int, bool), int>(
+            selector: ((int, bool) st) => st.$1,
+            builder: (_, int index) {
+              return IndexedStack(
                 index: index,
                 children: const <Widget>[
                   HomeTabView(),
@@ -48,14 +50,16 @@ class ATMainAppShell extends StatelessWidget {
                   SizedBox(),
                   NotificationTabView()
                 ]
-              ),
-            );
-          }
-        ),
+              );
+            }
+          ),
+          
+          resizeToAvoidBottomInset: false,
+          backgroundColor: ATColors.trsprnt,
+          
         
-        resizeToAvoidBottomInset: false,
-
-        bottomSheet: const MainAppBottomNav()
+          bottomSheet: const MainAppBottomNav()
+        ),
       ),
     );
   }

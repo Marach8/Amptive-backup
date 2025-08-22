@@ -5,7 +5,7 @@ import 'package:amptive/src/views/widgets/common_widgets/image_loader_widget.dar
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import '../views/widgets/common_widgets/custom_container_widget.dart';
+import '../shared/custom_container_widget.dart';
 
 
 class MainAppBottomNav extends StatelessWidget {
@@ -28,7 +28,7 @@ class MainAppBottomNav extends StatelessWidget {
           endOffset: const Offset(0, 0),
           child: ATContainer(
             color: ATColors.black,
-            padding: const EdgeInsets.fromLTRB(20, 10, 20, 10),
+            padding: const EdgeInsets.fromLTRB(20, 10, 20, 50),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: listOfIcons.map(

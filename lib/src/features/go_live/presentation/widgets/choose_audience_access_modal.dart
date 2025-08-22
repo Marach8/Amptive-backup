@@ -1,6 +1,6 @@
 import 'package:amptive/src/features/profile/bloc/fees_setup_bloc.dart';
 import 'package:amptive/src/features/profile/presentation/views/profile_views_export.dart';
-import 'package:amptive/src/views/widgets/common_widgets/custom_container_widget.dart';
+import 'package:amptive/src/shared/custom_container_widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/divider_widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/image_loader_widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/radio_button.dart';

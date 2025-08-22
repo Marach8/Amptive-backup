@@ -3,7 +3,7 @@ import 'package:amptive/src/bloc/main_app/go_live_bloc/host_view/notifications_b
 import 'package:amptive/src/config/config_export.dart';
 import 'package:amptive/src/config/utils/dialogs/go_live/host_moderation_tools_dialog.dart';
 import 'package:amptive/src/views/widgets/common_widgets/circular_image.dart';
-import 'package:amptive/src/views/widgets/common_widgets/custom_container_widget.dart';
+import 'package:amptive/src/shared/custom_container_widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/custom_rebuilder_widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/textformfield_widget.dart';
 import 'package:flutter/material.dart';

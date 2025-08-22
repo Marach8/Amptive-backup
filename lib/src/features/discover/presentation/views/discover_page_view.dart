@@ -15,7 +15,7 @@ import '../widgets/hastags_subtitle_row.dart';
 import '../widgets/trending_technology_widget.dart';
 import '../widgets/top_creator_widget.dart';
 import '../widgets/render_trending_hashtag.dart';
-import 'package:amptive/src/views/widgets/common_widgets/custom_container_widget.dart';
+import 'package:amptive/src/shared/custom_container_widget.dart';
 
 class MainDiscoverView extends StatelessWidget {
   const MainDiscoverView({super.key});

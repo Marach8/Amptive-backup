@@ -3,7 +3,7 @@ import 'package:amptive/src/config/utils/font_sizes.dart';
 import 'package:amptive/src/config/utils/helper_functions.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
-import '../../../views/widgets/common_widgets/custom_container_widget.dart';
+import '../../../shared/custom_container_widget.dart';
 import '../colors.dart';
 import 'package:amptive/src/config/utils/image_strings.dart';
 import 'package:amptive/src/views/widgets/common_widgets/image_loader_widget.dart';

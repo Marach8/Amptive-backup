@@ -1,6 +1,6 @@
 import 'package:amptive/src/global_export.dart';
 import 'package:amptive/src/views/widgets/common_widgets/circular_image.dart';
-import 'package:amptive/src/views/widgets/common_widgets/custom_container_widget.dart';
+import 'package:amptive/src/shared/custom_container_widget.dart';
 import '../../../../views/widgets/common_widgets/circle_avatar.dart';
 
 class CohostWidget4HostView extends StatelessWidget {
@@ -34,7 +34,7 @@ class CohostWidget4HostView extends StatelessWidget {
           children: <Widget>[
             showAddIcon ? ATContainer(
               height: 64, width: 64, radius: 40,
-              border: Border.all(color: ATColors.white, width: 0.5),
+              border: Border.all(color: ATColors.white.withValues(alpha: 0.2), width: 2),
               child: const Icon(Icons.add, size: 40)) 
             : Stack(
               clipBehavior: Clip.none,
@@ -111,7 +111,7 @@ class GoLiveHostWidget extends StatelessWidget {
               ATCircularImage(
                 diameter: 94, addBorder: true,
                 borderColor: ATColors.white,
-                borderWidth: 1, picturePadding: 2,
+                borderWidth: 2, picturePadding: 2,
                 imagePath: hostProfilePic
               ),
               Positioned(

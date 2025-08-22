@@ -7,7 +7,7 @@ import 'package:amptive/src/views/widgets/common_widgets/rich_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../../views/widgets/common_widgets/custom_container_widget.dart';
+import '../../../../shared/custom_container_widget.dart';
 
 class AutoplayCountdownWidget extends StatelessWidget {
   const AutoplayCountdownWidget({

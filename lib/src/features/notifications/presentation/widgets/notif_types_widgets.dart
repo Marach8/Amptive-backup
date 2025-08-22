@@ -5,7 +5,7 @@ import 'package:amptive/src/config/utils/other_strings.dart';
 import 'package:amptive/src/config/routing/route_strings.dart';
 import 'package:amptive/src/config/utils/extensions/string_extensions.dart';
 import 'package:amptive/src/views/widgets/common_widgets/circle_avatar.dart';
-import 'package:amptive/src/views/widgets/common_widgets/custom_container_widget.dart';
+import 'package:amptive/src/shared/custom_container_widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/image_loader_widget.dart';
 import 'package:amptive/src/shared/overlapping_widgets.dart';
 import 'package:amptive/src/views/widgets/common_widgets/rich_text.dart';

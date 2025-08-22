@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 
 import '../../../../config/utils/font_weights.dart';
 import '../../../../config/utils/image_strings.dart';
-import '../../../../views/widgets/common_widgets/custom_container_widget.dart' show ATContainer;
+import '../../../../shared/custom_container_widget.dart' show ATContainer;
 import '../../../../views/widgets/common_widgets/image_loader_widget.dart' show ATImgLoader;
 
 class ProfileEventOrShowDisplay extends StatelessWidget {

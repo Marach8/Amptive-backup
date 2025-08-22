@@ -12,7 +12,7 @@ import '../../../../models/host.dart';
 import '../../../../config/utils/font_sizes.dart';
 import '../../../../config/utils/other_strings.dart';
 import '../../../../views/widgets/common_widgets/app_bar_widget.dart';
-import '../../../../views/widgets/common_widgets/custom_container_widget.dart';
+import '../../../../shared/custom_container_widget.dart';
 
 class AmptiveProfileSubScribersScreen extends StatelessWidget {
   const AmptiveProfileSubScribersScreen({super.key});

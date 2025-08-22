@@ -8,7 +8,7 @@ import 'package:custom_image_crop/custom_image_crop.dart' show Ratio;
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:image_picker/image_picker.dart';
-import '../../../../views/widgets/common_widgets/custom_container_widget.dart';
+import '../../../../shared/custom_container_widget.dart';
 
 class SelectProgramCoverArt extends StatefulWidget {
   const SelectProgramCoverArt({

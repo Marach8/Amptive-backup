@@ -17,8 +17,8 @@ class ATAnnotatedRegion extends StatelessWidget {
   Widget build(BuildContext context) {
     return AnnotatedRegion<SystemUiOverlayStyle>(
       value: SystemUiOverlayStyle(
-        systemNavigationBarColor: systemBarColor ?? ATColors.black,
-        statusBarColor: statusBarColor ?? ATColors.black,
+        systemNavigationBarColor: systemBarColor ?? ATColors.trsprnt,
+        statusBarColor: statusBarColor ?? ATColors.trsprnt,
         statusBarIconBrightness: Brightness.light,
         systemNavigationBarIconBrightness: Brightness.light
       ),

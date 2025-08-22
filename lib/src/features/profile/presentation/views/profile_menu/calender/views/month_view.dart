@@ -3,7 +3,7 @@ import 'package:amptive/src/bloc/main_app/profile/profile_menu/calender/calender
 import 'package:amptive/src/config/utils/colors.dart';
 import 'package:amptive/src/config/utils/other_strings.dart';
 import 'package:amptive/src/config/utils/dialogs/app_notification_dialog.dart';
-import 'package:amptive/src/views/widgets/common_widgets/custom_container_widget.dart';
+import 'package:amptive/src/shared/custom_container_widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/loading_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

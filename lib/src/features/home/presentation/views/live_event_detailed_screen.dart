@@ -9,7 +9,7 @@ import 'package:amptive/src/views/widgets/common_widgets/textformfield_widget.da
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:readmore/readmore.dart';
 import '../../../../views/widgets/common_widgets/circle_avatar.dart';
-import '../../../../views/widgets/common_widgets/custom_container_widget.dart';
+import '../../../../shared/custom_container_widget.dart';
 import '../../../../views/widgets/common_widgets/list_tile_with_leading_picture_widget.dart';
 import '../../../../views/widgets/common_widgets/row_of_people_listening_widget.dart';
 import '../../home_export.dart';

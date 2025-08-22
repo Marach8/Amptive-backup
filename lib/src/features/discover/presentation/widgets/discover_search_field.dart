@@ -1,6 +1,6 @@
 import 'package:amptive/src/features/discover/presentation/views/discover_landing_screen.dart';
 import 'package:amptive/src/config/utils/image_strings.dart';
-import 'package:amptive/src/views/widgets/common_widgets/custom_container_widget.dart';
+import 'package:amptive/src/shared/custom_container_widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/image_loader_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

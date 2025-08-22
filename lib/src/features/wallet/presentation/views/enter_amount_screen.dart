@@ -15,7 +15,7 @@ import 'package:go_router/go_router.dart';
 import '../../../../config/utils/font_sizes.dart';
 import '../../../../views/widgets/common_widgets/app_bar_widget.dart';
 import '../../../../views/widgets/common_widgets/back_button.dart';
-import '../../../../views/widgets/common_widgets/custom_container_widget.dart';
+import '../../../../shared/custom_container_widget.dart';
 
 class ATEnterAmountScreen extends StatelessWidget {
   const ATEnterAmountScreen({super.key, required this.params});
