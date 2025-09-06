@@ -44,7 +44,7 @@ class TileWithLeadingImage extends StatelessWidget {
                 subtitle,
                 style: context.textTheme.titleLarge?.copyWith(
                   color: ATColors.hexC2C2C2,
-                  fontSize: ATFontSizes.size12,
+                  fontSize: ATSizes.size12,
                   height: 1.5
                 ),
               ),

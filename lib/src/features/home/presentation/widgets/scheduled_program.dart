@@ -72,7 +72,7 @@ class _ScheduledProgramState extends State<ScheduledProgram> {
                     Text(
                       '15 Jul 2024 at 17:00',
                       style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                        fontSize: ATFontSizes.size16
+                        fontSize: ATSizes.size16
                       ),
                     ),
                     const SizedBox(height: 10,),
@@ -81,7 +81,7 @@ class _ScheduledProgramState extends State<ScheduledProgram> {
                       "Don't Forget Who You Are ft. Jacob Scipio",
                       overflow: TextOverflow.clip,
                       style: Theme.of(context).textTheme.displayMedium?.copyWith(
-                        fontSize: ATFontSizes.size24,
+                        fontSize: ATSizes.size24,
                         fontWeight: ATFontWeights.w600,
                       ),
                     ),
@@ -99,7 +99,7 @@ class _ScheduledProgramState extends State<ScheduledProgram> {
                         Text(
                           '656 going',
                           style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                            fontSize: ATFontSizes.size13
+                            fontSize: ATSizes.size13
                           )
                         ),
                       ],
@@ -115,7 +115,7 @@ class _ScheduledProgramState extends State<ScheduledProgram> {
                             ATStrings.PAID_SHOW.toUpperCase(),
                             style: Theme.of(context).textTheme.titleSmall?.copyWith(
                               fontWeight: ATFontWeights.w500,
-                              fontSize: ATFontSizes.size10
+                              fontSize: ATSizes.size10
                             )
                           ),
                         ),

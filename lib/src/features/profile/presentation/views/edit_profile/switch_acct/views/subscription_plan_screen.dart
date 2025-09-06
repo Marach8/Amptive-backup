@@ -55,7 +55,7 @@ class CreatorSubPlanScreen extends StatelessWidget {
                     secondChild: Text(
                       ATStrings.ALLOW_FREE_SUB, maxLines: 2,
                       style: context.textTheme.titleSmall?.copyWith(
-                        fontSize: ATFontSizes.size11,
+                        fontSize: ATSizes.size11,
                       ),
                     ),
                   );

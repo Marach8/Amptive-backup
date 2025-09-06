@@ -118,7 +118,7 @@ class ATStrings{
   static const String SPEAK_IN_2_MIC = 'Speak into the mic';
   static const String MIC_ENHANCE_SOUND = 'Microphones enhance sound quality.';
   static const String SOUND_CHECK = 'Sound check';
-  static const String GOING_LIVE_ON_AIR = 'Going live on air';
+  static const String GOING_LIVE_ON_AIR = 'Going live on air in';
   static const String CHANGE_BANK_DETAILS = 'Change bank details';
   static const String DELETE_SUB_PLAN = 'Delete subscription plan?';
   static const String DELETE_SUB_PLAN_DESC = 'Deleting plan will grant listeners free access to your shows.';

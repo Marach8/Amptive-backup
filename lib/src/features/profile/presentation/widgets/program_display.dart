@@ -43,7 +43,7 @@ class ProfileEventOrShowDisplay extends StatelessWidget {
                     Text(
                       'We Can Do Hard Things',
                       style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                        fontSize: ATFontSizes.size12,
+                        fontSize: ATSizes.size12,
                         color: ATColors.hexC2C2C2
                       ),
                     ),
@@ -55,7 +55,7 @@ class ProfileEventOrShowDisplay extends StatelessWidget {
                   maxLines: 2,
                   'How To Be More Alive With Cole Authur Riley (Best of Emmanuel Nnanna)',
                   style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                    fontSize: ATFontSizes.size15,
+                    fontSize: ATSizes.size15,
                   ),
                 ),
       
@@ -72,7 +72,7 @@ class ProfileEventOrShowDisplay extends StatelessWidget {
                           'P',
                           style: Theme.of(context).textTheme.titleSmall?.copyWith(
                             fontWeight: ATFontWeights.w800,
-                            fontSize: ATFontSizes.size10,
+                            fontSize: ATSizes.size10,
                             color: ATColors.black
                           ),
                         )

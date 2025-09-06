@@ -45,7 +45,7 @@ class ProfileScreenTabs extends StatelessWidget {
                       child: Text(
                         string,
                         style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                          fontSize: ATFontSizes.size13,
+                          fontSize: ATSizes.size13,
                           color: isSelected ? ATColors.black : ATColors.white
                         ),
                       ),

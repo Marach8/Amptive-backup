@@ -66,7 +66,7 @@ class SubscribedProgram extends StatelessWidget {
                       "Don't Forget Who You Are ft. Jacob Scipio",
                       overflow: TextOverflow.clip,
                       style: Theme.of(context).textTheme.displayMedium?.copyWith(
-                        fontSize: ATFontSizes.size24,
+                        fontSize: ATSizes.size24,
                         fontWeight: ATFontWeights.w600,
                       ),
                     ),
@@ -84,7 +84,7 @@ class SubscribedProgram extends StatelessWidget {
                         Text(
                           '656 listening',
                           style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                            fontSize: ATFontSizes.size13
+                            fontSize: ATSizes.size13
                           )
                         ),
                       ],
@@ -100,7 +100,7 @@ class SubscribedProgram extends StatelessWidget {
                             ATStrings.PAID_SHOW.toUpperCase(),
                             style: Theme.of(context).textTheme.titleSmall?.copyWith(
                               fontWeight: ATFontWeights.w500,
-                              fontSize: ATFontSizes.size10
+                              fontSize: ATSizes.size10
                             )
                           ),
                         ),

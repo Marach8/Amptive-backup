@@ -29,7 +29,7 @@ class _DiscoverTabViewState extends State<DiscoverTabView> {
             title: Text(
               'Discover',
               style: Theme.of(context).textTheme.displaySmall?.copyWith(
-                fontSize: ATFontSizes.size23
+                fontSize: ATSizes.size23
               )
             ),
             floating: true,

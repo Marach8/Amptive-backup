@@ -50,7 +50,7 @@ class CreateShowTextFormField extends ATTextFormField {
         contentPadding: EdgeInsets.symmetric(vertical: 12.h, horizontal: 16.w),
         hintText: hintText,
         hintStyle: TextStyle(
-          fontSize: ATFontSizes.size14,
+          fontSize: ATSizes.size14,
           color: ATColors.white.withOpacity(0.4),
           fontWeight: ATFontWeights.w500,
         ),
@@ -112,7 +112,7 @@ class CreateShowTextFieldTitle extends StatelessWidget {
               Theme.of(context)
                   .textTheme
                   .bodySmall
-                  ?.copyWith(fontSize: ATFontSizes.size15),
+                  ?.copyWith(fontSize: ATSizes.size15),
         ),
         Expanded(
             child: SizedBox(
@@ -160,7 +160,7 @@ class SelectedHashTags extends StatelessWidget {
                   Text(
                     hashtag.obj.name,
                     style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                      fontSize: ATFontSizes.size10,
+                      fontSize: ATSizes.size10,
                       color: ATColors.white.withOpacity(0.7),
                     ),
                   ),

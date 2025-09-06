@@ -108,7 +108,7 @@ class AmptiveLiveHostAndCoHostWidgetForAudienceView extends StatelessWidget {
                                   .textTheme
                                   .bodySmall
                                   ?.copyWith(
-                                    fontSize: ATFontSizes.size10,
+                                    fontSize: ATSizes.size10,
                                   )),
                         )
                       : const SizedBox.shrink()

@@ -32,7 +32,7 @@ class SubPlanWidget extends StatelessWidget {
               Text(
                 ATStrings.ADD_NEW,
                 style: context.textTheme.labelSmall?.copyWith(
-                  fontSize: ATFontSizes.size16,
+                  fontSize: ATSizes.size16,
                 ),
               )
             ],
@@ -49,13 +49,13 @@ class SubPlanWidget extends StatelessWidget {
                         Text(
                           ATStrings.SUB_OVERVIEW,
                           style: context.textTheme.bodySmall?.copyWith(
-                            fontSize: ATFontSizes.size15
+                            fontSize: ATSizes.size15
                           ),
                         ),
                         Text(
                           ATStrings.SUB_OVERVIEW_DESC, maxLines: 3,
                           style: context.textTheme.titleSmall?.copyWith(
-                            fontSize: ATFontSizes.size13
+                            fontSize: ATSizes.size13
                           ),
                         ),
                       ],
@@ -99,7 +99,7 @@ class SubPlanWidget extends StatelessWidget {
                       child: Text(
                         ATStrings.EDIT_SUB_PLAN,
                         style: context.textTheme.bodySmall?.copyWith(
-                          fontSize: ATFontSizes.size12,
+                          fontSize: ATSizes.size12,
                           color: ATColors.white.withValues(alpha: 0.7)
                         ),
                       ),
@@ -108,7 +108,7 @@ class SubPlanWidget extends StatelessWidget {
                       child: Text(
                         'N$state/month', maxLines: 2,
                         style: context.textTheme.bodyMedium?.copyWith(
-                          fontSize: ATFontSizes.size14
+                          fontSize: ATSizes.size14
                         ),
                       ),
                     ),

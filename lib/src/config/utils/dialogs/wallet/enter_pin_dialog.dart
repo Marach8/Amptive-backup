@@ -207,7 +207,7 @@ Future<bool?> inputTxnPinDialog({
                                   child: Text(
                                     ATStrings.KEEPS_WALLET_SECURE, maxLines: 3,
                                     style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                                      fontSize: ATFontSizes.size13,
+                                      fontSize: ATSizes.size13,
                                       color: ATColors.hexC2C2C2
                                     )
                                   ),

@@ -28,7 +28,7 @@ class TrendingHashtagsList extends StatelessWidget {
                 Text(
                   ATStrings.NO_TRENDING_HASHTAGS,
                   style: context.textTheme.bodySmall?.copyWith(
-                    fontSize: ATFontSizes.size16
+                    fontSize: ATSizes.size16
                   )
                 ),
                 const SizedBox(height: 5,),
@@ -56,7 +56,7 @@ class TrendingHashtagsList extends StatelessWidget {
                       child: Text(
                         ATStrings.TRENDING_HASHTAGS,
                         style: context.textTheme.bodySmall?.copyWith(
-                          fontSize: ATFontSizes.size16
+                          fontSize: ATSizes.size16
                         )
                       ),
                     );
@@ -108,14 +108,14 @@ class HashtagWithCheckIconWidget extends StatelessWidget {
                 ATFilterWidget<SearchkeyBloc>(
                   title: '#${hashtag.title ?? ''}',
                   style: context.textTheme.bodySmall?.copyWith(
-                    fontSize: ATFontSizes.size15
+                    fontSize: ATSizes.size15
                   )
                 ),
                 Text(
                   hashtag.subtitle ?? '',
                   style: context.textTheme.bodySmall?.copyWith(
                     color: ATColors.hexC2C2C2,
-                    fontSize: ATFontSizes.size13
+                    fontSize: ATSizes.size13
                   ),
                 ),
               ],

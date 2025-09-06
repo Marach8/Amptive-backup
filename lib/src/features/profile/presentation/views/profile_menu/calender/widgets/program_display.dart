@@ -46,7 +46,7 @@ class CalenderProgramDisplay extends StatelessWidget {
                     child: Text(
                       title,
                       style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                        fontSize: ATFontSizes.size13,
+                        fontSize: ATSizes.size13,
                         color: isEvent ? ATColors.hex27E8DB : ATColors.hexF79E1E
                       )
                     ),

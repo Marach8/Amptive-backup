@@ -68,7 +68,7 @@ class RenderEachWeekHeading extends StatelessWidget {
                         child: Text(
                           '${day.value?.day}',
                           style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                            fontSize: ATFontSizes.size18
+                            fontSize: ATSizes.size18
                           ),
                         ),
                       ),

@@ -54,7 +54,7 @@ class MainAppBottomNav extends StatelessWidget {
                               child: Text(
                                 '3', textAlign: TextAlign.center,
                                 style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                                  fontSize: ATFontSizes.size10
+                                  fontSize: ATSizes.size10
                                 ),
                               ),
                             ),

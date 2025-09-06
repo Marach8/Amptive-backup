@@ -49,7 +49,7 @@ class ATScaleUpAndDownWidget extends StatelessWidget {
           Text(
             title,
             style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-              fontSize: ATFontSizes.size13
+              fontSize: ATSizes.size13
             ),
           ),
           const SizedBox(height: 5),

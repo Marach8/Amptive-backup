@@ -137,7 +137,7 @@ Future<(int?, bool)?> viewCoHostInviteDetails({
                           Text(
                             ATStrings.REMEMBER_CHOICE_4_HOST, maxLines: 2,
                             style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                              fontSize: ATFontSizes.size11
+                              fontSize: ATSizes.size11
                             )
                           ),
                         ],
@@ -223,13 +223,13 @@ class _PrivateWidget extends StatelessWidget {
                     Text(
                       title,
                       style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                        fontSize: ATFontSizes.size15
+                        fontSize: ATSizes.size15
                       ),
                     ),
                     if(subtitle != null)Text(
                       subtitle!, maxLines: 3,
                       style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                        fontSize: ATFontSizes.size13
+                        fontSize: ATSizes.size13
                       ),
                     ),
                   ],
@@ -255,7 +255,7 @@ class _PrivateWidget extends StatelessWidget {
                   child: Text(
                     onTapTitle ?? '',
                     style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                      fontSize: ATFontSizes.size12,
+                      fontSize: ATSizes.size12,
                       color: ATColors.white.withValues(alpha: 0.7)
                     ),
                   ),
@@ -265,7 +265,7 @@ class _PrivateWidget extends StatelessWidget {
                   child: Text(
                     'N$amount', maxLines: 2,
                     style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                      fontSize: ATFontSizes.size14
+                      fontSize: ATSizes.size14
                     )
                   ),
                 ),

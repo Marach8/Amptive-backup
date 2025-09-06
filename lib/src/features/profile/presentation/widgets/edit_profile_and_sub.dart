@@ -27,7 +27,7 @@ class EditProfileAndSubscriptionRow extends StatelessWidget {
             child: Text(
               ATStrings.EDIT_PROFILE,
               style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                fontSize: ATFontSizes.size14
+                fontSize: ATSizes.size14
               )
             )
           ),
@@ -42,7 +42,7 @@ class EditProfileAndSubscriptionRow extends StatelessWidget {
             child: Text(
               ATStrings.SUBSCRIPTION,
               style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                fontSize: ATFontSizes.size14
+                fontSize: ATSizes.size14
               )
             )
           ),

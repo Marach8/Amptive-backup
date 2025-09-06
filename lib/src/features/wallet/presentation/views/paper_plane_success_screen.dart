@@ -61,7 +61,7 @@ class ATPaperPlaneSuccessScreen extends StatelessWidget {
                             Text(
                               title,
                               style: Theme.of(context).textTheme.displaySmall?.copyWith(
-                                fontSize: ATFontSizes.size23
+                                fontSize: ATSizes.size23
                               ),
                             ),
                             const SizedBox(height: 5,),

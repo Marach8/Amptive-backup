@@ -9,84 +9,96 @@ class ATTextTheme{
   static TextTheme darkTextTheme = TextTheme( 
     displayMedium: TextStyle(
       color: ATColors.white,
-      fontSize: ATFontSizes.size25,
+      fontSize: ATSizes.size25,
       fontWeight: ATFontWeights.w700,
-      overflow: TextOverflow.ellipsis
+      overflow: TextOverflow.ellipsis,
+      letterSpacing: 0
     ),
 
     displaySmall: TextStyle(
       color: ATColors.white,
-      fontSize: ATFontSizes.size24,
+      letterSpacing: 0,
+      fontSize: ATSizes.size24,
       fontWeight: ATFontWeights.w600,
       overflow: TextOverflow.ellipsis
     ),
 
     headlineLarge: TextStyle(
       color: ATColors.white,
-      fontSize: ATFontSizes.size22,
+      fontSize: ATSizes.size22,
+      letterSpacing: 0,
       fontWeight: ATFontWeights.w700,
       overflow: TextOverflow.ellipsis
     ),
 
     headlineMedium: TextStyle(
       color: ATColors.white,
-      fontSize: ATFontSizes.size18,
+      letterSpacing: 0,
+      fontSize: ATSizes.size18,
       fontWeight: ATFontWeights.w700,
       overflow: TextOverflow.ellipsis
     ),
 
     bodyLarge : TextStyle(
       color: ATColors.white,
-      fontSize: ATFontSizes.size18,
+      letterSpacing: 0,
+      fontSize: ATSizes.size18,
       fontWeight: ATFontWeights.w600,
       overflow: TextOverflow.ellipsis
     ),
 
     bodyMedium : TextStyle(
       color: ATColors.white,
-      fontSize: ATFontSizes.size16,
+      letterSpacing: 0,
+      fontSize: ATSizes.size16,
       fontWeight: ATFontWeights.w600,
       overflow: TextOverflow.ellipsis
     ), 
 
     bodySmall : TextStyle(
       color: ATColors.white,
-      fontSize: ATFontSizes.size14,
+      letterSpacing: 0,
+      fontSize: ATSizes.size14,
       fontWeight: ATFontWeights.w500,
       overflow: TextOverflow.ellipsis
     ),
     
     labelMedium: TextStyle(
       color: ATColors.hexB6B6B6,
-      fontSize: ATFontSizes.size16,
+      letterSpacing: 0,
+      fontSize: ATSizes.size16,
       fontWeight: ATFontWeights.w400,
       overflow: TextOverflow.ellipsis
     ),
 
     labelSmall: TextStyle(
+      letterSpacing: 0,
       color: ATColors.white,
-      fontSize: ATFontSizes.size12,
+      fontSize: ATSizes.size12,
       fontWeight: ATFontWeights.w500,
       overflow: TextOverflow.ellipsis
     ),
 
     titleLarge: TextStyle(
+      letterSpacing: 0,
       color: ATColors.white,
-      fontSize: ATFontSizes.size15,
+      fontSize: ATSizes.size15,
       fontWeight: ATFontWeights.w400,
       overflow: TextOverflow.ellipsis
     ),
 
     titleMedium: TextStyle(
+      letterSpacing: 0,
       color: ATColors.white,
-      fontSize: ATFontSizes.size14,
+      fontSize: ATSizes.size14,
       fontWeight: ATFontWeights.w400,
       overflow: TextOverflow.ellipsis
     ),
 
     titleSmall: TextStyle(
+      letterSpacing: 0,
       color: ATColors.white,
-      fontSize: ATFontSizes.size12,
+      fontSize: ATSizes.size12,
       fontWeight: ATFontWeights.w400,
       overflow: TextOverflow.ellipsis
     ),

@@ -1,6 +1,6 @@
 
-class ATFontSizes{
-  const ATFontSizes._();
+class ATSizes{
+  const ATSizes._();
 
   static double size8 = 8.0;
 

@@ -156,7 +156,7 @@ class _MenuHeading extends StatelessWidget {
         text,
         style: Theme.of(context).textTheme.labelSmall?.copyWith(
           color: ATColors.hexC2C2C2,
-          fontSize: ATFontSizes.size13
+          fontSize: ATSizes.size13
         ),
       ),
     );

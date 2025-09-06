@@ -33,7 +33,7 @@ class ATScheduledPrograms extends StatelessWidget {
                     alignment: Alignment.centerLeft,
                     leadingText: ATStrings.SCHEDULED,
                     leadingStyle: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                      fontSize: ATFontSizes.size23
+                      fontSize: ATSizes.size23
                     ),
                   )
                 ),

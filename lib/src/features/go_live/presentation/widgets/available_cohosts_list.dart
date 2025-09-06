@@ -1,6 +1,5 @@
 import 'package:amptive/src/features/go_live/go_live_export.dart';
 import 'package:amptive/src/global_export.dart';
-import 'package:amptive/src/shared/custom_container_widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/image_loader_widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/search_filter_widget.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -32,7 +31,7 @@ class AvailableCohostsList extends StatelessWidget {
                 Text(
                   ATStrings.NO_SUGGESTIONS,
                   style: context.textTheme.bodySmall?.copyWith(
-                    fontSize: ATFontSizes.size16
+                    fontSize: ATSizes.size16
                   )
                 ),
                 const SizedBox(height: 5,),
@@ -49,9 +48,9 @@ class AvailableCohostsList extends StatelessWidget {
         return LayoutBuilder(
           builder: (_, BoxConstraints kst) {
             return ATScrollBar(
+              extScrollCntrl: scrollController,
               child: ListView.builder(
-                controller: scrollController,
-                itemCount: coHosts.length + 1,
+                primary: true, itemCount: coHosts.length + 1,
                 padding: const EdgeInsets.only(right: 10, bottom: 20),
                 itemBuilder: (_, int index){
                   if(index == 0){
@@ -60,7 +59,7 @@ class AvailableCohostsList extends StatelessWidget {
                       child: Text(
                         ATStrings.SUGGESTIONS,
                         style: context.textTheme.bodySmall?.copyWith(
-                          fontSize: ATFontSizes.size16
+                          fontSize: ATSizes.size16
                         )
                       ),
                     );
@@ -127,7 +126,7 @@ class CohostWithCheckIconWidget extends StatelessWidget {
                 ATFilterWidget<SearchkeyBloc>(
                   title: coHost.name ?? '',
                   style: context.textTheme.bodySmall?.copyWith(
-                    fontSize: ATFontSizes.size15
+                    fontSize: ATSizes.size15
                   )
                 ),
                 ATFilterWidget<SearchkeyBloc>(

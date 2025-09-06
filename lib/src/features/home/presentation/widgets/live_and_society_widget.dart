@@ -45,7 +45,7 @@ class LiveIndicatorRow extends StatelessWidget {
           ATStrings.LIVE.toUpperCase(),
           style: context.textTheme.bodyMedium?.copyWith(
             color: ATColors.hexA8A8A8,
-            fontSize: ATFontSizes.size14
+            fontSize: ATSizes.size14
           ),  
         ),
         const SizedBox(width: 20,),
@@ -58,7 +58,7 @@ class LiveIndicatorRow extends StatelessWidget {
           (text2 ?? ATStrings.SOCIETY).toUpperCase(),
           style: context.textTheme.bodyMedium?.copyWith(
             color: ATColors.hexA8A8A8,
-            fontSize: ATFontSizes.size14
+            fontSize: ATSizes.size14
           ),  
         ),
       ],
@@ -89,7 +89,7 @@ class ScheduleDateIndicator extends StatelessWidget {
             text1,
             style: context.textTheme.bodyMedium?.copyWith(
               color: ATColors.hexA8A8A8,
-              fontSize: ATFontSizes.size14
+              fontSize: ATSizes.size14
             ),  
           ),
         ),
@@ -103,7 +103,7 @@ class ScheduleDateIndicator extends StatelessWidget {
           text2.toUpperCase(),
           style: context.textTheme.bodyMedium?.copyWith(
             color: ATColors.hexA8A8A8,
-            fontSize: ATFontSizes.size14
+            fontSize: ATSizes.size14
           ),  
         ),
       ],

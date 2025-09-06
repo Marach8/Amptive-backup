@@ -35,14 +35,14 @@ class NoOfFollowers extends StatelessWidget {
           Text(
             noOfFollowers,
             style: Theme.of(context).textTheme.bodySmall?.copyWith(
-              fontSize: ATFontSizes.size16
+              fontSize: ATSizes.size16
             ),
           ),
           const SizedBox(width: 5),
           Text(
             ATStrings.FOLLOWERS,
             style: Theme.of(context).textTheme.bodySmall?.copyWith(
-              fontSize: ATFontSizes.size16
+              fontSize: ATSizes.size16
             ),
           ),
         ],

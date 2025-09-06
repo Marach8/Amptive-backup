@@ -64,7 +64,7 @@ class _AddUsernameScreenState extends State<AddUsernameScreen> {
                   Text(
                     ATStrings.whatShouldWeCallYou,
                     style: Theme.of(context).textTheme.headlineMedium?.copyWith(
-                          fontSize: ATFontSizes.size17,
+                          fontSize: ATSizes.size17,
                         ),
                   ),
                   SizedBox(

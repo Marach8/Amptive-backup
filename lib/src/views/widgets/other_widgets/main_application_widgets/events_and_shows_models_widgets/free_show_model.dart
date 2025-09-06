@@ -42,7 +42,7 @@ class AmptiveFreeShowModel extends StatelessWidget {
                 child: Text(
                   'figma',
                   style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                    fontSize: ATFontSizes.size13,
+                    fontSize: ATSizes.size13,
                     color: ATColors.hexA8A8A8
                   ),
                 ),

@@ -103,14 +103,14 @@ Future<WhispersState?> controlWhispersModal({
                                           Text(
                                             ATStrings.TURN_ON,
                                             style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                                              fontSize: ATFontSizes.size15
+                                              fontSize: ATSizes.size15
                                             )
                                           ),
                                           Text(
                                             maxLines: 5,
                                             ATStrings.WHISPERS_ENABLED,
                                             style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                                              color: ATColors.hexC2C2C2, fontSize: ATFontSizes.size13
+                                              color: ATColors.hexC2C2C2, fontSize: ATSizes.size13
                                             ),
                                           ),
                                         ],
@@ -148,14 +148,14 @@ Future<WhispersState?> controlWhispersModal({
                                               Text(
                                                 ATStrings.TURN_OFF,
                                                 style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                                                  fontSize: ATFontSizes.size15
+                                                  fontSize: ATSizes.size15
                                                 )
                                               ),
                                               Text(
                                                 maxLines: 5,
                                                 ATStrings.WHISPERS_DISABLED,
                                                 style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                                                  color: ATColors.hexC2C2C2, fontSize: ATFontSizes.size13
+                                                  color: ATColors.hexC2C2C2, fontSize: ATSizes.size13
                                                 ),
                                               ),
                                             ],

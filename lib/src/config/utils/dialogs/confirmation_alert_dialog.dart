@@ -34,7 +34,7 @@ Future<bool?> showConfirmationDialog({
             child: Text(
               title, maxLines: 3, textAlign: TextAlign.center,
               style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                fontSize: ATFontSizes.size17,
+                fontSize: ATSizes.size17,
               ),
             ),
           ),
@@ -43,7 +43,7 @@ Future<bool?> showConfirmationDialog({
             child: Text(
               content, maxLines: 3, textAlign: TextAlign.center,
               style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                fontSize: ATFontSizes.size13,
+                fontSize: ATSizes.size13,
               ),
             ),
           ),
@@ -56,7 +56,7 @@ Future<bool?> showConfirmationDialog({
                 child: Text(
                   yesString,
                   style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                    fontSize: ATFontSizes.size17,
+                    fontSize: ATSizes.size17,
                     color: ATColors.hex307FE2
                   ),
                 ),
@@ -67,7 +67,7 @@ Future<bool?> showConfirmationDialog({
                 child: Text(
                   noString,
                   style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                    fontSize: ATFontSizes.size17,
+                    fontSize: ATSizes.size17,
                     color: ATColors.hex307FE2
                   ),
                 ),
@@ -135,14 +135,14 @@ Future<bool?> showKickOutConfirmationDialog({
           Text(
             title, maxLines: 3, textAlign: TextAlign.center,
             style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-              fontSize: ATFontSizes.size17,
+              fontSize: ATSizes.size17,
             ),
           ),
           const Gap(10),
           Text(
             content, maxLines: 3, textAlign: TextAlign.center,
             style: Theme.of(context).textTheme.titleMedium?.copyWith(
-              fontSize: ATFontSizes.size13,
+              fontSize: ATSizes.size13,
             ),
           ),
           const Gap(20),
@@ -161,7 +161,7 @@ Future<bool?> showKickOutConfirmationDialog({
             child: Text(
               ATStrings.CANCEL,
               style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                fontSize: ATFontSizes.size15,
+                fontSize: ATSizes.size15,
 
               ),
             ),

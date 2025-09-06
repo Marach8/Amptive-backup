@@ -42,7 +42,7 @@ Future<bool?> showDeletePlanOption(BuildContext context)async{
                   Text(
                     ATStrings.DELETE_PLAN,
                     style: Theme.of(context).textTheme.labelMedium?.copyWith(
-                      fontSize: ATFontSizes.size17
+                      fontSize: ATSizes.size17
                     )
                   ),
                 ],

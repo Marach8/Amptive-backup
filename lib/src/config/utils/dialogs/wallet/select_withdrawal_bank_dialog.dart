@@ -186,7 +186,7 @@ Future<String?> selectWithdrawalBankDialog(BuildContext context) {
                                             child: ATFilterWidget<SearchkeyBloc>(
                                               title: bank ?? '',
                                               style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                                                fontSize: ATFontSizes.size15
+                                                fontSize: ATSizes.size15
                                               )
                                             ),
                                           ),

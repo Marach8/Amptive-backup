@@ -26,7 +26,7 @@ class InstructionsSwitcher extends StatelessWidget {
           final String text = texts.elementAt(index);
           return Center(
             child: SizedBox(
-              width: 300, height: 100,
+              width: index == 2 ? 200 : 300, height: 100,
               child: Text(
                 text.toUpperCase(),
                 key: ValueKey<String>(text),

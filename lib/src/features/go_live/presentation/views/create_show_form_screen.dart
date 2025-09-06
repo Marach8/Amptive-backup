@@ -22,18 +22,6 @@ import '../../../../models/host.dart';
 import '../../../../views/widgets/common_widgets/rich_text.dart';
 import '../../../../config/utils/dialogs/add_communities_dialog.dart';
 
-//     ShowTypeVisibilityWidget(
-          //       showType: widget.showType,
-          //       allowedShowTypes: const <ShowType>[ShowType.event],
-          //       child: IconButton(
-          //         icon: const Icon(Iconsax.calendar_2),
-          //         onPressed: () async {
-          //           await selectDateModal(context, service.selectedImage.value);
-          //         },
-          //       ),
-          //     ),
-
-
 
 
 
@@ -398,7 +386,7 @@ class _CreateShowFormScreenState extends State<CreateShowFormScreen> {
                                   child: Text(
                                     ATStrings.MODERATION_TOOLS,
                                     style: context.textTheme.labelSmall?.copyWith(
-                                      fontSize: ATFontSizes.size13,
+                                      fontSize: ATSizes.size13,
                                     ),
                                   ),
                                 ),

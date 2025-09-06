@@ -47,7 +47,7 @@ class SearchItemTile extends StatelessWidget {
                 Text(
                   title,
                   style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                    fontSize: ATFontSizes.size14
+                    fontSize: ATSizes.size14
                   ),
                 ),
 
@@ -60,7 +60,7 @@ class SearchItemTile extends StatelessWidget {
                       style: Theme.of(context).textTheme.titleSmall?.copyWith(
                         color: ATColors.hexC2C2C2,
                         fontWeight: ATFontWeights.w500,
-                        fontSize: ATFontSizes.size13,
+                        fontSize: ATSizes.size13,
                         height: 1.5
                       ),
                     ),
@@ -72,7 +72,7 @@ class SearchItemTile extends StatelessWidget {
                       style: Theme.of(context).textTheme.titleSmall?.copyWith(
                         color: ATColors.hexC2C2C2,
                         fontWeight: ATFontWeights.w500,
-                        fontSize: ATFontSizes.size13,
+                        fontSize: ATSizes.size13,
                         height: 1.5
                       ),
                     ),
@@ -143,7 +143,7 @@ class HashTagSearchItemTile extends StatelessWidget {
                 Text(
                   '${ATStrings.HASH}$title'.toLowerCase(),
                   style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                    fontSize: ATFontSizes.size14
+                    fontSize: ATSizes.size14
                   ),
                 ),
 
@@ -154,7 +154,7 @@ class HashTagSearchItemTile extends StatelessWidget {
                   style: Theme.of(context).textTheme.titleSmall?.copyWith(
                     color: ATColors.hexC2C2C2,
                     fontWeight: ATFontWeights.w500,
-                    fontSize: ATFontSizes.size13,
+                    fontSize: ATSizes.size13,
                     height: 1.5
                   ),
                 ),

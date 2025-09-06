@@ -93,14 +93,14 @@ Future<String?> chooseAudienceAccess4ShowModal({
                                           Text(
                                             ATStrings.FREE,
                                             style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                                              fontSize: ATFontSizes.size15
+                                              fontSize: ATSizes.size15
                                             )
                                           ),
                                           Text(
                                             maxLines: 5,
                                             ATStrings.SHOW_FREE_ACCESS,
                                             style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                                              color: ATColors.hexC2C2C2, fontSize: ATFontSizes.size13
+                                              color: ATColors.hexC2C2C2, fontSize: ATSizes.size13
                                             ),
                                           ),
                                         ],
@@ -140,14 +140,14 @@ Future<String?> chooseAudienceAccess4ShowModal({
                                               Text(
                                                 ATStrings.SUBSCRIBERS_ONLY,
                                                 style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                                                  fontSize: ATFontSizes.size15
+                                                  fontSize: ATSizes.size15
                                                 )
                                               ),
                                               Text(
                                                 maxLines: 5,
                                                 ATStrings.ACCESS_2_ONLY_SUBSCRIBERS,
                                                 style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                                                  color: ATColors.hexC2C2C2, fontSize: ATFontSizes.size13
+                                                  color: ATColors.hexC2C2C2, fontSize: ATSizes.size13
                                                 ),
                                               ),
                                             ],
@@ -189,7 +189,7 @@ Future<String?> chooseAudienceAccess4ShowModal({
                                                 child: Text(
                                                   state.first == null ? '' : '${ATStrings.NAIRA_TEXT}${state.first}/month',
                                                   style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                                                    fontSize: ATFontSizes.size14,
+                                                    fontSize: ATSizes.size14,
                                                   )
                                                 ),
                                               ),

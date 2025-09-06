@@ -41,7 +41,7 @@ class ATHomeDropDown extends StatelessWidget {
               Text(
                 ATStrings.SCHEDULED,
                 style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                  fontSize: ATFontSizes.size15
+                  fontSize: ATSizes.size15
                 ),
               ),
               const ATImgLoader(imgPath: ATImgStrings.CALENDER_ICON)
@@ -59,7 +59,7 @@ class ATHomeDropDown extends StatelessWidget {
               Text(
                 ATStrings.SUBSCRIBED,
                 style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                  fontSize: ATFontSizes.size15
+                  fontSize: ATSizes.size15
                 ),
               ),
               const Icon(Icons.favorite_border_outlined)
@@ -77,7 +77,7 @@ class ATHomeDropDown extends StatelessWidget {
               Text(
                 ATStrings.FOLLOWING,
                 style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                  fontSize: ATFontSizes.size15
+                  fontSize: ATSizes.size15
                 ),
               ),
               const ATImgLoader(imgPath: ATImgStrings.PERSON_CHECKED)

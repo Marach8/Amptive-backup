@@ -78,7 +78,7 @@ Future<Community?> showCommunitiesDialog(BuildContext context) async {
                                       child: Text(
                                         com.name!,
                                         style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                                          fontSize: ATFontSizes.size15
+                                          fontSize: ATSizes.size15
                                         ),
                                       ),
                                     )

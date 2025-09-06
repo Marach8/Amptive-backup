@@ -38,7 +38,7 @@ class CalenderDropDown extends StatelessWidget {
               Text(
                 ATStrings.DAY_VIEW,
                 style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                  fontSize: ATFontSizes.size15
+                  fontSize: ATSizes.size15
                 ),
               ),
               const Icon(Icons.calendar_view_day_outlined)
@@ -54,7 +54,7 @@ class CalenderDropDown extends StatelessWidget {
               Text(
                 ATStrings.MONTH_VIEW,
                 style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                  fontSize: ATFontSizes.size15
+                  fontSize: ATSizes.size15
                 ),
               ),
               const Icon(Icons.calendar_view_month_outlined)
@@ -70,7 +70,7 @@ class CalenderDropDown extends StatelessWidget {
               Text(
                 ATStrings.SCHEDULED,
                 style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                  fontSize: ATFontSizes.size15
+                  fontSize: ATSizes.size15
                 ),
               ),
               const Icon(Icons.schedule_outlined)

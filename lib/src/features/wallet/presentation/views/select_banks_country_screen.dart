@@ -65,7 +65,7 @@ class ATSelectBanksCountryScreen extends StatelessWidget {
                                   child: Text(
                                     country,
                                     style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                                      fontSize: ATFontSizes.size15
+                                      fontSize: ATSizes.size15
                                     )
                                   ),
                                 ),

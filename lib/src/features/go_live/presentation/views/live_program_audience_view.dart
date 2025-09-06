@@ -165,7 +165,7 @@ class _LiveProgramAudienceViewState extends State<LiveProgramAudienceView> {
                                   subtitle: Text(
                                     string.obj.username ?? '',
                                     style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                                      fontSize: ATFontSizes.size13
+                                      fontSize: ATSizes.size13
                                     )
                                   ),
                                 );
@@ -443,7 +443,7 @@ class _GoLiveAudienViewControlsWidgetState extends State<GoLiveAudienViewControl
                       ),
                       _RenderAudienceViewButtons(
                         onTap: (){},
-                        child: const ATImgLoader(imgPath: ATImgStrings.GIFT_ICON),
+                        child: const ATImgLoader(imgPath: ATImgStrings.HOST_GIFT_ICON),
                       ),
                       _RenderAudienceViewButtons(
                         onTap: (){},

@@ -121,7 +121,7 @@ class _SelectAcct extends StatelessWidget {
           Text(
             title,
             style: Theme.of(context).textTheme.bodySmall?.copyWith(
-              fontSize: ATFontSizes.size15
+              fontSize: ATSizes.size15
             ),
           ),
           const SizedBox(height: 8),
@@ -132,7 +132,7 @@ class _SelectAcct extends StatelessWidget {
                 child: Text(
                   subTitle, maxLines: 3,
                   style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                    fontSize: ATFontSizes.size13,
+                    fontSize: ATSizes.size13,
                     color: ATColors.hexC2C2C2
                   ),
                 ),
@@ -152,7 +152,7 @@ class _SelectAcct extends StatelessWidget {
             child: Text(
               ATStrings.setUpAcct(title.toLowerCase()),
               style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                fontSize: ATFontSizes.size12,
+                fontSize: ATSizes.size12,
                 color: ATColors.white.withValues(alpha: 0.7)
               ),
             ),

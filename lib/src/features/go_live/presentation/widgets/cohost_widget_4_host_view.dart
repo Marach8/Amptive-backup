@@ -49,7 +49,7 @@ class CohostWidget4HostView extends StatelessWidget {
                 Positioned(
                   bottom: 0, right: 5,
                   child: ATCircleAvatar(
-                    diameter: 20,
+                    diameter: 22,
                     child: FittedBox(
                       fit: BoxFit.scaleDown,
                       child: Icon(
@@ -117,7 +117,7 @@ class GoLiveHostWidget extends StatelessWidget {
               Positioned(
                 bottom: 0, right: 5,
                 child: ATCircleAvatar(
-                  diameter: 20,
+                  diameter: 22,
                   child: FittedBox(
                     fit: BoxFit.scaleDown,
                     child: Icon(
@@ -153,7 +153,7 @@ class GoLiveHostWidget extends StatelessWidget {
             child: Text(
               ATStrings.HOST.toUpperCase(),
               style: context.textTheme.bodySmall?.copyWith(
-                fontSize: ATFontSizes.size10,
+                fontSize: ATSizes.size10,
               )
             ),
           ),

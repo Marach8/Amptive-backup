@@ -77,7 +77,7 @@ class ATUserProfileScreen extends StatelessWidget {
                       child: Text(
                         ATStrings.EDIT_PROFILE,
                         style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                          fontSize: ATFontSizes.size14
+                          fontSize: ATSizes.size14
                         )
                       )
                     ),

@@ -64,7 +64,7 @@ class CreatorProfilePix extends StatelessWidget {
                 child: Text(
                   ATStrings.CREATOR.toUpperCase(),
                   style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                    fontSize: ATFontSizes.size10,
+                    fontSize: ATSizes.size10,
                     color: ATColors.black
                   ),
                 ),

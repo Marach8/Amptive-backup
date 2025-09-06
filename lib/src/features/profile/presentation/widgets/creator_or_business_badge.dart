@@ -26,7 +26,7 @@ class CreatorOrBizBadge extends StatelessWidget {
       child: Text(
         (isCreator ?? false ? ATStrings.CREATOR : ATStrings.BUSINESS).toUpperCase(),
         style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-          fontSize: ATFontSizes.size10,
+          fontSize: ATSizes.size10,
           color: ATColors.black
         ),
       ),

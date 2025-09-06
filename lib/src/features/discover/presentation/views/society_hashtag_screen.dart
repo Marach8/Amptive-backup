@@ -66,13 +66,13 @@ class SocietyHastagScreen extends StatelessWidget {
                                 Text(
                                   ATStrings.HASH + ATStrings.SOCIETY,
                                   style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                                    fontSize: ATFontSizes.size15
+                                    fontSize: ATSizes.size15
                                   ),
                                 ),
                                 Text(
                                  'ankira22, emmanuel, and 15k others are live',
                                   style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                                    fontSize: ATFontSizes.size13,
+                                    fontSize: ATSizes.size13,
                                     color: ATColors.hexA8A8A8
                                   ),
                                 ),

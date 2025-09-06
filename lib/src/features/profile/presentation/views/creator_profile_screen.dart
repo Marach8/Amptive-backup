@@ -148,14 +148,14 @@ class _ProfileDesc extends StatelessWidget {
         items: <String, TextStyle>{
           'Author of UNTAMED & LOVE WARRIOR. Host of WE CAN DO HARD THINGS. Founder of'
           : Theme.of(context).textTheme.titleMedium!.copyWith(
-            fontSize: ATFontSizes.size13
+            fontSize: ATSizes.size13
           ),
           ' @together_rising. ': Theme.of(context).textTheme.titleMedium!.copyWith(
-            fontSize: ATFontSizes.size13,
+            fontSize: ATSizes.size13,
             color: ATColors.hexC2C2C2
           ),
           'Includes an Oscar winner.': Theme.of(context).textTheme.titleMedium!.copyWith(
-            fontSize: ATFontSizes.size13
+            fontSize: ATSizes.size13
           ),
         },
         textAlign: TextAlign.center,

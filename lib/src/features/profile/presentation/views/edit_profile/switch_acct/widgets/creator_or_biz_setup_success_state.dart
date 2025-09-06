@@ -77,7 +77,7 @@ class CreatorOrBizSetupSuccess extends StatelessWidget {
             isCreator ? ATStrings.U_R_A_CREATOR : ATStrings.UR_BIZ_IS_READY, 
             maxLines: 2, textAlign: TextAlign.center,
             style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-              fontSize: ATFontSizes.size24
+              fontSize: ATSizes.size24
             ),
           ),
         ),

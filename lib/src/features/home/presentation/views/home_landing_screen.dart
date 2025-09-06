@@ -15,7 +15,7 @@ import '../../../../views/widgets/common_widgets/divider_widget.dart';
 import '../../../../views/widgets/common_widgets/image_loader_widget.dart';
 import '../../../../views/widgets/common_widgets/live_user_model_widget.dart';
 import '../../../../views/widgets/other_widgets/main_application_widgets/widgets_in_home_view/appbar_drop_down.dart';
-import '../widgets/go_live_widget.dart';
+import '../widgets/go_live_widget_in_home.dart';
 
 
 class HomeTabView extends StatelessWidget {
@@ -29,8 +29,7 @@ class HomeTabView extends StatelessWidget {
         floatHeaderSlivers: true,
         headerSliverBuilder: (_, __) => <Widget>[
           SliverAppBar(
-            floating: true, snap: true,
-            leadingWidth: 150,
+            floating: true, snap: true, leadingWidth: 150,
             leading: const Padding(
               padding: EdgeInsets.only(left: 15),
               child: ATHomeDropDown(
@@ -101,7 +100,7 @@ class HomeTabView extends StatelessWidget {
                 children:<Widget>[
                   const Padding(
                     padding: EdgeInsets.only(left: 11, right: 14),
-                    child: GoLiveWidget(),
+                    child: GoLiveWidgetInHome(),
                   ),
                   ...Iterable<Widget>.generate(
                     20,

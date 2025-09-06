@@ -80,7 +80,7 @@ class ATEnterAccountNoScreen extends StatelessWidget {
                           return Text(
                             ATStrings.CHECKER_LOADING,
                             style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                              fontSize: ATFontSizes.size11
+                              fontSize: ATSizes.size11
                             ),
                           );
                         }
@@ -89,7 +89,7 @@ class ATEnterAccountNoScreen extends StatelessWidget {
                           return Text(
                             name ?? '',
                             style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                              fontSize: ATFontSizes.size11
+                              fontSize: ATSizes.size11
                             ),
                           );
                         }
@@ -97,7 +97,7 @@ class ATEnterAccountNoScreen extends StatelessWidget {
                           return Text(
                             ATStrings.INVALID_ACCT_NO,
                             style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                              fontSize: ATFontSizes.size11,
+                              fontSize: ATSizes.size11,
                               color: ATColors.textRedColor
                             ),
                           );

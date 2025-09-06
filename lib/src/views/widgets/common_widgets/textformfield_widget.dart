@@ -94,7 +94,7 @@ class ATTextFormField extends StatelessWidget {
       keyboardType: keyboardType,
       style: TextStyle(
         fontWeight: ATFontWeights.w400,
-        fontSize: ATFontSizes.size18,
+        fontSize: ATSizes.size18,
         color: ATColors.white,
       ),
       decoration: decoration ?? InputDecoration(     

@@ -66,7 +66,7 @@ class SelectedHashtag extends StatelessWidget {
           Text(
             hashtag.title ?? '',
             style: context.textTheme.labelSmall?.copyWith(
-              fontSize: ATFontSizes.size11,
+              fontSize: ATSizes.size11,
               color: ATColors.white.withValues(alpha: 0.7)
             ),
           ),

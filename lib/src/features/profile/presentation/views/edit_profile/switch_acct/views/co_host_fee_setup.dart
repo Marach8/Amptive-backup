@@ -122,7 +122,7 @@ class _CoHostFeeSetupScreenState extends State<CoHostFeeSetupScreen> {
                     Text(
                       ATStrings.ALLOW_FREE_COHOSTING, maxLines: 2,
                       style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                        fontSize: ATFontSizes.size11,
+                        fontSize: ATSizes.size11,
                       ),
                     ),
                   ],

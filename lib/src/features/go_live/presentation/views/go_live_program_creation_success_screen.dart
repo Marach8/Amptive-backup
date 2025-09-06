@@ -77,7 +77,7 @@ class _GoLiveProgramCreationSuccessScreenState extends State<GoLiveProgramCreati
                 textAlign: TextAlign.center,
                 widget.params.title, maxLines: 2,
                 style: context.textTheme.displaySmall?.copyWith(
-                  fontSize: ATFontSizes.size23
+                  fontSize: ATSizes.size23
                 )
               ),
               const SizedBox(height: 10,),
@@ -163,7 +163,7 @@ class _GoLiveProgramCreationSuccessScreenState extends State<GoLiveProgramCreati
                                   child: Text(
                                     widget.params.txtBtnTitle,
                                     style: context.textTheme.bodyLarge?.copyWith(
-                                      fontSize: ATFontSizes.size17
+                                      fontSize: ATSizes.size17
                                     ),
                                   )
                                 )

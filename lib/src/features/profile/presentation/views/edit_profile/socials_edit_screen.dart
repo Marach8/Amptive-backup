@@ -104,7 +104,7 @@ class _EditSocialsScreenState extends State<EditSocialsScreen> {
           }) => Text(
             '${maxLength! - currentLength} remaining',
             style: Theme.of(context).textTheme.titleSmall?.copyWith(
-              fontSize: ATFontSizes.size11
+              fontSize: ATSizes.size11
             )
           ),
         ),

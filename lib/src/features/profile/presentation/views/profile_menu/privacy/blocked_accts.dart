@@ -128,7 +128,7 @@ class AmptiveBlockedOrMutedAcctWidget extends StatelessWidget {
             child: Text(
               text,
               style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                fontSize: ATFontSizes.size13,
+                fontSize: ATSizes.size13,
               ),
             ),
           )

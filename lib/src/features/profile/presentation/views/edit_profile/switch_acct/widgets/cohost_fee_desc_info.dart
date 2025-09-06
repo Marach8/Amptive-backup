@@ -41,7 +41,7 @@ class CohostFeeDescInfo extends StatelessWidget {
                     Text(
                       ATStrings.WHAT_IS_COHOST_FEE,
                       style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                        fontSize: ATFontSizes.size15
+                        fontSize: ATSizes.size15
                       ),
                     ),
                     Text(

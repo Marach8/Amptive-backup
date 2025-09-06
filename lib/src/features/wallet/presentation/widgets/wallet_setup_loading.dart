@@ -43,7 +43,7 @@ class WalletCreationLoading extends StatelessWidget {
                           Text(
                             item, 
                             style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                              fontSize: ATFontSizes.size17
+                              fontSize: ATSizes.size17
                             )
                           ),
                           const Icon(Icons.check,)

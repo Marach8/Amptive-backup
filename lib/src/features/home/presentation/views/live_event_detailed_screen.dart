@@ -9,7 +9,6 @@ import 'package:amptive/src/views/widgets/common_widgets/textformfield_widget.da
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:readmore/readmore.dart';
 import '../../../../views/widgets/common_widgets/circle_avatar.dart';
-import '../../../../shared/custom_container_widget.dart';
 import '../../../../views/widgets/common_widgets/list_tile_with_leading_picture_widget.dart';
 import '../../../../views/widgets/common_widgets/row_of_people_listening_widget.dart';
 import '../../home_export.dart';
@@ -35,7 +34,7 @@ class ATLiveEventDetailedScreen extends StatelessWidget {
               ),
             ),
             
-            ATContainer(
+            ColoredBox(
               color: ATColors.hex0D0D0D.withValues(alpha: 0.75),
               child: BlocProvider<BlurredHeaderBloc>(
                 create: (_) => BlurredHeaderBloc(),
@@ -73,8 +72,8 @@ class ATLiveEventDetailedScreen extends StatelessWidget {
                                       maxLines: 2,
                                       "Figma Confiq 2024",
                                       overflow: TextOverflow.clip,
-                                      style: Theme.of(context).textTheme.displayMedium?.copyWith(
-                                        fontSize: ATFontSizes.size24,
+                                      style: context.textTheme.displayMedium?.copyWith(
+                                        fontSize: ATSizes.size24,
                                         fontWeight: ATFontWeights.w600,
                                       ),
                                     ),
@@ -85,8 +84,8 @@ class ATLiveEventDetailedScreen extends StatelessWidget {
                               
                                     Text(
                                       ATStrings.HASHTAGS,
-                                      style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                                        fontSize: ATFontSizes.size17
+                                      style: context.textTheme.bodySmall?.copyWith(
+                                        fontSize: ATSizes.size17
                                       ),  
                                     ),
                                     Divider(color: ATColors.white.withValues(alpha: 0.1),),
@@ -97,8 +96,8 @@ class ATLiveEventDetailedScreen extends StatelessWidget {
                               
                                     Text(
                                       ATStrings.HOSTED_BY,
-                                      style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                                        fontSize: ATFontSizes.size17
+                                      style: context.textTheme.bodySmall?.copyWith(
+                                        fontSize: ATSizes.size17
                                       ),  
                                     ),
                                     Divider(color: ATColors.white.withValues(alpha: 0.1),),
@@ -116,8 +115,8 @@ class ATLiveEventDetailedScreen extends StatelessWidget {
                               
                                     Text(
                                       '12528 Listening',
-                                      style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                                        fontSize: ATFontSizes.size17
+                                      style: context.textTheme.bodySmall?.copyWith(
+                                        fontSize: ATSizes.size17
                                       ),  
                                     ),
                                     Divider(color: ATColors.white.withValues(alpha: 0.1),),
@@ -129,7 +128,7 @@ class ATLiveEventDetailedScreen extends StatelessWidget {
                                     const SizedBox(height: 20),
                                     Text(
                                       'daniel, jessica, gerald, peter and 652 more',
-                                      style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                                      style: context.textTheme.bodySmall?.copyWith(
                                         color: ATColors.white.withValues(alpha: 0.6)
                                       ),
                                     ),
@@ -137,8 +136,8 @@ class ATLiveEventDetailedScreen extends StatelessWidget {
                               
                                     Text(
                                       'About Event',
-                                      style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                                        fontSize: ATFontSizes.size17
+                                      style: context.textTheme.bodySmall?.copyWith(
+                                        fontSize: ATSizes.size17
                                       ),  
                                     ),
                                     Divider(color: ATColors.white.withValues(alpha: 0.1),),
@@ -151,7 +150,7 @@ class ATLiveEventDetailedScreen extends StatelessWidget {
                                       trimLength: 100,
                                       style: TextStyle(
                                         color: ATColors.white.withValues(alpha: 0.6),
-                                        fontSize: ATFontSizes.size14,
+                                        fontSize: ATSizes.size14,
                                         fontWeight: ATFontWeights.w500,
                                       ),
                                     ),
@@ -159,8 +158,8 @@ class ATLiveEventDetailedScreen extends StatelessWidget {
                               
                                     Text(
                                       ATStrings.WHISPERS,
-                                      style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                                        fontSize: ATFontSizes.size17
+                                      style: context.textTheme.bodySmall?.copyWith(
+                                        fontSize: ATSizes.size17
                                       ),  
                                     ),
                                     Divider(color: ATColors.white.withValues(alpha: 0.1),),
@@ -177,8 +176,8 @@ class ATLiveEventDetailedScreen extends StatelessWidget {
                                   children: <Widget>[
                                     Text(
                                       ATStrings.GOT_TICKET_ID,
-                                      style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                                        fontSize: ATFontSizes.size17
+                                      style: context.textTheme.bodySmall?.copyWith(
+                                        fontSize: ATSizes.size17
                                       ),  
                                     ),
                                     Divider(color: ATColors.white.withValues(alpha: 0.1),),
@@ -210,7 +209,7 @@ class ATLiveEventDetailedScreen extends StatelessWidget {
                                       trimLength: 100,
                                       style: TextStyle(
                                         color: ATColors.white.withValues(alpha: 0.6),
-                                        fontSize: ATFontSizes.size14,
+                                        fontSize: ATSizes.size14,
                                         fontWeight: ATFontWeights.w500,
                                       ),
                                     ),
@@ -239,8 +238,8 @@ class ATLiveEventDetailedScreen extends StatelessWidget {
             children: <Widget>[
               Text(
                 ATStrings.PAY,
-                style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                  fontSize: ATFontSizes.size17,
+                style: context.textTheme.bodyMedium?.copyWith(
+                  fontSize: ATSizes.size17,
                   color: ATColors.black
                 ),
               ),
@@ -249,8 +248,8 @@ class ATLiveEventDetailedScreen extends StatelessWidget {
               const SizedBox(width: 5,),
               Text(
                 '₦5,000',
-                style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                  fontSize: ATFontSizes.size17,
+                style: context.textTheme.bodyMedium?.copyWith(
+                  fontSize: ATSizes.size17,
                   color: ATColors.black
                 ),
               ),

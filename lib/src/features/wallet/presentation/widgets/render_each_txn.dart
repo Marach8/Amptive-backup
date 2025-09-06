@@ -61,7 +61,7 @@ class RenderTxnWidget extends StatelessWidget {
                 time,
                 style: Theme.of(context).textTheme.titleSmall?.copyWith(
                   color: ATColors.hexC2C2C2,
-                  fontSize: ATFontSizes.size13
+                  fontSize: ATSizes.size13
                 )
               ),
             ],
@@ -71,7 +71,7 @@ class RenderTxnWidget extends StatelessWidget {
             child: Text(
               amount, maxLines: 2,
               style: Theme.of(context).textTheme.labelSmall?.copyWith(
-                fontSize: ATFontSizes.size16
+                fontSize: ATSizes.size16
               ),
             ),
           )

@@ -132,64 +132,88 @@ class _DescriptionWidgetState extends State<_DescriptionWidget> with WidgetsBind
                     );
                   }
                 ),
-                StreamBuilder<double>(
-                  stream: _streamCntrl.stream,
-                  builder: (_, AsyncSnapshot<double> snapshot) {   
-                    final double keyboardHeight = MediaQuery.of(context).viewInsets.bottom;
-                    final double height = (snapshot.data ?? 0.0) > 0 ? keyboardHeight : -50.0;
+                // StreamBuilder<double>(
+                //   stream: _streamCntrl.stream,
+                //   builder: (_, AsyncSnapshot<double> snapshot) {   
+                //     final double keyboardHeight = MediaQuery.of(context).viewInsets.bottom;
+                //     final double height = (snapshot.data ?? 0.0) > 0 ? keyboardHeight : -50.0;
+                //     return AnimatedPositioned(
+                //       left: 0, right: 0, bottom: height,
+                //       duration: const Duration(milliseconds: 100),
+                //       child: const _CoolOne()
+                //     );
+                //   }
+                // ),
+
+                Builder(
+                  builder: (BuildContext context) {
+                    final double bottomInset = MediaQuery.viewInsetsOf(context).bottom;
+                    final double extraSpace = bottomInset == 0 ? -50.0 : bottomInset;
+
                     return AnimatedPositioned(
-                      left: 0, right: 0, bottom: height,
+                      left: 0, right: 0, bottom: extraSpace,
                       duration: const Duration(milliseconds: 100),
-                      child: ATContainer(
-                        color: ATColors.hex48484A,
-                        padding: const EdgeInsets.fromLTRB(20, 10, 20, 10),
-                        child: BlocBuilder<_PrivateBloc, ({bool isBold, bool isItalic})>(
-                          builder: (_, ({bool isBold, bool isItalic}) state) {
-                            return Row(
-                              children: <Widget>[
-                                ATContainer(
-                                  onTap: () => context.read<_PrivateBloc>().toggleBold(),
-                                  width: 20, alignment: Alignment.center,
-                                  child: Text(
-                                    'B',
-                                    style: context.textTheme.headlineMedium?.copyWith(
-                                      fontWeight: state.isBold ? null : ATFontWeights.w300
-                                    )
-                                  ),
-                                ),
-                                const SizedBox(width: 35,),
-                                ATContainer(
-                                  onTap: () => context.read<_PrivateBloc>().toggleItalic(),
-                                  padding: const EdgeInsets.all(3),
-                                  height: 18, width: 18,
-                                  child: CustomPaint(
-                                    painter: _ItalicIPainter(
-                                      color: ATColors.white,
-                                      strokeWidth: state.isItalic ? 3 : 1
-                                    ),
-                                  ),
-                                ),
-                                const SizedBox(width: 40,),
-                                ATContainer(
-                                  onTap: ()async{
-                                    final (String, String)? linkData = await addLinkModal(context: context);
-                                    if(linkData != null){}
-                                  },
-                                  width: 20, height: 20, alignment: Alignment.center,
-                                  child: const Icon(CupertinoIcons.link, size: 18,),
-                                )
-                              ],
-                            );
-                          }
-                        ),
-                      )
+                      child: const _CoolOne()
                     );
                   }
-                )
+                ),
               ],
             ),
           ),
         ],
+      ),
+    );
+  }
+}
+
+class _CoolOne extends StatelessWidget {
+  const _CoolOne({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return ATContainer(
+      color: ATColors.hex48484A,
+      padding: const EdgeInsets.fromLTRB(20, 10, 20, 10),
+      child: BlocBuilder<_PrivateBloc, ({bool isBold, bool isItalic})>(
+        builder: (_, ({bool isBold, bool isItalic}) state) {
+          return Row(
+            children: <Widget>[
+              ATContainer(
+                onTap: () => context.read<_PrivateBloc>().toggleBold(),
+                width: 20, alignment: Alignment.center,
+                child: Text(
+                  'B',
+                  style: context.textTheme.headlineMedium?.copyWith(
+                    fontWeight: state.isBold ? null : ATFontWeights.w300
+                  )
+                ),
+              ),
+              const SizedBox(width: 35,),
+              ATContainer(
+                onTap: () => context.read<_PrivateBloc>().toggleItalic(),
+                padding: const EdgeInsets.all(3),
+                height: 18, width: 18,
+                child: CustomPaint(
+                  painter: _ItalicIPainter(
+                    color: ATColors.white,
+                    strokeWidth: state.isItalic ? 3 : 1
+                  ),
+                ),
+              ),
+              const SizedBox(width: 40,),
+              ATContainer(
+                onTap: ()async{
+                  final (String, String)? linkData = await addLinkModal(context: context);
+                  if(linkData != null){}
+                },
+                width: 20, height: 20, alignment: Alignment.center,
+                child: const Icon(CupertinoIcons.link, size: 18,),
+              )
+            ],
+          );
+        }
       ),
     );
   }

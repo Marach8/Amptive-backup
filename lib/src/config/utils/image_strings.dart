@@ -27,7 +27,6 @@ class ATImgStrings{
   static const String SHARE_LIVE = '$_svgPath/Icon.svg';
   static const String FOLLOW_ICON = '$_svgPath/Icon (1).svg';
   static const String UNFOLLOW_ICON = '$_svgPath/Icon (2).svg';
-  static const String GIFT_ICON = '$_svgPath/gift.svg';
   static const String MICROPHONE = '$_svgPath/Microphone.svg';
   static const String USER_FOLLOW = '$_svgPath/user-check.svg';
   static const String KICK_USER_OUT = '$_svgPath/user out.svg';
@@ -51,6 +50,8 @@ class ATImgStrings{
   static const String ROTOR_IMG = '$_svgPath/Group 50.svg';
   static const String ROTOR_IMG1 = '$_svgPath/Group 51.svg';
   static const String BLUE_ROTOR_IMG = '$_svgPath/Moving Gradient Animation.svg';
+  static const String SELECT_IMG_ICON = '$_svgPath/Rectangle 1.svg';
+  static const String HAND_RAISING_ICON = '$_svgPath/Vector.svg';
   // static const String CREATOR_MIC = '$_svgPath/creator-microphone.svg';
   // static const String CREATOR_GIF = '$_svgPath/creatorgif.svg';
   // static const String CREATOR_GLOBE = '$_svgPath/internet.svg';
@@ -97,6 +98,7 @@ class ATImgStrings{
   static const String WARNING_ICON = '$_pngPath/warning.png';
   static const String WIRE_TRANSFER = '$_pngPath/wiretransfer.png';
   static const String PAPER_PLANE = '$_pngPath/paper plane.png';
+  static const String HOST_GIFT_ICON = '$_pngPath/host_gift.png';
   static const String ONBOARD_NOTIF_IMG1 = '$_pngPath/image 5.png';
   static const String ONBOARD_NOTIF_IMG2 = '$_pngPath/image 5 (1).png';
   static const String ONBOARD_NOTIF_IMG3 = '$_pngPath/image 5 (2).png';

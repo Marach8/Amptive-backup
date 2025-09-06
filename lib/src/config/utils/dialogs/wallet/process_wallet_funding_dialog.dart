@@ -50,7 +50,7 @@ Future<bool?> processWalletFundingDialog({
                                 state ? ATStrings.WALLET_FUNDING_SUCCESS : ATStrings.WALLET_FUNDIND_FAILED,
                                 textAlign: TextAlign.center, maxLines: 2,
                                 style: Theme.of(context).textTheme.displaySmall?.copyWith(
-                                  fontSize: ATFontSizes.size23
+                                  fontSize: ATSizes.size23
                                 ),
                               )
                             ],

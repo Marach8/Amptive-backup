@@ -395,7 +395,7 @@ class _CreateShowFormScreenState extends State<CreateEventFormScreen> {
                                   child: Text(
                                     ATStrings.MODERATION_TOOLS,
                                     style: context.textTheme.labelSmall?.copyWith(
-                                      fontSize: ATFontSizes.size13,
+                                      fontSize: ATSizes.size13,
                                     ),
                                   ),
                                 ),

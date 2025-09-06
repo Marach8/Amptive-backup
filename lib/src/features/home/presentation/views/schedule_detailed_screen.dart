@@ -71,7 +71,7 @@ class ATScheduleDetailedScreen extends StatelessWidget {
                                 "Don't Forget Who You Are ft. Jacob Scipio",
                                 overflow: TextOverflow.clip,
                                 style: Theme.of(context).textTheme.displayMedium?.copyWith(
-                                  fontSize: ATFontSizes.size24,
+                                  fontSize: ATSizes.size24,
                                   fontWeight: ATFontWeights.w600,
                                 ),
                               ),
@@ -83,7 +83,7 @@ class ATScheduleDetailedScreen extends StatelessWidget {
                               Text(
                                 ATStrings.HASHTAGS,
                                 style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                                  fontSize: ATFontSizes.size17
+                                  fontSize: ATSizes.size17
                                 ),  
                               ),
                               Divider(color: ATColors.white.withValues(alpha:0.1),),
@@ -94,7 +94,7 @@ class ATScheduleDetailedScreen extends StatelessWidget {
                               Text(
                                 ATStrings.HOSTED_BY,
                                 style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                                  fontSize: ATFontSizes.size17
+                                  fontSize: ATSizes.size17
                                 ),  
                               ),
                               Divider(color: ATColors.white.withValues(alpha:0.1),),
@@ -113,7 +113,7 @@ class ATScheduleDetailedScreen extends StatelessWidget {
                               Text(
                                 '656 Listening',
                                 style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                                  fontSize: ATFontSizes.size17
+                                  fontSize: ATSizes.size17
                                 ),  
                               ),
                               Divider(color: ATColors.white.withValues(alpha: 0.1),),
@@ -133,7 +133,7 @@ class ATScheduleDetailedScreen extends StatelessWidget {
                               Text(
                                 'About Episode',
                                 style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                                  fontSize: ATFontSizes.size17
+                                  fontSize: ATSizes.size17
                                 ),  
                               ),
                               Divider(color: ATColors.white.withOpacity(0.1),),
@@ -146,7 +146,7 @@ class ATScheduleDetailedScreen extends StatelessWidget {
                                 trimLength: 100,
                                 style: TextStyle(
                                   color: ATColors.white.withOpacity(0.6),
-                                  fontSize: ATFontSizes.size14,
+                                  fontSize: ATSizes.size14,
                                   fontWeight: ATFontWeights.w500,
                                 ),
                               ),

@@ -101,7 +101,7 @@ class _ATOTPScreenState extends State<ATOTPScreen> {
                   '${ATStrings.ENTER_CODE} ${widget.emailOrPhone}',
                   maxLines: 2,
                   style: Theme.of(context).textTheme.headlineMedium?.copyWith(
-                    fontSize: ATFontSizes.size17
+                    fontSize: ATSizes.size17
                   ),
                 ),
                 const SizedBox(height: 11),

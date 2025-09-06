@@ -1,27 +1,19 @@
-import 'dart:io';
-import 'dart:ui';
-import 'package:amptive/src/config/utils/colors.dart';
-import 'package:amptive/src/config/utils/image_strings.dart';
 import 'package:amptive/src/config/utils/dialogs/app_notification_dialog.dart';
 import 'package:amptive/src/config/utils/dialogs/confirmation_alert_dialog.dart';
-import 'package:amptive/src/config/utils/helper_functions.dart';
-import 'package:amptive/src/views/widgets/animation_widgets/common_animation_widgets/animated_crossfade_widget.dart';
-import 'package:amptive/src/shared/custom_container_widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/image_loader_widget.dart';
-import 'package:amptive/src/views/widgets/common_widgets/textformfield_widget.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:gap/gap.dart';
-import 'package:go_router/go_router.dart';
-import 'package:iconsax/iconsax.dart';
-import '../../../../bloc/main_app/go_live_bloc/host_view/available_cohosts_bloc.dart';
+import 'package:amptive/src/features/go_live/go_live_export.dart';
+import 'package:amptive/src/global_export.dart';
+import 'package:amptive/src/views/widgets/common_widgets/dismiss_modal.dart';
+import 'package:amptive/src/views/widgets/common_widgets/search_filter_widget.dart';
 import '../../../../models/host.dart';
+import 'package:gap/gap.dart';
+import '../../../../bloc/main_app/go_live_bloc/host_view/available_cohosts_bloc.dart';
 import '../../../../services/create_show/create_show_service.dart';
-import '../../../../views/widgets/common_widgets/custom_rebuilder_widget.dart';
-import '../../other_strings.dart';
 
 
-Future<void> showListenersDialog({
+
+Future<ATCohost<bool>?> showListenersDialog({
   required BuildContext context,
   bool? enableKickOut
 }) async {
@@ -37,149 +29,105 @@ Future<void> showListenersDialog({
     );
 
   return await showModalBottomSheet(
+    context: context, isScrollControlled: true,
     backgroundColor: ATColors.hex202020,
-    context: context,
-    isScrollControlled: true,
-    useSafeArea: true,
-    barrierColor: ATColors.black.withOpacity(0.6),
-    shape: const RoundedRectangleBorder(
-      borderRadius: BorderRadius.only(
-      topLeft: Radius.circular(15), topRight: Radius.circular(15),
-    )),
-    builder: (BuildContext context) {
-      return ClipRRect(
-        borderRadius: const BorderRadius.only(
-          topLeft: Radius.circular(15), topRight: Radius.circular(15),
-        ),
-        child: BackdropFilter(
-          filter: ImageFilter.blur(sigmaX: 1, sigmaY: 1),
-          child: ATContainer(
-            width: ATHelperFuncs.getScreenWidth(context),
-            padding: const EdgeInsets.fromLTRB(15, 10, 15, 10),
-            child: Column(
-              children: <Widget>[
-                Center(
-                  child: GestureDetector(
-                    onTap: () => context.pop(),
-                    child: Platform.isAndroid
-                      ? Icon(
-                          Icons.keyboard_arrow_down,
-                          color: ATColors.white.withOpacity(0.6),
-                        )
-                      : ATContainer(
-                          margin: const EdgeInsets.symmetric(vertical: 10),
-                          radius: 5, height: 4, width: 30,
-                          color: ATColors.white.withOpacity(0.6),
-                          child: const SizedBox.shrink(),
-                        ),
-                    ),
-                  ),
-                  const Gap(10),
+    builder: (BuildContext dContext) {
+      return BlocProvider<SearchkeyBloc>(
+        create: (_) => SearchkeyBloc(),
+        child: DraggableScrollableSheet(
+          expand: false, initialChildSize: 0.7,
+          builder: (BuildContext bContext, ScrollController scrollController) {
+            return Padding(
+              padding: const EdgeInsets.only(top: 20),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  const Align(alignment: Alignment.center, child: ATModalDismisser()),
                   Align(
                     alignment: Alignment.center,
                     child: Row(
                       mainAxisSize: MainAxisSize.min,
                       children: <Widget>[
-                        const ATImgLoader(
-                          imgPath: ATImgStrings.USER_ICON
-                        ),
-                        const Gap(5),
+                        const ATImgLoader(imgPath: ATImgStrings.USER_ICON),
+                        const SizedBox(width: 5,),
                         Text(
                           ATStrings.LISTENERS,
-                          style: Theme.of(context).textTheme.bodyLarge
+                          style: context.textTheme.bodyLarge
                         ),
                       ],
                     ),
                   ),
-                  const Gap(20),
-                    
-                  Text(
-                    maxLines: 3,
-                    ATStrings.TOP_LISTENERS_DESC,
-                    style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                      color: ATColors.hexC2C2C2
-                    ),
-                  ),
-                  const Gap(20),
-                  // search SEARCH
-
-                  ATTextFormField(
-                    controller: controller,
-                    focusNode: focusNode,
-                    disableBlueBorder: true,
-                    onChanged: (String text) => ATHelperFuncs.callDebouncer(
-                      200,
-                      () => context.read<AmptiveGoLiveAvailableCoHostsBloc>().add(
-                        SearchCohostEvent(searchKey: text)
+      
+                  const SizedBox(height: 15),
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(15, 0, 15, 0),
+                    child: Text(
+                      ATStrings.TOP_LISTENERS_DESC, maxLines: 2,
+                      style: context.textTheme.labelSmall!.copyWith(
+                        color: ATColors.hexC2C2C2.withValues(alpha: 0.76)
                       ),
                     ),
-                    hintText: ATStrings.SEARCH_4_LISTENERS,
-                    prefixConstraints: const BoxConstraints(maxWidth: 50),
-                    prefixIcon: const Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 15),
-                      child: Icon(Iconsax.search_normal_14),
-                    ),
-                    suffixIcon: AmptiveRebuilderWidget(
-                      notifier: showSuffixIconNotifier,
-                      builder: (_, bool shouldShow, __) {
-                        return ATAnimatedXFade(
-                          condition: shouldShow,
-                          secondChild: const SizedBox.shrink(),
-                          firstChild: GestureDetector(
-                            onTap: () => controller.clear(),
-                            child: const Padding(
-                              padding: EdgeInsets.only(right: 10),
-                              child: Icon(Icons.close, size: 20),
-                            ),
-                          ),
-                        );
-                      }
-                    ),
                   ),
-                  
-                  const Gap(20),
-                  Align(
-                    alignment: Alignment.centerLeft,
-                    child: Text(
-                      ATStrings.TOP_LISTENERS,
-                      style: Theme.of(context).textTheme.bodyMedium
+                  const SizedBox(height: 20),
+        
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(15, 0, 15, 10),
+                    child: SearchFieldWithXSuffix(
+                      hintText: ATStrings.SEARCH_4_LISTENERS,
+                      onClear: (){
+                        // bContext.read<SearchkeyBloc>().resetSearch();
+                        // dContext.read<CohostServiceBloc>().resetCohostSearch();
+                      },
+                      onChanged: (String searchKey)=> ATHelperFuncs.callDebouncer(
+                        200,
+                        () => context.read<AmptiveGoLiveAvailableCoHostsBloc>().add(
+                          SearchCohostEvent(searchKey: searchKey)
+                        ),
+                      ),
                     ),
-                  ),
-                  const Gap(10),
+                  ), 
 
                   Expanded(
-                    child: ListView.builder(
-                      padding: EdgeInsets.zero,
-                      physics: const BouncingScrollPhysics(),
-                      itemCount: getHostList().length,
-                      itemBuilder: (_, int listIndex){
-                        final ObjectWithNotifier<Host> listener = getHostList().elementAt(listIndex);
-                        return AmptiveListenerWidget(
-                          onTap: (_, __){},
-                          listener: listener,
-                          index: listIndex + 1,
-                          enableKickOut: enableKickOut,
-                        );
-                      },
+                    child: ATScrollBar(
+                      extScrollCntrl: scrollController,
+                      child: ListView.builder(
+                        primary: true, itemCount: getHostList().length + 1,
+                        physics: const BouncingScrollPhysics(),
+                        padding: const EdgeInsets.fromLTRB(15, 20, 10, 20),
+                        itemBuilder: (_, int listIndex){
+                          if(listIndex == 0){
+                            return Text(
+                              ATStrings.TOP_LISTENERS,
+                              style: context.textTheme.bodyMedium
+                            );
+                          }
+
+                          final ObjectWithNotifier<Host> listener = getHostList().elementAt(listIndex - 1);
+                          return _ListenerWidget(
+                            onTap: (_, __){},
+                            listener: listener,
+                            index: listIndex,
+                            enableKickOut: enableKickOut,
+                          );
+                        },
+                      ),
                     ),
                   ),
-              ],
-            ),
-          )
+                ],
+              )
+            );
+          },
         ),
       );
-    }
+    },
   );
 }
 
 
 
+class _ListenerWidget extends StatelessWidget {
 
-
-class AmptiveListenerWidget extends StatelessWidget {
-
-  const AmptiveListenerWidget({
-    super.key,
+  const _ListenerWidget({
     required this.onTap,
     required this.listener,
     required this.index,
@@ -199,19 +147,18 @@ class AmptiveListenerWidget extends StatelessWidget {
         onTap: () => onTap(listener, listener.notifier.value),
         child: Row(
           children: <Widget>[
-            ATContainer(
-              clipBehavior: Clip.hardEdge,
-              height: 50, width: 50, radius: 30,
-              child: FittedBox(
-                fit: BoxFit.fill,
-                child: ATImgLoader(imgPath: listener.obj.profilePicture!)
+            ClipRRect(
+              borderRadius: BorderRadius.circular(25),
+              child: ATImgLoader(
+                imgPath: listener.obj.profilePicture!,
+                height: 50, width: 50, boxFit: BoxFit.cover,
               ),
             ),
             const Gap(10),
             Expanded(
               child: Text(
                 listener.obj.username ?? '',
-                style: Theme.of(context).textTheme.titleMedium
+                style: context.textTheme.titleMedium
               ),
             ),
             if(enableKickOut ?? true) ATContainer(

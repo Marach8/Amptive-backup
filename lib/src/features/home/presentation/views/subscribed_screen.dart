@@ -33,7 +33,7 @@ class ATSubscribedPrograms extends StatelessWidget {
                     alignment: Alignment.centerLeft,
                     leadingText: ATStrings.SUBSCRIBED,
                     leadingStyle: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                      fontSize: ATFontSizes.size23
+                      fontSize: ATSizes.size23
                     ),
                   )
                 ),

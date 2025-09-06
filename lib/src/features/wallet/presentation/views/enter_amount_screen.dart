@@ -156,7 +156,7 @@ class ATEnterAmountScreen extends StatelessWidget {
                                 child: Text(
                                   params.slidingNotif, maxLines: 3,
                                   style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                                    fontSize: ATFontSizes.size13,
+                                    fontSize: ATSizes.size13,
                                     color: ATColors.hexC2C2C2
                                   )
                                 ),

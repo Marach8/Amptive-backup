@@ -52,7 +52,7 @@ class _AddNameScreenState extends State<AddNameScreen> {
                 Text(
                   ATStrings.whatIsYourName,
                   style: Theme.of(context).textTheme.headlineMedium?.copyWith(
-                        fontSize: ATFontSizes.size17,
+                        fontSize: ATSizes.size17,
                       ),
                 ),
                 SizedBox(
@@ -119,16 +119,16 @@ class _AddNameScreenState extends State<AddNameScreen> {
                 ATRichText(
                   items: <String, TextStyle>{
                     '${ATStrings.BY_CLICKING_ON_CREATE_ACCT} ': context.textTheme.titleSmall!.copyWith(
-                      fontSize: ATFontSizes.size11
+                      fontSize: ATSizes.size11
                     ),
                     ATStrings.TERMS_OF_SERVICE: context.textTheme.displayMedium!.copyWith(
-                      fontSize: ATFontSizes.size11
+                      fontSize: ATSizes.size11
                     ),
                     ' and ': context.textTheme.titleSmall!.copyWith(
-                      fontSize: ATFontSizes.size11
+                      fontSize: ATSizes.size11
                     ),
                     ATStrings.PRIVACY_POLICY: context.textTheme.displayMedium!.copyWith(
-                      fontSize: ATFontSizes.size11
+                      fontSize: ATSizes.size11
                     ),
                   },
                 ),

@@ -38,7 +38,7 @@ class CustomOnboardPageWidget extends StatelessWidget {
               child: Text(
                 title, maxLines: 2, textAlign: TextAlign.start,
                 style: Theme.of(context).textTheme.displayMedium?.copyWith(
-                  fontSize: ATFontSizes.size24,
+                  fontSize: ATSizes.size24,
                 ),
               ),
             ),

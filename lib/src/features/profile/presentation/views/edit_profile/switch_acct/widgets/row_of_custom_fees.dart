@@ -40,7 +40,7 @@ class RowOfCustomFees extends StatelessWidget {
                   child: Text(
                     'N$item',
                     style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                      fontSize: ATFontSizes.size11,
+                      fontSize: ATSizes.size11,
                       color: selectedFee == item ? ATColors.white : ATColors.white.withValues(alpha: 0.7),
                     )
                   ),

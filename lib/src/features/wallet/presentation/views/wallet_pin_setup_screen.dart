@@ -116,7 +116,7 @@ class ATWalletPinSetupScreen extends StatelessWidget {
                                 child: Text(
                                   ATStrings.ENABLE_BIOMETRICS,
                                   style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                                    fontSize: ATFontSizes.size15
+                                    fontSize: ATSizes.size15
                                   )
                                 )
                               )

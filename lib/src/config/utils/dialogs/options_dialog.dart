@@ -58,7 +58,7 @@ void showProgramOptions(BuildContext context)
                         entry.key,
                         style: Theme.of(context).textTheme.labelMedium?.copyWith(
                           color: ATColors.white,
-                          fontSize: ATFontSizes.size17
+                          fontSize: ATSizes.size17
                         ),
                       )
                     ],

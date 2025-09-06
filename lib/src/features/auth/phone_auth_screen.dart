@@ -58,7 +58,7 @@ class _AddPhoneScreenState extends State<AddPhoneScreen> {
                 Text(
                   ATStrings.UR_FON_NUMBER,
                   style: Theme.of(context).textTheme.headlineMedium?.copyWith(
-                    fontSize: ATFontSizes.size17,
+                    fontSize: ATSizes.size17,
                   ),
                 ),
                 const SizedBox(height: 11),

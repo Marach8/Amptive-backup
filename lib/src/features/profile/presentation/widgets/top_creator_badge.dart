@@ -39,7 +39,7 @@ class TopCreatorBadge extends StatelessWidget {
             ATStrings.TOP_CREATORS_IN_SOCIETY,
             style: Theme.of(context).textTheme.bodySmall?.copyWith(
               color: ATColors.hexEECEA0,
-              fontSize: ATFontSizes.size13
+              fontSize: ATSizes.size13
             ),
           ),
         ],

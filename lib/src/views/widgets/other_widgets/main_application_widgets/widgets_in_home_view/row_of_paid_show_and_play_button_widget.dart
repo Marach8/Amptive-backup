@@ -29,7 +29,7 @@ class PaidShowAndPlayBtnWidget extends StatelessWidget {
               ATStrings.PAID_SHOW.toUpperCase(),
               style: Theme.of(context).textTheme.titleSmall?.copyWith(
                 fontWeight: ATFontWeights.w500,
-                fontSize: ATFontSizes.size10
+                fontSize: ATSizes.size10
               )
             ),
           ),

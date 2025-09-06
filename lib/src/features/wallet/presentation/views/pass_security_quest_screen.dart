@@ -66,7 +66,7 @@ class ATPassSecurityQuestionScreen extends StatelessWidget {
                           return Text(
                             ATStrings.ANS_IS_CASE_SENSITIVE,
                             style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                              fontSize: ATFontSizes.size11
+                              fontSize: ATSizes.size11
                             ),
                           );
                         }
@@ -74,7 +74,7 @@ class ATPassSecurityQuestionScreen extends StatelessWidget {
                           return Text(
                             ATStrings.CHECKER_LOADING,
                             style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                              fontSize: ATFontSizes.size11
+                              fontSize: ATSizes.size11
                             ),
                           );
                         }
@@ -82,7 +82,7 @@ class ATPassSecurityQuestionScreen extends StatelessWidget {
                           return Text(
                             ATStrings.CORRECT_ANS,
                             style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                              fontSize: ATFontSizes.size11,
+                              fontSize: ATSizes.size11,
                               color: ATColors.successColor
                             ),
                           );
@@ -91,7 +91,7 @@ class ATPassSecurityQuestionScreen extends StatelessWidget {
                           return Text(
                             ATStrings.INCORRECT_ANS,
                             style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                              fontSize: ATFontSizes.size11,
+                              fontSize: ATSizes.size11,
                               color: ATColors.textRedColor
                             ),
                           );

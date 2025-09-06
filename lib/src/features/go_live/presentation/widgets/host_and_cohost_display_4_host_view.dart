@@ -1,8 +1,6 @@
-
 import 'package:amptive/src/config/config_export.dart';
 import 'package:amptive/src/config/utils/dialogs/confirmation_alert_dialog.dart';
 import 'package:amptive/src/models/host.dart';
-import 'package:amptive/src/shared/custom_container_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../bloc/main_app/go_live_bloc/host_view/cohosts_display_bloc.dart';
@@ -10,8 +8,8 @@ import '../../go_live_export.dart';
 
 
 
-class HostViewHostNdCohostDisplay extends StatelessWidget {
-  const HostViewHostNdCohostDisplay({super.key,});
+class HostViewOfHostNdCohostDisplay extends StatelessWidget {
+  const HostViewOfHostNdCohostDisplay({super.key,});
 
   @override
   Widget build(BuildContext context) {

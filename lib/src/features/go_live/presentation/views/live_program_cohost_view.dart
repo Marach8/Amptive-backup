@@ -143,7 +143,7 @@ class _LiveProgramCohostViewState extends State<LiveProgramCohostView> {
                                 subtitle: Text(
                                   string.obj.username ?? '',
                                   style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                                    fontSize: ATFontSizes.size13
+                                    fontSize: ATSizes.size13
                                   )
                                 ),
                               );

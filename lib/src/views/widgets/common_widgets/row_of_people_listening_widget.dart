@@ -37,7 +37,7 @@ class PeopleListeningWidget extends StatelessWidget {
             child: Text(
               '+652',
               style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                fontSize: ATFontSizes.size13
+                fontSize: ATSizes.size13
               )
             ),
           )

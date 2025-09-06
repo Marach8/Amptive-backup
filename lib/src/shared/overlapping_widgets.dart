@@ -97,7 +97,7 @@ class ATOverlappingCircles extends StatelessWidget {
                       child: Text(
                         (entry.$1 + 1).toString(),
                         style: context.textTheme.labelSmall?.copyWith(
-                          fontSize: ATFontSizes.size11
+                          fontSize: ATSizes.size11
                         )
                       ),
                     ),

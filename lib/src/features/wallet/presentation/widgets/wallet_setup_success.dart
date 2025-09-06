@@ -66,7 +66,7 @@ class WalletCretionSuccess extends StatelessWidget {
             ATStrings.WALLET_CREATED,
             maxLines: 2, textAlign: TextAlign.center,
             style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-              fontSize: ATFontSizes.size24
+              fontSize: ATSizes.size24
             ),
           ),
         ),

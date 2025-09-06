@@ -25,7 +25,7 @@ Future<String?> showSecurityQuestionsDialog(BuildContext context, List<String> i
                 child: Text(
                   ATStrings.DONE,
                   style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                    fontSize: ATFontSizes.size16
+                    fontSize: ATSizes.size16
                   )
                 ),
               ),
@@ -42,7 +42,7 @@ Future<String?> showSecurityQuestionsDialog(BuildContext context, List<String> i
                       child: Text(
                         item,
                         style: Theme.of(context).textTheme.labelSmall?.copyWith(
-                          fontSize: ATFontSizes.size20
+                          fontSize: ATSizes.size20
                         ),
                       ),
                     ),

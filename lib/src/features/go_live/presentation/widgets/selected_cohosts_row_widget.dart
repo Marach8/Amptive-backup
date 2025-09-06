@@ -42,7 +42,7 @@ class SelectedCohostsRow extends StatelessWidget {
                         child: Text(
                           (entry.$1 + 1).toString(),
                           style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                            fontSize: ATFontSizes.size12
+                            fontSize: ATSizes.size12
                           ),
                         ),
                       );

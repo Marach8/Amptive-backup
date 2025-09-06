@@ -32,7 +32,7 @@ class HoursAndProgramsList extends StatelessWidget {
                     Text(
                       formattedTime, 
                       style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                        fontSize: ATFontSizes.size11,
+                        fontSize: ATSizes.size11,
                         color: ATColors.hexC2C2C2
                       )
                     ),

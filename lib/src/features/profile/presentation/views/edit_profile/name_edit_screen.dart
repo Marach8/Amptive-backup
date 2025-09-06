@@ -62,7 +62,7 @@ class _EditNameScreen extends State<EditNameScreen > {
               Text(
                 ATStrings.THIS_WILL_APPEAR_ON_PROFILE,
                 style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                  fontSize: ATFontSizes.size11
+                  fontSize: ATSizes.size11
                 )
               )
             ],

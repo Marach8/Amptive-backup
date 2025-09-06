@@ -68,7 +68,7 @@ class AvailableBalanceWidget extends StatelessWidget {
                     return Text(
                       state ? 'N 2,345,737.18' : '******',
                       style: Theme.of(context).textTheme.displaySmall?.copyWith(
-                        fontSize: ATFontSizes.size30
+                        fontSize: ATSizes.size30
                       )
                     );
                   }

@@ -14,8 +14,7 @@ Future<ATCohost<bool>?> showAvailableCoHostsModal({
   CohostSelectionMode selectionMode = CohostSelectionMode.multiple,
 }) async {
   return await showModalBottomSheet(
-    context: context,
-    isScrollControlled: true,
+    context: context, isScrollControlled: true,
     backgroundColor: ATColors.hex202020,
     builder: (BuildContext dContext) {
       return Stack(
@@ -26,16 +25,8 @@ Future<ATCohost<bool>?> showAvailableCoHostsModal({
               expand: false,
               initialChildSize: 0.7,
               builder: (BuildContext bContext, ScrollController scrollController) {
-                return Container(
-                  padding: const EdgeInsets.only(top: kToolbarHeight * 0.5),
-                  height: context.screenHeight,
-                  width: context.screenWidth,
-                  decoration: const BoxDecoration(
-                    borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(5),
-                      topRight: Radius.circular(5),
-                    ),
-                  ),
+                return Padding(
+                  padding: const EdgeInsets.only(top: 20),
                   child: Column(
                     children: <Widget>[
                       const ATModalDismisser(),

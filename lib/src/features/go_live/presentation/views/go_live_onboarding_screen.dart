@@ -327,7 +327,7 @@ class _SubWidgetState extends State<_SubWidget> {
   
       
         bottomSheet: Padding(
-          padding: const EdgeInsets.fromLTRB(15, 5, 15, 10),
+          padding: const EdgeInsets.fromLTRB(15, 5, 15, 50),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
@@ -368,17 +368,22 @@ class _SubWidgetState extends State<_SubWidget> {
                           valueListenable: _reRecordBtnNotifier,
                           builder: (_, bool showBtn, __) {
                             return ATScalingSwitcher(
-                              child: showBtn ? ATContainer(
-                                onTap: (){
-                                  _reRecordBtnNotifier.value = false;
-                                  _hasPlayedAlready = false;
-                                  context.read<GoLiveOnboardBloc>().setFullState((OnboardStage.initial, true));
-                                },
-                                margin: const EdgeInsets.only(left: 15),
-                                color: ATColors.white.withValues(alpha: 0.1), radius: 30,
-                                height: 54, width: 54,
-                                child: const Icon(Iconsax.refresh,),
-                              ) : const SizedBox.shrink()
+                              child: showBtn ? Row(
+                                children: <Widget>[
+                                  const SizedBox(width: 15,),
+                                  ATContainer(
+                                    key: const ValueKey<int>(2000),
+                                    onTap: (){
+                                      _reRecordBtnNotifier.value = false;
+                                      _hasPlayedAlready = false;
+                                      context.read<GoLiveOnboardBloc>().setFullState((OnboardStage.initial, true));
+                                    },
+                                    color: ATColors.white.withValues(alpha: 0.1), 
+                                    radius: 30,  height: 54, width: 54,
+                                    child: const Icon(Iconsax.refresh,),
+                                  ),
+                                ],
+                              ) : const SizedBox.shrink(key: ValueKey<int>(2001),)
                             );
                           }
                         )

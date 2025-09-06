@@ -113,7 +113,7 @@ class SelectCategoryScreen extends StatelessWidget {
                                 child: Text(
                                   'AI & Machine Learning',
                                   style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                                    fontSize: ATFontSizes.size16
+                                    fontSize: ATSizes.size16
                                   ),
                                 ),
                               ),

@@ -58,7 +58,7 @@ class AmptivePaidEventModel extends StatelessWidget {
                 child: Text(
                   'glendonnoyle',
                   style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                    fontSize: ATFontSizes.size13,
+                    fontSize: ATSizes.size13,
                     color: ATColors.hexA8A8A8,
                   ),
                 ),

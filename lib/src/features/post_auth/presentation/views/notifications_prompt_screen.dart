@@ -341,7 +341,7 @@ class _AnimExperimentState extends State<_SubWidget> with TickerProviderStateMix
                       child: Text(
                         ATStrings.NO_THANKS,
                         style: context.textTheme.bodyLarge?.copyWith(
-                          fontSize: ATFontSizes.size17
+                          fontSize: ATSizes.size17
                         ),
                       )
                     )

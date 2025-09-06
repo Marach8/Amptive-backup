@@ -68,7 +68,7 @@ class EpisodeDetailPreviewScreen extends StatelessWidget {
                                 "Figma Confiq 2024",
                                 overflow: TextOverflow.clip,
                                 style: context.textTheme.displayMedium?.copyWith(
-                                  fontSize: ATFontSizes.size24,
+                                  fontSize: ATSizes.size24,
                                   fontWeight: ATFontWeights.w600,
                                 ),
                               ),
@@ -80,7 +80,7 @@ class EpisodeDetailPreviewScreen extends StatelessWidget {
                               Text(
                                 ATStrings.HASHTAGS,
                                 style: context.textTheme.bodySmall?.copyWith(
-                                  fontSize: ATFontSizes.size17
+                                  fontSize: ATSizes.size17
                                 ),  
                               ),
                               Divider(color: ATColors.white.withValues(alpha: 0.1),),
@@ -92,7 +92,7 @@ class EpisodeDetailPreviewScreen extends StatelessWidget {
                               Text(
                                 ATStrings.HOSTED_BY,
                                 style: context.textTheme.bodySmall?.copyWith(
-                                  fontSize: ATFontSizes.size17
+                                  fontSize: ATSizes.size17
                                 ),  
                               ),
                               Divider(color: ATColors.white.withValues(alpha: 0.1),),
@@ -111,7 +111,7 @@ class EpisodeDetailPreviewScreen extends StatelessWidget {
                               Text(
                                 '0 Going',
                                 style: context.textTheme.bodySmall?.copyWith(
-                                  fontSize: ATFontSizes.size17
+                                  fontSize: ATSizes.size17
                                 ),  
                               ),
                               Divider(color: ATColors.white.withValues(alpha: 0.1),),
@@ -124,7 +124,7 @@ class EpisodeDetailPreviewScreen extends StatelessWidget {
                                     child: Text(
                                       ATStrings.ATTENDEES_WILL_SHOW_HERE, maxLines: 2,
                                       style: context.textTheme.titleMedium?.copyWith(
-                                        fontSize: ATFontSizes.size13
+                                        fontSize: ATSizes.size13
                                       ),
                                     ),
                                   ),
@@ -142,7 +142,7 @@ class EpisodeDetailPreviewScreen extends StatelessWidget {
                               Text(
                                 ATStrings.ABOUT_EPISODE,
                                 style: context.textTheme.bodySmall?.copyWith(
-                                  fontSize: ATFontSizes.size17
+                                  fontSize: ATSizes.size17
                                 ),  
                               ),
                               Divider(color: ATColors.white.withValues(alpha: 0.1),),
@@ -155,7 +155,7 @@ class EpisodeDetailPreviewScreen extends StatelessWidget {
                                 trimLength: 100,
                                 style: TextStyle(
                                   color: ATColors.white.withValues(alpha: 0.6),
-                                  fontSize: ATFontSizes.size14,
+                                  fontSize: ATSizes.size14,
                                   fontWeight: ATFontWeights.w500,
                                 ),
                               ),

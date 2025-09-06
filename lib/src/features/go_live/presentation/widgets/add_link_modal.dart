@@ -99,7 +99,7 @@ class _AddLinkWidgetState extends State<_AddLinkWidget> with ATValidators{
               child: Text(
                 ATStrings.TEXT,
                 style: context.textTheme.bodySmall?.copyWith(
-                  fontSize: ATFontSizes.size15
+                  fontSize: ATSizes.size15
                 ),
               ),
             ),
@@ -122,7 +122,7 @@ class _AddLinkWidgetState extends State<_AddLinkWidget> with ATValidators{
               child: Text(
                 ATStrings.LINK,
                 style: context.textTheme.bodySmall?.copyWith(
-                  fontSize: ATFontSizes.size15
+                  fontSize: ATSizes.size15
                 ),
               ),
             ),

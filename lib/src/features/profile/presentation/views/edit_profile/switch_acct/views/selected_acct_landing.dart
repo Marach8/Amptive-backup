@@ -92,7 +92,7 @@ class SelectedAcctLandingScreen extends StatelessWidget {
                 child: Text(
                   isCreator ? ATStrings.AMPTIVE_4_CREATORS : ATStrings.AMPTIVE_4_BIZ,
                   style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                    fontSize: ATFontSizes.size24
+                    fontSize: ATSizes.size24
                   ),
                 ),
               ),
@@ -102,7 +102,7 @@ class SelectedAcctLandingScreen extends StatelessWidget {
                 child: Text(
                   isCreator ? ATStrings.U_OWN_STAGE : ATStrings.CONNECT_SELL,
                   style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                    fontSize: ATFontSizes.size13,
+                    fontSize: ATSizes.size13,
                     color: ATColors.hexC2C2C2
                   ),
                 ),
@@ -178,13 +178,13 @@ class _CustomWidget extends StatelessWidget {
                       Text(
                         title, maxLines: 2,
                         style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                          fontSize: ATFontSizes.size15
+                          fontSize: ATSizes.size15
                         ),
                       ),
                       Text(
                         subTitle, maxLines: 3,
                         style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                          fontSize: ATFontSizes.size13,
+                          fontSize: ATSizes.size13,
                           color: ATColors.hexC2C2C2
                         ),
                       ),

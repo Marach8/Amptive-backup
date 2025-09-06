@@ -40,7 +40,7 @@ class ATCalenderScreen extends StatelessWidget {
                         return Text(
                           state,
                           style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                            fontSize: ATFontSizes.size23
+                            fontSize: ATSizes.size23
                           ),
                         );
                       }

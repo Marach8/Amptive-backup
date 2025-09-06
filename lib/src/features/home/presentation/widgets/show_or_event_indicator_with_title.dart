@@ -25,7 +25,7 @@ class ShowOrEventIndicatorWithTitle extends StatelessWidget {
         Text(
           title,
           style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-            fontSize: ATFontSizes.size15,
+            fontSize: ATSizes.size15,
             color: ATColors.dimWhiteColor1
           ),
         ),

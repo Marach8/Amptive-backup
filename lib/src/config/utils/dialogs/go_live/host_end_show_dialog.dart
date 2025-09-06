@@ -140,7 +140,7 @@ Future<void> showHostEndShowDialog({
                         ATStrings.END_LIVE_SHOW,
                         maxLines: 2, textAlign: TextAlign.center,
                         style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                          fontSize: ATFontSizes.size23
+                          fontSize: ATSizes.size23
                         )
                       ),
                       if(showNoOfListeners || showNoOfGifters)ATRichText(
@@ -149,7 +149,7 @@ Future<void> showHostEndShowDialog({
                             color: ATColors.hexC2C2C2
                           ),
                           '144k listeners' : Theme.of(context).textTheme.bodyMedium!.copyWith(
-                            fontSize: ATFontSizes.size14
+                            fontSize: ATSizes.size14
                           ),
                         },
                       ),
@@ -160,7 +160,7 @@ Future<void> showHostEndShowDialog({
                             color: ATColors.hexC2C2C2
                           ),
                           '200 gifts': Theme.of(context).textTheme.bodyMedium!.copyWith(
-                            fontSize: ATFontSizes.size14
+                            fontSize: ATSizes.size14
                           ),
                         },
                       ),
@@ -216,7 +216,7 @@ Future<void> showHostEndShowDialog({
                         child: Text(
                           ATStrings.CANCEL,
                           style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                            fontSize: ATFontSizes.size17
+                            fontSize: ATSizes.size17
                           )
                         ),
                       ),

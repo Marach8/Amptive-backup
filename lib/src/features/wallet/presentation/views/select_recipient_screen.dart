@@ -121,7 +121,7 @@ class _ATSelectRecipientScreenState extends State<ATSelectRecipientScreen> {
                                 Text(
                                   ATStrings.NO_RECENT_RECEPIENT,
                                   style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                                    fontSize: ATFontSizes.size14
+                                    fontSize: ATSizes.size14
                                   ),
                                 ),
                                 Text(
@@ -228,7 +228,7 @@ class _UserWithTrailingRadio extends StatelessWidget {
                   ATFilterWidget<SearchkeyBloc>(
                     title: user.obj.name ?? '',
                     style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                      fontSize: ATFontSizes.size15
+                      fontSize: ATSizes.size15
                     )
                   ),
                   Text(

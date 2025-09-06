@@ -41,7 +41,7 @@ class LiveWithAnimatingDot extends StatelessWidget {
           Text(
             ATStrings.LIVE.toUpperCase(),
             style: Theme.of(context).textTheme.titleSmall?.copyWith(
-              fontSize: ATFontSizes.size14,
+              fontSize: ATSizes.size14,
               fontWeight: ATFontWeights.w600,
               height: 0,
             )

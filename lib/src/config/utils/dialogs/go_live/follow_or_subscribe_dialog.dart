@@ -81,7 +81,7 @@ Future<void> showFollowHostOrCohostDialog({
                             Text(
                               host.obj.name ?? '',
                               style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                                fontSize: ATFontSizes.size20
+                                fontSize: ATSizes.size20
                               ),
                             ),
                             Text(
@@ -118,14 +118,14 @@ Future<void> showFollowHostOrCohostDialog({
                       Text(
                         '1.1m',
                         style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                          fontSize: ATFontSizes.size16
+                          fontSize: ATSizes.size16
                         ),
                       ),
                       const Gap(5),
                       Text(
                         ATStrings.FOLLOWERS,
                         style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                          fontSize: ATFontSizes.size16
+                          fontSize: ATSizes.size16
                         ),
                       ),
                       const Gap(20),
@@ -143,14 +143,14 @@ Future<void> showFollowHostOrCohostDialog({
                       Text(
                         '150k',
                         style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                          fontSize: ATFontSizes.size16
+                          fontSize: ATSizes.size16
                         ),
                       ),
                       const Gap(5),
                       Text(
                         ATStrings.SUBSCRIBERS,
                         style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                          fontSize: ATFontSizes.size16
+                          fontSize: ATSizes.size16
                         ),
                       ),
                     ],
@@ -162,7 +162,7 @@ Future<void> showFollowHostOrCohostDialog({
                     maxLines: 2,
                     'Author of UNTAMED AND LOVE WARRIOR, Host ofWE CAN DO HARD THINGS Podcast Founder of @together jfjdkfjkdjkajkfdkakkdafdadfjkajkfa',
                     style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                      fontSize: ATFontSizes.size13,
+                      fontSize: ATSizes.size13,
                       color: ATColors.hexC2C2C2.withOpacity(0.76)
                     ),
                   ),
@@ -262,7 +262,7 @@ Future<void> showFollowHostOrCohostDialog({
                                       ATStrings.SUBSCRIBE,
                                       style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                                         color: ATColors.hex0D0D0D,
-                                        fontSize: ATFontSizes.size17
+                                        fontSize: ATSizes.size17
                                       ),
                                     ),
                                     const Gap(2),
@@ -276,7 +276,7 @@ Future<void> showFollowHostOrCohostDialog({
                                         'N1,900/month',
                                         style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                                           color: ATColors.hex0D0D0D,
-                                          fontSize: ATFontSizes.size17
+                                          fontSize: ATSizes.size17
                                         ),
                                       ),
                                     ),

@@ -83,7 +83,7 @@ class GoLiveTypeSelectionScreen extends StatelessWidget {
               ),
               
               bottomNavigationBar: Padding(
-                padding: const EdgeInsets.fromLTRB(15, 5, 15, 30),
+                padding: const EdgeInsets.fromLTRB(15, 5, 15, 50),
                 child: ATPlainElevatedBtn(
                   onPressed: isBtnActive ? () => context.pushNamed(
                     ATRoutes.CHOOSE_OR_CREATE_GO_LIVE_PROGRAM_SCREEN,
