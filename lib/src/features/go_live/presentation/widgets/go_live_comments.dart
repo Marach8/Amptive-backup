@@ -34,11 +34,6 @@ class _GoLiveCommentsState extends State<GoLiveComments> {
         _scroll2BottomNotifier.value = isScrollable;
       }
     );
-    // SystemChrome.setEnabledSystemUIMode(
-    //   SystemUiMode.manual,
-    //   overlays: <SystemUiOverlay>[SystemUiOverlay.top],
-    // );
-    SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
   }
 
   @override 
@@ -75,7 +70,7 @@ class _GoLiveCommentsState extends State<GoLiveComments> {
       alignment: Alignment.center,
       children: <Widget>[
         NotificationListener<ScrollNotification>(
-          onNotification: context.read<HostModerationToolsVisibilityBloc>().ctrlModerationToolsVisibility,
+          onNotification: context.read<GoLiveControlsVisibilityBloc>().ctrlModerationToolsVisibility,
           child: ListView.builder(
             physics: const BouncingScrollPhysics(),
             controller: _scrollController,

@@ -28,17 +28,9 @@ class GoLiveScreenHeader extends StatelessWidget {
               Reset2IntialStateEvent()
             );
             showHostEndShowDialog(context: context);
-            //context.read<AmptiveNavBarBloc>().goToPage(0),
           },
-          //border: Border.all(color: ATColors.black, width: 5),
           color: ATColors.hexECO404.withValues(alpha: 0.3),
           height: 35, width: 35, boxShape: BoxShape.circle,
-          // boxShadow: <BoxShadow>[
-          //   BoxShadow(
-          //     color: ATColors.black,
-          //     blurRadius: 5, spreadRadius: 10,
-          //   )
-          // ],
           child: Icon(Icons.logout, color: ATColors.hexECO404, size: 20,),
         ),
         const SizedBox(width: 10),

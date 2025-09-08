@@ -27,6 +27,6 @@ export 'bottom_infos.dart';
 export 'go_live_screen_title.dart';
 export 'host_moderation_tools_btns.dart';
 export 'go_live_comments.dart';
-export 'host_and_cohost_display_4_host_view.dart';
+export 'host_view_of_host_nd_cohosts.dart';
 export 'cohost_widget_4_host_view.dart';
 export 'host_moderation_tools_dialog.dart';

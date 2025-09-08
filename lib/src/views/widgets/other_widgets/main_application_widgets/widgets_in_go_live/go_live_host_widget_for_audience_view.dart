@@ -34,7 +34,7 @@ class AmptiveLiveHostAndCoHostWidgetForAudienceView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AnimatedPositioned(
-        duration: const Duration(seconds: 1),
+        duration: const Duration(milliseconds: 700),
         curve: Curves.decelerate,
         top: top,
         left: left,

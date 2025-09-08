@@ -3,6 +3,7 @@ import 'package:amptive/src/views/widgets/common_widgets/annotated_region__widge
 import 'package:amptive/src/features/main_app_nav_bar.dart';
 import 'package:amptive/src/features/home/presentation/views/home_landing_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../global_export.dart';
 import '../services/go_live_service/go_live_service.dart';
@@ -11,7 +12,7 @@ import 'notifications/presentation/views/notif_landing_screen.dart';
 
 
 enum GoLiveUserType{audience, cohost, host}
-class GoLiveScreen extends StatelessWidget {
+class GoLiveScreen extends StatefulWidget {
   const GoLiveScreen({
     super.key,
     required this.userType
@@ -20,14 +21,32 @@ class GoLiveScreen extends StatelessWidget {
   final GoLiveUserType userType;
 
   @override
+  State<GoLiveScreen> createState() => _GoLiveScreenState();
+}
+
+class _GoLiveScreenState extends State<GoLiveScreen> {
+  @override 
+  void initState(){
+    super.initState();
+    // SystemChrome.setEnabledSystemUIMode(
+    //   SystemUiMode.manual,
+    //   overlays: <SystemUiOverlay>[SystemUiOverlay.top],
+    // );
+    SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
+  }
+
+
+  @override
   Widget build(BuildContext context) {
-    return switch(userType){
+    return switch(widget.userType){
       GoLiveUserType.audience => LiveProgramAudienceView(goLiveHost: getHostList().first),
       GoLiveUserType.cohost => const LiveProgramCohostView(),
       GoLiveUserType.host => LiveProgramHostView(goLiveHost: getHostList().first),
     };
   }
 }
+
+
 
 
 class ATMainAppShell extends StatelessWidget {

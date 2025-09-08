@@ -1,45 +1,49 @@
+import 'dart:ui';
 
-import 'package:amptive/src/bloc/main_app/go_live_bloc/host_view/notifications_bloc.dart';
-import 'package:amptive/src/config/config_export.dart';
-import 'package:amptive/src/features/go_live/presentation/widgets/host_moderation_tools_dialog.dart';
+import 'package:amptive/src/features/go_live/presentation/widgets/go_live_comments.dart';
+import 'package:amptive/src/features/main_app_nav_bar.dart';
+import 'package:amptive/src/global_export.dart';
+import 'package:amptive/src/models/host.dart';
+import 'package:amptive/src/config/utils/font_sizes.dart';
+import 'package:amptive/src/config/utils/image_strings.dart';
+import 'package:amptive/src/config/utils/dialogs/app_notification_dialog.dart';
+import 'package:amptive/src/config/utils/dialogs/minimized_go_live_dialog.dart';
+import 'package:amptive/src/config/utils/helper_functions.dart';
+import 'package:amptive/src/views/widgets/common_widgets/annotated_region__widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/circular_image.dart';
 import 'package:amptive/src/shared/custom_container_widget.dart';
+import 'package:amptive/src/views/widgets/common_widgets/custom_rebuilder_widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/image_loader_widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/textformfield_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../../../global_export.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:gap/gap.dart';
+import 'package:get_it/get_it.dart';
+import '../../../../bloc/main_app/go_live_bloc/audience_view/host_moderation_control_bloc.dart';
+import '../../../../bloc/main_app/go_live_bloc/host_view/cohosts_display_bloc.dart';
+import '../../../../bloc/main_app/go_live_bloc/host_view/notifications_bloc.dart';
 import '../../../../services/go_live_service/go_live_service.dart';
-
-class GoLiveControlsVisibilityBloc extends Cubit<bool> {
-  GoLiveControlsVisibilityBloc() : super(true);
-
-  bool ctrlModerationToolsVisibility(ScrollNotification notif){
-    if (notif is ScrollUpdateNotification) {
-      if (notif.dragDetails != null) {
-
-        if (notif.dragDetails!.delta.dy > 0) {
-          emit(true);
-        } 
-        else if (notif.dragDetails!.delta.dy < 0) {
-          emit(false);
-        }
-      } 
-    }
-
-    return true;
-  }
-}
+import '../../../../config/utils/colors.dart';
+import '../../../../config/utils/other_strings.dart';
+import '../../../../config/utils/dialogs/go_live/follow_or_subscribe_dialog.dart';
+import '../../../../shared/animated_switcher.dart';
+import '../../go_live_export.dart';
+import '../widgets/audience_view_of_host_and_cohosts.dart';
+import '../widgets/go_live_screen_header.dart';
+import '../../../../views/widgets/other_widgets/main_application_widgets/widgets_in_go_live/go_live_host_widget_for_audience_view.dart';
 
 
-class HostModerationToolsBtns extends StatefulWidget {
-  const HostModerationToolsBtns({super.key});
+
+class GoLiveAudienViewControlsWidget extends StatefulWidget {
+  const GoLiveAudienViewControlsWidget({super.key});
 
   @override
-  State<HostModerationToolsBtns> createState() => _HostModerationToolsBtnsState();
+  State<GoLiveAudienViewControlsWidget> createState() => _GoLiveAudienViewControlsWidgetState();
 }
 
-class _HostModerationToolsBtnsState extends State<HostModerationToolsBtns> {
+class _GoLiveAudienViewControlsWidgetState extends State<GoLiveAudienViewControlsWidget> {
   late FocusNode _focusNode;
   late TextEditingController _cntrl;
   final ValueNotifier<bool> _isFocusedNotifier = ValueNotifier<bool>(false);
@@ -71,27 +75,25 @@ class _HostModerationToolsBtnsState extends State<HostModerationToolsBtns> {
       children: <Widget>[
         ValueListenableBuilder<bool>(
           valueListenable: _isFocusedNotifier,
-          builder: (_, bool value, __) {
-            if(value){
+          builder: (_, bool isFocused, __) {
+            if(isFocused){
               return Padding(
                 padding: const EdgeInsets.only(right: 15),
                 child: InkWell(
                   onTap: () => _focusNode.unfocus(),
                   child: ATCircularImage(
                     diameter: 35,
-                    imagePath: getHostList()[5].obj.profilePicture ?? ''
+                    imagePath: getHostList()[3].obj.profilePicture ?? ''
                   ),
                 ),
               );
             }
+            
             return EachGoLiveControlBtn(
               onTap: (){
-                showHostModerationToolsDialog(context);
-                // context.read<AmptiveGoLiveNotificationBloc>().addTalkingNotification(
-                //   service.coHostsListData.first
-                // );
+                context.read<AmptiveGoLiveSelectCoHostBloc>().hostAddCohost(getHostList()[3]);
               },
-              child: const Icon(Icons.settings, size: 20),
+              child: Transform.flip(flipX: true, child: const Icon(Icons.reply, size: 20,),)
             );
           }
         ),
@@ -161,17 +163,14 @@ class _RowOfBtns extends StatelessWidget {
       children: <Widget>[
         EachGoLiveControlBtn(
           onTap: (){
-            context.read<AmptiveGoLiveNotificationBloc>().addGiftingNotification(
-              getHostList()[5]
-            );
+            context.read<AmptiveGoLiveSelectCoHostBloc>().hostAddCohost(getHostList()[6]);
           },
           child: const Icon(Icons.mic, size: 20),
         ),
         EachGoLiveControlBtn(
           onTap: (){
-            context.read<AmptiveGoLiveNotificationBloc>().addPinnedMsgNotification(
-              getHostList()[3], 'CO-HOST'
-            );
+            context.read<AmptiveGoLiveSelectCoHostBloc>().hostAddCohost(getHostList()[5]);
+            //showFollowHostOrCohostDialog(context: context, host: getHostList().first);
           },
           child: const ATImgLoader(
             imgPath: ATImgStrings.HAND_RAISING_ICON,
@@ -180,55 +179,17 @@ class _RowOfBtns extends StatelessWidget {
           ),
         ),
         EachGoLiveControlBtn(
-          onTap: (){},
-          child: Transform.flip(flipX: true, child: const Icon(Icons.reply, size: 20)),
+          onTap: (){context.read<AmptiveGoLiveSelectCoHostBloc>().hostAddCohost(getHostList()[1]);},
+          child: const ATImgLoader(imgPath: ATImgStrings.HOST_GIFT_ICON, height: 20, width: 20,),
         ),
         EachGoLiveControlBtn(
           onTap: ()async{
-            // final bool? sendInvite = await showGoLiveHostAddCoHostDialog(context: context);
-            // if(context.mounted && (sendInvite ?? false)){
-            //   showAppNotification(
-            //     context: context,
-            //     icon: const Icon(Icons.check_circle),
-            //     text: ATStrings.COHOST_INVITE_SENT,
-            //     bgColor: ATColors.notifBg,
-            //   );
-            // }
+            context.read<AmptiveGoLiveSelectCoHostBloc>().hostAddCohost(getHostList()[2]);
           },
           margin: EdgeInsets.zero,
-          child: const Icon(Icons.add,),
+          child: Icon(Icons.favorite, color: ATColors.hexECO404, size: 20,),
         ),
       ],
-    );
-  }
-}
-
-
-
-class EachGoLiveControlBtn extends StatelessWidget {
-  const EachGoLiveControlBtn({
-    super.key,
-    required this.child,
-    required this.onTap,
-    this.margin
-  });
-
-  final Widget child;
-  final EdgeInsetsGeometry? margin;
-  final VoidCallback onTap;
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: margin ?? const EdgeInsets.only(right: 5),
-      child: ATContainer(
-        alignment: Alignment.center,
-        height: 35, width: 35,
-        onTap: onTap,        
-        color: ATColors.white.withValues(alpha: 0.1),
-        padding: const EdgeInsets.all(5),
-        radius: 30, child: child
-      ),
     );
   }
 }

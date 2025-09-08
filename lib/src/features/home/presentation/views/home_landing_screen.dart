@@ -70,7 +70,7 @@ class HomeTabView extends StatelessWidget {
                 onTap: (){
                   context.pushReplacementNamed(
                     ATRoutes.MAIN_GO_LIVE_PROGRAM,
-                    extra: GoLiveUserType.host
+                    extra: GoLiveUserType.audience
                   );
                 },
                 //onTap: () => context.pushNamed(ATRoutes.CREATOR_PROFILE_SCREEN),
