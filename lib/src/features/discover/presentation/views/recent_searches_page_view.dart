@@ -33,8 +33,8 @@ class RecentSearchesView extends StatelessWidget {
                 ),
               ],
             ),
-            Gap(20.h),
-            
+            SizedBox(height: 20.h),
+
             const SearchItemTile(
               leadingImagePath: ATImgStrings.OFFICE_LADIES,
               title: 'Glennon Doyle',

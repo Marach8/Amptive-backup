@@ -272,7 +272,7 @@ class MainDiscoverView extends StatelessWidget {
             ),
           ),
         ),
-        const Gap(100)
+        const SizedBox(height: 100)
       ],
     );
   }

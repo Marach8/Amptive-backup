@@ -1,7 +1,6 @@
 import 'package:amptive/src/config/utils/colors.dart';
 import 'package:amptive/src/config/routing/route_strings.dart';
 import 'package:amptive/src/features/main_app_nav_bar.dart';
-import 'package:amptive/src/features/main_app_shell.dart';
 import 'package:amptive/src/views/widgets/common_widgets/circle_avatar.dart';
 import 'package:amptive/src/features/home/presentation/widgets/program_widget_in_home.dart';
 import 'package:flutter/material.dart';
@@ -65,15 +64,15 @@ class HomeTabView extends StatelessWidget {
                   ],
                 )
               ),
-              const Gap(24),
+              const SizedBox(width: 24),
               GestureDetector(
-                onTap: (){
-                  context.pushReplacementNamed(
-                    ATRoutes.MAIN_GO_LIVE_PROGRAM,
-                    extra: GoLiveUserType.audience
-                  );
-                },
-                //onTap: () => context.pushNamed(ATRoutes.CREATOR_PROFILE_SCREEN),
+                // onTap: (){
+                //   context.pushReplacementNamed(
+                //     ATRoutes.MAIN_GO_LIVE_PROGRAM,
+                //     extra: GoLiveUserType.audience
+                //   );
+                // },
+                onTap: () => context.pushNamed(ATRoutes.CREATOR_PROFILE_SCREEN),
                 //onTap: () => context.pushNamed(ATRoutes.USER_PROFILE_SCREEN),
                 child: const Padding(
                   padding: EdgeInsets.only(right: 15),

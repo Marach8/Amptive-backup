@@ -60,7 +60,7 @@ Future<void> showSelectAudienceAccessForEventsDialog(
                 style: Theme.of(context).textTheme.bodyLarge,
               ),
             ),
-            const Gap(20),
+            const SizedBox(height: 20),
             Text(
               maxLines: 5,
               ATStrings.EVENT_AUDIENCE_ACCESS_DESC,
@@ -69,7 +69,7 @@ Future<void> showSelectAudienceAccessForEventsDialog(
                   .titleMedium
                   ?.copyWith(color: ATColors.hexC2C2C2),
             ),
-            const Gap(20),
+            const SizedBox(height: 20),
             AmptiveRebuilderWidget(
                 notifier: freeAccesNotifier,
                 shouldDispose: true,
@@ -93,7 +93,7 @@ Future<void> showSelectAudienceAccessForEventsDialog(
                       children: <Widget>[
                         const ATImgLoader(
                             imgPath: ATImgStrings.PEOPLE),
-                        const Gap(10),
+                        const SizedBox(width: 10),
                         Expanded(
                           child: Column(
                             mainAxisSize: MainAxisSize.min,
@@ -114,7 +114,7 @@ Future<void> showSelectAudienceAccessForEventsDialog(
                             ],
                           ),
                         ),
-                        const Gap(15),
+                        const SizedBox(width: 15),
                         ATContainer(
                             height: 20,
                             width: 20,
@@ -133,7 +133,7 @@ Future<void> showSelectAudienceAccessForEventsDialog(
                     ),
                   );
                 }),
-            const Gap(15),
+            const SizedBox(height: 15),
             AmptiveRebuilderWidget(
                 shouldDispose: true,
                 notifier: paidAccessNotifier,
@@ -161,7 +161,7 @@ Future<void> showSelectAudienceAccessForEventsDialog(
                           children: <Widget>[
                             const ATImgLoader(
                                 imgPath: ATImgStrings.PADLOCK),
-                            const Gap(10),
+                            const SizedBox(width: 10),
                             Expanded(
                               child: Column(
                                 mainAxisSize: MainAxisSize.min,
@@ -183,7 +183,7 @@ Future<void> showSelectAudienceAccessForEventsDialog(
                                 ],
                               ),
                             ),
-                            const Gap(15),
+                            const SizedBox(width: 15),
                             ATContainer(
                                 height: 20,
                                 width: 20,
@@ -200,9 +200,9 @@ Future<void> showSelectAudienceAccessForEventsDialog(
                                 child: const SizedBox.shrink())
                           ],
                         ),
-                        const Gap(15),
+                        const SizedBox(height: 15),
                         const Divider(height: 0.5),
-                        const Gap(15),
+                        const SizedBox(height: 15),
                         Row(
                           children: <Widget>[
                             ATContainer(

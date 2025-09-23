@@ -37,7 +37,7 @@ class LiveWithAnimatingDot extends StatelessWidget {
               backgroundColor: ATColors.white,
             ),
           ),
-          Gap(4.w),
+          SizedBox(width: 4.w),
           Text(
             ATStrings.LIVE.toUpperCase(),
             style: Theme.of(context).textTheme.titleSmall?.copyWith(

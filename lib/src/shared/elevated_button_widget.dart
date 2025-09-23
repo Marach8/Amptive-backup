@@ -43,12 +43,12 @@ class AmptiveElevatedButtonWidget extends StatelessWidget {
                           .textTheme
                           .bodyMedium
                           ?.copyWith(color: ATColors.hex0D0D0D)),
-                  const Gap(5),
+                  const SizedBox(width: 5),
                   CircleAvatar(
                     radius: 2,
                     backgroundColor: ATColors.hex0D0D0D,
                   ),
-                  const Gap(5),
+                  const SizedBox(width: 5),
                   Text(text2!,
                       style: Theme.of(context)
                           .textTheme
@@ -68,23 +68,29 @@ class ATPlainElevatedBtn extends StatelessWidget {
     super.key,
     this.btnTitle,
     required this.onPressed,
+    this.padding,
     this.height,
     this.width,
     this.bgColor,
     this.fgColor,
-    this.child
+    this.child,
+    this.style
   });
+  
+  final EdgeInsetsGeometry? padding;
   final String? btnTitle;
   final void Function()? onPressed;
   final double? height, width;
   final Color? bgColor, fgColor;
   final Widget? child;
+  final TextStyle? style;
 
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
       onPressed: onPressed,
       style: ElevatedButton.styleFrom(
+        padding: padding,
         foregroundColor: fgColor,
         backgroundColor: bgColor,
         shape: RoundedRectangleBorder(
@@ -92,7 +98,7 @@ class ATPlainElevatedBtn extends StatelessWidget {
         ),
         fixedSize: Size(width ?? context.screenWidth, height ?? 54)
       ),
-      child: child ?? Text(btnTitle ?? ''),
+      child: child ?? Text(btnTitle ?? '', style: style,),
     );
   }
 }

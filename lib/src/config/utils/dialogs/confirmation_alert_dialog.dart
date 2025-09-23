@@ -1,3 +1,4 @@
+import 'package:amptive/src/config/utils/extensions/context_extensions.dart';
 import 'package:amptive/src/models/host.dart';
 import 'package:amptive/src/config/utils/colors.dart';
 import 'package:amptive/src/config/utils/font_sizes.dart';
@@ -33,7 +34,7 @@ Future<bool?> showConfirmationDialog({
             padding: const EdgeInsets.fromLTRB(20, 0, 20, 10),
             child: Text(
               title, maxLines: 3, textAlign: TextAlign.center,
-              style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+              style: context.textTheme.bodyMedium?.copyWith(
                 fontSize: ATSizes.size17,
               ),
             ),
@@ -42,7 +43,7 @@ Future<bool?> showConfirmationDialog({
             padding: const EdgeInsets.fromLTRB(20, 0, 20, 20),
             child: Text(
               content, maxLines: 3, textAlign: TextAlign.center,
-              style: Theme.of(context).textTheme.titleMedium?.copyWith(
+              style: context.textTheme.titleMedium?.copyWith(
                 fontSize: ATSizes.size13,
               ),
             ),
@@ -55,7 +56,7 @@ Future<bool?> showConfirmationDialog({
                 onTap: () => context.pop(true),
                 child: Text(
                   yesString,
-                  style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                  style: context.textTheme.titleMedium?.copyWith(
                     fontSize: ATSizes.size17,
                     color: ATColors.hex307FE2
                   ),
@@ -66,7 +67,7 @@ Future<bool?> showConfirmationDialog({
                 onTap: () => context.pop(false),
                 child: Text(
                   noString,
-                  style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                  style: context.textTheme.titleMedium?.copyWith(
                     fontSize: ATSizes.size17,
                     color: ATColors.hex307FE2
                   ),
@@ -131,21 +132,21 @@ Future<bool?> showKickOutConfirmationDialog({
               )
             ],
           ),
-          const Gap(15),
+          const SizedBox(height: 15),
           Text(
             title, maxLines: 3, textAlign: TextAlign.center,
-            style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+            style: context.textTheme.bodyMedium?.copyWith(
               fontSize: ATSizes.size17,
             ),
           ),
-          const Gap(10),
+          const SizedBox(height: 10),
           Text(
             content, maxLines: 3, textAlign: TextAlign.center,
-            style: Theme.of(context).textTheme.titleMedium?.copyWith(
+            style: context.textTheme.titleMedium?.copyWith(
               fontSize: ATSizes.size13,
             ),
           ),
-          const Gap(20),
+          const SizedBox(height: 20),
           SizedBox(
             width: ATHelperFuncs.getScreenWidth(context),
             child: AmptiveElevatedButtonWidget(
@@ -155,14 +156,13 @@ Future<bool?> showKickOutConfirmationDialog({
               buttonTitle: ATStrings.KICK_OUT_LISTENER,
             ),
           ),
-          const Gap(20),
+          const SizedBox(height: 20),
           GestureDetector(
             onTap: () => context.pop(false),
             child: Text(
               ATStrings.CANCEL,
-              style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+              style: context.textTheme.bodyMedium?.copyWith(
                 fontSize: ATSizes.size15,
-
               ),
             ),
           ),

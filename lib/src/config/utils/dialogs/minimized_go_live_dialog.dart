@@ -31,7 +31,7 @@ Future<void> showMinimizedGoLiveState() async {
             imagePath: ATImgStrings.weCanDoHardThingsBgImage,
             diameter: 40, radius: 2,            
           ),
-          const Gap(5),
+          const SizedBox(width: 5),
           Flexible(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,

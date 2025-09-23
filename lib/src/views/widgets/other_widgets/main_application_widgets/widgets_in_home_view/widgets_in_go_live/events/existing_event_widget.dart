@@ -49,7 +49,7 @@ class AmptiveExistingEventWidget extends StatelessWidget {
                   ),
                 ),
               ),
-              const Gap(5),
+              const SizedBox(height: 5),
               Text(
                 maxLines: 2,
                 "We Can Do Hard Things",
@@ -66,8 +66,8 @@ class AmptiveExistingEventWidget extends StatelessWidget {
                       ),
                     ),
                   ),
-                  const Gap(5),
-                  
+                  const SizedBox(width: 5),
+
                   Align(
                     alignment: Alignment.bottomCenter,
                     child: ATCircleAvatar(

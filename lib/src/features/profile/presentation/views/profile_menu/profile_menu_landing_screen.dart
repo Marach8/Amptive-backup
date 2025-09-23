@@ -122,7 +122,7 @@ class AmptiveProfileMenuScreen extends StatelessWidget {
                 onTap: (){}
               ),
 
-              const Gap(20),
+              const SizedBox(height: 20),
               MenuItem(
                 firstIcon: const Icon(Icons.logout),
                 middleText: ATStrings.LOGOUT,
@@ -161,7 +161,7 @@ class MenuItem extends StatelessWidget {
       child: Row(
         children: <Widget>[
           firstIcon,
-          const Gap(15),
+          const SizedBox(width: 15),
           Expanded(
             child: Text(
               middleText,

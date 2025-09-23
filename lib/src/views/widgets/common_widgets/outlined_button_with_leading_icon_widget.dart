@@ -26,7 +26,7 @@ class AmptiveOutlinedButtonWithLeadingIconWidget extends StatelessWidget {
         child: Row(
           children: <Widget>[
             leadingIcon,
-            Gap(50.w),
+            SizedBox(width: 50.w),
             Text(buttonTitle)
           ],
         ),

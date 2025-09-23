@@ -16,8 +16,8 @@ class TopCreatorWidget extends StatelessWidget {
       padding: const EdgeInsets.only(left: 15),
       child: Column(
         children: <Widget>[
-          ATImgLoader(imgPath: picture), 
-          const Gap(5),
+          ATImgLoader(imgPath: picture),
+          const SizedBox(height: 5),
           Text(
             'ammybach',
             style: Theme.of(context).textTheme.titleMedium

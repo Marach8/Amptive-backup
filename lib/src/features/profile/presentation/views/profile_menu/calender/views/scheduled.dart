@@ -211,7 +211,7 @@ class _CalenderProgramDisplay extends StatelessWidget {
               const SizedBox(height: 5),
               Row(
                 children: <Widget>[
-                  isEvent ? const EventIcon() : const ShowIcon(),
+                  isEvent ? const EventIcon() : const ATShowIcon(),
                   const SizedBox(width: 2),
                   Expanded(
                     child: Text(
@@ -229,7 +229,7 @@ class _CalenderProgramDisplay extends StatelessWidget {
                               
               Row(
                 children: <Widget>[
-                  if(isPaid) const PaidIndicatorIcon(),
+                  if(isPaid) const ATPaidIndicatorIcon(),
                   if(isPaid) const SizedBox(width: 5),
                   Expanded(
                     child: Text(

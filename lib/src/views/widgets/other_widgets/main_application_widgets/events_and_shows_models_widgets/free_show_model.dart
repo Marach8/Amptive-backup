@@ -27,7 +27,7 @@ class AmptiveFreeShowModel extends StatelessWidget {
             borderRadius: BorderRadius.circular(5),
             child: ATImgLoader(imgPath: trendingPicture),
           ),
-          const Gap(5),
+          const SizedBox(height: 5),
           SizedBox(
             width: 135,
             child: Text(
@@ -47,8 +47,8 @@ class AmptiveFreeShowModel extends StatelessWidget {
                   ),
                 ),
               ),
-              const Gap(2),
-              
+              const SizedBox(width: 2),
+
               Align(
                 alignment: Alignment.bottomCenter,
                 child: ATCircleAvatar(
@@ -56,7 +56,7 @@ class AmptiveFreeShowModel extends StatelessWidget {
                   color: ATColors.hexA8A8A8
                 ),
               ),
-              const Gap(2),
+              const SizedBox(width: 2),
               Text(
                 'LIVE',
                 style: Theme.of(context).textTheme.titleSmall?.copyWith(

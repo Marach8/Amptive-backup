@@ -16,11 +16,12 @@ class ProfileScreenTabs extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ATContainer(
+    return ColoredBox(
       color: ATColors.black,             
       child: BlocBuilder<ProfileTabViewBloc, int>(
         builder: (_, int state) {
           return SingleChildScrollView(
+            padding: const EdgeInsets.fromLTRB(0, 5, 0, 10),
             scrollDirection: Axis.horizontal,
             physics: const BouncingScrollPhysics(),
             child: Row(        
@@ -35,7 +36,7 @@ class ProfileScreenTabs extends StatelessWidget {
                       curve: Curves.decelerate,
                       alignment: Alignment.center, radius: 50,
                       padding: const EdgeInsets.fromLTRB(20, 5, 20, 5),
-                      margin: const EdgeInsets.fromLTRB(0, 10, 10, 20),
+                      margin: const EdgeInsets.only(right: 10),
                       color: isSelected ? ATColors.white : ATColors.black,
                       border: !isSelected ? Border.all(
                         color: ATColors.white.withOpacity(0.1),

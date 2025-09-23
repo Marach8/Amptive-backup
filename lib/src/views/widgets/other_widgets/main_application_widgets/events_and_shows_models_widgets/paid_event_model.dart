@@ -30,7 +30,7 @@ class AmptivePaidEventModel extends StatelessWidget {
               imgPath: trendingPicture
             ),
           ),
-          const Gap(5),
+          const SizedBox(height: 5),
           SizedBox(
             width: 135,
             child: Text(
@@ -53,7 +53,7 @@ class AmptivePaidEventModel extends StatelessWidget {
                   ),
                 ),
               ),
-              const Gap(2),
+              const SizedBox(width: 2),
               Expanded(
                 child: Text(
                   'glendonnoyle',
@@ -63,8 +63,8 @@ class AmptivePaidEventModel extends StatelessWidget {
                   ),
                 ),
               ),
-              const Gap(5),
-              
+              const SizedBox(width: 5),
+
               Align(
                 alignment: Alignment.bottomCenter,
                 child: ATCircleAvatar(

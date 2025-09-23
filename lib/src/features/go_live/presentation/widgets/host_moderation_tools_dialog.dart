@@ -65,7 +65,7 @@ Future<void> showHostModerationToolsDialog(BuildContext context) async {
                   }
                 ),
               ),
-              const Gap(10),
+              const SizedBox(height: 10),
               _CustomRow(
                 title: ATStrings.ALLOW_AUDIENCE_MIC,
                 icon: Icons.mic,
@@ -99,7 +99,7 @@ Future<void> showHostModerationToolsDialog(BuildContext context) async {
                   }
                 ),
               ),
-              const Gap(10),
+              const SizedBox(height: 10),
               _CustomRow(
                 title: ATStrings.ALLOW_HANDRAISING,
                 icon: Icons.front_hand_outlined,

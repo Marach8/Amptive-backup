@@ -27,7 +27,7 @@ class AmptivePaidShowModel extends StatelessWidget {
             borderRadius: BorderRadius.circular(5),
             child: ATImgLoader(imgPath: trendingPicture),
           ),
-          const Gap(5),
+          const SizedBox(height: 5),
           SizedBox(
             width: 135,
             child: Text(
@@ -50,7 +50,7 @@ class AmptivePaidShowModel extends StatelessWidget {
                   ),
                 ),
               ),
-              const Gap(2),
+              const SizedBox(width: 2),
               Expanded(
                 child: Text(
                   'glendonnoyle',
@@ -60,8 +60,8 @@ class AmptivePaidShowModel extends StatelessWidget {
                   ),
                 ),
               ),
-              const Gap(5),
-              
+              const SizedBox(width: 5),
+
               Align(
                 alignment: Alignment.bottomCenter,
                 child: ATCircleAvatar(

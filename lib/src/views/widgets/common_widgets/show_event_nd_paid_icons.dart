@@ -5,8 +5,8 @@ import 'package:amptive/src/views/widgets/common_widgets/image_loader_widget.dar
 import 'package:flutter/material.dart';
 import '../../../config/utils/image_strings.dart';
 
-class ShowIcon extends StatelessWidget {
-  const ShowIcon({super.key, this.size});
+class ATShowIcon extends StatelessWidget {
+  const ATShowIcon({super.key, this.size});
   final double? size;
 
   @override
@@ -33,14 +33,22 @@ class EventIcon extends StatelessWidget {
 }
 
 
-class PaidIndicatorIcon extends StatelessWidget {
-  const PaidIndicatorIcon({super.key, this.size});
-  final double? size;
+class ATPaidIndicatorIcon extends StatelessWidget {
+  const ATPaidIndicatorIcon({
+    super.key,
+    this.size,
+    this.color,
+    this.radius
+  });
+
+  final double? size, radius;
+  final Color? color;
+
 
   @override
   Widget build(BuildContext context) {
     return ATContainer(
-      color: ATColors.white, radius: 2,
+      color: color ?? ATColors.white, radius: radius ?? 2,
       height: size ?? 14, width: size ?? 14,
       child: FittedBox(
         fit: BoxFit.scaleDown,

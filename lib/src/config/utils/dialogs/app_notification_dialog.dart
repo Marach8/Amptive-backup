@@ -24,7 +24,7 @@ Future<dynamic> showAppNotification({
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
             if(icon != null) icon,
-            if(icon != null) const Gap(10),
+            if(icon != null) const SizedBox(width: 10),
             Flexible(
               child: Text(
                 text, maxLines: 2,

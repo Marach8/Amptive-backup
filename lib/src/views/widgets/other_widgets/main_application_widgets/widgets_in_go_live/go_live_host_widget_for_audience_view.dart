@@ -1,5 +1,5 @@
 import 'package:amptive/src/config/utils/font_sizes.dart';
-import 'package:amptive/src/config/utils/dialogs/go_live/follow_or_subscribe_dialog.dart';
+import 'package:amptive/src/features/go_live/presentation/widgets/follow_or_subscribe_dialog.dart';
 import 'package:amptive/src/views/widgets/common_widgets/circle_avatar.dart';
 import 'package:amptive/src/views/widgets/common_widgets/circular_image.dart';
 import 'package:amptive/src/shared/custom_container_widget.dart';
@@ -82,7 +82,7 @@ class AmptiveLiveHostAndCoHostWidgetForAudienceView extends StatelessWidget {
                       ],
                     ),
                   ),
-                  Gap(5.h),
+                  SizedBox(height: 5.h),
                   SizedBox(
                     width: 80.w,
                     child: Text(
@@ -91,7 +91,7 @@ class AmptiveLiveHostAndCoHostWidgetForAudienceView extends StatelessWidget {
                       style: Theme.of(context).textTheme.titleSmall,
                     ),
                   ),
-                  Gap(5.h),
+                  SizedBox(height: 5.h),
                   isHost
                       ? ATContainer(
                           padding: const EdgeInsets.fromLTRB(4, 2, 4, 2),

@@ -94,9 +94,9 @@ class _LiveProgramCohostViewState extends State<LiveProgramCohostView> {
                           ATStrings.LIVE,
                           style: Theme.of(context).textTheme.bodyMedium,
                         ),
-                        Gap(5.w),
+                        SizedBox(width: 5.w),
                         const ATCircleAvatar(diameter: 5),
-                        Gap(5.w),
+                        SizedBox(width: 5.w),
                         Text(
                           // maxLines: 1,
                           "Don't Forget Who you are by glennodyle",

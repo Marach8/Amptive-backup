@@ -154,7 +154,7 @@ class _ListenerWidget extends StatelessWidget {
                 height: 50, width: 50, boxFit: BoxFit.cover,
               ),
             ),
-            const Gap(10),
+            const SizedBox(width: 10),
             Expanded(
               child: Text(
                 listener.obj.username ?? '',

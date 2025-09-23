@@ -153,7 +153,7 @@ Future<void> showHostEndShowDialog({
                           ),
                         },
                       ),
-                      const Gap(10),
+                      const SizedBox(height: 10),
                       if(showNoOfGifters)ATRichText(
                         items: <String, TextStyle>{
                           'You received ': Theme.of(context).textTheme.bodySmall!.copyWith(
@@ -210,7 +210,7 @@ Future<void> showHostEndShowDialog({
                           buttonTitle: ATStrings.END_NOW,
                         ),
                       ),
-                      const Gap(15),
+                      const SizedBox(height: 15),
                       GestureDetector(
                         onTap: () => context.pop(),
                         child: Text(
@@ -220,7 +220,7 @@ Future<void> showHostEndShowDialog({
                           )
                         ),
                       ),
-                      const Gap(15),
+                      const SizedBox(height: 15),
                     ],
                   ),
                 );

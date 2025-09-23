@@ -25,7 +25,7 @@ class NotificationTabView extends StatelessWidget {
         ],
       
         body: ListView(
-          padding: const EdgeInsets.fromLTRB(15, 10, 15, 20),
+          padding: const EdgeInsets.fromLTRB(15, 10, 15, 50),
           children: <Widget>[
             NewFollowerNotif(
               follower: getHostList().first,

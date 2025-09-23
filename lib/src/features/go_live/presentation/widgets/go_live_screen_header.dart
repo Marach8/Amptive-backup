@@ -115,7 +115,7 @@ class _GiftingNdFollowing extends StatelessWidget {
                     const ATImgLoader(
                       imgPath: ATImgStrings.HOST_GIFT_ICON,
                     ),
-                    const Gap(5),
+                    const SizedBox(width: 5),
                     Text(
                       "Gift",
                       style: context.textTheme.bodyMedium?.copyWith(
@@ -142,7 +142,7 @@ class _GiftingNdFollowing extends StatelessWidget {
             child: Row(
               children: <Widget>[
                 const ATImgLoader(imgPath: ATImgStrings.USER_ICON, height: 15, width: 15,),
-                const Gap(5),
+                const SizedBox(width: 5),
                 Text(
                   "144k",
                   style: context.textTheme.bodyMedium?.copyWith(

@@ -417,9 +417,38 @@ class ProgramIsLiveNotif extends StatelessWidget {
             ),
           ),
           const SizedBox(width: 20,),
-          ATCircleAvatar(diameter: 10, color: ATColors.textRedColor,)
+          const _LiveProgramIndicator()
         ]
       ),
+    );
+  }
+}
+
+class _LiveProgramIndicator extends StatefulWidget {
+  const _LiveProgramIndicator();
+
+  @override
+  State<_LiveProgramIndicator> createState() => _LiveProgramIndicatorState();
+}
+
+class _LiveProgramIndicatorState extends State<_LiveProgramIndicator> {
+  bool isDone = false;
+
+  @override
+  Widget build(BuildContext context) {
+    return TweenAnimationBuilder<double>(
+      duration: const Duration(milliseconds: 500),
+      tween: Tween<double>(
+        begin: isDone ? 3 : 10,
+        end: isDone ? 10 : 3
+      ),
+      onEnd: () => setState(() => isDone = !isDone),
+      builder: (_, double size, __) {
+        return ATCircleAvatar(
+          diameter: size, 
+          color: ATColors.textRedColor,
+        );
+      }
     );
   }
 }

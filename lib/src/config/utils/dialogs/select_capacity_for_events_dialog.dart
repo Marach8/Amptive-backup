@@ -70,7 +70,7 @@ Future<void> showEventCapacitySelectionDialog({
                 ],
               ),
             ),
-            const Gap(20),
+            const SizedBox(height: 20),
             Text(
               maxLines: 5,
               ATStrings.MAX_CAPACITY,
@@ -78,7 +78,7 @@ Future<void> showEventCapacitySelectionDialog({
                 color: ATColors.hexC2C2C2
               ),
             ),
-            const Gap(20),
+            const SizedBox(height: 20),
 
             Form(
               key: formKey,
@@ -106,7 +106,7 @@ Future<void> showEventCapacitySelectionDialog({
                 color: ATColors.hexC2C2C2
               ),
             ),
-            const Gap(20),
+            const SizedBox(height: 20),
             Column(
               mainAxisSize: MainAxisSize.min,
               children: <Widget>[
@@ -120,7 +120,7 @@ Future<void> showEventCapacitySelectionDialog({
                   bgColor: ATColors.white,
                   fgColor: ATColors.black,
                 ),
-                const Gap(20),
+                const SizedBox(height: 20),
 
                 AmptiveElevatedButtonWidget(
                   margin: EdgeInsets.zero,
@@ -132,7 +132,7 @@ Future<void> showEventCapacitySelectionDialog({
                   bgColor: ATColors.trsprnt,
                   fgColor: ATColors.white,
                 ),
-                const Gap(10),
+                const SizedBox(height: 10),
               ],
             )
           ]

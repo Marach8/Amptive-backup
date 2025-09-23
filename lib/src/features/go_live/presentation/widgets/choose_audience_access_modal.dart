@@ -84,7 +84,7 @@ Future<String?> chooseAudienceAccess4ShowModal({
                                 child: Row(
                                   children: <Widget>[
                                     const ATImgLoader(imgPath: ATImgStrings.PEOPLE),
-                                    const Gap(10),
+                                    const SizedBox(width: 10),
                                     Expanded(
                                       child: Column(
                                         mainAxisSize: MainAxisSize.min,
@@ -131,7 +131,7 @@ Future<String?> chooseAudienceAccess4ShowModal({
                                     Row(
                                       children: <Widget>[
                                         const ATImgLoader(imgPath: ATImgStrings.PADLOCK),
-                                        const Gap(10),
+                                        const SizedBox(width: 10),
                                         Expanded(
                                           child: Column(
                                             mainAxisSize: MainAxisSize.min,

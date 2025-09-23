@@ -1,26 +1,23 @@
-import 'dart:io';
-import 'dart:math';
 import 'dart:ui';
 import 'package:amptive/src/bloc/main_app/go_live_bloc/audience_view/following_bloc.dart';
 import 'package:amptive/src/config/utils/colors.dart';
+import 'package:amptive/src/config/utils/extensions/context_extensions.dart';
 import 'package:amptive/src/config/utils/font_sizes.dart';
 import 'package:amptive/src/config/utils/image_strings.dart';
 import 'package:amptive/src/config/utils/dialogs/confirmation_alert_dialog.dart';
-import 'package:amptive/src/config/utils/helper_functions.dart';
+import 'package:amptive/src/features/profile/presentation/profile_prez_export.dart';
 import 'package:amptive/src/views/widgets/common_widgets/circle_avatar.dart';
 import 'package:amptive/src/views/widgets/common_widgets/circular_image.dart';
-import 'package:amptive/src/shared/custom_container_widget.dart';
 import 'package:amptive/src/shared/elevated_button_widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/image_loader_widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/loading_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
-import 'package:go_router/go_router.dart';
 import '../../../../bloc/main_app/go_live_bloc/audience_view/subscription_bloc.dart';
 import '../../../../models/host.dart';
 import '../../../../views/widgets/common_widgets/dismiss_modal.dart';
-import '../../other_strings.dart';
+import '../../../../config/utils/other_strings.dart';
 
 Future<void> showFollowHostOrCohostDialog({
   required BuildContext context,
@@ -39,8 +36,13 @@ Future<void> showFollowHostOrCohostDialog({
         borderRadius: const BorderRadius.only(
           topLeft: Radius.circular(15), topRight: Radius.circular(15),
         ),
-        child: ATContainer(
-          width: ATHelperFuncs.getScreenWidth(context),
+        child: Container(
+          width: context.screenWidth,
+          decoration: const BoxDecoration(
+            borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(15), topRight: Radius.circular(15),
+            ),
+          ),
           padding: const EdgeInsets.fromLTRB(15, 10, 15, 30),
           child: Column(
             mainAxisSize: MainAxisSize.min,
@@ -54,7 +56,7 @@ Future<void> showFollowHostOrCohostDialog({
                       imagePath: host.obj.profilePicture ?? '',
                       diameter: 70,
                     ),
-                    const Gap(10),
+                    const SizedBox(width: 10),
                     Expanded(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -75,73 +77,27 @@ Future<void> showFollowHostOrCohostDialog({
                         ],
                       ),
                     ),
-                    const Gap(50),
+                    const SizedBox(width: 50),
                     GestureDetector(
                       onTap: (){},
                       child: const Icon(Icons.more_horiz,),
                     )
                   ],
                 ),
-                  
-                const Gap(15),
-                  
-                Row(
+
+                const SizedBox(height: 15),
+
+                const Row(
+                  mainAxisSize: MainAxisSize.min,
+                  spacing: 20,
                   children: <Widget>[
-                    CustomPaint(
-                      size: const Size(16, 16),
-                      painter: RoundedScallopedPainter(
-                        color: ATColors.dimWhiteColor1
-                      ),
-                      child: Padding(
-                        padding: const EdgeInsets.all(5),
-                        child: Icon(Icons.star, color: ATColors.black, size: 12),
-                      ),
-                    ),
-                    const SizedBox(width: 2,),
-                    Text(
-                      '1.1m',
-                      style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                        fontSize: ATSizes.size16
-                      ),
-                    ),
-                    const SizedBox(width: 5,),
-                    Text(
-                      ATStrings.FOLLOWERS,
-                      style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                        fontSize: ATSizes.size16
-                      ),
-                    ),
-                    const Spacer(),
-                  
-                    CustomPaint(
-                      size: const Size(16, 16),
-                      painter: RoundedScallopedPainter(
-                        color: ATColors.yellowColor
-                      ),
-                      child: Padding(
-                        padding: const EdgeInsets.all(5),
-                        child: Icon(Icons.favorite, color: ATColors.black, size: 12),
-                      ),
-                    ),
-                    const SizedBox(width: 2,),
-                    Text(
-                      '150k',
-                      style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                        fontSize: ATSizes.size16
-                      ),
-                    ),
-                    const Gap(5),
-                    Text(
-                      ATStrings.SUBSCRIBERS,
-                      style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                        fontSize: ATSizes.size16
-                      ),
-                    ),
+                    NoOfFollowers(noOfFollowers: '1.1m'),
+                    NoOfSubscribers(),
                   ],
                 ),
-                  
-                const Gap(10),
-                  
+
+                const SizedBox(height: 10),
+
                 Text(
                   maxLines: 5,
                   'Author of UNTAMED AND LOVE WARRIOR, Host ofWE CAN DO HARD THINGS Podcast Founder of @together jfjdkfjkdjkajkfdkakkdafdadfjkajkfa',
@@ -150,8 +106,8 @@ Future<void> showFollowHostOrCohostDialog({
                     color: ATColors.hexC2C2C2.withOpacity(0.76)
                   ),
                 ),
-                  
-                const Gap(30),
+
+                const SizedBox(height: 30),
                 Row(
                   children: <Widget>[
                     BlocConsumer<AmptiveFollowingBloc, FollowingState>(
@@ -191,6 +147,7 @@ Future<void> showFollowHostOrCohostDialog({
                                 }
                               }
                             },
+                            padding: const EdgeInsets.fromLTRB(5, 10, 5, 10),
                             bgColor: ATColors.white,
                             fgColor: ATColors.hex0D0D0D,
                             btnTitle:notFollowing ? ATStrings.FOLLOW : '',
@@ -201,8 +158,8 @@ Future<void> showFollowHostOrCohostDialog({
                         );
                       }
                     ),
-                    const Gap(10),
-        
+                    const SizedBox(width: 10),
+
                     BlocBuilder<AmptiveSubscriptionBloc, SubscriptionState>(
                       builder: (_, SubscriptionState state) {
                         final bool isSubscribed = state is SubscribedState;
@@ -249,12 +206,12 @@ Future<void> showFollowHostOrCohostDialog({
                                       fontSize: ATSizes.size17
                                     ),
                                   ),
-                                  const Gap(2),
+                                  const SizedBox(width: 2),
                                   ATCircleAvatar(
                                     diameter: 4,
                                     color: ATColors.hex0D0D0D,
                                   ),
-                                  const Gap(2),
+                                  const SizedBox(width: 2),
                                   Expanded(
                                     child: Text(
                                       'N1,900/month',
@@ -278,62 +235,4 @@ Future<void> showFollowHostOrCohostDialog({
         );
       }
     );
-}
-
-
-
-
-
-class RoundedScallopedPainter extends CustomPainter {
-  const RoundedScallopedPainter({required this.color});
-  final Color color;
-
-  @override
-  void paint(Canvas canvas, Size size) {
-    final Paint paint = Paint()..color = color..style = PaintingStyle.fill;
-
-    final Path path = Path();
-    final Offset center = Offset(size.width / 2, size.height / 2);
-    final double radius = size.width / 2; // Radius of the main circle
-    const int scallopCount = 10; // Number of scallops
-    final double scallopRadius = size.width / 10; // Radius of each scallop
-
-    for (int i = 0; i < scallopCount; i++) {
-      double theta1 = (2 * pi / scallopCount) * i; // Start angle of the scallop
-      double theta2 = (2 * pi / scallopCount) * (i + 1); // End angle of the scallop
-
-      // Points for the scallop curve
-      Offset startPoint = Offset(
-        center.dx + (radius - scallopRadius) * cos(theta1),
-        center.dy + (radius - scallopRadius) * sin(theta1),
-      );
-      Offset endPoint = Offset(
-        center.dx + (radius - scallopRadius) * cos(theta2),
-        center.dy + (radius - scallopRadius) * sin(theta2),
-      );
-
-      // Control point for smooth curves between scallops
-      Offset controlPoint = Offset(
-        center.dx + radius * cos((theta1 + theta2) / 2),
-        center.dy + radius * sin((theta1 + theta2) / 2),
-      );
-
-      // Add the scallop curve
-      if (i == 0) {
-        path.moveTo(startPoint.dx, startPoint.dy);
-      }
-      path.quadraticBezierTo(
-        controlPoint.dx,
-        controlPoint.dy,
-        endPoint.dx,
-        endPoint.dy,
-      );
-    }
-
-    path.close(); // Connect the path back to the starting point
-    canvas.drawPath(path, paint);
-  }
-
-  @override
-  bool shouldRepaint(_) => false;
 }

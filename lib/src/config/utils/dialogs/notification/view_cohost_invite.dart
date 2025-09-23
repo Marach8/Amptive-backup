@@ -29,7 +29,7 @@ Future<(int?, bool)?> viewCoHostInviteDetails({
       child: Builder(
         builder: (BuildContext blocContext) {
           return Container(
-            padding: const EdgeInsets.fromLTRB(15, 5, 15, 10),
+            padding: const EdgeInsets.fromLTRB(15, 5, 15, 50),
             decoration: BoxDecoration(
               color: ATColors.hex202020,
               borderRadius: const BorderRadius.only(

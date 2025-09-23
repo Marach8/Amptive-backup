@@ -42,19 +42,19 @@ class AmptiveGoLiveNotificationsWidget extends StatelessWidget {
             diameter: 30,
             imagePath: user.profilePicture ?? ''
           ),
-          const Gap(5),
+          const SizedBox(width: 5),
           Text(
             user.name ?? '',
             style: Theme.of(context).textTheme.bodyMedium?.copyWith(
               fontSize: ATSizes.size12
             ),
           ),
-          const Gap(5),
+          const SizedBox(width: 5),
           Text(
             isGifting ? '${ATStrings.GIFTED} $giftedAmount' : ATStrings.IS_TALKING,
             style: Theme.of(context).textTheme.titleSmall,
           ),
-          const Gap(10),
+          const SizedBox(width: 10),
           ATImgLoader(
             imgPath: isTalking ? ATImgStrings.MIC_ICON
               : isGifting ? ATImgStrings.MONEY_ICON : ''
@@ -98,7 +98,7 @@ class AmptiveGoLivePinnedMsgNtfctnWidget extends StatelessWidget {
             diameter: 30,
             imagePath: user.profilePicture ?? ''
           ),
-          const Gap(10),
+          const SizedBox(width: 10),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -125,7 +125,7 @@ class AmptiveGoLivePinnedMsgNtfctnWidget extends StatelessWidget {
                         )
                       ),
                     ),
-                    const Gap(5),
+                    const SizedBox(width: 5),
                     ATContainer(
                       color: ATColors.white.withOpacity(0.2),
                       padding: const EdgeInsets.all(2), radius: 4,
@@ -135,7 +135,7 @@ class AmptiveGoLivePinnedMsgNtfctnWidget extends StatelessWidget {
                             angle: 44.5,
                             child: const Icon(Icons.push_pin, size: 14)
                           ),
-                          const Gap(2),
+                          const SizedBox(width: 2),
                           Text(
                             ATStrings.PINNED.toUpperCase(),
                             style: Theme.of(context).textTheme.bodyMedium?.copyWith(
@@ -148,9 +148,9 @@ class AmptiveGoLivePinnedMsgNtfctnWidget extends StatelessWidget {
                     const Spacer()
                   ],
                 ),
-            
-                const Gap(5),
-            
+
+                const SizedBox(height: 5),
+
                 Row(
                   children: <Widget>[
                     Text(

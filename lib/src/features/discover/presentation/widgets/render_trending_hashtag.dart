@@ -55,8 +55,8 @@ class RenderTrendingHashTag extends StatelessWidget {
                   ),
                 ),
               ),
-              const Gap(5),
-              
+              const SizedBox(width: 5),
+
               Align(
                 alignment: Alignment.bottomCenter,
                 child: ATCircleAvatar(
@@ -64,7 +64,7 @@ class RenderTrendingHashTag extends StatelessWidget {
                   color: ATColors.hexA8A8A8,
                 ),
               ),
-              const Gap(5),
+              const SizedBox(width: 5),
               Text(
                 'LIVE',
                 style: Theme.of(context).textTheme.titleSmall?.copyWith(

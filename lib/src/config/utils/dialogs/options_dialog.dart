@@ -45,7 +45,7 @@ void showProgramOptions(BuildContext context)
                     ),
                 ),
               ),
-              const Gap(20),
+              const SizedBox(height: 20),
               ...mapOfOptions.entries.map(
                 (MapEntry<String, Widget> entry) => Padding(
                   padding: const EdgeInsets.only(bottom: 30),
@@ -53,7 +53,7 @@ void showProgramOptions(BuildContext context)
                     mainAxisSize: MainAxisSize.min,
                     children: <Widget>[
                       entry.value,
-                      const Gap(15),
+                      const SizedBox(width: 15),
                       Text(
                         entry.key,
                         style: Theme.of(context).textTheme.labelMedium?.copyWith(
