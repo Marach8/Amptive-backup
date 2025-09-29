@@ -23,45 +23,48 @@ class _DiscoverTabViewState extends State<DiscoverTabView> {
   Widget build(BuildContext context) {
     return BlocProvider<DiscoverTrnstnBlc>(
       create: (_) => DiscoverTrnstnBlc(),
-      child: NotificationListener<ScrollNotification>(
-        onNotification: context.read<ATNavBarBloc>().ctrlNavVisibility,
-        child: CustomScrollView(
-          physics: const BouncingScrollPhysics(),
-          slivers: <Widget>[
-            SliverAppBar(
-              title: Text(
-                'Discover',
-                style: Theme.of(context).textTheme.displaySmall?.copyWith(
-                  fontSize: ATSizes.size23
+      child: SafeArea(
+        bottom: false,
+        child: NotificationListener<ScrollNotification>(
+          onNotification: context.read<ATNavBarBloc>().ctrlNavVisibility,
+          child: CustomScrollView(
+            physics: const BouncingScrollPhysics(),
+            slivers: <Widget>[
+              SliverAppBar(
+                title: Text(
+                  'Discover',
+                  style: Theme.of(context).textTheme.displaySmall?.copyWith(
+                    fontSize: ATSizes.size23
+                  )
+                ),
+                floating: true,
+              ),
+              SliverPersistentHeader(
+                pinned: true,
+                delegate: ATSliverHDelegate(
+                  minExt: 60, maxExt: 60, 
+                  child: const ATDiscoverSearchField(),
                 )
               ),
-              floating: true,
-            ),
-            SliverPersistentHeader(
-              pinned: true,
-              delegate: ATSliverHDelegate(
-                minExt: 60, maxExt: 60, 
-                child: const ATDiscoverSearchField(),
-              )
-            ),
-        
-            const SliverToBoxAdapter(child: SizedBox(height: 20,)),
-        
-            SliverToBoxAdapter(
-              child: BlocBuilder<DiscoverTrnstnBlc, (DiscoverPageState, String?)>(
-                builder: (_, (DiscoverPageState, String?) state) {
-                  final DiscoverPageState pageState = state.$1;
-                  return ATFadingSwitcher(
-                    child: pageState == DiscoverPageState.showMainPage
-                      ? const MainDiscoverView(key: ValueKey<int>(100)) :
-                      pageState == DiscoverPageState.showRecentSearches
-                      ? const RecentSearchesView(key: ValueKey<int>(200)) :
-                        const SearchResultsTabsView(key: ValueKey<int>(300)),
-                  );
-                }
-              )
-            ),
-          ],
+          
+              const SliverToBoxAdapter(child: SizedBox(height: 20,)),
+          
+              SliverToBoxAdapter(
+                child: BlocBuilder<DiscoverTrnstnBlc, (DiscoverPageState, String?)>(
+                  builder: (_, (DiscoverPageState, String?) state) {
+                    final DiscoverPageState pageState = state.$1;
+                    return ATFadingSwitcher(
+                      child: pageState == DiscoverPageState.showMainPage
+                        ? const MainDiscoverView(key: ValueKey<int>(100)) :
+                        pageState == DiscoverPageState.showRecentSearches
+                        ? const RecentSearchesView(key: ValueKey<int>(200)) :
+                          const SearchResultsTabsView(key: ValueKey<int>(300)),
+                    );
+                  }
+                )
+              ),
+            ],
+          ),
         ),
       ),
     );
