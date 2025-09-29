@@ -121,16 +121,13 @@ class ATNavBarBloc extends Cubit<(int, bool)>{
   ATNavBarBloc(): super((0, true));
 
   bool ctrlNavVisibility(ScrollNotification notif){
-    if (notif is ScrollUpdateNotification) {
-      if (notif.dragDetails != null) {
-
-        if (notif.dragDetails!.delta.dy > 0) {
-          emit((state.$1, true));
-        } 
-        else if (notif.dragDetails!.delta.dy < 0) {
-          emit((state.$1, false));
-        }
-      } 
+    if(notif is! ScrollUpdateNotification) return false;
+    if(notif.dragDetails == null) return false;
+    if (notif.dragDetails!.delta.dy > 0) {
+      emit((state.$1, true));
+    } 
+    else if (notif.dragDetails!.delta.dy < 0) {
+      emit((state.$1, false));
     }
 
     return true;
