@@ -36,7 +36,10 @@ class HomeTabView extends StatelessWidget {
                 child: Row(
                   mainAxisSize: MainAxisSize.min,
                   children: <Widget>[
-                    ATImgLoader(imgPath: ATImgStrings.AMPTIVE_NAME_LOGO, height: 21, width: 86),
+                    ATImgLoader(
+                      imgPath: ATImgStrings.AMPTIVE_NAME_LOGO,
+                      height: 21, width: 86
+                    ),
                     SizedBox(width: 4.0,),
                     Icon(Icons.keyboard_arrow_down_outlined, size: 25,),
                   ],
