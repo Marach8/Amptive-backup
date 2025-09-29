@@ -78,7 +78,7 @@ class IsGoingLiveInfo extends StatelessWidget {
         final bool showInfo = state == OnboardStage.isGoingLive;
 
         return ATAnimatedSlide(
-          condition: showInfo, duration: 800,
+          shouldSlide: showInfo, duration: 800,
           endOffset: const Offset(0, 0),
           startOffset: const Offset(0, 1.5),
           child: ATContainer(

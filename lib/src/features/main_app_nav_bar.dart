@@ -23,7 +23,7 @@ class MainAppBottomNav extends StatelessWidget {
     return BlocBuilder<ATNavBarBloc, (int, bool)>(
       builder: (_, (int, bool) state) {
         return ATAnimatedSlide(
-          condition: state.$2,
+          shouldSlide: state.$2,
           startOffset: const Offset(0, 1.5),
           endOffset: const Offset(0, 0),
           child: ATContainer(

@@ -61,7 +61,7 @@ Future<bool?> processWalletFundingDialog({
                       BlocBuilder<_WalletFundingBloc, bool?>(
                         builder: (_, bool? state) {
                           return ATAnimatedSlide(
-                            condition: state == null,
+                            shouldSlide: state == null,
                             startOffset: const Offset(0, 1.5), 
                             endOffset: const Offset(0, 0),
                             child: ATPlainElevatedBtn(

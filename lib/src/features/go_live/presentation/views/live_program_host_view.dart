@@ -115,7 +115,7 @@ class _SubWidget extends StatelessWidget {
           final double extraSpace = bottomInset == 0 ? 5.0 : bottomInset + 10;
           
           return ATAnimatedSlide(
-            condition: isVisible,
+            shouldSlide: isVisible,
             startOffset: const Offset(0, 1.5),
             endOffset: const Offset(0, 0),
             child: Container(
