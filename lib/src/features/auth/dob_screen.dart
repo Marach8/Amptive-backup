@@ -100,7 +100,7 @@ class _AddDOBScreenState extends State<AddDOBScreen> {
                       border: OutlineInputBorder(
                         borderSide: BorderSide(
                           width: 2.w,
-                          color: ATColors.trsprnt,
+                          color: ATColors.transparent,
                         ),
                         borderRadius: BorderRadius.circular(14.r),
                       ),

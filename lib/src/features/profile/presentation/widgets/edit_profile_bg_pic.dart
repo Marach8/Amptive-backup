@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:amptive/src/config/config_export.dart';
 import 'package:amptive/src/config/utils/colors.dart';
 import 'package:amptive/src/config/utils/image_strings.dart';
 import 'package:amptive/src/config/routing/route_strings.dart';
@@ -42,13 +43,13 @@ class EditProfileBgImage extends StatelessWidget {
               },
               child: imageBytes == null ? ATImgLoader(
                 height: 150, boxFit: BoxFit.cover,
-                width: ATHelperFuncs.getScreenWidth(context),
+                width: context.screenWidth,
                 imgPath: ATImgStrings.weCanDoHardThingsBgImage
               ) : Image.memory(
                 imageBytes!,
                 //frameBuilder: ,
                 height: 150, fit: BoxFit.cover,
-                width: ATHelperFuncs.getScreenWidth(context),
+                width: context.screenWidth,
               )
             ),
             Positioned(

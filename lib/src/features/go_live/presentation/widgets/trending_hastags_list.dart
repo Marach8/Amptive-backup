@@ -126,13 +126,13 @@ class HashtagWithCheckIconWidget extends StatelessWidget {
             builder: (_, bool? isSelected, __) {
               return ATContainer(
                 duration: 200,
-                color: (isSelected ?? false) ? ATColors.white : ATColors.trsprnt,
+                color: (isSelected ?? false) ? ATColors.white : ATColors.transparent,
                 border: Border.all(color: ATColors.white),
                 boxShape: BoxShape.circle,
                 height: 24, width: 24,
                 child: Icon(
                   Icons.check, size: 20,
-                  color: (isSelected ?? false) ? ATColors.hex0D0D0D : ATColors.trsprnt
+                  color: (isSelected ?? false) ? ATColors.hex0D0D0D : ATColors.transparent
                 )
               );
             }

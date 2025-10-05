@@ -12,7 +12,7 @@ Future<bool?> showAddedOrRemovedSnackbar({
   required String content
 }) async {
   return await Flushbar<bool?>(
-    backgroundColor: ATColors.trsprnt,
+    backgroundColor: ATColors.transparent,
     flushbarPosition: FlushbarPosition.BOTTOM,
     duration: const Duration(seconds: 10),
     messageText: Center(

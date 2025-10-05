@@ -28,7 +28,7 @@ class CreatorSuccessScreen extends StatelessWidget {
           );
           
           return ATAnnotatedRegion(
-            statusBarColor: ATColors.trsprnt,
+            statusBarColor: ATColors.transparent,
             child: Scaffold(
               body: BlocSelector<SwitchAcctSuccessAnimBloc, List<bool>, bool>(
                 selector: (List<bool> state) => state.elementAt(3),

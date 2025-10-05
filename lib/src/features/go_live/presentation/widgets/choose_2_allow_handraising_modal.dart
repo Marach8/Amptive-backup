@@ -83,7 +83,7 @@ Future<String?> choose2AllowHandRaisingModal({
                                 radius: 15, color: ATColors.hex2D2D2D,
                                 border: Border.all(
                                   width: 2,
-                                  color: shouldAllow ? ATColors.hex307FE2 : ATColors.trsprnt
+                                  color: shouldAllow ? ATColors.hex307FE2 : ATColors.transparent
                                 ),
                                 child: Row(
                                   children: <Widget>[
@@ -124,7 +124,7 @@ Future<String?> choose2AllowHandRaisingModal({
                                 radius: 15, duration: 100, color: ATColors.hex2D2D2D,
                                 border: Border.all(
                                   width: 2,
-                                  color: shouldNotAllow ? ATColors.hex307FE2 : ATColors.trsprnt
+                                  color: shouldNotAllow ? ATColors.hex307FE2 : ATColors.transparent
                                 ),
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,

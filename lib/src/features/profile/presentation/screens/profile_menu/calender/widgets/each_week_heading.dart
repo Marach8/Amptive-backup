@@ -60,9 +60,9 @@ class RenderEachWeekHeading extends StatelessWidget {
                       height: 35, width: 35,
                       boxShape: BoxShape.circle,
                       border: Border.all(
-                        color: isSelected ? ATColors.white : ATColors.trsprnt,
+                        color: isSelected ? ATColors.white : ATColors.transparent,
                       ),
-                      color: isToday ? ATColors.hex307FE2 : ATColors.trsprnt,
+                      color: isToday ? ATColors.hex307FE2 : ATColors.transparent,
                       child: FittedBox(
                         fit: BoxFit.scaleDown,
                         child: Text(

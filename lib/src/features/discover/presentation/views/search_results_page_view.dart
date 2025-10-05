@@ -48,7 +48,7 @@ with SingleTickerProviderStateMixin{
           splashFactory: NoSplash.splashFactory,
           tabAlignment: TabAlignment.start,
           labelPadding: EdgeInsets.zero,
-          indicatorColor: ATColors.trsprnt,
+          indicatorColor: ATColors.transparent,
           padding: const EdgeInsets.only(left: 15),
           isScrollable: true,
           dividerColor: ATColors.hex0D0D0D,

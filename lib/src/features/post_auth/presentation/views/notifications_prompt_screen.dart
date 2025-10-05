@@ -185,7 +185,7 @@ class _AnimExperimentState extends State<_SubWidget> with TickerProviderStateMix
   @override
   Widget build(BuildContext context) {
     return ATAnnotatedRegion(
-      statusBarColor: ATColors.trsprnt,
+      statusBarColor: ATColors.transparent,
       child: Scaffold(
         body: Stack(
           alignment: Alignment.center,

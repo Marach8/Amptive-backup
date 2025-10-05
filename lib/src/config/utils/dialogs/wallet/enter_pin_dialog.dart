@@ -44,7 +44,7 @@ Future<bool?> inputTxnPinDialog({
         child: Builder(
           builder: (BuildContext blocContext) {
             return Material(
-              color: ATColors.trsprnt,
+              color: ATColors.transparent,
               child: SizedBox(
                 height: ATHelperFuncs.getScreenHeight(context),
                 child: Column(
@@ -116,7 +116,7 @@ Future<bool?> inputTxnPinDialog({
                                               color: (state.$2 == false) ? ATColors.textRedColor : ATColors.white,
                                             ),
                                             height: 16, width: 16, radius: 10,
-                                            color: (eachPin ?? '').isEmpty ? ATColors.trsprnt : ATColors.white,
+                                            color: (eachPin ?? '').isEmpty ? ATColors.transparent : ATColors.white,
                                           );
                                         }
                                       ),

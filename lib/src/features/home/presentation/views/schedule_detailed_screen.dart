@@ -24,7 +24,7 @@ class ATScheduleDetailedScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final double blurredHeaderHeight = kToolbarHeight + MediaQuery.paddingOf(context).top;
     return ATAnnotatedRegion(
-      statusBarColor: ATColors.trsprnt,
+      statusBarColor: ATColors.transparent,
       child: Scaffold(
         body: Stack(
           children: <Widget>[

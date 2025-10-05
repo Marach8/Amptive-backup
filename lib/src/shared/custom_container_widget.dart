@@ -54,7 +54,7 @@ class ATContainer extends StatelessWidget {
     final bool isAssetImage = decorImage != null && decorImage is String;
     
     return Material(
-      color: ATColors.trsprnt,
+      color: ATColors.transparent,
       child: InkWell(
         onTap: onTap, splashColor: splashColor ?? ATColors.white.withValues(alpha: 0.5),
         borderRadius: BorderRadius.circular(radius ?? 10),

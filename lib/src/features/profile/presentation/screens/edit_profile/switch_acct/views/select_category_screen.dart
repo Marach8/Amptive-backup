@@ -84,7 +84,7 @@ class SelectCategoryScreen extends StatelessWidget {
                               contentPadding: EdgeInsets.zero,
                               enabledBorder: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(14),
-                                borderSide: BorderSide(color: ATColors.trsprnt)
+                                borderSide: BorderSide(color: ATColors.transparent)
                               ),
                               prefixIcon: const Padding(
                                 padding: EdgeInsets.only(left: 10),

@@ -61,7 +61,7 @@ class _SearchFieldWithXSuffixState extends State<SearchFieldWithXSuffix> {
       hintText: widget.hintText,
       enabledBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(14),
-        borderSide: BorderSide(color: ATColors.trsprnt)
+        borderSide: BorderSide(color: ATColors.transparent)
       ),
       prefixIcon: Padding(
         padding: const EdgeInsets.only(left: 12),

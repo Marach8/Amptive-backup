@@ -16,7 +16,7 @@ class TrendingSocietyScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ATAnnotatedRegion(
-      statusBarColor: ATColors.trsprnt,
+      statusBarColor: ATColors.transparent,
       child: Scaffold(
         body: BlocProvider<BlurredHeaderBloc>(
           create: (_) => BlurredHeaderBloc(),

@@ -112,7 +112,7 @@ class _AddLinkWidgetState extends State<_AddLinkWidget> with ATValidators{
               hintText: ATStrings.LINK_NAME,
               enabledBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(14),
-                borderSide: BorderSide(color: ATColors.trsprnt)
+                borderSide: BorderSide(color: ATColors.transparent)
               ),
             ),
             const SizedBox(height: 30,),
@@ -136,7 +136,7 @@ class _AddLinkWidgetState extends State<_AddLinkWidget> with ATValidators{
               hintText: ATStrings.LINK_URL,
               enabledBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(14),
-                borderSide: BorderSide(color: ATColors.trsprnt)
+                borderSide: BorderSide(color: ATColors.transparent)
               ),
             ),
             

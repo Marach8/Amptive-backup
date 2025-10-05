@@ -69,7 +69,6 @@ List<SingleChildWidget> providers() {
     BlocProvider(create: (_) => CalenderMonthViewBloc()),
     BlocProvider(create: (_) => DayViewHeadingBloc()),
     BlocProvider(create: (_) => HoursInADayBloc()),
-    BlocProvider(create: (_) => ProfileTabViewBloc()),
     BlocProvider(create: (_) => AcctTypeLandingAnimBloc()),
     BlocProvider(create: (_) => SwitchAcctSuccessAnimBloc()),
     BlocProvider(create: (_) => SubPlanSetupBloc()),

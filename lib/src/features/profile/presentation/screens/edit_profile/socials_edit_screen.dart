@@ -91,7 +91,7 @@ class _EditSocialsScreenState extends State<EditSocialsScreen> {
           disableBlueBorder: true,
           cursorHeight: 20,
           hintText: hintText,
-          fillColor: ATColors.trsprnt,
+          fillColor: ATColors.transparent,
           prefixIcon: Padding(
             padding: const EdgeInsets.only(left: 10),
             child: prefix,

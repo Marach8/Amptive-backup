@@ -100,7 +100,7 @@ class _CreateShowFormScreenState extends State<CreateEpisodeFormScreen> {
         BlocProvider<BgImageBloc>(create: (_) => BgImageBloc())
       ],
       child: ATAnnotatedRegion(
-        statusBarColor: ATColors.trsprnt,
+        statusBarColor: ATColors.transparent,
         child: Scaffold(
           body: Builder(
             builder: (BuildContext blocContext) {
@@ -201,7 +201,7 @@ class _CreateShowFormScreenState extends State<CreateEpisodeFormScreen> {
                                   disableBlueBorder: true,
                                   enabledBorder: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(14),
-                                    borderSide: BorderSide(color: ATColors.trsprnt)
+                                    borderSide: BorderSide(color: ATColors.transparent)
                                   ),
                                 ),
                               ),

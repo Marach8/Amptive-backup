@@ -58,7 +58,7 @@ class _EditBioScreenState extends State<EditBioScreen> {
           controller: _cntrl,
           maxLines: null, maxLength: 150,
           disableBlueBorder: true,
-          fillColor: ATColors.trsprnt,
+          fillColor: ATColors.transparent,
           buildCounter: (
             BuildContext context, {
             required int currentLength,

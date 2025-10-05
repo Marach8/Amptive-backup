@@ -30,7 +30,7 @@ Future<bool?> showDeletePlanOption(BuildContext context)async{
           ),
           const SizedBox(height: 5),
           Material(
-            color: ATColors.trsprnt,
+            color: ATColors.transparent,
             child: InkWell(
               onTap: () => context.pop(true),
               borderRadius: BorderRadius.circular(10),

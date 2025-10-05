@@ -20,6 +20,7 @@ class ATImgStrings{
   static const String OUTLINED_SEARCH = '$_svgPath/Discover animation icon=Outline.svg';
   static const String filledHome = '$_svgPath/Home=Fill.svg';
   static const String outlinedHome = '$_svgPath/Home.svg';
+  static const String ADD_IMAGE_ICON = '$_svgPath/add_image_icon.svg';
   static const String filledBroadCast = '$_svgPath/Broadcast icon=Fill.svg';
   static const String outlinedBroadCast = '$_svgPath/Broadcast icon=Outline.svg';
   static const String CALENDER_ICON = '$_svgPath/Contextual menu icon.svg';

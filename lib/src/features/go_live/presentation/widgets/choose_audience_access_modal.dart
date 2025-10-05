@@ -1,5 +1,5 @@
 import 'package:amptive/src/features/profile/bloc/fees_setup_bloc.dart';
-import 'package:amptive/src/features/profile/presentation/views/profile_views_export.dart';
+import 'package:amptive/src/features/profile/presentation/screens/profile_views_export.dart';
 import 'package:amptive/src/shared/custom_container_widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/divider_widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/image_loader_widget.dart';
@@ -79,7 +79,7 @@ Future<String?> chooseAudienceAccess4ShowModal({
                                 radius: 15, color: ATColors.hex2D2D2D,
                                 border: Border.all(
                                   width: 2,
-                                  color: isFree ? ATColors.hex307FE2 : ATColors.trsprnt
+                                  color: isFree ? ATColors.hex307FE2 : ATColors.transparent
                                 ),
                                 child: Row(
                                   children: <Widget>[
@@ -122,7 +122,7 @@ Future<String?> chooseAudienceAccess4ShowModal({
                                 radius: 15, duration: 100, color: ATColors.hex2D2D2D,
                                 border: Border.all(
                                   width: 2,
-                                  color: isPaid ? ATColors.hex307FE2 : ATColors.trsprnt
+                                  color: isPaid ? ATColors.hex307FE2 : ATColors.transparent
                                 ),
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,

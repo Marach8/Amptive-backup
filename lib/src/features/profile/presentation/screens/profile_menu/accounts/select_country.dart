@@ -29,7 +29,7 @@ class ATSelectCountryScreen extends StatelessWidget {
                 children: <Widget>[
                   ATCircleAvatar(
                     onTap: () => context.pop(),
-                    diameter: 30, color: ATColors.trsprnt,
+                    diameter: 30, color: ATColors.transparent,
                     child: const Icon(Icons.keyboard_arrow_left),
                   ),
                   const Spacer(),
@@ -38,7 +38,7 @@ class ATSelectCountryScreen extends StatelessWidget {
                     style: Theme.of(context).textTheme.bodyMedium,
                   ),
                   const Spacer(),
-                  Icon(Icons.keyboard_arrow_left, color: ATColors.trsprnt),
+                  Icon(Icons.keyboard_arrow_left, color: ATColors.transparent),
                 ],
               ),
             ),
@@ -70,7 +70,7 @@ class ATSelectCountryScreen extends StatelessWidget {
                                 ATContainer(
                                   height: 15, width: 15, boxShape: BoxShape.circle,
                                   padding: const EdgeInsets.all(5),
-                                  color: isSelected ? ATColors.hex307FE2 : ATColors.trsprnt,
+                                  color: isSelected ? ATColors.hex307FE2 : ATColors.transparent,
                                   border: Border.all(
                                     color: isSelected ? ATColors.hex307FE2 : ATColors.white,
                                     strokeAlign: 5.0

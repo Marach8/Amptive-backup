@@ -17,7 +17,7 @@ class ATCommunityScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ATAnnotatedRegion(
-      statusBarColor: ATColors.trsprnt,
+      statusBarColor: ATColors.transparent,
       child: Scaffold(
         body: BlocProvider<BlurredHeaderBloc>(
           create: (_) => BlurredHeaderBloc(),
@@ -39,7 +39,7 @@ class ATCommunityScreen extends StatelessWidget {
                             children: <Widget>[
                               Padding(
                                 padding: const EdgeInsets.only(left: 4),
-                                child: ATRoundedBackBtn(bgColor: ATColors.trsprnt,),
+                                child: ATRoundedBackBtn(bgColor: ATColors.transparent,),
                               ),
                               Text(
                                 ATStrings.COMMUNITIES,

@@ -20,7 +20,7 @@ class ATLiveEventDetailedScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final double blurredHeaderHeight = kToolbarHeight + MediaQuery.paddingOf(context).top;
     return ATAnnotatedRegion(
-      statusBarColor: ATColors.trsprnt,
+      statusBarColor: ATColors.transparent,
       child: Scaffold(
         body: Stack(
           children: <Widget>[
@@ -196,7 +196,7 @@ class ATLiveEventDetailedScreen extends StatelessWidget {
                                       ),
                                       enabledBorder: OutlineInputBorder(
                                         borderRadius: BorderRadius.circular(14),
-                                        borderSide: BorderSide(color: ATColors.trsprnt)
+                                        borderSide: BorderSide(color: ATColors.transparent)
                                       )
                                     ),
                                     const SizedBox(height: 10),

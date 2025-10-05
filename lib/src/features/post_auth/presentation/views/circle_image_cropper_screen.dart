@@ -86,7 +86,7 @@ class _CircleImageCropperScreenState extends State<CircleImageCropperScreen> {
         painter: SolidCropPathPainter(
           path,
           Paint()
-            ..color = ATColors.trsprnt
+            ..color = ATColors.transparent
             ..strokeWidth = 0
             ..style = PaintingStyle.stroke
             ..strokeJoin = StrokeJoin.round,

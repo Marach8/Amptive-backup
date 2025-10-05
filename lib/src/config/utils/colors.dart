@@ -3,7 +3,7 @@ import 'package:flutter/material.dart' show Color, Colors;
 class ATColors {
   const ATColors._();
 
-  static Color get trsprnt => Colors.transparent;
+  static Color get transparent => Colors.transparent;
 
   static Color get black => Colors.black;
 

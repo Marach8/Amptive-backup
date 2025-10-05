@@ -44,7 +44,7 @@ class ChooseOrCreateGoLiveProgramScreen extends StatelessWidget {
         BlocProvider<_PrivateBloc>(create: (_) => _PrivateBloc())
       ],
       child: ATAnnotatedRegion(
-        statusBarColor: ATColors.trsprnt,
+        statusBarColor: ATColors.transparent,
         child: Scaffold(
           body: Builder(
             builder: (BuildContext blocContext) {
@@ -85,7 +85,7 @@ class ChooseOrCreateGoLiveProgramScreen extends StatelessWidget {
                                     children: <Widget>[
                                       Padding(
                                         padding: const EdgeInsets.only(left: 5),
-                                        child: ATRoundedBackBtn(bgColor: ATColors.trsprnt,),
+                                        child: ATRoundedBackBtn(bgColor: ATColors.transparent,),
                                       ),
                                       Text(
                                         isShow ? ATStrings.CHOOSE_SHOW : ATStrings.CHOOSE_EVENT,

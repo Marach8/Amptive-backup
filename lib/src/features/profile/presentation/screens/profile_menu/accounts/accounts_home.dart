@@ -24,7 +24,7 @@ class ATAccountScreen extends StatelessWidget {
                 children: <Widget>[
                   ATCircleAvatar(
                     onTap: () => context.pop(),
-                    diameter: 30, color: ATColors.trsprnt,
+                    diameter: 30, color: ATColors.transparent,
                     child: const Icon(Icons.keyboard_arrow_left),
                   ),
                   const Spacer(),
@@ -33,7 +33,7 @@ class ATAccountScreen extends StatelessWidget {
                     style: Theme.of(context).textTheme.bodyMedium,
                   ),
                   const Spacer(),
-                  Icon(Icons.keyboard_arrow_left, color: ATColors.trsprnt),
+                  Icon(Icons.keyboard_arrow_left, color: ATColors.transparent),
                 ],
               ),
             ),

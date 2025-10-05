@@ -88,7 +88,7 @@ Future<void> showSelectAudienceAccessForEventsDialog(
                         width: 2,
                         color: value
                             ? ATColors.hex307FE2
-                            : ATColors.trsprnt),
+                            : ATColors.transparent),
                     child: Row(
                       children: <Widget>[
                         const ATImgLoader(
@@ -122,7 +122,7 @@ Future<void> showSelectAudienceAccessForEventsDialog(
                             padding: const EdgeInsets.all(3),
                             color: value
                                 ? ATColors.hex307FE2
-                                : ATColors.trsprnt,
+                                : ATColors.transparent,
                             border: Border.all(
                                 color: value
                                     ? ATColors.hex307FE2
@@ -152,7 +152,7 @@ Future<void> showSelectAudienceAccessForEventsDialog(
                         width: 2,
                         color: value
                             ? ATColors.hex307FE2
-                            : ATColors.trsprnt),
+                            : ATColors.transparent),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisSize: MainAxisSize.min,
@@ -191,7 +191,7 @@ Future<void> showSelectAudienceAccessForEventsDialog(
                                 padding: const EdgeInsets.all(3),
                                 color: value
                                     ? ATColors.hex307FE2
-                                    : ATColors.trsprnt,
+                                    : ATColors.transparent,
                                 border: Border.all(
                                     color: value
                                         ? ATColors.hex307FE2

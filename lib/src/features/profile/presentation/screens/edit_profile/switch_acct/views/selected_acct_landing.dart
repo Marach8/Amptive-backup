@@ -44,7 +44,7 @@ class SelectedAcctLandingScreen extends StatelessWidget {
     final bool isCreator = context.read<AccountTypeBloc>().state;
 
     return ATAnnotatedRegion(
-      statusBarColor: ATColors.trsprnt,
+      statusBarColor: ATColors.transparent,
       child: Scaffold(
         body: SingleChildScrollView(
           physics: const BouncingScrollPhysics(),

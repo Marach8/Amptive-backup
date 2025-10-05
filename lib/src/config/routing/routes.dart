@@ -16,7 +16,7 @@ import 'package:amptive/src/features/discover/presentation/views/trending_hashta
 import 'package:amptive/src/features/home/home_export.dart';
 import 'package:amptive/src/features/main_app_shell.dart';
 import 'package:amptive/src/features/post_auth/presentation/views/post_auth_prez_export.dart';
-import 'package:amptive/src/features/profile/presentation/views/profile_views_export.dart';
+import 'package:amptive/src/features/profile/presentation/screens/profile_views_export.dart';
 import 'package:amptive/src/features/home/presentation/views/scheduled_screen.dart';
 import 'package:amptive/src/features/wallet/presentation/views/wallet_txns_history_screen.dart';
 import 'package:amptive/src/features/onboarding/presentation/views/onboarding_screen.dart';

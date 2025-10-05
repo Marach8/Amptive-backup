@@ -28,7 +28,7 @@ class ExistingGoLiveProgramWidget extends StatelessWidget {
           onTap: () => onTap(isSelected),
           radius: 5,
           border: Border.all(
-            color: isSelected ? ATColors.hex307FE2 : ATColors.trsprnt,
+            color: isSelected ? ATColors.hex307FE2 : ATColors.transparent,
             width: 3,
           ),
           child: Column(
@@ -49,7 +49,7 @@ class ExistingGoLiveProgramWidget extends StatelessWidget {
               ),
               ATContainer(
                 padding: const EdgeInsets.only(top: 5),
-                color: isSelected ? ATColors.hex1F1F23 : ATColors.trsprnt,
+                color: isSelected ? ATColors.hex1F1F23 : ATColors.transparent,
                 child: Column(
                   children: <Widget>[
                     Text(

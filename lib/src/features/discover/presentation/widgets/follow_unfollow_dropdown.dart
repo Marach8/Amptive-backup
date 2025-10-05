@@ -25,7 +25,7 @@ class FollowUnfollowDropDown extends StatelessWidget {
       padding: EdgeInsets.zero,
       menuPadding: EdgeInsets.zero,
       onSelected: onSelected,
-      color: ATColors.trsprnt,
+      color: ATColors.transparent,
       elevation: 0,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(12)

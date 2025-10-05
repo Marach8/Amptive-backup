@@ -32,7 +32,7 @@ Future<String?> selectWithdrawalBankDialog(BuildContext context) {
           BlocProvider(create: (_) => SearchkeyBloc())
         ],
         child: Material(
-          color: ATColors.trsprnt,
+          color: ATColors.transparent,
           child: Builder(
             builder: (BuildContext context) {
               WidgetsBinding.instance.addPostFrameCallback((_) {

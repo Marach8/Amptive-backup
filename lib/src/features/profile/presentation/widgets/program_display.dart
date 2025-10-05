@@ -13,9 +13,9 @@ class ProfileEventOrShowDisplay extends StatelessWidget {
   Widget build(BuildContext context) {
     return ATContainer(
       onTap: (){
-        context.pushNamed(ATRoutes.LIVE_SHOW_DETAILED);
+        //context.pushNamed(ATRoutes.LIVE_SHOW_DETAILED);
       },
-      margin: const EdgeInsets.fromLTRB(15, 7, 15, 7),
+      margin: const EdgeInsets.fromLTRB(15, 12, 15, 12),
       height: 80, radius: 0,
       child: Row(
         children: <Widget>[

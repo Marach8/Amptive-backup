@@ -4,7 +4,7 @@ import 'package:amptive/src/config/utils/image_strings.dart';
 import 'package:amptive/src/config/utils/other_strings.dart';
 import 'package:amptive/src/config/utils/helper_functions.dart';
 import 'package:amptive/src/features/profile/bloc/fees_setup_bloc.dart';
-import 'package:amptive/src/features/profile/presentation/views/profile_views_export.dart';
+import 'package:amptive/src/features/profile/presentation/screens/profile_views_export.dart';
 import 'package:amptive/src/views/widgets/common_widgets/dismiss_modal.dart';
 import 'package:amptive/src/shared/elevated_button_widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/image_loader_widget.dart';
@@ -87,7 +87,7 @@ class _AddSubPlanWidgetState extends State<_SubPlanWidget> {
           ),
           const SizedBox(height: 20),
           Material(
-            color: ATColors.trsprnt,
+            color: ATColors.transparent,
             child: ATTextFormField(
               controller: _cntrl,
               fillColor: ATColors.white.withValues(alpha: 0.1),
@@ -96,7 +96,7 @@ class _AddSubPlanWidgetState extends State<_SubPlanWidget> {
               disableBlueBorder: true,
               enabledBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(14),
-                borderSide: BorderSide(color: ATColors.trsprnt)
+                borderSide: BorderSide(color: ATColors.transparent)
               ),
               prefixIcon: Padding(
                 padding: const EdgeInsets.only(left: 15),

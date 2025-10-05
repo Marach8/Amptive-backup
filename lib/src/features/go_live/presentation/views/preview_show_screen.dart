@@ -21,7 +21,7 @@ class PreviewShowScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final double blurredHeaderHeight = kToolbarHeight + MediaQuery.paddingOf(context).top;
     return ATAnnotatedRegion(
-      statusBarColor: ATColors.trsprnt,
+      statusBarColor: ATColors.transparent,
       child: Scaffold(
         body: Stack(
           children: <Widget>[
@@ -55,7 +55,7 @@ class PreviewShowScreen extends StatelessWidget {
                                   children: <Widget>[
                                     Padding(
                                       padding: const EdgeInsets.only(left: 5),
-                                      child: ATRoundedBackBtn(bgColor: ATColors.trsprnt,),
+                                      child: ATRoundedBackBtn(bgColor: ATColors.transparent,),
                                     ),
                                     Text(
                                       'We can do hard things',

@@ -17,7 +17,7 @@ class DiscoverSocietyScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ATAnnotatedRegion(
-      statusBarColor: ATColors.trsprnt,
+      statusBarColor: ATColors.transparent,
       child: DefaultTabController(
         length: 3,
         child: Scaffold(
@@ -42,7 +42,7 @@ class DiscoverSocietyScreen extends StatelessWidget {
                               children: <Widget>[
                                 Padding(
                                   padding: const EdgeInsets.only(left: 4),
-                                  child: ATRoundedBackBtn(bgColor: ATColors.trsprnt,),
+                                  child: ATRoundedBackBtn(bgColor: ATColors.transparent,),
                                 ),
                                 Text(
                                   ATStrings.SOCIETY,

@@ -89,7 +89,7 @@ Future<WhispersState?> controlWhispersModal({
                                 radius: 15, color: ATColors.hex2D2D2D,
                                 border: Border.all(
                                   width: 2,
-                                  color: whispersIsOn ? ATColors.hex307FE2 : ATColors.trsprnt
+                                  color: whispersIsOn ? ATColors.hex307FE2 : ATColors.transparent
                                 ),
                                 child: Row(
                                   children: <Widget>[
@@ -130,7 +130,7 @@ Future<WhispersState?> controlWhispersModal({
                                 radius: 15, duration: 100, color: ATColors.hex2D2D2D,
                                 border: Border.all(
                                   width: 2,
-                                  color: whispersIsOff ? ATColors.hex307FE2 : ATColors.trsprnt
+                                  color: whispersIsOff ? ATColors.hex307FE2 : ATColors.transparent
                                 ),
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,

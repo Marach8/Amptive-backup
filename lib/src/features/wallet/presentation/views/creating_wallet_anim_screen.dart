@@ -27,7 +27,7 @@ class ATWalletCreationAnimScreen extends StatelessWidget {
           );
           
           return ATAnnotatedRegion(
-            statusBarColor: ATColors.trsprnt,
+            statusBarColor: ATColors.transparent,
             child: Scaffold(
               body: BlocSelector<WalletCreationAnimBloc, List<bool>, bool>(
                 selector: (List<bool> state) => state.elementAt(3),

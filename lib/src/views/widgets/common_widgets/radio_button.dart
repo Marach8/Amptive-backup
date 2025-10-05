@@ -18,7 +18,7 @@ class ATRadioBtn extends StatelessWidget {
       duration: duration,
       height: 15, width: 15, boxShape: BoxShape.circle,
       padding: const EdgeInsets.all(5),
-      color: isSelected ? ATColors.hex307FE2 : ATColors.trsprnt,
+      color: isSelected ? ATColors.hex307FE2 : ATColors.transparent,
       border: Border.all(
         color: isSelected ? ATColors.hex307FE2 : ATColors.white,
         strokeAlign: 5.0

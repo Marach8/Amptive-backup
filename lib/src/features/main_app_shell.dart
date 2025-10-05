@@ -8,7 +8,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../global_export.dart';
 import '../services/go_live_service/go_live_service.dart';
 import 'go_live/go_live_export.dart';
-import 'notifications/presentation/views/notif_landing_screen.dart';
+import 'notifications/presentation/screens/notif_landing_screen.dart';
 
 
 enum GoLiveUserType{audience, cohost, host}
@@ -74,7 +74,7 @@ class ATMainAppShell extends StatelessWidget {
           ),
           
           resizeToAvoidBottomInset: false,
-          backgroundColor: ATColors.trsprnt,
+          backgroundColor: ATColors.transparent,
           
         
           bottomSheet: const MainAppBottomNav()

@@ -110,7 +110,7 @@ class _ATEmailAuthScreenState extends State<ATEmailAuthScreen> {
                       border: OutlineInputBorder(
                         borderSide: BorderSide(
                           width: 2,
-                          color: ATColors.trsprnt,
+                          color: ATColors.transparent,
                         ),
                         borderRadius: BorderRadius.circular(14),
                       ),

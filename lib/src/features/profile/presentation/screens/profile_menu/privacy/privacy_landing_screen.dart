@@ -1,6 +1,6 @@
 import 'package:amptive/src/config/utils/colors.dart';
 import 'package:amptive/src/config/utils/font_weights.dart';
-import 'package:amptive/src/features/profile/presentation/views/profile_menu/profile_menu_landing_screen.dart';
+import 'package:amptive/src/features/profile/presentation/screens/profile_menu/profile_menu_landing_screen.dart';
 import 'package:amptive/src/views/widgets/common_widgets/annotated_region__widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -29,7 +29,7 @@ class AmptivePrivacyScreen extends StatelessWidget {
                 children: <Widget>[
                   ATCircleAvatar(
                     onTap: () => context.pop(),
-                    diameter: 30, color: ATColors.trsprnt,
+                    diameter: 30, color: ATColors.transparent,
                     child: const Icon(Icons.keyboard_arrow_left),
                   ),
                   const Spacer(),
@@ -38,7 +38,7 @@ class AmptivePrivacyScreen extends StatelessWidget {
                     style: Theme.of(context).textTheme.bodyMedium,
                   ),
                   const Spacer(),
-                  Icon(Icons.keyboard_arrow_left, color: ATColors.trsprnt),
+                  Icon(Icons.keyboard_arrow_left, color: ATColors.transparent),
                 ],
               ),
             ),

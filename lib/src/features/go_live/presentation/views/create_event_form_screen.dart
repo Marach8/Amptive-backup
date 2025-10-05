@@ -88,7 +88,7 @@ class _CreateShowFormScreenState extends State<CreateEventFormScreen> {
         BlocProvider<BgImageBloc>(create: (_) => BgImageBloc())
       ],
       child: ATAnnotatedRegion(
-        statusBarColor: ATColors.trsprnt,
+        statusBarColor: ATColors.transparent,
         child: Scaffold(
           body: Builder(
             builder: (BuildContext blocContext) {
@@ -126,7 +126,7 @@ class _CreateShowFormScreenState extends State<CreateEventFormScreen> {
                                     children: <Widget>[
                                       Padding(
                                         padding: const EdgeInsets.only(left: 4),
-                                        child: ATRoundedBackBtn(bgColor: ATColors.trsprnt,),
+                                        child: ATRoundedBackBtn(bgColor: ATColors.transparent,),
                                       ),
                                       Text(
                                         ATStrings.CREATE_SHOW,
@@ -178,7 +178,7 @@ class _CreateShowFormScreenState extends State<CreateEventFormScreen> {
                                   disableBlueBorder: true,
                                   enabledBorder: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(14),
-                                    borderSide: BorderSide(color: ATColors.trsprnt)
+                                    borderSide: BorderSide(color: ATColors.transparent)
                                   ),
                                 ),
                               ),

@@ -30,7 +30,7 @@ Future<String?> selectPaymentMethodDialog({
       return BlocProvider(
         create: (_) => _PaymentMethodBloc(),
         child: Material(
-          color: ATColors.trsprnt,
+          color: ATColors.transparent,
           child: Builder(
             builder: (BuildContext context) {
               return SizedBox(

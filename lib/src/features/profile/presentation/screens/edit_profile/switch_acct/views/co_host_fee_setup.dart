@@ -4,7 +4,7 @@ import 'package:amptive/src/config/utils/other_strings.dart';
 import 'package:amptive/src/config/routing/route_strings.dart';
 import 'package:amptive/src/config/utils/helper_functions.dart';
 import 'package:amptive/src/features/profile/bloc/animation_bloc.dart';
-import 'package:amptive/src/features/profile/presentation/views/profile_views_export.dart';
+import 'package:amptive/src/features/profile/presentation/screens/profile_views_export.dart';
 import 'package:amptive/src/views/widgets/common_widgets/annotated_region__widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/back_button.dart';
 import 'package:amptive/src/shared/elevated_button_widget.dart';
@@ -97,7 +97,7 @@ class _CoHostFeeSetupScreenState extends State<CoHostFeeSetupScreen> {
                       disableBlueBorder: true,
                       enabledBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(14),
-                        borderSide: BorderSide(color: ATColors.trsprnt)
+                        borderSide: BorderSide(color: ATColors.transparent)
                       ),
                       prefixIcon: Padding(
                         padding: const EdgeInsets.only(left: 15),

@@ -88,7 +88,7 @@ class _GoLiveAudienViewControlsWidgetState extends State<GoLiveAudienViewControl
               maxLines: null, isDense: true,
               enabledBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(14),
-                borderSide: BorderSide(color: ATColors.trsprnt)
+                borderSide: BorderSide(color: ATColors.transparent)
               ),
               prefixIcon: const SizedBox(width: 10,),
               fillColor: ATColors.white.withValues(alpha: 0.1),

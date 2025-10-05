@@ -109,7 +109,7 @@ Future<(int?, bool)?> viewCoHostInviteDetails({
                 Align(
                   alignment: Alignment.centerLeft,
                   child: Material(
-                    color: ATColors.trsprnt,
+                    color: ATColors.transparent,
                     child: InkWell(
                       borderRadius: BorderRadius.circular(5),
                       onTap: () => blocContext.read<_PrivatBloc>().rememberChoice(),
@@ -127,7 +127,7 @@ Future<(int?, bool)?> viewCoHostInviteDetails({
                                   fit: BoxFit.cover,
                                   child: Icon(
                                     CupertinoIcons.check_mark,
-                                    color: state ? ATColors.successColor : ATColors.trsprnt
+                                    color: state ? ATColors.successColor : ATColors.transparent
                                   ),
                                 ),
                               );

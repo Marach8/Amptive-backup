@@ -31,7 +31,7 @@ class CreatorProfilePix extends StatelessWidget {
                 end: Alignment.bottomCenter,
                 colors: <Color>[
                   ATColors.black,
-                  ATColors.trsprnt
+                  ATColors.transparent
                 ]
               ),
               width: context.screenWidth,
