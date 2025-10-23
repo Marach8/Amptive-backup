@@ -370,6 +370,7 @@ class ATStrings{
   static const String LINKS = 'Links';
   static const String LINK = 'Link';
   static const String SWITCH_ACCT = 'Switch Account Type';
+  static const String SWITCH = 'Switch';
   static const String PSWRD_ND_SECURITY = 'Password and Security';
   static const String APP_SETTINGS = 'App Settings';
   static const String SETTINGS = 'Settings';

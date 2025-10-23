@@ -1,5 +1,3 @@
-import 'dart:developer' show log;
-
 import 'package:amptive/src/config/config_export.dart';
 import 'package:amptive/src/features/profile/presentation/screens/profile_views_export.dart';
 import 'package:amptive/src/views/widgets/common_widgets/annotated_region__widget.dart';

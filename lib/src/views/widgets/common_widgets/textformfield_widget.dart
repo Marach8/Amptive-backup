@@ -4,7 +4,6 @@ import 'package:amptive/src/config/utils/font_weights.dart';
 import 'package:amptive/src/views/widgets/common_widgets/search_filter_widget.dart';
 import 'package:flutter/material.dart';
 
-
 class ATTextFormField extends StatelessWidget {
   const ATTextFormField({
     super.key,
@@ -16,6 +15,7 @@ class ATTextFormField extends StatelessWidget {
     this.counterText,
     this.cursorHeight,
     this.hintText,
+    this.focusedBorder,
     this.enabledBorder,
     this.cursorColor, 
     this.decoration,
@@ -57,7 +57,7 @@ class ATTextFormField extends StatelessWidget {
   final BoxConstraints? suffixConstraints,
   prefixConstraints, constraints;
   final InputDecoration? decoration;
-  final InputBorder? enabledBorder;
+  final InputBorder? enabledBorder, focusedBorder;
   final FocusNode? focusNode;
   final TextStyle? hintStyle;
   final TextInputAction? textInputAction;
@@ -94,7 +94,7 @@ class ATTextFormField extends StatelessWidget {
       keyboardType: keyboardType,
       style: TextStyle(
         fontWeight: ATFontWeights.w400,
-        fontSize: ATSizes.size18,
+        fontSize: ATSizes.size16,
         color: ATColors.white,
       ),
       decoration: decoration ?? InputDecoration(     
@@ -104,10 +104,12 @@ class ATTextFormField extends StatelessWidget {
         constraints: constraints,
         fillColor: ATColors.white.withValues(alpha: 0.1), filled: filled ?? true,
         contentPadding: contentPadding ?? EdgeInsets.zero,
-        focusedBorder: disableBlueBorder ?? false ? OutlineInputBorder(
-          borderRadius: BorderRadius.circular(14),
-          borderSide: BorderSide(color: ATColors.transparent)
-        ) : null,
+        focusedBorder: focusedBorder ?? (
+            disableBlueBorder ?? false ? OutlineInputBorder(
+            borderRadius: BorderRadius.circular(14),
+            borderSide: BorderSide(color: ATColors.transparent)
+          ) : null
+        ),
         hintStyle: hintStyle ?? Theme.of(context).textTheme.titleLarge?.copyWith(
           color: ATColors.strokeGreyColor,
         ),

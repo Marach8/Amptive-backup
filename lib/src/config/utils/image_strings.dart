@@ -37,6 +37,7 @@ class ATImgStrings{
   static const String TOP_CREATOR_BADGE = '$_svgPath/RANK BADGES.svg';
   static const String SUBSCRIBER_BADGE = '$_svgPath/Subscribers badge.svg';
   static const String BIZ_ACCT_LOGO = '$_svgPath/Simplification (3).svg';
+  static const String BIZ_ACCT_LOGO_MIC = '$_svgPath/Simplification (1).svg';
   static const String CREATOR_ACCT_LOGO = '$_svgPath/Simplification.svg';
   static const String FLUTTERWAVE = '$_svgPath/flutter_wave.svg';
   static const String APPLE_ICON = '$_svgPath/apple_icon.svg';

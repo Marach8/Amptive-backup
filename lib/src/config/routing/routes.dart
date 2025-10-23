@@ -16,8 +16,12 @@ import 'package:amptive/src/features/discover/presentation/views/trending_hashta
 import 'package:amptive/src/features/home/home_export.dart';
 import 'package:amptive/src/features/main_app_shell.dart';
 import 'package:amptive/src/features/post_auth/presentation/views/post_auth_prez_export.dart';
+import 'package:amptive/src/features/profile/presentation/screens/edit_bio_screen.dart';
+import 'package:amptive/src/features/profile/presentation/screens/edit_name_screen.dart';
+import 'package:amptive/src/features/profile/presentation/screens/edit_username_screen.dart';
 import 'package:amptive/src/features/profile/presentation/screens/profile_views_export.dart';
 import 'package:amptive/src/features/home/presentation/views/scheduled_screen.dart';
+import 'package:amptive/src/features/switch_account/presentation/switch_acct/switch_acct_export.dart';
 import 'package:amptive/src/features/wallet/presentation/views/wallet_txns_history_screen.dart';
 import 'package:amptive/src/features/onboarding/presentation/views/onboarding_screen.dart';
 import 'package:amptive/src/features/onboarding/presentation/views/post_onboarding_screen.dart';
@@ -29,6 +33,8 @@ import '../../features/discover/presentation/views/community_home_screen.dart';
 import '../../features/discover/presentation/views/society_hashtag_screen.dart';
 import '../../features/discover/presentation/views/trending_society_screen.dart';
 import '../../features/go_live/go_live_export.dart';
+import '../../features/profile/presentation/screens/edit_profile_landing_screen.dart';
+import '../../features/profile/presentation/screens/edit_socials_screen.dart';
 import '../../features/wallet/wallet_export.dart';
 
 // The route configuration.

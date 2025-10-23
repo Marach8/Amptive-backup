@@ -35,7 +35,10 @@ class EditProfileBgImage extends StatelessWidget {
                 final XFile? selectedFile = await ATHelperFuncs.pickImage(selectedSrc);
                 if(context.mounted && selectedFile != null){
                   final File file = File(selectedFile.path);
-                  final MemoryImage? imageData = await context.pushNamed(ATRoutes.RECT_IMG_CROPPER_SCREEN, extra: file) as MemoryImage?;
+                  final MemoryImage? imageData = await context.pushNamed(
+                    ATRoutes.RECT_IMG_CROPPER_SCREEN,
+                    extra: (file, null),
+                  ) as MemoryImage?;
                   if(imageData != null){
                     setter(() => imageBytes = imageData.bytes);
                   }
@@ -68,11 +71,13 @@ class EditProfileBgImage extends StatelessWidget {
                     borderWidth: 3,
                     imagePath: ATImgStrings.jpeg2
                   ),
-                  ATContainer(
+                  Container(
                     height: 67, width: 67,
-                    boxShape: BoxShape.circle,
                     color: ATColors.black.withValues(alpha: 0.5),
-                    child: const Icon(Icons.add_photo_alternate_outlined)
+                  ),
+                  const ATImgLoader(
+                    imgPath: ATImgStrings.ADD_IMAGE_ICON,
+                    height: 30, width: 30,
                   )
                 ],
               )

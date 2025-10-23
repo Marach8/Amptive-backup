@@ -56,7 +56,7 @@ Future<void> showHostModerationToolsDialog(BuildContext context) async {
                     }
                   },
                   builder: (_, List<bool> state) {
-                    return AmptiveSwitch(
+                    return ATSwitch(
                       value: state.first,
                       onChanged: (bool value) => value ?
                       context.read<AmptiveGoLiveHostModerationToolsBloc>().allowComments()
@@ -90,7 +90,7 @@ Future<void> showHostModerationToolsDialog(BuildContext context) async {
                     }
                   },
                   builder: (_, List<bool> state) {
-                    return AmptiveSwitch(
+                    return ATSwitch(
                       value: state[1],
                       onChanged: (bool value) => value ?
                       context.read<AmptiveGoLiveHostModerationToolsBloc>().allowAudienceMic()
@@ -123,7 +123,7 @@ Future<void> showHostModerationToolsDialog(BuildContext context) async {
                     }
                   },
                   builder: (_, List<bool> state) {
-                    return AmptiveSwitch(
+                    return ATSwitch(
                       value: state.last,
                       onChanged: (bool value) => value ?
                       context.read<AmptiveGoLiveHostModerationToolsBloc>().allowHandRaising()
