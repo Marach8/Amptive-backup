@@ -346,7 +346,7 @@ class ATStrings{
   static const String MENU = 'Menu';
   static const String VIEW_CALENDER = 'View calender';
   static const String CALENDER = 'Calender';
-  static const String ALLOW_SEE_CALENDER =  'Allow users to see your calender';
+  static const String GRANT_CALENDER_ACCESS =  'Grant calender access';
   static const String ACCT_SETTINGS = 'Account Settings';
   static const String ACCT = 'Account';
   static const String PRIVACY = 'Privacy';
@@ -560,14 +560,14 @@ class ATStrings{
   static const String DEACTIVATE_ACCT = 'Deactivate your account';
   static const String CAT_SELECETED = 'Category selected';
   static const String SUB_FEE_SETUP = 'Subscription fee setup';
-  static const String U_R_A_CREATOR = 'You are now a creator🎉';
+  static const String U_R_A_CREATOR = 'You are now a creator';
   static const String UR_BIZ_IS_READY = 'Your business is ready';
   static const String EXPAND_UR_BIZ = 'Expand your business and connect with potential customers.';
   static const String NOW_U_CAN_CREATE = 'Now, you can create live audio shows and events.';
   static const String CREATING_WALLET = 'Creating your wallet';
   static const String PREPARING_WALLET = 'Preparing your wallet';
   static const String FINALIZING_SETUP = 'Finalizing setup';
-  static const String WALLET_CREATED = 'Your wallet has been created🎉';
+  static const String WALLET_CREATED = 'Your wallet has been created';
   static const String RECEIVE_EARNINGS_WITH_WALLET = 'Receive earnings from events, gifts and subscriptions with your wallet.';
   static const String OPEN_WALLET = 'Open wallet';
   static const String NOTIF1 = 'The HonestBunch is live now!';

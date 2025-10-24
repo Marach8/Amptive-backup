@@ -16,9 +16,11 @@ class AmptiveInputDecorationTheme{
     // suffixIconColor: AmptiveColors.deepOrange,
     //labelStyle: const TextStyle().copyWith(fontSize: AmptiveFontSizes.size13),
     hintStyle: TextStyle(
-      fontSize: ATSizes.size16,
-      color: ATColors.hexB6B6B6,
-      fontWeight: ATFontWeights.w400
+      letterSpacing: 0,
+      color: ATColors.strokeGreyColor,
+      fontSize: ATSizes.size15,
+      fontWeight: ATFontWeights.w400,
+      overflow: TextOverflow.ellipsis
     ),
     contentPadding: const EdgeInsets.fromLTRB(16, 12, 16, 12),
     errorStyle: TextStyle(

@@ -21,6 +21,8 @@ import 'package:amptive/src/features/profile/presentation/screens/edit_name_scre
 import 'package:amptive/src/features/profile/presentation/screens/edit_username_screen.dart';
 import 'package:amptive/src/features/profile/presentation/screens/profile_views_export.dart';
 import 'package:amptive/src/features/home/presentation/views/scheduled_screen.dart';
+import 'package:amptive/src/features/profile_menu/presentation/account_info_screen.dart';
+import 'package:amptive/src/features/profile_menu/presentation/acounts_landing_screen.dart';
 import 'package:amptive/src/features/switch_account/presentation/switch_acct/switch_acct_export.dart';
 import 'package:amptive/src/features/wallet/presentation/views/wallet_txns_history_screen.dart';
 import 'package:amptive/src/features/onboarding/presentation/views/onboarding_screen.dart';
@@ -35,6 +37,7 @@ import '../../features/discover/presentation/views/trending_society_screen.dart'
 import '../../features/go_live/go_live_export.dart';
 import '../../features/profile/presentation/screens/edit_profile_landing_screen.dart';
 import '../../features/profile/presentation/screens/edit_socials_screen.dart';
+import '../../features/profile_menu/presentation/select_country_screen.dart';
 import '../../features/wallet/wallet_export.dart';
 
 // The route configuration.
@@ -443,7 +446,7 @@ final GoRouter amptiveAppRouter = GoRouter(
               GoRoute(
                 name: ATRoutes.CREATOR_SUCCESS,
                 path: ATRoutes.CREATOR_SUCCESS,
-                builder: (_, GoRouterState state) => const CreatorSuccessScreen()
+                builder: (_, GoRouterState state) => const CreatorOrBusinessSetupSuccessScreen()
               ),
             ]
           ),
@@ -488,12 +491,12 @@ final GoRouter amptiveAppRouter = GoRouter(
 
           GoRoute(
             name: ATRoutes.ACCT_SCREEN,
-            path: ATRoutes.ACCT_SCREEN,
+            path: ATRoutes.ACCT_SCREEN.addSlash,
             builder: (_, __) => const ATAccountScreen(),
             routes: <RouteBase>[
               GoRoute(
                 name: ATRoutes.ACCT_INFO_SCREEN,
-                path: ATRoutes.ACCT_INFO_SCREEN,
+                path: ATRoutes.ACCT_INFO_SCREEN.addSlash,
                 builder: (_, GoRouterState state){
                   final List<String?>? params = state.extra as List<String?>?;
                   final String? email = params?.first;

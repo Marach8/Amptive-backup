@@ -1,18 +1,15 @@
-import 'package:amptive/src/config/utils/colors.dart';
-import 'package:amptive/src/config/utils/font_sizes.dart';
-import 'package:amptive/src/config/utils/other_strings.dart';
+import 'package:amptive/src/config/config_export.dart';
 import 'package:amptive/src/views/widgets/common_widgets/dismiss_modal.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 
-
-Future<bool?> showDeletePlanOption(BuildContext context)async{
+Future<bool?> showDeleteSubscriptionPlanOptionModal(BuildContext context)async{
   return await showCupertinoModalPopup<bool>(
     context: context,
     builder: (_) => Container(
-      padding: const EdgeInsets.fromLTRB(15, 5, 15, 10),
+      padding: const EdgeInsets.fromLTRB(15, 5, 15, 70),
       decoration: BoxDecoration(
         color: ATColors.hex202020,
         borderRadius: const BorderRadius.only(
@@ -41,7 +38,7 @@ Future<bool?> showDeletePlanOption(BuildContext context)async{
                   const SizedBox(width: 10),
                   Text(
                     ATStrings.DELETE_PLAN,
-                    style: Theme.of(context).textTheme.labelMedium?.copyWith(
+                    style: context.textTheme.labelMedium?.copyWith(
                       fontSize: ATSizes.size17
                     )
                   ),

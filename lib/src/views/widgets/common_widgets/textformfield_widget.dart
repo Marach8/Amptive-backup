@@ -1,6 +1,4 @@
-import 'package:amptive/src/config/utils/colors.dart';
-import 'package:amptive/src/config/utils/font_sizes.dart';
-import 'package:amptive/src/config/utils/font_weights.dart';
+import 'package:amptive/src/config/config_export.dart';
 import 'package:amptive/src/views/widgets/common_widgets/search_filter_widget.dart';
 import 'package:flutter/material.dart';
 
@@ -37,6 +35,7 @@ class ATTextFormField extends StatelessWidget {
     this.enabled,
     this.maxLength,
     this.prefix,
+    this.disabledBorder,
     this.suffix,
     this.isDense,
     this.filled
@@ -57,7 +56,7 @@ class ATTextFormField extends StatelessWidget {
   final BoxConstraints? suffixConstraints,
   prefixConstraints, constraints;
   final InputDecoration? decoration;
-  final InputBorder? enabledBorder, focusedBorder;
+  final InputBorder? enabledBorder, focusedBorder, disabledBorder;
   final FocusNode? focusNode;
   final TextStyle? hintStyle;
   final TextInputAction? textInputAction;
@@ -102,7 +101,8 @@ class ATTextFormField extends StatelessWidget {
         hintText: hintText,
         isDense: isDense, errorMaxLines: 5,
         constraints: constraints,
-        fillColor: ATColors.white.withValues(alpha: 0.1), filled: filled ?? true,
+        fillColor: fillColor ?? ATColors.white.withValues(alpha: 0.1), 
+        filled: filled ?? true,
         contentPadding: contentPadding ?? EdgeInsets.zero,
         focusedBorder: focusedBorder ?? (
             disableBlueBorder ?? false ? OutlineInputBorder(
@@ -110,9 +110,7 @@ class ATTextFormField extends StatelessWidget {
             borderSide: BorderSide(color: ATColors.transparent)
           ) : null
         ),
-        hintStyle: hintStyle ?? Theme.of(context).textTheme.titleLarge?.copyWith(
-          color: ATColors.strokeGreyColor,
-        ),
+        hintStyle: hintStyle,
         suffixIcon: suffixIcon,
         prefixIcon: prefixIcon ?? const ATSearchIcon(),
         prefix: prefix, suffix: suffix,
@@ -124,7 +122,8 @@ class ATTextFormField extends StatelessWidget {
           maxHeight: 35,
           maxWidth: 35
         ),
-        enabledBorder: enabledBorder
+        enabledBorder: enabledBorder,
+        disabledBorder: disabledBorder,
       ),
     );
   }

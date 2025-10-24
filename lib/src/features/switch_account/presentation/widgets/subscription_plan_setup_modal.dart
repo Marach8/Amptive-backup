@@ -28,7 +28,8 @@ class _SubPlanWidget extends StatefulWidget {
 }
 
 class _AddSubPlanWidgetState extends State<_SubPlanWidget> {
-  late final TextEditingController _cntrl;
+  late final TextEditingController _newPlanCntrl;
+  final TextEditingController _oneTimePaymentCntrl = TextEditingController();
   final ValueNotifier<bool> _oneTimePaymentNotifier = ValueNotifier<bool>(false);
   final String defaultPrice = '0';
   
@@ -36,7 +37,7 @@ class _AddSubPlanWidgetState extends State<_SubPlanWidget> {
   void initState(){
     super.initState();
     final int? selectedPrice = context.read<SubPlanSetupBloc>().state.last;
-    _cntrl = TextEditingController(
+    _newPlanCntrl = TextEditingController(
       text: selectedPrice != null ? selectedPrice.toString() : defaultPrice
     )..addListener(_handleBtnActivation);
   }
@@ -45,13 +46,14 @@ class _AddSubPlanWidgetState extends State<_SubPlanWidget> {
     ATHelperFuncs.callDebouncer(
       500,
       () => context.read<SubPlanSetupBloc>()
-        .selectAFee(int.tryParse(_cntrl.text.trim()))
+        .selectAFee(int.tryParse(_newPlanCntrl.text.trim()))
     );
   }
 
   @override 
   void dispose(){
-    _cntrl.dispose();
+    _newPlanCntrl.dispose();
+    _oneTimePaymentCntrl.dispose();
     _oneTimePaymentNotifier.dispose();
     super.dispose();
   }
@@ -95,7 +97,7 @@ class _AddSubPlanWidgetState extends State<_SubPlanWidget> {
                   ),
                   const SizedBox(height: 20),
                   ATTextFormField(
-                    controller: _cntrl,
+                    controller: _newPlanCntrl,
                     fillColor: ATColors.white.withValues(alpha: 0.1),
                     keyboardType: TextInputType.number,
                     textInputAction: TextInputAction.done,
@@ -117,7 +119,7 @@ class _AddSubPlanWidgetState extends State<_SubPlanWidget> {
                       return RowOfCustomFees(
                         selectedFee: state,
                         onFeeTap: (int tappedFee){
-                          _cntrl.text = tappedFee.toString();
+                          _newPlanCntrl.text = tappedFee.toString();
                           context.read<SubPlanSetupBloc>().selectAFee(tappedFee);
                         },
                       );
@@ -146,12 +148,18 @@ class _AddSubPlanWidgetState extends State<_SubPlanWidget> {
                       )
                     ],
                   ),
-                  Text(
-                    maxLines: 4,
-                    'Let non-subscribers access a single live show without subscribing. They will need to pay to join any episode',
-                    style: context.textTheme.labelSmall?.copyWith(
-                      color: ATColors.white.withValues(alpha: 0.4)
-                    )
+                  ValueListenableBuilder<bool>(
+                    valueListenable: _oneTimePaymentNotifier,
+                    builder: (_, bool? state, __) {
+                      final bool isActive = state ?? false;
+                      return Text(
+                        maxLines: 4,
+                        'Let non-subscribers access a single live show without subscribing. They will need to pay to join any episode',
+                        style: context.textTheme.labelSmall?.copyWith(
+                          color: ATColors.white.withValues(alpha: isActive ? 0.4 : 0.1)
+                        )
+                      );
+                    }
                   ),
                   const SizedBox(height: 20,),
                   Align(
@@ -163,21 +171,31 @@ class _AddSubPlanWidgetState extends State<_SubPlanWidget> {
                         builder: (_, bool? state, __) {
                           final bool isActive = state ?? false;
                           return ATTextFormField(
-                            controller: _cntrl, filled: true,
-                            fillColor: isActive ? ATColors.white.withValues(alpha: 0.1) : ATColors.hex202020,
+                            controller: _oneTimePaymentCntrl,
+                            fillColor: isActive ? null : ATColors.hex202020,
                             enabled: isActive, keyboardType: TextInputType.number,
                             textInputAction: TextInputAction.done,
+                            hintStyle: Theme.of(context).inputDecorationTheme.hintStyle?.copyWith(
+                              color: isActive ? null : ATColors.hex313131
+                            ),
+                            hintText: '100 (1%)',
                             disableBlueBorder: true,
+                            disabledBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(14),
+                              borderSide: BorderSide(color: ATColors.hex313131)
+                            ),
                             enabledBorder: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(14),
-                              borderSide: BorderSide(
-                                width: 1,
-                                color: isActive ? ATColors.transparent : ATColors.hex313131
-                              )
+                              borderSide: BorderSide(color: ATColors.transparent)
                             ),
                             prefixIcon: Padding(
                               padding: const EdgeInsets.only(left: 15),
-                              child: Text(ATStrings.NAIRA_TEXT, style: context.textTheme.headlineMedium),
+                              child: Text(
+                                ATStrings.NAIRA_TEXT, 
+                                style: context.textTheme.headlineMedium?.copyWith(
+                                  color: isActive ? null : ATColors.hex313131
+                                )
+                              ),
                             ),
                             contentPadding: EdgeInsets.zero
                           );
@@ -187,7 +205,8 @@ class _AddSubPlanWidgetState extends State<_SubPlanWidget> {
                   ),
                   const SizedBox(height: 80),
                   Text(
-                    ATStrings.AMPTIVE_CHARGES_4_CREATORS, maxLines: 2,
+                    'Amptive charges a 0% fee on subscription',
+                    maxLines: 2,
                     style: context.textTheme.labelSmall?.copyWith(
                       color: ATColors.white.withValues(alpha: 0.4),
                     )
@@ -200,7 +219,7 @@ class _AddSubPlanWidgetState extends State<_SubPlanWidget> {
                       return ATPlainElevatedBtn(
                         fgColor: ATColors.black, bgColor: ATColors.white,
                         onPressed: shouldActivate ? (){
-                          final int? selectdFee = int.tryParse(_cntrl.text.trim());
+                          final int? selectdFee = int.tryParse(_newPlanCntrl.text.trim());
                           context.read<SubPlanSetupBloc>().setSelectedFee(selectdFee);
                           context.pop();
                         } : null,

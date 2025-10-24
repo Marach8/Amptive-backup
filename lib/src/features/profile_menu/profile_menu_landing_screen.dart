@@ -6,14 +6,13 @@ import 'package:amptive/src/config/utils/dialogs/app_notification_dialog.dart';
 import 'package:amptive/src/views/widgets/common_widgets/annotated_region__widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/app_bar_widget.dart';
 import 'package:amptive/src/shared/custom_container_widget.dart';
+import 'package:amptive/src/views/widgets/common_widgets/back_button.dart';
 import 'package:amptive/src/views/widgets/common_widgets/image_loader_widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/switch_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:gap/gap.dart';
 import 'package:go_router/go_router.dart';
 import 'package:iconsax/iconsax.dart';
-
 import '../../bloc/main_app/profile/profile_menu/calender/calender_visibile_bloc.dart';
 
 class AmptiveProfileMenuScreen extends StatelessWidget {
@@ -23,23 +22,16 @@ class AmptiveProfileMenuScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return ATAnnotatedRegion(
       child: Scaffold(
-        appBar: ATAppBar(
-          leading: GestureDetector(
-            onTap: () => context.pop(),
-            child: const SizedBox(
-              height: 30, width: 30,
-              child: Icon(Icons.keyboard_arrow_left_outlined),
-            ),
-          ),
+        appBar: const ATAppBar(
           leadingWidth: 30,
-          title: Text(
-            ATStrings.MENU,
-            style: Theme.of(context).textTheme.bodyMedium,
-          ),
+          padding: EdgeInsets.only(left: 7),
+          leading: ATRoundedBackBtn(),
+          titleText: ATStrings.MENU,
         ),
 
         body: SingleChildScrollView(
           physics: const BouncingScrollPhysics(),
+          padding: const EdgeInsets.only(bottom: 60),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
@@ -47,12 +39,12 @@ class AmptiveProfileMenuScreen extends StatelessWidget {
               MenuItem(
                 firstIcon: const ATImgLoader(imgPath: ATImgStrings.CALENDER_ICON),
                 middleText: ATStrings.VIEW_CALENDER,
-                margin: const EdgeInsets.fromLTRB(15, 0, 15, 5),
                 onTap: () => context.pushNamed(ATRoutes.CALENDER_SCREEN)
               ),
               MenuItem(
+                onTap: null,
                 firstIcon: const Icon(Icons.visibility_outlined),
-                middleText: ATStrings.ALLOW_SEE_CALENDER,
+                middleText: ATStrings.GRANT_CALENDER_ACCESS,
                 margin: const EdgeInsets.fromLTRB(15, 0, 5, 5),
                 lastIcon: BlocConsumer<CalenderVisibleBloc, bool>(
                   listener: (_, bool state){
@@ -71,7 +63,6 @@ class AmptiveProfileMenuScreen extends StatelessWidget {
                     }
                   )
                 ),
-                onTap: (){}
               ),
 
               const MenuHeading(text: ATStrings.ACCT_SETTINGS),
@@ -150,13 +141,13 @@ class MenuItem extends StatelessWidget {
   final Widget firstIcon;
   final Widget? lastIcon;
   final String middleText;
-  final VoidCallback onTap;
+  final VoidCallback? onTap;
   final EdgeInsetsGeometry? margin;
 
   @override
   Widget build(BuildContext context) {
     return ATContainer(
-      margin: margin ?? const EdgeInsets.fromLTRB(15, 0, 15, 20),
+      margin: margin ?? const EdgeInsets.fromLTRB(15, 12, 15, 12),
       onTap: onTap,
       child: Row(
         children: <Widget>[
@@ -185,7 +176,7 @@ class MenuHeading extends StatelessWidget {
   @override
   Widget build(BuildContext context) 
     => Padding(
-      padding: const EdgeInsets.fromLTRB(15, 10, 15, 15),
+      padding: const EdgeInsets.fromLTRB(15, 30, 15, 16),
       child: Text(
         text,
         style: Theme.of(context).textTheme.bodySmall?.copyWith(

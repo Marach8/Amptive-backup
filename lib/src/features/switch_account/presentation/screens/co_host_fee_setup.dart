@@ -1,3 +1,4 @@
+import 'package:amptive/src/config/config_export.dart';
 import 'package:amptive/src/config/utils/colors.dart';
 import 'package:amptive/src/config/utils/font_sizes.dart';
 import 'package:amptive/src/config/utils/other_strings.dart';
@@ -54,8 +55,9 @@ class _CoHostFeeSetupScreenState extends State<CoHostFeeSetupScreen> {
   Widget build(BuildContext context) {
     return ATAnnotatedRegion(
       child: Scaffold(     
-        body: Padding(
-          padding: const EdgeInsets.fromLTRB(0, kToolbarHeight * 0.8, 0, kBottomNavigationBarHeight),
+        body: SingleChildScrollView(
+          padding: const EdgeInsets.fromLTRB(0, 50, 0, 56),
+          physics: const BouncingScrollPhysics(),
           child: Column(
             children: <Widget>[
               Padding(
@@ -63,15 +65,12 @@ class _CoHostFeeSetupScreenState extends State<CoHostFeeSetupScreen> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
-                    Material(
-                      color: ATColors.black,
-                      child: const ATRoundedBackBtn()
-                    ),
+                    const ATRoundedBackBtn(),
                     Text(
                       ATStrings.COHOST_FEE_SETUP,
                       style: Theme.of(context).textTheme.bodyMedium
                     ),
-                    const Visibility(visible: false, child: ATRoundedBackBtn()),
+                    const SizedBox(width: 30,),
                   ],
                 ),
               ),
@@ -102,7 +101,10 @@ class _CoHostFeeSetupScreenState extends State<CoHostFeeSetupScreen> {
                       ),
                       prefixIcon: Padding(
                         padding: const EdgeInsets.only(left: 15),
-                        child: Text('N', style: Theme.of(context).textTheme.headlineMedium),
+                        child: Text(
+                          ATStrings.NAIRA_TEXT, 
+                          style: context.textTheme.headlineMedium,
+                        ),
                       ),
                       contentPadding: EdgeInsets.zero
                     ),
@@ -133,8 +135,8 @@ class _CoHostFeeSetupScreenState extends State<CoHostFeeSetupScreen> {
           ),
         ),
       
-        bottomSheet: const Padding(
-          padding: EdgeInsets.fromLTRB(15, 5, 15, 10),
+        bottomNavigationBar: const Padding(
+          padding: EdgeInsets.fromLTRB(15, 5, 15, 60),
           child: _BottomSheetContent(),
         ),
       ),
@@ -157,7 +159,8 @@ class _BottomSheetContent extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
             Text(
-              ATStrings.AMTPIVE_CHARGES_4_COHOSTING, maxLines: 2,
+              'Amptive charges 0% fee on payment from creators',
+              textAlign: TextAlign.center, maxLines: 2,
               style: Theme.of(context).textTheme.labelSmall?.copyWith(
                 color: ATColors.white.withValues(alpha: 0.4),
               )
@@ -170,8 +173,8 @@ class _BottomSheetContent extends StatelessWidget {
               } : null,
               btnTitle: ATStrings.CONTINUE
             ),
-            if(!shouldActivate) const SizedBox(height: 15),
-            shouldActivate ? const SizedBox.shrink() : InkWell(
+            const SizedBox(height: 15),
+            InkWell(
               onTap: (){},
               radius: 5,
               child: Text(

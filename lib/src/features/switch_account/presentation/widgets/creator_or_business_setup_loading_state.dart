@@ -6,8 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 
-class CreatorOrBizSetupLoading extends StatelessWidget {
-  const CreatorOrBizSetupLoading({super.key});
+class CreatorOrBusinessSetupLoading extends StatelessWidget {
+  const CreatorOrBusinessSetupLoading({super.key});
 
   static const List<String> creatorList = <String>[ATStrings.CAT_SELECETED, ATStrings.SUB_FEE_SETUP, ATStrings.COHOST_FEE_SETUP];
   static const List<String> bizList = <String>[ATStrings.CAT_SELECETED, ATStrings.SETTING_UP_ACCT, ATStrings.ALMOST_THERE];
@@ -37,18 +37,11 @@ class CreatorOrBizSetupLoading extends StatelessWidget {
                           const Duration(milliseconds: 2500),
                           () => context.mounted ? context.read<SwitchAcctSuccessAnimBloc>().triggerNext(index + 1) : <dynamic, dynamic>{}
                         ) : null,
-                      child: Row(
-                        mainAxisSize: MainAxisSize.min,
-                        spacing: 10,
-                        children: <Widget>[
-                          Text(
-                            item, 
-                            style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                              fontSize: ATSizes.size17
-                            )
-                          ),
-                          const Icon(Icons.check,)
-                        ],
+                      child: Text(
+                        item, 
+                        style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                          fontSize: ATSizes.size17
+                        )
                       ),
                     );
                   }

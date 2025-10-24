@@ -20,7 +20,7 @@ class CohostFeeDescInfo extends StatelessWidget {
       radius: 14,
       margin: const EdgeInsets.only(bottom: 20),
       color: ATColors.hex9E9E9E.withValues(alpha: 0.3),
-      padding: const EdgeInsets.fromLTRB(10, 10, 10, 15),
+      padding: const EdgeInsets.fromLTRB(10, 10, 10, 20),
       child: Column(
         children: <Widget>[
           Align(

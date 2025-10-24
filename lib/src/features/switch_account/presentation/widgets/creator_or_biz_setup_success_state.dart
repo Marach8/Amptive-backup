@@ -12,8 +12,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../profile/presentation/widgets/creator_or_business_badge.dart';
 
 
-class CreatorOrBizSetupSuccess extends StatelessWidget {
-  const CreatorOrBizSetupSuccess({super.key});
+class CreatorOrBusinessSetupSuccess extends StatelessWidget {
+  const CreatorOrBusinessSetupSuccess({super.key});
 
   @override
   Widget build(BuildContext context) {
