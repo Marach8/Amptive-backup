@@ -1,4 +1,4 @@
-import 'package:amptive/src/features/go_live/presentation/views/choose_or_create_go_live_program_screen.dart';
+import 'package:amptive/src/features/go_live/presentation/screens/choose_or_create_go_live_program_screen.dart';
 import 'package:amptive/src/config/utils/image_strings.dart';
 import 'package:amptive/src/config/utils/other_strings.dart';
 import 'package:amptive/src/config/routing/route_strings.dart';

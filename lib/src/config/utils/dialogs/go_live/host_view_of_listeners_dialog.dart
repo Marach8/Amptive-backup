@@ -7,7 +7,6 @@ import 'package:amptive/src/global_export.dart';
 import 'package:amptive/src/views/widgets/common_widgets/dismiss_modal.dart';
 import 'package:amptive/src/views/widgets/common_widgets/search_filter_widget.dart';
 import '../../../../models/host.dart';
-import 'package:gap/gap.dart';
 import '../../../../bloc/main_app/go_live_bloc/host_view/available_cohosts_bloc.dart';
 import '../../../../services/create_show/create_show_service.dart';
 

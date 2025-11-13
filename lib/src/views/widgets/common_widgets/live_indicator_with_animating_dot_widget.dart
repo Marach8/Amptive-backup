@@ -5,7 +5,6 @@ import 'package:amptive/src/config/utils/other_strings.dart';
 import 'package:amptive/src/views/widgets/animation_widgets/other_animation_widgets/opacity_animation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:gap/gap.dart';
 
 class LiveWithAnimatingDot extends StatelessWidget {
   const LiveWithAnimatingDot({

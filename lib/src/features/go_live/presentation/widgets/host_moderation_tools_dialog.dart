@@ -2,7 +2,6 @@ import 'package:amptive/src/config/config_export.dart';
 import 'package:amptive/src/config/utils/dialogs/app_notification_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:gap/gap.dart';
 import 'package:iconsax/iconsax.dart';
 import '../../../../bloc/main_app/go_live_bloc/audience_view/host_moderation_control_bloc.dart';
 import '../../../../views/widgets/common_widgets/dismiss_modal.dart';

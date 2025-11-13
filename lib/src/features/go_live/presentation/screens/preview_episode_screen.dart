@@ -7,7 +7,6 @@ import 'package:amptive/src/views/widgets/common_widgets/sliver_header_delegate.
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:readmore/readmore.dart';
-import '../../../../shared/custom_container_widget.dart';
 import '../../../../views/widgets/common_widgets/list_tile_with_leading_picture_widget.dart';
 
 

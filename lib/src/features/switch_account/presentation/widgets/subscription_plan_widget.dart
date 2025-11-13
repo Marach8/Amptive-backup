@@ -2,7 +2,6 @@ import 'package:amptive/src/config/config_export.dart';
 import 'package:amptive/src/config/utils/dialogs/confirmation_alert_dialog.dart';
 import 'package:amptive/src/features/switch_account/presentation/widgets/subscription_plan_setup_modal.dart';
 import 'package:amptive/src/features/switch_account/presentation/widgets/delete_subscription_plan_modal.dart';
-import 'package:amptive/src/features/profile/presentation/profile_prez_export.dart';
 import 'package:amptive/src/shared/custom_container_widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/divider_widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/image_loader_widget.dart';

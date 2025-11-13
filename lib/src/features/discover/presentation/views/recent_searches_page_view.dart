@@ -2,7 +2,6 @@ import 'package:amptive/src/config/utils/colors.dart';
 import 'package:amptive/src/features/discover/presentation/widgets/search_item_tile.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:gap/gap.dart';
 import '../../../../config/utils/image_strings.dart';
 import '../../../../config/utils/other_strings.dart';
 

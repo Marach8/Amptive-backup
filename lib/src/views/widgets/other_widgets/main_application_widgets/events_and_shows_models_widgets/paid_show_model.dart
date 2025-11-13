@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:gap/gap.dart';
 import '../../../../../config/utils/colors.dart';
 import '../../../../../config/utils/font_sizes.dart';
 import '../../../common_widgets/circle_avatar.dart';

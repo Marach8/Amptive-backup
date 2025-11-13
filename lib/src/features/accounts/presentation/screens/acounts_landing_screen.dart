@@ -4,12 +4,12 @@ import 'package:amptive/src/shared/custom_container_widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/app_bar_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import '../../../config/utils/other_strings.dart';
-import '../../../config/routing/route_strings.dart';
-import '../../../views/widgets/common_widgets/back_button.dart';
+import '../../../../config/utils/other_strings.dart';
+import '../../../../config/routing/route_strings.dart';
+import '../../../../views/widgets/common_widgets/back_button.dart';
 
-class ATAccountScreen extends StatelessWidget {
-  const ATAccountScreen({super.key});
+class ATAccountLandingScreen extends StatelessWidget {
+  const ATAccountLandingScreen({super.key});
 
   @override
   Widget build(BuildContext context) {

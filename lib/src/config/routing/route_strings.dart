@@ -42,6 +42,8 @@ class ATRoutes {
   static const String CREATOR_PROFILE_SCREEN = 'creator_profile';
   static const String PROFILE_MENU_SCREEN = 'profile_menu_screen';
   static const String PROFILE_FOLLOWING_SCREEN = 'profile_following_screen';
+  static const String updateEmailScreen = 'update_email_screen';
+  static const String updatePhoneNoScreen = 'update_phone_no_screen';
   static const String PROFILE_SUBSCRIBERS_SCREEN = 'profile_sub_screen';
   static const String USER_PROFILE_SCREEN = 'user_profile';
   static const String CHOOSE_OR_CREATE_GO_LIVE_PROGRAM_SCREEN = 'choose_or_create_show';
@@ -58,7 +60,7 @@ class ATRoutes {
   static const String MUTED_ACCTS_SCREEN = 'muted_accounts_screen';
   static const String SELECT_COUNTRY_SCREEN = 'select_country_screen';
   static const String ACCT_INFO_SCREEN = 'account_infomation_screen';
-  static const String ACCT_SCREEN = 'account_screen';
+  static const String accountLandingScreen = 'account_screen';
   static const String EDIT_PROFILE = 'edit_profile';
   static const String RECT_IMG_CROPPER_SCREEN = 'profile_bg_crop';
   static const String EDIT_NAME = 'edit_name';

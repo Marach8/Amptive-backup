@@ -1,5 +1,5 @@
 import 'dart:ui';
-import 'package:amptive/src/features/go_live/presentation/views/audience_view_controls.dart';
+import 'package:amptive/src/features/go_live/presentation/screens/audience_view_controls.dart';
 import 'package:amptive/src/global_export.dart';
 import 'package:amptive/src/models/host.dart';
 import 'package:amptive/src/views/widgets/common_widgets/image_loader_widget.dart';

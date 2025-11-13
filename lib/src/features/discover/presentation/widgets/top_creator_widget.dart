@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:gap/gap.dart';
 import '../../../../shared/custom_container_widget.dart';
 import '../../../../views/widgets/common_widgets/image_loader_widget.dart';
 

@@ -6,7 +6,6 @@ import 'package:amptive/src/views/widgets/common_widgets/image_loader_widget.dar
 import 'package:amptive/src/views/widgets/common_widgets/textformfield_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:gap/gap.dart';
 import '../../../../bloc/main_app/profile/profile_followers_bloc.dart';
 import '../../../../models/host.dart';
 import '../../../../views/widgets/common_widgets/app_bar_widget.dart';

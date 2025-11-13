@@ -1,20 +1,12 @@
-import 'package:amptive/src/config/utils/colors.dart';
-import 'package:amptive/src/config/utils/font_sizes.dart';
-import 'package:amptive/src/config/utils/other_strings.dart';
-import 'package:amptive/src/config/routing/route_strings.dart';
 import 'package:amptive/src/features/profile/bloc/profile_bloc_export.dart';
 import 'package:amptive/src/global_export.dart';
 import 'package:amptive/src/views/widgets/common_widgets/annotated_region__widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/back_button.dart';
-import 'package:amptive/src/shared/custom_container_widget.dart';
-import 'package:amptive/src/shared/elevated_button_widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/image_loader_widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/radio_button.dart';
 import 'package:amptive/src/views/widgets/common_widgets/sliver_header_delegate.dart';
 import 'package:amptive/src/views/widgets/common_widgets/textformfield_widget.dart';
-import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:iconsax/iconsax.dart';
 import 'package:provider/provider.dart';
 
 class SelectCategoryScreen extends StatelessWidget {

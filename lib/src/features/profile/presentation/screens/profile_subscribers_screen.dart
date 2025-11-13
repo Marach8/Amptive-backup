@@ -1,16 +1,11 @@
-import 'package:amptive/src/config/utils/colors.dart';
-import 'package:amptive/src/config/utils/image_strings.dart';
 import 'package:amptive/src/shared/outlined_button_widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/annotated_region__widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/image_loader_widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/textformfield_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:gap/gap.dart';
 import '../../../../bloc/main_app/profile/profile_followers_bloc.dart';
 import '../../../../models/host.dart';
-import '../../../../config/utils/font_sizes.dart';
-import '../../../../config/utils/other_strings.dart';
 import '../../../../views/widgets/common_widgets/app_bar_widget.dart';
 import '../../../../shared/custom_container_widget.dart';
 import 'package:amptive/src/config/config_export.dart';
@@ -20,7 +15,6 @@ import 'package:amptive/src/views/widgets/common_widgets/image_loader_widget.dar
 import 'package:amptive/src/views/widgets/common_widgets/textformfield_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:gap/gap.dart';
 import '../../../../bloc/main_app/profile/profile_followers_bloc.dart';
 import '../../../../models/host.dart';
 import '../../../../views/widgets/common_widgets/app_bar_widget.dart';

@@ -5,7 +5,6 @@ import 'package:amptive/src/shared/custom_container_widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/image_loader_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:gap/gap.dart';
 import '../../../../bloc/main_app/go_live_bloc/host_view/host_end_show_bloc.dart';
 import '../../../../config/utils/dialogs/go_live/host_end_show_dialog.dart';
 import '../../../../config/utils/dialogs/go_live/host_view_of_listeners_dialog.dart';

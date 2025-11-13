@@ -5,7 +5,6 @@ import 'package:amptive/src/views/widgets/common_widgets/circular_image.dart';
 import 'package:amptive/src/shared/custom_container_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:gap/gap.dart';
 import '../../../../../models/host.dart';
 import '../../../../../services/go_live_service/go_live_service.dart';
 import '../../../../../config/utils/colors.dart';

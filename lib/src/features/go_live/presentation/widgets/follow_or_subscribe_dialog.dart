@@ -1,4 +1,3 @@
-import 'dart:ui';
 import 'package:amptive/src/bloc/main_app/go_live_bloc/audience_view/following_bloc.dart';
 import 'package:amptive/src/config/utils/colors.dart';
 import 'package:amptive/src/config/utils/extensions/context_extensions.dart';
@@ -13,7 +12,6 @@ import 'package:amptive/src/views/widgets/common_widgets/image_loader_widget.dar
 import 'package:amptive/src/views/widgets/common_widgets/loading_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:gap/gap.dart';
 import '../../../../bloc/main_app/go_live_bloc/audience_view/subscription_bloc.dart';
 import '../../../../models/host.dart';
 import '../../../../views/widgets/common_widgets/dismiss_modal.dart';

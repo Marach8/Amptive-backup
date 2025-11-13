@@ -2,7 +2,6 @@ import 'package:amptive/src/features/discover/presentation/widgets/follow_unfoll
 import 'package:amptive/src/features/discover/presentation/widgets/horizontal_scroll_cards.dart';
 import 'package:amptive/src/config/routing/route_strings.dart';
 import 'package:flutter/material.dart';
-import 'package:gap/gap.dart';
 import 'package:go_router/go_router.dart';
 import '../../../../config/utils/colors.dart';
 import '../../../../config/utils/image_strings.dart';

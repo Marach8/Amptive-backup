@@ -2,6 +2,7 @@ import 'dart:async' show StreamSubscription, Timer, StreamController;
 import 'dart:io' show Directory, File;
 import 'dart:ui';
 import 'package:amptive/src/features/go_live/go_live_export.dart';
+import 'package:amptive/src/features/go_live/presentation/widgets/go_live_onboarding_bottom_sheet.dart';
 import 'package:amptive/src/global_export.dart';
 import 'package:amptive/src/views/widgets/common_widgets/annotated_region__widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/app_bar_widget.dart';
@@ -9,7 +10,6 @@ import 'package:amptive/src/views/widgets/common_widgets/back_button.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_sound/flutter_sound.dart';
 import 'package:go_router/go_router.dart';
-import 'package:iconsax/iconsax.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 import '../../../../views/widgets/common_widgets/image_loader_widget.dart';
@@ -325,74 +325,10 @@ class _SubWidgetState extends State<_SubWidget> {
         ),
   
       
-        bottomSheet: Padding(
-          padding: const EdgeInsets.fromLTRB(15, 5, 15, 50),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: <Widget>[
-              AutoplayCountdownWidget(
-                isVisibleNotifier: _countDownIsVisibleNotifier,
-                timeRemainingStreamCntrl: _timeRemainingStreamCntrl,
-                onEnd: () => _hasPlayedAlready ? null : _startAudioPlayCountDown(),
-              ),
-
-              const SizedBox(height: 10,),
-              BlocBuilder<GoLiveOnboardBloc, (OnboardStage, bool)>(
-                builder: (_, (OnboardStage, bool) state) {
-                  final bool shouldRecord = state.$1 == OnboardStage.initial;
-                  final bool shouldActivateBtn = state.$2;
-                  final bool isGoingLive = state.$1 == OnboardStage.isGoingLive;
-
-                  return ATSlidingSwitcher(
-                    duration: 800,
-                    child: isGoingLive ? const IsGoingLiveInfo() : Row(
-                      children: <Widget>[
-                        Flexible(
-                          child: ATPlainElevatedBtn(
-                            onPressed: shouldActivateBtn ? (){
-                              if(shouldRecord){
-                                _startRecording();
-                                context.read<GoLiveOnboardBloc>().setFullState((OnboardStage.isRecording, false));
-                              }
-                              else{
-                                context.read<GoLiveOnboardBloc>().setStage(OnboardStage.isGoingLive);
-                              }
-                            } : null,
-                            btnTitle: shouldRecord ? ATStrings.RECORD : ATStrings.DONE,
-                            fgColor: shouldRecord ? ATColors.white : ATColors.black,
-                            bgColor: shouldRecord ? ATColors.hexF92018 : ATColors.white
-                          ),
-                        ),
-                        ValueListenableBuilder<bool>(
-                          valueListenable: _reRecordBtnNotifier,
-                          builder: (_, bool showBtn, __) {
-                            return ATScalingSwitcher(
-                              child: showBtn ? Row(
-                                children: <Widget>[
-                                  const SizedBox(width: 15,),
-                                  ATContainer(
-                                    key: const ValueKey<int>(2000),
-                                    onTap: (){
-                                      _reRecordBtnNotifier.value = false;
-                                      _hasPlayedAlready = false;
-                                      context.read<GoLiveOnboardBloc>().setFullState((OnboardStage.initial, true));
-                                    },
-                                    color: ATColors.white.withValues(alpha: 0.1), 
-                                    radius: 30,  height: 54, width: 54,
-                                    child: const Icon(Iconsax.refresh,),
-                                  ),
-                                ],
-                              ) : const SizedBox.shrink(key: ValueKey<int>(2001),)
-                            );
-                          }
-                        )
-                      ],
-                    ),
-                  );
-                }
-              )
-            ],
-          ),
+        bottomSheet: GoLiveOnboardingBottomSheet(
+          countDownVisibilityNotifier: _countDownIsVisibleNotifier,
+          reRecordButtonNotifier: _reRecordBtnNotifier,
+          timeRemainingStreamController: _timeRemainingStreamCntrl,
         )
       ),
     );

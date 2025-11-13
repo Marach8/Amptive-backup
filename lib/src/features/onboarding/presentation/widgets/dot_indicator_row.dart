@@ -1,5 +1,4 @@
 import 'package:amptive/src/global_export.dart';
-import 'package:amptive/src/shared/custom_container_widget.dart';
 import 'package:go_router/go_router.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 

@@ -2,7 +2,6 @@ import 'package:amptive/src/config/config_export.dart';
 import 'package:amptive/src/views/widgets/common_widgets/circle_avatar.dart';
 import 'package:amptive/src/views/widgets/common_widgets/show_event_nd_paid_icons.dart';
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 import '../../../../shared/custom_container_widget.dart';
 import '../../../../views/widgets/common_widgets/image_loader_widget.dart';
 

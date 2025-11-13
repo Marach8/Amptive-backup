@@ -11,7 +11,6 @@ import 'package:amptive/src/views/widgets/common_widgets/loading_indicator.dart'
 import 'package:amptive/src/views/widgets/common_widgets/rich_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:gap/gap.dart';
 import 'package:go_router/go_router.dart';
 import '../../../../bloc/main_app/go_live_bloc/host_view/host_end_show_bloc.dart';
 import '../../other_strings.dart';

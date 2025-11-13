@@ -75,6 +75,7 @@ class ATTextFormField extends StatelessWidget {
   Widget build(BuildContext context) {
     return TextFormField(
       controller: controller,
+      onTapOutside: (_) => FocusScope.of(context).unfocus(),
       enabled: enabled,      
       textAlign: textAlign ?? TextAlign.start,
       validator: validator,

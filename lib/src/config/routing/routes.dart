@@ -1,5 +1,7 @@
 import 'dart:io';
 import 'package:amptive/src/config/routing/routing_export.dart';
+import 'package:amptive/src/features/accounts/presentation/screens/update_email_screen.dart';
+import 'package:amptive/src/features/accounts/presentation/screens/update_phone_no_screen.dart';
 import 'package:amptive/src/features/auth/phone_auth_screen.dart';
 import 'package:amptive/src/features/auth/temp_login_screen.dart';
 import 'package:amptive/src/config/utils/extensions/string_extensions.dart';
@@ -21,8 +23,8 @@ import 'package:amptive/src/features/profile/presentation/screens/edit_name_scre
 import 'package:amptive/src/features/profile/presentation/screens/edit_username_screen.dart';
 import 'package:amptive/src/features/profile/presentation/screens/profile_views_export.dart';
 import 'package:amptive/src/features/home/presentation/views/scheduled_screen.dart';
-import 'package:amptive/src/features/profile_menu/presentation/account_info_screen.dart';
-import 'package:amptive/src/features/profile_menu/presentation/acounts_landing_screen.dart';
+import 'package:amptive/src/features/accounts/presentation/screens/account_info_screen.dart';
+import 'package:amptive/src/features/accounts/presentation/screens/acounts_landing_screen.dart';
 import 'package:amptive/src/features/switch_account/presentation/switch_acct/switch_acct_export.dart';
 import 'package:amptive/src/features/wallet/presentation/views/wallet_txns_history_screen.dart';
 import 'package:amptive/src/features/onboarding/presentation/views/onboarding_screen.dart';
@@ -490,9 +492,9 @@ final GoRouter amptiveAppRouter = GoRouter(
           ),
 
           GoRoute(
-            name: ATRoutes.ACCT_SCREEN,
-            path: ATRoutes.ACCT_SCREEN.addSlash,
-            builder: (_, __) => const ATAccountScreen(),
+            name: ATRoutes.accountLandingScreen,
+            path: ATRoutes.accountLandingScreen.addSlash,
+            builder: (_, __) => const ATAccountLandingScreen(),
             routes: <RouteBase>[
               GoRoute(
                 name: ATRoutes.ACCT_INFO_SCREEN,
@@ -523,6 +525,21 @@ final GoRouter amptiveAppRouter = GoRouter(
                     selectedCountry: selectedCountry,
                   );
                 }
+              ),
+
+              GoRoute(
+                name: ATRoutes.updateEmailScreen,
+                path: ATRoutes.updateEmailScreen.addSlash,
+                pageBuilder: (_, GoRouterState state) => ATSlidingRouteTransition<void>(
+                  child: UpdateEmailScreen(title: state.extra as String,),
+                ),
+              ),
+              GoRoute(
+                name: ATRoutes.updatePhoneNoScreen,
+                path: ATRoutes.updatePhoneNoScreen.addSlash,
+                pageBuilder: (_, GoRouterState state) => ATSlidingRouteTransition<void>(
+                  child: UpdatePhoneNoScreen(title: state.extra as String,),
+                ),
               ),
             ]
           ),

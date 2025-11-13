@@ -1,7 +1,6 @@
 import 'package:amptive/src/models/host.dart';
 import 'package:amptive/src/config/utils/font_sizes.dart';
 import 'package:flutter/material.dart';
-import 'package:gap/gap.dart';
 import '../../../../../config/utils/other_strings.dart';
 import '../../../../../models/go_live_notification_model.dart';
 import '../../../../../config/utils/colors.dart';

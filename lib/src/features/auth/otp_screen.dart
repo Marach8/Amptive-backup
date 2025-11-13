@@ -158,28 +158,37 @@ class _ATOTPScreenState extends State<ATOTPScreen> {
           ),
         ),
 
-        bottomSheet: Padding(
-          padding: const EdgeInsets.fromLTRB(15, 0, 15, 15),
-          child: BlocConsumer<AmptiveOTPAuthBloc, AmptiveOTPAuthState>(
-            listener: (BuildContext context, AmptiveOTPAuthState state) {
-              if (state is VerifiedOTPAuthState && context.mounted) {
-                context.pushNamed(ATRoutes.PSWRD_AUTH_SCREEN,);
-                //Remove this screen and the email input screen
-                // context.pop(); context.pop(true);
-              }
-            },
-            buildWhen: (AmptiveOTPAuthState prev, AmptiveOTPAuthState curr) => curr is! AmptiveOTPCounterState,
-            builder: (BuildContext context, AmptiveOTPAuthState state) {
-              return ATPlainElevatedBtn(
-                onPressed: state is! ValidOTPAuthState ? null:
-                  () => context.read<AmptiveOTPAuthBloc>().add(VerifyOTPAuthEvent()) ,
-                btnTitle: ATStrings.NEXT,
-                child: state is LoadingAuthState ? ATLoadingIndicator(
-                  color: ATColors.white,
-                ) : null,
-              );
-            },
-          ),
+        bottomSheet: Builder(
+          builder: (BuildContext context) {
+            final double bottom = MediaQuery.viewInsetsOf(context).bottom;
+            final double bottomPadding = bottom == 0 ? 60 : 15;
+            return Padding(
+              padding: EdgeInsets.fromLTRB(15, 0, 15, bottomPadding),
+              child: BlocConsumer<AmptiveOTPAuthBloc, AmptiveOTPAuthState>(
+                listener: (BuildContext context, AmptiveOTPAuthState state) {
+                  if (state is VerifiedOTPAuthState && context.mounted) {
+                    context.pushNamed(ATRoutes.PSWRD_AUTH_SCREEN,);
+                    //Remove this screen and the email input screen
+                    // context.pop(); context.pop(true);
+                  }
+                },
+                buildWhen: (AmptiveOTPAuthState prev, AmptiveOTPAuthState curr) => curr is! AmptiveOTPCounterState,
+                builder: (BuildContext context, AmptiveOTPAuthState state) {
+                  return ATPlainElevatedBtn(
+                    onPressed:(){
+                      context.pop(widget.emailOrPhone);
+                    },
+                    // onPressed: state is! ValidOTPAuthState ? null:
+                    //   () => context.read<AmptiveOTPAuthBloc>().add(VerifyOTPAuthEvent()) ,
+                    btnTitle: ATStrings.NEXT,
+                    child: state is LoadingAuthState ? ATLoadingIndicator(
+                      color: ATColors.white,
+                    ) : null,
+                  );
+                },
+              ),
+            );
+          }
         ),
       ),
     );

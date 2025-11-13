@@ -14,7 +14,6 @@ import 'package:amptive/src/views/widgets/common_widgets/textformfield_widget.da
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:gap/gap.dart';
 import 'package:get_it/get_it.dart';
 import '../../../../services/go_live_service/go_live_service.dart';
 import '../../../../config/utils/colors.dart';
