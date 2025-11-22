@@ -1,5 +1,5 @@
-import 'package:amptive/src/bloc/main_app/profile/profile_menu/calender/calender_month_view_bloc.dart';
-import 'package:amptive/src/bloc/main_app/profile/profile_menu/calender/calender_programs_bloc.dart';
+import 'package:amptive/src/features/calender/v_model/calender_month_view_bloc.dart';
+import 'package:amptive/src/features/calender/v_model/calender_programs_bloc.dart';
 import 'package:amptive/src/config/utils/colors.dart';
 import 'package:amptive/src/config/utils/other_strings.dart';
 import 'package:amptive/src/config/utils/dialogs/app_notification_dialog.dart';

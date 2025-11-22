@@ -1,4 +1,5 @@
 import 'package:amptive/src/config/utils/colors.dart';
+import 'package:amptive/src/config/utils/extensions/context_extensions.dart';
 import 'package:amptive/src/config/utils/other_strings.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -10,11 +11,13 @@ class ATBackBtn extends StatelessWidget {
     this.leadingStyle,
     this.iconSize,
     this.alignment,
+    this.leadingWidget,
   });
   final String? leadingText;
   final TextStyle? leadingStyle;
   final double? iconSize;
   final AlignmentGeometry? alignment;
+  final Widget? leadingWidget;
 
   @override
   Widget build(BuildContext context) {
@@ -27,9 +30,9 @@ class ATBackBtn extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
             Icon(Icons.arrow_back_ios, size: iconSize ?? 20),
-            Text(
+            leadingWidget ?? Text(
               leadingText ?? ATStrings.BACK,
-              style: leadingStyle ?? Theme.of(context).textTheme.titleMedium,
+              style: leadingStyle ?? context.textTheme.titleMedium,
             )
           ],
         ),

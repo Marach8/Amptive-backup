@@ -199,6 +199,6 @@ class _ProfileDesc extends StatelessWidget {
 
 
 final List<String> _tabs = <String>[
-  ATStrings.SCHEDULED, ATStrings.ENDED,
+  ATStrings.scheduled, ATStrings.ENDED,
   ATStrings.SHOWS, ATStrings.EVENTS
 ];

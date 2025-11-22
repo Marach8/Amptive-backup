@@ -131,10 +131,10 @@ class ATStrings{
   static const String ENTER_UR_EMAIL = 'Enter your email...';
   static const String thisEmailWillBeVerified = 'This email will be verified in the next step';
   static const String VERIFY_EMAIL = 'Verify email';
-  static const String UNBLOCK_DESC = 'will be able to follow, subscribe and see your app activities';
+  static const String unblockDesc = 'will be able to follow, subscribe and see your app activities';
   static String unMuteDesc(String text) => "You will be able to see $text's app activities";
   static String enterLink(String link) => "Enter your $link link";
-  static const String IS_UNBLOCKED = 'is now unblocked';
+  static const String isUnblocked = 'is now unblocked';
   static const String IS_UNMUTED = 'is now unmuted';
   static const String TRANSFER_FUNDS = 'Transfer Funds';
   static const String COUNTRY = 'Country';
@@ -202,7 +202,7 @@ class ATStrings{
   static const String whatIsYourName = 'What is your name?';
   static const String CREATE_ACCT = 'Create account';
   static const String PRIVACY_POLICY = 'Privacy Policy.';
-  static const String CREATE_SCHEDULE = 'Create a Schedule';
+  static const String createSchedule = 'Create a Schedule';
   static const String SUB_OVERVIEW = 'Subscription Plan Overview';
   static const String SUB_OVERVIEW_DESC = 'Only subscribers will have access to your shows';
   static const String BY_CLICKING_ON_CREATE_ACCT = 'By clicking on ‘Create account’, you agree to the';
@@ -278,7 +278,7 @@ class ATStrings{
   static const String WHISPERS = 'Whispers';
   static const String ATTENDED = 'Attended';
   static const String UPCOMING = 'Upcoming';
-  static const String SCHEDULED = 'Scheduled';
+  static const String scheduled = 'Scheduled';
   static const String SCHEDULE = 'Schedule';
   static const String SUBSCRIBED = 'Subscribed';
   static const String SUBSCRIBE = 'Subscribe';
@@ -324,7 +324,7 @@ class ATStrings{
   static const String LINK_URL = 'What is the URL of your link';
 
   static const String SEARCH_FOR_EVENTS_ND_SHOWS = 'Search for events, shows and more';
-  static const String CANCEL = 'Cancel';
+  static const String cancel = 'Cancel';
   static const String TRENDING_HASHTAGS = 'Trending Hashtags';
   static const String TRENDING = 'Trending';
   static const String SPORTS = 'Sports';
@@ -343,13 +343,13 @@ class ATStrings{
   static const String RE_ENTER_PIN = 'Re-enter pin';
   static const String ADD_SECURITY_QUESTION = 'Add security question';
   static const String FINISH_SETUP = 'Finish setup';
-  static const String MENU = 'Menu';
+  static const String menu = 'Menu';
   static const String VIEW_CALENDER = 'View calender';
   static const String CALENDER = 'Calender';
   static const String GRANT_CALENDER_ACCESS =  'Grant calender access';
   static const String ACCT_SETTINGS = 'Account Settings';
   static const String ACCT = 'Account';
-  static const String PRIVACY = 'Privacy';
+  static const String privacy = 'Privacy';
   static const String EDIT_PROFILE = 'Edit Profile';
   static const String ABT_U = 'About you';
   static const String USERNAME = 'Username';
@@ -374,12 +374,12 @@ class ATStrings{
   static const String PSWRD_ND_SECURITY = 'Password and Security';
   static const String APP_SETTINGS = 'App Settings';
   static const String SETTINGS = 'Settings';
-  static const String LANGUAGE = 'Language';
+  static const String language = 'Language';
   static const String APPROVED_USERS_CAN_FOLLOW = 'Only users who you approve can follow you and see your activities';
   static const String PRIVATE_ACCT = 'Private account';
   static const String MUTES_ND_BLOCKS = 'Mutes & Blocks';
-  static const String MUTED_ACCTS = 'Muted accounts';
-  static const String BLOCKED_ACCTS = 'Blocked accounts';
+  static const String mutedAccounts = 'Muted accounts';
+  static const String blockedAccounts = 'Blocked accounts';
   static const String HELP_SUPPORT = 'Help & Support';
   static const String ABOUT = 'About';
   static const String LOGOUT = 'Log out';
@@ -437,7 +437,7 @@ class ATStrings{
   static const String SEARCH_4_LISTENERS = 'Search for listeners';
   static const String SEARCH_4_HASHTAGS = 'Search for hashtags';
   static const String SUGGESTIONS = 'Suggestions';
-  static const String APP_LANG = 'App language';
+  static const String appLanguage = 'App language';
   static const String NO_RECENT_RECEPIENT = 'No Recent Recipient';
   static const String TRY_SEARCHING_4_USER = 'Try searching for the user you want to send funds to.';
   static const String NO_SUGGESTIONS = 'No Suggestions';
@@ -519,7 +519,7 @@ class ATStrings{
   static const String SHARE_EPISODE_LINK_DESC = 'Share your episode link to build excitement and attract more attendees';
   static const String VIEW_EPISODE_DETAILS = 'View episode details';
   static const String SHARE_EPISODE = 'Share episode';
-  static const String UNBLOCK = 'Unblock';
+  static const String unblock = 'Unblock';
   static const String UNMUTE = 'Unmute';
   static const String ABOUT_EPISODE = 'About Episode';
   static const String AMPTIVE_4_CREATORS = 'Amptive for Creators';

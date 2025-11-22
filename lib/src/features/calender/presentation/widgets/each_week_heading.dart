@@ -1,5 +1,5 @@
-import 'package:amptive/src/bloc/main_app/profile/profile_menu/calender/calender_programs_bloc.dart';
-import 'package:amptive/src/bloc/main_app/profile/profile_menu/calender/selected_calender_date_bloc.dart';
+import 'package:amptive/src/features/calender/v_model/calender_programs_bloc.dart';
+import 'package:amptive/src/features/calender/v_model/selected_calender_date_bloc.dart';
 import 'package:amptive/src/config/utils/colors.dart';
 import 'package:amptive/src/config/utils/font_sizes.dart';
 import 'package:amptive/src/config/utils/helper_functions.dart';

@@ -1,12 +1,12 @@
-import 'package:amptive/src/bloc/main_app/profile/profile_menu/calender/calender_programs_bloc.dart';
-import 'package:amptive/src/bloc/main_app/profile/profile_menu/calender/day_view_bloc.dart';
+import 'package:amptive/src/features/calender/v_model/calender_programs_bloc.dart';
+import 'package:amptive/src/features/calender/v_model/day_view_bloc.dart';
 import 'package:amptive/src/config/utils/colors.dart';
 import 'package:amptive/src/config/utils/font_sizes.dart';
 import 'package:amptive/src/views/widgets/common_widgets/loading_indicator.dart';
 import 'package:amptive/src/views/widgets/common_widgets/shimmer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../calender_export.dart' show CalenderProgramDisplay;
+import '../../calender_export.dart' show CalenderProgramDisplay;
 
 
 

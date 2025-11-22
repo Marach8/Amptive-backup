@@ -11,7 +11,7 @@ class ATImgStrings{
   static const String AMPTIVE_LOGO = '$_svgPath/Logo.svg';
   static const String AMPTIVE_NAME_LOGO = '$_svgPath/amptive_logotype.svg';
   static const String WALLET_ICON = '$_svgPath/WALLET ICON.svg';
-  static const String SHOW_ICON = '$_svgPath/Frame 79.svg';
+  static const String showIcon = '$_svgPath/Frame 79.svg';
   static const String WIFI_ICON = '$_svgPath/Start or Schedule.svg';
   static const String robot = '$_svgPath/delivery robot.svg';
   static const String filledBell = '$_svgPath/Bell=Fill.svg';

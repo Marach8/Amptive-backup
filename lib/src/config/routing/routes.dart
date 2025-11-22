@@ -13,6 +13,7 @@ import 'package:amptive/src/features/auth/password_auth_screen.dart';
 import 'package:amptive/src/features/auth/add_profile_pic.dart';
 import 'package:amptive/src/features/auth/auth_options_screen.dart';
 import 'package:amptive/src/features/auth/username_auth_screen.dart';
+import 'package:amptive/src/features/calender/presentation/screens/calender_landing_screen.dart';
 import 'package:amptive/src/features/discover/presentation/views/society_screen.dart';
 import 'package:amptive/src/features/discover/presentation/views/trending_hashtags_screen.dart';
 import 'package:amptive/src/features/home/home_export.dart';
@@ -39,7 +40,7 @@ import '../../features/discover/presentation/views/trending_society_screen.dart'
 import '../../features/go_live/go_live_export.dart';
 import '../../features/profile/presentation/screens/edit_profile_landing_screen.dart';
 import '../../features/profile/presentation/screens/edit_socials_screen.dart';
-import '../../features/profile_menu/presentation/select_country_screen.dart';
+import '../../features/accounts/presentation/screens/select_country_screen.dart';
 import '../../features/wallet/wallet_export.dart';
 
 // The route configuration.
@@ -461,7 +462,7 @@ final GoRouter amptiveAppRouter = GoRouter(
               GoRoute(
                 name: ATRoutes.CALENDER_SCREEN,
                 path: ATRoutes.CALENDER_SCREEN,
-                builder: (_, __) => const ATCalenderScreen(),
+                builder: (_, __) => const ATCalenderLandingScreen(),
               ),
 
               GoRoute(
@@ -473,12 +474,12 @@ final GoRouter amptiveAppRouter = GoRouter(
               GoRoute(
                 name: ATRoutes.PRIVACY_SCREEN,
                 path: ATRoutes.PRIVACY_SCREEN,
-                builder: (_, __) => const AmptivePrivacyScreen(),
+                builder: (_, __) => const ATPrivacyScreen(),
                 routes: <RouteBase>[
                   GoRoute(
                     name: ATRoutes.BLOCKED_ACCTS_SCREEN,
                     path: ATRoutes.BLOCKED_ACCTS_SCREEN,
-                    builder: (_, __) => const AmptiveBlockedAcctsScreen(),
+                    builder: (_, __) => const ATBlockedAcctsScreen(),
                   ),
 
                   GoRoute(

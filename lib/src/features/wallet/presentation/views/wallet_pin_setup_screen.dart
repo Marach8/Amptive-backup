@@ -103,7 +103,7 @@ class ATWalletPinSetupScreen extends StatelessWidget {
                               title: ATStrings.ALLOW_FACE_ID,
                               content: ATStrings.ALLOW_FACE_ID_DESC,
                               yesString: ATStrings.PROCEED,
-                              noString: ATStrings.CANCEL
+                              noString: ATStrings.cancel
                             );
                           },
                           padding: const EdgeInsets.fromLTRB(15, 10, 15, 10),

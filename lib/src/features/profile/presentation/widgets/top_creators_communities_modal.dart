@@ -3,7 +3,7 @@ import 'package:amptive/src/views/widgets/common_widgets/image_loader_widget.dar
 import 'package:get_it/get_it.dart';
 import '../../../../services/create_show/create_show_service.dart';
 import 'package:amptive/src/global_export.dart';
-import 'package:amptive/src/views/widgets/common_widgets/dismiss_modal.dart';
+import 'package:amptive/src/views/widgets/common_widgets/modal_dismisser.dart';
 
 Future<void> showTopCreationCommunitiesModal(BuildContext context) async {
   CreateShowService service = GetIt.I<CreateShowService>();

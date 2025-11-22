@@ -127,7 +127,7 @@ class ATEnterAccountNoScreen extends StatelessWidget {
                             title: ATStrings.SAVE_BANK_DETAILS,
                             content: ATStrings.SAVE_BANK_DETAILS_DESC,
                             yesString: ATStrings.SAVE,
-                            noString: ATStrings.CANCEL
+                            noString: ATStrings.cancel
                           );
 
                           if(context.mounted){

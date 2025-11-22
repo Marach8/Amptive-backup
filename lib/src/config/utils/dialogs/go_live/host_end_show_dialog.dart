@@ -213,7 +213,7 @@ Future<void> showHostEndShowDialog({
                       GestureDetector(
                         onTap: () => context.pop(),
                         child: Text(
-                          ATStrings.CANCEL,
+                          ATStrings.cancel,
                           style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                             fontSize: ATSizes.size17
                           )

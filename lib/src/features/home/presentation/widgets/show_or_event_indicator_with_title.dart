@@ -8,7 +8,7 @@ class ShowOrEventIndicatorWithTitle extends StatelessWidget {
   const ShowOrEventIndicatorWithTitle({
     super.key,
     this.title = 'We Can Do Hard Things',
-    this.eventOrShowImgPath = ATImgStrings.SHOW_ICON,
+    this.eventOrShowImgPath = ATImgStrings.showIcon,
     this.leading,
   });
 

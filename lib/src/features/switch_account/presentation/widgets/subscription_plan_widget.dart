@@ -71,7 +71,7 @@ class SubPlanWidget extends StatelessWidget {
                           title: ATStrings.DELETE_SUB_PLAN,
                           content: ATStrings.DELETE_SUB_PLAN_DESC,
                           yesString: ATStrings.DELETE,
-                          noString: ATStrings.CANCEL,
+                          noString: ATStrings.cancel,
                         );
                         if(context.mounted && delete == true){
                           context.read<SubPlanSetupBloc>().resetPlan();

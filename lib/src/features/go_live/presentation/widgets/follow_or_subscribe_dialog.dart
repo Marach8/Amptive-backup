@@ -14,7 +14,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../bloc/main_app/go_live_bloc/audience_view/subscription_bloc.dart';
 import '../../../../models/host.dart';
-import '../../../../views/widgets/common_widgets/dismiss_modal.dart';
+import '../../../../views/widgets/common_widgets/modal_dismisser.dart';
 import '../../../../config/utils/other_strings.dart';
 
 Future<void> showFollowHostOrCohostDialog({
@@ -138,7 +138,7 @@ Future<void> showFollowHostOrCohostDialog({
                                   title: 'Unfollowing ${host.obj.name ?? ''}?',
                                   content: 'Unfollowing will automatically cancell your subscription to their content.',
                                   yesString: 'Unfollow',
-                                  noString: ATStrings.CANCEL
+                                  noString: ATStrings.cancel
                                 );
                                 if(context.mounted && (shouldUnfollow ?? false)){
                                   context.read<AmptiveFollowingBloc>().add(ShouldUnFollowEvent());
@@ -182,7 +182,7 @@ Future<void> showFollowHostOrCohostDialog({
                                   title: "Are your sure you want to unsubscribe from ${host.obj.name ?? ''}'s content?",
                                   content: 'Unsubscribing will remove your access to "subscribers-only" live shows!',
                                   yesString: ATStrings.UNSUBSCRIBE,
-                                  noString: ATStrings.CANCEL
+                                  noString: ATStrings.cancel
                                 );
         
                                 if(context.mounted && (shouldUnSubscribe ?? false)){

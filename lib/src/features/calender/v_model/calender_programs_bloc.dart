@@ -1,6 +1,6 @@
 import 'package:amptive/src/models/host.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../../../../services/go_live_service/go_live_service.dart';
+import '../../../services/go_live_service/go_live_service.dart';
 
 class CalenderProgramBloc extends Bloc<ProgramsEvents, ProgramsState>{
   CalenderProgramBloc():super(NoProgramsState()){

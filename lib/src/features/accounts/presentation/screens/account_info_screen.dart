@@ -1,16 +1,16 @@
-
-import 'package:amptive/src/bloc/main_app/profile/profile_menu/select_country_bloc.dart';
-import 'package:amptive/src/config/utils/colors.dart';
+import 'package:amptive/src/config/config_export.dart';
+import 'package:amptive/src/features/accounts/v_models/select_country_bloc.dart';
 import 'package:amptive/src/config/utils/dialogs/app_notification_dialog.dart';
 import 'package:amptive/src/config/utils/dialogs/confirmation_alert_dialog.dart';
+import 'package:amptive/src/shared/cupertino_country_picker.dart';
 import 'package:amptive/src/views/widgets/common_widgets/annotated_region__widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/app_bar_widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/back_button.dart';
+import 'package:country_pickers/country.dart';
+import 'package:country_pickers/country_pickers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import '../../../../config/utils/other_strings.dart';
-import '../../../../config/routing/route_strings.dart';
 
 
 class ATAccountInfoScreen extends StatelessWidget {
@@ -24,6 +24,7 @@ class ATAccountInfoScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Country selectedCountry = CountryPickerUtils.getCountryByIsoCode('NG');
     return BlocProvider<ATSelectCountryBloc>(
       create: (_) => ATSelectCountryBloc(),
       child: ATAnnotatedRegion(
@@ -52,7 +53,7 @@ class ATAccountInfoScreen extends StatelessWidget {
                         title: ATStrings.WANT_2_CHANGE_EMAIL,
                         content: '',
                         yesString: ATStrings.CHANGE,
-                        noString: ATStrings.CANCEL
+                        noString: ATStrings.cancel
                       );
                     }
                     else{
@@ -88,7 +89,7 @@ class ATAccountInfoScreen extends StatelessWidget {
                         title: ATStrings.WANT_2_CHANGE_FONE,
                         content: '',
                         yesString: ATStrings.CHANGE,
-                        noString: ATStrings.CANCEL
+                        noString: ATStrings.cancel
                       );
                     }
                     else{
@@ -110,18 +111,22 @@ class ATAccountInfoScreen extends StatelessWidget {
                   },
                 ),
                 
-                BlocBuilder<ATSelectCountryBloc, String?>(
-                  builder: (_, String? state) {
+                StatefulBuilder(
+                  builder: (_, StateSetter setter) {
                     return RenderRowInfo(
                       title: ATStrings.COUNTRY,
-                      value: state ?? 'Nigeria',
-                      onTap: () => context.pushNamed(
-                        ATRoutes.SELECT_COUNTRY_SCREEN,
-                        extra: <Object>[
-                          'Nigeria',
-                          _listOfCountries
-                        ]
-                      ),
+                      value: selectedCountry.name,
+                      onTap: ()async{
+                        final Country? newSelectedCountry = await showCupertinoCountryPickerModal(
+                          context: context,
+                          initialCountry: selectedCountry,
+                        );
+                        if(newSelectedCountry != null){
+                          setter((){
+                            selectedCountry = newSelectedCountry;
+                          });
+                        }
+                      }
                     );
                   }
                 ),
@@ -140,11 +145,13 @@ class RenderRowInfo extends StatelessWidget {
     super.key,
     required this.title,
     required this.onTap,
-    required this.value
+    required this.value,
+    this.valueLeading,
   });
 
   final String title, value;
   final VoidCallback onTap;
+  final Widget? valueLeading;
 
   @override
   Widget build(BuildContext context) {
@@ -155,15 +162,18 @@ class RenderRowInfo extends StatelessWidget {
         children: <Widget>[
           Text(
             title,
-            style: Theme.of(context).textTheme.bodySmall,
+            style: context.textTheme.bodySmall,
           ),
           InkWell(
             onTap: onTap,
             child: Row(
               children: <Widget>[
+                if(valueLeading != null)...<Widget>[
+                  valueLeading!, const SizedBox(width: 5,)
+                ],
                 Text(
                   value,
-                  style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                  style: context.textTheme.bodySmall?.copyWith(
                     color: ATColors.white.withValues(alpha: 0.4)
                   ),
                 ),
@@ -176,10 +186,3 @@ class RenderRowInfo extends StatelessWidget {
     );
   }
 }
-
-
-
-final List<String> _listOfCountries = <String>[
-  'Afghanistan', 'Albania', 'Algeria', 'Angola', 'Antigua and Barbuda',
-  'Austria', 'Azerbaijan', 'Bahamas', 'Nigeria', 'Bangladesh'
-];

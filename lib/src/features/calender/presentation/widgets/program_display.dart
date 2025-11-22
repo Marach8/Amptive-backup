@@ -1,4 +1,4 @@
-import 'package:amptive/src/bloc/main_app/profile/profile_menu/calender/calender_programs_bloc.dart';
+import 'package:amptive/src/features/calender/v_model/calender_programs_bloc.dart';
 import 'package:amptive/src/models/host.dart';
 import 'package:amptive/src/config/utils/colors.dart';
 import 'package:amptive/src/config/utils/font_sizes.dart';

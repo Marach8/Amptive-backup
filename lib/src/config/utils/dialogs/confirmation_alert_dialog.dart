@@ -21,7 +21,7 @@ Future<bool?> showConfirmationDialog({
   return await showDialog<bool?>(
     context: context,
     builder: (_) => AlertDialog(
-      backgroundColor: ATColors.hex252525.withOpacity(0.82),
+      backgroundColor: ATColors.hex252525,
       contentPadding: const EdgeInsets.fromLTRB(0, 20, 0, 0),
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(14),
@@ -159,7 +159,7 @@ Future<bool?> showKickOutConfirmationDialog({
           GestureDetector(
             onTap: () => context.pop(false),
             child: Text(
-              ATStrings.CANCEL,
+              ATStrings.cancel,
               style: context.textTheme.bodyMedium?.copyWith(
                 fontSize: ATSizes.size15,
               ),

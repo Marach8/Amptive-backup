@@ -2,7 +2,7 @@ import 'package:go_router/go_router.dart';
 
 import 'package:amptive/src/views/widgets/common_widgets/radio_button.dart';
 import 'package:amptive/src/global_export.dart';
-import 'package:amptive/src/views/widgets/common_widgets/dismiss_modal.dart';
+import 'package:amptive/src/views/widgets/common_widgets/modal_dismisser.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../views/widgets/common_widgets/rich_text.dart';

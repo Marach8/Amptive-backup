@@ -118,7 +118,7 @@ class _ATDiscoverSearchFieldState extends State<ATDiscoverSearchField> {
               firstChild: InkWell(
                 onTap: () => _focusNode.unfocus(),
                 child: Text(
-                  ATStrings.CANCEL,
+                  ATStrings.cancel,
                   style: Theme.of(context).textTheme.titleLarge,
                 ),
               ),

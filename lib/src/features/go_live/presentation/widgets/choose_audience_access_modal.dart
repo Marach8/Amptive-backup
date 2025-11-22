@@ -4,7 +4,7 @@ import 'package:amptive/src/views/widgets/common_widgets/image_loader_widget.dar
 import 'package:amptive/src/views/widgets/common_widgets/radio_button.dart';
 import 'package:go_router/go_router.dart';
 import 'package:amptive/src/global_export.dart';
-import 'package:amptive/src/views/widgets/common_widgets/dismiss_modal.dart';
+import 'package:amptive/src/views/widgets/common_widgets/modal_dismisser.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../switch_account/presentation/switch_acct/switch_acct_export.dart';

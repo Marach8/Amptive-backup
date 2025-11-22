@@ -13,7 +13,7 @@ class ATShowIcon extends StatelessWidget {
   Widget build(BuildContext context) {
     return ATImgLoader(
       height: size ?? 16, width: size ?? 16,
-      imgPath: ATImgStrings.SHOW_ICON,
+      imgPath: ATImgStrings.showIcon,
     );
   }
 }
@@ -27,7 +27,7 @@ class EventIcon extends StatelessWidget {
   Widget build(BuildContext context) {
     return ATImgLoader(
       height: size ?? 16, width: size ?? 16,
-      imgPath: ATImgStrings.SHOW_ICON,
+      imgPath: ATImgStrings.showIcon,
     );
   }
 }

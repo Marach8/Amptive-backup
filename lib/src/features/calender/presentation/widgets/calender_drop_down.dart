@@ -1,7 +1,5 @@
-import 'package:amptive/src/bloc/main_app/profile/profile_menu/calender/calender_views_bloc.dart';
-import 'package:amptive/src/config/utils/colors.dart';
-import 'package:amptive/src/config/utils/font_sizes.dart';
-import 'package:amptive/src/config/utils/other_strings.dart';
+import 'package:amptive/src/config/config_export.dart';
+import 'package:amptive/src/features/calender/v_model/calender_views_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -26,7 +24,7 @@ class CalenderDropDown extends StatelessWidget {
       child: currIndex == 0 ? 
         const Icon(Icons.calendar_view_day_outlined)
         : currIndex == 1 ? const Icon(Icons.calendar_view_month_outlined)
-        : const Icon(Icons.schedule_outlined),
+        : const _ScheduledIcon(),
       
       itemBuilder: (_) => <PopupMenuEntry<String>>[
         PopupMenuItem<String>(
@@ -37,7 +35,7 @@ class CalenderDropDown extends StatelessWidget {
             children: <Widget>[
               Text(
                 ATStrings.DAY_VIEW,
-                style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                style: context.textTheme.bodySmall?.copyWith(
                   fontSize: ATSizes.size15
                 ),
               ),
@@ -53,7 +51,7 @@ class CalenderDropDown extends StatelessWidget {
             children: <Widget>[
               Text(
                 ATStrings.MONTH_VIEW,
-                style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                style: context.textTheme.bodySmall?.copyWith(
                   fontSize: ATSizes.size15
                 ),
               ),
@@ -68,16 +66,48 @@ class CalenderDropDown extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
               Text(
-                ATStrings.SCHEDULED,
-                style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                ATStrings.scheduled,
+                style: context.textTheme.bodySmall?.copyWith(
                   fontSize: ATSizes.size15
                 ),
               ),
-              const Icon(Icons.schedule_outlined)
+              const _ScheduledIcon(),
             ],
           )
         )
       ]
+    );
+  }
+}
+
+
+class _ScheduledIcon extends StatelessWidget {
+  const _ScheduledIcon();
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      spacing: 2,
+      mainAxisSize: MainAxisSize.min,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: <Widget>[
+        Container(
+          height: 8, width: 20,
+          margin: const EdgeInsets.only(right: 2),
+          decoration: BoxDecoration(
+            color: ATColors.transparent,
+            border: Border.all(color: ATColors.white, width: 2),
+          ),
+        ),
+        Container(
+          height: 8, width: 20,
+          margin: const EdgeInsets.only(right: 2),
+          decoration: BoxDecoration(
+            border: Border.all(color: ATColors.white, width: 2),
+            color: ATColors.transparent,
+          ),
+        ),
+      ],
     );
   }
 }

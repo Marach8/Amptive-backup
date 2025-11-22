@@ -1,15 +1,14 @@
-import 'package:amptive/src/bloc/main_app/profile/profile_menu/calender/calender_programs_bloc.dart';
+import 'package:amptive/src/features/calender/v_model/calender_programs_bloc.dart';
 import 'package:amptive/src/models/host.dart';
 import 'package:amptive/src/services/go_live_service/go_live_service.dart';
 import 'package:amptive/src/config/utils/colors.dart';
+import 'package:amptive/src/shared/custom_container_widget.dart';
 import 'package:amptive/src/shared/overlapping_widgets.dart';
 import 'package:amptive/src/views/widgets/common_widgets/show_event_nd_paid_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:sticky_headers/sticky_headers.dart';
-
-import '../../../../shared/custom_container_widget.dart';
-import '../calender_export.dart';
+import '../../calender_export.dart';
 
 
 class ScheduledEventsView extends StatelessWidget {
@@ -26,7 +25,7 @@ class ScheduledEventsView extends StatelessWidget {
         Expanded(
           child: ListView.builder(
             physics: const BouncingScrollPhysics(),
-            padding: const EdgeInsets.fromLTRB(15, 5, 10, kBottomNavigationBarHeight),
+            padding: const EdgeInsets.fromLTRB(15, 5, 10, 0),
             itemCount: _map.entries.length,
             itemBuilder: (_, int listIndex){
               final MapEntry<DateTime, List<CalenderProgram>> programs = _map.entries.elementAt(listIndex);
@@ -68,6 +67,7 @@ class ScheduledEventsView extends StatelessWidget {
             }
           ),
         ),
+        const SizedBox(height: 100),
       ],
     );
   }
@@ -233,7 +233,7 @@ class _CalenderProgramDisplay extends StatelessWidget {
                   if(isPaid) const SizedBox(width: 5),
                   Expanded(
                     child: Text(
-                      type,
+                      '$type • 17:00',
                       style: Theme.of(context).textTheme.titleSmall
                     ),
                   )

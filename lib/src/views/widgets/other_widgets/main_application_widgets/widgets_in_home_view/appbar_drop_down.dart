@@ -39,7 +39,7 @@ class ATHomeDropDown extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
               Text(
-                ATStrings.SCHEDULED,
+                ATStrings.scheduled,
                 style: Theme.of(context).textTheme.bodySmall?.copyWith(
                   fontSize: ATSizes.size15
                 ),

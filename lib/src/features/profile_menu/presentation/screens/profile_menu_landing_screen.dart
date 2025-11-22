@@ -13,7 +13,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:iconsax/iconsax.dart';
-import '../../bloc/main_app/profile/profile_menu/calender/calender_visibile_bloc.dart';
+import '../../../calender/v_model/calender_visibile_bloc.dart';
 
 class AmptiveProfileMenuScreen extends StatelessWidget {
   const AmptiveProfileMenuScreen({super.key});
@@ -26,7 +26,7 @@ class AmptiveProfileMenuScreen extends StatelessWidget {
           leadingWidth: 30,
           padding: EdgeInsets.only(left: 7),
           leading: ATRoundedBackBtn(),
-          titleText: ATStrings.MENU,
+          titleText: ATStrings.menu,
         ),
 
         body: SingleChildScrollView(
@@ -73,7 +73,7 @@ class AmptiveProfileMenuScreen extends StatelessWidget {
               ),
               MenuItem(
                 firstIcon: const Icon(Icons.lock_outline_rounded),
-                middleText: ATStrings.PRIVACY,
+                middleText: ATStrings.privacy,
                 onTap: () => context.pushNamed(ATRoutes.PRIVACY_SCREEN)
               ),
               MenuItem(
@@ -90,7 +90,7 @@ class AmptiveProfileMenuScreen extends StatelessWidget {
               ),
               MenuItem(
                 firstIcon: const Icon(Iconsax.global),
-                middleText: ATStrings.LANGUAGE,
+                middleText: ATStrings.language,
                 onTap: () => context.pushNamed(ATRoutes.LANGUAGE_SCREEN)
               ),
               MenuItem(

@@ -1,3 +1,4 @@
+import 'package:amptive/src/config/utils/extensions/context_extensions.dart';
 import 'package:amptive/src/config/utils/font_sizes.dart';
 import 'package:amptive/src/config/utils/other_strings.dart';
 import 'package:amptive/src/config/routing/route_strings.dart';
@@ -31,8 +32,8 @@ class ATScheduledPrograms extends StatelessWidget {
                   padding: const EdgeInsets.only(left: 20),
                   child: ATBackBtn(
                     alignment: Alignment.centerLeft,
-                    leadingText: ATStrings.SCHEDULED,
-                    leadingStyle: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                    leadingText: ATStrings.scheduled,
+                    leadingStyle: context.textTheme.bodyMedium?.copyWith(
                       fontSize: ATSizes.size23
                     ),
                   )

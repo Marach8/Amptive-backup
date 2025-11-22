@@ -114,7 +114,7 @@ Future<void> _onCohostTap({
       title: '${ATStrings.REMOVE} ${ATStrings.COHOST}',
       content: '${ATStrings.CONFIRM_COHOST_REMOVAL} ${cohost.name}?',
       yesString: ATStrings.REMOVE,
-      noString: ATStrings.CANCEL,
+      noString: ATStrings.cancel,
     );
     if(context.mounted && removeCohost == true) {
       context.read<AddCohostsBloc>().removeCohost(cohostNo: coHostNo);
