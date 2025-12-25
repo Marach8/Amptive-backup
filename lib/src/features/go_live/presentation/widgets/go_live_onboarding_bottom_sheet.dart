@@ -1,9 +1,7 @@
 import 'dart:async' show StreamController;
-
 import 'package:amptive/src/global_export.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:iconsax/iconsax.dart';
-
 import '../../go_live_export.dart';
 
 class GoLiveOnboardingBottomSheet extends StatelessWidget {
@@ -12,12 +10,16 @@ class GoLiveOnboardingBottomSheet extends StatelessWidget {
     required this.countDownVisibilityNotifier,
     required this.reRecordButtonNotifier,
     required this.timeRemainingStreamController,
+    required this.onShouldRecord,
+    required this.onAutoPlayCountDownEnd,
+    required this.onPlayRefresh,
   });
 
   final ValueNotifier<bool> countDownVisibilityNotifier;
   final ValueNotifier<bool> reRecordButtonNotifier;
   final StreamController<int> timeRemainingStreamController;
-
+  final VoidCallback onShouldRecord, onAutoPlayCountDownEnd,
+  onPlayRefresh;
 
   @override
   Widget build(BuildContext context) {
@@ -29,8 +31,7 @@ class GoLiveOnboardingBottomSheet extends StatelessWidget {
           AutoplayCountdownWidget(
             isVisibleNotifier: countDownVisibilityNotifier,
             timeRemainingStreamCntrl: timeRemainingStreamController,
-            onEnd: (){},
-            //onEnd: () => _hasPlayedAlready ? null : _startAudioPlayCountDown(),
+            onEnd: onAutoPlayCountDownEnd,
           ),
 
           const SizedBox(height: 10,),
@@ -48,7 +49,7 @@ class GoLiveOnboardingBottomSheet extends StatelessWidget {
                       child: ATPlainElevatedBtn(
                         onPressed: shouldActivateBtn ? (){
                           if(shouldRecord){
-                            //_startRecording();
+                            onShouldRecord.call();
                             context.read<GoLiveOnboardBloc>().setFullState((OnboardStage.isRecording, false));
                           }
                           else{
@@ -72,6 +73,7 @@ class GoLiveOnboardingBottomSheet extends StatelessWidget {
                                 onTap: (){
                                   reRecordButtonNotifier.value = false;
                                   //_hasPlayedAlready = false;
+                                  onPlayRefresh.call();
                                   context.read<GoLiveOnboardBloc>().setFullState((OnboardStage.initial, true));
                                 },
                                 color: ATColors.white.withValues(alpha: 0.1), 

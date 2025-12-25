@@ -13,7 +13,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:iconsax/iconsax.dart';
-import '../../../calender/v_model/calender_visibile_bloc.dart';
+import '../../../calender/cubits/calender_visibile_bloc.dart';
 
 class AmptiveProfileMenuScreen extends StatelessWidget {
   const AmptiveProfileMenuScreen({super.key});

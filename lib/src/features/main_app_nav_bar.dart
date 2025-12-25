@@ -7,7 +7,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import '../shared/custom_container_widget.dart';
 
-
 class MainAppBottomNav extends StatelessWidget {
   const MainAppBottomNav({super.key});
 

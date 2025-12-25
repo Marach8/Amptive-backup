@@ -1,4 +1,4 @@
-import 'package:amptive/src/features/calender/v_model/calender_programs_bloc.dart';
+import 'package:amptive/src/features/calender/cubits/calender_programs_bloc.dart';
 import 'package:amptive/src/models/host.dart';
 import 'package:amptive/src/services/go_live_service/go_live_service.dart';
 import 'package:amptive/src/config/utils/colors.dart';
@@ -9,6 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:sticky_headers/sticky_headers.dart';
 import '../../calender_export.dart';
+import '../widgets/calender_program_display.dart';
 
 
 class ScheduledEventsView extends StatelessWidget {
@@ -198,7 +199,7 @@ class _CalenderProgramDisplay extends StatelessWidget {
     return ATContainer(
       radius: 5, clipBehavior: Clip.hardEdge,
       child: CustomPaint(
-        painter:LeftBorderPainter(
+        painter: LeftBorderPainter(
           color: isEvent ? ATColors.hex27E8DB : ATColors.hexF79E1E,
           width: 5,
         ),

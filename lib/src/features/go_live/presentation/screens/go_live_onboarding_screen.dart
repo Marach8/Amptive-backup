@@ -329,6 +329,9 @@ class _SubWidgetState extends State<_SubWidget> {
           countDownVisibilityNotifier: _countDownIsVisibleNotifier,
           reRecordButtonNotifier: _reRecordBtnNotifier,
           timeRemainingStreamController: _timeRemainingStreamCntrl,
+          onShouldRecord: () => _startRecording(),
+          onPlayRefresh: () => _hasPlayedAlready = false,
+          onAutoPlayCountDownEnd: () => _hasPlayedAlready ? null : _startAudioPlayCountDown(),
         )
       ),
     );

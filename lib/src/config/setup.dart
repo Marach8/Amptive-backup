@@ -1,9 +1,9 @@
 import 'package:amptive/src/bloc/main_app/go_live_bloc/audience_view/following_bloc.dart';
 import 'package:amptive/src/bloc/main_app/go_live_bloc/audience_view/subscription_bloc.dart';
-import 'package:amptive/src/features/calender/v_model/calender_month_view_bloc.dart';
-import 'package:amptive/src/features/calender/v_model/calender_visibile_bloc.dart';
-import 'package:amptive/src/features/calender/v_model/calender_views_bloc.dart';
-import 'package:amptive/src/features/calender/v_model/day_view_bloc.dart';
+import 'package:amptive/src/features/calender/cubits/calender_month_view_bloc.dart';
+import 'package:amptive/src/features/calender/cubits/calender_visibile_bloc.dart';
+import 'package:amptive/src/features/calender/cubits/calender_views_bloc.dart';
+import 'package:amptive/src/features/calender/cubits/day_view_bloc.dart';
 import 'package:amptive/src/bloc/preference/bloc.dart';
 import 'package:amptive/src/features/go_live/go_live_export.dart';
 import 'package:amptive/src/features/main_app_nav_bar.dart';
@@ -28,8 +28,8 @@ import '../bloc/main_app/go_live_bloc/host_view/host_end_show_bloc.dart';
 import '../bloc/main_app/go_live_bloc/host_view/notifications_bloc.dart';
 import '../bloc/main_app/profile/private_account_bloc.dart';
 import '../bloc/main_app/profile/profile_followers_bloc.dart';
-import '../features/calender/v_model/calender_programs_bloc.dart';
-import '../features/calender/v_model/selected_calender_date_bloc.dart';
+import '../features/calender/cubits/calender_programs_bloc.dart';
+import '../features/calender/cubits/selected_calender_date_bloc.dart';
 import '../bloc/main_app/profile/profile_menu/language_bloc.dart';
 import '../bloc/onboarding_bloc/onboarding_bloc.dart';
 

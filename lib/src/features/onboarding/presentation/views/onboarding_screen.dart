@@ -52,11 +52,10 @@ class _ATOnboardingScreenState extends State<ATOnboardingScreen> {
               ),
             ),
             DotIndicatorRow(pageCntrl: _pageCntrl),
+            const SizedBox(height: 50),
           ],
         ),
       ),
     );
   }
 }
-
-

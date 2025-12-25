@@ -1,5 +1,5 @@
 import 'package:amptive/src/config/config_export.dart';
-import 'package:amptive/src/features/calender/v_model/calender_views_bloc.dart';
+import 'package:amptive/src/features/calender/cubits/calender_views_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

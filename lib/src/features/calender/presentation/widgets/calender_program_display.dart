@@ -1,4 +1,5 @@
-import 'package:amptive/src/features/calender/v_model/calender_programs_bloc.dart';
+import 'package:amptive/src/config/config_export.dart';
+import 'package:amptive/src/features/calender/cubits/calender_programs_bloc.dart';
 import 'package:amptive/src/models/host.dart';
 import 'package:amptive/src/config/utils/colors.dart';
 import 'package:amptive/src/config/utils/font_sizes.dart';
@@ -24,7 +25,7 @@ class CalenderProgramDisplay extends StatelessWidget {
     final Iterable<String> hostsImgs = program.hosts.map((ObjectWithNotifier host) => (host.obj as Host).profilePicture ?? '');
 
     return ATContainer(
-      margin: const EdgeInsets.only(left: 55),
+      width: context.screenWidth * 0.5,
       radius: 5, clipBehavior: Clip.hardEdge,
       color: isEvent ? ATColors.hex27E8DB.withValues(alpha: 0.2) 
         : ATColors.hexF79E1E.withValues(alpha: 0.2),

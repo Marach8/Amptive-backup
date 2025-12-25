@@ -108,22 +108,28 @@ class _TempLoginScreenState extends State<TempLoginScreen> with ATValidators{
           ),
         ),
 
-        bottomSheet: Padding(
-          padding: const EdgeInsets.all(15),
-          child: ValueListenableBuilder<(bool, bool)>(
-            valueListenable: _btnNotifier,
-            builder: (_, (bool, bool) value, __) {
-              final bool enable = value.$1 && value.$2;
-              return ATPlainElevatedBtn(
-                onPressed: enable ? (){
-                  if(_formKey.currentState?.validate() ?? false){
-                    context.goNamed(ATRoutes.MAIN_APP_SHELL);
-                  }
-                } : null,
-                btnTitle: ATStrings.SIGN_IN,
-              );
-            }
-          ),
+        bottomSheet: Builder(
+          builder: (BuildContext context) {
+            final double bottom = MediaQuery.viewInsetsOf(context).bottom;
+            final double bottomPadding = bottom == 0 ? 50 : 10;
+            return Padding(
+              padding: EdgeInsets.fromLTRB(15, 10, 15, bottomPadding),
+              child: ValueListenableBuilder<(bool, bool)>(
+                valueListenable: _btnNotifier,
+                builder: (_, (bool, bool) value, __) {
+                  final bool enable = value.$1 && value.$2;
+                  return ATPlainElevatedBtn(
+                    onPressed: enable ? (){
+                      if(_formKey.currentState?.validate() ?? false){
+                        context.goNamed(ATRoutes.MAIN_APP_SHELL);
+                      }
+                    } : null,
+                    btnTitle: ATStrings.SIGN_IN,
+                  );
+                }
+              ),
+            );
+          }
         )
       ),
     );
