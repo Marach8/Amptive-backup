@@ -31,7 +31,7 @@ class ATWithdrwalLandingScreen extends StatelessWidget {
                 leading: ATRoundedBackBtn(),
                 leadingWidth: 30,
                 padding: EdgeInsets.only(left: 7),
-                titleText: ATStrings.WITHDRAW
+                titleText: ATStrings.withdraw
               ),
             
               body: SingleChildScrollView(

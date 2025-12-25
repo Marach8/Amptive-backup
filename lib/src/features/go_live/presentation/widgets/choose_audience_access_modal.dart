@@ -186,7 +186,7 @@ Future<String?> chooseAudienceAccess4ShowModal({
                                               child: Align(
                                                 alignment: Alignment.centerRight,
                                                 child: Text(
-                                                  state.first == null ? '' : '${ATStrings.NAIRA_TEXT}${state.first}/month',
+                                                  state.first == null ? '' : '${ATStrings.nairaText}${state.first}/month',
                                                   style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                                                     fontSize: ATSizes.size14,
                                                   )

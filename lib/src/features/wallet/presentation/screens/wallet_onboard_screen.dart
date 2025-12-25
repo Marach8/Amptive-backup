@@ -26,8 +26,12 @@ class _ATWalletOnboardScreenState extends State<ATWalletOnboardScreen> {
               leadingWidth: 30,
               padding: EdgeInsets.only(left: 5),
             ),
-            body: Padding(
-              padding: const EdgeInsets.fromLTRB(20, 50, 20, 0),
+            body: AnimatedPadding(
+              duration: const Duration(milliseconds: 100),
+              padding: EdgeInsets.fromLTRB(20, 
+                context.screenHeight * (_shouldShow ? 0.18 : 0.3),
+                20, 0
+              ),
               child: ATFadingSwitcher(
                 child: _shouldShow ? const _WalletIconColumn()
                   : UrWalletUrWayWidget(
@@ -40,7 +44,7 @@ class _ATWalletOnboardScreenState extends State<ATWalletOnboardScreen> {
             ),
     
             bottomSheet: Padding(
-              padding: const EdgeInsets.all(15),
+              padding: const EdgeInsets.fromLTRB(15, 15, 15, 50),
               child: AnimatedOpacity(
                 duration: const Duration(milliseconds: 500),
                 opacity: _shouldShow ? 1.0 : 0.0,
@@ -51,7 +55,7 @@ class _ATWalletOnboardScreenState extends State<ATWalletOnboardScreen> {
                     const WalletOnboardInfoWidget(),
                     ATPlainElevatedBtn(
                       onPressed: (){context.pushReplacementNamed(ATRoutes.WALLET_PIN_SETUP);},
-                      btnTitle: ATStrings.BEGIN_SETUP,
+                      btnTitle: ATStrings.beginSetup,
                     ),
                   ],
                 ),
@@ -73,7 +77,7 @@ class _WalletIconColumn extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       spacing: 10,
-      mainAxisAlignment: MainAxisAlignment.center,
+      mainAxisSize: MainAxisSize.min,
       children: <Widget>[
         const ATImgLoader(imgPath: ATImgStrings.BIG_WALLET_ICON),
         Text(

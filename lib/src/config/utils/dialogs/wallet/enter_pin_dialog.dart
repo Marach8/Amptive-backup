@@ -5,7 +5,7 @@ import 'package:amptive/src/config/utils/image_strings.dart';
 import 'package:amptive/src/config/utils/other_strings.dart';
 import 'package:amptive/src/config/utils/extensions/string_extensions.dart';
 import 'package:amptive/src/config/utils/helper_functions.dart';
-import 'package:amptive/src/features/wallet/presentation/views/wallet_views_export.dart';
+import 'package:amptive/src/features/wallet/presentation/screens/wallet_views_export.dart';
 import 'package:amptive/src/views/widgets/animation_widgets/common_animation_widgets/animated_align_widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/back_button.dart';
 import 'package:amptive/src/shared/custom_container_widget.dart';

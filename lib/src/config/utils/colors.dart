@@ -113,4 +113,5 @@ class ATColors {
 
   static Color get hex2C2F33 => const Color(0XFF2C2F33);
   static Color get hex434343 => const Color(0XFF434343);
+  static Color get hex111111 => const Color(0XFF111111);
 }

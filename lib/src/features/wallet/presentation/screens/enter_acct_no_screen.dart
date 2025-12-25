@@ -4,7 +4,7 @@ import 'package:amptive/src/config/utils/other_strings.dart';
 import 'package:amptive/src/config/routing/route_strings.dart';
 import 'package:amptive/src/config/utils/dialogs/confirmation_alert_dialog.dart';
 import 'package:amptive/src/config/utils/dialogs/dialog_export.dart';
-import 'package:amptive/src/features/wallet/presentation/views/enter_amount_screen.dart';
+import 'package:amptive/src/features/wallet/presentation/screens/enter_amount_screen.dart';
 import 'package:amptive/src/views/widgets/common_widgets/annotated_region__widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/app_bar_widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/back_button.dart';
@@ -134,7 +134,7 @@ class ATEnterAccountNoScreen extends StatelessWidget {
                             final String? amount = await context.pushNamed(
                               ATRoutes.ENTER_AMOUNT_2_TRSF,
                               extra: EnterAmountScreenParams(
-                                title: '${ATStrings.WITHDRAW} to ${bankDetail.accountName.toUpperCase()}',
+                                title: '${ATStrings.withdraw} to ${bankDetail.accountName.toUpperCase()}',
                                 slidingNotif: ATStrings.AMPTIVE_WITHDRAWAL_CHARGES,
                                 btnTitle: ATStrings.ENTER_PIN,
                                 flushBarNotif: (shouldSave ?? false) ? ATStrings.BANK_DETAIL_SAVED : null

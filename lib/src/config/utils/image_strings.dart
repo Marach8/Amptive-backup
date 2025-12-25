@@ -108,4 +108,6 @@ class ATImgStrings{
   static const String ONBOARD_NOTIF_IMG5 = '$_pngPath/image 5 (4).png';
   static const String ONBOARD_NOTIF_IMG7 = '$_pngPath/image 5 (5).png';
   static const String ONBOARD_NOTIF_IMG6 = '$_pngPath/image 5 (6).png';
+  static const String walletScreenImg1 = '$_pngPath/wallet_screen_image1.png';
+  static const String walletScreenImg2 = '$_pngPath/wallet_screen_image2.png';
 }

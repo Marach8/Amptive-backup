@@ -76,7 +76,7 @@ class ATRoutes {
   static const String WALLET_ONBOARDING = 'wallet_landing';
   static const String WALLET_PIN_SETUP = 'wallet_pin_setup';
   static const String SECURITY_QUEST = 'security_question';
-  static const String WALLET_CREATION_ANIM = 'wallet_creation_animation';
+  static const String walletCreationAnimationScreen = 'wallet_creation_animation';
   static const String WALLET = 'wallet';
   static const String SELECT_RECIPIENT = 'transfer_funds';
   static const String FUND_WALLET = 'fund_wallet';

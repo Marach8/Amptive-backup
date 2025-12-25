@@ -108,7 +108,7 @@ class _AddSubPlanWidgetState extends State<_SubPlanWidget> {
                     ),
                     prefixIcon: Padding(
                       padding: const EdgeInsets.only(left: 15),
-                      child: Text(ATStrings.NAIRA_TEXT, style: context.textTheme.headlineMedium),
+                      child: Text(ATStrings.nairaText, style: context.textTheme.headlineMedium),
                     ),
                     contentPadding: EdgeInsets.zero
                   ),
@@ -191,7 +191,7 @@ class _AddSubPlanWidgetState extends State<_SubPlanWidget> {
                             prefixIcon: Padding(
                               padding: const EdgeInsets.only(left: 15),
                               child: Text(
-                                ATStrings.NAIRA_TEXT, 
+                                ATStrings.nairaText, 
                                 style: context.textTheme.headlineMedium?.copyWith(
                                   color: isActive ? null : ATColors.hex313131
                                 )

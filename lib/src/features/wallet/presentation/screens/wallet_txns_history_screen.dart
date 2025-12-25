@@ -62,7 +62,7 @@ class ATWalletTxnsHistoryScreen extends StatelessWidget {
                           tileColor: ATColors.transparent,
                           time: 'Today, 5:50 PM',
                           txnType: ATStrings.SUB_RECEIVED,
-                          amount: '+${ATStrings.NAIRA_TEXT}5,000.00',
+                          amount: '+${ATStrings.nairaText}5,000.00',
                           color: ATColors.yellowColor,
                           icon: Icons.favorite,
                           imgPath: ATImgStrings.jpeg1,

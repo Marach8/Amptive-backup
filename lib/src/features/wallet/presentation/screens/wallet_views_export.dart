@@ -2,7 +2,7 @@ export 'wallet_onboard_screen.dart';
 export 'wallet_pin_setup_screen.dart';
 export 'security_question_screen.dart';
 export 'creating_wallet_anim_screen.dart';
-export 'wallet_home_screen.dart';
+export 'wallet_landing_screen.dart';
 export 'select_recipient_screen.dart';
 export 'enter_amount_screen.dart';
 export 'withdrawal_landing_screen.dart';

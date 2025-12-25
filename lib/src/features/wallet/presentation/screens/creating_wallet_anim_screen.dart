@@ -15,12 +15,12 @@ class ATWalletCreationAnimScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
+    return BlocProvider<WalletCreationAnimBloc>(
       create: (_) => WalletCreationAnimBloc(),
       child: Builder(
         builder: (BuildContext blocContext) {
           WidgetsBinding.instance.addPostFrameCallback(
-            (_) => Future.delayed(
+            (_) => Future<void>.delayed(
               const Duration(milliseconds: 500),
               () => blocContext.mounted ? blocContext.read<WalletCreationAnimBloc>().triggerNext(0) : <dynamic, dynamic>{}
             )
@@ -40,7 +40,7 @@ class ATWalletCreationAnimScreen extends StatelessWidget {
               ),
           
               bottomSheet: Padding(
-                padding: const EdgeInsets.fromLTRB(15, 5, 15, 10),
+                padding: const EdgeInsets.fromLTRB(15, 5, 15, 50),
                 child: BlocSelector<WalletCreationAnimBloc, List<bool>, bool>(
                   selector: (List<bool> state) => state.elementAt(3),
                   builder: (_, bool isVisible) {

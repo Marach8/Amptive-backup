@@ -1,3 +1,4 @@
+import 'package:amptive/src/config/utils/extensions/context_extensions.dart';
 import 'package:amptive/src/config/utils/font_sizes.dart';
 import 'package:amptive/src/config/utils/other_strings.dart';
 import 'package:amptive/src/features/wallet/bloc/wallet_bloc_export.dart';
@@ -9,8 +10,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 class WalletCreationLoading extends StatelessWidget {
   const WalletCreationLoading({super.key});
 
-  static const List<String> walletList = 
-  <String>[ATStrings.CREATING_WALLET, ATStrings.PREPARING_WALLET, ATStrings.FINALIZING_SETUP];
+  static const List<String> walletList = <String>[
+    ATStrings.CREATING_WALLET,
+    ATStrings.PREPARING_WALLET,
+    ATStrings.FINALIZING_SETUP
+  ];
 
   @override
   Widget build(BuildContext context) {   
@@ -36,18 +40,11 @@ class WalletCreationLoading extends StatelessWidget {
                           const Duration(milliseconds: 2500),
                           () => context.mounted ? context.read<WalletCreationAnimBloc>().triggerNext(index + 1) : <dynamic, dynamic>{}
                         ) : null,
-                      child: Row(
-                        mainAxisSize: MainAxisSize.min,
-                        spacing: 10,
-                        children: <Widget>[
-                          Text(
-                            item, 
-                            style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                              fontSize: ATSizes.size17
-                            )
-                          ),
-                          const Icon(Icons.check,)
-                        ],
+                      child:Text(
+                        item, 
+                        style: context.textTheme.bodyMedium?.copyWith(
+                          fontSize: ATSizes.size17
+                        )
                       ),
                     );
                   }

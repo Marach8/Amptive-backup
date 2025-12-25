@@ -38,6 +38,7 @@ class UrWalletUrWayWidget extends StatelessWidget {
             },
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisSize: MainAxisSize.min,
               children: _list.indexed.map(
                 ((int, String) item) => _CustomWidget(text: item.$2, index: item.$1)
               ).toList(),
@@ -67,12 +68,12 @@ class _CustomWidget extends StatelessWidget {
           opacity: isVisible ? 1 : 0, curve: Curves.decelerate,
           onEnd: () => isVisible ? context.read<_PrivateBloc>().triggerNext(index + 1): null,
           child: Padding(
-            padding: const EdgeInsets.fromLTRB(30, 0, 30, 0),
+            padding: const EdgeInsets.fromLTRB(15, 0, 15, 0),
             child: Text(
               text.toUpperCase(),
-              style: Theme.of(context).textTheme.displayMedium?.copyWith(
+              style: context.textTheme.displayMedium?.copyWith(
                 color: ATColors.hexC2C2C2,
-                fontSize: 40,
+                fontSize: 38, height: 1,
                 fontWeight: ATFontWeights.w800
               ),
             )

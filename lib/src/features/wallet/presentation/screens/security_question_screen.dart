@@ -1,9 +1,9 @@
 import 'package:amptive/src/config/utils/colors.dart';
+import 'package:amptive/src/config/utils/extensions/context_extensions.dart';
 import 'package:amptive/src/config/utils/other_strings.dart';
 import 'package:amptive/src/config/routing/route_strings.dart';
 import 'package:amptive/src/config/utils/dialogs/wallet/security_questions.dialog.dart';
 import 'package:amptive/src/config/utils/helper_functions.dart';
-import 'package:amptive/src/features/wallet/presentation/widgets/security_answer_field.dart';
 import 'package:amptive/src/views/widgets/animation_widgets/common_animation_widgets/animated_crossfade_widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/annotated_region__widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/app_bar_widget.dart';
@@ -13,7 +13,7 @@ import 'package:amptive/src/shared/elevated_button_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-
+import 'package:amptive/src/views/widgets/common_widgets/textformfield_widget.dart';
 import '../../bloc/security_question_bloc.dart';
 
 
@@ -33,7 +33,7 @@ class ATSecurityQuestionScreen extends StatelessWidget {
   @override
   Widget build(_) {
     return ATAnnotatedRegion(
-      child: BlocProvider(
+      child: BlocProvider<SecQuestionBloc>(
         create: (_) => SecQuestionBloc(),
         child: Builder(
           builder: (BuildContext context) {
@@ -70,7 +70,7 @@ class ATSecurityQuestionScreen extends StatelessWidget {
                       },
                       color: ATColors.hex9E9E9E.withValues(alpha: 0.3),
                       radius: 14,
-                      width: ATHelperFuncs.getScreenWidth(context),
+                      width: context.screenWidth,
                       padding: const EdgeInsets.fromLTRB(15, 10, 15, 10),
                       child: Row(
                         children: <Widget>[
@@ -117,23 +117,73 @@ class ATSecurityQuestionScreen extends StatelessWidget {
                 ),
               ),
             
-              bottomSheet: Padding(
-                padding: const EdgeInsets.fromLTRB(15, 5, 15, 10),
-                child: BlocSelector<SecQuestionBloc, (String?, bool, String), String>(
-                  selector: ((String?, bool, String) state) => state.$3,
-                  builder: (_, String state) {
-                    return ATPlainElevatedBtn(
-                      onPressed: state.isEmpty ? null : ()
-                        => context.pushReplacementNamed(ATRoutes.WALLET_CREATION_ANIM),
-                      btnTitle: ATStrings.FINISH_SETUP
-                    );
-                  }
-                ),
+              bottomSheet: Builder(
+                builder: (BuildContext context) {
+                  final double bottom = MediaQuery.viewInsetsOf(context).bottom;
+                  final double bottomPadd = bottom == 0 ? 50 : 15;
+                  return Padding(
+                    padding: EdgeInsets.fromLTRB(15, 5, 15, bottomPadd),
+                    child: BlocSelector<SecQuestionBloc, (String?, bool, String), String>(
+                      selector: ((String?, bool, String) state) => state.$3,
+                      builder: (_, String state) {
+                        return ATPlainElevatedBtn(
+                          onPressed: state.isEmpty ? null : ()
+                            => context.pushReplacementNamed(ATRoutes.walletCreationAnimationScreen),
+                          btnTitle: ATStrings.FINISH_SETUP
+                        );
+                      }
+                    ),
+                  );
+                }
               ),
             );
           }
         ),
       )
+    );
+  }
+}
+
+
+
+class SecurityAnswerField extends StatelessWidget {
+  const SecurityAnswerField({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: <Widget>[
+        Text(
+          ATStrings.WHAT_IS_UR_ANSWER,
+          style: context.textTheme.bodyMedium
+        ),
+        const SizedBox(height: 10,),
+        ATTextFormField(
+          hintText: ATStrings.ENTER_UR_ANS,
+          prefixIcon: const SizedBox(width: 12,),
+          maxLines: 1,
+          fillColor: ATColors.hex9E9E9E.withValues(alpha: 0.3),
+          onChanged: (String text){
+            ATHelperFuncs.callDebouncer(
+              1000,
+              () => context.read<SecQuestionBloc>().setSecAnswer(text)
+            );
+          },
+        ),
+        const SizedBox(height: 10,),
+        Text(
+          ATStrings.ANS_IS_CASE_SENSITIVE,
+          style: Theme.of(context).textTheme.titleSmall
+        ),
+        const SizedBox(height: 10,),
+        Text(
+          ATStrings.U_MUST_ANS_SECURITY_QUEST, maxLines: 2,
+          style: Theme.of(context).textTheme.titleSmall
+        ),
+      ],
     );
   }
 }

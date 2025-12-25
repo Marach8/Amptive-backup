@@ -8,8 +8,8 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import '../../../../views/widgets/common_widgets/annotated_region__widget.dart';
 
-class ATWalletScreen extends StatelessWidget {
-  const ATWalletScreen({super.key});
+class WalletLandingScreen extends StatelessWidget {
+  const WalletLandingScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +22,7 @@ class ATWalletScreen extends StatelessWidget {
           leadingWidth: 30,
         ),
         body: Padding(
-          padding: const EdgeInsets.fromLTRB(15, 10, 15, 20),
+          padding: const EdgeInsets.fromLTRB(15, 10, 15, 10),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
@@ -62,7 +62,7 @@ class ATWalletScreen extends StatelessWidget {
               RenderTxnWidget(
                 time: 'Today, 5:50 PM',
                 txnType: ATStrings.SUB_RECEIVED,
-                amount: '+${ATStrings.NAIRA_TEXT}5,000.00',
+                amount: '+${ATStrings.nairaText}5,000.00',
                 color: ATColors.yellowColor,
                 icon: Icons.favorite,
                 imgPath: ATImgStrings.jpeg1,
@@ -71,9 +71,10 @@ class ATWalletScreen extends StatelessWidget {
               RenderTxnWidget(
                 time: 'Today, 7:00 PM',
                 txnType: ATStrings.SUB_RECEIVED,
-                amount: '+${ATStrings.NAIRA_TEXT}1,000,000.00',
+                amount: '+${ATStrings.nairaText}1,000,000.00',
                 color: ATColors.hex307FE2,
                 icon: Icons.sync,
+                descriptionIconColor: ATColors.white,
                 imgPath: ATImgStrings.jpeg3,
               ),
 
@@ -83,28 +84,12 @@ class ATWalletScreen extends StatelessWidget {
                 style: context.textTheme.bodyLarge
               ),
               const SizedBox(height: 20),
-              Expanded(
-                child: LayoutBuilder(
-                  builder: (_, BoxConstraints kst){
-                    return Row(
-                      spacing: 10,
-                      children: List.filled(
-                        2,
-                        Expanded(
-                          child: ATContainer(
-                            clipBehavior: Clip.hardEdge,
-                            radius: 15,
-                            height: kst.maxHeight,
-                            child: const ATImgLoader(
-                              boxFit: BoxFit.cover,
-                              imgPath: ATImgStrings.jpeg1,
-                            ),
-                          ),
-                        )
-                      ).toList()
-                    );
-                  },
-                ),
+              Row(
+                children: <Widget>[
+                  ATImgLoader(
+                    imgPath: ,
+                  )
+                ]
               )
             ],
           ),

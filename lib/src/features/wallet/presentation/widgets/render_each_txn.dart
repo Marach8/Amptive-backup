@@ -1,4 +1,5 @@
 import 'package:amptive/src/config/utils/colors.dart';
+import 'package:amptive/src/config/utils/extensions/context_extensions.dart';
 import 'package:amptive/src/config/utils/font_sizes.dart';
 import 'package:amptive/src/views/widgets/common_widgets/circle_avatar.dart';
 import 'package:amptive/src/views/widgets/common_widgets/circular_image.dart';
@@ -14,20 +15,25 @@ class RenderTxnWidget extends StatelessWidget {
     required this.icon,
     required this.imgPath,
     required this.txnType,
+    this.descriptionIconColor,
     this.tileColor,
   });
 
   final String txnType, time, amount, imgPath;
   final IconData icon;
   final Color color;
-  final Color? tileColor;
+  final Color? tileColor, descriptionIconColor;
 
   @override
   Widget build(BuildContext context) {
     return ATContainer(
       onTap: (){},
       color: tileColor ?? ATColors.white.withValues(alpha: 0.05),
-      padding: const EdgeInsets.all(15),
+      padding: const EdgeInsets.all(15), radius: 15,
+      border: Border.all(
+        color: ATColors.hex111111,
+        width: 2,
+      ),
       child: Row(
         children: <Widget>[
           SizedBox(
@@ -41,38 +47,41 @@ class RenderTxnWidget extends StatelessWidget {
                 ),
                 Positioned(
                   right: -2, top: -2,
-                  child: ATCircleAvatar(
-                    diameter: 20, color: color,
-                    child: Icon(icon, color: ATColors.black, size: 15,),
+                  child: CircleAvatar(
+                    radius: 9, backgroundColor: color,
+                    child: Icon(
+                      icon, size: 10,
+                      color: descriptionIconColor ?? ATColors.black,
+                    ),
                   ),
                 )
               ],
             ),
           ),
           const SizedBox(width: 10,),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              Text(
-                txnType,
-                style: Theme.of(context).textTheme.bodySmall
-              ),
-              Text(
-                time,
-                style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                  color: ATColors.hexC2C2C2,
-                  fontSize: ATSizes.size13
-                )
-              ),
-            ],
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Text(
+                  txnType,
+                  style: context.textTheme.bodySmall
+                ),
+                Text(
+                  time,
+                  style: context.textTheme.titleSmall?.copyWith(
+                    color: ATColors.hexC2C2C2,
+                    fontSize: ATSizes.size13
+                  )
+                ),
+              ],
+            ),
           ),
           const SizedBox(width: 20,),
-          Expanded(
-            child: Text(
-              amount, maxLines: 2,
-              style: Theme.of(context).textTheme.labelSmall?.copyWith(
-                fontSize: ATSizes.size16
-              ),
+          Text(
+            amount, maxLines: 2,
+            style: context.textTheme.labelSmall?.copyWith(
+              fontSize: ATSizes.size16
             ),
           )
         ],

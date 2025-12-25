@@ -27,7 +27,7 @@ import 'package:amptive/src/features/home/presentation/views/scheduled_screen.da
 import 'package:amptive/src/features/accounts/presentation/screens/account_info_screen.dart';
 import 'package:amptive/src/features/accounts/presentation/screens/acounts_landing_screen.dart';
 import 'package:amptive/src/features/switch_account/presentation/switch_acct/switch_acct_export.dart';
-import 'package:amptive/src/features/wallet/presentation/views/wallet_txns_history_screen.dart';
+import 'package:amptive/src/features/wallet/presentation/screens/wallet_txns_history_screen.dart';
 import 'package:amptive/src/features/onboarding/presentation/views/onboarding_screen.dart';
 import 'package:amptive/src/features/onboarding/presentation/views/post_onboarding_screen.dart';
 import 'package:custom_image_crop/custom_image_crop.dart' show Ratio;
@@ -201,8 +201,8 @@ final GoRouter amptiveAppRouter = GoRouter(
                 ),
               ),
               GoRoute(
-                name: ATRoutes.WALLET_CREATION_ANIM,
-                path: ATRoutes.WALLET_CREATION_ANIM.addSlash,
+                name: ATRoutes.walletCreationAnimationScreen,
+                path: ATRoutes.walletCreationAnimationScreen.addSlash,
                 pageBuilder: (_, __) => ATSlidingRouteTransition<void>(
                   child: const ATWalletCreationAnimScreen()
                 ),
@@ -211,7 +211,7 @@ final GoRouter amptiveAppRouter = GoRouter(
                 name: ATRoutes.WALLET,
                 path: ATRoutes.WALLET.addSlash,
                 pageBuilder: (_, __) => ATSlidingRouteTransition<void>(
-                  child: const ATWalletScreen(),
+                  child: const WalletLandingScreen(),
                 ),
                 routes: <RouteBase>[
                   GoRoute(

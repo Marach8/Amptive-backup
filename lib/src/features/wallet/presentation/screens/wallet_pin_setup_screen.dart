@@ -20,7 +20,7 @@ class ATWalletPinSetupScreen extends StatelessWidget {
   @override
   Widget build(_) {
     return ATAnnotatedRegion(
-      child: BlocProvider(
+      child: BlocProvider<_WalletPinsBloc>(
         create: (_) => _WalletPinsBloc(),
         child: Builder(
           builder: (BuildContext context) {
@@ -87,51 +87,57 @@ class ATWalletPinSetupScreen extends StatelessWidget {
                 ),
               ),
             
-              bottomSheet: Padding(
-                padding: const EdgeInsets.fromLTRB(15, 5, 15, 10),
-                child: BlocBuilder<_WalletPinsBloc, List<String?>>(
-                  builder: (_, List<String?> state) {
-                    return Column(
-                      spacing:10,
-                      mainAxisSize: MainAxisSize.min,
-                      children: <Widget>[
-                        if(state.length == 2) ATContainer(
-                          radius: 14,
-                          onTap: ()async{
-                            final bool? result = await showConfirmationDialog(
-                              context: context,
-                              title: ATStrings.ALLOW_FACE_ID,
-                              content: ATStrings.ALLOW_FACE_ID_DESC,
-                              yesString: ATStrings.PROCEED,
-                              noString: ATStrings.cancel
-                            );
-                          },
-                          padding: const EdgeInsets.fromLTRB(15, 10, 15, 10),
-                          color: ATColors.white.withValues(alpha: 0.05),
-                          child: Row(
-                            spacing: 10,
-                            children: <Widget>[
-                              const Icon(Iconsax.scan_barcode),
-                              Expanded(
-                                child: Text(
-                                  ATStrings.ENABLE_BIOMETRICS,
-                                  style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                                    fontSize: ATSizes.size15
+              bottomSheet: Builder(
+                builder: (BuildContext context) {
+                  final double bottom = MediaQuery.viewInsetsOf(context).bottom;
+                  final double bottomPadd = bottom == 0 ? 50 : 15;
+                  return Padding(
+                    padding: EdgeInsets.fromLTRB(15, 5, 15, bottomPadd),
+                    child: BlocBuilder<_WalletPinsBloc, List<String?>>(
+                      builder: (_, List<String?> state) {
+                        return Column(
+                          spacing:10,
+                          mainAxisSize: MainAxisSize.min,
+                          children: <Widget>[
+                            ATContainer(
+                              radius: 14,
+                              onTap: ()async{
+                                final bool? result = await showConfirmationDialog(
+                                  context: context,
+                                  title: ATStrings.ALLOW_FACE_ID,
+                                  content: ATStrings.ALLOW_FACE_ID_DESC,
+                                  yesString: ATStrings.PROCEED,
+                                  noString: ATStrings.cancel
+                                );
+                              },
+                              padding: const EdgeInsets.fromLTRB(15, 10, 15, 10),
+                              color: ATColors.white.withValues(alpha: 0.05),
+                              child: Row(
+                                spacing: 10,
+                                children: <Widget>[
+                                  const Icon(Iconsax.scan_barcode),
+                                  Expanded(
+                                    child: Text(
+                                      ATStrings.ENABLE_BIOMETRICS,
+                                      style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                                        fontSize: ATSizes.size15
+                                      )
+                                    )
                                   )
-                                )
+                                ],
                               )
-                            ],
-                          )
-                        ),
-                        ATPlainElevatedBtn(
-                          onPressed: state.length == 2 ? ()
-                          => context.pushReplacementNamed(ATRoutes.SECURITY_QUEST) : null,
-                          btnTitle: ATStrings.ADD_SECURITY_QUESTION
-                        )
-                      ],
-                    );
-                  }
-                ),
+                            ),
+                            ATPlainElevatedBtn(
+                              onPressed: state.length == 2 ? ()
+                              => context.pushReplacementNamed(ATRoutes.SECURITY_QUEST) : null,
+                              btnTitle: ATStrings.ADD_SECURITY_QUESTION
+                            )
+                          ],
+                        );
+                      }
+                    ),
+                  );
+                }
               ),
             );
           }

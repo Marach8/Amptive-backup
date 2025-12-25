@@ -12,7 +12,7 @@ class ATStrings{
   static const String plus  = '+';
   static const String HASH = '#';
   static const String AT_SIGN = '@';
-  static const String NAIRA_TEXT = '₦';
+  static const String nairaText = '₦';
 
 
   static const String GO_LIVE_LIKE_NEVER_B4 = "Go Live, Like Never Before";
@@ -142,10 +142,10 @@ class ATStrings{
   static const String STAY_ON_LOOP = 'STAY ON THE LOOP';
   static const String ALLOW_NOTIFICATIONS = 'Allow Amptive to send notifications of live audio shows & events';
   static const String SELECT_COUNTRY = 'Select Country';
-  static const String BEGIN_SETUP = 'Begin setup';
+  static const String beginSetup = 'Begin setup';
   static const String AVAILABLE_BAL = 'Available balance';
-  static const String FUND_WALLET = 'Fund wallet';
-  static const String TRSF = 'Transfer';
+  static const String fundWallet = 'Fund wallet';
+  static const String transfer = 'Transfer';
   static const String JUST_FOLLOWED_U = 'Just followed you';
   static const String JUST_SUBSCRIBED = 'Just subscribed';
   static const String WILL_B_GOING_2_UR = 'will be going to your';
@@ -158,7 +158,7 @@ class ATStrings{
   static const String WALLET_FUNDING_SUCCESS = 'Wallet Funded Successfully🎉';
   static const String WALLET_FUNDIND_FAILED = 'Wallet Funding Failed';
   static const String PAYPAL_DESC = 'Funds will be transferred to your Paypal account';
-  static const String WITHDRAW = 'Withdraw';
+  static const String withdraw = 'Withdraw';
   static const String PENDING_BAL = 'Pending balance';
   static const String TXN_HISTORY = 'Transaction History';
   static const String NOTIFICATIONS = 'Notifications';

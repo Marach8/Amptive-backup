@@ -242,7 +242,7 @@ class _GifterWidget extends StatelessWidget {
             ),
             const SizedBox(width: 20,),
             Text(
-              '${ATStrings.NAIRA_TEXT}${amountGifted.toString().formatPrice()}',
+              '${ATStrings.nairaText}${amountGifted.toString().formatPrice()}',
               style: context.textTheme.bodySmall
             ),
           ],
