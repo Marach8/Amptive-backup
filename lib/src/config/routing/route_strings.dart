@@ -75,7 +75,7 @@ class ATRoutes {
   static const String CREATOR_SUCCESS = 'creator_success';
   static const String WALLET_ONBOARDING = 'wallet_landing';
   static const String WALLET_PIN_SETUP = 'wallet_pin_setup';
-  static const String SECURITY_QUEST = 'security_question';
+  static const String securityQuestionScreen = 'security_question';
   static const String walletCreationAnimationScreen = 'wallet_creation_animation';
   static const String WALLET = 'wallet';
   static const String SELECT_RECIPIENT = 'transfer_funds';
@@ -84,8 +84,8 @@ class ATRoutes {
   static const String SELECT_BANK_COUNTRY = 'select_bank_country';
   static const String transactionAmountScreen = 'amount_to_transfer';
   static const String ENTER_ACCT_NO = 'enter_account_number';
-  static const String PASS_SECURITY_QUEST = 'pass_security_question';
-  static const String PAPER_PLANE_SUCCESS = 'paper_plane_success';
+  static const String answerSecurityQuestionScreen = 'pass_security_question';
+  static const String paperPlaneSuccessScreen = 'paper_plane_success';
   static const String walletTransactionsHistoryScreen = 'wallet_transactions';
   static const String SCHEDULE_DETAILED = 'schedule_detailed_screen';
   static const String GO_LIVE_ONBOARDING = 'go_live_onboarding_screen';

@@ -2,7 +2,7 @@ import 'package:amptive/src/config/utils/colors.dart';
 import 'package:amptive/src/config/utils/extensions/context_extensions.dart';
 import 'package:amptive/src/config/utils/other_strings.dart';
 import 'package:amptive/src/config/routing/route_strings.dart';
-import 'package:amptive/src/config/utils/dialogs/wallet/security_questions.dialog.dart';
+import 'package:amptive/src/features/wallet/presentation/widgets/security_question.dialog.dart';
 import 'package:amptive/src/config/utils/helper_functions.dart';
 import 'package:amptive/src/views/widgets/animation_widgets/common_animation_widgets/animated_crossfade_widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/annotated_region__widget.dart';
@@ -52,14 +52,17 @@ class ATSecurityQuestionScreen extends StatelessWidget {
                   children: <Widget>[
                     Text(
                       ATStrings.SELECT_SECURITY_QUEST,
-                      style: Theme.of(context).textTheme.bodyMedium
+                      style: context.textTheme.bodyMedium
                     ),
                     const SizedBox(height: 10,),
                     ATContainer(
                       onTap: ()async {
                         context.read<SecQuestionBloc>().toggleIcon();
 
-                        final String? result = await showSecurityQuestionsDialog(context, items);
+                        final String? result = await showSecurityQuestionsDialog(
+                          context: context,
+                          items: items,
+                        );
                         if(result != null && context.mounted){
                           context.read<SecQuestionBloc>().setSecQuestion(result);
                         }
@@ -79,8 +82,9 @@ class ATSecurityQuestionScreen extends StatelessWidget {
                             builder: (_, String? state) {
                               return Expanded(
                                 child: Text(
-                                  state ?? ATStrings.A_QUEST_U_CAN_REMEMBER, maxLines: 3,
-                                  style: Theme.of(context).textTheme.labelMedium?.copyWith(
+                                  state ?? ATStrings.aQuestionYouCanRemember, 
+                                  maxLines: 3,
+                                  style: context.textTheme.labelMedium?.copyWith(
                                     color: state == null ? ATColors.hex5B5B5B : ATColors.white,
                                   )
                                 ),
@@ -162,7 +166,7 @@ class SecurityAnswerField extends StatelessWidget {
         ),
         const SizedBox(height: 10,),
         ATTextFormField(
-          hintText: ATStrings.ENTER_UR_ANS,
+          hintText: ATStrings.enterYourAnswer,
           prefixIcon: const SizedBox(width: 12,),
           maxLines: 1,
           fillColor: ATColors.hex9E9E9E.withValues(alpha: 0.3),
@@ -175,13 +179,13 @@ class SecurityAnswerField extends StatelessWidget {
         ),
         const SizedBox(height: 10,),
         Text(
-          ATStrings.ANS_IS_CASE_SENSITIVE,
-          style: Theme.of(context).textTheme.titleSmall
+          ATStrings.answerIsCaseSensitive,
+          style: context.textTheme.titleSmall
         ),
         const SizedBox(height: 10,),
         Text(
           ATStrings.U_MUST_ANS_SECURITY_QUEST, maxLines: 2,
-          style: Theme.of(context).textTheme.titleSmall
+          style: context.textTheme.titleSmall
         ),
       ],
     );

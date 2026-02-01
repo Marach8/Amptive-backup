@@ -129,7 +129,7 @@ class ATWalletPinSetupScreen extends StatelessWidget {
                             ),
                             ATPlainElevatedBtn(
                               onPressed: state.length == 2 ? ()
-                              => context.pushReplacementNamed(ATRoutes.SECURITY_QUEST) : null,
+                              => context.pushReplacementNamed(ATRoutes.securityQuestionScreen) : null,
                               btnTitle: ATStrings.ADD_SECURITY_QUESTION
                             )
                           ],

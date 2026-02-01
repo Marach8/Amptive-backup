@@ -1,10 +1,15 @@
+import 'package:amptive/src/config/routing/route_strings.dart';
 import 'package:amptive/src/config/utils/colors.dart';
+import 'package:amptive/src/config/utils/extensions/context_extensions.dart';
 import 'package:amptive/src/config/utils/font_sizes.dart';
+import 'package:amptive/src/config/utils/image_strings.dart';
 import 'package:amptive/src/config/utils/other_strings.dart';
 import 'package:amptive/src/config/utils/helper_functions.dart';
+import 'package:amptive/src/features/wallet/presentation/screens/transaction_amount_screen.dart';
 import 'package:amptive/src/views/widgets/common_widgets/annotated_region__widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/app_bar_widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/back_button.dart';
+import 'package:amptive/src/views/widgets/common_widgets/image_loader_widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/loading_indicator.dart';
 import 'package:amptive/src/views/widgets/common_widgets/textformfield_widget.dart';
 import 'package:flutter/material.dart';
@@ -12,8 +17,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import '../../../../shared/elevated_button_widget.dart';
 
-class ATPassSecurityQuestionScreen extends StatelessWidget {
-  const ATPassSecurityQuestionScreen({super.key});
+class ATAnswerSecurityQuestionScreen extends StatelessWidget {
+  const ATAnswerSecurityQuestionScreen({super.key});
 
   static String quest = 'What is your childhood nickname?';
 
@@ -41,7 +46,7 @@ class ATPassSecurityQuestionScreen extends StatelessWidget {
                     Text(
                       maxLines: 2,
                       quest,
-                      style: Theme.of(context).textTheme.bodySmall
+                      style: context.textTheme.bodySmall
                     ),
                     const SizedBox(height: 10),
                     BlocBuilder<_EnterSecretQuesBloc, int?>(
@@ -49,8 +54,16 @@ class ATPassSecurityQuestionScreen extends StatelessWidget {
                       builder: (_, int? state){
                         return ATTextFormField(
                           enabled: state != 0,
+                          disableBlueBorder: true,
+                          prefixIcon: const Padding(
+                            padding: EdgeInsets.only(left: 10),
+                            child: ATImgLoader(
+                              height: 20, width: 20,
+                              imgPath: ATImgStrings.outlinedSearch
+                            ),
+                          ),
                           fillColor: ATColors.white.withValues(alpha: 0.1),
-                          hintText: ATStrings.ENTER_UR_ANS,
+                          hintText: ATStrings.enterYourAnswer,
                           suffixIcon: const _SuffixIcon(),
                           onChanged: (String text) => ATHelperFuncs.callDebouncer(
                             2000,
@@ -64,8 +77,8 @@ class ATPassSecurityQuestionScreen extends StatelessWidget {
                       builder: (_, int? state){
                         if(state == null){
                           return Text(
-                            ATStrings.ANS_IS_CASE_SENSITIVE,
-                            style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                            ATStrings.answerIsCaseSensitive,
+                            style: context.textTheme.bodySmall?.copyWith(
                               fontSize: ATSizes.size11
                             ),
                           );
@@ -73,15 +86,15 @@ class ATPassSecurityQuestionScreen extends StatelessWidget {
                         else if(state == 0){
                           return Text(
                             ATStrings.CHECKER_LOADING,
-                            style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                            style: context.textTheme.bodySmall?.copyWith(
                               fontSize: ATSizes.size11
                             ),
                           );
                         }
                         else if(state == 1){
                           return Text(
-                            ATStrings.CORRECT_ANS,
-                            style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                            ATStrings.correctAnswer,
+                            style: context.textTheme.bodySmall?.copyWith(
                               fontSize: ATSizes.size11,
                               color: ATColors.successColor
                             ),
@@ -90,7 +103,7 @@ class ATPassSecurityQuestionScreen extends StatelessWidget {
                         else {
                           return Text(
                             ATStrings.INCORRECT_ANS,
-                            style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                            style: context.textTheme.bodySmall?.copyWith(
                               fontSize: ATSizes.size11,
                               color: ATColors.textRedColor
                             ),
@@ -103,13 +116,22 @@ class ATPassSecurityQuestionScreen extends StatelessWidget {
                 ),
               ),
 
-              bottomSheet: Padding(
-                padding: const EdgeInsets.fromLTRB(15, 5, 15, 10),
+              bottomNavigationBar: Padding(
+                padding: const EdgeInsets.fromLTRB(15, 5, 15, 50),
                 child: BlocBuilder<_EnterSecretQuesBloc, int?>(
                   builder: (_, int? state){
                     return ATPlainElevatedBtn(
-                      onPressed: state == 1 ? () => context.pop(true) : null,
-                      btnTitle: ATStrings.SEND_WITHDRAWAL_REQUEST
+                      onPressed: state == 1 ? (){
+                        context.pushNamed(
+                          ATRoutes.paperPlaneSuccessScreen,
+                          extra: <dynamic>[
+                            'Withdrawal Request Sent',
+                            TransactionType.withdraw,
+                            "Your withdrawal request has been sent. We'll notify you once it is processed",
+                          ]
+                        );
+                      } : null,
+                      btnTitle: ATStrings.sendWithdrawalRequest
                     );
                   }
                 ),

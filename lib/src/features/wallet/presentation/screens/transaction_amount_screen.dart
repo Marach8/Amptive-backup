@@ -1,3 +1,4 @@
+import 'package:amptive/src/config/routing/route_strings.dart';
 import 'package:amptive/src/config/utils/colors.dart';
 import 'package:amptive/src/config/utils/dialogs/dialog_export.dart';
 import 'package:amptive/src/config/utils/extensions/context_extensions.dart';
@@ -5,8 +6,8 @@ import 'package:amptive/src/config/utils/font_weights.dart';
 import 'package:amptive/src/config/utils/other_strings.dart';
 import 'package:amptive/src/config/utils/dialogs/app_notification_dialog.dart';
 import 'package:amptive/src/config/utils/extensions/string_extensions.dart';
-import 'package:amptive/src/config/utils/helper_functions.dart';
 import 'package:amptive/src/features/wallet/bloc/wallet_bloc_export.dart';
+import 'package:amptive/src/features/wallet/presentation/screens/enter_acct_no_screen.dart';
 import 'package:amptive/src/views/widgets/animation_widgets/common_animation_widgets/animated_align_widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/annotated_region__widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/circular_image.dart';
@@ -29,12 +30,15 @@ class TransactionAmountScreenParams{
     required this.btnTitle,
     required this.transactionType,
     this.flushBarNotif,
-    this.imgPath
+    this.recipientProfileUrl,
+    this.recipientName
   });
   final String title, slidingNotif,
   btnTitle;
   final TransactionType transactionType;
-  final String? imgPath, flushBarNotif;
+  final String? recipientProfileUrl, 
+  recipientName, flushBarNotif;
+
 }
 
 class TransactionAmountScreen extends StatelessWidget {
@@ -70,10 +74,10 @@ class TransactionAmountScreen extends StatelessWidget {
                   physics: const BouncingScrollPhysics(),
                   child: Column(
                     children: <Widget>[
-                      if(params.imgPath != null)Padding(
+                      if(params.recipientProfileUrl != null)Padding(
                         padding: const EdgeInsets.only(bottom: 20),
                         child: ATCircularImage(
-                          imagePath: params.imgPath!,
+                          imagePath: params.recipientProfileUrl!,
                           diameter: 50,
                         ),
                       ),
@@ -168,7 +172,7 @@ class TransactionAmountScreen extends StatelessWidget {
                       final bool isDone = snapshot.connectionState == ConnectionState.done;
                       return ATAnimatedAlign(
                         condition: !isDone,
-                        startAlignment: Alignment(-ATHelperFuncs.getScreenWidth(context), 0),
+                        startAlignment: Alignment(-context.screenWidth, 0),
                         endAlignment: Alignment.center,
                         child: ATContainer(
                           radius: 14,
@@ -212,7 +216,40 @@ class TransactionAmountScreen extends StatelessWidget {
                                   }
                                   break;
                                 case TransactionType.transfer:
+                                  final bool? pinIsCorrect = await inputTransactionPinDialog(
+                                    context: context,
+                                    params: InputPinParams(
+                                      transactionType: TransactionType.transfer,
+                                      recipientProfileUrl: params.recipientProfileUrl,
+                                    )
+                                  );
+                                  if(context.mounted && pinIsCorrect == true){
+                                    context.pushNamed(
+                                      ATRoutes.paperPlaneSuccessScreen,
+                                      extra: <dynamic>[
+                                        'Transfer Successful',
+                                        TransactionType.transfer,
+                                        'Funds have been sent successfully to ${params.recipientName}'
+                                      ]
+                                    );
+                                  }
+                                  break;
                                 case TransactionType.withdraw:
+                                  final bool? pinIsCorrect = await inputTransactionPinDialog(
+                                    context: context,
+                                    params: InputPinParams(
+                                      transactionType: TransactionType.withdraw,
+                                      bankDetails: BankDetails(
+                                        accountName: 'Jozy boss',
+                                        accountNo: '2020202020',
+                                        bankName: 'GTBank',
+                                        amount: state.$1,
+                                      )
+                                    )
+                                  );
+                                  if(context.mounted && pinIsCorrect == true){
+                                    context.pushNamed(ATRoutes.answerSecurityQuestionScreen);
+                                  }
                               }
                             } : null,
                           btnTitle: params.btnTitle

@@ -2,6 +2,7 @@ import 'package:amptive/src/config/utils/colors.dart';
 import 'package:amptive/src/config/utils/font_sizes.dart';
 import 'package:amptive/src/config/utils/image_strings.dart';
 import 'package:amptive/src/config/utils/other_strings.dart';
+import 'package:amptive/src/features/wallet/presentation/screens/transaction_amount_screen.dart';
 import 'package:amptive/src/views/widgets/common_widgets/annotated_region__widget.dart';
 import 'package:amptive/src/shared/elevated_button_widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/image_loader_widget.dart';
@@ -13,9 +14,11 @@ class ATPaperPlaneSuccessScreen extends StatelessWidget {
   const ATPaperPlaneSuccessScreen({
     super.key,
     required this.title,
-    required this.subtitle
+    required this.subtitle,
+    required this.transactionType,
   });
   final String title, subtitle;
+  final TransactionType transactionType;
 
   @override
   Widget build(BuildContext context) {
@@ -82,14 +85,26 @@ class ATPaperPlaneSuccessScreen extends StatelessWidget {
           ),
 
           bottomSheet: Padding(
-            padding: const EdgeInsets.fromLTRB(15, 5, 15, 10),
+            padding: const EdgeInsets.fromLTRB(15, 5, 15, 50),
             child: BlocBuilder<_SlidingPaperPlaneBloc, int?>(
               builder: (_, int? state) {
                 return AnimatedSlide(
                   duration: const Duration(milliseconds: 300),
-                  offset: state == 1 ? const Offset(0, 0) : const Offset(0, 1.5),
+                  offset: state == 1 ? const Offset(0, 0) : const Offset(0, 2),
                   child: ATPlainElevatedBtn(
-                    onPressed: () => context.pop(),
+                    onPressed: (){
+                      if(transactionType == TransactionType.transfer){
+                        context.pop();
+                        context.pop();
+                        context.pop();
+                      }
+                      else{
+                        context.pop();
+                        context.pop();
+                        context.pop();
+                        context.pop();
+                      }
+                    },
                     btnTitle: ATStrings.backToSite,
                   ),
                 );

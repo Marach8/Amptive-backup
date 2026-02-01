@@ -38,7 +38,7 @@ class NoOfSubscribers extends StatelessWidget {
           ),
           const SizedBox(width: 5),
           Text(
-            ATStrings.SUBSCRIBERS,
+            ATStrings.subscribers,
             style: Theme.of(context).textTheme.bodySmall?.copyWith(
               fontSize: ATSizes.size16
             ),

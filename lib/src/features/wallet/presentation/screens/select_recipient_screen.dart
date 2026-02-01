@@ -1,10 +1,9 @@
-import 'dart:ui';
+import 'package:amptive/src/config/utils/image_strings.dart';
 import 'package:amptive/src/models/host.dart';
 import 'package:amptive/src/config/utils/colors.dart';
 import 'package:amptive/src/config/utils/font_sizes.dart';
 import 'package:amptive/src/config/utils/other_strings.dart';
 import 'package:amptive/src/config/routing/route_strings.dart';
-import 'package:amptive/src/config/utils/dialogs/wallet/enter_pin_dialog.dart' show inputTxnPinDialog;
 import 'package:amptive/src/config/utils/helper_functions.dart';
 import 'package:amptive/src/features/wallet/bloc/recent_receipients_bloc.dart';
 import 'package:amptive/src/features/wallet/presentation/screens/transaction_amount_screen.dart' show TransactionAmountScreenParams, TransactionType;
@@ -62,7 +61,7 @@ class _ATSelectRecipientScreenState extends State<ATSelectRecipientScreen> {
                 child: NestedScrollView(
                   floatHeaderSlivers: true,
                   headerSliverBuilder: (_, __) => <Widget>[
-                    const ATSliverAppBar(titleText: ATStrings.TRANSFER_FUNDS,),
+                    const ATSliverAppBar(titleText: ATStrings.transferFunds,),
                     SliverPersistentHeader(
                       pinned: true,
                       delegate: ATSliverHDelegate(
@@ -75,7 +74,15 @@ class _ATSelectRecipientScreenState extends State<ATSelectRecipientScreen> {
                             builder: (_, setter) {
                               return ATTextFormField(
                                 controller: _cntrl, maxLines: 1,
-                                hintText: ATStrings.SEARCH_4_USER,
+                                hintText: ATStrings.searchForUser,
+                                disableBlueBorder: true,
+                                prefixIcon: const Padding(
+                                  padding: EdgeInsets.only(left: 10),
+                                  child: ATImgLoader(
+                                    height: 20, width: 20,
+                                    imgPath: ATImgStrings.outlinedSearch
+                                  ),
+                                ),
                                 suffixIcon: showCancelIcon ? IconButton(
                                   onPressed: () => setter(
                                     (){
@@ -155,39 +162,35 @@ class _ATSelectRecipientScreenState extends State<ATSelectRecipientScreen> {
                 ),
               ),
               
-              bottomSheet: ClipRect(
-                child: BackdropFilter(
-                  filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
-                  child: Padding(
-                    padding: const EdgeInsets.fromLTRB(15, 5, 15, 10),
+              bottomSheet: Builder(
+                builder: (BuildContext context) {
+                  final double bottomSheetHeight = MediaQuery.viewInsetsOf(context).bottom;
+                  final double bottomPadding = bottomSheetHeight > 0 ? 10 : 60;
+                  return Padding(
+                    padding: EdgeInsets.fromLTRB(15, 5, 15, bottomPadding),
                     child: BlocBuilder<RecentRecipientsBloc, RecentRecipientsState>(
                       builder: (_, RecentRecipientsState state) {
                         return ATPlainElevatedBtn(
                           onPressed: (state is RecentRecipientsData && state.selectedRecipient != null) ? () async{
                             final ObjectWithNotifier<Host> recipient = state.selectedRecipient!;
-                            final String? trsfAmount = await context.pushNamed(
+                            await context.pushNamed(
                               ATRoutes.transactionAmountScreen,
                               extra: TransactionAmountScreenParams(
                                 transactionType: TransactionType.transfer,
-                                title: '${ATStrings.TRANSFER_FUNDS} to ${recipient.obj.name ?? ''}',
-                                slidingNotif: ATStrings.AMPTIVE_TRNSF_CHARGES,
-                                btnTitle: ATStrings.ENTER_PIN
+                                title: '${ATStrings.transferFunds} to ${recipient.obj.name ?? ''}',
+                                slidingNotif: ATStrings.amptiveTransferCharges,
+                                btnTitle: ATStrings.enterPin,
+                                recipientProfileUrl: recipient.obj.profilePicture ?? '',
+                                recipientName: recipient.obj.name ?? '',
                               )
                             ) as String?;
-
-                            if(context.mounted && trsfAmount != null){
-                              final bool? shouldProceed = await inputTxnPinDialog(context: context, object: recipient);
-                              if(context.mounted && (shouldProceed ?? false)){
-                                context.pop(recipient.obj.username);
-                              }
-                            }
                           } : null,
-                          btnTitle: ATStrings.ENTER_AMT,
+                          btnTitle: ATStrings.enterAmount,
                         );
                       }
                     ),
-                  ),
-                ),
+                  );
+                }
               ),
             );
           }

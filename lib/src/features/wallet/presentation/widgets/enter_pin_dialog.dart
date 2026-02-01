@@ -1,3 +1,4 @@
+import 'package:amptive/src/config/utils/extensions/context_extensions.dart';
 import 'package:amptive/src/models/host.dart';
 import 'package:amptive/src/config/utils/colors.dart';
 import 'package:amptive/src/config/utils/font_sizes.dart';
@@ -6,6 +7,7 @@ import 'package:amptive/src/config/utils/other_strings.dart';
 import 'package:amptive/src/config/utils/extensions/string_extensions.dart';
 import 'package:amptive/src/config/utils/helper_functions.dart';
 import 'package:amptive/src/features/wallet/presentation/screens/wallet_views_export.dart';
+import 'package:amptive/src/shared/elevated_button_widget.dart';
 import 'package:amptive/src/views/widgets/animation_widgets/common_animation_widgets/animated_align_widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/back_button.dart';
 import 'package:amptive/src/shared/custom_container_widget.dart';
@@ -14,49 +16,51 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import '../../../../features/wallet/bloc/enter_pin_bloc.dart';
+import '../../bloc/enter_pin_bloc.dart';
 import '../../../../views/widgets/common_widgets/circular_image.dart';
-import '../../font_weights.dart';
+import '../../../../config/utils/font_weights.dart';
 
-Future<bool?> inputTxnPinDialog({
+class InputPinParams{
+  const InputPinParams({
+    this.bankDetails,
+    this.recipientProfileUrl,
+    required this.transactionType,
+  });
+
+  final BankDetails? bankDetails;
+  final String? recipientProfileUrl;
+  final TransactionType transactionType;
+}
+
+
+Future<bool?> inputTransactionPinDialog({
   required BuildContext context,
-  required Object? object
+  required InputPinParams params,
 }) {
-  ObjectWithNotifier<Host>? receipient; BankDetails? bankDetails;
-  final bool isTransfer = object is ObjectWithNotifier<Host>;
-  final bool isWithdrawal = object is BankDetails;
-
-  if(isTransfer){
-    receipient = object;
-  }
-  else if(isWithdrawal){
-    bankDetails = object;
-  }
-
   const String digits = '123456789.0<';
   
   return showCupertinoModalPopup<bool>(
     context: context,
     barrierColor: ATColors.black,
     builder: (BuildContext dialogContext) {
-      return BlocProvider(
+      return BlocProvider<EnterPinBloc>(
         create: (_) => EnterPinBloc(),
         child: Builder(
           builder: (BuildContext blocContext) {
             return Material(
               color: ATColors.transparent,
               child: SizedBox(
-                height: ATHelperFuncs.getScreenHeight(context),
+                height: context.screenHeight,
                 child: Column(
                   children: <Widget>[
                     Padding(
-                      padding: const EdgeInsets.fromLTRB(7, 40, 15, 30),
+                      padding: const EdgeInsets.fromLTRB(7, 48, 15, 30),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: <Widget>[
                           const ATRoundedBackBtn(),
                           Text(
-                            ATStrings.ENTER_PIN,
+                            ATStrings.enterPin,
                             style: Theme.of(context).textTheme.bodyMedium
                           ),
                           const SizedBox(width: 30,),
@@ -70,20 +74,21 @@ Future<bool?> inputTxnPinDialog({
                         padding: const EdgeInsets.fromLTRB(15, 10, 15, 10),
                         child: Column(
                           children: <Widget>[
-                            if(isTransfer)ATCircularImage(
-                              imagePath: receipient?.obj.profilePicture ?? '',
+                            if(params.transactionType == TransactionType.transfer)ATCircularImage(
+                              imagePath: params.recipientProfileUrl ?? '',
                               diameter: 50,
                             ),
-                            if(isWithdrawal) WidgetWithLeadingImageAndTrailingMoreIcon(
-                              title: bankDetails?.bankName ?? '',
-                              subtitle: '${bankDetails?.accountNo} - ${bankDetails?.accountName}',
+
+                            if(params.transactionType == TransactionType.withdraw) WidgetWithLeadingImageAndTrailingMoreIcon(
+                              title: params.bankDetails?.bankName ?? '',
+                              subtitle: '${params.bankDetails?.accountNo} - ${params.bankDetails?.accountName}',
                               leadingImgPath: ATImgStrings.WIRE_TRANSFER,
                               btnText: ATStrings.CHANGE_BANK_DETAILS,
                               btnOnTap: (){
                                 dialogContext.pop(); context.pop();
                               },
                               trailingMoreOnTap: (){},
-                              bottomTrailingText: bankDetails?.amount?.formatPrice(),
+                              bottomTrailingText: params.bankDetails?.amount?.formatPrice(),
                               //bottomTrailingWidget: const SizedBox.shrink(),
                               imgSize: 40,
                             ),
@@ -123,7 +128,7 @@ Future<bool?> inputTxnPinDialog({
                                     ),
                             
                                     if(state.$2 == false)Text(
-                                      ATStrings.INCORRECT_PIN,
+                                      ATStrings.incorrectPin,
                                       style: Theme.of(context).textTheme.bodySmall?.copyWith(
                                         color: ATColors.textRedColor
                                       ),
@@ -170,7 +175,7 @@ Future<bool?> inputTxnPinDialog({
                                     child: Center(
                                       child: Text(
                                         digit,
-                                        style: Theme.of(context).textTheme.displayMedium?.copyWith(
+                                        style: context.textTheme.displayMedium?.copyWith(
                                           fontWeight: ATFontWeights.w500
                                         )
                                       ),
@@ -186,51 +191,28 @@ Future<bool?> inputTxnPinDialog({
                       ),
                     ),
 
-                    FutureBuilder(
-                      future: Future.delayed(const Duration(seconds: 2)),
-                      builder: (_, AsyncSnapshot snapshot) {
-                        final bool isDone = snapshot.connectionState == ConnectionState.done;
-                        return ATAnimatedAlign(
-                          condition: !isDone,
-                          startAlignment: Alignment(-ATHelperFuncs.getScreenWidth(dialogContext) * 3, 0),
-                          endAlignment: Alignment.center,
-                          child: ATContainer(
-                            radius: 14,
-                            padding: const EdgeInsets.fromLTRB(15, 10, 15, 10),
-                            width: ATHelperFuncs.getScreenWidth(dialogContext) * 0.92,
-                            color: ATColors.white.withValues(alpha: 0.05),
-                            child: Row(
-                              spacing: 10,
-                              children: <Widget>[
-                                Icon(Icons.info_outline, color: ATColors.hexC2C2C2),
-                                Flexible(
-                                  child: Text(
-                                    ATStrings.KEEPS_WALLET_SECURE, maxLines: 3,
-                                    style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                                      fontSize: ATSizes.size13,
-                                      color: ATColors.hexC2C2C2
-                                    )
-                                  ),
-                                ),
-                              ],
-                            )
+                    ATContainer(
+                      radius: 14,
+                      padding: const EdgeInsets.fromLTRB(15, 10, 15, 10),
+                      color: ATColors.white.withValues(alpha: 0.05),
+                      child: Row(
+                        spacing: 10,
+                        mainAxisSize: MainAxisSize.min,
+                        children: <Widget>[
+                          Icon(Icons.info_outline, color: ATColors.hexC2C2C2),
+                          Flexible(
+                            child: Text(
+                              ATStrings.keepsWalletSecure, maxLines: 3,
+                              style: context.textTheme.titleSmall?.copyWith(
+                                fontSize: ATSizes.size13,
+                                color: ATColors.hexC2C2C2
+                              )
+                            ),
                           ),
-                        );
-                      }
+                        ],
+                      )
                     ),
-                    const SizedBox(height: 10,)
-                    // Padding(
-                    //   padding: const EdgeInsets.fromLTRB(15, 10, 15, 10),
-                    //   child: BlocBuilder<EnterPinBloc, (String, bool)>(
-                    //     builder: (_, state) {
-                    //       return ATPlainElevatedBtn(
-                    //         onPressed: (state.$1.isNotEmpty && state.$1 != '0' && state.$2 == true) 
-                    //           ? () {} : null,
-                    //         btnTitle: ATStrings.ENTER_PIN,
-                    //       );
-                    //     }
-                    //   ),
-                    // ),
+                    const SizedBox(height: 50,),
                   ],
                 ),
               ),

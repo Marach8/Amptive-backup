@@ -171,7 +171,7 @@ Future<String?> choose2AllowHandRaisingModal({
                     builder: (_, String? state) {
                       return ATPlainElevatedBtn(
                         onPressed: state == null ? null : () => dContext.pop(state),
-                        btnTitle: ATStrings.CONTINUE,
+                        btnTitle: ATStrings.cContinue,
                       );
                     }
                   )

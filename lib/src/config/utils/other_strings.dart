@@ -31,7 +31,7 @@ class ATStrings{
   static const String NEXT = 'Next';
   static const String SHOULD_REDIRECT = 'should Redirect';
   static const String IS_NEW_USER = 'Is First time user';
-  static const String ENTER_AMT = 'Enter Amount';
+  static const String enterAmount = 'Enter Amount';
   static const String or = 'or';
   static const String and = 'and';
   static const String emailSymbol = '@';
@@ -44,17 +44,17 @@ class ATStrings{
   static const String BACK = 'Back';
   static const String TEXT = 'Text';
   static const String RESPOND = 'Respond';
-  static const String CONTINUE = 'Continue';
+  static const String cContinue = 'Continue';
   static const String SEND_INVITE = 'Send invite';
   static const String SET_FEE = 'Set fee';
-  static const String ENTER_PIN = 'Enter pin';
+  static const String enterPin = 'Enter pin';
   static const String SELECT_PAYMENT_METHOD = 'Select payment method';
   static const String insufficientFunds = 'Insufficient funds!';
-  static const String INCORRECT_PIN = 'Incorrect pin!';
-  static const String AMPTIVE_TRNSF_CHARGES = 'Amptive charges 0% on transfers';
+  static const String incorrectPin = 'Incorrect pin!';
+  static const String amptiveTransferCharges = 'Amptive charges 0% on transfers';
   static const String AMPTIVE_FUNDING_CHARGES = 'Amptive charges a 0% funding fee';
   static const String AMPTIVE_WITHDRAWAL_CHARGES = 'Amptive charges 2% on withdrawals';
-  static const String KEEPS_WALLET_SECURE = 'This keeps your wallet secure';
+  static const String keepsWalletSecure = 'This keeps your wallet secure';
 
   static const String signUpWith = 'Sign up with ';
   static const String signInWith = 'Sign in with ';
@@ -80,7 +80,7 @@ class ATStrings{
   static const String TWITTER = 'X(Twitter)';
   static const String GOOGLE = 'Google';
   static const String ANSWER_SECRET_QUEST = 'Answer Secret Question';
-  static const String NO_MATCHING_RESULTS = 'No results found for this search!';
+  static const String noMatchingResults = 'No results found for this search!';
   static const String SELECT_CAT = 'Select your category';
   static const String CAT_WONT_BE_SHOWN = 'Selected category will not be shown on your public profile and can be changed anytime.';
   static const String SEARCH_CAT = 'Search for a category';
@@ -94,8 +94,8 @@ class ATStrings{
   static const String WAS_SUCCESSFUL = 'was successful';
   static const String TO_UR_WALLET = 'to your wallet';
   static const String HAS_BEEN_PROCESSED = 'has been processed';
-  static const String SEND_WITHDRAWAL_REQUEST = 'Send withdrawal request';
-  static const String INVALID_ACCT_NO = 'Invalid account number!';
+  static const String sendWithdrawalRequest = 'Send withdrawal request';
+  static const String invalidAccountNumber = 'Invalid account number!';
   static const String SETUP_WALLET = 'Setup your Amptive wallet';
   static const String NO_WALLET_NO_EARNINGS = 'No Wallet, No Earnings';
   static const String SETUP_UR_WALLET = 'Set up your wallet to receive payments from events, gifts, and subscriptions.';
@@ -136,7 +136,7 @@ class ATStrings{
   static String enterLink(String link) => "Enter your $link link";
   static const String isUnblocked = 'is now unblocked';
   static const String IS_UNMUTED = 'is now unmuted';
-  static const String TRANSFER_FUNDS = 'Transfer Funds';
+  static const String transferFunds = 'Transfer Funds';
   static const String COUNTRY = 'Country';
   static const String PROFILE = 'Profile';
   static const String STAY_ON_LOOP = 'STAY ON THE LOOP';
@@ -208,7 +208,7 @@ class ATStrings{
   static const String BY_CLICKING_ON_CREATE_ACCT = 'By clicking on ‘Create account’, you agree to the';
 
   static const String CHECKER_LOADING = "Checker is loading...";
-  static const String CORRECT_ANS = 'Answer is correct';
+  static const String correctAnswer = 'Answer is correct';
   static const String INCORRECT_ANS = 'Answer is incorrect!';
   static const String USERNAME_AVAILABLE ="Username is available";
   static const String whatShouldWeCallYou ="What should we call you?";
@@ -285,7 +285,7 @@ class ATStrings{
   static const String DAY_VIEW = 'Day view';
   static const String MONTH_VIEW = 'Month view';
   static const String SUBSCRIPTION = 'Subscription';
-  static const String SUBSCRIBERS = 'Subscribers';
+  static const String subscribers = 'Subscribers';
   static const String COMMUNITY_TASK = 'Community Task';
   static const String NO_TASK = 'No task available right now';
   static const String PROFILE_PIC = 'Profile Picture';
@@ -306,10 +306,10 @@ class ATStrings{
   static const String TOP_LISTENERS_DESC = 'Top listeners are ranked by their level of interaction during the live session.';
   static const String LISTENERS = 'Listeners';
   static const String SELECT_SECURITY_QUEST = 'Select a Security Question';
-  static const String A_QUEST_U_CAN_REMEMBER = 'Select a question you can easily remember...';
+  static const String aQuestionYouCanRemember = 'Select a question you can easily remember...';
   static const String WHAT_IS_UR_ANSWER = 'What is your answer?';
-  static const String ENTER_UR_ANS = 'Enter your answer';
-  static const String ANS_IS_CASE_SENSITIVE = 'Your answer is case-sensitive!';
+  static const String enterYourAnswer = 'Enter your answer';
+  static const String answerIsCaseSensitive = 'Your answer is case-sensitive!';
   static const String U_MUST_ANS_SECURITY_QUEST = 'You must answer your security question when making withdrawals!';
   static const String END_LIVE_SHOW = 'Are you sure you want to end your live show?';
 
@@ -399,10 +399,10 @@ class ATStrings{
   static const String ENTER_10_DIGIT_ACCT_NO = 'Your 10-digit account number';
 
   static const String CHOOSE_WITHDRWAL_METHOD = 'Choose your preferred withdrawal method.';
-  static const String SELECT_BANK_DESC = 'Select the bank you would like to withdraw funds to.';
-  static const String UR_ACCT_NO = 'What is your account number?';
-  static const String SELECT_BANK = 'Select Bank';
-  static const String SELECT_BANK_COUNTRY = 'Please select the country where your bank is located.';
+  static const String selectBankDesc = 'Select the bank you would like to withdraw funds to.';
+  static const String whatIsYourAccountNumber = 'What is your account number?';
+  static const String selectBank = 'Select Bank';
+  static const String selectBankCountry = 'Please select the country where your bank is located.';
   static const String CHOOSE_2_CREATE_SHOW_OR_EVENT = "Choose whether you'd like to create a Show or an Event befor proceeding.";
   static const String CREATE_SHOW = 'Create Show';
   static const String CREATE_EVENT = 'Create Event';
@@ -430,8 +430,8 @@ class ATStrings{
   static const String TOP_GIFTERS = 'Top Gifters';
   static const String SEARCH_4_COHOSTS = 'Search for co-hosts';
   static const String SEARCH_ND_ADD_COHOSTS_4_SHOW = 'Search and add co-hosts for your show';
-  static const String SEARCH_4_USER = 'Search for user';
-  static const String SEARCH_4_BANK = 'Search for bank';
+  static const String searchForUser = 'Search for user';
+  static const String searchForBank = 'Search for bank';
   static const String SEARCH_4_FOLLOWERS = 'Search for followers';
   static const String SEARCH_4_SUBSCRIBERS = 'Search for subscribers';
   static const String SEARCH_4_LISTENERS = 'Search for listeners';

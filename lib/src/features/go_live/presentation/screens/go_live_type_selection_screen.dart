@@ -89,7 +89,7 @@ class GoLiveTypeSelectionScreen extends StatelessWidget {
                     ATRoutes.CHOOSE_OR_CREATE_GO_LIVE_PROGRAM_SCREEN,
                     extra: state == 0 ? GoLiveProgramType.show : GoLiveProgramType.event,
                   ) : null,
-                  btnTitle: ATStrings.CONTINUE,
+                  btnTitle: ATStrings.cContinue,
                   bgColor: ATColors.white,
                   fgColor: ATColors.black,
                 ),

@@ -1,4 +1,5 @@
 import 'package:amptive/src/config/utils/colors.dart';
+import 'package:amptive/src/config/utils/extensions/context_extensions.dart';
 import 'package:amptive/src/config/utils/image_strings.dart';
 import 'package:amptive/src/config/utils/other_strings.dart';
 import 'package:amptive/src/config/routing/route_strings.dart';
@@ -43,7 +44,7 @@ class ATWithdrwalLandingScreen extends StatelessWidget {
                     Text(
                       maxLines: 2,
                       ATStrings.CHOOSE_WITHDRWAL_METHOD,
-                      style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                      style: context.textTheme.bodySmall?.copyWith(
                         color: ATColors.hexC2C2C2
                       ),
                     ),
@@ -77,13 +78,13 @@ class ATWithdrwalLandingScreen extends StatelessWidget {
               ),
 
               bottomNavigationBar: Padding(
-                padding: const EdgeInsets.fromLTRB(15, 5, 15, 10),
+                padding: const EdgeInsets.fromLTRB(15, 5, 15, 50),
                 child: BlocBuilder<_PrivateBloc, int?>(
                   builder: (_, int? state) {
                     return ATPlainElevatedBtn(
                       onPressed: state == null ? null : 
                         () => context.pushReplacementNamed(ATRoutes.SELECT_BANK_COUNTRY),
-                      btnTitle: ATStrings.CONTINUE,
+                      btnTitle: ATStrings.cContinue,
                     );
                   }
                 ),

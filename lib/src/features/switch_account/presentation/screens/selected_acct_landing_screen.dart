@@ -138,7 +138,7 @@ class SelectedAcctLandingScreen extends StatelessWidget {
                     onPressed: isVisible ? () => context.pushNamed(
                       ATRoutes.SELECT_CAT, extra: isCreator
                     ) : null,
-                    btnTitle: ATStrings.CONTINUE
+                    btnTitle: ATStrings.cContinue
                   );
                 }
               )

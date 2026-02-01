@@ -1,11 +1,15 @@
 import 'package:amptive/src/config/utils/colors.dart';
+import 'package:amptive/src/config/utils/extensions/context_extensions.dart';
 import 'package:amptive/src/config/utils/font_sizes.dart';
 import 'package:amptive/src/config/utils/other_strings.dart';
 import 'package:amptive/src/shared/custom_container_widget.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
 
-Future<String?> showSecurityQuestionsDialog(BuildContext context, List<String> items) {
+
+Future<String?> showSecurityQuestionsDialog({
+  required BuildContext context,
+  required List<String> items,
+}) {
   int selectedIndex = 0;
 
   return showCupertinoModalPopup<String>(
@@ -17,14 +21,15 @@ Future<String?> showSecurityQuestionsDialog(BuildContext context, List<String> i
         child: Column(
           children: <Widget>[
             ATContainer(
-              height: 40, color: ATColors.hex9E9E9E.withValues(alpha: 0.3),
+              height: 40, 
+              color: ATColors.hex9E9E9E.withValues(alpha: 0.3),
               padding: const EdgeInsets.only(right: 15),
               alignment: Alignment.centerRight,
               child: GestureDetector(
                 onTap: () => Navigator.pop(dialogContext, items[selectedIndex]),
                 child: Text(
                   ATStrings.DONE,
-                  style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                  style: context.textTheme.bodySmall?.copyWith(
                     fontSize: ATSizes.size16
                   )
                 ),
@@ -41,7 +46,7 @@ Future<String?> showSecurityQuestionsDialog(BuildContext context, List<String> i
                       padding: const EdgeInsets.symmetric(horizontal: 20),
                       child: Text(
                         item,
-                        style: Theme.of(context).textTheme.labelSmall?.copyWith(
+                        style: context.textTheme.labelSmall?.copyWith(
                           fontSize: ATSizes.size20
                         ),
                       ),

@@ -104,7 +104,7 @@ Future<String?> selectPaymentMethodDialog({
                         builder: (_, String? state) {
                           return ATPlainElevatedBtn(
                             onPressed: state == null ? null : () => dialogContext.pop(state),
-                            btnTitle: ATStrings.CONTINUE,
+                            btnTitle: ATStrings.cContinue,
                           );
                         }
                       ),

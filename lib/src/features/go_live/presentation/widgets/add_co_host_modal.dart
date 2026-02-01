@@ -121,7 +121,7 @@ Future<ATCohost<bool>?> showAvailableCoHostsModal({
 
                 return ATBlurredBgBtn(
                   onPressed: activateBtn ? () => dContext.pop() : null,
-                  btnTitle: ATStrings.CONTINUE,
+                  btnTitle: ATStrings.cContinue,
                 );
               }
             ),

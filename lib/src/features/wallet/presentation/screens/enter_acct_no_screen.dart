@@ -1,4 +1,5 @@
 import 'package:amptive/src/config/utils/colors.dart';
+import 'package:amptive/src/config/utils/extensions/context_extensions.dart';
 import 'package:amptive/src/config/utils/font_sizes.dart';
 import 'package:amptive/src/config/utils/other_strings.dart';
 import 'package:amptive/src/config/routing/route_strings.dart';
@@ -45,9 +46,9 @@ class ATEnterAccountNoScreen extends StatelessWidget {
                   children: <Widget>[
                     Text(
                       maxLines: 2,
-                      ATStrings.UR_ACCT_NO,
-                      style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                        color: ATColors.hexC2C2C2
+                      ATStrings.whatIsYourAccountNumber,
+                      style: context.textTheme.bodyMedium?.copyWith(
+                        fontSize: ATSizes.size17
                       ),
                     ),
                     const SizedBox(height: 10),
@@ -57,6 +58,8 @@ class ATEnterAccountNoScreen extends StatelessWidget {
                         return ATTextFormField(
                           keyboardType: TextInputType.number,
                           enabled: state.$2 != 0,
+                          disableBlueBorder: true,
+                          prefixIcon: const SizedBox(width: 15),
                           fillColor: ATColors.white.withValues(alpha: 0.1),
                           hintText: ATStrings.ENTER_10_DIGIT_ACCT_NO,
                           suffixIcon: const _SuffixIcon(),
@@ -79,7 +82,7 @@ class ATEnterAccountNoScreen extends StatelessWidget {
                         else if(state == 0){
                           return Text(
                             ATStrings.CHECKER_LOADING,
-                            style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                            style: context.textTheme.bodySmall?.copyWith(
                               fontSize: ATSizes.size11
                             ),
                           );
@@ -88,15 +91,15 @@ class ATEnterAccountNoScreen extends StatelessWidget {
                           final String? name = context.read<_EnterAccountNoBloc>().state.$1;
                           return Text(
                             name ?? '',
-                            style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                            style: context.textTheme.bodySmall?.copyWith(
                               fontSize: ATSizes.size11
                             ),
                           );
                         }
                         else {
                           return Text(
-                            ATStrings.INVALID_ACCT_NO,
-                            style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                            ATStrings.invalidAccountNumber,
+                            style: context.textTheme.bodySmall?.copyWith(
                               fontSize: ATSizes.size11,
                               color: ATColors.textRedColor
                             ),
@@ -108,8 +111,8 @@ class ATEnterAccountNoScreen extends StatelessWidget {
                 ),
               ),
 
-              bottomSheet: Padding(
-                padding: const EdgeInsets.fromLTRB(15, 5, 15, 10),
+              bottomNavigationBar: Padding(
+                padding: const EdgeInsets.fromLTRB(15, 5, 15, 50),
                 child: BlocSelector<_EnterAccountNoBloc, (String?, int?), String?>(
                   selector: ((String?, int?) state) => state.$1,
                   builder: (_, String? state){
@@ -137,29 +140,29 @@ class ATEnterAccountNoScreen extends StatelessWidget {
                                 transactionType: TransactionType.withdraw,
                                 title: '${ATStrings.withdraw} to ${bankDetail.accountName.toUpperCase()}',
                                 slidingNotif: ATStrings.AMPTIVE_WITHDRAWAL_CHARGES,
-                                btnTitle: ATStrings.ENTER_PIN,
+                                btnTitle: ATStrings.enterPin,
                                 flushBarNotif: (shouldSave ?? false) ? ATStrings.BANK_DETAIL_SAVED : null
                               ),
                             ) as String?;
 
                             if(context.mounted && (amount != null)){
-                              final bool? shouldProceed = await inputTxnPinDialog(context: context, object: bankDetail);
-                              if(context.mounted && (shouldProceed ?? false)){
-                                final bool? didPassQuest = await context.pushNamed(ATRoutes.PASS_SECURITY_QUEST) as bool?;
-                                if(context.mounted && (didPassQuest ?? false)){
-                                  await context.pushNamed(
-                                    ATRoutes.PAPER_PLANE_SUCCESS,
-                                    extra: <String>[ATStrings.WITHDRAWAL_REQUEST_SENT, ATStrings.WITHDRAWAL_REQUEST_DESC]
-                                  );
-                                  if(context.mounted){
-                                    context.pop();
-                                  }
-                                }
-                              }
+                              // final bool? shouldProceed = await inputTransactionPinDialog(context: context, object: bankDetail);
+                              // if(context.mounted && (shouldProceed ?? false)){
+                              //   final bool? didPassQuest = await context.pushNamed(ATRoutes.PASS_SECURITY_QUEST) as bool?;
+                              //   if(context.mounted && (didPassQuest ?? false)){
+                              //     await context.pushNamed(
+                              //       ATRoutes.PAPER_PLANE_SUCCESS,
+                              //       extra: <String>[ATStrings.WITHDRAWAL_REQUEST_SENT, ATStrings.WITHDRAWAL_REQUEST_DESC]
+                              //     );
+                              //     if(context.mounted){
+                              //       context.pop();
+                              //     }
+                              //   }
+                              // }
                             }
                           }
                         },
-                      btnTitle: ATStrings.CONTINUE,
+                      btnTitle: ATStrings.cContinue,
                     );
                   }
                 ),

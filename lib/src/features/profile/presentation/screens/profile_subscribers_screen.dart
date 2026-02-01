@@ -9,16 +9,8 @@ import '../../../../models/host.dart';
 import '../../../../views/widgets/common_widgets/app_bar_widget.dart';
 import '../../../../shared/custom_container_widget.dart';
 import 'package:amptive/src/config/config_export.dart';
-import 'package:amptive/src/views/widgets/common_widgets/annotated_region__widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/back_button.dart';
-import 'package:amptive/src/views/widgets/common_widgets/image_loader_widget.dart';
-import 'package:amptive/src/views/widgets/common_widgets/textformfield_widget.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../../../bloc/main_app/profile/profile_followers_bloc.dart';
-import '../../../../models/host.dart';
-import '../../../../views/widgets/common_widgets/app_bar_widget.dart';
-import '../../../../shared/custom_container_widget.dart';
+
 
 class ProfileSubscribersScreen extends StatelessWidget {
   const ProfileSubscribersScreen({super.key});
@@ -31,7 +23,7 @@ class ProfileSubscribersScreen extends StatelessWidget {
           leading: const ATRoundedBackBtn(),
           leadingWidth: 30,
           title: Text(
-            ATStrings.SUBSCRIBERS,
+            ATStrings.subscribers,
             style: context.textTheme.bodyMedium,
           ),
         ),

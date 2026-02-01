@@ -194,8 +194,8 @@ final GoRouter amptiveAppRouter = GoRouter(
                 ),
               ),
               GoRoute(
-                name: ATRoutes.SECURITY_QUEST,
-                path: ATRoutes.SECURITY_QUEST.addSlash,
+                name: ATRoutes.securityQuestionScreen,
+                path: ATRoutes.securityQuestionScreen.addSlash,
                 pageBuilder: (_, __) => ATSlidingRouteTransition<void>(
                   child: const ATSecurityQuestionScreen()
                 ),
@@ -259,21 +259,22 @@ final GoRouter amptiveAppRouter = GoRouter(
                     ),
                   ),
                   GoRoute(
-                    name: ATRoutes.PASS_SECURITY_QUEST,
-                    path: ATRoutes.PASS_SECURITY_QUEST.addSlash,
+                    name: ATRoutes.answerSecurityQuestionScreen,
+                    path: ATRoutes.answerSecurityQuestionScreen.addSlash,
                     pageBuilder: (_, GoRouterState state) => ATSlidingRouteTransition<void>(
-                      child: const ATPassSecurityQuestionScreen()
+                      child: const ATAnswerSecurityQuestionScreen()
                     ),
                   ),
                   GoRoute(
-                    name: ATRoutes.PAPER_PLANE_SUCCESS,
-                    path: ATRoutes.PAPER_PLANE_SUCCESS.addSlash,
+                    name: ATRoutes.paperPlaneSuccessScreen,
+                    path: ATRoutes.paperPlaneSuccessScreen.addSlash,
                     pageBuilder: (_, GoRouterState state){
-                      final List<String> params = state.extra as List<String>;
+                      final List<dynamic> params = state.extra as List<dynamic>;
                       return ATSlidingRouteTransition<void>(
                         child: ATPaperPlaneSuccessScreen(
-                          title: params.first,
-                          subtitle: params.last,
+                          title: params.first as String,
+                          transactionType: params[1] as TransactionType,
+                          subtitle: params.last as String,
                         )
                       );
                     },

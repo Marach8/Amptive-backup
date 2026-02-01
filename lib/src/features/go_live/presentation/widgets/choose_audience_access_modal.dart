@@ -213,7 +213,7 @@ Future<String?> chooseAudienceAccess4ShowModal({
                       return ATPlainElevatedBtn(
                         height: 50,
                         onPressed: state == null ? null : () => dContext.pop(state),
-                        btnTitle: ATStrings.CONTINUE,
+                        btnTitle: ATStrings.cContinue,
                       );
                     }
                   )

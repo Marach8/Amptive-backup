@@ -1,10 +1,13 @@
 import 'package:amptive/src/config/utils/colors.dart';
+import 'package:amptive/src/config/utils/extensions/context_extensions.dart';
 import 'package:amptive/src/config/utils/font_sizes.dart';
+import 'package:amptive/src/config/utils/image_strings.dart';
 import 'package:amptive/src/config/utils/other_strings.dart';
 import 'package:amptive/src/config/utils/helper_functions.dart';
 import 'package:amptive/src/features/wallet/bloc/wallet_bloc_export.dart';
 import 'package:amptive/src/views/widgets/common_widgets/back_button.dart';
 import 'package:amptive/src/shared/elevated_button_widget.dart';
+import 'package:amptive/src/views/widgets/common_widgets/image_loader_widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/loading_indicator.dart';
 import 'package:amptive/src/views/widgets/common_widgets/radio_button.dart';
 import 'package:amptive/src/views/widgets/common_widgets/search_filter_widget.dart';
@@ -40,18 +43,19 @@ Future<String?> selectWithdrawalBankDialog(BuildContext context) {
               });
 
               return SizedBox(
-                height: ATHelperFuncs.getScreenHeight(context),
+                height: context.screenHeight,
                 child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     Padding(
-                      padding: const EdgeInsets.fromLTRB(7, 40, 15, 20),
+                      padding: const EdgeInsets.fromLTRB(7, 48, 15, 10),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: <Widget>[
                           const ATRoundedBackBtn(),
                           Text(
-                            ATStrings.SELECT_BANK,
-                            style: Theme.of(context).textTheme.bodyMedium
+                            'Bank',
+                            style: context.textTheme.bodyMedium
                           ),
                           const SizedBox(width: 30),
                         ],
@@ -59,79 +63,70 @@ Future<String?> selectWithdrawalBankDialog(BuildContext context) {
                     ),
 
                     Padding(
-                      padding: const EdgeInsets.fromLTRB(15, 0, 15, 20),
-                      child: BlocBuilder<WithdrawalBanksBloc, WithdrawalBanksState>(
-                        buildWhen: (WithdrawalBanksState prev, WithdrawalBanksState curr) => (prev is WithdrawalBanksInitial && curr is FetchingBanks)
-                          || (prev is FetchingBanks && curr is WithdrawalBanksData),
-                        builder: (_, WithdrawalBanksState state) {
-                          if(state is FetchingBanks){
-                            return const ATShimmer(
-                              height: 15, radius: 5,
-                              margin: EdgeInsets.only(bottom: 10),
-                            );
-                          }
-                          return Text(
-                            maxLines: 2,
-                            ATStrings.SELECT_BANK_DESC,
-                            style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                              color: ATColors.hexC2C2C2
-                            ),
-                          );
-                        }
+                      padding: const EdgeInsets.fromLTRB(15, 10, 15, 8),
+                      child: Text(
+                        maxLines: 2,
+                        "Choose your bank",
+                        style: context.textTheme.headlineLarge?.copyWith(
+                          fontWeight: FontWeight.w600
+                        ),
+                      ),
+                    ),
+
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(15, 0, 15, 16),
+                      child: Text(
+                        maxLines: 2,
+                        ATStrings.selectBankDesc,
+                        style: context.textTheme.bodySmall?.copyWith(
+                          color: ATColors.hexC2C2C2
+                        ),
                       ),
                     ),
                     
                     Padding(
                       padding: const EdgeInsets.fromLTRB(15, 10, 15, 15),
-                      child: BlocBuilder<WithdrawalBanksBloc, WithdrawalBanksState>(
-                        buildWhen: (WithdrawalBanksState prev, WithdrawalBanksState curr) => (prev is WithdrawalBanksInitial && curr is FetchingBanks)
-                          || (prev is FetchingBanks && curr is WithdrawalBanksData),
-                        builder: (_, WithdrawalBanksState state) {
-                          if(state is FetchingBanks){
-                            return const ATShimmer(
-                              height: 40, radius: 5,
-                              margin: EdgeInsets.only(bottom: 10),
-                            );
-                          }
-                          return StatefulBuilder(
-                            builder: (_, setter) {
-                              return ATTextFormField(
-                                controller: cntrl, maxLines: 1,
-                                fillColor: ATColors.white.withValues(alpha: 0.1),
-                                hintText: ATStrings.SEARCH_4_BANK,
-                                prefixIcon: const Padding(
-                                  padding: EdgeInsets.only(left: 10, right: 5),
-                                  child: Icon(Iconsax.search_normal_14, size: 20,),
-                                ),
-                                suffixIcon: showCancelIcon ? IconButton(
-                                  onPressed: () => setter(
-                                    (){
-                                      context.read<WithdrawalBanksBloc>().add(ResetBanksSearchEvent());
-                                      context.read<SearchkeyBloc>().updateSearchKey('');
-                                      cntrl.clear(); showCancelIcon = false;
-                                    }
-                                  ),
-                                  icon: const Icon(Icons.close, size: 20,),
-                                ) : null,
-                                onChanged: (String text){
-                                  if(text.isEmpty && showCancelIcon){
-                                    setter(() => showCancelIcon = false);
-                                  }
-                                  else if(text.isNotEmpty && !showCancelIcon){
-                                    setter(() => showCancelIcon = true);
-                                  }
-                                  ATHelperFuncs.callDebouncer(
-                                    500,
-                                    (){
-                                      context.read<SearchkeyBloc>().updateSearchKey(text);
-                                      context.read<WithdrawalBanksBloc>().add(
-                                        SearchBanksEvent(text)
-                                      );
-                                    }
+                      child: StatefulBuilder(
+                        builder: (_, setter) {
+                          return ATTextFormField(
+                            controller: cntrl, maxLines: 1,
+                            fillColor: ATColors.white.withValues(alpha: 0.1),
+                            hintText: ATStrings.searchForBank,
+                            disableBlueBorder: true,
+                            prefixIcon: const Padding(
+                              padding: EdgeInsets.only(left: 10),
+                              child: ATImgLoader(
+                                height: 20, width: 20,
+                                imgPath: ATImgStrings.outlinedSearch
+                              ),
+                            ),
+                            suffixIcon: showCancelIcon ? IconButton(
+                              onPressed: () => setter(
+                                (){
+                                  context.read<WithdrawalBanksBloc>().add(ResetBanksSearchEvent());
+                                  context.read<SearchkeyBloc>().updateSearchKey('');
+                                  cntrl.clear(); showCancelIcon = false;
+                                }
+                              ),
+                              icon: const Icon(Icons.close, size: 20,),
+                            ) : null,
+                            onChanged: (String text){
+                              if(text.isEmpty && showCancelIcon){
+                                setter(() => showCancelIcon = false);
+                              }
+                              else if(text.isNotEmpty && !showCancelIcon){
+                                setter(() => showCancelIcon = true);
+                              }
+                              ATHelperFuncs.callDebouncer(
+                                500,
+                                (){
+                                  context.read<SearchkeyBloc>().updateSearchKey(text);
+                                  context.read<WithdrawalBanksBloc>().add(
+                                    SearchBanksEvent(text)
                                   );
-                                },
+                                }
                               );
-                            }
+                            },
                           );
                         }
                       ),
@@ -148,14 +143,18 @@ Future<String?> selectWithdrawalBankDialog(BuildContext context) {
                               if(state is WithdrawalBanksInitial){
                                 return Center(
                                   child: Text(
-                                    ATStrings.NO_MATCHING_RESULTS,
-                                    style: Theme.of(context).textTheme.bodyMedium,
+                                    ATStrings.noMatchingResults,
+                                    style: context.textTheme.bodyMedium,
                                   )
                                 );
                               }
 
                               List<String>? banks; String? selectedBank;
                               final bool isFetchingBanks = state is FetchingBanks;
+                              if(isFetchingBanks){
+                                return const Center(child: ATLoadingIndicator());
+                              }
+
                               final bool hasBanks = state is WithdrawalBanksData;
                               if(hasBanks){
                                 banks = state.banks;
@@ -173,28 +172,23 @@ Future<String?> selectWithdrawalBankDialog(BuildContext context) {
                                       SelectBankEvent(selectedBank == bank ? null : bank)
                                     ),
                                     child: Padding(
-                                      padding: const EdgeInsets.fromLTRB(15, 10, 15, 10),
+                                      padding: const EdgeInsets.fromLTRB(15, 16, 15, 16),
                                       child: Row(
                                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                         children: <Widget>[
-                                          isFetchingBanks ? Flexible(
-                                            child: ATShimmer(
-                                            height: 15, margin: EdgeInsets.zero,
-                                            width: ATHelperFuncs.getRandomNumber(kst.maxWidth).toDouble(),
-                                            ),
-                                          ) : Expanded(
+                                          Expanded(
                                             child: ATFilterWidget<SearchkeyBloc>(
                                               title: bank ?? '',
-                                              style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                                              style: context.textTheme.bodySmall?.copyWith(
                                                 fontSize: ATSizes.size15
                                               )
                                             ),
                                           ),
                                           const SizedBox(width: 30),
-                                          isFetchingBanks ? const ATShimmer(
-                                            height: 20, width: 20, radius: 15,
-                                            margin: EdgeInsets.zero,
-                                          ) : ATRadioBtn(isSelected: selectedBank == bank, duration: 0,),
+                                          ATRadioBtn(
+                                            isSelected: selectedBank == bank,
+                                            duration: 0,
+                                          ),
                                         ],
                                       ),
                                     ),
@@ -208,14 +202,14 @@ Future<String?> selectWithdrawalBankDialog(BuildContext context) {
                     ),
                   
                     Padding(
-                      padding: const EdgeInsets.fromLTRB(15, 10, 15, 10),
+                      padding: const EdgeInsets.fromLTRB(15, 10, 15, 50),
                       child: BlocBuilder<WithdrawalBanksBloc, WithdrawalBanksState>(
                           builder: (_, WithdrawalBanksState state) {
                           return ATPlainElevatedBtn(
                             onPressed: (state is WithdrawalBanksData && state.selectedBank != null) ? (){
                               context.pop(state.selectedBank!);
                             } : null,
-                            btnTitle: ATStrings.CONTINUE,
+                            btnTitle: ATStrings.cContinue,
                           );
                         }
                       ),

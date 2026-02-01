@@ -126,7 +126,7 @@ class AvailableBalanceWidget extends StatelessWidget {
                             final String? recipientName = await context.pushNamed(ATRoutes.SELECT_RECIPIENT) as String?;
                             if(recipientName != null && context.mounted){
                               context.pushNamed(
-                                ATRoutes.PAPER_PLANE_SUCCESS,
+                                ATRoutes.paperPlaneSuccessScreen,
                                 extra: <String>[ATStrings.TRSF_SUCCESS, '${ATStrings.TRSF_SUCCESS_DESC}$recipientName']
                               );
                             }

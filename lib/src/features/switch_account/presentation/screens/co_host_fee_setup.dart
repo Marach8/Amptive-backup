@@ -165,7 +165,7 @@ class _BottomSheetContent extends StatelessWidget {
                 context.read<SwitchAcctSuccessAnimBloc>().reset();
                 context.pushNamed(ATRoutes.CREATOR_SUCCESS);
               } : null,
-              btnTitle: ATStrings.CONTINUE
+              btnTitle: ATStrings.cContinue
             ),
             const SizedBox(height: 15),
             InkWell(

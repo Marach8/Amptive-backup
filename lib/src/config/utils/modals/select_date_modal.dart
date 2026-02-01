@@ -115,7 +115,7 @@ Future<void> selectDateModal(
                     service.eventDateTime = selectedDateTime;
                     Navigator.pop(context);
                   },
-                  buttonTitle: ATStrings.CONTINUE,
+                  buttonTitle: ATStrings.cContinue,
                   bgColor: ATColors.white,
                   fgColor: ATColors.black,
                 ),

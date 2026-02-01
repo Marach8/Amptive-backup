@@ -254,7 +254,7 @@ Future<void> showSelectAudienceAccessForEventsDialog(
                             Navigator.pop(context);
                           }
                         : null,
-                    buttonTitle: ATStrings.CONTINUE,
+                    buttonTitle: ATStrings.cContinue,
                     bgColor: ATColors.white,
                     fgColor: ATColors.black,
                   );

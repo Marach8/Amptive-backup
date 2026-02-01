@@ -177,7 +177,7 @@ Future<WhispersState?> controlWhispersModal({
                     builder: (_, WhispersState? state) {
                       return ATPlainElevatedBtn(
                         onPressed: state == null ? null : () => dContext.pop(state),
-                        btnTitle: ATStrings.CONTINUE,
+                        btnTitle: ATStrings.cContinue,
                       );
                     }
                   )

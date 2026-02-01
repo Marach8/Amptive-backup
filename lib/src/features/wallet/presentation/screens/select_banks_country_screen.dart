@@ -1,6 +1,8 @@
+import 'package:amptive/src/config/utils/extensions/context_extensions.dart';
 import 'package:amptive/src/config/utils/font_sizes.dart';
 import 'package:amptive/src/config/routing/route_strings.dart';
-import 'package:amptive/src/config/utils/dialogs/wallet/select_withdrawal_bank_dialog.dart';
+import 'package:amptive/src/features/wallet/presentation/widgets/select_withdrawal_bank_dialog.dart';
+import 'package:amptive/src/views/widgets/common_widgets/divider_widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/radio_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -29,7 +31,7 @@ class ATSelectBanksCountryScreen extends StatelessWidget {
                 leading: ATRoundedBackBtn(),
                 leadingWidth: 30,
                 padding: EdgeInsets.only(left: 7),
-                titleText: ATStrings.SELECT_COUNTRY
+                titleText: 'Country',
               ),
             
               body: SingleChildScrollView(
@@ -38,15 +40,27 @@ class ATSelectBanksCountryScreen extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     Padding(
+                      padding: const EdgeInsets.fromLTRB(15, 10, 15, 0),
+                      child: Text(
+                        maxLines: 2,
+                        "Choose your bank's country",
+                        style: context.textTheme.headlineLarge?.copyWith(
+                          fontWeight: FontWeight.w600
+                        ),
+                      ),
+                    ),
+                    Padding(
                       padding: const EdgeInsets.fromLTRB(15, 10, 15, 20),
                       child: Text(
                         maxLines: 2,
-                        ATStrings.SELECT_BANK_COUNTRY,
-                        style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                        ATStrings.selectBankCountry,
+                        style: context.textTheme.bodySmall?.copyWith(
                           color: ATColors.hexC2C2C2
                         ),
                       ),
                     ),
+
+                    const ATDivider(),
         
                     ...countries.map(
                       (String country){
@@ -58,13 +72,13 @@ class ATSelectBanksCountryScreen extends StatelessWidget {
                             );
                           },
                           child: Padding(
-                            padding: const EdgeInsets.fromLTRB(15, 10, 15, 10),
+                            padding: const EdgeInsets.fromLTRB(15, 16, 15, 16),
                             child: Row(
                               children: <Widget>[
                                 Expanded(
                                   child: Text(
                                     country,
-                                    style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                                    style: context.textTheme.bodySmall?.copyWith(
                                       fontSize: ATSizes.size15
                                     )
                                   ),
@@ -86,7 +100,7 @@ class ATSelectBanksCountryScreen extends StatelessWidget {
               ),
         
               bottomNavigationBar: Padding(
-                padding: const EdgeInsets.fromLTRB(15, 5, 15, 10),
+                padding: const EdgeInsets.fromLTRB(15, 5, 15, 50),
                 child: BlocBuilder<_PrivateBloc, String?>(
                   builder: (_, String? state) {
                     return ATPlainElevatedBtn(
@@ -96,7 +110,7 @@ class ATSelectBanksCountryScreen extends StatelessWidget {
                           context.pushReplacementNamed(ATRoutes.ENTER_ACCT_NO, extra: selectedBank);
                         }
                       },
-                      btnTitle: ATStrings.CONTINUE,
+                      btnTitle: ATStrings.cContinue,
                     );
                   }
                 ),
