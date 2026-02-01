@@ -2,7 +2,6 @@ import 'package:amptive/src/config/config_export.dart';
 import 'package:amptive/src/features/wallet/presentation/widgets/wallets_widget_export.dart';
 import 'package:amptive/src/views/widgets/common_widgets/app_bar_widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/back_button.dart';
-import 'package:amptive/src/shared/custom_container_widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/image_loader_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -13,6 +12,7 @@ class WalletLandingScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    bool shouldShowCommingSoon = false;
     return ATAnnotatedRegion(
       child: Scaffold(
         appBar: const ATAppBar(
@@ -21,7 +21,7 @@ class WalletLandingScreen extends StatelessWidget {
           padding: EdgeInsets.only(left: 7),
           leadingWidth: 30,
         ),
-        body: Padding(
+        body: SingleChildScrollView(
           padding: const EdgeInsets.fromLTRB(15, 10, 15, 10),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -31,7 +31,7 @@ class WalletLandingScreen extends StatelessWidget {
               Row(
                 children: <Widget>[
                   Text(
-                    ATStrings.TXN_HISTORY,
+                    ATStrings.transactionHistory,
                     style: context.textTheme.bodySmall?.copyWith(
                       color: ATColors.hexC2C2C2
                     )
@@ -39,7 +39,7 @@ class WalletLandingScreen extends StatelessWidget {
                   const Spacer(),
                   InkWell(
                     onTap: (){
-                      context.pushNamed(ATRoutes.WALLET_TXNS_HISTORY_SCREEN);
+                      context.pushNamed(ATRoutes.walletTransactionsHistoryScreen);
                     },
                     splashColor: ATColors.white,
                     borderRadius: BorderRadius.circular(5),
@@ -59,7 +59,7 @@ class WalletLandingScreen extends StatelessWidget {
               ),
               const SizedBox(height: 10,),
               
-              RenderTxnWidget(
+              RenderATransaction(
                 time: 'Today, 5:50 PM',
                 txnType: ATStrings.SUB_RECEIVED,
                 amount: '+${ATStrings.nairaText}5,000.00',
@@ -68,7 +68,7 @@ class WalletLandingScreen extends StatelessWidget {
                 imgPath: ATImgStrings.jpeg1,
               ),
               const SizedBox(height: 10,),
-              RenderTxnWidget(
+              RenderATransaction(
                 time: 'Today, 7:00 PM',
                 txnType: ATStrings.SUB_RECEIVED,
                 amount: '+${ATStrings.nairaText}1,000,000.00',
@@ -84,13 +84,34 @@ class WalletLandingScreen extends StatelessWidget {
                 style: context.textTheme.bodyLarge
               ),
               const SizedBox(height: 20),
-              Row(
-                children: <Widget>[
-                  ATImgLoader(
-                    imgPath: ,
-                  )
-                ]
-              )
+              StatefulBuilder(
+                builder: (_, StateSetter setter) {
+                  return InkWell(
+                    onTap: (){
+                      setter(() => shouldShowCommingSoon = true);
+                    },
+                    child: Row(
+                      children: <Widget>[
+                        Expanded(
+                          child: ATImgLoader(
+                            imgPath: shouldShowCommingSoon ? ATImgStrings.comingSoonImage2:
+                              ATImgStrings.vestingOverviewImage,
+                            height: 240,
+                          ),
+                        ),
+                        Expanded(
+                          child: ATImgLoader(
+                            imgPath: shouldShowCommingSoon ? ATImgStrings.comingSoonImage1 :
+                              ATImgStrings.exploreListingsImage,
+                            height: 240,
+                          ),
+                        ),
+                      ]
+                    ),
+                  );
+                }
+              ),
+              const SizedBox(height: 100),
             ],
           ),
         ),

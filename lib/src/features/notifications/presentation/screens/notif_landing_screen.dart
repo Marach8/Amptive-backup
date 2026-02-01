@@ -19,7 +19,7 @@ class NotificationTabView extends StatelessWidget {
         floatHeaderSlivers: true,
         headerSliverBuilder: (_, __) => <Widget>[
           const ATSliverAppBar(
-            titleText: ATStrings.TXN_HISTORY,
+            titleText: ATStrings.transactionHistory,
             leading: SizedBox.shrink(),
           ),
         ],

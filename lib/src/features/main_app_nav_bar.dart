@@ -12,7 +12,7 @@ class MainAppBottomNav extends StatelessWidget {
 
   static final List<List<String>> listOfIcons = <List<String>>[
     <String>[ATImgStrings.filledHome, ATImgStrings.outlinedHome],
-    <String>[ATImgStrings.filledSearch, ATImgStrings.OUTLINED_SEARCH],
+    <String>[ATImgStrings.filledSearch, ATImgStrings.outlinedSearch],
     <String>[ATImgStrings.filledBroadCast, ATImgStrings.outlinedBroadCast],
     <String>[ATImgStrings.filledBell, ATImgStrings.outlinedBell],
   ];

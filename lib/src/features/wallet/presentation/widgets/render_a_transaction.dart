@@ -6,8 +6,8 @@ import 'package:amptive/src/views/widgets/common_widgets/circular_image.dart';
 import 'package:amptive/src/shared/custom_container_widget.dart';
 import 'package:flutter/material.dart';
 
-class RenderTxnWidget extends StatelessWidget {
-  const RenderTxnWidget({
+class RenderATransaction extends StatelessWidget {
+  const RenderATransaction({
     super.key,
     required this.time,
     required this.amount,
@@ -30,10 +30,6 @@ class RenderTxnWidget extends StatelessWidget {
       onTap: (){},
       color: tileColor ?? ATColors.white.withValues(alpha: 0.05),
       padding: const EdgeInsets.all(15), radius: 15,
-      border: Border.all(
-        color: ATColors.hex111111,
-        width: 2,
-      ),
       child: Row(
         children: <Widget>[
           SizedBox(

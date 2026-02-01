@@ -50,7 +50,7 @@ class ProfileSubscribersScreen extends StatelessWidget {
                   padding: EdgeInsets.only(left: 10),
                   child: ATImgLoader(
                     height: 20, width: 20,
-                    imgPath: ATImgStrings.OUTLINED_SEARCH
+                    imgPath: ATImgStrings.outlinedSearch
                   ),
                 ),
               ),

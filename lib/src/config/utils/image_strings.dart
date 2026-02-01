@@ -17,7 +17,7 @@ class ATImgStrings{
   static const String filledBell = '$_svgPath/Bell=Fill.svg';
   static const String outlinedBell = '$_svgPath/Bell=Outline.svg';
   static const String filledSearch = '$_svgPath/Discover animation icon=Fill.svg';
-  static const String OUTLINED_SEARCH = '$_svgPath/Discover animation icon=Outline.svg';
+  static const String outlinedSearch = '$_svgPath/Discover animation icon=Outline.svg';
   static const String filledHome = '$_svgPath/Home=Fill.svg';
   static const String outlinedHome = '$_svgPath/Home.svg';
   static const String ADD_IMAGE_ICON = '$_svgPath/add_image_icon.svg';
@@ -39,8 +39,8 @@ class ATImgStrings{
   static const String BIZ_ACCT_LOGO = '$_svgPath/Simplification (3).svg';
   static const String BIZ_ACCT_LOGO_MIC = '$_svgPath/Simplification (1).svg';
   static const String CREATOR_ACCT_LOGO = '$_svgPath/Simplification.svg';
-  static const String FLUTTERWAVE = '$_svgPath/flutter_wave.svg';
-  static const String APPLE_ICON = '$_svgPath/apple_icon.svg';
+  static const String flutterWaveIcon = '$_svgPath/flutter_wave.svg';
+  static const String appleIcon = '$_svgPath/apple_icon.svg';
   static const String PAYPAL_ICON = '$_svgPath/paypal.svg';
   static const String NAIRA_ICON = '$_svgPath/₦.svg';
   static const String HASH_ICON = '$_svgPath/hash.svg';
@@ -65,7 +65,7 @@ class ATImgStrings{
   static const String weCanDoHardThingsBgImage = '$_generalJpegImagePath/weCanDoAllThings.jpg';
 
   static const String FB_ICON = '$_pngPath/facebook.png';
-  static const String GOOGLE_ICON = '$_pngPath/google_icon.png';
+  static const String googleIcon = '$_pngPath/google_icon.png';
   static const String noAvatarImage = '$_pngPath/no_avatar_image.png';
   static const String discoverPic1 = '$_pngPath/Frame 156.png';
   static const String OFFICE_LADIES = '$_pngPath/Frame 22.png';
@@ -75,6 +75,10 @@ class ATImgStrings{
   static const String CRIMINAL = '$_pngPath/Frame 71 (2).png';
   static const String COMMUNITY_CARD = '$_pngPath/Community card 1.png';
   static const String MAN_PHOTO = '$_pngPath/Pexels Photo by Key  Notez.png';
+  static const String comingSoonImage1 = '$_pngPath/coming_soon_blurred_image1.png';
+  static const String comingSoonImage2 = '$_pngPath/coming_soon_blurred_image2.png';
+  static const String exploreListingsImage = '$_pngPath/explore_listings_image.png';
+  static const String vestingOverviewImage = '$_pngPath/vesting_overview.png';
   //static const String CREATE_EVENT_ICON = '$_pngPath/cube tiny (1).png';
   //static const String event2 = '$_pngPath/cube tiny.png';
   // static const String CREATE_SHOW_ICON = '$_pngPath/Group 31 (1).png';

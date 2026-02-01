@@ -85,7 +85,7 @@ class SelectCategoryScreen extends StatelessWidget {
                                   colorFilter: ColorFilter.mode(ATColors.white, BlendMode.srcATop),
                                   child: const ATImgLoader(
                                     height: 25, width: 25,
-                                    imgPath: ATImgStrings.OUTLINED_SEARCH,
+                                    imgPath: ATImgStrings.outlinedSearch,
                                   ),
                                 ),
                               ),

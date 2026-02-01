@@ -49,7 +49,7 @@ class ATStrings{
   static const String SET_FEE = 'Set fee';
   static const String ENTER_PIN = 'Enter pin';
   static const String SELECT_PAYMENT_METHOD = 'Select payment method';
-  static const String INSUFFICIENT_FUNDS = 'Insufficient funds!';
+  static const String insufficientFunds = 'Insufficient funds!';
   static const String INCORRECT_PIN = 'Incorrect pin!';
   static const String AMPTIVE_TRNSF_CHARGES = 'Amptive charges 0% on transfers';
   static const String AMPTIVE_FUNDING_CHARGES = 'Amptive charges a 0% funding fee';
@@ -58,10 +58,10 @@ class ATStrings{
 
   static const String signUpWith = 'Sign up with ';
   static const String signInWith = 'Sign in with ';
-  static const String APPLE_PAY = 'Apple Pay';
+  static const String applePay = 'Apple Pay';
   static const String APPLE = 'Apple';
-  static const String FLUTTERWAVE = 'Flutterwave';
-  static const String GOOGLE_PAY = 'Google Pay';
+  static const String flutterWave = 'Flutterwave';
+  static const String googlePay = 'Google Pay';
   static const String EMAIL = 'Email';
   static const String LIVE = 'Live';
   static const String ALL = 'All';
@@ -153,14 +153,14 @@ class ATStrings{
   static const String WIRE_TRSF = 'Wire Transfer';
   static const String WIRE_TRSF_DESC = 'Funds will be transferred directly to your bank account';
   static const String PAYPAL = 'Paypal';
-  static const String BACK_2_WALLET = 'Back to wallet';
-  static const String FUNDING_WALLET = 'Funding wallet...';
-  static const String WALLET_FUNDING_SUCCESS = 'Wallet Funded Successfully🎉';
-  static const String WALLET_FUNDIND_FAILED = 'Wallet Funding Failed';
+  static const String backToSite = 'Back to wallet';
+  static const String fundingWallet = 'Funding wallet...';
+  static const String walletFundingSuccess = 'Wallet Funded Successfully';
+  static const String walletFundingFailed = 'Wallet Funding Failed';
   static const String PAYPAL_DESC = 'Funds will be transferred to your Paypal account';
   static const String withdraw = 'Withdraw';
   static const String PENDING_BAL = 'Pending balance';
-  static const String TXN_HISTORY = 'Transaction History';
+  static const String transactionHistory = 'Transaction History';
   static const String NOTIFICATIONS = 'Notifications';
   static const String SUB_RECEIVED = 'Subscription Received';
   static const String GIFT_RECEIVED = 'Gift Received';

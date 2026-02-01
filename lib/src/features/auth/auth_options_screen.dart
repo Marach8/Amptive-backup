@@ -84,7 +84,7 @@ class ATAuthOptionsScreen extends StatelessWidget {
 
                 _CustomBtn(
                   isSignUp: isSignUp, btnName: ATStrings.GOOGLE,
-                  leading: const ATImgLoader(imgPath: ATImgStrings.GOOGLE_ICON,),
+                  leading: const ATImgLoader(imgPath: ATImgStrings.googleIcon,),
                   onPressed: (){}
                 ),
                 const SizedBox(height: 15,),
@@ -94,7 +94,7 @@ class ATAuthOptionsScreen extends StatelessWidget {
                   leading: const Padding(
                     padding: EdgeInsets.only(left: 10),
                     child: ATImgLoader(
-                      imgPath: ATImgStrings.APPLE_ICON,
+                      imgPath: ATImgStrings.appleIcon,
                       height: 30, width: 30,
                     ),
                   ),

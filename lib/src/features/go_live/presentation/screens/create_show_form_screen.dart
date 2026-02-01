@@ -274,7 +274,7 @@ class _CreateShowFormScreenState extends State<CreateShowFormScreen> {
                                         ) : CreateProgramSelectionItem(
                                           leading: const ATImgLoader(
                                             height: 20, width: 20,
-                                            imgPath: ATImgStrings.OUTLINED_SEARCH,
+                                            imgPath: ATImgStrings.outlinedSearch,
                                           ),
                                           trailing: Flexible(
                                             child: Text(

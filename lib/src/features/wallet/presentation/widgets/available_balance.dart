@@ -4,9 +4,9 @@ import 'package:amptive/src/config/utils/font_sizes.dart';
 import 'package:amptive/src/config/utils/image_strings.dart';
 import 'package:amptive/src/config/utils/other_strings.dart';
 import 'package:amptive/src/config/routing/route_strings.dart';
-import 'package:amptive/src/config/utils/dialogs/wallet/process_wallet_funding_dialog.dart';
-import 'package:amptive/src/config/utils/dialogs/wallet/select_payment_method_dialog.dart';
-import 'package:amptive/src/features/wallet/presentation/screens/enter_amount_screen.dart';
+import 'package:amptive/src/features/wallet/presentation/widgets/process_wallet_funding_dialog.dart';
+import 'package:amptive/src/features/wallet/presentation/widgets/select_payment_method_dialog.dart';
+import 'package:amptive/src/features/wallet/presentation/screens/transaction_amount_screen.dart';
 import 'package:amptive/src/views/widgets/common_widgets/circular_image.dart';
 import 'package:amptive/src/shared/custom_container_widget.dart';
 import 'package:flutter/material.dart';
@@ -110,25 +110,16 @@ class AvailableBalanceWidget extends StatelessWidget {
                       }
                       return ATContainer( 
                         onTap: ()async{
-                          if(item == ATStrings.fundWallet){                            
-                            final String? inputPrice = await context.pushNamed(
-                              ATRoutes.ENTER_AMOUNT_2_TRSF,
-                              extra: EnterAmountScreenParams(
+                          if(item == ATStrings.fundWallet){
+                            context.pushNamed(
+                              ATRoutes.transactionAmountScreen,
+                              extra: TransactionAmountScreenParams(
+                                transactionType: TransactionType.fundWallet,
                                 title: ATStrings.fundWallet,
                                 slidingNotif: ATStrings.AMPTIVE_FUNDING_CHARGES,
                                 btnTitle: ATStrings.SELECT_PAYMENT_METHOD
                               )
-                            ) as String?;
-
-                            if(context.mounted && inputPrice != null){
-                              final String? selectedPaymentMethod = await selectPaymentMethodDialog(context: context, amount: inputPrice);
-                              if(context.mounted && selectedPaymentMethod != null){
-                                final bool? processPayment = await processWalletFundingDialog(
-                                  context: context,
-                                  paymentMethod: inputPrice
-                                );
-                              }
-                            }
+                            );
                           }
 
                           else if(item == ATStrings.transfer){

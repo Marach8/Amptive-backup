@@ -90,7 +90,7 @@ class ATPaperPlaneSuccessScreen extends StatelessWidget {
                   offset: state == 1 ? const Offset(0, 0) : const Offset(0, 1.5),
                   child: ATPlainElevatedBtn(
                     onPressed: () => context.pop(),
-                    btnTitle: ATStrings.BACK_2_WALLET,
+                    btnTitle: ATStrings.backToSite,
                   ),
                 );
               }

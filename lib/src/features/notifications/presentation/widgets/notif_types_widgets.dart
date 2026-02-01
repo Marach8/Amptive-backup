@@ -612,7 +612,7 @@ class WithdrawalProcessedNotif extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ATContainer(
-      onTap: () => context.pushNamed(ATRoutes.WALLET_TXNS_HISTORY_SCREEN),
+      onTap: () => context.pushNamed(ATRoutes.walletTransactionsHistoryScreen),
       padding: const EdgeInsets.only(top: 10, bottom: 10),
       child: Row(
         children: <Widget>[
@@ -653,7 +653,7 @@ class DepositSuccessNotif extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ATContainer(
-      onTap: () => context.pushNamed(ATRoutes.WALLET_TXNS_HISTORY_SCREEN),
+      onTap: () => context.pushNamed(ATRoutes.walletTransactionsHistoryScreen),
       padding: const EdgeInsets.only(top: 10, bottom: 10),
       child: Row(
         children: <Widget>[
@@ -695,7 +695,7 @@ class MoneyReceivedNotif extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ATContainer(
-      onTap: () => context.pushNamed(ATRoutes.WALLET_TXNS_HISTORY_SCREEN),
+      onTap: () => context.pushNamed(ATRoutes.walletTransactionsHistoryScreen),
       padding: const EdgeInsets.only(top: 10, bottom: 10),
       child: Row(
         children: <Widget>[

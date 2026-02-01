@@ -4,7 +4,7 @@ export 'security_question_screen.dart';
 export 'creating_wallet_anim_screen.dart';
 export 'wallet_landing_screen.dart';
 export 'select_recipient_screen.dart';
-export 'enter_amount_screen.dart';
+export 'transaction_amount_screen.dart';
 export 'withdrawal_landing_screen.dart';
 export 'select_banks_country_screen.dart';
 export 'enter_acct_no_screen.dart';

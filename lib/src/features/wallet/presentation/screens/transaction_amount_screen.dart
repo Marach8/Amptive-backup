@@ -1,4 +1,6 @@
 import 'package:amptive/src/config/utils/colors.dart';
+import 'package:amptive/src/config/utils/dialogs/dialog_export.dart';
+import 'package:amptive/src/config/utils/extensions/context_extensions.dart';
 import 'package:amptive/src/config/utils/font_weights.dart';
 import 'package:amptive/src/config/utils/other_strings.dart';
 import 'package:amptive/src/config/utils/dialogs/app_notification_dialog.dart';
@@ -9,6 +11,7 @@ import 'package:amptive/src/views/widgets/animation_widgets/common_animation_wid
 import 'package:amptive/src/views/widgets/common_widgets/annotated_region__widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/circular_image.dart';
 import 'package:amptive/src/shared/elevated_button_widget.dart';
+import 'package:amptive/src/views/widgets/common_widgets/rich_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -17,10 +20,27 @@ import '../../../../views/widgets/common_widgets/app_bar_widget.dart';
 import '../../../../views/widgets/common_widgets/back_button.dart';
 import '../../../../shared/custom_container_widget.dart';
 
-class ATEnterAmountScreen extends StatelessWidget {
-  const ATEnterAmountScreen({super.key, required this.params});
+enum TransactionType {fundWallet, transfer, withdraw}
+class TransactionAmountScreenParams{
 
-  final EnterAmountScreenParams params;
+  TransactionAmountScreenParams({
+    required this.title,
+    required this.slidingNotif,
+    required this.btnTitle,
+    required this.transactionType,
+    this.flushBarNotif,
+    this.imgPath
+  });
+  final String title, slidingNotif,
+  btnTitle;
+  final TransactionType transactionType;
+  final String? imgPath, flushBarNotif;
+}
+
+class TransactionAmountScreen extends StatelessWidget {
+  const TransactionAmountScreen({super.key, required this.params});
+
+  final TransactionAmountScreenParams params;
 
   static String digits = '123456789.0<';
 
@@ -33,7 +53,7 @@ class ATEnterAmountScreen extends StatelessWidget {
     }
 
     return ATAnnotatedRegion(
-      child: BlocProvider(
+      child: BlocProvider<EnterAmountBloc>(
         create: (_) => EnterAmountBloc(),
         child: Builder(
           builder: (BuildContext context) {
@@ -64,16 +84,23 @@ class ATEnterAmountScreen extends StatelessWidget {
                             spacing: 10,
                             mainAxisSize: MainAxisSize.min,
                             children: <Widget>[
-                              Text(
-                                state.$1.isEmpty ? '${ATStrings.nairaText} 0' : '${ATStrings.nairaText} ${state.$1.formatPrice()}', maxLines: 2,
-                                style: Theme.of(context).textTheme.displayMedium?.copyWith(
-                                  fontSize: 50,
-                                  color: state.$2 == false ? ATColors.textRedColor : null,
-                                ),
+                              ATRichText(
+                                maxLines: 1,
+                                items: <String, TextStyle>{
+                                  ATStrings.nairaText: context.textTheme.displayMedium!.copyWith(
+                                    fontSize: 35,
+                                    color: state.$2 == false 
+                                      ? ATColors.textRedColor : ATColors.white.withValues(alpha: 0.7),
+                                  ),
+                                  state.$1.isEmpty ? '0' : state.$1.formatPrice(): context.textTheme.displayMedium!.copyWith(
+                                    fontSize: 50,
+                                    color: state.$2 == false ? ATColors.textRedColor : null,
+                                  ),
+                                },
                               ),
                               if(state.$2 == false)Text(
-                                ATStrings.INSUFFICIENT_FUNDS,
-                                style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                                ATStrings.insufficientFunds,
+                                style: context.textTheme.bodySmall?.copyWith(
                                   color: ATColors.textRedColor
                                 ),
                               ),
@@ -135,9 +162,9 @@ class ATEnterAmountScreen extends StatelessWidget {
                 spacing:10,
                 mainAxisSize: MainAxisSize.min,
                 children: <Widget>[
-                  FutureBuilder(
-                    future: Future.delayed(const Duration(seconds: 2)),
-                    builder: (_, AsyncSnapshot snapshot) {
+                  FutureBuilder<void>(
+                    future: Future<void>.delayed(const Duration(seconds: 5)),
+                    builder: (_, AsyncSnapshot<void> snapshot) {
                       final bool isDone = snapshot.connectionState == ConnectionState.done;
                       return ATAnimatedAlign(
                         condition: !isDone,
@@ -146,7 +173,7 @@ class ATEnterAmountScreen extends StatelessWidget {
                         child: ATContainer(
                           radius: 14,
                           padding: const EdgeInsets.fromLTRB(15, 10, 15, 10),
-                          width: ATHelperFuncs.getScreenWidth(context) * 0.92,
+                          width: context.screenWidth * 0.92,
                           color: ATColors.white.withValues(alpha: 0.05),
                           child: Row(
                             spacing: 10,
@@ -168,12 +195,26 @@ class ATEnterAmountScreen extends StatelessWidget {
                     }
                   ),
                   Padding(
-                    padding: const EdgeInsets.fromLTRB(15, 5, 15, 10),
+                    padding: const EdgeInsets.fromLTRB(15, 5, 15, 60),
                     child: BlocBuilder<EnterAmountBloc, (String, bool)>(
                       builder: (_, (String, bool) state) {
                         return ATPlainElevatedBtn(
                           onPressed: (state.$1.isNotEmpty && state.$1 != '0' && state.$2 == true) 
-                            ? () => context.pop(state.$1) : null,
+                            ? ()async{
+                              switch(params.transactionType){
+                                case TransactionType.fundWallet:
+                                  final String? selectedPaymentMethod = await selectPaymentMethodDialog(context: context, amount: state.$1);
+                                  if(context.mounted && selectedPaymentMethod != null){
+                                    final bool? processPayment = await processWalletFundingDialog(
+                                      context: context,
+                                      paymentMethod: selectedPaymentMethod
+                                    );
+                                  }
+                                  break;
+                                case TransactionType.transfer:
+                                case TransactionType.withdraw:
+                              }
+                            } : null,
                           btnTitle: params.btnTitle
                         );
                       }
@@ -187,19 +228,4 @@ class ATEnterAmountScreen extends StatelessWidget {
       ),
     );
   }
-}
-
-
-class EnterAmountScreenParams{
-
-  EnterAmountScreenParams({
-    required this.title,
-    required this.slidingNotif,
-    required this.btnTitle,
-    this.flushBarNotif,
-    this.imgPath
-  });
-  final String title, slidingNotif,
-  btnTitle;
-  final String? imgPath, flushBarNotif;
 }

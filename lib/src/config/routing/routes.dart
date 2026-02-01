@@ -27,7 +27,7 @@ import 'package:amptive/src/features/home/presentation/views/scheduled_screen.da
 import 'package:amptive/src/features/accounts/presentation/screens/account_info_screen.dart';
 import 'package:amptive/src/features/accounts/presentation/screens/acounts_landing_screen.dart';
 import 'package:amptive/src/features/switch_account/presentation/switch_acct/switch_acct_export.dart';
-import 'package:amptive/src/features/wallet/presentation/screens/wallet_txns_history_screen.dart';
+import 'package:amptive/src/features/wallet/presentation/screens/wallet_transactions_history_screen.dart';
 import 'package:amptive/src/features/onboarding/presentation/views/onboarding_screen.dart';
 import 'package:amptive/src/features/onboarding/presentation/views/post_onboarding_screen.dart';
 import 'package:custom_image_crop/custom_image_crop.dart' show Ratio;
@@ -215,8 +215,8 @@ final GoRouter amptiveAppRouter = GoRouter(
                 ),
                 routes: <RouteBase>[
                   GoRoute(
-                    name: ATRoutes.WALLET_TXNS_HISTORY_SCREEN,
-                    path: ATRoutes.WALLET_TXNS_HISTORY_SCREEN.addSlash,
+                    name: ATRoutes.walletTransactionsHistoryScreen,
+                    path: ATRoutes.walletTransactionsHistoryScreen.addSlash,
                     pageBuilder: (_, __) => ATSlidingRouteTransition<void>(
                       child: const ATWalletTxnsHistoryScreen()
                     ),
@@ -229,11 +229,11 @@ final GoRouter amptiveAppRouter = GoRouter(
                     ),
                   ),
                   GoRoute(
-                    name: ATRoutes.ENTER_AMOUNT_2_TRSF,
-                    path: ATRoutes.ENTER_AMOUNT_2_TRSF.addSlash,
+                    name: ATRoutes.transactionAmountScreen,
+                    path: ATRoutes.transactionAmountScreen.addSlash,
                     pageBuilder: (_, GoRouterState state) => ATSlidingRouteTransition<void>(
-                      child: ATEnterAmountScreen(
-                        params: state.extra as EnterAmountScreenParams
+                      child: TransactionAmountScreen(
+                        params: state.extra as TransactionAmountScreenParams
                       )
                     ),
                   ),

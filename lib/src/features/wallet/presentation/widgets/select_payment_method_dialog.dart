@@ -19,15 +19,15 @@ Future<String?> selectPaymentMethodDialog({
   required String amount
 }) {
   final Map<String, String> paymentMethods = <String, String>{
-    ATImgStrings.APPLE_ICON : ATStrings.APPLE_PAY,
-    ATImgStrings.FLUTTERWAVE: ATStrings.FLUTTERWAVE,
-    ATImgStrings.GOOGLE_ICON: ATStrings.GOOGLE_PAY,
+    ATImgStrings.appleIcon : ATStrings.applePay,
+    ATImgStrings.flutterWaveIcon: ATStrings.flutterWave,
+    ATImgStrings.googleIcon: ATStrings.googlePay,
   };
   return showCupertinoModalPopup<String>(
     context: context,
     barrierColor: ATColors.black,
     builder: (BuildContext dialogContext) {
-      return BlocProvider(
+      return BlocProvider<_PaymentMethodBloc>(
         create: (_) => _PaymentMethodBloc(),
         child: Material(
           color: ATColors.transparent,
@@ -44,7 +44,7 @@ Future<String?> selectPaymentMethodDialog({
                         children: <Widget>[
                           const ATRoundedBackBtn(),
                           Text(
-                            'Funding N${amount.formatPrice()}',
+                            'Funding ${ATStrings.nairaText}${amount.formatPrice()}',
                             style: Theme.of(context).textTheme.bodyMedium
                           ),
                           const SizedBox(width: 30,),
@@ -58,11 +58,11 @@ Future<String?> selectPaymentMethodDialog({
                         padding: const EdgeInsets.fromLTRB(15, 10, 15, 10),
                         child: Column(
                           spacing: 15,
-                          children: paymentMethods.entries.map(
-                            (MapEntry<String, String> entry){
+                          children: paymentMethods.entries.indexed.map(
+                            ((int, MapEntry<String, String>) entry){
                               return InkWell(
                                 borderRadius: BorderRadius.circular(50),
-                                onTap: () => context.read<_PaymentMethodBloc>().setPaymentMethod(entry.value),
+                                onTap: () => context.read<_PaymentMethodBloc>().setPaymentMethod(entry.$2.value),
                                 child: ATContainer(
                                   color: ATColors.white.withValues(alpha: 0.05),
                                   radius: 50,
@@ -71,14 +71,21 @@ Future<String?> selectPaymentMethodDialog({
                                   child: Row(
                                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                     children: <Widget>[
-                                      ATImgLoader(imgPath: entry.key, width: 30, height: 30),
+                                      ATImgLoader(
+                                        imgPath: entry.$2.key,
+                                        width: entry.$1 == 2 ? 30 : 20, 
+                                        height: entry.$1 == 2 ? 30 : 20,
+                                        boxFit: BoxFit.cover,
+                                      ),
                                       Text(
-                                        'Pay with ${entry.value}',
+                                        'Pay with ${entry.$2.value}',
                                         style: Theme.of(context).textTheme.bodyMedium
                                       ),
                                       BlocBuilder<_PaymentMethodBloc, String?>(
                                         builder: (_, String? state) {
-                                          return ATRadioBtn(isSelected: state == entry.value);
+                                          return ATRadioBtn(
+                                            duration: 300,
+                                            isSelected: state == entry.$2.value);
                                         }
                                       ),
                                     ],
@@ -92,7 +99,7 @@ Future<String?> selectPaymentMethodDialog({
                     ),
                   
                     Padding(
-                      padding: const EdgeInsets.fromLTRB(15, 10, 15, 10),
+                      padding: const EdgeInsets.fromLTRB(15, 10, 15, 60),
                       child: BlocBuilder<_PaymentMethodBloc, String?>(
                         builder: (_, String? state) {
                           return ATPlainElevatedBtn(

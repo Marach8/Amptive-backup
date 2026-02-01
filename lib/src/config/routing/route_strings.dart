@@ -82,11 +82,11 @@ class ATRoutes {
   static const String FUND_WALLET = 'fund_wallet';
   static const String WITHDRAWAL_LANDING = 'withdraw';
   static const String SELECT_BANK_COUNTRY = 'select_bank_country';
-  static const String ENTER_AMOUNT_2_TRSF = 'amount_to_transfer';
+  static const String transactionAmountScreen = 'amount_to_transfer';
   static const String ENTER_ACCT_NO = 'enter_account_number';
   static const String PASS_SECURITY_QUEST = 'pass_security_question';
   static const String PAPER_PLANE_SUCCESS = 'paper_plane_success';
-  static const String WALLET_TXNS_HISTORY_SCREEN = 'wallet_transactions';
+  static const String walletTransactionsHistoryScreen = 'wallet_transactions';
   static const String SCHEDULE_DETAILED = 'schedule_detailed_screen';
   static const String GO_LIVE_ONBOARDING = 'go_live_onboarding_screen';
   static const String MAIN_GO_LIVE_PROGRAM = 'main_go_live_program';
