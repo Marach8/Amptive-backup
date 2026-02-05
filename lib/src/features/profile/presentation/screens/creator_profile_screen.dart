@@ -1,0 +1,204 @@
+import 'package:amptive/src/config/config_export.dart';
+import 'package:amptive/src/features/profile/presentation/screens/profile_views_export.dart';
+import 'package:amptive/src/views/widgets/common_widgets/annotated_region__widget.dart';
+import 'package:amptive/src/views/widgets/common_widgets/back_button.dart';
+import 'package:amptive/src/views/widgets/common_widgets/circle_avatar.dart';
+import 'package:amptive/src/views/widgets/common_widgets/sliver_header_delegate.dart';
+import 'package:amptive/src/views/widgets/common_widgets/rich_text.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
+import 'package:iconsax/iconsax.dart';
+import '../widgets/profile_widgets_export.dart';
+
+class ToggleIconsColor extends Cubit<bool>{
+  ToggleIconsColor() : super(false);
+
+  void changeIconColor(bool shouldChange) => emit(shouldChange);
+}
+
+class CreatorProfileScreen extends StatelessWidget {
+  const CreatorProfileScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    const double headerHeight = 65;
+    return DefaultTabController(
+      length: 4,
+      child: BlocProvider<ToggleIconsColor>(
+        create: (_) => ToggleIconsColor(),
+        child: ATAnnotatedRegion(
+          statusBarColor: ATColors.transparent,
+          child: SafeArea(
+            top: false,
+            child: Scaffold(
+              body: NestedScrollView(
+                headerSliverBuilder: (BuildContext ctx, __) => <Widget>[
+                  SliverAppBar(
+                    expandedHeight: 500.0, pinned: true,
+                    automaticallyImplyLeading: false,
+                    actions: <Widget>[
+                      const SizedBox(width: 10,),
+                      BlocBuilder<ToggleIconsColor, bool>(
+                        builder: (_, bool state) {
+                          return ATRoundedBackBtn(
+                            bgColor: state ? ATColors.white.withValues(alpha: 0.2): null,
+                          );
+                        }
+                      ),
+                      const Spacer(),
+                      Stack(
+                        children: <Widget>[
+                          BlocBuilder<ToggleIconsColor, bool>(
+                            builder: (_, bool state) {
+                              return ATCircleAvatar(
+                                onTap: () => context.pushNamed(ATRoutes.COMMUNITY_TASK_SCREEN),
+                                //onTap: () => context.pushNamed(AmptiveRoutes.USER_PROFILE_SCREEN),
+                                diameter: 30, animationDuration: 0,
+                                color: state ? ATColors.white.withValues(alpha: 0.2)
+                                  : ATColors.black.withValues(alpha: 0.7),
+                                child: const Icon(Iconsax.global, size: 20),
+                              );
+                            }
+                          ),
+                          Positioned(
+                            right: 1, top: 1,
+                            child: ATCircleAvatar(diameter: 8, color: ATColors.hexECO404,),
+                          )
+                        ],
+                      ),
+                      const SizedBox(width: 15),
+                      BlocBuilder<ToggleIconsColor, bool>(
+                        builder: (_, bool state) {
+                          return ATCircleAvatar(
+                            onTap: () => context.pushNamed(ATRoutes.PROFILE_MENU_SCREEN),
+                            diameter: 30, animationDuration: 0,
+                            color: state ? ATColors.white.withValues(alpha: 0.2)
+                              : ATColors.black.withValues(alpha: 0.7),
+                            child: const Icon(Icons.menu, size: 20),
+                          );
+                        }
+                      ),
+                      const SizedBox(width: 15)
+                    ],
+                    backgroundColor: ATColors.black, stretch: true,
+                    flexibleSpace: FlexibleSpaceBar(
+                      stretchModes: const <StretchMode>[StretchMode.fadeTitle],
+                      background: Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: <Widget>[
+                          const CreatorProfilePix(),                    
+                          const SizedBox(height: 50),                
+                          Text(
+                            'Glennon Doyle',
+                            style: context.textTheme.bodyLarge?.copyWith(
+                              height: 0.6,
+                            )
+                          ),
+                          const SizedBox(height: 8),
+                          Text(
+                            'Glennondoyle',
+                            style: context.textTheme.titleMedium?.copyWith(
+                              color: ATColors.hexC2C2C2, height: 0.8
+                            ),
+                          ),
+                      
+                          const SizedBox(height: 20),                
+                          const TopCreatorBadge(),                
+                          const SizedBox(height: 20),
+                      
+                          const Row(
+                            mainAxisSize: MainAxisSize.min,
+                            spacing: 20,
+                            children: <Widget>[
+                              NoOfFollowers(noOfFollowers: '1.1m'),
+                              NoOfSubscribers(),
+                            ],
+                          ),                
+                          const SizedBox(height: 20),                
+                          const _ProfileDesc(),
+                      
+                          const SizedBox(height: 20),
+                          const RowOfSocials(),                
+                          const SizedBox(height: 15),                  
+                          const EditProfileAndSubscriptionRow(),
+                          const SizedBox(height: 15),     
+                          Divider(
+                            thickness: 1,
+                            color: ATColors.white.withValues(alpha: 0.1),
+                          ),            
+                        ],
+                      ),
+                    ),
+                  ),        
+            
+                  SliverPersistentHeader(
+                    pinned: true,
+                    delegate: ATSliverHDelegate(
+                      maxExt: headerHeight, minExt: headerHeight,
+                      onPinned: () => ctx.read<ToggleIconsColor>().changeIconColor(true),
+                      onUnpinned: () => ctx.read<ToggleIconsColor>().changeIconColor(false),
+                      child: Container(
+                        height: headerHeight, color: ATColors.black,
+                        padding: const EdgeInsets.fromLTRB(0, 10, 0, 10),
+                        child: ProfileScreenTabs(tabs: _tabs,)
+                      )
+                    ),
+                  )
+                ],
+            
+                body: TabBarView(
+                  physics: const BouncingScrollPhysics(),
+                  children: List<Widget>.filled(
+                    4,
+                    const SampleTabView(),
+                  )
+                )
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+
+
+class _ProfileDesc extends StatelessWidget {
+  const _ProfileDesc();
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(15, 0, 15, 0),
+      child: ATRichText(
+        items: <String, TextStyle>{
+          'Author of UNTAMED & LOVE WARRIOR. Host of WE CAN DO HARD THINGS. Founder of'
+          : context.textTheme.titleMedium!.copyWith(
+            fontSize: ATSizes.size13
+          ),
+          ' @together_rising. ': context.textTheme.titleMedium!.copyWith(
+            fontSize: ATSizes.size13,
+            color: ATColors.hexC2C2C2
+          ),
+          'Includes an Oscar winner.': context.textTheme.titleMedium!.copyWith(
+            fontSize: ATSizes.size13
+          ),
+        },
+        textAlign: TextAlign.center,
+        textOnTap: (String index){
+          if(index == 1){
+            print("Hello");
+          }
+        },
+      ),
+    );
+  }
+}
+
+
+final List<String> _tabs = <String>[
+  ATStrings.scheduled, ATStrings.ENDED,
+  ATStrings.SHOWS, ATStrings.EVENTS
+];

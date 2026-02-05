@@ -1,12 +1,9 @@
-import 'package:amptive/src/config/utils/colors.dart';
-import 'package:amptive/src/config/utils/font_sizes.dart';
+import 'package:amptive/src/config/config_export.dart';
 import 'package:amptive/src/views/widgets/common_widgets/circle_avatar.dart';
+import 'package:amptive/src/views/widgets/common_widgets/show_event_nd_paid_icons.dart';
 import 'package:flutter/material.dart';
-
-import '../../../../config/utils/font_weights.dart';
-import '../../../../config/utils/image_strings.dart';
-import '../../../../views/widgets/common_widgets/custom_container_widget.dart' show ATContainer;
-import '../../../../views/widgets/common_widgets/image_loader_widget.dart' show ATImgLoader;
+import '../../../../shared/custom_container_widget.dart';
+import '../../../../views/widgets/common_widgets/image_loader_widget.dart';
 
 class ProfileEventOrShowDisplay extends StatelessWidget {
   const ProfileEventOrShowDisplay({super.key});
@@ -14,8 +11,11 @@ class ProfileEventOrShowDisplay extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ATContainer(
-      margin: const EdgeInsets.only(bottom: 15),
-      height: 80,
+      onTap: (){
+        //context.pushNamed(ATRoutes.LIVE_SHOW_DETAILED);
+      },
+      margin: const EdgeInsets.fromLTRB(15, 12, 15, 12),
+      height: 80, radius: 0,
       child: Row(
         children: <Widget>[
           ClipRRect(
@@ -27,7 +27,7 @@ class ProfileEventOrShowDisplay extends StatelessWidget {
           ),
           const SizedBox(width: 10),
       
-          Flexible(
+          Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -35,16 +35,15 @@ class ProfileEventOrShowDisplay extends StatelessWidget {
                 //Row 1
                 Row(
                   children: <Widget>[
-                    ATCircleAvatar(
-                      diameter: 15,
-                      color: ATColors.hexF91880,
-                      child: const FittedBox(child: Text('S')),
-                    ),
-                    Text(
-                      'We Can Do Hard Things',
-                      style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                        fontSize: ATFontSizes.size12,
-                        color: ATColors.hexC2C2C2
+                    const ATShowIcon(),
+                    const SizedBox(width: 5,),
+                    Flexible(
+                      child: Text(
+                        'We Can Do Hard Things',
+                        style: context.textTheme.bodySmall?.copyWith(
+                          fontSize: ATSizes.size12,
+                          color: ATColors.hexC2C2C2
+                        ),
                       ),
                     ),
                     Icon(Icons.keyboard_arrow_right_outlined, color: ATColors.hexC2C2C2, size: 20)
@@ -54,37 +53,26 @@ class ProfileEventOrShowDisplay extends StatelessWidget {
                 Text(
                   maxLines: 2,
                   'How To Be More Alive With Cole Authur Riley (Best of Emmanuel Nnanna)',
-                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                    fontSize: ATFontSizes.size15,
+                  style: context.textTheme.bodyMedium?.copyWith(
+                    fontSize: ATSizes.size15,
                   ),
                 ),
       
                 //Row 3
                 Row(
                   children: <Widget>[
-                    ATContainer(
-                      alignment: Alignment.center,
-                      height: 10, width: 10, radius: 1,
-                      color: ATColors.hexC2C2C2,
-                      child: FittedBox(
-                        fit: BoxFit.scaleDown,
-                        child: Text(
-                          'P',
-                          style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                            fontWeight: ATFontWeights.w800,
-                            fontSize: ATFontSizes.size10,
-                            color: ATColors.black
-                          ),
-                        )
-                      ),
+                    ATPaidIndicatorIcon(
+                      size: 10, radius: 1,
+                      color: ATColors.hexC2C2C2
                     ),
                     const SizedBox(width: 5,),
                     Text(
                       'Society',
-                      style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                      style: context.textTheme.titleSmall?.copyWith(
                         color: ATColors.hexC2C2C2
                       ),
                     ),
+                    const SizedBox(width: 5,),
                     ATCircleAvatar(
                       diameter: 3,
                       color: ATColors.hexC2C2C2,
@@ -93,7 +81,7 @@ class ProfileEventOrShowDisplay extends StatelessWidget {
                     const SizedBox(width: 5,),
                     Text(
                       '15 JAN 2034 at 19:00',
-                      style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                      style: context.textTheme.titleSmall?.copyWith(
                         color: ATColors.hexC2C2C2
                       ),
                     ),

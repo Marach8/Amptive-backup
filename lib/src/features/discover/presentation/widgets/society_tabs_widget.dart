@@ -1,7 +1,7 @@
 import 'package:amptive/src/config/utils/other_strings.dart';
 import 'package:flutter/material.dart';
 import '../../../../config/utils/colors.dart';
-import '../../../../views/widgets/common_widgets/custom_container_widget.dart';
+import '../../../../shared/custom_container_widget.dart';
 
 class SocietyTabsWidget extends StatefulWidget{
   const SocietyTabsWidget({

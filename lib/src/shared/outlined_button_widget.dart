@@ -12,7 +12,8 @@ class ATOutlinedBtn extends StatelessWidget {
     this.height,
     this.width,
     this.child,
-    this.padding
+    this.padding,
+    this.style,
   });
   
   final String? btnTitle;
@@ -21,6 +22,7 @@ class ATOutlinedBtn extends StatelessWidget {
   final double? height, width;
   final Widget? child;
   final EdgeInsetsGeometry? padding;
+  final TextStyle? style;
 
   @override
   Widget build(BuildContext context) {
@@ -35,7 +37,7 @@ class ATOutlinedBtn extends StatelessWidget {
         ),
         fixedSize: Size(width ?? context.screenWidth, height ?? 54)
       ),
-      child: child ?? Text(btnTitle ?? ''),
+      child: child ?? Text(btnTitle ?? '', style: style),
       
     );
   }

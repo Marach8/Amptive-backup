@@ -8,7 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get_it/get_it.dart';
 import '../../../services/create_show/create_show_service.dart';
-import '../../../views/widgets/common_widgets/custom_container_widget.dart';
+import '../../../shared/custom_container_widget.dart';
 import '../image_strings.dart';
 import '../other_strings.dart';
 import 'package:amptive/src/shared/elevated_button_widget.dart';
@@ -25,7 +25,7 @@ Future<void> selectDateModal(
       service.isValidEventDateTime() ? service.eventDateTime! : now;
 
   return await showModalBottomSheet(
-      backgroundColor: ATColors.trsprnt,
+      backgroundColor: ATColors.transparent,
       constraints: BoxConstraints.expand(
           height: ATHelperFuncs.getScreenHeight(context)),
       context: context,
@@ -115,7 +115,7 @@ Future<void> selectDateModal(
                     service.eventDateTime = selectedDateTime;
                     Navigator.pop(context);
                   },
-                  buttonTitle: ATStrings.CONTINUE,
+                  buttonTitle: ATStrings.cContinue,
                   bgColor: ATColors.white,
                   fgColor: ATColors.black,
                 ),
@@ -134,7 +134,7 @@ Future<void> selectDateModal(
                     Navigator.pop(context);
                   },
                   buttonTitle: ATStrings.REMOVE,
-                  bgColor: ATColors.trsprnt,
+                  bgColor: ATColors.transparent,
                   fgColor: ATColors.white,
                 ),
               ),

@@ -2,7 +2,7 @@ import 'dart:ui';
 
 import 'package:amptive/src/config/utils/colors.dart';
 import 'package:amptive/src/config/utils/extensions/context_extensions.dart';
-import 'package:amptive/src/views/widgets/common_widgets/custom_container_widget.dart';
+import 'package:amptive/src/shared/custom_container_widget.dart';
 import 'package:flutter/material.dart';
 
 class FollowUnfollowDropDown extends StatelessWidget {
@@ -25,7 +25,7 @@ class FollowUnfollowDropDown extends StatelessWidget {
       padding: EdgeInsets.zero,
       menuPadding: EdgeInsets.zero,
       onSelected: onSelected,
-      color: ATColors.trsprnt,
+      color: ATColors.transparent,
       elevation: 0,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(12)

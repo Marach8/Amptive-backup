@@ -2,7 +2,7 @@ import 'dart:ui';
 
 import 'package:amptive/src/config/config_export.dart';
 import 'package:amptive/src/models/host.dart';
-import 'package:amptive/src/views/widgets/common_widgets/custom_container_widget.dart';
+import 'package:amptive/src/shared/custom_container_widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/image_loader_widget.dart';
 import 'package:flutter/material.dart';
 
@@ -58,7 +58,7 @@ class SelectedCoHostsWidget extends StatelessWidget {
             maxLines: 5,
             style: context.textTheme.labelSmall?.copyWith(
               color: ATColors.white.withValues(alpha: 0.6),
-              fontSize: ATFontSizes.size13,
+              fontSize: ATSizes.size13,
             ),
           ),
         ],
@@ -115,7 +115,7 @@ class _OverlappingCohosts<T> extends StatelessWidget {
                       child: Text(
                         (entry.$1 + 1).toString(),
                         style: context.textTheme.labelSmall?.copyWith(
-                          fontSize: ATFontSizes.size11
+                          fontSize: ATSizes.size11
                         )
                       ),
                     ),

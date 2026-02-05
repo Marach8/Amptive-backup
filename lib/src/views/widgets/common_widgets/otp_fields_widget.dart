@@ -129,7 +129,7 @@ class _OTPField extends StatelessWidget {
           borderRadius: BorderRadius.circular(14),
         ),
         border: OutlineInputBorder(
-          borderSide: BorderSide(color: ATColors.trsprnt),
+          borderSide: BorderSide(color: ATColors.transparent),
           borderRadius: BorderRadius.circular(14),
         ),
       ),

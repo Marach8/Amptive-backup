@@ -3,7 +3,7 @@ import 'package:amptive/src/config/utils/font_sizes.dart';
 import 'package:amptive/src/config/utils/font_weights.dart';
 import 'package:amptive/src/config/utils/other_strings.dart';
 import 'package:amptive/src/views/widgets/common_widgets/circle_avatar.dart';
-import 'package:amptive/src/views/widgets/common_widgets/custom_container_widget.dart';
+import 'package:amptive/src/shared/custom_container_widget.dart';
 import 'package:flutter/material.dart';
 import '../../../../config/utils/image_strings.dart';
 import '../../../../views/widgets/common_widgets/image_loader_widget.dart';
@@ -47,7 +47,7 @@ class SearchItemTile extends StatelessWidget {
                 Text(
                   title,
                   style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                    fontSize: ATFontSizes.size14
+                    fontSize: ATSizes.size14
                   ),
                 ),
 
@@ -60,7 +60,7 @@ class SearchItemTile extends StatelessWidget {
                       style: Theme.of(context).textTheme.titleSmall?.copyWith(
                         color: ATColors.hexC2C2C2,
                         fontWeight: ATFontWeights.w500,
-                        fontSize: ATFontSizes.size13,
+                        fontSize: ATSizes.size13,
                         height: 1.5
                       ),
                     ),
@@ -72,7 +72,7 @@ class SearchItemTile extends StatelessWidget {
                       style: Theme.of(context).textTheme.titleSmall?.copyWith(
                         color: ATColors.hexC2C2C2,
                         fontWeight: ATFontWeights.w500,
-                        fontSize: ATFontSizes.size13,
+                        fontSize: ATSizes.size13,
                         height: 1.5
                       ),
                     ),
@@ -143,7 +143,7 @@ class HashTagSearchItemTile extends StatelessWidget {
                 Text(
                   '${ATStrings.HASH}$title'.toLowerCase(),
                   style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                    fontSize: ATFontSizes.size14
+                    fontSize: ATSizes.size14
                   ),
                 ),
 
@@ -154,7 +154,7 @@ class HashTagSearchItemTile extends StatelessWidget {
                   style: Theme.of(context).textTheme.titleSmall?.copyWith(
                     color: ATColors.hexC2C2C2,
                     fontWeight: ATFontWeights.w500,
-                    fontSize: ATFontSizes.size13,
+                    fontSize: ATSizes.size13,
                     height: 1.5
                   ),
                 ),

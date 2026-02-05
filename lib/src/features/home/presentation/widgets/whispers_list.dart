@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../../../config/utils/colors.dart';
 import '../../../../config/utils/image_strings.dart';
-import '../../../../views/widgets/common_widgets/custom_container_widget.dart';
+import '../../../../shared/custom_container_widget.dart';
 import '../../../../views/widgets/common_widgets/list_tile_with_leading_picture_widget.dart';
 
 class ATWhispersWidget extends StatelessWidget {

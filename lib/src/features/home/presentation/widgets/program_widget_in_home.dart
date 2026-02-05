@@ -2,7 +2,7 @@ import 'package:amptive/src/config/utils/font_sizes.dart';
 import 'package:amptive/src/config/utils/font_weights.dart';
 import 'package:amptive/src/config/utils/image_strings.dart';
 import 'package:amptive/src/config/utils/helper_functions.dart';
-import 'package:amptive/src/views/widgets/common_widgets/custom_container_widget.dart';
+import 'package:amptive/src/shared/custom_container_widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/image_loader_widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/live_indicator_with_animating_dot_widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/list_tile_with_leading_picture_widget.dart';
@@ -44,10 +44,10 @@ class ATShowOrEventInfo extends StatelessWidget {
                   begin: Alignment.topCenter,
                   end: Alignment.bottomCenter,
                   colors: <Color>[
-                    ATColors.trsprnt,
-                    ATColors.trsprnt,
-                    ATColors.trsprnt,
-                    ATColors.trsprnt,
+                    ATColors.transparent,
+                    ATColors.transparent,
+                    ATColors.transparent,
+                    ATColors.transparent,
                     ATColors.containerGradientColorB.withOpacity(0.5),
                     ATColors.containerGradientColorB,
                     ATColors.containerGradientColorB,
@@ -65,7 +65,7 @@ class ATShowOrEventInfo extends StatelessWidget {
                       maxLines: 2,
                       "Don't Forget Who You Are ft. Jacob Scipio",
                       style: Theme.of(context).textTheme.displayMedium?.copyWith(
-                        fontSize: ATFontSizes.size24,
+                        fontSize: ATSizes.size24,
                         fontWeight: ATFontWeights.w600,
                         height: 1.2,
                       ),

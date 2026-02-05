@@ -31,13 +31,13 @@ class HashTagsSubtitleRow extends StatelessWidget {
             Text(
               '#${hashTagTitle.toLowerCase()}',
               style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                fontSize: ATFontSizes.size15
+                fontSize: ATSizes.size15
               ),
             ),
             Text(
               hashTagSubTitle,
               style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                fontSize: ATFontSizes.size13,
+                fontSize: ATSizes.size13,
                 color: ATColors.hexC2C2C2
               ),
             ),

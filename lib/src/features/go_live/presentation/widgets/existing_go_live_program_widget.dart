@@ -1,5 +1,5 @@
 import 'package:amptive/src/config/utils/extensions/context_extensions.dart';
-import 'package:amptive/src/views/widgets/common_widgets/custom_container_widget.dart';
+import 'package:amptive/src/shared/custom_container_widget.dart';
 import 'package:flutter/material.dart';
 import '../../../../config/utils/colors.dart';
 import '../../../../config/utils/font_sizes.dart';
@@ -28,7 +28,7 @@ class ExistingGoLiveProgramWidget extends StatelessWidget {
           onTap: () => onTap(isSelected),
           radius: 5,
           border: Border.all(
-            color: isSelected ? ATColors.hex307FE2 : ATColors.trsprnt,
+            color: isSelected ? ATColors.hex307FE2 : ATColors.transparent,
             width: 3,
           ),
           child: Column(
@@ -49,7 +49,7 @@ class ExistingGoLiveProgramWidget extends StatelessWidget {
               ),
               ATContainer(
                 padding: const EdgeInsets.only(top: 5),
-                color: isSelected ? ATColors.hex1F1F23 : ATColors.trsprnt,
+                color: isSelected ? ATColors.hex1F1F23 : ATColors.transparent,
                 child: Column(
                   children: <Widget>[
                     Text(
@@ -62,7 +62,7 @@ class ExistingGoLiveProgramWidget extends StatelessWidget {
                         Text(
                           'Created',
                           style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                            fontSize: ATFontSizes.size13,
+                            fontSize: ATSizes.size13,
                             color: ATColors.hexA8A8A8,
                           ),
                         ),

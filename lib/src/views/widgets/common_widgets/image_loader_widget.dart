@@ -45,3 +45,31 @@ class ATImgLoader extends StatelessWidget {
     }
   }
 }
+
+
+// class SvgPreloader {
+//   static Future<void> precacheSvg(
+//     String assetPath,
+//     BuildContext context,
+//   ) async {
+//     final loader = SvgAssetLoader(assetPath);
+    
+//     // This directly caches the SVG bytes
+//     await svg.cache.putIfAbsent(
+//       loader.cacheKey(context),
+//       () => loader.loadBytes(context),
+//     );
+//   }
+  
+//   static Future<void> precacheNetworkSvg(
+//     String url,
+//     BuildContext context,
+//   ) async {
+//     final loader = SvgNetworkLoader(url);
+    
+//     await svg.cache.putIfAbsent(
+//       loader.cacheKey(context),
+//       () => loader.loadBytes(context),
+//     );
+//   }
+// }

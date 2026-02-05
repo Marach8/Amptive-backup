@@ -6,7 +6,6 @@ import 'package:amptive/src/views/widgets/common_widgets/image_loader_widget.dar
 import 'package:amptive/src/views/widgets/other_widgets/main_application_widgets/widgets_in_discover_view/recent_searches_widgets/container_with_picture.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
-import 'package:gap/gap.dart';
 import 'package:amptive/main.dart';
 import 'dart:developer' as marach show log;
 
@@ -31,7 +30,7 @@ Future<void> showMinimizedGoLiveState() async {
             imagePath: ATImgStrings.weCanDoHardThingsBgImage,
             diameter: 40, radius: 2,            
           ),
-          const Gap(5),
+          const SizedBox(width: 5),
           Flexible(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -40,7 +39,7 @@ Future<void> showMinimizedGoLiveState() async {
                   'glennodoyle and 2 others',
                   style: TextStyle(
                     color: ATColors.white,
-                    fontSize: ATFontSizes.size13,
+                    fontSize: ATSizes.size13,
                     fontWeight: ATFontWeights.w500,
                   ),
                 ),
@@ -58,7 +57,7 @@ Future<void> showMinimizedGoLiveState() async {
                           "Don't forget who you are ft. Jacob Scipio and the boy is cooljdkjfkafkdajdjjakdjfkajeiefkdjfkdjakjdkjkja",
                           style: TextStyle(
                             color: ATColors.hexC2C2C2,
-                            fontSize: ATFontSizes.size12,
+                            fontSize: ATSizes.size12,
                             fontWeight: ATFontWeights.w500,
                           ),
                         ),

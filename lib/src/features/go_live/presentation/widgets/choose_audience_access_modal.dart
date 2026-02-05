@@ -1,16 +1,13 @@
 import 'package:amptive/src/features/profile/bloc/fees_setup_bloc.dart';
-import 'package:amptive/src/features/profile/presentation/views/profile_views_export.dart';
-import 'package:amptive/src/views/widgets/common_widgets/custom_container_widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/divider_widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/image_loader_widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/radio_button.dart';
-import 'package:flutter/material.dart';
-import 'package:gap/gap.dart';
 import 'package:go_router/go_router.dart';
-import '../../../../shared/elevated_button_widget.dart';
 import 'package:amptive/src/global_export.dart';
-import 'package:amptive/src/views/widgets/common_widgets/dismiss_modal.dart';
+import 'package:amptive/src/views/widgets/common_widgets/modal_dismisser.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
+import '../../../switch_account/presentation/switch_acct/switch_acct_export.dart';
 
 
 Future<String?> chooseAudienceAccess4ShowModal({
@@ -81,12 +78,12 @@ Future<String?> chooseAudienceAccess4ShowModal({
                                 radius: 15, color: ATColors.hex2D2D2D,
                                 border: Border.all(
                                   width: 2,
-                                  color: isFree ? ATColors.hex307FE2 : ATColors.trsprnt
+                                  color: isFree ? ATColors.hex307FE2 : ATColors.transparent
                                 ),
                                 child: Row(
                                   children: <Widget>[
                                     const ATImgLoader(imgPath: ATImgStrings.PEOPLE),
-                                    const Gap(10),
+                                    const SizedBox(width: 10),
                                     Expanded(
                                       child: Column(
                                         mainAxisSize: MainAxisSize.min,
@@ -95,14 +92,14 @@ Future<String?> chooseAudienceAccess4ShowModal({
                                           Text(
                                             ATStrings.FREE,
                                             style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                                              fontSize: ATFontSizes.size15
+                                              fontSize: ATSizes.size15
                                             )
                                           ),
                                           Text(
                                             maxLines: 5,
                                             ATStrings.SHOW_FREE_ACCESS,
                                             style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                                              color: ATColors.hexC2C2C2, fontSize: ATFontSizes.size13
+                                              color: ATColors.hexC2C2C2, fontSize: ATSizes.size13
                                             ),
                                           ),
                                         ],
@@ -124,7 +121,7 @@ Future<String?> chooseAudienceAccess4ShowModal({
                                 radius: 15, duration: 100, color: ATColors.hex2D2D2D,
                                 border: Border.all(
                                   width: 2,
-                                  color: isPaid ? ATColors.hex307FE2 : ATColors.trsprnt
+                                  color: isPaid ? ATColors.hex307FE2 : ATColors.transparent
                                 ),
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -133,7 +130,7 @@ Future<String?> chooseAudienceAccess4ShowModal({
                                     Row(
                                       children: <Widget>[
                                         const ATImgLoader(imgPath: ATImgStrings.PADLOCK),
-                                        const Gap(10),
+                                        const SizedBox(width: 10),
                                         Expanded(
                                           child: Column(
                                             mainAxisSize: MainAxisSize.min,
@@ -142,14 +139,14 @@ Future<String?> chooseAudienceAccess4ShowModal({
                                               Text(
                                                 ATStrings.SUBSCRIBERS_ONLY,
                                                 style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                                                  fontSize: ATFontSizes.size15
+                                                  fontSize: ATSizes.size15
                                                 )
                                               ),
                                               Text(
                                                 maxLines: 5,
                                                 ATStrings.ACCESS_2_ONLY_SUBSCRIBERS,
                                                 style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                                                  color: ATColors.hexC2C2C2, fontSize: ATFontSizes.size13
+                                                  color: ATColors.hexC2C2C2, fontSize: ATSizes.size13
                                                 ),
                                               ),
                                             ],
@@ -189,9 +186,9 @@ Future<String?> chooseAudienceAccess4ShowModal({
                                               child: Align(
                                                 alignment: Alignment.centerRight,
                                                 child: Text(
-                                                  state.first == null ? '' : '${ATStrings.NAIRA_TEXT}${state.first}/month',
+                                                  state.first == null ? '' : '${ATStrings.nairaText}${state.first}/month',
                                                   style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                                                    fontSize: ATFontSizes.size14,
+                                                    fontSize: ATSizes.size14,
                                                   )
                                                 ),
                                               ),
@@ -216,7 +213,7 @@ Future<String?> chooseAudienceAccess4ShowModal({
                       return ATPlainElevatedBtn(
                         height: 50,
                         onPressed: state == null ? null : () => dContext.pop(state),
-                        btnTitle: ATStrings.CONTINUE,
+                        btnTitle: ATStrings.cContinue,
                       );
                     }
                   )

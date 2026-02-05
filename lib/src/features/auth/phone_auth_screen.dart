@@ -6,7 +6,7 @@ import 'package:amptive/src/config/utils/colors.dart';
 import 'package:amptive/src/views/widgets/common_widgets/annotated_region__widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/app_bar_widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/back_button.dart';
-import 'package:amptive/src/views/widgets/common_widgets/custom_container_widget.dart';
+import 'package:amptive/src/shared/custom_container_widget.dart';
 import 'package:amptive/src/shared/elevated_button_widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/textformfield_widget.dart';
 import 'package:country_pickers/country.dart';
@@ -58,7 +58,7 @@ class _AddPhoneScreenState extends State<AddPhoneScreen> {
                 Text(
                   ATStrings.UR_FON_NUMBER,
                   style: Theme.of(context).textTheme.headlineMedium?.copyWith(
-                    fontSize: ATFontSizes.size17,
+                    fontSize: ATSizes.size17,
                   ),
                 ),
                 const SizedBox(height: 11),
@@ -78,7 +78,7 @@ class _AddPhoneScreenState extends State<AddPhoneScreen> {
                           color: ATColors.hex9E9E9E.withOpacity(0.3),
                           radius: 14,
                           border: Border.all(
-                            color: _bottomSheetOpened ? ATColors.hex307FE2 : ATColors.trsprnt,
+                            color: _bottomSheetOpened ? ATColors.hex307FE2 : ATColors.transparent,
                             width: 2,
                           ),
                           child: Row(
@@ -131,7 +131,7 @@ class _AddPhoneScreenState extends State<AddPhoneScreen> {
                             borderSide: BorderSide(width: 2, color: ATColors.hex307FE2),
                           ),
                           border: OutlineInputBorder(
-                            borderSide: BorderSide(width: 2, color: ATColors.trsprnt),
+                            borderSide: BorderSide(width: 2, color: ATColors.transparent),
                           ),
                         ),
                       ),

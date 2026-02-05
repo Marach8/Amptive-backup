@@ -1,11 +1,8 @@
-import 'package:amptive/src/views/widgets/common_widgets/custom_container_widget.dart';
-import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import '../../../../shared/elevated_button_widget.dart';
 
 import 'package:amptive/src/views/widgets/common_widgets/radio_button.dart';
 import 'package:amptive/src/global_export.dart';
-import 'package:amptive/src/views/widgets/common_widgets/dismiss_modal.dart';
+import 'package:amptive/src/views/widgets/common_widgets/modal_dismisser.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../views/widgets/common_widgets/rich_text.dart';
@@ -85,7 +82,7 @@ Future<String?> choose2AllowHandRaisingModal({
                                 radius: 15, color: ATColors.hex2D2D2D,
                                 border: Border.all(
                                   width: 2,
-                                  color: shouldAllow ? ATColors.hex307FE2 : ATColors.trsprnt
+                                  color: shouldAllow ? ATColors.hex307FE2 : ATColors.transparent
                                 ),
                                 child: Row(
                                   children: <Widget>[
@@ -99,14 +96,14 @@ Future<String?> choose2AllowHandRaisingModal({
                                           Text(
                                             ATStrings.ALLOW,
                                             style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                                              fontSize: ATFontSizes.size15
+                                              fontSize: ATSizes.size15
                                             )
                                           ),
                                           Text(
                                             maxLines: 5,
                                             ATStrings.AUDIENCE_CAN_RAISE_HAND,
                                             style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                                              color: ATColors.hexC2C2C2, fontSize: ATFontSizes.size13
+                                              color: ATColors.hexC2C2C2, fontSize: ATSizes.size13
                                             ),
                                           ),
                                         ],
@@ -126,7 +123,7 @@ Future<String?> choose2AllowHandRaisingModal({
                                 radius: 15, duration: 100, color: ATColors.hex2D2D2D,
                                 border: Border.all(
                                   width: 2,
-                                  color: shouldNotAllow ? ATColors.hex307FE2 : ATColors.trsprnt
+                                  color: shouldNotAllow ? ATColors.hex307FE2 : ATColors.transparent
                                 ),
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -144,14 +141,14 @@ Future<String?> choose2AllowHandRaisingModal({
                                               Text(
                                                 ATStrings.DONT_ALLOW,
                                                 style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                                                  fontSize: ATFontSizes.size15
+                                                  fontSize: ATSizes.size15
                                                 )
                                               ),
                                               Text(
                                                 maxLines: 5,
                                                 ATStrings.AUDIENCE_CANNOT_RAISE_HAND,
                                                 style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                                                  color: ATColors.hexC2C2C2, fontSize: ATFontSizes.size13
+                                                  color: ATColors.hexC2C2C2, fontSize: ATSizes.size13
                                                 ),
                                               ),
                                             ],
@@ -174,7 +171,7 @@ Future<String?> choose2AllowHandRaisingModal({
                     builder: (_, String? state) {
                       return ATPlainElevatedBtn(
                         onPressed: state == null ? null : () => dContext.pop(state),
-                        btnTitle: ATStrings.CONTINUE,
+                        btnTitle: ATStrings.cContinue,
                       );
                     }
                   )

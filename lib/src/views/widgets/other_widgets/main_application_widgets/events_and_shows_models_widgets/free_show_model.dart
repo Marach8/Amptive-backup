@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:gap/gap.dart';
 import '../../../../../config/utils/colors.dart';
 import '../../../../../config/utils/font_sizes.dart';
 import '../../../common_widgets/circle_avatar.dart';
-import '../../../common_widgets/custom_container_widget.dart';
+import '../../../../../shared/custom_container_widget.dart';
 import '../../../common_widgets/image_loader_widget.dart';
 
 
@@ -27,7 +26,7 @@ class AmptiveFreeShowModel extends StatelessWidget {
             borderRadius: BorderRadius.circular(5),
             child: ATImgLoader(imgPath: trendingPicture),
           ),
-          const Gap(5),
+          const SizedBox(height: 5),
           SizedBox(
             width: 135,
             child: Text(
@@ -42,13 +41,13 @@ class AmptiveFreeShowModel extends StatelessWidget {
                 child: Text(
                   'figma',
                   style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                    fontSize: ATFontSizes.size13,
+                    fontSize: ATSizes.size13,
                     color: ATColors.hexA8A8A8
                   ),
                 ),
               ),
-              const Gap(2),
-              
+              const SizedBox(width: 2),
+
               Align(
                 alignment: Alignment.bottomCenter,
                 child: ATCircleAvatar(
@@ -56,7 +55,7 @@ class AmptiveFreeShowModel extends StatelessWidget {
                   color: ATColors.hexA8A8A8
                 ),
               ),
-              const Gap(2),
+              const SizedBox(width: 2),
               Text(
                 'LIVE',
                 style: Theme.of(context).textTheme.titleSmall?.copyWith(

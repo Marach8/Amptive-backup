@@ -1,9 +1,7 @@
 import 'dart:async';
-import 'dart:developer' show log;
 import 'package:amptive/src/config/utils/colors.dart';
 import 'package:amptive/src/config/utils/lottie_animation_strings.dart';
 import 'package:amptive/src/views/widgets/common_widgets/circle_avatar.dart';
-import 'package:amptive/src/views/widgets/common_widgets/custom_container_widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/image_loader_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
@@ -61,12 +59,12 @@ class _AmptiveAudioCreatorWidgetState extends State<AmptiveAudioCreatorWidget>{
           ),
         ),
         Container(
-          margin: EdgeInsets.only(top: 15, left: 15),
+          margin: const EdgeInsets.only(top: 15, left: 15),
           width: 74.99,
           height: 74.99,
           child: CircleAvatar(
             radius: 36.5,
-            backgroundColor:_isBorderColored ? ATColors.hex307FE2 : ATColors.trsprnt,
+            backgroundColor:_isBorderColored ? ATColors.hex307FE2 : ATColors.transparent,
             child: CircleAvatar(
               radius: 34.814,
               backgroundColor: ATColors.hex0D0D0D,
@@ -257,6 +255,8 @@ class _TestWidgetState extends State<TestWidget> with TickerProviderStateMixin{
 
 
 class RippleAnimationPage extends StatefulWidget {
+  const RippleAnimationPage({super.key});
+
   @override
   _RippleAnimationPageState createState() => _RippleAnimationPageState();
 }
@@ -321,7 +321,7 @@ class _RippleAnimationPageState extends State<RippleAnimationPage>
   Widget build(BuildContext context) {
     return AnimatedBuilder(
       animation: _controller,
-      builder: (context, child) {
+      builder: (BuildContext context, Widget? child) {
         return Opacity(
           opacity: _opacityAnimation.value,
           child: Container(
@@ -346,15 +346,17 @@ class _RippleAnimationPageState extends State<RippleAnimationPage>
 
 // Alternative implementation with multiple ripples for a more realistic effect
 class MultipleRippleAnimation extends StatefulWidget {
+  const MultipleRippleAnimation({super.key});
+
   @override
   _MultipleRippleAnimationState createState() => _MultipleRippleAnimationState();
 }
 
 class _MultipleRippleAnimationState extends State<MultipleRippleAnimation>
     with TickerProviderStateMixin {
-  List<AnimationController> _controllers = [];
-  List<Animation<double>> _scaleAnimations = [];
-  List<Animation<double>> _opacityAnimations = [];
+  final List<AnimationController> _controllers = <AnimationController>[];
+  final List<Animation<double>> _scaleAnimations = <Animation<double>>[];
+  final List<Animation<double>> _opacityAnimations = <Animation<double>>[];
 
   @override
   void initState() {
@@ -365,12 +367,12 @@ class _MultipleRippleAnimationState extends State<MultipleRippleAnimation>
 
   void _createRipples() {
     for (int i = 0; i < 3; i++) {
-      final controller = AnimationController(
+      final AnimationController controller = AnimationController(
         duration: Duration(milliseconds: 2000 + (i * 200)),
         vsync: this,
       );
 
-      final scaleAnimation = Tween<double>(
+      final Animation<double> scaleAnimation = Tween<double>(
         begin: 0.7,
         end: 1.4,
       ).animate(CurvedAnimation(
@@ -378,7 +380,7 @@ class _MultipleRippleAnimationState extends State<MultipleRippleAnimation>
         curve: Curves.easeOut,
       ));
 
-      final opacityAnimation = Tween<double>(
+      final Animation<double> opacityAnimation = Tween<double>(
         begin: 1.0,
         end: 0.0,
       ).animate(CurvedAnimation(
@@ -404,7 +406,7 @@ class _MultipleRippleAnimationState extends State<MultipleRippleAnimation>
 
   @override
   void dispose() {
-    for (final controller in _controllers) {
+    for (final AnimationController controller in _controllers) {
       controller.dispose();
     }
     super.dispose();
@@ -420,10 +422,10 @@ class _MultipleRippleAnimationState extends State<MultipleRippleAnimation>
       body: Center(
         child: Stack(
           alignment: Alignment.center,
-          children: List.generate(_controllers.length, (index) {
+          children: List.generate(_controllers.length, (int index) {
             return AnimatedBuilder(
               animation: _controllers[index],
-              builder: (context, child) {
+              builder: (BuildContext context, Widget? child) {
                 return Transform.scale(
                   scale: _scaleAnimations[index].value,
                   child: Opacity(
@@ -448,13 +450,13 @@ class _MultipleRippleAnimationState extends State<MultipleRippleAnimation>
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          for (final controller in _controllers) {
+          for (final AnimationController controller in _controllers) {
             controller.reset();
           }
           _startRipples();
         },
-        child: const Icon(Icons.water_drop),
         tooltip: 'Trigger Ripples',
+        child: const Icon(Icons.water_drop),
       ),
     );
   }

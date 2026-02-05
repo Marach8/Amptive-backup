@@ -1,5 +1,5 @@
 import 'package:amptive/src/config/config_export.dart';
-import 'package:amptive/src/views/widgets/common_widgets/dismiss_modal.dart';
+import 'package:amptive/src/views/widgets/common_widgets/modal_dismisser.dart';
 import 'package:amptive/src/shared/elevated_button_widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/textformfield_widget.dart';
 import 'package:flutter/material.dart';
@@ -99,7 +99,7 @@ class _AddLinkWidgetState extends State<_AddLinkWidget> with ATValidators{
               child: Text(
                 ATStrings.TEXT,
                 style: context.textTheme.bodySmall?.copyWith(
-                  fontSize: ATFontSizes.size15
+                  fontSize: ATSizes.size15
                 ),
               ),
             ),
@@ -112,7 +112,7 @@ class _AddLinkWidgetState extends State<_AddLinkWidget> with ATValidators{
               hintText: ATStrings.LINK_NAME,
               enabledBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(14),
-                borderSide: BorderSide(color: ATColors.trsprnt)
+                borderSide: BorderSide(color: ATColors.transparent)
               ),
             ),
             const SizedBox(height: 30,),
@@ -122,7 +122,7 @@ class _AddLinkWidgetState extends State<_AddLinkWidget> with ATValidators{
               child: Text(
                 ATStrings.LINK,
                 style: context.textTheme.bodySmall?.copyWith(
-                  fontSize: ATFontSizes.size15
+                  fontSize: ATSizes.size15
                 ),
               ),
             ),
@@ -136,7 +136,7 @@ class _AddLinkWidgetState extends State<_AddLinkWidget> with ATValidators{
               hintText: ATStrings.LINK_URL,
               enabledBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(14),
-                borderSide: BorderSide(color: ATColors.trsprnt)
+                borderSide: BorderSide(color: ATColors.transparent)
               ),
             ),
             

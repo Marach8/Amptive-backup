@@ -15,6 +15,7 @@ class ATRoutes {
   static const String ADD_NAME_AUTH_SCREEN = "name_auth";
   static const String ADD_USERNAME_AUTH_SCREEN = "username_auth";
   static const String ADD_FONE_NO_SCREEN = "add_phone_auth";
+  static const String TEMP_LOGIN_SCREEN = 'temporary_login';
 
   //POST AUTHENTICATION
   static const String ADD_PROFILE_PIC_SCREEN = "add_profile_pic";
@@ -41,6 +42,8 @@ class ATRoutes {
   static const String CREATOR_PROFILE_SCREEN = 'creator_profile';
   static const String PROFILE_MENU_SCREEN = 'profile_menu_screen';
   static const String PROFILE_FOLLOWING_SCREEN = 'profile_following_screen';
+  static const String updateEmailScreen = 'update_email_screen';
+  static const String updatePhoneNoScreen = 'update_phone_no_screen';
   static const String PROFILE_SUBSCRIBERS_SCREEN = 'profile_sub_screen';
   static const String USER_PROFILE_SCREEN = 'user_profile';
   static const String CHOOSE_OR_CREATE_GO_LIVE_PROGRAM_SCREEN = 'choose_or_create_show';
@@ -57,7 +60,7 @@ class ATRoutes {
   static const String MUTED_ACCTS_SCREEN = 'muted_accounts_screen';
   static const String SELECT_COUNTRY_SCREEN = 'select_country_screen';
   static const String ACCT_INFO_SCREEN = 'account_infomation_screen';
-  static const String ACCT_SCREEN = 'account_screen';
+  static const String accountLandingScreen = 'account_screen';
   static const String EDIT_PROFILE = 'edit_profile';
   static const String RECT_IMG_CROPPER_SCREEN = 'profile_bg_crop';
   static const String EDIT_NAME = 'edit_name';
@@ -70,20 +73,20 @@ class ATRoutes {
   static const String CREATOR_SUB_PLAN = 'creator_sub_plan';
   static const String CO_HOST_FEE_SETUP = 'co_host_fee_setup';
   static const String CREATOR_SUCCESS = 'creator_success';
-  static const String WALLET_LANDING = 'wallet_landing';
+  static const String WALLET_ONBOARDING = 'wallet_landing';
   static const String WALLET_PIN_SETUP = 'wallet_pin_setup';
-  static const String SECURITY_QUEST = 'security_question';
-  static const String WALLET_CREATION_ANIM = 'wallet_creation_animation';
+  static const String securityQuestionScreen = 'security_question';
+  static const String walletCreationAnimationScreen = 'wallet_creation_animation';
   static const String WALLET = 'wallet';
   static const String SELECT_RECIPIENT = 'transfer_funds';
   static const String FUND_WALLET = 'fund_wallet';
   static const String WITHDRAWAL_LANDING = 'withdraw';
   static const String SELECT_BANK_COUNTRY = 'select_bank_country';
-  static const String ENTER_AMOUNT_2_TRSF = 'amount_to_transfer';
+  static const String transactionAmountScreen = 'amount_to_transfer';
   static const String ENTER_ACCT_NO = 'enter_account_number';
-  static const String PASS_SECURITY_QUEST = 'pass_security_question';
-  static const String PAPER_PLANE_SUCCESS = 'paper_plane_success';
-  static const String WALLET_TXNS = 'wallet_transactions';
+  static const String answerSecurityQuestionScreen = 'pass_security_question';
+  static const String paperPlaneSuccessScreen = 'paper_plane_success';
+  static const String walletTransactionsHistoryScreen = 'wallet_transactions';
   static const String SCHEDULE_DETAILED = 'schedule_detailed_screen';
   static const String GO_LIVE_ONBOARDING = 'go_live_onboarding_screen';
   static const String MAIN_GO_LIVE_PROGRAM = 'main_go_live_program';

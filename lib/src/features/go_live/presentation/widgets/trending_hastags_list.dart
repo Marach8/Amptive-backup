@@ -1,7 +1,5 @@
-import 'package:flutter/material.dart';
 import 'package:amptive/src/features/go_live/go_live_export.dart';
 import 'package:amptive/src/global_export.dart';
-import 'package:amptive/src/views/widgets/common_widgets/custom_container_widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/search_filter_widget.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../models/host.dart';
@@ -29,7 +27,7 @@ class TrendingHashtagsList extends StatelessWidget {
                 Text(
                   ATStrings.NO_TRENDING_HASHTAGS,
                   style: context.textTheme.bodySmall?.copyWith(
-                    fontSize: ATFontSizes.size16
+                    fontSize: ATSizes.size16
                   )
                 ),
                 const SizedBox(height: 5,),
@@ -46,7 +44,6 @@ class TrendingHashtagsList extends StatelessWidget {
         return LayoutBuilder(
           builder: (_, BoxConstraints kst) {
             return ATScrollBar(
-              scrollController: scrollController,
               child: ListView.builder(
                 controller: scrollController,
                 itemCount: hashtags.length + 1,
@@ -58,7 +55,7 @@ class TrendingHashtagsList extends StatelessWidget {
                       child: Text(
                         ATStrings.TRENDING_HASHTAGS,
                         style: context.textTheme.bodySmall?.copyWith(
-                          fontSize: ATFontSizes.size16
+                          fontSize: ATSizes.size16
                         )
                       ),
                     );
@@ -110,14 +107,14 @@ class HashtagWithCheckIconWidget extends StatelessWidget {
                 ATFilterWidget<SearchkeyBloc>(
                   title: '#${hashtag.title ?? ''}',
                   style: context.textTheme.bodySmall?.copyWith(
-                    fontSize: ATFontSizes.size15
+                    fontSize: ATSizes.size15
                   )
                 ),
                 Text(
                   hashtag.subtitle ?? '',
                   style: context.textTheme.bodySmall?.copyWith(
                     color: ATColors.hexC2C2C2,
-                    fontSize: ATFontSizes.size13
+                    fontSize: ATSizes.size13
                   ),
                 ),
               ],
@@ -128,13 +125,13 @@ class HashtagWithCheckIconWidget extends StatelessWidget {
             builder: (_, bool? isSelected, __) {
               return ATContainer(
                 duration: 200,
-                color: (isSelected ?? false) ? ATColors.white : ATColors.trsprnt,
+                color: (isSelected ?? false) ? ATColors.white : ATColors.transparent,
                 border: Border.all(color: ATColors.white),
                 boxShape: BoxShape.circle,
                 height: 24, width: 24,
                 child: Icon(
                   Icons.check, size: 20,
-                  color: (isSelected ?? false) ? ATColors.hex0D0D0D : ATColors.trsprnt
+                  color: (isSelected ?? false) ? ATColors.hex0D0D0D : ATColors.transparent
                 )
               );
             }

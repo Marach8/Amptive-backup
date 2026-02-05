@@ -1,4 +1,5 @@
 import 'package:amptive/src/config/utils/colors.dart';
+import 'package:amptive/src/config/utils/extensions/context_extensions.dart';
 import 'package:amptive/src/config/utils/other_strings.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -8,16 +9,20 @@ class ATBackBtn extends StatelessWidget {
     super.key,
     this.leadingText,
     this.leadingStyle,
-    this.iconSize
+    this.iconSize,
+    this.alignment,
+    this.leadingWidget,
   });
   final String? leadingText;
   final TextStyle? leadingStyle;
   final double? iconSize;
+  final AlignmentGeometry? alignment;
+  final Widget? leadingWidget;
 
   @override
   Widget build(BuildContext context) {
     return Align(
-      alignment: Alignment.center,
+      alignment: alignment ?? Alignment.center,
       child: InkWell(
         onTap: () => context.pop(),
         borderRadius: BorderRadius.circular(10),
@@ -25,9 +30,9 @@ class ATBackBtn extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
             Icon(Icons.arrow_back_ios, size: iconSize ?? 20),
-            Text(
+            leadingWidget ?? Text(
               leadingText ?? ATStrings.BACK,
-              style: leadingStyle ?? Theme.of(context).textTheme.titleMedium,
+              style: leadingStyle ?? context.textTheme.titleMedium,
             )
           ],
         ),
@@ -39,9 +44,15 @@ class ATBackBtn extends StatelessWidget {
 
 
 class ATRoundedBackBtn extends StatelessWidget {
-  const ATRoundedBackBtn({super.key, this.bgColor});
+  const ATRoundedBackBtn({
+    super.key,
+    this.bgColor,
+    this.splashColor,
+    this.icon
+  });
 
-  final Color? bgColor;
+  final Color? bgColor, splashColor;
+  final Widget? icon;
 
   @override
   Widget build(BuildContext context) {
@@ -52,11 +63,11 @@ class ATRoundedBackBtn extends StatelessWidget {
         borderRadius: BorderRadius.circular(30),
         child: InkWell(
           onTap: () => context.pop(),
-          splashColor: ATColors.hex303030,
+          splashColor: splashColor ?? ATColors.white.withValues(alpha: 0.5),
           borderRadius: BorderRadius.circular(30),
-          child: const SizedBox(
+          child: SizedBox(
             height: 30, width: 30,
-            child: Icon(Icons.keyboard_arrow_left),
+            child: icon ?? const Icon(Icons.keyboard_arrow_left),
           ),
         ),
       ),
@@ -76,7 +87,7 @@ class ATXBackBtn extends StatelessWidget {
       alignment: Alignment.center,
       child: InkWell(
         onTap: onTapOverride ?? () => context.pop(),
-        splashColor: ATColors.hex303030,
+        splashColor: ATColors.white.withValues(alpha: 0.5),
         borderRadius: BorderRadius.circular(30),
         child: const SizedBox(
           height: 30, width: 30,

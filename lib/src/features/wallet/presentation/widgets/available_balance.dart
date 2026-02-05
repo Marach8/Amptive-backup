@@ -1,13 +1,14 @@
 import 'package:amptive/src/config/utils/colors.dart';
+import 'package:amptive/src/config/utils/extensions/context_extensions.dart';
 import 'package:amptive/src/config/utils/font_sizes.dart';
 import 'package:amptive/src/config/utils/image_strings.dart';
 import 'package:amptive/src/config/utils/other_strings.dart';
 import 'package:amptive/src/config/routing/route_strings.dart';
-import 'package:amptive/src/config/utils/dialogs/wallet/process_wallet_funding_dialog.dart';
-import 'package:amptive/src/config/utils/dialogs/wallet/select_payment_method_dialog.dart';
-import 'package:amptive/src/features/wallet/presentation/views/enter_amount_screen.dart';
+import 'package:amptive/src/features/wallet/presentation/widgets/process_wallet_funding_dialog.dart';
+import 'package:amptive/src/features/wallet/presentation/widgets/select_payment_method_dialog.dart';
+import 'package:amptive/src/features/wallet/presentation/screens/transaction_amount_screen.dart';
 import 'package:amptive/src/views/widgets/common_widgets/circular_image.dart';
-import 'package:amptive/src/views/widgets/common_widgets/custom_container_widget.dart';
+import 'package:amptive/src/shared/custom_container_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -16,15 +17,18 @@ import 'dart:developer';
 class AvailableBalanceWidget extends StatelessWidget {
   const AvailableBalanceWidget({super.key});
 
-  static const List<String> list = <String>[ATStrings.FUND_WALLET, ATStrings.TRSF, ATStrings.WITHDRAW];
+  static const List<String> list = <String>[
+    ATStrings.fundWallet,
+    ATStrings.transfer,
+    ATStrings.withdraw
+  ];
 
   @override
   Widget build(BuildContext context) {
     return ATContainer(
       color: ATColors.white.withValues(alpha: 0.05),
-      padding: const EdgeInsets.all(15),
-      radius: 15,
-      child: BlocProvider(
+      padding: const EdgeInsets.all(15), radius: 15,
+      child: BlocProvider<_VisibilityBloc>(
         create: (_) => _VisibilityBloc(),
         child: Builder(
           builder: (BuildContext context) {
@@ -40,7 +44,7 @@ class AvailableBalanceWidget extends StatelessWidget {
                         children: <Widget>[
                           Text(
                             ATStrings.AVAILABLE_BAL,
-                            style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                            style: context.textTheme.bodySmall?.copyWith(
                               color: ATColors.hexC2C2C2
                             )
                           ),
@@ -64,11 +68,11 @@ class AvailableBalanceWidget extends StatelessWidget {
                 ),
                 
                 BlocBuilder<_VisibilityBloc, bool>(
-                  builder: (_, bool state) {
+                  builder: (_, bool shouldShow) {
                     return Text(
-                      state ? 'N 2,345,737.18' : '******',
-                      style: Theme.of(context).textTheme.displaySmall?.copyWith(
-                        fontSize: ATFontSizes.size30
+                      shouldShow ? '${ATStrings.nairaText}2,345,737.18' : '******',
+                      style: context.textTheme.displaySmall?.copyWith(
+                        fontSize: ATSizes.size30
                       )
                     );
                   }
@@ -77,8 +81,8 @@ class AvailableBalanceWidget extends StatelessWidget {
                 BlocBuilder<_VisibilityBloc, bool>(
                   builder: (_, bool state) {
                     return Text(
-                      'Pending balance: ${state ? 'N13,438.00' : '******'}',
-                      style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                      'Pending balance: ${state ? '${ATStrings.nairaText}13,438.00' : '******'}',
+                      style: context.textTheme.bodySmall?.copyWith(
                         color: ATColors.hexC2C2C2
                       )
                     );
@@ -92,13 +96,13 @@ class AvailableBalanceWidget extends StatelessWidget {
                     (String item){
                       IconData icon;
                       switch(item){
-                        case ATStrings.FUND_WALLET:
+                        case ATStrings.fundWallet:
                           icon = Icons.add;
                           break;
-                        case ATStrings.TRSF:
+                        case ATStrings.transfer:
                           icon = Icons.sync;
                           break;
-                        case ATStrings.WITHDRAW:
+                        case ATStrings.withdraw:
                           icon = Icons.arrow_upward;
                           break;
                         default:
@@ -106,38 +110,29 @@ class AvailableBalanceWidget extends StatelessWidget {
                       }
                       return ATContainer( 
                         onTap: ()async{
-                          if(item == ATStrings.FUND_WALLET){                            
-                            final String? inputPrice = await context.pushNamed(
-                              ATRoutes.ENTER_AMOUNT_2_TRSF,
-                              extra: EnterAmountScreenParams(
-                                title: ATStrings.FUND_WALLET,
+                          if(item == ATStrings.fundWallet){
+                            context.pushNamed(
+                              ATRoutes.transactionAmountScreen,
+                              extra: TransactionAmountScreenParams(
+                                transactionType: TransactionType.fundWallet,
+                                title: ATStrings.fundWallet,
                                 slidingNotif: ATStrings.AMPTIVE_FUNDING_CHARGES,
                                 btnTitle: ATStrings.SELECT_PAYMENT_METHOD
                               )
-                            ) as String?;
-
-                            if(context.mounted && inputPrice != null){
-                              final String? selectedPaymentMethod = await selectPaymentMethodDialog(context: context, amount: inputPrice);
-                              if(context.mounted && selectedPaymentMethod != null){
-                                final bool? processPayment = await processWalletFundingDialog(
-                                  context: context,
-                                  paymentMethod: inputPrice
-                                );
-                              }
-                            }
+                            );
                           }
 
-                          else if(item == ATStrings.TRSF){
+                          else if(item == ATStrings.transfer){
                             final String? recipientName = await context.pushNamed(ATRoutes.SELECT_RECIPIENT) as String?;
                             if(recipientName != null && context.mounted){
                               context.pushNamed(
-                                ATRoutes.PAPER_PLANE_SUCCESS,
+                                ATRoutes.paperPlaneSuccessScreen,
                                 extra: <String>[ATStrings.TRSF_SUCCESS, '${ATStrings.TRSF_SUCCESS_DESC}$recipientName']
                               );
                             }
                           }
                           
-                          else if(item == ATStrings.WITHDRAW){
+                          else if(item == ATStrings.withdraw){
                             final bool? result = await context.pushNamed(ATRoutes.WITHDRAWAL_LANDING) as bool?;
                             log(result.toString());
                           }
@@ -150,7 +145,7 @@ class AvailableBalanceWidget extends StatelessWidget {
                             Icon(icon, size: 15,),
                             Text(
                               item,
-                              style: Theme.of(context).textTheme.labelSmall,
+                              style: context.textTheme.labelSmall,
                             ),
                           ],
                         ),

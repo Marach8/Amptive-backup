@@ -1,6 +1,4 @@
 import 'package:amptive/src/global_export.dart';
-import 'package:amptive/src/views/widgets/common_widgets/custom_container_widget.dart';
-import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
@@ -44,7 +42,8 @@ class DotIndicatorRow extends StatelessWidget {
               final bool isLast = pageCntrl.page == 2;
               return ATContainer(
                 onTap: (){
-                  isLast ? context.pushNamed(ATRoutes.POST_ONBOARDING_SCREEN) : pageCntrl.animateToPage(
+                  isLast ? context.pushNamed(ATRoutes.POST_ONBOARDING_SCREEN) 
+                  : pageCntrl.animateToPage(
                     2, duration: const Duration(seconds: 1),
                     curve: Curves.decelerate
                   );

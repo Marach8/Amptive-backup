@@ -3,14 +3,14 @@ import 'package:amptive/src/config/utils/font_sizes.dart';
 import 'package:amptive/src/config/utils/other_strings.dart';
 import 'package:amptive/src/config/utils/extensions/string_extensions.dart';
 import 'package:amptive/src/views/widgets/common_widgets/circular_image.dart';
-import 'package:amptive/src/views/widgets/common_widgets/dismiss_modal.dart';
+import 'package:amptive/src/views/widgets/common_widgets/modal_dismisser.dart';
 import 'package:amptive/src/shared/elevated_button_widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/radio_button.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:amptive/src/views/widgets/common_widgets/custom_container_widget.dart';
+import 'package:amptive/src/shared/custom_container_widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/divider_widget.dart';
 
 
@@ -29,7 +29,7 @@ Future<(int?, bool)?> viewCoHostInviteDetails({
       child: Builder(
         builder: (BuildContext blocContext) {
           return Container(
-            padding: const EdgeInsets.fromLTRB(15, 5, 15, 10),
+            padding: const EdgeInsets.fromLTRB(15, 5, 15, 50),
             decoration: BoxDecoration(
               color: ATColors.hex202020,
               borderRadius: const BorderRadius.only(
@@ -109,7 +109,7 @@ Future<(int?, bool)?> viewCoHostInviteDetails({
                 Align(
                   alignment: Alignment.centerLeft,
                   child: Material(
-                    color: ATColors.trsprnt,
+                    color: ATColors.transparent,
                     child: InkWell(
                       borderRadius: BorderRadius.circular(5),
                       onTap: () => blocContext.read<_PrivatBloc>().rememberChoice(),
@@ -127,7 +127,7 @@ Future<(int?, bool)?> viewCoHostInviteDetails({
                                   fit: BoxFit.cover,
                                   child: Icon(
                                     CupertinoIcons.check_mark,
-                                    color: state ? ATColors.successColor : ATColors.trsprnt
+                                    color: state ? ATColors.successColor : ATColors.transparent
                                   ),
                                 ),
                               );
@@ -137,7 +137,7 @@ Future<(int?, bool)?> viewCoHostInviteDetails({
                           Text(
                             ATStrings.REMEMBER_CHOICE_4_HOST, maxLines: 2,
                             style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                              fontSize: ATFontSizes.size11
+                              fontSize: ATSizes.size11
                             )
                           ),
                         ],
@@ -223,13 +223,13 @@ class _PrivateWidget extends StatelessWidget {
                     Text(
                       title,
                       style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                        fontSize: ATFontSizes.size15
+                        fontSize: ATSizes.size15
                       ),
                     ),
                     if(subtitle != null)Text(
                       subtitle!, maxLines: 3,
                       style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                        fontSize: ATFontSizes.size13
+                        fontSize: ATSizes.size13
                       ),
                     ),
                   ],
@@ -255,7 +255,7 @@ class _PrivateWidget extends StatelessWidget {
                   child: Text(
                     onTapTitle ?? '',
                     style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                      fontSize: ATFontSizes.size12,
+                      fontSize: ATSizes.size12,
                       color: ATColors.white.withValues(alpha: 0.7)
                     ),
                   ),
@@ -265,7 +265,7 @@ class _PrivateWidget extends StatelessWidget {
                   child: Text(
                     'N$amount', maxLines: 2,
                     style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                      fontSize: ATFontSizes.size14
+                      fontSize: ATSizes.size14
                     )
                   ),
                 ),

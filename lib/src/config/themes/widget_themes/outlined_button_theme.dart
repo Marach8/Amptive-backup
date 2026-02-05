@@ -13,13 +13,13 @@ class AmptiveOutlinedButtonTheme{
     style: OutlinedButton.styleFrom(
       elevation: 0,
       foregroundColor: ATColors.white,
-      backgroundColor: ATColors.trsprnt,
+      backgroundColor: ATColors.transparent,
       disabledForegroundColor: ATColors.hex5B5B5B,
-      disabledBackgroundColor: ATColors.trsprnt,
+      disabledBackgroundColor: ATColors.transparent,
       side: BorderSide(color: ATColors.white, width: 0.5),
       textStyle: TextStyle(
         fontFamily: ATStrings.inter,
-        fontSize: ATFontSizes.size16,
+        fontSize: ATSizes.size16,
         fontWeight: ATFontWeights.w600
       ),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(40).r)

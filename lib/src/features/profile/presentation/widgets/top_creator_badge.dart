@@ -1,6 +1,6 @@
 import 'package:amptive/src/config/utils/other_strings.dart';
-import 'package:amptive/src/config/utils/dialogs/profile/show_top_creator_societies.dart';
-import 'package:amptive/src/views/widgets/common_widgets/custom_container_widget.dart';
+import 'package:amptive/src/features/profile/presentation/widgets/top_creators_communities_modal.dart';
+import 'package:amptive/src/shared/custom_container_widget.dart';
 import 'package:amptive/src/config/utils/colors.dart';
 import 'package:amptive/src/config/utils/font_sizes.dart';
 import 'package:flutter/material.dart';
@@ -17,17 +17,17 @@ class TopCreatorBadge extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ATContainer(
-      onTap: () => showTopCreatorSocietiesDialog(context),
-      border: Border.all(color: ATColors.hexC2C2C2.withOpacity(0.23)),
+      onTap: () => showTopCreationCommunitiesModal(context),
+      border: Border.all(color: ATColors.hexC2C2C2.withValues(alpha:0.23)),
       radius: 20,
       padding: const EdgeInsets.fromLTRB(10, 5, 10, 5),
       gradient: LinearGradient(
         begin: Alignment.topCenter,
         end: Alignment.bottomCenter,
         colors: <Color>[
-          ATColors.white.withOpacity(0.1),
-          ATColors.hex303030.withOpacity(0.1),
-          ATColors.white.withOpacity(0.1),
+          ATColors.white.withValues(alpha:0.1),
+          ATColors.hex303030.withValues(alpha:0.1),
+          ATColors.white.withValues(alpha:0.1),
         ]
       ),
       child: Row(
@@ -39,7 +39,7 @@ class TopCreatorBadge extends StatelessWidget {
             ATStrings.TOP_CREATORS_IN_SOCIETY,
             style: Theme.of(context).textTheme.bodySmall?.copyWith(
               color: ATColors.hexEECEA0,
-              fontSize: ATFontSizes.size13
+              fontSize: ATSizes.size13
             ),
           ),
         ],

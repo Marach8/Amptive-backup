@@ -1,17 +1,16 @@
-import 'package:amptive/src/features/discover/presentation/views/discover_landing_screen.dart';
-import 'package:amptive/src/shared/animated_slide.dart';
 import 'package:amptive/src/views/widgets/common_widgets/annotated_region__widget.dart';
-import 'package:amptive/src/views/widgets/other_widgets/main_application_widgets/dashboard_nav_bar_widget.dart';
+import 'package:amptive/src/features/main_app_nav_bar.dart';
 import 'package:amptive/src/features/home/presentation/views/home_landing_screen.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import '../global_export.dart';
 import '../services/go_live_service/go_live_service.dart';
 import 'go_live/go_live_export.dart';
-import 'notifications/presentation/views/notif_landing_screen.dart';
+import 'notifications/presentation/screens/notif_landing_screen.dart';
 
 
 enum GoLiveUserType{audience, cohost, host}
-class GoLiveScreen extends StatelessWidget {
+class GoLiveScreen extends StatefulWidget {
   const GoLiveScreen({
     super.key,
     required this.userType
@@ -20,8 +19,24 @@ class GoLiveScreen extends StatelessWidget {
   final GoLiveUserType userType;
 
   @override
+  State<GoLiveScreen> createState() => _GoLiveScreenState();
+}
+
+class _GoLiveScreenState extends State<GoLiveScreen> {
+  @override 
+  void initState(){
+    super.initState();
+    // SystemChrome.setEnabledSystemUIMode(
+    //   SystemUiMode.manual,
+    //   overlays: <SystemUiOverlay>[SystemUiOverlay.top],
+    // );
+    SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
+  }
+
+
+  @override
   Widget build(BuildContext context) {
-    return switch(userType){
+    return switch(widget.userType){
       GoLiveUserType.audience => LiveProgramAudienceView(goLiveHost: getHostList().first),
       GoLiveUserType.cohost => const LiveProgramCohostView(),
       GoLiveUserType.host => LiveProgramHostView(goLiveHost: getHostList().first),
@@ -30,69 +45,39 @@ class GoLiveScreen extends StatelessWidget {
 }
 
 
+
+
 class ATMainAppShell extends StatelessWidget {
   const ATMainAppShell({super.key});
 
   @override
   Widget build(BuildContext context) {
     return ATAnnotatedRegion(
-      child: Scaffold(
-        body: BlocSelector<ATNavBarBloc, (int, bool), int>(
-          selector: ((int, bool) st) => st.$1,
-          builder: (_, int index) {
-            return IndexedStack(
-              index: index,
-              children: const <Widget>[
-                ATHomeScreen(),
-                ATDiscoverScreen(),
-                SizedBox.shrink(),
-                ATNotificationScreen()
-              ]
-            );
-          }
+      child: SafeArea(
+        bottom: false, top: false,
+        child: Scaffold(
+          body: BlocSelector<ATNavBarBloc, (int, bool), int>(
+            selector: ((int, bool) st) => st.$1,
+            builder: (_, int index) {
+              return IndexedStack(
+                index: index,
+                children: const <Widget>[
+                  HomeTabView(),
+                  DiscoverTabView(),
+                  SizedBox(),
+                  NotificationTabView()
+                ]
+              );
+            }
+          ),
+          
+          resizeToAvoidBottomInset: false,
+          backgroundColor: ATColors.transparent,
+          
+        
+          bottomSheet: const MainAppBottomNav()
         ),
-        resizeToAvoidBottomInset: false,
-
-        bottomSheet: BlocBuilder<ATNavBarBloc, (int, bool)>(
-          builder: (_, (int, bool) state) {
-            return ATAnimatedSlide(
-              condition: state.$2,
-              startOffset: const Offset(0, 1.5),
-              endOffset: const Offset(0, 0),
-              child: const MainAppBottomNav()
-            );
-          },
-        )
       ),
     );
-  }
-}
-
-
-class ATNavBarBloc extends Cubit<(int, bool)>{
-  ATNavBarBloc(): super((0, true));
-
-  bool ctrlNavVisibility(ScrollNotification notif){
-    if (notif is ScrollUpdateNotification) {
-      if (notif.dragDetails != null) {
-
-        if (notif.dragDetails!.delta.dy > 0) {
-          emit((state.$1, true));
-        } 
-        else if (notif.dragDetails!.delta.dy < 0) {
-          emit((state.$1, false));
-        }
-      } 
-    }
-
-    return true;
-  }
-  void goToPage(int index){
-    if(index == 2){
-      emit((index, false));
-    }
-    else{
-      emit((index, state.$2));
-    }
   }
 }

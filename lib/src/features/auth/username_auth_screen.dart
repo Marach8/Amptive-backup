@@ -64,7 +64,7 @@ class _AddUsernameScreenState extends State<AddUsernameScreen> {
                   Text(
                     ATStrings.whatShouldWeCallYou,
                     style: Theme.of(context).textTheme.headlineMedium?.copyWith(
-                          fontSize: ATFontSizes.size17,
+                          fontSize: ATSizes.size17,
                         ),
                   ),
                   SizedBox(
@@ -147,7 +147,7 @@ class _AddUsernameScreenState extends State<AddUsernameScreen> {
                         border: OutlineInputBorder(
                           borderSide: BorderSide(
                             width: 2.w,
-                            color: ATColors.trsprnt,
+                            color: ATColors.transparent,
                           ),
                           borderRadius: BorderRadius.circular(14.r),
                         ),

@@ -17,7 +17,6 @@ import '../../bloc/authentication/email/email_auth_bloc.dart';
 import '../../bloc/authentication/email/email_auth_events.dart';
 import '../../config/routing/route_strings.dart';
 import '../../views/widgets/common_widgets/app_bar_widget.dart';
-import '../../views/widgets/common_widgets/common_widgets.dart';
 
 class ATEmailAuthScreen extends StatefulWidget {
   const ATEmailAuthScreen({super.key, this.title});
@@ -85,16 +84,16 @@ class _ATEmailAuthScreenState extends State<ATEmailAuthScreen> {
                     },
                     decoration: InputDecoration(
                       contentPadding: const EdgeInsets.fromLTRB(16, 12, 16, 12),
-                      hintText: ATStrings.enterYourEmail,
+                      hintText: ATStrings.ENTER_UR_EMAIL,
                       hintStyle: TextStyle(
-                        fontSize: ATFontSizes.size16,
+                        fontSize: ATSizes.size16,
                         color: ATColors.hexB6B6B6,
                         fontWeight: ATFontWeights.w400,
                       ),
                       errorText: service.email.error,
                       errorStyle: TextStyle(
                         color: ATColors.textRedColor,
-                        fontSize: ATFontSizes.size12,
+                        fontSize: ATSizes.size12,
                         fontWeight: ATFontWeights.w400,
                       ),
                       filled: true,
@@ -111,7 +110,7 @@ class _ATEmailAuthScreenState extends State<ATEmailAuthScreen> {
                       border: OutlineInputBorder(
                         borderSide: BorderSide(
                           width: 2,
-                          color: ATColors.trsprnt,
+                          color: ATColors.transparent,
                         ),
                         borderRadius: BorderRadius.circular(14),
                       ),

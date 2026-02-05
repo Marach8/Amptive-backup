@@ -1,7 +1,9 @@
 import 'dart:io';
 import 'package:amptive/src/config/routing/routing_export.dart';
+import 'package:amptive/src/features/accounts/presentation/screens/update_email_screen.dart';
+import 'package:amptive/src/features/accounts/presentation/screens/update_phone_no_screen.dart';
 import 'package:amptive/src/features/auth/phone_auth_screen.dart';
-import 'package:amptive/src/features/post_auth/presentation/views/anim_experiment.dart';
+import 'package:amptive/src/features/auth/temp_login_screen.dart';
 import 'package:amptive/src/config/utils/extensions/string_extensions.dart';
 import 'package:amptive/src/features/auth/dob_screen.dart';
 import 'package:amptive/src/features/auth/email_auth_screen.dart';
@@ -11,15 +13,21 @@ import 'package:amptive/src/features/auth/password_auth_screen.dart';
 import 'package:amptive/src/features/auth/add_profile_pic.dart';
 import 'package:amptive/src/features/auth/auth_options_screen.dart';
 import 'package:amptive/src/features/auth/username_auth_screen.dart';
+import 'package:amptive/src/features/calender/presentation/screens/calender_landing_screen.dart';
 import 'package:amptive/src/features/discover/presentation/views/society_screen.dart';
 import 'package:amptive/src/features/discover/presentation/views/trending_hashtags_screen.dart';
 import 'package:amptive/src/features/home/home_export.dart';
 import 'package:amptive/src/features/main_app_shell.dart';
-import 'package:amptive/src/features/post_auth/presentation/views/new_file.dart';
 import 'package:amptive/src/features/post_auth/presentation/views/post_auth_prez_export.dart';
-import 'package:amptive/src/features/profile/presentation/views/profile_views_export.dart';
+import 'package:amptive/src/features/profile/presentation/screens/edit_bio_screen.dart';
+import 'package:amptive/src/features/profile/presentation/screens/edit_name_screen.dart';
+import 'package:amptive/src/features/profile/presentation/screens/edit_username_screen.dart';
+import 'package:amptive/src/features/profile/presentation/screens/profile_views_export.dart';
 import 'package:amptive/src/features/home/presentation/views/scheduled_screen.dart';
-import 'package:amptive/src/features/wallet/presentation/views/wallet_txns_screen.dart';
+import 'package:amptive/src/features/accounts/presentation/screens/account_info_screen.dart';
+import 'package:amptive/src/features/accounts/presentation/screens/acounts_landing_screen.dart';
+import 'package:amptive/src/features/switch_account/presentation/switch_acct/switch_acct_export.dart';
+import 'package:amptive/src/features/wallet/presentation/screens/wallet_transactions_history_screen.dart';
 import 'package:amptive/src/features/onboarding/presentation/views/onboarding_screen.dart';
 import 'package:amptive/src/features/onboarding/presentation/views/post_onboarding_screen.dart';
 import 'package:custom_image_crop/custom_image_crop.dart' show Ratio;
@@ -30,11 +38,15 @@ import '../../features/discover/presentation/views/community_home_screen.dart';
 import '../../features/discover/presentation/views/society_hashtag_screen.dart';
 import '../../features/discover/presentation/views/trending_society_screen.dart';
 import '../../features/go_live/go_live_export.dart';
+import '../../features/profile/presentation/screens/edit_profile_landing_screen.dart';
+import '../../features/profile/presentation/screens/edit_socials_screen.dart';
+import '../../features/accounts/presentation/screens/select_country_screen.dart';
 import '../../features/wallet/wallet_export.dart';
 
 // The route configuration.
 final GoRouter amptiveAppRouter = GoRouter(
   initialLocation: ATRoutes.MAIN_APP_SHELL.addSlash,
+  //redirect: tempRedirect,
   //initialLocation: ATRoutes.ONBOARDING_SCREEN.addSlash,
   routes: <RouteBase>[
     GoRoute(
@@ -61,8 +73,19 @@ final GoRouter amptiveAppRouter = GoRouter(
     GoRoute(
       name: ATRoutes.EMAIL_SCREEN,
       path: ATRoutes.EMAIL_SCREEN.addSlash,
-      builder: (_, GoRouterState state) => ATEmailAuthScreen(title: state.extra as String?)
+      pageBuilder: (_, GoRouterState st) => ATSlidingRouteTransition<void>(
+        child: ATEmailAuthScreen(title: st.extra as String?)
+      )
     ),
+    
+    GoRoute(
+      name: ATRoutes.TEMP_LOGIN_SCREEN,
+      path: ATRoutes.TEMP_LOGIN_SCREEN.addSlash,
+      pageBuilder: (_, GoRouterState st) => ATSlidingRouteTransition<void>(
+        child: const TempLoginScreen()
+      )
+    ),
+
     GoRoute(
       name: ATRoutes.OTP_SCREEN,
       path: ATRoutes.OTP_SCREEN.addSlash,
@@ -157,8 +180,8 @@ final GoRouter amptiveAppRouter = GoRouter(
           ),
           
           GoRoute(
-            name: ATRoutes.WALLET_LANDING,
-            path: ATRoutes.WALLET_LANDING.addSlash,
+            name: ATRoutes.WALLET_ONBOARDING,
+            path: ATRoutes.WALLET_ONBOARDING.addSlash,
             pageBuilder: (_, __) => ATSlidingRouteTransition<void>(
               child: const ATWalletOnboardScreen()
             ),
@@ -171,15 +194,15 @@ final GoRouter amptiveAppRouter = GoRouter(
                 ),
               ),
               GoRoute(
-                name: ATRoutes.SECURITY_QUEST,
-                path: ATRoutes.SECURITY_QUEST.addSlash,
+                name: ATRoutes.securityQuestionScreen,
+                path: ATRoutes.securityQuestionScreen.addSlash,
                 pageBuilder: (_, __) => ATSlidingRouteTransition<void>(
                   child: const ATSecurityQuestionScreen()
                 ),
               ),
               GoRoute(
-                name: ATRoutes.WALLET_CREATION_ANIM,
-                path: ATRoutes.WALLET_CREATION_ANIM.addSlash,
+                name: ATRoutes.walletCreationAnimationScreen,
+                path: ATRoutes.walletCreationAnimationScreen.addSlash,
                 pageBuilder: (_, __) => ATSlidingRouteTransition<void>(
                   child: const ATWalletCreationAnimScreen()
                 ),
@@ -188,14 +211,14 @@ final GoRouter amptiveAppRouter = GoRouter(
                 name: ATRoutes.WALLET,
                 path: ATRoutes.WALLET.addSlash,
                 pageBuilder: (_, __) => ATSlidingRouteTransition<void>(
-                  child: const ATWalletScreen(),
+                  child: const WalletLandingScreen(),
                 ),
                 routes: <RouteBase>[
                   GoRoute(
-                    name: ATRoutes.WALLET_TXNS,
-                    path: ATRoutes.WALLET_TXNS.addSlash,
+                    name: ATRoutes.walletTransactionsHistoryScreen,
+                    path: ATRoutes.walletTransactionsHistoryScreen.addSlash,
                     pageBuilder: (_, __) => ATSlidingRouteTransition<void>(
-                      child: const ATWalletTxnsScreen()
+                      child: const ATWalletTxnsHistoryScreen()
                     ),
                   ),
                   GoRoute(
@@ -206,11 +229,11 @@ final GoRouter amptiveAppRouter = GoRouter(
                     ),
                   ),
                   GoRoute(
-                    name: ATRoutes.ENTER_AMOUNT_2_TRSF,
-                    path: ATRoutes.ENTER_AMOUNT_2_TRSF.addSlash,
+                    name: ATRoutes.transactionAmountScreen,
+                    path: ATRoutes.transactionAmountScreen.addSlash,
                     pageBuilder: (_, GoRouterState state) => ATSlidingRouteTransition<void>(
-                      child: ATEnterAmountScreen(
-                        params: state.extra as EnterAmountScreenParams
+                      child: TransactionAmountScreen(
+                        params: state.extra as TransactionAmountScreenParams
                       )
                     ),
                   ),
@@ -236,21 +259,22 @@ final GoRouter amptiveAppRouter = GoRouter(
                     ),
                   ),
                   GoRoute(
-                    name: ATRoutes.PASS_SECURITY_QUEST,
-                    path: ATRoutes.PASS_SECURITY_QUEST.addSlash,
+                    name: ATRoutes.answerSecurityQuestionScreen,
+                    path: ATRoutes.answerSecurityQuestionScreen.addSlash,
                     pageBuilder: (_, GoRouterState state) => ATSlidingRouteTransition<void>(
-                      child: const ATPassSecurityQuestionScreen()
+                      child: const ATAnswerSecurityQuestionScreen()
                     ),
                   ),
                   GoRoute(
-                    name: ATRoutes.PAPER_PLANE_SUCCESS,
-                    path: ATRoutes.PAPER_PLANE_SUCCESS.addSlash,
+                    name: ATRoutes.paperPlaneSuccessScreen,
+                    path: ATRoutes.paperPlaneSuccessScreen.addSlash,
                     pageBuilder: (_, GoRouterState state){
-                      final List<String> params = state.extra as List<String>;
+                      final List<dynamic> params = state.extra as List<dynamic>;
                       return ATSlidingRouteTransition<void>(
                         child: ATPaperPlaneSuccessScreen(
-                          title: params.first,
-                          subtitle: params.last,
+                          title: params.first as String,
+                          transactionType: params[1] as TransactionType,
+                          subtitle: params.last as String,
                         )
                       );
                     },
@@ -426,7 +450,7 @@ final GoRouter amptiveAppRouter = GoRouter(
               GoRoute(
                 name: ATRoutes.CREATOR_SUCCESS,
                 path: ATRoutes.CREATOR_SUCCESS,
-                builder: (_, GoRouterState state) => const CreatorSuccessScreen()
+                builder: (_, GoRouterState state) => const CreatorOrBusinessSetupSuccessScreen()
               ),
             ]
           ),
@@ -439,7 +463,7 @@ final GoRouter amptiveAppRouter = GoRouter(
               GoRoute(
                 name: ATRoutes.CALENDER_SCREEN,
                 path: ATRoutes.CALENDER_SCREEN,
-                builder: (_, __) => const ATCalenderScreen(),
+                builder: (_, __) => const ATCalenderLandingScreen(),
               ),
 
               GoRoute(
@@ -451,12 +475,12 @@ final GoRouter amptiveAppRouter = GoRouter(
               GoRoute(
                 name: ATRoutes.PRIVACY_SCREEN,
                 path: ATRoutes.PRIVACY_SCREEN,
-                builder: (_, __) => const AmptivePrivacyScreen(),
+                builder: (_, __) => const ATPrivacyScreen(),
                 routes: <RouteBase>[
                   GoRoute(
                     name: ATRoutes.BLOCKED_ACCTS_SCREEN,
                     path: ATRoutes.BLOCKED_ACCTS_SCREEN,
-                    builder: (_, __) => const AmptiveBlockedAcctsScreen(),
+                    builder: (_, __) => const ATBlockedAcctsScreen(),
                   ),
 
                   GoRoute(
@@ -470,13 +494,13 @@ final GoRouter amptiveAppRouter = GoRouter(
           ),
 
           GoRoute(
-            name: ATRoutes.ACCT_SCREEN,
-            path: ATRoutes.ACCT_SCREEN,
-            builder: (_, __) => const ATAccountScreen(),
+            name: ATRoutes.accountLandingScreen,
+            path: ATRoutes.accountLandingScreen.addSlash,
+            builder: (_, __) => const ATAccountLandingScreen(),
             routes: <RouteBase>[
               GoRoute(
                 name: ATRoutes.ACCT_INFO_SCREEN,
-                path: ATRoutes.ACCT_INFO_SCREEN,
+                path: ATRoutes.ACCT_INFO_SCREEN.addSlash,
                 builder: (_, GoRouterState state){
                   final List<String?>? params = state.extra as List<String?>?;
                   final String? email = params?.first;
@@ -503,6 +527,21 @@ final GoRouter amptiveAppRouter = GoRouter(
                     selectedCountry: selectedCountry,
                   );
                 }
+              ),
+
+              GoRoute(
+                name: ATRoutes.updateEmailScreen,
+                path: ATRoutes.updateEmailScreen.addSlash,
+                pageBuilder: (_, GoRouterState state) => ATSlidingRouteTransition<void>(
+                  child: UpdateEmailScreen(title: state.extra as String,),
+                ),
+              ),
+              GoRoute(
+                name: ATRoutes.updatePhoneNoScreen,
+                path: ATRoutes.updatePhoneNoScreen.addSlash,
+                pageBuilder: (_, GoRouterState state) => ATSlidingRouteTransition<void>(
+                  child: UpdatePhoneNoScreen(title: state.extra as String,),
+                ),
               ),
             ]
           ),
@@ -531,7 +570,7 @@ final GoRouter amptiveAppRouter = GoRouter(
           GoRoute(
             name: ATRoutes.PROFILE_SUBSCRIBERS_SCREEN,
             path: ATRoutes.PROFILE_SUBSCRIBERS_SCREEN,
-            builder: (_, __) => const AmptiveProfileSubScribersScreen(),
+            builder: (_, __) => const ProfileSubscribersScreen(),
           ),
 
           GoRoute(

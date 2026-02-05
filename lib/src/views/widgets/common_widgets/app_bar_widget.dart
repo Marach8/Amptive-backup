@@ -1,4 +1,5 @@
 import 'package:amptive/src/config/utils/colors.dart';
+import 'package:amptive/src/config/utils/extensions/context_extensions.dart';
 import 'package:amptive/src/views/widgets/common_widgets/back_button.dart';
 import 'package:flutter/material.dart';
 
@@ -39,7 +40,7 @@ class ATAppBar extends StatelessWidget implements PreferredSizeWidget {
         leading: leading,
         title: title ?? Text(
           titleText ?? '',
-          style: titleStyle ?? Theme.of(context).textTheme.bodyMedium
+          style: titleStyle ?? context.textTheme.bodyMedium
         ),
         leadingWidth: leadingWidth,
         actions: actions,
@@ -49,7 +50,10 @@ class ATAppBar extends StatelessWidget implements PreferredSizeWidget {
   }
 
   @override
-  Size get preferredSize => const Size.fromHeight(kToolbarHeight);
+  Size get preferredSize {
+    final double bottomHeight = bottom?.preferredSize.height ?? 0.0;
+    return Size.fromHeight(kToolbarHeight + bottomHeight);
+  }
 }
 
 
@@ -93,7 +97,7 @@ class ATSliverAppBar extends StatelessWidget{
       ),
       title: title ?? Text(
         titleText ?? '',
-        style: titleStyle ?? Theme.of(context).textTheme.bodyMedium
+        style: titleStyle ?? context.textTheme.bodyMedium
       ),
       leadingWidth: leadingWidth,
       actions: actions,

@@ -8,7 +8,7 @@ class ShowOrEventIndicatorWithTitle extends StatelessWidget {
   const ShowOrEventIndicatorWithTitle({
     super.key,
     this.title = 'We Can Do Hard Things',
-    this.eventOrShowImgPath = ATImgStrings.SHOW_ICON,
+    this.eventOrShowImgPath = ATImgStrings.showIcon,
     this.leading,
   });
 
@@ -25,7 +25,7 @@ class ShowOrEventIndicatorWithTitle extends StatelessWidget {
         Text(
           title,
           style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-            fontSize: ATFontSizes.size15,
+            fontSize: ATSizes.size15,
             color: ATColors.dimWhiteColor1
           ),
         ),

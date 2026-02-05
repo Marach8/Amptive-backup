@@ -1,12 +1,11 @@
 import 'dart:io';
 import 'package:amptive/src/config/utils/colors.dart';
 import 'package:amptive/src/config/utils/image_strings.dart';
-import 'package:amptive/src/views/widgets/common_widgets/custom_container_widget.dart';
+import 'package:amptive/src/shared/custom_container_widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/image_loader_widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/textformfield_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:gap/gap.dart';
 import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
 import '../../../services/create_show/create_show_service.dart';
@@ -55,12 +54,12 @@ Future<void> showEventPaymentFeeDialog({
                           ),
                   ),
                 ),
-                const Gap(5),
+                const SizedBox(height: 5),
                 const Align(
                     alignment: Alignment.center,
                     child: ATImgLoader(
                         imgPath: ATImgStrings.PADLOCK)),
-                const Gap(10),
+                const SizedBox(height: 10),
                 Align(
                   alignment: Alignment.center,
                   child: Text(
@@ -68,7 +67,7 @@ Future<void> showEventPaymentFeeDialog({
                     style: Theme.of(context).textTheme.bodyLarge,
                   ),
                 ),
-                const Gap(20),
+                const SizedBox(height: 20),
                 Text(
                   maxLines: 5,
                   ATStrings.AMOUNT_2_CHARGE_4_EVENT,
@@ -77,7 +76,7 @@ Future<void> showEventPaymentFeeDialog({
                       .titleMedium
                       ?.copyWith(color: ATColors.hexC2C2C2),
                 ),
-                const Gap(20),
+                const SizedBox(height: 20),
                 Form(
                   key: formKey,
                   child: ATTextFormField(

@@ -1,4 +1,3 @@
-import 'package:amptive/src/config/config_export.dart';
 import 'package:amptive/src/features/post_auth/presentation/widgets/notification_card_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

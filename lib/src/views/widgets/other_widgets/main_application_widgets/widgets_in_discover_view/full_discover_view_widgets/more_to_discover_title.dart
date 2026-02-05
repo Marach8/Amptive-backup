@@ -22,7 +22,7 @@ class AmptiveMore2DiscoverTitle extends StatelessWidget {
             Text(
               ATStrings.SEE_COMMUNITIES,
               style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                fontSize: ATFontSizes.size13,
+                fontSize: ATSizes.size13,
                 color: ATColors.hexCDCDCD
               ),
             ),

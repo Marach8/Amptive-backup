@@ -1,17 +1,14 @@
 import 'package:amptive/src/config/utils/colors.dart';
+import 'package:amptive/src/config/utils/extensions/context_extensions.dart';
 import 'package:amptive/src/config/utils/font_sizes.dart';
 import 'package:amptive/src/config/utils/image_strings.dart';
 import 'package:amptive/src/config/utils/other_strings.dart';
 import 'package:amptive/src/views/widgets/common_widgets/image_loader_widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/spotlight_beam.dart';
 import 'package:flutter/material.dart';
-
-
-
 import 'package:amptive/src/config/utils/helper_functions.dart';
 import 'package:amptive/src/views/widgets/common_widgets/back_button.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
 import '../../bloc/wallet_bloc_export.dart';
 
 
@@ -65,18 +62,18 @@ class WalletCretionSuccess extends StatelessWidget {
           child: Text(
             ATStrings.WALLET_CREATED,
             maxLines: 2, textAlign: TextAlign.center,
-            style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-              fontSize: ATFontSizes.size24
+            style: context.textTheme.bodyLarge?.copyWith(
+              fontSize: ATSizes.size24, height: 1
             ),
           ),
         ),
-        const SizedBox(height: 5),
+        const SizedBox(height: 15),
         Padding(
           padding: const EdgeInsets.fromLTRB(15, 0, 15, 0),
           child: Text(
             ATStrings.RECEIVE_EARNINGS_WITH_WALLET,
             maxLines: 2, textAlign: TextAlign.center,
-            style: Theme.of(context).textTheme.bodySmall?.copyWith(
+            style: context.textTheme.bodySmall?.copyWith(
               color: ATColors.hexC2C2C2
             )
           ),

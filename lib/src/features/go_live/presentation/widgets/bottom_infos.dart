@@ -7,7 +7,7 @@ import 'package:amptive/src/views/widgets/common_widgets/rich_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../../views/widgets/common_widgets/custom_container_widget.dart';
+import '../../../../shared/custom_container_widget.dart';
 
 class AutoplayCountdownWidget extends StatelessWidget {
   const AutoplayCountdownWidget({
@@ -78,7 +78,7 @@ class IsGoingLiveInfo extends StatelessWidget {
         final bool showInfo = state == OnboardStage.isGoingLive;
 
         return ATAnimatedSlide(
-          condition: showInfo, duration: 800,
+          shouldSlide: showInfo, duration: 800,
           endOffset: const Offset(0, 0),
           startOffset: const Offset(0, 1.5),
           child: ATContainer(

@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import '../../../../config/utils/colors.dart';
 import '../../../../config/utils/font_sizes.dart';
 import '../../../../views/widgets/common_widgets/circle_avatar.dart';
-import '../../../../views/widgets/common_widgets/custom_container_widget.dart';
+import '../../../../shared/custom_container_widget.dart';
 import '../../../../views/widgets/common_widgets/image_loader_widget.dart';
 
 class TrendingTechnologyWidget extends StatelessWidget {
@@ -51,7 +51,7 @@ class TrendingTechnologyWidget extends StatelessWidget {
                 child: Text(
                   'glendonnor',
                   style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                    fontSize: ATFontSizes.size13,
+                    fontSize: ATSizes.size13,
                     color: ATColors.hexCDCDCD
                   ),
                 ),
