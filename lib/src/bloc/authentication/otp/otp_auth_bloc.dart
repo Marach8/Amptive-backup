@@ -51,7 +51,7 @@ class AmptiveOTPAuthBloc extends Bloc<AmptiveOTPAuthEvent, AmptiveOTPAuthState> 
 
     });
 
-    on<ValidOTPAuthEvent>((_, emit){
+    on<ValidOTPAuthEvent>((_, Emitter<AmptiveOTPAuthState> emit){
       emit(VerifiedOTPAuthState());
     });
   }

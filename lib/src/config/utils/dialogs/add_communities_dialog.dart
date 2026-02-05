@@ -1,9 +1,8 @@
 import 'package:amptive/src/global_export.dart';
 import 'package:amptive/src/models/community.dart';
-import 'package:amptive/src/views/widgets/common_widgets/dismiss_modal.dart';
+import 'package:amptive/src/views/widgets/common_widgets/modal_dismisser.dart';
 import 'package:amptive/src/views/widgets/common_widgets/image_loader_widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/rich_text.dart';
-import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
 import '../../../services/create_show/create_show_service.dart';
@@ -58,7 +57,6 @@ Future<Community?> showCommunitiesDialog(BuildContext context) async {
                   child: LayoutBuilder(
                     builder: (_, BoxConstraints kst) {
                       return ATScrollBar(
-                        scrollController: scrollController,
                         child: ListView.builder(
                           controller: scrollController,
                           itemCount: communities.length,
@@ -80,7 +78,7 @@ Future<Community?> showCommunitiesDialog(BuildContext context) async {
                                       child: Text(
                                         com.name!,
                                         style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                                          fontSize: ATFontSizes.size15
+                                          fontSize: ATSizes.size15
                                         ),
                                       ),
                                     )

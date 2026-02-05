@@ -2,7 +2,6 @@ import 'package:amptive/src/features/discover/presentation/widgets/follow_unfoll
 import 'package:amptive/src/features/discover/presentation/widgets/horizontal_scroll_cards.dart';
 import 'package:amptive/src/config/routing/route_strings.dart';
 import 'package:flutter/material.dart';
-import 'package:gap/gap.dart';
 import 'package:go_router/go_router.dart';
 import '../../../../config/utils/colors.dart';
 import '../../../../config/utils/image_strings.dart';
@@ -15,7 +14,7 @@ import '../widgets/hastags_subtitle_row.dart';
 import '../widgets/trending_technology_widget.dart';
 import '../widgets/top_creator_widget.dart';
 import '../widgets/render_trending_hashtag.dart';
-import 'package:amptive/src/views/widgets/common_widgets/custom_container_widget.dart';
+import 'package:amptive/src/shared/custom_container_widget.dart';
 
 class MainDiscoverView extends StatelessWidget {
   const MainDiscoverView({super.key});
@@ -272,7 +271,7 @@ class MainDiscoverView extends StatelessWidget {
             ),
           ),
         ),
-        const Gap(100)
+        const SizedBox(height: 100)
       ],
     );
   }

@@ -11,6 +11,7 @@ class ATFilterWidget<B extends BlocBase<String>> extends StatelessWidget{
     this.padLeft,
     this.padRight,
   });
+  
   final String title;
   final TextStyle? style;
   final String? padLeft, padRight;

@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:gap/gap.dart';
 import '../../../../config/utils/colors.dart';
 import '../../../../config/utils/font_sizes.dart';
 import '../../../../views/widgets/common_widgets/circle_avatar.dart';
-import '../../../../views/widgets/common_widgets/custom_container_widget.dart';
+import '../../../../shared/custom_container_widget.dart';
 import '../../../../views/widgets/common_widgets/image_loader_widget.dart';
 
 class RenderTrendingHashTag extends StatelessWidget {
@@ -50,13 +49,13 @@ class RenderTrendingHashTag extends StatelessWidget {
                 child: Text(
                   'glendonnoyle',
                   style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                    fontSize: ATFontSizes.size13,
+                    fontSize: ATSizes.size13,
                     color: ATColors.hexA8A8A8,
                   ),
                 ),
               ),
-              const Gap(5),
-              
+              const SizedBox(width: 5),
+
               Align(
                 alignment: Alignment.bottomCenter,
                 child: ATCircleAvatar(
@@ -64,7 +63,7 @@ class RenderTrendingHashTag extends StatelessWidget {
                   color: ATColors.hexA8A8A8,
                 ),
               ),
-              const Gap(5),
+              const SizedBox(width: 5),
               Text(
                 'LIVE',
                 style: Theme.of(context).textTheme.titleSmall?.copyWith(

@@ -1,19 +1,19 @@
 import 'package:amptive/src/config/utils/colors.dart';
 import 'package:amptive/src/config/utils/font_weights.dart';
-import 'package:amptive/src/views/widgets/common_widgets/custom_container_widget.dart';
+import 'package:amptive/src/shared/custom_container_widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/image_loader_widget.dart' show ATImgLoader;
 import 'package:flutter/material.dart';
 import '../../../config/utils/image_strings.dart';
 
-class ShowIcon extends StatelessWidget {
-  const ShowIcon({super.key, this.size});
+class ATShowIcon extends StatelessWidget {
+  const ATShowIcon({super.key, this.size});
   final double? size;
 
   @override
   Widget build(BuildContext context) {
     return ATImgLoader(
       height: size ?? 16, width: size ?? 16,
-      imgPath: ATImgStrings.SHOW_ICON,
+      imgPath: ATImgStrings.showIcon,
     );
   }
 }
@@ -27,20 +27,28 @@ class EventIcon extends StatelessWidget {
   Widget build(BuildContext context) {
     return ATImgLoader(
       height: size ?? 16, width: size ?? 16,
-      imgPath: ATImgStrings.SHOW_ICON,
+      imgPath: ATImgStrings.showIcon,
     );
   }
 }
 
 
-class PaidIndicatorIcon extends StatelessWidget {
-  const PaidIndicatorIcon({super.key, this.size});
-  final double? size;
+class ATPaidIndicatorIcon extends StatelessWidget {
+  const ATPaidIndicatorIcon({
+    super.key,
+    this.size,
+    this.color,
+    this.radius
+  });
+
+  final double? size, radius;
+  final Color? color;
+
 
   @override
   Widget build(BuildContext context) {
     return ATContainer(
-      color: ATColors.white, radius: 2,
+      color: color ?? ATColors.white, radius: radius ?? 2,
       height: size ?? 14, width: size ?? 14,
       child: FittedBox(
         fit: BoxFit.scaleDown,

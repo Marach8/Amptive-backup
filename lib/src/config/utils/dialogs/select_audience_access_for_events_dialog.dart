@@ -3,10 +3,9 @@ import 'package:amptive/src/config/utils/colors.dart';
 import 'package:amptive/src/config/utils/image_strings.dart';
 import 'package:amptive/src/config/utils/dialogs/event_payment_fee_dialog.dart';
 import 'package:amptive/src/config/utils/helper_functions.dart';
-import 'package:amptive/src/views/widgets/common_widgets/custom_container_widget.dart';
+import 'package:amptive/src/shared/custom_container_widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/image_loader_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:gap/gap.dart';
 import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
 import '../../../services/create_show/create_show_service.dart';
@@ -60,7 +59,7 @@ Future<void> showSelectAudienceAccessForEventsDialog(
                 style: Theme.of(context).textTheme.bodyLarge,
               ),
             ),
-            const Gap(20),
+            const SizedBox(height: 20),
             Text(
               maxLines: 5,
               ATStrings.EVENT_AUDIENCE_ACCESS_DESC,
@@ -69,7 +68,7 @@ Future<void> showSelectAudienceAccessForEventsDialog(
                   .titleMedium
                   ?.copyWith(color: ATColors.hexC2C2C2),
             ),
-            const Gap(20),
+            const SizedBox(height: 20),
             AmptiveRebuilderWidget(
                 notifier: freeAccesNotifier,
                 shouldDispose: true,
@@ -88,12 +87,12 @@ Future<void> showSelectAudienceAccessForEventsDialog(
                         width: 2,
                         color: value
                             ? ATColors.hex307FE2
-                            : ATColors.trsprnt),
+                            : ATColors.transparent),
                     child: Row(
                       children: <Widget>[
                         const ATImgLoader(
                             imgPath: ATImgStrings.PEOPLE),
-                        const Gap(10),
+                        const SizedBox(width: 10),
                         Expanded(
                           child: Column(
                             mainAxisSize: MainAxisSize.min,
@@ -114,7 +113,7 @@ Future<void> showSelectAudienceAccessForEventsDialog(
                             ],
                           ),
                         ),
-                        const Gap(15),
+                        const SizedBox(width: 15),
                         ATContainer(
                             height: 20,
                             width: 20,
@@ -122,7 +121,7 @@ Future<void> showSelectAudienceAccessForEventsDialog(
                             padding: const EdgeInsets.all(3),
                             color: value
                                 ? ATColors.hex307FE2
-                                : ATColors.trsprnt,
+                                : ATColors.transparent,
                             border: Border.all(
                                 color: value
                                     ? ATColors.hex307FE2
@@ -133,7 +132,7 @@ Future<void> showSelectAudienceAccessForEventsDialog(
                     ),
                   );
                 }),
-            const Gap(15),
+            const SizedBox(height: 15),
             AmptiveRebuilderWidget(
                 shouldDispose: true,
                 notifier: paidAccessNotifier,
@@ -152,7 +151,7 @@ Future<void> showSelectAudienceAccessForEventsDialog(
                         width: 2,
                         color: value
                             ? ATColors.hex307FE2
-                            : ATColors.trsprnt),
+                            : ATColors.transparent),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisSize: MainAxisSize.min,
@@ -161,7 +160,7 @@ Future<void> showSelectAudienceAccessForEventsDialog(
                           children: <Widget>[
                             const ATImgLoader(
                                 imgPath: ATImgStrings.PADLOCK),
-                            const Gap(10),
+                            const SizedBox(width: 10),
                             Expanded(
                               child: Column(
                                 mainAxisSize: MainAxisSize.min,
@@ -183,7 +182,7 @@ Future<void> showSelectAudienceAccessForEventsDialog(
                                 ],
                               ),
                             ),
-                            const Gap(15),
+                            const SizedBox(width: 15),
                             ATContainer(
                                 height: 20,
                                 width: 20,
@@ -191,7 +190,7 @@ Future<void> showSelectAudienceAccessForEventsDialog(
                                 padding: const EdgeInsets.all(3),
                                 color: value
                                     ? ATColors.hex307FE2
-                                    : ATColors.trsprnt,
+                                    : ATColors.transparent,
                                 border: Border.all(
                                     color: value
                                         ? ATColors.hex307FE2
@@ -200,9 +199,9 @@ Future<void> showSelectAudienceAccessForEventsDialog(
                                 child: const SizedBox.shrink())
                           ],
                         ),
-                        const Gap(15),
+                        const SizedBox(height: 15),
                         const Divider(height: 0.5),
-                        const Gap(15),
+                        const SizedBox(height: 15),
                         Row(
                           children: <Widget>[
                             ATContainer(
@@ -255,7 +254,7 @@ Future<void> showSelectAudienceAccessForEventsDialog(
                             Navigator.pop(context);
                           }
                         : null,
-                    buttonTitle: ATStrings.CONTINUE,
+                    buttonTitle: ATStrings.cContinue,
                     bgColor: ATColors.white,
                     fgColor: ATColors.black,
                   );

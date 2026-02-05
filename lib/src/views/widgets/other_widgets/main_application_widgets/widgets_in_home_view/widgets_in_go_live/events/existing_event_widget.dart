@@ -1,7 +1,6 @@
-import 'package:amptive/src/views/widgets/common_widgets/custom_container_widget.dart';
+import 'package:amptive/src/shared/custom_container_widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/custom_rebuilder_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:gap/gap.dart';
 import '../../../../../../../config/utils/colors.dart';
 import '../../../../../../../config/utils/font_sizes.dart';
 import '../../../../../common_widgets/circle_avatar.dart';
@@ -31,7 +30,7 @@ class AmptiveExistingEventWidget extends StatelessWidget {
           onTap: () => onTap(isSelected),
           radius: 5,
           border: Border.all(
-            color: isSelected ? ATColors.hex307FE2 : ATColors.trsprnt,
+            color: isSelected ? ATColors.hex307FE2 : ATColors.transparent,
             width: 3,
           ),
           child: Column(
@@ -49,7 +48,7 @@ class AmptiveExistingEventWidget extends StatelessWidget {
                   ),
                 ),
               ),
-              const Gap(5),
+              const SizedBox(height: 5),
               Text(
                 maxLines: 2,
                 "We Can Do Hard Things",
@@ -61,13 +60,13 @@ class AmptiveExistingEventWidget extends StatelessWidget {
                     child: Text(
                       'glendonnoyle',
                       style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                        fontSize: ATFontSizes.size13,
+                        fontSize: ATSizes.size13,
                         color: ATColors.hexA8A8A8,
                       ),
                     ),
                   ),
-                  const Gap(5),
-                  
+                  const SizedBox(width: 5),
+
                   Align(
                     alignment: Alignment.bottomCenter,
                     child: ATCircleAvatar(

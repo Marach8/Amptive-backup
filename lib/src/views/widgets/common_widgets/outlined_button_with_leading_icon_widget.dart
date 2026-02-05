@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:gap/gap.dart';
 
 class AmptiveOutlinedButtonWithLeadingIconWidget extends StatelessWidget {
 
@@ -26,7 +25,7 @@ class AmptiveOutlinedButtonWithLeadingIconWidget extends StatelessWidget {
         child: Row(
           children: <Widget>[
             leadingIcon,
-            Gap(50.w),
+            SizedBox(width: 50.w),
             Text(buttonTitle)
           ],
         ),

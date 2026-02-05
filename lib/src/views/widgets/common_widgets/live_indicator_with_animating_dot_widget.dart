@@ -5,7 +5,6 @@ import 'package:amptive/src/config/utils/other_strings.dart';
 import 'package:amptive/src/views/widgets/animation_widgets/other_animation_widgets/opacity_animation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:gap/gap.dart';
 
 class LiveWithAnimatingDot extends StatelessWidget {
   const LiveWithAnimatingDot({
@@ -37,11 +36,11 @@ class LiveWithAnimatingDot extends StatelessWidget {
               backgroundColor: ATColors.white,
             ),
           ),
-          Gap(4.w),
+          SizedBox(width: 4.w),
           Text(
             ATStrings.LIVE.toUpperCase(),
             style: Theme.of(context).textTheme.titleSmall?.copyWith(
-              fontSize: ATFontSizes.size14,
+              fontSize: ATSizes.size14,
               fontWeight: ATFontWeights.w600,
               height: 0,
             )

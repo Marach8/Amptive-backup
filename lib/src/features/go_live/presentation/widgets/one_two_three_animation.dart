@@ -1,5 +1,4 @@
 import 'package:amptive/src/global_export.dart';
-import 'package:flutter/material.dart';
 
 class OneTwoThreeCountDown extends StatelessWidget {
   const OneTwoThreeCountDown({

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../../../../../config/utils/colors.dart';
-import '../../../../../common_widgets/custom_container_widget.dart';
+import '../../../../../../../shared/custom_container_widget.dart';
 import '../../../../../common_widgets/custom_rebuilder_widget.dart';
 
 class AmptiveCreateShowSelectAudienceAccessWidget extends StatelessWidget {

@@ -1,7 +1,7 @@
 import 'package:amptive/src/config/utils/colors.dart';
 import 'package:amptive/src/config/utils/font_sizes.dart';
 import 'package:amptive/src/config/utils/other_strings.dart';
-import 'package:amptive/src/views/widgets/common_widgets/custom_container_widget.dart';
+import 'package:amptive/src/shared/custom_container_widget.dart';
 import 'package:flutter/material.dart';
 
 class CreatorOrBizBadge extends StatelessWidget {
@@ -26,7 +26,7 @@ class CreatorOrBizBadge extends StatelessWidget {
       child: Text(
         (isCreator ?? false ? ATStrings.CREATOR : ATStrings.BUSINESS).toUpperCase(),
         style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-          fontSize: ATFontSizes.size10,
+          fontSize: ATSizes.size10,
           color: ATColors.black
         ),
       ),

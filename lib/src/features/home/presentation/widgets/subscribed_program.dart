@@ -6,7 +6,7 @@ import 'package:amptive/src/config/utils/font_weights.dart';
 import 'package:amptive/src/config/utils/image_strings.dart';
 import 'package:amptive/src/config/utils/other_strings.dart';
 import 'package:amptive/src/config/utils/dialogs/options_dialog.dart';
-import 'package:amptive/src/views/widgets/common_widgets/custom_container_widget.dart';
+import 'package:amptive/src/shared/custom_container_widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/image_loader_widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/live_indicator_with_animating_dot_widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/list_tile_with_leading_picture_widget.dart';
@@ -44,10 +44,10 @@ class SubscribedProgram extends StatelessWidget {
                   begin: Alignment.topCenter,
                   end: Alignment.bottomCenter,
                   colors: <Color>[
-                    ATColors.trsprnt,
-                    ATColors.trsprnt,
-                    ATColors.trsprnt,
-                    ATColors.trsprnt,
+                    ATColors.transparent,
+                    ATColors.transparent,
+                    ATColors.transparent,
+                    ATColors.transparent,
                     ATColors.containerGradientColorB.withOpacity(0.5),
                     ATColors.containerGradientColorB,
                     ATColors.containerGradientColorB,
@@ -66,7 +66,7 @@ class SubscribedProgram extends StatelessWidget {
                       "Don't Forget Who You Are ft. Jacob Scipio",
                       overflow: TextOverflow.clip,
                       style: Theme.of(context).textTheme.displayMedium?.copyWith(
-                        fontSize: ATFontSizes.size24,
+                        fontSize: ATSizes.size24,
                         fontWeight: ATFontWeights.w600,
                       ),
                     ),
@@ -84,7 +84,7 @@ class SubscribedProgram extends StatelessWidget {
                         Text(
                           '656 listening',
                           style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                            fontSize: ATFontSizes.size13
+                            fontSize: ATSizes.size13
                           )
                         ),
                       ],
@@ -100,7 +100,7 @@ class SubscribedProgram extends StatelessWidget {
                             ATStrings.PAID_SHOW.toUpperCase(),
                             style: Theme.of(context).textTheme.titleSmall?.copyWith(
                               fontWeight: ATFontWeights.w500,
-                              fontSize: ATFontSizes.size10
+                              fontSize: ATSizes.size10
                             )
                           ),
                         ),

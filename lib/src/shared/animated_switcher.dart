@@ -13,8 +13,8 @@ class ATFadingSwitcher extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AnimatedSwitcher(
-      duration: Duration(milliseconds: duration ?? 1000),
-      reverseDuration: Duration(milliseconds: duration ?? 1000),
+      duration: Duration(milliseconds: duration ?? 500),
+      reverseDuration: Duration(milliseconds: duration ?? 500),
       switchInCurve: Curves.easeIn,
       switchOutCurve: Curves.easeIn,
       transitionBuilder: (Widget child, Animation<double> animation) {

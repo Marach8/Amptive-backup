@@ -41,13 +41,21 @@ class ATAuthOptionsScreen extends StatelessWidget {
               children: <Widget>[
                 ATPlainElevatedBtn(
                   btnTitle: (isSignUp ? ATStrings.signUpWith : ATStrings.signInWith) + ATStrings.EMAIL,
-                  onPressed: () => context.pushNamed(ATRoutes.EMAIL_SCREEN)
+                  onPressed: (){
+                    if(isSignUp){
+                      context.pushNamed(ATRoutes.EMAIL_SCREEN);
+                    }
+                    else{
+                      context.pushNamed(ATRoutes.TEMP_LOGIN_SCREEN);
+                    }
+                  }
                 ),
                 const SizedBox(height: 15,),
 
                 ATOutlinedBtn(
                   btnTitle: (isSignUp ? ATStrings.signUpWith : ATStrings.signInWith) + ATStrings.FONE_NO,
-                  onPressed: () => context.pushNamed(ATRoutes.ADD_FONE_NO_SCREEN)
+                  onPressed: (){},
+                  //onPressed: () => context.pushNamed(ATRoutes.ADD_FONE_NO_SCREEN)
                 ),
 
                 const SizedBox(height: 20),
@@ -76,7 +84,7 @@ class ATAuthOptionsScreen extends StatelessWidget {
 
                 _CustomBtn(
                   isSignUp: isSignUp, btnName: ATStrings.GOOGLE,
-                  leading: const ATImgLoader(imgPath: ATImgStrings.GOOGLE_ICON,),
+                  leading: const ATImgLoader(imgPath: ATImgStrings.googleIcon,),
                   onPressed: (){}
                 ),
                 const SizedBox(height: 15,),
@@ -86,7 +94,7 @@ class ATAuthOptionsScreen extends StatelessWidget {
                   leading: const Padding(
                     padding: EdgeInsets.only(left: 10),
                     child: ATImgLoader(
-                      imgPath: ATImgStrings.APPLE_ICON,
+                      imgPath: ATImgStrings.appleIcon,
                       height: 30, width: 30,
                     ),
                   ),

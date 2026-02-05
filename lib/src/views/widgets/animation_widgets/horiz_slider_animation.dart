@@ -28,8 +28,8 @@ with SingleTickerProviderStateMixin {
     )..repeat();
 
     sliderAnimation = Tween<Offset>(
-      begin: const Offset(2 , 0),
-      end: const Offset(-1.5, 0),
+      begin: const Offset(0.72, 0),
+      end: const Offset(-1.0, 0),
     ).animate(CurvedAnimation(
       parent: sliderController,
       curve: Curves.linear,
@@ -46,7 +46,11 @@ with SingleTickerProviderStateMixin {
   Widget build(BuildContext context) {
     return SlideTransition(
       position: sliderAnimation,
-      child: widget.child,
+      child: Container(
+        color: Colors.blue,
+        child: widget.child
+      ),
     );
   }
 }
+

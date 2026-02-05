@@ -3,15 +3,14 @@ import 'package:amptive/src/config/utils/font_sizes.dart';
 import 'package:amptive/src/config/utils/image_strings.dart';
 import 'package:amptive/src/config/utils/dialogs/app_notification_dialog.dart';
 import 'package:amptive/src/config/utils/helper_functions.dart';
-import 'package:amptive/src/features/main_app_shell.dart';
-import 'package:amptive/src/views/widgets/common_widgets/custom_container_widget.dart';
+import 'package:amptive/src/features/main_app_nav_bar.dart';
+import 'package:amptive/src/shared/custom_container_widget.dart';
 import 'package:amptive/src/shared/elevated_button_widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/image_loader_widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/loading_indicator.dart';
 import 'package:amptive/src/views/widgets/common_widgets/rich_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:gap/gap.dart';
 import 'package:go_router/go_router.dart';
 import '../../../../bloc/main_app/go_live_bloc/host_view/host_end_show_bloc.dart';
 import '../../other_strings.dart';
@@ -44,7 +43,7 @@ Future<void> showHostEndShowDialog({
                     const Duration(seconds: 2),
                     (){
                       if(context.mounted){
-                        context.read<ATNavBarBloc>().goToPage(0);                        
+                        context.read<ATNavBarBloc>().goToPage(0, context);                        
                         context.pop();
                         showAppNotification(
                           context: context,
@@ -140,7 +139,7 @@ Future<void> showHostEndShowDialog({
                         ATStrings.END_LIVE_SHOW,
                         maxLines: 2, textAlign: TextAlign.center,
                         style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                          fontSize: ATFontSizes.size23
+                          fontSize: ATSizes.size23
                         )
                       ),
                       if(showNoOfListeners || showNoOfGifters)ATRichText(
@@ -149,18 +148,18 @@ Future<void> showHostEndShowDialog({
                             color: ATColors.hexC2C2C2
                           ),
                           '144k listeners' : Theme.of(context).textTheme.bodyMedium!.copyWith(
-                            fontSize: ATFontSizes.size14
+                            fontSize: ATSizes.size14
                           ),
                         },
                       ),
-                      const Gap(10),
+                      const SizedBox(height: 10),
                       if(showNoOfGifters)ATRichText(
                         items: <String, TextStyle>{
                           'You received ': Theme.of(context).textTheme.bodySmall!.copyWith(
                             color: ATColors.hexC2C2C2
                           ),
                           '200 gifts': Theme.of(context).textTheme.bodyMedium!.copyWith(
-                            fontSize: ATFontSizes.size14
+                            fontSize: ATSizes.size14
                           ),
                         },
                       ),
@@ -210,17 +209,17 @@ Future<void> showHostEndShowDialog({
                           buttonTitle: ATStrings.END_NOW,
                         ),
                       ),
-                      const Gap(15),
+                      const SizedBox(height: 15),
                       GestureDetector(
                         onTap: () => context.pop(),
                         child: Text(
-                          ATStrings.CANCEL,
+                          ATStrings.cancel,
                           style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                            fontSize: ATFontSizes.size17
+                            fontSize: ATSizes.size17
                           )
                         ),
                       ),
-                      const Gap(15),
+                      const SizedBox(height: 15),
                     ],
                   ),
                 );

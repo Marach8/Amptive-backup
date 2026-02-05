@@ -1,5 +1,5 @@
 import 'package:amptive/src/config/utils/colors.dart';
-import 'package:amptive/src/views/widgets/common_widgets/custom_container_widget.dart';
+import 'package:amptive/src/shared/custom_container_widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/image_loader_widget.dart';
 import 'package:flutter/material.dart';
 import '../../../../config/utils/font_sizes.dart';
@@ -49,7 +49,7 @@ class ATScaleUpAndDownWidget extends StatelessWidget {
           Text(
             title,
             style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-              fontSize: ATFontSizes.size13
+              fontSize: ATSizes.size13
             ),
           ),
           const SizedBox(height: 5),

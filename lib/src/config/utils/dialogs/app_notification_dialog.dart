@@ -1,8 +1,7 @@
 import 'package:amptive/src/config/utils/colors.dart';
 import 'package:another_flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
-import 'package:gap/gap.dart';
-import '../../../views/widgets/common_widgets/custom_container_widget.dart';
+import '../../../shared/custom_container_widget.dart';
 
 
 Future<dynamic> showAppNotification({
@@ -13,7 +12,7 @@ Future<dynamic> showAppNotification({
   Color? bgColor
 }) async {
   return await Flushbar(
-    backgroundColor: ATColors.trsprnt,
+    backgroundColor: ATColors.transparent,
     flushbarPosition: FlushbarPosition.TOP,
     duration: Duration(seconds: duration ?? 5),
     messageText: Center(
@@ -24,7 +23,7 @@ Future<dynamic> showAppNotification({
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
             if(icon != null) icon,
-            if(icon != null) const Gap(10),
+            if(icon != null) const SizedBox(width: 10),
             Flexible(
               child: Text(
                 text, maxLines: 2,

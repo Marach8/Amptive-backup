@@ -1,3 +1,4 @@
+import 'package:amptive/src/config/utils/extensions/context_extensions.dart';
 import 'package:amptive/src/config/utils/font_sizes.dart';
 import 'package:amptive/src/config/utils/other_strings.dart';
 import 'package:amptive/src/config/routing/route_strings.dart';
@@ -7,7 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import '../../../../config/utils/colors.dart';
 import '../../../../views/widgets/common_widgets/back_button.dart';
-import '../../../../views/widgets/common_widgets/custom_container_widget.dart';
+import '../../../../shared/custom_container_widget.dart';
 import '../widgets/scheduled_program.dart';
 
 
@@ -30,9 +31,10 @@ class ATScheduledPrograms extends StatelessWidget {
                 leading: Padding(
                   padding: const EdgeInsets.only(left: 20),
                   child: ATBackBtn(
-                    leadingText: ATStrings.SCHEDULED,
-                    leadingStyle: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                      fontSize: ATFontSizes.size23
+                    alignment: Alignment.centerLeft,
+                    leadingText: ATStrings.scheduled,
+                    leadingStyle: context.textTheme.bodyMedium?.copyWith(
+                      fontSize: ATSizes.size23
                     ),
                   )
                 ),

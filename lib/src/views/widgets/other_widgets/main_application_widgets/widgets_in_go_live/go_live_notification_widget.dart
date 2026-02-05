@@ -1,13 +1,12 @@
 import 'package:amptive/src/models/host.dart';
 import 'package:amptive/src/config/utils/font_sizes.dart';
 import 'package:flutter/material.dart';
-import 'package:gap/gap.dart';
 import '../../../../../config/utils/other_strings.dart';
 import '../../../../../models/go_live_notification_model.dart';
 import '../../../../../config/utils/colors.dart';
 import '../../../../../config/utils/image_strings.dart';
 import '../../../common_widgets/circular_image.dart';
-import '../../../common_widgets/custom_container_widget.dart';
+import '../../../../../shared/custom_container_widget.dart';
 import '../../../common_widgets/image_loader_widget.dart';
 
 class AmptiveGoLiveNotificationsWidget extends StatelessWidget {
@@ -42,19 +41,19 @@ class AmptiveGoLiveNotificationsWidget extends StatelessWidget {
             diameter: 30,
             imagePath: user.profilePicture ?? ''
           ),
-          const Gap(5),
+          const SizedBox(width: 5),
           Text(
             user.name ?? '',
             style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-              fontSize: ATFontSizes.size12
+              fontSize: ATSizes.size12
             ),
           ),
-          const Gap(5),
+          const SizedBox(width: 5),
           Text(
             isGifting ? '${ATStrings.GIFTED} $giftedAmount' : ATStrings.IS_TALKING,
             style: Theme.of(context).textTheme.titleSmall,
           ),
-          const Gap(10),
+          const SizedBox(width: 10),
           ATImgLoader(
             imgPath: isTalking ? ATImgStrings.MIC_ICON
               : isGifting ? ATImgStrings.MONEY_ICON : ''
@@ -98,7 +97,7 @@ class AmptiveGoLivePinnedMsgNtfctnWidget extends StatelessWidget {
             diameter: 30,
             imagePath: user.profilePicture ?? ''
           ),
-          const Gap(10),
+          const SizedBox(width: 10),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -121,11 +120,11 @@ class AmptiveGoLivePinnedMsgNtfctnWidget extends StatelessWidget {
                       child: Text(
                         (role ?? '').toUpperCase(),
                         style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                          fontSize: ATFontSizes.size10
+                          fontSize: ATSizes.size10
                         )
                       ),
                     ),
-                    const Gap(5),
+                    const SizedBox(width: 5),
                     ATContainer(
                       color: ATColors.white.withOpacity(0.2),
                       padding: const EdgeInsets.all(2), radius: 4,
@@ -135,11 +134,11 @@ class AmptiveGoLivePinnedMsgNtfctnWidget extends StatelessWidget {
                             angle: 44.5,
                             child: const Icon(Icons.push_pin, size: 14)
                           ),
-                          const Gap(2),
+                          const SizedBox(width: 2),
                           Text(
                             ATStrings.PINNED.toUpperCase(),
                             style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                              fontSize: ATFontSizes.size10
+                              fontSize: ATSizes.size10
                             )
                           ),
                         ],
@@ -148,15 +147,15 @@ class AmptiveGoLivePinnedMsgNtfctnWidget extends StatelessWidget {
                     const Spacer()
                   ],
                 ),
-            
-                const Gap(5),
-            
+
+                const SizedBox(height: 5),
+
                 Row(
                   children: <Widget>[
                     Text(
                       '$msgTitle: ',
                       style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                        fontSize: ATFontSizes.size13
+                        fontSize: ATSizes.size13
                       ),
                     ),
                     Expanded(

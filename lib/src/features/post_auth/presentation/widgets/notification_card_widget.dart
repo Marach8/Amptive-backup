@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import '../../../../global_export.dart';
 import '../../../../views/widgets/common_widgets/image_loader_widget.dart';
 

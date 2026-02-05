@@ -1,6 +1,5 @@
 import 'dart:math';
 import 'package:amptive/src/global_export.dart';
-import 'package:flutter/material.dart';
 
 
 class PlayProgressIndicator extends StatefulWidget {

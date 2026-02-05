@@ -1,13 +1,10 @@
-import 'package:amptive/src/views/widgets/common_widgets/custom_container_widget.dart';
-import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:iconsax/iconsax.dart';
-import '../../../../shared/elevated_button_widget.dart';
 
 
 import 'package:amptive/src/views/widgets/common_widgets/radio_button.dart';
 import 'package:amptive/src/global_export.dart';
-import 'package:amptive/src/views/widgets/common_widgets/dismiss_modal.dart';
+import 'package:amptive/src/views/widgets/common_widgets/modal_dismisser.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 
@@ -91,7 +88,7 @@ Future<WhispersState?> controlWhispersModal({
                                 radius: 15, color: ATColors.hex2D2D2D,
                                 border: Border.all(
                                   width: 2,
-                                  color: whispersIsOn ? ATColors.hex307FE2 : ATColors.trsprnt
+                                  color: whispersIsOn ? ATColors.hex307FE2 : ATColors.transparent
                                 ),
                                 child: Row(
                                   children: <Widget>[
@@ -105,14 +102,14 @@ Future<WhispersState?> controlWhispersModal({
                                           Text(
                                             ATStrings.TURN_ON,
                                             style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                                              fontSize: ATFontSizes.size15
+                                              fontSize: ATSizes.size15
                                             )
                                           ),
                                           Text(
                                             maxLines: 5,
                                             ATStrings.WHISPERS_ENABLED,
                                             style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                                              color: ATColors.hexC2C2C2, fontSize: ATFontSizes.size13
+                                              color: ATColors.hexC2C2C2, fontSize: ATSizes.size13
                                             ),
                                           ),
                                         ],
@@ -132,7 +129,7 @@ Future<WhispersState?> controlWhispersModal({
                                 radius: 15, duration: 100, color: ATColors.hex2D2D2D,
                                 border: Border.all(
                                   width: 2,
-                                  color: whispersIsOff ? ATColors.hex307FE2 : ATColors.trsprnt
+                                  color: whispersIsOff ? ATColors.hex307FE2 : ATColors.transparent
                                 ),
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -150,14 +147,14 @@ Future<WhispersState?> controlWhispersModal({
                                               Text(
                                                 ATStrings.TURN_OFF,
                                                 style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                                                  fontSize: ATFontSizes.size15
+                                                  fontSize: ATSizes.size15
                                                 )
                                               ),
                                               Text(
                                                 maxLines: 5,
                                                 ATStrings.WHISPERS_DISABLED,
                                                 style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                                                  color: ATColors.hexC2C2C2, fontSize: ATFontSizes.size13
+                                                  color: ATColors.hexC2C2C2, fontSize: ATSizes.size13
                                                 ),
                                               ),
                                             ],
@@ -180,7 +177,7 @@ Future<WhispersState?> controlWhispersModal({
                     builder: (_, WhispersState? state) {
                       return ATPlainElevatedBtn(
                         onPressed: state == null ? null : () => dContext.pop(state),
-                        btnTitle: ATStrings.CONTINUE,
+                        btnTitle: ATStrings.cContinue,
                       );
                     }
                   )

@@ -1,7 +1,7 @@
 import 'package:amptive/src/config/routing/route_strings.dart';
 import 'package:amptive/src/config/utils/extensions/context_extensions.dart';
 import 'package:amptive/src/views/widgets/common_widgets/circular_image.dart';
-import 'package:amptive/src/views/widgets/common_widgets/custom_container_widget.dart';
+import 'package:amptive/src/shared/custom_container_widget.dart';
 import 'package:amptive/src/config/utils/colors.dart';
 import 'package:amptive/src/config/utils/font_sizes.dart';
 import 'package:flutter/material.dart';
@@ -31,8 +31,8 @@ class CreatorProfilePix extends StatelessWidget {
                 end: Alignment.bottomCenter,
                 colors: <Color>[
                   ATColors.black,
-                  ATColors.trsprnt,
-                  ATColors.trsprnt
+                  ATColors.transparent,
+                  ATColors.transparent
                 ]
               ),
               width: context.screenWidth,
@@ -64,7 +64,7 @@ class CreatorProfilePix extends StatelessWidget {
                 child: Text(
                   ATStrings.CREATOR.toUpperCase(),
                   style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                    fontSize: ATFontSizes.size10,
+                    fontSize: ATSizes.size10,
                     color: ATColors.black
                   ),
                 ),

@@ -1,9 +1,6 @@
-import 'package:amptive/src/config/utils/colors.dart';
-import 'package:amptive/src/config/utils/font_sizes.dart';
-import 'package:amptive/src/config/utils/font_weights.dart';
+import 'package:amptive/src/config/config_export.dart';
 import 'package:amptive/src/views/widgets/common_widgets/search_filter_widget.dart';
 import 'package:flutter/material.dart';
-
 
 class ATTextFormField extends StatelessWidget {
   const ATTextFormField({
@@ -16,6 +13,7 @@ class ATTextFormField extends StatelessWidget {
     this.counterText,
     this.cursorHeight,
     this.hintText,
+    this.focusedBorder,
     this.enabledBorder,
     this.cursorColor, 
     this.decoration,
@@ -37,6 +35,7 @@ class ATTextFormField extends StatelessWidget {
     this.enabled,
     this.maxLength,
     this.prefix,
+    this.disabledBorder,
     this.suffix,
     this.isDense,
     this.filled
@@ -57,7 +56,7 @@ class ATTextFormField extends StatelessWidget {
   final BoxConstraints? suffixConstraints,
   prefixConstraints, constraints;
   final InputDecoration? decoration;
-  final InputBorder? enabledBorder;
+  final InputBorder? enabledBorder, focusedBorder, disabledBorder;
   final FocusNode? focusNode;
   final TextStyle? hintStyle;
   final TextInputAction? textInputAction;
@@ -76,6 +75,7 @@ class ATTextFormField extends StatelessWidget {
   Widget build(BuildContext context) {
     return TextFormField(
       controller: controller,
+      onTapOutside: (_) => FocusScope.of(context).unfocus(),
       enabled: enabled,      
       textAlign: textAlign ?? TextAlign.start,
       validator: validator,
@@ -94,23 +94,24 @@ class ATTextFormField extends StatelessWidget {
       keyboardType: keyboardType,
       style: TextStyle(
         fontWeight: ATFontWeights.w400,
-        fontSize: ATFontSizes.size18,
+        fontSize: ATSizes.size16,
         color: ATColors.white,
       ),
       decoration: decoration ?? InputDecoration(     
         counterText: counterText,   
         hintText: hintText,
-        isDense: isDense,
+        isDense: isDense, errorMaxLines: 5,
         constraints: constraints,
-        fillColor: ATColors.white.withValues(alpha: 0.1), filled: filled ?? true,
+        fillColor: fillColor ?? ATColors.white.withValues(alpha: 0.1), 
+        filled: filled ?? true,
         contentPadding: contentPadding ?? EdgeInsets.zero,
-        focusedBorder: disableBlueBorder ?? false ? OutlineInputBorder(
-          borderRadius: BorderRadius.circular(14),
-          borderSide: BorderSide(color: ATColors.trsprnt)
-        ) : null,
-        hintStyle: hintStyle ?? Theme.of(context).textTheme.titleLarge?.copyWith(
-          color: ATColors.strokeGreyColor,
+        focusedBorder: focusedBorder ?? (
+            disableBlueBorder ?? false ? OutlineInputBorder(
+            borderRadius: BorderRadius.circular(14),
+            borderSide: BorderSide(color: ATColors.transparent)
+          ) : null
         ),
+        hintStyle: hintStyle,
         suffixIcon: suffixIcon,
         prefixIcon: prefixIcon ?? const ATSearchIcon(),
         prefix: prefix, suffix: suffix,
@@ -122,7 +123,8 @@ class ATTextFormField extends StatelessWidget {
           maxHeight: 35,
           maxWidth: 35
         ),
-        enabledBorder: enabledBorder
+        enabledBorder: enabledBorder,
+        disabledBorder: disabledBorder,
       ),
     );
   }

@@ -3,7 +3,7 @@ import 'package:flutter/material.dart' show Color, Colors;
 class ATColors {
   const ATColors._();
 
-  static Color get trsprnt => Colors.transparent;
+  static Color get transparent => Colors.transparent;
 
   static Color get black => Colors.black;
 
@@ -12,6 +12,8 @@ class ATColors {
   static Color get hexFED601 => const Color(0xFFFED601);
 
   static Color get hex0D0D0D => const Color(0xFF0D0D0D);
+
+  static Color get hex313131 => const Color(0xFF313131);
 
   static Color get hex252525 => const Color(0xFF252525);
 
@@ -85,6 +87,8 @@ class ATColors {
 
   static Color get hex27E8DB => const Color(0XFF27E8DB);
 
+  static Color get hex54C981 => const Color(0XFF54C981);
+
   static Color get hexF79E1E => const Color(0XFFEECEA0);
 
   static Color get hex2F2F2F => const Color(0XFF2F2F2F);
@@ -106,4 +110,8 @@ class ATColors {
   static Color get hexFF6482 => const Color(0XFFFF6482);
 
   static Color get hex323033 => const Color(0XFF323033);
+
+  static Color get hex2C2F33 => const Color(0XFF2C2F33);
+  static Color get hex434343 => const Color(0XFF434343);
+  static Color get hex111111 => const Color(0XFF111111);
 }

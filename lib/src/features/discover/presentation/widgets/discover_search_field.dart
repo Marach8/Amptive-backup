@@ -1,6 +1,6 @@
 import 'package:amptive/src/features/discover/presentation/views/discover_landing_screen.dart';
 import 'package:amptive/src/config/utils/image_strings.dart';
-import 'package:amptive/src/views/widgets/common_widgets/custom_container_widget.dart';
+import 'package:amptive/src/shared/custom_container_widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/image_loader_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -8,7 +8,6 @@ import '../../../../config/utils/colors.dart';
 import '../../../../config/utils/other_strings.dart';
 import '../../../../views/widgets/animation_widgets/common_animation_widgets/animated_crossfade_widget.dart';
 import '../../../../views/widgets/common_widgets/textformfield_widget.dart';
-
 
 class ATDiscoverSearchField extends StatefulWidget {
   const ATDiscoverSearchField({super.key});
@@ -95,7 +94,7 @@ class _ATDiscoverSearchFieldState extends State<ATDiscoverSearchField> {
                     colorFilter: ColorFilter.mode(ATColors.white, BlendMode.srcATop),
                     child: const ATImgLoader(
                       height: 25, width: 25,
-                      imgPath: ATImgStrings.OUTLINED_SEARCH,
+                      imgPath: ATImgStrings.outlinedSearch,
                     ),
                   ),
                 ),
@@ -119,7 +118,7 @@ class _ATDiscoverSearchFieldState extends State<ATDiscoverSearchField> {
               firstChild: InkWell(
                 onTap: () => _focusNode.unfocus(),
                 child: Text(
-                  ATStrings.CANCEL,
+                  ATStrings.cancel,
                   style: Theme.of(context).textTheme.titleLarge,
                 ),
               ),

@@ -6,7 +6,6 @@ import 'package:amptive/src/config/utils/colors.dart';
 import 'package:amptive/src/config/utils/font_sizes.dart';
 import 'package:amptive/src/views/widgets/common_widgets/annotated_region__widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/back_button.dart';
-import 'package:amptive/src/views/widgets/common_widgets/common_widgets.dart';
 import 'package:amptive/src/views/widgets/common_widgets/loading_indicator.dart';
 import 'package:amptive/src/views/widgets/common_widgets/otp_fields_widget.dart';
 import 'package:flutter/gestures.dart';
@@ -102,7 +101,7 @@ class _ATOTPScreenState extends State<ATOTPScreen> {
                   '${ATStrings.ENTER_CODE} ${widget.emailOrPhone}',
                   maxLines: 2,
                   style: Theme.of(context).textTheme.headlineMedium?.copyWith(
-                    fontSize: ATFontSizes.size17
+                    fontSize: ATSizes.size17
                   ),
                 ),
                 const SizedBox(height: 11),
@@ -159,28 +158,37 @@ class _ATOTPScreenState extends State<ATOTPScreen> {
           ),
         ),
 
-        bottomSheet: Padding(
-          padding: const EdgeInsets.fromLTRB(15, 0, 15, 15),
-          child: BlocConsumer<AmptiveOTPAuthBloc, AmptiveOTPAuthState>(
-            listener: (BuildContext context, AmptiveOTPAuthState state) {
-              if (state is VerifiedOTPAuthState && context.mounted) {
-                context.pushNamed(ATRoutes.PSWRD_AUTH_SCREEN,);
-                //Remove this screen and the email input screen
-                // context.pop(); context.pop(true);
-              }
-            },
-            buildWhen: (AmptiveOTPAuthState prev, AmptiveOTPAuthState curr) => curr is! AmptiveOTPCounterState,
-            builder: (BuildContext context, AmptiveOTPAuthState state) {
-              return ATPlainElevatedBtn(
-                onPressed: state is! ValidOTPAuthState ? null:
-                  () => context.read<AmptiveOTPAuthBloc>().add(VerifyOTPAuthEvent()) ,
-                btnTitle: ATStrings.NEXT,
-                child: state is LoadingAuthState ? ATLoadingIndicator(
-                  color: ATColors.white,
-                ) : null,
-              );
-            },
-          ),
+        bottomSheet: Builder(
+          builder: (BuildContext context) {
+            final double bottom = MediaQuery.viewInsetsOf(context).bottom;
+            final double bottomPadding = bottom == 0 ? 60 : 15;
+            return Padding(
+              padding: EdgeInsets.fromLTRB(15, 0, 15, bottomPadding),
+              child: BlocConsumer<AmptiveOTPAuthBloc, AmptiveOTPAuthState>(
+                listener: (BuildContext context, AmptiveOTPAuthState state) {
+                  if (state is VerifiedOTPAuthState && context.mounted) {
+                    context.pushNamed(ATRoutes.PSWRD_AUTH_SCREEN,);
+                    //Remove this screen and the email input screen
+                    // context.pop(); context.pop(true);
+                  }
+                },
+                buildWhen: (AmptiveOTPAuthState prev, AmptiveOTPAuthState curr) => curr is! AmptiveOTPCounterState,
+                builder: (BuildContext context, AmptiveOTPAuthState state) {
+                  return ATPlainElevatedBtn(
+                    onPressed:(){
+                      context.pop(widget.emailOrPhone);
+                    },
+                    // onPressed: state is! ValidOTPAuthState ? null:
+                    //   () => context.read<AmptiveOTPAuthBloc>().add(VerifyOTPAuthEvent()) ,
+                    btnTitle: ATStrings.NEXT,
+                    child: state is LoadingAuthState ? ATLoadingIndicator(
+                      color: ATColors.white,
+                    ) : null,
+                  );
+                },
+              ),
+            );
+          }
         ),
       ),
     );

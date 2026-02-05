@@ -1,11 +1,10 @@
 import 'package:amptive/src/config/utils/font_sizes.dart';
-import 'package:amptive/src/config/utils/dialogs/go_live/follow_or_subscribe_dialog.dart';
+import 'package:amptive/src/features/go_live/presentation/widgets/follow_or_subscribe_dialog.dart';
 import 'package:amptive/src/views/widgets/common_widgets/circle_avatar.dart';
 import 'package:amptive/src/views/widgets/common_widgets/circular_image.dart';
-import 'package:amptive/src/views/widgets/common_widgets/custom_container_widget.dart';
+import 'package:amptive/src/shared/custom_container_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:gap/gap.dart';
 import '../../../../../models/host.dart';
 import '../../../../../services/go_live_service/go_live_service.dart';
 import '../../../../../config/utils/colors.dart';
@@ -34,7 +33,7 @@ class AmptiveLiveHostAndCoHostWidgetForAudienceView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AnimatedPositioned(
-        duration: const Duration(seconds: 1),
+        duration: const Duration(milliseconds: 700),
         curve: Curves.decelerate,
         top: top,
         left: left,
@@ -82,7 +81,7 @@ class AmptiveLiveHostAndCoHostWidgetForAudienceView extends StatelessWidget {
                       ],
                     ),
                   ),
-                  Gap(5.h),
+                  SizedBox(height: 5.h),
                   SizedBox(
                     width: 80.w,
                     child: Text(
@@ -91,7 +90,7 @@ class AmptiveLiveHostAndCoHostWidgetForAudienceView extends StatelessWidget {
                       style: Theme.of(context).textTheme.titleSmall,
                     ),
                   ),
-                  Gap(5.h),
+                  SizedBox(height: 5.h),
                   isHost
                       ? ATContainer(
                           padding: const EdgeInsets.fromLTRB(4, 2, 4, 2),
@@ -108,7 +107,7 @@ class AmptiveLiveHostAndCoHostWidgetForAudienceView extends StatelessWidget {
                                   .textTheme
                                   .bodySmall
                                   ?.copyWith(
-                                    fontSize: ATFontSizes.size10,
+                                    fontSize: ATSizes.size10,
                                   )),
                         )
                       : const SizedBox.shrink()

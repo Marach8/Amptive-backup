@@ -4,7 +4,7 @@ import 'package:amptive/src/config/utils/font_sizes.dart';
 import 'package:amptive/src/config/utils/font_weights.dart';
 import 'package:amptive/src/config/utils/image_strings.dart';
 import 'package:amptive/src/config/utils/other_strings.dart';
-import 'package:amptive/src/views/widgets/common_widgets/custom_container_widget.dart';
+import 'package:amptive/src/shared/custom_container_widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/list_tile_with_leading_picture_widget.dart';
 import 'package:amptive/src/shared/overlapping_widgets.dart';
 import 'package:amptive/src/views/widgets/other_widgets/main_application_widgets/widgets_in_home_view/with_2_others_widget.dart';
@@ -54,10 +54,10 @@ class _ScheduledProgramState extends State<ScheduledProgram> {
                   begin: Alignment.topCenter,
                   end: Alignment.bottomCenter,
                   colors: <Color>[
-                    ATColors.trsprnt,
-                    ATColors.trsprnt,
-                    ATColors.trsprnt,
-                    ATColors.trsprnt,
+                    ATColors.transparent,
+                    ATColors.transparent,
+                    ATColors.transparent,
+                    ATColors.transparent,
                     ATColors.containerGradientColorB.withOpacity(0.5),
                     ATColors.containerGradientColorB,
                     ATColors.containerGradientColorB,
@@ -72,7 +72,7 @@ class _ScheduledProgramState extends State<ScheduledProgram> {
                     Text(
                       '15 Jul 2024 at 17:00',
                       style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                        fontSize: ATFontSizes.size16
+                        fontSize: ATSizes.size16
                       ),
                     ),
                     const SizedBox(height: 10,),
@@ -81,7 +81,7 @@ class _ScheduledProgramState extends State<ScheduledProgram> {
                       "Don't Forget Who You Are ft. Jacob Scipio",
                       overflow: TextOverflow.clip,
                       style: Theme.of(context).textTheme.displayMedium?.copyWith(
-                        fontSize: ATFontSizes.size24,
+                        fontSize: ATSizes.size24,
                         fontWeight: ATFontWeights.w600,
                       ),
                     ),
@@ -99,7 +99,7 @@ class _ScheduledProgramState extends State<ScheduledProgram> {
                         Text(
                           '656 going',
                           style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                            fontSize: ATFontSizes.size13
+                            fontSize: ATSizes.size13
                           )
                         ),
                       ],
@@ -115,7 +115,7 @@ class _ScheduledProgramState extends State<ScheduledProgram> {
                             ATStrings.PAID_SHOW.toUpperCase(),
                             style: Theme.of(context).textTheme.titleSmall?.copyWith(
                               fontWeight: ATFontWeights.w500,
-                              fontSize: ATFontSizes.size10
+                              fontSize: ATSizes.size10
                             )
                           ),
                         ),

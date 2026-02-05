@@ -1,8 +1,7 @@
 import 'dart:ui';
 
 import 'package:amptive/src/config/utils/extensions/context_extensions.dart';
-import 'package:amptive/src/views/widgets/common_widgets/custom_container_widget.dart';
-import 'package:amptive/src/views/widgets/common_widgets/dismiss_modal.dart';
+import 'package:amptive/src/views/widgets/common_widgets/modal_dismisser.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -18,16 +17,19 @@ class ATBlurredHeaderWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return ClipRect(
       child: BlocBuilder<BlurredHeaderBloc, bool>(
-        builder: (_, bool state) {
+        builder: (_, bool shouldBlur) {
           return RepaintBoundary(
             child: BackdropFilter(
-              filter: state ? ImageFilter.blur(sigmaX: 53, sigmaY: 53)
+              filter: shouldBlur ? ImageFilter.blur(sigmaX: 53, sigmaY: 53)
                 : ImageFilter.blur(sigmaX: 0, sigmaY: 0),
-              child: ATContainer(
+              child: Container(
                 padding: const EdgeInsets.only(top: 40),
                 height: kToolbarHeight + MediaQuery.paddingOf(context).top,
                 width: context.screenWidth,
-                child: child ?? const ATModalDismisser(),
+                child: Align(
+                  alignment: Alignment.bottomCenter,
+                  child: child ?? const ATModalDismisser()
+                ),
               ),
             ),
           );
@@ -36,6 +38,7 @@ class ATBlurredHeaderWidget extends StatelessWidget {
     );
   }
 }
+
 
 
 class BlurredHeaderBloc extends Cubit<bool>{

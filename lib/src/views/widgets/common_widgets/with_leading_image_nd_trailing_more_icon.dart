@@ -1,6 +1,6 @@
 import 'package:amptive/src/config/utils/colors.dart';
 import 'package:amptive/src/config/utils/font_sizes.dart';
-import 'package:amptive/src/views/widgets/common_widgets/custom_container_widget.dart';
+import 'package:amptive/src/shared/custom_container_widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/divider_widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/image_loader_widget.dart';
 import 'package:flutter/material.dart';
@@ -45,13 +45,13 @@ class WidgetWithLeadingImageAndTrailingMoreIcon extends StatelessWidget {
                     Text(
                       title,
                       style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                        fontSize: ATFontSizes.size15
+                        fontSize: ATSizes.size15
                       ),
                     ),
                     Text(
                       subtitle, maxLines: 3,
                       style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                        fontSize: ATFontSizes.size13
+                        fontSize: ATSizes.size13
                       ),
                     ),
                   ],
@@ -83,7 +83,7 @@ class WidgetWithLeadingImageAndTrailingMoreIcon extends StatelessWidget {
                     child: Text(
                       btnText,
                       style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                        fontSize: ATFontSizes.size12,
+                        fontSize: ATSizes.size12,
                         color: ATColors.white.withValues(alpha: 0.7)
                       ),
                     ),
@@ -93,7 +93,7 @@ class WidgetWithLeadingImageAndTrailingMoreIcon extends StatelessWidget {
                   child: bottomTrailingWidget == null ? Text(
                     bottomTrailingText ?? '', maxLines: 2,
                     style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                      fontSize: ATFontSizes.size14
+                      fontSize: ATSizes.size14
                     ),
                   ) : bottomTrailingWidget!,
                 ),

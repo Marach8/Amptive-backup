@@ -1,7 +1,7 @@
 import 'dart:io';
 import 'package:amptive/src/config/config_export.dart';
 import 'package:amptive/src/views/widgets/common_widgets/back_button.dart';
-import 'package:amptive/src/views/widgets/common_widgets/custom_container_widget.dart';
+import 'package:amptive/src/shared/custom_container_widget.dart';
 import 'package:custom_image_crop/custom_image_crop.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -86,7 +86,7 @@ class _CircleImageCropperScreenState extends State<CircleImageCropperScreen> {
         painter: SolidCropPathPainter(
           path,
           Paint()
-            ..color = ATColors.trsprnt
+            ..color = ATColors.transparent
             ..strokeWidth = 0
             ..style = PaintingStyle.stroke
             ..strokeJoin = StrokeJoin.round,

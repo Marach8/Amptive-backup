@@ -2,8 +2,7 @@ import 'dart:io';
 import 'package:amptive/src/config/utils/font_sizes.dart';
 import 'package:amptive/src/config/utils/helper_functions.dart';
 import 'package:flutter/material.dart';
-import 'package:gap/gap.dart';
-import '../../../views/widgets/common_widgets/custom_container_widget.dart';
+import '../../../shared/custom_container_widget.dart';
 import '../colors.dart';
 import 'package:amptive/src/config/utils/image_strings.dart';
 import 'package:amptive/src/views/widgets/common_widgets/image_loader_widget.dart';
@@ -45,7 +44,7 @@ void showProgramOptions(BuildContext context)
                     ),
                 ),
               ),
-              const Gap(20),
+              const SizedBox(height: 20),
               ...mapOfOptions.entries.map(
                 (MapEntry<String, Widget> entry) => Padding(
                   padding: const EdgeInsets.only(bottom: 30),
@@ -53,12 +52,12 @@ void showProgramOptions(BuildContext context)
                     mainAxisSize: MainAxisSize.min,
                     children: <Widget>[
                       entry.value,
-                      const Gap(15),
+                      const SizedBox(width: 15),
                       Text(
                         entry.key,
                         style: Theme.of(context).textTheme.labelMedium?.copyWith(
                           color: ATColors.white,
-                          fontSize: ATFontSizes.size17
+                          fontSize: ATSizes.size17
                         ),
                       )
                     ],

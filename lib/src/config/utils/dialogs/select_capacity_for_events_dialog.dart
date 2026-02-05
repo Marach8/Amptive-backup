@@ -1,10 +1,9 @@
 import 'dart:io';
 import 'package:amptive/src/config/utils/colors.dart';
-import 'package:amptive/src/views/widgets/common_widgets/custom_container_widget.dart';
+import 'package:amptive/src/shared/custom_container_widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/textformfield_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:gap/gap.dart';
 import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
 import '../../../services/create_show/create_show_service.dart';
@@ -70,7 +69,7 @@ Future<void> showEventCapacitySelectionDialog({
                 ],
               ),
             ),
-            const Gap(20),
+            const SizedBox(height: 20),
             Text(
               maxLines: 5,
               ATStrings.MAX_CAPACITY,
@@ -78,7 +77,7 @@ Future<void> showEventCapacitySelectionDialog({
                 color: ATColors.hexC2C2C2
               ),
             ),
-            const Gap(20),
+            const SizedBox(height: 20),
 
             Form(
               key: formKey,
@@ -106,7 +105,7 @@ Future<void> showEventCapacitySelectionDialog({
                 color: ATColors.hexC2C2C2
               ),
             ),
-            const Gap(20),
+            const SizedBox(height: 20),
             Column(
               mainAxisSize: MainAxisSize.min,
               children: <Widget>[
@@ -120,7 +119,7 @@ Future<void> showEventCapacitySelectionDialog({
                   bgColor: ATColors.white,
                   fgColor: ATColors.black,
                 ),
-                const Gap(20),
+                const SizedBox(height: 20),
 
                 AmptiveElevatedButtonWidget(
                   margin: EdgeInsets.zero,
@@ -129,10 +128,10 @@ Future<void> showEventCapacitySelectionDialog({
                     context.pop();
                   },
                   buttonTitle: ATStrings.REMOVE,
-                  bgColor: ATColors.trsprnt,
+                  bgColor: ATColors.transparent,
                   fgColor: ATColors.white,
                 ),
-                const Gap(10),
+                const SizedBox(height: 10),
               ],
             )
           ]

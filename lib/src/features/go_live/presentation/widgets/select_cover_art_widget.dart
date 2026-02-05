@@ -1,6 +1,5 @@
 import 'dart:io';
 import 'dart:typed_data';
-
 import 'package:amptive/src/config/config_export.dart';
 import 'package:amptive/src/shared/image_source_selection_dialog.dart';
 import 'package:amptive/src/views/widgets/common_widgets/image_loader_widget.dart';
@@ -8,7 +7,7 @@ import 'package:custom_image_crop/custom_image_crop.dart' show Ratio;
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:image_picker/image_picker.dart';
-import '../../../../views/widgets/common_widgets/custom_container_widget.dart';
+import '../../../../shared/custom_container_widget.dart';
 
 class SelectProgramCoverArt extends StatefulWidget {
   const SelectProgramCoverArt({
@@ -30,7 +29,7 @@ class _SelectProgramCoverArtState extends State<SelectProgramCoverArt> {
     return ATContainer(
       radius: 10,
       clipBehavior: Clip.hardEdge,
-      color: ATColors.trsprnt,
+      color: ATColors.transparent,
       onTap: ()async{
         final ImageSource? selectedSrc = await showImageSourceOptions(context);
         final XFile? selectedFile = await ATHelperFuncs.pickImage(selectedSrc);
@@ -65,11 +64,10 @@ class _SelectProgramCoverArtState extends State<SelectProgramCoverArt> {
           CircleAvatar(
             backgroundColor: ATColors.black.withValues(alpha: 0.5),
             radius: 20,
-            child: Icon(
-              Icons.add_a_photo_outlined,
-              color: ATColors.white,
-              size: 25,
-            ),
+            child: const ATImgLoader(
+              imgPath: ATImgStrings.ADD_IMAGE_ICON,
+              height: 20, width: 20
+            )
           ),
         ],
       ),

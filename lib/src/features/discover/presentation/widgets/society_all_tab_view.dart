@@ -5,7 +5,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../../../config/utils/image_strings.dart';
 import '../../../../config/utils/other_strings.dart';
-import '../../../../views/widgets/common_widgets/custom_container_widget.dart';
+import '../../../../shared/custom_container_widget.dart';
 import 'top_creator_widget.dart';
 import 'render_trending_hashtag.dart';
 import 'hashtag_heading_row.dart';

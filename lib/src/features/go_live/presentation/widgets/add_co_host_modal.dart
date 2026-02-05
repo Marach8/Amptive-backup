@@ -1,16 +1,20 @@
 import 'package:amptive/src/features/go_live/go_live_export.dart';
 import 'package:amptive/src/global_export.dart';
-import 'package:amptive/src/views/widgets/common_widgets/dismiss_modal.dart';
+import 'package:amptive/src/views/widgets/common_widgets/modal_dismisser.dart';
 import 'package:amptive/src/views/widgets/common_widgets/search_filter_widget.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import '../../../../models/host.dart';
 
-Future<void> showAvailableCoHostsModal(BuildContext context) async {
+
+enum CohostSelectionMode {single, multiple,}
+
+Future<ATCohost<bool>?> showAvailableCoHostsModal({
+  required BuildContext context,
+  CohostSelectionMode selectionMode = CohostSelectionMode.multiple,
+}) async {
   return await showModalBottomSheet(
-    context: context,
-    isScrollControlled: true,
+    context: context, isScrollControlled: true,
     backgroundColor: ATColors.hex202020,
     builder: (BuildContext dContext) {
       return Stack(
@@ -21,16 +25,8 @@ Future<void> showAvailableCoHostsModal(BuildContext context) async {
               expand: false,
               initialChildSize: 0.7,
               builder: (BuildContext bContext, ScrollController scrollController) {
-                return Container(
-                  padding: const EdgeInsets.only(top: kToolbarHeight * 0.5),
-                  height: context.screenHeight,
-                  width: context.screenWidth,
-                  decoration: const BoxDecoration(
-                    borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(5),
-                      topRight: Radius.circular(5),
-                    ),
-                  ),
+                return Padding(
+                  padding: const EdgeInsets.only(top: 20),
                   child: Column(
                     children: <Widget>[
                       const ATModalDismisser(),
@@ -103,7 +99,10 @@ Future<void> showAvailableCoHostsModal(BuildContext context) async {
                       
                       const SelectedCohostsRow(),
                       
-                      Expanded(child: AvailableCohostsList(scrollController: scrollController,)),
+                      Expanded(child: AvailableCohostsList(
+                        scrollController: scrollController,
+                        selectionMode: selectionMode,
+                      )),
                     ],
                   )
                 );
@@ -122,7 +121,7 @@ Future<void> showAvailableCoHostsModal(BuildContext context) async {
 
                 return ATBlurredBgBtn(
                   onPressed: activateBtn ? () => dContext.pop() : null,
-                  btnTitle: ATStrings.CONTINUE,
+                  btnTitle: ATStrings.cContinue,
                 );
               }
             ),

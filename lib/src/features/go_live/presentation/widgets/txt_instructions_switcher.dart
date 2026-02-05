@@ -1,15 +1,13 @@
 import 'package:amptive/src/global_export.dart';
-import 'package:carousel_slider/carousel_slider.dart';
-import 'package:flutter/material.dart';
 
 
 class InstructionsSwitcher extends StatelessWidget {
   const InstructionsSwitcher({
     super.key,
-    required this.carouselCntrl,
+    required this.pageCntrl,
   });
 
-  final  CarouselSliderController carouselCntrl;
+  final  PageController pageCntrl;
 
   static final List<String> texts = <String>[
     ATStrings.TAP_D_RECORD_BTN, ATStrings.SPEAK_IN_2_MIC,
@@ -19,13 +17,16 @@ class InstructionsSwitcher extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: context.screenWidth,
-      height: 106,
-      child: CarouselSlider(
-        items: texts.map(
-          (String text){
-            return SizedBox(
-              width: 300, height: 110,
+      width: context.screenWidth, height: 110,
+      child: PageView.builder(
+        controller: pageCntrl,
+        physics: const NeverScrollableScrollPhysics(),
+        padEnds: false,
+        itemBuilder: (_, int index){
+          final String text = texts.elementAt(index);
+          return Center(
+            child: SizedBox(
+              width: index == 2 ? 200 : 300, height: 100,
               child: Text(
                 text.toUpperCase(),
                 key: ValueKey<String>(text),
@@ -37,14 +38,9 @@ class InstructionsSwitcher extends StatelessWidget {
                   fontWeight: ATFontWeights.w800
                 )
               ),
-            );
-          }
-        ).toList(),
-        carouselController: carouselCntrl,
-        options: CarouselOptions(
-          scrollPhysics: const NeverScrollableScrollPhysics(),
-          viewportFraction: 1
-        )
+            ),
+          );
+        },
       ),
     );
   }

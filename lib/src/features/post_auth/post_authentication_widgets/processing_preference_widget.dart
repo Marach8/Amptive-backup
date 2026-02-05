@@ -121,7 +121,7 @@ class _ProcessingPreferenceWidgetState
           child: Text(
             ATStrings.personalizingYourExperience,
             style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                  fontSize: ATFontSizes.size17,
+                  fontSize: ATSizes.size17,
                   height: 0.09,
                 ),
           ),
