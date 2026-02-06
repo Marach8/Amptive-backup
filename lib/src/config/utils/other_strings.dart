@@ -131,7 +131,7 @@ class ATStrings{
   static const String UR_PSWRD = 'What is your password?';
   static const String enterYourEmail = 'Enter your email...';
   static const String thisEmailWillBeVerified = 'This email will be verified in the next step';
-  static const String VERIFY_EMAIL = 'Verify email';
+  static const String verifyEmail = 'Verify email';
   static const String unblockDesc = 'will be able to follow, subscribe and see your app activities';
   static String unMuteDesc(String text) => "You will be able to see $text's app activities";
   static String enterLink(String link) => "Enter your $link link";
