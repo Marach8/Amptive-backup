@@ -219,7 +219,7 @@ class _AddPictureWidgetState extends State<AddPictureWidget> {
           BlocBuilder<AmptiveAuthBloc, AmptiveAuthState>(
               builder: (BuildContext context, AmptiveAuthState state) {
             return ATPlainElevatedBtn(
-              btnTitle: ATStrings.NEXT,
+              btnTitle: ATStrings.next,
               onPressed:
                   state is ProfilePictureAddedState && state.image != null
                       ? () => context.pushNamed(ATRoutes.SELECT_5_COMMUNITIES_SCREEN)

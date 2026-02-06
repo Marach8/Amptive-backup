@@ -641,7 +641,7 @@ class _CreateShowFormScreenState extends State<CreateEventFormScreen> {
                 return ATPlainElevatedBtn(
                   bgColor: ATColors.white,
                   fgColor: ATColors.hex0D0D0D,
-                  btnTitle: ATStrings.NEXT,
+                  btnTitle: ATStrings.next,
                   onPressed: () async{
                     //await showAddCoHostDialog(context);
                     //await showAddHashtagDialog(context);

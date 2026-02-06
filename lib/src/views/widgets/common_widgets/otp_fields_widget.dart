@@ -31,7 +31,7 @@ class _ATOTPFieldsWidgetState extends State<ATOTPFieldsWidget> {
   @override 
   void initState(){
     super.initState();
-    pins = List.filled(widget.noOfFields, '');
+    pins = List<String>.filled(widget.noOfFields, '');
   }
 
   @override
@@ -40,11 +40,11 @@ class _ATOTPFieldsWidgetState extends State<ATOTPFieldsWidget> {
       mainAxisSize: MainAxisSize.min,
       mainAxisAlignment: widget.mainAxisAlignment,
       spacing: widget.spacing,
-      children: List.generate(
+      children: List<Widget>.generate(
         widget.noOfFields,
         (int index){
           return StatefulBuilder(
-            builder: (_, setter) {
+            builder: (_, StateSetter setter) {
               return SizedBox(
                 height: widget.height, width: widget.width,
                 child: _OTPField(
@@ -109,7 +109,7 @@ class _OTPField extends StatelessWidget {
           fontWeight: ATFontWeights.w400,
         ),
         filled: true,
-        fillColor: ATColors.hex9E9E9E.withOpacity(0.3),
+        fillColor: ATColors.hex9E9E9E.withValues(alpha:0.3),
         focusedBorder: OutlineInputBorder(
           borderSide: BorderSide(
             width: 2,

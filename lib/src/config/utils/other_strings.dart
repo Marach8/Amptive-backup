@@ -28,8 +28,8 @@ class ATStrings{
       "Tune into live audio shows and events.";
   static const String monetizeLiveAudioShowsAndEvents =
       "Monetizable Live Audio Shows & Events ";
-  static const String ENTER_CODE = 'Enter the 4 digit code we just sent to';
-  static const String NEXT = 'Next';
+  static const String enterCodeSentTo = 'Enter the 4 digit code we just sent to';
+  static const String next = 'Next';
   static const String SHOULD_REDIRECT = 'should Redirect';
   static const String IS_NEW_USER = 'Is First time user';
   static const String enterAmount = 'Enter Amount';
@@ -183,7 +183,7 @@ class ATStrings{
 
   static const String youEnteredInvalidCode = 'You entered an invalid code. ';
   static const String passwordMustBeAtleast8 = 'Your password must be at least 8 characters';
-  static const String DID_NOT_GET_CODE = "Didn't get the code? ";
+  static const String didNotGetCode = "Didn't get the code? ";
   static const String sendAgain = 'Send again';
   static const String SEND = 'Send';
   static const String SEND_GIFT = 'Send gift';
@@ -384,7 +384,7 @@ class ATStrings{
   static const String HELP_SUPPORT = 'Help & Support';
   static const String ABOUT = 'About';
   static const String LOGOUT = 'Log out';
-  static const String CODE_SENT = 'Code has been sent. You can request another in';
+  static const String codeHasBeenSent = 'Code has been sent. You can request another in';
   static const String SEE_COMMUNITIES = 'See communities on Amptive';
   static const String COMMUNITIES = 'Communities';
   static const String COMMUNITY = 'Community';
@@ -507,8 +507,8 @@ class ATStrings{
   static const String VIEW_EVENT_PAGE = 'View event page';
   static const String EVENT_SCHEDULED = 'Your Event is scheduled!';
   static const String SHARE_EVENT_LINK = 'Share your event link to build excitement and attract more attendees.';
-  static const String EMPTY_FIELD = 'Field(s) cannot be empty';
-  static const String INVALID_EMAIL = 'Please enter a valid email address!';
+  static const String emptyField = 'Field(s) cannot be empty';
+  static const String invalidEmail = 'Please enter a valid email address!';
   static const String WEAK_PSWRD = 'Password must contain at least one upper and lower case letters, one special character and must be at least 8 characters!';
   static const String SHARE_EVENT = 'Share event';
   static const String COMMENT = 'Comment';

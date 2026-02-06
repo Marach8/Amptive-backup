@@ -164,7 +164,7 @@ class _AddPhoneScreenState extends State<AddPhoneScreen> {
                   ? () {
                     final String phoneNo = ATStrings.plus + selectedCountry.phoneCode + _phoneController.text.trim();
                     context.pushNamed(
-                      ATRoutes.OTP_SCREEN,
+                      ATRoutes.enterOtpScreen,
                       extra: <String>[phoneNo, widget.title ?? '']
                     );
                   } : null,

@@ -87,13 +87,12 @@ final GoRouter amptiveAppRouter = GoRouter(
     ),
 
     GoRoute(
-      name: ATRoutes.OTP_SCREEN,
-      path: ATRoutes.OTP_SCREEN.addSlash,
-      builder: (_, GoRouterState state) {
-        final List<String?>? params = state.extra as List<String?>?;
-        final String? emailOrPhone = params?.first;
-        final String? title = params?.last;
-        return ATOTPScreen(emailOrPhone: emailOrPhone ?? '', title: title ?? '');
+      name: ATRoutes.enterOtpScreen,
+      path: ATRoutes.enterOtpScreen.addSlash,
+      pageBuilder: (_, GoRouterState state) {
+        return ATSlidingRouteTransition<bool?>(
+          child: ATOTPScreen(params: state.extra as VerifyOTPScreenParams,),
+        );
       }
     ),
     GoRoute(
@@ -121,8 +120,8 @@ final GoRouter amptiveAppRouter = GoRouter(
     ),
 
     GoRoute(
-      name: ATRoutes.PSWRD_AUTH_SCREEN,
-      path: ATRoutes.PSWRD_AUTH_SCREEN.addSlash,
+      name: ATRoutes.createPasswordScreen,
+      path: ATRoutes.createPasswordScreen.addSlash,
       pageBuilder: (_, __) => ATSlidingRouteTransition<void>(
         child: const PasswordAuthScreen(),
       )

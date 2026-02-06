@@ -21,7 +21,7 @@ class AuthRepoImpl implements AuthRepo {
   }) async {
     try {
       final Response<dynamic> response = await networkService.post(
-        AEEndpoints.checkIdentityAvailability,
+        ATEndpoints.checkIdentityAvailability,
         data: param,
       );
 
@@ -30,6 +30,46 @@ class AuthRepoImpl implements AuthRepo {
     } catch (e) {
       log('Check identity availability error: $e');
       return Unsuccessful<bool>(
+        error: ATException.resolveException(e),
+      );
+    }
+  }
+
+
+  @override
+  Future<ApiResponse<String>> sendOtp({
+    required Map<String, dynamic> param,
+  }) async {
+    try {
+      final Response<dynamic> response = await networkService.post(
+        ATEndpoints.sendOtp,
+        data: param,
+      );
+
+      final String otp = response.data['data']['otp'] as String;
+      return Successful<String>(data: otp);
+    } catch (e) {
+      log('Send OTP error: $e');
+      return Unsuccessful<String>(
+        error: ATException.resolveException(e),
+      );
+    }
+  }
+
+  @override
+  Future<ApiResponse<dynamic>> verifyOtp({
+    required Map<String, dynamic> param,
+  }) async {
+    try {
+      final Response<dynamic> response = await networkService.post(
+        ATEndpoints.verifyOtp,
+        data: param,
+      );
+
+      return Successful<dynamic>(data: response.data);
+    } catch (e) {
+      log('Verify OTP error: $e');
+      return Unsuccessful<dynamic>(
         error: ATException.resolveException(e),
       );
     }

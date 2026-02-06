@@ -38,7 +38,8 @@ class ATTextFormField extends StatelessWidget {
     this.disabledBorder,
     this.suffix,
     this.isDense,
-    this.filled
+    this.filled,
+    this.autoValidateMode,
   });
 
   final TextEditingController? controller;
@@ -62,6 +63,7 @@ class ATTextFormField extends StatelessWidget {
   final TextInputAction? textInputAction;
   final int? maxLines, maxLength;
   final EdgeInsetsGeometry? contentPadding;
+  final AutovalidateMode? autoValidateMode;
   final Widget? Function(
     BuildContext, {
       required int currentLength, 
@@ -80,7 +82,7 @@ class ATTextFormField extends StatelessWidget {
       textAlign: textAlign ?? TextAlign.start,
       validator: validator,
       maxLines: maxLines, focusNode: focusNode,
-      autovalidateMode: AutovalidateMode.onUserInteraction,
+      autovalidateMode: autoValidateMode ?? AutovalidateMode.onUserInteraction,
       onChanged: onChanged,
       maxLength: maxLength,
       buildCounter: buildCounter,

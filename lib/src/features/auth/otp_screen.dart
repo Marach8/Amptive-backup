@@ -1,142 +1,162 @@
-
-import 'package:amptive/src/bloc/authentication/otp/otp_auth_bloc.dart';
-import 'package:amptive/src/bloc/authentication/otp/otp_auth_states.dart';
-import 'package:amptive/src/config/routing/route_strings.dart';
+import 'package:amptive/src/config/api_response_and_app_state.dart';
 import 'package:amptive/src/config/utils/colors.dart';
+import 'package:amptive/src/config/utils/dialogs/app_notification_dialog.dart';
+import 'package:amptive/src/config/utils/extensions/context_extensions.dart';
 import 'package:amptive/src/config/utils/font_sizes.dart';
+import 'package:amptive/src/features/auth/cubits/send_otp_cubit.dart';
+import 'package:amptive/src/features/auth/cubits/verify_otp_cubit.dart';
 import 'package:amptive/src/views/widgets/common_widgets/annotated_region__widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/back_button.dart';
-import 'package:amptive/src/views/widgets/common_widgets/loading_indicator.dart';
 import 'package:amptive/src/views/widgets/common_widgets/otp_fields_widget.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import '../../bloc/authentication/otp/otp_auth_events.dart';
+import 'package:provider/single_child_widget.dart';
 import '../../config/utils/font_weights.dart';
 import '../../config/utils/other_strings.dart';
 import '../../views/widgets/common_widgets/app_bar_widget.dart';
 import '../../shared/elevated_button_widget.dart';
-import 'dart:developer';
+
+
+enum OTPVerificationType{email, phoneNumber}
+class VerifyOTPScreenParams{
+  const VerifyOTPScreenParams({
+    required this.identifier,
+    required this.verificationType,
+    this.title,
+    this.otp,
+  });
+
+  final String identifier;
+  final String? title, otp;
+  final OTPVerificationType verificationType;
+}
 
 class ATOTPScreen extends StatefulWidget {
   const ATOTPScreen({
     super.key,
-    required this.emailOrPhone,
-    required this.title
+    required this.params,
   });
-
-  final String emailOrPhone, title;
+  final VerifyOTPScreenParams params;
 
   @override
   State<ATOTPScreen> createState() => _ATOTPScreenState();
 }
 
 class _ATOTPScreenState extends State<ATOTPScreen> {
-  late TapGestureRecognizer _tapGestureRecognizer;
-  // late Timer _timer;
-  bool _resendButtonEnabled = false;
+  final ValueNotifier<bool> activateBtnNotifier = ValueNotifier<bool>(false);
+  final ValueNotifier<bool> didSendAgainNotifier = ValueNotifier<bool>(false);
+  final TapGestureRecognizer _tapGestureRecognizer = TapGestureRecognizer();
+  final int countDownStart = 10;
 
-  @override
-  void initState() {
-    super.initState();
-    resetTimer(context);
-
-    _tapGestureRecognizer = TapGestureRecognizer()
-      ..onTap = () => resetTimer(context);
+  Stream<int> generateCountDown() async* {
+    for (int i = countDownStart; i >= 0; i--) {
+      yield i;
+      await Future<void>.delayed(const Duration(seconds: 1));
+    }
+    didSendAgainNotifier.value = false;
   }
 
   @override
   void dispose() {
-    // _timer.cancel();
+    activateBtnNotifier.dispose();
+    didSendAgainNotifier.dispose();
+    _tapGestureRecognizer.dispose();
     super.dispose();
-  }
-
-  // void startTimer(BuildContext context) {
-  //   _timer = Timer.periodic(const Duration(seconds: 1), (Timer timer) {
-  //     final currentState = BlocProvider.of<AmptiveOTPAuthBloc>(context).state;
-  //
-  //     if (currentState is AmptiveOTPCounterState) {
-  //       int timeLeft = currentState.timeLeft;
-  //
-  //       if (timeLeft <= 1) {
-  //         _resendButtonEnabled = true;
-  //         _timer.cancel();
-  //       }
-  //
-  //       context
-  //           .read<AmptiveOTPAuthBloc>()
-  //           .add(AmptiveOtpCountDownEvent(secondsLeft: timeLeft - 1));
-  //     }
-  //   });
-  // }
-
-  final String correctPin = '1234';
-  void resetTimer(BuildContext context) {
-    context
-        .read<AmptiveOTPAuthBloc>()
-        .add(AmptiveOtpCountDownStartEvent());
-    _resendButtonEnabled = false;
-
-    // startTimer(context);
   }
 
   @override
   Widget build(BuildContext context) {
-    return ATAnnotatedRegion(
-      child: Scaffold(
-        backgroundColor: ATColors.hex0D0D0D,
-        appBar: ATAppBar(
-          titleText: widget.title,
-          leading: const ATBackBtn(),
-        ),
+    String identifierKey = '';
+    switch(widget.params.verificationType){
+      case OTPVerificationType.email:
+        identifierKey = 'email'; break;
+      case OTPVerificationType.phoneNumber:
+        identifierKey = 'phone_number'; break;
+    }
 
-        body: Padding(
-          padding: const EdgeInsets.fromLTRB(15, 15, 15, 0),
-          child: Form(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Text(
-                  '${ATStrings.ENTER_CODE} ${widget.emailOrPhone}',
-                  maxLines: 2,
-                  style: Theme.of(context).textTheme.headlineMedium?.copyWith(
-                    fontSize: ATSizes.size17
+    return MultiBlocProvider(
+      providers: <SingleChildWidget>[
+        BlocProvider<VerifyOtpCubit>(create: (_) => VerifyOtpCubit()),
+        BlocProvider<SendOtpCubit>(create:(_) => SendOtpCubit()),
+      ],
+      child: ATAnnotatedRegion(
+        child: Scaffold(
+          backgroundColor: ATColors.hex0D0D0D,
+          appBar: ATAppBar(
+            titleText: widget.params.title,
+            leading: const ATBackBtn(),
+          ),
+      
+          body: Padding(
+            padding: const EdgeInsets.fromLTRB(15, 15, 15, 0),
+            child: Form(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  BlocListener<SendOtpCubit, ATAppState<String>>(
+                    listener: (_, ATAppState<String> sendOtpState) {
+                      if(sendOtpState is LoadingState<String>){
+                        activateBtnNotifier.value = false;
+                      }
+                      else{activateBtnNotifier.value = true;}
+                    },
+                    child: Text(
+                      '${ATStrings.enterCodeSentTo} ${widget.params.identifier}',
+                      maxLines: 2,
+                      style: context.textTheme.headlineMedium?.copyWith(
+                        fontSize: ATSizes.size17
+                      ),
+                    ),
                   ),
-                ),
-                const SizedBox(height: 11),
-                ATOTPFieldsWidget(
-                  onPinComplete: (String pin) async{
-                    log(pin);
-                    if(pin == correctPin){
-                      context.read<AmptiveOTPAuthBloc>().add(ValidOTPAuthEvent());
-                      return true;
-                    }
-                    return false;
-                  },
-                ),
-
-                const SizedBox(height: 11),
-
-                BlocBuilder<AmptiveOTPAuthBloc, AmptiveOTPAuthState>(
-                  buildWhen: (AmptiveOTPAuthState prev, AmptiveOTPAuthState curr) => curr is AmptiveOTPCounterState,
-                  builder: (BuildContext context, AmptiveOTPAuthState state) {
-                    debugPrint(state.toString());
-                    if (state is AmptiveOTPCounterState && state.timeLeft <= 0) {
-                      _resendButtonEnabled = true;
-                    }
-                    if (state is AmptiveOTPCounterState) {
-                      return _resendButtonEnabled ? RichText(
+                  const SizedBox(height: 11),
+                  ATOTPFieldsWidget(
+                    onPinComplete: (String pin) async{
+                      if(pin == widget.params.otp){
+                        activateBtnNotifier.value = true;
+                        return true;
+                      }
+                      activateBtnNotifier.value = false;
+                      return false;
+                    },
+                  ),
+      
+                  const SizedBox(height: 11),
+      
+                  ValueListenableBuilder<bool>(
+                    valueListenable: didSendAgainNotifier,
+                    builder: (BuildContext context, bool didSendAgain, __) {
+                      if(didSendAgain){
+                        return StreamBuilder<int>(
+                          stream: generateCountDown(),
+                          initialData: 10,
+                          builder: (_, AsyncSnapshot<int> asyncSnapshot) {
+                            final int timeLeft = asyncSnapshot.data!;
+                            return Text(
+                              maxLines: 2,
+                              '${ATStrings.codeHasBeenSent} $timeLeft ${timeLeft == 1 ? 'second' : 'seconds'}',
+                              style: context.textTheme.titleSmall,
+                            );
+                          }
+                        );
+                      }
+                      return RichText(
                         text: TextSpan(
                           children: <InlineSpan>[
                             TextSpan(
-                              text: ATStrings.DID_NOT_GET_CODE,
-                              style: Theme.of(context).textTheme.titleSmall
+                              text: ATStrings.didNotGetCode,
+                              style: context.textTheme.titleSmall
                             ),
                             TextSpan(
                               text: ATStrings.sendAgain,
-                              recognizer: _tapGestureRecognizer,
-                              style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                              recognizer: _tapGestureRecognizer..onTap = (){                                
+                                context.read<SendOtpCubit>().sendOtp(
+                                  param: <String, dynamic>{identifierKey: widget.params.identifier}
+                                );
+                                didSendAgainNotifier.value = true;
+                              },
+                              style: context.textTheme.titleSmall?.copyWith(
                                 decoration: TextDecoration.underline,
                                 fontWeight: ATFontWeights.w400,
                                 decorationColor: ATColors.white,
@@ -144,51 +164,56 @@ class _ATOTPScreenState extends State<ATOTPScreen> {
                             ),
                           ],
                         ),
-                      )
-                      : Text(
-                        '${ATStrings.CODE_SENT} ${state.timeLeft}',
-                        style: Theme.of(context).textTheme.titleSmall,
                       );
                     }
-                    return Container();
-                  }
-                ),
-              ],
+                  ),
+                ],
+              ),
             ),
           ),
-        ),
-
-        bottomSheet: Builder(
-          builder: (BuildContext context) {
-            final double bottom = MediaQuery.viewInsetsOf(context).bottom;
-            final double bottomPadding = bottom == 0 ? 60 : 15;
-            return Padding(
-              padding: EdgeInsets.fromLTRB(15, 0, 15, bottomPadding),
-              child: BlocConsumer<AmptiveOTPAuthBloc, AmptiveOTPAuthState>(
-                listener: (BuildContext context, AmptiveOTPAuthState state) {
-                  if (state is VerifiedOTPAuthState && context.mounted) {
-                    context.pushNamed(ATRoutes.PSWRD_AUTH_SCREEN,);
-                    //Remove this screen and the email input screen
-                    // context.pop(); context.pop(true);
+      
+          bottomSheet: Builder(
+            builder: (BuildContext context) {
+              final double bottom = MediaQuery.viewInsetsOf(context).bottom;
+              final double bottomPadding = bottom > 0 ? 10 : 50;
+              return Padding(
+                padding: EdgeInsets.fromLTRB(15, 0, 15, bottomPadding),
+                child: ValueListenableBuilder<bool>(
+                  valueListenable: activateBtnNotifier,
+                  builder: (_, bool shouldEnable, __) {
+                    return BlocConsumer<VerifyOtpCubit, ATAppState<dynamic>>(
+                      listener: (_, ATAppState<dynamic> state) {
+                        if(state is SuccessState<dynamic>){
+                          context.pop(true);
+                        }
+                        else if(state is FailureState<dynamic>){
+                          showAppNotification2(
+                            context: context,
+                            text: state.message,
+                            type: NotificationType.failure,
+                          );
+                        }
+                      },
+                      builder: (BuildContext context, ATAppState<dynamic> verifyOtpState) {       
+                        return ATPlainElevatedBtn(
+                          isLoading: verifyOtpState is LoadingState<dynamic>,
+                          onPressed: shouldEnable ? (){
+                            context.read<VerifyOtpCubit>().verifyOtp(
+                              param: <String, dynamic>{
+                                identifierKey: widget.params.identifier,
+                                'otp': widget.params.otp,
+                              },
+                            );
+                          } : null,
+                          btnTitle: ATStrings.next,
+                        );
+                      },
+                    );
                   }
-                },
-                buildWhen: (AmptiveOTPAuthState prev, AmptiveOTPAuthState curr) => curr is! AmptiveOTPCounterState,
-                builder: (BuildContext context, AmptiveOTPAuthState state) {
-                  return ATPlainElevatedBtn(
-                    onPressed:(){
-                      context.pop(widget.emailOrPhone);
-                    },
-                    // onPressed: state is! ValidOTPAuthState ? null:
-                    //   () => context.read<AmptiveOTPAuthBloc>().add(VerifyOTPAuthEvent()) ,
-                    btnTitle: ATStrings.NEXT,
-                    child: state is LoadingAuthState ? ATLoadingIndicator(
-                      color: ATColors.white,
-                    ) : null,
-                  );
-                },
-              ),
-            );
-          }
+                ),
+              );
+            }
+          ),
         ),
       ),
     );

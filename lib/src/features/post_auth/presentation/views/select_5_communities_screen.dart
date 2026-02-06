@@ -124,7 +124,7 @@ class _Select5CommunitiesScreenState extends State<Select5CommunitiesScreen> {
                                                 .add(
                                                     SelectPreferenceCompletedEvent());
                                           },
-                                          btnTitle: ATStrings.NEXT,
+                                          btnTitle: ATStrings.next,
                                         ),
                                       ),
                                     ),

@@ -51,7 +51,7 @@ class DotIndicatorRow extends StatelessWidget {
                 padding: const EdgeInsets.fromLTRB(10, 3, 10, 3),
                 color: ATColors.hex307FE2, radius: 30,
                 child: Text(
-                  isLast ? ATStrings.NEXT : ATStrings.SKIP,
+                  isLast ? ATStrings.next : ATStrings.SKIP,
                   style: Theme.of(context).textTheme.bodyMedium,
                 ),
               );

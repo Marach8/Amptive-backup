@@ -32,7 +32,7 @@ mixin ATValidators{
 
   String? validateField(String? text){
     if(text == null || text.isEmpty){
-      return ATStrings.EMPTY_FIELD;
+      return ATStrings.emptyField;
     }
     return null;
   }
@@ -53,7 +53,7 @@ mixin ATValidators{
     final RegExp regex = RegExp(r'^(?=.*[A-Z])(?=.*[a-z])(?=.*[!@#$%^&*(),.?":{}|<>]).{8,}$');
     
     if(password == null || password.isEmpty){
-      return ATStrings.EMPTY_FIELD;
+      return ATStrings.emptyField;
     }
     else if(!regex.hasMatch(password)){
       return ATStrings.WEAK_PSWRD;
@@ -65,10 +65,10 @@ mixin ATValidators{
     final RegExp regexExpression = RegExp(r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$');
 
     if(email == null || email.isEmpty){
-      return ATStrings.EMPTY_FIELD;
+      return ATStrings.emptyField;
     }
     else if(!regexExpression.hasMatch(email)){
-      return ATStrings.INVALID_EMAIL;
+      return ATStrings.invalidEmail;
     }
     return null;
   }

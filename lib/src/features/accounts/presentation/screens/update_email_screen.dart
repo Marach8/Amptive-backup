@@ -99,7 +99,7 @@ class _UpdateEmailScreenState extends State<UpdateEmailScreen> with ATValidators
                   return ATPlainElevatedBtn(
                     onPressed: isActive ? ()async {
                       final String? newEmail = await context.pushNamed(
-                        ATRoutes.OTP_SCREEN,
+                        ATRoutes.enterOtpScreen,
                         extra: <String>[
                           _controller.text.trim(),
                           widget.title

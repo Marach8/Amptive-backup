@@ -9,9 +9,9 @@ class ATRoutes {
   static const String EMAIL_SCREEN = "email_auth";
   static const String SELECT_5_COMMUNITIES_SCREEN = "preference";
   static const String AUTH_OPTIONS_SCREEN = "auth_screen";
-  static const String PSWRD_AUTH_SCREEN = "password_auth";
+  static const String createPasswordScreen = "password_auth";
   static const String DOB_AUTH_SCREEN = "dob_auth";
-  static const String OTP_SCREEN = "otp";
+  static const String enterOtpScreen = "otp";
   static const String ADD_NAME_AUTH_SCREEN = "name_auth";
   static const String ADD_USERNAME_AUTH_SCREEN = "username_auth";
   static const String ADD_FONE_NO_SCREEN = "add_phone_auth";

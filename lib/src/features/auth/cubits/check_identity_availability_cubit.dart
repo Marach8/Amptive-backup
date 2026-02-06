@@ -3,7 +3,7 @@ import 'package:amptive/src/config/api_response_and_app_state.dart';
 import 'package:amptive/src/features/auth/data/repository/auth_repo.dart';
 import 'package:amptive/src/features/auth/data/repository/auth_repo_impl.dart';
 
-class CheckIdentityAvailabilityCubit extends Cubit<AEAppState<bool>> {
+class CheckIdentityAvailabilityCubit extends Cubit<ATAppState<bool>> {
   CheckIdentityAvailabilityCubit({
     AuthRepo? mockAuthRepo,
   }) : authRepo = mockAuthRepo ?? AuthRepoImpl(),
@@ -21,6 +21,7 @@ class CheckIdentityAvailabilityCubit extends Cubit<AEAppState<bool>> {
   Future<void> checkIdentityAvailability({
     required Map<String, dynamic> param,
   }) async {
+    if(state is LoadingState<bool>) return;
     emit(const LoadingState<bool>());
     try {
       final ApiResponse<bool> response =

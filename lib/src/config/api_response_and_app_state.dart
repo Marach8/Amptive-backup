@@ -36,27 +36,27 @@ class Unsuccessful<T> extends ApiResponse<T> {
 
 
 //APP STATES
-sealed class AEAppState<T> {
-  const AEAppState();
+sealed class ATAppState<T> {
+  const ATAppState();
 }
 
-class InitialState<T> extends AEAppState<T> {
+class InitialState<T> extends ATAppState<T> {
   const InitialState({this.initialData});
   final T? initialData;
 }
 
-class LoadingState<T> extends AEAppState<T> {
+class LoadingState<T> extends ATAppState<T> {
   const LoadingState({this.currentData});
   final T? currentData;
 }
 
-class SuccessState<T> extends AEAppState<T> {
+class SuccessState<T> extends ATAppState<T> {
   const SuccessState({this.newData, this.message});
   final T? newData;
   final String? message;
 }
 
-class FailureState<T> extends AEAppState<T> {
+class FailureState<T> extends ATAppState<T> {
   const FailureState(
     this.message, {
     this.oldData,

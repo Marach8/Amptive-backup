@@ -136,7 +136,7 @@ class _AddDOBScreenState extends State<AddDOBScreen> {
               buildWhen: (AmptiveAuthState prev, AmptiveAuthState curr) => curr is EditDOBAuthState,
               builder: (BuildContext context, AmptiveAuthState state) {
                 return ATPlainElevatedBtn(
-                btnTitle: ATStrings.NEXT,
+                btnTitle: ATStrings.next,
                 onPressed: state is EditDOBAuthState && state.dob != null
                   ? () {
                       context.pushNamed(ATRoutes.ADD_USERNAME_AUTH_SCREEN);
