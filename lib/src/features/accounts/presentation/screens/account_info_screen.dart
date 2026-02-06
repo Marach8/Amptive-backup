@@ -42,7 +42,7 @@ class ATAccountInfoScreen extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 RenderRowInfo(
-                  title: ATStrings.EMAIL,
+                  title: ATStrings.email,
                   value: email ?? ATStrings.ADD_UR_EMAIL,
                   onTap: ()async{
                     bool? shouldUpdateEmail;
@@ -77,7 +77,7 @@ class ATAccountInfoScreen extends StatelessWidget {
                   }
                 ),
                 RenderRowInfo(
-                  title: ATStrings.FONE_NO,
+                  title: ATStrings.phoneNumber,
                   value: phone ?? ATStrings.ADD_UR_PHONE,
                   onTap: ()async{
                     bool? shouldUpdatePhone;

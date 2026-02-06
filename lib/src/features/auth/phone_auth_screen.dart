@@ -21,15 +21,15 @@ import '../../bloc/authentication/general/auth_events.dart';
 import '../../bloc/authentication/general/auth_states.dart';
 import '../post_auth/post_authentication_widgets/cupertino_phone_code_select.dart';
 
-class AddPhoneScreen extends StatefulWidget {
-  const AddPhoneScreen({super.key, this.title});
+class PhoneAuthScreen extends StatefulWidget {
+  const PhoneAuthScreen({super.key, this.title});
   final String? title;
 
   @override
-  State<AddPhoneScreen> createState() => _AddPhoneScreenState();
+  State<PhoneAuthScreen> createState() => _PhoneAuthScreenState();
 }
 
-class _AddPhoneScreenState extends State<AddPhoneScreen> {
+class _PhoneAuthScreenState extends State<PhoneAuthScreen> {
   bool _bottomSheetOpened = false;
   final TextEditingController _phoneController = TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
@@ -119,7 +119,7 @@ class _AddPhoneScreenState extends State<AddPhoneScreen> {
                         },
                         decoration: InputDecoration(
                           contentPadding: const EdgeInsets.fromLTRB(16, 12, 16, 12),
-                          hintText: ATStrings.FONE_NO,
+                          hintText: ATStrings.phoneNumber,
                           hintStyle: Theme.of(context).textTheme.labelMedium,
                           errorStyle: Theme.of(context).textTheme.headlineMedium?.copyWith(
                             color: ATColors.textRedColor,
@@ -164,7 +164,7 @@ class _AddPhoneScreenState extends State<AddPhoneScreen> {
                   ? () {
                     final String phoneNo = ATStrings.plus + selectedCountry.phoneCode + _phoneController.text.trim();
                     context.pushNamed(
-                      ATRoutes.OTP_SCREEN,
+                      ATRoutes.enterOtpScreen,
                       extra: <String>[phoneNo, widget.title ?? '']
                     );
                   } : null,

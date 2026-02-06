@@ -74,13 +74,13 @@ class _TempLoginScreenState extends State<TempLoginScreen> with ATValidators{
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 Text(
-                  ATStrings.UR_EMAIL,
+                  ATStrings.whatIsYourEmail,
                   style: Theme.of(context).textTheme.headlineMedium
                 ),
                 const SizedBox(height: 10),
                 ATTextFormField(
                   controller: _emailCntrl,
-                  hintText: ATStrings.ENTER_UR_EMAIL,
+                  hintText: ATStrings.enterYourEmail,
                   validator: validateEmail,
                   prefixIcon: const Padding(
                     padding: EdgeInsets.fromLTRB(10, 0, 10, 0),

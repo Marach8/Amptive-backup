@@ -1,4 +1,5 @@
 import 'package:amptive/src/config/config_export.dart';
+import 'package:amptive/src/views/widgets/common_widgets/loading_indicator.dart';
 import 'package:flutter/material.dart';
 
 class AmptiveElevatedButtonWidget extends StatelessWidget {
@@ -73,7 +74,8 @@ class ATPlainElevatedBtn extends StatelessWidget {
     this.bgColor,
     this.fgColor,
     this.child,
-    this.style
+    this.style,
+    this.isLoading = false,
   });
   
   final EdgeInsetsGeometry? padding;
@@ -83,21 +85,28 @@ class ATPlainElevatedBtn extends StatelessWidget {
   final Color? bgColor, fgColor;
   final Widget? child;
   final TextStyle? style;
+  final bool isLoading;
 
   @override
   Widget build(BuildContext context) {
-    return ElevatedButton(
-      onPressed: onPressed,
-      style: ElevatedButton.styleFrom(
-        padding: padding,
-        foregroundColor: fgColor,
-        backgroundColor: bgColor,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(30)
+    return AbsorbPointer(
+      absorbing: isLoading,
+      child: ElevatedButton(
+        onPressed: onPressed,
+        style: ElevatedButton.styleFrom(
+          padding: padding,
+          foregroundColor: fgColor,
+          backgroundColor: bgColor,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(30)
+          ),
+          fixedSize: Size(width ?? context.screenWidth, height ?? 54)
         ),
-        fixedSize: Size(width ?? context.screenWidth, height ?? 54)
+        child: isLoading ? ATLoadingIndicator(
+          color: fgColor ?? ATColors.white,
+          size: 30,
+        ) : (child ?? Text(btnTitle ?? '', style: style,))
       ),
-      child: child ?? Text(btnTitle ?? '', style: style,),
     );
   }
 }

@@ -87,7 +87,7 @@ Future<void> showEventPaymentFeeDialog({
                     keyboardType: TextInputType.number,
                     validator: (String? text) {
                       if (text?.isEmpty ?? false) {
-                        return ATStrings.EMPTY_FIELD;
+                        return ATStrings.emptyField;
                       }
                       return null;
                     },

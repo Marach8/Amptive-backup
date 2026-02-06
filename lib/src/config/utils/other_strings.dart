@@ -13,6 +13,7 @@ class ATStrings{
   static const String HASH = '#';
   static const String AT_SIGN = '@';
   static const String nairaText = '₦';
+  static const String accessToken = 'Access Token';
 
 
   static const String GO_LIVE_LIKE_NEVER_B4 = "Go Live, Like Never Before";
@@ -27,8 +28,8 @@ class ATStrings{
       "Tune into live audio shows and events.";
   static const String monetizeLiveAudioShowsAndEvents =
       "Monetizable Live Audio Shows & Events ";
-  static const String ENTER_CODE = 'Enter the 4 digit code we just sent to';
-  static const String NEXT = 'Next';
+  static const String enterCodeSentTo = 'Enter the 4 digit code we just sent to';
+  static const String next = 'Next';
   static const String SHOULD_REDIRECT = 'should Redirect';
   static const String IS_NEW_USER = 'Is First time user';
   static const String enterAmount = 'Enter Amount';
@@ -62,7 +63,7 @@ class ATStrings{
   static const String APPLE = 'Apple';
   static const String flutterWave = 'Flutterwave';
   static const String googlePay = 'Google Pay';
-  static const String EMAIL = 'Email';
+  static const String email = 'Email';
   static const String LIVE = 'Live';
   static const String ALL = 'All';
   static const String RECORDING_WILL_AUTOPLAY = 'Your recording will play in';
@@ -72,7 +73,7 @@ class ATStrings{
   static const String WITHDRAWAL_REQUEST_DESC = 'Your withdrawal request has been sent. You will be notified once it is processed.';
   static const String TRSF_SUCCESS_DESC = 'Funds have been sent successfully to ';
   static const String BANK_DETAIL_SAVED = 'Bank details saved';
-  static const String FONE_NO = 'Phone Number';
+  static const String phoneNumber = 'Phone Number';
   static const String SAVE_BANK_DETAILS_DESC = 'Do you want to save this bank detail to re-use it next time?';
   static const String SAVE_BANK_DETAILS = 'Save Bank Details';
   static const String FACEBOOK = 'Facebook';
@@ -125,12 +126,12 @@ class ATStrings{
   static const String ACCEPT_CHANGES = 'Accept Changes';
   static const String NO_WILL_BE_VERIFIED = 'This phone number will be verified in the next step.';
 
-  static const String UR_EMAIL = 'What is your email?';
+  static const String whatIsYourEmail = 'What is your email?';
   static const String COHOST = 'Cohost';
   static const String UR_PSWRD = 'What is your password?';
-  static const String ENTER_UR_EMAIL = 'Enter your email...';
+  static const String enterYourEmail = 'Enter your email...';
   static const String thisEmailWillBeVerified = 'This email will be verified in the next step';
-  static const String VERIFY_EMAIL = 'Verify email';
+  static const String verifyEmail = 'Verify email';
   static const String unblockDesc = 'will be able to follow, subscribe and see your app activities';
   static String unMuteDesc(String text) => "You will be able to see $text's app activities";
   static String enterLink(String link) => "Enter your $link link";
@@ -182,7 +183,7 @@ class ATStrings{
 
   static const String youEnteredInvalidCode = 'You entered an invalid code. ';
   static const String passwordMustBeAtleast8 = 'Your password must be at least 8 characters';
-  static const String DID_NOT_GET_CODE = "Didn't get the code? ";
+  static const String didNotGetCode = "Didn't get the code? ";
   static const String sendAgain = 'Send again';
   static const String SEND = 'Send';
   static const String SEND_GIFT = 'Send gift';
@@ -383,7 +384,7 @@ class ATStrings{
   static const String HELP_SUPPORT = 'Help & Support';
   static const String ABOUT = 'About';
   static const String LOGOUT = 'Log out';
-  static const String CODE_SENT = 'Code has been sent. You can request another in';
+  static const String codeHasBeenSent = 'Code has been sent. You can request another in';
   static const String SEE_COMMUNITIES = 'See communities on Amptive';
   static const String COMMUNITIES = 'Communities';
   static const String COMMUNITY = 'Community';
@@ -506,8 +507,8 @@ class ATStrings{
   static const String VIEW_EVENT_PAGE = 'View event page';
   static const String EVENT_SCHEDULED = 'Your Event is scheduled!';
   static const String SHARE_EVENT_LINK = 'Share your event link to build excitement and attract more attendees.';
-  static const String EMPTY_FIELD = 'Field(s) cannot be empty';
-  static const String INVALID_EMAIL = 'Please enter a valid email address!';
+  static const String emptyField = 'Field(s) cannot be empty';
+  static const String invalidEmail = 'Please enter a valid email address!';
   static const String WEAK_PSWRD = 'Password must contain at least one upper and lower case letters, one special character and must be at least 8 characters!';
   static const String SHARE_EVENT = 'Share event';
   static const String COMMENT = 'Comment';

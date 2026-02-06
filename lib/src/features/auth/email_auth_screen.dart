@@ -1,9 +1,9 @@
-import 'package:amptive/src/bloc/authentication/email/email_auth_states.dart';
-import 'package:amptive/src/services/auth/auth_field_service.dart';
-import 'package:amptive/src/config/utils/colors.dart';
-import 'package:amptive/src/config/utils/font_sizes.dart';
-import 'package:amptive/src/config/utils/font_weights.dart';
-import 'package:amptive/src/config/utils/other_strings.dart';
+import 'package:amptive/src/config/api_response_and_app_state.dart';
+import 'package:amptive/src/config/config_export.dart';
+import 'package:amptive/src/config/utils/dialogs/app_notification_dialog.dart';
+import 'package:amptive/src/features/auth/cubits/check_identity_availability_cubit.dart';
+import 'package:amptive/src/features/auth/cubits/send_otp_cubit.dart';
+import 'package:amptive/src/features/auth/otp_screen.dart';
 import 'package:amptive/src/views/widgets/common_widgets/annotated_region__widget.dart';
 import 'package:amptive/src/shared/elevated_button_widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/back_button.dart';
@@ -11,11 +11,8 @@ import 'package:amptive/src/views/widgets/common_widgets/loading_indicator.dart'
 import 'package:amptive/src/views/widgets/common_widgets/textformfield_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
-import '../../bloc/authentication/email/email_auth_bloc.dart';
-import '../../bloc/authentication/email/email_auth_events.dart';
-import '../../config/routing/route_strings.dart';
+import 'package:nested/nested.dart';
 import '../../views/widgets/common_widgets/app_bar_widget.dart';
 
 class ATEmailAuthScreen extends StatefulWidget {
@@ -26,18 +23,9 @@ class ATEmailAuthScreen extends StatefulWidget {
   State<ATEmailAuthScreen> createState() => _ATEmailAuthScreenState();
 }
 
-class _ATEmailAuthScreenState extends State<ATEmailAuthScreen> {
-  late AuthFieldService service;
+class _ATEmailAuthScreenState extends State<ATEmailAuthScreen> with ATValidators{
   final TextEditingController _controller = TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-
-  @override
-  void initState() {
-    super.initState();
-    service = GetIt.I<AuthFieldService>();
-    
-    
-  }
 
   @override
   void dispose() {
@@ -47,119 +35,141 @@ class _ATEmailAuthScreenState extends State<ATEmailAuthScreen> {
   }
 
   @override
-  Widget build(BuildContext context) {
-    return ATAnnotatedRegion(
-      child: Scaffold(
-        appBar: ATAppBar(
-          leading: const ATBackBtn(),
-          titleText: widget.title ?? ''
+  Widget build(_) {
+    return MultiBlocProvider(
+      providers: <SingleChildWidget>[
+        BlocProvider<CheckIdentityAvailabilityCubit>(
+          create:(_) => CheckIdentityAvailabilityCubit(),
         ),
-        body: SingleChildScrollView(
-          physics: const BouncingScrollPhysics(),
-          padding: const EdgeInsets.all(15),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              Text(
-                ATStrings.UR_EMAIL,
-                style: Theme.of(context).textTheme.headlineMedium
+        BlocProvider<SendOtpCubit>(create:(_) => SendOtpCubit()),
+      ],
+      child: Builder(
+        builder: (BuildContext context) {
+          return ATAnnotatedRegion(
+            child: Scaffold(
+              appBar: ATAppBar(
+                leading: const ATBackBtn(),
+                titleText: widget.title ?? ''
               ),
-              const SizedBox(height: 10),
+              body: SingleChildScrollView(
+                physics: const BouncingScrollPhysics(),
+                padding: const EdgeInsets.all(15),
+                child: Form(
+                  key: _formKey,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Text(
+                        ATStrings.whatIsYourEmail,
+                        style: context.textTheme.headlineMedium
+                      ),
+                      const SizedBox(height: 10),
+          
+                      ATTextFormField(
+                        controller: _controller,
+                        maxLines: 1,
+                        hintText: ATStrings.enterYourEmail,
+                        fillColor: ATColors.hex9E9E9E.withValues(alpha: 0.3),
+                        prefixIcon: const SizedBox(width: 10,),
+                        keyboardType: TextInputType.emailAddress,
+                        autoValidateMode: AutovalidateMode.disabled,
+                        validator: validateEmail,
+                        suffixIcon: Padding(
+                          padding: const EdgeInsets.only(right: 10),
+                          child: BlocConsumer<CheckIdentityAvailabilityCubit, ATAppState<bool>>(
+                            listener: (_, ATAppState<bool> state) {
+                              if(state is FailureState<bool>){
+                                showAppNotification2(
+                                  context: context,
+                                  text: state.message,
+                                  type: NotificationType.failure,
+                                );
+                              }
+                            },
+                            builder: (_, ATAppState<bool> state) => switch(state){
+                              InitialState<bool>() => const SizedBox.shrink(),
+                              LoadingState<bool>() => const ATLoadingIndicator(size: 20,),
+                              SuccessState<bool>() => Icon(
+                                Icons.check, color: ATColors.successColor,
+                              ),
+                              FailureState<bool>() => Icon(
+                                Icons.close, color: ATColors.textRedColor,
+                              )
+                            }
+                          ),
+                        ),
+                        onChanged: (String text){
+                          ATHelperFuncs.callDebouncer(
+                            1500,
+                            () => context.read<CheckIdentityAvailabilityCubit>()
+                              .checkIdentityAvailability(param: <String, dynamic>{'email': text})
+                          );
+                        }
+                      ),
+                      const SizedBox(height: 6,),
+                      Text(
+                        "This email will be verified in the next step.",
+                        style: context.textTheme.titleSmall,
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+           
+              bottomSheet: Builder(
+                builder: (BuildContext context) {
+                  final double bottom = MediaQuery.viewInsetsOf(context).bottom;
+                  final double bottomPad = bottom > 0 ? 10 : 50;
+                  return Padding(
+                    padding: EdgeInsets.fromLTRB(15, 0, 15, bottomPad),
+                    child: BlocBuilder<CheckIdentityAvailabilityCubit, ATAppState<bool>>(
+                      builder: (_, ATAppState<bool> state) {
+                        final bool shouldEnableBtn = state is SuccessState<bool>;
+                        return BlocConsumer<SendOtpCubit, ATAppState<String>>(
+                          listener: (_, ATAppState<String> sendOtpState) {
+                            if(sendOtpState is SuccessState<String>){
+                              final bool? didVerifyOTP = context.pushNamed(
+                                ATRoutes.enterOtpScreen,
+                                extra: VerifyOTPScreenParams(
+                                  verificationType: OTPVerificationType.email,
+                                  identifier: _controller.text.trim(),
+                                  title: widget.title,
+                                )
+                              ) as bool?;
 
-              Form(
-                key: _formKey,
-                child: BlocBuilder<ATEmailAuthBloc, ATAuthState>(
-                    builder: (_, ATAuthState state) {
-                  return ATTextFormField(
-                    controller: _controller, maxLines: 1,
-                    cursorColor: service.email.error == null
-                        ? ATColors.hex307FE2
-                        : ATColors.textRedColor,
-                    keyboardType: TextInputType.emailAddress,
-                    onChanged: (String currentText) {
-                      service.validateEmail(currentText);
-                      context.read<ATEmailAuthBloc>().add(
-                        EmailFieldChangedAuthEvent(currentTextEntered: currentText)
-                      );
-                    },
-                    decoration: InputDecoration(
-                      contentPadding: const EdgeInsets.fromLTRB(16, 12, 16, 12),
-                      hintText: ATStrings.ENTER_UR_EMAIL,
-                      hintStyle: TextStyle(
-                        fontSize: ATSizes.size16,
-                        color: ATColors.hexB6B6B6,
-                        fontWeight: ATFontWeights.w400,
-                      ),
-                      errorText: service.email.error,
-                      errorStyle: TextStyle(
-                        color: ATColors.textRedColor,
-                        fontSize: ATSizes.size12,
-                        fontWeight: ATFontWeights.w400,
-                      ),
-                      filled: true,
-                      fillColor: const Color(0xFF9E9E9E).withOpacity(0.3),
-                      focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(
-                          width: 2,
-                          color: service.email.error == null
-                              ? ATColors.hex307FE2
-                              : ATColors.textRedColor,
-                        ),
-                        borderRadius: BorderRadius.circular(14),
-                      ),
-                      border: OutlineInputBorder(
-                        borderSide: BorderSide(
-                          width: 2,
-                          color: ATColors.transparent,
-                        ),
-                        borderRadius: BorderRadius.circular(14),
-                      ),
+                              if(context.mounted && didVerifyOTP == true){
+                                context.pushNamed(ATRoutes.createPasswordScreen);
+                              }
+                            }
+                            else if(sendOtpState is FailureState<String>){
+                              showAppNotification2(
+                                context: context,
+                                text: sendOtpState.message,
+                                type: NotificationType.failure,
+                              );
+                            }
+                          },
+                          builder: (BuildContext context, ATAppState<String> sendOtpState) {                   
+                            return ATPlainElevatedBtn(
+                              isLoading: sendOtpState is LoadingState<String>,
+                              onPressed: shouldEnableBtn ? (){
+                                if(_formKey.currentState?.validate() ?? false){
+                                  context.read<SendOtpCubit>()
+                                    .sendOtp(param: <String, dynamic>{'email': _controller.text.trim()});
+                                }
+                              } : null,
+                              btnTitle: ATStrings.verifyEmail,
+                            );
+                          },
+                        );
+                      }
                     ),
                   );
-                }),
+                }
               ),
-              BlocBuilder<ATEmailAuthBloc, ATAuthState>(
-                  builder: (BuildContext context, ATAuthState state) {
-                int height = service.customEmailStatus.value != null ? 20 : 0;
-                return Container(
-                  height: height.toDouble(),
-                  margin: const EdgeInsets.symmetric(vertical: 11),
-                  child: Text(
-                    service.customEmailStatus.value ??
-                        ATStrings.empty,
-                    style: Theme.of(context).textTheme.titleSmall,
-                  ),
-                );
-              }),
-            ],
-          ),
-        ),
-
-        bottomSheet: Padding(
-          padding: const EdgeInsets.fromLTRB(15, 0, 15, 15),
-          child: BlocConsumer<ATEmailAuthBloc, ATAuthState>(
-            listener: (BuildContext context, ATAuthState state) {
-              if (state is ValidEmailAuthState && context.mounted) {
-                context.pushNamed(
-                  ATRoutes.OTP_SCREEN,
-                  extra: <String?>[_controller.text.trim(), widget.title]
-                );
-              }
-            },
-            builder: (BuildContext context, ATAuthState state) {
-              final bool enableBtn = service.isEmailValid;
-
-              return ATPlainElevatedBtn(
-                onPressed: !enableBtn ? null:
-                  () => context.read<ATEmailAuthBloc>().add(VerifyEmailAuthEvent()),
-                btnTitle: ATStrings.VERIFY_EMAIL,
-                child: state is LoadingAuthState ? ATLoadingIndicator(
-                  color: ATColors.white,
-                ) : null,
-              );
-            },
-          ),
-        ),
+            ),
+          );
+        }
       ),
     );
   }

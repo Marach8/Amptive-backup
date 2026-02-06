@@ -212,7 +212,7 @@ class _AddUsernameScreenState extends State<AddUsernameScreen> {
                       context.pushNamed(ATRoutes.ADD_NAME_AUTH_SCREEN);
                     }
                   : null,
-              btnTitle: ATStrings.NEXT,
+              btnTitle: ATStrings.next,
             );
           }),
         ),

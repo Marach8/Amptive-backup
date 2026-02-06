@@ -134,7 +134,7 @@ class _PasswordAuthScreenState extends State<PasswordAuthScreen> {
               return ATPlainElevatedBtn(
                 onPressed: state is! ValidPasswordAuthState ? null:
                   () => context.pushNamed(ATRoutes.DOB_AUTH_SCREEN),
-                btnTitle: ATStrings.NEXT,
+                btnTitle: ATStrings.next,
               );
             },
           ),

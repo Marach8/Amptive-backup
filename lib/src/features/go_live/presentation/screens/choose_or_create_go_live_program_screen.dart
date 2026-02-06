@@ -176,7 +176,7 @@ class ChooseOrCreateGoLiveProgramScreen extends StatelessWidget {
           bottomSheet: BlocBuilder<_PrivateBloc, String?>(
             builder: (_, String? selectedImgPath) {
               return ATBlurredBgBtn(
-                btnTitle: ATStrings.NEXT,
+                btnTitle: ATStrings.next,
                 onPressed: selectedImgPath == null ? null : (){
                   context.pushNamed(ATRoutes.SHOW_PREVIEW_SCREEN, extra: selectedImgPath);
                   //await showAddCoHostDialog(context);

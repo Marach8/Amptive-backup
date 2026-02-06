@@ -40,22 +40,21 @@ class ATAuthOptionsScreen extends StatelessWidget {
             child: Column(
               children: <Widget>[
                 ATPlainElevatedBtn(
-                  btnTitle: (isSignUp ? ATStrings.signUpWith : ATStrings.signInWith) + ATStrings.EMAIL,
+                  btnTitle: (isSignUp ? ATStrings.signUpWith : ATStrings.signInWith) + ATStrings.email,
                   onPressed: (){
                     if(isSignUp){
-                      context.pushNamed(ATRoutes.EMAIL_SCREEN);
+                      context.pushNamed(ATRoutes.emailScreen);
                     }
                     else{
-                      context.pushNamed(ATRoutes.TEMP_LOGIN_SCREEN);
+                      context.pushNamed(ATRoutes.temporaryLoginScreen);
                     }
                   }
                 ),
                 const SizedBox(height: 15,),
 
                 ATOutlinedBtn(
-                  btnTitle: (isSignUp ? ATStrings.signUpWith : ATStrings.signInWith) + ATStrings.FONE_NO,
-                  onPressed: (){},
-                  //onPressed: () => context.pushNamed(ATRoutes.ADD_FONE_NO_SCREEN)
+                  btnTitle: (isSignUp ? ATStrings.signUpWith : ATStrings.signInWith) + ATStrings.phoneNumber,
+                  onPressed: () => context.pushNamed(ATRoutes.phoneAuthScreen)
                 ),
 
                 const SizedBox(height: 20),

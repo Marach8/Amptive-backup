@@ -135,7 +135,7 @@ class _UpdatePhoneNoScreenState extends State<UpdatePhoneNoScreen> {
                       keyboardType: TextInputType.number,
                       cursorColor: ATColors.hex307FE2,
                       prefixIcon: const SizedBox(width: 10,),
-                      hintText: ATStrings.FONE_NO,
+                      hintText: ATStrings.phoneNumber,
                     ),
                   ),
                 ],
@@ -166,7 +166,7 @@ class _UpdatePhoneNoScreenState extends State<UpdatePhoneNoScreen> {
                   return ATPlainElevatedBtn(
                     onPressed: isActive ? ()async {
                       final String? newPhoneNumber = await context.pushNamed(
-                        ATRoutes.OTP_SCREEN,
+                        ATRoutes.enterOtpScreen,
                         extra: <String>[
                           '+${selectedCountry.phoneCode} ${_controller.text.trim()}',
                           widget.title
