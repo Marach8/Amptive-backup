@@ -13,6 +13,7 @@ class ATStrings{
   static const String HASH = '#';
   static const String AT_SIGN = '@';
   static const String nairaText = '₦';
+  static const String accessToken = 'Access Token';
 
 
   static const String GO_LIVE_LIKE_NEVER_B4 = "Go Live, Like Never Before";
@@ -125,10 +126,10 @@ class ATStrings{
   static const String ACCEPT_CHANGES = 'Accept Changes';
   static const String NO_WILL_BE_VERIFIED = 'This phone number will be verified in the next step.';
 
-  static const String UR_EMAIL = 'What is your email?';
+  static const String whatIsYourEmail = 'What is your email?';
   static const String COHOST = 'Cohost';
   static const String UR_PSWRD = 'What is your password?';
-  static const String ENTER_UR_EMAIL = 'Enter your email...';
+  static const String enterYourEmail = 'Enter your email...';
   static const String thisEmailWillBeVerified = 'This email will be verified in the next step';
   static const String VERIFY_EMAIL = 'Verify email';
   static const String unblockDesc = 'will be able to follow, subscribe and see your app activities';
