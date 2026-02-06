@@ -28,8 +28,8 @@ import 'package:amptive/src/features/accounts/presentation/screens/account_info_
 import 'package:amptive/src/features/accounts/presentation/screens/acounts_landing_screen.dart';
 import 'package:amptive/src/features/switch_account/presentation/switch_acct/switch_acct_export.dart';
 import 'package:amptive/src/features/wallet/presentation/screens/wallet_transactions_history_screen.dart';
-import 'package:amptive/src/features/onboarding/presentation/views/onboarding_screen.dart';
-import 'package:amptive/src/features/onboarding/presentation/views/post_onboarding_screen.dart';
+import 'package:amptive/src/features/onboarding/presentation/screens/onboarding_screen.dart';
+import 'package:amptive/src/features/onboarding/presentation/screens/post_onboarding_screen.dart';
 import 'package:custom_image_crop/custom_image_crop.dart' show Ratio;
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -71,16 +71,16 @@ final GoRouter amptiveAppRouter = GoRouter(
       ),
     ),
     GoRoute(
-      name: ATRoutes.EMAIL_SCREEN,
-      path: ATRoutes.EMAIL_SCREEN.addSlash,
+      name: ATRoutes.emailScreen,
+      path: ATRoutes.emailScreen.addSlash,
       pageBuilder: (_, GoRouterState st) => ATSlidingRouteTransition<void>(
         child: ATEmailAuthScreen(title: st.extra as String?)
       )
     ),
     
     GoRoute(
-      name: ATRoutes.TEMP_LOGIN_SCREEN,
-      path: ATRoutes.TEMP_LOGIN_SCREEN.addSlash,
+      name: ATRoutes.temporaryLoginScreen,
+      path: ATRoutes.temporaryLoginScreen.addSlash,
       pageBuilder: (_, GoRouterState st) => ATSlidingRouteTransition<void>(
         child: const TempLoginScreen()
       )
@@ -96,10 +96,10 @@ final GoRouter amptiveAppRouter = GoRouter(
       }
     ),
     GoRoute(
-      name: ATRoutes.ADD_FONE_NO_SCREEN,
-      path: ATRoutes.ADD_FONE_NO_SCREEN.addSlash,
+      name: ATRoutes.phoneAuthScreen,
+      path: ATRoutes.phoneAuthScreen.addSlash,
       pageBuilder: (_, GoRouterState st) => ATSlidingRouteTransition<void>(
-        child: AddPhoneScreen(title: st.extra as String?),
+        child: PhoneAuthScreen(title: st.extra as String?),
       )
     ),
 

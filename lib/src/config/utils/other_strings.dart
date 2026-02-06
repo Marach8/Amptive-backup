@@ -63,7 +63,7 @@ class ATStrings{
   static const String APPLE = 'Apple';
   static const String flutterWave = 'Flutterwave';
   static const String googlePay = 'Google Pay';
-  static const String EMAIL = 'Email';
+  static const String email = 'Email';
   static const String LIVE = 'Live';
   static const String ALL = 'All';
   static const String RECORDING_WILL_AUTOPLAY = 'Your recording will play in';
@@ -73,7 +73,7 @@ class ATStrings{
   static const String WITHDRAWAL_REQUEST_DESC = 'Your withdrawal request has been sent. You will be notified once it is processed.';
   static const String TRSF_SUCCESS_DESC = 'Funds have been sent successfully to ';
   static const String BANK_DETAIL_SAVED = 'Bank details saved';
-  static const String FONE_NO = 'Phone Number';
+  static const String phoneNumber = 'Phone Number';
   static const String SAVE_BANK_DETAILS_DESC = 'Do you want to save this bank detail to re-use it next time?';
   static const String SAVE_BANK_DETAILS = 'Save Bank Details';
   static const String FACEBOOK = 'Facebook';

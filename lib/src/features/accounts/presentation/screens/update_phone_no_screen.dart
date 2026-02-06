@@ -135,7 +135,7 @@ class _UpdatePhoneNoScreenState extends State<UpdatePhoneNoScreen> {
                       keyboardType: TextInputType.number,
                       cursorColor: ATColors.hex307FE2,
                       prefixIcon: const SizedBox(width: 10,),
-                      hintText: ATStrings.FONE_NO,
+                      hintText: ATStrings.phoneNumber,
                     ),
                   ),
                 ],

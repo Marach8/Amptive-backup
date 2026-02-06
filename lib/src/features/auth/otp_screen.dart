@@ -45,7 +45,8 @@ class ATOTPScreen extends StatefulWidget {
 }
 
 class _ATOTPScreenState extends State<ATOTPScreen> {
-  final ValueNotifier<bool> activateBtnNotifier = ValueNotifier<bool>(false);
+  final ValueNotifier<({bool otpcorrect, bool notresendingotp})> activateBtnNotifier =
+      ValueNotifier<({bool otpcorrect, bool notresendingotp})>((otpcorrect: false, notresendingotp: false));
   final ValueNotifier<bool> didSendAgainNotifier = ValueNotifier<bool>(false);
   final TapGestureRecognizer _tapGestureRecognizer = TapGestureRecognizer();
   final int countDownStart = 10;
@@ -97,10 +98,20 @@ class _ATOTPScreenState extends State<ATOTPScreen> {
                 children: <Widget>[
                   BlocListener<SendOtpCubit, ATAppState<String>>(
                     listener: (_, ATAppState<String> sendOtpState) {
+                      final ({bool notresendingotp, bool otpcorrect})
+                        currentState = activateBtnNotifier.value;
                       if(sendOtpState is LoadingState<String>){
-                        activateBtnNotifier.value = false;
+                        activateBtnNotifier.value = (
+                          otpcorrect: currentState.otpcorrect,
+                          notresendingotp: false
+                        );
                       }
-                      else{activateBtnNotifier.value = true;}
+                      else{
+                        activateBtnNotifier.value = (
+                          otpcorrect: currentState.otpcorrect,
+                          notresendingotp: true
+                        );
+                      }
                     },
                     child: Text(
                       '${ATStrings.enterCodeSentTo} ${widget.params.identifier}',
@@ -113,12 +124,14 @@ class _ATOTPScreenState extends State<ATOTPScreen> {
                   const SizedBox(height: 11),
                   ATOTPFieldsWidget(
                     onPinComplete: (String pin) async{
-                      if(pin == widget.params.otp){
-                        activateBtnNotifier.value = true;
-                        return true;
-                      }
-                      activateBtnNotifier.value = false;
-                      return false;
+                      final bool isCorrect = pin == widget.params.otp;
+                      final ({bool notresendingotp, bool otpcorrect}) 
+                        currentState = activateBtnNotifier.value;
+                      activateBtnNotifier.value = (
+                        otpcorrect: isCorrect,
+                        notresendingotp: currentState.notresendingotp
+                      );
+                      return isCorrect;
                     },
                   ),
       
@@ -178,9 +191,10 @@ class _ATOTPScreenState extends State<ATOTPScreen> {
               final double bottomPadding = bottom > 0 ? 10 : 50;
               return Padding(
                 padding: EdgeInsets.fromLTRB(15, 0, 15, bottomPadding),
-                child: ValueListenableBuilder<bool>(
+                child: ValueListenableBuilder<({bool otpcorrect, bool notresendingotp})>(
                   valueListenable: activateBtnNotifier,
-                  builder: (_, bool shouldEnable, __) {
+                  builder: (_, ({bool otpcorrect, bool notresendingotp}) state, __) {
+                    final bool shouldEnable = state.otpcorrect && state.notresendingotp;
                     return BlocConsumer<VerifyOtpCubit, ATAppState<dynamic>>(
                       listener: (_, ATAppState<dynamic> state) {
                         if(state is SuccessState<dynamic>){

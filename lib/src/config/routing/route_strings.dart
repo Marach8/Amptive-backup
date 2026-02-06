@@ -6,7 +6,7 @@ class ATRoutes {
   static const String ONBOARDING_SCREEN = "onboarding";
 
   //AUTHENTICATION
-  static const String EMAIL_SCREEN = "email_auth";
+  static const String emailScreen = "email_auth";
   static const String SELECT_5_COMMUNITIES_SCREEN = "preference";
   static const String AUTH_OPTIONS_SCREEN = "auth_screen";
   static const String createPasswordScreen = "password_auth";
@@ -14,8 +14,8 @@ class ATRoutes {
   static const String enterOtpScreen = "otp";
   static const String ADD_NAME_AUTH_SCREEN = "name_auth";
   static const String ADD_USERNAME_AUTH_SCREEN = "username_auth";
-  static const String ADD_FONE_NO_SCREEN = "add_phone_auth";
-  static const String TEMP_LOGIN_SCREEN = 'temporary_login';
+  static const String phoneAuthScreen = "add_phone_auth";
+  static const String temporaryLoginScreen = 'temporary_login';
 
   //POST AUTHENTICATION
   static const String ADD_PROFILE_PIC_SCREEN = "add_profile_pic";
