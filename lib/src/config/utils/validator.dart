@@ -72,5 +72,14 @@ mixin ATValidators{
     }
     return null;
   }
-}
 
+  String? validatePhoneNumber(String? phoneNumber){
+    if(phoneNumber == null || phoneNumber.isEmpty){
+      return ATStrings.emptyField;
+    }
+    else if(phoneNumber.length < 10  || phoneNumber.length > 11){
+      return ATStrings.invalidPhone;
+    }
+    return null;
+  }
+}

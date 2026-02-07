@@ -124,7 +124,7 @@ class ATStrings{
   static const String DELETE_SUB_PLAN = 'Delete subscription plan?';
   static const String DELETE_SUB_PLAN_DESC = 'Deleting plan will grant listeners free access to your shows.';
   static const String ACCEPT_CHANGES = 'Accept Changes';
-  static const String NO_WILL_BE_VERIFIED = 'This phone number will be verified in the next step.';
+  static const String no_will_be_verified = 'This phone number will be verified in the next step.';
 
   static const String whatIsYourEmail = 'What is your email?';
   static const String COHOST = 'Cohost';
@@ -250,7 +250,7 @@ class ATStrings{
   static const String personalizingYourExperience = "Personalizing your experience...";
 
   static const String countryPickers  = 'country_pickers';
-  static const String VERIFY_FONE  = 'Verify phone number';
+  static const String verify_fone  = 'Verify phone number';
   static const String UR_FON_NUMBER = "What is your phone number?";
 
   static const String ALLOW  = 'Allow';
@@ -509,6 +509,7 @@ class ATStrings{
   static const String SHARE_EVENT_LINK = 'Share your event link to build excitement and attract more attendees.';
   static const String emptyField = 'Field(s) cannot be empty';
   static const String invalidEmail = 'Please enter a valid email address!';
+  static const String invalidPhone = 'Please enter a valid phone number!';
   static const String WEAK_PSWRD = 'Password must contain at least one upper and lower case letters, one special character and must be at least 8 characters!';
   static const String SHARE_EVENT = 'Share event';
   static const String COMMENT = 'Comment';
