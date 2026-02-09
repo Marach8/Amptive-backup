@@ -77,7 +77,7 @@ mixin ATValidators{
     if(phoneNumber == null || phoneNumber.isEmpty){
       return ATStrings.emptyField;
     }
-    else if(phoneNumber.length < 10  || phoneNumber.length > 11){
+    else if(phoneNumber.length != 10){
       return ATStrings.invalidPhone;
     }
     return null;
