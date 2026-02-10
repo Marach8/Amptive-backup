@@ -142,7 +142,7 @@ class _UpdatePhoneNoScreenState extends State<UpdatePhoneNoScreen> {
               ),
 
               Text(
-                ATStrings.NO_WILL_BE_VERIFIED,
+                ATStrings.no_will_be_verified,
                 style: context.textTheme.titleSmall?.copyWith(
                   height: 1.5, fontSize: ATSizes.size11,
                 ),
