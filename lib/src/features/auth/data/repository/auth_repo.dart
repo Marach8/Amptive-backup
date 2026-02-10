@@ -9,4 +9,7 @@ abstract class AuthRepo {
 
   Future<ApiResponse<dynamic>> verifyOtp({
     required Map<String, dynamic> param});
+
+   Future<ApiResponse<String>> registerUser({
+    required Map<String, dynamic> param}); 
 }

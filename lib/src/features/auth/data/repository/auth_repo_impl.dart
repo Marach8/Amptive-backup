@@ -74,4 +74,25 @@ class AuthRepoImpl implements AuthRepo {
       );
     }
   }
+
+  @override
+  Future<ApiResponse<String>> registerUser({
+    required Map<String, dynamic> param,
+  }) async {
+    try {
+      final Response<dynamic> response = await networkService.post(
+        ATEndpoints.registerUser,
+        data: param,
+      );
+      final String? data = response.data['data'] as String?;
+
+      return Successful<String>(data: data ?? '') ;
+    } catch (e) {
+      log('Error in registering user: $e');
+      return Unsuccessful<String>(
+        error: ATException.resolveException(e),
+      );
+    }
+}
+
 }
