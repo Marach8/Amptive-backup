@@ -46,7 +46,7 @@ class ATOTPScreen extends StatefulWidget {
 
 class _ATOTPScreenState extends State<ATOTPScreen> {
   final ValueNotifier<({bool otpcorrect, bool notresendingotp})> activateBtnNotifier =
-      ValueNotifier<({bool otpcorrect, bool notresendingotp})>((otpcorrect: false, notresendingotp: false));
+      ValueNotifier<({bool otpcorrect, bool notresendingotp})>((otpcorrect: false, notresendingotp: true));
   final ValueNotifier<bool> didSendAgainNotifier = ValueNotifier<bool>(false);
   final TapGestureRecognizer _tapGestureRecognizer = TapGestureRecognizer();
   final int countDownStart = 10;

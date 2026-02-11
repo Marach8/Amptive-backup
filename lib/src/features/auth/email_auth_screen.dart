@@ -134,6 +134,7 @@ class _ATEmailAuthScreenState extends State<ATEmailAuthScreen> with ATValidators
                                   verificationType: OTPVerificationType.email,
                                   identifier: _controller.text.trim(),
                                   title: widget.title,
+                                  otp: sendOtpState.newData
                                 )
                               ) as bool?;
 
