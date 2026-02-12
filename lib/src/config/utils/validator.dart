@@ -37,17 +37,23 @@ mixin ATValidators{
     return null;
   }
 
-  // String? validateUsername(String? username){
-  //   final RegExp regex = RegExp(r'^[a-zA-Z0-9_]{3,30}$');
+  String? validateUsername(String? username){
+    final RegExp regex = RegExp(r'^[a-zA-Z0-9_]{3,30}$');
     
-  //   if(username == null || username.isEmpty){
-  //     return ATStrings.EMPTY_FIELD;
-  //   }
-  //   else if(!regex.hasMatch(username)){
-  //     return ATStrings.INVALID_USERNAME;
-  //   }
-  //   return null;
-  // }
+    if(username == null || username.isEmpty){
+      return ATStrings.empty_username;
+    }
+    else if(!regex.hasMatch(username)){
+      return ATStrings.invalid_username;
+    }
+    return null;
+  }
+
+   String? validateName(String? name){    
+    if(name == null || name.isEmpty){
+      return ATStrings.empty_username;
+    } return null;
+   }
 
   String? validatePassword(String? password){
     final RegExp regex = RegExp(r'^(?=.*[A-Z])(?=.*[a-z])(?=.*[!@#$%^&*(),.?":{}|<>]).{8,}$');

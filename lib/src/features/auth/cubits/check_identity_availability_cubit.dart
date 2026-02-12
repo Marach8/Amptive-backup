@@ -42,4 +42,6 @@ class CheckIdentityAvailabilityCubit extends Cubit<ATAppState<bool>> {
       );
     }
   }
+
+  
 }

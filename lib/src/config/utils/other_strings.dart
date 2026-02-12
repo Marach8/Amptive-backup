@@ -198,20 +198,21 @@ class ATStrings{
   static const String DONE = 'Done';
 
   static const String noteAboutProfilePic = "Note that this will appear on your profile.";
-  static const String TERMS_OF_SERVICE = "Terms of Service";
+  static const String terms_of_service = "Terms of Service";
   static const String enterYourName = 'Enter your name';
   static const String whatIsYourName = 'What is your name?';
-  static const String CREATE_ACCT = 'Create account';
-  static const String PRIVACY_POLICY = 'Privacy Policy.';
+  static const String create_acct = 'Create account';
+  static const String privacy_policy = 'Privacy Policy.';
   static const String createSchedule = 'Create a Schedule';
   static const String SUB_OVERVIEW = 'Subscription Plan Overview';
   static const String SUB_OVERVIEW_DESC = 'Only subscribers will have access to your shows';
-  static const String BY_CLICKING_ON_CREATE_ACCT = 'By clicking on ‘Create account’, you agree to the';
+  static const String by_clicking_on_create_acct = 'By clicking on ‘Create account’, you agree to the';
 
-  static const String CHECKER_LOADING = "Checker is loading...";
+  static const String checker_loading = "Checker is loading...";
   static const String correctAnswer = 'Answer is correct';
   static const String INCORRECT_ANS = 'Answer is incorrect!';
-  static const String USERNAME_AVAILABLE ="Username is available";
+  static const String username_available ="Username is available";
+  static const String username_taken ="Username is already taken";
   static const String whatShouldWeCallYou ="What should we call you?";
   static const String ROLE = 'message notifier';
   static const String ALLOWED_AUD_MIC = "You allowed audience microphone";
@@ -353,7 +354,9 @@ class ATStrings{
   static const String privacy = 'Privacy';
   static const String EDIT_PROFILE = 'Edit Profile';
   static const String ABT_U = 'About you';
-  static const String USERNAME = 'Username';
+  static const String username = 'Username';
+  static const String empty_username= 'Please enter a username';
+  static const String invalid_username= 'Please enter a valid username';
   static const String NAME = 'Name';
   static const String TITLE_OF_UR_SHOW = 'What is the title of your show?';
   static const String TELL_LISTENERS_ABOUT_SHOW = 'Tell your listeners what your show is about.';

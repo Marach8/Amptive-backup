@@ -55,7 +55,7 @@ class _EditNameScreen extends State<EditUsernameScreen> {
           leadingWidth: 30,
           padding: EdgeInsets.only(left: 7),
           leading: ATRoundedBackBtn(),
-          titleText: ATStrings.USERNAME
+          titleText: ATStrings.username
         ),
         body: Padding(
           padding: const EdgeInsets.fromLTRB(15, 10, 15, 0),
@@ -86,8 +86,8 @@ class _EditNameScreen extends State<EditUsernameScreen> {
               BlocBuilder<AmptiveAuthBloc, AmptiveAuthState>(
                 builder: (_, AmptiveAuthState state) {
                   return Text(
-                    (state is VerifyingUsernameState) ? ATStrings.CHECKER_LOADING 
-                      : (state is UsernameVerifiedState) ? ATStrings.USERNAME_AVAILABLE : '',
+                    (state is VerifyingUsernameState) ? ATStrings.checker_loading 
+                      : (state is UsernameVerifiedState) ? ATStrings.username_available : '',
                     style: Theme.of(context).textTheme.titleSmall?.copyWith(
                       fontSize: ATSizes.size11,
                       color: state is UsernameVerifiedState ? ATColors.hex54C981 : null

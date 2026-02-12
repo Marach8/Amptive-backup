@@ -1,9 +1,8 @@
-import 'package:amptive/src/services/auth/auth_field_service.dart';
-import 'package:amptive/src/config/utils/font_sizes.dart';
-import 'package:amptive/src/config/utils/font_weights.dart';
-import 'package:amptive/src/config/utils/other_strings.dart';
+import 'package:amptive/src/config/api_response_and_app_state.dart';
+import 'package:amptive/src/config/config_export.dart';
 import 'package:amptive/src/config/routing/route_strings.dart';
-import 'package:amptive/src/config/utils/colors.dart';
+import 'package:amptive/src/features/auth/cubits/check_identity_availability_cubit.dart';
+import 'package:amptive/src/features/auth/cubits/register_user_cubit.dart';
 import 'package:amptive/src/views/widgets/common_widgets/annotated_region__widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/app_bar_widget.dart';
 import 'package:amptive/src/shared/elevated_button_widget.dart';
@@ -12,12 +11,8 @@ import 'package:amptive/src/views/widgets/common_widgets/textformfield_widget.da
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
-
-import '../../bloc/authentication/general/auth_bloc.dart';
-import '../../bloc/authentication/general/auth_events.dart';
-import '../../bloc/authentication/general/auth_states.dart';
+import 'package:nested/nested.dart';
 
 class AddUsernameScreen extends StatefulWidget {
   const AddUsernameScreen({super.key});
@@ -26,196 +21,213 @@ class AddUsernameScreen extends StatefulWidget {
   State<AddUsernameScreen> createState() => _AddUsernameScreenState();
 }
 
-class _AddUsernameScreenState extends State<AddUsernameScreen> {
-  late final AuthFieldService service;
-
-  TextEditingController usernameController = TextEditingController();
-  bool _isLoading = false;
-
+class _AddUsernameScreenState extends State<AddUsernameScreen> with ATValidators {
+  final TextEditingController usernameController = TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   @override
-  void initState() {
-    service = GetIt.I<AuthFieldService>();
-    super.initState();
+  void dispose() {
+    usernameController.dispose();
+    super.dispose();
   }
 
   @override
-  Widget build(BuildContext context) {
-    return ATAnnotatedRegion(
-      child: Scaffold(
-        backgroundColor: ATColors.hex0D0D0D,
-        appBar: const ATAppBar(leading: ATBackBtn(),),
-        body: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 20.h),
-          child: BlocListener<AmptiveAuthBloc, AmptiveAuthState>(
-            listener: (BuildContext context, AmptiveAuthState state) {
-              if (state is VerifyingUsernameState) {
-                _isLoading = true;
-              } else if (state is UsernameVerifiedState) {
-                _isLoading = false;
-              }
-            },
-            child: Form(
-              key: _formKey,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Text(
-                    ATStrings.whatShouldWeCallYou,
-                    style: Theme.of(context).textTheme.headlineMedium?.copyWith(
-                          fontSize: ATSizes.size17,
-                        ),
-                  ),
-                  SizedBox(
-                    height: 11.h,
-                  ),
-                  BlocBuilder<AmptiveAuthBloc, AmptiveAuthState>(
-                      buildWhen: (AmptiveAuthState p, AmptiveAuthState current) {
-                    return true;
-                  }, builder: (_, AmptiveAuthState state) {
-                    return ATTextFormField(
-                      controller: usernameController,
-                      onChanged: (String val) {
-                        context
-                            .read<AmptiveAuthBloc>()
-                            .add(UsernameChangedEvent(val));
-                      },
-                      keyboardType: TextInputType.text,
-                      cursorColor: service.username.error == null
-                          ? ATColors.hex307FE2
-                          : ATColors.textRedColor,
-                      decoration: InputDecoration(
-                        contentPadding: EdgeInsets.symmetric(
-                            vertical: 12.h, horizontal: 16.w),
-                        prefixIcon: Container(
-                          padding: EdgeInsets.symmetric(
-                              vertical: 12.h, horizontal: 16.w),
-                          child: Text(
-                            ATStrings.emailSymbol,
-                            style: Theme.of(context).textTheme.headlineMedium,
-                          ),
-                        ),
-                        suffix: _isLoading
-                            ? SizedBox(
-                                width: 18,
-                                height: 18,
-                                child: CircularProgressIndicator(
-                                  color: ATColors.hex307FE2,
-                                  backgroundColor: ATColors.hex307FE2
-                                      .withOpacity(0.5),
-                                  strokeWidth: 3.w,
+  Widget build(_) {
+    return MultiBlocProvider(
+      providers: <SingleChildWidget>[
+        BlocProvider<CheckIdentityAvailabilityCubit>(
+          create: (_) => CheckIdentityAvailabilityCubit(),
+        ),
+      ],
+      child: Builder(
+        builder: (BuildContext context) {
+          return ATAnnotatedRegion(
+            child: Scaffold(
+              backgroundColor: ATColors.hex0D0D0D,
+              appBar: const ATAppBar(
+                leading: ATBackBtn(),
+              ),
+              body: Padding(
+                padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 20.h),
+                child: BlocConsumer<CheckIdentityAvailabilityCubit, ATAppState<bool>>(
+                  listener: (_, ATAppState<bool> state) {},
+                  builder: (_, ATAppState<bool> availabilityState) {
+                    final bool isLoading = availabilityState is LoadingState<bool>;
+                    final bool isAvailable = availabilityState is SuccessState<bool> && availabilityState.newData == true;
+                    final bool isTaken = availabilityState is SuccessState<bool> && availabilityState.newData == false;
+                    final bool isError = availabilityState is FailureState<bool>;
+
+                    return Form(
+                      key: _formKey,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          Text(
+                            ATStrings.whatShouldWeCallYou,
+                            style: Theme.of(context).textTheme.headlineMedium?.copyWith(
+                                  fontSize: ATSizes.size17,
                                 ),
-                              )
-                            : null,
-                        suffixIcon: _isLoading
-                            ? null
-                            : service.isUsernameValid
-                                ? Container(
-                                    alignment: Alignment.center,
-                                    width: 20,
-                                    height: 20,
-                                    child: Icon(
-                                      Icons.check,
+                          ),
+                          SizedBox(
+                            height: 11.h,
+                          ),
+                          ATTextFormField(
+                            controller: usernameController,
+                            onChanged: (String val) {
+                              context.read<RegisterUserCubit>().setUsername(val);
+                              ATHelperFuncs.callDebouncer(
+                                1500,
+                                () => context
+                                    .read<CheckIdentityAvailabilityCubit>()
+                                    .checkIdentityAvailability(param: <String, dynamic>{'username': val}),
+                              );
+                            },
+                            keyboardType: TextInputType.text,
+                            cursorColor: isTaken || isError ? ATColors.textRedColor : ATColors.hex307FE2,
+                            decoration: InputDecoration(
+                              contentPadding: EdgeInsets.symmetric(
+                                  vertical: 12.h, horizontal: 16.w),
+                              prefixIcon: Container(
+                                padding: EdgeInsets.symmetric(
+                                    vertical: 12.h, horizontal: 16.w),
+                                child: Text(
+                                  ATStrings.emailSymbol,
+                                  style: Theme.of(context).textTheme.headlineMedium,
+                                ),
+                              ),
+                              suffix: isLoading
+                                  ? SizedBox(
+                                      width: 18,
+                                      height: 18,
+                                      child: CircularProgressIndicator(
+                                        color: ATColors.hex307FE2,
+                                        backgroundColor: ATColors.hex307FE2
+                                            .withOpacity(0.5),
+                                        strokeWidth: 3.w,
+                                      ),
+                                    )
+                                  : null,
+                              suffixIcon: isLoading
+                                  ? null
+                                  : isAvailable
+                                      ? Container(
+                                          alignment: Alignment.center,
+                                          width: 20,
+                                          height: 20,
+                                          child: Icon(
+                                            Icons.check,
+                                            color: ATColors.successColor,
+                                          ),
+                                        )
+                                      : (isTaken || isError)
+                                          ? Container(
+                                              alignment: Alignment.center,
+                                              width: 20,
+                                              height: 20,
+                                              child: Icon(
+                                                Icons.close,
+                                                color: ATColors.textRedColor,
+                                              ),
+                                            )
+                                          : null,
+                              hintText: ATStrings.username,
+                              hintStyle: Theme.of(context).textTheme.labelMedium,
+                              filled: true,
+                              fillColor: ATColors.hex9E9E9E.withOpacity(0.3),
+                              focusedBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                  width: 2.w,
+                                  color: isTaken || isError
+                                      ? ATColors.textRedColor
+                                      : ATColors.hex307FE2,
+                                ),
+                                borderRadius: BorderRadius.circular(14.r),
+                              ),
+                              border: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                  width: 2.w,
+                                  color: ATColors.transparent,
+                                ),
+                                borderRadius: BorderRadius.circular(14.r),
+                              ),
+                            ),
+                          ),
+                          Visibility(
+                            visible: isLoading,
+                            child: Container(
+                              height: 20.h,
+                              margin: EdgeInsets.symmetric(vertical: 11.h),
+                              child: Text(
+                                ATStrings.checker_loading,
+                                style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                                      fontWeight: ATFontWeights.w500,
+                                    ),
+                              ),
+                            ),
+                          ),
+                          Visibility(
+                            visible: !isLoading && isAvailable,
+                            child: Container(
+                              margin: EdgeInsets.symmetric(vertical: 11.h),
+                              child: Text(
+                                ATStrings.username_available,
+                                style: Theme.of(context).textTheme.titleSmall?.copyWith(
                                       color: ATColors.successColor,
                                     ),
-                                  )
-                                : service.isUsernameInvalid
-                                    ? Container(
-                                        alignment: Alignment.center,
-                                        width: 20,
-                                        height: 20,
-                                        child: Icon(
-                                          Icons.close,
-                                          color: ATColors.textRedColor,
-                                        ),
-                                      )
-                                    : null,
-                        hintText: ATStrings.USERNAME,
-                        hintStyle: Theme.of(context).textTheme.labelMedium,
-                        filled: true,
-                        fillColor: ATColors.hex9E9E9E.withOpacity(0.3),
-                        focusedBorder: OutlineInputBorder(
-                          borderSide: BorderSide(
-                            width: 2.w,
-                            color: service.username.error == null
-                                ? ATColors.hex307FE2
-                                : ATColors.textRedColor,
+                              ),
+                            ),
                           ),
-                          borderRadius: BorderRadius.circular(14.r),
-                        ),
-                        border: OutlineInputBorder(
-                          borderSide: BorderSide(
-                            width: 2.w,
-                            color: ATColors.transparent,
+                          Visibility(
+                            visible: !isLoading && !isAvailable,
+                            child: Container(
+                              margin: EdgeInsets.symmetric(vertical: 11.h),
+                              child: Text(
+                                isTaken
+                                    ? ATStrings.username_taken
+                                    : (isError ? availabilityState.message : ATStrings.empty),
+                                style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                                      color: ATColors.textRedColor,
+                                    ),
+                              ),
+                            ),
                           ),
-                          borderRadius: BorderRadius.circular(14.r),
-                        ),
+                          Expanded(
+                            child: SizedBox(
+                              height: 1.h,
+                            ),
+                          ),
+                        ],
                       ),
                     );
-                  }),
-                  Visibility(
-                    visible: _isLoading,
-                    child: Container(
-                      height: 20.h,
-                      margin: EdgeInsets.symmetric(vertical: 11.h),
-                      child: Text(
-                        ATStrings.CHECKER_LOADING,
-                        style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                              fontWeight: ATFontWeights.w500,
-                            ),
-                      ),
+                  },
+                ),
+              ),
+              bottomSheet: Builder(
+                builder: (BuildContext context) {
+                  return Padding(
+                    padding: const EdgeInsets.all(15),
+                    child: BlocBuilder<CheckIdentityAvailabilityCubit, ATAppState<bool>>(
+                      builder: (_, ATAppState<bool> availabilityState) {
+                        final bool isAvailable = availabilityState is SuccessState<bool> && availabilityState.newData == true;
+                        return ATPlainElevatedBtn(
+                          onPressed: isAvailable
+                              ? () {
+                                  if (_formKey.currentState?.validate() ?? false) {
+                                    context.read<RegisterUserCubit>().setUsername(usernameController.text);
+                                    context.pushNamed(ATRoutes.ADD_NAME_AUTH_SCREEN);
+                                  }
+                                }
+                              : null,
+                          btnTitle: ATStrings.next,
+                        );
+                      },
                     ),
-                  ),
-                  Visibility(
-                    visible: !_isLoading && service.isUsernameValid,
-                    child: Container(
-                      margin: EdgeInsets.symmetric(vertical: 11.h),
-                      child: Text(
-                        ATStrings.USERNAME_AVAILABLE,
-                        style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                              color: ATColors.successColor,
-                            ),
-                      ),
-                    ),
-                  ),
-                  Visibility(
-                    visible: !_isLoading && !service.isUsernameValid,
-                    child: Container(
-                      margin: EdgeInsets.symmetric(vertical: 11.h),
-                      child: Text(
-                        service.username.error ?? ATStrings.empty,
-                        style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                              color: ATColors.textRedColor,
-                            ),
-                      ),
-                    ),
-                  ),
-                  Expanded(
-                    child: SizedBox(
-                      height: 1.h,
-                    ),
-                  ),
-                ],
+                  );
+                },
               ),
             ),
-          ),
-        ),
-
-        bottomSheet: Padding(
-          padding: const EdgeInsets.all(15),
-          child: BlocBuilder<AmptiveAuthBloc, AmptiveAuthState>(
-              builder: (BuildContext context, AmptiveAuthState state) {
-            return ATPlainElevatedBtn(
-              onPressed: service.isUsernameValid
-                  ? () {
-                      context.pushNamed(ATRoutes.ADD_NAME_AUTH_SCREEN);
-                    }
-                  : null,
-              btnTitle: ATStrings.next,
-            );
-          }),
-        ),
+          );
+        },
       ),
     );
   }

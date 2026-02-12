@@ -81,7 +81,7 @@ class ATEnterAccountNoScreen extends StatelessWidget {
                         }
                         else if(state == 0){
                           return Text(
-                            ATStrings.CHECKER_LOADING,
+                            ATStrings.checker_loading,
                             style: context.textTheme.bodySmall?.copyWith(
                               fontSize: ATSizes.size11
                             ),

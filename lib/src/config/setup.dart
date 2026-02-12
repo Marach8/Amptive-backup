@@ -29,6 +29,7 @@ import '../bloc/main_app/go_live_bloc/host_view/notifications_bloc.dart';
 import '../bloc/main_app/profile/private_account_bloc.dart';
 import '../bloc/main_app/profile/profile_followers_bloc.dart';
 import '../features/calender/cubits/calender_programs_bloc.dart';
+import '../features/auth/cubits/register_user_cubit.dart';
 import '../features/calender/cubits/selected_calender_date_bloc.dart';
 import '../bloc/main_app/profile/profile_menu/language_bloc.dart';
 import '../bloc/onboarding_bloc/onboarding_bloc.dart';
@@ -76,5 +77,6 @@ List<SingleChildWidget> providers() {
     BlocProvider(create: (_) => AccountTypeBloc()),
     BlocProvider(create: (_) => CohostServiceBloc()),
     BlocProvider(create: (_) => HashtagServiceBloc()),
+    BlocProvider(create: (_) => RegisterUserCubit())
   ];
 }

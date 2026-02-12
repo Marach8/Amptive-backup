@@ -1,7 +1,9 @@
-import 'package:amptive/src/bloc/authentication/general/auth_events.dart';
-import 'package:amptive/src/bloc/authentication/password/password_auth_states.dart';
+import 'package:amptive/src/config/api_response_and_app_state.dart';
+import 'package:amptive/src/config/config_export.dart';
 import 'package:amptive/src/config/routing/route_strings.dart';
 import 'package:amptive/src/config/utils/colors.dart';
+import 'package:amptive/src/features/auth/cubits/register_user_cubit.dart';
+import 'package:amptive/src/features/auth/data/models/user_data.dart';
 import 'package:amptive/src/views/widgets/common_widgets/annotated_region__widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/back_button.dart';
 import 'package:amptive/src/views/widgets/common_widgets/textformfield_widget.dart';
@@ -10,10 +12,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../bloc/authentication/general/auth_bloc.dart';
-import '../../bloc/authentication/general/auth_states.dart';
-import '../../bloc/authentication/password/password_auth_bloc.dart';
-import '../../bloc/authentication/password/password_auth_events.dart';
 import '../../config/utils/other_strings.dart';
 import '../../views/widgets/common_widgets/app_bar_widget.dart';
 import '../../shared/elevated_button_widget.dart';
@@ -25,22 +23,30 @@ class PasswordAuthScreen extends StatefulWidget {
   State<PasswordAuthScreen> createState() => _PasswordAuthScreenState();
 }
 
-class _PasswordAuthScreenState extends State<PasswordAuthScreen> {
+class _PasswordAuthScreenState extends State<PasswordAuthScreen> with ATValidators{
   bool _passwordVisible = false;
-  TextEditingController passwordController = TextEditingController();
-
+  final TextEditingController passwordController = TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   @override
-  void initState() {
-    super.initState();
+  void dispose() {
+    passwordController.dispose();
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
+    final ATAppState<UserData> state = context.watch<RegisterUserCubit>().state;
+  
+    final bool isError = state is FailureState<UserData>;
+    final bool isSuccess = state is SuccessState<UserData>;
+
     return ATAnnotatedRegion(
       child: Scaffold(
-        appBar: const ATAppBar(leading: ATBackBtn(),),
+        backgroundColor: ATColors.hex0D0D0D,
+        appBar: const ATAppBar(
+          leading: ATBackBtn(),
+        ),
         body: Form(
           key: _formKey,
           child: SingleChildScrollView(
@@ -53,99 +59,85 @@ class _PasswordAuthScreenState extends State<PasswordAuthScreen> {
                   ATStrings.createPasswordForAccount,
                   style: Theme.of(context).textTheme.headlineMedium,
                 ),
-                SizedBox(
-                  height: 11.h,
-                ),
-                BlocBuilder<AmptiveAuthBloc, AmptiveAuthState>(
-                    buildWhen: (AmptiveAuthState previous, AmptiveAuthState current) =>
-                        current is HideOrShowPasswordAuthState,
-                    builder: (_, AmptiveAuthState state) {
-                      if (state is HideOrShowPasswordAuthState) {
-                        // toggle password visibility
-                        _passwordVisible = !_passwordVisible;
-                      }
-                      return ATTextFormField(
-                        controller: passwordController,
-                        onChanged: (String value) {
-                          // trigger password changed event
-                          context
-                              .read<AmptivePasswordAuthBloc>()
-                              .add(PasswordChangedAuthEvent(value: value));
-                        },
-                        obscureText: !_passwordVisible, maxLines: 1,
-                        keyboardType: TextInputType.visiblePassword,
-                        cursorColor: ATColors.hex307FE2,
-                        decoration: InputDecoration(
-                          contentPadding: EdgeInsets.symmetric(
-                              vertical: 12.h, horizontal: 16.w),
-                          hintText: ATStrings.ENTER_UR_PSWRD,
-                          hintStyle: Theme.of(context).textTheme.labelMedium,
-                          filled: true,
-                          fillColor:
-                              ATColors.hex9E9E9E.withOpacity(0.3),
-                          focusedBorder: buildOutlineInputBorder(),
-                          border: OutlineInputBorder(
-                            borderSide: BorderSide(
-                              width: 2.w,
-                              color: ATColors.transparent,
-                            ),
-                            borderRadius: BorderRadius.circular(14.r),
-                          ),
-                          suffixIcon: IconButton(
-                            icon: Padding(
-                              padding: EdgeInsets.only(right: 16.0.w),
-                              child: Icon(
-                                _passwordVisible
-                                    ? Icons.visibility_off
-                                    : Icons.visibility,
-                                color: ATColors.white,
-                              ),
-                            ),
-                            onPressed: () {
-                              context
-                                  .read<AmptiveAuthBloc>()
-                                  .add(HideOrShowPasswordAuthEvent());
-                            },
-                          ),
+                SizedBox(height: 11.h),
+                ATTextFormField(
+                  controller: passwordController,
+                  validator: validatePassword,
+                  onChanged: (String value) {
+                    context.read<RegisterUserCubit>().setPassword(value);
+                  },
+                  obscureText: !_passwordVisible,
+                  maxLines: 1,
+                  keyboardType: TextInputType.visiblePassword,
+                  cursorColor: isError ? ATColors.textRedColor : ATColors.hex307FE2,
+                  decoration: InputDecoration(
+                    contentPadding: EdgeInsets.symmetric(
+                        vertical: 12.h, horizontal: 16.w),
+                    hintText: ATStrings.ENTER_UR_PSWRD,
+                    hintStyle: Theme.of(context).textTheme.labelMedium,
+                    filled: true,
+                    fillColor: ATColors.hex9E9E9E.withOpacity(0.3),
+                    focusedBorder: buildOutlineInputBorder(isError),
+                    border: OutlineInputBorder(
+                      borderSide: BorderSide(
+                        width: 2.w,
+                        color: ATColors.transparent,
+                      ),
+                      borderRadius: BorderRadius.circular(14.r),
+                    ),
+                    suffixIcon: IconButton(
+                      icon: Padding(
+                        padding: EdgeInsets.only(right: 16.0.w),
+                        child: Icon(
+                          _passwordVisible
+                              ? Icons.visibility_off
+                              : Icons.visibility,
+                          color: ATColors.white,
                         ),
-                      );
-                    }),
-                BlocBuilder<AmptivePasswordAuthBloc, AmptivePasswordAuthState>(
-                    builder: (_, AmptivePasswordAuthState state) {
-                  double height = state.error != null ? 20.h : 0.h;
-                  return Container(
-                    height: height,
+                      ),
+                      onPressed: () {
+                        setState(() {
+                          _passwordVisible = !_passwordVisible;
+                        });
+                      },
+                    ),
+                  ),
+                ),
+                Visibility(
+                  visible: isError,
+                  child: Container(
+                    height: 20.h,
                     margin: EdgeInsets.symmetric(vertical: 11.h),
                     child: Text(
-                      state.error ?? ATStrings.empty,
-                      style: Theme.of(context).textTheme.titleSmall,
+                      isError ? state.message : ATStrings.empty,
+                      style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                            color: ATColors.textRedColor,
+                          ),
                     ),
-                  );
-                }),
+                  ),
+                ),
               ],
             ),
           ),
         ),
-
         bottomSheet: Padding(
           padding: const EdgeInsets.fromLTRB(15, 10, 15, 10),
-          child: BlocBuilder<AmptivePasswordAuthBloc, AmptivePasswordAuthState>(
-            builder: (BuildContext context, AmptivePasswordAuthState state) {
-              return ATPlainElevatedBtn(
-                onPressed: state is! ValidPasswordAuthState ? null:
-                  () => context.pushNamed(ATRoutes.DOB_AUTH_SCREEN),
-                btnTitle: ATStrings.next,
-              );
-            },
+          child: ATPlainElevatedBtn(
+            onPressed: (_formKey.currentState?.validate() ?? false)
+        ? ()  => context.pushNamed(ATRoutes.DOB_AUTH_SCREEN)
+                : null,
+            btnTitle: ATStrings.next,
           ),
         ),
       ),
     );
   }
 
-  OutlineInputBorder buildOutlineInputBorder() {
+  OutlineInputBorder buildOutlineInputBorder(bool isError) {
     return OutlineInputBorder(
-      borderSide: BorderSide(width: 2.w, color: ATColors.hex307FE2),
+      borderSide: BorderSide(
+          width: 2.w,
+          color: isError ? ATColors.textRedColor : ATColors.hex307FE2),
       borderRadius: BorderRadius.circular(14.r),
     );
   }
