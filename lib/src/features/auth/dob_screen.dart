@@ -212,6 +212,6 @@ class _AddDOBScreenState extends State<AddDOBScreen> {
     );
   }
 
-  String _formatDate(DateTime date) =>
-      "${DateFormat('MMMM', 'en_US').format(date)} ${date.day} ${date.year}";
-}
+  String _formatDate(DateTime date) => 
+    "${date.year}-${date.month.toString().padLeft(2, '0')}-${date.day.toString().padLeft(2, '0')}";
+    }

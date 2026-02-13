@@ -54,9 +54,8 @@ class RegisterUserCubit extends Cubit<ATAppState<UserData>> {
     final UserData registerData = getCurrentData();
     print("Email: ${registerData.email}, dob: ${registerData.dob} , password: ${registerData.password}, User: ${registerData.username}, Name: ${registerData.name}  phone: ${registerData.phoneNumber}", );
 
-    if (registerData.email.isEmpty ||
-        registerData.phoneNumber.isEmpty ||
-        registerData.name.isEmpty ||
+    if (
+         registerData.name.isEmpty ||
         registerData.password.isEmpty ||
         registerData.dob.isEmpty ||
         registerData.username.isEmpty) {
@@ -71,24 +70,24 @@ class RegisterUserCubit extends Cubit<ATAppState<UserData>> {
 
     try {
       final Map<String, String> param = <String, String>{
-        'email': registerData.email,
-        'phone_number': registerData.phoneNumber,
+       if ( registerData.email != null) 'email': registerData.email!,
+        if (registerData.phoneNumber != null)'phone_number': registerData.phoneNumber!,
         'name': registerData.name,
         'password': registerData.password,
         'dob': registerData.dob,
         'username': registerData.username,
       };
 
-      final ApiResponse<String> response = await authRepo.registerUser(param: param);
+      final ApiResponse<dynamic> response = await authRepo.registerUser(param: param);
 
       response.when(
-        successful: (Successful<String> data) {
+        successful: (Successful<dynamic> data) {
           emit(SuccessState<UserData>(
             newData: registerData,
             message: data.data,
           ));
         },
-        unSuccessful: (Unsuccessful<String> error) {
+        unSuccessful: (Unsuccessful<dynamic> error) {
           emit(FailureState<UserData>(
             error.error.message,
             oldData: registerData,

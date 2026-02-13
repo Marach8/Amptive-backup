@@ -1,23 +1,23 @@
 class UserData {
   const UserData({
-    this.email = '',
-    this.phoneNumber = '',
+    this.email,
+    this.phoneNumber, 
     this.name = '',
     this.password = '',
     this.dob = '',
     this.username = '',
     this.loading = false,
-    this.error,
+    
   });
 
-  final String email;
-  final String phoneNumber;
+  final String? email;
+  final String? phoneNumber;
   final String name;
   final String password;
   final String dob;
   final String username;
   final bool loading;
-  final String? error;
+ 
 
   UserData copyWith({
     String? email,
@@ -27,7 +27,7 @@ class UserData {
     String? dob,
     String? username,
     bool? loading,
-    String? error,
+  
   }) {
     return UserData(
       email: email ?? this.email,
@@ -37,7 +37,7 @@ class UserData {
       dob: dob ?? this.dob,
       username: username ?? this.username,
       loading: loading ?? this.loading,
-      error: error ?? this.error,
+      
     );
   }
 

@@ -1,4 +1,5 @@
 import 'package:amptive/src/config/api_response_and_app_state.dart';
+import 'package:amptive/src/config/utils/dialogs/app_notification_dialog.dart';
 import 'package:amptive/src/config/utils/utils_export.dart';
 import 'package:amptive/src/config/routing/route_strings.dart';
 import 'package:amptive/src/features/auth/cubits/register_user_cubit.dart';
@@ -25,8 +26,10 @@ class AddNameScreen extends StatefulWidget {
 class _AddNameScreenState extends State<AddNameScreen> with ATValidators {
   late TextEditingController nameController;
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  
-  bool _isFormValid = false;
+  final ValueNotifier<bool> _isFormValid = ValueNotifier<bool>(false);
+  bool _isSubmitted = false;
+  bool _isRegistering = false;
+
 
   @override
   void initState() {
@@ -42,8 +45,6 @@ class _AddNameScreenState extends State<AddNameScreen> with ATValidators {
 
   @override
   Widget build(BuildContext context) {
-    // Removed the local BlocProvider. This screen now correctly uses the 
-    // RegisterUserCubit provided at the root of the auth flow.
     return ATAnnotatedRegion(
       child: Scaffold(
         backgroundColor: ATColors.hex0D0D0D,
@@ -71,9 +72,9 @@ class _AddNameScreenState extends State<AddNameScreen> with ATValidators {
                   controller: nameController,
                   validator: validateField,
                   onChanged: (String val) {
-                    setState(() {
-                      _isFormValid = _formKey.currentState?.validate() ?? false;
-                    });
+                    
+                      _isFormValid.value = _formKey.currentState?.validate() ?? false;
+                  
                     context.read<RegisterUserCubit>().setName(val);
                   },
                   keyboardType: TextInputType.text,
@@ -115,47 +116,69 @@ class _AddNameScreenState extends State<AddNameScreen> with ATValidators {
             ),
           ),
         ),
-        bottomSheet: BlocBuilder<RegisterUserCubit, ATAppState<UserData>>(
-          builder: (BuildContext context, ATAppState<UserData> state) {
-            final bool isLoading = state is LoadingState<UserData>;
-
-            return Padding(
-              padding: const EdgeInsets.all(15),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                spacing: 20,
-                children: <Widget>[
-                  ATRichText(
-                    items: <String, TextStyle>{
-                      '${ATStrings.by_clicking_on_create_acct} ': context.textTheme.titleSmall!.copyWith(
-                        fontSize: ATSizes.size11
-                      ),
-                      ATStrings.terms_of_service: context.textTheme.displayMedium!.copyWith(
-                        fontSize: ATSizes.size11
-                      ),
-                      ' and ': context.textTheme.titleSmall!.copyWith(
-                        fontSize: ATSizes.size11
-                      ),
-                      ATStrings.privacy_policy: context.textTheme.displayMedium!.copyWith(
-                        fontSize: ATSizes.size11
-                      ),
-                    },
-                  ),
-                  ATPlainElevatedBtn(
-                    btnTitle: ATStrings.create_acct,
-                    isLoading: isLoading,
-                    onPressed: (_isFormValid && !isLoading)
-                        ? () async {
-                            final cubit = context.read<RegisterUserCubit>();
-                            cubit.setName(nameController.text);
-                            await cubit.registerUser();
-                          }
-                        : null,
-                  ),
-                ],
-              ),
-            );
+        bottomSheet: BlocListener<RegisterUserCubit, ATAppState<UserData>>(
+          listener: (BuildContext context, ATAppState<UserData> state) {
+            if (_isSubmitted && _isRegistering && state is SuccessState<UserData>) {
+              _isRegistering = false;
+              context.pushNamed(ATRoutes.ADD_PROFILE_PIC_SCREEN);
+            } else if (state is FailureState<UserData>) {
+              _isSubmitted = false;
+              _isRegistering = false;
+              showAppNotification2(
+                context: context, text: state.message,
+                type: NotificationType.failure);
+            }
           },
+          child: BlocBuilder<RegisterUserCubit, ATAppState<UserData>>(
+            builder: (BuildContext context, ATAppState<UserData> state) {
+              final bool isLoading = state is LoadingState<UserData>;
+
+              return Padding(
+                padding: const EdgeInsets.all(15),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  spacing: 20,
+                  children: <Widget>[
+                    ATRichText(
+                      items: <String, TextStyle>{
+                        '${ATStrings.by_clicking_on_create_acct} ': context.textTheme.titleSmall!.copyWith(
+                          fontSize: ATSizes.size11
+                        ),
+                        ATStrings.terms_of_service: context.textTheme.displayMedium!.copyWith(
+                          fontSize: ATSizes.size11
+                        ),
+                        ' and ': context.textTheme.titleSmall!.copyWith(
+                          fontSize: ATSizes.size11
+                        ),
+                        ATStrings.privacy_policy: context.textTheme.displayMedium!.copyWith(
+                          fontSize: ATSizes.size11
+                        ),
+                      },
+                    ),
+                    
+                    ValueListenableBuilder<bool>(
+                      valueListenable: _isFormValid,
+                      builder: (context, _isValid,  _) {
+                      return ATPlainElevatedBtn(
+                        btnTitle: ATStrings.create_acct,
+                        isLoading: isLoading,
+                        onPressed: (_isValid && !isLoading)
+                            ? () async {
+                                _isRegistering = true;
+                                _isSubmitted = true;
+                                final RegisterUserCubit cubit = context.read<RegisterUserCubit>();
+                                cubit.setName(nameController.text);
+                                await cubit.registerUser();
+                              }
+                            : null,
+                      );
+                      }
+                    ),
+                  ],
+                ),
+              );
+            },
+          ),
         ),
       ),
     );

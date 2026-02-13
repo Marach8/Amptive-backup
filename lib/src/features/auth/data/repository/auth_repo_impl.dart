@@ -76,7 +76,7 @@ class AuthRepoImpl implements AuthRepo {
   }
 
   @override
-  Future<ApiResponse<String>> registerUser({
+  Future<ApiResponse<dynamic>> registerUser({
     required Map<String, dynamic> param,
   }) async {
     try {
@@ -84,12 +84,11 @@ class AuthRepoImpl implements AuthRepo {
         ATEndpoints.registerUser,
         data: param,
       );
-      final String? data = response.data['data'] as String?;
-
-      return Successful<String>(data: data ?? '') ;
+    
+      return Successful<dynamic>(data: response.data ) ;
     } catch (e) {
       log('Error in registering user: $e');
-      return Unsuccessful<String>(
+      return Unsuccessful<dynamic>(
         error: ATException.resolveException(e),
       );
     }
