@@ -1,4 +1,3 @@
-
 import 'dart:developer' show log;
 
 import 'package:amptive/src/config/api_response_and_app_state.dart';
@@ -35,7 +34,6 @@ class AuthRepoImpl implements AuthRepo {
     }
   }
 
-
   @override
   Future<ApiResponse<String>> sendOtp({
     required Map<String, dynamic> param,
@@ -69,6 +67,25 @@ class AuthRepoImpl implements AuthRepo {
       return Successful<dynamic>(data: response.data);
     } catch (e) {
       log('Verify OTP error: $e');
+      return Unsuccessful<dynamic>(
+        error: ATException.resolveException(e),
+      );
+    }
+  }
+
+  @override
+  Future<ApiResponse<dynamic>> loginUser({
+    required Map<String, dynamic> param,
+  }) async {
+    try {
+      final Response<dynamic> response = await networkService.post(
+        ATEndpoints.login,
+        data: param,
+      );
+
+      return Successful<dynamic>(data: response.data);
+    } catch (e) {
+      log('Unable to log in user: $e');
       return Unsuccessful<dynamic>(
         error: ATException.resolveException(e),
       );

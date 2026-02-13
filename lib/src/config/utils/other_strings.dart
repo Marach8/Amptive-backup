@@ -127,6 +127,7 @@ class ATStrings{
   static const String no_will_be_verified = 'This phone number will be verified in the next step.';
 
   static const String whatIsYourEmail = 'What is your email?';
+  static const String WhatIsYourPhoneNumber ='What is your phone number?';
   static const String COHOST = 'Cohost';
   static const String UR_PSWRD = 'What is your password?';
   static const String enterYourEmail = 'Enter your email...';

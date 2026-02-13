@@ -54,7 +54,13 @@ class ATAuthOptionsScreen extends StatelessWidget {
 
                 ATOutlinedBtn(
                   btnTitle: (isSignUp ? ATStrings.signUpWith : ATStrings.signInWith) + ATStrings.phoneNumber,
-                  onPressed: () => context.pushNamed(ATRoutes.phoneAuthScreen)
+                  onPressed: () {
+                    if (isSignUp){
+                     context.pushNamed(ATRoutes.phoneAuthScreen);
+                     } else {
+                      context.pushNamed(ATRoutes.phoneLoginScreen);
+                     }
+                     }
                 ),
 
                 const SizedBox(height: 20),
