@@ -81,7 +81,7 @@ class _DescriptionWidgetState extends State<_DescriptionWidget> with WidgetsBind
                   child: Padding(
                     padding: const EdgeInsets.fromLTRB(10, 3, 10, 3),
                     child: Text(
-                      ATStrings.DONE,
+                      ATStrings.done,
                       style: Theme.of(context).textTheme.bodyMedium,
                     ),
                   ),
@@ -97,7 +97,7 @@ class _DescriptionWidgetState extends State<_DescriptionWidget> with WidgetsBind
                   padding: const EdgeInsets.fromLTRB(10, 3, 10, 3),
                   color: ATColors.hex307FE2, radius: 30,
                   child: Text(
-                    ATStrings.DONE,
+                    ATStrings.done,
                     style: Theme.of(context).textTheme.bodyMedium,
                   ),
                 )

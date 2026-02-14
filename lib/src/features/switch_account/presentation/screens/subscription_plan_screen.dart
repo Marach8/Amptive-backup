@@ -85,7 +85,7 @@ class CreatorSubPlanScreen extends StatelessWidget {
                         context.pushNamed(ATRoutes.CO_HOST_FEE_SETUP);
                       }
                     } : null,
-                    btnTitle: is4rmProgramCreation ? ATStrings.DONE : ATStrings.SETUP_COHOST_FEE
+                    btnTitle: is4rmProgramCreation ? ATStrings.done : ATStrings.SETUP_COHOST_FEE
                   ),
                   if(!hideSetupLaterBtn) const SizedBox(height: 15),
                   hideSetupLaterBtn ? const SizedBox.shrink() : InkWell(

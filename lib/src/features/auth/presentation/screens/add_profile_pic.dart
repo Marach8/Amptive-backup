@@ -6,7 +6,7 @@ import 'package:amptive/src/features/post_auth/post_authentication_widgets/add_p
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import '../../config/utils/font_sizes.dart';
+import '../../../../config/utils/font_sizes.dart';
 
 class AddProfilePictureScreen extends StatefulWidget {
   const AddProfilePictureScreen({super.key});

@@ -2,17 +2,17 @@ import 'dart:io';
 import 'package:amptive/src/config/routing/routing_export.dart';
 import 'package:amptive/src/features/accounts/presentation/screens/update_email_screen.dart';
 import 'package:amptive/src/features/accounts/presentation/screens/update_phone_no_screen.dart';
-import 'package:amptive/src/features/auth/phone_auth_screen.dart';
-import 'package:amptive/src/features/auth/temp_login_screen.dart';
+import 'package:amptive/src/features/auth/presentation/screens/phone_auth_screen.dart';
+import 'package:amptive/src/features/auth/presentation/screens/temp_login_screen.dart';
 import 'package:amptive/src/config/utils/extensions/string_extensions.dart';
-import 'package:amptive/src/features/auth/dob_screen.dart';
-import 'package:amptive/src/features/auth/email_auth_screen.dart';
-import 'package:amptive/src/features/auth/name_auth_screen.dart';
-import 'package:amptive/src/features/auth/otp_screen.dart';
-import 'package:amptive/src/features/auth/password_auth_screen.dart';
-import 'package:amptive/src/features/auth/add_profile_pic.dart';
-import 'package:amptive/src/features/auth/auth_options_screen.dart';
-import 'package:amptive/src/features/auth/username_auth_screen.dart';
+import 'package:amptive/src/features/auth/presentation/screens/dob_screen.dart';
+import 'package:amptive/src/features/auth/presentation/screens/email_auth_screen.dart';
+import 'package:amptive/src/features/auth/presentation/screens/name_auth_screen.dart';
+import 'package:amptive/src/features/auth/presentation/screens/otp_screen.dart';
+import 'package:amptive/src/features/auth/presentation/screens/password_auth_screen.dart';
+import 'package:amptive/src/features/auth/presentation/screens/add_profile_pic.dart';
+import 'package:amptive/src/features/auth/presentation/screens/auth_options_screen.dart';
+import 'package:amptive/src/features/auth/presentation/screens/username_auth_screen.dart';
 import 'package:amptive/src/features/calender/presentation/screens/calender_landing_screen.dart';
 import 'package:amptive/src/features/discover/presentation/views/society_screen.dart';
 import 'package:amptive/src/features/discover/presentation/views/trending_hashtags_screen.dart';
@@ -128,15 +128,15 @@ final GoRouter amptiveAppRouter = GoRouter(
     ),
 
     GoRoute(
-      name: ATRoutes.DOB_AUTH_SCREEN,
-      path: ATRoutes.DOB_AUTH_SCREEN.addSlash,
+      name: ATRoutes.dobAuthScreen,
+      path: ATRoutes.dobAuthScreen.addSlash,
       pageBuilder: (_, __) => ATSlidingRouteTransition<void>(
         child: const AddDOBScreen(),
       )
     ),
     GoRoute(
-      name: ATRoutes.ADD_USERNAME_AUTH_SCREEN,
-      path: ATRoutes.ADD_USERNAME_AUTH_SCREEN.addSlash,
+      name: ATRoutes.addUserNameScreen,
+      path: ATRoutes.addUserNameScreen.addSlash,
       pageBuilder: (_, __) => ATSlidingRouteTransition<void>(
         child: const AddUsernameScreen(),
       )

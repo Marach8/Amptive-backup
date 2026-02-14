@@ -56,7 +56,7 @@ class GoLiveOnboardingBottomSheet extends StatelessWidget {
                             context.read<GoLiveOnboardBloc>().setStage(OnboardStage.isGoingLive);
                           }
                         } : null,
-                        btnTitle: shouldRecord ? ATStrings.RECORD : ATStrings.DONE,
+                        btnTitle: shouldRecord ? ATStrings.RECORD : ATStrings.done,
                         fgColor: shouldRecord ? ATColors.white : ATColors.black,
                         bgColor: shouldRecord ? ATColors.hexF92018 : ATColors.white
                       ),

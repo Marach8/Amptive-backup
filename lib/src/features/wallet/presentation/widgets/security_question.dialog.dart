@@ -28,7 +28,7 @@ Future<String?> showSecurityQuestionsDialog({
               child: GestureDetector(
                 onTap: () => Navigator.pop(dialogContext, items[selectedIndex]),
                 child: Text(
-                  ATStrings.DONE,
+                  ATStrings.done,
                   style: context.textTheme.bodySmall?.copyWith(
                     fontSize: ATSizes.size16
                   )

@@ -11,11 +11,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
-
-import '../../bloc/authentication/general/auth_bloc.dart';
-import '../../bloc/authentication/general/auth_events.dart';
-import '../../bloc/authentication/general/auth_states.dart';
-import '../../views/widgets/common_widgets/app_bar_widget.dart';
+import '../../../../bloc/authentication/general/auth_bloc.dart';
+import '../../../../bloc/authentication/general/auth_events.dart';
+import '../../../../bloc/authentication/general/auth_states.dart';
+import '../../../../views/widgets/common_widgets/app_bar_widget.dart';
 
 class AddNameScreen extends StatefulWidget {
   const AddNameScreen({super.key});
@@ -39,19 +38,17 @@ class _AddNameScreenState extends State<AddNameScreen> {
   Widget build(BuildContext context) {
     return ATAnnotatedRegion(
       child: Scaffold(
-        backgroundColor: ATColors.hex0D0D0D,
         appBar: const ATAppBar(leading: ATBackBtn(),),
         body: Form(
           key: _formKey,
           child: SingleChildScrollView(
-            physics: const BouncingScrollPhysics(),
             padding: const EdgeInsets.all(15),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 Text(
                   ATStrings.whatIsYourName,
-                  style: Theme.of(context).textTheme.headlineMedium?.copyWith(
+                  style: context.textTheme.headlineMedium?.copyWith(
                         fontSize: ATSizes.size17,
                       ),
                 ),
@@ -72,7 +69,7 @@ class _AddNameScreenState extends State<AddNameScreen> {
                     contentPadding:
                         EdgeInsets.symmetric(vertical: 12.h, horizontal: 16.w),
                     hintText: ATStrings.enterYourName,
-                    hintStyle: Theme.of(context).textTheme.labelMedium,
+                    hintStyle: context.textTheme.labelMedium,
                     filled: true,
                     fillColor: const Color(0xFF9E9E9E).withOpacity(0.3),
                     focusedBorder: OutlineInputBorder(
@@ -100,7 +97,7 @@ class _AddNameScreenState extends State<AddNameScreen> {
                   ),
                   child: Text(
                     ATStrings.noteAboutProfilePic,
-                    style: Theme.of(context).textTheme.titleSmall,
+                    style: context.textTheme.titleSmall,
                   ),
                 ),
               ],
@@ -109,40 +106,46 @@ class _AddNameScreenState extends State<AddNameScreen> {
         ),
 
         bottomSheet: BlocBuilder<AmptiveAuthBloc, AmptiveAuthState>(
-            builder: (BuildContext context, AmptiveAuthState state) {
-          return Padding(
-            padding: const EdgeInsets.all(15),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              spacing: 20,
-              children: <Widget>[
-                ATRichText(
-                  items: <String, TextStyle>{
-                    '${ATStrings.BY_CLICKING_ON_CREATE_ACCT} ': context.textTheme.titleSmall!.copyWith(
-                      fontSize: ATSizes.size11
+          builder: (BuildContext context, AmptiveAuthState state) {
+            return Builder(
+              builder: (BuildContext context) {
+              final double bottom = MediaQuery.viewInsetsOf(context).bottom;
+            final double bottomPad = bottom > 0 ? 10 : 50;
+            return Padding(
+              padding: EdgeInsets.fromLTRB(15, 0, 15, bottomPad),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  spacing: 20,
+                  children: <Widget>[
+                    ATRichText(
+                      items: <String, TextStyle>{
+                        '${ATStrings.BY_CLICKING_ON_CREATE_ACCT} ': context.textTheme.titleSmall!.copyWith(
+                          fontSize: ATSizes.size11
+                        ),
+                        ATStrings.TERMS_OF_SERVICE: context.textTheme.displayMedium!.copyWith(
+                          fontSize: ATSizes.size11
+                        ),
+                        ' and ': context.textTheme.titleSmall!.copyWith(
+                          fontSize: ATSizes.size11
+                        ),
+                        ATStrings.PRIVACY_POLICY: context.textTheme.displayMedium!.copyWith(
+                          fontSize: ATSizes.size11
+                        ),
+                      },
                     ),
-                    ATStrings.TERMS_OF_SERVICE: context.textTheme.displayMedium!.copyWith(
-                      fontSize: ATSizes.size11
+                    ATPlainElevatedBtn(
+                      btnTitle: ATStrings.CREATE_ACCT,
+                      onPressed: service.isNameValid
+                          ? () {
+                              // Validate returns true if the form is valid, or false otherwise.
+                              context.goNamed(ATRoutes.ADD_PROFILE_PIC_SCREEN);
+                            }
+                          : null,
                     ),
-                    ' and ': context.textTheme.titleSmall!.copyWith(
-                      fontSize: ATSizes.size11
-                    ),
-                    ATStrings.PRIVACY_POLICY: context.textTheme.displayMedium!.copyWith(
-                      fontSize: ATSizes.size11
-                    ),
-                  },
+                  ],
                 ),
-                ATPlainElevatedBtn(
-                  btnTitle: ATStrings.CREATE_ACCT,
-                  onPressed: service.isNameValid
-                      ? () {
-                          // Validate returns true if the form is valid, or false otherwise.
-                          context.goNamed(ATRoutes.ADD_PROFILE_PIC_SCREEN);
-                        }
-                      : null,
-                ),
-              ],
-            ),
+              );
+            }
           );
         }),
       ),

@@ -1,4 +1,5 @@
 import 'package:amptive/src/config/utils/colors.dart';
+import 'package:amptive/src/config/utils/extensions/context_extensions.dart';
 import 'package:flutter/material.dart';
 import '../../../config/utils/font_weights.dart';
 import '../../../config/utils/other_strings.dart';
@@ -12,10 +13,12 @@ class ATOTPFieldsWidget extends StatefulWidget {
     this.noOfFields = 4,
     this.height = 50,
     this.width = 57,
+    this.onPinFieldChanged,
     this.mainAxisAlignment = MainAxisAlignment.start
   });
 
   final Future<bool> Function(String pin) onPinComplete;
+  final void Function(String pin)? onPinFieldChanged;
   final double spacing, height, width;
   final int noOfFields;
   final MainAxisAlignment mainAxisAlignment;
@@ -46,13 +49,18 @@ class _ATOTPFieldsWidgetState extends State<ATOTPFieldsWidget> {
           return StatefulBuilder(
             builder: (_, StateSetter setter) {
               return SizedBox(
-                height: widget.height, width: widget.width,
+                height: widget.height, 
+                width: widget.width,
                 child: _OTPField(
                   isValidated: isValidated,
                   onChanged: (String value)async{
                     final int? parsedValue = int.tryParse(value);
-                    if(parsedValue != null){pins[index] = value;}
+                    if(parsedValue != null){
+                      pins[index] = value;
+                      
+                    }
                     else{pins[index] = '';}
+                    widget.onPinFieldChanged?.call(value);
                 
                     if (pins.every((String pin) => pin.isNotEmpty)) {
                       FocusScope.of(context).unfocus();
@@ -105,7 +113,7 @@ class _OTPField extends StatelessWidget {
           padding: const EdgeInsets.only(top: 15),
           child: const Text(ATStrings.hyphen),
         ),
-        labelStyle:Theme.of(context).textTheme.headlineMedium?.copyWith(
+        labelStyle:context.textTheme.headlineMedium?.copyWith(
           fontWeight: ATFontWeights.w400,
         ),
         filled: true,
@@ -133,7 +141,7 @@ class _OTPField extends StatelessWidget {
           borderRadius: BorderRadius.circular(14),
         ),
       ),
-      style:Theme.of(context).textTheme.headlineMedium?.copyWith(
+      style:context.textTheme.headlineMedium?.copyWith(
         fontWeight: ATFontWeights.w400,
       ),
       textAlign: TextAlign.center,

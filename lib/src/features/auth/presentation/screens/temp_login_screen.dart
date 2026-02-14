@@ -6,7 +6,7 @@ import 'package:amptive/src/views/widgets/common_widgets/back_button.dart';
 import 'package:amptive/src/views/widgets/common_widgets/textformfield_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import '../../views/widgets/common_widgets/app_bar_widget.dart';
+import '../../../../views/widgets/common_widgets/app_bar_widget.dart';
 
 class TempLoginScreen extends StatefulWidget {
   const TempLoginScreen({super.key, this.title});
@@ -100,7 +100,7 @@ class _TempLoginScreenState extends State<TempLoginScreen> with ATValidators{
                     child: Icon(Icons.key_outlined),
                   ),
                   controller: _pswrdCntrl,
-                  hintText: ATStrings.ENTER_UR_PSWRD,
+                  hintText: ATStrings.enterYourPassword,
                   validator: validatePassword,
                 ),
               ],

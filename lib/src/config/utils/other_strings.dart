@@ -190,12 +190,12 @@ class ATStrings{
   static const String THIS_WILL_APPEAR_ON_PROFILE = 'Note that this will appear on your profile';
 
   static const String createPasswordForAccount = 'Create a password for your account';
-  static const String ENTER_UR_PSWRD = 'Enter your password...';
+  static const String enterYourPassword = 'Enter your password...';
 
   static const String whatIsYourDateOfBirth = "What is your date of birth?";
   static const String selectDate = "Select Date";
   static const String users13andOlderWarning = "Only users 13 and older may use this app";
-  static const String DONE = 'Done';
+  static const String done = 'Done';
 
   static const String noteAboutProfilePic = "Note that this will appear on your profile.";
   static const String TERMS_OF_SERVICE = "Terms of Service";

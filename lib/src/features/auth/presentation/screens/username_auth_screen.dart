@@ -15,9 +15,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../bloc/authentication/general/auth_bloc.dart';
-import '../../bloc/authentication/general/auth_events.dart';
-import '../../bloc/authentication/general/auth_states.dart';
+import '../../../../bloc/authentication/general/auth_bloc.dart';
+import '../../../../bloc/authentication/general/auth_events.dart';
+import '../../../../bloc/authentication/general/auth_states.dart';
 
 class AddUsernameScreen extends StatefulWidget {
   const AddUsernameScreen({super.key});
@@ -44,7 +44,6 @@ class _AddUsernameScreenState extends State<AddUsernameScreen> {
   Widget build(BuildContext context) {
     return ATAnnotatedRegion(
       child: Scaffold(
-        backgroundColor: ATColors.hex0D0D0D,
         appBar: const ATAppBar(leading: ATBackBtn(),),
         body: Padding(
           padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 20.h),
