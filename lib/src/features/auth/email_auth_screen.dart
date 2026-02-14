@@ -126,14 +126,15 @@ class _ATEmailAuthScreenState extends State<ATEmailAuthScreen> with ATValidators
                       builder: (_, ATAppState<bool> state) {
                         final bool shouldEnableBtn = state is SuccessState<bool>;
                         return BlocConsumer<SendOtpCubit, ATAppState<String>>(
-                          listener: (_, ATAppState<String> sendOtpState) {
+                          listener: (_, ATAppState<String> sendOtpState) async{
                             if(sendOtpState is SuccessState<String>){
-                              final bool? didVerifyOTP = context.pushNamed(
+                              final bool? didVerifyOTP = await context.pushNamed(
                                 ATRoutes.enterOtpScreen,
                                 extra: VerifyOTPScreenParams(
                                   verificationType: OTPVerificationType.email,
                                   identifier: _controller.text.trim(),
                                   title: widget.title,
+                                  otp: sendOtpState.newData
                                 )
                               ) as bool?;
 

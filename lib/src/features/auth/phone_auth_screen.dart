@@ -223,9 +223,9 @@ class _PhoneAuthScreenState extends State<PhoneAuthScreen>
                             state is SuccessState<bool>;
                         return BlocConsumer<SendOtpCubit, ATAppState<String>>(
                           listener:
-                              (_, ATAppState<String> sendOtpState) {
+                              (_, ATAppState<String> sendOtpState) async {
                             if (sendOtpState is SuccessState<String>) {
-                              final bool? didVerifyOTP = context.pushNamed(
+                              final  bool? didVerifyOTP = await context.pushNamed(
                                 ATRoutes.enterOtpScreen,
                                 extra: VerifyOTPScreenParams(
                                   verificationType:
@@ -234,6 +234,7 @@ class _PhoneAuthScreenState extends State<PhoneAuthScreen>
                                       selectedCountry.phoneCode +
                                       _phoneController.text.trim(),
                                   title: widget.title,
+                                  otp: sendOtpState.newData,
                                 ),
                               ) as bool?;
 
