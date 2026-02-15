@@ -124,9 +124,7 @@ class _AddNameScreenState extends State<AddNameScreen> with ATValidators {
             } else if (state is FailureState<UserData>) {
               _isSubmitted = false;
               _isRegistering = false;
-              showAppNotification2(
-                context: context, text: state.message,
-                type: NotificationType.failure);
+              
             }
           },
           child: BlocBuilder<RegisterUserCubit, ATAppState<UserData>>(
