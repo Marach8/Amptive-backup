@@ -16,6 +16,7 @@ class ATRoutes {
   static const String addUserNameScreen = "username_auth";
   static const String phoneAuthScreen = "add_phone_auth";
   static const String temporaryLoginScreen = 'temporary_login';
+  static const String phoneLoginScreen = 'phone_login';
 
   //POST AUTHENTICATION
   static const String ADD_PROFILE_PIC_SCREEN = "add_profile_pic";

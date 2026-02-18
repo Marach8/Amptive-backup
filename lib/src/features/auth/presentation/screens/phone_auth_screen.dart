@@ -115,8 +115,7 @@ class _PhoneAuthScreenState extends State<PhoneAuthScreen>
                               ],
                             ),
                           ),
-                          const SizedBox(width: 10),
-                          Expanded(
+                       Expanded(
                             child: ATTextFormField(
                               controller: _phoneController,
                               keyboardType: TextInputType.number,

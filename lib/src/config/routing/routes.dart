@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:amptive/src/config/routing/routing_export.dart';
 import 'package:amptive/src/features/accounts/presentation/screens/update_email_screen.dart';
 import 'package:amptive/src/features/accounts/presentation/screens/update_phone_no_screen.dart';
+import 'package:amptive/src/features/auth/phone_login_screen.dart';
 import 'package:amptive/src/features/auth/presentation/screens/phone_auth_screen.dart';
 import 'package:amptive/src/features/auth/presentation/screens/temp_login_screen.dart';
 import 'package:amptive/src/config/utils/extensions/string_extensions.dart';
@@ -102,6 +103,14 @@ final GoRouter amptiveAppRouter = GoRouter(
         child: PhoneAuthScreen(title: st.extra as String?),
       )
     ),
+    GoRoute(
+      name: ATRoutes.phoneLoginScreen,
+      path: ATRoutes.phoneLoginScreen.addSlash,
+      pageBuilder: (_, GoRouterState st) => ATSlidingRouteTransition<void>(
+        child: PhoneLoginScreen(title: st.extra as String?),
+      ),
+    ),
+
 
     GoRoute(
       name: ATRoutes.ADD_PROFILE_PIC_SCREEN,
