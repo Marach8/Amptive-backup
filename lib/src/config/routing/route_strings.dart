@@ -7,27 +7,28 @@ class ATRoutes {
 
   //AUTHENTICATION
   static const String emailScreen = "email_auth";
-  static const String SELECT_5_COMMUNITIES_SCREEN = "preference";
+  static const String select5CommunitiesScreen = "preference";
   static const String AUTH_OPTIONS_SCREEN = "auth_screen";
   static const String createPasswordScreen = "password_auth";
-  static const String DOB_AUTH_SCREEN = "dob_auth";
+  static const String dobAuthScreen = "dob_auth";
   static const String enterOtpScreen = "otp";
-  static const String ADD_NAME_AUTH_SCREEN = "name_auth";
-  static const String ADD_USERNAME_AUTH_SCREEN = "username_auth";
+  static const String addNameAuthScreen = "name_auth";
+  static const String addUserNameScreen = "username_auth";
   static const String phoneAuthScreen = "add_phone_auth";
   static const String temporaryLoginScreen = 'temporary_login';
+  static const String phoneLoginScreen = 'phone_login';
 
   //POST AUTHENTICATION
-  static const String ADD_PROFILE_PIC_SCREEN = "add_profile_pic";
+  static const String addProfilePicScreen = "add_profile_pic";
   static const String CIRCLE_IMG_CROPPER_SCREEN = "crop_image";
-  static const String ALLOW_NOTIFICATIONS_SCREEN = "pre-homepage";
+  static const String allowNotificationsScreen = "pre-homepage";
   static const String CREATE_SHOW_FORM = "create-show-form";
   static const String CREATE_EVENT_FORM = "create-event-form";
   static const String CREATE_EPISODE_FORM = "create-episode-form";
 
 
   //MAIN APPLICATION
-  static const String MAIN_APP_SHELL = "main_app_shell";
+  static const String mainAppShell = "main_app_shell";
   static const String LIVE_SHOW_DETAILED = "show_detailed_screen";
   static const String LIVE_EVENT_DETAILED = "event_detailed_screen";
   static const String SCHEDULED_EVENTS_OR_SHOWS_SCREEN = 'scheduled_events_or_shows';
@@ -62,7 +63,7 @@ class ATRoutes {
   static const String ACCT_INFO_SCREEN = 'account_infomation_screen';
   static const String accountLandingScreen = 'account_screen';
   static const String EDIT_PROFILE = 'edit_profile';
-  static const String RECT_IMG_CROPPER_SCREEN = 'profile_bg_crop';
+  static const String rectImageCropperScreen = 'profile_bg_crop';
   static const String EDIT_NAME = 'edit_name';
   static const String EDIT_USERNAME = 'edit_username';
   static const String EDIT_BIO = 'edit_bio';

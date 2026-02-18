@@ -2,11 +2,11 @@ import 'dart:async';
 
 import 'package:amptive/src/config/utils/colors.dart';
 import 'package:amptive/src/views/widgets/common_widgets/loading_indicator.dart';
-import 'package:amptive/src/features/post_auth/post_authentication_widgets/add_picture.dart';
+import 'package:amptive/src/features/auth/presentation/widgets/add_picture.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import '../../config/utils/font_sizes.dart';
+import '../../../../config/utils/font_sizes.dart';
 
 class AddProfilePictureScreen extends StatefulWidget {
   const AddProfilePictureScreen({super.key});
@@ -36,7 +36,7 @@ class _AddProfilePictureScreenState extends State<AddProfilePictureScreen> {
         child: Scaffold(
       backgroundColor: ATColors.hex0D0D0D,
       body: Padding(
-        padding: EdgeInsets.only(left: 25.w, right: 25.w, top: 20.w),
+        padding: const EdgeInsets.fromLTRB(15, 20, 15, 10),
         child: _isLoading ? const LoadingAccountWidget() : const AddPictureWidget(),
       ),
     ));

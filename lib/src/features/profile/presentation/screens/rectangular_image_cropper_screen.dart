@@ -7,23 +7,23 @@ import 'package:custom_image_crop/custom_image_crop.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
-
 class RectImageCropperScreen extends StatefulWidget {
-
-  const RectImageCropperScreen ({
-    super.key, 
+  const RectImageCropperScreen({
+    super.key,
     required this.imageFile,
     this.ratio,
+    required this.shape,
   });
 
   final File imageFile;
   final Ratio? ratio;
+  final CustomCropShape shape;
 
   @override
-  State<RectImageCropperScreen > createState() => _CropPageState();
+  State<RectImageCropperScreen> createState() => _CropPageState();
 }
 
-class _CropPageState extends State<RectImageCropperScreen > {
+class _CropPageState extends State<RectImageCropperScreen> {
   late final CustomImageCropController controller;
 
   @override
@@ -51,15 +51,16 @@ class _CropPageState extends State<RectImageCropperScreen > {
                   const ATBackBtn(iconSize: 15),
                   const Spacer(),
                   ATContainer(
-                    onTap: () async{
-                      final MemoryImage? image = await controller.onCropImage();
-                      if(context.mounted) context.pop(image);
+                    onTap: () async {
+                      final MemoryImage? image =
+                          await controller.onCropImage();
+                      if (context.mounted) context.pop(image);
                     },
                     padding: const EdgeInsets.fromLTRB(10, 3, 10, 3),
                     color: ATColors.hex307FE2,
                     radius: 30,
                     child: Text(
-                      ATStrings.APPLY,
+                      ATStrings.apply,
                       style: Theme.of(context).textTheme.bodyMedium,
                     ),
                   )
@@ -73,10 +74,12 @@ class _CropPageState extends State<RectImageCropperScreen > {
                   cropController: controller,
                   cropPercentage: 1,
                   imageFit: CustomImageFit.fitVisibleSpace,
-                  shape: CustomCropShape.Ratio,
-                  ratio: widget.ratio ?? Ratio(width: 16, height: 8),
+                  shape: widget.shape,
+                  ratio: widget.shape == CustomCropShape.Ratio
+                      ? (widget.ratio ?? Ratio(width: 16, height: 8))
+                      : null,
                   drawPath: _drawCropPath,
-                  image: FileImage(widget.imageFile)
+                  image: FileImage(widget.imageFile),
                 ),
               ),
             ),
@@ -91,8 +94,7 @@ class _CropPageState extends State<RectImageCropperScreen > {
       return CustomPaint(
         painter: SolidCropPathPainter(path, pathPaint),
       );
-    } 
-    else {
+    } else {
       return CustomPaint(
         painter: SolidCropPathPainter(
           path,

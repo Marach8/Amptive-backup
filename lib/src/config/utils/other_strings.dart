@@ -14,6 +14,13 @@ class ATStrings{
   static const String AT_SIGN = '@';
   static const String nairaText = '₦';
   static const String accessToken = 'Access Token';
+  static const String cachedUserData = 'Cached User Data';
+  static const String profilePicture = 'Profile Picture';
+  static const String userId = 'User Id';
+  static const String email = 'Email';
+  static const String username = 'Username';
+  static const String dob = 'Date of Birth';
+  static const String name = 'Name';
 
 
   static const String GO_LIVE_LIKE_NEVER_B4 = "Go Live, Like Never Before";
@@ -31,7 +38,7 @@ class ATStrings{
   static const String enterCodeSentTo = 'Enter the 4 digit code we just sent to';
   static const String next = 'Next';
   static const String SHOULD_REDIRECT = 'should Redirect';
-  static const String IS_NEW_USER = 'Is First time user';
+  static const String isNewUser = 'Is First time user';
   static const String enterAmount = 'Enter Amount';
   static const String or = 'or';
   static const String and = 'and';
@@ -63,7 +70,6 @@ class ATStrings{
   static const String APPLE = 'Apple';
   static const String flutterWave = 'Flutterwave';
   static const String googlePay = 'Google Pay';
-  static const String email = 'Email';
   static const String LIVE = 'Live';
   static const String ALL = 'All';
   static const String RECORDING_WILL_AUTOPLAY = 'Your recording will play in';
@@ -127,6 +133,7 @@ class ATStrings{
   static const String no_will_be_verified = 'This phone number will be verified in the next step.';
 
   static const String whatIsYourEmail = 'What is your email?';
+  static const String WhatIsYourPhoneNumber ='What is your phone number?';
   static const String COHOST = 'Cohost';
   static const String UR_PSWRD = 'What is your password?';
   static const String enterYourEmail = 'Enter your email...';
@@ -140,7 +147,7 @@ class ATStrings{
   static const String transferFunds = 'Transfer Funds';
   static const String COUNTRY = 'Country';
   static const String PROFILE = 'Profile';
-  static const String STAY_ON_LOOP = 'STAY ON THE LOOP';
+  static const String stayOnTheLoop = 'STAY ON THE LOOP';
   static const String ALLOW_NOTIFICATIONS = 'Allow Amptive to send notifications of live audio shows & events';
   static const String SELECT_COUNTRY = 'Select Country';
   static const String beginSetup = 'Begin setup';
@@ -190,28 +197,28 @@ class ATStrings{
   static const String THIS_WILL_APPEAR_ON_PROFILE = 'Note that this will appear on your profile';
 
   static const String createPasswordForAccount = 'Create a password for your account';
-  static const String ENTER_UR_PSWRD = 'Enter your password...';
+  static const String enterYourPassword = 'Enter your password...';
 
   static const String whatIsYourDateOfBirth = "What is your date of birth?";
   static const String selectDate = "Select Date";
   static const String users13andOlderWarning = "Only users 13 and older may use this app";
-  static const String DONE = 'Done';
+  static const String done = 'Done';
 
   static const String noteAboutProfilePic = "Note that this will appear on your profile.";
-  static const String TERMS_OF_SERVICE = "Terms of Service";
+  static const String termsOfService = "Terms of Service";
   static const String enterYourName = 'Enter your name';
   static const String whatIsYourName = 'What is your name?';
-  static const String CREATE_ACCT = 'Create account';
-  static const String PRIVACY_POLICY = 'Privacy Policy.';
+  static const String createAccount = 'Create account';
+  static const String privacyPolicy = 'Privacy Policy.';
   static const String createSchedule = 'Create a Schedule';
   static const String SUB_OVERVIEW = 'Subscription Plan Overview';
   static const String SUB_OVERVIEW_DESC = 'Only subscribers will have access to your shows';
-  static const String BY_CLICKING_ON_CREATE_ACCT = 'By clicking on ‘Create account’, you agree to the';
+  static const String byClickingOnCreateAcct = 'By clicking on ‘Create account’, you agree to the';
 
-  static const String CHECKER_LOADING = "Checker is loading...";
+  static const String checkerLoading = "Checker is loading...";
   static const String correctAnswer = 'Answer is correct';
   static const String INCORRECT_ANS = 'Answer is incorrect!';
-  static const String USERNAME_AVAILABLE ="Username is available";
+  static const String usernameIsAvailable ="Username is available";
   static const String whatShouldWeCallYou ="What should we call you?";
   static const String ROLE = 'message notifier';
   static const String ALLOWED_AUD_MIC = "You allowed audience microphone";
@@ -231,7 +238,7 @@ class ATStrings{
   static const String PHOTO_GALLERY = 'Photo Gallery';
   static const String CAMERA = 'Camera';
   static const String skipForNow = 'Skip for now';
-  static const String APPLY = 'Apply';
+  static const String apply = 'Apply';
   static const String ADD_NEW_PLAN = 'Add New Plan';
   static const String COHOST_REQUEST = 'Co-Host Request';
   static const String ACCEPT_WITH_FEE = 'Accept (With Fee)';
@@ -353,7 +360,7 @@ class ATStrings{
   static const String privacy = 'Privacy';
   static const String EDIT_PROFILE = 'Edit Profile';
   static const String ABT_U = 'About you';
-  static const String USERNAME = 'Username';
+  static const String userName = 'Username';
   static const String NAME = 'Name';
   static const String TITLE_OF_UR_SHOW = 'What is the title of your show?';
   static const String TELL_LISTENERS_ABOUT_SHOW = 'Tell your listeners what your show is about.';
@@ -510,7 +517,7 @@ class ATStrings{
   static const String emptyField = 'Field(s) cannot be empty';
   static const String invalidEmail = 'Please enter a valid email address!';
   static const String invalidPhone = 'Please enter a valid phone number!';
-  static const String WEAK_PSWRD = 'Password must contain at least one upper and lower case letters, one special character and must be at least 8 characters!';
+  static const String weakPassword = 'Password must contain at least one upper case letter, and must be at least 8 characters!';
   static const String SHARE_EVENT = 'Share event';
   static const String COMMENT = 'Comment';
   static const String END_NOW = 'End now';

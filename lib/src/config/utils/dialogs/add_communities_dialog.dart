@@ -8,11 +8,11 @@ import 'package:go_router/go_router.dart';
 import '../../../services/create_show/create_show_service.dart';
 
 
-Future<Community?> showCommunitiesDialog(BuildContext context) async {
+Future<UnusedCommunity?> showCommunitiesDialog(BuildContext context) async {
   CreateShowService service = GetIt.I<CreateShowService>();
-  final List<Community> communities = service.generateCommunities();
+  final List<UnusedCommunity> communities = service.generateCommunities();
 
-  return await showModalBottomSheet<Community>(
+  return await showModalBottomSheet<UnusedCommunity>(
     context: context,
     isScrollControlled: true,
     backgroundColor: ATColors.hex202020,
@@ -61,7 +61,7 @@ Future<Community?> showCommunitiesDialog(BuildContext context) async {
                           controller: scrollController,
                           itemCount: communities.length,
                           itemBuilder: (_, int index){
-                            final Community com = communities.elementAt(index);
+                            final UnusedCommunity com = communities.elementAt(index);
                             return GestureDetector(
                               onTap: () => dContext.pop(com),
                               child: Padding(

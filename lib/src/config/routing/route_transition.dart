@@ -62,7 +62,7 @@ class ATFadingRouteTransition<T> extends CustomTransitionPage<T>{
 FutureOr<String?> tempRedirect(BuildContext context, GoRouterState state) async {
   const FlutterSecureStorage storage = FlutterSecureStorage();
   final String? shouldRedirect = await storage.read(key: ATStrings.SHOULD_REDIRECT,);
-  final String? isNewUser = await storage.read(key: ATStrings.IS_NEW_USER);
+  final String? isNewUser = await storage.read(key: ATStrings.isNewUser);
 
   if(shouldRedirect == 'true'){
     await storage.write(

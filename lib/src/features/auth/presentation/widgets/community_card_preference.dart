@@ -1,12 +1,15 @@
+import 'package:amptive/src/config/utils/extensions/context_extensions.dart';
+import 'package:amptive/src/features/auth/data/models/response/communities_response_model.dart';
+import 'package:amptive/src/views/widgets/common_widgets/image_loader_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import '../../../bloc/preference/bloc.dart';
-import '../../../bloc/preference/events.dart';
-import '../../../bloc/preference/states.dart';
-import '../../../config/utils/colors.dart';
-import '../presentation/views/single_community_card.dart';
+import '../../../../bloc/preference/bloc.dart';
+import '../../../../bloc/preference/events.dart';
+import '../../../../bloc/preference/states.dart';
+import '../../../../config/utils/colors.dart';
+import '../../../post_auth/presentation/views/single_community_card.dart';
 
 class CommunityCardPreferenceWidget extends StatelessWidget {
   const CommunityCardPreferenceWidget({
@@ -73,5 +76,36 @@ class CommunityCardPreferenceWidget extends StatelessWidget {
         ),
       );
     });
+  }
+}
+
+
+
+class RenderACommunityCard extends StatelessWidget {
+  const RenderACommunityCard({
+    super.key,
+    required this.community});
+  final Community community;
+
+  @override
+  Widget build(BuildContext context) {
+    return Stack(
+      children: <Widget>[
+        ATImgLoader(
+          imgPath: community.image ?? '',
+          boxFit: BoxFit.cover,
+        ),
+        Positioned(
+          bottom: 8,
+          left: 8,
+          child: Text(
+            community.name ?? '',
+            style: context.textTheme.labelMedium?.copyWith(
+              color: ATColors.white
+            ),
+          ),
+        )
+      ],
+    );
   }
 }
