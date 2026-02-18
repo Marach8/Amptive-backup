@@ -36,6 +36,7 @@ class ATStrings{
   static const String or = 'or';
   static const String and = 'and';
   static const String emailSymbol = '@';
+  static const String forgotPassword = 'Forgot Password?';
   static const String SIGN_UP = 'Sign up';
   static const String RECORD = 'Record';
   static const String LAUNCH_SHOW = 'Launch show';
@@ -64,6 +65,9 @@ class ATStrings{
   static const String flutterWave = 'Flutterwave';
   static const String googlePay = 'Google Pay';
   static const String email = 'Email';
+    static const String emailOrUsername = 'Email Or Username';
+
+
   static const String LIVE = 'Live';
   static const String ALL = 'All';
   static const String RECORDING_WILL_AUTOPLAY = 'Your recording will play in';
@@ -130,7 +134,9 @@ class ATStrings{
   static const String WhatIsYourPhoneNumber ='What is your phone number?';
   static const String COHOST = 'Cohost';
   static const String UR_PSWRD = 'What is your password?';
+    static const String password = 'Password';
   static const String enterYourEmail = 'Enter your email...';
+  static const String enterYourEmailOrUsername = 'Enter your email or usrename';
   static const String thisEmailWillBeVerified = 'This email will be verified in the next step';
   static const String verifyEmail = 'Verify email';
   static const String unblockDesc = 'will be able to follow, subscribe and see your app activities';
@@ -354,7 +360,7 @@ class ATStrings{
   static const String privacy = 'Privacy';
   static const String EDIT_PROFILE = 'Edit Profile';
   static const String ABT_U = 'About you';
-  static const String USERNAME = 'Username';
+  static const String userName = 'Username';
   static const String NAME = 'Name';
   static const String TITLE_OF_UR_SHOW = 'What is the title of your show?';
   static const String TELL_LISTENERS_ABOUT_SHOW = 'Tell your listeners what your show is about.';

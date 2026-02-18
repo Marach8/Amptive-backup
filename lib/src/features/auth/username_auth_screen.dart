@@ -131,7 +131,7 @@ class _AddUsernameScreenState extends State<AddUsernameScreen> {
                                         ),
                                       )
                                     : null,
-                        hintText: ATStrings.USERNAME,
+                        hintText: ATStrings.userName,
                         hintStyle: Theme.of(context).textTheme.labelMedium,
                         filled: true,
                         fillColor: ATColors.hex9E9E9E.withOpacity(0.3),
