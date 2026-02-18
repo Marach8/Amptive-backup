@@ -2,7 +2,6 @@ import 'package:amptive/src/config/api_response_and_app_state.dart';
 import 'package:amptive/src/config/config_export.dart';
 import 'package:amptive/src/config/utils/dialogs/app_notification_dialog.dart';
 import 'package:amptive/src/features/auth/cubits/check_identity_availability_cubit.dart';
-import 'package:amptive/src/features/auth/cubits/register_user_cubit.dart';
 import 'package:amptive/src/features/auth/cubits/send_otp_cubit.dart';
 import 'package:amptive/src/features/auth/otp_screen.dart';
 import 'package:amptive/src/views/widgets/common_widgets/annotated_region__widget.dart';
@@ -156,7 +155,6 @@ class _ATEmailAuthScreenState extends State<ATEmailAuthScreen> with ATValidators
                               isLoading: sendOtpState is LoadingState<String>,
                               onPressed: shouldEnableBtn ? (){
                                 if(_formKey.currentState?.validate() ?? false){
-                                  context.read<RegisterUserCubit>().setEmail(_controller.text.trim());
                                   context.read<SendOtpCubit>()
                                     .sendOtp(param: <String, dynamic>{'email': _controller.text.trim()});
                                 }
