@@ -85,7 +85,7 @@ Widget build(BuildContext context) {
         body: BlocConsumer<LoginCubit, ATAppState<dynamic>>(
           listener: (BuildContext context, ATAppState<dynamic> state) {
             if (state is SuccessState<dynamic>) {
-              context.goNamed(ATRoutes.MAIN_APP_SHELL);
+              context.goNamed(ATRoutes.mainAppShell);
             } else if (state is FailureState ) {
               showAppNotification2(context: context, text: state.message);
               

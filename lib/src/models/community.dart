@@ -1,7 +1,7 @@
 
-class Community {
+class UnusedCommunity {
 
-  Community({
+  UnusedCommunity({
     required this.id,
     required this.name,
     required this.coverPic,

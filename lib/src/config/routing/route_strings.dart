@@ -28,7 +28,7 @@ class ATRoutes {
 
 
   //MAIN APPLICATION
-  static const String MAIN_APP_SHELL = "main_app_shell";
+  static const String mainAppShell = "main_app_shell";
   static const String LIVE_SHOW_DETAILED = "show_detailed_screen";
   static const String LIVE_EVENT_DETAILED = "event_detailed_screen";
   static const String SCHEDULED_EVENTS_OR_SHOWS_SCREEN = 'scheduled_events_or_shows';

@@ -38,7 +38,7 @@ class ATStrings{
   static const String enterCodeSentTo = 'Enter the 4 digit code we just sent to';
   static const String next = 'Next';
   static const String SHOULD_REDIRECT = 'should Redirect';
-  static const String IS_NEW_USER = 'Is First time user';
+  static const String isNewUser = 'Is First time user';
   static const String enterAmount = 'Enter Amount';
   static const String or = 'or';
   static const String and = 'and';
@@ -147,7 +147,7 @@ class ATStrings{
   static const String transferFunds = 'Transfer Funds';
   static const String COUNTRY = 'Country';
   static const String PROFILE = 'Profile';
-  static const String STAY_ON_LOOP = 'STAY ON THE LOOP';
+  static const String stayOnTheLoop = 'STAY ON THE LOOP';
   static const String ALLOW_NOTIFICATIONS = 'Allow Amptive to send notifications of live audio shows & events';
   static const String SELECT_COUNTRY = 'Select Country';
   static const String beginSetup = 'Begin setup';

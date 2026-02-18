@@ -1,12 +1,15 @@
 import 'package:amptive/src/config/api_response_and_app_state.dart';
+import 'package:amptive/src/config/services/local_storage_service/flutter_secure_storage_service_impl.dart';
 import 'package:amptive/src/config/services/local_storage_service/storage_service.dart';
 import 'package:amptive/src/config/utils/other_strings.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class LocalUserDataCubit extends Cubit<ATAppState<CachedUserData>> {
-  LocalUserDataCubit({required this.localStorage})
-      : super(const InitialState<CachedUserData>());
+  LocalUserDataCubit({
+    ATLocalStorageService? mockLocalStorage,
+  }) : localStorage = mockLocalStorage ?? FlutterSecureStorageServiceImpl(),
+        super(const InitialState<CachedUserData>());
 
   final ATLocalStorageService localStorage;
 
@@ -59,7 +62,7 @@ class CachedUserData extends Equatable {
     this.username,
     this.dob,
     this.name,
-    this.profilePicture,
+    this.pictureUrl,
   });
 
   factory CachedUserData.fromJson(Map<String, dynamic> json) =>
@@ -69,10 +72,10 @@ class CachedUserData extends Equatable {
         username: json[ATStrings.username],
         dob: json[ATStrings.dob],
         name: json[ATStrings.name],
-        profilePicture: json[ATStrings.profilePicture],
+        pictureUrl: json[ATStrings.profilePicture],
       );
 
-  final String? userId, email, username, dob, name, profilePicture;
+  final String? userId, email, username, dob, name, pictureUrl;
 
   CachedUserData copyWith({
     String? userId,
@@ -87,7 +90,7 @@ class CachedUserData extends Equatable {
         username: username ?? this.username,
         dob: dob ?? this.dob,
         name: name ?? this.name,
-        profilePicture: profilePicture ?? this.profilePicture,
+        pictureUrl: profilePicture ?? this.pictureUrl,
       );
 
   Map<String, dynamic> toJson() => <String, dynamic>{
@@ -96,9 +99,10 @@ class CachedUserData extends Equatable {
       ATStrings.username: username,
       ATStrings.dob: dob,
       ATStrings.name: name,
-      ATStrings.profilePicture: profilePicture,
+      ATStrings.profilePicture: pictureUrl,
     };
 
   @override
-  List<Object?> get props => <Object?>[userId, email, username, dob, name, profilePicture];
+  List<Object?> get props => <Object?>[
+    userId, email, username, dob, name, pictureUrl];
 }

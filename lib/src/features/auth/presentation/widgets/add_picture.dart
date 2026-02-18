@@ -5,6 +5,7 @@ import 'package:amptive/src/bloc/authentication/general/auth_states.dart';
 import 'package:amptive/src/config/api_response_and_app_state.dart';
 import 'package:amptive/src/config/utils/helper_functions.dart';
 import 'package:amptive/src/features/auth/cubits/add_profile_pic_cubit.dart';
+import 'package:amptive/src/features/auth/cubits/local_user_data_cubit.dart';
 import 'package:amptive/src/shared/elevated_button_widget.dart';
 import 'package:amptive/src/shared/image_source_selection_dialog.dart';
 import 'package:amptive/src/views/widgets/common_widgets/image_loader_widget.dart';
@@ -85,7 +86,7 @@ class _AddPictureWidgetState extends State<AddPictureWidget> {
                         child: IconButton(
                           style: IconButton.styleFrom(),
                           onPressed: () async{
-                            if(_pickedImage != null){
+                            if(_pickedImage == null){
                               final ImageSource? selectedSrc = await showImageSourceOptions(context);
                               final XFile? selectedFile = await ATHelperFuncs.pickImage(selectedSrc);
                               if(context.mounted && selectedFile != null){
@@ -136,12 +137,17 @@ class _AddPictureWidgetState extends State<AddPictureWidget> {
               ),
             ),
           ),
-          BlocConsumer<AddProfilePicCubit, ATAppState<dynamic>>(
-            listener: (_, ATAppState<dynamic> state){
-              if(state is SuccessState<dynamic>){
-                context.pushNamed(ATRoutes.select5CommunitiesScreen);
+          BlocConsumer<AddProfilePicCubit, ATAppState<String>>(
+            listener: (_, ATAppState<String> state)async{
+              if(state is SuccessState<String>){
+                await context.read<LocalUserDataCubit>().updateUserDataLocally(
+                  CachedUserData(pictureUrl: state.newData,)
+                );
+                if(context.mounted){
+                  context.pushNamed(ATRoutes.select5CommunitiesScreen);
+                }
               }
-              else if(state is FailureState<dynamic>){
+              else if(state is FailureState<String>){
                 showAppNotification2(
                   context: context,
                   text: state.message,
@@ -149,10 +155,10 @@ class _AddPictureWidgetState extends State<AddPictureWidget> {
                 );
               }
             },
-            builder: (BuildContext context, ATAppState<dynamic> state) {
+            builder: (BuildContext context, ATAppState<String> state) {
               return ATPlainElevatedBtn(
                 btnTitle: ATStrings.next,
-                isLoading: state is LoadingState<dynamic>,
+                isLoading: state is LoadingState<String>,
                 onPressed: _pickedImage != null ? (){
                   context.read<AddProfilePicCubit>()
                     .uploadImage(bytes: _pickedImage!); 

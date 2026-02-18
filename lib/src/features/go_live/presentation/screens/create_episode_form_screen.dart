@@ -38,7 +38,7 @@ class _CreateShowFormScreenState extends State<CreateEpisodeFormScreen> {
   String whispersDesc = ATStrings.TOGGLE_WHISPERS;
   String handRaisingDesc = ATStrings.CHOOSE_2_ALLOW_HAND_RASING;
 
-  Community? selectedCommunity;
+  UnusedCommunity? selectedCommunity;
 
   @override 
   void initState(){

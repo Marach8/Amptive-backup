@@ -36,7 +36,7 @@ class _AddProfilePictureScreenState extends State<AddProfilePictureScreen> {
         child: Scaffold(
       backgroundColor: ATColors.hex0D0D0D,
       body: Padding(
-        padding: EdgeInsets.only(left: 25.w, right: 25.w, top: 20.w),
+        padding: const EdgeInsets.fromLTRB(15, 20, 15, 10),
         child: _isLoading ? const LoadingAccountWidget() : const AddPictureWidget(),
       ),
     ));

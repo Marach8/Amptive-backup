@@ -40,7 +40,7 @@ class _CreateShowFormScreenState extends State<CreateShowFormScreen> {
   String chooseAudienceAccess = ATStrings.SELECT_WHO_CAN_ACCESS_SHOW;
   String shouldAllowHandRasing = ATStrings.CHOOSE_2_ALLOW_HAND_RASING;
 
-  Community? selectedCommunity;
+  UnusedCommunity? selectedCommunity;
 
   @override 
   void initState(){
@@ -222,7 +222,7 @@ class _CreateShowFormScreenState extends State<CreateShowFormScreen> {
                                       child: selectedCommunity == null ? CreateProgramSelectionItem(
                                         description: ATStrings.SELECT_COMMUNITY_4_UR_SHOW,
                                         onTap: ()async{
-                                          final Community? selectedCom = await showCommunitiesDialog(context);
+                                          final UnusedCommunity? selectedCom = await showCommunitiesDialog(context);
                                           if(selectedCom != null){
                                             setter(() => selectedCommunity = selectedCom);
                                           }

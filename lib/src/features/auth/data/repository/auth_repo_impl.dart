@@ -6,6 +6,7 @@ import 'package:amptive/src/config/exception.dart';
 import 'package:amptive/src/config/services/network_service/dio_network_service_impl.dart';
 import 'package:amptive/src/config/services/network_service/network_service.dart';
 import 'package:amptive/src/features/auth/data/models/request/registration_data.dart';
+import 'package:amptive/src/features/auth/data/models/response/communities_response_model.dart';
 import 'package:amptive/src/features/auth/data/models/response/signup_response.dart';
 import 'package:amptive/src/features/auth/data/repository/auth_repo.dart';
 import 'package:dio/dio.dart' show Response, MultipartFile;
@@ -140,6 +141,24 @@ class AuthRepoImpl implements AuthRepo {
     } catch (e) {
       log('Unable to upload image: $e');
       return Unsuccessful<String>(
+        error: ATException.resolveException(e),
+      );
+    }
+  }
+
+  @override
+  Future<ApiResponse<CommunitiesResponseModel>> fetchCommunities() async {
+    try {
+      final Response<dynamic> response = await networkService.get(
+        ATEndpoints.communities,
+      );
+
+      final CommunitiesResponseModel communitiesResponse = 
+        CommunitiesResponseModel.fromJson(response.data);
+      return Successful<CommunitiesResponseModel>(data: communitiesResponse);
+    } catch (e) {
+      log('Unable to get communities: $e');
+      return Unsuccessful<CommunitiesResponseModel>(
         error: ATException.resolveException(e),
       );
     }

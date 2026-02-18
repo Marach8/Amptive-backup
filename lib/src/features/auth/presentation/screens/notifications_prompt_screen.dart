@@ -11,7 +11,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:go_router/go_router.dart';
-import '../widgets/notification_card_widget.dart';
+import '../../../post_auth/presentation/widgets/notification_card_widget.dart';
 
 
 class NotificationsPromptScreen extends StatelessWidget {
@@ -217,9 +217,9 @@ class _AnimExperimentState extends State<_SubWidget> with TickerProviderStateMix
                   SizedBox(
                     height: 120, width: 250,
                     child: Text(
-                      ATStrings.STAY_ON_LOOP, maxLines: 2,
+                      ATStrings.stayOnTheLoop, maxLines: 2,
                       textAlign: TextAlign.center,
-                      style: Theme.of(context).textTheme.headlineMedium?.copyWith(
+                      style: context.textTheme.headlineMedium?.copyWith(
                         fontSize: 45, fontWeight: ATFontWeights.w800
                       ),
                     ),
@@ -231,7 +231,7 @@ class _AnimExperimentState extends State<_SubWidget> with TickerProviderStateMix
                       ATStrings.ALLOW_NOTIFICATIONS,
                       textAlign: TextAlign.center,
                       maxLines: 3,
-                      style: Theme.of(context).textTheme.bodySmall
+                      style: context.textTheme.bodySmall
                     ),
                   ),
                   const SizedBox(height: 24),
@@ -305,7 +305,7 @@ class _AnimExperimentState extends State<_SubWidget> with TickerProviderStateMix
             ),
 
             Positioned(
-              bottom: 0,
+              bottom: 40,
               child: ATContainer(
                 padding: const EdgeInsets.fromLTRB(0, 10, 0, 10),
                 width: context.screenWidth - 30.0,
@@ -322,20 +322,20 @@ class _AnimExperimentState extends State<_SubWidget> with TickerProviderStateMix
                     ATPlainElevatedBtn(
                       onPressed: (){
                         storage.write(
-                          key: ATStrings.IS_NEW_USER,
+                          key: ATStrings.isNewUser,
                           value: false.toString()
                         );
-                        context.goNamed(ATRoutes.MAIN_APP_SHELL);
+                        context.goNamed(ATRoutes.mainAppShell);
                       },
                       btnTitle: ATStrings.ALLOW,
                     ),
                     InkWell(
                       onTap: (){
                         storage.write(
-                          key: ATStrings.IS_NEW_USER,
+                          key: ATStrings.isNewUser,
                           value: false.toString()
                         );
-                        context.goNamed(ATRoutes.MAIN_APP_SHELL);
+                        context.goNamed(ATRoutes.mainAppShell);
                       },
                       borderRadius: BorderRadius.circular(5),
                       child: Text(
