@@ -7,6 +7,8 @@ class ATEndpoints {
   static const String sendOtp = '/api/v1/auth/init';
   static const String verifyOtp = '/api/v1/auth/verify-otp';
   static const String login = '/api/v1/auth/login';
+  static const String register = '/api/v1/auth/register';
+  static const String uploadImage = '/api/v1/extras/upload-image';
 
 }
 

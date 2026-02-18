@@ -7,7 +7,7 @@ class ATRoutes {
 
   //AUTHENTICATION
   static const String emailScreen = "email_auth";
-  static const String SELECT_5_COMMUNITIES_SCREEN = "preference";
+  static const String select5CommunitiesScreen = "preference";
   static const String AUTH_OPTIONS_SCREEN = "auth_screen";
   static const String createPasswordScreen = "password_auth";
   static const String dobAuthScreen = "dob_auth";
@@ -19,7 +19,7 @@ class ATRoutes {
   static const String phoneLoginScreen = 'phone_login';
 
   //POST AUTHENTICATION
-  static const String ADD_PROFILE_PIC_SCREEN = "add_profile_pic";
+  static const String addProfilePicScreen = "add_profile_pic";
   static const String CIRCLE_IMG_CROPPER_SCREEN = "crop_image";
   static const String ALLOW_NOTIFICATIONS_SCREEN = "pre-homepage";
   static const String CREATE_SHOW_FORM = "create-show-form";
@@ -63,7 +63,7 @@ class ATRoutes {
   static const String ACCT_INFO_SCREEN = 'account_infomation_screen';
   static const String accountLandingScreen = 'account_screen';
   static const String EDIT_PROFILE = 'edit_profile';
-  static const String RECT_IMG_CROPPER_SCREEN = 'profile_bg_crop';
+  static const String rectImageCropperScreen = 'profile_bg_crop';
   static const String EDIT_NAME = 'edit_name';
   static const String EDIT_USERNAME = 'edit_username';
   static const String EDIT_BIO = 'edit_bio';

@@ -60,7 +60,7 @@ mixin ATValidators{
       return ATStrings.emptyField;
     }
     else if(!regex.hasMatch(password)){
-      return ATStrings.WEAK_PSWRD;
+      return ATStrings.weakPassword;
     }
     return null;
   }

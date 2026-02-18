@@ -85,7 +85,7 @@ class ATAnswerSecurityQuestionScreen extends StatelessWidget {
                         }
                         else if(state == 0){
                           return Text(
-                            ATStrings.CHECKER_LOADING,
+                            ATStrings.checkerLoading,
                             style: context.textTheme.bodySmall?.copyWith(
                               fontSize: ATSizes.size11
                             ),

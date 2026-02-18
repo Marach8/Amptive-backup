@@ -14,6 +14,7 @@ class ATStrings{
   static const String AT_SIGN = '@';
   static const String nairaText = '₦';
   static const String accessToken = 'Access Token';
+  static const String cachedUserData = 'Cached User Data';
 
 
   static const String GO_LIVE_LIKE_NEVER_B4 = "Go Live, Like Never Before";
@@ -199,20 +200,20 @@ class ATStrings{
   static const String done = 'Done';
 
   static const String noteAboutProfilePic = "Note that this will appear on your profile.";
-  static const String TERMS_OF_SERVICE = "Terms of Service";
+  static const String termsOfService = "Terms of Service";
   static const String enterYourName = 'Enter your name';
   static const String whatIsYourName = 'What is your name?';
-  static const String CREATE_ACCT = 'Create account';
-  static const String PRIVACY_POLICY = 'Privacy Policy.';
+  static const String createAccount = 'Create account';
+  static const String privacyPolicy = 'Privacy Policy.';
   static const String createSchedule = 'Create a Schedule';
   static const String SUB_OVERVIEW = 'Subscription Plan Overview';
   static const String SUB_OVERVIEW_DESC = 'Only subscribers will have access to your shows';
-  static const String BY_CLICKING_ON_CREATE_ACCT = 'By clicking on ‘Create account’, you agree to the';
+  static const String byClickingOnCreateAcct = 'By clicking on ‘Create account’, you agree to the';
 
-  static const String CHECKER_LOADING = "Checker is loading...";
+  static const String checkerLoading = "Checker is loading...";
   static const String correctAnswer = 'Answer is correct';
   static const String INCORRECT_ANS = 'Answer is incorrect!';
-  static const String USERNAME_AVAILABLE ="Username is available";
+  static const String usernameIsAvailable ="Username is available";
   static const String whatShouldWeCallYou ="What should we call you?";
   static const String ROLE = 'message notifier';
   static const String ALLOWED_AUD_MIC = "You allowed audience microphone";
@@ -232,7 +233,7 @@ class ATStrings{
   static const String PHOTO_GALLERY = 'Photo Gallery';
   static const String CAMERA = 'Camera';
   static const String skipForNow = 'Skip for now';
-  static const String APPLY = 'Apply';
+  static const String apply = 'Apply';
   static const String ADD_NEW_PLAN = 'Add New Plan';
   static const String COHOST_REQUEST = 'Co-Host Request';
   static const String ACCEPT_WITH_FEE = 'Accept (With Fee)';
@@ -511,7 +512,7 @@ class ATStrings{
   static const String emptyField = 'Field(s) cannot be empty';
   static const String invalidEmail = 'Please enter a valid email address!';
   static const String invalidPhone = 'Please enter a valid phone number!';
-  static const String WEAK_PSWRD = 'Password must contain at least one upper and lower case letters, one special character and must be at least 8 characters!';
+  static const String weakPassword = 'Password must contain at least one upper case letter, and must be at least 8 characters!';
   static const String SHARE_EVENT = 'Share event';
   static const String COMMENT = 'Comment';
   static const String END_NOW = 'End now';

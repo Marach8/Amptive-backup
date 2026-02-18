@@ -10,13 +10,7 @@ import 'package:amptive/src/views/widgets/common_widgets/back_button.dart';
 import 'package:amptive/src/views/widgets/common_widgets/textformfield_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import '../../../../bloc/authentication/general/auth_bloc.dart';
-import '../../../../bloc/authentication/general/auth_states.dart';
-import '../../../../bloc/authentication/password/password_auth_bloc.dart';
-import '../../../../bloc/authentication/password/password_auth_events.dart';
-import '../../../../config/utils/other_strings.dart';
 import '../../../../views/widgets/common_widgets/app_bar_widget.dart';
 import '../../../../shared/elevated_button_widget.dart';
 
@@ -84,8 +78,9 @@ class _PasswordAuthScreenState extends State<PasswordAuthScreen> with ATValidato
                   },
                 ),
                 if(_showDescription)Text(
-                  'Your password should be at least 8 characters',
+                  'Your password should be at least 8 characters, must contain at least one upper case letter',
                   style: context.textTheme.titleSmall,
+                  maxLines: 2,
                 ),
               ],
             ),
@@ -104,8 +99,10 @@ class _PasswordAuthScreenState extends State<PasswordAuthScreen> with ATValidato
                   final bool activate = _passwordCntrl.text.trim().length >= 8;
                   return ATPlainElevatedBtn(
                     onPressed: activate ? (){
-                      RegistrationData().copyWith(password: _passwordCntrl.text.trim());
-                      context.pushNamed(ATRoutes.dobAuthScreen);
+                      if(_formKey.currentState?.validate() == true){
+                        RegistrationData().copyWith(password: _passwordCntrl.text.trim());
+                        context.pushNamed(ATRoutes.dobAuthScreen);
+                      }
                     } : null,
                     btnTitle: ATStrings.next,
                   );

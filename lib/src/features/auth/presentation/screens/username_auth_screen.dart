@@ -47,13 +47,13 @@ class _AddUsernameScreenState extends State<AddUsernameScreen>
                 child: SingleChildScrollView(
                   padding: const EdgeInsets.all(15),
                   child: Column(
+                    spacing: 10,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
                       Text(
                         ATStrings.whatShouldWeCallYou,
                         style: context.textTheme.headlineMedium
                       ),
-                      const SizedBox(height: 10),
           
                       ATTextFormField(
                         controller: _userNameCntrl,
@@ -99,6 +99,22 @@ class _AddUsernameScreenState extends State<AddUsernameScreen>
                             1500,
                             () => context.read<CheckIdentityAvailabilityCubit>()
                               .checkIdentityAvailability(param: <String, dynamic>{'username': text})
+                          );
+                        }
+                      ),
+                      BlocBuilder<CheckIdentityAvailabilityCubit, ATAppState<bool>>(
+                        builder: (_, ATAppState<bool> state){
+                          if(state is InitialState<bool>) return const SizedBox.shrink();
+                          final bool isLoading = state is LoadingState<bool>;
+                          final bool isSuccess = state is SuccessState<bool>;
+                          return Text(
+                            isLoading ? ATStrings.checkerLoading :
+                            isSuccess ? ATStrings.usernameIsAvailable 
+                              : 'Username not available!',
+                            style: context.textTheme.titleSmall?.copyWith(
+                              color: isSuccess ? ATColors.successColor
+                                : isLoading ? ATColors.white : ATColors.textRedColor,
+                            ),
                           );
                         }
                       ),

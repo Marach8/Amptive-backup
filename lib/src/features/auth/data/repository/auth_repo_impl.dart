@@ -5,8 +5,10 @@ import 'package:amptive/src/config/endpoints.dart';
 import 'package:amptive/src/config/exception.dart';
 import 'package:amptive/src/config/services/network_service/dio_network_service_impl.dart';
 import 'package:amptive/src/config/services/network_service/network_service.dart';
+import 'package:amptive/src/features/auth/data/models/request/registration_data.dart';
+import 'package:amptive/src/features/auth/data/models/response/signup_response.dart';
 import 'package:amptive/src/features/auth/data/repository/auth_repo.dart';
-import 'package:dio/dio.dart' show Response;
+import 'package:dio/dio.dart' show Response, MultipartFile;
 
 class AuthRepoImpl implements AuthRepo {
   AuthRepoImpl({NetworkService? mockNetworkService})
@@ -91,4 +93,54 @@ class AuthRepoImpl implements AuthRepo {
       );
     }
   }
+
+  @override
+  Future<ApiResponse<SignupResponseModel>> registerUser({
+    required RegistrationData param,
+  }) async {
+    try {
+      final Response<dynamic> response = await networkService.post(
+        ATEndpoints.register,
+        data: param.toJson(),
+      );
+
+      final signupResponse = SignupResponseModel.fromJson(
+        response.data['data'] as Map<String, dynamic>,
+      );
+      return Successful<SignupResponseModel>(data: signupResponse);
+    } catch (e) {
+      log('Unable to register user: $e');
+      return Unsuccessful<SignupResponseModel>(
+        error: ATException.resolveException(e),
+      );
+    }
+  }
+
+  @override
+  Future<ApiResponse<dynamic>> uploadImage({
+    required String filePath,
+  }) async {
+    try {
+      final Map<String, dynamic> param = <String, dynamic>{
+        'images': await MultipartFile.fromFile(
+          filePath,
+          filename: filePath.split('/').last,
+        ),
+        'purpose': 'profile-picture',
+      };
+
+      final Response<dynamic> response = await networkService.formDataRequest(
+        ATEndpoints.uploadImage,
+        data: param,
+      );
+
+      return Successful<dynamic>(data: response.data);
+    } catch (e) {
+      log('Unable to upload image: $e');
+      return Unsuccessful<dynamic>(
+        error: ATException.resolveException(e),
+      );
+    }
+  }
+
 }

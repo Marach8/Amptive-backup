@@ -98,7 +98,7 @@ class _AddDOBScreenState extends State<AddDOBScreen> with ATValidators{
                     btnTitle: ATStrings.next,
                     onPressed: shouldEnable ? (){
                       if(_formKey.currentState?.validate() ?? false){
-                        final String formattedDate = DateFormat('MMMM d y').format(selectedDOB!);
+                        final String formattedDate = DateFormat('yyyy-MM-dd').format(selectedDOB!);
                         RegistrationData().copyWith(dob: formattedDate);
                         context.pushNamed(ATRoutes.addUserNameScreen);
                       }

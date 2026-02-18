@@ -86,8 +86,8 @@ class _EditNameScreen extends State<EditUsernameScreen> {
               BlocBuilder<AmptiveAuthBloc, AmptiveAuthState>(
                 builder: (_, AmptiveAuthState state) {
                   return Text(
-                    (state is VerifyingUsernameState) ? ATStrings.CHECKER_LOADING 
-                      : (state is UsernameVerifiedState) ? ATStrings.USERNAME_AVAILABLE : '',
+                    (state is VerifyingUsernameState) ? ATStrings.checkerLoading 
+                      : (state is UsernameVerifiedState) ? ATStrings.usernameIsAvailable : '',
                     style: Theme.of(context).textTheme.titleSmall?.copyWith(
                       fontSize: ATSizes.size11,
                       color: state is UsernameVerifiedState ? ATColors.hex54C981 : null

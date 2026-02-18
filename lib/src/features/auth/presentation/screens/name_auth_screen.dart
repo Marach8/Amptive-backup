@@ -1,4 +1,8 @@
+import 'package:amptive/src/config/api_response_and_app_state.dart';
+import 'package:amptive/src/config/utils/dialogs/app_notification_dialog.dart';
 import 'package:amptive/src/config/utils/utils_export.dart';
+import 'package:amptive/src/features/auth/cubits/signup_cubit.dart';
+import 'package:amptive/src/features/auth/data/models/request/registration_data.dart';
 import 'package:amptive/src/services/auth/auth_field_service.dart';
 import 'package:amptive/src/config/routing/route_strings.dart';
 import 'package:amptive/src/views/widgets/common_widgets/annotated_region__widget.dart';
@@ -23,131 +27,115 @@ class AddNameScreen extends StatefulWidget {
   State<AddNameScreen> createState() => _AddNameScreenState();
 }
 
-class _AddNameScreenState extends State<AddNameScreen> {
-  TextEditingController nameController = TextEditingController();
-  late AuthFieldService service;
+class _AddNameScreenState extends State<AddNameScreen> with ATValidators{
+  final TextEditingController _nameCntrl = TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   @override
-  void initState() {
-    service = GetIt.I<AuthFieldService>();
-    super.initState();
+  void dispose(){
+    _formKey.currentState?.dispose();
+    _nameCntrl.dispose();
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    return ATAnnotatedRegion(
-      child: Scaffold(
-        appBar: const ATAppBar(leading: ATBackBtn(),),
-        body: Form(
-          key: _formKey,
-          child: SingleChildScrollView(
-            padding: const EdgeInsets.all(15),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Text(
-                  ATStrings.whatIsYourName,
-                  style: context.textTheme.headlineMedium?.copyWith(
-                        fontSize: ATSizes.size17,
-                      ),
-                ),
-                SizedBox(
-                  height: 11.h,
-                ),
-                ATTextFormField(
-                  controller: nameController,
-                  onChanged: (String val) {
-                    context.read<AmptiveAuthBloc>().add(NameChangedEvent());
-                    service.validateName(val);
-                  },
-                  keyboardType: TextInputType.text,
-                  cursorColor: service.name.error == null
-                      ? ATColors.hex307FE2
-                      : ATColors.textRedColor,
-                  decoration: InputDecoration(
-                    contentPadding:
-                        EdgeInsets.symmetric(vertical: 12.h, horizontal: 16.w),
+    return BlocProvider<SignupCubit>(
+      create: (_) => SignupCubit(),
+      child: ATAnnotatedRegion(
+        child: Scaffold(
+          appBar: const ATAppBar(leading: ATBackBtn(),),
+          body: Form(
+            key: _formKey,
+            child: SingleChildScrollView(
+              padding: const EdgeInsets.all(15),
+              child: Column(
+                spacing: 10,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Text(
+                    ATStrings.whatIsYourName,
+                    style: context.textTheme.headlineMedium
+                  ),
+                  ATTextFormField(
+                    controller: _nameCntrl,
+                    maxLines: 1,
                     hintText: ATStrings.enterYourName,
-                    hintStyle: context.textTheme.labelMedium,
-                    filled: true,
-                    fillColor: const Color(0xFF9E9E9E).withOpacity(0.3),
-                    focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(
-                        width: 2.w,
-                        color: service.name.error == null
-                            ? ATColors.hex307FE2
-                            : ATColors.textRedColor,
-                      ),
-                      borderRadius: BorderRadius.circular(14.r),
-                    ),
-                    border: OutlineInputBorder(
-                      borderSide: BorderSide(
-                        width: 2.w,
-                        color: ATColors.transparent,
-                      ),
-                      borderRadius: BorderRadius.circular(14.r),
-                    ),
+                    fillColor: ATColors.hex9E9E9E.withValues(alpha: 0.3),
+                    keyboardType: TextInputType.text,
+                    autoValidateMode: AutovalidateMode.disabled,
+                    validator: validateField,
+                    prefixIcon : const SizedBox(width: 10,),
                   ),
-                ),
-                Container(
-                  height: 17.h,
-                  margin: EdgeInsets.symmetric(
-                    vertical: 11.h,
-                  ),
-                  child: Text(
+                  Text(
                     ATStrings.noteAboutProfilePic,
                     style: context.textTheme.titleSmall,
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
-        ),
-
-        bottomSheet: BlocBuilder<AmptiveAuthBloc, AmptiveAuthState>(
-          builder: (BuildContext context, AmptiveAuthState state) {
-            return Builder(
-              builder: (BuildContext context) {
+      
+          bottomSheet: BlocConsumer<SignupCubit, ATAppState<dynamic>>(
+            listener: (_, ATAppState<dynamic> state){
+              if(state is SuccessState<dynamic>){
+                context.goNamed(ATRoutes.addProfilePicScreen);
+              }
+              if(state is FailureState<dynamic>){
+                showAppNotification2(
+                  context: context,
+                  text: state.message,
+                  type: NotificationType.failure
+                );
+              }
+            },
+            builder: (BuildContext context, ATAppState<dynamic> state) {
               final double bottom = MediaQuery.viewInsetsOf(context).bottom;
-            final double bottomPad = bottom > 0 ? 10 : 50;
-            return Padding(
-              padding: EdgeInsets.fromLTRB(15, 0, 15, bottomPad),
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  spacing: 20,
-                  children: <Widget>[
-                    ATRichText(
-                      items: <String, TextStyle>{
-                        '${ATStrings.BY_CLICKING_ON_CREATE_ACCT} ': context.textTheme.titleSmall!.copyWith(
-                          fontSize: ATSizes.size11
-                        ),
-                        ATStrings.TERMS_OF_SERVICE: context.textTheme.displayMedium!.copyWith(
-                          fontSize: ATSizes.size11
-                        ),
-                        ' and ': context.textTheme.titleSmall!.copyWith(
-                          fontSize: ATSizes.size11
-                        ),
-                        ATStrings.PRIVACY_POLICY: context.textTheme.displayMedium!.copyWith(
-                          fontSize: ATSizes.size11
-                        ),
-                      },
-                    ),
-                    ATPlainElevatedBtn(
-                      btnTitle: ATStrings.CREATE_ACCT,
-                      onPressed: service.isNameValid
-                          ? () {
-                              // Validate returns true if the form is valid, or false otherwise.
-                              context.goNamed(ATRoutes.ADD_PROFILE_PIC_SCREEN);
-                            }
-                          : null,
-                    ),
-                  ],
-                ),
-              );
-            }
-          );
-        }),
+              final double bottomPad = bottom > 0 ? 10 : 50;
+              return Padding(
+                padding: EdgeInsets.fromLTRB(15, 0, 15, bottomPad),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    spacing: 20,
+                    children: <Widget>[
+                      ATRichText(
+                        items: <String, TextStyle>{
+                          '${ATStrings.byClickingOnCreateAcct} ': context.textTheme.titleSmall!.copyWith(
+                            fontSize: ATSizes.size11
+                          ),
+                          ATStrings.termsOfService: context.textTheme.displayMedium!.copyWith(
+                            fontSize: ATSizes.size11
+                          ),
+                          ' and ': context.textTheme.titleSmall!.copyWith(
+                            fontSize: ATSizes.size11
+                          ),
+                          ATStrings.privacyPolicy: context.textTheme.displayMedium!.copyWith(
+                            fontSize: ATSizes.size11
+                          ),
+                        },
+                        textOnTap: (String text){
+                          if(text == ATStrings.termsOfService){}
+                          else if(text == ATStrings.privacyPolicy){}
+                        },
+                      ),
+                      ATPlainElevatedBtn(
+                        btnTitle: ATStrings.createAccount,
+                        isLoading: state is LoadingState<dynamic>,
+                        onPressed: (){
+                          if(_formKey.currentState?.validate() == true){
+                            RegistrationData().copyWith(name: _nameCntrl.text.trim());
+                            context.read<SignupCubit>().signupUser(
+                              param: RegistrationData(),
+                            );
+                          }
+                        }
+                      ),
+                    ],
+                  ),
+                );
+              }
+          ),
+        ),
       ),
     );
   }
