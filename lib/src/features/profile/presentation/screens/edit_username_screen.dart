@@ -55,7 +55,7 @@ class _EditNameScreen extends State<EditUsernameScreen> {
           leadingWidth: 30,
           padding: EdgeInsets.only(left: 7),
           leading: ATRoundedBackBtn(),
-          titleText: ATStrings.USERNAME
+          titleText: ATStrings.userName
         ),
         body: Padding(
           padding: const EdgeInsets.fromLTRB(15, 10, 15, 0),

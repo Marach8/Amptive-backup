@@ -151,8 +151,8 @@ final GoRouter amptiveAppRouter = GoRouter(
       )
     ),
     GoRoute(
-      name: ATRoutes.ADD_NAME_AUTH_SCREEN,
-      path: ATRoutes.ADD_NAME_AUTH_SCREEN.addSlash,
+      name: ATRoutes.addNameAuthScreen,
+      path: ATRoutes.addNameAuthScreen.addSlash,
       pageBuilder: (_, __) => ATSlidingRouteTransition<void>(
         child: const AddNameScreen(),
       )

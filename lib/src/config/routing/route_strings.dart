@@ -12,7 +12,7 @@ class ATRoutes {
   static const String createPasswordScreen = "password_auth";
   static const String dobAuthScreen = "dob_auth";
   static const String enterOtpScreen = "otp";
-  static const String ADD_NAME_AUTH_SCREEN = "name_auth";
+  static const String addNameAuthScreen = "name_auth";
   static const String addUserNameScreen = "username_auth";
   static const String phoneAuthScreen = "add_phone_auth";
   static const String temporaryLoginScreen = 'temporary_login';

@@ -53,11 +53,10 @@ class _ATEmailAuthScreenState extends State<ATEmailAuthScreen> with ATValidators
                 leading: const ATBackBtn(),
                 titleText: widget.title ?? ''
               ),
-              body: SingleChildScrollView(
-                physics: const BouncingScrollPhysics(),
-                padding: const EdgeInsets.all(15),
-                child: Form(
-                  key: _formKey,
+              body: Form(
+                key: _formKey,
+                child: SingleChildScrollView(
+                  padding: const EdgeInsets.all(15),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[

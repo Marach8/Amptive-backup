@@ -354,7 +354,7 @@ class ATStrings{
   static const String privacy = 'Privacy';
   static const String EDIT_PROFILE = 'Edit Profile';
   static const String ABT_U = 'About you';
-  static const String USERNAME = 'Username';
+  static const String userName = 'Username';
   static const String NAME = 'Name';
   static const String TITLE_OF_UR_SHOW = 'What is the title of your show?';
   static const String TELL_LISTENERS_ABOUT_SHOW = 'Tell your listeners what your show is about.';

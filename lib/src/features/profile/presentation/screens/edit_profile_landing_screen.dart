@@ -48,7 +48,7 @@ class EditProfileScreen extends StatelessWidget {
                       }
                     ),
                     _MenuItem(
-                      title: ATStrings.USERNAME,
+                      title: ATStrings.userName,
                       value: 'AlieuBaba',
                       onTap: ()async => await context.pushNamed(
                         ATRoutes.EDIT_USERNAME, extra: 'AlieuBaba'
