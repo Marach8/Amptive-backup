@@ -59,18 +59,20 @@ class CachedUserData extends Equatable {
     this.username,
     this.dob,
     this.name,
+    this.profilePicture,
   });
 
   factory CachedUserData.fromJson(Map<String, dynamic> json) =>
       CachedUserData(
-        userId: json['id'],
-        email: json['email'],
-        username: json['username'],
-        dob: json['dob'],
-        name: json['name'],
+        userId: json[ATStrings.userId],
+        email: json[ATStrings.email],
+        username: json[ATStrings.username],
+        dob: json[ATStrings.dob],
+        name: json[ATStrings.name],
+        profilePicture: json[ATStrings.profilePicture],
       );
 
-  final String? userId, email, username, dob, name;
+  final String? userId, email, username, dob, name, profilePicture;
 
   CachedUserData copyWith({
     String? userId,
@@ -78,22 +80,25 @@ class CachedUserData extends Equatable {
     String? username,
     String? dob,
     String? name,
+    String? profilePicture,
   }) => CachedUserData(
         userId: userId ?? this.userId,
         email: email ?? this.email,
         username: username ?? this.username,
         dob: dob ?? this.dob,
         name: name ?? this.name,
+        profilePicture: profilePicture ?? this.profilePicture,
       );
 
   Map<String, dynamic> toJson() => <String, dynamic>{
-      'id': userId,
-      'email': email,
-      'username': username,
-      'dob': dob,
-      'name': name,
+      ATStrings.userId: userId,
+      ATStrings.email: email,
+      ATStrings.username: username,
+      ATStrings.dob: dob,
+      ATStrings.name: name,
+      ATStrings.profilePicture: profilePicture,
     };
 
   @override
-  List<Object?> get props => <Object?>[userId, email, username, dob, name];
+  List<Object?> get props => <Object?>[userId, email, username, dob, name, profilePicture];
 }

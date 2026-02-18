@@ -120,14 +120,6 @@ final GoRouter amptiveAppRouter = GoRouter(
       )
     ),
 
-    // GoRoute(
-    //   name: ATRoutes.CIRCLE_IMG_CROPPER_SCREEN,
-    //   path: ATRoutes.CIRCLE_IMG_CROPPER_SCREEN.addSlash,
-    //   pageBuilder: (_, GoRouterState st) => ATSlidingRouteTransition<MemoryImage?>(
-    //     child: CircleImageCropperScreen(imageFile: st.extra as File)
-    //   )
-    // ),
-
     GoRoute(
       name: ATRoutes.createPasswordScreen,
       path: ATRoutes.createPasswordScreen.addSlash,
@@ -166,8 +158,8 @@ final GoRouter amptiveAppRouter = GoRouter(
     ),
 
     GoRoute(
-      name: ATRoutes.ALLOW_NOTIFICATIONS_SCREEN,
-      path: ATRoutes.ALLOW_NOTIFICATIONS_SCREEN.addSlash,
+      name: ATRoutes.allowNotificationsScreen,
+      path: ATRoutes.allowNotificationsScreen.addSlash,
       pageBuilder: (_, __) => ATSlidingRouteTransition<void>(
         child: const NotificationsPromptScreen(),
       )

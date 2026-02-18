@@ -21,7 +21,7 @@ class ATRoutes {
   //POST AUTHENTICATION
   static const String addProfilePicScreen = "add_profile_pic";
   static const String CIRCLE_IMG_CROPPER_SCREEN = "crop_image";
-  static const String ALLOW_NOTIFICATIONS_SCREEN = "pre-homepage";
+  static const String allowNotificationsScreen = "pre-homepage";
   static const String CREATE_SHOW_FORM = "create-show-form";
   static const String CREATE_EVENT_FORM = "create-event-form";
   static const String CREATE_EPISODE_FORM = "create-episode-form";

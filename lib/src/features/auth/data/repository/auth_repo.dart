@@ -20,7 +20,7 @@ abstract class AuthRepo {
     required RegistrationData param
   });
 
-  Future<ApiResponse<dynamic>> uploadImage({
+  Future<ApiResponse<String>> uploadImage({
     required String filePath,
   });
 }

@@ -15,6 +15,12 @@ class ATStrings{
   static const String nairaText = '₦';
   static const String accessToken = 'Access Token';
   static const String cachedUserData = 'Cached User Data';
+  static const String profilePicture = 'Profile Picture';
+  static const String userId = 'User Id';
+  static const String email = 'Email';
+  static const String username = 'Username';
+  static const String dob = 'Date of Birth';
+  static const String name = 'Name';
 
 
   static const String GO_LIVE_LIKE_NEVER_B4 = "Go Live, Like Never Before";
@@ -64,7 +70,6 @@ class ATStrings{
   static const String APPLE = 'Apple';
   static const String flutterWave = 'Flutterwave';
   static const String googlePay = 'Google Pay';
-  static const String email = 'Email';
   static const String LIVE = 'Live';
   static const String ALL = 'All';
   static const String RECORDING_WILL_AUTOPLAY = 'Your recording will play in';

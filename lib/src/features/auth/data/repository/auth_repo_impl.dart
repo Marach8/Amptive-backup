@@ -104,9 +104,8 @@ class AuthRepoImpl implements AuthRepo {
         data: param.toJson(),
       );
 
-      final signupResponse = SignupResponseModel.fromJson(
-        response.data['data'] as Map<String, dynamic>,
-      );
+      final SignupResponseModel signupResponse = 
+        SignupResponseModel.fromJson(response.data['data']);
       return Successful<SignupResponseModel>(data: signupResponse);
     } catch (e) {
       log('Unable to register user: $e');
@@ -117,7 +116,7 @@ class AuthRepoImpl implements AuthRepo {
   }
 
   @override
-  Future<ApiResponse<dynamic>> uploadImage({
+  Future<ApiResponse<String>> uploadImage({
     required String filePath,
   }) async {
     try {
@@ -134,10 +133,13 @@ class AuthRepoImpl implements AuthRepo {
         data: param,
       );
 
-      return Successful<dynamic>(data: response.data);
+      final List<dynamic> urls = response.data['data']['urls'];
+      final String imageUrl = urls.first;
+
+      return Successful<String>(data: imageUrl);
     } catch (e) {
       log('Unable to upload image: $e');
-      return Unsuccessful<dynamic>(
+      return Unsuccessful<String>(
         error: ATException.resolveException(e),
       );
     }

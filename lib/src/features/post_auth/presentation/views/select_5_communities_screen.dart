@@ -40,7 +40,7 @@ class _Select5CommunitiesScreenState extends State<Select5CommunitiesScreen> {
         listener: (BuildContext context, AmptivePreferenceState state) {
           if (state is PreferencePersonalizedState) {
             // context.goNamed(AmptiveRoutes.homeScreen);
-            context.goNamed(ATRoutes.ALLOW_NOTIFICATIONS_SCREEN);
+            context.goNamed(ATRoutes.allowNotificationsScreen);
 
           }
         },
