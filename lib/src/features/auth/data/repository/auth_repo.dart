@@ -13,6 +13,10 @@ abstract class AuthRepo {
   Future<ApiResponse<dynamic>> loginUser({
     required Map<String, dynamic> param
     });
+     Future<ApiResponse<String>> resetPasswordOtp({
+    required Map<String, dynamic> param});
+
     
-    
+     Future<ApiResponse<dynamic>> verifyResetPasswordOtp({
+    required Map<String, dynamic> param});
 }

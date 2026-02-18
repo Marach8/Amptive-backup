@@ -36,11 +36,13 @@ class ATStrings{
   static const String or = 'or';
   static const String and = 'and';
   static const String emailSymbol = '@';
-  static const String forgotPassword = 'Forgot Password?';
+  static const String forgotPassword = 'Forgot Password';
+  static const String forgotPasswrd = 'Forgot Password?';
   static const String SIGN_UP = 'Sign up';
   static const String RECORD = 'Record';
   static const String LAUNCH_SHOW = 'Launch show';
   static const String SIGN_IN = 'Sign in';
+  static const String sendCode = 'Send Code';
   static const String attendAsGuest = 'Attend as guest';
   static const String SKIP = 'Skip';
   static const String BACK = 'Back';
@@ -135,7 +137,7 @@ class ATStrings{
   static const String COHOST = 'Cohost';
   static const String UR_PSWRD = 'What is your password?';
     static const String password = 'Password';
-  static const String enterYourEmail = 'Enter your email...';
+  static const String enterYourEmail = 'Enter your email';
   static const String enterYourEmailOrUsername = 'Enter your email or usrename';
   static const String thisEmailWillBeVerified = 'This email will be verified in the next step';
   static const String verifyEmail = 'Verify email';

@@ -2,6 +2,7 @@ import 'package:amptive/src/config/api_response_and_app_state.dart';
 import 'package:amptive/src/config/config_export.dart';
 import 'package:amptive/src/config/utils/dialogs/app_notification_dialog.dart';
 import 'package:amptive/src/features/auth/cubits/check_identity_availability_cubit.dart';
+import 'package:amptive/src/features/auth/cubits/register_user_cubit.dart';
 import 'package:amptive/src/features/auth/cubits/send_otp_cubit.dart';
 import 'package:amptive/src/features/auth/otp_screen.dart';
 import 'package:amptive/src/views/widgets/common_widgets/annotated_region__widget.dart';
@@ -126,14 +127,15 @@ class _ATEmailAuthScreenState extends State<ATEmailAuthScreen> with ATValidators
                       builder: (_, ATAppState<bool> state) {
                         final bool shouldEnableBtn = state is SuccessState<bool>;
                         return BlocConsumer<SendOtpCubit, ATAppState<String>>(
-                          listener: (_, ATAppState<String> sendOtpState) {
+                          listener: (_, ATAppState<String> sendOtpState) async{
                             if(sendOtpState is SuccessState<String>){
-                              final bool? didVerifyOTP = context.pushNamed(
-                                ATRoutes.enterOtpScreen,
+                              final bool? didVerifyOTP = await context.pushNamed(
+                                ATRoutes.ENTER_OTP_SCREEN,
                                 extra: VerifyOTPScreenParams(
                                   verificationType: OTPVerificationType.email,
                                   identifier: _controller.text.trim(),
                                   title: widget.title,
+                                  otp: sendOtpState.newData
                                 )
                               ) as bool?;
 
@@ -154,6 +156,7 @@ class _ATEmailAuthScreenState extends State<ATEmailAuthScreen> with ATValidators
                               isLoading: sendOtpState is LoadingState<String>,
                               onPressed: shouldEnableBtn ? (){
                                 if(_formKey.currentState?.validate() ?? false){
+                                  context.read<RegisterUserCubit>().setEmail(_controller.text.trim());
                                   context.read<SendOtpCubit>()
                                     .sendOtp(param: <String, dynamic>{'email': _controller.text.trim()});
                                 }

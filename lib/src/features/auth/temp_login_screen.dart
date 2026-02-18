@@ -129,8 +129,9 @@ class _TempLoginScreenState extends State<TempLoginScreen> with ATValidators {
                       const SizedBox(height: 5),
                       TextButton(
                         onPressed: () {
+                          context.pushNamed(ATRoutes.FORGOT_PASSWORD_SCREEN);
                         }, 
-                        child: Text(ATStrings.forgotPassword,
+                        child: Text(ATStrings.forgotPasswrd,
                         style: Theme.of(context).textTheme.bodySmall,))
 
                         

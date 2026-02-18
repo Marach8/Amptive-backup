@@ -11,12 +11,14 @@ class ATRoutes {
   static const String AUTH_OPTIONS_SCREEN = "auth_screen";
   static const String createPasswordScreen = "password_auth";
   static const String DOB_AUTH_SCREEN = "dob_auth";
-  static const String enterOtpScreen = "otp";
+  static const String ENTER_OTP_SCREEN = "otp";
   static const String ADD_NAME_AUTH_SCREEN = "name_auth";
   static const String ADD_USERNAME_AUTH_SCREEN = "username_auth";
   static const String phoneAuthScreen = "add_phone_auth";
   static const String temporaryLoginScreen = 'temporary_login';
   static const String phoneLoginScreen = 'phone_login';
+  static const String FORGOT_PASSWORD_SCREEN = 'forgot_password';
+  static const String PASSWORD_RESET_OTP_SCREEN = 'password_reset_otp';
 
   //POST AUTHENTICATION
   static const String ADD_PROFILE_PIC_SCREEN = "add_profile_pic";

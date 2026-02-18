@@ -225,7 +225,7 @@ class _PhoneAuthScreenState extends State<PhoneAuthScreen>
                               (_, ATAppState<String> sendOtpState) {
                             if (sendOtpState is SuccessState<String>) {
                               final bool? didVerifyOTP = context.pushNamed(
-                                ATRoutes.enterOtpScreen,
+                                ATRoutes.ENTER_OTP_SCREEN,
                                 extra: VerifyOTPScreenParams(
                                   verificationType:
                                       OTPVerificationType.phoneNumber,
