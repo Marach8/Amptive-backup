@@ -160,7 +160,7 @@ class _AddUsernameScreenState extends State<AddUsernameScreen> {
                       height: 20.h,
                       margin: EdgeInsets.symmetric(vertical: 11.h),
                       child: Text(
-                        ATStrings.CHECKER_LOADING,
+                        ATStrings.checkerLoading,
                         style: Theme.of(context).textTheme.titleSmall?.copyWith(
                               fontWeight: ATFontWeights.w500,
                             ),
@@ -172,7 +172,7 @@ class _AddUsernameScreenState extends State<AddUsernameScreen> {
                     child: Container(
                       margin: EdgeInsets.symmetric(vertical: 11.h),
                       child: Text(
-                        ATStrings.USERNAME_AVAILABLE,
+                        ATStrings.usernameIsAvailable,
                         style: Theme.of(context).textTheme.titleSmall?.copyWith(
                               color: ATColors.successColor,
                             ),

@@ -13,7 +13,7 @@ class SelectedCommunityWidget extends StatelessWidget {
     required this.onView,
   });
 
-  final Community selectedCommunity;
+  final UnusedCommunity selectedCommunity;
   final VoidCallback onClose, onView;
 
   @override

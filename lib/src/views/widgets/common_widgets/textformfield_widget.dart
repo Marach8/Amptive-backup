@@ -39,6 +39,8 @@ class ATTextFormField extends StatelessWidget {
     this.suffix,
     this.isDense,
     this.filled,
+    this.readOnly,
+    this.onTap,
     this.autoValidateMode,
   });
 
@@ -52,7 +54,7 @@ class ATTextFormField extends StatelessWidget {
   final double? cursorHeight;
   final Widget? suffixIcon, prefixIcon, prefix, suffix;
   final bool? obscureText, disableBlueBorder,
-  enabled, filled, isDense;
+  enabled, filled, isDense, readOnly;
   final Color? cursorColor, fillColor;
   final BoxConstraints? suffixConstraints,
   prefixConstraints, constraints;
@@ -64,6 +66,7 @@ class ATTextFormField extends StatelessWidget {
   final int? maxLines, maxLength;
   final EdgeInsetsGeometry? contentPadding;
   final AutovalidateMode? autoValidateMode;
+  final VoidCallback? onTap;
   final Widget? Function(
     BuildContext, {
       required int currentLength, 
@@ -85,9 +88,11 @@ class ATTextFormField extends StatelessWidget {
       autovalidateMode: autoValidateMode ?? AutovalidateMode.onUserInteraction,
       onChanged: onChanged,
       maxLength: maxLength,
+      onTap: onTap,
       buildCounter: buildCounter,
       textInputAction: textInputAction,
       onSaved: onSaved,
+      readOnly: readOnly ?? false,
       cursorColor: disableBlueBorder ?? false ? ATColors.white
         : ATColors.hex307FE2,
       obscureText: obscureText ?? false,

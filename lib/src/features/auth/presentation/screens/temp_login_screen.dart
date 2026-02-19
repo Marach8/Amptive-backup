@@ -10,7 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
-import '../../views/widgets/common_widgets/app_bar_widget.dart';
+import '../../../../views/widgets/common_widgets/app_bar_widget.dart';
 
 class TempLoginScreen extends StatefulWidget {
   const TempLoginScreen({super.key, this.title});
@@ -70,7 +70,7 @@ class _TempLoginScreenState extends State<TempLoginScreen> with ATValidators {
           body: BlocConsumer<LoginCubit, ATAppState<dynamic>>(
             listener: (BuildContext context, ATAppState<dynamic> state) {
               if (state is SuccessState<dynamic>) {
-                context.goNamed(ATRoutes.MAIN_APP_SHELL);
+                context.goNamed(ATRoutes.mainAppShell);
               } else if (state is FailureState) {
                 showAppNotification2(context: context, text: state.message);
               }
@@ -103,8 +103,7 @@ class _TempLoginScreenState extends State<TempLoginScreen> with ATValidators {
                         const SizedBox(height: 10),
                         ATTextFormField(
                           controller: _pswrdCntrl,
-                          hintText: ATStrings.ENTER_UR_PSWRD,
-                          prefixIcon: const SizedBox(width: 10) ,
+                          hintText: ATStrings.enterYourPassword,
                           validator: validatePassword,
                           obscureText: _passwordVisible,
                           maxLines: 1,

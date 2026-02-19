@@ -38,7 +38,7 @@ class CupertinoPhoneCodeSelectWidget extends StatelessWidget {
                           children: <Widget>[
                             CupertinoButton(
                               child: Text(
-                                ATStrings.DONE,
+                                ATStrings.done,
                                 style: Theme.of(context)
                                     .textTheme
                                     .bodyMedium

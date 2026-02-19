@@ -18,7 +18,7 @@ class DotIndicatorRow extends StatelessWidget {
             child: Padding(
               padding: const EdgeInsets.fromLTRB(10, 3, 10, 3),
               child: Text(
-                ATStrings.APPLY,
+                ATStrings.apply,
                 style: Theme.of(context).textTheme.bodyMedium,
               ),
             ),

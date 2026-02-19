@@ -3,7 +3,7 @@ import 'package:amptive/src/config/config_export.dart';
 import 'package:amptive/src/config/utils/dialogs/app_notification_dialog.dart';
 import 'package:amptive/src/features/auth/cubits/check_identity_availability_cubit.dart';
 import 'package:amptive/src/features/auth/cubits/send_otp_cubit.dart';
-import 'package:amptive/src/features/auth/otp_screen.dart';
+import 'package:amptive/src/features/auth/presentation/screens/otp_screen.dart';
 import 'package:amptive/src/views/widgets/common_widgets/annotated_region__widget.dart';
 import 'package:amptive/src/shared/custom_container_widget.dart';
 import 'package:amptive/src/shared/elevated_button_widget.dart';
@@ -18,7 +18,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:nested/nested.dart';
 
-import '../post_auth/post_authentication_widgets/cupertino_phone_code_select.dart';
+import '../../../post_auth/post_authentication_widgets/cupertino_phone_code_select.dart';
 
 class PhoneAuthScreen extends StatefulWidget {
   const PhoneAuthScreen({super.key, this.title});
@@ -222,10 +222,10 @@ class _PhoneAuthScreenState extends State<PhoneAuthScreen>
                             state is SuccessState<bool>;
                         return BlocConsumer<SendOtpCubit, ATAppState<String>>(
                           listener:
-                              (_, ATAppState<String> sendOtpState) {
+                              (_, ATAppState<String> sendOtpState) async {
                             if (sendOtpState is SuccessState<String>) {
-                              final bool? didVerifyOTP = context.pushNamed(
-                                ATRoutes.ENTER_OTP_SCREEN,
+                              final  bool? didVerifyOTP = await context.pushNamed(
+                                ATRoutes.enterOtpScreen,
                                 extra: VerifyOTPScreenParams(
                                   verificationType:
                                       OTPVerificationType.phoneNumber,
@@ -233,6 +233,7 @@ class _PhoneAuthScreenState extends State<PhoneAuthScreen>
                                       selectedCountry.phoneCode +
                                       _phoneController.text.trim(),
                                   title: widget.title,
+                                  otp: sendOtpState.newData,
                                 ),
                               ) as bool?;
 

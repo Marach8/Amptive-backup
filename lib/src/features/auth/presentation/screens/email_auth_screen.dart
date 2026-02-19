@@ -3,7 +3,9 @@ import 'package:amptive/src/config/config_export.dart';
 import 'package:amptive/src/config/utils/dialogs/app_notification_dialog.dart';
 import 'package:amptive/src/features/auth/cubits/check_identity_availability_cubit.dart';
 import 'package:amptive/src/features/auth/cubits/send_otp_cubit.dart';
-import 'package:amptive/src/features/auth/otp_screen.dart';
+import 'package:amptive/src/features/auth/data/models/request/registration_data.dart';
+import 'package:amptive/src/features/auth/presentation/screens/otp_screen.dart';
+import 'package:amptive/src/services/api_handler.dart';
 import 'package:amptive/src/views/widgets/common_widgets/annotated_region__widget.dart';
 import 'package:amptive/src/shared/elevated_button_widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/back_button.dart';
@@ -13,7 +15,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:nested/nested.dart';
-import '../../views/widgets/common_widgets/app_bar_widget.dart';
+import '../../../../views/widgets/common_widgets/app_bar_widget.dart';
 
 class ATEmailAuthScreen extends StatefulWidget {
   const ATEmailAuthScreen({super.key, this.title});
@@ -24,12 +26,12 @@ class ATEmailAuthScreen extends StatefulWidget {
 }
 
 class _ATEmailAuthScreenState extends State<ATEmailAuthScreen> with ATValidators{
-  final TextEditingController _controller = TextEditingController();
+  final TextEditingController _emailCntrl = TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   @override
   void dispose() {
-    _controller.dispose();
+    _emailCntrl.dispose();
     _formKey.currentState?.dispose();
     super.dispose();
   }
@@ -51,11 +53,10 @@ class _ATEmailAuthScreenState extends State<ATEmailAuthScreen> with ATValidators
                 leading: const ATBackBtn(),
                 titleText: widget.title ?? ''
               ),
-              body: SingleChildScrollView(
-                physics: const BouncingScrollPhysics(),
-                padding: const EdgeInsets.all(15),
-                child: Form(
-                  key: _formKey,
+              body: Form(
+                key: _formKey,
+                child: SingleChildScrollView(
+                  padding: const EdgeInsets.all(15),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
@@ -66,7 +67,7 @@ class _ATEmailAuthScreenState extends State<ATEmailAuthScreen> with ATValidators
                       const SizedBox(height: 10),
           
                       ATTextFormField(
-                        controller: _controller,
+                        controller: _emailCntrl,
                         maxLines: 1,
                         hintText: ATStrings.enterYourEmail,
                         fillColor: ATColors.hex9E9E9E.withValues(alpha: 0.3),
@@ -129,16 +130,17 @@ class _ATEmailAuthScreenState extends State<ATEmailAuthScreen> with ATValidators
                           listener: (_, ATAppState<String> sendOtpState) async{
                             if(sendOtpState is SuccessState<String>){
                               final bool? didVerifyOTP = await context.pushNamed(
-                                ATRoutes.ENTER_OTP_SCREEN,
+                                ATRoutes.enterOtpScreen,
                                 extra: VerifyOTPScreenParams(
                                   verificationType: OTPVerificationType.email,
-                                  identifier: _controller.text.trim(),
+                                  identifier: _emailCntrl.text.trim(),
                                   title: widget.title,
                                   otp: sendOtpState.newData
                                 )
                               ) as bool?;
 
                               if(context.mounted && didVerifyOTP == true){
+                                RegistrationData().copyWith(email: _emailCntrl.text.trim());
                                 context.pushNamed(ATRoutes.createPasswordScreen);
                               }
                             }
@@ -156,7 +158,7 @@ class _ATEmailAuthScreenState extends State<ATEmailAuthScreen> with ATValidators
                               onPressed: shouldEnableBtn ? (){
                                 if(_formKey.currentState?.validate() ?? false){
                                   context.read<SendOtpCubit>()
-                                    .sendOtp(param: <String, dynamic>{'email': _controller.text.trim()});
+                                    .sendOtp(param: <String, dynamic>{'email': _emailCntrl.text.trim()});
                                 }
                               } : null,
                               btnTitle: ATStrings.verifyEmail,

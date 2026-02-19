@@ -1,10 +1,9 @@
 import 'package:amptive/src/config/api_response_and_app_state.dart';
 import 'package:amptive/src/config/config_export.dart';
 import 'package:amptive/src/config/utils/dialogs/app_notification_dialog.dart';
-import 'package:amptive/src/features/auth/cubits/login_cubit.dart';
 import 'package:amptive/src/features/auth/cubits/password_reset_otp_cubit.dart';
-import 'package:amptive/src/features/auth/cubits/send_otp_cubit.dart';
-import 'package:amptive/src/features/auth/reset_password_otp_screen.dart';
+import 'package:amptive/src/features/auth/presentation/screens/create_new_password_screen.dart';
+import 'package:amptive/src/features/auth/presentation/screens/reset_password_otp_screen.dart';
 import 'package:amptive/src/views/widgets/common_widgets/annotated_region__widget.dart';
 import 'package:amptive/src/shared/elevated_button_widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/back_button.dart';
@@ -12,7 +11,7 @@ import 'package:amptive/src/views/widgets/common_widgets/textformfield_widget.da
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import '../../views/widgets/common_widgets/app_bar_widget.dart';
+import '../../../../views/widgets/common_widgets/app_bar_widget.dart';
 
 class ATForgotPasswordEmailScreen extends StatefulWidget {
   const ATForgotPasswordEmailScreen({super.key, this.title});
@@ -23,22 +22,18 @@ class ATForgotPasswordEmailScreen extends StatefulWidget {
       _ATForgotPasswordEmailScreenState();
 }
 
-class _ATForgotPasswordEmailScreenState
-    extends State<ATForgotPasswordEmailScreen> with ATValidators {
+class _ATForgotPasswordEmailScreenState extends State<ATForgotPasswordEmailScreen> with ATValidators {
   final TextEditingController _emailCntrl = TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  final ValueNotifier<(bool, bool)> _btnNotifier =
-      ValueNotifier<(bool, bool)>((false, false));
+  final ValueNotifier<bool> _btnNotifier = ValueNotifier<bool>(false);
 
   @override
   void initState() {
     super.initState();
-   _emailCntrl.addListener(() {
-  final String text = _emailCntrl.text;
-  final bool isValid = validateEmail(text) == null;
-  _btnNotifier.value = (isValid, isValid);
-});
-
+    _emailCntrl.addListener(() {
+      final bool isValid = validateEmail(_emailCntrl.text) == null;
+      _btnNotifier.value = isValid;
+    });
   }
 
   @override
@@ -50,7 +45,6 @@ class _ATForgotPasswordEmailScreenState
   }
 
   @override
-  @override
   Widget build(BuildContext context) {
     return BlocProvider<PasswordResetOtpCubit>(
       create: (_) => PasswordResetOtpCubit(),
@@ -58,29 +52,33 @@ class _ATForgotPasswordEmailScreenState
         builder: (BuildContext context) {
           return ATAnnotatedRegion(
             child: Scaffold(
-              appBar: const ATAppBar(
-                leading: ATBackBtn(),
-                titleText: ATStrings.forgotPassword,
+              appBar: ATAppBar(
+                leading: const ATBackBtn(),
+                titleText: widget.title ?? ATStrings.forgotPassword
               ),
-              body: SingleChildScrollView(
-                physics: const BouncingScrollPhysics(),
-                padding: const EdgeInsets.all(15),
-                child: Form(
-                  key: _formKey,
+              body: Form(
+                key: _formKey,
+                child: SingleChildScrollView(
+                  padding: const EdgeInsets.all(15),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
                       Text(
                         ATStrings.whatIsYourEmail,
-                        style: Theme.of(context).textTheme.headlineMedium,
+                        style: context.textTheme.headlineMedium
                       ),
                       const SizedBox(height: 10),
                       ATTextFormField(
                         controller: _emailCntrl,
+                        maxLines: 1,
                         hintText: ATStrings.enterYourEmail,
+                        fillColor: ATColors.hex9E9E9E.withValues(alpha: 0.3),
+                        prefixIcon: const SizedBox(width: 10,),
+                        keyboardType: TextInputType.emailAddress,
+                        autoValidateMode: AutovalidateMode.disabled,
                         validator: validateEmail,
-                        prefixIcon: const SizedBox(width: 10),
                       ),
+                      const SizedBox(height: 6,),
                     ],
                   ),
                 ),
@@ -88,41 +86,48 @@ class _ATForgotPasswordEmailScreenState
               bottomSheet: Builder(
                 builder: (BuildContext context) {
                   final double bottom = MediaQuery.viewInsetsOf(context).bottom;
-                  final double bottomPadding = bottom == 0 ? 50 : 10;
-
+                  final double bottomPad = bottom > 0 ? 10 : 50;
                   return Padding(
-                    padding: EdgeInsets.fromLTRB(15, 10, 15, bottomPadding),
-                    child: ValueListenableBuilder<(bool, bool)>(
+                    padding: EdgeInsets.fromLTRB(15, 0, 15, bottomPad),
+                    child: ValueListenableBuilder<bool>(
                       valueListenable: _btnNotifier,
-                      builder: (_, (bool, bool) value, __) {
-                        final bool enable = value.$1 && value.$2;
+                      builder: (_, bool isValid, __) {
                         return BlocConsumer<PasswordResetOtpCubit, ATAppState<String>>(
-                          listener: (_, ATAppState<String> sendOtpState) {
-                            if (sendOtpState is SuccessState<String>) {
+                          listener: (_, ATAppState<String> state)  async{
+                            if (state is SuccessState<String>) {
+                              final bool? didVerifyOTP = await 
                               context.pushNamed(
                                 ATRoutes.PASSWORD_RESET_OTP_SCREEN,
                                 extra: VerifyPasswordResetOTPScreenParams(
                                   identifier: _emailCntrl.text.trim(),
                                   title: ATStrings.forgotPassword,
                                   verificationType: OTPVerificationType.email,
+                                  otp: state.newData,
+                                  
                                 ),
                               );
-                            } else if (sendOtpState is FailureState<String>) {
+
+                              if(context.mounted && didVerifyOTP == true){
+                                context.pushNamed(ATRoutes.createNewPAsswordScreen,
+                                extra: CreateNewPasswordScreenParams(email: _emailCntrl.text.trim(),
+                                title: ATStrings.forgotPassword));
+                              }
+                            } else if (state is FailureState<String>) {
                               showAppNotification2(
                                 context: context,
-                                text: sendOtpState.message,
+                                text: state.message,
                                 type: NotificationType.failure,
                               );
                             }
                           },
-                          builder: (BuildContext context, ATAppState<String> sendOtpState) {
+                          builder: (BuildContext context, ATAppState<String> state) {
                             return ATPlainElevatedBtn(
-                              isLoading: sendOtpState is LoadingState<String>,
-                              onPressed: enable
+                              isLoading: state is LoadingState<String>,
+                              onPressed: isValid
                                   ? () {
                                       if (_formKey.currentState?.validate() ?? false) {
-                                        context.read<PasswordResetOtpCubit>().resetPasswordOtp(
-                                          param: <String, dynamic>{'email': _emailCntrl.text.trim()});
+                                        context.read<PasswordResetOtpCubit>()
+                                          .resetPasswordOtp(param: <String, dynamic>{'email': _emailCntrl.text.trim()});
                                       }
                                     }
                                   : null,
@@ -133,11 +138,11 @@ class _ATForgotPasswordEmailScreenState
                       },
                     ),
                   );
-                },
+                }
               ),
             ),
           );
-        },
+        }
       ),
     );
   }

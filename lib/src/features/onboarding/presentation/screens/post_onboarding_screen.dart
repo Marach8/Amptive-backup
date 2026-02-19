@@ -1,4 +1,4 @@
-import 'package:amptive/src/features/auth/auth_options_screen.dart' show AuthType;
+import 'package:amptive/src/features/auth/presentation/screens/auth_options_screen.dart' show AuthType;
 import 'package:amptive/src/global_export.dart';
 import 'package:amptive/src/views/widgets/common_widgets/annotated_region__widget.dart';
 import 'package:go_router/go_router.dart';

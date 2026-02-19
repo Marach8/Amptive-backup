@@ -7,7 +7,7 @@ import 'package:amptive/src/views/widgets/common_widgets/modal_dismisser.dart';
 
 Future<void> showTopCreationCommunitiesModal(BuildContext context) async {
   CreateShowService service = GetIt.I<CreateShowService>();
-  final List<Community> communities = service.generateCommunities();
+  final List<UnusedCommunity> communities = service.generateCommunities();
 
   return await showModalBottomSheet(
     backgroundColor: ATColors.hex202020,
@@ -40,7 +40,7 @@ Future<void> showTopCreationCommunitiesModal(BuildContext context) async {
                     itemCount: communities.length,
                     controller: scrollController,
                     itemBuilder: (_, int index){
-                      final Community community = communities[index];                        
+                      final UnusedCommunity community = communities[index];                        
                       return _RenderACommunity(community);
                     },
                   ),
@@ -58,7 +58,7 @@ Future<void> showTopCreationCommunitiesModal(BuildContext context) async {
 
 class _RenderACommunity extends StatelessWidget {
   const _RenderACommunity(this.community);
-  final Community? community;
+  final UnusedCommunity? community;
 
   @override
   Widget build(BuildContext context) {

@@ -13,10 +13,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/single_child_widget.dart';
-import '../../config/utils/font_weights.dart';
-import '../../config/utils/other_strings.dart';
-import '../../views/widgets/common_widgets/app_bar_widget.dart';
-import '../../shared/elevated_button_widget.dart';
+import '../../../../config/utils/font_weights.dart';
+import '../../../../config/utils/other_strings.dart';
+import '../../../../views/widgets/common_widgets/app_bar_widget.dart';
+import '../../../../shared/elevated_button_widget.dart';
 
 
 enum OTPVerificationType{email, phoneNumber}
@@ -46,10 +46,12 @@ class ResetPasswordOtpScreen extends StatefulWidget {
 
 class _ResetPasswordOtpScreenState extends State<ResetPasswordOtpScreen> {
   final ValueNotifier<({bool otpcorrect, bool notresendingotp})> activateBtnNotifier =
-      ValueNotifier<({bool otpcorrect, bool notresendingotp})>((otpcorrect: false, notresendingotp: false));
+      ValueNotifier<({bool otpcorrect, bool notresendingotp})>((otpcorrect: false, notresendingotp: true));
   final ValueNotifier<bool> didSendAgainNotifier = ValueNotifier<bool>(false);
   final TapGestureRecognizer _tapGestureRecognizer = TapGestureRecognizer();
   final int countDownStart = 10;
+  
+  String? _matchingOtp;
 
   Stream<int> generateCountDown() async* {
     for (int i = countDownStart; i >= 0; i--) {
@@ -59,11 +61,19 @@ class _ResetPasswordOtpScreenState extends State<ResetPasswordOtpScreen> {
     didSendAgainNotifier.value = false;
   }
 
+  @override 
+  void initState(){
+    super.initState();
+    _matchingOtp = widget.params.otp;
+  }
+
   @override
   void dispose() {
     activateBtnNotifier.dispose();
     didSendAgainNotifier.dispose();
     _tapGestureRecognizer.dispose();
+     
+
     super.dispose();
   }
 
@@ -124,7 +134,7 @@ class _ResetPasswordOtpScreenState extends State<ResetPasswordOtpScreen> {
                   const SizedBox(height: 11),
                   ATOTPFieldsWidget(
                     onPinComplete: (String pin) async{
-                      final bool isCorrect = pin == widget.params.otp;
+                      final bool isCorrect = pin == _matchingOtp;
                       final ({bool notresendingotp, bool otpcorrect}) 
                         currentState = activateBtnNotifier.value;
                       activateBtnNotifier.value = (
@@ -215,7 +225,8 @@ class _ResetPasswordOtpScreenState extends State<ResetPasswordOtpScreen> {
                             context.read<VerifyResetPasswordOtpCubit>().verifyResetPasswordOtp(
                               param: <String, dynamic>{
                                 identifierKey: widget.params.identifier,
-                                'otp': widget.params.otp,
+                                'otp': _matchingOtp,
+                                
                               },
                             );
                           } : null,

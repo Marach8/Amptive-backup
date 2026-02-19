@@ -19,7 +19,7 @@ class EditProfileBgImage extends StatelessWidget {
   Widget build(BuildContext context) {
     Uint8List? imageBytes;
     return StatefulBuilder(
-      builder: (BuildContext context, void Function(void Function())  setter) {
+      builder: (BuildContext context, StateSetter setter) {
         return Stack(
           alignment: Alignment.center,
           clipBehavior: Clip.none,
@@ -31,8 +31,8 @@ class EditProfileBgImage extends StatelessWidget {
                 if(context.mounted && selectedFile != null){
                   final File file = File(selectedFile.path);
                   final MemoryImage? imageData = await context.pushNamed(
-                    ATRoutes.RECT_IMG_CROPPER_SCREEN,
-                    extra: (file, null),
+                    ATRoutes.rectImageCropperScreen,
+                    extra: (file, null, null,),
                   ) as MemoryImage?;
                   if(imageData != null){
                     setter(() => imageBytes = imageData.bytes);

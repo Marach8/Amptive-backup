@@ -1,5 +1,6 @@
 import 'package:amptive/src/config/config_export.dart';
 import 'package:email_validator/email_validator.dart';
+import 'package:intl/intl.dart' show DateFormat;
 
 class Validators {
   static String? validateEmail(String? value) {
@@ -37,17 +38,20 @@ mixin ATValidators{
     return null;
   }
 
-  // String? validateUsername(String? username){
-  //   final RegExp regex = RegExp(r'^[a-zA-Z0-9_]{3,30}$');
-    
-  //   if(username == null || username.isEmpty){
-  //     return ATStrings.EMPTY_FIELD;
-  //   }
-  //   else if(!regex.hasMatch(username)){
-  //     return ATStrings.INVALID_USERNAME;
-  //   }
-  //   return null;
-  // }
+  String? validateDOB(String? value) {
+    if (value == null || value.trim().isEmpty) {
+      return 'Date is required';
+    }
+
+    try {
+      // This enforces: December 15 2018
+      DateFormat('MMMM d yyyy').parseStrict(value);
+      return null;
+    } catch (_) {
+      return 'Date must be in the format: December 15 2026';
+    }
+  }
+
 
   String? validatePassword(String? password){
     final RegExp regex = RegExp(r'^(?=.*[A-Z])(?=.*[a-z])(?=.*[!@#$%^&*(),.?":{}|<>]).{8,}$');
@@ -56,7 +60,7 @@ mixin ATValidators{
       return ATStrings.emptyField;
     }
     else if(!regex.hasMatch(password)){
-      return ATStrings.WEAK_PSWRD;
+      return ATStrings.weakPassword;
     }
     return null;
   }

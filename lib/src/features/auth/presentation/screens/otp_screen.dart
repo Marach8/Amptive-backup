@@ -13,10 +13,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/single_child_widget.dart';
-import '../../config/utils/font_weights.dart';
-import '../../config/utils/other_strings.dart';
-import '../../views/widgets/common_widgets/app_bar_widget.dart';
-import '../../shared/elevated_button_widget.dart';
+import '../../../../config/utils/font_weights.dart';
+import '../../../../config/utils/other_strings.dart';
+import '../../../../views/widgets/common_widgets/app_bar_widget.dart';
+import '../../../../shared/elevated_button_widget.dart';
 
 
 enum OTPVerificationType{email, phoneNumber}
@@ -45,11 +45,12 @@ class ATOTPScreen extends StatefulWidget {
 }
 
 class _ATOTPScreenState extends State<ATOTPScreen> {
-  final ValueNotifier<({bool otpcorrect, bool notresendingotp})> activateBtnNotifier =
-      ValueNotifier<({bool otpcorrect, bool notresendingotp})>((otpcorrect: false, notresendingotp: false));
+  final ValueNotifier<({bool otpIscorrect, bool notResendingotp})> activateBtnNotifier =
+      ValueNotifier<({bool otpIscorrect, bool notResendingotp})>((otpIscorrect: false, notResendingotp: true));
   final ValueNotifier<bool> didSendAgainNotifier = ValueNotifier<bool>(false);
   final TapGestureRecognizer _tapGestureRecognizer = TapGestureRecognizer();
   final int countDownStart = 10;
+  String? _matchingOtp;
 
   Stream<int> generateCountDown() async* {
     for (int i = countDownStart; i >= 0; i--) {
@@ -57,6 +58,12 @@ class _ATOTPScreenState extends State<ATOTPScreen> {
       await Future<void>.delayed(const Duration(seconds: 1));
     }
     didSendAgainNotifier.value = false;
+  }
+  
+  @override 
+  void initState(){
+    super.initState();
+    _matchingOtp = widget.params.otp;
   }
 
   @override
@@ -98,19 +105,23 @@ class _ATOTPScreenState extends State<ATOTPScreen> {
                 children: <Widget>[
                   BlocListener<SendOtpCubit, ATAppState<String>>(
                     listener: (_, ATAppState<String> sendOtpState) {
-                      final ({bool notresendingotp, bool otpcorrect})
+                      final ({bool notResendingotp, bool otpIscorrect})
                         currentState = activateBtnNotifier.value;
                       if(sendOtpState is LoadingState<String>){
                         activateBtnNotifier.value = (
-                          otpcorrect: currentState.otpcorrect,
-                          notresendingotp: false
+                          otpIscorrect: currentState.otpIscorrect,
+                          notResendingotp: false
                         );
                       }
                       else{
                         activateBtnNotifier.value = (
-                          otpcorrect: currentState.otpcorrect,
-                          notresendingotp: true
+                          otpIscorrect: currentState.otpIscorrect,
+                          notResendingotp: true
                         );
+                      }
+
+                      if(sendOtpState is SuccessState<String>){
+                        _matchingOtp = sendOtpState.newData;
                       }
                     },
                     child: Text(
@@ -123,15 +134,23 @@ class _ATOTPScreenState extends State<ATOTPScreen> {
                   ),
                   const SizedBox(height: 11),
                   ATOTPFieldsWidget(
-                    onPinComplete: (String pin) async{
-                      final bool isCorrect = pin == widget.params.otp;
-                      final ({bool notresendingotp, bool otpcorrect}) 
+                    onPinFieldChanged: (_){
+                      final ({bool notResendingotp, bool otpIscorrect}) 
                         currentState = activateBtnNotifier.value;
                       activateBtnNotifier.value = (
-                        otpcorrect: isCorrect,
-                        notresendingotp: currentState.notresendingotp
+                        otpIscorrect: false,
+                        notResendingotp: currentState.notResendingotp
                       );
-                      return isCorrect;
+                    },
+                    onPinComplete: (String pin) async{
+                      final bool otpIsCorrect = pin == _matchingOtp;
+                      final ({bool notResendingotp, bool otpIscorrect}) 
+                        currentState = activateBtnNotifier.value;
+                      activateBtnNotifier.value = (
+                        otpIscorrect: otpIsCorrect,
+                        notResendingotp: currentState.notResendingotp
+                      );
+                      return otpIsCorrect;
                     },
                   ),
       
@@ -191,10 +210,10 @@ class _ATOTPScreenState extends State<ATOTPScreen> {
               final double bottomPadding = bottom > 0 ? 10 : 50;
               return Padding(
                 padding: EdgeInsets.fromLTRB(15, 0, 15, bottomPadding),
-                child: ValueListenableBuilder<({bool otpcorrect, bool notresendingotp})>(
+                child: ValueListenableBuilder<({bool otpIscorrect, bool notResendingotp})>(
                   valueListenable: activateBtnNotifier,
-                  builder: (_, ({bool otpcorrect, bool notresendingotp}) state, __) {
-                    final bool shouldEnable = state.otpcorrect && state.notresendingotp;
+                  builder: (_, ({bool otpIscorrect, bool notResendingotp}) state, __) {
+                    final bool shouldEnable = state.otpIscorrect && state.notResendingotp;
                     return BlocConsumer<VerifyOtpCubit, ATAppState<dynamic>>(
                       listener: (_, ATAppState<dynamic> state) {
                         if(state is SuccessState<dynamic>){
@@ -215,7 +234,7 @@ class _ATOTPScreenState extends State<ATOTPScreen> {
                             context.read<VerifyOtpCubit>().verifyOtp(
                               param: <String, dynamic>{
                                 identifierKey: widget.params.identifier,
-                                'otp': widget.params.otp,
+                                'otp': _matchingOtp
                               },
                             );
                           } : null,

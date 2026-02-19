@@ -130,7 +130,7 @@ class CreateShowService {
     selectedShowImage = selectedImage.value;
   }
 
-  List<Community> generateCommunities() {
+  List<UnusedCommunity> generateCommunities() {
     final Random random = Random();
 
     final List<String> names = <String>[
@@ -156,7 +156,7 @@ class CreateShowService {
       int id = random.nextInt(1000);
       index++;
 
-      return Community(
+      return UnusedCommunity(
         id: id,
         name: name,
         coverPic: pics[index],

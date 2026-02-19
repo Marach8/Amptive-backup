@@ -36,7 +36,7 @@ class _SelectProgramCoverArtState extends State<SelectProgramCoverArt> {
         if(context.mounted && selectedFile != null){
           final File file = File(selectedFile.path);
           final MemoryImage? croppedImage = await context.pushNamed(
-            ATRoutes.RECT_IMG_CROPPER_SCREEN, extra: (file, Ratio(width: 160, height: 160))
+            ATRoutes.rectImageCropperScreen, extra: (file, Ratio(width: 160, height: 160))
           );
 
           if(croppedImage != null){

@@ -5,8 +5,11 @@ import 'package:amptive/src/config/endpoints.dart';
 import 'package:amptive/src/config/exception.dart';
 import 'package:amptive/src/config/services/network_service/dio_network_service_impl.dart';
 import 'package:amptive/src/config/services/network_service/network_service.dart';
+import 'package:amptive/src/features/auth/data/models/request/registration_data.dart';
+import 'package:amptive/src/features/auth/data/models/response/communities_response_model.dart';
+import 'package:amptive/src/features/auth/data/models/response/signup_response.dart';
 import 'package:amptive/src/features/auth/data/repository/auth_repo.dart';
-import 'package:dio/dio.dart' show Response;
+import 'package:dio/dio.dart' show Response, MultipartFile;
 
 class AuthRepoImpl implements AuthRepo {
   AuthRepoImpl({NetworkService? mockNetworkService})
@@ -106,11 +109,61 @@ class AuthRepoImpl implements AuthRepo {
       return Successful<String>(data: otp);
     } catch (e) {
       log('Send OTP error: $e');
+      return Unsuccessful<String>(error: ATException.resolveException(e));
+    }
+    }
+
+    @override
+  Future<ApiResponse<SignupResponseModel>> registerUser({
+    required RegistrationData param,
+  }) async {
+    try {
+      final Response<dynamic> response = await networkService.post(
+        ATEndpoints.register,
+        data: param.toJson(),
+      );
+
+      final SignupResponseModel signupResponse = 
+        SignupResponseModel.fromJson(response.data['data']);
+      return Successful<SignupResponseModel>(data: signupResponse);
+    } catch (e) {
+      log('Unable to register user: $e');
+      return Unsuccessful<SignupResponseModel>(
+        error: ATException.resolveException(e),
+      );
+    }
+  }
+
+  @override
+  Future<ApiResponse<String>> uploadImage({
+    required String filePath,
+  }) async {
+    try {
+      final Map<String, dynamic> param = <String, dynamic>{
+        'images': await MultipartFile.fromFile(
+          filePath,
+          filename: filePath.split('/').last,
+        ),
+        'purpose': 'profile-picture',
+      };
+
+      final Response<dynamic> response = await networkService.formDataRequest(
+        ATEndpoints.uploadImage,
+        data: param,
+      );
+
+      final List<dynamic> urls = response.data['data']['urls'];
+      final String imageUrl = urls.first;
+
+      return Successful<String>(data: imageUrl);
+    } catch (e) {
+      log('Unable to upload image: $e');
       return Unsuccessful<String>(
         error: ATException.resolveException(e),
       );
     }
   }
+  
   @override
   Future<ApiResponse<dynamic>> verifyResetPasswordOtp({
     required Map<String, dynamic> param,
@@ -125,8 +178,43 @@ class AuthRepoImpl implements AuthRepo {
     } catch (e) {
       log('Verify OTP error: $e');
       return Unsuccessful<dynamic>(
+        error: ATException.resolveException(e));
+    }
+  }
+
+  @override
+  Future<ApiResponse<CommunitiesResponseModel>> fetchCommunities() async {
+    try {
+      final Response<dynamic> response = await networkService.get(
+        ATEndpoints.communities,
+      );
+
+      final CommunitiesResponseModel communitiesResponse = 
+        CommunitiesResponseModel.fromJson(response.data);
+      return Successful<CommunitiesResponseModel>(data: communitiesResponse);
+    } catch (e) {
+      log('Unable to get communities: $e');
+      return Unsuccessful<CommunitiesResponseModel>(
         error: ATException.resolveException(e),
       );
     }
   }
+
+  @override
+  Future<ApiResponse<String>> resetPassword({
+    required Map<String, dynamic> param,
+  }) async {
+    try {
+      final Response<dynamic> response = await networkService.post(
+        ATEndpoints.resetPassword,
+        data: param,
+      );
+      final String successMessage = response.data['message'];
+      return Successful<String>(data: successMessage);
+    } catch (e) {
+      log('unable to reset passowrd: $e');
+      return Unsuccessful<String>(error: ATException.resolveException(e));
+    }
+    }
+
 }
