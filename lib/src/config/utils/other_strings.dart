@@ -43,10 +43,13 @@ class ATStrings{
   static const String or = 'or';
   static const String and = 'and';
   static const String emailSymbol = '@';
+  static const String forgotPassword = 'Forgot Password';
+  static const String forgotPasswrd = 'Forgot Password?';
   static const String SIGN_UP = 'Sign up';
   static const String RECORD = 'Record';
   static const String LAUNCH_SHOW = 'Launch show';
   static const String SIGN_IN = 'Sign in';
+  static const String sendCode = 'Send Code';
   static const String attendAsGuest = 'Attend as guest';
   static const String SKIP = 'Skip';
   static const String BACK = 'Back';
@@ -70,6 +73,7 @@ class ATStrings{
   static const String APPLE = 'Apple';
   static const String flutterWave = 'Flutterwave';
   static const String googlePay = 'Google Pay';
+    static const String emailOrUsername = 'Email Or Username';
   static const String LIVE = 'Live';
   static const String ALL = 'All';
   static const String RECORDING_WILL_AUTOPLAY = 'Your recording will play in';
@@ -136,7 +140,10 @@ class ATStrings{
   static const String WhatIsYourPhoneNumber ='What is your phone number?';
   static const String COHOST = 'Cohost';
   static const String UR_PSWRD = 'What is your password?';
-  static const String enterYourEmail = 'Enter your email...';
+  static const String password = 'Password';
+  static const String passwordsDoNotMatch = 'Passwords do not match';
+  static const String enterYourEmail = 'Enter your email';
+  static const String enterYourEmailOrUsername = 'Enter your email or usrename';
   static const String thisEmailWillBeVerified = 'This email will be verified in the next step';
   static const String verifyEmail = 'Verify email';
   static const String unblockDesc = 'will be able to follow, subscribe and see your app activities';
@@ -197,6 +204,8 @@ class ATStrings{
   static const String THIS_WILL_APPEAR_ON_PROFILE = 'Note that this will appear on your profile';
 
   static const String createPasswordForAccount = 'Create a password for your account';
+  static const String createNewPassword = 'Create new password';
+  static const String confirmPassword = 'Confirm new password';
   static const String enterYourPassword = 'Enter your password...';
 
   static const String whatIsYourDateOfBirth = "What is your date of birth?";
@@ -351,6 +360,7 @@ class ATStrings{
   static const String RE_ENTER_PIN = 'Re-enter pin';
   static const String ADD_SECURITY_QUESTION = 'Add security question';
   static const String FINISH_SETUP = 'Finish setup';
+    static const String finish = 'Finish';
   static const String menu = 'Menu';
   static const String VIEW_CALENDER = 'View calender';
   static const String CALENDER = 'Calender';

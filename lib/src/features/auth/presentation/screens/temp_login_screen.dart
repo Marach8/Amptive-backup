@@ -85,30 +85,23 @@ class _TempLoginScreenState extends State<TempLoginScreen> with ATValidators {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
                         Text(
-                          ATStrings.whatIsYourEmail,
+                          ATStrings.emailOrUsername,
                           style: Theme.of(context).textTheme.headlineMedium,
                         ),
                         const SizedBox(height: 10),
                         ATTextFormField(
                           controller: _emailCntrl,
-                          hintText: ATStrings.enterYourEmail,
+                          hintText: ATStrings.enterYourEmailOrUsername,
                           validator: validateEmail,
-                          prefixIcon: const Padding(
-                            padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
-                            child: Icon(Icons.email_outlined),
-                          ),
+                          prefixIcon: const SizedBox(width: 10),
                         ),
                         const SizedBox(height: 30),
                         Text(
-                          ATStrings.UR_PSWRD,
+                          ATStrings.password,
                           style: Theme.of(context).textTheme.headlineMedium,
                         ),
                         const SizedBox(height: 10),
                         ATTextFormField(
-                          prefixIcon: const Padding(
-                            padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
-                            child: Icon(Icons.key_outlined),
-                          ),
                           controller: _pswrdCntrl,
                           hintText: ATStrings.enterYourPassword,
                           validator: validatePassword,
@@ -132,6 +125,14 @@ class _TempLoginScreenState extends State<TempLoginScreen> with ATValidators {
                       )
                         
                           ),
+                      const SizedBox(height: 5),
+                      TextButton(
+                        onPressed: () {
+                          context.pushNamed(ATRoutes.FORGOT_PASSWORD_SCREEN);
+                        }, 
+                        child: Text(ATStrings.forgotPasswrd,
+                        style: Theme.of(context).textTheme.bodySmall,))
+
                         
                       ]
                       ),
