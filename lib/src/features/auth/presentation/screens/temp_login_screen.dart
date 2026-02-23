@@ -107,6 +107,7 @@ class _TempLoginScreenState extends State<TempLoginScreen> with ATValidators {
                           validator: validatePassword,
                           obscureText: _passwordVisible,
                           maxLines: 1,
+                          prefixIcon: const SizedBox(width: 10),
                         suffixIcon: IconButton(
                         icon: Padding(
                         padding: EdgeInsets.only(right: 16.0.w),
