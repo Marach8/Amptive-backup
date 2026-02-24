@@ -7,7 +7,7 @@ import 'package:amptive/src/features/auth/presentation/screens/forgot_password_e
 import 'package:amptive/src/features/auth/phone_login_screen.dart';
 import 'package:amptive/src/features/auth/presentation/screens/reset_password_otp_screen.dart';
 import 'package:amptive/src/features/auth/presentation/screens/phone_auth_screen.dart';
-import 'package:amptive/src/features/auth/presentation/screens/temp_login_screen.dart';
+import 'package:amptive/src/features/auth/presentation/screens/login_screen.dart';
 import 'package:amptive/src/config/utils/extensions/string_extensions.dart';
 import 'package:amptive/src/features/auth/presentation/screens/dob_screen.dart';
 import 'package:amptive/src/features/auth/presentation/screens/email_auth_screen.dart';
@@ -51,7 +51,7 @@ import '../../features/wallet/wallet_export.dart';
 final GoRouter amptiveAppRouter = GoRouter(
   //initialLocation: ATRoutes.MAIN_APP_SHELL.addSlash,
   //redirect: tempRedirect,
-  initialLocation: ATRoutes.ONBOARDING_SCREEN.addSlash,
+  initialLocation: ATRoutes.temporaryLoginScreen.addSlash,
   routes: <RouteBase>[
     GoRoute(
       name: ATRoutes.POST_ONBOARDING_SCREEN,
@@ -84,7 +84,7 @@ final GoRouter amptiveAppRouter = GoRouter(
       name: ATRoutes.temporaryLoginScreen,
       path: ATRoutes.temporaryLoginScreen.addSlash,
       pageBuilder: (_, GoRouterState st) => ATSlidingRouteTransition<void>(
-        child: const TempLoginScreen()
+        child: const LoginScreen()
       )
     ),
      GoRoute(

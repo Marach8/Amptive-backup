@@ -14,6 +14,7 @@ class ATStrings{
   static const String AT_SIGN = '@';
   static const String nairaText = '₦';
   static const String accessToken = 'Access Token';
+  static const String refreshToken = 'Refresh Token';
   static const String cachedUserData = 'Cached User Data';
   static const String profilePicture = 'Profile Picture';
   static const String userId = 'User Id';

@@ -6,8 +6,8 @@ import 'package:amptive/src/config/exception.dart';
 import 'package:amptive/src/config/services/network_service/dio_network_service_impl.dart';
 import 'package:amptive/src/config/services/network_service/network_service.dart';
 import 'package:amptive/src/features/auth/data/models/request/registration_data.dart';
+import 'package:amptive/src/features/auth/data/models/response/auth_success_response_model.dart';
 import 'package:amptive/src/features/auth/data/models/response/communities_response_model.dart';
-import 'package:amptive/src/features/auth/data/models/response/signup_response.dart';
 import 'package:amptive/src/features/auth/data/repository/auth_repo.dart';
 import 'package:dio/dio.dart' show Response, MultipartFile;
 
@@ -77,7 +77,7 @@ class AuthRepoImpl implements AuthRepo {
   }
 
   @override
-  Future<ApiResponse<dynamic>> loginUser({
+  Future<ApiResponse<LoginResponseModel>> loginUser({
     required Map<String, dynamic> param,
   }) async {
     try {
@@ -86,10 +86,12 @@ class AuthRepoImpl implements AuthRepo {
         data: param,
       );
 
-      return Successful<dynamic>(data: response.data);
+      final LoginResponseModel loginResponse = 
+        LoginResponseModel.fromJson(response.data);
+      return Successful<LoginResponseModel>(data: loginResponse);
     } catch (e) {
       log('Unable to log in user: $e');
-      return Unsuccessful<dynamic>(
+      return Unsuccessful<LoginResponseModel>(
         error: ATException.resolveException(e),
       );
     }
