@@ -14,6 +14,9 @@ class ATEndpoints {
   static const String communities = '/api/v1/communities/';
   static const String resetPassword = '/api/v1/auth/reset-password';
   static const String homeFeed = '/api/v1/shows/feed/home';
+  static const String followedShowsFeed = '/api/v1/shows/feed/following';
+  static const String liveShowsFeed = '/api/v1/shows/feed/live-now';
+  static const String shows = '/api/v1/shows/';
 
 }
 

@@ -139,6 +139,7 @@ class AuthRepoImpl implements AuthRepo {
   @override
   Future<ApiResponse<String>> uploadImage({
     required String filePath,
+    String? purpose,
   }) async {
     try {
       final Map<String, dynamic> param = <String, dynamic>{
@@ -146,7 +147,7 @@ class AuthRepoImpl implements AuthRepo {
           filePath,
           filename: filePath.split('/').last,
         ),
-        'purpose': 'profile-picture',
+        'purpose': purpose ?? 'profile-picture',
       };
 
       final Response<dynamic> response = await networkService.formDataRequest(
@@ -185,10 +186,16 @@ class AuthRepoImpl implements AuthRepo {
   }
 
   @override
-  Future<ApiResponse<CommunitiesResponseModel>> fetchCommunities() async {
+  Future<ApiResponse<CommunitiesResponseModel>> fetchCommunities({
+    required int pageNo, required int pageSize,
+  }) async {
     try {
       final Response<dynamic> response = await networkService.get(
         ATEndpoints.communities,
+        queryParameters: <String, dynamic>{
+          'page': pageNo,
+          'page_size': pageSize,
+        },
       );
 
       final CommunitiesResponseModel communitiesResponse = 

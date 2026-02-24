@@ -29,6 +29,7 @@ import '../../../../models/host.dart';
 import '../../../../views/widgets/common_widgets/rich_text.dart';
 import '../../../../config/utils/dialogs/add_communities_dialog.dart';
 import '../../../../views/widgets/other_widgets/main_application_widgets/widgets_in_create_show_event/create_show_text_form_field.dart';
+import '../../../auth/data/models/response/communities_response_model.dart' show Community;
 
 //     ShowTypeVisibilityWidget(
           //       showType: widget.showType,
@@ -56,9 +57,9 @@ class _CreateShowFormScreenState extends State<CreateEventFormScreen> {
   late final TextEditingController _titleCntrl;
   final StreamController<String> _titleStreamCntrl = StreamController<String>();
   final StreamController<String> _descStreamCntrl = StreamController<String>();
-  String programDesc = ATStrings.TELL_LISTENERS_ABOUT_SHOW;
-  String chooseAudienceAccess = ATStrings.SELECT_WHO_CAN_ACCESS_SHOW;
-  UnusedCommunity? selectedCommunity;
+  String programDesc = ATStrings.tellListenersAboutYourShow;
+  String chooseAudienceAccess = ATStrings.selectWhoCanAccessYourShow;
+  Community? selectedCommunity;
   CreateShowService service = GetIt.I<CreateShowService>();
 
   @override 
@@ -85,7 +86,7 @@ class _CreateShowFormScreenState extends State<CreateEventFormScreen> {
     return MultiBlocProvider(
       providers: <SingleChildWidget>[
         BlocProvider<BlurredHeaderBloc>(create: (_) => BlurredHeaderBloc(),),
-        BlocProvider<BgImageBloc>(create: (_) => BgImageBloc())
+        BlocProvider<BgImageCubit>(create: (_) => BgImageCubit())
       ],
       child: ATAnnotatedRegion(
         statusBarColor: ATColors.transparent,
@@ -95,7 +96,7 @@ class _CreateShowFormScreenState extends State<CreateEventFormScreen> {
               return Stack(
                 children: <Widget>[
                   Positioned.fill(
-                    child: BlocBuilder<BgImageBloc, (String, Uint8List?)>(
+                    child: BlocBuilder<BgImageCubit, (String, Uint8List?)>(
                       builder: (_, (String, Uint8List?) state) {
                         return ImageFiltered(
                           imageFilter: ImageFilter.blur(sigmaX: 200, sigmaY: 200),
@@ -149,7 +150,7 @@ class _CreateShowFormScreenState extends State<CreateEventFormScreen> {
                               Padding(
                                 padding: const EdgeInsets.fromLTRB(15, 0, 15, 30),
                                 child: SelectProgramCoverArt(
-                                  onImageSelected: blocContext.read<BgImageBloc>().setBgImage,
+                                  onImageSelected: blocContext.read<BgImageCubit>().setBgImage,
                                 ),
                               ),
 
@@ -160,7 +161,7 @@ class _CreateShowFormScreenState extends State<CreateEventFormScreen> {
                                   builder: (_, AsyncSnapshot<String> snapshot) {
                                     final int remaining = 140 - (snapshot.data?.length ?? 0);
                                     return RowWith2Texts(
-                                      text1: ATStrings.TITLE,
+                                      text1: ATStrings.title,
                                       text2: '$remaining remaining',
                                     );
                                   }
@@ -191,7 +192,7 @@ class _CreateShowFormScreenState extends State<CreateEventFormScreen> {
                                   builder: (_, AsyncSnapshot<String> snapshot) {
                                     final int remaining = 4000 - (snapshot.data?.length ?? 0);
                                     return RowWith2Texts(
-                                      text1: ATStrings.DESCRIPTION,
+                                      text1: ATStrings.description,
                                       text2: '$remaining remaining',
                                     );
                                   }
@@ -232,12 +233,12 @@ class _CreateShowFormScreenState extends State<CreateEventFormScreen> {
                                     return ATScalingSwitcher(
                                       duration: 300,
                                       child: selectedCommunity == null ? CreateProgramSelectionItem(
-                                        description: ATStrings.SELECT_COMMUNITY_4_UR_SHOW,
+                                        description: ATStrings.selectCommunity4YourShow,
                                         onTap: ()async{
-                                          final UnusedCommunity? selectedCom = await showCommunitiesDialog(context);
-                                          if(selectedCom != null){
-                                            setter(() => selectedCommunity = selectedCom);
-                                          }
+                                          // final UnusedCommunity? selectedCom = await showCommunitiesDialog(context);
+                                          // if(selectedCom != null){
+                                          //   setter(() => selectedCommunity = selectedCom);
+                                          // }
                                         },
                                       ) : SelectedCommunityWidget(
                                         selectedCommunity: selectedCommunity!,
@@ -253,13 +254,13 @@ class _CreateShowFormScreenState extends State<CreateEventFormScreen> {
                                 child: ATRichText(
                                   maxLines: 4,
                                   items: <String, TextStyle>{
-                                    ATStrings.ADD_COMMUNITY_DESC: context.textTheme.labelSmall!.copyWith(
+                                    ATStrings.addCommunityDesc: context.textTheme.labelSmall!.copyWith(
                                       color: ATColors.hexC2C2C2.withValues(alpha: 0.76)
                                     ),
-                                    ATStrings.LEARN_MORE: context.textTheme.labelSmall!
+                                    ATStrings.learnMore: context.textTheme.labelSmall!
                                   },
                                   textOnTap: (String text){
-                                    if(text == ATStrings.LEARN_MORE){}
+                                    if(text == ATStrings.learnMore){}
                                   },
                                 ),
                               ),
@@ -350,7 +351,7 @@ class _CreateShowFormScreenState extends State<CreateEventFormScreen> {
                                       duration: 300,
                                       child: CreateProgramSelectionItem(
                                         description: chooseAudienceAccess,
-                                        descStyle: chooseAudienceAccess == ATStrings.SELECT_WHO_CAN_ACCESS_SHOW ? null
+                                        descStyle: chooseAudienceAccess == ATStrings.selectWhoCanAccessYourShow ? null
                                           : context.textTheme.bodySmall,
                                         onTap: ()async{
                                           //showSelectAudienceAccessForEventsDialog(context);
@@ -360,7 +361,7 @@ class _CreateShowFormScreenState extends State<CreateEventFormScreen> {
                                           setter(
                                             (){
                                               if(selectedAccessType == null){
-                                                chooseAudienceAccess = ATStrings.SELECT_WHO_CAN_ACCESS_SHOW;
+                                                chooseAudienceAccess = ATStrings.selectWhoCanAccessYourShow;
                                               }
                                               else{
                                                 chooseAudienceAccess = selectedAccessType;
@@ -409,7 +410,7 @@ class _CreateShowFormScreenState extends State<CreateEventFormScreen> {
                                     const Icon(Icons.front_hand_outlined, size: 18,),
                                     const SizedBox(width: 5,),
                                     Text(
-                                      ATStrings.HAND_RAISING,
+                                      ATStrings.handRaising,
                                       style: context.textTheme.titleLarge?.copyWith(
                                         fontWeight: ATFontWeights.w500
                                       ),
@@ -425,7 +426,7 @@ class _CreateShowFormScreenState extends State<CreateEventFormScreen> {
                                       duration: 300,
                                       child: CreateProgramSelectionItem(
                                         description: chooseAudienceAccess,
-                                        descStyle: chooseAudienceAccess == ATStrings.SELECT_WHO_CAN_ACCESS_SHOW ? null
+                                        descStyle: chooseAudienceAccess == ATStrings.selectWhoCanAccessYourShow ? null
                                           : context.textTheme.bodySmall,
                                         onTap: ()async{
                                           //await choose2AllowHandRaisingModal(context);
@@ -442,7 +443,7 @@ class _CreateShowFormScreenState extends State<CreateEventFormScreen> {
                                     ATStrings.U_WILL_HAVE_ACCESS_2_MODERATION_TOOLS: context.textTheme.labelSmall!.copyWith(
                                       color: ATColors.hexC2C2C2.withValues(alpha: 0.76)
                                     ),
-                                    ' ${ATStrings.LEARN_MORE}': context.textTheme.labelSmall!
+                                    ' ${ATStrings.learnMore}': context.textTheme.labelSmall!
                                   },
                                 )
                               ),
@@ -636,7 +637,7 @@ class _CreateShowFormScreenState extends State<CreateEventFormScreen> {
               ]
             ),
             padding: const EdgeInsets.fromLTRB(15, 10, 15, 10),
-            child: BlocBuilder<BgImageBloc, (String, Uint8List?)>(
+            child: BlocBuilder<BgImageCubit, (String, Uint8List?)>(
               builder: (_, (String, Uint8List?) selectedImgPath) {
                 return ATPlainElevatedBtn(
                   bgColor: ATColors.white,

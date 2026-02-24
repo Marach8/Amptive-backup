@@ -4,7 +4,7 @@ import 'package:amptive/src/bloc/authentication/general/auth_bloc.dart';
 import 'package:amptive/src/bloc/authentication/general/auth_states.dart';
 import 'package:amptive/src/config/api_response_and_app_state.dart';
 import 'package:amptive/src/config/utils/helper_functions.dart';
-import 'package:amptive/src/features/auth/cubits/add_profile_pic_cubit.dart';
+import 'package:amptive/src/features/auth/cubits/upload_image_cubit.dart';
 import 'package:amptive/src/features/auth/cubits/local_user_data_cubit.dart';
 import 'package:amptive/src/shared/elevated_button_widget.dart';
 import 'package:amptive/src/shared/image_source_selection_dialog.dart';
@@ -35,8 +35,8 @@ class _AddPictureWidgetState extends State<AddPictureWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider<AddProfilePicCubit>(
-      create: (_) => AddProfilePicCubit(),
+    return BlocProvider<UploadImageCubit>(
+      create: (_) => UploadImageCubit(),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
@@ -137,7 +137,7 @@ class _AddPictureWidgetState extends State<AddPictureWidget> {
               ),
             ),
           ),
-          BlocConsumer<AddProfilePicCubit, ATAppState<String>>(
+          BlocConsumer<UploadImageCubit, ATAppState<String>>(
             listener: (_, ATAppState<String> state)async{
               if(state is SuccessState<String>){
                 await context.read<LocalUserDataCubit>().updateUserDataLocally(
@@ -160,8 +160,8 @@ class _AddPictureWidgetState extends State<AddPictureWidget> {
                 btnTitle: ATStrings.next,
                 isLoading: state is LoadingState<String>,
                 onPressed: _pickedImage != null ? (){
-                  context.read<AddProfilePicCubit>()
-                    .uploadImage(bytes: _pickedImage!); 
+                  context.read<UploadImageCubit>()
+                    .uploadBytesImage(bytes: _pickedImage!); 
                 } : null,
               );
             }

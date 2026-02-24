@@ -291,7 +291,7 @@ class ATStrings{
   static const String HASHTAG = 'Hashtag';
   static const String HOSTED_BY = 'Hosted by';
   static const String showLess = ' Show less';
-  static const String LEARN_MORE = 'Learn more';
+  static const String learnMore = 'Learn more';
   static const String showMore = 'Show more';
   static const String WHISPERS = 'Whispers';
   static const String ATTENDED = 'Attended';
@@ -374,11 +374,11 @@ class ATStrings{
   static const String userName = 'Username';
   static const String NAME = 'Name';
   static const String TITLE_OF_UR_SHOW = 'What is the title of your show?';
-  static const String TELL_LISTENERS_ABOUT_SHOW = 'Tell your listeners what your show is about.';
-  static const String SELECT_COMMUNITY_4_UR_SHOW = 'Select a community for your show';
-  static const String TITLE = 'Title';
+  static const String tellListenersAboutYourShow = 'Tell your listeners what your show is about.';
+  static const String selectCommunity4YourShow = 'Select a community for your show';
+  static const String title = 'Title';
   static const String TOGGLE_WHISPERS = 'Activate or de-activate whispers';
-  static const String DESCRIPTION = 'Description';
+  static const String description = 'Description';
   static const String BIO = 'Bio';
   static const String SELECT_ACCT_TYPE = 'Select your choice account type to proceed.';
   static const String CREATOR_ACCT = 'Creator Account';
@@ -435,7 +435,7 @@ class ATStrings{
   static const String CHOOSE_EVENT = 'Choose Event';
   static const String CREATE_UR_SHOW = 'Create your show';
   static const String CREATE_UR_EVENT = 'Create your event';
-  static const String ADD_COMMUNITY = 'Add Community';
+  static const String addCommunity = 'Add Community';
   static const String ADD_CO_HOST = 'Add Co-host';
   static const String EDIT_COHOST = 'Edit cohost';
   static const String ADD_HASHTAG = 'Add Hashtag';
@@ -443,7 +443,7 @@ class ATStrings{
   static const String USERS_CAN_SEE_UR_CALENDER = 'Users can see your calender';
   static const String ADD_HASHTAG_DESC = 'You can add up to 5 hashtags, with each hashtag not more that 25 characaters long, without spaces or special characters';
   static const String SELECTED = 'Selected';
-  static const String ADD_COMMUNITY_DESC = 'Communities will help your Shows and Events reach more listeners. Your audience can also use communites to find your Shows and Events easily. ';
+  static const String addCommunityDesc = 'Communities will help your Shows and Events reach more listeners. Your audience can also use communites to find your Shows and Events easily. ';
   static const String ADD_COHOST_DESC = 'Added users must accept your invitation before they are added as your co-hosts.';
   static const String TOP_GIFTERS_DESC = 'Gifters are ranked base on the total amount they have contributed to the host during live sessions.';
   static const String TOP_GIFTERS = 'Top Gifters';
@@ -464,9 +464,9 @@ class ATStrings{
   static const String SEARCH_UR_HASHTAGS = 'Try searching for hashtag(s) in the search bar';
   static const String SEARCH_UR_COHOSTS = 'Try searching for your co-host(s) in the search bar';
   static const String AUDIENCE_ACCESS = 'Audience Access';
-  static const String SELECT_WHO_CAN_ACCESS_SHOW = 'Choose who can access this show';
+  static const String selectWhoCanAccessYourShow = 'Choose who can access this show';
   static const String CAPACITY = 'Capacity';
-  static const String CHOOSE_2_ALLOW_HAND_RASING = 'Choose whether to allow hand-rasing';
+  static const String choose2AllowHandRasing = 'Choose whether to allow hand-rasing';
   static const String AUDIENCE_INTERACTION = 'Select audience interaction';
   static const String U_WILL_HAVE_ACCESS_2_MODERATION_TOOLS = "While you're live, you'll have full access to your moderation tools so you can control and manage audience interactions throughout the session.";
   static const String ALL_FOLLOWERS = 'All Followers';
@@ -495,7 +495,7 @@ class ATStrings{
   static const String ALLOW_HANDRAISING = 'Allow hand raising';
   static const String WHISPERS_ENABLED = 'Whispers will be enabled for your event.';
   static const String WHISPERS_DISABLED = 'Whispers will be disabled for your event.';
-  static const String HAND_RAISING = 'Hand Raising';
+  static const String handRaising = 'Hand Raising';
   static const String CNTRL_HAND_RAISING = "While you're live, you'll have full access to your moderation tools, allowing you to manage interactions and maintain control throughout the session.";
   static const String DISALLOW = "Don't Allow";
   static const String AUDIENCE_CAN_RAISE_HAND = 'Audience can raise their hands during your live.';

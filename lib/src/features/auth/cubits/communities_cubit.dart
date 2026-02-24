@@ -24,12 +24,43 @@ class CommunitiesCubit extends Cubit<ATAppState<CommunitiesResponseModel>> {
   };
 
   Future<void> fetchCommunities() async {
-    emit(const LoadingState<CommunitiesResponseModel>());
+    final bool hasMore = currentCommunities?.hasMore ?? true;
+    if(state is LoadingState<CommunitiesResponseModel> || !hasMore) {
+      return;
+    }
+
+    emit(LoadingState<CommunitiesResponseModel>(currentData: currentCommunities));
     try {
-      final ApiResponse<CommunitiesResponseModel> response = await authRepo.fetchCommunities();
+      final ApiResponse<CommunitiesResponseModel> response = await authRepo.fetchCommunities(
+        pageNo: (currentCommunities?.page ?? 0) + 1,
+        pageSize: 20,
+      );
+
       response.when(
         successful: (Successful<CommunitiesResponseModel> data) {
-          emit(SuccessState<CommunitiesResponseModel>(newData: data.data));
+          final Map<String, Community>? newCommunities = data.data?.communities;
+          final List<String>? newCommunityIds = data.data?.communityIds;
+
+          final Map<String, Community> mergedCommunities = <String, Community>{
+            ...?currentCommunities?.communities,
+            ...?newCommunities,
+          };
+
+          final List<String> mergedCommunityIds = <String>[
+            ...?currentCommunities?.communityIds,
+            ...?newCommunityIds,
+          ];
+
+          final CommunitiesResponseModel? newCommunitiesData = currentCommunities?.copyWith(
+            communities: mergedCommunities,
+            communityIds: mergedCommunityIds,
+            page: data.data?.page,
+            totalItems: data.data?.totalItems,
+            pageSize: data.data?.pageSize,
+            totalPages: data.data?.totalPages,
+          ) ?? data.data;
+
+          emit(SuccessState<CommunitiesResponseModel>(newData: newCommunitiesData));
         },
         unSuccessful: (Unsuccessful<CommunitiesResponseModel> error) {
           emit(

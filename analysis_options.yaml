@@ -23,6 +23,7 @@ linter:
   rules:
     - always_specify_types
     - always_declare_return_types
+    - eol_at_end_of_file
     - sort_constructors_first
     - sort_unnamed_constructors_first
     - prefer_const_constructors

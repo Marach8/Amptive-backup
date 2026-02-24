@@ -24,9 +24,12 @@ abstract class AuthRepo {
 
   Future<ApiResponse<String>> uploadImage({
     required String filePath,
+    String? purpose,
   });
 
-  Future<ApiResponse<CommunitiesResponseModel>> fetchCommunities();
+  Future<ApiResponse<CommunitiesResponseModel>> fetchCommunities({
+    required int pageNo, required int pageSize,
+  });
   
   Future<ApiResponse<String>> resetPassword( 
      {required Map<String, dynamic> param});

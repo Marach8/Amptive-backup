@@ -3,7 +3,7 @@ import 'dart:typed_data';
 import 'package:amptive/src/config/config_export.dart';
 import 'package:amptive/src/shared/image_source_selection_dialog.dart';
 import 'package:amptive/src/views/widgets/common_widgets/image_loader_widget.dart';
-import 'package:custom_image_crop/custom_image_crop.dart' show Ratio;
+import 'package:custom_image_crop/custom_image_crop.dart' show Ratio, CustomCropShape;
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:image_picker/image_picker.dart';
@@ -36,7 +36,12 @@ class _SelectProgramCoverArtState extends State<SelectProgramCoverArt> {
         if(context.mounted && selectedFile != null){
           final File file = File(selectedFile.path);
           final MemoryImage? croppedImage = await context.pushNamed(
-            ATRoutes.rectImageCropperScreen, extra: (file, Ratio(width: 160, height: 160))
+            ATRoutes.rectImageCropperScreen, 
+            extra: (
+              file,
+              Ratio(width: 160, height: 160),
+              CustomCropShape.Ratio,
+            )
           );
 
           if(croppedImage != null){
@@ -53,8 +58,9 @@ class _SelectProgramCoverArtState extends State<SelectProgramCoverArt> {
         alignment: Alignment.center,
         children: <Widget>[
           selectedImgBytes == null ? const ATImgLoader(
-            imgPath: ATImgStrings.CREATE_SHOW_PLACEHOLDER,
+            imgPath: ATImgStrings.createShowPlaceholder,
             boxFit: BoxFit.cover,
+            height: 160, width: 160,
           ) : Image.memory(
             height: 160, width: 160,
             selectedImgBytes!,
@@ -65,7 +71,7 @@ class _SelectProgramCoverArtState extends State<SelectProgramCoverArt> {
             backgroundColor: ATColors.black.withValues(alpha: 0.5),
             radius: 20,
             child: const ATImgLoader(
-              imgPath: ATImgStrings.ADD_IMAGE_ICON,
+              imgPath: ATImgStrings.addImageIcon,
               height: 20, width: 20
             )
           ),

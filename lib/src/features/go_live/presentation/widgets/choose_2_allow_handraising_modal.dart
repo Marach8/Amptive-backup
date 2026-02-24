@@ -45,7 +45,7 @@ Future<String?> choose2AllowHandRaisingModal({
                       const Icon(Icons.front_hand_outlined),
                       const SizedBox(width: 5,),
                       Text(
-                        ATStrings.HAND_RAISING,
+                        ATStrings.handRaising,
                         style: Theme.of(context).textTheme.bodyLarge,
                       ),
                     ],
@@ -57,7 +57,7 @@ Future<String?> choose2AllowHandRaisingModal({
                       ATStrings.U_WILL_HAVE_ACCESS_2_MODERATION_TOOLS: context.textTheme.labelSmall!.copyWith(
                         color: ATColors.hexC2C2C2.withValues(alpha: 0.76)
                       ),
-                      ' ${ATStrings.LEARN_MORE}': context.textTheme.labelSmall!
+                      ' ${ATStrings.learnMore}': context.textTheme.labelSmall!
                     },
                   ),
 
@@ -194,7 +194,7 @@ class _HandRaisingBloc extends Cubit<String?>{
     => emit(type);
 
   void initializeHandRaising(String initialHandRasing){
-    if(initialHandRasing == ATStrings.CHOOSE_2_ALLOW_HAND_RASING){
+    if(initialHandRasing == ATStrings.choose2AllowHandRasing){
       emit(null);
     }
     else{

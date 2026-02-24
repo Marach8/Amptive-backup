@@ -1,4 +1,4 @@
-import 'package:amptive/src/features/home/empty.dart';
+import 'package:amptive/src/features/home/cubits/followed_shows_cubit.dart';
 import 'package:amptive/src/views/widgets/common_widgets/back_button.dart';
 import 'package:flutter/material.dart';
 import 'package:amptive/src/config/utils/other_strings.dart';
@@ -10,7 +10,7 @@ import '../../../../config/utils/image_strings.dart';
 import '../../../../shared/blurred_header.dart';
 import '../../../../shared/hashtag_badge.dart';
 import '../../../../views/widgets/common_widgets/sliver_header_delegate.dart';
-import '../../../home/presentation/widgets/empty3.dart';
+import '../../../home/cubits/empty.dart';
 import '../widgets/trending_society_hashtag_widget.dart';
 
 class SocietyHastagScreen extends StatelessWidget {
