@@ -166,7 +166,7 @@ class _UpdatePhoneNoScreenState extends State<UpdatePhoneNoScreen> {
                   return ATPlainElevatedBtn(
                     onPressed: isActive ? ()async {
                       final String? newPhoneNumber = await context.pushNamed(
-                        ATRoutes.enterOtpScreen,
+                        ATRoutes.ENTER_OTP_SCREEN,
                         extra: <String>[
                           '+${selectedCountry.phoneCode} ${_controller.text.trim()}',
                           widget.title

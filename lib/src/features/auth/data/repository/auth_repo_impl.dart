@@ -96,6 +96,24 @@ class AuthRepoImpl implements AuthRepo {
   }
 
   @override
+  Future<ApiResponse<String>> resetPasswordOtp({
+    required Map<String, dynamic> param,
+  }) async {
+    try {
+      final Response<dynamic> response = await networkService.post(
+        ATEndpoints.resetPasswordOtp,
+        data: param,
+      );
+
+      final String otp = response.data['data']['otp'] as String;
+      return Successful<String>(data: otp);
+    } catch (e) {
+      log('Send OTP error: $e');
+      return Unsuccessful<String>(error: ATException.resolveException(e));
+    }
+    }
+
+    @override
   Future<ApiResponse<SignupResponseModel>> registerUser({
     required RegistrationData param,
   }) async {
@@ -145,6 +163,24 @@ class AuthRepoImpl implements AuthRepo {
       );
     }
   }
+  
+  @override
+  Future<ApiResponse<dynamic>> verifyResetPasswordOtp({
+    required Map<String, dynamic> param,
+  }) async {
+    try {
+      final Response<dynamic> response = await networkService.post(
+        ATEndpoints.verifyresetPasswordOtp,
+        data: param,
+      );
+
+      return Successful<dynamic>(data: response.data);
+    } catch (e) {
+      log('Verify OTP error: $e');
+      return Unsuccessful<dynamic>(
+        error: ATException.resolveException(e));
+    }
+  }
 
   @override
   Future<ApiResponse<CommunitiesResponseModel>> fetchCommunities() async {
@@ -163,5 +199,22 @@ class AuthRepoImpl implements AuthRepo {
       );
     }
   }
+
+  @override
+  Future<ApiResponse<String>> resetPassword({
+    required Map<String, dynamic> param,
+  }) async {
+    try {
+      final Response<dynamic> response = await networkService.post(
+        ATEndpoints.resetPassword,
+        data: param,
+      );
+      final String successMessage = response.data['message'];
+      return Successful<String>(data: successMessage);
+    } catch (e) {
+      log('unable to reset passowrd: $e');
+      return Unsuccessful<String>(error: ATException.resolveException(e));
+    }
+    }
 
 }

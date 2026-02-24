@@ -4,26 +4,31 @@ import 'package:amptive/src/features/auth/data/models/response/communities_respo
 import 'package:amptive/src/features/auth/data/models/response/signup_response.dart';
 
 abstract class AuthRepo {
-  Future<ApiResponse<bool>> checkIdentityAvailability({
-    required Map<String, dynamic> param});
+  Future<ApiResponse<bool>> checkIdentityAvailability(
+      {required Map<String, dynamic> param});
 
-  Future<ApiResponse<String>> sendOtp({
-    required Map<String, dynamic> param});
+  Future<ApiResponse<String>> sendOtp({required Map<String, dynamic> param});
 
-  Future<ApiResponse<dynamic>> verifyOtp({
-    required Map<String, dynamic> param});
+  Future<ApiResponse<dynamic>> verifyOtp({required Map<String, dynamic> param});
 
-  Future<ApiResponse<dynamic>> loginUser({
-    required Map<String, dynamic> param
-    });
+  Future<ApiResponse<dynamic>> loginUser({required Map<String, dynamic> param});
 
-  Future<ApiResponse<SignupResponseModel>> registerUser({
-    required RegistrationData param
-  });
+  Future<ApiResponse<String>> resetPasswordOtp( 
+     {required Map<String, dynamic> param});
+
+  Future<ApiResponse<dynamic>> verifyResetPasswordOtp(
+      {required Map<String, dynamic> param});
+
+  Future<ApiResponse<SignupResponseModel>> registerUser(
+      {required RegistrationData param});
 
   Future<ApiResponse<String>> uploadImage({
     required String filePath,
   });
 
   Future<ApiResponse<CommunitiesResponseModel>> fetchCommunities();
+  
+  Future<ApiResponse<String>> resetPassword( 
+     {required Map<String, dynamic> param});
+
 }

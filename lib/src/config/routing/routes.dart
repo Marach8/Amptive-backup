@@ -2,7 +2,10 @@ import 'dart:io';
 import 'package:amptive/src/config/routing/routing_export.dart';
 import 'package:amptive/src/features/accounts/presentation/screens/update_email_screen.dart';
 import 'package:amptive/src/features/accounts/presentation/screens/update_phone_no_screen.dart';
+import 'package:amptive/src/features/auth/presentation/screens/create_new_password_screen.dart';
+import 'package:amptive/src/features/auth/presentation/screens/forgot_password_email_screen.dart';
 import 'package:amptive/src/features/auth/phone_login_screen.dart';
+import 'package:amptive/src/features/auth/presentation/screens/reset_password_otp_screen.dart';
 import 'package:amptive/src/features/auth/presentation/screens/phone_auth_screen.dart';
 import 'package:amptive/src/features/auth/presentation/screens/temp_login_screen.dart';
 import 'package:amptive/src/config/utils/extensions/string_extensions.dart';
@@ -71,13 +74,11 @@ final GoRouter amptiveAppRouter = GoRouter(
         child: ATAuthOptionsScreen(authType: st.extra as AuthType,)
       ),
     ),
-    GoRoute(
-      name: ATRoutes.emailScreen,
-      path: ATRoutes.emailScreen.addSlash,
+    GoRoute(name: ATRoutes.FORGOT_PASSWORD_SCREEN,
+      path: ATRoutes.FORGOT_PASSWORD_SCREEN.addSlash,
       pageBuilder: (_, GoRouterState st) => ATSlidingRouteTransition<void>(
-        child: ATEmailAuthScreen(title: st.extra as String?)
-      )
-    ),
+        child:  const ATForgotPasswordEmailScreen()),
+      ),
     
     GoRoute(
       name: ATRoutes.temporaryLoginScreen,
@@ -86,16 +87,34 @@ final GoRouter amptiveAppRouter = GoRouter(
         child: const TempLoginScreen()
       )
     ),
+     GoRoute(
+      name: ATRoutes.emailScreen,
+      path: ATRoutes.emailScreen.addSlash,
+      pageBuilder: (_, GoRouterState st) => ATSlidingRouteTransition<void>(
+        child: ATEmailAuthScreen(title: st.extra as String?)
+      )
+    ),
 
     GoRoute(
-      name: ATRoutes.enterOtpScreen,
-      path: ATRoutes.enterOtpScreen.addSlash,
+      name: ATRoutes.ENTER_OTP_SCREEN,
+      path: ATRoutes.ENTER_OTP_SCREEN.addSlash,
       pageBuilder: (_, GoRouterState state) {
         return ATSlidingRouteTransition<bool?>(
           child: ATOTPScreen(params: state.extra as VerifyOTPScreenParams,),
         );
       }
     ),
+    GoRoute(
+      name: ATRoutes.PASSWORD_RESET_OTP_SCREEN,
+      path: ATRoutes.PASSWORD_RESET_OTP_SCREEN.addSlash,
+      pageBuilder: (_, GoRouterState state) {
+        return ATSlidingRouteTransition<bool?>(
+          child: ResetPasswordOtpScreen(params: state.extra as VerifyPasswordResetOTPScreenParams,),
+        );
+      }
+    ),
+
+    
     GoRoute(
       name: ATRoutes.phoneAuthScreen,
       path: ATRoutes.phoneAuthScreen.addSlash,
@@ -110,6 +129,15 @@ final GoRouter amptiveAppRouter = GoRouter(
         child: PhoneLoginScreen(title: st.extra as String?),
       ),
     ),
+
+    GoRoute(
+      name: ATRoutes.createNewPAsswordScreen,
+      path: ATRoutes.createNewPAsswordScreen.addSlash,
+      pageBuilder: (_, GoRouterState state) => ATSlidingRouteTransition<void>(
+        child:  CreateNewPasswordScreen(params: state.extra as CreateNewPasswordScreenParams,),
+      )
+    ),
+
 
 
     GoRoute(

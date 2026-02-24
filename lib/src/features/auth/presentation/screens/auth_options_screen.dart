@@ -40,7 +40,7 @@ class ATAuthOptionsScreen extends StatelessWidget {
             child: Column(
               children: <Widget>[
                 ATPlainElevatedBtn(
-                  btnTitle: (isSignUp ? ATStrings.signUpWith : ATStrings.signInWith) + ATStrings.email,
+                  btnTitle: (isSignUp ? ATStrings.signUpWith : ATStrings.signInWith) + ATStrings.email ,
                   onPressed: (){
                     if(isSignUp){
                       context.pushNamed(ATRoutes.emailScreen);
