@@ -23,7 +23,7 @@ import 'package:amptive/src/shared/custom_container_widget.dart';
 import 'package:amptive/src/shared/elevated_button_widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/image_loader_widget.dart';
 import 'package:nested/nested.dart' show SingleChildWidget;
-import 'package:amptive/src/features/home/presentation/widgets/home_widgets_export.dart';
+import 'package:amptive/src/shared/blurred_header.dart';
 import 'package:amptive/src/views/widgets/common_widgets/sliver_header_delegate.dart';
 import '../../../../models/host.dart';
 import '../../../../views/widgets/common_widgets/rich_text.dart';

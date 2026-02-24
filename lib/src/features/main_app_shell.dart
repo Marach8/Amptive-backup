@@ -1,8 +1,10 @@
+import 'package:amptive/src/features/home/cubits/home_feed_cubit.dart';
 import 'package:amptive/src/views/widgets/common_widgets/annotated_region__widget.dart';
 import 'package:amptive/src/features/main_app_nav_bar.dart';
-import 'package:amptive/src/features/home/presentation/views/home_landing_screen.dart';
+import 'package:amptive/src/features/home/presentation/screens/home_landing_screen.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:nested/nested.dart';
 import '../global_export.dart';
 import '../services/go_live_service/go_live_service.dart';
 import 'go_live/go_live_export.dart';
@@ -33,7 +35,6 @@ class _GoLiveScreenState extends State<GoLiveScreen> {
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
   }
 
-
   @override
   Widget build(BuildContext context) {
     return switch(widget.userType){
@@ -47,8 +48,40 @@ class _GoLiveScreenState extends State<GoLiveScreen> {
 
 
 
+
 class ATMainAppShell extends StatelessWidget {
   const ATMainAppShell({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return MultiBlocProvider(
+      providers: <SingleChildWidget>[
+        BlocProvider<HomeFeedCubit>(create: (_) => HomeFeedCubit()),
+      ],
+      child: const _SubWidget(),
+    );
+  }
+}
+
+
+class _SubWidget extends StatefulWidget {
+  const _SubWidget();
+
+  @override
+  State<_SubWidget> createState() => __SubWidgetState();
+}
+
+class __SubWidgetState extends State<_SubWidget> {
+  @override 
+  void initState(){
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback(
+      (_){
+        context.read<HomeFeedCubit>().fetchHomeFeed();
+      }
+    );
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -73,8 +106,6 @@ class ATMainAppShell extends StatelessWidget {
           
           resizeToAvoidBottomInset: false,
           backgroundColor: ATColors.transparent,
-          
-        
           bottomSheet: const MainAppBottomNav()
         ),
       ),
