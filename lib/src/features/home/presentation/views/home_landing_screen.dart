@@ -1,5 +1,7 @@
+import 'package:amptive/src/config/api_response_and_app_state.dart';
 import 'package:amptive/src/config/utils/colors.dart';
 import 'package:amptive/src/config/routing/route_strings.dart';
+import 'package:amptive/src/features/auth/cubits/local_user_data_cubit.dart';
 import 'package:amptive/src/features/main_app_nav_bar.dart';
 import 'package:amptive/src/views/widgets/common_widgets/circle_avatar.dart';
 import 'package:amptive/src/features/home/presentation/widgets/program_widget_in_home.dart';
@@ -76,10 +78,20 @@ class HomeTabView extends StatelessWidget {
                 // },
                 onTap: () => context.pushNamed(ATRoutes.CREATOR_PROFILE_SCREEN),
                 //onTap: () => context.pushNamed(ATRoutes.USER_PROFILE_SCREEN),
-                child: const Padding(
-                  padding: EdgeInsets.only(right: 15),
-                  child: ATCircularImage(
-                    imagePath: ATImgStrings.jpeg2,
+                child: Padding(
+                  padding: const EdgeInsets.only(right: 15),
+                  child: BlocBuilder<LocalUserDataCubit, ATAppState<CachedUserData>>(
+                    builder: (_, ATAppState<CachedUserData> state) {
+                      if(state is SuccessState<CachedUserData>){
+                        final CachedUserData? userData = context.read<LocalUserDataCubit>().currentUserData;
+                        return ATCircularImage(
+                          imagePath: userData?.pictureUrl ?? ATImgStrings.jpeg2,
+                        );
+                      }
+                      return ATCircularImage(
+                        imagePath: ATImgStrings.jpeg2,
+                      );
+                    }
                   ),
                 )
               ),

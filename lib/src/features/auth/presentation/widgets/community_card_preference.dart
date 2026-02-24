@@ -89,23 +89,48 @@ class RenderACommunityCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      children: <Widget>[
-        ATImgLoader(
-          imgPath: community.image ?? '',
-          boxFit: BoxFit.cover,
-        ),
-        Positioned(
-          bottom: 8,
-          left: 8,
-          child: Text(
-            community.name ?? '',
-            style: context.textTheme.labelMedium?.copyWith(
-              color: ATColors.white
-            ),
+    return Builder(
+      builder: (context) {
+        return GestureDetector(
+          onTap: (){
+            
+          },
+          child: Stack(
+            children: <Widget>[
+              ClipRRect(
+                borderRadius: BorderRadius.circular(6),
+                child: ATImgLoader(
+                  imgPath: community.image ?? '',
+                  boxFit: BoxFit.cover,
+                  height: 120,
+                  width: 170,
+                ),
+              ),
+              Positioned(
+                bottom: 8,
+                left: 8,
+                child: DecoratedBox(
+                  decoration: BoxDecoration(
+                    boxShadow: <BoxShadow>[
+                      BoxShadow(
+                        color: ATColors.black,
+                        blurRadius: 15,
+                        spreadRadius: 0.1
+                      )
+                    ]
+                  ),
+                  child: Text(
+                    community.name ?? '',
+                    style: context.textTheme.titleMedium?.copyWith(
+                      fontWeight: FontWeight.w600
+                    ),
+                  ),
+                ),
+              )
+            ],
           ),
-        )
-      ],
+        );
+      }
     );
   }
 }

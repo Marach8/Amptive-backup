@@ -68,28 +68,18 @@ class __SubWidgetState extends State<_SubWidget> {
         child: Scaffold(
             appBar: const ATAppBar(leading: ATBackBtn(),),
             body: Padding(
-              padding: EdgeInsets.symmetric(horizontal: 22),
+              padding: const EdgeInsets.fromLTRB(16, 0, 16, 0),
               child: Column(
+                spacing: 16,
                 children: <Widget>[
-                  Container(
-                    margin: EdgeInsets.only(top: 20, bottom: 11),
-                    alignment: Alignment.centerLeft,
-                    child: Text(
-                      ATStrings.select5Communities, maxLines: 3,
-                      style: context.textTheme.headlineLarge,
-                    ),
+                  Text(
+                    ATStrings.select5Communities, maxLines: 3,
+                    style: context.textTheme.headlineLarge,
                   ),
-                  Container(
-                    margin: EdgeInsets.only(bottom: 30),
-                    alignment: Alignment.centerLeft,
-                    child: Text(
-                      ATStrings.selectedInterestNote, maxLines: 3,
-                      style: Theme.of(context)
-                          .textTheme
-                          .titleMedium
-                          ?.copyWith(
-                              color: ATColors.hexCDCDCD),
-                    ),
+                  Text(
+                    ATStrings.selectedInterestNote, maxLines: 3,
+                    style: context.textTheme.titleMedium
+                      ?.copyWith(color: ATColors.hexCDCDCD),
                   ),
                   Expanded(
                     child: Stack(
@@ -180,5 +170,17 @@ class __SubWidgetState extends State<_SubWidget> {
         )
       ),
     );
+  }
+}
+
+
+class SelectedCommunitiesCubit extends Cubit<List<String>>{
+  SelectedCommunitiesCubit() : super(<String>[]);
+
+  void addCommunity(String communityId){
+    emit(<String>[...state, communityId]);
+  }
+  void removeCommunity(String communityId){
+    emit(state.where((String id) => id != communityId).toList());
   }
 }
