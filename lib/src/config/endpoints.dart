@@ -13,6 +13,7 @@ class ATEndpoints {
   static const String uploadImage = '/api/v1/extras/upload-image';
   static const String communities = '/api/v1/communities/';
   static const String resetPassword = '/api/v1/auth/reset-password';
+  static const String followCreator = '/api/v1/shows/users';
 
 }
 

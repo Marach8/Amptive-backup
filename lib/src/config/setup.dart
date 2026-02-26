@@ -6,6 +6,7 @@ import 'package:amptive/src/features/calender/cubits/calender_visibile_bloc.dart
 import 'package:amptive/src/features/calender/cubits/calender_views_bloc.dart';
 import 'package:amptive/src/features/calender/cubits/day_view_bloc.dart';
 import 'package:amptive/src/bloc/preference/bloc.dart';
+import 'package:amptive/src/features/home/cubits/follow_creator_cubit.dart';
 import 'package:amptive/src/features/go_live/go_live_export.dart';
 import 'package:amptive/src/features/main_app_nav_bar.dart';
 import 'package:amptive/src/services/auth/auth_field_service.dart';
@@ -78,5 +79,6 @@ List<SingleChildWidget> providers() {
     BlocProvider(create: (_) => CohostServiceBloc()),
     BlocProvider(create: (_) => HashtagServiceBloc()),
     BlocProvider<LocalUserDataCubit>(create: (_) => LocalUserDataCubit()),
+     BlocProvider<FollowCreatorCubit>(create: (_) => FollowCreatorCubit()),
   ];
 }
