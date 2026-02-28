@@ -20,6 +20,7 @@ import 'package:amptive/src/views/widgets/common_widgets/back_button.dart';
 import 'package:amptive/src/views/widgets/common_widgets/image_loader_widget.dart';
 import 'package:nested/nested.dart' show SingleChildWidget;
 import 'package:amptive/src/views/widgets/common_widgets/sliver_header_delegate.dart';
+import 'package:uuid/uuid.dart';
 import '../../../../models/host.dart';
 import '../../../../views/widgets/common_widgets/rich_text.dart';
 import '../../../../config/utils/dialogs/add_communities_dialog.dart';
@@ -58,7 +59,7 @@ class __SubWidgetState extends State<_SubWidget> {
   //Null for loading, false for disabled, true for enabled. All for the launch show button.
   final ValueNotifier<bool?> _launchShowNotifier = ValueNotifier<bool?>(false);
 
-  String programDesc = ATStrings.tellListenersAboutYourShow;
+  String selectedDescription = ATStrings.tellListenersAboutYourShow;
   String chooseAudienceAccess = ATStrings.selectWhoCanAccessYourShow;
   String shouldAllowHandRasing = ATStrings.choose2AllowHandRasing;
 
@@ -211,17 +212,18 @@ class __SubWidgetState extends State<_SubWidget> {
                               child: StatefulBuilder(
                                 builder: (_, void Function(void Function()) setter) {
                                   return CreateProgramSelectionItem(
-                                    description: programDesc,
+                                    description: selectedDescription,
                                     onTap: ()async{
-                                      final String? description = await enterDescriptionModal(
+                                      final String? enteredDescription = await enterDescriptionModal(
                                         context: context, 
-                                        initialDesc: programDesc == ATStrings.tellListenersAboutYourShow ? null : programDesc,
+                                        initialDesc: selectedDescription == ATStrings.tellListenersAboutYourShow 
+                                          ? null : selectedDescription,
                                       );
-                                      if((description ?? '').isNotEmpty){
+                                      if((enteredDescription ?? '').isNotEmpty){
                                         setter(
                                           (){
-                                            programDesc = description!;
-                                            _descStreamCntrl.add(description);
+                                            selectedDescription = enteredDescription!;
+                                            _descStreamCntrl.add(enteredDescription);
                                           }
                                         );
                                       }
@@ -504,10 +506,10 @@ class __SubWidgetState extends State<_SubWidget> {
               listener: (_, ATAppState<String> state) {
                 if(state is SuccessState<String>){
                   context.read<CreateShowCubit>().createShow(
-                    tagIds: <String>['123', '456'],
-                    coHostIds: <String>['Hello', 'Emmanuel'],
+                    tagIds: <String>[const Uuid().v4(), const Uuid().v4()],
+                    coHostIds: <String>[const Uuid().v4(), const Uuid().v4()],
                     title: _titleCntrl.text.trim(),
-                    description: programDesc,
+                    description: selectedDescription,
                     coverUrl: state.newData!,
                     category: 'Category',
                     showType: 'free',
@@ -531,7 +533,7 @@ class __SubWidgetState extends State<_SubWidget> {
                   _launchShowNotifier.value = true;
                   showAppNotification2(
                     context: context,
-                    text: state.newData ?? 'Success',
+                    text: 'Show created successfully',
                     type: NotificationType.success,
                   );
                 }

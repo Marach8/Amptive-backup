@@ -54,7 +54,7 @@ class ATRoutes {
   static const String updatePhoneNoScreen = 'update_phone_no_screen';
   static const String PROFILE_SUBSCRIBERS_SCREEN = 'profile_sub_screen';
   static const String USER_PROFILE_SCREEN = 'user_profile';
-  static const String CHOOSE_OR_CREATE_GO_LIVE_PROGRAM_SCREEN = 'choose_or_create_show';
+  static const String listHostedShowsScreen = 'choose_or_create_show';
   static const String GO_LIVE_PROGRAM_CREATION_SUCCESS = 'create_show_success_screen';
   static const String EVENT_SCHEDULED_SCREEN = 'event_scheduled';
   static const String SHOW_PREVIEW_SCREEN = 'show_preview';

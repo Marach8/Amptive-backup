@@ -1,13 +1,14 @@
 import 'package:amptive/src/config/api_response_and_app_state.dart';
 import 'package:amptive/src/features/go_live/data/models/request/create_show_model.dart';
+import 'package:amptive/src/features/go_live/data/models/response/show_response_model.dart';
 import 'package:amptive/src/features/go_live/data/repository/go_live_repo.dart';
 import 'package:amptive/src/features/go_live/data/repository/go_live_repo_impl.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class CreateShowCubit extends Cubit<ATAppState<dynamic>> {
+class CreateShowCubit extends Cubit<ATAppState<HostedShow>> {
   CreateShowCubit({GoLiveRepo? mockGoLiveRepo})
       : goLiveRepo = mockGoLiveRepo ?? GoLiveRepoImpl(),
-        super(const InitialState<dynamic>());
+        super(const InitialState<HostedShow>());
 
   final GoLiveRepo goLiveRepo;
 
@@ -21,7 +22,7 @@ class CreateShowCubit extends Cubit<ATAppState<dynamic>> {
     required List<String> tagIds,
     required List<String> coHostIds,
   }) async {
-    emit(const LoadingState<dynamic>());
+        emit(const LoadingState<HostedShow>());
     try {
       final CreateShowModel createShowModel = CreateShowModel(
         title: title,
@@ -34,19 +35,19 @@ class CreateShowCubit extends Cubit<ATAppState<dynamic>> {
         coHostIds: coHostIds,
       );
 
-      final ApiResponse<dynamic> response = await goLiveRepo.createShow(
+      final ApiResponse<HostedShow> response = await goLiveRepo.createShow(
         createShowModel: createShowModel,
       );
       response.when(
-        successful: (Successful<dynamic> data) {
-          emit(SuccessState<dynamic>(newData: data.data));
+        successful: (Successful<HostedShow> data) {
+          emit(SuccessState<HostedShow>(newData: data.data));
         },
-        unSuccessful: (Unsuccessful<dynamic> error) {
-          emit(FailureState<dynamic>(error.error.message));
+        unSuccessful: (Unsuccessful<HostedShow> error) {
+          emit(FailureState<HostedShow>(error.error.message));
         },
       );
     } catch (e) {
-      emit(FailureState<dynamic>('Unable to create show: $e'));
+      emit(FailureState<HostedShow>('Unable to create show: $e'));
     }
   }
 }

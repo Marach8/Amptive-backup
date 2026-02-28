@@ -427,11 +427,11 @@ class ATStrings{
   static const String CREATE_EVENT = 'Create Event';
   static const String CREATE_EVENT_DESC = 'For one-time live audio experience';
   static const String CREATE_SHOW_DESC = 'For live audio series with recurring episodes';
-  static const String CHOOSE_OR_CREATE_SHOW_DESC = 'Continue from your already running shows or create a new one';
-  static const String CHOOSE_OR_CREATE_EVENT_DESC = 'Continue from your already running events or create a new one';
-  static const String CREATE_NEW_SHOW = 'Create new show';
-  static const String CREATE_NEW_EVENT = 'Create new event';
-  static const String CHOOSE_SHOW = 'Choose Show';
+  static const String chooseOrCreateShowDesc = 'Continue from your already running shows or create a new one';
+  static const String chooseOrCreateEventDesc = 'Continue from your already running events or create a new one';
+  static const String createNewShow = 'Create new show';
+  static const String createNewEvent = 'Create new event';
+  static const String chooseShow = 'Choose Show';
   static const String CHOOSE_EVENT = 'Choose Event';
   static const String CREATE_UR_SHOW = 'Create your show';
   static const String CREATE_UR_EVENT = 'Create your event';

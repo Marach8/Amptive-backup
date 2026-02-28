@@ -144,6 +144,13 @@ class ATHelperFuncs{
   }
 
 
+  static String formatDate(String isoString) {
+    final DateTime parsed = DateTime.parse(isoString);
+    final DateFormat formatter = DateFormat('d MMMM yyyy');
+    return formatter.format(parsed);
+  }
+
+
   static Map<String, List<List<DateTime?>>> generateCalendarData(List<int> args) {
     final int year = args[0];
     final int month = args[1];

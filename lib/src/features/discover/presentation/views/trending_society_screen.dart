@@ -8,7 +8,7 @@ import '../../../../config/utils/colors.dart';
 import '../../../../config/utils/image_strings.dart';
 import '../../../../shared/blurred_header.dart';
 import '../../../../views/widgets/common_widgets/sliver_header_delegate.dart';
-import '../../../home/cubits/empty.dart';
+import '../../../go_live/data/models/response/show_response_model.dart';
 import '../widgets/trending_society_hashtag_widget.dart';
 
 class TrendingSocietyScreen extends StatelessWidget {

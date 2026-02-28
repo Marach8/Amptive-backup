@@ -360,10 +360,10 @@ final GoRouter amptiveAppRouter = GoRouter(
           ),
 
           GoRoute(
-            name: ATRoutes.CHOOSE_OR_CREATE_GO_LIVE_PROGRAM_SCREEN,
-            path: ATRoutes.CHOOSE_OR_CREATE_GO_LIVE_PROGRAM_SCREEN,
-            pageBuilder: (_, GoRouterState st) => ATSlidingRouteTransition<void>(
-              child: ChooseOrCreateGoLiveProgramScreen(programType: st.extra as GoLiveProgramType,),
+            name: ATRoutes.listHostedShowsScreen,
+            path: ATRoutes.listHostedShowsScreen.addSlash,
+            pageBuilder: (_, __) => ATSlidingRouteTransition<void>(
+              child: const ListHostedShowsScreen(),
             )
           ),
 
