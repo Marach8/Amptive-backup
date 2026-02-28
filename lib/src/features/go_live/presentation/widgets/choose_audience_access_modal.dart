@@ -236,7 +236,7 @@ class _AudienceAccessBloc extends Cubit<String?>{
     => emit(type);
 
   void initializeAccessType(String initialAccessType){
-    if(initialAccessType == ATStrings.SELECT_WHO_CAN_ACCESS_SHOW){
+    if(initialAccessType == ATStrings.selectWhoCanAccessYourShow){
       emit(null);
     }
     else{

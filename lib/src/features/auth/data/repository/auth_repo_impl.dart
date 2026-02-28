@@ -6,8 +6,8 @@ import 'package:amptive/src/config/exception.dart';
 import 'package:amptive/src/config/services/network_service/dio_network_service_impl.dart';
 import 'package:amptive/src/config/services/network_service/network_service.dart';
 import 'package:amptive/src/features/auth/data/models/request/registration_data.dart';
+import 'package:amptive/src/features/auth/data/models/response/auth_success_response_model.dart';
 import 'package:amptive/src/features/auth/data/models/response/communities_response_model.dart';
-import 'package:amptive/src/features/auth/data/models/response/signup_response.dart';
 import 'package:amptive/src/features/auth/data/repository/auth_repo.dart';
 import 'package:dio/dio.dart' show Response, MultipartFile;
 
@@ -77,7 +77,7 @@ class AuthRepoImpl implements AuthRepo {
   }
 
   @override
-  Future<ApiResponse<dynamic>> loginUser({
+  Future<ApiResponse<LoginResponseModel>> loginUser({
     required Map<String, dynamic> param,
   }) async {
     try {
@@ -86,10 +86,12 @@ class AuthRepoImpl implements AuthRepo {
         data: param,
       );
 
-      return Successful<dynamic>(data: response.data);
+      final LoginResponseModel loginResponse = 
+        LoginResponseModel.fromJson(response.data);
+      return Successful<LoginResponseModel>(data: loginResponse);
     } catch (e) {
       log('Unable to log in user: $e');
-      return Unsuccessful<dynamic>(
+      return Unsuccessful<LoginResponseModel>(
         error: ATException.resolveException(e),
       );
     }
@@ -137,6 +139,7 @@ class AuthRepoImpl implements AuthRepo {
   @override
   Future<ApiResponse<String>> uploadImage({
     required String filePath,
+    String? purpose,
   }) async {
     try {
       final Map<String, dynamic> param = <String, dynamic>{
@@ -144,7 +147,7 @@ class AuthRepoImpl implements AuthRepo {
           filePath,
           filename: filePath.split('/').last,
         ),
-        'purpose': 'profile-picture',
+        'purpose': purpose ?? 'profile-picture',
       };
 
       final Response<dynamic> response = await networkService.formDataRequest(
@@ -183,10 +186,16 @@ class AuthRepoImpl implements AuthRepo {
   }
 
   @override
-  Future<ApiResponse<CommunitiesResponseModel>> fetchCommunities() async {
+  Future<ApiResponse<CommunitiesResponseModel>> fetchCommunities({
+    required int pageNo, required int pageSize,
+  }) async {
     try {
       final Response<dynamic> response = await networkService.get(
         ATEndpoints.communities,
+        queryParameters: <String, dynamic>{
+          'page': pageNo,
+          'page_size': pageSize,
+        },
       );
 
       final CommunitiesResponseModel communitiesResponse = 

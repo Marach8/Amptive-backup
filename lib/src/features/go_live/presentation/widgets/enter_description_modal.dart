@@ -88,7 +88,7 @@ class _DescriptionWidgetState extends State<_DescriptionWidget> with WidgetsBind
                 ),
                 Flexible(
                   child: Text(
-                    ATStrings.DESCRIPTION,
+                    ATStrings.description,
                     style: Theme.of(context).textTheme.bodyMedium,
                   ),
                 ),
@@ -123,7 +123,7 @@ class _DescriptionWidgetState extends State<_DescriptionWidget> with WidgetsBind
                         border: InputBorder.none,
                         focusedBorder: InputBorder.none,
                         enabledBorder: InputBorder.none,
-                        hintText: ATStrings.TELL_LISTENERS_ABOUT_SHOW,
+                        hintText: ATStrings.tellListenersAboutYourShow,
                         hintStyle: context.textTheme.bodySmall?.copyWith(
                           color: ATColors.white.withValues(alpha: 0.4)
                         ),

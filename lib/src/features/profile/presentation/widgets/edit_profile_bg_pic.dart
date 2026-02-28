@@ -71,7 +71,7 @@ class EditProfileBgImage extends StatelessWidget {
                     color: ATColors.black.withValues(alpha: 0.5),
                   ),
                   const ATImgLoader(
-                    imgPath: ATImgStrings.ADD_IMAGE_ICON,
+                    imgPath: ATImgStrings.addImageIcon,
                     height: 30, width: 30,
                   )
                 ],

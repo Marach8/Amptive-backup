@@ -79,15 +79,17 @@ class ATOverlappingCircles extends StatelessWidget {
           ((int, int) entry) {
             return Positioned(
               left: entry.$1 * overlapOffset,
-              child: ATContainer(
+              child: Container(
                 height: circleSize, width: circleSize,
                 color: ATColors.black.withValues(alpha: 0.05),
                 clipBehavior: Clip.hardEdge,
-                radius: circleSize,
-                border: Border.all(
-                  color: borderColor ?? ATColors.white.withValues(alpha: 0.4),
-                  width: borderWidth,
-                ) ,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(circleSize),
+                  border: Border.all(
+                    color: borderColor ?? ATColors.white.withValues(alpha: 0.4),
+                    width: borderWidth,
+                  )
+                ),
                 child: ClipRRect(
                   borderRadius: BorderRadiusGeometry.circular(20),
                   child: BackdropFilter(
@@ -106,6 +108,50 @@ class ATOverlappingCircles extends StatelessWidget {
             );
           }
         ).toList(),
+      ),
+    );
+  }
+}
+
+
+class OverlappingImagesShimmer extends StatelessWidget {
+
+  const OverlappingImagesShimmer({
+    super.key,
+    this.size = 35,
+    this.overlapOffset = 25,
+    this.borderWidth = 1,
+    this.number = 4,
+  });
+
+  final double size, number;
+  final double overlapOffset, borderWidth;
+
+  @override
+  Widget build(BuildContext context) {
+    final double width = size + ((number - 1) * overlapOffset);
+
+    return SizedBox(
+      height: size,
+      width: width,
+      child: Stack(
+        children: List<Widget>.generate(
+          number.toInt(),
+          (int index){
+            return Positioned(
+              left: index * overlapOffset,
+              child: Container(
+                height: size, width: size,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  border: Border.all(
+                    color: ATColors.white,
+                    width: borderWidth,
+                  )
+                ),
+              ),
+            );
+          })
       ),
     );
   }

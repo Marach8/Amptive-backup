@@ -273,7 +273,7 @@ List<ObjectWithNotifier<Host>> getHostList() {
     ATImgStrings.MAN_PHOTO: <String>['Daniel Adesua', 'myownbrother'],
     ATImgStrings.COMMUNITY_CARD: <String>['Erica Nwosu', 'ricababygirl'],
     ATImgStrings.CRIMINAL: <String>['Peter Nwokeji', 'sirpee'],
-    ATImgStrings.CREATE_SHOW_PLACEHOLDER: <String>[
+    ATImgStrings.createShowPlaceholder: <String>[
       'Arlan Walker',
       'walkerboss'
     ],
@@ -310,7 +310,7 @@ List<ATCohost<bool>> getCoHostList() {
     ATImgStrings.MAN_PHOTO: <String>['Daniel Adesua', 'myownbrother'],
     ATImgStrings.COMMUNITY_CARD: <String>['Erica Nwosu', 'ricababygirl'],
     ATImgStrings.CRIMINAL: <String>['Peter Nwokeji', 'sirpee'],
-    ATImgStrings.CREATE_SHOW_PLACEHOLDER: <String>[
+    ATImgStrings.createShowPlaceholder: <String>[
       'Arlan Walker',
       'walkerboss'
     ],

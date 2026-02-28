@@ -50,12 +50,6 @@ class LoadingState<T> extends ATAppState<T> {
   final T? currentData;
 }
 
-class SuccessState<T> extends ATAppState<T> {
-  const SuccessState({this.newData, this.message});
-  final T? newData;
-  final String? message;
-}
-
 class FailureState<T> extends ATAppState<T> {
   const FailureState(
     this.message, {
@@ -69,3 +63,9 @@ class FailureState<T> extends ATAppState<T> {
 }
 
 enum FailureType { apiCallFailure, searchFailure, unknownFailure }
+
+class SuccessState<T> extends ATAppState<T> {
+  const SuccessState({this.newData, this.message});
+  final T? newData;
+  final String? message;
+}

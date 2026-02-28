@@ -12,7 +12,8 @@ class ATBlurredBgBtn extends StatelessWidget {
     this.bgColor,
     this.fgColor,
     this.height,
-    this.padding
+    this.padding,
+    this.isLoading = false,
   });
 
   final VoidCallback? onPressed;
@@ -21,6 +22,7 @@ class ATBlurredBgBtn extends StatelessWidget {
   final Color? bgColor, fgColor;
   final double? height; 
   final EdgeInsetsGeometry? padding;
+  final bool isLoading;
 
   @override
   Widget build(BuildContext context) {
@@ -36,6 +38,7 @@ class ATBlurredBgBtn extends StatelessWidget {
       ),
       padding: padding ?? const EdgeInsets.fromLTRB(15, 10, 15, 50),
       child: ATPlainElevatedBtn(
+        isLoading: isLoading,
         bgColor: bgColor ?? ATColors.white,
         fgColor: fgColor ?? ATColors.hex0D0D0D,
         btnTitle: btnTitle,

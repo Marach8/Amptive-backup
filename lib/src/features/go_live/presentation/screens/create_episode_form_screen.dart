@@ -34,9 +34,9 @@ class _CreateShowFormScreenState extends State<CreateEpisodeFormScreen> {
 
   final ValueNotifier<(bool, BtnOnTap)> _activateBtn = ValueNotifier<(bool, BtnOnTap)>((false, BtnOnTap.goLive));
 
-  String programDesc = ATStrings.TELL_LISTENERS_ABOUT_SHOW;
+  String programDesc = ATStrings.tellListenersAboutYourShow;
   String whispersDesc = ATStrings.TOGGLE_WHISPERS;
-  String handRaisingDesc = ATStrings.CHOOSE_2_ALLOW_HAND_RASING;
+  String handRaisingDesc = ATStrings.choose2AllowHandRasing;
 
   UnusedCommunity? selectedCommunity;
 
@@ -53,7 +53,7 @@ class _CreateShowFormScreenState extends State<CreateEpisodeFormScreen> {
       (ATCohost<bool> cohost) => cohost.profilePicture != null);
 
     _activateBtn.value = (
-      ctx.read<BgImageBloc>().state.$2 != null,
+      ctx.read<BgImageCubit>().state.$2 != null,
       // &&
       // ctx.read<HashtagServiceBloc>().state.$2.isNotEmpty &&
       // cohostIsSelected &&
@@ -96,7 +96,7 @@ class _CreateShowFormScreenState extends State<CreateEpisodeFormScreen> {
     return MultiBlocProvider(
       providers: <SingleChildWidget>[
         BlocProvider<BlurredHeaderBloc>(create: (_) => BlurredHeaderBloc(),),
-        BlocProvider<BgImageBloc>(create: (_) => BgImageBloc())
+        BlocProvider<BgImageCubit>(create: (_) => BgImageCubit())
       ],
       child: ATAnnotatedRegion(
         statusBarColor: ATColors.transparent,
@@ -106,7 +106,7 @@ class _CreateShowFormScreenState extends State<CreateEpisodeFormScreen> {
               return Stack(
                 children: <Widget>[
                   Positioned.fill(
-                    child: BlocBuilder<BgImageBloc, (String, Uint8List?)>(
+                    child: BlocBuilder<BgImageCubit, (String, Uint8List?)>(
                       builder: (_, (String, Uint8List?) state) {
                         return ImageFiltered(
                           imageFilter: ImageFilter.blur(sigmaX: 200, sigmaY: 200),
@@ -168,7 +168,7 @@ class _CreateShowFormScreenState extends State<CreateEpisodeFormScreen> {
                                 padding: const EdgeInsets.fromLTRB(15, 0, 15, 30),
                                 child: SelectProgramCoverArt(
                                   onImageSelected: (Uint8List imgBytes) {
-                                    blocContext.read<BgImageBloc>().setBgImage(imgBytes);
+                                    blocContext.read<BgImageCubit>().setBgImage(imgBytes);
                                     _check4BtnActivation(blocContext);
                                   }
                                 ),
@@ -181,7 +181,7 @@ class _CreateShowFormScreenState extends State<CreateEpisodeFormScreen> {
                                   builder: (_, AsyncSnapshot<String> snapshot) {
                                     final int remaining = 140 - (snapshot.data?.length ?? 0);
                                     return RowWith2Texts(
-                                      text1: ATStrings.TITLE,
+                                      text1: ATStrings.title,
                                       text2: '$remaining remaining',
                                     );
                                   }
@@ -213,7 +213,7 @@ class _CreateShowFormScreenState extends State<CreateEpisodeFormScreen> {
                                   builder: (_, AsyncSnapshot<String> snapshot) {
                                     final int remaining = 4000 - (snapshot.data?.length ?? 0);
                                     return RowWith2Texts(
-                                      text1: ATStrings.DESCRIPTION,
+                                      text1: ATStrings.description,
                                       text2: '$remaining remaining',
                                     );
                                   }
@@ -228,7 +228,7 @@ class _CreateShowFormScreenState extends State<CreateEpisodeFormScreen> {
                                       onTap: ()async{
                                         final String? description = await enterDescriptionModal(
                                           context: context, 
-                                          initialDesc: programDesc == ATStrings.TELL_LISTENERS_ABOUT_SHOW ? null : programDesc,
+                                          initialDesc: programDesc == ATStrings.tellListenersAboutYourShow ? null : programDesc,
                                         );
                                         if((description ?? '').isNotEmpty){
                                           setter(
@@ -344,7 +344,7 @@ class _CreateShowFormScreenState extends State<CreateEpisodeFormScreen> {
                                     const Icon(Icons.front_hand_outlined, size: 18,),
                                     const SizedBox(width: 5,),
                                     Text(
-                                      ATStrings.HAND_RAISING,
+                                      ATStrings.handRaising,
                                       style: context.textTheme.titleLarge?.copyWith(
                                         fontWeight: ATFontWeights.w500
                                       ),
@@ -360,7 +360,7 @@ class _CreateShowFormScreenState extends State<CreateEpisodeFormScreen> {
                                       duration: 300,
                                       child: CreateProgramSelectionItem(
                                         description: handRaisingDesc,
-                                        descStyle: handRaisingDesc == ATStrings.CHOOSE_2_ALLOW_HAND_RASING ? null
+                                        descStyle: handRaisingDesc == ATStrings.choose2AllowHandRasing ? null
                                           : context.textTheme.bodySmall,
                                         onTap: ()async{
                                           final String? selectedHandRaising = await choose2AllowHandRaisingModal(
@@ -369,7 +369,7 @@ class _CreateShowFormScreenState extends State<CreateEpisodeFormScreen> {
                                           setter(
                                             (){
                                               if(selectedHandRaising == null){
-                                                handRaisingDesc = ATStrings.SELECT_WHO_CAN_ACCESS_SHOW;
+                                                handRaisingDesc = ATStrings.selectWhoCanAccessYourShow;
                                               }
                                               else{
                                                 handRaisingDesc = selectedHandRaising;
@@ -390,7 +390,7 @@ class _CreateShowFormScreenState extends State<CreateEpisodeFormScreen> {
                                     ATStrings.U_WILL_HAVE_ACCESS_2_MODERATION_TOOLS: context.textTheme.labelSmall!.copyWith(
                                       color: ATColors.hexC2C2C2.withValues(alpha: 0.76)
                                     ),
-                                    ' ${ATStrings.LEARN_MORE}': context.textTheme.labelSmall!
+                                    ' ${ATStrings.learnMore}': context.textTheme.labelSmall!
                                   },
                                 )
                               ),
@@ -488,7 +488,7 @@ class _CreateShowFormScreenState extends State<CreateEpisodeFormScreen> {
                   }
                   else{
                     final dynamic params = (
-                      coverArtBytes: ctx.read<BgImageBloc>().state.$2,
+                      coverArtBytes: ctx.read<BgImageCubit>().state.$2,
                       title: ATStrings.EPISODE_CREATED,
                       subtitle: ATStrings.SHARE_EPISODE_LINK_DESC,
                       btnTitle: ATStrings.SHARE_EPISODE,
@@ -497,7 +497,7 @@ class _CreateShowFormScreenState extends State<CreateEpisodeFormScreen> {
                       txtBtnOnPressed: (){
                         context.pushReplacementNamed(
                           ATRoutes.EPISODE_PREVIEW_SCREEN,
-                          extra: ctx.read<BgImageBloc>().state.$2,
+                          extra: ctx.read<BgImageCubit>().state.$2,
                         );
                       },
                       topLogo: ATContainer(

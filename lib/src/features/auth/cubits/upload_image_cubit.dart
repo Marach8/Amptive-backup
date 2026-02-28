@@ -6,15 +6,18 @@ import 'dart:io';
 import 'dart:typed_data';
 import 'package:path_provider/path_provider.dart';
 
-class AddProfilePicCubit extends Cubit<ATAppState<String>> {
-  AddProfilePicCubit({
+class UploadImageCubit extends Cubit<ATAppState<String>> {
+  UploadImageCubit({
     AuthRepo? mockAuthRepo,
   })  : authRepo = mockAuthRepo ?? AuthRepoImpl(),
         super(const InitialState<String>());
 
   final AuthRepo authRepo;
 
-  Future<void> uploadImage({required Uint8List bytes}) async {
+  Future<void> uploadBytesImage({
+    required Uint8List bytes,
+    String? purpose,
+  }) async {
     emit(const LoadingState<String>());
 
     File? file;
@@ -36,6 +39,30 @@ class AddProfilePicCubit extends Cubit<ATAppState<String>> {
             await file!.delete();
           }
 
+          emit(SuccessState<String>(newData: data.data));
+        },
+        unSuccessful: (Unsuccessful<String> error) {
+          emit(FailureState<String>(error.error.message));
+        },
+      );
+    } catch (e) {
+      emit(FailureState<String>('Unable to upload image: $e'));
+    }
+  }
+
+
+  Future<void> uploadFileImage({
+    required String filepath,
+    String? purpose,
+  }) async {
+    emit(const LoadingState<String>());
+
+    try {
+      final ApiResponse<String> response =
+          await authRepo.uploadImage(filePath: filepath);
+
+      await response.when(
+        successful: (Successful<String> data) async {
           emit(SuccessState<String>(newData: data.data));
         },
         unSuccessful: (Unsuccessful<String> error) {

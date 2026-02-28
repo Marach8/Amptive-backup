@@ -1,4 +1,4 @@
-export 'choose_or_create_go_live_program_screen.dart';
+export 'list_hosted_shows_screen.dart';
 export 'create_show_form_screen.dart';
 export 'go_live_program_creation_success_screen.dart';
 export 'even_scheduled_screen.dart';
