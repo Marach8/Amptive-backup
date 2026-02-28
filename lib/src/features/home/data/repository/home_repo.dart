@@ -1,8 +1,8 @@
 import 'package:amptive/src/config/api_response_and_app_state.dart';
-import 'package:amptive/src/features/go_live/presentation/widgets/render_hosted_show.dart';
+import 'package:amptive/src/features/home/data/models/response/home_feed_response_model.dart';
 
 abstract class HomeRepo {
-  Future<ApiResponse<dynamic>> fetchHomeFeed({
+  Future<ApiResponse<HomeFeedResponseModel>> fetchHomeFeed({
     required int page,
     required int pageSize,
     required bool refresh,
@@ -19,4 +19,6 @@ abstract class HomeRepo {
     required int pageSize,
     required bool refresh,
   });
+
+  Future<ApiResponse<dynamic>> fetchLiveUsers();
 }

@@ -1,11 +1,16 @@
 import 'package:amptive/src/config/api_response_and_app_state.dart';
 import 'package:amptive/src/config/utils/colors.dart';
 import 'package:amptive/src/config/routing/route_strings.dart';
+import 'package:amptive/src/config/utils/dialogs/app_notification_dialog.dart';
 import 'package:amptive/src/features/auth/cubits/local_user_data_cubit.dart';
 import 'package:amptive/src/features/home/cubits/home_feed_cubit.dart';
+import 'package:amptive/src/features/home/cubits/live_users_cubit.dart';
+import 'package:amptive/src/features/home/data/models/response/home_feed_response_model.dart';
+import 'package:amptive/src/features/home/presentation/widgets/render_home_feed_item.dart';
 import 'package:amptive/src/features/main_app_nav_bar.dart';
 import 'package:amptive/src/views/widgets/common_widgets/circle_avatar.dart';
 import 'package:amptive/src/features/home/presentation/widgets/program_widget_in_home.dart';
+import 'package:amptive/src/views/widgets/common_widgets/loading_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -20,7 +25,14 @@ import '../widgets/go_live_widget_in_home.dart';
 
 
 class HomeTabView extends StatelessWidget {
-  const HomeTabView({super.key});
+  const HomeTabView({
+    super.key,
+    required this.nestedKey,
+    required this.liveUsersScrollController,
+  });
+
+  final ScrollController liveUsersScrollController;
+  final GlobalKey<NestedScrollViewState> nestedKey;
 
   @override
   Widget build(BuildContext context) {
@@ -28,6 +40,7 @@ class HomeTabView extends StatelessWidget {
       onNotification: context.read<ATNavBarBloc>().ctrlNavVisibility,
       child: NestedScrollView(
         floatHeaderSlivers: true,
+        key: nestedKey,
         headerSliverBuilder: (_, __) => <Widget>[
           SliverAppBar(
             floating: true, snap: true, leadingWidth: 150,
@@ -53,6 +66,7 @@ class HomeTabView extends StatelessWidget {
               IconButton(
                 onPressed: (){
                   context.read<HomeFeedCubit>().fetchHomeFeed();
+                  context.read<LiveUsersCubit>().fetchLiveUsers();
                 },
                 icon: Icon(Icons.add),
               ),
@@ -125,36 +139,92 @@ class HomeTabView extends StatelessWidget {
           ),
           const SliverToBoxAdapter(
             child: Padding(
-              padding:  EdgeInsets.symmetric(vertical: 14.0),
-              child: const ATDivider(),
+              padding: EdgeInsets.symmetric(vertical: 14.0),
+              child: ATDivider(),
             ),
           )
         ],
          
-        body: BlocConsumer<HomeFeedCubit, ATAppState<dynamic>>(
-          listener: (_, ATAppState<dynamic> state){
-
+        body: BlocConsumer<HomeFeedCubit, ATAppState<HomeFeedResponseModel>>(
+          listener: (_, ATAppState<HomeFeedResponseModel> state){
+            if(state is FailureState<HomeFeedResponseModel>){
+              showAppNotification2(
+                context: context,
+                text: state.message,
+                type: NotificationType.failure,
+              );
+            }
           },
-          builder: (_, ATAppState<dynamic> state) {
-            return ListView( 
-              padding: EdgeInsets.zero,
-              children: <Widget>[      
-                ...Iterable<Widget>.generate(
-                  10,
-                  (_) => Padding(
-                    padding: const EdgeInsets.fromLTRB(15, 0, 15, 30),
-                    child: GestureDetector(
-                      onTap: () => context.pushNamed(ATRoutes.LIVE_EVENT_DETAILED),
-                      //onTap: () => context.pushNamed(ATRoutes.LIVE_SHOW_DETAILED),
-                      child: const ATShowOrEventInfo()
-                    ),
-                  )
-                )
-              ]
-            );
+          builder: (_, ATAppState<HomeFeedResponseModel> state) {
+            return switch(state){
+              InitialState<HomeFeedResponseModel>() => const SizedBox.shrink(),
+              LoadingState<HomeFeedResponseModel>() ||
+              FailureState<HomeFeedResponseModel>() ||
+              SuccessState<HomeFeedResponseModel>() => Builder(
+                builder: (_){
+                  final HomeFeedResponseModel? homeFeedData = 
+                    context.read<HomeFeedCubit>().currentHomeFeedData;
+                  final List<HomeFeedItem> homeFeedItems = 
+                    homeFeedData?.homeFeedItems ?? <HomeFeedItem>[];
+
+                  if(homeFeedItems.isEmpty){
+                    if(state is LoadingState<HomeFeedResponseModel>){
+                      return const _InitialLoadingShimmer();
+                    }
+                    if(state is FailureState<HomeFeedResponseModel>){
+                      return Center(
+                        child: IconButton(
+                          icon: const Icon(Icons.refresh),
+                          onPressed: () => context.read<HomeFeedCubit>().fetchHomeFeed(),
+                        ),
+                      );
+                    }
+                    return const Center(
+                      child: Text('No feed items available'),
+                    );
+                  }
+
+                  final bool hasMore = homeFeedData?.hasMore ?? false;
+                  final int count = homeFeedItems.length;
+
+                  return ListView.separated(
+                    separatorBuilder: (_, int index) => const SizedBox(height: 30),
+                    itemCount: hasMore ? count + 1 : count,
+                    padding: const EdgeInsets.fromLTRB(15, 0, 15, 60),
+                    itemBuilder: (_, int index){
+                      if(index < count){
+                        final HomeFeedItem homeFeedItem = homeFeedItems[index];
+                        return RenderHomeFeedItem(homeFeedItem: homeFeedItem);
+                      }
+                      if(state is LoadingState<HomeFeedResponseModel>){
+                        return const Center(
+                          child: ATLoadingIndicator(),
+                        );
+                      }
+                      return const SizedBox.shrink();
+                    }
+                  );
+                }
+              )
+            };
           }
         )
       ),
+    );
+  }
+}
+
+
+class _InitialLoadingShimmer extends StatelessWidget {
+  const _InitialLoadingShimmer();
+
+  @override
+  Widget build(BuildContext context) {
+    return ListView.separated(
+      separatorBuilder: (_, __) => const SizedBox(height: 30),
+      itemCount: 5,
+      padding: const EdgeInsets.fromLTRB(15, 0, 15, 60),
+      itemBuilder: (_, __) => const RenderHomeFeedItemShimmer()
     );
   }
 }

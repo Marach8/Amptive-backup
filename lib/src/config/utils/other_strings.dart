@@ -276,7 +276,7 @@ class ATStrings{
 
   static const String SOCIETY = 'Society';
   static const String GO_LIVE = 'Go live';
-  static const String PAID_SHOW = '\$paid show';
+  static const String paidShow = '\$paid show';
   static const String INSTAGRAM = 'Instagram';
   static const String X = 'X';
   static const String LINKEDIN = 'LinkedIn';

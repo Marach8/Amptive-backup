@@ -1,0 +1,29 @@
+import 'package:amptive/src/config/api_response_and_app_state.dart';
+import 'package:amptive/src/features/home/data/repository/home_repo.dart';
+import 'package:amptive/src/features/home/data/repository/home_repo_impl.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+class LiveUsersCubit extends Cubit<ATAppState<dynamic>> {
+  LiveUsersCubit({HomeRepo? mockHomeRepo})
+      : homeRepo = mockHomeRepo ?? HomeRepoImpl(),
+        super(const InitialState<dynamic>());
+
+  final HomeRepo homeRepo;
+
+  Future<void> fetchLiveUsers() async {
+    emit(const LoadingState<dynamic>());
+    try {
+      final ApiResponse<dynamic> response = await homeRepo.fetchLiveUsers();
+      response.when(
+        successful: (Successful<dynamic> data) {
+          emit(SuccessState<dynamic>(newData: data.data));
+        },
+        unSuccessful: (Unsuccessful<dynamic> error) {
+          emit(FailureState<dynamic>(error.error.message));
+        },
+      );
+    } catch (e) {
+      emit(FailureState<dynamic>('Unable to get live users: $e'));
+    }
+  }
+}

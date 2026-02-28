@@ -5,8 +5,8 @@ import 'package:amptive/src/config/endpoints.dart';
 import 'package:amptive/src/config/exception.dart';
 import 'package:amptive/src/config/services/network_service/dio_network_service_impl.dart';
 import 'package:amptive/src/config/services/network_service/network_service.dart';
+import 'package:amptive/src/features/home/data/models/response/home_feed_response_model.dart';
 import 'package:amptive/src/features/home/data/repository/home_repo.dart';
-import 'package:amptive/src/features/go_live/presentation/widgets/render_hosted_show.dart';
 import 'package:dio/dio.dart' show Response;
 
 class HomeRepoImpl implements HomeRepo {
@@ -16,7 +16,7 @@ class HomeRepoImpl implements HomeRepo {
   final NetworkService networkService;
 
   @override
-  Future<ApiResponse<dynamic>> fetchHomeFeed({
+  Future<ApiResponse<HomeFeedResponseModel>> fetchHomeFeed({
     required int page,
     required int pageSize,
     required bool refresh,
@@ -31,10 +31,12 @@ class HomeRepoImpl implements HomeRepo {
         },
       );
 
-      return Successful<dynamic>(data: response.data);
+      return Successful<HomeFeedResponseModel>(
+        data: HomeFeedResponseModel.fromJson(response.data as Map<String, dynamic>),
+      );
     } catch (e) {
       log('Get home feed error: $e');
-      return Unsuccessful<dynamic>(
+      return Unsuccessful<HomeFeedResponseModel>(
         error: ATException.resolveException(e),
       );
     }
@@ -84,6 +86,22 @@ class HomeRepoImpl implements HomeRepo {
       return Successful<dynamic>(data: response.data);
     } catch (e) {
       log('Get live shows error: $e');
+      return Unsuccessful<dynamic>(
+        error: ATException.resolveException(e),
+      );
+    }
+  }
+
+  @override
+  Future<ApiResponse<dynamic>> fetchLiveUsers() async {
+    try {
+      final Response<dynamic> response = await networkService.get(
+        ATEndpoints.liveShowsFeed,
+      );
+
+      return Successful<dynamic>(data: response.data);
+    } catch (e) {
+      log('Get live users error: $e');
       return Unsuccessful<dynamic>(
         error: ATException.resolveException(e),
       );

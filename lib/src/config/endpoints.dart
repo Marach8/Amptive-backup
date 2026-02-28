@@ -19,4 +19,3 @@ class ATEndpoints {
   static const String shows = '/api/v1/shows/';
 
 }
-

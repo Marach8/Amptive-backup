@@ -1,4 +1,5 @@
 import 'package:amptive/src/features/home/cubits/home_feed_cubit.dart';
+import 'package:amptive/src/features/home/cubits/live_users_cubit.dart';
 import 'package:amptive/src/views/widgets/common_widgets/annotated_region__widget.dart';
 import 'package:amptive/src/features/main_app_nav_bar.dart';
 import 'package:amptive/src/features/home/presentation/screens/home_landing_screen.dart';
@@ -57,6 +58,7 @@ class ATMainAppShell extends StatelessWidget {
     return MultiBlocProvider(
       providers: <SingleChildWidget>[
         BlocProvider<HomeFeedCubit>(create: (_) => HomeFeedCubit()),
+        BlocProvider<LiveUsersCubit>(create: (_) => LiveUsersCubit()),
       ],
       child: const _SubWidget(),
     );
@@ -72,14 +74,41 @@ class _SubWidget extends StatefulWidget {
 }
 
 class __SubWidgetState extends State<_SubWidget> {
+  final ScrollController _liveUsersScrollController = ScrollController();
+  final GlobalKey<NestedScrollViewState> _nestedKey = GlobalKey<NestedScrollViewState>();
+
   @override 
   void initState(){
     super.initState();
+    _liveUsersScrollController.addListener(() => _onLiveUsersScrollToEnd());
+
     WidgetsBinding.instance.addPostFrameCallback(
       (_){
+        final ScrollController? sController = _nestedKey.currentState?.innerController;
+        if (sController != null) {
+          sController.addListener(() => _onHomeFeedScrollToEnd(sController));
+        }
+        
         context.read<HomeFeedCubit>().fetchHomeFeed();
+        context.read<LiveUsersCubit>().fetchLiveUsers();
       }
     );
+  }
+
+  void _onHomeFeedScrollToEnd(ScrollController sController) {
+    const double threshHold = 80;
+    if (sController.position.pixels >= 
+      sController.position.maxScrollExtent + threshHold) {
+      context.read<HomeFeedCubit>().fetchHomeFeed();
+    }
+  }
+
+  void _onLiveUsersScrollToEnd(){
+    const double threshHold = 80;
+    if (_liveUsersScrollController.position.pixels >= 
+      _liveUsersScrollController.position.maxScrollExtent + threshHold) {
+      context.read<LiveUsersCubit>().fetchLiveUsers();
+    }
   }
 
 
@@ -94,11 +123,14 @@ class __SubWidgetState extends State<_SubWidget> {
             builder: (_, int index) {
               return IndexedStack(
                 index: index,
-                children: const <Widget>[
-                  HomeTabView(),
-                  DiscoverTabView(),
-                  SizedBox(),
-                  NotificationTabView()
+                children: <Widget>[
+                  HomeTabView(
+                    nestedKey: _nestedKey,
+                    liveUsersScrollController: _liveUsersScrollController,
+                  ),
+                  const DiscoverTabView(),
+                  const SizedBox(),
+                  const NotificationTabView()
                 ]
               );
             }

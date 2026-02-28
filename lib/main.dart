@@ -55,6 +55,17 @@ class AmptiveApp extends StatelessWidget {
           darkTheme: AmptiveThemeData.darkTheme,
           theme: AmptiveThemeData.darkTheme,
           routerConfig: amptiveAppRouter,
+          builder: (BuildContext context, Widget? child) {
+            final MediaQueryData mediaQuery = MediaQuery.of(context)
+                .copyWith(textScaler: TextScaler.noScaling);
+            return MediaQuery(
+              data: mediaQuery,
+              child: ScrollConfiguration(
+                behavior: const _GlobalScrollBehavior(),
+                child: child!,
+              ),
+            );
+          },
         );
       },
     );
@@ -62,4 +73,13 @@ class AmptiveApp extends StatelessWidget {
 }
 
 
-final GlobalKey<ScaffoldMessengerState> scaffoldMessengerKey = GlobalKey<ScaffoldMessengerState>();
+final GlobalKey<ScaffoldMessengerState> scaffoldMessengerKey =
+    GlobalKey<ScaffoldMessengerState>();
+
+class _GlobalScrollBehavior extends ScrollBehavior {
+  const _GlobalScrollBehavior();
+
+  @override
+  ScrollPhysics getScrollPhysics(_) =>
+      const BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics());
+}
