@@ -39,10 +39,19 @@ class GoLiveRepoImpl implements GoLiveRepo {
   }
 
   @override
-  Future<ApiResponse<HostedShowsResponseModel>> fetchHostedShows() async {
+  Future<ApiResponse<HostedShowsResponseModel>> fetchHostedShows({
+    required int page,
+    required int pageSize,
+    required bool refresh,
+  }) async {
     try {
       final Response<dynamic> response = await networkService.get(
         ATEndpoints.shows,
+        queryParameters: <String, dynamic>{
+          'page': page,
+          'page_size': pageSize,
+          'refresh': refresh,
+        },
       );
 
       final HostedShowsResponseModel hostedShowsResponse = HostedShowsResponseModel.fromJson(

@@ -7,5 +7,9 @@ abstract class GoLiveRepo {
     required CreateShowModel createShowModel,
   });
 
-  Future<ApiResponse<HostedShowsResponseModel>> fetchHostedShows();
+  Future<ApiResponse<HostedShowsResponseModel>> fetchHostedShows({
+    required int page,
+    required int pageSize,
+    required bool refresh,
+  });
 }

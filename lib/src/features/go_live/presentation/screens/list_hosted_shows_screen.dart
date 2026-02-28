@@ -174,9 +174,9 @@ class __SubWidgetState extends State<_SubWidget> {
                             FailureState<HostedShowsResponseModel>() => Builder(
                               builder: (_){
                                 final HostedShowsResponseModel? hostedShowsData = 
-                                  context.read<HostedShowsCubit>().hostedShowsData;
+                                  context.read<HostedShowsCubit>().currentHostedShowsData;
                                 final List<HostedShow> hostedShows = 
-                                  hostedShowsData?.items ?? <HostedShow>[];
+                                  hostedShowsData?.hostedShows ?? <HostedShow>[];
                                 
                                 if(hostedShows.isEmpty){
                                   if(state is LoadingState<HostedShowsResponseModel>){

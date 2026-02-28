@@ -11,37 +11,54 @@ class HostedShowsCubit extends Cubit<ATAppState<HostedShowsResponseModel>> {
 
   final GoLiveRepo goLiveRepo;
 
-  HostedShowsResponseModel? get hostedShowsData => switch (state) {
+  HostedShowsResponseModel? get currentHostedShowsData => switch (state) {
     InitialState<HostedShowsResponseModel>(:final HostedShowsResponseModel? initialData) => initialData,
     LoadingState<HostedShowsResponseModel>(:final HostedShowsResponseModel? currentData) => currentData,
     SuccessState<HostedShowsResponseModel>(:final HostedShowsResponseModel? newData) => newData,
     FailureState<HostedShowsResponseModel>(:final HostedShowsResponseModel? oldData) => oldData,
   };
 
-  Future<void> fetchHostedShows() async {
-    final bool hasMore = hostedShowsData?.hasMore ?? true;
+  Future<void> fetchHostedShows([bool forceRefresh = false]) async {
+    final bool hasMore = currentHostedShowsData?.hasMore ?? true;
     if(state is LoadingState<HostedShowsResponseModel> || !hasMore){
       return;
     }
 
-    emit(LoadingState<HostedShowsResponseModel>(currentData: hostedShowsData));
+    emit(LoadingState<HostedShowsResponseModel>(currentData: currentHostedShowsData));
     try {
-      final ApiResponse<HostedShowsResponseModel> response = await goLiveRepo.fetchHostedShows();
+      final ApiResponse<HostedShowsResponseModel> response = await goLiveRepo.fetchHostedShows(
+        page: (currentHostedShowsData?.page ?? -1) + 1,
+        pageSize: 20,
+        refresh: forceRefresh,
+      );
       response.when(
         successful: (Successful<HostedShowsResponseModel> data) {
-          emit(SuccessState<HostedShowsResponseModel>(newData: data.data));
+          final List<HostedShow>? newHostedShows = data.data?.hostedShows;
+          final List<HostedShow> mergedHostedShows = <HostedShow>[
+            ...?currentHostedShowsData?.hostedShows,
+            ...?newHostedShows,
+          ];
+
+          final HostedShowsResponseModel newData = HostedShowsResponseModel(
+            hostedShows: mergedHostedShows,
+            total: data.data?.total,
+            page: data.data?.page,
+            pageSize: data.data?.pageSize,
+            hasMore: data.data?.hasMore,
+          );
+          emit(SuccessState<HostedShowsResponseModel>(newData: newData));
         },
         unSuccessful: (Unsuccessful<HostedShowsResponseModel> error) {
           emit(FailureState<HostedShowsResponseModel>(
             error.error.message,
-            oldData: hostedShowsData
+            oldData: currentHostedShowsData
           ));
         },
       );
     } catch (e) {
       emit(FailureState<HostedShowsResponseModel>(
         'Unable to get shows: $e',
-        oldData: hostedShowsData
+        oldData: currentHostedShowsData
       ));
     }
   }

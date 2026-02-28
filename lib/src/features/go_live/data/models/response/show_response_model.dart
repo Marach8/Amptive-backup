@@ -1,7 +1,7 @@
 
 class HostedShowsResponseModel {
   HostedShowsResponseModel({
-    this.items,
+    this.hostedShows,
     this.total,
     this.page,
     this.pageSize,
@@ -10,7 +10,7 @@ class HostedShowsResponseModel {
 
   factory HostedShowsResponseModel.fromJson(Map<String, dynamic> json) {
     return HostedShowsResponseModel(
-      items: (json['items'] as List<dynamic>?)
+      hostedShows: (json['items'] as List<dynamic>?)
           ?.map((dynamic e) => HostedShow.fromJson(e))
           .toList(),
       total: json['total'],
@@ -20,7 +20,7 @@ class HostedShowsResponseModel {
     );
   }
 
-  final List<HostedShow>? items;
+  final List<HostedShow>? hostedShows;
   final int? total;
   final int? page;
   final int? pageSize;
