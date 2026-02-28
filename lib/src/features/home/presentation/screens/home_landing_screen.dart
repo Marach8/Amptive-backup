@@ -2,6 +2,7 @@ import 'package:amptive/src/config/api_response_and_app_state.dart';
 import 'package:amptive/src/config/utils/colors.dart';
 import 'package:amptive/src/config/routing/route_strings.dart';
 import 'package:amptive/src/features/auth/cubits/local_user_data_cubit.dart';
+import 'package:amptive/src/features/home/cubits/home_feed_cubit.dart';
 import 'package:amptive/src/features/main_app_nav_bar.dart';
 import 'package:amptive/src/views/widgets/common_widgets/circle_avatar.dart';
 import 'package:amptive/src/features/home/presentation/widgets/program_widget_in_home.dart';
@@ -49,6 +50,12 @@ class HomeTabView extends StatelessWidget {
             ),
           
             actions: <Widget>[
+              IconButton(
+                onPressed: (){
+                  context.read<HomeFeedCubit>().fetchHomeFeed();
+                },
+                icon: Icon(Icons.add),
+              ),
               GestureDetector(
                 onTap: (){
                   //context.pushNamed(ATRoutes.GO_LIVE_ONBOARDING);
@@ -92,13 +99,8 @@ class HomeTabView extends StatelessWidget {
               ),
             ],      
           ),
-        ],
-         
-        body: ListView( 
-          physics: const BouncingScrollPhysics(),
-          padding: EdgeInsets.zero,
-          children: <Widget>[
-            SizedBox(
+          SliverToBoxAdapter(
+            child: SizedBox(
               height: 100,
               child: ListView(
                 physics: const BouncingScrollPhysics(),
@@ -120,23 +122,37 @@ class HomeTabView extends StatelessWidget {
                 ]
               ),
             ),
-            Padding(
-              padding:  EdgeInsets.symmetric(vertical: 14.0.h),
+          ),
+          const SliverToBoxAdapter(
+            child: Padding(
+              padding:  EdgeInsets.symmetric(vertical: 14.0),
               child: const ATDivider(),
             ),
-      
-            ...Iterable<Widget>.generate(
-              10,
-              (_) => Padding(
-                padding: const EdgeInsets.fromLTRB(15, 0, 15, 30),
-                child: GestureDetector(
-                  onTap: () => context.pushNamed(ATRoutes.LIVE_EVENT_DETAILED),
-                  //onTap: () => context.pushNamed(ATRoutes.LIVE_SHOW_DETAILED),
-                  child: const ATShowOrEventInfo()
-                ),
-              )
-            )
-          ]
+          )
+        ],
+         
+        body: BlocConsumer<HomeFeedCubit, ATAppState<dynamic>>(
+          listener: (_, ATAppState<dynamic> state){
+
+          },
+          builder: (_, ATAppState<dynamic> state) {
+            return ListView( 
+              padding: EdgeInsets.zero,
+              children: <Widget>[      
+                ...Iterable<Widget>.generate(
+                  10,
+                  (_) => Padding(
+                    padding: const EdgeInsets.fromLTRB(15, 0, 15, 30),
+                    child: GestureDetector(
+                      onTap: () => context.pushNamed(ATRoutes.LIVE_EVENT_DETAILED),
+                      //onTap: () => context.pushNamed(ATRoutes.LIVE_SHOW_DETAILED),
+                      child: const ATShowOrEventInfo()
+                    ),
+                  )
+                )
+              ]
+            );
+          }
         )
       ),
     );

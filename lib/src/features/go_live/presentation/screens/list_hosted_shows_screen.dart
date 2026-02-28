@@ -1,8 +1,10 @@
 import 'dart:ui';
 import 'package:amptive/src/config/api_response_and_app_state.dart';
+import 'package:amptive/src/config/utils/dialogs/app_notification_dialog.dart';
 import 'package:amptive/src/features/go_live/cubits/hosted_shows_cubit.dart';
 import 'package:amptive/src/features/go_live/data/models/response/show_response_model.dart';
 import 'package:amptive/src/features/go_live/go_live_export.dart';
+import 'package:amptive/src/features/go_live/presentation/widgets/render_hosted_show.dart';
 import 'package:amptive/src/global_export.dart';
 import 'package:amptive/src/views/widgets/common_widgets/annotated_region__widget.dart';
 import 'package:amptive/src/views/widgets/common_widgets/back_button.dart';
@@ -25,7 +27,7 @@ class ListHostedShowsScreen extends StatelessWidget {
     return MultiBlocProvider(
       providers: <SingleChildWidget>[
         BlocProvider<BlurredHeaderBloc>(create: (_) => BlurredHeaderBloc(),),
-        BlocProvider<_PrivateBloc>(create: (_) => _PrivateBloc()),
+        BlocProvider<HostedShowSelectionCubit>(create: (_) => HostedShowSelectionCubit()),
         BlocProvider<HostedShowsCubit>(create: (_) => HostedShowsCubit())
       ],
       child: const _SubWidget(),
@@ -53,12 +55,29 @@ class _SubWidget extends StatefulWidget {
 }
 
 class __SubWidgetState extends State<_SubWidget> {
+  final ScrollController _scrollCntrl = ScrollController();
+
   @override 
   void initState(){
     super.initState();
+    _scrollCntrl.addListener(_onScrollToEnd);
     WidgetsBinding.instance.addPostFrameCallback(
       (_) => context.read<HostedShowsCubit>().fetchHostedShows(),
     );
+  }
+
+  void _onScrollToEnd() {
+    const double dragThreshold = 80;
+    if (_scrollCntrl.position.pixels >= 
+      _scrollCntrl.position.maxScrollExtent + dragThreshold) {
+      context.read<HostedShowsCubit>().fetchHostedShows();
+    }
+  }
+
+  @override 
+  void dispose(){
+    _scrollCntrl.dispose();
+    super.dispose();  
   }
 
   @override
@@ -74,7 +93,7 @@ class __SubWidgetState extends State<_SubWidget> {
             return Stack(
               children: <Widget>[
                 Positioned.fill(
-                  child: BlocBuilder<_PrivateBloc, String?>(
+                  child: BlocBuilder<HostedShowSelectionCubit, String?>(
                     builder: (_, String? selectedImgString) {
                       if(selectedImgString == null){
                         return ATContainer(color: ATColors.black,);
@@ -139,9 +158,15 @@ class __SubWidgetState extends State<_SubWidget> {
                       
                       body: BlocConsumer<HostedShowsCubit, ATAppState<HostedShowsResponseModel>>(
                         listener: (_, ATAppState<HostedShowsResponseModel> state){
-
+                          if(state is FailureState<HostedShowsResponseModel>){
+                            showAppNotification2(
+                              context: context,
+                              text: state.message,
+                              type: NotificationType.failure,
+                            );
+                          }
                         },
-                        builder: (_, ATAppState<HostedShowsResponseModel> state) {
+                        builder: (_, ATAppState<HostedShowsResponseModel> state) {                          
                           return switch(state){
                             InitialState<HostedShowsResponseModel>() ||
                             LoadingState<HostedShowsResponseModel>() ||
@@ -152,62 +177,47 @@ class __SubWidgetState extends State<_SubWidget> {
                                   context.read<HostedShowsCubit>().hostedShowsData;
                                 final List<HostedShow> hostedShows = 
                                   hostedShowsData?.items ?? <HostedShow>[];
-
                                 
-                              }
-                            )
-                          };
-                          return GridView.builder(
-                            padding: const EdgeInsets.fromLTRB(15, 0, 15, 100),
-                            physics: const BouncingScrollPhysics(),
-                            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                              crossAxisCount: 2,
-                              childAspectRatio: 0.7,
-                              crossAxisSpacing: 20,
-                              mainAxisSpacing: 20
-                            ),
-                            itemCount: _SubWidget.listOfImageStrings.length,
-                            itemBuilder: (_, int gridIndex){
-                              final String imagePath = _SubWidget.listOfImageStrings.elementAt(gridIndex);
-                              if(gridIndex == 0){
-                                return LayoutBuilder(
-                                  builder: (_, BoxConstraints kst) {
-                                    return Column(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                      children: <Widget>[
-                                        ATContainer(
-                                          onTap: (){
-                                            context.pushNamed(ATRoutes.CREATE_SHOW_FORM);
-                                          },
-                                          radius: 5, color: ATColors.hex2D2D2D,
-                                          width: context.screenWidth,
-                                          height: kst.maxHeight * 0.65,
-                                          child: const Icon(Icons.add, size: 100),
-                                        ),
-                                        const SizedBox(height: 5,),
-                                        Text(
-                                          ATStrings.createNewShow,
-                                          style: context.textTheme.bodyMedium,
-                                        ),
-                                      ],
-                                    );
+                                if(hostedShows.isEmpty){
+                                  if(state is LoadingState<HostedShowsResponseModel>){
+                                    return const _RenderShowInitialLoadingShimmer();
+                                  }
+                                  if(state is FailureState<HostedShowsResponseModel>){
+                                    return const _RenderInitialLoadFailureWidget();
+                                  }
+                                }
+
+                                final bool hasMoreItems = hostedShowsData?.hasMore ?? true;
+                                final int count = hostedShows.length;
+
+                                return GridView.builder(
+                                  padding: const EdgeInsets.fromLTRB(15, 0, 15, 100),
+                                  controller: _scrollCntrl,
+                                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                                    crossAxisCount: 2,
+                                    childAspectRatio: 0.7,
+                                    crossAxisSpacing: 20,
+                                    mainAxisSpacing: 20
+                                  ),
+                                  itemCount: hasMoreItems ? count + 2 : count + 1,
+                                  itemBuilder: (_, int gridIndex){
+                                    if(gridIndex == 0){
+                                      return const CreateNewShowWidget();
+                                    }
+                                    final int adjustedIndex = gridIndex - 1;
+                                    if(adjustedIndex < count){
+                                      final HostedShow hostedShow = hostedShows[adjustedIndex];
+                                      return RenderHostedShow(hostedShow: hostedShow);
+                                    }
+                                    if(state is LoadingState<HostedShowsResponseModel>){
+                                      return const RenderAHostedShowShimmer();
+                                    }
+                                    return const SizedBox.shrink();
                                   }
                                 );
                               }
-                              return BlocBuilder<_PrivateBloc, String?>(
-                                builder: (BuildContext blocContext, String? state) {
-                                  final bool isSelected = imagePath == state;
-                                  return ExistingGoLiveProgramWidget(
-                                    isSelected: isSelected,
-                                    onTap: (bool isSelected) => blocContext.read<_PrivateBloc>().setBgImage(
-                                      isSelected ? null : imagePath
-                                    ),
-                                    imagePic: imagePath
-                                  );
-                                }
-                              );
-                            }
-                          );
+                            )
+                          };
                         }
                       )
                     ),
@@ -220,12 +230,15 @@ class __SubWidgetState extends State<_SubWidget> {
         
         resizeToAvoidBottomInset: false,
     
-        bottomSheet: BlocBuilder<_PrivateBloc, String?>(
+        bottomSheet: BlocBuilder<HostedShowSelectionCubit, String?>(
           builder: (_, String? selectedImgPath) {
             return ATBlurredBgBtn(
               btnTitle: ATStrings.next,
               onPressed: selectedImgPath == null ? null : (){
-                context.pushNamed(ATRoutes.SHOW_PREVIEW_SCREEN, extra: selectedImgPath);
+                context.pushNamed(
+                  ATRoutes.showPreviewScreen,
+                  extra: selectedImgPath
+                );
               },
             );
           }
@@ -236,97 +249,67 @@ class __SubWidgetState extends State<_SubWidget> {
 }
 
 
-class _RenderAShow extends StatelessWidget {
-  const _RenderAShow({required this.hostedShow});
-  final HostedShow hostedShow;
-  
+class _RenderShowInitialLoadingShimmer extends StatelessWidget {
+  const _RenderShowInitialLoadingShimmer();
+
   @override
   Widget build(BuildContext context) {
-    return LayoutBuilder(
-      builder: (_, BoxConstraints kst) {
-        return BlocBuilder<_PrivateBloc, String?>(
-          builder: (BuildContext blocContext, String? selectedImg) {
-            final bool isSelected = hostedShow.coverUrl == selectedImg;
-            return ATContainer(
-              duration: 200,
-              onTap: () => blocContext.read<_PrivateBloc>().setBgImage(
-                isSelected ? null : hostedShow.coverUrl
-              ),
-              radius: 5,
-              border: Border.all(
-                color: isSelected ? ATColors.hex307FE2 : ATColors.transparent,
-                width: 3,
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  ATContainer(
-                    radius: 5,
-                    height: kst.maxHeight * 0.65,
-                    width: context.screenWidth,
-                    clipBehavior: Clip.hardEdge,
-                    child: FittedBox(
-                      fit: BoxFit.fill,
-                      child: ATImgLoader(
-                        boxFit: BoxFit.fill,
-                        imgPath: hostedShow.coverUrl ?? '',
-                      ),
-                    ),
-                  ),
-                  ATContainer(
-                    padding: const EdgeInsets.only(top: 5),
-                    color: isSelected ? ATColors.hex1F1F23 : ATColors.transparent,
-                    child: Column(
-                      children: <Widget>[
-                        Text(
-                          maxLines: 2,
-                          hostedShow.title ?? '',
-                          style: context.textTheme.bodyMedium,
-                        ),
-                        Row(
-                          children: <Widget>[
-                            Text(
-                              'Created',
-                              style: context.textTheme.titleSmall?.copyWith(
-                                fontSize: ATSizes.size13,
-                                color: ATColors.hexA8A8A8,
-                              ),
-                            ),
-                            const SizedBox(width: 5,),
-                            
-                            Align(
-                              alignment: Alignment.bottomCenter,
-                              child: CircleAvatar(
-                                radius: 2.5,
-                                backgroundColor: ATColors.hexA8A8A8,
-                              ),
-                            ),
-                            const SizedBox(width: 5,),
-                            Flexible(
-                              child: Text(
-                                ATHelperFuncs.formatDate(hostedShow.createdAt ?? ''),
-                                style: context.textTheme.titleSmall?.copyWith(
-                                  color: ATColors.hexA8A8A8,
-                                ),
-                              ),
-                            ),
-                          ],
-                        )
-                      ],
-                    ),
-                  )
-                ],
-              ),
-            );
-          }
+    return GridView.builder(
+      padding: const EdgeInsets.fromLTRB(15, 0, 15, 100),
+      physics: const BouncingScrollPhysics(),
+      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+        crossAxisCount: 2,
+        childAspectRatio: 0.7,
+        crossAxisSpacing: 20,
+        mainAxisSpacing: 20
+      ),
+      itemCount: 9,
+      itemBuilder: (_, int gridIndex){
+        if(gridIndex == 0){
+          return const CreateNewShowWidget();
+        }
+        return const RenderAHostedShowShimmer();
+      }
+    );
+  }
+}
+
+
+class _RenderInitialLoadFailureWidget extends StatelessWidget {
+  const _RenderInitialLoadFailureWidget();
+
+  @override
+  Widget build(BuildContext context) {
+    return GridView.builder(
+      padding: const EdgeInsets.fromLTRB(15, 0, 15, 100),
+      physics: const BouncingScrollPhysics(),
+      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+        crossAxisCount: 2,
+        childAspectRatio: 0.7,
+        crossAxisSpacing: 20,
+        mainAxisSpacing: 20
+      ),
+      itemCount: _SubWidget.listOfImageStrings.length,
+      itemBuilder: (_, int gridIndex){
+        if(gridIndex == 0){
+          return const CreateNewShowWidget();
+        }
+        return Center(
+          child: IconButton(
+            onPressed: (){
+              context.read<HostedShowsCubit>().fetchHostedShows();
+            },
+            icon: Icon(Icons.refresh, color: ATColors.white),
+          ),
         );
       }
     );
   }
 }
 
-class _PrivateBloc extends Cubit<String?>{
-  _PrivateBloc():super(null);
+
+class HostedShowSelectionCubit extends Cubit<String?>{
+  HostedShowSelectionCubit():super(null);
 
   void setBgImage(String? image) => emit(image);
 

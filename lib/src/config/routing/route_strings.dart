@@ -29,7 +29,7 @@ class ATRoutes {
   static const String addProfilePicScreen = "add_profile_pic";
   static const String CIRCLE_IMG_CROPPER_SCREEN = "crop_image";
   static const String allowNotificationsScreen = "pre-homepage";
-  static const String CREATE_SHOW_FORM = "create-show-form";
+  static const String createShowForm = "create-show-form";
   static const String CREATE_EVENT_FORM = "create-event-form";
   static const String CREATE_EPISODE_FORM = "create-episode-form";
 
@@ -57,7 +57,7 @@ class ATRoutes {
   static const String listHostedShowsScreen = 'choose_or_create_show';
   static const String GO_LIVE_PROGRAM_CREATION_SUCCESS = 'create_show_success_screen';
   static const String EVENT_SCHEDULED_SCREEN = 'event_scheduled';
-  static const String SHOW_PREVIEW_SCREEN = 'show_preview';
+  static const String showPreviewScreen = 'show_preview';
   static const String EPISODE_PREVIEW_SCREEN = 'episode_preview';
   static const String COMMUNITY_TASK_SCREEN = 'community_task';
   static const String PROFILE_PIC_SCREEN = 'profile_picture';

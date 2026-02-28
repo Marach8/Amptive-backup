@@ -368,8 +368,8 @@ final GoRouter amptiveAppRouter = GoRouter(
           ),
 
           GoRoute(
-            name: ATRoutes.CREATE_SHOW_FORM,
-            path: ATRoutes.CREATE_SHOW_FORM,
+            name: ATRoutes.createShowForm,
+            path: ATRoutes.createShowForm,
             pageBuilder: (_, __) => ATSlidingRouteTransition<void>(child: const CreateShowFormScreen())
           ),
           GoRoute(
@@ -623,8 +623,8 @@ final GoRouter amptiveAppRouter = GoRouter(
             builder: (_, __) => const ATScheduledPrograms(),
           ),
           GoRoute(
-            name: ATRoutes.SHOW_PREVIEW_SCREEN,
-            path: ATRoutes.SHOW_PREVIEW_SCREEN,
+            name: ATRoutes.showPreviewScreen,
+            path: ATRoutes.showPreviewScreen,
             pageBuilder: (_, GoRouterState state) {
               String coverArt = state.extra as String;
               return ATSlidingRouteTransition<void>(
