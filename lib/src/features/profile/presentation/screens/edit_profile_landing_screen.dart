@@ -122,7 +122,7 @@ class EditProfileScreen extends StatelessWidget {
                       value: 'Audience',
                       onTap: ()async {
                         context.pushNamed(ATRoutes.SELECT_ACCT_TYPE);
-                        return null;
+                        return;
                       }
                     ),
                   ],

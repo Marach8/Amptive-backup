@@ -20,7 +20,6 @@ import 'package:amptive/src/features/auth/presentation/screens/username_auth_scr
 import 'package:amptive/src/features/calender/presentation/screens/calender_landing_screen.dart';
 import 'package:amptive/src/features/discover/presentation/views/society_screen.dart';
 import 'package:amptive/src/features/discover/presentation/views/trending_hashtags_screen.dart';
-import 'package:amptive/src/features/home/cubits/followed_shows_cubit.dart';
 import 'package:amptive/src/features/home/presentation/screens/following_screen.dart';
 import 'package:amptive/src/features/home/presentation/screens/live_show_detailed_screen.dart';
 import 'package:amptive/src/features/home/presentation/screens/schedule_detailed_screen.dart';

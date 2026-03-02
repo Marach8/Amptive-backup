@@ -8,7 +8,6 @@ import 'package:amptive/src/shared/show_event_nd_paid_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:sticky_headers/sticky_headers.dart';
-import '../../calender_export.dart';
 import '../widgets/calender_program_display.dart';
 
 

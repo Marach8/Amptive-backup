@@ -4,8 +4,6 @@ import 'package:amptive/src/config/utils/font_sizes.dart';
 import 'package:amptive/src/config/utils/image_strings.dart';
 import 'package:amptive/src/config/utils/other_strings.dart';
 import 'package:amptive/src/config/routing/route_strings.dart';
-import 'package:amptive/src/features/wallet/presentation/widgets/process_wallet_funding_dialog.dart';
-import 'package:amptive/src/features/wallet/presentation/widgets/select_payment_method_dialog.dart';
 import 'package:amptive/src/features/wallet/presentation/screens/transaction_amount_screen.dart';
 import 'package:amptive/src/shared/circular_image.dart';
 import 'package:amptive/src/shared/custom_container_widget.dart';

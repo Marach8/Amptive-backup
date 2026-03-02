@@ -1,6 +1,5 @@
 import 'dart:ui';
 import 'package:amptive/src/global_export.dart';
-import 'package:amptive/src/shared/blurred_header.dart';
 import 'package:amptive/src/shared/annotated_region__widget.dart';
 import 'package:amptive/src/shared/circle_avatar.dart';
 import 'package:amptive/src/shared/image_loader_widget.dart';

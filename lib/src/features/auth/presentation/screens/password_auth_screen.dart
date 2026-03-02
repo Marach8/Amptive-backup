@@ -1,9 +1,4 @@
-import 'package:amptive/src/bloc/authentication/general/auth_events.dart';
-import 'package:amptive/src/bloc/authentication/password/password_auth_states.dart';
 import 'package:amptive/src/config/config_export.dart';
-import 'package:amptive/src/config/routing/route_strings.dart';
-import 'package:amptive/src/config/utils/colors.dart';
-import 'package:amptive/src/config/utils/extensions/context_extensions.dart';
 import 'package:amptive/src/features/auth/data/models/request/registration_data.dart';
 import 'package:amptive/src/shared/annotated_region__widget.dart';
 import 'package:amptive/src/shared/back_button.dart';

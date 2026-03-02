@@ -90,7 +90,7 @@ class CachedUserData extends Equatable {
         username: username ?? this.username,
         dob: dob ?? this.dob,
         name: name ?? this.name,
-        pictureUrl: profilePicture ?? this.pictureUrl,
+        pictureUrl: profilePicture ?? pictureUrl,
       );
 
   Map<String, dynamic> toJson() => <String, dynamic>{

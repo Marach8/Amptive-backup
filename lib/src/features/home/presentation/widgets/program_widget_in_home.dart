@@ -11,7 +11,7 @@ import 'package:amptive/src/shared/row_of_people_listening_widget.dart';
 import 'package:amptive/src/features/home/presentation/widgets/with_2_others_widget.dart';
 import 'package:flutter/material.dart';
 import '../../../../config/utils/colors.dart';
-import 'program_options_modal.dart';
+import 'program_actions_modal.dart';
 
 class ATShowOrEventInfo extends StatelessWidget {
   const ATShowOrEventInfo({
@@ -24,7 +24,9 @@ class ATShowOrEventInfo extends StatelessWidget {
       children: <Widget>[
         TileWithLeadingImage(
           leadingImagePath: ATImgStrings.jpeg3,
-          trailingOnPressed: () => showProgramOptions(context),
+          trailingOnPressed: () {
+            
+          },
           title: 'glennodoyle',
           subtitle: 'started a live show',
         ),

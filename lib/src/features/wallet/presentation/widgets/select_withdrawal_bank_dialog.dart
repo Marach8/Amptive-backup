@@ -11,13 +11,11 @@ import 'package:amptive/src/shared/image_loader_widget.dart';
 import 'package:amptive/src/shared/loading_indicator.dart';
 import 'package:amptive/src/shared/radio_button.dart';
 import 'package:amptive/src/shared/search_filter_widget.dart';
-import 'package:amptive/src/shared/shimmer.dart';
 import 'package:amptive/src/shared/textformfield_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:iconsax/iconsax.dart';
 import 'package:nested/nested.dart';
 
 

@@ -4,7 +4,6 @@ import 'package:amptive/src/shared/custom_container_widget.dart';
 import 'package:amptive/src/shared/image_loader_widget.dart';
 import 'package:flutter/material.dart';
 
-import '../../../../models/community.dart';
 
 class SelectedCommunityWidget extends StatelessWidget {
   const SelectedCommunityWidget({
