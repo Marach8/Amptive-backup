@@ -1,5 +1,6 @@
 import 'package:amptive/src/config/config_export.dart';
-import 'package:amptive/src/views/widgets/common_widgets/circular_image.dart';
+import 'package:amptive/src/shared/circular_image.dart';
+import 'package:amptive/src/shared/image_loader_widget.dart';
 import 'package:flutter/material.dart';
 
 class TileWithLeadingImage extends StatelessWidget {
@@ -25,9 +26,13 @@ class TileWithLeadingImage extends StatelessWidget {
       padding: padding ?? const EdgeInsets.fromLTRB(0, 15, 0, 10),
       child: Row(
         children: <Widget>[
-          ATCircularImage(
-            imagePath: leadingImagePath,
-            diameter: diameter ?? 40,
+          ClipRRect(
+            borderRadius: BorderRadius.circular(30),
+            child: ATImgLoader(
+              imgPath: leadingImagePath,
+              height: 40, width: 40,
+              boxFit: BoxFit.cover,
+            ),
           ),
           const SizedBox(width: 12,),
           Column(
@@ -37,7 +42,7 @@ class TileWithLeadingImage extends StatelessWidget {
               Text(
                 title,
                 style: context.textTheme.titleMedium?.copyWith(
-                  fontWeight: ATFontWeights.w500,
+                  fontWeight: FontWeight.w500,
                 ),
               ),
               Text(

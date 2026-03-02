@@ -1,7 +1,7 @@
 import 'package:amptive/src/config/config_export.dart';
-import 'package:amptive/src/views/widgets/common_widgets/modal_dismisser.dart';
+import 'package:amptive/src/shared/modal_dismisser.dart';
 import 'package:amptive/src/shared/elevated_button_widget.dart';
-import 'package:amptive/src/views/widgets/common_widgets/textformfield_widget.dart';
+import 'package:amptive/src/shared/textformfield_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 

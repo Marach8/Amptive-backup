@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../../config/utils/colors.dart';
+import '../config/utils/colors.dart';
 
 class ATLoadingIndicator extends StatelessWidget {
   const ATLoadingIndicator({

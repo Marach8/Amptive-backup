@@ -2,7 +2,7 @@ import 'dart:ui';
 import 'package:amptive/src/features/go_live/presentation/screens/audience_view_controls.dart';
 import 'package:amptive/src/global_export.dart';
 import 'package:amptive/src/models/host.dart';
-import 'package:amptive/src/views/widgets/common_widgets/image_loader_widget.dart';
+import 'package:amptive/src/shared/image_loader_widget.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../config/utils/dialogs/minimized_go_live_dialog.dart';
 import '../../go_live_export.dart';

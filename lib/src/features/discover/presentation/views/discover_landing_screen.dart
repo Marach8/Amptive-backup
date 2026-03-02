@@ -1,7 +1,7 @@
 import 'package:amptive/src/config/utils/font_sizes.dart';
 import 'package:amptive/src/features/main_app_nav_bar.dart';
 import 'package:amptive/src/shared/animated_switcher.dart';
-import 'package:amptive/src/views/widgets/common_widgets/sliver_header_delegate.dart';
+import 'package:amptive/src/shared/sliver_header_delegate.dart';
 import 'package:amptive/src/features/discover/presentation/views/discover_page_view.dart';
 import 'package:amptive/src/features/discover/presentation/widgets/discover_search_field.dart';
 import 'package:amptive/src/features/discover/presentation/views/recent_searches_page_view.dart';

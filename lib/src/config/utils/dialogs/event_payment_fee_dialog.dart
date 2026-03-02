@@ -2,14 +2,14 @@ import 'dart:io';
 import 'package:amptive/src/config/utils/colors.dart';
 import 'package:amptive/src/config/utils/image_strings.dart';
 import 'package:amptive/src/shared/custom_container_widget.dart';
-import 'package:amptive/src/views/widgets/common_widgets/image_loader_widget.dart';
-import 'package:amptive/src/views/widgets/common_widgets/textformfield_widget.dart';
+import 'package:amptive/src/shared/image_loader_widget.dart';
+import 'package:amptive/src/shared/textformfield_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
 import '../../../services/create_show/create_show_service.dart';
-import '../../../views/widgets/common_widgets/custom_rebuilder_widget.dart';
+import '../../../shared/custom_rebuilder_widget.dart';
 import 'package:amptive/src/shared/elevated_button_widget.dart';
 import '../other_strings.dart';
 

@@ -3,8 +3,8 @@ import 'package:amptive/src/shared/custom_container_widget.dart';
 import 'package:flutter/material.dart';
 import '../../../../config/utils/colors.dart';
 import '../../../../config/utils/font_sizes.dart';
-import '../../../../views/widgets/common_widgets/circle_avatar.dart';
-import '../../../../views/widgets/common_widgets/image_loader_widget.dart';
+import '../../../../shared/circle_avatar.dart';
+import '../../../../shared/image_loader_widget.dart';
 
 
 class ExistingGoLiveProgramWidget extends StatelessWidget {

@@ -1,5 +1,5 @@
 import 'package:amptive/src/config/utils/colors.dart';
-import 'package:amptive/src/views/widgets/common_widgets/shimmer.dart';
+import 'package:amptive/src/shared/shimmer.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';

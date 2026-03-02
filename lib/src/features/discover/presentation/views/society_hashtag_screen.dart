@@ -1,15 +1,15 @@
 import 'package:amptive/src/features/home/cubits/followed_shows_cubit.dart';
-import 'package:amptive/src/views/widgets/common_widgets/back_button.dart';
+import 'package:amptive/src/shared/back_button.dart';
 import 'package:flutter/material.dart';
 import 'package:amptive/src/config/utils/other_strings.dart';
-import 'package:amptive/src/views/widgets/common_widgets/annotated_region__widget.dart';
+import 'package:amptive/src/shared/annotated_region__widget.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../config/utils/colors.dart';
 import '../../../../config/utils/font_sizes.dart';
 import '../../../../config/utils/image_strings.dart';
 import '../../../../shared/blurred_header.dart';
 import '../../../../shared/hashtag_badge.dart';
-import '../../../../views/widgets/common_widgets/sliver_header_delegate.dart';
+import '../../../../shared/sliver_header_delegate.dart';
 import '../../../go_live/data/models/response/show_response_model.dart';
 import '../widgets/trending_society_hashtag_widget.dart';
 

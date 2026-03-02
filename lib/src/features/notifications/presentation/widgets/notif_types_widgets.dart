@@ -4,16 +4,16 @@ import 'package:amptive/src/config/utils/font_sizes.dart';
 import 'package:amptive/src/config/utils/other_strings.dart';
 import 'package:amptive/src/config/routing/route_strings.dart';
 import 'package:amptive/src/config/utils/extensions/string_extensions.dart';
-import 'package:amptive/src/views/widgets/common_widgets/circle_avatar.dart';
+import 'package:amptive/src/shared/circle_avatar.dart';
 import 'package:amptive/src/shared/custom_container_widget.dart';
-import 'package:amptive/src/views/widgets/common_widgets/image_loader_widget.dart';
+import 'package:amptive/src/shared/image_loader_widget.dart';
 import 'package:amptive/src/shared/overlapping_widgets.dart';
-import 'package:amptive/src/views/widgets/common_widgets/rich_text.dart';
+import 'package:amptive/src/shared/rich_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../../../views/widgets/common_widgets/circular_image.dart';
+import '../../../../shared/circular_image.dart';
 
 class NewFollowerNotif extends StatelessWidget {
   const NewFollowerNotif({

@@ -1,5 +1,5 @@
 import 'package:amptive/src/config/config_export.dart';
-import 'package:amptive/src/views/widgets/common_widgets/search_filter_widget.dart';
+import 'package:amptive/src/shared/search_filter_widget.dart';
 import 'package:flutter/material.dart';
 
 class ATTextFormField extends StatelessWidget {

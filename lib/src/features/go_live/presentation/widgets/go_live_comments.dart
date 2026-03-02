@@ -2,7 +2,7 @@ import 'dart:ui';
 import 'package:amptive/src/global_export.dart';
 import 'package:amptive/src/models/host.dart';
 import 'package:amptive/src/services/create_show/create_show_service.dart';
-import 'package:amptive/src/views/widgets/common_widgets/circular_image.dart';
+import 'package:amptive/src/shared/circular_image.dart';
 import 'package:amptive/src/views/widgets/other_widgets/main_application_widgets/widgets_in_go_live/go_live_notification_widget.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';

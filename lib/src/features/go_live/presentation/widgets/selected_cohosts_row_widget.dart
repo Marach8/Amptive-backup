@@ -5,7 +5,7 @@ import 'package:amptive/src/views/widgets/animation_widgets/common_animation_wid
 import 'package:amptive/src/shared/custom_container_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../../../views/widgets/common_widgets/image_loader_widget.dart';
+import '../../../../shared/image_loader_widget.dart';
 
 
 class SelectedCohostsRow extends StatelessWidget {

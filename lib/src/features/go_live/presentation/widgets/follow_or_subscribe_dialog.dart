@@ -5,16 +5,16 @@ import 'package:amptive/src/config/utils/font_sizes.dart';
 import 'package:amptive/src/config/utils/image_strings.dart';
 import 'package:amptive/src/config/utils/dialogs/confirmation_alert_dialog.dart';
 import 'package:amptive/src/features/profile/presentation/profile_prez_export.dart';
-import 'package:amptive/src/views/widgets/common_widgets/circle_avatar.dart';
-import 'package:amptive/src/views/widgets/common_widgets/circular_image.dart';
+import 'package:amptive/src/shared/circle_avatar.dart';
+import 'package:amptive/src/shared/circular_image.dart';
 import 'package:amptive/src/shared/elevated_button_widget.dart';
-import 'package:amptive/src/views/widgets/common_widgets/image_loader_widget.dart';
-import 'package:amptive/src/views/widgets/common_widgets/loading_indicator.dart';
+import 'package:amptive/src/shared/image_loader_widget.dart';
+import 'package:amptive/src/shared/loading_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../bloc/main_app/go_live_bloc/audience_view/subscription_bloc.dart';
 import '../../../../models/host.dart';
-import '../../../../views/widgets/common_widgets/modal_dismisser.dart';
+import '../../../../shared/modal_dismisser.dart';
 import '../../../../config/utils/other_strings.dart';
 
 Future<void> showFollowHostOrCohostDialog({

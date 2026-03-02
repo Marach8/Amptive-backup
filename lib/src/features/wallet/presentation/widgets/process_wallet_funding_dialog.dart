@@ -1,7 +1,7 @@
 import 'package:amptive/src/config/config_export.dart';
 import 'package:amptive/src/shared/animated_slide.dart';
 import 'package:amptive/src/shared/elevated_button_widget.dart';
-import 'package:amptive/src/views/widgets/common_widgets/loading_indicator.dart';
+import 'package:amptive/src/shared/loading_indicator.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

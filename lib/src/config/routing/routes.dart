@@ -241,8 +241,8 @@ final GoRouter amptiveAppRouter = GoRouter(
                 ),
               ),
               GoRoute(
-                name: ATRoutes.WALLET,
-                path: ATRoutes.WALLET.addSlash,
+                name: ATRoutes.walletScreen,
+                path: ATRoutes.walletScreen.addSlash,
                 pageBuilder: (_, __) => ATSlidingRouteTransition<void>(
                   child: const WalletLandingScreen(),
                 ),
@@ -403,8 +403,8 @@ final GoRouter amptiveAppRouter = GoRouter(
           ),
 
           GoRoute(
-            name: ATRoutes.CREATOR_PROFILE_SCREEN,
-            path: ATRoutes.CREATOR_PROFILE_SCREEN,
+            name: ATRoutes.creatorProfileScreen,
+            path: ATRoutes.creatorProfileScreen,
             builder: (_, __) => const CreatorProfileScreen(),
           ),
 

@@ -1,9 +1,9 @@
 import 'package:amptive/src/config/config_export.dart';
-import 'package:amptive/src/views/widgets/common_widgets/circle_avatar.dart';
-import 'package:amptive/src/views/widgets/common_widgets/show_event_nd_paid_icons.dart';
+import 'package:amptive/src/shared/circle_avatar.dart';
+import 'package:amptive/src/shared/show_event_nd_paid_icons.dart';
 import 'package:flutter/material.dart';
 import '../../../../shared/custom_container_widget.dart';
-import '../../../../views/widgets/common_widgets/image_loader_widget.dart';
+import '../../../../shared/image_loader_widget.dart';
 
 class ProfileEventOrShowDisplay extends StatelessWidget {
   const ProfileEventOrShowDisplay({super.key});

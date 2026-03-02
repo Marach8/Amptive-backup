@@ -5,7 +5,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:iconsax/iconsax.dart';
 
 import '../../../../config/utils/image_strings.dart';
-import '../../../../views/widgets/common_widgets/image_loader_widget.dart' show ATImgLoader;
+import '../../../../shared/image_loader_widget.dart' show ATImgLoader;
 
 class RowOfSocials extends StatelessWidget {
   const RowOfSocials({

@@ -1,10 +1,10 @@
 import 'package:amptive/src/features/profile/bloc/fees_setup_bloc.dart';
-import 'package:amptive/src/views/widgets/common_widgets/divider_widget.dart';
-import 'package:amptive/src/views/widgets/common_widgets/image_loader_widget.dart';
-import 'package:amptive/src/views/widgets/common_widgets/radio_button.dart';
+import 'package:amptive/src/shared/divider_widget.dart';
+import 'package:amptive/src/shared/image_loader_widget.dart';
+import 'package:amptive/src/shared/radio_button.dart';
 import 'package:go_router/go_router.dart';
 import 'package:amptive/src/global_export.dart';
-import 'package:amptive/src/views/widgets/common_widgets/modal_dismisser.dart';
+import 'package:amptive/src/shared/modal_dismisser.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../switch_account/presentation/switch_acct/switch_acct_export.dart';

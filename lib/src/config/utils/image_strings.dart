@@ -10,7 +10,7 @@ class ATImgStrings{
   static const String emptyImage = '$_svgPath/empty_image.svg';
   static const String AMPTIVE_LOGO = '$_svgPath/Logo.svg';
   static const String AMPTIVE_NAME_LOGO = '$_svgPath/amptive_logotype.svg';
-  static const String WALLET_ICON = '$_svgPath/WALLET ICON.svg';
+  static const String walletIcon = '$_svgPath/WALLET ICON.svg';
   static const String showIcon = '$_svgPath/Frame 79.svg';
   static const String WIFI_ICON = '$_svgPath/Start or Schedule.svg';
   static const String robot = '$_svgPath/delivery robot.svg';
@@ -26,8 +26,8 @@ class ATImgStrings{
   static const String CALENDER_ICON = '$_svgPath/Contextual menu icon.svg';
   static const String PERSON_CHECKED = '$_svgPath/Contextual menu icon (1).svg';
   static const String SHARE_LIVE = '$_svgPath/Icon.svg';
-  static const String FOLLOW_ICON = '$_svgPath/Icon (1).svg';
-  static const String UNFOLLOW_ICON = '$_svgPath/Icon (2).svg';
+  static const String followIcon = '$_svgPath/Icon (1).svg';
+  static const String unFollowIcon = '$_svgPath/Icon (2).svg';
   static const String MICROPHONE = '$_svgPath/Microphone.svg';
   static const String USER_FOLLOW = '$_svgPath/user-check.svg';
   static const String KICK_USER_OUT = '$_svgPath/user out.svg';

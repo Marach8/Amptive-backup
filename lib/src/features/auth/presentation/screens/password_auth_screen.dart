@@ -5,13 +5,13 @@ import 'package:amptive/src/config/routing/route_strings.dart';
 import 'package:amptive/src/config/utils/colors.dart';
 import 'package:amptive/src/config/utils/extensions/context_extensions.dart';
 import 'package:amptive/src/features/auth/data/models/request/registration_data.dart';
-import 'package:amptive/src/views/widgets/common_widgets/annotated_region__widget.dart';
-import 'package:amptive/src/views/widgets/common_widgets/back_button.dart';
-import 'package:amptive/src/views/widgets/common_widgets/textformfield_widget.dart';
+import 'package:amptive/src/shared/annotated_region__widget.dart';
+import 'package:amptive/src/shared/back_button.dart';
+import 'package:amptive/src/shared/textformfield_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import '../../../../views/widgets/common_widgets/app_bar_widget.dart';
+import '../../../../shared/app_bar_widget.dart';
 import '../../../../shared/elevated_button_widget.dart';
 
 class PasswordAuthScreen extends StatefulWidget {

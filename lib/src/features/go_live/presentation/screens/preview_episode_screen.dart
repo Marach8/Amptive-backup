@@ -5,12 +5,12 @@ import 'package:amptive/src/features/go_live/data/models/response/show_response_
 import 'package:amptive/src/features/home/presentation/widgets/live_and_society_widget.dart';
 import 'package:amptive/src/features/home/presentation/widgets/show_or_event_indicator_with_title.dart';
 import 'package:amptive/src/global_export.dart';
-import 'package:amptive/src/views/widgets/common_widgets/annotated_region__widget.dart';
-import 'package:amptive/src/views/widgets/common_widgets/sliver_header_delegate.dart';
+import 'package:amptive/src/shared/annotated_region__widget.dart';
+import 'package:amptive/src/shared/sliver_header_delegate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:readmore/readmore.dart';
-import '../../../../views/widgets/common_widgets/list_tile_with_leading_picture_widget.dart';
+import '../../../../shared/list_tile_with_leading_picture_widget.dart';
 
 
 class EpisodeDetailPreviewScreen extends StatelessWidget {

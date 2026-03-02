@@ -6,16 +6,16 @@ import 'package:amptive/src/config/utils/helper_functions.dart';
 import 'package:amptive/src/features/home/data/models/response/home_feed_response_model.dart';
 import 'package:amptive/src/shared/custom_container_widget.dart';
 import 'package:amptive/src/shared/overlapping_widgets.dart';
-import 'package:amptive/src/views/widgets/common_widgets/image_loader_widget.dart';
-import 'package:amptive/src/views/widgets/common_widgets/live_indicator_with_animating_dot_widget.dart';
-import 'package:amptive/src/views/widgets/common_widgets/list_tile_with_leading_picture_widget.dart';
+import 'package:amptive/src/shared/image_loader_widget.dart';
+import 'package:amptive/src/shared/live_indicator_with_animating_dot_widget.dart';
+import 'package:amptive/src/shared/list_tile_with_leading_picture_widget.dart';
 import 'package:amptive/src/features/home/presentation/widgets/row_of_paid_show_and_play_button_widget.dart';
-import 'package:amptive/src/views/widgets/common_widgets/row_of_people_listening_widget.dart';
-import 'package:amptive/src/views/widgets/common_widgets/shimmer.dart';
-import 'package:amptive/src/views/widgets/other_widgets/main_application_widgets/widgets_in_home_view/with_2_others_widget.dart';
+import 'package:amptive/src/shared/row_of_people_listening_widget.dart';
+import 'package:amptive/src/shared/shimmer.dart';
+import 'package:amptive/src/features/home/presentation/widgets/with_2_others_widget.dart';
 import 'package:flutter/material.dart';
 import '../../../../config/utils/colors.dart';
-import '../../../../config/utils/dialogs/options_dialog.dart';
+import 'program_options_modal.dart';
 
 class RenderHomeFeedItem extends StatelessWidget {
   const RenderHomeFeedItem({
@@ -74,7 +74,7 @@ class RenderHomeFeedItem extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
-                    const AmptiveWith2OthersWidget(),
+                    const With2OthersWidget(),
                     const Spacer(),
                     const LiveWithAnimatingDot(),
                     const SizedBox(height: 10),
@@ -109,21 +109,31 @@ class RenderHomeFeedItemShimmer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
+      spacing: 5,
       children: <Widget>[
-        Row(
-          children: <Widget>[
-            const ATShimmer(width: 40, height: 40, radius: 30,),
-            Column(
+        LayoutBuilder(
+          builder: (_, BoxConstraints constraints) {
+            return Row(
+              spacing: 10,
               children: <Widget>[
-                ATShimmer(
-                  height: 12, radius: 3,
-                  width: ATHelperFuncs.getRandomNumber(context.screenWidth * 0.8),
+                const ATShimmer(width: 40, height: 40, radius: 30,),
+                Column(
+                  spacing: 5,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    ATShimmer(
+                      height: 10, radius: 3,
+                      width: ATHelperFuncs.getRandomNumber(
+                        constraints.maxWidth * 0.75),
+                    ),
+                    const ATShimmer(width: 80, height: 7, radius: 2,),
+                  ],
                 ),
-                const ATShimmer(width: 100, height: 8, radius: 2,),
+                const Spacer(),
+                const ATShimmer(width: 25, height: 5, radius: 4,),
               ],
-            ),
-            const ATShimmer(width: 40, height: 2, radius: 1,),
-          ],
+            );
+          }
         ),
         const SizedBox(height: 2,),
         Container(
@@ -156,9 +166,16 @@ class RenderHomeFeedItemShimmer extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
-                    const ATShimmer(height: 14, width: 80, radius: 4,),
+                    Container(
+                      padding: const EdgeInsets.all(6),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(6),
+                        color: ATColors.black.withValues(alpha: 0.7)
+                      ),
+                      child: const ATShimmer(height: 10, width: 70, radius: 3),
+                    ),
                     const Spacer(),
-                    const ATShimmer(height: 20, width: 60, radius: 5,),
+                    const ATShimmer(height: 30, width: 60, radius: 5,),
                     const SizedBox(height: 10),
                     ATShimmer(
                       height: 20, radius: 6,
@@ -183,7 +200,7 @@ class RenderHomeFeedItemShimmer extends StatelessWidget {
                               borderRadius: BorderRadius.circular(5),
                               color: ATColors.hex0D0D0D
                             ),
-                            child: const ATShimmer(height: 10, width: 60, radius: 5,),
+                            child: const ATShimmer(height: 10, width: 60, radius: 3),
                           ),
                         ),
                         const ATShimmer(height: 45, width: 45, radius: 30),

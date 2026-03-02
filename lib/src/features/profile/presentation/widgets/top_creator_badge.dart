@@ -6,7 +6,7 @@ import 'package:amptive/src/config/utils/font_sizes.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../config/utils/image_strings.dart';
-import '../../../../views/widgets/common_widgets/image_loader_widget.dart';
+import '../../../../shared/image_loader_widget.dart';
 
 
 class TopCreatorBadge extends StatelessWidget {

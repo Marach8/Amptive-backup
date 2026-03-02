@@ -9,16 +9,16 @@ import 'package:amptive/src/config/utils/extensions/string_extensions.dart';
 import 'package:amptive/src/features/wallet/bloc/wallet_bloc_export.dart';
 import 'package:amptive/src/features/wallet/presentation/screens/enter_acct_no_screen.dart';
 import 'package:amptive/src/views/widgets/animation_widgets/common_animation_widgets/animated_align_widget.dart';
-import 'package:amptive/src/views/widgets/common_widgets/annotated_region__widget.dart';
-import 'package:amptive/src/views/widgets/common_widgets/circular_image.dart';
+import 'package:amptive/src/shared/annotated_region__widget.dart';
+import 'package:amptive/src/shared/circular_image.dart';
 import 'package:amptive/src/shared/elevated_button_widget.dart';
-import 'package:amptive/src/views/widgets/common_widgets/rich_text.dart';
+import 'package:amptive/src/shared/rich_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import '../../../../config/utils/font_sizes.dart';
-import '../../../../views/widgets/common_widgets/app_bar_widget.dart';
-import '../../../../views/widgets/common_widgets/back_button.dart';
+import '../../../../shared/app_bar_widget.dart';
+import '../../../../shared/back_button.dart';
 import '../../../../shared/custom_container_widget.dart';
 
 enum TransactionType {fundWallet, transfer, withdraw}

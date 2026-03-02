@@ -1,5 +1,5 @@
 import 'package:amptive/src/global_export.dart';
-import 'package:amptive/src/views/widgets/common_widgets/image_loader_widget.dart';
+import 'package:amptive/src/shared/image_loader_widget.dart';
 
 class WalletOnboardInfoWidget extends StatelessWidget {
   const WalletOnboardInfoWidget({
