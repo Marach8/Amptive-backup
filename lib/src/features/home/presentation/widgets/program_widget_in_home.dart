@@ -48,7 +48,7 @@ class ATShowOrEventInfo extends StatelessWidget {
                     ATColors.transparent,
                     ATColors.transparent,
                     ATColors.transparent,
-                    ATColors.containerGradientColorB.withOpacity(0.5),
+                    ATColors.containerGradientColorB.withValues(alpha: 0.5),
                     ATColors.containerGradientColorB,
                     ATColors.containerGradientColorB,
                     ATColors.containerGradientColorB,
