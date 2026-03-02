@@ -6,7 +6,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../../../config/utils/colors.dart';
 import '../../../../../config/utils/font_sizes.dart';
 import '../../../../../config/utils/font_weights.dart';
-import '../../../common_widgets/textformfield_widget.dart';
+import '../../../../../shared/textformfield_widget.dart';
 
 class CreateShowTextFormField extends ATTextFormField {
   const CreateShowTextFormField(

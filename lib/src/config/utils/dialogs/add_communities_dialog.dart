@@ -3,10 +3,10 @@ import 'package:amptive/src/config/utils/dialogs/app_notification_dialog.dart';
 import 'package:amptive/src/features/auth/cubits/communities_cubit.dart';
 import 'package:amptive/src/features/auth/data/models/response/communities_response_model.dart';
 import 'package:amptive/src/global_export.dart';
-import 'package:amptive/src/views/widgets/common_widgets/loading_indicator.dart';
-import 'package:amptive/src/views/widgets/common_widgets/modal_dismisser.dart';
-import 'package:amptive/src/views/widgets/common_widgets/image_loader_widget.dart';
-import 'package:amptive/src/views/widgets/common_widgets/rich_text.dart';
+import 'package:amptive/src/shared/loading_indicator.dart';
+import 'package:amptive/src/shared/modal_dismisser.dart';
+import 'package:amptive/src/shared/image_loader_widget.dart';
+import 'package:amptive/src/shared/rich_text.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 

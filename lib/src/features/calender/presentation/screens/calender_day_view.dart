@@ -4,7 +4,7 @@ import 'package:amptive/src/features/calender/cubits/day_view_date_time_indicato
 import 'package:amptive/src/features/calender/presentation/widgets/calender_program_display.dart';
 import 'package:amptive/src/features/calender/presentation/widgets/current_time_indicator.dart';
 import 'package:amptive/src/features/calender/presentation/widgets/date_and_weekdays.dart';
-import 'package:amptive/src/views/widgets/common_widgets/shimmer.dart';
+import 'package:amptive/src/shared/shimmer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

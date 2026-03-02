@@ -1,7 +1,7 @@
 import 'package:amptive/src/config/utils/font_sizes.dart';
 import 'package:amptive/src/features/go_live/presentation/widgets/follow_or_subscribe_dialog.dart';
-import 'package:amptive/src/views/widgets/common_widgets/circle_avatar.dart';
-import 'package:amptive/src/views/widgets/common_widgets/circular_image.dart';
+import 'package:amptive/src/shared/circle_avatar.dart';
+import 'package:amptive/src/shared/circular_image.dart';
 import 'package:amptive/src/shared/custom_container_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';

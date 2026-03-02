@@ -1,6 +1,6 @@
 import 'dart:ui';
 import 'package:amptive/src/models/host.dart';
-import 'package:amptive/src/views/widgets/common_widgets/image_loader_widget.dart';
+import 'package:amptive/src/shared/image_loader_widget.dart';
 import 'package:amptive/src/features/go_live/presentation/widgets/go_live_screen_header.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../global_export.dart';

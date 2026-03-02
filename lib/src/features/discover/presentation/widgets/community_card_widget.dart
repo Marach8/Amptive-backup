@@ -1,6 +1,6 @@
 import 'package:amptive/src/shared/custom_container_widget.dart';
 import 'package:flutter/material.dart';
-import '../../../../views/widgets/common_widgets/image_loader_widget.dart';
+import '../../../../shared/image_loader_widget.dart';
 
 class CommunityCardWidget extends StatelessWidget {
   const CommunityCardWidget({

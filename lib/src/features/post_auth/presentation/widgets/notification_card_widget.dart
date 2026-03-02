@@ -1,5 +1,5 @@
 import '../../../../global_export.dart';
-import '../../../../views/widgets/common_widgets/image_loader_widget.dart';
+import '../../../../shared/image_loader_widget.dart';
 
 
 class NotifTile1 extends StatelessWidget {

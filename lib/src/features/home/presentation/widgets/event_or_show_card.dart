@@ -1,4 +1,4 @@
-import 'package:amptive/src/config/utils/dialogs/options_dialog.dart';
+import 'package:amptive/src/features/home/presentation/widgets/program_options_modal.dart';
 import 'package:flutter/material.dart';
 import '../../../../config/utils/colors.dart';
 import '../../../../config/utils/image_strings.dart';

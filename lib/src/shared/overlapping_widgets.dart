@@ -1,6 +1,7 @@
 import 'dart:ui' show ImageFilter;
 import 'package:amptive/src/global_export.dart';
-import 'package:amptive/src/views/widgets/common_widgets/circular_image.dart';
+import 'package:amptive/src/shared/circular_image.dart';
+import 'package:amptive/src/shared/shimmer.dart';
 
 
 class ATOverlappingImages extends StatelessWidget {
@@ -148,6 +149,9 @@ class OverlappingImagesShimmer extends StatelessWidget {
                     color: ATColors.white,
                     width: borderWidth,
                   )
+                ),
+                child: ATShimmer(
+                  height: size, width: size, radius: size,
                 ),
               ),
             );

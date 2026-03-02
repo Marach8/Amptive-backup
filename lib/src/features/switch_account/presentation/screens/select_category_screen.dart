@@ -1,11 +1,11 @@
 import 'package:amptive/src/features/profile/bloc/profile_bloc_export.dart';
 import 'package:amptive/src/global_export.dart';
-import 'package:amptive/src/views/widgets/common_widgets/annotated_region__widget.dart';
-import 'package:amptive/src/views/widgets/common_widgets/back_button.dart';
-import 'package:amptive/src/views/widgets/common_widgets/image_loader_widget.dart';
-import 'package:amptive/src/views/widgets/common_widgets/radio_button.dart';
-import 'package:amptive/src/views/widgets/common_widgets/sliver_header_delegate.dart';
-import 'package:amptive/src/views/widgets/common_widgets/textformfield_widget.dart';
+import 'package:amptive/src/shared/annotated_region__widget.dart';
+import 'package:amptive/src/shared/back_button.dart';
+import 'package:amptive/src/shared/image_loader_widget.dart';
+import 'package:amptive/src/shared/radio_button.dart';
+import 'package:amptive/src/shared/sliver_header_delegate.dart';
+import 'package:amptive/src/shared/textformfield_widget.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 

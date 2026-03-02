@@ -3,8 +3,6 @@ import 'package:amptive/src/config/utils/font_sizes.dart';
 import 'package:amptive/src/config/utils/font_weights.dart';
 import 'package:amptive/src/config/utils/other_strings.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-
 import '../../../../config/utils/extensions/context_extensions.dart';
 
 class PaidShowAndPlayBtnWidget extends StatelessWidget {

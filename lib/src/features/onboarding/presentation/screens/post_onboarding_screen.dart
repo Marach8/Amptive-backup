@@ -1,8 +1,8 @@
 import 'package:amptive/src/features/auth/presentation/screens/auth_options_screen.dart' show AuthType;
 import 'package:amptive/src/global_export.dart';
-import 'package:amptive/src/views/widgets/common_widgets/annotated_region__widget.dart';
+import 'package:amptive/src/shared/annotated_region__widget.dart';
 import 'package:go_router/go_router.dart';
-import '../../../../views/widgets/common_widgets/image_loader_widget.dart';
+import '../../../../shared/image_loader_widget.dart';
 
 
 class ATPostOnboardingScreen extends StatelessWidget {

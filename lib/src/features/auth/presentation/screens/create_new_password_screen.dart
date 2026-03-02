@@ -3,15 +3,15 @@ import 'package:amptive/src/config/config_export.dart';
 import 'package:amptive/src/config/utils/dialogs/app_notification_dialog.dart';
 import 'package:amptive/src/features/auth/cubits/login_cubit.dart';
 import 'package:amptive/src/features/auth/cubits/reset_password_cubit.dart';
-import 'package:amptive/src/views/widgets/common_widgets/annotated_region__widget.dart';
+import 'package:amptive/src/shared/annotated_region__widget.dart';
 import 'package:amptive/src/shared/elevated_button_widget.dart';
-import 'package:amptive/src/views/widgets/common_widgets/back_button.dart';
-import 'package:amptive/src/views/widgets/common_widgets/textformfield_widget.dart';
+import 'package:amptive/src/shared/back_button.dart';
+import 'package:amptive/src/shared/textformfield_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
-import '../../../../views/widgets/common_widgets/app_bar_widget.dart';
+import '../../../../shared/app_bar_widget.dart';
 
 class CreateNewPasswordScreenParams {
   CreateNewPasswordScreenParams({required this.email,  this.title});

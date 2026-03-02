@@ -1,10 +1,10 @@
 import 'package:amptive/src/config/config_export.dart';
 import 'package:amptive/src/features/profile/presentation/screens/profile_views_export.dart';
-import 'package:amptive/src/views/widgets/common_widgets/annotated_region__widget.dart';
-import 'package:amptive/src/views/widgets/common_widgets/back_button.dart';
-import 'package:amptive/src/views/widgets/common_widgets/circle_avatar.dart';
-import 'package:amptive/src/views/widgets/common_widgets/sliver_header_delegate.dart';
-import 'package:amptive/src/views/widgets/common_widgets/rich_text.dart';
+import 'package:amptive/src/shared/annotated_region__widget.dart';
+import 'package:amptive/src/shared/back_button.dart';
+import 'package:amptive/src/shared/circle_avatar.dart';
+import 'package:amptive/src/shared/sliver_header_delegate.dart';
+import 'package:amptive/src/shared/rich_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';

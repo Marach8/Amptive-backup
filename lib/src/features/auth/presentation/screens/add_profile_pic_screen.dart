@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:amptive/src/config/utils/colors.dart';
-import 'package:amptive/src/views/widgets/common_widgets/loading_indicator.dart';
+import 'package:amptive/src/shared/loading_indicator.dart';
 import 'package:amptive/src/features/auth/presentation/widgets/add_picture.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';

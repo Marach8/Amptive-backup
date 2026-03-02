@@ -7,7 +7,7 @@ import 'package:amptive/src/config/routing/route_strings.dart';
 import 'package:amptive/src/features/wallet/presentation/widgets/process_wallet_funding_dialog.dart';
 import 'package:amptive/src/features/wallet/presentation/widgets/select_payment_method_dialog.dart';
 import 'package:amptive/src/features/wallet/presentation/screens/transaction_amount_screen.dart';
-import 'package:amptive/src/views/widgets/common_widgets/circular_image.dart';
+import 'package:amptive/src/shared/circular_image.dart';
 import 'package:amptive/src/shared/custom_container_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

@@ -1,6 +1,6 @@
 import 'package:amptive/src/global_export.dart';
-import 'package:amptive/src/views/widgets/common_widgets/circular_image.dart';
-import '../../../../views/widgets/common_widgets/circle_avatar.dart';
+import 'package:amptive/src/shared/circular_image.dart';
+import '../../../../shared/circle_avatar.dart';
 
 class CohostWidget4HostView extends StatelessWidget {
   const CohostWidget4HostView({

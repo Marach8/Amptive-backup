@@ -4,7 +4,7 @@ import 'package:amptive/src/services/go_live_service/go_live_service.dart';
 import 'package:amptive/src/config/utils/colors.dart';
 import 'package:amptive/src/shared/custom_container_widget.dart';
 import 'package:amptive/src/shared/overlapping_widgets.dart';
-import 'package:amptive/src/views/widgets/common_widgets/show_event_nd_paid_icons.dart';
+import 'package:amptive/src/shared/show_event_nd_paid_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:sticky_headers/sticky_headers.dart';

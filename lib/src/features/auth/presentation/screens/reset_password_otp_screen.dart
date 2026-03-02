@@ -5,9 +5,9 @@ import 'package:amptive/src/config/utils/extensions/context_extensions.dart';
 import 'package:amptive/src/config/utils/font_sizes.dart';
 import 'package:amptive/src/features/auth/cubits/password_reset_otp_cubit.dart';
 import 'package:amptive/src/features/auth/cubits/verify_reset_password_otp_cubit.dart';
-import 'package:amptive/src/views/widgets/common_widgets/annotated_region__widget.dart';
-import 'package:amptive/src/views/widgets/common_widgets/back_button.dart';
-import 'package:amptive/src/views/widgets/common_widgets/otp_fields_widget.dart';
+import 'package:amptive/src/shared/annotated_region__widget.dart';
+import 'package:amptive/src/shared/back_button.dart';
+import 'package:amptive/src/shared/otp_fields_widget.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -15,7 +15,7 @@ import 'package:go_router/go_router.dart';
 import 'package:provider/single_child_widget.dart';
 import '../../../../config/utils/font_weights.dart';
 import '../../../../config/utils/other_strings.dart';
-import '../../../../views/widgets/common_widgets/app_bar_widget.dart';
+import '../../../../shared/app_bar_widget.dart';
 import '../../../../shared/elevated_button_widget.dart';
 
 
