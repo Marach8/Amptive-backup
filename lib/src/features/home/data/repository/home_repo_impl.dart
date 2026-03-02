@@ -67,7 +67,7 @@ class HomeRepoImpl implements HomeRepo {
       {required String targetUserId}) async {
     try {
       final Response<dynamic> response = await networkService.delete(
-        '${ATEndpoints.followCreator}/$targetUserId/follow',
+        '${ATEndpoints.unfollowCreator}/$targetUserId/follow',
       );
       return Successful<FollowResponseModel>(
         data: FollowResponseModel.fromJson(response.data as Map<String, dynamic>)
