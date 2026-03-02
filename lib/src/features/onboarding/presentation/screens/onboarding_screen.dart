@@ -1,7 +1,7 @@
 import 'package:amptive/src/config/utils/colors.dart';
 import 'package:amptive/src/config/utils/other_strings.dart';
 import 'package:amptive/src/features/onboarding/presentation/widgets/dot_indicator_row.dart';
-import 'package:amptive/src/views/widgets/common_widgets/annotated_region__widget.dart';
+import 'package:amptive/src/shared/annotated_region__widget.dart';
 import 'package:amptive/src/features/onboarding/presentation/widgets/custom_onboarding_page_widget.dart';
 import 'package:flutter/material.dart';
 

@@ -1,11 +1,11 @@
 import 'package:amptive/src/config/utils/dialogs/app_notification_dialog.dart';
 import 'package:amptive/src/config/utils/dialogs/confirmation_alert_dialog.dart';
-import 'package:amptive/src/views/widgets/common_widgets/image_loader_widget.dart';
+import 'package:amptive/src/shared/image_loader_widget.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:amptive/src/features/go_live/go_live_export.dart';
 import 'package:amptive/src/global_export.dart';
-import 'package:amptive/src/views/widgets/common_widgets/modal_dismisser.dart';
-import 'package:amptive/src/views/widgets/common_widgets/search_filter_widget.dart';
+import 'package:amptive/src/shared/modal_dismisser.dart';
+import 'package:amptive/src/shared/search_filter_widget.dart';
 import '../../../../models/host.dart';
 import '../../../../bloc/main_app/go_live_bloc/host_view/available_cohosts_bloc.dart';
 import '../../../../services/create_show/create_show_service.dart';

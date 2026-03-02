@@ -2,9 +2,9 @@ import 'package:go_router/go_router.dart';
 import 'package:iconsax/iconsax.dart';
 
 
-import 'package:amptive/src/views/widgets/common_widgets/radio_button.dart';
+import 'package:amptive/src/shared/radio_button.dart';
 import 'package:amptive/src/global_export.dart';
-import 'package:amptive/src/views/widgets/common_widgets/modal_dismisser.dart';
+import 'package:amptive/src/shared/modal_dismisser.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 

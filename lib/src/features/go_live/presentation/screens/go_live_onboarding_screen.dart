@@ -4,15 +4,15 @@ import 'dart:ui';
 import 'package:amptive/src/features/go_live/go_live_export.dart';
 import 'package:amptive/src/features/go_live/presentation/widgets/go_live_onboarding_bottom_sheet.dart';
 import 'package:amptive/src/global_export.dart';
-import 'package:amptive/src/views/widgets/common_widgets/annotated_region__widget.dart';
-import 'package:amptive/src/views/widgets/common_widgets/app_bar_widget.dart';
-import 'package:amptive/src/views/widgets/common_widgets/back_button.dart';
+import 'package:amptive/src/shared/annotated_region__widget.dart';
+import 'package:amptive/src/shared/app_bar_widget.dart';
+import 'package:amptive/src/shared/back_button.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_sound/flutter_sound.dart';
 import 'package:go_router/go_router.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
-import '../../../../views/widgets/common_widgets/image_loader_widget.dart';
+import '../../../../shared/image_loader_widget.dart';
 
 
 class GoLiveOnboardingScreen extends StatelessWidget {

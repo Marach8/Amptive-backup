@@ -2,10 +2,10 @@ import 'package:amptive/src/config/routing/route_strings.dart';
 import 'package:amptive/src/config/utils/utils_export.dart';
 import 'package:amptive/src/features/profile/presentation/widgets/profile_widgets_export.dart';
 import 'package:amptive/src/shared/custom_container_widget.dart';
-import 'package:amptive/src/views/widgets/common_widgets/annotated_region__widget.dart';
-import 'package:amptive/src/views/widgets/common_widgets/app_bar_widget.dart';
-import 'package:amptive/src/views/widgets/common_widgets/back_button.dart';
-import 'package:amptive/src/views/widgets/common_widgets/divider_widget.dart';
+import 'package:amptive/src/shared/annotated_region__widget.dart';
+import 'package:amptive/src/shared/app_bar_widget.dart';
+import 'package:amptive/src/shared/back_button.dart';
+import 'package:amptive/src/shared/divider_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 

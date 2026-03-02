@@ -1,6 +1,6 @@
 import 'package:amptive/src/features/home/cubits/home_feed_cubit.dart';
 import 'package:amptive/src/features/home/cubits/live_users_cubit.dart';
-import 'package:amptive/src/views/widgets/common_widgets/annotated_region__widget.dart';
+import 'package:amptive/src/shared/annotated_region__widget.dart';
 import 'package:amptive/src/features/main_app_nav_bar.dart';
 import 'package:amptive/src/features/home/presentation/screens/home_landing_screen.dart';
 import 'package:flutter/services.dart';

@@ -3,15 +3,15 @@ import 'package:amptive/src/config/utils/font_weights.dart';
 import 'package:amptive/src/config/utils/image_strings.dart';
 import 'package:amptive/src/config/utils/helper_functions.dart';
 import 'package:amptive/src/shared/custom_container_widget.dart';
-import 'package:amptive/src/views/widgets/common_widgets/image_loader_widget.dart';
-import 'package:amptive/src/views/widgets/common_widgets/live_indicator_with_animating_dot_widget.dart';
-import 'package:amptive/src/views/widgets/common_widgets/list_tile_with_leading_picture_widget.dart';
+import 'package:amptive/src/shared/image_loader_widget.dart';
+import 'package:amptive/src/shared/live_indicator_with_animating_dot_widget.dart';
+import 'package:amptive/src/shared/list_tile_with_leading_picture_widget.dart';
 import 'package:amptive/src/features/home/presentation/widgets/row_of_paid_show_and_play_button_widget.dart';
-import 'package:amptive/src/views/widgets/common_widgets/row_of_people_listening_widget.dart';
-import 'package:amptive/src/views/widgets/other_widgets/main_application_widgets/widgets_in_home_view/with_2_others_widget.dart';
+import 'package:amptive/src/shared/row_of_people_listening_widget.dart';
+import 'package:amptive/src/features/home/presentation/widgets/with_2_others_widget.dart';
 import 'package:flutter/material.dart';
 import '../../../../config/utils/colors.dart';
-import '../../../../config/utils/dialogs/options_dialog.dart';
+import 'program_options_modal.dart';
 
 class ATShowOrEventInfo extends StatelessWidget {
   const ATShowOrEventInfo({
@@ -48,7 +48,7 @@ class ATShowOrEventInfo extends StatelessWidget {
                     ATColors.transparent,
                     ATColors.transparent,
                     ATColors.transparent,
-                    ATColors.containerGradientColorB.withOpacity(0.5),
+                    ATColors.containerGradientColorB.withValues(alpha: 0.5),
                     ATColors.containerGradientColorB,
                     ATColors.containerGradientColorB,
                     ATColors.containerGradientColorB,
@@ -57,7 +57,7 @@ class ATShowOrEventInfo extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
-                    const AmptiveWith2OthersWidget(),
+                    const With2OthersWidget(),
                     const Spacer(),
                     const LiveWithAnimatingDot(),
                     const SizedBox(height: 10),

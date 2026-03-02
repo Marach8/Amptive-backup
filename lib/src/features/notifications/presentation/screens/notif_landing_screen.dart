@@ -5,7 +5,7 @@ import 'package:amptive/src/features/notifications/presentation/widgets/notif_wi
 import 'package:flutter/material.dart';
 import 'package:amptive/src/config/utils/image_strings.dart';
 import 'package:amptive/src/config/utils/other_strings.dart';
-import 'package:amptive/src/views/widgets/common_widgets/app_bar_widget.dart';
+import 'package:amptive/src/shared/app_bar_widget.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class NotificationTabView extends StatelessWidget {

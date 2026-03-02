@@ -1,17 +1,19 @@
 import 'dart:io';
+import 'package:amptive/src/config/utils/extensions/context_extensions.dart';
 import 'package:amptive/src/config/utils/font_sizes.dart';
 import 'package:amptive/src/config/utils/helper_functions.dart';
-import 'package:amptive/src/views/widgets/common_widgets/image_loader_widget.dart';
+import 'package:amptive/src/shared/modal_dismisser.dart';
 import 'package:flutter/material.dart';
-import '../../../shared/custom_container_widget.dart';
-import '../colors.dart';
+import '../../../../shared/custom_container_widget.dart';
+import '../../../../config/utils/colors.dart';
 import 'package:amptive/src/config/utils/image_strings.dart';
+import 'package:amptive/src/shared/image_loader_widget.dart';
 
 
 void showProgramOptions(BuildContext context)
   => showModalBottomSheet(
       context: context,
-      barrierColor: ATColors.black.withOpacity(0.5),
+      barrierColor: ATColors.black.withValues(alpha: 0.5),
       backgroundColor: ATColors.containerGradientColorB,
       elevation: 0,
       shape: const RoundedRectangleBorder(
@@ -21,41 +23,38 @@ void showProgramOptions(BuildContext context)
         )
       ),
       builder: (_,){
+        Map<String, Widget> mapOfOptions = <String, Widget>{
+          'Subscribe to glennodoyle': const Icon(Icons.favorite_border_outlined),
+          'Follow glennodoyle': const ATImgLoader(
+            imgPath: ATImgStrings.followIcon,
+            height: 24, width: 24,
+          ),
+          'Share live': const RotatedBox(
+            quarterTurns: 1,
+            child: Icon(Icons.logout_outlined),
+          ),
+          'Not interested': const Icon(Icons.visibility_off_outlined),
+          'Report': const Icon(Icons.flag_outlined)
+        };
         return Padding(
-          padding: const EdgeInsets.all(15),
+          padding: const EdgeInsets.fromLTRB(15, 0, 15, 60),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              Align(
-                alignment: Alignment.center,
-                child: GestureDetector(
-                  onTap: () => ATHelperFuncs.hideAnyMountedSnackbar(context),
-                  child: Platform.isAndroid
-                    ? Icon(
-                      Icons.keyboard_arrow_down, size: 30,
-                      color: ATColors.white.withOpacity(0.6),
-                    ) : ATContainer(
-                      margin: const EdgeInsets.symmetric(vertical: 10),
-                      radius: 5, height: 4, width: 30,
-                      color: ATColors.white.withOpacity(0.6),
-                      child: const SizedBox.shrink(),
-                    ),
-                ),
-              ),
+              const ATModalDismisser(),
               const SizedBox(height: 20),
               ...mapOfOptions.entries.map(
                 (MapEntry<String, Widget> entry) => Padding(
                   padding: const EdgeInsets.only(bottom: 30),
                   child: Row(
-                    mainAxisSize: MainAxisSize.min,
                     children: <Widget>[
                       entry.value,
                       const SizedBox(width: 15),
                       Text(
                         entry.key,
-                        style: Theme.of(context).textTheme.labelMedium?.copyWith(
+                        style: context.textTheme.labelMedium?.copyWith(
                           color: ATColors.white,
                           fontSize: ATSizes.size17
                         ),
@@ -63,18 +62,9 @@ void showProgramOptions(BuildContext context)
                     ],
                   ),
                 )
-              )
+              ),
             ],
           ),
         );
     }
   );
-
-
-  Map<String, Widget> mapOfOptions = <String, Widget>{
-  'Subscribe to glennodoyle': const Icon(Icons.favorite_border_outlined),
-  'Follow glennodoyle': const ATImgLoader(imgPath: ATImgStrings.FOLLOW_ICON),
-  'Share live': const ATImgLoader(imgPath: ATImgStrings.SHARE_LIVE),
-  'Not interested': const Icon(Icons.visibility_off_outlined),
-  'Report': const Icon(Icons.flag_outlined)
-};

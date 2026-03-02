@@ -4,8 +4,8 @@ import 'package:amptive/src/config/utils/font_weights.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-class AmptiveWith2OthersWidget extends StatelessWidget {
-  const AmptiveWith2OthersWidget({
+class With2OthersWidget extends StatelessWidget {
+  const With2OthersWidget({
     super.key,
   });
 

@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:iconsax/iconsax.dart';
 import '../../../../bloc/main_app/go_live_bloc/audience_view/host_moderation_control_bloc.dart';
-import '../../../../views/widgets/common_widgets/modal_dismisser.dart';
-import '../../../../views/widgets/common_widgets/switch_widget.dart';
+import '../../../../shared/modal_dismisser.dart';
+import '../../../../shared/switch_widget.dart';
 
 Future<void> showHostModerationToolsDialog(BuildContext context) async {
   return await showModalBottomSheet(

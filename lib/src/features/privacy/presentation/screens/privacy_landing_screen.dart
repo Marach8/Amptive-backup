@@ -1,9 +1,9 @@
 import 'package:amptive/src/config/utils/colors.dart';
 import 'package:amptive/src/config/utils/font_weights.dart';
 import 'package:amptive/src/features/profile_menu/presentation/screens/profile_menu_landing_screen.dart';
-import 'package:amptive/src/views/widgets/common_widgets/annotated_region__widget.dart';
-import 'package:amptive/src/views/widgets/common_widgets/app_bar_widget.dart';
-import 'package:amptive/src/views/widgets/common_widgets/back_button.dart';
+import 'package:amptive/src/shared/annotated_region__widget.dart';
+import 'package:amptive/src/shared/app_bar_widget.dart';
+import 'package:amptive/src/shared/back_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -11,7 +11,7 @@ import '../../../../bloc/main_app/profile/private_account_bloc.dart';
 import '../../../../config/utils/other_strings.dart';
 import '../../../../config/routing/route_strings.dart';
 import '../../../../config/utils/dialogs/app_notification_dialog.dart';
-import '../../../../views/widgets/common_widgets/switch_widget.dart';
+import '../../../../shared/switch_widget.dart';
 
 
 

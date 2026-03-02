@@ -5,7 +5,7 @@ import 'package:amptive/src/config/utils/colors.dart';
 import 'package:amptive/src/config/utils/font_sizes.dart';
 import 'package:amptive/src/shared/overlapping_widgets.dart';
 import 'package:amptive/src/shared/custom_container_widget.dart';
-import 'package:amptive/src/views/widgets/common_widgets/show_event_nd_paid_icons.dart';
+import 'package:amptive/src/shared/show_event_nd_paid_icons.dart';
 import 'package:flutter/material.dart';
 
 

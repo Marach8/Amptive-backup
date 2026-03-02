@@ -1,7 +1,7 @@
 import 'package:amptive/src/config/config_export.dart';
 import 'package:amptive/src/features/auth/data/models/response/communities_response_model.dart' show Community;
 import 'package:amptive/src/shared/custom_container_widget.dart';
-import 'package:amptive/src/views/widgets/common_widgets/image_loader_widget.dart';
+import 'package:amptive/src/shared/image_loader_widget.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../models/community.dart';

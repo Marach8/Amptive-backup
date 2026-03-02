@@ -9,15 +9,15 @@ import 'package:amptive/src/config/utils/helper_functions.dart';
 import 'package:amptive/src/features/wallet/presentation/screens/wallet_views_export.dart';
 import 'package:amptive/src/shared/elevated_button_widget.dart';
 import 'package:amptive/src/views/widgets/animation_widgets/common_animation_widgets/animated_align_widget.dart';
-import 'package:amptive/src/views/widgets/common_widgets/back_button.dart';
+import 'package:amptive/src/shared/back_button.dart';
 import 'package:amptive/src/shared/custom_container_widget.dart';
-import 'package:amptive/src/views/widgets/common_widgets/with_leading_image_nd_trailing_more_icon.dart';
+import 'package:amptive/src/shared/with_leading_image_nd_trailing_more_icon.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import '../../bloc/enter_pin_bloc.dart';
-import '../../../../views/widgets/common_widgets/circular_image.dart';
+import '../../../../shared/circular_image.dart';
 import '../../../../config/utils/font_weights.dart';
 
 class InputPinParams{

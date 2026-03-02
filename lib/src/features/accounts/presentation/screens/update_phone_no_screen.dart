@@ -2,13 +2,13 @@ import 'dart:async' show StreamController;
 
 import 'package:amptive/src/config/config_export.dart';
 import 'package:amptive/src/shared/cupertino_country_picker.dart';
-import 'package:amptive/src/views/widgets/common_widgets/annotated_region__widget.dart';
-import 'package:amptive/src/views/widgets/common_widgets/app_bar_widget.dart';
-import 'package:amptive/src/views/widgets/common_widgets/back_button.dart';
+import 'package:amptive/src/shared/annotated_region__widget.dart';
+import 'package:amptive/src/shared/app_bar_widget.dart';
+import 'package:amptive/src/shared/back_button.dart';
 import 'package:amptive/src/shared/custom_container_widget.dart';
 import 'package:amptive/src/shared/elevated_button_widget.dart';
-import 'package:amptive/src/views/widgets/common_widgets/image_loader_widget.dart';
-import 'package:amptive/src/views/widgets/common_widgets/textformfield_widget.dart';
+import 'package:amptive/src/shared/image_loader_widget.dart';
+import 'package:amptive/src/shared/textformfield_widget.dart';
 import 'package:country_pickers/country.dart';
 import 'package:country_pickers/utils/utils.dart';
 import 'package:flutter/material.dart';

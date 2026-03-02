@@ -47,7 +47,7 @@ class ATRoutes {
   static const String TRENDING_HASHTAGS_SCREEN = 'trending_hashtags_screen';
   static const String SOCIETY_HASHTAG_SCREEN = 'trending_hashtag_full_screen';
   static const String GO_LIVE_TYPE_SELECTION = 'go_live_welcome_screen';
-  static const String CREATOR_PROFILE_SCREEN = 'creator_profile';
+  static const String creatorProfileScreen = 'creator_profile';
   static const String PROFILE_MENU_SCREEN = 'profile_menu_screen';
   static const String PROFILE_FOLLOWING_SCREEN = 'profile_following_screen';
   static const String updateEmailScreen = 'update_email_screen';
@@ -85,7 +85,7 @@ class ATRoutes {
   static const String WALLET_PIN_SETUP = 'wallet_pin_setup';
   static const String securityQuestionScreen = 'security_question';
   static const String walletCreationAnimationScreen = 'wallet_creation_animation';
-  static const String WALLET = 'wallet';
+  static const String walletScreen = 'wallet';
   static const String SELECT_RECIPIENT = 'transfer_funds';
   static const String FUND_WALLET = 'fund_wallet';
   static const String WITHDRAWAL_LANDING = 'withdraw';

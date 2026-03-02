@@ -1,8 +1,8 @@
 import 'dart:ui';
 import 'package:amptive/src/global_export.dart';
-import 'package:amptive/src/views/widgets/common_widgets/circle_avatar.dart';
-import 'package:amptive/src/views/widgets/common_widgets/modal_dismisser.dart';
-import 'package:amptive/src/views/widgets/common_widgets/image_loader_widget.dart';
+import 'package:amptive/src/shared/circle_avatar.dart';
+import 'package:amptive/src/shared/modal_dismisser.dart';
+import 'package:amptive/src/shared/image_loader_widget.dart';
 import '../../../../models/host.dart';
 import '../../../../services/create_show/create_show_service.dart';
 

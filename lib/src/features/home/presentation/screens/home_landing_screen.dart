@@ -8,18 +8,16 @@ import 'package:amptive/src/features/home/cubits/live_users_cubit.dart';
 import 'package:amptive/src/features/home/data/models/response/home_feed_response_model.dart';
 import 'package:amptive/src/features/home/presentation/widgets/render_home_feed_item.dart';
 import 'package:amptive/src/features/main_app_nav_bar.dart';
-import 'package:amptive/src/views/widgets/common_widgets/circle_avatar.dart';
-import 'package:amptive/src/features/home/presentation/widgets/program_widget_in_home.dart';
-import 'package:amptive/src/views/widgets/common_widgets/loading_indicator.dart';
+import 'package:amptive/src/shared/circle_avatar.dart';
+import 'package:amptive/src/shared/loading_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import '../../../../config/utils/image_strings.dart';
-import '../../../../views/widgets/common_widgets/circular_image.dart';
-import '../../../../views/widgets/common_widgets/divider_widget.dart';
-import '../../../../views/widgets/common_widgets/image_loader_widget.dart';
-import '../../../../views/widgets/common_widgets/live_user_model_widget.dart';
+import '../../../../shared/circular_image.dart';
+import '../../../../shared/divider_widget.dart';
+import '../../../../shared/image_loader_widget.dart';
+import '../../../../shared/live_user_model_widget.dart';
 import '../../../../views/widgets/other_widgets/main_application_widgets/widgets_in_home_view/appbar_drop_down.dart';
 import '../widgets/go_live_widget_in_home.dart';
 
@@ -63,23 +61,23 @@ class HomeTabView extends StatelessWidget {
             ),
           
             actions: <Widget>[
-              IconButton(
-                onPressed: (){
-                  context.read<HomeFeedCubit>().fetchHomeFeed();
-                  context.read<LiveUsersCubit>().fetchLiveUsers();
-                },
-                icon: Icon(Icons.add),
-              ),
+              // IconButton(
+              //   onPressed: (){
+              //     context.read<HomeFeedCubit>().fetchHomeFeed();
+              //     context.read<LiveUsersCubit>().fetchLiveUsers();
+              //   },
+              //   icon: Icon(Icons.add),
+              // ),
               GestureDetector(
                 onTap: (){
                   //context.pushNamed(ATRoutes.GO_LIVE_ONBOARDING);
-                  context.pushNamed(ATRoutes.WALLET);
+                  context.pushNamed(ATRoutes.walletScreen);
                   //context.pushNamed(ATRoutes.WALLET_ONBOARDING);
                 },
                 child: Stack(
                   children: <Widget>[
                     const ATImgLoader(
-                      imgPath: ATImgStrings.WALLET_ICON, 
+                      imgPath: ATImgStrings.walletIcon, 
                       height: 30, width: 30,
                     ),
                     Positioned(
@@ -97,7 +95,7 @@ class HomeTabView extends StatelessWidget {
                 //     extra: GoLiveUserType.audience
                 //   );
                 // },
-                onTap: () => context.pushNamed(ATRoutes.CREATOR_PROFILE_SCREEN),
+                onTap: () => context.pushNamed(ATRoutes.creatorProfileScreen),
                 //onTap: () => context.pushNamed(ATRoutes.USER_PROFILE_SCREEN),
                 child: Padding(
                   padding: const EdgeInsets.only(right: 15),

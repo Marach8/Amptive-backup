@@ -1,8 +1,8 @@
 import 'package:amptive/src/global_export.dart';
-import 'package:amptive/src/views/widgets/common_widgets/annotated_region__widget.dart';
-import 'package:amptive/src/views/widgets/common_widgets/app_bar_widget.dart';
-import 'package:amptive/src/views/widgets/common_widgets/back_button.dart';
-import 'package:amptive/src/views/widgets/common_widgets/image_loader_widget.dart';
+import 'package:amptive/src/shared/annotated_region__widget.dart';
+import 'package:amptive/src/shared/app_bar_widget.dart';
+import 'package:amptive/src/shared/back_button.dart';
+import 'package:amptive/src/shared/image_loader_widget.dart';
 import 'package:go_router/go_router.dart';
 import '../../wallet_export.dart';
 

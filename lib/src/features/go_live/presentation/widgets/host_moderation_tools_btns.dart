@@ -1,9 +1,9 @@
 
 import 'package:amptive/src/bloc/main_app/go_live_bloc/host_view/notifications_bloc.dart';
 import 'package:amptive/src/features/go_live/presentation/widgets/host_moderation_tools_dialog.dart';
-import 'package:amptive/src/views/widgets/common_widgets/circular_image.dart';
-import 'package:amptive/src/views/widgets/common_widgets/image_loader_widget.dart';
-import 'package:amptive/src/views/widgets/common_widgets/textformfield_widget.dart';
+import 'package:amptive/src/shared/circular_image.dart';
+import 'package:amptive/src/shared/image_loader_widget.dart';
+import 'package:amptive/src/shared/textformfield_widget.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../global_export.dart';
 import '../../../../services/go_live_service/go_live_service.dart';

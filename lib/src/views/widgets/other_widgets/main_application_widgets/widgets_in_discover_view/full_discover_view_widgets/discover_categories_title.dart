@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../../../../../config/utils/colors.dart';
 import '../../../../../../config/utils/image_strings.dart';
-import '../../../../common_widgets/image_loader_widget.dart';
+import '../../../../../../shared/image_loader_widget.dart';
 
 class DiscoverCategoriesTile extends StatelessWidget {
   const DiscoverCategoriesTile({

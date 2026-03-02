@@ -1,6 +1,6 @@
 import 'package:amptive/src/config/config_export.dart';
 import 'package:flutter/material.dart';
-import '../../../../views/widgets/common_widgets/image_loader_widget.dart';
+import '../../../../shared/image_loader_widget.dart';
 
 class LiveIndicatorRow extends StatelessWidget {
   const LiveIndicatorRow({

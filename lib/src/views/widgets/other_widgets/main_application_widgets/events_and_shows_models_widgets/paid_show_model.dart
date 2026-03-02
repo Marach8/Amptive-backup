@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import '../../../../../config/utils/colors.dart';
 import '../../../../../config/utils/font_sizes.dart';
-import '../../../common_widgets/circle_avatar.dart';
+import '../../../../../shared/circle_avatar.dart';
 import '../../../../../shared/custom_container_widget.dart';
-import '../../../common_widgets/image_loader_widget.dart';
+import '../../../../../shared/image_loader_widget.dart';
 
 
 class AmptivePaidShowModel extends StatelessWidget {

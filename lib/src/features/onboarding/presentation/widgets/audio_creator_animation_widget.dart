@@ -1,8 +1,8 @@
 import 'dart:async';
 import 'package:amptive/src/config/utils/colors.dart';
 import 'package:amptive/src/config/utils/lottie_animation_strings.dart';
-import 'package:amptive/src/views/widgets/common_widgets/circle_avatar.dart';
-import 'package:amptive/src/views/widgets/common_widgets/image_loader_widget.dart';
+import 'package:amptive/src/shared/circle_avatar.dart';
+import 'package:amptive/src/shared/image_loader_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 

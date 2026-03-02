@@ -5,13 +5,13 @@ import 'package:amptive/src/config/utils/font_sizes.dart';
 import 'package:amptive/src/config/utils/font_weights.dart';
 import 'package:amptive/src/config/utils/image_strings.dart';
 import 'package:amptive/src/config/utils/other_strings.dart';
-import 'package:amptive/src/config/utils/dialogs/options_dialog.dart';
+import 'package:amptive/src/features/home/presentation/widgets/program_options_modal.dart';
 import 'package:amptive/src/shared/custom_container_widget.dart';
-import 'package:amptive/src/views/widgets/common_widgets/image_loader_widget.dart';
-import 'package:amptive/src/views/widgets/common_widgets/live_indicator_with_animating_dot_widget.dart';
-import 'package:amptive/src/views/widgets/common_widgets/list_tile_with_leading_picture_widget.dart';
+import 'package:amptive/src/shared/image_loader_widget.dart';
+import 'package:amptive/src/shared/live_indicator_with_animating_dot_widget.dart';
+import 'package:amptive/src/shared/list_tile_with_leading_picture_widget.dart';
 import 'package:amptive/src/shared/overlapping_widgets.dart';
-import 'package:amptive/src/views/widgets/other_widgets/main_application_widgets/widgets_in_home_view/with_2_others_widget.dart';
+import 'package:amptive/src/features/home/presentation/widgets/with_2_others_widget.dart';
 import 'package:flutter/material.dart';
 
 class SubscribedProgram extends StatelessWidget {
@@ -57,7 +57,7 @@ class SubscribedProgram extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
-                    const AmptiveWith2OthersWidget(),
+                    const With2OthersWidget(),
                     const Spacer(),
                     const LiveWithAnimatingDot(),
                     const SizedBox(height: 10,),
