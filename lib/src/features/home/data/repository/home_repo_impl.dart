@@ -5,7 +5,7 @@ import 'package:amptive/src/config/endpoints.dart';
 import 'package:amptive/src/config/exception.dart';
 import 'package:amptive/src/config/services/network_service/dio_network_service_impl.dart';
 import 'package:amptive/src/config/services/network_service/network_service.dart';
-import 'package:amptive/src/features/home/data/models/follow_creator_response_model.dart';
+import 'package:amptive/src/features/home/data/models/following_status.dart';
 import 'package:amptive/src/features/home/data/repository/home_repo.dart';
 import 'package:dio/dio.dart';
 import 'package:amptive/src/features/home/data/models/response/home_feed_response_model.dart';
@@ -16,23 +16,45 @@ class HomeRepoImpl implements HomeRepo {
       : networkService = mockNetworkService ?? DioNetworkServiceImpl();
 
   final NetworkService networkService;
+
   @override
-  Future<ApiResponse<FollowResponseModel>> followCreator(
+  Future<ApiResponse<FollowingStatus>> unFollowTargetUser(
       {required String targetUserId}) async {
     try {
-      final Response<dynamic> response = await networkService.post(
-        '${ATEndpoints.followCreator}/$targetUserId/follow',
+      final Response<dynamic> response = await networkService.delete(
+        '${ATEndpoints.users}/$targetUserId/follow',
       );
-      return Successful<FollowResponseModel>(
-        data: FollowResponseModel.fromJson(response.data as Map<String, dynamic>)
-        );
+      
+      return Successful<FollowingStatus>(
+        data: FollowingStatus.fromJson(response.data,)
+      );
     } catch (e) {
-      log('Follow creator error: $e');
-      return Unsuccessful<FollowResponseModel>(
+      log('error in unfollowing user: $e');
+      return Unsuccessful<FollowingStatus>(
         error: ATException.resolveException(e)
       );
     }
+  }
+
+
+  @override
+  Future<ApiResponse<FollowingStatus>> followTargetUser(
+      {required String targetUserId}) async {
+    try {
+      final Response<dynamic> response = await networkService.post(
+        '${ATEndpoints.users}/$targetUserId/follow',
+      );
+      
+      return Successful<FollowingStatus>(
+        data: FollowingStatus.fromJson(response.data,)
+      );
+    } catch (e) {
+      log('error in unfollowing user: $e');
+      return Unsuccessful<FollowingStatus>(
+        error: ATException.resolveException(e)
+      );
     }
+  }
 
 
   @override
@@ -61,24 +83,6 @@ class HomeRepoImpl implements HomeRepo {
       );
     }
   }
-
-   @override
-  Future<ApiResponse<FollowResponseModel>> unFollowCreator(
-      {required String targetUserId}) async {
-    try {
-      final Response<dynamic> response = await networkService.delete(
-        '${ATEndpoints.unfollowCreator}/$targetUserId/follow',
-      );
-      return Successful<FollowResponseModel>(
-        data: FollowResponseModel.fromJson(response.data as Map<String, dynamic>)
-        );
-    } catch (e) {
-      log('error in unfollowing user: $e');
-      return Unsuccessful<FollowResponseModel>(
-        error: ATException.resolveException(e)
-      );
-    }
-      }
 
   @override
   Future<ApiResponse<dynamic>> fetchFollowedShows({

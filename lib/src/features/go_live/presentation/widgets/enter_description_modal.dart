@@ -167,9 +167,7 @@ class _DescriptionWidgetState extends State<_DescriptionWidget> with WidgetsBind
 }
 
 class _CoolOne extends StatelessWidget {
-  const _CoolOne({
-    super.key,
-  });
+  const _CoolOne();
 
   @override
   Widget build(BuildContext context) {

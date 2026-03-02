@@ -1,7 +1,6 @@
 
 import 'package:amptive/src/config/api_response_and_app_state.dart';
 import 'package:amptive/src/config/utils/colors.dart';
-import 'package:amptive/src/config/utils/constants.dart';
 import 'package:amptive/src/config/utils/extensions/context_extensions.dart';
 import 'package:amptive/src/config/utils/other_strings.dart';
 import 'package:amptive/src/config/routing/route_strings.dart';
@@ -17,7 +16,6 @@ import 'package:go_router/go_router.dart';
 import '../../../../shared/app_bar_widget.dart';
 import '../../../../shared/loading_indicator.dart';
 import '../widgets/community_card_preference.dart';
-import '../../../post_auth/post_authentication_widgets/processing_preference_widget.dart';
 
 
 class Select5CommunitiesScreen extends StatelessWidget {

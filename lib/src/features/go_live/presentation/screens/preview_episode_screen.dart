@@ -1,7 +1,6 @@
 import 'dart:typed_data' show Uint8List;
 import 'dart:ui';
 import 'package:amptive/src/features/home/presentation/widgets/event_or_show_card.dart';
-import 'package:amptive/src/features/go_live/data/models/response/show_response_model.dart';
 import 'package:amptive/src/features/home/presentation/widgets/live_and_society_widget.dart';
 import 'package:amptive/src/features/home/presentation/widgets/show_or_event_indicator_with_title.dart';
 import 'package:amptive/src/global_export.dart';

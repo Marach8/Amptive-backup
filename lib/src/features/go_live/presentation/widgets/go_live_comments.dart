@@ -170,7 +170,7 @@ class _GoLiveCommentsState extends State<GoLiveComments> {
 
 
 class _Notifications extends StatelessWidget {
-  const _Notifications({super.key});
+  const _Notifications();
 
   @override
   Widget build(BuildContext context) {

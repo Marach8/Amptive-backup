@@ -139,7 +139,7 @@ class _SubWidget extends StatelessWidget {
 
 
 class _AudienceViewExitIcon extends StatelessWidget {
-  const _AudienceViewExitIcon({super.key});
+  const _AudienceViewExitIcon();
 
   @override
   Widget build(BuildContext context) {
@@ -149,7 +149,7 @@ class _AudienceViewExitIcon extends StatelessWidget {
       },
       color: ATColors.white.withValues(alpha: 0.1),
       height: 35, width: 35, boxShape: BoxShape.circle,
-      child: Icon(Icons.keyboard_arrow_down, size: 20,),
+      child: const Icon(Icons.keyboard_arrow_down, size: 20,),
     );
   }
 }
