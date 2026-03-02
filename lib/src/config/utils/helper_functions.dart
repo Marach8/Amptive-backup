@@ -34,12 +34,12 @@ class ATHelperFuncs{
     => ScaffoldMessenger.maybeOf(context)?.hideCurrentSnackBar();
 
 
-  static int getRandomNumber(double ceiling){
+  static double getRandomNumber(double ceiling){
     final int number = Random().nextInt(ceiling.toInt()) + 1;
     if(number < 100){
-      return 100 + number;
+      return (100 + number).toDouble();
     }
-    return number;
+    return number.toDouble();
   }
 
   static void startTimer({
@@ -141,6 +141,13 @@ class ATHelperFuncs{
     }
 
     return weeks;
+  }
+
+
+  static String formatDate(String isoString) {
+    final DateTime parsed = DateTime.parse(isoString);
+    final DateFormat formatter = DateFormat('d MMMM yyyy');
+    return formatter.format(parsed);
   }
 
 

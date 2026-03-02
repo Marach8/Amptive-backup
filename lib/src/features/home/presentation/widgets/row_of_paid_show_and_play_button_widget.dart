@@ -5,6 +5,8 @@ import 'package:amptive/src/config/utils/other_strings.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import '../../../../config/utils/extensions/context_extensions.dart';
+
 class PaidShowAndPlayBtnWidget extends StatelessWidget {
   const PaidShowAndPlayBtnWidget({
     super.key,
@@ -18,16 +20,16 @@ class PaidShowAndPlayBtnWidget extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: <Widget>[
         Padding(
-          padding:  EdgeInsets.only(top: 18.0.h),
+          padding: const EdgeInsets.only(top: 18),
           child: Container(
-            padding:  EdgeInsets.all(8.5.w),
+            padding: const EdgeInsets.all(8.5),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(5),
               color: ATColors.hex0D0D0D
             ),
             child: Text(
-              ATStrings.PAID_SHOW.toUpperCase(),
-              style: Theme.of(context).textTheme.titleSmall?.copyWith(
+              ATStrings.paidShow.toUpperCase(),
+              style: context.textTheme.titleSmall?.copyWith(
                 fontWeight: ATFontWeights.w500,
                 fontSize: ATSizes.size10
               )

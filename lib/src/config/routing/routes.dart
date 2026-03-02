@@ -7,7 +7,7 @@ import 'package:amptive/src/features/auth/presentation/screens/forgot_password_e
 import 'package:amptive/src/features/auth/phone_login_screen.dart';
 import 'package:amptive/src/features/auth/presentation/screens/reset_password_otp_screen.dart';
 import 'package:amptive/src/features/auth/presentation/screens/phone_auth_screen.dart';
-import 'package:amptive/src/features/auth/presentation/screens/temp_login_screen.dart';
+import 'package:amptive/src/features/auth/presentation/screens/login_screen.dart';
 import 'package:amptive/src/config/utils/extensions/string_extensions.dart';
 import 'package:amptive/src/features/auth/presentation/screens/dob_screen.dart';
 import 'package:amptive/src/features/auth/presentation/screens/email_auth_screen.dart';
@@ -20,14 +20,18 @@ import 'package:amptive/src/features/auth/presentation/screens/username_auth_scr
 import 'package:amptive/src/features/calender/presentation/screens/calender_landing_screen.dart';
 import 'package:amptive/src/features/discover/presentation/views/society_screen.dart';
 import 'package:amptive/src/features/discover/presentation/views/trending_hashtags_screen.dart';
-import 'package:amptive/src/features/home/home_export.dart';
+import 'package:amptive/src/features/home/cubits/followed_shows_cubit.dart';
+import 'package:amptive/src/features/home/presentation/screens/following_screen.dart';
+import 'package:amptive/src/features/home/presentation/screens/live_show_detailed_screen.dart';
+import 'package:amptive/src/features/home/presentation/screens/schedule_detailed_screen.dart';
+import 'package:amptive/src/features/home/presentation/screens/subscribed_screen.dart';
 import 'package:amptive/src/features/main_app_shell.dart';
 import 'package:amptive/src/features/post_auth/presentation/views/post_auth_prez_export.dart';
 import 'package:amptive/src/features/profile/presentation/screens/edit_bio_screen.dart';
 import 'package:amptive/src/features/profile/presentation/screens/edit_name_screen.dart';
 import 'package:amptive/src/features/profile/presentation/screens/edit_username_screen.dart';
 import 'package:amptive/src/features/profile/presentation/screens/profile_views_export.dart';
-import 'package:amptive/src/features/home/presentation/views/scheduled_screen.dart';
+import 'package:amptive/src/features/home/presentation/screens/scheduled_screen.dart';
 import 'package:amptive/src/features/accounts/presentation/screens/account_info_screen.dart';
 import 'package:amptive/src/features/accounts/presentation/screens/acounts_landing_screen.dart';
 import 'package:amptive/src/features/switch_account/presentation/switch_acct/switch_acct_export.dart';
@@ -42,6 +46,7 @@ import '../../features/discover/presentation/views/community_home_screen.dart';
 import '../../features/discover/presentation/views/society_hashtag_screen.dart';
 import '../../features/discover/presentation/views/trending_society_screen.dart';
 import '../../features/go_live/go_live_export.dart';
+import '../../features/home/presentation/screens/live_event_detailed_screen.dart';
 import '../../features/profile/presentation/screens/edit_profile_landing_screen.dart';
 import '../../features/profile/presentation/screens/edit_socials_screen.dart';
 import '../../features/accounts/presentation/screens/select_country_screen.dart';
@@ -49,9 +54,9 @@ import '../../features/wallet/wallet_export.dart';
 
 // The route configuration.
 final GoRouter amptiveAppRouter = GoRouter(
-  //initialLocation: ATRoutes.MAIN_APP_SHELL.addSlash,
+  initialLocation: ATRoutes.mainAppShell.addSlash,
   //redirect: tempRedirect,
-  initialLocation: ATRoutes.ONBOARDING_SCREEN.addSlash,
+  //initialLocation: ATRoutes.temporaryLoginScreen.addSlash,
   routes: <RouteBase>[
     GoRoute(
       name: ATRoutes.POST_ONBOARDING_SCREEN,
@@ -84,7 +89,7 @@ final GoRouter amptiveAppRouter = GoRouter(
       name: ATRoutes.temporaryLoginScreen,
       path: ATRoutes.temporaryLoginScreen.addSlash,
       pageBuilder: (_, GoRouterState st) => ATSlidingRouteTransition<void>(
-        child: const TempLoginScreen()
+        child: const LoginScreen()
       )
     ),
      GoRoute(
@@ -355,16 +360,16 @@ final GoRouter amptiveAppRouter = GoRouter(
           ),
 
           GoRoute(
-            name: ATRoutes.CHOOSE_OR_CREATE_GO_LIVE_PROGRAM_SCREEN,
-            path: ATRoutes.CHOOSE_OR_CREATE_GO_LIVE_PROGRAM_SCREEN,
-            pageBuilder: (_, GoRouterState st) => ATSlidingRouteTransition<void>(
-              child: ChooseOrCreateGoLiveProgramScreen(programType: st.extra as GoLiveProgramType,),
+            name: ATRoutes.listHostedShowsScreen,
+            path: ATRoutes.listHostedShowsScreen.addSlash,
+            pageBuilder: (_, __) => ATSlidingRouteTransition<void>(
+              child: const ListHostedShowsScreen(),
             )
           ),
 
           GoRoute(
-            name: ATRoutes.CREATE_SHOW_FORM,
-            path: ATRoutes.CREATE_SHOW_FORM,
+            name: ATRoutes.createShowForm,
+            path: ATRoutes.createShowForm,
             pageBuilder: (_, __) => ATSlidingRouteTransition<void>(child: const CreateShowFormScreen())
           ),
           GoRoute(
@@ -618,8 +623,8 @@ final GoRouter amptiveAppRouter = GoRouter(
             builder: (_, __) => const ATScheduledPrograms(),
           ),
           GoRoute(
-            name: ATRoutes.SHOW_PREVIEW_SCREEN,
-            path: ATRoutes.SHOW_PREVIEW_SCREEN,
+            name: ATRoutes.showPreviewScreen,
+            path: ATRoutes.showPreviewScreen,
             pageBuilder: (_, GoRouterState state) {
               String coverArt = state.extra as String;
               return ATSlidingRouteTransition<void>(

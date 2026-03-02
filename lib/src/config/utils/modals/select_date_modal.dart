@@ -18,7 +18,7 @@ Future<void> selectDateModal(
   CreateShowService service = GetIt.I<CreateShowService>();
 
   AssetImage? defaultAssetImage =
-      const AssetImage(ATImgStrings.CREATE_SHOW_PLACEHOLDER);
+      const AssetImage(ATImgStrings.createShowPlaceholder);
   DateTime now = DateTime.now();
 
   DateTime selectedDateTime =

@@ -2,7 +2,6 @@ import 'dart:ui';
 import 'package:amptive/src/config/utils/colors.dart';
 import 'package:amptive/src/config/utils/image_strings.dart';
 import 'package:amptive/src/config/utils/other_strings.dart';
-import 'package:amptive/src/features/home/home_export.dart';
 import 'package:amptive/src/views/widgets/common_widgets/annotated_region__widget.dart';
 import 'package:amptive/src/shared/custom_container_widget.dart';
 import 'package:amptive/src/shared/elevated_button_widget.dart';
@@ -14,8 +13,11 @@ import '../../../../config/utils/font_sizes.dart';
 import '../../../../config/utils/font_weights.dart';
 import '../../../../views/widgets/common_widgets/list_tile_with_leading_picture_widget.dart';
 import '../../../../views/widgets/common_widgets/sliver_header_delegate.dart';
-import '../../../../shared/hashtags_widget.dart';
-import '../widgets/home_widgets_export.dart';
+import 'package:amptive/src/shared/hashtags_widget.dart';
+import 'package:amptive/src/shared/blurred_header.dart';
+import '../widgets/event_or_show_card.dart';
+import '../widgets/live_and_society_widget.dart';
+import '../widgets/people_listening.dart';
 
 class ATScheduleDetailedScreen extends StatelessWidget {
   const ATScheduleDetailedScreen({super.key});

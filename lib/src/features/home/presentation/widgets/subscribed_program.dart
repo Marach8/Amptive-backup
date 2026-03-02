@@ -97,7 +97,7 @@ class SubscribedProgram extends StatelessWidget {
                           color: ATColors.hex0D0D0D, radius: 5,
                           padding: const EdgeInsets.all(8.5),
                           child: Text(
-                            ATStrings.PAID_SHOW.toUpperCase(),
+                            ATStrings.paidShow.toUpperCase(),
                             style: Theme.of(context).textTheme.titleSmall?.copyWith(
                               fontWeight: ATFontWeights.w500,
                               fontSize: ATSizes.size10

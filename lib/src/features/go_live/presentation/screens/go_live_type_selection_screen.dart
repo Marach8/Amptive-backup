@@ -1,4 +1,4 @@
-import 'package:amptive/src/features/go_live/presentation/screens/choose_or_create_go_live_program_screen.dart';
+import 'package:amptive/src/features/go_live/presentation/screens/list_hosted_shows_screen.dart';
 import 'package:amptive/src/config/utils/image_strings.dart';
 import 'package:amptive/src/config/utils/other_strings.dart';
 import 'package:amptive/src/config/routing/route_strings.dart';
@@ -86,7 +86,7 @@ class GoLiveTypeSelectionScreen extends StatelessWidget {
                 padding: const EdgeInsets.fromLTRB(15, 5, 15, 50),
                 child: ATPlainElevatedBtn(
                   onPressed: isBtnActive ? () => context.pushNamed(
-                    ATRoutes.CHOOSE_OR_CREATE_GO_LIVE_PROGRAM_SCREEN,
+                    ATRoutes.listHostedShowsScreen,
                     extra: state == 0 ? GoLiveProgramType.show : GoLiveProgramType.event,
                   ) : null,
                   btnTitle: ATStrings.cContinue,

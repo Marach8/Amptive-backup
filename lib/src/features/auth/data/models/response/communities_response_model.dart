@@ -3,7 +3,8 @@ class CommunitiesResponseModel {
     this.status,
     this.statusCode,
     this.message,
-    this.data,
+    this.communities,
+    this.communityIds,
     this.totalItems,
     this.page,
     this.pageSize,
@@ -11,17 +12,56 @@ class CommunitiesResponseModel {
   });
 
   factory CommunitiesResponseModel.fromJson(Map<String, dynamic> json) {
+    final Map<String, Community> communitiesMap = <String, Community>{};
+    final List<String> communityIds = <String>[];
+
+    final List<dynamic>? rawList =
+        (json['data']?['communities'] as List<dynamic>?);
+
+    if (rawList != null) {
+      for (final dynamic communityEntry in rawList) {
+        final String? id = communityEntry['id'];
+        if (id != null) {
+          communitiesMap[id] = Community.fromJson(communityEntry);
+          communityIds.add(id);
+        }
+      }
+    }
+
     return CommunitiesResponseModel(
       status: json['status'],
       statusCode: json['status_code'],
       message: json['message'],
-      data: json['data'] != null
-          ? CommunitiesData.fromJson(json['data'])
-          : null,
+      communities: communitiesMap,
+      communityIds: communityIds,
       totalItems: json['total'],
       page: json['page'],
       pageSize: json['page_size'],
       totalPages: json['total_pages'],
+    );
+  }
+
+  CommunitiesResponseModel copyWith({
+    bool? status,
+    int? statusCode,
+    String? message,
+    Map<String, Community>? communities,
+    List<String>? communityIds,
+    int? totalItems,
+    int? page,
+    int? pageSize,
+    int? totalPages,
+  }) {
+    return CommunitiesResponseModel(
+      status: status ?? this.status,
+      statusCode: statusCode ?? this.statusCode,
+      message: message ?? this.message,
+      communities: communities ?? this.communities,
+      communityIds: communityIds ?? this.communityIds,
+      totalItems: totalItems ?? this.totalItems,
+      page: page ?? this.page,
+      pageSize: pageSize ?? this.pageSize,
+      totalPages: totalPages ?? this.totalPages,
     );
   }
 
@@ -33,23 +73,9 @@ class CommunitiesResponseModel {
   final bool? status;
   final int? statusCode, totalItems, page, pageSize, totalPages;
   final String? message;
-  final CommunitiesData? data;
-}
 
-class CommunitiesData {
-  CommunitiesData({
-    this.communities,
-  });
-
-  factory CommunitiesData.fromJson(Map<String, dynamic> json) {
-    return CommunitiesData(
-      communities: (json['communities'] as List<dynamic>?)
-          ?.map((dynamic e) => Community.fromJson(e))
-          .toList(),
-    );
-  }
-
-  final List<Community>? communities;
+  final Map<String, Community>? communities;
+  final List<String>? communityIds;
 }
 
 class Community {
@@ -69,5 +95,3 @@ class Community {
 
   final String? id, name, image;
 }
-
-
