@@ -1,5 +1,9 @@
+import 'package:amptive/src/config/api_response_and_app_state.dart';
+import 'package:amptive/src/features/auth/cubits/local_user_data_cubit.dart';
+import 'package:amptive/src/features/auth/data/models/response/user_profile_response_model.dart';
 import 'package:amptive/src/features/home/cubits/home_feed_cubit.dart';
 import 'package:amptive/src/features/home/cubits/live_users_cubit.dart';
+import 'package:amptive/src/features/profile/cubits/remote_user_data_cubit.dart';
 import 'package:amptive/src/shared/annotated_region__widget.dart';
 import 'package:amptive/src/features/main_app_nav_bar.dart';
 import 'package:amptive/src/features/home/presentation/screens/home_landing_screen.dart';
@@ -11,13 +15,10 @@ import '../services/go_live_service/go_live_service.dart';
 import 'go_live/go_live_export.dart';
 import 'notifications/presentation/screens/notif_landing_screen.dart';
 
+enum GoLiveUserType { audience, cohost, host }
 
-enum GoLiveUserType{audience, cohost, host}
 class GoLiveScreen extends StatefulWidget {
-  const GoLiveScreen({
-    super.key,
-    required this.userType
-  });
+  const GoLiveScreen({super.key, required this.userType});
 
   final GoLiveUserType userType;
 
@@ -26,8 +27,8 @@ class GoLiveScreen extends StatefulWidget {
 }
 
 class _GoLiveScreenState extends State<GoLiveScreen> {
-  @override 
-  void initState(){
+  @override
+  void initState() {
     super.initState();
     // SystemChrome.setEnabledSystemUIMode(
     //   SystemUiMode.manual,
@@ -38,17 +39,15 @@ class _GoLiveScreenState extends State<GoLiveScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return switch(widget.userType){
-      GoLiveUserType.audience => LiveProgramAudienceView(goLiveHost: getHostList().first),
+    return switch (widget.userType) {
+      GoLiveUserType.audience =>
+        LiveProgramAudienceView(goLiveHost: getHostList().first),
       GoLiveUserType.cohost => const LiveProgramCohostView(),
-      GoLiveUserType.host => LiveProgramHostView(goLiveHost: getHostList().first),
+      GoLiveUserType.host =>
+        LiveProgramHostView(goLiveHost: getHostList().first),
     };
   }
 }
-
-
-
-
 
 class ATMainAppShell extends StatelessWidget {
   const ATMainAppShell({super.key});
@@ -59,12 +58,12 @@ class ATMainAppShell extends StatelessWidget {
       providers: <SingleChildWidget>[
         BlocProvider<HomeFeedCubit>(create: (_) => HomeFeedCubit()),
         BlocProvider<LiveUsersCubit>(create: (_) => LiveUsersCubit()),
+        BlocProvider<RemoteUserDataCubit>(create: (_) => RemoteUserDataCubit())
       ],
       child: const _SubWidget(),
     );
   }
 }
-
 
 class _SubWidget extends StatefulWidget {
   const _SubWidget();
@@ -75,70 +74,83 @@ class _SubWidget extends StatefulWidget {
 
 class __SubWidgetState extends State<_SubWidget> {
   final ScrollController _liveUsersScrollController = ScrollController();
-  final GlobalKey<NestedScrollViewState> _nestedKey = GlobalKey<NestedScrollViewState>();
+  final GlobalKey<NestedScrollViewState> _nestedKey =
+      GlobalKey<NestedScrollViewState>();
 
-  @override 
-  void initState(){
+  @override
+  void initState() {
     super.initState();
     _liveUsersScrollController.addListener(() => _onLiveUsersScrollToEnd());
 
-    WidgetsBinding.instance.addPostFrameCallback(
-      (_){
-        final ScrollController? sController = _nestedKey.currentState?.innerController;
-        if (sController != null) {
-          sController.addListener(() => _onHomeFeedScrollToEnd(sController));
-        }
-        
-        context.read<HomeFeedCubit>().fetchHomeFeed();
-        context.read<LiveUsersCubit>().fetchLiveUsers();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      final ScrollController? sController =
+          _nestedKey.currentState?.innerController;
+      if (sController != null) {
+        sController.addListener(() => _onHomeFeedScrollToEnd(sController));
       }
-    );
+
+      context.read<HomeFeedCubit>().fetchHomeFeed();
+      context.read<LiveUsersCubit>().fetchLiveUsers();
+      context.read<RemoteUserDataCubit>().fetchUserProfile();
+    });
   }
 
   void _onHomeFeedScrollToEnd(ScrollController sController) {
     const double threshHold = 80;
-    if (sController.position.pixels >= 
-      sController.position.maxScrollExtent + threshHold) {
+    if (sController.position.pixels >=
+        sController.position.maxScrollExtent + threshHold) {
       context.read<HomeFeedCubit>().fetchHomeFeed();
     }
   }
 
-  void _onLiveUsersScrollToEnd(){
+  void _onLiveUsersScrollToEnd() {
     const double threshHold = 80;
-    if (_liveUsersScrollController.position.pixels >= 
-      _liveUsersScrollController.position.maxScrollExtent + threshHold) {
+    if (_liveUsersScrollController.position.pixels >=
+        _liveUsersScrollController.position.maxScrollExtent + threshHold) {
       context.read<LiveUsersCubit>().fetchLiveUsers();
     }
   }
 
-
   @override
   Widget build(BuildContext context) {
-    return ATAnnotatedRegion(
-      child: SafeArea(
-        bottom: false, top: false,
-        child: Scaffold(
-          body: BlocSelector<ATNavBarBloc, (int, bool), int>(
-            selector: ((int, bool) st) => st.$1,
-            builder: (_, int index) {
-              return IndexedStack(
-                index: index,
-                children: <Widget>[
-                  HomeTabView(
-                    nestedKey: _nestedKey,
-                    liveUsersScrollController: _liveUsersScrollController,
-                  ),
-                  const DiscoverTabView(),
-                  const SizedBox(),
-                  const NotificationTabView()
-                ]
+    return BlocListener<RemoteUserDataCubit, ATAppState<UserData>>(
+      listener: (BuildContext context, ATAppState<UserData> state) {
+        if (state is SuccessState<UserData>) {
+          final UserData? userProfile = state.newData;
+
+          context.read<LocalUserDataCubit>().updateUserDataLocally(
+                CachedUserData(
+                  userId: userProfile?.id,
+                  email: userProfile?.email,
+                  username: userProfile?.username,
+                  dob: userProfile?.dob,
+                  name: userProfile?.name,
+                  pictureUrl: userProfile?.pictureUrl,
+                ),
               );
-            }
-          ),
-          
-          resizeToAvoidBottomInset: false,
-          backgroundColor: ATColors.transparent,
-          bottomSheet: const MainAppBottomNav()
+        }
+      },
+      child: ATAnnotatedRegion(
+        child: SafeArea(
+          bottom: false,
+          top: false,
+          child: Scaffold(
+              body: BlocSelector<ATNavBarBloc, (int, bool), int>(
+                  selector: ((int, bool) st) => st.$1,
+                  builder: (_, int index) {
+                    return IndexedStack(index: index, children: <Widget>[
+                      HomeTabView(
+                        nestedKey: _nestedKey,
+                        liveUsersScrollController: _liveUsersScrollController,
+                      ),
+                      const DiscoverTabView(),
+                      const SizedBox(),
+                      const NotificationTabView()
+                    ]);
+                  }),
+              resizeToAvoidBottomInset: false,
+              backgroundColor: ATColors.transparent,
+              bottomSheet: const MainAppBottomNav()),
         ),
       ),
     );
