@@ -4,7 +4,6 @@ import 'package:amptive/src/features/accounts/v_models/select_country_bloc.dart'
 import 'package:amptive/src/config/utils/dialogs/app_notification_dialog.dart';
 import 'package:amptive/src/config/utils/dialogs/confirmation_alert_dialog.dart';
 import 'package:amptive/src/features/auth/cubits/local_user_data_cubit.dart';
-import 'package:amptive/src/features/auth/data/models/response/user_profile_response_model.dart';
 import 'package:amptive/src/shared/cupertino_country_picker.dart';
 import 'package:amptive/src/shared/annotated_region__widget.dart';
 import 'package:amptive/src/shared/app_bar_widget.dart';
@@ -53,7 +52,7 @@ class ATAccountInfoScreen extends StatelessWidget {
                     onTap: ()async{
                       bool? shouldUpdateEmail;
               
-                      if(email != null){
+                      if(userData?.email != null){
                         shouldUpdateEmail = await showConfirmationDialog(
                           context: context,
                           title: ATStrings.WANT_2_CHANGE_EMAIL,
@@ -69,97 +68,107 @@ class ATAccountInfoScreen extends StatelessWidget {
                       if(context.mounted && (shouldUpdateEmail ?? false)){
                         final String? newEmail = await context.pushNamed(
                           ATRoutes.updateEmailScreen, 
-                          extra: email == null ? ATStrings.ADDING_EMAIL : ATStrings.CHANGING_EMAIL,
+                          extra: userData?.email == null ? ATStrings.ADDING_EMAIL : ATStrings.CHANGING_EMAIL,
                         ) as String?;
               
                         if(context.mounted && (newEmail != null)){
+                          final CachedUserData? currentData = context.read<LocalUserDataCubit>().currentUserData;
+                          final CachedUserData updatedData = (currentData ?? const CachedUserData()).copyWith(email: newEmail);
+                          context.read<LocalUserDataCubit>().updateUserDataLocally(updatedData);
+                          
                           showAppNotification(
                             context: context,
                             icon: const Icon(Icons.check_circle),
-                            text: email == null ? ATStrings.EMAIL_ADDED : ATStrings.EMAIL_CHANGED,
+                            text: userData?.email == null ? ATStrings.EMAIL_ADDED : ATStrings.EMAIL_CHANGED,
                           );
                         }
                       }
                     }
                   ),
-                                      RenderRowInfo(
-                      title: ATStrings.name,
-                      value: userData?.name ?? ATStrings.addYourName,
-                      onTap: ()async{
-                        bool? shouldUpdateName;
-                
-                        if(userData?.name != null){
-                          shouldUpdateName = await showConfirmationDialog(
-                            context: context,
-                            title: ATStrings.want2ChangeName,
-                            content: '',
-                            yesString: ATStrings.CHANGE,
-                            noString: ATStrings.cancel
-                          );
-                        }
-                        else{
-                          shouldUpdateName = true;
-                        }
-                
-                        if(context.mounted && (shouldUpdateName ?? false)){
-                          final String? newName = await context.pushNamed(
-                            ATRoutes.addNameAuthScreen, 
-                            extra: userData?.name == null ? ATStrings.addingName: ATStrings.changingName,
-                          ) as String?;
-                
-                          if(context.mounted && (newName != null)){
-                            showAppNotification(
-                              context: context,
-                              icon: const Icon(Icons.check_circle),
-                              text: userData?.name == null ? ATStrings.usernameAdded : ATStrings.nameChanged,
-                            );
-                          }
-                        }
-                      }
-                    ),
-                    RenderRowInfo(
-                      title: ATStrings.username,
-                      value: userData?.username ?? ATStrings.addYourUsername,
-                      onTap: ()async{
-                        bool? shouldUpdateUsername;
-                
-                        if(userData?.username != null){
-                          shouldUpdateUsername = await showConfirmationDialog(
-                            context: context,
-                            title: ATStrings.want2ChangeUserName,
-                            content: '',
-                            yesString: ATStrings.CHANGE,
-                            noString: ATStrings.cancel
-                          );
-                        }
-                        else{
-                          shouldUpdateUsername = true;
-                        }
-                
-                        if(context.mounted && (shouldUpdateUsername ?? false)){
-                          final String? newUsername = await context.pushNamed(
-                            ATRoutes.addUserNameScreen, 
-                            extra: userData?.username == null ? ATStrings.addingUsername : ATStrings.changingUsername,
-                          ) as String?;
-                
-                          if(context.mounted && (newUsername != null)){
-                            showAppNotification(
-                              context: context,
-                              icon: const Icon(Icons.check_circle),
-                              text: userData?.username == null ? ATStrings.usernameAdded : ATStrings.usernameChanged
-                            );
-                          }
-                        }
-                      }
-                    ),
-                    // 
-                    // 
+                  // RenderRowInfo(
+                  //   title: ATStrings.name,
+                  //   value: userData?.name ?? ATStrings.addYourName,
+                  //   onTap: ()async{
+                  //     bool? shouldUpdateName;
+              
+                  //     if(userData?.name != null){
+                  //       shouldUpdateName = await showConfirmationDialog(
+                  //         context: context,
+                  //         title: ATStrings.want2ChangeName,
+                  //         content: '',
+                  //         yesString: ATStrings.CHANGE,
+                  //         noString: ATStrings.cancel
+                  //       );
+                  //     }
+                  //     else{
+                  //       shouldUpdateName = true;
+                  //     }
+              
+                  //     if(context.mounted && (shouldUpdateName ?? false)){
+                  //       final String? newName = await context.pushNamed(
+                  //         ATRoutes.updateNameScreen, 
+                  //         extra: userData?.name == null ? ATStrings.addingName : ATStrings.changingName,
+                  //       ) as String?;
+              
+                  //       if(context.mounted && (newName != null)){
+                  //         final CachedUserData? currentData = context.read<LocalUserDataCubit>().currentUserData;
+                  //         final CachedUserData updatedData = (currentData ?? const CachedUserData()).copyWith(name: newName);
+                  //         context.read<LocalUserDataCubit>().updateUserDataLocally(updatedData);
+                          
+                  //         showAppNotification(
+                  //           context: context,
+                  //           icon: const Icon(Icons.check_circle),
+                  //           text: userData?.name == null ? ATStrings.nameAdded : ATStrings.nameChanged,
+                  //         );
+                  //       }
+                  //     }
+                  //   }
+                  // ),
+                  // RenderRowInfo(
+                  //   title: ATStrings.username,
+                  //   value: userData?.username ?? ATStrings.addYourUsername,
+                  //   onTap: ()async{
+                  //     bool? shouldUpdateUsername;
+              
+                  //     if(userData?.username != null){
+                  //       shouldUpdateUsername = await showConfirmationDialog(
+                  //         context: context,
+                  //         title: ATStrings.want2ChangeUserName,
+                  //         content: '',
+                  //         yesString: ATStrings.CHANGE,
+                  //         noString: ATStrings.cancel
+                  //       );
+                  //     }
+                  //     else{
+                  //       shouldUpdateUsername = true;
+                  //     }
+              
+                  //     if(context.mounted && (shouldUpdateUsername ?? false)){
+                  //       final String? newUsername = await context.pushNamed(
+                  //         ATRoutes.updateUsernameScreen, 
+                  //         extra: userData?.username == null ? ATStrings.addingUsername : ATStrings.changingUsername,
+                  //       ) as String?;
+              
+                  //       if(context.mounted && (newUsername != null)){
+                  //         final CachedUserData? currentData = context.read<LocalUserDataCubit>().currentUserData;
+                  //         final CachedUserData updatedData = (currentData ?? const CachedUserData()).copyWith(username: newUsername);
+                  //         context.read<LocalUserDataCubit>().updateUserDataLocally(updatedData);
+                          
+                  //         showAppNotification(
+                  //           context: context,
+                  //           icon: const Icon(Icons.check_circle),
+                  //           text: userData?.username == null ? ATStrings.usernameAdded : ATStrings.usernameChanged
+                  //         );
+                  //       }
+                  //     }
+                  //   }
+                  // ),
                   RenderRowInfo(
                     title: ATStrings.phoneNumber,
                     value: userData?.phoneNumber ?? ATStrings.ADD_UR_PHONE,
                     onTap: ()async{
                       bool? shouldUpdatePhone;
-                      final bool noPhone = (phone ?? '').isEmpty;
+                      final bool noPhone = (userData?.phoneNumber ?? '').isEmpty;
               
                       if(!noPhone){
                         shouldUpdatePhone = await showConfirmationDialog(
@@ -179,6 +188,10 @@ class ATAccountInfoScreen extends StatelessWidget {
                           extra: noPhone ? ATStrings.ADDING_PHONE : ATStrings.CHANGING_PHONE,
                         ) as String?;
                         if(context.mounted && (newPhoneNumber != null)){
+                          final CachedUserData? currentData = context.read<LocalUserDataCubit>().currentUserData;
+                          final CachedUserData updatedData = (currentData ?? const CachedUserData()).copyWith(phoneNumber: newPhoneNumber);
+                          context.read<LocalUserDataCubit>().updateUserDataLocally(updatedData);
+                          
                           showAppNotification(
                             context: context,
                             icon: const Icon(Icons.check_circle),
@@ -188,50 +201,54 @@ class ATAccountInfoScreen extends StatelessWidget {
                       }
                     },
                   ),
-                  RenderRowInfo(
-                      title: ATStrings.dob,
-                      value: userData?.dob ?? ATStrings.whatIsYourDateOfBirth,
-                      onTap: ()async{
-                        bool? shouldUpdateDob;
-                        final bool noDob = (userData?.dob ?? '').isEmpty;
-                
-                        if(!noDob){
-                          shouldUpdateDob = await showConfirmationDialog(
-                            context: context,
-                            title: ATStrings.WANT_2_CHANGE_DOB,
-                            content: '',
-                            yesString: ATStrings.CHANGE,
-                            noString: ATStrings.cancel
-                          );
-                        }
-                        else{
-                          shouldUpdateDob = true;
-                        }
-                        if(context.mounted && (shouldUpdateDob ?? false)){
-                          final String? newDob = await context.pushNamed(
-                             ATRoutes.dobAuthScreen,
-                          //   extra: noDob ? ATStrings.ADDING_DOB : ATStrings.CHANGING_DOB,
-                           );
-                          if(context.mounted && (newDob != null)){
-                            showAppNotification(
-                              context: context,
-                              icon: const Icon(Icons.check_circle),
-                              text: noDob ? ATStrings.dobAdded : ATStrings.dobChanged,
-                            );
-                          }
-                        }
-                      },
-                    ),
-                    RenderRowInfo(
-                      title: ATStrings.followers,
-                      value: userData?.followersCount ?? '0',
-                      onTap: () {}
-                    ),
-                    RenderRowInfo(
-                      title: ATStrings.following,
-                      value: userData?.followingCount ?? '0',
-                      onTap: () {}
-                    ),
+                  // RenderRowInfo(
+                  //   title: ATStrings.dob,
+                  //   value: userData?.dob ?? ATStrings.whatIsYourDateOfBirth,
+                  //   onTap: ()async{
+                  //     bool? shouldUpdateDob;
+                  //     final bool noDob = (userData?.dob ?? '').isEmpty;
+              
+                  //     if(!noDob){
+                  //       shouldUpdateDob = await showConfirmationDialog(
+                  //         context: context,
+                  //         title: ATStrings.WANT_2_CHANGE_DOB,
+                  //         content: '',
+                  //         yesString: ATStrings.CHANGE,
+                  //         noString: ATStrings.cancel
+                  //       );
+                  //     }
+                  //     else{
+                  //       shouldUpdateDob = true;
+                  //     }
+                  //     if(context.mounted && (shouldUpdateDob ?? false)){
+                  //       final String? newDob = await context.pushNamed(
+                  //         ATRoutes.updateDOBScreen,
+                  //         extra: noDob ? ATStrings.ADDING_DOB : ATStrings.CHANGING_DOB,
+                  //       );
+                  //       if(context.mounted && (newDob != null)){
+                  //         final CachedUserData? currentData = context.read<LocalUserDataCubit>().currentUserData;
+                  //         final CachedUserData updatedData = (currentData ?? const CachedUserData()).copyWith(dob: newDob);
+                  //         context.read<LocalUserDataCubit>().updateUserDataLocally(updatedData);
+                          
+                  //         showAppNotification(
+                  //           context: context,
+                  //           icon: const Icon(Icons.check_circle),
+                  //           text: noDob ? ATStrings.dobAdded : ATStrings.dobChanged,
+                  //         );
+                  //       }
+                  //     }
+                  //   },
+                  // ),
+                  // RenderRowInfo(
+                  //   title: ATStrings.followers,
+                  //   value: userData?.followersCount ?? '0',
+                  //   onTap: () {}
+                  // ),
+                  // RenderRowInfo(
+                  //   title: ATStrings.following,
+                  //   value: userData?.followingCount ?? '0',
+                  //   onTap: () {}
+                  // ),
                   
                   StatefulBuilder(
                     builder: (_, StateSetter setter) {
