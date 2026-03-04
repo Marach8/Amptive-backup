@@ -1,15 +1,17 @@
 import 'package:amptive/src/config/api_response_and_app_state.dart';
-import 'package:amptive/src/features/go_live/data/models/response/show_response_model.dart';
+import 'package:amptive/src/features/shows/data/models/response/show_response_model.dart';
 import 'package:amptive/src/features/go_live/data/repository/go_live_repo.dart';
 import 'package:amptive/src/features/go_live/data/repository/go_live_repo_impl.dart';
+import 'package:amptive/src/features/shows/data/repository/shows_repo.dart';
+import 'package:amptive/src/features/shows/data/repository/shows_repo_impl.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class HostedShowsCubit extends Cubit<ATAppState<HostedShowsResponseModel>> {
-  HostedShowsCubit({GoLiveRepo? mockGoLiveRepo})
-      : goLiveRepo = mockGoLiveRepo ?? GoLiveRepoImpl(),
+  HostedShowsCubit({ShowsRepo? mockShowsRepo})
+      : showsRepo = mockShowsRepo ?? ShowsRepoImpl(),
         super(const InitialState<HostedShowsResponseModel>());
 
-  final GoLiveRepo goLiveRepo;
+  final ShowsRepo showsRepo;
 
   HostedShowsResponseModel? get currentHostedShowsData => switch (state) {
     InitialState<HostedShowsResponseModel>(:final HostedShowsResponseModel? initialData) => initialData,
@@ -26,7 +28,8 @@ class HostedShowsCubit extends Cubit<ATAppState<HostedShowsResponseModel>> {
 
     emit(LoadingState<HostedShowsResponseModel>(currentData: currentHostedShowsData));
     try {
-      final ApiResponse<HostedShowsResponseModel> response = await goLiveRepo.fetchHostedShows(
+      final ApiResponse<HostedShowsResponseModel> response = 
+      await showsRepo.fetchHostedShows(
         page: (currentHostedShowsData?.page ?? -1) + 1,
         pageSize: 20,
         refresh: forceRefresh,

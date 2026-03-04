@@ -1,4 +1,4 @@
-import 'package:amptive/src/features/go_live/data/models/response/show_response_model.dart';
+import 'package:amptive/src/features/shows/data/models/response/show_response_model.dart';
 import 'package:amptive/src/features/go_live/go_live_export.dart';
 import 'package:amptive/src/global_export.dart';
 import 'package:amptive/src/shared/image_loader_widget.dart';

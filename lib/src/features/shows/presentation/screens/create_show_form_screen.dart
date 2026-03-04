@@ -6,7 +6,7 @@ import 'package:amptive/src/config/utils/dialogs/app_notification_dialog.dart';
 import 'package:amptive/src/features/auth/cubits/communities_cubit.dart';
 import 'package:amptive/src/features/auth/cubits/upload_image_cubit.dart';
 import 'package:amptive/src/features/auth/data/models/response/communities_response_model.dart';
-import 'package:amptive/src/features/go_live/cubits/create_show_cubit.dart';
+import 'package:amptive/src/features/shows/cubits/create_show_cubit.dart';
 import 'package:amptive/src/features/go_live/go_live_export.dart';
 import 'package:amptive/src/global_export.dart';
 import 'package:amptive/src/shared/annotated_region__widget.dart';

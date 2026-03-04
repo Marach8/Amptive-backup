@@ -1,16 +1,18 @@
 import 'package:amptive/src/config/api_response_and_app_state.dart';
-import 'package:amptive/src/features/go_live/data/models/request/create_show_model.dart';
-import 'package:amptive/src/features/go_live/data/models/response/show_response_model.dart';
+import 'package:amptive/src/features/shows/data/models/request/create_show_model.dart';
+import 'package:amptive/src/features/shows/data/models/response/show_response_model.dart';
 import 'package:amptive/src/features/go_live/data/repository/go_live_repo.dart';
 import 'package:amptive/src/features/go_live/data/repository/go_live_repo_impl.dart';
+import 'package:amptive/src/features/shows/data/repository/shows_repo.dart';
+import 'package:amptive/src/features/shows/data/repository/shows_repo_impl.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class CreateShowCubit extends Cubit<ATAppState<HostedShow>> {
-  CreateShowCubit({GoLiveRepo? mockGoLiveRepo})
-      : goLiveRepo = mockGoLiveRepo ?? GoLiveRepoImpl(),
+  CreateShowCubit({ShowsRepo? mockShowsRepo})
+      : showsRepo = mockShowsRepo ?? ShowsRepoImpl(),
         super(const InitialState<HostedShow>());
 
-  final GoLiveRepo goLiveRepo;
+  final ShowsRepo showsRepo;
 
   Future<void> createShow({
     required String title,
@@ -35,7 +37,7 @@ class CreateShowCubit extends Cubit<ATAppState<HostedShow>> {
         coHostIds: coHostIds,
       );
 
-      final ApiResponse<HostedShow> response = await goLiveRepo.createShow(
+      final ApiResponse<HostedShow> response = await showsRepo.createShow(
         createShowModel: createShowModel,
       );
       response.when(
