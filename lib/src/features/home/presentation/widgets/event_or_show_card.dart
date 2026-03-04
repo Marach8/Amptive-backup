@@ -1,4 +1,4 @@
-import 'package:amptive/src/features/home/presentation/widgets/program_options_modal.dart';
+import 'package:amptive/src/features/home/presentation/widgets/program_actions_modal.dart';
 import 'package:flutter/material.dart';
 import '../../../../config/utils/colors.dart';
 import '../../../../config/utils/image_strings.dart';
@@ -20,7 +20,7 @@ class ATEventOrShowCard extends StatelessWidget {
       height: 360, radius: 16,
       decorImage: imgPath,
       child: ATContainer(
-        onTap: () => showProgramOptions(context),
+        //onTap: () => showProgramOptions(context),
         height: 32, width: 32,
         boxShape: BoxShape.circle,
         color: ATColors.hex0D0D0D.withValues(alpha: 0.7),

@@ -21,10 +21,11 @@ class RemoteUserDataCubit extends Cubit<ATAppState<UserData>> {
 
   Future<void> fetchUserProfile() async {
     emit(const LoadingState<UserData>());
+    try{
 
-    final ApiResponse<UserProfileResponseModel> result = await profileRepo.fetchUserProfile();
+    final ApiResponse<UserProfileResponseModel> response = await profileRepo.fetchUserProfile();
 
-    result.when(
+    response.when(
       successful: (Successful<UserProfileResponseModel> data) async {
         final UserData? userData = data.data?.data;
 
@@ -52,5 +53,8 @@ class RemoteUserDataCubit extends Cubit<ATAppState<UserData>> {
         emit(FailureState<UserData>(error.error.message));
       },
     );
+  }catch (e) {
+    emit(FailureState<UserData>('Unable to fetch user profile: $e'));
+  }
   }
 }
