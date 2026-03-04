@@ -10,7 +10,6 @@ import 'package:amptive/src/shared/textformfield_widget.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import '../../../../shared/app_bar_widget.dart';
 
@@ -107,7 +106,7 @@ class _LoginScreenState extends State<LoginScreen> with ATValidators {
                       prefixIcon: const SizedBox(width: 10),
                     suffixIcon: IconButton(
                     icon: Padding(
-                    padding: EdgeInsets.only(right: 16),
+                    padding: const EdgeInsets.only(right: 16),
                     child: Icon(
                       _passwordVisible
                           ? Icons.visibility_off

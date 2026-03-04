@@ -1,5 +1,4 @@
 import 'package:amptive/src/config/config_export.dart';
-import 'package:amptive/src/shared/circular_image.dart';
 import 'package:amptive/src/shared/image_loader_widget.dart';
 import 'package:flutter/material.dart';
 

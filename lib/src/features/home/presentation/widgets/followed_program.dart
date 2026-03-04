@@ -11,7 +11,7 @@ import 'package:flutter/material.dart';
 import '../../../../services/create_show/create_show_service.dart';
 import '../../../../config/utils/colors.dart';
 import '../../../../config/utils/other_strings.dart';
-import 'program_options_modal.dart';
+import 'program_actions_modal.dart';
 import '../../../../shared/image_loader_widget.dart';
 
 class FollowedProgram extends StatelessWidget {
@@ -26,7 +26,7 @@ class FollowedProgram extends StatelessWidget {
         TileWithLeadingImage(
           leadingImagePath: ATImgStrings.jpeg3,
           trailingOnPressed: (){
-            showProgramOptions(context);
+            //showProgramOptions(context);
           },
           title: 'glennodoyle',
           subtitle: 'scheduled a live show',

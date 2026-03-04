@@ -105,6 +105,7 @@ class CachedUserData extends Equatable {
         phoneNumber: phoneNumber ?? this.phoneNumber,
         followersCount: followersCount ?? this.followersCount,
         followingCount: followingCount ?? this.followingCount
+      
       );
 
   Map<String, dynamic> toJson() => <String, dynamic>{

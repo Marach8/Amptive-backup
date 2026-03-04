@@ -11,7 +11,7 @@ import 'package:amptive/src/features/home/presentation/widgets/with_2_others_wid
 import 'package:flutter/material.dart';
 import '../../../../config/utils/colors.dart';
 import '../../../../config/utils/dialogs/added_or_removed_from_calender_dialog.dart';
-import 'program_options_modal.dart';
+import 'program_actions_modal.dart';
 import '../../../../shared/image_loader_widget.dart';
 
 
@@ -36,7 +36,7 @@ class _ScheduledProgramState extends State<ScheduledProgram> {
         TileWithLeadingImage(
           leadingImagePath: ATImgStrings.jpeg3,
           trailingOnPressed: (){
-            showProgramOptions(context);
+            //showProgramOptions(context);
           },
           title: 'glennodoyle',
           subtitle: 'scheduled a live show',

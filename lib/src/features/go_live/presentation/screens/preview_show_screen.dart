@@ -1,5 +1,4 @@
 import 'dart:ui';
-import 'package:amptive/src/features/home/cubits/followed_shows_cubit.dart';
 import 'package:amptive/src/features/home/presentation/widgets/event_or_show_card.dart';
 import 'package:amptive/src/features/home/presentation/widgets/live_and_society_widget.dart';
 import 'package:amptive/src/features/home/presentation/widgets/people_listening.dart';
