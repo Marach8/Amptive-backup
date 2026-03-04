@@ -7,7 +7,6 @@ import 'package:amptive/src/config/services/network_service/dio_network_service_
 import 'package:amptive/src/config/services/network_service/network_service.dart';
 import 'package:amptive/src/features/shows/data/models/request/create_show_model.dart';
 import 'package:amptive/src/features/shows/data/models/response/show_response_model.dart';
-import 'package:amptive/src/features/go_live/data/repository/go_live_repo.dart';
 import 'package:amptive/src/features/shows/data/repository/shows_repo.dart';
 import 'package:dio/dio.dart' show Response;
 
@@ -16,6 +15,27 @@ class ShowsRepoImpl implements ShowsRepo {
       : networkService = mockNetworkService ?? DioNetworkServiceImpl();
 
   final NetworkService networkService;
+
+  @override
+  Future<ApiResponse<HostedShow>> fetchShow({
+    required String showId,
+  }) async {
+    try {
+      final Response<dynamic> response = await networkService.get(
+        '${ATEndpoints.shows}$showId',
+      );
+
+      final HostedShow showResponse = HostedShow.fromJson(
+        response.data as Map<String, dynamic>,
+      );
+      return Successful<HostedShow>(data: showResponse);
+    } catch (e) {
+      log('Fetch show error: $e');
+      return Unsuccessful<HostedShow>(
+        error: ATException.resolveException(e),
+      );
+    }
+  }
 
   @override
   Future<ApiResponse<HostedShow>> createShow({

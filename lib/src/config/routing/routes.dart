@@ -33,6 +33,7 @@ import 'package:amptive/src/features/profile/presentation/screens/profile_views_
 import 'package:amptive/src/features/home/presentation/screens/scheduled_screen.dart';
 import 'package:amptive/src/features/accounts/presentation/screens/account_info_screen.dart';
 import 'package:amptive/src/features/accounts/presentation/screens/acounts_landing_screen.dart';
+import 'package:amptive/src/features/shows/data/models/response/show_response_model.dart';
 import 'package:amptive/src/features/switch_account/presentation/switch_acct/switch_acct_export.dart';
 import 'package:amptive/src/features/wallet/presentation/screens/wallet_transactions_history_screen.dart';
 import 'package:amptive/src/features/onboarding/presentation/screens/onboarding_screen.dart';
@@ -53,9 +54,9 @@ import '../../features/wallet/wallet_export.dart';
 
 // The route configuration.
 final GoRouter amptiveAppRouter = GoRouter(
-  //initialLocation: ATRoutes.mainAppShell.addSlash,
+  initialLocation: ATRoutes.mainAppShell.addSlash,
   //redirect: tempRedirect,
-  initialLocation: ATRoutes.temporaryLoginScreen.addSlash,
+  //initialLocation: ATRoutes.temporaryLoginScreen.addSlash,
   routes: <RouteBase>[
     GoRoute(
       name: ATRoutes.POST_ONBOARDING_SCREEN,
@@ -625,9 +626,9 @@ final GoRouter amptiveAppRouter = GoRouter(
             name: ATRoutes.showPreviewScreen,
             path: ATRoutes.showPreviewScreen,
             pageBuilder: (_, GoRouterState state) {
-              String coverArt = state.extra as String;
+              HostedShow hostedShow = state.extra as HostedShow;
               return ATSlidingRouteTransition<void>(
-                child: PreviewShowScreen(coverArt: coverArt,)
+                child: PreviewShowScreen(hostedShow: hostedShow,)
               );
             },
           ),

@@ -1,4 +1,6 @@
 
+import 'package:equatable/equatable.dart';
+
 class HostedShowsResponseModel {
   HostedShowsResponseModel({
     this.hostedShows,
@@ -29,8 +31,8 @@ class HostedShowsResponseModel {
 
 
 
-class HostedShow {
-  HostedShow({
+class HostedShow extends Equatable {
+  const HostedShow({
     this.showId,
     this.title,
     this.description,
@@ -104,6 +106,29 @@ class HostedShow {
   final List<Host>? coHosts;
   final List<Tag>? tags;
   final Episode? activeEpisode;
+
+  @override
+  List<Object?> get props => <Object?>[
+        showId,
+        title,
+        description,
+        coverUrl,
+        category,
+        showType,
+        price,
+        status,
+        episodeCount,
+        totalViewers,
+        goingCount,
+        followerCount,
+        host,
+        coHosts,
+        tags,
+        publishedAt,
+        createdAt,
+        updatedAt,
+        activeEpisode,
+      ];
 }
 
 

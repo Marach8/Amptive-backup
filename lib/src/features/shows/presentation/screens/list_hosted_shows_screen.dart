@@ -3,7 +3,7 @@ import 'package:amptive/src/config/api_response_and_app_state.dart';
 import 'package:amptive/src/config/utils/dialogs/app_notification_dialog.dart';
 import 'package:amptive/src/features/shows/cubits/hosted_shows_cubit.dart';
 import 'package:amptive/src/features/shows/data/models/response/show_response_model.dart';
-import 'package:amptive/src/features/go_live/presentation/widgets/render_hosted_show.dart';
+import 'package:amptive/src/features/shows/presentation/widgets/render_hosted_show.dart';
 import 'package:amptive/src/global_export.dart';
 import 'package:amptive/src/shared/annotated_region__widget.dart';
 import 'package:amptive/src/shared/back_button.dart';
@@ -34,18 +34,6 @@ class ListHostedShowsScreen extends StatelessWidget {
 
 class _SubWidget extends StatefulWidget {
   const _SubWidget();
-
-  static const List<String> listOfImageStrings = <String>[
-    '',
-    ATImgStrings.CRIMINAL,
-    ATImgStrings.weCanDoHardThingsBgImage,
-    // ATImgStrings.CRIMINAL,
-    // ATImgStrings.weCanDoHardThingsBgImage,
-    // ATImgStrings.CRIMINAL,
-    // ATImgStrings.weCanDoHardThingsBgImage,
-    ATImgStrings.OFFICE_LADIES,
-    ATImgStrings.JOE_POMP_SHOW,
-  ];
 
   @override
   State<_SubWidget> createState() => __SubWidgetState();
@@ -90,8 +78,9 @@ class __SubWidgetState extends State<_SubWidget> {
             return Stack(
               children: <Widget>[
                 Positioned.fill(
-                  child: BlocBuilder<HostedShowSelectionCubit, String?>(
-                    builder: (_, String? selectedImgString) {
+                  child: BlocBuilder<HostedShowSelectionCubit, HostedShow?>(
+                    builder: (_, HostedShow? selected) {
+                      final String? selectedImgString = selected?.coverUrl;
                       if(selectedImgString == null){
                         return ATContainer(color: ATColors.black,);
                       }
@@ -227,16 +216,17 @@ class __SubWidgetState extends State<_SubWidget> {
         
         resizeToAvoidBottomInset: false,
     
-        bottomSheet: BlocBuilder<HostedShowSelectionCubit, String?>(
-          builder: (_, String? selectedImgPath) {
+        bottomSheet: BlocBuilder<HostedShowSelectionCubit, HostedShow?>(
+          builder: (_, HostedShow? selectedShow) {
+            final bool shouldActivate = selectedShow != null;
             return ATBlurredBgBtn(
               btnTitle: ATStrings.next,
-              onPressed: selectedImgPath == null ? null : (){
+              onPressed: shouldActivate ? (){
                 context.pushNamed(
                   ATRoutes.showPreviewScreen,
-                  extra: selectedImgPath
+                  extra: selectedShow,
                 );
-              },
+              } : null,
             );
           }
         )
@@ -286,7 +276,7 @@ class _RenderInitialLoadFailureWidget extends StatelessWidget {
         crossAxisSpacing: 20,
         mainAxisSpacing: 20
       ),
-      itemCount: _SubWidget.listOfImageStrings.length,
+      itemCount: 2,
       itemBuilder: (_, int gridIndex){
         if(gridIndex == 0){
           return const CreateNewShowWidget();
@@ -305,9 +295,11 @@ class _RenderInitialLoadFailureWidget extends StatelessWidget {
 }
 
 
-class HostedShowSelectionCubit extends Cubit<String?>{
+class HostedShowSelectionCubit extends Cubit<HostedShow?>{
   HostedShowSelectionCubit():super(null);
 
-  void setBgImage(String? image) => emit(image);
+  void setSelection({HostedShow? show}) {
+    emit(show);
+  }
 
 }
