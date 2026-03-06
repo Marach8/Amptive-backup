@@ -16,11 +16,14 @@ class ATHashtagsWidget extends StatelessWidget {
         'Documentry',
       ].map(
         (String element) => IntrinsicWidth(
-          child: ATContainer(
+          child: Container(
             margin: const EdgeInsets.only(bottom: 15, right: 15),
             padding: const EdgeInsets.fromLTRB(10, 7, 10, 7),
-            alignment: Alignment.center, radius: 10,
-            color: ATColors.white.withValues(alpha: 0.1),
+            alignment: Alignment.center,
+            decoration: BoxDecoration(
+              color: ATColors.white.withValues(alpha: 0.1),
+              borderRadius: BorderRadius.circular(10),
+            ),
             child: Row(
               children: <Widget>[
                 const ATImgLoader(imgPath: ATImgStrings.HASH_ICON),

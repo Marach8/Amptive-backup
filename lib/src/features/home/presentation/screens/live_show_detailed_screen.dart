@@ -79,7 +79,7 @@ class ATLiveShowDetailedScreen extends StatelessWidget {
                                     const SizedBox(height: 40,),
                               
                                     Text(
-                                      ATStrings.HASHTAGS,
+                                      ATStrings.hashtags,
                                       style: context.textTheme.bodySmall?.copyWith(
                                         fontSize: ATSizes.size17
                                       ),  

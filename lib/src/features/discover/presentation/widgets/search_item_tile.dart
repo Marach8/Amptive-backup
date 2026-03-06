@@ -150,7 +150,7 @@ class HashTagSearchItemTile extends StatelessWidget {
                 const SizedBox(height: 5,),
 
                 Text(
-                  ATStrings.HASHTAGS.toLowerCase(),
+                  ATStrings.hashtags.toLowerCase(),
                   style: Theme.of(context).textTheme.titleSmall?.copyWith(
                     color: ATColors.hexC2C2C2,
                     fontWeight: ATFontWeights.w500,

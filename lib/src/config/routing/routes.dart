@@ -57,9 +57,9 @@ import '../../features/wallet/wallet_export.dart';
 
 // The route configuration.
 final GoRouter amptiveAppRouter = GoRouter(
-  //initialLocation: ATRoutes.mainAppShell.addSlash,
+  initialLocation: ATRoutes.mainAppShell.addSlash,
   //redirect: tempRedirect,
-  initialLocation: ATRoutes.temporaryLoginScreen.addSlash,
+  //initialLocation: ATRoutes.temporaryLoginScreen.addSlash,
   routes: <RouteBase>[
     GoRoute(
       name: ATRoutes.POST_ONBOARDING_SCREEN,

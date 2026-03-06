@@ -304,7 +304,7 @@ class ATStrings{
   static const String FREE_EVENTS = 'Free Events';
   static const String PAID_EVENTS = 'Paid Events';
   static const String FREE_SHOWS = 'Free Shows';
-  static const String HASHTAGS = 'Hashtags';
+  static const String hashtags = 'Hashtags';
   static const String HASHTAG = 'Hashtag';
   static const String HOSTED_BY = 'Hosted by';
   static const String showLess = ' Show less';

@@ -295,7 +295,7 @@ class _CreateShowFormScreenState extends State<CreateEpisodeFormScreen> {
                                                     
                               const Padding(
                                 padding: EdgeInsets.fromLTRB(15, 0, 15, 10),
-                                child: RowWith2Texts(text1: ATStrings.HASHTAGS),
+                                child: RowWith2Texts(text1: ATStrings.hashtags),
                               ),
                               Padding(
                                 padding: const EdgeInsets.fromLTRB(15, 0, 15, 10),
