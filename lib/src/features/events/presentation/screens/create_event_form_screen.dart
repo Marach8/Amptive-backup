@@ -29,20 +29,6 @@ import '../../../../shared/rich_text.dart';
 import '../../../../views/widgets/other_widgets/main_application_widgets/widgets_in_create_show_event/create_show_text_form_field.dart';
 import '../../../auth/data/models/response/communities_response_model.dart' show Community;
 
-//     ShowTypeVisibilityWidget(
-          //       showType: widget.showType,
-          //       allowedShowTypes: const <ShowType>[ShowType.event],
-          //       child: IconButton(
-          //         icon: const Icon(Iconsax.calendar_2),
-          //         onPressed: () async {
-          //           await selectDateModal(context, service.selectedImage.value);
-          //         },
-          //       ),
-          //     ),
-
-
-
-
 
 class CreateEventFormScreen extends StatefulWidget {
   const CreateEventFormScreen({super.key});

@@ -1,4 +1,4 @@
-import 'package:amptive/src/features/go_live/presentation/screens/list_hosted_shows_screen.dart';
+import 'package:amptive/src/features/shows/presentation/screens/list_hosted_shows_screen.dart';
 import 'package:amptive/src/config/utils/image_strings.dart';
 import 'package:amptive/src/config/utils/other_strings.dart';
 import 'package:amptive/src/config/routing/route_strings.dart';

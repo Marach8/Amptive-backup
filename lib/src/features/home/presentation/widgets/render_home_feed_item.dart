@@ -125,17 +125,19 @@ class RenderHomeFeedItemShimmer extends StatelessWidget {
               spacing: 10,
               children: <Widget>[
                 const ATShimmer(width: 40, height: 40, radius: 30,),
-                Column(
-                  spacing: 5,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    ATShimmer(
-                      height: 10, radius: 3,
-                      width: ATHelperFuncs.getRandomNumber(
-                        constraints.maxWidth * 0.75),
-                    ),
-                    const ATShimmer(width: 80, height: 7, radius: 2,),
-                  ],
+                Flexible(
+                  child: Column(
+                    spacing: 5,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      ATShimmer(
+                        height: 10, radius: 3,
+                        width: ATHelperFuncs.getRandomNumber(
+                          constraints.maxWidth * 0.75),
+                      ),
+                      const ATShimmer(width: 80, height: 7, radius: 2,),
+                    ],
+                  ),
                 ),
                 const Spacer(),
                 const ATShimmer(width: 25, height: 5, radius: 4,),
