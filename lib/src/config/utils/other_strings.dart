@@ -306,11 +306,11 @@ class ATStrings{
   static const String FREE_SHOWS = 'Free Shows';
   static const String hashtags = 'Hashtags';
   static const String HASHTAG = 'Hashtag';
-  static const String HOSTED_BY = 'Hosted by';
+  static const String hostedBy = 'Hosted by';
   static const String showLess = ' Show less';
   static const String learnMore = 'Learn more';
   static const String showMore = 'Show more';
-  static const String WHISPERS = 'Whispers';
+  static const String whispers = 'Whispers';
   static const String ATTENDED = 'Attended';
   static const String UPCOMING = 'Upcoming';
   static const String scheduled = 'Scheduled';
@@ -392,11 +392,11 @@ class ATStrings{
   static const String ABT_U = 'About you';
   static const String userName = 'Username';
   static const String NAME = 'Name';
-  static const String TITLE_OF_UR_SHOW = 'What is the title of your show?';
+  static const String titleOfYourShow = 'What is the title of your show?';
   static const String tellListenersAboutYourShow = 'Tell your listeners what your show is about.';
   static const String selectCommunity4YourShow = 'Select a community for your show';
   static const String title = 'Title';
-  static const String TOGGLE_WHISPERS = 'Activate or de-activate whispers';
+  static const String toggleWhispers = 'Activate or de-activate whispers';
   static const String description = 'Description';
   static const String BIO = 'Bio';
   static const String SELECT_ACCT_TYPE = 'Select your choice account type to proceed.';
@@ -539,7 +539,7 @@ class ATStrings{
   static const String SHOW_IS_SETUP = 'Your Show is setup and airing!';
   static const String BEGIN_JOURNEY = 'Begin your journey by creating your first episode';
   static const String CREATE_1ST_EPISODE = 'Create first epidode';
-  static const String CREATE_AN_EPISODE = 'Create an episode';
+  static const String createAnEpisode = 'Create an Episode';
   static const String VIEW_SHOW_PAGE = 'View show page';
   static const String VIEW_EVENT_PAGE = 'View event page';
   static const String EVENT_SCHEDULED = 'Your Event is scheduled!';

@@ -46,7 +46,7 @@ Future<WhispersState?> controlWhispersModal({
                       const Icon(Iconsax.message),
                       const SizedBox(width: 5,),
                       Text(
-                        ATStrings.WHISPERS,
+                        ATStrings.whispers,
                         style: Theme.of(context).textTheme.bodyLarge,
                       ),
                     ],
@@ -201,7 +201,7 @@ class _WhispersBloc extends Cubit<WhispersState?>{
     => emit(st);
 
   void initializeWhispers(String initialWhisper){
-    if(initialWhisper == ATStrings.TOGGLE_WHISPERS){
+    if(initialWhisper == ATStrings.toggleWhispers){
       emit(null);
     }
     else{

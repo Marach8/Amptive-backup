@@ -96,7 +96,7 @@ class ATLiveEventDetailedScreen extends StatelessWidget {
                                     const SizedBox(height: 20),
                               
                                     Text(
-                                      ATStrings.HOSTED_BY,
+                                      ATStrings.hostedBy,
                                       style: context.textTheme.bodySmall?.copyWith(
                                         fontSize: ATSizes.size17
                                       ),  
@@ -158,7 +158,7 @@ class ATLiveEventDetailedScreen extends StatelessWidget {
                                     const SizedBox(height: 30),
                               
                                     Text(
-                                      ATStrings.WHISPERS,
+                                      ATStrings.whispers,
                                       style: context.textTheme.bodySmall?.copyWith(
                                         fontSize: ATSizes.size17
                                       ),  

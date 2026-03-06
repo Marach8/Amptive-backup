@@ -21,7 +21,7 @@ class HashTagsSubtitleRow extends StatelessWidget {
     return Row(
       children: <Widget>[
         const ATImgLoader(
-          imgPath: ATImgStrings.HASH_ICON,
+          imgPath: ATImgStrings.hashIcon,
           height: 25, width: 25,
         ),
         const SizedBox(width: 8),

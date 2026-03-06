@@ -8,6 +8,7 @@ import 'package:amptive/src/services/create_show/create_show_service.dart';
 import 'package:amptive/src/shared/animated_switcher.dart';
 import 'package:amptive/src/shared/annotated_region__widget.dart';
 import 'package:amptive/src/shared/divider_widget.dart';
+import 'package:amptive/src/shared/global_model_objects.dart';
 import 'package:amptive/src/shared/textformfield_widget.dart';
 import 'package:amptive/src/views/widgets/other_widgets/main_application_widgets/widgets_in_home_view/widgets_in_go_live/shows/show_type_visibility.dart';
 import 'package:flutter/material.dart';
@@ -27,7 +28,7 @@ import 'package:amptive/src/shared/sliver_header_delegate.dart';
 import '../../../../models/host.dart';
 import '../../../../shared/rich_text.dart';
 import '../../../../views/widgets/other_widgets/main_application_widgets/widgets_in_create_show_event/create_show_text_form_field.dart';
-import '../../../auth/data/models/response/communities_response_model.dart' show Community;
+import '../../../discover/data/models/response/communities_response_model.dart' show Community;
 
 
 class CreateEventFormScreen extends StatefulWidget {
@@ -155,7 +156,7 @@ class _CreateShowFormScreenState extends State<CreateEventFormScreen> {
                                 padding: const EdgeInsets.fromLTRB(15, 0, 15, 30),
                                 child: ATTextFormField(
                                   controller: _titleCntrl,
-                                  hintText: ATStrings.TITLE_OF_UR_SHOW,
+                                  hintText: ATStrings.titleOfYourShow,
                                   prefixIcon: const SizedBox(width: 12,),
                                   hintStyle: context.textTheme.bodySmall?.copyWith(
                                     color: ATColors.white.withValues(alpha: 0.4),

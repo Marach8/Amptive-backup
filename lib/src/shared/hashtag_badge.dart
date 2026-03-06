@@ -26,7 +26,7 @@ class ATHashtagBadge extends StatelessWidget {
           BlendMode.srcATop
         ),
         child: ATImgLoader(
-          imgPath: ATImgStrings.HASH_ICON,
+          imgPath: ATImgStrings.hashIcon,
           height: hashSize, width: hashSize,
         ),
       ),

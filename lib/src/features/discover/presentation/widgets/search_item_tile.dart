@@ -129,7 +129,7 @@ class HashTagSearchItemTile extends StatelessWidget {
                 BlendMode.srcATop
               ),
               child: const ATImgLoader(
-                imgPath: ATImgStrings.HASH_ICON,
+                imgPath: ATImgStrings.hashIcon,
                 height: 28, width: 28,
               ),
             ),

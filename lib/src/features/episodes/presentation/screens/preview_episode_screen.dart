@@ -91,7 +91,7 @@ class EpisodeDetailPreviewScreen extends StatelessWidget {
                               const SizedBox(height: 20),
                                                         
                               Text(
-                                ATStrings.HOSTED_BY,
+                                ATStrings.hostedBy,
                                 style: context.textTheme.bodySmall?.copyWith(
                                   fontSize: ATSizes.size17
                                 ),  

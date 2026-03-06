@@ -1,16 +1,17 @@
-import 'package:amptive/src/features/auth/data/models/response/communities_response_model.dart';
+import 'package:amptive/src/features/discover/data/models/response/communities_response_model.dart';
+import 'package:amptive/src/features/discover/data/repository/discover_repo.dart';
+import 'package:amptive/src/features/discover/data/repository/discover_repo_impl.dart';
+import 'package:amptive/src/shared/global_model_objects.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:amptive/src/config/api_response_and_app_state.dart';
-import 'package:amptive/src/features/auth/data/repository/auth_repo.dart';
-import 'package:amptive/src/features/auth/data/repository/auth_repo_impl.dart';
 
 class CommunitiesCubit extends Cubit<ATAppState<CommunitiesResponseModel>> {
   CommunitiesCubit({
-    AuthRepo? mockAuthRepo,
-  }) : authRepo = mockAuthRepo ?? AuthRepoImpl(),
+    DiscoverRepo? mockDiscoverRepo,
+  }) : discoverRepo = mockDiscoverRepo ?? DiscoverRepoImpl(),
         super(const InitialState<CommunitiesResponseModel>());
 
-  final AuthRepo authRepo;
+  final DiscoverRepo discoverRepo;
 
   CommunitiesResponseModel? get currentCommunities => switch (state) {
     InitialState<CommunitiesResponseModel>(
@@ -31,7 +32,7 @@ class CommunitiesCubit extends Cubit<ATAppState<CommunitiesResponseModel>> {
 
     emit(LoadingState<CommunitiesResponseModel>(currentData: currentCommunities));
     try {
-      final ApiResponse<CommunitiesResponseModel> response = await authRepo.fetchCommunities(
+      final ApiResponse<CommunitiesResponseModel> response = await discoverRepo.fetchCommunities(
         pageNo: (currentCommunities?.page ?? 0) + 1,
         pageSize: 20,
       );

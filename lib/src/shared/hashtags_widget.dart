@@ -26,7 +26,10 @@ class ATHashtagsWidget extends StatelessWidget {
             ),
             child: Row(
               children: <Widget>[
-                const ATImgLoader(imgPath: ATImgStrings.HASH_ICON),
+                const ATImgLoader(
+                  imgPath: ATImgStrings.hashIcon,
+                  height: 16, width: 16,
+                ),
                 const SizedBox(width: 2,),
                 Flexible(
                   child: Text(

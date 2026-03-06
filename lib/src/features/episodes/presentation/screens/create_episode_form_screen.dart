@@ -35,7 +35,7 @@ class _CreateShowFormScreenState extends State<CreateEpisodeFormScreen> {
   final ValueNotifier<(bool, BtnOnTap)> _activateBtn = ValueNotifier<(bool, BtnOnTap)>((false, BtnOnTap.goLive));
 
   String programDesc = ATStrings.tellListenersAboutYourShow;
-  String whispersDesc = ATStrings.TOGGLE_WHISPERS;
+  String whispersDesc = ATStrings.toggleWhispers;
   String handRaisingDesc = ATStrings.choose2AllowHandRasing;
 
   UnusedCommunity? selectedCommunity;
@@ -140,7 +140,7 @@ class _CreateShowFormScreenState extends State<CreateEpisodeFormScreen> {
                                         child: ATXBackBtn()
                                       ),
                                       Text(
-                                        ATStrings.CREATE_AN_EPISODE,
+                                        ATStrings.createAnEpisode,
                                         style: context.textTheme.bodyMedium,
                                       ),
                                       Padding(
@@ -190,8 +190,9 @@ class _CreateShowFormScreenState extends State<CreateEpisodeFormScreen> {
                               Padding(
                                 padding: const EdgeInsets.fromLTRB(15, 0, 15, 30),
                                 child: ATTextFormField(
-                                  controller: _titleCntrl, maxLines: 1, cursorHeight: 20,
-                                  hintText: ATStrings.TITLE_OF_UR_SHOW,
+                                  controller: _titleCntrl, 
+                                  maxLines: 1, cursorHeight: 20,
+                                  hintText: ATStrings.titleOfYourShow,
                                   prefixIcon: const SizedBox(width: 12,),
                                   onChanged: (_) => _check4BtnActivation(blocContext),
                                   hintStyle: context.textTheme.bodySmall?.copyWith(
@@ -403,7 +404,7 @@ class _CreateShowFormScreenState extends State<CreateEpisodeFormScreen> {
                                     const Icon(Iconsax.message, size: 18,),
                                     const SizedBox(width: 5,),
                                     Text(
-                                      ATStrings.WHISPERS,
+                                      ATStrings.whispers,
                                       style: context.textTheme.titleLarge?.copyWith(
                                         fontWeight: ATFontWeights.w500
                                       ),
@@ -419,7 +420,7 @@ class _CreateShowFormScreenState extends State<CreateEpisodeFormScreen> {
                                       duration: 300,
                                       child: CreateProgramSelectionItem(
                                         description: whispersDesc,
-                                        descStyle: whispersDesc == ATStrings.TOGGLE_WHISPERS ? null
+                                        descStyle: whispersDesc == ATStrings.toggleWhispers ? null
                                           : context.textTheme.bodySmall,
                                         onTap: ()async{                                          
                                           final WhispersState? whispersResult = await controlWhispersModal(
@@ -428,7 +429,7 @@ class _CreateShowFormScreenState extends State<CreateEpisodeFormScreen> {
                                           setter(
                                             (){
                                               if(whispersResult == null){
-                                                whispersDesc = ATStrings.TOGGLE_WHISPERS;
+                                                whispersDesc = ATStrings.toggleWhispers;
                                               }
                                               else{
                                                 whispersDesc = whispersResult == WhispersState.turnedOn 

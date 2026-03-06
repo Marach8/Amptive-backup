@@ -94,7 +94,7 @@ class ATScheduleDetailedScreen extends StatelessWidget {
                               const SizedBox(height: 30,),
                                                       
                               Text(
-                                ATStrings.HOSTED_BY,
+                                ATStrings.hostedBy,
                                 style: Theme.of(context).textTheme.bodySmall?.copyWith(
                                   fontSize: ATSizes.size17
                                 ),  

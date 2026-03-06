@@ -3,14 +3,15 @@ import 'dart:typed_data';
 import 'dart:ui';
 import 'package:amptive/src/config/api_response_and_app_state.dart';
 import 'package:amptive/src/config/utils/dialogs/app_notification_dialog.dart';
-import 'package:amptive/src/features/auth/cubits/communities_cubit.dart';
+import 'package:amptive/src/features/discover/cubits/communities_cubit.dart';
 import 'package:amptive/src/features/auth/cubits/upload_image_cubit.dart';
-import 'package:amptive/src/features/auth/data/models/response/communities_response_model.dart';
+import 'package:amptive/src/features/discover/data/models/response/communities_response_model.dart';
 import 'package:amptive/src/features/shows/cubits/create_show_cubit.dart';
 import 'package:amptive/src/features/go_live/go_live_export.dart';
 import 'package:amptive/src/global_export.dart';
 import 'package:amptive/src/shared/annotated_region__widget.dart';
 import 'package:amptive/src/shared/divider_widget.dart';
+import 'package:amptive/src/shared/global_model_objects.dart';
 import 'package:amptive/src/shared/textformfield_widget.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:nested/nested.dart';
@@ -178,7 +179,7 @@ class __SubWidgetState extends State<_SubWidget> {
                               child: ATTextFormField(
                                 controller: _titleCntrl,
                                 maxLines: 1, cursorHeight: 20,
-                                hintText: ATStrings.TITLE_OF_UR_SHOW,
+                                hintText: ATStrings.titleOfYourShow,
                                 prefixIcon: const SizedBox(width: 12,),
                                 hintStyle: context.textTheme.bodySmall?.copyWith(
                                   color: ATColors.white.withValues(alpha: 0.4),
