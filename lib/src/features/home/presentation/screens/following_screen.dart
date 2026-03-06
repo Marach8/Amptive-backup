@@ -32,7 +32,7 @@ class ATFollowedPrograms extends StatelessWidget {
                   padding: const EdgeInsets.only(left: 20),
                   child: ATBackBtn(
                     alignment: Alignment.centerLeft,
-                    leadingText: ATStrings.FOLLOWING,
+                    leadingText: ATStrings.following,
                     leadingStyle: Theme.of(context).textTheme.bodyMedium?.copyWith(
                       fontSize: ATSizes.size23
                     ),

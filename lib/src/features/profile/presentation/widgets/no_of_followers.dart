@@ -43,7 +43,7 @@ class NoOfFollowers extends StatelessWidget {
           ),
           const SizedBox(width: 5,),
           Text(
-            ATStrings.FOLLOWERS,
+            ATStrings.followers,
             style: Theme.of(context).textTheme.bodySmall?.copyWith(
               fontSize: ATSizes.size16
             ),

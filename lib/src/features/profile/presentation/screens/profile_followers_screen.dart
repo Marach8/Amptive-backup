@@ -22,7 +22,7 @@ class ATProfileFollowersScreen extends StatelessWidget {
           leading: const ATRoundedBackBtn(),
           leadingWidth: 30,
           title: Text(
-            ATStrings.FOLLOWERS,
+            ATStrings.followers,
             style: context.textTheme.bodyMedium,
           ),
         ),
