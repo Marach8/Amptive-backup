@@ -7,15 +7,16 @@ import 'package:amptive/src/config/services/network_service/network_service.dart
 import 'package:amptive/src/features/discover/data/models/response/communities_response_model.dart';
 import 'package:amptive/src/features/discover/data/repository/discover_repo.dart';
 import 'package:dio/dio.dart';
-
+import 'package:amptive/src/features/discover/data/models/response/get_all_users_response_model.dart';
 
 class DiscoverRepoImpl implements DiscoverRepo {
-  DiscoverRepoImpl({NetworkService? mockNetworkService})
-      : networkService = mockNetworkService ?? DioNetworkServiceImpl();
+  DiscoverRepoImpl({
+    NetworkService? mockNetworkService,
+  }) : networkService = mockNetworkService ?? DioNetworkServiceImpl();
 
   final NetworkService networkService;
 
-    @override
+  @override
   Future<ApiResponse<CommunitiesResponseModel>> fetchCommunities({
     required int pageNo, required int pageSize,
   }) async {
@@ -36,6 +37,28 @@ class DiscoverRepoImpl implements DiscoverRepo {
       return Unsuccessful<CommunitiesResponseModel>(
         error: ATException.resolveException(e),
       );
+    }
+  }
+
+  @override
+  Future<ApiResponse<GetAllUsersResponseModel>> fetchAllUsers({
+    required int page,
+    required int pageSize,
+  }) async {
+    try {
+      final Response<dynamic> response = await networkService.get(
+        ATEndpoints.getUsers,
+        queryParameters: <String, dynamic>{
+          'page': page,
+          'pageSize': pageSize,
+        },
+      );
+      return Successful<GetAllUsersResponseModel>(
+        data: GetAllUsersResponseModel.fromJson(response.data),
+        );
+    } catch (e) {
+      log('Error in fetching users');
+      return Unsuccessful<GetAllUsersResponseModel>(error: ATException.resolveException(e));
     }
   }
 }
