@@ -22,6 +22,8 @@ class ATStrings{
   static const String username = 'Username';
   static const String dob = 'Date of Birth';
   static const String name = 'Name';
+  static const String followerCount = 'followers count';
+  static const String followingCount= 'following count';
 
 
   static const String GO_LIVE_LIKE_NEVER_B4 = "Go Live, Like Never Before";
@@ -115,13 +117,28 @@ class ATStrings{
   static const String CHANGING_EMAIL = 'Changing Email Address...';
   static const String CHANGING_PHONE = 'Changing Phone Number...';
   static const String ADDING_PHONE = 'Adding Phone Number...';
+  static const String addingName =  'Adding name...';
+  static const String changingName = 'changing name...';
+  static const String addingUsername =  'Adding Username...';
+  static const String changingUsername = 'Changing Username...';
   static const String EMAIL_ADDED = 'Email Added';
   static const String DETAILS = 'Details';
   static const String FONE_ADDED = 'Phone Number Added';
+  static const String usernameAdded = 'Username added';
+  static const String usernameChanged = 'Username updated';
+  static const String nameAdded = 'Name added';
+  static const String nameChanged = 'Name Updated';
   static const String FONE_CHANGED = 'Phone Number Updated';
+  static const String dobAdded = 'Date of Birth Added';
+  static const String dobChanged = 'Date of Birth Updated';
+  static const String ADDING_DOB = 'Adding Date of Birth...';
+  static const String CHANGING_DOB = 'Changing Date of Birth...';
   static const String EMAIL_CHANGED = 'Email Updated';
   static const String WANT_2_CHANGE_EMAIL = 'Do you want to change your email address?';
   static const String WANT_2_CHANGE_FONE = 'Do you want to change your phone number?';
+  static const String WANT_2_CHANGE_DOB = 'Do you want to change your date of birth ?';
+  static const String want2ChangeName = 'Do you want to change your name?';
+  static const String want2ChangeUserName = 'Do you want to change your username?';
   static const String CHANGE = 'Change';
   static const String DELETE_PLAN = 'Delete plan';
   static const String DELETE = 'Delete';
@@ -311,9 +328,11 @@ class ATStrings{
   static const String EDIT = 'Edit';
   static const String COHOST_FEE = 'Co-host fee';
   static const String TASKS_WILL_APPEAR_HERE = 'Available tasks for the communities you follow will appear here';
-  static const String FOLLOWERS = 'Followers';
-  static const String FOLLOWING = 'Following';
+  static const String followers = 'Followers';
+  static const String following = 'Following';
   static const String ADD_UR_EMAIL = 'Add your email address';
+  static const String addYourName = 'Add your name';
+  static const String addYourUsername = 'Add your Usernname';
   static const String ADD_UR_PHONE = 'Add your phone number';
   static const String FOLLOW = 'Follow';
   static const String UNFOLLOW = 'Unfollow';

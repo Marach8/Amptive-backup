@@ -52,6 +52,9 @@ class ATRoutes {
   static const String PROFILE_FOLLOWING_SCREEN = 'profile_following_screen';
   static const String updateEmailScreen = 'update_email_screen';
   static const String updatePhoneNoScreen = 'update_phone_no_screen';
+  static const String updateNameScreen = 'update_name_screen';
+  static const String updateUsernameScreen = 'update_username_screen';
+  static const String updateDOBScreen = 'update_dob_screen';
   static const String PROFILE_SUBSCRIBERS_SCREEN = 'profile_sub_screen';
   static const String USER_PROFILE_SCREEN = 'user_profile';
   static const String listHostedShowsScreen = 'choose_or_create_show';

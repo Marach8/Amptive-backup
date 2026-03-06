@@ -63,6 +63,9 @@ class CachedUserData extends Equatable {
     this.dob,
     this.name,
     this.pictureUrl,
+    this.phoneNumber,
+    this.followersCount,
+    this.followingCount
   });
 
   factory CachedUserData.fromJson(Map<String, dynamic> json) =>
@@ -73,9 +76,14 @@ class CachedUserData extends Equatable {
         dob: json[ATStrings.dob],
         name: json[ATStrings.name],
         pictureUrl: json[ATStrings.profilePicture],
+        phoneNumber: json[ATStrings.phoneNumber],
+        followersCount: json[ATStrings.followerCount],
+        followingCount: json[ATStrings.followingCount]
+
       );
 
-  final String? userId, email, username, dob, name, pictureUrl;
+  final String? userId, email, username, dob, name, pictureUrl, 
+  phoneNumber, followingCount, followersCount ;
 
   CachedUserData copyWith({
     String? userId,
@@ -83,14 +91,21 @@ class CachedUserData extends Equatable {
     String? username,
     String? dob,
     String? name,
-    String? profilePicture,
+    String? pictureUrl,
+    String? followersCount,
+    String? followingCount,
+    String? phoneNumber
   }) => CachedUserData(
         userId: userId ?? this.userId,
         email: email ?? this.email,
         username: username ?? this.username,
         dob: dob ?? this.dob,
         name: name ?? this.name,
-        pictureUrl: profilePicture ?? pictureUrl,
+        pictureUrl: pictureUrl ?? this.pictureUrl,
+        phoneNumber: phoneNumber ?? this.phoneNumber,
+        followersCount: followersCount ?? this.followersCount,
+        followingCount: followingCount ?? this.followingCount
+      
       );
 
   Map<String, dynamic> toJson() => <String, dynamic>{
@@ -100,9 +115,13 @@ class CachedUserData extends Equatable {
       ATStrings.dob: dob,
       ATStrings.name: name,
       ATStrings.profilePicture: pictureUrl,
+      ATStrings.phoneNumber: phoneNumber,
+      ATStrings.followerCount: followersCount,
+      ATStrings.followingCount: followingCount
     };
 
   @override
   List<Object?> get props => <Object?>[
-    userId, email, username, dob, name, pictureUrl];
+    userId, email, username, dob, name, pictureUrl,
+    phoneNumber, followersCount, followingCount];
 }

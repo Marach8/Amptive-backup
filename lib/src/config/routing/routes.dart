@@ -2,6 +2,9 @@ import 'dart:io';
 import 'package:amptive/src/config/routing/routing_export.dart';
 import 'package:amptive/src/features/accounts/presentation/screens/update_email_screen.dart';
 import 'package:amptive/src/features/accounts/presentation/screens/update_phone_no_screen.dart';
+import 'package:amptive/src/features/accounts/presentation/screens/update_name_screen.dart';
+import 'package:amptive/src/features/accounts/presentation/screens/update_username_screen.dart';
+import 'package:amptive/src/features/accounts/presentation/screens/update_dob_screen.dart';
 import 'package:amptive/src/features/auth/presentation/screens/create_new_password_screen.dart';
 import 'package:amptive/src/features/auth/presentation/screens/forgot_password_email_screen.dart';
 import 'package:amptive/src/features/auth/phone_login_screen.dart';
@@ -54,9 +57,9 @@ import '../../features/wallet/wallet_export.dart';
 
 // The route configuration.
 final GoRouter amptiveAppRouter = GoRouter(
-  initialLocation: ATRoutes.mainAppShell.addSlash,
+  //initialLocation: ATRoutes.mainAppShell.addSlash,
   //redirect: tempRedirect,
-  //initialLocation: ATRoutes.temporaryLoginScreen.addSlash,
+  initialLocation: ATRoutes.temporaryLoginScreen.addSlash,
   routes: <RouteBase>[
     GoRoute(
       name: ATRoutes.POST_ONBOARDING_SCREEN,
@@ -579,6 +582,27 @@ final GoRouter amptiveAppRouter = GoRouter(
                 path: ATRoutes.updatePhoneNoScreen.addSlash,
                 pageBuilder: (_, GoRouterState state) => ATSlidingRouteTransition<void>(
                   child: UpdatePhoneNoScreen(title: state.extra as String,),
+                ),
+              ),
+              GoRoute(
+                name: ATRoutes.updateNameScreen,
+                path: ATRoutes.updateNameScreen.addSlash,
+                pageBuilder: (_, GoRouterState state) => ATSlidingRouteTransition<void>(
+                  child: UpdateNameScreen(title: state.extra as String,),
+                ),
+              ),
+              GoRoute(
+                name: ATRoutes.updateUsernameScreen,
+                path: ATRoutes.updateUsernameScreen.addSlash,
+                pageBuilder: (_, GoRouterState state) => ATSlidingRouteTransition<void>(
+                  child: UpdateUsernameScreen(title: state.extra as String,),
+                ),
+              ),
+              GoRoute(
+                name: ATRoutes.updateDOBScreen,
+                path: ATRoutes.updateDOBScreen.addSlash,
+                pageBuilder: (_, GoRouterState state) => ATSlidingRouteTransition<void>(
+                  child: UpdateDOBScreen(title: state.extra as String,),
                 ),
               ),
             ]

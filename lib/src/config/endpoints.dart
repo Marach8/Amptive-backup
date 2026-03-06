@@ -20,5 +20,6 @@ class ATEndpoints {
   static const String shows = '/api/v1/shows/';
   static const String events = '/api/v1/events/';
   static const String episodes = '/api/v1/episodes/';
+  static const String getUserprofile = '/api/v1/users/me';
 
 }

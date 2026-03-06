@@ -1,4 +1,7 @@
+import 'package:amptive/src/config/api_response_and_app_state.dart';
 import 'package:amptive/src/config/config_export.dart';
+import 'package:amptive/src/features/auth/cubits/local_user_data_cubit.dart';
+import 'package:amptive/src/features/auth/data/models/response/user_profile_response_model.dart';
 import 'package:amptive/src/features/profile/presentation/screens/profile_views_export.dart';
 import 'package:amptive/src/shared/annotated_region__widget.dart';
 import 'package:amptive/src/shared/back_button.dart';
@@ -11,7 +14,7 @@ import 'package:go_router/go_router.dart';
 import 'package:iconsax/iconsax.dart';
 import '../widgets/profile_widgets_export.dart';
 
-class ToggleIconsColor extends Cubit<bool>{
+class ToggleIconsColor extends Cubit<bool> {
   ToggleIconsColor() : super(false);
 
   void changeIconColor(bool shouldChange) => emit(shouldChange);
@@ -35,16 +38,19 @@ class CreatorProfileScreen extends StatelessWidget {
               body: NestedScrollView(
                 headerSliverBuilder: (BuildContext ctx, __) => <Widget>[
                   SliverAppBar(
-                    expandedHeight: 500.0, pinned: true,
+                    expandedHeight: 540.0,
+                    pinned: true,
                     automaticallyImplyLeading: false,
                     actions: <Widget>[
-                      const SizedBox(width: 10,),
+                      const SizedBox(width: 10),
                       BlocBuilder<ToggleIconsColor, bool>(
                         builder: (_, bool state) {
                           return ATRoundedBackBtn(
-                            bgColor: state ? ATColors.white.withValues(alpha: 0.2): null,
+                            bgColor: state
+                                ? ATColors.white.withValues(alpha: 0.2)
+                                : null,
                           );
-                        }
+                        },
                       ),
                       const Spacer(),
                       Stack(
@@ -52,18 +58,24 @@ class CreatorProfileScreen extends StatelessWidget {
                           BlocBuilder<ToggleIconsColor, bool>(
                             builder: (_, bool state) {
                               return ATCircleAvatar(
-                                onTap: () => context.pushNamed(ATRoutes.COMMUNITY_TASK_SCREEN),
-                                //onTap: () => context.pushNamed(AmptiveRoutes.USER_PROFILE_SCREEN),
-                                diameter: 30, animationDuration: 0,
-                                color: state ? ATColors.white.withValues(alpha: 0.2)
-                                  : ATColors.black.withValues(alpha: 0.7),
+                                onTap: () => context
+                                    .pushNamed(ATRoutes.COMMUNITY_TASK_SCREEN),
+                                diameter: 30,
+                                animationDuration: 0,
+                                color: state
+                                    ? ATColors.white.withValues(alpha: 0.2)
+                                    : ATColors.black.withValues(alpha: 0.7),
                                 child: const Icon(Iconsax.global, size: 20),
                               );
-                            }
+                            },
                           ),
                           Positioned(
-                            right: 1, top: 1,
-                            child: ATCircleAvatar(diameter: 8, color: ATColors.hexECO404,),
+                            right: 1,
+                            top: 1,
+                            child: ATCircleAvatar(
+                              diameter: 8,
+                              color: ATColors.hexECO404,
+                            ),
                           )
                         ],
                       ),
@@ -71,89 +83,104 @@ class CreatorProfileScreen extends StatelessWidget {
                       BlocBuilder<ToggleIconsColor, bool>(
                         builder: (_, bool state) {
                           return ATCircleAvatar(
-                            onTap: () => context.pushNamed(ATRoutes.PROFILE_MENU_SCREEN),
-                            diameter: 30, animationDuration: 0,
-                            color: state ? ATColors.white.withValues(alpha: 0.2)
-                              : ATColors.black.withValues(alpha: 0.7),
+                            onTap: () =>
+                                context.pushNamed(ATRoutes.PROFILE_MENU_SCREEN),
+                            diameter: 30,
+                            animationDuration: 0,
+                            color: state
+                                ? ATColors.white.withValues(alpha: 0.2)
+                                : ATColors.black.withValues(alpha: 0.7),
                             child: const Icon(Icons.menu, size: 20),
                           );
-                        }
+                        },
                       ),
                       const SizedBox(width: 15)
                     ],
-                    backgroundColor: ATColors.black, stretch: true,
+                    backgroundColor: ATColors.black,
+                    stretch: true,
                     flexibleSpace: FlexibleSpaceBar(
                       stretchModes: const <StretchMode>[StretchMode.fadeTitle],
-                      background: Column(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: <Widget>[
-                          const CreatorProfilePix(),                    
-                          const SizedBox(height: 50),                
-                          Text(
-                            'Glennon Doyle',
-                            style: context.textTheme.bodyLarge?.copyWith(
-                              height: 0.6,
-                            )
-                          ),
-                          const SizedBox(height: 8),
-                          Text(
-                            'Glennondoyle',
-                            style: context.textTheme.titleMedium?.copyWith(
-                              color: ATColors.hexC2C2C2, height: 0.8
-                            ),
-                          ),
-                      
-                          const SizedBox(height: 20),                
-                          const TopCreatorBadge(),                
-                          const SizedBox(height: 20),
-                      
-                          const Row(
-                            mainAxisSize: MainAxisSize.min,
-                            spacing: 20,
+                      background: BlocBuilder<LocalUserDataCubit,
+                          ATAppState<CachedUserData>>(
+                        builder: (BuildContext context,
+                            ATAppState<CachedUserData> state) {
+                          final CachedUserData? userData = context
+                              .read<LocalUserDataCubit>()
+                              .currentUserData;
+                          return Column(
+                            crossAxisAlignment: CrossAxisAlignment.center,
                             children: <Widget>[
-                              NoOfFollowers(noOfFollowers: '1.1m'),
-                              NoOfSubscribers(),
+                              const CreatorProfilePix(),
+                              const SizedBox(height: 50),
+                              Text(
+                                userData?.name ?? 'Glennon Doyle',
+                                style: context.textTheme.bodyLarge
+                                    ?.copyWith(height: 0.6),
+                              ),
+                              const SizedBox(height: 8),
+                              Text(
+                                userData?.username ?? 'Glennondoyle',
+                                style: context.textTheme.titleMedium?.copyWith(
+                                  color: ATColors.hexC2C2C2,
+                                  height: 0.8,
+                                ),
+                              ),
+                              const SizedBox(height: 20),
+                              const TopCreatorBadge(),
+                              const SizedBox(height: 20),
+                              Row(
+                                mainAxisSize: MainAxisSize.min,
+                                spacing: 20,
+                                children: <Widget>[
+                                  NoOfFollowers(
+                                    noOfFollowers:
+                                        userData?.followersCount ?? '1.1m',
+                                  ),
+                                  const NoOfSubscribers(),
+                                ],
+                              ),
+                              const SizedBox(height: 20),
+                              const _ProfileDesc(),
+                              const SizedBox(height: 20),
+                              const RowOfSocials(),
+                              const SizedBox(height: 15),
+                              const EditProfileAndSubscriptionRow(),
+                              const SizedBox(height: 15),
+                              Divider(
+                                thickness: 1,
+                                color: ATColors.white.withValues(alpha: 0.1),
+                              ),
                             ],
-                          ),                
-                          const SizedBox(height: 20),                
-                          const _ProfileDesc(),
-                      
-                          const SizedBox(height: 20),
-                          const RowOfSocials(),                
-                          const SizedBox(height: 15),                  
-                          const EditProfileAndSubscriptionRow(),
-                          const SizedBox(height: 15),     
-                          Divider(
-                            thickness: 1,
-                            color: ATColors.white.withValues(alpha: 0.1),
-                          ),            
-                        ],
+                          );
+                        },
                       ),
                     ),
-                  ),        
-            
+                  ),
                   SliverPersistentHeader(
                     pinned: true,
                     delegate: ATSliverHDelegate(
-                      maxExt: headerHeight, minExt: headerHeight,
-                      onPinned: () => ctx.read<ToggleIconsColor>().changeIconColor(true),
-                      onUnpinned: () => ctx.read<ToggleIconsColor>().changeIconColor(false),
+                      maxExt: headerHeight,
+                      minExt: headerHeight,
+                      onPinned: () =>
+                          ctx.read<ToggleIconsColor>().changeIconColor(true),
+                      onUnpinned: () =>
+                          ctx.read<ToggleIconsColor>().changeIconColor(false),
                       child: Container(
-                        height: headerHeight, color: ATColors.black,
+                        height: headerHeight,
+                        color: ATColors.black,
                         padding: const EdgeInsets.fromLTRB(0, 10, 0, 10),
-                        child: ProfileScreenTabs(tabs: _tabs,)
-                      )
+                        child: ProfileScreenTabs(tabs: _tabs),
+                      ),
                     ),
                   )
                 ],
-            
                 body: TabBarView(
                   physics: const BouncingScrollPhysics(),
                   children: List<Widget>.filled(
                     4,
                     const SampleTabView(),
-                  )
-                )
+                  ),
+                ),
               ),
             ),
           ),
@@ -162,8 +189,6 @@ class CreatorProfileScreen extends StatelessWidget {
     );
   }
 }
-
-
 
 class _ProfileDesc extends StatelessWidget {
   const _ProfileDesc();
@@ -174,21 +199,18 @@ class _ProfileDesc extends StatelessWidget {
       padding: const EdgeInsets.fromLTRB(15, 0, 15, 0),
       child: ATRichText(
         items: <String, TextStyle>{
-          'Author of UNTAMED & LOVE WARRIOR. Host of WE CAN DO HARD THINGS. Founder of'
-          : context.textTheme.titleMedium!.copyWith(
-            fontSize: ATSizes.size13
-          ),
+          'Author of UNTAMED & LOVE WARRIOR. Host of WE CAN DO HARD THINGS. Founder of':
+              context.textTheme.titleMedium!.copyWith(fontSize: ATSizes.size13),
           ' @together_rising. ': context.textTheme.titleMedium!.copyWith(
             fontSize: ATSizes.size13,
-            color: ATColors.hexC2C2C2
+            color: ATColors.hexC2C2C2,
           ),
-          'Includes an Oscar winner.': context.textTheme.titleMedium!.copyWith(
-            fontSize: ATSizes.size13
-          ),
+          'Includes an Oscar winner.':
+              context.textTheme.titleMedium!.copyWith(fontSize: ATSizes.size13),
         },
         textAlign: TextAlign.center,
-        textOnTap: (String index){
-          if(index == 1){
+        textOnTap: (String index) {
+          if (index == "1") {
             print("Hello");
           }
         },
@@ -197,8 +219,9 @@ class _ProfileDesc extends StatelessWidget {
   }
 }
 
-
 final List<String> _tabs = <String>[
-  ATStrings.scheduled, ATStrings.ENDED,
-  ATStrings.SHOWS, ATStrings.EVENTS
+  ATStrings.scheduled,
+  ATStrings.ENDED,
+  ATStrings.SHOWS,
+  ATStrings.EVENTS
 ];
