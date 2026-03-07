@@ -1,18 +1,32 @@
+import 'package:amptive/src/config/api_response_and_app_state.dart';
 import 'package:amptive/src/config/config_export.dart';
+import 'package:amptive/src/config/utils/dialogs/app_notification_dialog.dart';
+import 'package:amptive/src/features/profile/cubits/followers_cubit.dart';
+import 'package:amptive/src/models/host.dart';
 import 'package:amptive/src/shared/elevated_button_widget.dart';
 import 'package:amptive/src/shared/annotated_region__widget.dart';
+import 'package:amptive/src/shared/app_bar_widget.dart';
 import 'package:amptive/src/shared/back_button.dart';
+import 'package:amptive/src/shared/custom_container_widget.dart';
 import 'package:amptive/src/shared/image_loader_widget.dart';
 import 'package:amptive/src/shared/textformfield_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../../../bloc/main_app/profile/profile_followers_bloc.dart';
-import '../../../../models/host.dart';
-import '../../../../shared/app_bar_widget.dart';
-import '../../../../shared/custom_container_widget.dart';
 
 class ATProfileFollowersScreen extends StatelessWidget {
   const ATProfileFollowersScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocProvider<FollowersCubit>(
+      create: (context) => FollowersCubit()..fetchFollowers(),
+      child: const _ATProfileFollowersScreenContent(),
+    );
+  }
+}
+
+class _ATProfileFollowersScreenContent extends StatelessWidget {
+  const _ATProfileFollowersScreenContent();
 
   @override
   Widget build(BuildContext context) {
@@ -47,28 +61,68 @@ class ATProfileFollowersScreen extends StatelessWidget {
               ),
             ),
             Expanded(
-              child: BlocBuilder<AmptiveProfileFollowersBloc, List<ObjectWithNotifier<Host>>>(
-                builder: (_, List<ObjectWithNotifier<Host>> state) {
-                  return ListView.builder(
-                    itemCount: state.length,
-                    padding: const EdgeInsets.only(bottom: 50),
-                    itemBuilder: (_, int index){
-                      if(index == 0){
-                        return Padding(
-                          padding: const EdgeInsets.fromLTRB(15, 5, 15, 20),
-                          child: Text(
-                            ATStrings.ALL_FOLLOWERS,
-                            style: context.textTheme.bodyMedium,
-                          ),
+              child: BlocConsumer<FollowersCubit, ATAppState<dynamic>>(
+                listener: (_, ATAppState<dynamic> state){
+                  if(state is FailureState<dynamic>){
+                    showAppNotification2(
+                      context: context,
+                      text: state.message,
+                      type: NotificationType.failure,
+                    );
+                  }
+                },
+                builder: (_, ATAppState<dynamic> state) {
+                  return switch(state){
+                    InitialState<dynamic>() => const SizedBox.shrink(),
+                    LoadingState<dynamic>() ||
+                    FailureState<dynamic>() ||
+                    SuccessState<dynamic>() => Builder(
+                      builder: (_){
+                        final dynamic followerData = context.read<FollowersCubit>().currentFollowers;
+                        final List followers = (followerData is Map ? followerData['data'] : followerData) ?? [];
+
+                        if(followers.isEmpty){
+                          if(state is LoadingState<dynamic>){
+                            return const Center(child: CircularProgressIndicator());
+                          }
+                          if(state is FailureState<dynamic>){
+                            return Center(
+                              child: IconButton(
+                                icon: const Icon(Icons.refresh),
+                                onPressed: () => context.read<FollowersCubit>().fetchFollowers(),
+                              ),
+                            );
+                          }
+                          return const Center(
+                            child: Text('No followers yet'),
+                          );
+                        }
+
+                        final int count = followers.length;
+
+                        return ListView.builder(
+                          itemCount: count + 1,
+                          padding: const EdgeInsets.only(bottom: 50),
+                          itemBuilder: (_, int index){
+                            if(index == 0){
+                              return Padding(
+                                padding: const EdgeInsets.fromLTRB(15, 5, 15, 20),
+                                child: Text(
+                                  ATStrings.ALL_FOLLOWERS,
+                                  style: context.textTheme.bodyMedium,
+                                ),
+                              );
+                            }
+                            final dynamic follower = followers[index - 1];
+                            return _RenderAFollower(
+                              follower: follower,
+                              onTap: (dynamic follower, bool isSelected){},
+                            );
+                          }
                         );
-                      }
-                      final ObjectWithNotifier<Host> follower = state.elementAt(index - 1);
-                      return _RenderAFollower(
-                        follower: follower,
-                        onTap: (ObjectWithNotifier<Host> follower, bool isSelected){},
-                      );
-                    }
-                  );
+                      },
+                    )
+                  };
                 }
               ),
             )

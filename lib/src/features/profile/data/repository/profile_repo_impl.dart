@@ -30,4 +30,20 @@ class ProfileRepoImpl implements ProfileRepo {
     }
   }
   
+   @override
+  Future <ApiResponse<dynamic>> fetchFollowers ({
+    required int pageNo,
+    required int pageSize,
+  }) async {
+    
+    try {
+      final Response<dynamic> response = await networkService.get(
+        ATEndpoints.followers
+      );
+      return Successful<dynamic>(data: response.data);
+    } catch (e) {
+      log('Error in getting followers');
+      return Unsuccessful<dynamic>(error: ATException.resolveException(e));
+    }
+  }
 }

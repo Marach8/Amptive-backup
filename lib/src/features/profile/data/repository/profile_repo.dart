@@ -3,4 +3,8 @@ import 'package:amptive/src/features/auth/data/models/response/user_profile_resp
 
 abstract class ProfileRepo{
   Future<ApiResponse<UserProfileResponseModel>> fetchUserProfile ();
+  Future<ApiResponse<dynamic>> fetchFollowers ({
+    required int pageNo,
+    required int pageSize,
+  });
 }
