@@ -69,14 +69,16 @@ class ATColors {
 
   static Color get orangeGradientColorB => const Color.fromRGBO(249, 32, 24, 1);
 
-  static Color get containerGradientColorA => const Color.fromRGBO(26, 26, 26, 0);
+  static Color get containerGradientColorA =>
+      const Color.fromRGBO(26, 26, 26, 0);
 
-  static Color get containerGradientColorB => const Color.fromRGBO(26, 26, 26, 1);
+  static Color get containerGradientColorB =>
+      const Color.fromRGBO(26, 26, 26, 1);
 
   static Color get hexC2C2C2 => const Color(0XFFC2C2C2);
 
   static Color get hexA8A8A8 => const Color(0xFFA8A8A8);
-  
+
   static Color get dimWhiteColor1 => const Color(0xFFF2F2F2);
 
   static Color get snackBarBgColor => const Color.fromRGBO(48, 52, 57, 1);
@@ -103,7 +105,7 @@ class ATColors {
 
   static Color get hex292929 => const Color(0XFF292929);
 
-  static Color get hex1F1F23=> const Color(0XFF1F1F23);
+  static Color get hex1F1F23 => const Color(0XFF1F1F23);
 
   static Color get hex48484A => const Color(0XFF48484A);
 

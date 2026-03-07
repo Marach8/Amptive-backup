@@ -16,7 +16,7 @@ import '../../bloc/enter_pin_bloc.dart';
 import '../../../../shared/circular_image.dart';
 import '../../../../config/utils/font_weights.dart';
 
-class InputPinParams{
+class InputPinParams {
   const InputPinParams({
     this.bankDetails,
     this.recipientProfileUrl,
@@ -28,166 +28,178 @@ class InputPinParams{
   final TransactionType transactionType;
 }
 
-
 Future<bool?> inputTransactionPinDialog({
   required BuildContext context,
   required InputPinParams params,
 }) {
   const String digits = '123456789.0<';
-  
+
   return showCupertinoModalPopup<bool>(
     context: context,
     barrierColor: ATColors.black,
     builder: (BuildContext dialogContext) {
       return BlocProvider<EnterPinBloc>(
         create: (_) => EnterPinBloc(),
-        child: Builder(
-          builder: (BuildContext blocContext) {
-            return Material(
-              color: ATColors.transparent,
-              child: SizedBox(
-                height: context.screenHeight,
-                child: Column(
-                  children: <Widget>[
-                    Padding(
-                      padding: const EdgeInsets.fromLTRB(7, 48, 15, 30),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: <Widget>[
-                          const ATRoundedBackBtn(),
-                          Text(
-                            ATStrings.enterPin,
-                            style: Theme.of(context).textTheme.bodyMedium
-                          ),
-                          const SizedBox(width: 30,),
-                        ],
-                      ),
+        child: Builder(builder: (BuildContext blocContext) {
+          return Material(
+            color: ATColors.transparent,
+            child: SizedBox(
+              height: context.screenHeight,
+              child: Column(
+                children: <Widget>[
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(7, 48, 15, 30),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: <Widget>[
+                        const ATRoundedBackBtn(),
+                        Text(ATStrings.enterPin,
+                            style: Theme.of(context).textTheme.bodyMedium),
+                        const SizedBox(
+                          width: 30,
+                        ),
+                      ],
                     ),
-
-                    Expanded(
-                      child: SingleChildScrollView(
-                        physics: const BouncingScrollPhysics(),
-                        padding: const EdgeInsets.fromLTRB(15, 10, 15, 10),
-                        child: Column(
-                          children: <Widget>[
-                            if(params.transactionType == TransactionType.transfer)ATCircularImage(
+                  ),
+                  Expanded(
+                    child: SingleChildScrollView(
+                      physics: const BouncingScrollPhysics(),
+                      padding: const EdgeInsets.fromLTRB(15, 10, 15, 10),
+                      child: Column(
+                        children: <Widget>[
+                          if (params.transactionType ==
+                              TransactionType.transfer)
+                            ATCircularImage(
                               imagePath: params.recipientProfileUrl ?? '',
                               diameter: 50,
                             ),
-
-                            if(params.transactionType == TransactionType.withdraw) WidgetWithLeadingImageAndTrailingMoreIcon(
+                          if (params.transactionType ==
+                              TransactionType.withdraw)
+                            WidgetWithLeadingImageAndTrailingMoreIcon(
                               title: params.bankDetails?.bankName ?? '',
-                              subtitle: '${params.bankDetails?.accountNo} - ${params.bankDetails?.accountName}',
+                              subtitle:
+                                  '${params.bankDetails?.accountNo} - ${params.bankDetails?.accountName}',
                               leadingImgPath: ATImgStrings.WIRE_TRANSFER,
                               btnText: ATStrings.CHANGE_BANK_DETAILS,
-                              btnOnTap: (){
-                                dialogContext.pop(); context.pop();
+                              btnOnTap: () {
+                                dialogContext.pop();
+                                context.pop();
                               },
-                              trailingMoreOnTap: (){},
-                              bottomTrailingText: params.bankDetails?.amount?.formatPrice(),
+                              trailingMoreOnTap: () {},
+                              bottomTrailingText:
+                                  params.bankDetails?.amount?.formatPrice(),
                               //bottomTrailingWidget: const SizedBox.shrink(),
                               imgSize: 40,
                             ),
-
-                            const SizedBox(height: 50,),
-
-                            BlocConsumer<EnterPinBloc, (String, bool?)>(                              
-                              listener: (_, (String, bool?) state){
-                                if(state.$1.length == 4 && state.$2 == true){
-                                  dialogContext.pop(true);
-                                }
-                              },
-                              builder: (_, (String, bool?) state) {
-                                final Characters pins = state.$1.characters;
-                                return Column(
+                          const SizedBox(
+                            height: 50,
+                          ),
+                          BlocConsumer<EnterPinBloc, (String, bool?)>(
+                              listener: (_, (String, bool?) state) {
+                            if (state.$1.length == 4 && state.$2 == true) {
+                              dialogContext.pop(true);
+                            }
+                          }, builder: (_, (String, bool?) state) {
+                            final Characters pins = state.$1.characters;
+                            return Column(
+                              spacing: 20,
+                              mainAxisSize: MainAxisSize.min,
+                              children: <Widget>[
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
                                   spacing: 20,
-                                  mainAxisSize: MainAxisSize.min,
-                                  children: <Widget>[
-                                    Row(
-                                      mainAxisAlignment: MainAxisAlignment.center,
-                                      spacing: 20,
-                                      children: List.generate(
-                                        4,
-                                        (int index){
-                                          final String? eachPin = pins.elementAtOrNull(index);
-                                          return ATContainer(
-                                            duration: 200,
-                                            border: Border.all(
-                                              width: 2,
-                                              color: (state.$2 == false) ? ATColors.textRedColor : ATColors.white,
-                                            ),
-                                            height: 16, width: 16, radius: 10,
-                                            color: (eachPin ?? '').isEmpty ? ATColors.transparent : ATColors.white,
-                                          );
-                                        }
+                                  children: List.generate(4, (int index) {
+                                    final String? eachPin =
+                                        pins.elementAtOrNull(index);
+                                    return ATContainer(
+                                      duration: 200,
+                                      border: Border.all(
+                                        width: 2,
+                                        color: (state.$2 == false)
+                                            ? ATColors.textRedColor
+                                            : ATColors.white,
                                       ),
-                                    ),
-                            
-                                    if(state.$2 == false)Text(
-                                      ATStrings.incorrectPin,
-                                      style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                                        color: ATColors.textRedColor
-                                      ),
-                                    ),
-                                  ],
-                                );
-                              }
-                            ),
-
-                            const SizedBox(height: 20,),
-              
-                            GridView(
+                                      height: 16,
+                                      width: 16,
+                                      radius: 10,
+                                      color: (eachPin ?? '').isEmpty
+                                          ? ATColors.transparent
+                                          : ATColors.white,
+                                    );
+                                  }),
+                                ),
+                                if (state.$2 == false)
+                                  Text(
+                                    ATStrings.incorrectPin,
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .bodySmall
+                                        ?.copyWith(
+                                            color: ATColors.textRedColor),
+                                  ),
+                              ],
+                            );
+                          }),
+                          const SizedBox(
+                            height: 20,
+                          ),
+                          GridView(
                               shrinkWrap: true,
                               physics: const NeverScrollableScrollPhysics(),
-                              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                                crossAxisCount: 3,
-                                childAspectRatio: 1.5
-                              ),
-                              
-                              children: digits.characters.map(
-                                (String digit){
-                                  if(digit == '.') return const SizedBox.shrink();
-                      
-                                  if(digits.indexOf(digit) == 11){
-                                    return BlocBuilder<EnterPinBloc, (String, bool?)>(                              
-                                      builder: (_, (String, bool?) state){
-                                        return InkWell(
-                                          borderRadius: BorderRadius.circular(5),
-                                          onTap: state.$1.isEmpty ? null : () => blocContext.read<EnterPinBloc>().deletePin(),                          
-                                          child: Center(
-                                            child: Icon(
-                                              Icons.keyboard_arrow_left_outlined, size: 30,
-                                              color: state.$1.isEmpty ? ATColors.white.withValues(alpha: 0.3) : null
-                                            )
-                                          ),
-                                        );
-                                      }
-                                    );
-                                  }
-                                  
-                                  return InkWell(
-                                    borderRadius: BorderRadius.circular(5),
-                                    onTap: () => blocContext.read<EnterPinBloc>().grabPin(digit),                            
-                                    child: Center(
-                                      child: Text(
-                                        digit,
-                                        style: context.textTheme.displayMedium?.copyWith(
-                                          fontWeight: ATFontWeights.w500
-                                        )
-                                      ),
-                                    ),
-                                  );
+                              gridDelegate:
+                                  const SliverGridDelegateWithFixedCrossAxisCount(
+                                      crossAxisCount: 3, childAspectRatio: 1.5),
+                              children: digits.characters.map((String digit) {
+                                if (digit == '.') {
+                                  return const SizedBox.shrink();
                                 }
-                              ).toList()
-                            ),
 
-                            const SizedBox(height: 30,),
-                          ],
-                        ),
+                                if (digits.indexOf(digit) == 11) {
+                                  return BlocBuilder<EnterPinBloc,
+                                          (String, bool?)>(
+                                      builder: (_, (String, bool?) state) {
+                                    return InkWell(
+                                      borderRadius: BorderRadius.circular(5),
+                                      onTap: state.$1.isEmpty
+                                          ? null
+                                          : () => blocContext
+                                              .read<EnterPinBloc>()
+                                              .deletePin(),
+                                      child: Center(
+                                          child: Icon(
+                                              Icons
+                                                  .keyboard_arrow_left_outlined,
+                                              size: 30,
+                                              color: state.$1.isEmpty
+                                                  ? ATColors.white
+                                                      .withValues(alpha: 0.3)
+                                                  : null)),
+                                    );
+                                  });
+                                }
+
+                                return InkWell(
+                                  borderRadius: BorderRadius.circular(5),
+                                  onTap: () => blocContext
+                                      .read<EnterPinBloc>()
+                                      .grabPin(digit),
+                                  child: Center(
+                                    child: Text(digit,
+                                        style: context.textTheme.displayMedium
+                                            ?.copyWith(
+                                                fontWeight:
+                                                    ATFontWeights.w500)),
+                                  ),
+                                );
+                              }).toList()),
+                          const SizedBox(
+                            height: 30,
+                          ),
+                        ],
                       ),
                     ),
-
-                    ATContainer(
+                  ),
+                  ATContainer(
                       radius: 14,
                       padding: const EdgeInsets.fromLTRB(15, 10, 15, 10),
                       color: ATColors.white.withValues(alpha: 0.05),
@@ -197,26 +209,23 @@ Future<bool?> inputTransactionPinDialog({
                         children: <Widget>[
                           Icon(Icons.info_outline, color: ATColors.hexC2C2C2),
                           Flexible(
-                            child: Text(
-                              ATStrings.keepsWalletSecure, maxLines: 3,
-                              style: context.textTheme.titleSmall?.copyWith(
-                                fontSize: ATSizes.size13,
-                                color: ATColors.hexC2C2C2
-                              )
-                            ),
+                            child: Text(ATStrings.keepsWalletSecure,
+                                maxLines: 3,
+                                style: context.textTheme.titleSmall?.copyWith(
+                                    fontSize: ATSizes.size13,
+                                    color: ATColors.hexC2C2C2)),
                           ),
                         ],
-                      )
-                    ),
-                    const SizedBox(height: 50,),
-                  ],
-                ),
+                      )),
+                  const SizedBox(
+                    height: 50,
+                  ),
+                ],
               ),
-            );
-          }
-        ),
+            ),
+          );
+        }),
       );
     },
   );
 }
-

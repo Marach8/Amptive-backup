@@ -19,24 +19,27 @@ class ATWhispersWidget extends StatelessWidget {
         itemCount: 10,
         itemBuilder: (_, __) => ATContainer(
           margin: const EdgeInsets.only(left: 15),
-          padding: const EdgeInsets.fromLTRB(15, 0, 15,  0),
-          height: 230, width: 326, radius: 10,
+          padding: const EdgeInsets.fromLTRB(15, 0, 15, 0),
+          height: 230,
+          width: 326,
+          radius: 10,
           color: ATColors.white.withValues(alpha: 0.1),
           child: Column(
             children: <Widget>[
               const TileWithLeadingImage(
                 title: 'karankabir',
-                subtitle: 'Listener', diameter: 48,
+                subtitle: 'Listener',
+                diameter: 48,
                 leadingImagePath: ATImgStrings.jpeg1,
               ),
               const SizedBox(height: 10),
               Text(
-                maxLines: 100,
-                'I got so excited whan Jack spoke spanish for just no reason, like what!!!!!!>😂😂😂',
-                style: Theme.of(context).textTheme.labelMedium?.copyWith(
-                  color: ATColors.white, height: 1.5
-                )
-              ),
+                  maxLines: 100,
+                  'I got so excited whan Jack spoke spanish for just no reason, like what!!!!!!>😂😂😂',
+                  style: Theme.of(context)
+                      .textTheme
+                      .labelMedium
+                      ?.copyWith(color: ATColors.white, height: 1.5)),
               const Spacer()
             ],
           ),

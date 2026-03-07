@@ -9,24 +9,19 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
-Future<String?> enterDescriptionModal({
-  required BuildContext context,
-  String? initialDesc
-}) async{
+Future<String?> enterDescriptionModal(
+    {required BuildContext context, String? initialDesc}) async {
   return await showModalBottomSheet<String>(
     backgroundColor: ATColors.black.withValues(alpha: 0.1),
     constraints: BoxConstraints.expand(height: context.screenHeight),
     context: context,
     isScrollControlled: true,
     elevation: 0,
-    builder: (_)  => BlocProvider<_PrivateBloc>(
-      create: (_) => _PrivateBloc(),
-      child: _DescriptionWidget(intialDesc: initialDesc)
-    ),
+    builder: (_) => BlocProvider<_PrivateBloc>(
+        create: (_) => _PrivateBloc(),
+        child: _DescriptionWidget(intialDesc: initialDesc)),
   );
 }
-
-
 
 class _DescriptionWidget extends StatefulWidget {
   const _DescriptionWidget({this.intialDesc});
@@ -36,7 +31,8 @@ class _DescriptionWidget extends StatefulWidget {
   State<_DescriptionWidget> createState() => _DescriptionWidgetState();
 }
 
-class _DescriptionWidgetState extends State<_DescriptionWidget> with WidgetsBindingObserver{
+class _DescriptionWidgetState extends State<_DescriptionWidget>
+    with WidgetsBindingObserver {
   late final TextEditingController _textCntrl;
   final StreamController<double> _streamCntrl = StreamController<double>();
 
@@ -58,10 +54,10 @@ class _DescriptionWidgetState extends State<_DescriptionWidget> with WidgetsBind
   @override
   void didChangeMetrics() {
     super.didChangeMetrics();
-    final ViewPadding currentViewPadding = WidgetsBinding.instance.platformDispatcher.views.first.viewInsets;
+    final ViewPadding currentViewPadding =
+        WidgetsBinding.instance.platformDispatcher.views.first.viewInsets;
     _streamCntrl.add(currentViewPadding.bottom);
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -95,7 +91,8 @@ class _DescriptionWidgetState extends State<_DescriptionWidget> with WidgetsBind
                 ATContainer(
                   onTap: () => context.pop(_textCntrl.text.trim()),
                   padding: const EdgeInsets.fromLTRB(10, 3, 10, 3),
-                  color: ATColors.hex307FE2, radius: 30,
+                  color: ATColors.hex307FE2,
+                  radius: 30,
                   child: Text(
                     ATStrings.done,
                     style: Theme.of(context).textTheme.bodyMedium,
@@ -104,37 +101,37 @@ class _DescriptionWidgetState extends State<_DescriptionWidget> with WidgetsBind
               ],
             ),
           ),
-          const SizedBox(height: 10,),
+          const SizedBox(
+            height: 10,
+          ),
           Expanded(
             child: Stack(
               children: <Widget>[
                 BlocBuilder<_PrivateBloc, ({bool isBold, bool isItalic})>(
-                  builder: (_, ({bool isBold, bool isItalic}) state) {
-                    return TextField(
-                      maxLines: 100, controller: _textCntrl,
-                      keyboardType: TextInputType.multiline,
-                      cursorColor: ATColors.white.withValues(alpha: 0.7),
-                      style: context.textTheme.bodySmall?.copyWith(
+                    builder: (_, ({bool isBold, bool isItalic}) state) {
+                  return TextField(
+                    maxLines: 100,
+                    controller: _textCntrl,
+                    keyboardType: TextInputType.multiline,
+                    cursorColor: ATColors.white.withValues(alpha: 0.7),
+                    style: context.textTheme.bodySmall?.copyWith(
                         fontStyle: state.isItalic ? FontStyle.italic : null,
                         fontWeight: state.isBold ? ATFontWeights.w800 : null,
-                        color: ATColors.white.withValues(alpha: 0.7)
-                      ),
-                      decoration: InputDecoration(
-                        border: InputBorder.none,
-                        focusedBorder: InputBorder.none,
-                        enabledBorder: InputBorder.none,
-                        hintText: ATStrings.tellListenersAboutYourShow,
-                        hintStyle: context.textTheme.bodySmall?.copyWith(
-                          color: ATColors.white.withValues(alpha: 0.4)
-                        ),
-                        contentPadding: const EdgeInsets.all(15),
-                      ),
-                    );
-                  }
-                ),
+                        color: ATColors.white.withValues(alpha: 0.7)),
+                    decoration: InputDecoration(
+                      border: InputBorder.none,
+                      focusedBorder: InputBorder.none,
+                      enabledBorder: InputBorder.none,
+                      hintText: ATStrings.tellListenersAboutYourShow,
+                      hintStyle: context.textTheme.bodySmall?.copyWith(
+                          color: ATColors.white.withValues(alpha: 0.4)),
+                      contentPadding: const EdgeInsets.all(15),
+                    ),
+                  );
+                }),
                 // StreamBuilder<double>(
                 //   stream: _streamCntrl.stream,
-                //   builder: (_, AsyncSnapshot<double> snapshot) {   
+                //   builder: (_, AsyncSnapshot<double> snapshot) {
                 //     final double keyboardHeight = MediaQuery.of(context).viewInsets.bottom;
                 //     final double height = (snapshot.data ?? 0.0) > 0 ? keyboardHeight : -50.0;
                 //     return AnimatedPositioned(
@@ -145,18 +142,19 @@ class _DescriptionWidgetState extends State<_DescriptionWidget> with WidgetsBind
                 //   }
                 // ),
 
-                Builder(
-                  builder: (BuildContext context) {
-                    final double bottomInset = MediaQuery.viewInsetsOf(context).bottom;
-                    final double extraSpace = bottomInset == 0 ? -50.0 : bottomInset;
+                Builder(builder: (BuildContext context) {
+                  final double bottomInset =
+                      MediaQuery.viewInsetsOf(context).bottom;
+                  final double extraSpace =
+                      bottomInset == 0 ? -50.0 : bottomInset;
 
-                    return AnimatedPositioned(
-                      left: 0, right: 0, bottom: extraSpace,
+                  return AnimatedPositioned(
+                      left: 0,
+                      right: 0,
+                      bottom: extraSpace,
                       duration: const Duration(milliseconds: 100),
-                      child: const _CoolOne()
-                    );
-                  }
-                ),
+                      child: const _CoolOne());
+                }),
               ],
             ),
           ),
@@ -175,63 +173,65 @@ class _CoolOne extends StatelessWidget {
       color: ATColors.hex48484A,
       padding: const EdgeInsets.fromLTRB(20, 10, 20, 10),
       child: BlocBuilder<_PrivateBloc, ({bool isBold, bool isItalic})>(
-        builder: (_, ({bool isBold, bool isItalic}) state) {
-          return Row(
-            children: <Widget>[
-              ATContainer(
-                onTap: () => context.read<_PrivateBloc>().toggleBold(),
-                width: 20, alignment: Alignment.center,
-                child: Text(
-                  'B',
+          builder: (_, ({bool isBold, bool isItalic}) state) {
+        return Row(
+          children: <Widget>[
+            ATContainer(
+              onTap: () => context.read<_PrivateBloc>().toggleBold(),
+              width: 20,
+              alignment: Alignment.center,
+              child: Text('B',
                   style: context.textTheme.headlineMedium?.copyWith(
-                    fontWeight: state.isBold ? null : ATFontWeights.w300
-                  )
-                ),
+                      fontWeight: state.isBold ? null : ATFontWeights.w300)),
+            ),
+            const SizedBox(
+              width: 35,
+            ),
+            ATContainer(
+              onTap: () => context.read<_PrivateBloc>().toggleItalic(),
+              padding: const EdgeInsets.all(3),
+              height: 18,
+              width: 18,
+              child: CustomPaint(
+                painter: _ItalicIPainter(
+                    color: ATColors.white, strokeWidth: state.isItalic ? 3 : 1),
               ),
-              const SizedBox(width: 35,),
-              ATContainer(
-                onTap: () => context.read<_PrivateBloc>().toggleItalic(),
-                padding: const EdgeInsets.all(3),
-                height: 18, width: 18,
-                child: CustomPaint(
-                  painter: _ItalicIPainter(
-                    color: ATColors.white,
-                    strokeWidth: state.isItalic ? 3 : 1
-                  ),
-                ),
+            ),
+            const SizedBox(
+              width: 40,
+            ),
+            ATContainer(
+              onTap: () async {
+                final (String, String)? linkData =
+                    await addLinkModal(context: context);
+                if (linkData != null) {}
+              },
+              width: 20,
+              height: 20,
+              alignment: Alignment.center,
+              child: const Icon(
+                CupertinoIcons.link,
+                size: 18,
               ),
-              const SizedBox(width: 40,),
-              ATContainer(
-                onTap: ()async{
-                  final (String, String)? linkData = await addLinkModal(context: context);
-                  if(linkData != null){}
-                },
-                width: 20, height: 20, alignment: Alignment.center,
-                child: const Icon(CupertinoIcons.link, size: 18,),
-              )
-            ],
-          );
-        }
-      ),
+            )
+          ],
+        );
+      }),
     );
   }
 }
-
 
 class _PrivateBloc extends Cubit<({bool isBold, bool isItalic})> {
   _PrivateBloc() : super((isBold: false, isItalic: false));
 
   void toggleBold() => emit((isBold: !state.isBold, isItalic: state.isItalic));
 
-  void toggleItalic() => emit((isBold: state.isBold, isItalic: !state.isItalic));
+  void toggleItalic() =>
+      emit((isBold: state.isBold, isItalic: !state.isItalic));
 }
 
-
 class _ItalicIPainter extends CustomPainter {
-  _ItalicIPainter({
-    required this.color,
-    required this.strokeWidth
-  });
+  _ItalicIPainter({required this.color, required this.strokeWidth});
   final Color color;
   final double strokeWidth;
 

@@ -29,8 +29,9 @@ class _LoginScreenState extends State<LoginScreen> with ATValidators {
     text: kDebugMode ? 'Amptive@2026' : '',
   );
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  final ValueNotifier<(bool, bool)> _btnNotifier = ValueNotifier<(bool, bool)>((false, false));
-   bool _passwordVisible = false;
+  final ValueNotifier<(bool, bool)> _btnNotifier =
+      ValueNotifier<(bool, bool)>((false, false));
+  bool _passwordVisible = false;
 
   @override
   void initState() {
@@ -98,41 +99,37 @@ class _LoginScreenState extends State<LoginScreen> with ATValidators {
                     ),
                     const SizedBox(height: 10),
                     ATTextFormField(
-                      controller: _pswrdCntrl,
-                      hintText: ATStrings.enterYourPassword,
-                      validator: validatePassword,
-                      obscureText: _passwordVisible,
-                      maxLines: 1,
-                      prefixIcon: const SizedBox(width: 10),
-                    suffixIcon: IconButton(
-                    icon: Padding(
-                    padding: const EdgeInsets.only(right: 16),
-                    child: Icon(
-                      _passwordVisible
-                          ? Icons.visibility_off
-                          : Icons.visibility,
-                      color: ATColors.white,
-                    ),
-                  ),
-                  onPressed: () {
-                    setState(() {
-                      _passwordVisible = !_passwordVisible;
-                    });
-                  }
-                  )
-                    
-                      ),
-                  const SizedBox(height: 5),
-                  TextButton(
-                    onPressed: () {
-                      context.pushNamed(ATRoutes.FORGOT_PASSWORD_SCREEN);
-                    }, 
-                    child: Text(ATStrings.forgotPasswrd,
-                    style: Theme.of(context).textTheme.bodySmall,))
-
-                    
-                  ]
-                  ),
+                        controller: _pswrdCntrl,
+                        hintText: ATStrings.enterYourPassword,
+                        validator: validatePassword,
+                        obscureText: _passwordVisible,
+                        maxLines: 1,
+                        prefixIcon: const SizedBox(width: 10),
+                        suffixIcon: IconButton(
+                            icon: Padding(
+                              padding: const EdgeInsets.only(right: 16),
+                              child: Icon(
+                                _passwordVisible
+                                    ? Icons.visibility_off
+                                    : Icons.visibility,
+                                color: ATColors.white,
+                              ),
+                            ),
+                            onPressed: () {
+                              setState(() {
+                                _passwordVisible = !_passwordVisible;
+                              });
+                            })),
+                    const SizedBox(height: 5),
+                    TextButton(
+                        onPressed: () {
+                          context.pushNamed(ATRoutes.FORGOT_PASSWORD_SCREEN);
+                        },
+                        child: Text(
+                          ATStrings.forgotPasswrd,
+                          style: Theme.of(context).textTheme.bodySmall,
+                        ))
+                  ]),
             ),
           ),
           bottomSheet: BlocConsumer<LoginCubit, ATAppState<ATUser>>(
@@ -146,7 +143,8 @@ class _LoginScreenState extends State<LoginScreen> with ATValidators {
             builder: (BuildContext context, ATAppState<ATUser> state) {
               final double bottom = MediaQuery.viewInsetsOf(context).bottom;
               final double bottomPadding = bottom == 0 ? 50 : 10;
-              final ATAppState<ATUser> cubitState = context.watch<LoginCubit>().state;
+              final ATAppState<ATUser> cubitState =
+                  context.watch<LoginCubit>().state;
               final bool isLoading = cubitState is LoadingState<ATUser>;
 
               return Padding(

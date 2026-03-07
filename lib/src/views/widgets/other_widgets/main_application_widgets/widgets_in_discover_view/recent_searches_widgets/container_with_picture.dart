@@ -3,7 +3,6 @@ import 'package:amptive/src/shared/image_loader_widget.dart';
 import 'package:flutter/material.dart';
 
 class AmptivePictureWidget extends StatelessWidget {
-
   const AmptivePictureWidget({
     super.key,
     required this.imagePath,
@@ -24,10 +23,7 @@ class AmptivePictureWidget extends StatelessWidget {
       width: diameter,
       radius: (isCircular ?? false) ? null : radius,
       boxShape: (isCircular ?? false) ? BoxShape.circle : null,
-      child: ATImgLoader(
-        imgPath: imagePath,
-        boxFit: BoxFit.cover
-      ),
+      child: ATImgLoader(imgPath: imagePath, boxFit: BoxFit.cover),
     );
   }
 }

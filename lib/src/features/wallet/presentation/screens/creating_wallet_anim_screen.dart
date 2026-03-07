@@ -17,50 +17,44 @@ class ATWalletCreationAnimScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider<WalletCreationAnimBloc>(
       create: (_) => WalletCreationAnimBloc(),
-      child: Builder(
-        builder: (BuildContext blocContext) {
-          WidgetsBinding.instance.addPostFrameCallback(
-            (_) => Future<void>.delayed(
-              const Duration(milliseconds: 500),
-              () => blocContext.mounted ? blocContext.read<WalletCreationAnimBloc>().triggerNext(0) : <dynamic, dynamic>{}
-            )
-          );
-          
-          return ATAnnotatedRegion(
-            statusBarColor: ATColors.transparent,
-            child: Scaffold(
-              body: BlocSelector<WalletCreationAnimBloc, List<bool>, bool>(
+      child: Builder(builder: (BuildContext blocContext) {
+        WidgetsBinding.instance.addPostFrameCallback((_) =>
+            Future<void>.delayed(
+                const Duration(milliseconds: 500),
+                () => blocContext.mounted
+                    ? blocContext.read<WalletCreationAnimBloc>().triggerNext(0)
+                    : <dynamic, dynamic>{}));
+
+        return ATAnnotatedRegion(
+          statusBarColor: ATColors.transparent,
+          child: Scaffold(
+            body: BlocSelector<WalletCreationAnimBloc, List<bool>, bool>(
                 selector: (List<bool> state) => state.elementAt(3),
                 builder: (_, bool successState) {
-                  if(successState){
+                  if (successState) {
                     return const WalletCretionSuccess();
                   }
                   return const Center(child: WalletCreationLoading());
-                }
-              ),
-          
-              bottomSheet: Padding(
-                padding: const EdgeInsets.fromLTRB(15, 5, 15, 50),
-                child: BlocSelector<WalletCreationAnimBloc, List<bool>, bool>(
+                }),
+            bottomSheet: Padding(
+              padding: const EdgeInsets.fromLTRB(15, 5, 15, 50),
+              child: BlocSelector<WalletCreationAnimBloc, List<bool>, bool>(
                   selector: (List<bool> state) => state.elementAt(3),
                   builder: (_, bool isVisible) {
                     return ATAnimatedXFade(
-                      condition: isVisible,
-                      secondChild: const SizedBox.shrink(),
-                      firstChild: ATPlainElevatedBtn(
-                        onPressed: (){
-                          context.pushReplacementNamed(ATRoutes.walletScreen);
-                        },
-                        btnTitle: ATStrings.OPEN_WALLET
-                      )
-                    );
-                  }
-                ),
-              ),
+                        condition: isVisible,
+                        secondChild: const SizedBox.shrink(),
+                        firstChild: ATPlainElevatedBtn(
+                            onPressed: () {
+                              context
+                                  .pushReplacementNamed(ATRoutes.walletScreen);
+                            },
+                            btnTitle: ATStrings.OPEN_WALLET));
+                  }),
             ),
-          );
-        }
-      ),
+          ),
+        );
+      }),
     );
   }
 }

@@ -11,7 +11,6 @@ import '../../../../shared/custom_container_widget.dart';
 import 'package:amptive/src/config/config_export.dart';
 import 'package:amptive/src/shared/back_button.dart';
 
-
 class ProfileSubscribersScreen extends StatelessWidget {
   const ProfileSubscribersScreen({super.key});
 
@@ -27,7 +26,6 @@ class ProfileSubscribersScreen extends StatelessWidget {
             style: context.textTheme.bodyMedium,
           ),
         ),
-
         body: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
@@ -37,24 +35,25 @@ class ProfileSubscribersScreen extends StatelessWidget {
                 controller: TextEditingController(),
                 disableBlueBorder: true,
                 hintText: ATStrings.SEARCH_4_SUBSCRIBERS,
-                fillColor: ATColors.white.withValues(alpha:0.1),
+                fillColor: ATColors.white.withValues(alpha: 0.1),
                 prefixIcon: const Padding(
                   padding: EdgeInsets.only(left: 10),
                   child: ATImgLoader(
-                    height: 20, width: 20,
-                    imgPath: ATImgStrings.outlinedSearch
-                  ),
+                      height: 20,
+                      width: 20,
+                      imgPath: ATImgStrings.outlinedSearch),
                 ),
               ),
             ),
             Expanded(
-              child: BlocBuilder<AmptiveProfileFollowersBloc, List<ObjectWithNotifier<Host>>>(
-                builder: (_, List<ObjectWithNotifier<Host>> state) {
-                  return ListView.builder(
+              child: BlocBuilder<AmptiveProfileFollowersBloc,
+                      List<ObjectWithNotifier<Host>>>(
+                  builder: (_, List<ObjectWithNotifier<Host>> state) {
+                return ListView.builder(
                     itemCount: state.length,
                     padding: const EdgeInsets.only(bottom: 50),
-                    itemBuilder: (_, int index){
-                      if(index == 0){
+                    itemBuilder: (_, int index) {
+                      if (index == 0) {
                         return Padding(
                           padding: const EdgeInsets.fromLTRB(15, 5, 15, 20),
                           child: Text(
@@ -63,15 +62,15 @@ class ProfileSubscribersScreen extends StatelessWidget {
                           ),
                         );
                       }
-                      final ObjectWithNotifier<Host> follower = state.elementAt(index - 1);
+                      final ObjectWithNotifier<Host> follower =
+                          state.elementAt(index - 1);
                       return _RenderASubscriber(
                         follower: follower,
-                        onTap: (ObjectWithNotifier<Host> follower, bool isSelected){},
+                        onTap: (ObjectWithNotifier<Host> follower,
+                            bool isSelected) {},
                       );
-                    }
-                  );
-                }
-              ),
+                    });
+              }),
             )
           ],
         ),
@@ -80,10 +79,7 @@ class ProfileSubscribersScreen extends StatelessWidget {
   }
 }
 
-
-
 class _RenderASubscriber extends StatelessWidget {
-
   const _RenderASubscriber({
     required this.onTap,
     required this.follower,
@@ -102,22 +98,21 @@ class _RenderASubscriber extends StatelessWidget {
           ClipRRect(
             borderRadius: BorderRadius.circular(30),
             child: ATImgLoader(
-              height: 50, width: 50, boxFit: BoxFit.cover,
-              imgPath: follower.obj.profilePicture!
-            ),
+                height: 50,
+                width: 50,
+                boxFit: BoxFit.cover,
+                imgPath: follower.obj.profilePicture!),
           ),
           const SizedBox(width: 10),
           Expanded(
-            child: Text(
-              follower.obj.username ?? '',
-              style: context.textTheme.titleMedium
-            ),
+            child: Text(follower.obj.username ?? '',
+                style: context.textTheme.titleMedium),
           ),
-    
           SizedBox(
-            width: 84, height: 30,
+            width: 84,
+            height: 30,
             child: ATOutlinedBtn(
-              onPressed: (){},
+              onPressed: () {},
               padding: EdgeInsets.zero,
               btnTitle: ATStrings.MANAGE,
               style: context.textTheme.bodySmall?.copyWith(

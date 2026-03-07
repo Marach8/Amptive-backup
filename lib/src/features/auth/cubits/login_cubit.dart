@@ -8,62 +8,57 @@ import 'package:amptive/src/features/auth/data/repository/auth_repo.dart';
 import 'package:amptive/src/features/auth/data/repository/auth_repo_impl.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class LoginCubit extends Cubit <ATAppState<ATUser>>{
-  LoginCubit ({
-    AuthRepo? mockAuthRepo,
-    ATLocalStorageService? mockLocalStorageService
-  }): authRepo = mockAuthRepo ?? AuthRepoImpl(),
-      localStorageService = mockLocalStorageService ?? FlutterSecureStorageServiceImpl(),
-      super (const InitialState<ATUser> ());
+class LoginCubit extends Cubit<ATAppState<ATUser>> {
+  LoginCubit(
+      {AuthRepo? mockAuthRepo, ATLocalStorageService? mockLocalStorageService})
+      : authRepo = mockAuthRepo ?? AuthRepoImpl(),
+        localStorageService =
+            mockLocalStorageService ?? FlutterSecureStorageServiceImpl(),
+        super(const InitialState<ATUser>());
 
   final AuthRepo authRepo;
   final ATLocalStorageService localStorageService;
-  
-  Future <void> loginUser ({
-    required Map<String, dynamic> param
-  }) async {
+
+  Future<void> loginUser({required Map<String, dynamic> param}) async {
     emit(const LoadingState<ATUser>());
-    try{
+    try {
+      final ApiResponse<LoginResponseModel> response =
+          await authRepo.loginUser(param: param);
+      response.when(successful: (Successful<LoginResponseModel> data) async {
+        final String? accessToken = data.data?.accessToken;
+        final String? refreshToken = data.data?.refreshToken;
 
-      final ApiResponse<LoginResponseModel> response = await authRepo.loginUser(
-        param: param);
-        response.when(
-          successful: (Successful<LoginResponseModel> data) async{
-            final String? accessToken = data.data?.accessToken;
-            final String? refreshToken = data.data?.refreshToken;
+        final String? userName = data.data?.user?.username;
+        final String? email = data.data?.user?.email;
+        final String? name = data.data?.user?.name;
+        final String? userId = data.data?.user?.id;
+        final String? dob = data.data?.user?.dob;
 
-            final String? userName = data.data?.user?.username;
-            final String? email = data.data?.user?.email;
-            final String? name = data.data?.user?.name;
-            final String? userId = data.data?.user?.id;
-            final String? dob = data.data?.user?.dob;
-
-            if(accessToken != null){
-              await localStorageService.set(ATStrings.accessToken, accessToken);
-            }
-            if(refreshToken != null){
-              await localStorageService.set(ATStrings.refreshToken, refreshToken);
-            }
-            final CachedUserData cachedUserData = CachedUserData(
-              username: userName,
-              email: email,
-              name: name,
-              userId: userId,
-              dob: dob,
-            );
-            await localStorageService.setObject(
-              ATStrings.cachedUserData,
-              cachedUserData.toJson(),
-            );
-            emit(SuccessState<ATUser>(newData: data.data?.user,));
-          },
-          unSuccessful: (Unsuccessful<LoginResponseModel> error){
-            emit(FailureState<ATUser>(error.error.message));
-          }
+        if (accessToken != null) {
+          await localStorageService.set(ATStrings.accessToken, accessToken);
+        }
+        if (refreshToken != null) {
+          await localStorageService.set(ATStrings.refreshToken, refreshToken);
+        }
+        final CachedUserData cachedUserData = CachedUserData(
+          username: userName,
+          email: email,
+          name: name,
+          userId: userId,
+          dob: dob,
         );
-      }catch (e) {
-        emit(FailureState<ATUser>('Unable to login user: $e')
-      );
+        await localStorageService.setObject(
+          ATStrings.cachedUserData,
+          cachedUserData.toJson(),
+        );
+        emit(SuccessState<ATUser>(
+          newData: data.data?.user,
+        ));
+      }, unSuccessful: (Unsuccessful<LoginResponseModel> error) {
+        emit(FailureState<ATUser>(error.error.message));
+      });
+    } catch (e) {
+      emit(FailureState<ATUser>('Unable to login user: $e'));
     }
   }
 }

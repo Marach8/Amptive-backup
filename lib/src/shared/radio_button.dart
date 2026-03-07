@@ -3,11 +3,7 @@ import 'package:amptive/src/shared/custom_container_widget.dart';
 import 'package:flutter/material.dart';
 
 class ATRadioBtn extends StatelessWidget {
-  const ATRadioBtn({
-    super.key,
-    required this.isSelected,
-    this.duration
-  });
+  const ATRadioBtn({super.key, required this.isSelected, this.duration});
 
   final bool isSelected;
   final int? duration;
@@ -15,15 +11,15 @@ class ATRadioBtn extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ATContainer(
-      duration: duration,
-      height: 15, width: 15, boxShape: BoxShape.circle,
-      padding: const EdgeInsets.all(5),
-      color: isSelected ? ATColors.hex307FE2 : ATColors.transparent,
-      border: Border.all(
-        color: isSelected ? ATColors.hex307FE2 : ATColors.white,
-        strokeAlign: 5.0
-      ),
-      child: const SizedBox.shrink()
-    );
+        duration: duration,
+        height: 15,
+        width: 15,
+        boxShape: BoxShape.circle,
+        padding: const EdgeInsets.all(5),
+        color: isSelected ? ATColors.hex307FE2 : ATColors.transparent,
+        border: Border.all(
+            color: isSelected ? ATColors.hex307FE2 : ATColors.white,
+            strokeAlign: 5.0),
+        child: const SizedBox.shrink());
   }
 }

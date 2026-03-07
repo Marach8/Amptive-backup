@@ -9,7 +9,6 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class CardData {
-
   CardData(this.title, this.description, this.pics);
   late String title;
   late String description;
@@ -38,10 +37,12 @@ class AmptiveNotificationAnimationWidget extends StatefulWidget {
   const AmptiveNotificationAnimationWidget({super.key});
 
   @override
-  State<AmptiveNotificationAnimationWidget> createState() => _AmptiveNotificationAnimationWidgetState();
+  State<AmptiveNotificationAnimationWidget> createState() =>
+      _AmptiveNotificationAnimationWidgetState();
 }
 
-class _AmptiveNotificationAnimationWidgetState extends State<AmptiveNotificationAnimationWidget> {
+class _AmptiveNotificationAnimationWidgetState
+    extends State<AmptiveNotificationAnimationWidget> {
   final GlobalKey<AnimatedListState> _listKey = GlobalKey<AnimatedListState>();
   late Timer _timerRemove;
 
@@ -51,7 +52,8 @@ class _AmptiveNotificationAnimationWidgetState extends State<AmptiveNotification
     _timerRemove =
         Timer.periodic(const Duration(seconds: 7), (Timer timer) async {
       await _removeAllItems();
-      await Future.delayed(const Duration(milliseconds: 500)); // Small buffer time
+      await Future.delayed(
+          const Duration(milliseconds: 500)); // Small buffer time
       await _addAllItems();
     });
   }
@@ -65,19 +67,20 @@ class _AmptiveNotificationAnimationWidgetState extends State<AmptiveNotification
   @override
   Widget build(BuildContext context) {
     return Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: <Widget>[
-          Expanded(
-            child: AnimatedList(
-              key: _listKey,
-              initialItemCount: _notifies.length,
-              itemBuilder: (BuildContext context, int index, Animation<double> animation) {
-                return _buildItem(_notifies[index], animation, index);
-              },
-            ),
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: <Widget>[
+        Expanded(
+          child: AnimatedList(
+            key: _listKey,
+            initialItemCount: _notifies.length,
+            itemBuilder:
+                (BuildContext context, int index, Animation<double> animation) {
+              return _buildItem(_notifies[index], animation, index);
+            },
           ),
-        ],
-      );
+        ),
+      ],
+    );
   }
 
   Widget _buildItem(CardData item, Animation<double> animation, int index) {
@@ -91,8 +94,8 @@ class _AmptiveNotificationAnimationWidgetState extends State<AmptiveNotification
 
     double blurAmount = index * 0.8; // Increase blur by 0.8 for each item
 
-    Tween<Offset> offset = Tween(begin: const Offset(0, -1), end: const Offset(0, 0));
-
+    Tween<Offset> offset =
+        Tween(begin: const Offset(0, -1), end: const Offset(0, 0));
 
     return SlideTransition(
       position: animation.drive(offset),
@@ -105,16 +108,19 @@ class _AmptiveNotificationAnimationWidgetState extends State<AmptiveNotification
             ),
             child: Container(
                 width: width.w,
-                decoration: index == 0 ? BoxDecoration(
-                  boxShadow: <BoxShadow>[
-                    BoxShadow(
-                      color: ATColors.transparent,
-                      spreadRadius: 10,
-                      blurRadius: 7,
-                      offset: const Offset(0, 3), // changes position of shadow
-                    ),
-                  ],
-                ): null,
+                decoration: index == 0
+                    ? BoxDecoration(
+                        boxShadow: <BoxShadow>[
+                          BoxShadow(
+                            color: ATColors.transparent,
+                            spreadRadius: 10,
+                            blurRadius: 7,
+                            offset: const Offset(
+                                0, 3), // changes position of shadow
+                          ),
+                        ],
+                      )
+                    : null,
                 margin: EdgeInsets.symmetric(vertical: 5.h),
                 child: CardWidget(item, width.w)),
           ),
@@ -137,7 +143,8 @@ class _AmptiveNotificationAnimationWidgetState extends State<AmptiveNotification
       _removedItems.add(removedItem);
       _listKey.currentState?.removeItem(
         removeIndex,
-        (BuildContext context, Animation<double> animation) => _buildItem(removedItem, animation, removeIndex),
+        (BuildContext context, Animation<double> animation) =>
+            _buildItem(removedItem, animation, removeIndex),
         duration: const Duration(milliseconds: 600),
       );
     }
@@ -158,7 +165,6 @@ class _AmptiveNotificationAnimationWidgetState extends State<AmptiveNotification
 }
 
 class CardWidget extends StatelessWidget {
-
   const CardWidget(this.item, this.itemWidth, {super.key});
   final CardData item;
   final double itemWidth;

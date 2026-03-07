@@ -13,7 +13,8 @@ class RemoteUserDataCubit extends Cubit<ATAppState<UserData>> {
     ProfileRepo? mockProfileRepo,
     ATLocalStorageService? mockLocalStorageService,
   })  : profileRepo = mockProfileRepo ?? ProfileRepoImpl(),
-        localStorageService = mockLocalStorageService ?? FlutterSecureStorageServiceImpl(),
+        localStorageService =
+            mockLocalStorageService ?? FlutterSecureStorageServiceImpl(),
         super(const InitialState<UserData>());
 
   final ProfileRepo profileRepo;
@@ -21,40 +22,40 @@ class RemoteUserDataCubit extends Cubit<ATAppState<UserData>> {
 
   Future<void> fetchUserProfile() async {
     emit(const LoadingState<UserData>());
-    try{
+    try {
+      final ApiResponse<UserProfileResponseModel> response =
+          await profileRepo.fetchUserProfile();
 
-    final ApiResponse<UserProfileResponseModel> response = await profileRepo.fetchUserProfile();
+      response.when(
+        successful: (Successful<UserProfileResponseModel> data) async {
+          final UserData? userData = data.data?.data;
 
-    response.when(
-      successful: (Successful<UserProfileResponseModel> data) async {
-        final UserData? userData = data.data?.data;
+          if (userData != null) {
+            final CachedUserData cachedUserData = CachedUserData(
+              userId: userData.id,
+              email: userData.email,
+              username: userData.username,
+              dob: userData.dob,
+              name: userData.name,
+              pictureUrl: userData.pictureUrl,
+            );
 
-        if (userData != null) {
-          final CachedUserData cachedUserData = CachedUserData(
-            userId: userData.id,
-            email: userData.email,
-            username: userData.username,
-            dob: userData.dob,
-            name: userData.name,
-            pictureUrl: userData.pictureUrl,
-          );
+            await localStorageService.setObject(
+              ATStrings.cachedUserData,
+              cachedUserData.toJson(),
+            );
 
-          await localStorageService.setObject(
-            ATStrings.cachedUserData,
-            cachedUserData.toJson(),
-          );
-
-          emit(SuccessState<UserData>(newData: userData));
-        } else {
-          emit(const FailureState<UserData>('No user data found'));
-        }
-      },
-      unSuccessful: (Unsuccessful<UserProfileResponseModel> error) {
-        emit(FailureState<UserData>(error.error.message));
-      },
-    );
-  }catch (e) {
-    emit(FailureState<UserData>('Unable to fetch user profile: $e'));
-  }
+            emit(SuccessState<UserData>(newData: userData));
+          } else {
+            emit(const FailureState<UserData>('No user data found'));
+          }
+        },
+        unSuccessful: (Unsuccessful<UserProfileResponseModel> error) {
+          emit(FailureState<UserData>(error.error.message));
+        },
+      );
+    } catch (e) {
+      emit(FailureState<UserData>('Unable to fetch user profile: $e'));
+    }
   }
 }

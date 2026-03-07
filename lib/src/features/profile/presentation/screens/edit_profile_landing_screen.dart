@@ -17,12 +17,10 @@ class EditProfileScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    
     return BlocBuilder<LocalUserDataCubit, ATAppState<CachedUserData>>(
-      builder: (BuildContext context, ATAppState<CachedUserData> state){
-        final CachedUserData? userData = context
-           .read<LocalUserDataCubit>()
-           .currentUserData;
+        builder: (BuildContext context, ATAppState<CachedUserData> state) {
+      final CachedUserData? userData =
+          context.read<LocalUserDataCubit>().currentUserData;
       return ATAnnotatedRegion(
         child: Scaffold(
           appBar: const ATAppBar(
@@ -31,7 +29,6 @@ class EditProfileScreen extends StatelessWidget {
             leading: ATRoundedBackBtn(),
             titleText: ATStrings.EDIT_PROFILE,
           ),
-      
           body: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
@@ -45,94 +42,84 @@ class EditProfileScreen extends StatelessWidget {
                     children: <Widget>[
                       const SizedBox(height: 30),
                       const _MenuHeading(text: ATStrings.ABT_U),
-      
                       _MenuItem(
-                        title: ATStrings.NAME,
-                        value: userData?.name ??'Alieu Baba',
-                        onTap: ()async{
-                          await context.pushNamed(
-                            ATRoutes.EDIT_NAME, extra: 'Alieu Baba'
-                          );
-                        }
-                      ),
+                          title: ATStrings.NAME,
+                          value: userData?.name ?? 'Alieu Baba',
+                          onTap: () async {
+                            await context.pushNamed(ATRoutes.EDIT_NAME,
+                                extra: 'Alieu Baba');
+                          }),
                       _MenuItem(
-                        title: ATStrings.userName,
-                        value: userData?.username?? 'AlieuBaba',
-                        onTap: ()async => await context.pushNamed(
-                          ATRoutes.EDIT_USERNAME, extra: 'AlieuBaba'
-                        )
-                      ),
+                          title: ATStrings.userName,
+                          value: userData?.username ?? 'AlieuBaba',
+                          onTap: () async => await context.pushNamed(
+                              ATRoutes.EDIT_USERNAME,
+                              extra: 'AlieuBaba')),
                       _MenuItem(
-                        title: ATStrings.BIO,
-                        value: 'Author of UNTAMED & LOVE IS IN THE AIR',
-                        onTap: ()async{
-                          final String? newBio = await context.pushNamed(
-                            ATRoutes.EDIT_BIO, 
-                            extra: 'Author of UNTAMED & LOVE IS IN THE AIR'
-                          );
-                        }
-                      ),
-      
+                          title: ATStrings.BIO,
+                          value: 'Author of UNTAMED & LOVE IS IN THE AIR',
+                          onTap: () async {
+                            final String? newBio = await context.pushNamed(
+                                ATRoutes.EDIT_BIO,
+                                extra:
+                                    'Author of UNTAMED & LOVE IS IN THE AIR');
+                          }),
                       const SizedBox(height: 15),
                       const ATDivider(),
                       const SizedBox(height: 15),
-      
                       const _MenuHeading(text: ATStrings.LINKS),
                       _MenuItem(
-                        title: ATStrings.INSTAGRAM, isLink: true,
-                        value: 'www.instagram.com/alieubaba1',
-                        onTap: ()async => await context.pushNamed(
-                          ATRoutes.EDIT_SOCIALS, extra:<String?>[
-                            null,
-                            //'www.instagram.com/alieubaba1',
-                            ATStrings.INSTAGRAM,
-                          ]
-                        ) 
-                      ),
+                          title: ATStrings.INSTAGRAM,
+                          isLink: true,
+                          value: 'www.instagram.com/alieubaba1',
+                          onTap: () async => await context.pushNamed(
+                                  ATRoutes.EDIT_SOCIALS,
+                                  extra: <String?>[
+                                    null,
+                                    //'www.instagram.com/alieubaba1',
+                                    ATStrings.INSTAGRAM,
+                                  ])),
                       _MenuItem(
-                        title: 'X',isLink: true,
-                        value: 'www.x.com/alieubaba',
-                        onTap: ()async => await context.pushNamed(
-                          ATRoutes.EDIT_SOCIALS, extra:<String?>[
-                            null,//'www.x.com/alieubaba',
-                            ATStrings.X,
-                          ]
-                        )
-                      ),
+                          title: 'X',
+                          isLink: true,
+                          value: 'www.x.com/alieubaba',
+                          onTap: () async => await context.pushNamed(
+                                  ATRoutes.EDIT_SOCIALS,
+                                  extra: <String?>[
+                                    null, //'www.x.com/alieubaba',
+                                    ATStrings.X,
+                                  ])),
                       _MenuItem(
-                        title: ATStrings.LINKEDIN, isLink: true,
-                        value: 'www.linkedIn.com/alieubaba',
-                        onTap: ()async => await context.pushNamed(
-                          ATRoutes.EDIT_SOCIALS, extra:<String>[
-                            'www.linkedIn.com/alieubaba',
-                            ATStrings.LINKEDIN,
-                          ]
-                        )
-                      ),
+                          title: ATStrings.LINKEDIN,
+                          isLink: true,
+                          value: 'www.linkedIn.com/alieubaba',
+                          onTap: () async => await context.pushNamed(
+                                  ATRoutes.EDIT_SOCIALS,
+                                  extra: <String>[
+                                    'www.linkedIn.com/alieubaba',
+                                    ATStrings.LINKEDIN,
+                                  ])),
                       _MenuItem(
-                        title: ATStrings.WEBSITE, isLink: true,
-                        value: 'www.palbucks.co',
-                        onTap: ()async => await context.pushNamed(
-                          ATRoutes.EDIT_SOCIALS, extra:<String?>[
-                            null,//'www.palbucks.co',
-                            ATStrings.WEBSITE
-                          ]
-                        )
-                      ),
-      
+                          title: ATStrings.WEBSITE,
+                          isLink: true,
+                          value: 'www.palbucks.co',
+                          onTap: () async => await context.pushNamed(
+                                  ATRoutes.EDIT_SOCIALS,
+                                  extra: <String?>[
+                                    null, //'www.palbucks.co',
+                                    ATStrings.WEBSITE
+                                  ])),
                       const SizedBox(height: 15),
                       const ATDivider(),
                       const SizedBox(height: 15),
-      
                       const _MenuHeading(text: ATStrings.ACCT),
                       _MenuItem(
-                        title: ATStrings.SWITCH_ACCT,
-                        value: 'Audience',
-                        onTap: ()async {
-                          context.pushNamed(ATRoutes.SELECT_ACCT_TYPE);
-                          return null;
-                        }
-                      ),
+                          title: ATStrings.SWITCH_ACCT,
+                          value: 'Audience',
+                          onTap: () async {
+                            context.pushNamed(ATRoutes.SELECT_ACCT_TYPE);
+                            return;
+                          }),
                     ],
                   ),
                 ),
@@ -141,12 +128,9 @@ class EditProfileScreen extends StatelessWidget {
           ),
         ),
       );
-      }
-    );
+    });
   }
 }
-
-
 
 class _MenuHeading extends StatelessWidget {
   const _MenuHeading({required this.text});
@@ -159,15 +143,12 @@ class _MenuHeading extends StatelessWidget {
       padding: const EdgeInsets.fromLTRB(15, 0, 10, 0),
       child: Text(
         text,
-        style: context.textTheme.labelSmall?.copyWith(
-          color: ATColors.hexC2C2C2,
-          fontSize: ATSizes.size13
-        ),
+        style: context.textTheme.labelSmall
+            ?.copyWith(color: ATColors.hexC2C2C2, fontSize: ATSizes.size13),
       ),
     );
   }
 }
-
 
 class _MenuItem extends StatelessWidget {
   const _MenuItem({
@@ -196,7 +177,7 @@ class _MenuItem extends StatelessWidget {
               value,
               textAlign: TextAlign.end,
               style: context.textTheme.bodySmall?.copyWith(
-                color: isLink ? ATColors.white.withValues(alpha:0.4) : null,
+                color: isLink ? ATColors.white.withValues(alpha: 0.4) : null,
               ),
             ),
           ),

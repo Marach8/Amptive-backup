@@ -46,7 +46,8 @@ class CreateEpisodeRequestModel {
       if (title != null) 'title': title,
       if (description != null) 'description': description,
       if (thumbnailUrl != null) 'thumbnail_url': thumbnailUrl,
-      if (scheduledFor != null) 'scheduled_for': scheduledFor!.toIso8601String(),
+      if (scheduledFor != null)
+        'scheduled_for': scheduledFor!.toIso8601String(),
       if (communityId != null) 'community_id': communityId,
       if (tagIds != null) 'tag_ids': tagIds,
       if (coHostIds != null) 'co_host_ids': coHostIds,

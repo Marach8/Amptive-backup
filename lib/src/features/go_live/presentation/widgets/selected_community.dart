@@ -1,10 +1,8 @@
 import 'package:amptive/src/config/config_export.dart';
-import 'package:amptive/src/features/discover/data/models/response/communities_response_model.dart' show Community;
 import 'package:amptive/src/shared/custom_container_widget.dart';
 import 'package:amptive/src/shared/global_model_objects.dart';
 import 'package:amptive/src/shared/image_loader_widget.dart';
 import 'package:flutter/material.dart';
-
 
 class SelectedCommunityWidget extends StatelessWidget {
   const SelectedCommunityWidget({
@@ -31,10 +29,13 @@ class SelectedCommunityWidget extends StatelessWidget {
             child: ATImgLoader(
               imgPath: selectedCommunity.image ?? '',
               boxFit: BoxFit.cover,
-              width: 100, height: 75,
+              width: 100,
+              height: 75,
             ),
           ),
-          const SizedBox(width: 18,),
+          const SizedBox(
+            width: 18,
+          ),
           Expanded(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -44,29 +45,34 @@ class SelectedCommunityWidget extends StatelessWidget {
                   selectedCommunity.name!,
                   style: Theme.of(context).textTheme.bodySmall,
                 ),
-                const SizedBox(height: 20,),
+                const SizedBox(
+                  height: 20,
+                ),
                 ATContainer(
-                  onTap: onView, radius: 5,
+                  onTap: onView,
+                  radius: 5,
                   color: ATColors.white.withValues(alpha: 0.1),
                   padding: const EdgeInsets.fromLTRB(10, 8, 10, 8),
                   child: Text(
                     ATStrings.VIEW_COMMUNITY,
                     style: Theme.of(context).textTheme.labelSmall?.copyWith(
-                      color: ATColors.white.withValues(alpha: 0.7),
-                      height: 1.1
-                    ),
+                        color: ATColors.white.withValues(alpha: 0.7),
+                        height: 1.1),
                   ),
                 )
               ],
             ),
           ),
-          const SizedBox(width: 10,),
+          const SizedBox(
+            width: 10,
+          ),
           InkWell(
             onTap: onClose,
             splashColor: ATColors.hex303030,
             borderRadius: BorderRadius.circular(30),
             child: const SizedBox(
-              height: 30, width: 30,
+              height: 30,
+              width: 30,
               child: Icon(Icons.close),
             ),
           ),

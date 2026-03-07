@@ -19,26 +19,29 @@ class TrendingSocietyScreen extends StatelessWidget {
       child: Scaffold(
         body: BlocProvider<BlurredHeaderCubit>(
           create: (_) => BlurredHeaderCubit(),
-          child: Builder(
-            builder: (BuildContext blocContext) {
-              return NotificationListener<ScrollNotification>(
-                onNotification: blocContext.read<BlurredHeaderCubit>().onScrollNotification,
-                child: CustomScrollView(
-                  physics: const BouncingScrollPhysics(),
-                  slivers: <Widget>[
-                    SliverPersistentHeader(
-                      pinned: true,
-                      delegate: ATSliverHDelegate(
-                        maxExt: kToolbarHeight + MediaQuery.paddingOf(context).top,
-                        minExt: kToolbarHeight + MediaQuery.paddingOf(context).top,
+          child: Builder(builder: (BuildContext blocContext) {
+            return NotificationListener<ScrollNotification>(
+              onNotification:
+                  blocContext.read<BlurredHeaderCubit>().onScrollNotification,
+              child: CustomScrollView(
+                physics: const BouncingScrollPhysics(),
+                slivers: <Widget>[
+                  SliverPersistentHeader(
+                    pinned: true,
+                    delegate: ATSliverHDelegate(
+                        maxExt:
+                            kToolbarHeight + MediaQuery.paddingOf(context).top,
+                        minExt:
+                            kToolbarHeight + MediaQuery.paddingOf(context).top,
                         child: ATBlurredHeaderWidget(
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: <Widget>[
                               const Padding(
-                                padding: EdgeInsets.only(left: 15),
-                                child: ATBackBtn(leadingText: ATStrings.SOCIETY,)
-                              ),
+                                  padding: EdgeInsets.only(left: 15),
+                                  child: ATBackBtn(
+                                    leadingText: ATStrings.SOCIETY,
+                                  )),
                               Text(
                                 ATStrings.TRENDING,
                                 style: Theme.of(context).textTheme.bodyMedium,
@@ -46,34 +49,32 @@ class TrendingSocietyScreen extends StatelessWidget {
                               const SizedBox(width: 100)
                             ],
                           ),
-                        )
-                      ),
-                    ),
-
-                    const SliverToBoxAdapter(child: SizedBox(height: 15,)),
-                          
-                    SliverPadding(
-                      padding: const EdgeInsets.symmetric(horizontal: 15),
-                      sliver: SliverGrid(
+                        )),
+                  ),
+                  const SliverToBoxAdapter(
+                      child: SizedBox(
+                    height: 15,
+                  )),
+                  SliverPadding(
+                    padding: const EdgeInsets.symmetric(horizontal: 15),
+                    sliver: SliverGrid(
                         delegate: SliverChildListDelegate.fixed(
-                          List<Widget>.generate(
-                            28,
-                            (_) => const TrendingSocietyHashtagWidget(trendingPicture: ATImgStrings.jpeg2)
-                          ).toList()
-                        ),
-                        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 2,
-                          crossAxisSpacing: 15,
-                          mainAxisSpacing: 18,
-                          childAspectRatio: 0.72
-                        )
-                      ),
-                    )
-                  ],
-                ),
-              );
-            }
-          ),
+                            List<Widget>.generate(
+                                    28,
+                                    (_) => const TrendingSocietyHashtagWidget(
+                                        trendingPicture: ATImgStrings.jpeg2))
+                                .toList()),
+                        gridDelegate:
+                            const SliverGridDelegateWithFixedCrossAxisCount(
+                                crossAxisCount: 2,
+                                crossAxisSpacing: 15,
+                                mainAxisSpacing: 18,
+                                childAspectRatio: 0.72)),
+                  )
+                ],
+              ),
+            );
+          }),
         ),
       ),
     );

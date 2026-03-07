@@ -1,18 +1,16 @@
 import 'package:flutter/material.dart';
 
 class ATAnimatedAlign extends StatelessWidget {
-  const ATAnimatedAlign({
-    super.key,
-    required this.startAlignment,
-    required this.child,
-    required this.endAlignment,
-    required this.condition,
-    this.curve,
-    this.duration
-  });
+  const ATAnimatedAlign(
+      {super.key,
+      required this.startAlignment,
+      required this.child,
+      required this.endAlignment,
+      required this.condition,
+      this.curve,
+      this.duration});
   final Widget child;
-  final AlignmentGeometry startAlignment,
-  endAlignment;
+  final AlignmentGeometry startAlignment, endAlignment;
   final bool condition;
   final int? duration;
   final Curve? curve;

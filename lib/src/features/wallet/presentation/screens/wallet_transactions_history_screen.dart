@@ -8,7 +8,6 @@ import 'package:flutter/material.dart';
 import 'package:sticky_headers/sticky_headers/widget.dart';
 import '../../../../shared/annotated_region__widget.dart';
 
-
 class ATWalletTxnsHistoryScreen extends StatelessWidget {
   const ATWalletTxnsHistoryScreen({super.key});
 
@@ -36,7 +35,7 @@ class ATWalletTxnsHistoryScreen extends StatelessWidget {
                     imgPath: ATImgStrings.outlinedSearch,
                   ),
                 ),
-                onChanged: (String text){},
+                onChanged: (String text) {},
               ),
             ),
           ),
@@ -44,9 +43,9 @@ class ATWalletTxnsHistoryScreen extends StatelessWidget {
         body: ListView.builder(
           itemCount: 20,
           padding: EdgeInsets.zero,
-          itemBuilder: (_, int index){
+          itemBuilder: (_, int index) {
             return StickyHeaderBuilder(
-              builder: (_, __){
+              builder: (_, __) {
                 return Container(
                   width: context.screenWidth,
                   color: ATColors.black,
@@ -54,9 +53,10 @@ class ATWalletTxnsHistoryScreen extends StatelessWidget {
                     padding: const EdgeInsets.fromLTRB(16, 0, 16, 8),
                     child: Text(
                       '${index + 1} April 2025',
-                      style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                        color: ATColors.hexC2C2C2
-                      ),
+                      style: Theme.of(context)
+                          .textTheme
+                          .bodySmall
+                          ?.copyWith(color: ATColors.hexC2C2C2),
                     ),
                   ),
                 );
@@ -64,21 +64,20 @@ class ATWalletTxnsHistoryScreen extends StatelessWidget {
               content: Padding(
                 padding: const EdgeInsets.fromLTRB(0, 7, 0, 30),
                 child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  spacing: 15,
-                  children: List<Widget>.filled(
-                    5,
-                    RenderATransaction(
-                      tileColor: ATColors.transparent,
-                      time: 'Today, 5:50 PM',
-                      txnType: ATStrings.SUB_RECEIVED,
-                      amount: '+${ATStrings.nairaText}5,000.00',
-                      color: ATColors.yellowColor,
-                      icon: Icons.favorite,
-                      imgPath: ATImgStrings.jpeg1,
-                    ),
-                  )
-                ),
+                    mainAxisSize: MainAxisSize.min,
+                    spacing: 15,
+                    children: List<Widget>.filled(
+                      5,
+                      RenderATransaction(
+                        tileColor: ATColors.transparent,
+                        time: 'Today, 5:50 PM',
+                        txnType: ATStrings.SUB_RECEIVED,
+                        amount: '+${ATStrings.nairaText}5,000.00',
+                        color: ATColors.yellowColor,
+                        icon: Icons.favorite,
+                        imgPath: ATImgStrings.jpeg1,
+                      ),
+                    )),
               ),
             );
           },

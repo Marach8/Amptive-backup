@@ -1,19 +1,12 @@
-
 import 'dart:async';
 
 import 'package:amptive/src/config/utils/colors.dart';
 import 'package:flutter/material.dart';
 
 class PreHomePageBackground extends StatefulWidget {
-  
-  const PreHomePageBackground({
-    super.key,
-    this.color,
-    this.angle = 0.0
-  });
+  const PreHomePageBackground({super.key, this.color, this.angle = 0.0});
   final Color? color;
   final double angle;
-
 
   @override
   State<PreHomePageBackground> createState() => _PreHomePageBackgroundState();
@@ -26,8 +19,6 @@ class _PreHomePageBackgroundState extends State<PreHomePageBackground>
   late Timer _timer;
   bool isStretched = false;
 
-
-
   @override
   void initState() {
     super.initState();
@@ -37,7 +28,7 @@ class _PreHomePageBackgroundState extends State<PreHomePageBackground>
     );
     _animation = Tween<double>(begin: 0, end: 1).animate(_controller);
 
-    _timer = Timer.periodic(const Duration(seconds: 5), (Timer timer)  {
+    _timer = Timer.periodic(const Duration(seconds: 5), (Timer timer) {
       _toggleMoon();
     });
   }
@@ -62,29 +53,31 @@ class _PreHomePageBackgroundState extends State<PreHomePageBackground>
 
   @override
   Widget build(BuildContext context) {
-    return  Center(
-        child: Transform.rotate(
-          angle: widget.angle,
-          child: AnimatedContainer(
-            duration: const Duration(seconds: 2),
-            width: 294.0,
-            height: 291,
-            child: CustomPaint(
-              painter: HalfMoonPainter(
-                animation: _animation,
-                stretchedMode: isStretched,
-                color: widget.color ?? ATColors.hex307FE2,
-              ),
+    return Center(
+      child: Transform.rotate(
+        angle: widget.angle,
+        child: AnimatedContainer(
+          duration: const Duration(seconds: 2),
+          width: 294.0,
+          height: 291,
+          child: CustomPaint(
+            painter: HalfMoonPainter(
+              animation: _animation,
+              stretchedMode: isStretched,
+              color: widget.color ?? ATColors.hex307FE2,
             ),
           ),
         ),
-      );
+      ),
+    );
   }
 }
 
 class HalfMoonPainter extends CustomPainter {
-
-  HalfMoonPainter({required this.animation, required this.stretchedMode, required this.color})
+  HalfMoonPainter(
+      {required this.animation,
+      required this.stretchedMode,
+      required this.color})
       : super(repaint: animation);
   final Animation<double> animation;
   final bool stretchedMode;
@@ -115,8 +108,8 @@ class HalfMoonPainter extends CustomPainter {
     if (stretchedMode) {
       double controlPointY = animation.value * -w * 0.6;
       path.quadraticBezierTo(w * 0.6, controlPointY, w * 0.75, 0);
-    }else{
-      if(animation.value != 0) {
+    } else {
+      if (animation.value != 0) {
         double controlPointY = animation.value * -w * 0.5;
         path.quadraticBezierTo(w * 0.6, controlPointY, w * 0.75, 0);
       }

@@ -1,21 +1,20 @@
 import 'package:flutter/material.dart';
 
 class AmptiveRebuilderWidget<T> extends StatefulWidget {
-
-  const AmptiveRebuilderWidget({
-    super.key,
-    required this.builder,
-    required this.notifier,
-    this.shouldDispose = false,
-    this.child
-  });
+  const AmptiveRebuilderWidget(
+      {super.key,
+      required this.builder,
+      required this.notifier,
+      this.shouldDispose = false,
+      this.child});
   final ValueNotifier<T> notifier;
   final bool shouldDispose;
   final Widget Function(BuildContext, T, Widget?) builder;
   final Widget? child;
 
   @override
-  State<AmptiveRebuilderWidget<T>> createState() => _AmptiveRebuilderWidgetState<T>();
+  State<AmptiveRebuilderWidget<T>> createState() =>
+      _AmptiveRebuilderWidgetState<T>();
 }
 
 class _AmptiveRebuilderWidgetState<T> extends State<AmptiveRebuilderWidget<T>> {
@@ -35,14 +34,11 @@ class _AmptiveRebuilderWidgetState<T> extends State<AmptiveRebuilderWidget<T>> {
 
   @override
   Widget build(_) => ValueListenableBuilder<T>(
-    valueListenable: notifier,
-    builder: widget.builder,
-    child: widget.child,
-  );
+        valueListenable: notifier,
+        builder: widget.builder,
+        child: widget.child,
+      );
 }
-
-
-
 
 // class ExampleUsageOfTheRebuilderWidgetAbove extends StatelessWidget {
 //   const ExampleUsageOfTheRebuilderWidgetAbove({super.key});

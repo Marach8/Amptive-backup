@@ -17,7 +17,7 @@ class CreatorProfilePix extends StatelessWidget {
   Widget build(BuildContext context) {
     return ATContainer(
       decorImage: ATImgStrings.weCanDoHardThingsBgImage,
-      height: 150,                
+      height: 150,
       width: context.screenWidth,
       child: GestureDetector(
         child: Stack(
@@ -27,48 +27,39 @@ class CreatorProfilePix extends StatelessWidget {
             ATContainer(
               height: 150,
               gradient: LinearGradient(
-                begin: Alignment.topCenter,
-                end: Alignment.bottomCenter,
-                colors: <Color>[
-                  ATColors.black,
-                  ATColors.transparent
-                ]
-              ),
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
+                  colors: <Color>[ATColors.black, ATColors.transparent]),
               width: context.screenWidth,
               child: const SizedBox(),
             ),
             Positioned(
-              bottom: -35,
-              child: Hero(
-                tag: ATImgStrings.jpeg1,
-                child: ATCircularImage(
-                  onTap: () => context.pushNamed(
-                    ATRoutes.PROFILE_PIC_SCREEN,
-                    extra: ATImgStrings.jpeg1
-                  ),
-                  diameter: 70, addBorder: true,
-                  borderColor: ATColors.black,
-                  borderWidth: 3,
-                  imagePath: ATImgStrings.jpeg1
-                ),
-              )
-            ),
+                bottom: -35,
+                child: Hero(
+                  tag: ATImgStrings.jpeg1,
+                  child: ATCircularImage(
+                      onTap: () => context.pushNamed(
+                          ATRoutes.PROFILE_PIC_SCREEN,
+                          extra: ATImgStrings.jpeg1),
+                      diameter: 70,
+                      addBorder: true,
+                      borderColor: ATColors.black,
+                      borderWidth: 3,
+                      imagePath: ATImgStrings.jpeg1),
+                )),
             Positioned(
-              bottom: -35,
-              child: ATContainer(
-                color: ATColors.hexFED601,
-                radius: 10,
-                padding: const EdgeInsets.fromLTRB(5, 0, 5, 1),
-                border: Border.all(color: ATColors.black, width: 2),
-                child: Text(
-                  ATStrings.CREATOR.toUpperCase(),
-                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                    fontSize: ATSizes.size10,
-                    color: ATColors.black
+                bottom: -35,
+                child: ATContainer(
+                  color: ATColors.hexFED601,
+                  radius: 10,
+                  padding: const EdgeInsets.fromLTRB(5, 0, 5, 1),
+                  border: Border.all(color: ATColors.black, width: 2),
+                  child: Text(
+                    ATStrings.CREATOR.toUpperCase(),
+                    style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                        fontSize: ATSizes.size10, color: ATColors.black),
                   ),
-                ),
-              )
-            ),
+                )),
           ],
         ),
       ),

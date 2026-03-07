@@ -26,13 +26,15 @@ class RenderATransaction extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ATContainer(
-      onTap: (){},
+      onTap: () {},
       color: tileColor ?? ATColors.white.withValues(alpha: 0.05),
-      padding: const EdgeInsets.all(15), radius: 15,
+      padding: const EdgeInsets.all(15),
+      radius: 15,
       child: Row(
         children: <Widget>[
           SizedBox(
-            height: 35, width: 35,
+            height: 35,
+            width: 35,
             child: Stack(
               clipBehavior: Clip.none,
               children: <Widget>[
@@ -41,11 +43,14 @@ class RenderATransaction extends StatelessWidget {
                   diameter: 35,
                 ),
                 Positioned(
-                  right: -2, top: -2,
+                  right: -2,
+                  top: -2,
                   child: CircleAvatar(
-                    radius: 9, backgroundColor: color,
+                    radius: 9,
+                    backgroundColor: color,
                     child: Icon(
-                      icon, size: 10,
+                      icon,
+                      size: 10,
                       color: descriptionIconColor ?? ATColors.black,
                     ),
                   ),
@@ -53,31 +58,28 @@ class RenderATransaction extends StatelessWidget {
               ],
             ),
           ),
-          const SizedBox(width: 10,),
+          const SizedBox(
+            width: 10,
+          ),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                Text(
-                  txnType,
-                  style: context.textTheme.bodySmall
-                ),
-                Text(
-                  time,
-                  style: context.textTheme.titleSmall?.copyWith(
-                    color: ATColors.hexC2C2C2,
-                    fontSize: ATSizes.size13
-                  )
-                ),
+                Text(txnType, style: context.textTheme.bodySmall),
+                Text(time,
+                    style: context.textTheme.titleSmall?.copyWith(
+                        color: ATColors.hexC2C2C2, fontSize: ATSizes.size13)),
               ],
             ),
           ),
-          const SizedBox(width: 20,),
+          const SizedBox(
+            width: 20,
+          ),
           Text(
-            amount, maxLines: 2,
-            style: context.textTheme.labelSmall?.copyWith(
-              fontSize: ATSizes.size16
-            ),
+            amount,
+            maxLines: 2,
+            style: context.textTheme.labelSmall
+                ?.copyWith(fontSize: ATSizes.size16),
           )
         ],
       ),

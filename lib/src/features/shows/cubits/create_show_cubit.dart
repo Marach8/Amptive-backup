@@ -1,8 +1,6 @@
 import 'package:amptive/src/config/api_response_and_app_state.dart';
 import 'package:amptive/src/features/shows/data/models/request/create_show_model.dart';
 import 'package:amptive/src/features/shows/data/models/response/show_response_model.dart';
-import 'package:amptive/src/features/go_live/data/repository/go_live_repo.dart';
-import 'package:amptive/src/features/go_live/data/repository/go_live_repo_impl.dart';
 import 'package:amptive/src/features/shows/data/repository/shows_repo.dart';
 import 'package:amptive/src/features/shows/data/repository/shows_repo_impl.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -24,7 +22,7 @@ class CreateShowCubit extends Cubit<ATAppState<HostedShow>> {
     required List<String> tagIds,
     required List<String> coHostIds,
   }) async {
-        emit(const LoadingState<HostedShow>());
+    emit(const LoadingState<HostedShow>());
     try {
       final CreateShowModel createShowModel = CreateShowModel(
         title: title,

@@ -1,4 +1,3 @@
-import 'dart:developer';
 
 import 'package:amptive/src/config/api_response_and_app_state.dart';
 import 'package:amptive/src/config/utils/dialogs/app_notification_dialog.dart';
@@ -8,11 +7,7 @@ import 'package:amptive/src/features/go_live/go_live_export.dart';
 import 'package:amptive/src/features/shows/presentation/widgets/cohost_with_check_icon.dart';
 import 'package:amptive/src/global_export.dart';
 import 'package:amptive/src/shared/global_model_objects.dart';
-import 'package:amptive/src/shared/image_loader_widget.dart';
-import 'package:amptive/src/shared/search_filter_widget.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:go_router/go_router.dart';
-import '../../../../models/host.dart';
 
 class AvailableCohostsList extends StatelessWidget {
   const AvailableCohostsList({
@@ -27,104 +22,100 @@ class AvailableCohostsList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<AllUsersCubit, ATAppState<AllUsersResponseModel>>(
-      listener: (_, ATAppState<AllUsersResponseModel> state) {
-        if(state is FailureState<AllUsersResponseModel>){
-          showAppNotification2(
+        listener: (_, ATAppState<AllUsersResponseModel> state) {
+      if (state is FailureState<AllUsersResponseModel>) {
+        showAppNotification2(
             context: context,
             text: state.message,
-            type: NotificationType.failure
-          );
-        }
-      },
-      builder: (_, ATAppState<AllUsersResponseModel> state) {
-        return switch(state){
-          InitialState<AllUsersResponseModel>() => const SizedBox.shrink(),
-          LoadingState<AllUsersResponseModel>() ||
-          FailureState<AllUsersResponseModel>() ||
-          SuccessState<AllUsersResponseModel>() => Builder(
-            builder: (_){
-              final AllUsersResponseModel? usersData = 
-                context.read<AllUsersCubit>().currentUsersData;
+            type: NotificationType.failure);
+      }
+    }, builder: (_, ATAppState<AllUsersResponseModel> state) {
+      return switch (state) {
+        InitialState<AllUsersResponseModel>() => const SizedBox.shrink(),
+        LoadingState<AllUsersResponseModel>() ||
+        FailureState<AllUsersResponseModel>() ||
+        SuccessState<AllUsersResponseModel>() =>
+          Builder(
+            builder: (_) {
+              final AllUsersResponseModel? usersData =
+                  context.read<AllUsersCubit>().currentUsersData;
               final List<User> cohosts = usersData?.data ?? <User>[];
 
-              if(cohosts.isEmpty){
-                if(state is LoadingState<AllUsersResponseModel>){
+              if (cohosts.isEmpty) {
+                if (state is LoadingState<AllUsersResponseModel>) {
                   return CohosListInitialLoadingShimmer(
                     scrollController: scrollController,
                   );
                 }
-                if(state is FailureState<AllUsersResponseModel>){
+                if (state is FailureState<AllUsersResponseModel>) {
                   return Center(
-                    child: IconButton(
-                      onPressed: (){
-                        context.read<AllUsersCubit>().fetchAllUsers();
-                      },
-                      icon: const Icon(Icons.refresh),
-                    )
-                  );
+                      child: IconButton(
+                    onPressed: () {
+                      context.read<AllUsersCubit>().fetchAllUsers();
+                    },
+                    icon: const Icon(Icons.refresh),
+                  ));
                 }
-                return const Center(
-                  child: Text('No cohosts available yet')
-                );
+                return const Center(child: Text('No cohosts available yet'));
               }
-              
+
               final bool hasMore = usersData?.hasMore ?? false;
-              final int count = hasMore ? cohosts.length + 2 : cohosts.length + 1;
+              final int count =
+                  hasMore ? cohosts.length + 2 : cohosts.length + 1;
 
               return BlocBuilder<SelectedCohostsCubit, List<User>>(
-                builder: (_, List<User> selectedCohosts) {
-                  return ListView.builder(
-                    itemCount: count,
-                    controller: scrollController,
-                    padding: const EdgeInsets.only(right: 10, bottom: 20),
-                    itemBuilder: (_, int index){
-                      if(index == 0){
-                        return Padding(
-                          padding: const EdgeInsets.fromLTRB(15, 10, 15, 10),
-                          child: Text(
-                            ATStrings.suggestions,
-                            style: context.textTheme.bodySmall?.copyWith(
-                              fontSize: ATSizes.size16
-                            )
-                          ),
-                        );
-                      }
+                  builder: (_, List<User> selectedCohosts) {
+                return ListView.builder(
+                  itemCount: count,
+                  controller: scrollController,
+                  padding: const EdgeInsets.only(right: 10, bottom: 20),
+                  itemBuilder: (_, int index) {
+                    if (index == 0) {
+                      return Padding(
+                        padding: const EdgeInsets.fromLTRB(15, 10, 15, 10),
+                        child: Text(ATStrings.suggestions,
+                            style: context.textTheme.bodySmall
+                                ?.copyWith(fontSize: ATSizes.size16)),
+                      );
+                    }
 
-                      final int adjustedIndex = index - 1;
-                      if(adjustedIndex < cohosts.length){
-                        final User cohost = cohosts[adjustedIndex];
-                        final bool isLastItem = adjustedIndex == cohosts.length - 1;
-                        return Padding(
-                          padding: EdgeInsets.only(bottom: isLastItem ? 100 : 0),
-                          child: CohostWithCheckIconWidget(
-                            cohost: cohost,
-                            key: ValueKey<String?>(cohost.id),
-                            isSelected: selectedCohosts.contains(cohost),
-                            onTap: (bool isSelected){
-                              if(isSelected){
-                                context.read<SelectedCohostsCubit>().removeCohost(cohost);
-                              }
-                              else{
-                                context.read<SelectedCohostsCubit>().addCohost(cohost);
-                              }
-                            },
-                          ),
-                        );
-                      }
-                      
-                      if(state is LoadingState<AllUsersResponseModel>){
-                        return const CohostWithCheckIconShimmer();
-                      }
-                      return const SizedBox.shrink();
-                    },
-                  );
-                }
-              );
+                    final int adjustedIndex = index - 1;
+                    if (adjustedIndex < cohosts.length) {
+                      final User cohost = cohosts[adjustedIndex];
+                      final bool isLastItem =
+                          adjustedIndex == cohosts.length - 1;
+                      return Padding(
+                        padding: EdgeInsets.only(bottom: isLastItem ? 100 : 0),
+                        child: CohostWithCheckIconWidget(
+                          cohost: cohost,
+                          key: ValueKey<String?>(cohost.id),
+                          isSelected: selectedCohosts.contains(cohost),
+                          onTap: (bool isSelected) {
+                            if (isSelected) {
+                              context
+                                  .read<SelectedCohostsCubit>()
+                                  .removeCohost(cohost);
+                            } else {
+                              context
+                                  .read<SelectedCohostsCubit>()
+                                  .addCohost(cohost);
+                            }
+                          },
+                        ),
+                      );
+                    }
+
+                    if (state is LoadingState<AllUsersResponseModel>) {
+                      return const CohostWithCheckIconShimmer();
+                    }
+                    return const SizedBox.shrink();
+                  },
+                );
+              });
             },
           )
-        };
-      }
-    );
+      };
+    });
     // return BlocSelector<CohostServiceBloc, (List<ATCohost<bool>>, List<ATCohost<bool>>), List<ATCohost<bool>>>(
     //   selector: ((List<ATCohost<bool>>, List<ATCohost<bool>>) state) => state.$1,
     //   builder: (_, List<ATCohost<bool>> coHosts) {
@@ -151,47 +142,47 @@ class AvailableCohostsList extends StatelessWidget {
     //       );
     //     }
 
-        // return ListView.builder(
-        //   itemCount: coHosts.length + 1,
-        //   padding: const EdgeInsets.only(right: 10, bottom: 20),
-        //   itemBuilder: (_, int index){
-        //     if(index == 0){
-        //       return Padding(
-        //         padding: const EdgeInsets.fromLTRB(15, 10, 15, 10),
-        //         child: Text(
-        //           ATStrings.SUGGESTIONS,
-        //           style: context.textTheme.bodySmall?.copyWith(
-        //             fontSize: ATSizes.size16
-        //           )
-        //         ),
-        //       );
-        //     }
+    // return ListView.builder(
+    //   itemCount: coHosts.length + 1,
+    //   padding: const EdgeInsets.only(right: 10, bottom: 20),
+    //   itemBuilder: (_, int index){
+    //     if(index == 0){
+    //       return Padding(
+    //         padding: const EdgeInsets.fromLTRB(15, 10, 15, 10),
+    //         child: Text(
+    //           ATStrings.SUGGESTIONS,
+    //           style: context.textTheme.bodySmall?.copyWith(
+    //             fontSize: ATSizes.size16
+    //           )
+    //         ),
+    //       );
+    //     }
 
-        //     final ATCohost<bool> coHost = coHosts.elementAt(index - 1);
-        //     return CohostWithCheckIconWidget(coHost: coHost, selectionMode: selectionMode,);
-        //   },
-        // );
+    //     final ATCohost<bool> coHost = coHosts.elementAt(index - 1);
+    //     return CohostWithCheckIconWidget(coHost: coHost, selectionMode: selectionMode,);
+    //   },
+    // );
     //   }
     // );
   }
 }
 
 class SelectedCohostsCubit extends Cubit<List<User>> {
-  SelectedCohostsCubit({this.initialCohosts}) : super(initialCohosts ?? <User>[]);
+  SelectedCohostsCubit({this.initialCohosts})
+      : super(initialCohosts ?? <User>[]);
 
   final List<User>? initialCohosts;
 
-  void addCohost(User cohost){
-    if(state.length == 5) return;
+  void addCohost(User cohost) {
+    if (state.length == 5) return;
 
     emit(<User>[...state, cohost]);
   }
-  void removeCohost(User cohostToRemove){
-    emit(state.where(
-      (User cohost) => cohost.id != cohostToRemove.id).toList());
+
+  void removeCohost(User cohostToRemove) {
+    emit(state.where((User cohost) => cohost.id != cohostToRemove.id).toList());
   }
 }
-
 
 class CohosListInitialLoadingShimmer extends StatelessWidget {
   const CohosListInitialLoadingShimmer({
@@ -206,16 +197,13 @@ class CohosListInitialLoadingShimmer extends StatelessWidget {
       itemCount: 12,
       controller: scrollController,
       padding: const EdgeInsets.only(right: 10, bottom: 20),
-      itemBuilder: (_, int index){
-        if(index == 0){
+      itemBuilder: (_, int index) {
+        if (index == 0) {
           return Padding(
             padding: const EdgeInsets.fromLTRB(15, 10, 15, 10),
-            child: Text(
-              ATStrings.suggestions,
-              style: context.textTheme.bodySmall?.copyWith(
-                fontSize: ATSizes.size16
-              )
-            ),
+            child: Text(ATStrings.suggestions,
+                style: context.textTheme.bodySmall
+                    ?.copyWith(fontSize: ATSizes.size16)),
           );
         }
 
@@ -223,4 +211,4 @@ class CohosListInitialLoadingShimmer extends StatelessWidget {
       },
     );
   }
-} 
+}

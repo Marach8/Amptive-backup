@@ -21,12 +21,12 @@ class AddNameScreen extends StatefulWidget {
   State<AddNameScreen> createState() => _AddNameScreenState();
 }
 
-class _AddNameScreenState extends State<AddNameScreen> with ATValidators{
+class _AddNameScreenState extends State<AddNameScreen> with ATValidators {
   final TextEditingController _nameCntrl = TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   @override
-  void dispose(){
+  void dispose() {
     _formKey.currentState?.dispose();
     _nameCntrl.dispose();
     super.dispose();
@@ -38,7 +38,9 @@ class _AddNameScreenState extends State<AddNameScreen> with ATValidators{
       create: (_) => SignupCubit(),
       child: ATAnnotatedRegion(
         child: Scaffold(
-          appBar: const ATAppBar(leading: ATBackBtn(),),
+          appBar: const ATAppBar(
+            leading: ATBackBtn(),
+          ),
           body: Form(
             key: _formKey,
             child: SingleChildScrollView(
@@ -47,10 +49,8 @@ class _AddNameScreenState extends State<AddNameScreen> with ATValidators{
                 spacing: 10,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  Text(
-                    ATStrings.whatIsYourName,
-                    style: context.textTheme.headlineMedium
-                  ),
+                  Text(ATStrings.whatIsYourName,
+                      style: context.textTheme.headlineMedium),
                   ATTextFormField(
                     controller: _nameCntrl,
                     maxLines: 1,
@@ -59,7 +59,9 @@ class _AddNameScreenState extends State<AddNameScreen> with ATValidators{
                     keyboardType: TextInputType.text,
                     autoValidateMode: AutovalidateMode.disabled,
                     validator: validateField,
-                    prefixIcon : const SizedBox(width: 10,),
+                    prefixIcon: const SizedBox(
+                      width: 10,
+                    ),
                   ),
                   Text(
                     ATStrings.noteAboutProfilePic,
@@ -69,66 +71,59 @@ class _AddNameScreenState extends State<AddNameScreen> with ATValidators{
               ),
             ),
           ),
-      
           bottomSheet: BlocConsumer<SignupCubit, ATAppState<dynamic>>(
-            listener: (_, ATAppState<dynamic> state){
-              if(state is SuccessState<dynamic>){
-                context.goNamed(ATRoutes.addProfilePicScreen);
-              }
-              if(state is FailureState<dynamic>){
-                showAppNotification2(
+              listener: (_, ATAppState<dynamic> state) {
+            if (state is SuccessState<dynamic>) {
+              context.goNamed(ATRoutes.addProfilePicScreen);
+            }
+            if (state is FailureState<dynamic>) {
+              showAppNotification2(
                   context: context,
                   text: state.message,
-                  type: NotificationType.failure
-                );
-              }
-            },
-            builder: (BuildContext context, ATAppState<dynamic> state) {
-              final double bottom = MediaQuery.viewInsetsOf(context).bottom;
-              final double bottomPad = bottom > 0 ? 10 : 50;
-              return Padding(
-                padding: EdgeInsets.fromLTRB(15, 0, 15, bottomPad),
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    spacing: 20,
-                    children: <Widget>[
-                      ATRichText(
-                        items: <String, TextStyle>{
-                          '${ATStrings.byClickingOnCreateAcct} ': context.textTheme.titleSmall!.copyWith(
-                            fontSize: ATSizes.size11
-                          ),
-                          ATStrings.termsOfService: context.textTheme.displayMedium!.copyWith(
-                            fontSize: ATSizes.size11
-                          ),
-                          ' and ': context.textTheme.titleSmall!.copyWith(
-                            fontSize: ATSizes.size11
-                          ),
-                          ATStrings.privacyPolicy: context.textTheme.displayMedium!.copyWith(
-                            fontSize: ATSizes.size11
-                          ),
-                        },
-                        textOnTap: (String text){
-                          if(text == ATStrings.termsOfService){}
-                          else if(text == ATStrings.privacyPolicy){}
-                        },
-                      ),
-                      ATPlainElevatedBtn(
-                        btnTitle: ATStrings.createAccount,
-                        isLoading: state is LoadingState<dynamic>,
-                        onPressed: (){
-                          if(_formKey.currentState?.validate() == true){
-                            RegistrationData().copyWith(name: _nameCntrl.text.trim());
-                            context.read<SignupCubit>().signupUser(
-                              param: RegistrationData(),
-                            );
-                          }
-                        }
-                      ),
-                    ],
+                  type: NotificationType.failure);
+            }
+          }, builder: (BuildContext context, ATAppState<dynamic> state) {
+            final double bottom = MediaQuery.viewInsetsOf(context).bottom;
+            final double bottomPad = bottom > 0 ? 10 : 50;
+            return Padding(
+              padding: EdgeInsets.fromLTRB(15, 0, 15, bottomPad),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                spacing: 20,
+                children: <Widget>[
+                  ATRichText(
+                    items: <String, TextStyle>{
+                      '${ATStrings.byClickingOnCreateAcct} ': context
+                          .textTheme.titleSmall!
+                          .copyWith(fontSize: ATSizes.size11),
+                      ATStrings.termsOfService: context.textTheme.displayMedium!
+                          .copyWith(fontSize: ATSizes.size11),
+                      ' and ': context.textTheme.titleSmall!
+                          .copyWith(fontSize: ATSizes.size11),
+                      ATStrings.privacyPolicy: context.textTheme.displayMedium!
+                          .copyWith(fontSize: ATSizes.size11),
+                    },
+                    textOnTap: (String text) {
+                      if (text == ATStrings.termsOfService) {
+                      } else if (text == ATStrings.privacyPolicy) {}
+                    },
                   ),
-                );
-              }
-          ),
+                  ATPlainElevatedBtn(
+                      btnTitle: ATStrings.createAccount,
+                      isLoading: state is LoadingState<dynamic>,
+                      onPressed: () {
+                        if (_formKey.currentState?.validate() == true) {
+                          RegistrationData()
+                              .copyWith(name: _nameCntrl.text.trim());
+                          context.read<SignupCubit>().signupUser(
+                                param: RegistrationData(),
+                              );
+                        }
+                      }),
+                ],
+              ),
+            );
+          }),
         ),
       ),
     );

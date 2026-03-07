@@ -5,12 +5,8 @@ import '../../../../../shared/circle_avatar.dart';
 import '../../../../../shared/custom_container_widget.dart';
 import '../../../../../shared/image_loader_widget.dart';
 
-
 class AmptiveFreeShowModel extends StatelessWidget {
-  const AmptiveFreeShowModel({
-    super.key,
-    required this.trendingPicture
-  });
+  const AmptiveFreeShowModel({super.key, required this.trendingPicture});
   final String trendingPicture;
 
   @override
@@ -36,31 +32,26 @@ class AmptiveFreeShowModel extends StatelessWidget {
           ),
           Row(
             mainAxisSize: MainAxisSize.min,
-            children: <Widget>[              
+            children: <Widget>[
               Expanded(
                 child: Text(
                   'figma',
                   style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                    fontSize: ATSizes.size13,
-                    color: ATColors.hexA8A8A8
-                  ),
+                      fontSize: ATSizes.size13, color: ATColors.hexA8A8A8),
                 ),
               ),
               const SizedBox(width: 2),
-
               Align(
                 alignment: Alignment.bottomCenter,
-                child: ATCircleAvatar(
-                  diameter: 4,
-                  color: ATColors.hexA8A8A8
-                ),
+                child: ATCircleAvatar(diameter: 4, color: ATColors.hexA8A8A8),
               ),
               const SizedBox(width: 2),
               Text(
                 'LIVE',
-                style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                  color: ATColors.hexA8A8A8
-                ),
+                style: Theme.of(context)
+                    .textTheme
+                    .titleSmall
+                    ?.copyWith(color: ATColors.hexA8A8A8),
               ),
             ],
           )

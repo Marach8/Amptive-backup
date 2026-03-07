@@ -8,14 +8,16 @@ import 'events.dart';
 
 class AmptivePreferenceBloc
     extends Bloc<AmptivePreferenceEvent, AmptivePreferenceState> {
-
   AmptivePreferenceBloc() : super(InitialState(items: <Preferences>[])) {
-    on<LoadPreferencesEvent>((LoadPreferencesEvent event, Emitter<AmptivePreferenceState> emit) async {
+    on<LoadPreferencesEvent>((LoadPreferencesEvent event,
+        Emitter<AmptivePreferenceState> emit) async {
       await service.getAll();
-      emit(SelectPreferenceState(items: service.items, selectedItems: <dynamic>[]));
+      emit(SelectPreferenceState(
+          items: service.items, selectedItems: <dynamic>[]));
     });
 
-    on<SelectPreferenceCompletedEvent>((SelectPreferenceCompletedEvent event, Emitter<AmptivePreferenceState> emit) async {
+    on<SelectPreferenceCompletedEvent>((SelectPreferenceCompletedEvent event,
+        Emitter<AmptivePreferenceState> emit) async {
       emit(SelectPreferenceCompletedState());
       // personalize preferences
       await service.personalize();
@@ -23,7 +25,8 @@ class AmptivePreferenceBloc
       emit(PreferencePersonalizedState());
     });
 
-    on<SelectPreferenceEvent>((SelectPreferenceEvent event, Emitter<AmptivePreferenceState> emit) {
+    on<SelectPreferenceEvent>(
+        (SelectPreferenceEvent event, Emitter<AmptivePreferenceState> emit) {
       service.toggleSelectedByIndex(event.selectedIndex);
 
       emit(SelectPreferenceState(

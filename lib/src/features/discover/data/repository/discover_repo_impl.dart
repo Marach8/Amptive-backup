@@ -18,7 +18,8 @@ class DiscoverRepoImpl implements DiscoverRepo {
 
   @override
   Future<ApiResponse<CommunitiesResponseModel>> fetchCommunities({
-    required int pageNo, required int pageSize,
+    required int pageNo,
+    required int pageSize,
   }) async {
     try {
       final Response<dynamic> response = await networkService.get(
@@ -29,8 +30,8 @@ class DiscoverRepoImpl implements DiscoverRepo {
         },
       );
 
-      final CommunitiesResponseModel communitiesResponse = 
-        CommunitiesResponseModel.fromJson(response.data);
+      final CommunitiesResponseModel communitiesResponse =
+          CommunitiesResponseModel.fromJson(response.data);
       return Successful<CommunitiesResponseModel>(data: communitiesResponse);
     } catch (e) {
       log('Unable to get communities: $e');
@@ -55,10 +56,31 @@ class DiscoverRepoImpl implements DiscoverRepo {
       );
       return Successful<AllUsersResponseModel>(
         data: AllUsersResponseModel.fromJson(response.data),
-        );
+      );
     } catch (e) {
       log('Error in fetching users');
-      return Unsuccessful<AllUsersResponseModel>(error: ATException.resolveException(e));
+      return Unsuccessful<AllUsersResponseModel>(
+          error: ATException.resolveException(e));
+    }
+  }
+
+  @override
+  Future<ApiResponse<dynamic>> fetchTags({
+    required int page,
+    required int pageSize,
+  }) async {
+    try {
+      final Response<dynamic> response = await networkService.get(
+        ATEndpoints.tags,
+        queryParameters: <String, dynamic>{
+          'page': page,
+          'pageSize': pageSize,
+        },
+      );
+      return Successful<dynamic>(data: response.data);
+    } catch (e) {
+      log('Error in fetching tags: $e');
+      return Unsuccessful<dynamic>(error: ATException.resolveException(e));
     }
   }
 }

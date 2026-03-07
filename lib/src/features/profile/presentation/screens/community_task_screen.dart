@@ -13,12 +13,10 @@ class AmptiveCommunityTaskScreen extends StatelessWidget {
     return ATAnnotatedRegion(
       child: Scaffold(
         appBar: const ATAppBar(
-          leadingWidth: 30,
-          padding: EdgeInsets.only(left: 7),
-          leading: ATRoundedBackBtn(),
-          titleText: ATStrings.SWITCH_ACCT
-        ),
-
+            leadingWidth: 30,
+            padding: EdgeInsets.only(left: 7),
+            leading: ATRoundedBackBtn(),
+            titleText: ATStrings.SWITCH_ACCT),
         body: Padding(
           padding: const EdgeInsets.all(15),
           child: Column(
@@ -26,18 +24,14 @@ class AmptiveCommunityTaskScreen extends StatelessWidget {
             children: <Widget>[
               Text(
                 ATStrings.COMMUNITY_TASK,
-                style: context.textTheme.bodySmall?.copyWith(
-                  fontSize: ATSizes.size16
-                ),
+                style: context.textTheme.bodySmall
+                    ?.copyWith(fontSize: ATSizes.size16),
               ),
-
               Text(
-                maxLines: 2,
-                ATStrings.TASKS_WILL_APPEAR_HERE,
-                style: context.textTheme.titleMedium?.copyWith(
-                  color: ATColors.hexC2C2C2
-                )
-              ),
+                  maxLines: 2,
+                  ATStrings.TASKS_WILL_APPEAR_HERE,
+                  style: context.textTheme.titleMedium
+                      ?.copyWith(color: ATColors.hexC2C2C2)),
             ],
           ),
         ),

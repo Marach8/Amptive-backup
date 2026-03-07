@@ -4,19 +4,18 @@ import 'package:amptive/src/shared/back_button.dart';
 import 'package:flutter/material.dart';
 
 class ATAppBar extends StatelessWidget implements PreferredSizeWidget {
-  const ATAppBar({
-    super.key,
-    this.title,
-    this.leading,
-    this.centerTitle = true,
-    this.actions,
-    this.leadingWidth = 60.0,
-    this.bgColor,
-    this.titleStyle,
-    this.titleText,
-    this.padding,
-    this.bottom
-  });
+  const ATAppBar(
+      {super.key,
+      this.title,
+      this.leading,
+      this.centerTitle = true,
+      this.actions,
+      this.leadingWidth = 60.0,
+      this.bgColor,
+      this.titleStyle,
+      this.titleText,
+      this.padding,
+      this.bottom});
 
   final Widget? title, leading;
   final String? titleText;
@@ -38,10 +37,9 @@ class ATAppBar extends StatelessWidget implements PreferredSizeWidget {
         elevation: 0.0,
         centerTitle: centerTitle,
         leading: leading,
-        title: title ?? Text(
-          titleText ?? '',
-          style: titleStyle ?? context.textTheme.bodyMedium
-        ),
+        title: title ??
+            Text(titleText ?? '',
+                style: titleStyle ?? context.textTheme.bodyMedium),
         leadingWidth: leadingWidth,
         actions: actions,
         bottom: bottom,
@@ -56,23 +54,19 @@ class ATAppBar extends StatelessWidget implements PreferredSizeWidget {
   }
 }
 
-
-
-
-class ATSliverAppBar extends StatelessWidget{
-  const ATSliverAppBar({
-    super.key,
-    this.title,
-    this.leading,
-    this.centerTitle = true,
-    this.actions,
-    this.leadingWidth = 40.0,
-    this.bgColor,
-    this.titleStyle,
-    this.titleText,
-    this.padding,
-    this.bottom
-  });
+class ATSliverAppBar extends StatelessWidget {
+  const ATSliverAppBar(
+      {super.key,
+      this.title,
+      this.leading,
+      this.centerTitle = true,
+      this.actions,
+      this.leadingWidth = 40.0,
+      this.bgColor,
+      this.titleStyle,
+      this.titleText,
+      this.padding,
+      this.bottom});
 
   final Widget? title, leading;
   final String? titleText;
@@ -91,14 +85,14 @@ class ATSliverAppBar extends StatelessWidget{
       backgroundColor: bgColor ?? ATColors.black,
       elevation: 0.0,
       centerTitle: centerTitle,
-      leading: leading ?? const Padding(
-        padding: EdgeInsets.only(left: 8),
-        child: ATRoundedBackBtn(),
-      ),
-      title: title ?? Text(
-        titleText ?? '',
-        style: titleStyle ?? context.textTheme.bodyMedium
-      ),
+      leading: leading ??
+          const Padding(
+            padding: EdgeInsets.only(left: 8),
+            child: ATRoundedBackBtn(),
+          ),
+      title: title ??
+          Text(titleText ?? '',
+              style: titleStyle ?? context.textTheme.bodyMedium),
       leadingWidth: leadingWidth,
       actions: actions,
       bottom: bottom,

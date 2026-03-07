@@ -26,7 +26,7 @@
 //          unSuccessful: (Unsuccessful<FollowResponseModel> error) {
 //           emit(FailureState<FollowResponseModel>(error.error.message)
 //           );
-          
+
 //     },
 //       );
 //     }catch (e) {

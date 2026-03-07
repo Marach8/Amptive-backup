@@ -27,118 +27,98 @@ class ATAnswerSecurityQuestionScreen extends StatelessWidget {
     return ATAnnotatedRegion(
       child: BlocProvider(
         create: (_) => _EnterSecretQuesBloc(),
-        child: Builder(
-          builder: (BuildContext context) {
-            return Scaffold(
-              appBar: const ATAppBar(
+        child: Builder(builder: (BuildContext context) {
+          return Scaffold(
+            appBar: const ATAppBar(
                 leading: ATRoundedBackBtn(),
                 leadingWidth: 30,
                 padding: EdgeInsets.only(left: 7),
-                titleText: ATStrings.ANSWER_SECRET_QUEST
-              ),
-            
-              body: SingleChildScrollView(
-                padding: const EdgeInsets.fromLTRB(15, 10, 15, 20),
-                physics: const BouncingScrollPhysics(),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    Text(
-                      maxLines: 2,
-                      quest,
-                      style: context.textTheme.bodySmall
-                    ),
-                    const SizedBox(height: 10),
-                    BlocBuilder<_EnterSecretQuesBloc, int?>(
+                titleText: ATStrings.ANSWER_SECRET_QUEST),
+            body: SingleChildScrollView(
+              padding: const EdgeInsets.fromLTRB(15, 10, 15, 20),
+              physics: const BouncingScrollPhysics(),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Text(maxLines: 2, quest, style: context.textTheme.bodySmall),
+                  const SizedBox(height: 10),
+                  BlocBuilder<_EnterSecretQuesBloc, int?>(
                       buildWhen: (int? prev, _) => prev == null || prev == 0,
-                      builder: (_, int? state){
+                      builder: (_, int? state) {
                         return ATTextFormField(
-                          enabled: state != 0,
-                          disableBlueBorder: true,
-                          prefixIcon: const Padding(
-                            padding: EdgeInsets.only(left: 10),
-                            child: ATImgLoader(
-                              height: 20, width: 20,
-                              imgPath: ATImgStrings.outlinedSearch
+                            enabled: state != 0,
+                            disableBlueBorder: true,
+                            prefixIcon: const Padding(
+                              padding: EdgeInsets.only(left: 10),
+                              child: ATImgLoader(
+                                  height: 20,
+                                  width: 20,
+                                  imgPath: ATImgStrings.outlinedSearch),
                             ),
-                          ),
-                          fillColor: ATColors.white.withValues(alpha: 0.1),
-                          hintText: ATStrings.enterYourAnswer,
-                          suffixIcon: const _SuffixIcon(),
-                          onChanged: (String text) => ATHelperFuncs.callDebouncer(
-                            2000,
-                            () => context.read<_EnterSecretQuesBloc>().checkAnswer(text)
-                          )
-                        );
-                      }
-                    ),
-                    const SizedBox(height: 10),
-                    BlocBuilder<_EnterSecretQuesBloc, int?>(
-                      builder: (_, int? state){
-                        if(state == null){
-                          return Text(
-                            ATStrings.answerIsCaseSensitive,
-                            style: context.textTheme.bodySmall?.copyWith(
-                              fontSize: ATSizes.size11
-                            ),
-                          );
-                        }
-                        else if(state == 0){
-                          return Text(
-                            ATStrings.checkerLoading,
-                            style: context.textTheme.bodySmall?.copyWith(
-                              fontSize: ATSizes.size11
-                            ),
-                          );
-                        }
-                        else if(state == 1){
-                          return Text(
-                            ATStrings.correctAnswer,
-                            style: context.textTheme.bodySmall?.copyWith(
-                              fontSize: ATSizes.size11,
-                              color: ATColors.successColor
-                            ),
-                          );
-                        }
-                        else {
-                          return Text(
-                            ATStrings.INCORRECT_ANS,
-                            style: context.textTheme.bodySmall?.copyWith(
-                              fontSize: ATSizes.size11,
-                              color: ATColors.textRedColor
-                            ),
-                          );
-                        }
-                        
-                      }
-                    ),
-                  ],
-                ),
+                            fillColor: ATColors.white.withValues(alpha: 0.1),
+                            hintText: ATStrings.enterYourAnswer,
+                            suffixIcon: const _SuffixIcon(),
+                            onChanged: (String text) =>
+                                ATHelperFuncs.callDebouncer(
+                                    2000,
+                                    () => context
+                                        .read<_EnterSecretQuesBloc>()
+                                        .checkAnswer(text)));
+                      }),
+                  const SizedBox(height: 10),
+                  BlocBuilder<_EnterSecretQuesBloc, int?>(
+                      builder: (_, int? state) {
+                    if (state == null) {
+                      return Text(
+                        ATStrings.answerIsCaseSensitive,
+                        style: context.textTheme.bodySmall
+                            ?.copyWith(fontSize: ATSizes.size11),
+                      );
+                    } else if (state == 0) {
+                      return Text(
+                        ATStrings.checkerLoading,
+                        style: context.textTheme.bodySmall
+                            ?.copyWith(fontSize: ATSizes.size11),
+                      );
+                    } else if (state == 1) {
+                      return Text(
+                        ATStrings.correctAnswer,
+                        style: context.textTheme.bodySmall?.copyWith(
+                            fontSize: ATSizes.size11,
+                            color: ATColors.successColor),
+                      );
+                    } else {
+                      return Text(
+                        ATStrings.INCORRECT_ANS,
+                        style: context.textTheme.bodySmall?.copyWith(
+                            fontSize: ATSizes.size11,
+                            color: ATColors.textRedColor),
+                      );
+                    }
+                  }),
+                ],
               ),
-
-              bottomNavigationBar: Padding(
-                padding: const EdgeInsets.fromLTRB(15, 5, 15, 50),
-                child: BlocBuilder<_EnterSecretQuesBloc, int?>(
-                  builder: (_, int? state){
-                    return ATPlainElevatedBtn(
-                      onPressed: state == 1 ? (){
-                        context.pushNamed(
-                          ATRoutes.paperPlaneSuccessScreen,
-                          extra: <dynamic>[
-                            'Withdrawal Request Sent',
-                            TransactionType.withdraw,
-                            "Your withdrawal request has been sent. We'll notify you once it is processed",
-                          ]
-                        );
-                      } : null,
-                      btnTitle: ATStrings.sendWithdrawalRequest
-                    );
-                  }
-                ),
-              ),
-            );
-          }
-        ),
+            ),
+            bottomNavigationBar: Padding(
+              padding: const EdgeInsets.fromLTRB(15, 5, 15, 50),
+              child: BlocBuilder<_EnterSecretQuesBloc, int?>(
+                  builder: (_, int? state) {
+                return ATPlainElevatedBtn(
+                    onPressed: state == 1
+                        ? () {
+                            context.pushNamed(ATRoutes.paperPlaneSuccessScreen,
+                                extra: <dynamic>[
+                                  'Withdrawal Request Sent',
+                                  TransactionType.withdraw,
+                                  "Your withdrawal request has been sent. We'll notify you once it is processed",
+                                ]);
+                          }
+                        : null,
+                    btnTitle: ATStrings.sendWithdrawalRequest);
+              }),
+            ),
+          );
+        }),
       ),
     );
   }
@@ -151,17 +131,17 @@ class _SuffixIcon extends StatelessWidget {
   Widget build(BuildContext context) {
     return Center(
       child: BlocBuilder<_EnterSecretQuesBloc, int?>(
-        builder: (_, int? state){
-          if(state == null){
+        builder: (_, int? state) {
+          if (state == null) {
             return const SizedBox.shrink();
-          }
-          else if(state == 0){
+          } else if (state == 0) {
             return const Padding(
               padding: EdgeInsets.only(right: 10),
-              child: ATLoadingIndicator(size: 20,),
+              child: ATLoadingIndicator(
+                size: 20,
+              ),
             );
-          }
-          else if(state == 1){
+          } else if (state == 1) {
             return Padding(
               padding: const EdgeInsets.only(right: 10),
               child: Icon(
@@ -169,8 +149,7 @@ class _SuffixIcon extends StatelessWidget {
                 color: ATColors.successColor,
               ),
             );
-          }
-          else {
+          } else {
             return Icon(
               Icons.close,
               color: ATColors.textRedColor,
@@ -182,22 +161,20 @@ class _SuffixIcon extends StatelessWidget {
   }
 }
 
-
 class _EnterSecretQuesBloc extends Cubit<int?> {
   _EnterSecretQuesBloc() : super(null);
   final String ans = 'Emmanuel';
-  void checkAnswer(String input)async{ 
-    if(input.isEmpty){
+  void checkAnswer(String input) async {
+    if (input.isEmpty) {
       emit(null);
       return;
     }
-    
+
     emit(0);
     await Future.delayed(const Duration(seconds: 3));
-    if(input == ans){
+    if (input == ans) {
       emit(1);
-    }
-    else{
+    } else {
       emit(2);
     }
   }

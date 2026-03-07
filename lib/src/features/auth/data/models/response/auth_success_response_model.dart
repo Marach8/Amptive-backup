@@ -19,7 +19,6 @@ class SignupResponseModel {
   String? accessToken, refreshToken;
 }
 
-
 class ATUser {
   ATUser({
     this.id,
@@ -42,7 +41,6 @@ class ATUser {
   String? id, email, username, dob, name;
 }
 
-
 class LoginResponseModel {
   LoginResponseModel({
     this.status,
@@ -54,8 +52,7 @@ class LoginResponseModel {
   });
 
   factory LoginResponseModel.fromJson(Map<String, dynamic> json) {
-    final Map<String, dynamic>? data =
-        json['data'] as Map<String, dynamic>?;
+    final Map<String, dynamic>? data = json['data'] as Map<String, dynamic>?;
 
     return LoginResponseModel(
       status: json['status'],

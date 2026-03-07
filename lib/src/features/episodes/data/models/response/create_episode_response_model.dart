@@ -50,9 +50,7 @@ class CreateEpisodeResponseModel {
       commentCount: json['comment_count'],
       goingCount: json['going_count'],
       durationSeconds: json['duration_seconds'],
-      host: json['host'] != null
-          ? Host.fromJson(json['host'])
-          : null,
+      host: json['host'] != null ? Host.fromJson(json['host']) : null,
       coHosts: (json['co_hosts'] as List<dynamic>?)
           ?.map((dynamic e) => CoHost.fromJson(e))
           .toList(),
@@ -67,12 +65,28 @@ class CreateEpisodeResponseModel {
     );
   }
 
-  final String? episodeId, showId, title, description, thumbnailUrl, status,
-      scheduledFor, startedAt, endedAt, streamUrl, streamKey, playbackUrl,
-      createdAt, updatedAt;
+  final String? episodeId,
+      showId,
+      title,
+      description,
+      thumbnailUrl,
+      status,
+      scheduledFor,
+      startedAt,
+      endedAt,
+      streamUrl,
+      streamKey,
+      playbackUrl,
+      createdAt,
+      updatedAt;
 
-  final int? episodeNumber, viewerCount, peakViewers, reactionCount,
-      commentCount, goingCount, durationSeconds;
+  final int? episodeNumber,
+      viewerCount,
+      peakViewers,
+      reactionCount,
+      commentCount,
+      goingCount,
+      durationSeconds;
 
   final Host? host;
   final List<CoHost>? coHosts;

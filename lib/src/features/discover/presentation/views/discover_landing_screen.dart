@@ -9,7 +9,6 @@ import 'package:amptive/src/features/discover/presentation/views/search_results_
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-
 class DiscoverTabView extends StatefulWidget {
   const DiscoverTabView({super.key});
 
@@ -18,7 +17,6 @@ class DiscoverTabView extends StatefulWidget {
 }
 
 class _DiscoverTabViewState extends State<DiscoverTabView> {
-
   @override
   Widget build(BuildContext context) {
     return BlocProvider<DiscoverTrnstnBlc>(
@@ -31,38 +29,37 @@ class _DiscoverTabViewState extends State<DiscoverTabView> {
             physics: const BouncingScrollPhysics(),
             slivers: <Widget>[
               SliverAppBar(
-                title: Text(
-                  'Discover',
-                  style: Theme.of(context).textTheme.displaySmall?.copyWith(
-                    fontSize: ATSizes.size23
-                  )
-                ),
+                title: Text('Discover',
+                    style: Theme.of(context)
+                        .textTheme
+                        .displaySmall
+                        ?.copyWith(fontSize: ATSizes.size23)),
                 floating: true,
               ),
               SliverPersistentHeader(
-                pinned: true,
-                delegate: ATSliverHDelegate(
-                  minExt: 60, maxExt: 60, 
-                  child: const ATDiscoverSearchField(),
-                )
-              ),
-          
-              const SliverToBoxAdapter(child: SizedBox(height: 20,)),
-          
-              SliverToBoxAdapter(
-                child: BlocBuilder<DiscoverTrnstnBlc, (DiscoverPageState, String?)>(
-                  builder: (_, (DiscoverPageState, String?) state) {
-                    final DiscoverPageState pageState = state.$1;
-                    return ATFadingSwitcher(
-                      child: pageState == DiscoverPageState.showMainPage
-                        ? const MainDiscoverView(key: ValueKey<int>(100)) :
-                        pageState == DiscoverPageState.showRecentSearches
-                        ? const RecentSearchesView(key: ValueKey<int>(200)) :
-                          const SearchResultsTabsView(key: ValueKey<int>(300)),
-                    );
-                  }
-                )
-              ),
+                  pinned: true,
+                  delegate: ATSliverHDelegate(
+                    minExt: 60,
+                    maxExt: 60,
+                    child: const ATDiscoverSearchField(),
+                  )),
+              const SliverToBoxAdapter(
+                  child: SizedBox(
+                height: 20,
+              )),
+              SliverToBoxAdapter(child:
+                  BlocBuilder<DiscoverTrnstnBlc, (DiscoverPageState, String?)>(
+                      builder: (_, (DiscoverPageState, String?) state) {
+                final DiscoverPageState pageState = state.$1;
+                return ATFadingSwitcher(
+                  child: pageState == DiscoverPageState.showMainPage
+                      ? const MainDiscoverView(key: ValueKey<int>(100))
+                      : pageState == DiscoverPageState.showRecentSearches
+                          ? const RecentSearchesView(key: ValueKey<int>(200))
+                          : const SearchResultsTabsView(
+                              key: ValueKey<int>(300)),
+                );
+              })),
             ],
           ),
         ),
@@ -71,15 +68,16 @@ class _DiscoverTabViewState extends State<DiscoverTabView> {
   }
 }
 
+enum DiscoverPageState { showMainPage, showRecentSearches, showSearchResult }
 
-enum DiscoverPageState{showMainPage, showRecentSearches, showSearchResult}
+class DiscoverTrnstnBlc extends Cubit<(DiscoverPageState, String?)> {
+  DiscoverTrnstnBlc() : super((DiscoverPageState.showMainPage, null));
 
-class DiscoverTrnstnBlc extends Cubit<(DiscoverPageState, String?)>{
-  DiscoverTrnstnBlc(): super((DiscoverPageState.showMainPage, null));
+  void showRecentSearches() =>
+      emit((DiscoverPageState.showRecentSearches, state.$2));
 
-  void showRecentSearches() => emit((DiscoverPageState.showRecentSearches, state.$2));
-
-  void showSearchResults() => emit((DiscoverPageState.showSearchResult, state.$2));
+  void showSearchResults() =>
+      emit((DiscoverPageState.showSearchResult, state.$2));
 
   void reset() => emit((DiscoverPageState.showMainPage, null));
 }

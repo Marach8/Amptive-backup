@@ -11,7 +11,7 @@ class UserProfileResponseModel {
     return UserProfileResponseModel(
       status: json['status'] as bool?,
       statusCode: json['status_code'] as int?,
-      message: json['message'] ,
+      message: json['message'],
       data: json['data'] != null
           ? UserData.fromJson(json['data'] as Map<String, dynamic>)
           : null,
@@ -38,12 +38,12 @@ class UserData {
 
   factory UserData.fromJson(Map<String, dynamic> json) {
     return UserData(
-      id: json['id'] ,
-      email: json['email'] ,
-      username: json['username'] ,
-      dob: json['dob'] ,
-      name: json['name'] ,
-      pictureUrl: json['picture_url'] ,
+      id: json['id'],
+      email: json['email'],
+      username: json['username'],
+      dob: json['dob'],
+      name: json['name'],
+      pictureUrl: json['picture_url'],
     );
   }
 

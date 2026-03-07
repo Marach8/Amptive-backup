@@ -23,26 +23,31 @@ class DiscoverSocietyScreen extends StatelessWidget {
         child: Scaffold(
           body: BlocProvider<BlurredHeaderCubit>(
             create: (_) => BlurredHeaderCubit(),
-            child: Builder(
-              builder: (BuildContext blocContext) {
-                final TabController tabController = DefaultTabController.of(blocContext);
-                return NotificationListener<ScrollNotification>(
-                  onNotification: blocContext.read<BlurredHeaderCubit>().onScrollNotification,
-                  child: NestedScrollView(
-                    physics: const BouncingScrollPhysics(),
-                    headerSliverBuilder: (_, __) =>  <Widget>[
-                      SliverPersistentHeader(
-                        pinned: true,
-                        delegate: ATSliverHDelegate(
-                          maxExt: kToolbarHeight + MediaQuery.paddingOf(context).top,
-                          minExt: kToolbarHeight + MediaQuery.paddingOf(context).top,
+            child: Builder(builder: (BuildContext blocContext) {
+              final TabController tabController =
+                  DefaultTabController.of(blocContext);
+              return NotificationListener<ScrollNotification>(
+                onNotification:
+                    blocContext.read<BlurredHeaderCubit>().onScrollNotification,
+                child: NestedScrollView(
+                  physics: const BouncingScrollPhysics(),
+                  headerSliverBuilder: (_, __) => <Widget>[
+                    SliverPersistentHeader(
+                      pinned: true,
+                      delegate: ATSliverHDelegate(
+                          maxExt: kToolbarHeight +
+                              MediaQuery.paddingOf(context).top,
+                          minExt: kToolbarHeight +
+                              MediaQuery.paddingOf(context).top,
                           child: ATBlurredHeaderWidget(
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: <Widget>[
                                 Padding(
                                   padding: const EdgeInsets.only(left: 4),
-                                  child: ATRoundedBackBtn(bgColor: ATColors.transparent,),
+                                  child: ATRoundedBackBtn(
+                                    bgColor: ATColors.transparent,
+                                  ),
                                 ),
                                 Text(
                                   ATStrings.SOCIETY,
@@ -51,29 +56,25 @@ class DiscoverSocietyScreen extends StatelessWidget {
                                 Padding(
                                   padding: const EdgeInsets.only(right: 15),
                                   child: InkWell(
-                                    onTap: (){},
-                                    child: const Icon(Icons.add)
-                                  ),
+                                      onTap: () {},
+                                      child: const Icon(Icons.add)),
                                 ),
                               ],
                             ),
-                          )
-                        ),
-                      ),
-        
-                      SliverPersistentHeader(
-                        floating: true,
-                        delegate: ATSliverHDelegate(
-                          minExt: 60, maxExt: 60,
+                          )),
+                    ),
+                    SliverPersistentHeader(
+                      floating: true,
+                      delegate: ATSliverHDelegate(
+                          minExt: 60,
+                          maxExt: 60,
                           child: const Padding(
                             padding: EdgeInsets.only(top: 10),
                             child: SocietyTabsWidget(),
-                          )
-                        ),
-                      ),
-                    ],
-        
-                    body: TabBarView(
+                          )),
+                    ),
+                  ],
+                  body: TabBarView(
                       controller: tabController,
                       physics: const BouncingScrollPhysics(),
                       children: const <Widget>[
@@ -82,19 +83,16 @@ class DiscoverSocietyScreen extends StatelessWidget {
                           child: SocietyAllTabView(),
                         ),
                         SingleChildScrollView(
-                          physics: BouncingScrollPhysics(),
-                          child: SocietyShowsTabView()
-                        ),
+                            physics: BouncingScrollPhysics(),
+                            child: SocietyShowsTabView()),
                         SingleChildScrollView(
                           physics: BouncingScrollPhysics(),
                           child: SocietyEventsTabView(),
                         ),
-                      ]
-                    ),
-                  ),
-                );
-              }
-            ),
+                      ]),
+                ),
+              );
+            }),
           ),
         ),
       ),

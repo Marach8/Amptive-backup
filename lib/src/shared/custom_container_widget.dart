@@ -4,7 +4,6 @@ import 'package:amptive/src/config/utils/colors.dart';
 import 'package:flutter/material.dart';
 
 class ATContainer extends StatelessWidget {
-
   const ATContainer({
     super.key,
     this.padding,
@@ -52,11 +51,12 @@ class ATContainer extends StatelessWidget {
   Widget build(BuildContext context) {
     final bool isMemoryImage = decorImage != null && decorImage is Uint8List;
     final bool isAssetImage = decorImage != null && decorImage is String;
-    
+
     return Material(
       color: ATColors.transparent,
       child: InkWell(
-        onTap: onTap, splashColor: splashColor ?? ATColors.white.withValues(alpha: 0.5),
+        onTap: onTap,
+        splashColor: splashColor ?? ATColors.white.withValues(alpha: 0.5),
         borderRadius: BorderRadius.circular(radius ?? 10),
         child: AnimatedContainer(
           duration: Duration(milliseconds: duration ?? 500),
@@ -70,20 +70,22 @@ class ATContainer extends StatelessWidget {
           width: width,
           constraints: constraints,
           decoration: BoxDecoration(
-            image: isAssetImage ? DecorationImage(
-              fit: decorImageFit ?? BoxFit.cover,
-              image: AssetImage(decorImage) 
-            ) : isMemoryImage ? DecorationImage(
-              fit: decorImageFit ?? BoxFit.cover,
-              image: MemoryImage(decorImage) 
-            ) : null,
-            gradient: gradient,
-            shape: boxShape ?? BoxShape.rectangle,
-            color: color,
-            border: border,
-            borderRadius: boxShape == null ? BorderRadius.circular(radius ?? 0) : null,
-            boxShadow: boxShadow
-          ),
+              image: isAssetImage
+                  ? DecorationImage(
+                      fit: decorImageFit ?? BoxFit.cover,
+                      image: AssetImage(decorImage))
+                  : isMemoryImage
+                      ? DecorationImage(
+                          fit: decorImageFit ?? BoxFit.cover,
+                          image: MemoryImage(decorImage))
+                      : null,
+              gradient: gradient,
+              shape: boxShape ?? BoxShape.rectangle,
+              color: color,
+              border: border,
+              borderRadius:
+                  boxShape == null ? BorderRadius.circular(radius ?? 0) : null,
+              boxShadow: boxShadow),
           child: child,
         ),
       ),

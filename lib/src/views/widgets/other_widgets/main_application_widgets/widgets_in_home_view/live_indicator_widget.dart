@@ -17,26 +17,23 @@ class AmptiveLiveIndicatorWidget extends StatelessWidget {
       height: 22.h,
       width: 38.w,
       decoration: BoxDecoration(
-        gradient: LinearGradient(
-          begin: Alignment.topCenter,
-          end: Alignment.bottomCenter,
-          colors: <Color>[
-            ATColors.hexF91880,
-            ATColors.orangeGradientColorB
-          ]
-        ),
-        borderRadius: BorderRadius.circular(5),
-        border: Border.all(
-          color: ATColors.hex0D0D0D,
-          width: 2,
-        )
-      ),
-      child: Text(
-        ATStrings.LIVE.toUpperCase(),
-        style: Theme.of(context).textTheme.titleSmall?.copyWith(
-          fontWeight: ATFontWeights.w600
-        )
-      ),
+          gradient: LinearGradient(
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+              colors: <Color>[
+                ATColors.hexF91880,
+                ATColors.orangeGradientColorB
+              ]),
+          borderRadius: BorderRadius.circular(5),
+          border: Border.all(
+            color: ATColors.hex0D0D0D,
+            width: 2,
+          )),
+      child: Text(ATStrings.LIVE.toUpperCase(),
+          style: Theme.of(context)
+              .textTheme
+              .titleSmall
+              ?.copyWith(fontWeight: ATFontWeights.w600)),
     );
   }
 }

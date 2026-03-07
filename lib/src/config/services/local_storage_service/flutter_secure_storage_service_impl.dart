@@ -3,15 +3,12 @@ import 'package:amptive/src/config/services/local_storage_service/storage_servic
 import 'package:flutter/material.dart' show visibleForTesting;
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
-
 class FlutterSecureStorageServiceImpl implements ATLocalStorageService {
-
   factory FlutterSecureStorageServiceImpl({
     FlutterSecureStorage? mockFlutterSecureStorage,
   }) {
     _instance ??= FlutterSecureStorageServiceImpl._internal(
-      prefs: mockFlutterSecureStorage ?? const FlutterSecureStorage()
-    );
+        prefs: mockFlutterSecureStorage ?? const FlutterSecureStorage());
     return _instance!;
   }
 

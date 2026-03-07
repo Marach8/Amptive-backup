@@ -90,7 +90,7 @@
 //       },
 //       duration: const Duration(milliseconds: _slideOutDuration),
 //     );
-    
+
 //     Future<void>.delayed(
 //       const Duration(milliseconds: _slideOutDuration),
 //       () => addItem(removedItem)
@@ -138,7 +138,7 @@
 //                     ),
 //                     child: Stack(
 //                       alignment: Alignment.center,
-//                       children: <Widget>[                      
+//                       children: <Widget>[
 //                         AnimatedList(
 //                           padding: const EdgeInsets.fromLTRB(0, 130, 0, 20),
 //                           key: _animListKey,
@@ -146,7 +146,7 @@
 //                           initialItemCount: _originalItems.length,
 //                           itemBuilder: (_, int index, __) {
 //                             final dynamic item = _originalItems.elementAt(index);
-//                             final double scale = 1.0 - (0.1 * index);                      
+//                             final double scale = 1.0 - (0.1 * index);
 //                             return NotifTile(
 //                               horizMargin: (index * 8) + 10,
 //                               pictureSize: _normalPicSize * scale,
@@ -177,4 +177,3 @@
 //     );
 //   }
 // }
-

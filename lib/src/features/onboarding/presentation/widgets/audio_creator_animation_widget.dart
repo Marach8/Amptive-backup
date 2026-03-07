@@ -7,36 +7,31 @@ import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 
 class AmptiveAudioCreatorWidget extends StatefulWidget {
-  const AmptiveAudioCreatorWidget({
-    super.key,
-    required this.assetName,
-    required this.delay
-  });
+  const AmptiveAudioCreatorWidget(
+      {super.key, required this.assetName, required this.delay});
 
   final String assetName;
   final int delay;
 
   @override
-  State<AmptiveAudioCreatorWidget> createState() => _AmptiveAudioCreatorWidgetState();
+  State<AmptiveAudioCreatorWidget> createState() =>
+      _AmptiveAudioCreatorWidgetState();
 }
 
-class _AmptiveAudioCreatorWidgetState extends State<AmptiveAudioCreatorWidget>{
+class _AmptiveAudioCreatorWidgetState extends State<AmptiveAudioCreatorWidget> {
   bool _isBorderColored = false;
   late Timer _timer;
 
   @override
   void initState() {
     super.initState();
-    _timer = Timer.periodic(
-      Duration(seconds: widget.delay),
-      (_) {
-        if(mounted) setState(() => _isBorderColored = !_isBorderColored);
-      }
-    );
+    _timer = Timer.periodic(Duration(seconds: widget.delay), (_) {
+      if (mounted) setState(() => _isBorderColored = !_isBorderColored);
+    });
   }
 
   @override
-  void dispose(){
+  void dispose() {
     _timer.cancel();
     super.dispose();
   }
@@ -64,7 +59,8 @@ class _AmptiveAudioCreatorWidgetState extends State<AmptiveAudioCreatorWidget>{
           height: 74.99,
           child: CircleAvatar(
             radius: 36.5,
-            backgroundColor:_isBorderColored ? ATColors.hex307FE2 : ATColors.transparent,
+            backgroundColor:
+                _isBorderColored ? ATColors.hex307FE2 : ATColors.transparent,
             child: CircleAvatar(
               radius: 34.814,
               backgroundColor: ATColors.hex0D0D0D,
@@ -96,14 +92,8 @@ class _AmptiveAudioCreatorWidgetState extends State<AmptiveAudioCreatorWidget>{
   }
 }
 
-
-
-
 class TestWidget extends StatefulWidget {
-  const TestWidget({
-    super.key,
-    required this.imgPath
-  });
+  const TestWidget({super.key, required this.imgPath});
 
   final String imgPath;
 
@@ -111,7 +101,7 @@ class TestWidget extends StatefulWidget {
   State<TestWidget> createState() => _TestWidgetState();
 }
 
-class _TestWidgetState extends State<TestWidget> with TickerProviderStateMixin{
+class _TestWidgetState extends State<TestWidget> with TickerProviderStateMixin {
   late final AnimationController _cntrl1, _cntrl2;
   late final Animation<double> _spreadAnim1, _spreadAnim2;
 
@@ -128,24 +118,23 @@ class _TestWidgetState extends State<TestWidget> with TickerProviderStateMixin{
       duration: const Duration(seconds: 1),
     );
 
-    _spreadAnim1 = Tween<double>(begin: 0.0, end: 15.0).animate(
-      CurvedAnimation(parent: _cntrl1, curve: Curves.bounceInOut)
-    );
+    _spreadAnim1 = Tween<double>(begin: 0.0, end: 15.0)
+        .animate(CurvedAnimation(parent: _cntrl1, curve: Curves.bounceInOut));
 
-    _spreadAnim2 = Tween<double>(begin: 0.0, end: 8.0).animate(
-      CurvedAnimation(parent: _cntrl2, curve: Curves.decelerate)
-    );
+    _spreadAnim2 = Tween<double>(begin: 0.0, end: 8.0)
+        .animate(CurvedAnimation(parent: _cntrl2, curve: Curves.decelerate));
 
-    _cntrl1.addListener((){
-      if(_spreadAnim1.value >= 13.0 && !_cntrl2.isAnimating){
+    _cntrl1.addListener(() {
+      if (_spreadAnim1.value >= 13.0 && !_cntrl2.isAnimating) {
         _cntrl2.forward();
       }
-      if(_cntrl1.status == AnimationStatus.completed){
+      if (_cntrl1.status == AnimationStatus.completed) {
         _cntrl2.reset();
-        _cntrl1..reset()..forward();
+        _cntrl1
+          ..reset()
+          ..forward();
       }
     });
-    
 
     _cntrl1.forward();
   }
@@ -160,81 +149,80 @@ class _TestWidgetState extends State<TestWidget> with TickerProviderStateMixin{
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 70, width: 70,
+      height: 70,
+      width: 70,
       child: Stack(
         alignment: Alignment.center,
         clipBehavior: Clip.none,
         children: <Widget>[
           AnimatedBuilder(
-            animation: _spreadAnim1,
-            builder: (_, __) {
-              return Container(
-                height: 70, width: 70,
-                padding: const EdgeInsets.all(3),
-                decoration: BoxDecoration(
-                  boxShadow: <BoxShadow>[
-                    BoxShadow(
-                      spreadRadius: _spreadAnim1.value, blurRadius: 1,
-                      color: ATColors.hex307FE2.withValues(alpha: 0.3),
-                    )
-                  ],
-                  shape: BoxShape.circle,
-                ),
-                child: const SizedBox(),
-              );
-            }
-          ),
-
+              animation: _spreadAnim1,
+              builder: (_, __) {
+                return Container(
+                  height: 70,
+                  width: 70,
+                  padding: const EdgeInsets.all(3),
+                  decoration: BoxDecoration(
+                    boxShadow: <BoxShadow>[
+                      BoxShadow(
+                        spreadRadius: _spreadAnim1.value,
+                        blurRadius: 1,
+                        color: ATColors.hex307FE2.withValues(alpha: 0.3),
+                      )
+                    ],
+                    shape: BoxShape.circle,
+                  ),
+                  child: const SizedBox(),
+                );
+              }),
           AnimatedBuilder(
-            animation: _spreadAnim2,
-            builder: (_, __) {
-              return Container(
-                height: 70, width: 70,
-                decoration: BoxDecoration(
-                  boxShadow: <BoxShadow>[
-                    BoxShadow(
-                      spreadRadius: _spreadAnim2.value, blurRadius: 1,
-                      color: ATColors.hex307FE2.withValues(alpha: 0.5),
-                    )
-                  ],
-                  shape: BoxShape.circle,
-                ),
-                child: const SizedBox(),
-              );
-            }
-          ),
+              animation: _spreadAnim2,
+              builder: (_, __) {
+                return Container(
+                  height: 70,
+                  width: 70,
+                  decoration: BoxDecoration(
+                    boxShadow: <BoxShadow>[
+                      BoxShadow(
+                        spreadRadius: _spreadAnim2.value,
+                        blurRadius: 1,
+                        color: ATColors.hex307FE2.withValues(alpha: 0.5),
+                      )
+                    ],
+                    shape: BoxShape.circle,
+                  ),
+                  child: const SizedBox(),
+                );
+              }),
           Container(
             padding: const EdgeInsets.all(2),
-            height: 70, width: 70,
+            height: 70,
+            width: 70,
             decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(35),
-              color: ATColors.black,
-              border: Border.all(
-                color: ATColors.hex307FE2,
-                width: 3
-              )
-            ),
+                borderRadius: BorderRadius.circular(35),
+                color: ATColors.black,
+                border: Border.all(color: ATColors.hex307FE2, width: 3)),
             child: ClipRRect(
               borderRadius: BorderRadiusGeometry.circular(35),
               child: ATImgLoader(
-                height: 70, width: 70,
-                imgPath: widget.imgPath,
-                boxFit: BoxFit.cover
-              ),
+                  height: 70,
+                  width: 70,
+                  imgPath: widget.imgPath,
+                  boxFit: BoxFit.cover),
             ),
           ),
-
           Positioned(
-            bottom: 0, right: 5,
+            bottom: 0,
+            right: 5,
             child: ATCircleAvatar(
               diameter: 20,
               child: FittedBox(
-                fit: BoxFit.scaleDown,
-                child: Icon(
-                  Icons.mic_off, color: ATColors.hex0D0D0D,
-                  size: 15,
-                )
-              ),
+                  fit: BoxFit.scaleDown,
+                  child: Icon(
+                    Icons.mic_off,
+                    color: ATColors.hex0D0D0D,
+                    size: 15,
+                  )),
             ),
           ),
         ],
@@ -242,17 +230,6 @@ class _TestWidgetState extends State<TestWidget> with TickerProviderStateMixin{
     );
   }
 }
-
-
-
-
-
-
-
-
-
-
-
 
 class RippleAnimationPage extends StatefulWidget {
   const RippleAnimationPage({super.key});
@@ -270,7 +247,7 @@ class _RippleAnimationPageState extends State<RippleAnimationPage>
   @override
   void initState() {
     super.initState();
-    
+
     // Create animation controller with 2 second duration
     _controller = AnimationController(
       duration: const Duration(seconds: 2),
@@ -290,10 +267,7 @@ class _RippleAnimationPageState extends State<RippleAnimationPage>
     _opacityAnimation = Tween<double>(
       begin: 1.0,
       end: 0.0,
-    ).animate(CurvedAnimation(
-      parent: _controller,
-      curve: Curves.easeIn
-    ));
+    ).animate(CurvedAnimation(parent: _controller, curve: Curves.easeIn));
 
     // Start the animation
     _startAnimation();
@@ -342,14 +316,13 @@ class _RippleAnimationPageState extends State<RippleAnimationPage>
   }
 }
 
-
-
 // Alternative implementation with multiple ripples for a more realistic effect
 class MultipleRippleAnimation extends StatefulWidget {
   const MultipleRippleAnimation({super.key});
 
   @override
-  _MultipleRippleAnimationState createState() => _MultipleRippleAnimationState();
+  _MultipleRippleAnimationState createState() =>
+      _MultipleRippleAnimationState();
 }
 
 class _MultipleRippleAnimationState extends State<MultipleRippleAnimation>

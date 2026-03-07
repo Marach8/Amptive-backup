@@ -22,12 +22,10 @@ class User {
         name = json['name'],
         isVerified = json['is_verified'];
 
-  final String? id, username, profilePicture, firstName,
-  lastName, name;
+  final String? id, username, profilePicture, firstName, lastName, name;
   final int? followersCount, followingCount;
   final bool? isVerified;
 }
-
 
 class Host extends User {
   Host({

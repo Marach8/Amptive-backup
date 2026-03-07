@@ -12,12 +12,12 @@ class ATShowIcon extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ATImgLoader(
-      height: size ?? 16, width: size ?? 16,
+      height: size ?? 16,
+      width: size ?? 16,
       imgPath: ATImgStrings.showIcon,
     );
   }
 }
-
 
 class EventIcon extends StatelessWidget {
   const EventIcon({super.key, this.size});
@@ -26,39 +26,31 @@ class EventIcon extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ATImgLoader(
-      height: size ?? 16, width: size ?? 16,
+      height: size ?? 16,
+      width: size ?? 16,
       imgPath: ATImgStrings.showIcon,
     );
   }
 }
 
-
 class ATPaidIndicatorIcon extends StatelessWidget {
-  const ATPaidIndicatorIcon({
-    super.key,
-    this.size,
-    this.color,
-    this.radius
-  });
+  const ATPaidIndicatorIcon({super.key, this.size, this.color, this.radius});
 
   final double? size, radius;
   final Color? color;
 
-
   @override
   Widget build(BuildContext context) {
     return ATContainer(
-      color: color ?? ATColors.white, radius: radius ?? 2,
-      height: size ?? 14, width: size ?? 14,
+      color: color ?? ATColors.white,
+      radius: radius ?? 2,
+      height: size ?? 14,
+      width: size ?? 14,
       child: FittedBox(
         fit: BoxFit.scaleDown,
-        child: Text(
-          'P',
-          style: Theme.of(context).textTheme.titleSmall?.copyWith(
-            fontWeight: ATFontWeights.w800,
-            color: ATColors.black
-          )
-        ),
+        child: Text('P',
+            style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                fontWeight: ATFontWeights.w800, color: ATColors.black)),
       ),
     );
   }

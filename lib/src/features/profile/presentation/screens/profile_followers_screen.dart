@@ -26,7 +26,6 @@ class ATProfileFollowersScreen extends StatelessWidget {
             style: context.textTheme.bodyMedium,
           ),
         ),
-
         body: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
@@ -36,24 +35,25 @@ class ATProfileFollowersScreen extends StatelessWidget {
                 controller: TextEditingController(),
                 disableBlueBorder: true,
                 hintText: ATStrings.SEARCH_4_FOLLOWERS,
-                fillColor: ATColors.white.withValues(alpha:0.1),
+                fillColor: ATColors.white.withValues(alpha: 0.1),
                 prefixIcon: const Padding(
                   padding: EdgeInsets.only(left: 10),
                   child: ATImgLoader(
-                    height: 20, width: 20,
-                    imgPath: ATImgStrings.outlinedSearch
-                  ),
+                      height: 20,
+                      width: 20,
+                      imgPath: ATImgStrings.outlinedSearch),
                 ),
               ),
             ),
             Expanded(
-              child: BlocBuilder<AmptiveProfileFollowersBloc, List<ObjectWithNotifier<Host>>>(
-                builder: (_, List<ObjectWithNotifier<Host>> state) {
-                  return ListView.builder(
+              child: BlocBuilder<AmptiveProfileFollowersBloc,
+                      List<ObjectWithNotifier<Host>>>(
+                  builder: (_, List<ObjectWithNotifier<Host>> state) {
+                return ListView.builder(
                     itemCount: state.length,
                     padding: const EdgeInsets.only(bottom: 50),
-                    itemBuilder: (_, int index){
-                      if(index == 0){
+                    itemBuilder: (_, int index) {
+                      if (index == 0) {
                         return Padding(
                           padding: const EdgeInsets.fromLTRB(15, 5, 15, 20),
                           child: Text(
@@ -62,15 +62,15 @@ class ATProfileFollowersScreen extends StatelessWidget {
                           ),
                         );
                       }
-                      final ObjectWithNotifier<Host> follower = state.elementAt(index - 1);
+                      final ObjectWithNotifier<Host> follower =
+                          state.elementAt(index - 1);
                       return _RenderAFollower(
                         follower: follower,
-                        onTap: (ObjectWithNotifier<Host> follower, bool isSelected){},
+                        onTap: (ObjectWithNotifier<Host> follower,
+                            bool isSelected) {},
                       );
-                    }
-                  );
-                }
-              ),
+                    });
+              }),
             )
           ],
         ),
@@ -79,10 +79,7 @@ class ATProfileFollowersScreen extends StatelessWidget {
   }
 }
 
-
-
 class _RenderAFollower extends StatelessWidget {
-
   const _RenderAFollower({
     required this.onTap,
     required this.follower,
@@ -101,28 +98,26 @@ class _RenderAFollower extends StatelessWidget {
           ClipRRect(
             borderRadius: BorderRadius.circular(30),
             child: ATImgLoader(
-              height: 50, width: 50, boxFit: BoxFit.cover,
-              imgPath: follower.obj.profilePicture!
-            ),
+                height: 50,
+                width: 50,
+                boxFit: BoxFit.cover,
+                imgPath: follower.obj.profilePicture!),
           ),
           const SizedBox(width: 10),
           Expanded(
-            child: Text(
-              follower.obj.username ?? '',
-              style: context.textTheme.titleMedium
-            ),
+            child: Text(follower.obj.username ?? '',
+                style: context.textTheme.titleMedium),
           ),
-    
           SizedBox(
-            width: 84, height: 30,
+            width: 84,
+            height: 30,
             child: ATPlainElevatedBtn(
-              onPressed: (){},
-              padding: EdgeInsets.zero, bgColor: ATColors.white,
+              onPressed: () {},
+              padding: EdgeInsets.zero,
+              bgColor: ATColors.white,
               btnTitle: ATStrings.REMOVE,
-              style: context.textTheme.bodySmall?.copyWith(
-                fontSize: ATSizes.size13,
-                color: ATColors.black
-              ),
+              style: context.textTheme.bodySmall
+                  ?.copyWith(fontSize: ATSizes.size13, color: ATColors.black),
             ),
           )
         ],

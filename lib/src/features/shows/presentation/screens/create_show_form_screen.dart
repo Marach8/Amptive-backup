@@ -5,6 +5,7 @@ import 'package:amptive/src/config/api_response_and_app_state.dart';
 import 'package:amptive/src/config/utils/dialogs/app_notification_dialog.dart';
 import 'package:amptive/src/features/discover/cubits/communities_cubit.dart';
 import 'package:amptive/src/features/auth/cubits/upload_image_cubit.dart';
+import 'package:amptive/src/features/discover/cubits/hashtags_cubit.dart';
 import 'package:amptive/src/features/discover/cubits/users_cubits.dart';
 import 'package:amptive/src/features/shows/cubits/create_show_cubit.dart';
 import 'package:amptive/src/features/go_live/go_live_export.dart';
@@ -20,10 +21,8 @@ import 'package:amptive/src/shared/image_loader_widget.dart';
 import 'package:nested/nested.dart' show SingleChildWidget;
 import 'package:amptive/src/shared/sliver_header_delegate.dart';
 import 'package:uuid/uuid.dart';
-import '../../../../models/host.dart';
 import '../../../../shared/rich_text.dart';
 import '../../../../config/utils/dialogs/add_communities_dialog.dart';
-
 
 class CreateShowFormScreen extends StatelessWidget {
   const CreateShowFormScreen({super.key});
@@ -35,9 +34,16 @@ class CreateShowFormScreen extends StatelessWidget {
         BlocProvider<CommunitiesCubit>(create: (_) => CommunitiesCubit()),
         BlocProvider<CreateShowCubit>(create: (_) => CreateShowCubit()),
         BlocProvider<UploadImageCubit>(create: (_) => UploadImageCubit()),
-        BlocProvider<BlurredHeaderCubit>(create: (_) => BlurredHeaderCubit(),),
+        BlocProvider<BlurredHeaderCubit>(
+          create: (_) => BlurredHeaderCubit(),
+        ),
         BlocProvider<BgImageCubit>(create: (_) => BgImageCubit()),
-        BlocProvider<AllUsersCubit>(create: (_) => AllUsersCubit(),)
+        BlocProvider<AllUsersCubit>(
+          create: (_) => AllUsersCubit(),
+        ),
+        BlocProvider<HashtagsCubit>(
+          create: (_) => HashtagsCubit(),
+        ),
       ],
       child: const _SubWidget(),
     );
@@ -60,28 +66,27 @@ class __SubWidgetState extends State<_SubWidget> {
   final ValueNotifier<bool?> _launchShowNotifier = ValueNotifier<bool?>(false);
 
   String selectedDescription = ATStrings.tellListenersAboutYourShow;
-  String chooseAudienceAccess = ATStrings.selectWhoCanAccessYourShow;
   String shouldAllowHandRasing = ATStrings.choose2AllowHandRasing;
 
   Community? selectedCommunity;
   List<User>? selectedCohosts;
+  ProgramAccessTypeSelectionData accessTypeData =
+      const ProgramAccessTypeSelectionData();
 
-  @override 
-  void initState(){
+  @override
+  void initState() {
     super.initState();
-    _titleCntrl = TextEditingController()..addListener(
-      () => _titleStreamCntrl.add(_titleCntrl.text.trim())
-    );
-    WidgetsBinding.instance.addPostFrameCallback(
-      (_){
-        context.read<CommunitiesCubit>().fetchCommunities();
-        context.read<AllUsersCubit>().fetchAllUsers();
-      }
-    );
+    _titleCntrl = TextEditingController()
+      ..addListener(() => _titleStreamCntrl.add(_titleCntrl.text.trim()));
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      context.read<CommunitiesCubit>().fetchCommunities();
+      context.read<AllUsersCubit>().fetchAllUsers();
+      context.read<HashtagsCubit>().fetchTags();
+    });
   }
 
-  @override 
-  void dispose(){
+  @override
+  void dispose() {
     _titleCntrl.dispose();
     _titleStreamCntrl.close();
     _descStreamCntrl.close();
@@ -90,511 +95,561 @@ class __SubWidgetState extends State<_SubWidget> {
 
   @override
   Widget build(BuildContext context) {
-    final double blurredHeaderHeight = kToolbarHeight + MediaQuery.paddingOf(context).top;
+    final double blurredHeaderHeight =
+        kToolbarHeight + MediaQuery.paddingOf(context).top;
 
     return ATAnnotatedRegion(
       statusBarColor: ATColors.transparent,
       child: Scaffold(
-        body: Builder(
-          builder: (BuildContext blocContext) {
-            return Stack(
-              children: <Widget>[
-                Positioned.fill(
-                  child: ImageFiltered(
-                    imageFilter: ImageFilter.blur(sigmaX: 100, sigmaY: 100),
-                    child: BlocBuilder<BgImageCubit, (String, Uint8List?)>(
+        body: Builder(builder: (BuildContext blocContext) {
+          return Stack(
+            children: <Widget>[
+              Positioned.fill(
+                child: ImageFiltered(
+                  imageFilter: ImageFilter.blur(sigmaX: 100, sigmaY: 100),
+                  child: BlocBuilder<BgImageCubit, (String, Uint8List?)>(
                       builder: (_, (String, Uint8List?) state) {
-                        return state.$2 == null ? ATImgLoader(
-                          boxFit: BoxFit.fill,
-                          imgPath: state.$1,
-                        ) : Image.memory(state.$2!, fit: BoxFit.fill);
-                      }
-                    ),
-                  ),
+                    return state.$2 == null
+                        ? ATImgLoader(
+                            boxFit: BoxFit.fill,
+                            imgPath: state.$1,
+                          )
+                        : Image.memory(state.$2!, fit: BoxFit.fill);
+                  }),
                 ),
-                
-                ATContainer(
-                  color: ATColors.hex0D0D0D.withValues(alpha: 0.75),
-                  child: NotificationListener<ScrollNotification>(
-                    onNotification: blocContext.read<BlurredHeaderCubit>().onScrollNotification,
-                    child: NestedScrollView(
-                      headerSliverBuilder: (_, __) => <Widget>[
-                        SliverPersistentHeader(
-                          pinned: true,
-                          delegate: ATSliverHDelegate(
+              ),
+              ATContainer(
+                color: ATColors.hex0D0D0D.withValues(alpha: 0.75),
+                child: NotificationListener<ScrollNotification>(
+                  onNotification: blocContext
+                      .read<BlurredHeaderCubit>()
+                      .onScrollNotification,
+                  child: NestedScrollView(
+                    headerSliverBuilder: (_, __) => <Widget>[
+                      SliverPersistentHeader(
+                        pinned: true,
+                        delegate: ATSliverHDelegate(
                             maxExt: blurredHeaderHeight,
                             minExt: blurredHeaderHeight,
                             child: SizedBox(
-                              height: blurredHeaderHeight,
-                              child: ATBlurredHeaderWidget(
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                  children: <Widget>[
-                                    Padding(
-                                      padding: const EdgeInsets.only(left: 4),
-                                      child: ATRoundedBackBtn(bgColor: ATColors.transparent,),
-                                    ),
-                                    Text(
-                                      ATStrings.createShow,
-                                      style: context.textTheme.bodyMedium,
-                                    ),
-                                    const SizedBox(width: 30,)
-                                  ],
-                                ),
-                              )
-                            )
-                          ),
-                        ),
-                      ],
-                      
-                      body: SingleChildScrollView(
-                        padding: const EdgeInsets.fromLTRB(0, 10, 0, 100),
-                        physics: const BouncingScrollPhysics(),
-                        child: Column(
-                          children: <Widget>[
-                            Padding(
-                              padding: const EdgeInsets.fromLTRB(15, 0, 15, 30),
-                              child: SelectProgramCoverArt(
-                                onImageSelected: blocContext.read<BgImageCubit>().setBgImage,
-                              ),
+                                height: blurredHeaderHeight,
+                                child: ATBlurredHeaderWidget(
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: <Widget>[
+                                      Padding(
+                                        padding: const EdgeInsets.only(left: 4),
+                                        child: ATRoundedBackBtn(
+                                          bgColor: ATColors.transparent,
+                                        ),
+                                      ),
+                                      InkWell(
+                                        onTap: () {
+                                          context
+                                              .read<HashtagsCubit>()
+                                              .fetchTags();
+                                        },
+                                        child: Text(
+                                          ATStrings.createShow,
+                                          style: context.textTheme.bodyMedium,
+                                        ),
+                                      ),
+                                      const SizedBox(
+                                        width: 30,
+                                      )
+                                    ],
+                                  ),
+                                ))),
+                      ),
+                    ],
+                    body: SingleChildScrollView(
+                      padding: const EdgeInsets.fromLTRB(0, 10, 0, 100),
+                      physics: const BouncingScrollPhysics(),
+                      child: Column(
+                        children: <Widget>[
+                          Padding(
+                            padding: const EdgeInsets.fromLTRB(15, 0, 15, 30),
+                            child: SelectProgramCoverArt(
+                              onImageSelected:
+                                  blocContext.read<BgImageCubit>().setBgImage,
                             ),
-    
-                            Padding(
-                              padding: const EdgeInsets.fromLTRB(15, 0, 15, 10),
-                              child: StreamBuilder<String>(
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.fromLTRB(15, 0, 15, 10),
+                            child: StreamBuilder<String>(
                                 stream: _titleStreamCntrl.stream,
                                 builder: (_, AsyncSnapshot<String> snapshot) {
-                                  final int remaining = 140 - (snapshot.data?.length ?? 0);
+                                  final int remaining =
+                                      140 - (snapshot.data?.length ?? 0);
                                   return RowWith2Texts(
                                     text1: ATStrings.title,
                                     text2: '$remaining remaining',
                                   );
-                                }
+                                }),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.fromLTRB(15, 0, 15, 30),
+                            child: ATTextFormField(
+                              controller: _titleCntrl,
+                              maxLines: 1,
+                              cursorHeight: 20,
+                              hintText: ATStrings.titleOfYourShow,
+                              prefixIcon: const SizedBox(
+                                width: 12,
                               ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.fromLTRB(15, 0, 15, 30),
-                              child: ATTextFormField(
-                                controller: _titleCntrl,
-                                maxLines: 1, cursorHeight: 20,
-                                hintText: ATStrings.titleOfYourShow,
-                                prefixIcon: const SizedBox(width: 12,),
-                                hintStyle: context.textTheme.bodySmall?.copyWith(
-                                  color: ATColors.white.withValues(alpha: 0.4),
-                                ),
-                                disableBlueBorder: true,
-                                enabledBorder: OutlineInputBorder(
+                              hintStyle: context.textTheme.bodySmall?.copyWith(
+                                color: ATColors.white.withValues(alpha: 0.4),
+                              ),
+                              disableBlueBorder: true,
+                              enabledBorder: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(14),
-                                  borderSide: BorderSide(color: ATColors.transparent)
-                                ),
-                              ),
+                                  borderSide:
+                                      BorderSide(color: ATColors.transparent)),
                             ),
-    
-    
-                            Padding(
-                              padding: const EdgeInsets.fromLTRB(15, 0, 15, 10),
-                              child: StreamBuilder<String>(
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.fromLTRB(15, 0, 15, 10),
+                            child: StreamBuilder<String>(
                                 stream: _descStreamCntrl.stream,
                                 builder: (_, AsyncSnapshot<String> snapshot) {
-                                  final int remaining = 4000 - (snapshot.data?.length ?? 0);
+                                  final int remaining =
+                                      4000 - (snapshot.data?.length ?? 0);
                                   return RowWith2Texts(
                                     text1: ATStrings.description,
                                     text2: '$remaining remaining',
                                   );
-                                }
-                              ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.fromLTRB(15, 0, 15, 30),
-                              child: StatefulBuilder(
-                                builder: (_, void Function(void Function()) setter) {
-                                  return CreateProgramSelectionItem(
-                                    description: selectedDescription,
-                                    onTap: ()async{
-                                      final String? enteredDescription = await enterDescriptionModal(
-                                        context: context, 
-                                        initialDesc: selectedDescription == ATStrings.tellListenersAboutYourShow 
-                                          ? null : selectedDescription,
-                                      );
-                                      if((enteredDescription ?? '').isNotEmpty){
-                                        setter(
-                                          (){
-                                            selectedDescription = enteredDescription!;
-                                            _descStreamCntrl.add(enteredDescription);
-                                          }
-                                        );
-                                      }
-                                    },
+                                }),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.fromLTRB(15, 0, 15, 30),
+                            child: StatefulBuilder(builder:
+                                (_, void Function(void Function()) setter) {
+                              return CreateProgramSelectionItem(
+                                description: selectedDescription,
+                                onTap: () async {
+                                  final String? enteredDescription =
+                                      await enterDescriptionModal(
+                                    context: context,
+                                    initialDesc: selectedDescription ==
+                                            ATStrings.tellListenersAboutYourShow
+                                        ? null
+                                        : selectedDescription,
                                   );
-                                }
-                              ),
-                            ),
-    
-    
-                            const Padding(
-                              padding: EdgeInsets.fromLTRB(15, 0, 15, 10),
-                              child: RowWith2Texts(text1: ATStrings.COMMUNITY),
-                            ),
-    
-                            Padding(
-                              padding: const EdgeInsets.fromLTRB(15, 0, 15, 10),
-                              child: StatefulBuilder(
-                                builder: (_, void Function(void Function()) setter) {
-                                  return ATScalingSwitcher(
-                                    duration: 300,
-                                    child: selectedCommunity == null ? CreateProgramSelectionItem(
-                                      description: ATStrings.selectCommunity4YourShow,
-                                      onTap: ()async{
-                                        final Community? selectedCom = await showCommunitiesModal(
-                                          context: context,
-                                          communitiesCubit: context.read<CommunitiesCubit>(),
-                                        );
-                                        if(selectedCom != null){
-                                          setter(() => selectedCommunity = selectedCom);
-                                        }
-                                      },
-                                    ) : SelectedCommunityWidget(
-                                      selectedCommunity: selectedCommunity!,
-                                      onClose: () => setter(() => selectedCommunity = null),
-                                      onView: (){}
-                                    )
-                                  );
-                                }
-                              ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.fromLTRB(15, 0, 15, 30),
-                              child: ATRichText(
-                                maxLines: 4,
-                                items: <String, TextStyle>{
-                                  ATStrings.addCommunityDesc: context.textTheme.labelSmall!.copyWith(
-                                    color: ATColors.hexC2C2C2.withValues(alpha: 0.76)
-                                  ),
-                                  ATStrings.learnMore: context.textTheme.labelSmall!
+                                  if ((enteredDescription ?? '').isNotEmpty) {
+                                    setter(() {
+                                      selectedDescription = enteredDescription!;
+                                      _descStreamCntrl.add(enteredDescription);
+                                    });
+                                  }
                                 },
-                                textOnTap: (String text){
-                                  if(text == ATStrings.learnMore){}
-                                },
-                              ),
+                              );
+                            }),
+                          ),
+                          const Padding(
+                            padding: EdgeInsets.fromLTRB(15, 0, 15, 10),
+                            child: RowWith2Texts(text1: ATStrings.COMMUNITY),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.fromLTRB(15, 0, 15, 10),
+                            child: StatefulBuilder(builder:
+                                (_, void Function(void Function()) setter) {
+                              return ATScalingSwitcher(
+                                  duration: 300,
+                                  child: selectedCommunity == null
+                                      ? CreateProgramSelectionItem(
+                                          description: ATStrings
+                                              .selectCommunity4YourShow,
+                                          onTap: () async {
+                                            final Community? selectedCom =
+                                                await showCommunitiesModal(
+                                              context: context,
+                                              communitiesCubit: context
+                                                  .read<CommunitiesCubit>(),
+                                            );
+                                            if (selectedCom != null) {
+                                              setter(() => selectedCommunity =
+                                                  selectedCom);
+                                            }
+                                          },
+                                        )
+                                      : SelectedCommunityWidget(
+                                          selectedCommunity: selectedCommunity!,
+                                          onClose: () => setter(
+                                              () => selectedCommunity = null),
+                                          onView: () {}));
+                            }),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.fromLTRB(15, 0, 15, 30),
+                            child: ATRichText(
+                              maxLines: 4,
+                              items: <String, TextStyle>{
+                                ATStrings.addCommunityDesc:
+                                    context.textTheme.labelSmall!.copyWith(
+                                        color: ATColors.hexC2C2C2
+                                            .withValues(alpha: 0.76)),
+                                ATStrings.learnMore:
+                                    context.textTheme.labelSmall!
+                              },
+                              textOnTap: (String text) {
+                                if (text == ATStrings.learnMore) {}
+                              },
                             ),
-    
-    
-                            const Padding(
-                              padding: EdgeInsets.fromLTRB(15, 0, 15, 10),
-                              child: RowWith2Texts(text1: ATStrings.addCohost, text2: '5 max',),
+                          ),
+                          const Padding(
+                            padding: EdgeInsets.fromLTRB(15, 0, 15, 10),
+                            child: RowWith2Texts(
+                              text1: ATStrings.addCohost,
+                              text2: '5 max',
                             ),
-                            Padding(
-                              padding: const EdgeInsets.fromLTRB(15, 0, 15, 10),
-                              child: StatefulBuilder(
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.fromLTRB(15, 0, 15, 10),
+                            child: StatefulBuilder(
                                 builder: (_, StateSetter setter) {
-                                  final bool hasCohosts = (selectedCohosts ?? <User>[]).isNotEmpty;
-                                  return ATScalingSwitcher(
-                                    duration: 300,
-                                    child: hasCohosts ? SelectedCoHostsWidget(
-                                        onEdit: ()async{
-                                          final List<User>? newCohosts = await showAvailableCoHostsModal(
+                              final bool hasCohosts =
+                                  (selectedCohosts ?? <User>[]).isNotEmpty;
+                              return ATScalingSwitcher(
+                                duration: 300,
+                                child: hasCohosts
+                                    ? SelectedCoHostsWidget(
+                                        onEdit: () async {
+                                          final List<User>? newCohosts =
+                                              await showAvailableCoHostsModal(
                                             context: context,
                                             selectedCoHosts: selectedCohosts,
-                                            allUsersCubit: context.read<AllUsersCubit>(),
+                                            allUsersCubit:
+                                                context.read<AllUsersCubit>(),
                                           );
-                                          if(newCohosts != null){
-                                            setter(() => selectedCohosts = newCohosts);
+                                          if (newCohosts != null) {
+                                            setter(() =>
+                                                selectedCohosts = newCohosts);
                                           }
                                         },
-                                        selectedCohosts: selectedCohosts!
-                                      ) : CreateProgramSelectionItem(
+                                        selectedCohosts: selectedCohosts!)
+                                    : CreateProgramSelectionItem(
                                         leading: const ATImgLoader(
-                                          height: 20, width: 20,
+                                          height: 20,
+                                          width: 20,
                                           imgPath: ATImgStrings.outlinedSearch,
                                         ),
                                         trailing: Flexible(
                                           child: Text(
-                                            ATStrings.searchAndAddCohost4YourShow,
-                                            style: context.textTheme.bodySmall?.copyWith(
-                                              color: ATColors.white.withValues(alpha: 0.4),
+                                            ATStrings
+                                                .searchAndAddCohost4YourShow,
+                                            style: context.textTheme.bodySmall
+                                                ?.copyWith(
+                                              color: ATColors.white
+                                                  .withValues(alpha: 0.4),
                                             ),
                                           ),
                                         ),
-                                        onTap: ()async{
-                                          final List<User>? newCohosts = await showAvailableCoHostsModal(
+                                        onTap: () async {
+                                          final List<User>? newCohosts =
+                                              await showAvailableCoHostsModal(
                                             context: context,
-                                            allUsersCubit: context.read<AllUsersCubit>(),
+                                            allUsersCubit:
+                                                context.read<AllUsersCubit>(),
                                           );
-                                          if(newCohosts != null){
-                                            setter(() => selectedCohosts = newCohosts);
+                                          if (newCohosts != null) {
+                                            setter(() =>
+                                                selectedCohosts = newCohosts);
                                           }
-                                        }
-                                      ),
-                                  );
-                                }
-                              ),
+                                        }),
+                              );
+                            }),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.fromLTRB(15, 0, 15, 30),
+                            child: Text(
+                              ATStrings.addCohostDesc,
+                              maxLines: 5,
+                              style: context.textTheme.labelSmall!.copyWith(
+                                  color: ATColors.hexC2C2C2
+                                      .withValues(alpha: 0.76)),
                             ),
-                            Padding(
-                              padding: const EdgeInsets.fromLTRB(15, 0, 15, 30),
-                              child: Text(
-                                ATStrings.addCohostDesc, maxLines: 5,
-                                style: context.textTheme.labelSmall!.copyWith(
-                                  color: ATColors.hexC2C2C2.withValues(alpha: 0.76)
-                                ),
-                              ),
+                          ),
+                          const Padding(
+                            padding: EdgeInsets.fromLTRB(15, 0, 15, 10),
+                            child: RowWith2Texts(text1: ATStrings.hashtags),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.fromLTRB(15, 0, 15, 10),
+                            child: CreateProgramSelectionItem(
+                              description: '${ATStrings.addHashtags}s',
+                              onTap: () => showTrendingHashtagsModal(context),
                             ),
-                            
-                                                  
-                            const Padding(
-                              padding: EdgeInsets.fromLTRB(15, 0, 15, 10),
-                              child: RowWith2Texts(text1: ATStrings.hashtags),
+                          ),
+                          const SelectedHashtagsRow(margin: EdgeInsets.zero),
+                          Padding(
+                            padding: const EdgeInsets.fromLTRB(15, 0, 15, 30),
+                            child: Text(
+                              ATStrings.addHashtagsDesc,
+                              maxLines: 5,
+                              style: context.textTheme.labelSmall?.copyWith(
+                                  color: ATColors.hexC2C2C2
+                                      .withValues(alpha: 0.76)),
                             ),
-                            Padding(
-                              padding: const EdgeInsets.fromLTRB(15, 0, 15, 10),
-                              child: CreateProgramSelectionItem(
-                                description: '${ATStrings.ADD_HASHTAG}s',
-                                onTap: () => showTrendingHashtagsModal(context),
-                              ),
-                            ),
-    
-                            const SelectedHashtagsRow(margin: EdgeInsets.zero),
-    
-                            Padding(
-                              padding: const EdgeInsets.fromLTRB(15, 0, 15, 30),
-                              child: Text(
-                                ATStrings.ADD_HASHTAG_DESC, maxLines: 5,
-                                style: context.textTheme.labelSmall?.copyWith(
-                                  color: ATColors.hexC2C2C2.withValues(alpha: 0.76)
-                                ),
-                              ),
-                            ),
-                            
-                            
-                            const Padding(
-                              padding: EdgeInsets.fromLTRB(15, 0, 15, 10),
-                              child: RowWith2Texts(text1: ATStrings.AUDIENCE_ACCESS),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.fromLTRB(15, 0, 15, 10),
-                              child: StatefulBuilder(
-                                builder: (_, void Function(void Function()) setter) {
-                                  return ATScalingSwitcher(
-                                    duration: 300,
-                                    child: CreateProgramSelectionItem(
-                                      description: chooseAudienceAccess,
-                                      descStyle: chooseAudienceAccess == ATStrings.selectWhoCanAccessYourShow ? null
+                          ),
+                          const Padding(
+                            padding: EdgeInsets.fromLTRB(15, 0, 15, 10),
+                            child:
+                                RowWith2Texts(text1: ATStrings.audienceAccess),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.fromLTRB(15, 0, 15, 10),
+                            child: StatefulBuilder(
+                                builder: (_, StateSetter setter) {
+                              final String accessTypeDescText =
+                                  getAccessTypeDescText(
+                                      accessTypeData: accessTypeData);
+                              return ATScalingSwitcher(
+                                  duration: 300,
+                                  child: CreateProgramSelectionItem(
+                                    description: accessTypeDescText,
+                                    descStyle: accessTypeDescText ==
+                                            ATStrings.selectWhoCanAccessYourShow
+                                        ? null
                                         : context.textTheme.bodySmall,
-                                      onTap: ()async{
-                                        // context.read<SubPlanSetupBloc>().selectAFee(1000);
-                                        // context.read<SubPlanSetupBloc>().setSelectedFee(1000);
-    
-                                        final String? selectedAccessType = await chooseAudienceAccess4ShowModal(
-                                          context: context, initialAccessType: chooseAudienceAccess
-                                        );
-                                        setter(
-                                          (){
-                                            if(selectedAccessType == null){
-                                              chooseAudienceAccess = ATStrings.selectWhoCanAccessYourShow;
-                                            }
-                                            else{
-                                              chooseAudienceAccess = selectedAccessType;
-                                            }
-                                          }
-                                        );
-                                      },
-                                    )
-                                  );
-                                }
-                              ),
+                                    onTap: () async {
+                                      final ProgramAccessTypeSelectionData?
+                                          newAccessTypeData =
+                                          await showAudienceAccessTypeModal(
+                                              context: context,
+                                              initialAccessTypeData:
+                                                  accessTypeData);
+                                      setter(() {
+                                        if (newAccessTypeData != null) {
+                                          accessTypeData = newAccessTypeData;
+                                        }
+                                      });
+                                    },
+                                  ));
+                            }),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.fromLTRB(15, 0, 15, 30),
+                            child: Text(
+                              ATStrings.promptToSetupSubPlan,
+                              maxLines: 5,
+                              style: context.textTheme.labelSmall!.copyWith(
+                                  color: ATColors.hexC2C2C2
+                                      .withValues(alpha: 0.76)),
                             ),
-                            Padding(
-                              padding: const EdgeInsets.fromLTRB(15, 0, 15, 30),
+                          ),
+                          const Padding(
+                            padding: EdgeInsets.fromLTRB(15, 0, 15, 30),
+                            child: ATDivider(
+                              height: 1.1,
+                            ),
+                          ),
+                          Align(
+                            alignment: Alignment.centerLeft,
+                            child: Padding(
+                              padding:
+                                  const EdgeInsets.only(left: 15, right: 15),
                               child: Text(
-                                ATStrings.PROMPTED_2_SETUP_SUB_PLAN, maxLines: 5,
-                                style: context.textTheme.labelSmall!.copyWith(
-                                  color: ATColors.hexC2C2C2.withValues(alpha: 0.76)
+                                ATStrings.moderationTools,
+                                style: context.textTheme.labelSmall?.copyWith(
+                                  fontSize: ATSizes.size13,
                                 ),
                               ),
                             ),
-                                                  
-                            const Padding(
-                              padding: EdgeInsets.fromLTRB(15, 0, 15, 30),
-                              child: ATDivider(height: 1.1,),
-                            ),
-    
-                            Align(
-                              alignment: Alignment.centerLeft,
-                              child: Padding(
-                                padding: const EdgeInsets.only(left: 15, right: 15),
-                                child: Text(
-                                  ATStrings.MODERATION_TOOLS,
-                                  style: context.textTheme.labelSmall?.copyWith(
-                                    fontSize: ATSizes.size13,
-                                  ),
-                                ),
-                              ),
-                            ),
-    
-    
-                            Padding(
-                              padding: const EdgeInsets.fromLTRB(15, 15, 15, 10),
+                          ),
+                          Padding(
+                              padding:
+                                  const EdgeInsets.fromLTRB(15, 15, 15, 10),
                               child: Row(
                                 children: <Widget>[
-                                  const Icon(Icons.front_hand_outlined, size: 18,),
-                                  const SizedBox(width: 5,),
+                                  const Icon(
+                                    Icons.front_hand_outlined,
+                                    size: 18,
+                                  ),
+                                  const SizedBox(
+                                    width: 5,
+                                  ),
                                   Text(
                                     ATStrings.handRaising,
-                                    style: context.textTheme.titleLarge?.copyWith(
-                                      fontWeight: ATFontWeights.w500
-                                    ),
+                                    style: context.textTheme.titleLarge
+                                        ?.copyWith(
+                                            fontWeight: ATFontWeights.w500),
                                   ),
                                 ],
-                              )
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.fromLTRB(15, 0, 15, 10),
-                              child: StatefulBuilder(
-                                builder: (_, void Function(void Function()) setter) {
-                                  return ATScalingSwitcher(
-                                    duration: 300,
-                                    child: CreateProgramSelectionItem(
-                                      description: shouldAllowHandRasing,
-                                      descStyle: shouldAllowHandRasing == ATStrings.choose2AllowHandRasing ? null
+                              )),
+                          Padding(
+                            padding: const EdgeInsets.fromLTRB(15, 0, 15, 10),
+                            child: StatefulBuilder(builder:
+                                (_, void Function(void Function()) setter) {
+                              return ATScalingSwitcher(
+                                  duration: 300,
+                                  child: CreateProgramSelectionItem(
+                                    description: shouldAllowHandRasing,
+                                    descStyle: shouldAllowHandRasing ==
+                                            ATStrings.choose2AllowHandRasing
+                                        ? null
                                         : context.textTheme.bodySmall,
-                                      onTap: ()async{
-                                        final String? selectedHandRaising = await choose2AllowHandRaisingModal(
-                                          context: context, initialHandRaising: shouldAllowHandRasing
-                                        );
-                                        setter(
-                                          (){
-                                            if(selectedHandRaising == null){
-                                              shouldAllowHandRasing = ATStrings.selectWhoCanAccessYourShow;
-                                            }
-                                            else{
-                                              shouldAllowHandRasing = selectedHandRaising;
-                                            }
-                                          }
-                                        );
-                                      },
-                                    )
-                                  );
-                                }
-                              ),
-                            ),
-                            Padding(
+                                    onTap: () async {
+                                      final String? selectedHandRaising =
+                                          await choose2AllowHandRaisingModal(
+                                              context: context,
+                                              initialHandRaising:
+                                                  shouldAllowHandRasing);
+                                      setter(() {
+                                        if (selectedHandRaising == null) {
+                                          shouldAllowHandRasing = ATStrings
+                                              .selectWhoCanAccessYourShow;
+                                        } else {
+                                          shouldAllowHandRasing =
+                                              selectedHandRaising;
+                                        }
+                                      });
+                                    },
+                                  ));
+                            }),
+                          ),
+                          Padding(
                               padding: const EdgeInsets.fromLTRB(15, 0, 15, 30),
                               child: ATRichText(
                                 items: <String, TextStyle>{
-                                  ATStrings.U_WILL_HAVE_ACCESS_2_MODERATION_TOOLS: context.textTheme.labelSmall!.copyWith(
-                                    color: ATColors.hexC2C2C2.withValues(alpha: 0.76)
-                                  ),
-                                  ' ${ATStrings.learnMore}': context.textTheme.labelSmall!
+                                  ATStrings
+                                          .U_WILL_HAVE_ACCESS_2_MODERATION_TOOLS:
+                                      context.textTheme.labelSmall!.copyWith(
+                                          color: ATColors.hexC2C2C2
+                                              .withValues(alpha: 0.76)),
+                                  ' ${ATStrings.learnMore}':
+                                      context.textTheme.labelSmall!
                                 },
-                              )
-                            ),
-                          ],
-                        ),
+                              )),
+                        ],
                       ),
                     ),
                   ),
                 ),
-              ],
-            );
-          }
-        ),
-        
+              ),
+            ],
+          );
+        }),
         resizeToAvoidBottomInset: false,
-    
         bottomSheet: MultiBlocListener(
-          listeners: <SingleChildWidget>[
-            BlocListener<BgImageCubit, (String, Uint8List?)>(
-              listener: (_, (String, Uint8List?) state) {
-                if(state.$2 != null){
-                  _launchShowNotifier.value = true;
-                }
-                else{
-                  _launchShowNotifier.value = false;
-                }
-              },
-            ),
-            BlocListener<UploadImageCubit, ATAppState<String>>(
-              listener: (_, ATAppState<String> state) {
-                if(state is SuccessState<String>){
-                  context.read<CreateShowCubit>().createShow(
-                    tagIds: <String>[const Uuid().v4(), const Uuid().v4()],
-                    coHostIds: <String>[const Uuid().v4(), const Uuid().v4()],
-                    title: _titleCntrl.text.trim(),
-                    description: selectedDescription,
-                    coverUrl: state.newData!,
-                    category: 'Category',
-                    showType: 'free',
-                    price: 20,
-                  );
-                }
-                else if(state is FailureState<String>){
-                  //if uploading coverart fails, stop loading and show notif
-                  showAppNotification2(
-                    context: context,
-                    text: state.message,
-                    type: NotificationType.failure,
-                  );
-                  _launchShowNotifier.value = true;
-                }
-              },
-            ),
-            BlocListener<CreateShowCubit, ATAppState<dynamic>>(
-              listener: (_, ATAppState<dynamic> state) {
-                if(state is SuccessState<dynamic>){
-                  _launchShowNotifier.value = true;
-                  showAppNotification2(
-                    context: context,
-                    text: 'Show created successfully',
-                    type: NotificationType.success,
-                  );
-                }
-                else if(state is FailureState<dynamic>){
-                  _launchShowNotifier.value = true;
-                  showAppNotification2(
-                    context: context,
-                    text: state.message,
-                    type: NotificationType.failure,
-                  );
-                }
-              },
-            )
-          ],
-          child: ValueListenableBuilder<bool?>(
-            valueListenable: _launchShowNotifier,
-            builder: (_, bool? value, __) {
-              return ATBlurredBgBtn(
-                isLoading: value == null,
-                onPressed: value == false ? null : (){
-                  //Start loading on button press.
-                  _launchShowNotifier.value = null;
-                  //Try to upload the cover image.
-                  context.read<UploadImageCubit>().uploadBytesImage(
-                    bytes: context.read<BgImageCubit>().state.$2!,
-                    purpose: 'cover-art',
-                  );
-                  // final dynamic params = (
-                  //   coverArtBytes: state.$2,
-                  //   title: ATStrings.SHOW_IS_SETUP,
-                  //   subtitle: ATStrings.BEGIN_JOURNEY,
-                  //   btnTitle: ATStrings.CREATE_1ST_EPISODE,
-                  //   txtBtnTitle: ATStrings.VIEW_SHOW_PAGE,
-                  //   btnOnPressed: () => context.pushReplacementNamed(ATRoutes.CREATE_EPISODE_FORM),
-                  //   txtBtnOnPressed: () {
-                  //     // handle text button press
-                  //   },
-                  //   topLogo: const Icon(Icons.check_circle_sharp, size: 45),
-                  // );
-                  
-                  // context.pushNamed(
-                  //   ATRoutes.GO_LIVE_PROGRAM_CREATION_SUCCESS,
-                  //   extra: params
-                  // );
+            listeners: <SingleChildWidget>[
+              BlocListener<BgImageCubit, (String, Uint8List?)>(
+                listener: (_, (String, Uint8List?) state) {
+                  if (state.$2 != null) {
+                    _launchShowNotifier.value = true;
+                  } else {
+                    _launchShowNotifier.value = false;
+                  }
                 },
-                btnTitle: ATStrings.LAUNCH_SHOW,
-              );
-            }
-          )
-        ),
+              ),
+              BlocListener<UploadImageCubit, ATAppState<String>>(
+                listener: (_, ATAppState<String> state) {
+                  if (state is SuccessState<String>) {
+                    context.read<CreateShowCubit>().createShow(
+                      tagIds: <String>[const Uuid().v4(), const Uuid().v4()],
+                      coHostIds: <String>[const Uuid().v4(), const Uuid().v4()],
+                      title: _titleCntrl.text.trim(),
+                      description: selectedDescription,
+                      coverUrl: state.newData!,
+                      category: 'Category',
+                      showType: 'free',
+                      price: 20,
+                    );
+                  } else if (state is FailureState<String>) {
+                    //if uploading coverart fails, stop loading and show notif
+                    showAppNotification2(
+                      context: context,
+                      text: state.message,
+                      type: NotificationType.failure,
+                    );
+                    _launchShowNotifier.value = true;
+                  }
+                },
+              ),
+              BlocListener<CreateShowCubit, ATAppState<dynamic>>(
+                listener: (_, ATAppState<dynamic> state) {
+                  if (state is SuccessState<dynamic>) {
+                    _launchShowNotifier.value = true;
+                    showAppNotification2(
+                      context: context,
+                      text: 'Show created successfully',
+                      type: NotificationType.success,
+                    );
+                  } else if (state is FailureState<dynamic>) {
+                    _launchShowNotifier.value = true;
+                    showAppNotification2(
+                      context: context,
+                      text: state.message,
+                      type: NotificationType.failure,
+                    );
+                  }
+                },
+              )
+            ],
+            child: ValueListenableBuilder<bool?>(
+                valueListenable: _launchShowNotifier,
+                builder: (_, bool? value, __) {
+                  return ATBlurredBgBtn(
+                    isLoading: value == null,
+                    onPressed: value == false
+                        ? null
+                        : () {
+                            //Start loading on button press.
+                            _launchShowNotifier.value = null;
+                            //Try to upload the cover image.
+                            context.read<UploadImageCubit>().uploadBytesImage(
+                                  bytes: context.read<BgImageCubit>().state.$2!,
+                                  purpose: 'cover-art',
+                                );
+                            // final dynamic params = (
+                            //   coverArtBytes: state.$2,
+                            //   title: ATStrings.SHOW_IS_SETUP,
+                            //   subtitle: ATStrings.BEGIN_JOURNEY,
+                            //   btnTitle: ATStrings.CREATE_1ST_EPISODE,
+                            //   txtBtnTitle: ATStrings.VIEW_SHOW_PAGE,
+                            //   btnOnPressed: () => context.pushReplacementNamed(ATRoutes.CREATE_EPISODE_FORM),
+                            //   txtBtnOnPressed: () {
+                            //     // handle text button press
+                            //   },
+                            //   topLogo: const Icon(Icons.check_circle_sharp, size: 45),
+                            // );
+
+                            // context.pushNamed(
+                            //   ATRoutes.GO_LIVE_PROGRAM_CREATION_SUCCESS,
+                            //   extra: params
+                            // );
+                          },
+                    btnTitle: ATStrings.launchShow,
+                  );
+                })),
       ),
     );
   }
+}
+
+String getAccessTypeDescText(
+    {required ProgramAccessTypeSelectionData? accessTypeData}) {
+  String accessTypeTextDesc = ATStrings.selectWhoCanAccessYourShow;
+
+  if (accessTypeData?.accessType == null) {
+    accessTypeTextDesc = ATStrings.selectWhoCanAccessYourShow;
+  } else {
+    final ProgramAccessType? accessType = accessTypeData?.accessType;
+    if (accessType == ProgramAccessType.free) {
+      accessTypeTextDesc = ATStrings.free;
+    } else {
+      final double? subAmount = accessTypeData?.subscriptionAmount;
+      final double? oneTimePaymentAmt = accessTypeData?.oneTimePaymentAmount;
+
+      if (subAmount != null) {
+        accessTypeTextDesc =
+            '${ATStrings.subscribersOnly}(${ATStrings.nairaText}$subAmount/month)';
+      } else if (oneTimePaymentAmt != null) {
+        accessTypeTextDesc =
+            '${ATStrings.subscribersOnly}(${ATStrings.nairaText}$oneTimePaymentAmt/one-time)';
+      }
+    }
+  }
+
+  return accessTypeTextDesc;
 }

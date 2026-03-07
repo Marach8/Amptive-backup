@@ -41,7 +41,8 @@ import 'package:amptive/src/features/switch_account/presentation/switch_acct/swi
 import 'package:amptive/src/features/wallet/presentation/screens/wallet_transactions_history_screen.dart';
 import 'package:amptive/src/features/onboarding/presentation/screens/onboarding_screen.dart';
 import 'package:amptive/src/features/onboarding/presentation/screens/post_onboarding_screen.dart';
-import 'package:custom_image_crop/custom_image_crop.dart' show Ratio, CustomCropShape;
+import 'package:custom_image_crop/custom_image_crop.dart'
+    show Ratio, CustomCropShape;
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -62,12 +63,11 @@ final GoRouter amptiveAppRouter = GoRouter(
   //initialLocation: ATRoutes.temporaryLoginScreen.addSlash,
   routes: <RouteBase>[
     GoRoute(
-      name: ATRoutes.POST_ONBOARDING_SCREEN,
-      path: ATRoutes.POST_ONBOARDING_SCREEN.addSlash,
-      pageBuilder: (_, __) => ATSlidingRouteTransition<void>(
-        child: const ATPostOnboardingScreen(),
-      )
-    ),
+        name: ATRoutes.POST_ONBOARDING_SCREEN,
+        path: ATRoutes.POST_ONBOARDING_SCREEN.addSlash,
+        pageBuilder: (_, __) => ATSlidingRouteTransition<void>(
+              child: const ATPostOnboardingScreen(),
+            )),
     GoRoute(
       name: ATRoutes.ONBOARDING_SCREEN,
       path: ATRoutes.ONBOARDING_SCREEN.addSlash,
@@ -79,57 +79,55 @@ final GoRouter amptiveAppRouter = GoRouter(
       name: ATRoutes.AUTH_OPTIONS_SCREEN,
       path: ATRoutes.AUTH_OPTIONS_SCREEN.addSlash,
       pageBuilder: (_, GoRouterState st) => ATSlidingRouteTransition<void>(
-        child: ATAuthOptionsScreen(authType: st.extra as AuthType,)
-      ),
+          child: ATAuthOptionsScreen(
+        authType: st.extra as AuthType,
+      )),
     ),
-    GoRoute(name: ATRoutes.FORGOT_PASSWORD_SCREEN,
+    GoRoute(
+      name: ATRoutes.FORGOT_PASSWORD_SCREEN,
       path: ATRoutes.FORGOT_PASSWORD_SCREEN.addSlash,
       pageBuilder: (_, GoRouterState st) => ATSlidingRouteTransition<void>(
-        child:  const ATForgotPasswordEmailScreen()),
-      ),
-    
-    GoRoute(
-      name: ATRoutes.temporaryLoginScreen,
-      path: ATRoutes.temporaryLoginScreen.addSlash,
-      pageBuilder: (_, GoRouterState st) => ATSlidingRouteTransition<void>(
-        child: const LoginScreen()
-      )
-    ),
-     GoRoute(
-      name: ATRoutes.emailScreen,
-      path: ATRoutes.emailScreen.addSlash,
-      pageBuilder: (_, GoRouterState st) => ATSlidingRouteTransition<void>(
-        child: ATEmailAuthScreen(title: st.extra as String?)
-      )
+          child: const ATForgotPasswordEmailScreen()),
     ),
 
     GoRoute(
-      name: ATRoutes.ENTER_OTP_SCREEN,
-      path: ATRoutes.ENTER_OTP_SCREEN.addSlash,
-      pageBuilder: (_, GoRouterState state) {
-        return ATSlidingRouteTransition<bool?>(
-          child: ATOTPScreen(params: state.extra as VerifyOTPScreenParams,),
-        );
-      }
-    ),
+        name: ATRoutes.temporaryLoginScreen,
+        path: ATRoutes.temporaryLoginScreen.addSlash,
+        pageBuilder: (_, GoRouterState st) =>
+            ATSlidingRouteTransition<void>(child: const LoginScreen())),
     GoRoute(
-      name: ATRoutes.PASSWORD_RESET_OTP_SCREEN,
-      path: ATRoutes.PASSWORD_RESET_OTP_SCREEN.addSlash,
-      pageBuilder: (_, GoRouterState state) {
-        return ATSlidingRouteTransition<bool?>(
-          child: ResetPasswordOtpScreen(params: state.extra as VerifyPasswordResetOTPScreenParams,),
-        );
-      }
-    ),
+        name: ATRoutes.emailScreen,
+        path: ATRoutes.emailScreen.addSlash,
+        pageBuilder: (_, GoRouterState st) => ATSlidingRouteTransition<void>(
+            child: ATEmailAuthScreen(title: st.extra as String?))),
 
-    
     GoRoute(
-      name: ATRoutes.phoneAuthScreen,
-      path: ATRoutes.phoneAuthScreen.addSlash,
-      pageBuilder: (_, GoRouterState st) => ATSlidingRouteTransition<void>(
-        child: PhoneAuthScreen(title: st.extra as String?),
-      )
-    ),
+        name: ATRoutes.ENTER_OTP_SCREEN,
+        path: ATRoutes.ENTER_OTP_SCREEN.addSlash,
+        pageBuilder: (_, GoRouterState state) {
+          return ATSlidingRouteTransition<bool?>(
+            child: ATOTPScreen(
+              params: state.extra as VerifyOTPScreenParams,
+            ),
+          );
+        }),
+    GoRoute(
+        name: ATRoutes.PASSWORD_RESET_OTP_SCREEN,
+        path: ATRoutes.PASSWORD_RESET_OTP_SCREEN.addSlash,
+        pageBuilder: (_, GoRouterState state) {
+          return ATSlidingRouteTransition<bool?>(
+            child: ResetPasswordOtpScreen(
+              params: state.extra as VerifyPasswordResetOTPScreenParams,
+            ),
+          );
+        }),
+
+    GoRoute(
+        name: ATRoutes.phoneAuthScreen,
+        path: ATRoutes.phoneAuthScreen.addSlash,
+        pageBuilder: (_, GoRouterState st) => ATSlidingRouteTransition<void>(
+              child: PhoneAuthScreen(title: st.extra as String?),
+            )),
     GoRoute(
       name: ATRoutes.phoneLoginScreen,
       path: ATRoutes.phoneLoginScreen.addSlash,
@@ -139,67 +137,59 @@ final GoRouter amptiveAppRouter = GoRouter(
     ),
 
     GoRoute(
-      name: ATRoutes.createNewPAsswordScreen,
-      path: ATRoutes.createNewPAsswordScreen.addSlash,
-      pageBuilder: (_, GoRouterState state) => ATSlidingRouteTransition<void>(
-        child:  CreateNewPasswordScreen(params: state.extra as CreateNewPasswordScreenParams,),
-      )
-    ),
-
-
-
-    GoRoute(
-      name: ATRoutes.addProfilePicScreen,
-      path: ATRoutes.addProfilePicScreen.addSlash,
-      pageBuilder: (_, GoRouterState st) => ATSlidingRouteTransition<void>(
-        child: const AddProfilePictureScreen(),
-      )
-    ),
+        name: ATRoutes.createNewPAsswordScreen,
+        path: ATRoutes.createNewPAsswordScreen.addSlash,
+        pageBuilder: (_, GoRouterState state) => ATSlidingRouteTransition<void>(
+              child: CreateNewPasswordScreen(
+                params: state.extra as CreateNewPasswordScreenParams,
+              ),
+            )),
 
     GoRoute(
-      name: ATRoutes.createPasswordScreen,
-      path: ATRoutes.createPasswordScreen.addSlash,
-      pageBuilder: (_, __) => ATSlidingRouteTransition<void>(
-        child: const PasswordAuthScreen(),
-      )
-    ),
+        name: ATRoutes.addProfilePicScreen,
+        path: ATRoutes.addProfilePicScreen.addSlash,
+        pageBuilder: (_, GoRouterState st) => ATSlidingRouteTransition<void>(
+              child: const AddProfilePictureScreen(),
+            )),
 
     GoRoute(
-      name: ATRoutes.dobAuthScreen,
-      path: ATRoutes.dobAuthScreen.addSlash,
-      pageBuilder: (_, __) => ATSlidingRouteTransition<void>(
-        child: const AddDOBScreen(),
-      )
-    ),
-    GoRoute(
-      name: ATRoutes.addUserNameScreen,
-      path: ATRoutes.addUserNameScreen.addSlash,
-      pageBuilder: (_, __) => ATSlidingRouteTransition<void>(
-        child: const AddUsernameScreen(),
-      )
-    ),
-    GoRoute(
-      name: ATRoutes.addNameAuthScreen,
-      path: ATRoutes.addNameAuthScreen.addSlash,
-      pageBuilder: (_, __) => ATSlidingRouteTransition<void>(
-        child: const AddNameScreen(),
-      )
-    ),
-    GoRoute(
-      name: ATRoutes.select5CommunitiesScreen,
-      path: ATRoutes.select5CommunitiesScreen.addSlash,
-      pageBuilder: (_, __) => ATSlidingRouteTransition<void>(
-        child: const Select5CommunitiesScreen(),
-      )
-    ),
+        name: ATRoutes.createPasswordScreen,
+        path: ATRoutes.createPasswordScreen.addSlash,
+        pageBuilder: (_, __) => ATSlidingRouteTransition<void>(
+              child: const PasswordAuthScreen(),
+            )),
 
     GoRoute(
-      name: ATRoutes.allowNotificationsScreen,
-      path: ATRoutes.allowNotificationsScreen.addSlash,
-      pageBuilder: (_, __) => ATSlidingRouteTransition<void>(
-        child: const NotificationsPromptScreen(),
-      )
-    ),
+        name: ATRoutes.dobAuthScreen,
+        path: ATRoutes.dobAuthScreen.addSlash,
+        pageBuilder: (_, __) => ATSlidingRouteTransition<void>(
+              child: const AddDOBScreen(),
+            )),
+    GoRoute(
+        name: ATRoutes.addUserNameScreen,
+        path: ATRoutes.addUserNameScreen.addSlash,
+        pageBuilder: (_, __) => ATSlidingRouteTransition<void>(
+              child: const AddUsernameScreen(),
+            )),
+    GoRoute(
+        name: ATRoutes.addNameAuthScreen,
+        path: ATRoutes.addNameAuthScreen.addSlash,
+        pageBuilder: (_, __) => ATSlidingRouteTransition<void>(
+              child: const AddNameScreen(),
+            )),
+    GoRoute(
+        name: ATRoutes.select5CommunitiesScreen,
+        path: ATRoutes.select5CommunitiesScreen.addSlash,
+        pageBuilder: (_, __) => ATSlidingRouteTransition<void>(
+              child: const Select5CommunitiesScreen(),
+            )),
+
+    GoRoute(
+        name: ATRoutes.allowNotificationsScreen,
+        path: ATRoutes.allowNotificationsScreen.addSlash,
+        pageBuilder: (_, __) => ATSlidingRouteTransition<void>(
+              child: const NotificationsPromptScreen(),
+            )),
 
     //MAIN APPLICATION SCREENS
     GoRoute(
@@ -211,180 +201,158 @@ final GoRouter amptiveAppRouter = GoRouter(
             name: ATRoutes.SCHEDULE_DETAILED,
             path: ATRoutes.SCHEDULE_DETAILED.addSlash,
             pageBuilder: (_, __) => ATSlidingRouteTransition<void>(
-              child: const ATScheduleDetailedScreen()
-            ),
+                child: const ATScheduleDetailedScreen()),
           ),
-          
           GoRoute(
-            name: ATRoutes.WALLET_ONBOARDING,
-            path: ATRoutes.WALLET_ONBOARDING.addSlash,
-            pageBuilder: (_, __) => ATSlidingRouteTransition<void>(
-              child: const ATWalletOnboardScreen()
-            ),
-            routes: <RouteBase>[
-              GoRoute(
-                name: ATRoutes.WALLET_PIN_SETUP,
-                path: ATRoutes.WALLET_PIN_SETUP.addSlash,
-                pageBuilder: (_, __) => ATSlidingRouteTransition<void>(
-                  child: const ATWalletPinSetupScreen()
+              name: ATRoutes.WALLET_ONBOARDING,
+              path: ATRoutes.WALLET_ONBOARDING.addSlash,
+              pageBuilder: (_, __) => ATSlidingRouteTransition<void>(
+                  child: const ATWalletOnboardScreen()),
+              routes: <RouteBase>[
+                GoRoute(
+                  name: ATRoutes.WALLET_PIN_SETUP,
+                  path: ATRoutes.WALLET_PIN_SETUP.addSlash,
+                  pageBuilder: (_, __) => ATSlidingRouteTransition<void>(
+                      child: const ATWalletPinSetupScreen()),
                 ),
-              ),
-              GoRoute(
-                name: ATRoutes.securityQuestionScreen,
-                path: ATRoutes.securityQuestionScreen.addSlash,
-                pageBuilder: (_, __) => ATSlidingRouteTransition<void>(
-                  child: const ATSecurityQuestionScreen()
+                GoRoute(
+                  name: ATRoutes.securityQuestionScreen,
+                  path: ATRoutes.securityQuestionScreen.addSlash,
+                  pageBuilder: (_, __) => ATSlidingRouteTransition<void>(
+                      child: const ATSecurityQuestionScreen()),
                 ),
-              ),
-              GoRoute(
-                name: ATRoutes.walletCreationAnimationScreen,
-                path: ATRoutes.walletCreationAnimationScreen.addSlash,
-                pageBuilder: (_, __) => ATSlidingRouteTransition<void>(
-                  child: const ATWalletCreationAnimScreen()
+                GoRoute(
+                  name: ATRoutes.walletCreationAnimationScreen,
+                  path: ATRoutes.walletCreationAnimationScreen.addSlash,
+                  pageBuilder: (_, __) => ATSlidingRouteTransition<void>(
+                      child: const ATWalletCreationAnimScreen()),
                 ),
-              ),
-              GoRoute(
-                name: ATRoutes.walletScreen,
-                path: ATRoutes.walletScreen.addSlash,
-                pageBuilder: (_, __) => ATSlidingRouteTransition<void>(
-                  child: const WalletLandingScreen(),
-                ),
-                routes: <RouteBase>[
-                  GoRoute(
-                    name: ATRoutes.walletTransactionsHistoryScreen,
-                    path: ATRoutes.walletTransactionsHistoryScreen.addSlash,
+                GoRoute(
+                    name: ATRoutes.walletScreen,
+                    path: ATRoutes.walletScreen.addSlash,
                     pageBuilder: (_, __) => ATSlidingRouteTransition<void>(
-                      child: const ATWalletTxnsHistoryScreen()
-                    ),
-                  ),
-                  GoRoute(
-                    name: ATRoutes.SELECT_RECIPIENT,
-                    path: ATRoutes.SELECT_RECIPIENT.addSlash,
-                    pageBuilder: (_, __) => ATSlidingRouteTransition<void>(
-                      child: const ATSelectRecipientScreen()
-                    ),
-                  ),
-                  GoRoute(
-                    name: ATRoutes.transactionAmountScreen,
-                    path: ATRoutes.transactionAmountScreen.addSlash,
-                    pageBuilder: (_, GoRouterState state) => ATSlidingRouteTransition<void>(
-                      child: TransactionAmountScreen(
-                        params: state.extra as TransactionAmountScreenParams
-                      )
-                    ),
-                  ),
-                  GoRoute(
-                    name: ATRoutes.WITHDRAWAL_LANDING,
-                    path: ATRoutes.WITHDRAWAL_LANDING.addSlash,
-                    pageBuilder: (_, __) => ATSlidingRouteTransition<void>(
-                      child: const ATWithdrwalLandingScreen()
-                    ),
-                  ),
-                  GoRoute(
-                    name: ATRoutes.SELECT_BANK_COUNTRY,
-                    path: ATRoutes.SELECT_BANK_COUNTRY.addSlash,
-                    pageBuilder: (_, __) => ATSlidingRouteTransition<void>(
-                      child: const ATSelectBanksCountryScreen()
-                    ),
-                  ),
-                  GoRoute(
-                    name: ATRoutes.ENTER_ACCT_NO,
-                    path: ATRoutes.ENTER_ACCT_NO.addSlash,
-                    pageBuilder: (_, GoRouterState state) => ATSlidingRouteTransition<void>(
-                      child: ATEnterAccountNoScreen(bankName: state.extra as String,)
-                    ),
-                  ),
-                  GoRoute(
-                    name: ATRoutes.answerSecurityQuestionScreen,
-                    path: ATRoutes.answerSecurityQuestionScreen.addSlash,
-                    pageBuilder: (_, GoRouterState state) => ATSlidingRouteTransition<void>(
-                      child: const ATAnswerSecurityQuestionScreen()
-                    ),
-                  ),
-                  GoRoute(
-                    name: ATRoutes.paperPlaneSuccessScreen,
-                    path: ATRoutes.paperPlaneSuccessScreen.addSlash,
-                    pageBuilder: (_, GoRouterState state){
-                      final List<dynamic> params = state.extra as List<dynamic>;
-                      return ATSlidingRouteTransition<void>(
-                        child: ATPaperPlaneSuccessScreen(
-                          title: params.first as String,
-                          transactionType: params[1] as TransactionType,
-                          subtitle: params.last as String,
-                        )
-                      );
-                    },
-                  ),
-                ]
-              ),
-            ]
-          ),
-          
+                          child: const WalletLandingScreen(),
+                        ),
+                    routes: <RouteBase>[
+                      GoRoute(
+                        name: ATRoutes.walletTransactionsHistoryScreen,
+                        path: ATRoutes.walletTransactionsHistoryScreen.addSlash,
+                        pageBuilder: (_, __) => ATSlidingRouteTransition<void>(
+                            child: const ATWalletTxnsHistoryScreen()),
+                      ),
+                      GoRoute(
+                        name: ATRoutes.SELECT_RECIPIENT,
+                        path: ATRoutes.SELECT_RECIPIENT.addSlash,
+                        pageBuilder: (_, __) => ATSlidingRouteTransition<void>(
+                            child: const ATSelectRecipientScreen()),
+                      ),
+                      GoRoute(
+                        name: ATRoutes.transactionAmountScreen,
+                        path: ATRoutes.transactionAmountScreen.addSlash,
+                        pageBuilder: (_, GoRouterState state) =>
+                            ATSlidingRouteTransition<void>(
+                                child: TransactionAmountScreen(
+                                    params: state.extra
+                                        as TransactionAmountScreenParams)),
+                      ),
+                      GoRoute(
+                        name: ATRoutes.WITHDRAWAL_LANDING,
+                        path: ATRoutes.WITHDRAWAL_LANDING.addSlash,
+                        pageBuilder: (_, __) => ATSlidingRouteTransition<void>(
+                            child: const ATWithdrwalLandingScreen()),
+                      ),
+                      GoRoute(
+                        name: ATRoutes.SELECT_BANK_COUNTRY,
+                        path: ATRoutes.SELECT_BANK_COUNTRY.addSlash,
+                        pageBuilder: (_, __) => ATSlidingRouteTransition<void>(
+                            child: const ATSelectBanksCountryScreen()),
+                      ),
+                      GoRoute(
+                        name: ATRoutes.ENTER_ACCT_NO,
+                        path: ATRoutes.ENTER_ACCT_NO.addSlash,
+                        pageBuilder: (_, GoRouterState state) =>
+                            ATSlidingRouteTransition<void>(
+                                child: ATEnterAccountNoScreen(
+                          bankName: state.extra as String,
+                        )),
+                      ),
+                      GoRoute(
+                        name: ATRoutes.answerSecurityQuestionScreen,
+                        path: ATRoutes.answerSecurityQuestionScreen.addSlash,
+                        pageBuilder: (_, GoRouterState state) =>
+                            ATSlidingRouteTransition<void>(
+                                child: const ATAnswerSecurityQuestionScreen()),
+                      ),
+                      GoRoute(
+                        name: ATRoutes.paperPlaneSuccessScreen,
+                        path: ATRoutes.paperPlaneSuccessScreen.addSlash,
+                        pageBuilder: (_, GoRouterState state) {
+                          final List<dynamic> params =
+                              state.extra as List<dynamic>;
+                          return ATSlidingRouteTransition<void>(
+                              child: ATPaperPlaneSuccessScreen(
+                            title: params.first as String,
+                            transactionType: params[1] as TransactionType,
+                            subtitle: params.last as String,
+                          ));
+                        },
+                      ),
+                    ]),
+              ]),
           GoRoute(
-            name: ATRoutes.LIVE_SHOW_DETAILED,
-            path: ATRoutes.LIVE_SHOW_DETAILED.addSlash,
-            pageBuilder: (_, __) => ATSlidingRouteTransition<void>(
-              beginOffset: const Offset(0.0, 1.0),
-              child: const ATLiveShowDetailedScreen()
-            )
-          ),
+              name: ATRoutes.LIVE_SHOW_DETAILED,
+              path: ATRoutes.LIVE_SHOW_DETAILED.addSlash,
+              pageBuilder: (_, __) => ATSlidingRouteTransition<void>(
+                  beginOffset: const Offset(0.0, 1.0),
+                  child: const ATLiveShowDetailedScreen())),
           GoRoute(
-            name: ATRoutes.LIVE_EVENT_DETAILED,
-            path: ATRoutes.LIVE_EVENT_DETAILED.addSlash,
-            pageBuilder: (_, __) => ATSlidingRouteTransition<void>(
-              beginOffset: const Offset(0.0, 1.0),
-              child: const ATLiveEventDetailedScreen(),
-            )
-          ),
-
+              name: ATRoutes.LIVE_EVENT_DETAILED,
+              path: ATRoutes.LIVE_EVENT_DETAILED.addSlash,
+              pageBuilder: (_, __) => ATSlidingRouteTransition<void>(
+                    beginOffset: const Offset(0.0, 1.0),
+                    child: const ATLiveEventDetailedScreen(),
+                  )),
           GoRoute(
-            name: ATRoutes.GO_LIVE_ONBOARDING,
-            path: ATRoutes.GO_LIVE_ONBOARDING.addSlash,
-            pageBuilder: (_, __) => ATSlidingRouteTransition<void>(
-              child: const GoLiveOnboardingScreen()
-            )
-          ),
-
+              name: ATRoutes.GO_LIVE_ONBOARDING,
+              path: ATRoutes.GO_LIVE_ONBOARDING.addSlash,
+              pageBuilder: (_, __) => ATSlidingRouteTransition<void>(
+                  child: const GoLiveOnboardingScreen())),
           GoRoute(
-            name: ATRoutes.MAIN_GO_LIVE_PROGRAM,
-            path: ATRoutes.MAIN_GO_LIVE_PROGRAM.addSlash,
-            pageBuilder: (_, GoRouterState st){
-              final GoLiveUserType? userType = st.extra as GoLiveUserType?;
-              return ATFadingRouteTransition<void>(
-                child: GoLiveScreen(userType: userType ?? GoLiveUserType.host)
-              );
-            }
-          ),
-
+              name: ATRoutes.MAIN_GO_LIVE_PROGRAM,
+              path: ATRoutes.MAIN_GO_LIVE_PROGRAM.addSlash,
+              pageBuilder: (_, GoRouterState st) {
+                final GoLiveUserType? userType = st.extra as GoLiveUserType?;
+                return ATFadingRouteTransition<void>(
+                    child: GoLiveScreen(
+                        userType: userType ?? GoLiveUserType.host));
+              }),
           GoRoute(
             name: ATRoutes.GO_LIVE_TYPE_SELECTION,
             path: ATRoutes.GO_LIVE_TYPE_SELECTION,
             builder: (_, __) => const GoLiveTypeSelectionScreen(),
           ),
-
           GoRoute(
-            name: ATRoutes.listHostedShowsScreen,
-            path: ATRoutes.listHostedShowsScreen.addSlash,
-            pageBuilder: (_, __) => ATSlidingRouteTransition<void>(
-              child: const ListHostedShowsScreen(),
-            )
-          ),
-
+              name: ATRoutes.listHostedShowsScreen,
+              path: ATRoutes.listHostedShowsScreen.addSlash,
+              pageBuilder: (_, __) => ATSlidingRouteTransition<void>(
+                    child: const ListHostedShowsScreen(),
+                  )),
           GoRoute(
-            name: ATRoutes.createShowForm,
-            path: ATRoutes.createShowForm,
-            pageBuilder: (_, __) => ATSlidingRouteTransition<void>(child: const CreateShowFormScreen())
-          ),
+              name: ATRoutes.createShowForm,
+              path: ATRoutes.createShowForm,
+              pageBuilder: (_, __) => ATSlidingRouteTransition<void>(
+                  child: const CreateShowFormScreen())),
           GoRoute(
-            name: ATRoutes.CREATE_EVENT_FORM,
-            path: ATRoutes.CREATE_EVENT_FORM,
-            pageBuilder: (_, __) => ATSlidingRouteTransition<void>(child: const CreateEventFormScreen(),)
-          ),
+              name: ATRoutes.CREATE_EVENT_FORM,
+              path: ATRoutes.CREATE_EVENT_FORM,
+              pageBuilder: (_, __) => ATSlidingRouteTransition<void>(
+                    child: const CreateEventFormScreen(),
+                  )),
           GoRoute(
-            name: ATRoutes.CREATE_EPISODE_FORM,
-            path: ATRoutes.CREATE_EPISODE_FORM,
-            pageBuilder: (_, __) => ATSlidingRouteTransition<void>(child: const CreateEpisodeFormScreen())
-          ),
+              name: ATRoutes.CREATE_EPISODE_FORM,
+              path: ATRoutes.CREATE_EPISODE_FORM,
+              pageBuilder: (_, __) => ATSlidingRouteTransition<void>(
+                  child: const CreateEpisodeFormScreen())),
           GoRoute(
             name: ATRoutes.GO_LIVE_PROGRAM_CREATION_SUCCESS,
             path: ATRoutes.GO_LIVE_PROGRAM_CREATION_SUCCESS,
@@ -400,247 +368,243 @@ final GoRouter amptiveAppRouter = GoRouter(
                 Widget topLogo
               });
               return ATSlidingRouteTransition<void>(
-                child: GoLiveProgramCreationSuccessScreen(params: params,),
+                child: GoLiveProgramCreationSuccessScreen(
+                  params: params,
+                ),
               );
             },
           ),
-
           GoRoute(
             name: ATRoutes.creatorProfileScreen,
             path: ATRoutes.creatorProfileScreen,
             builder: (_, __) => const CreatorProfileScreen(),
           ),
-
           GoRoute(
-            name: ATRoutes.EDIT_PROFILE,
-            path: ATRoutes.EDIT_PROFILE.addSlash,
-            builder: (_, __) => const EditProfileScreen(),
-            routes: <RouteBase>[
-              GoRoute(
-                name: ATRoutes.rectImageCropperScreen,
-                path: ATRoutes.rectImageCropperScreen.addSlash,
-                pageBuilder: (_, GoRouterState state){
-                  final (File, Ratio?, CustomCropShape?) params = state.extra 
-                    as (File, Ratio?, CustomCropShape?);
-                  return ATSlidingRouteTransition<MemoryImage>(
-                    child: RectImageCropperScreen(
-                      imageFile: params.$1,
-                      ratio: params.$2,
-                      shape: params.$3 ?? CustomCropShape.Ratio,
-                    )
-                  );
-                }
-              ),
-              GoRoute(
-                name: ATRoutes.EDIT_NAME,
-                path: ATRoutes.EDIT_NAME,
-                builder: (_, GoRouterState state) => EditNameScreen(initialName: state.extra as String),
-              ),
-              GoRoute(
-                name: ATRoutes.EDIT_USERNAME,
-                path: ATRoutes.EDIT_USERNAME,
-                builder: (_, GoRouterState state) => EditUsernameScreen(initialUsername: state.extra as String),
-              ),
-              GoRoute(
-                name: ATRoutes.EDIT_BIO,
-                path: ATRoutes.EDIT_BIO,
-                builder: (_, GoRouterState state) => EditBioScreen(initialBio: state.extra as String),
-              ),
-              GoRoute(
-                name: ATRoutes.EDIT_SOCIALS,
-                path: ATRoutes.EDIT_SOCIALS,
-                builder: (_, GoRouterState state){
-                  final List<String?> params = state.extra as List<String?>;
-                  return EditSocialsScreen(
-                    initialLink: params.first,
-                    socialName: params.last as String
-                  );
-                }
-              ),
-              GoRoute(
-                name: ATRoutes.SELECT_ACCT_TYPE,
-                path: ATRoutes.SELECT_ACCT_TYPE,
-                builder: (_, GoRouterState state) => const SelectAcctTypeScreen(),
-                routes: <RouteBase>[
-                  GoRoute(
-                    name: ATRoutes.SELECTED_ACCT,
-                    path: ATRoutes.SELECTED_ACCT,
-                    builder: (_, GoRouterState state) => const SelectedAcctLandingScreen()
-                  ),
-                ]
-              ),
-              
-              GoRoute(
-                name: ATRoutes.SELECT_CAT,
-                path: ATRoutes.SELECT_CAT,
-                builder: (_, __) => const SelectCategoryScreen()
-              ),
-              GoRoute(
-                name: ATRoutes.CREATOR_SUB_PLAN,
-                path: ATRoutes.CREATOR_SUB_PLAN,
-                pageBuilder: (_, GoRouterState st){
-                  final SubPlanScreenEntryPoint? entryPoint = st.extra as SubPlanScreenEntryPoint?;
-                  return ATSlidingRouteTransition<void>(child: CreatorSubPlanScreen(entryPoint: entryPoint));
-                }
-              ),
-              GoRoute(
-                name: ATRoutes.CO_HOST_FEE_SETUP,
-                path: ATRoutes.CO_HOST_FEE_SETUP,
-                builder: (_, GoRouterState state) => const CoHostFeeSetupScreen()
-              ),
-              GoRoute(
-                name: ATRoutes.CREATOR_SUCCESS,
-                path: ATRoutes.CREATOR_SUCCESS,
-                builder: (_, GoRouterState state) => const CreatorOrBusinessSetupSuccessScreen()
-              ),
-            ]
-          ),
-
+              name: ATRoutes.EDIT_PROFILE,
+              path: ATRoutes.EDIT_PROFILE.addSlash,
+              builder: (_, __) => const EditProfileScreen(),
+              routes: <RouteBase>[
+                GoRoute(
+                    name: ATRoutes.rectImageCropperScreen,
+                    path: ATRoutes.rectImageCropperScreen.addSlash,
+                    pageBuilder: (_, GoRouterState state) {
+                      final (File, Ratio?, CustomCropShape?) params =
+                          state.extra as (File, Ratio?, CustomCropShape?);
+                      return ATSlidingRouteTransition<MemoryImage>(
+                          child: RectImageCropperScreen(
+                        imageFile: params.$1,
+                        ratio: params.$2,
+                        shape: params.$3 ?? CustomCropShape.Ratio,
+                      ));
+                    }),
+                GoRoute(
+                  name: ATRoutes.EDIT_NAME,
+                  path: ATRoutes.EDIT_NAME,
+                  builder: (_, GoRouterState state) =>
+                      EditNameScreen(initialName: state.extra as String),
+                ),
+                GoRoute(
+                  name: ATRoutes.EDIT_USERNAME,
+                  path: ATRoutes.EDIT_USERNAME,
+                  builder: (_, GoRouterState state) => EditUsernameScreen(
+                      initialUsername: state.extra as String),
+                ),
+                GoRoute(
+                  name: ATRoutes.EDIT_BIO,
+                  path: ATRoutes.EDIT_BIO,
+                  builder: (_, GoRouterState state) =>
+                      EditBioScreen(initialBio: state.extra as String),
+                ),
+                GoRoute(
+                    name: ATRoutes.EDIT_SOCIALS,
+                    path: ATRoutes.EDIT_SOCIALS,
+                    builder: (_, GoRouterState state) {
+                      final List<String?> params = state.extra as List<String?>;
+                      return EditSocialsScreen(
+                          initialLink: params.first,
+                          socialName: params.last as String);
+                    }),
+                GoRoute(
+                    name: ATRoutes.SELECT_ACCT_TYPE,
+                    path: ATRoutes.SELECT_ACCT_TYPE,
+                    builder: (_, GoRouterState state) =>
+                        const SelectAcctTypeScreen(),
+                    routes: <RouteBase>[
+                      GoRoute(
+                          name: ATRoutes.SELECTED_ACCT,
+                          path: ATRoutes.SELECTED_ACCT,
+                          builder: (_, GoRouterState state) =>
+                              const SelectedAcctLandingScreen()),
+                    ]),
+                GoRoute(
+                    name: ATRoutes.SELECT_CAT,
+                    path: ATRoutes.SELECT_CAT,
+                    builder: (_, __) => const SelectCategoryScreen()),
+                GoRoute(
+                    name: ATRoutes.creatorSubPlanSetup,
+                    path: ATRoutes.creatorSubPlanSetup,
+                    pageBuilder: (_, GoRouterState st) {
+                      final SubscriptionPlanData subPlanData =
+                          st.extra as SubscriptionPlanData;
+                      return ATSlidingRouteTransition<SubscriptionPlanData?>(
+                          child: CreatorSubPlanScreen(
+                              incomingSubPlan: subPlanData));
+                    }),
+                GoRoute(
+                    name: ATRoutes.cohostFeeSetup,
+                    path: ATRoutes.cohostFeeSetup,
+                    builder: (_, GoRouterState state) =>
+                        const CoHostFeeSetupScreen()),
+                GoRoute(
+                    name: ATRoutes.CREATOR_SUCCESS,
+                    path: ATRoutes.CREATOR_SUCCESS,
+                    builder: (_, GoRouterState state) =>
+                        const CreatorOrBusinessSetupSuccessScreen()),
+              ]),
           GoRoute(
-            name: ATRoutes.PROFILE_MENU_SCREEN,
-            path: ATRoutes.PROFILE_MENU_SCREEN,
-            builder: (_, __) => const AmptiveProfileMenuScreen(),
-            routes: <RouteBase>[
-              GoRoute(
-                name: ATRoutes.CALENDER_SCREEN,
-                path: ATRoutes.CALENDER_SCREEN,
-                builder: (_, __) => const ATCalenderLandingScreen(),
-              ),
-
-              GoRoute(
-                name: ATRoutes.LANGUAGE_SCREEN,
-                path: ATRoutes.LANGUAGE_SCREEN,
-                builder: (_, __) => const ATSelectLanguageScreen(),
-              ),
-
-              GoRoute(
-                name: ATRoutes.PRIVACY_SCREEN,
-                path: ATRoutes.PRIVACY_SCREEN,
-                builder: (_, __) => const ATPrivacyScreen(),
-                routes: <RouteBase>[
-                  GoRoute(
-                    name: ATRoutes.BLOCKED_ACCTS_SCREEN,
-                    path: ATRoutes.BLOCKED_ACCTS_SCREEN,
-                    builder: (_, __) => const ATBlockedAcctsScreen(),
-                  ),
-
-                  GoRoute(
-                    name: ATRoutes.MUTED_ACCTS_SCREEN,
-                    path: ATRoutes.MUTED_ACCTS_SCREEN,
-                    builder: (_, __) => const AmptiveMutedAcctsScreen(),
-                  ),
-                ]
-              ),
-            ]
-          ),
-
+              name: ATRoutes.PROFILE_MENU_SCREEN,
+              path: ATRoutes.PROFILE_MENU_SCREEN,
+              builder: (_, __) => const AmptiveProfileMenuScreen(),
+              routes: <RouteBase>[
+                GoRoute(
+                  name: ATRoutes.CALENDER_SCREEN,
+                  path: ATRoutes.CALENDER_SCREEN,
+                  builder: (_, __) => const ATCalenderLandingScreen(),
+                ),
+                GoRoute(
+                  name: ATRoutes.LANGUAGE_SCREEN,
+                  path: ATRoutes.LANGUAGE_SCREEN,
+                  builder: (_, __) => const ATSelectLanguageScreen(),
+                ),
+                GoRoute(
+                    name: ATRoutes.PRIVACY_SCREEN,
+                    path: ATRoutes.PRIVACY_SCREEN,
+                    builder: (_, __) => const ATPrivacyScreen(),
+                    routes: <RouteBase>[
+                      GoRoute(
+                        name: ATRoutes.BLOCKED_ACCTS_SCREEN,
+                        path: ATRoutes.BLOCKED_ACCTS_SCREEN,
+                        builder: (_, __) => const ATBlockedAcctsScreen(),
+                      ),
+                      GoRoute(
+                        name: ATRoutes.MUTED_ACCTS_SCREEN,
+                        path: ATRoutes.MUTED_ACCTS_SCREEN,
+                        builder: (_, __) => const AmptiveMutedAcctsScreen(),
+                      ),
+                    ]),
+              ]),
           GoRoute(
-            name: ATRoutes.accountLandingScreen,
-            path: ATRoutes.accountLandingScreen.addSlash,
-            builder: (_, __) => const ATAccountLandingScreen(),
-            routes: <RouteBase>[
-              GoRoute(
-                name: ATRoutes.ACCT_INFO_SCREEN,
-                path: ATRoutes.ACCT_INFO_SCREEN.addSlash,
-                builder: (_, GoRouterState state){
-                  final List<String?>? params = state.extra as List<String?>?;
-                  final String? email = params?.first;
-                  final String? phone = params?.elementAtOrNull(1);
-                  final String? country = params?.last;
-                  return ATAccountInfoScreen(
-                    country: country,
-                    email: email,
-                    phone: phone,
-                  );
-                },
-              ),
+              name: ATRoutes.accountLandingScreen,
+              path: ATRoutes.accountLandingScreen.addSlash,
+              builder: (_, __) => const ATAccountLandingScreen(),
+              routes: <RouteBase>[
+                GoRoute(
+                  name: ATRoutes.ACCT_INFO_SCREEN,
+                  path: ATRoutes.ACCT_INFO_SCREEN.addSlash,
+                  builder: (_, GoRouterState state) {
+                    final List<String?>? params = state.extra as List<String?>?;
+                    final String? email = params?.first;
+                    final String? phone = params?.elementAtOrNull(1);
+                    final String? country = params?.last;
+                    return ATAccountInfoScreen(
+                      country: country,
+                      email: email,
+                      phone: phone,
+                    );
+                  },
+                ),
+                GoRoute(
+                    name: ATRoutes.SELECT_COUNTRY_SCREEN,
+                    path: ATRoutes.SELECT_COUNTRY_SCREEN,
+                    builder: (_, GoRouterState state) {
+                      final List params = state.extra as List;
+                      final List<String> countries =
+                          params.last as List<String>;
+                      final String selectedCountry = params.first as String;
 
-              GoRoute(
-                name: ATRoutes.SELECT_COUNTRY_SCREEN,
-                path: ATRoutes.SELECT_COUNTRY_SCREEN,
-                builder: (_, GoRouterState state){
-                  final List params = state.extra as List;
-                  final List<String> countries = params.last as List<String>;
-                  final String selectedCountry = params.first as String;
-
-                  return ATSelectCountryScreen(
-                    countries: countries,
-                    selectedCountry: selectedCountry,
-                  );
-                }
-              ),
-
-              GoRoute(
-                name: ATRoutes.updateEmailScreen,
-                path: ATRoutes.updateEmailScreen.addSlash,
-                pageBuilder: (_, GoRouterState state) => ATSlidingRouteTransition<void>(
-                  child: UpdateEmailScreen(title: state.extra as String,),
+                      return ATSelectCountryScreen(
+                        countries: countries,
+                        selectedCountry: selectedCountry,
+                      );
+                    }),
+                GoRoute(
+                  name: ATRoutes.updateEmailScreen,
+                  path: ATRoutes.updateEmailScreen.addSlash,
+                  pageBuilder: (_, GoRouterState state) =>
+                      ATSlidingRouteTransition<void>(
+                    child: UpdateEmailScreen(
+                      title: state.extra as String,
+                    ),
+                  ),
                 ),
-              ),
-              GoRoute(
-                name: ATRoutes.updatePhoneNoScreen,
-                path: ATRoutes.updatePhoneNoScreen.addSlash,
-                pageBuilder: (_, GoRouterState state) => ATSlidingRouteTransition<void>(
-                  child: UpdatePhoneNoScreen(title: state.extra as String,),
+                GoRoute(
+                  name: ATRoutes.updatePhoneNoScreen,
+                  path: ATRoutes.updatePhoneNoScreen.addSlash,
+                  pageBuilder: (_, GoRouterState state) =>
+                      ATSlidingRouteTransition<void>(
+                    child: UpdatePhoneNoScreen(
+                      title: state.extra as String,
+                    ),
+                  ),
                 ),
-              ),
-              GoRoute(
-                name: ATRoutes.updateNameScreen,
-                path: ATRoutes.updateNameScreen.addSlash,
-                pageBuilder: (_, GoRouterState state) => ATSlidingRouteTransition<void>(
-                  child: UpdateNameScreen(title: state.extra as String,),
+                GoRoute(
+                  name: ATRoutes.updateNameScreen,
+                  path: ATRoutes.updateNameScreen.addSlash,
+                  pageBuilder: (_, GoRouterState state) =>
+                      ATSlidingRouteTransition<void>(
+                    child: UpdateNameScreen(
+                      title: state.extra as String,
+                    ),
+                  ),
                 ),
-              ),
-              GoRoute(
-                name: ATRoutes.updateUsernameScreen,
-                path: ATRoutes.updateUsernameScreen.addSlash,
-                pageBuilder: (_, GoRouterState state) => ATSlidingRouteTransition<void>(
-                  child: UpdateUsernameScreen(title: state.extra as String,),
+                GoRoute(
+                  name: ATRoutes.updateUsernameScreen,
+                  path: ATRoutes.updateUsernameScreen.addSlash,
+                  pageBuilder: (_, GoRouterState state) =>
+                      ATSlidingRouteTransition<void>(
+                    child: UpdateUsernameScreen(
+                      title: state.extra as String,
+                    ),
+                  ),
                 ),
-              ),
-              GoRoute(
-                name: ATRoutes.updateDOBScreen,
-                path: ATRoutes.updateDOBScreen.addSlash,
-                pageBuilder: (_, GoRouterState state) => ATSlidingRouteTransition<void>(
-                  child: UpdateDOBScreen(title: state.extra as String,),
+                GoRoute(
+                  name: ATRoutes.updateDOBScreen,
+                  path: ATRoutes.updateDOBScreen.addSlash,
+                  pageBuilder: (_, GoRouterState state) =>
+                      ATSlidingRouteTransition<void>(
+                    child: UpdateDOBScreen(
+                      title: state.extra as String,
+                    ),
+                  ),
                 ),
-              ),
-            ]
-          ),
-
+              ]),
           GoRoute(
             name: ATRoutes.PROFILE_FOLLOWING_SCREEN,
             path: ATRoutes.PROFILE_FOLLOWING_SCREEN,
             builder: (_, __) => const ATProfileFollowersScreen(),
           ),
-
           GoRoute(
             name: ATRoutes.COMMUNITY_TASK_SCREEN,
             path: ATRoutes.COMMUNITY_TASK_SCREEN,
             builder: (_, __) => const AmptiveCommunityTaskScreen(),
           ),
-
           GoRoute(
-            name: ATRoutes.PROFILE_PIC_SCREEN,
-            path: ATRoutes.PROFILE_PIC_SCREEN,
-            builder: (_, GoRouterState state){
-              final String imgPath = state.extra as String;
-              return AmptiveViewProfilePicScreen(imgPath: imgPath);
-            }
-          ),
-
+              name: ATRoutes.PROFILE_PIC_SCREEN,
+              path: ATRoutes.PROFILE_PIC_SCREEN,
+              builder: (_, GoRouterState state) {
+                final String imgPath = state.extra as String;
+                return AmptiveViewProfilePicScreen(imgPath: imgPath);
+              }),
           GoRoute(
             name: ATRoutes.PROFILE_SUBSCRIBERS_SCREEN,
             path: ATRoutes.PROFILE_SUBSCRIBERS_SCREEN,
             builder: (_, __) => const ProfileSubscribersScreen(),
           ),
-
           GoRoute(
             name: ATRoutes.USER_PROFILE_SCREEN,
             path: ATRoutes.USER_PROFILE_SCREEN,
             builder: (_, __) => const ATUserProfileScreen(),
           ),
-
           GoRoute(
             name: ATRoutes.SCHEDULED_EVENTS_OR_SHOWS_SCREEN,
             path: ATRoutes.SCHEDULED_EVENTS_OR_SHOWS_SCREEN,
@@ -652,16 +616,19 @@ final GoRouter amptiveAppRouter = GoRouter(
             pageBuilder: (_, GoRouterState state) {
               HostedShow hostedShow = state.extra as HostedShow;
               return ATSlidingRouteTransition<void>(
-                child: PreviewShowScreen(hostedShow: hostedShow,)
-              );
+                  child: PreviewShowScreen(
+                hostedShow: hostedShow,
+              ));
             },
           ),
           GoRoute(
             name: ATRoutes.EPISODE_PREVIEW_SCREEN,
             path: ATRoutes.EPISODE_PREVIEW_SCREEN,
-            pageBuilder: (_, GoRouterState st) => ATSlidingRouteTransition<void>(
-              child: EpisodeDetailPreviewScreen(coverArtBytes: st.extra as Uint8List,)
-            ),
+            pageBuilder: (_, GoRouterState st) =>
+                ATSlidingRouteTransition<void>(
+                    child: EpisodeDetailPreviewScreen(
+              coverArtBytes: st.extra as Uint8List,
+            )),
           ),
           GoRoute(
             name: ATRoutes.SUBSCRIBED_EVENTS_OR_SHOWS_SCREEN,

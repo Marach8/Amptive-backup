@@ -34,7 +34,8 @@ class CreateEpisodeCubit extends Cubit<ATAppState<CreateEpisodeResponseModel>> {
         },
       );
     } catch (e) {
-      emit(FailureState<CreateEpisodeResponseModel>('Unable to create episode: $e'));
+      emit(FailureState<CreateEpisodeResponseModel>(
+          'Unable to create episode: $e'));
     }
   }
 }

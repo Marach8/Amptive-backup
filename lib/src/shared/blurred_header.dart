@@ -16,44 +16,40 @@ class ATBlurredHeaderWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ClipRect(
-      child: BlocBuilder<BlurredHeaderCubit, bool>(
-        builder: (_, bool shouldBlur) {
-          return RepaintBoundary(
-            child: BackdropFilter(
-              filter: shouldBlur ? ImageFilter.blur(sigmaX: 53, sigmaY: 53)
+      child:
+          BlocBuilder<BlurredHeaderCubit, bool>(builder: (_, bool shouldBlur) {
+        return RepaintBoundary(
+          child: BackdropFilter(
+            filter: shouldBlur
+                ? ImageFilter.blur(sigmaX: 53, sigmaY: 53)
                 : ImageFilter.blur(sigmaX: 0, sigmaY: 0),
-              child: Container(
-                padding: const EdgeInsets.only(top: 40),
-                height: kToolbarHeight + MediaQuery.paddingOf(context).top,
-                width: context.screenWidth,
-                child: Align(
+            child: Container(
+              padding: const EdgeInsets.only(top: 40),
+              height: kToolbarHeight + MediaQuery.paddingOf(context).top,
+              width: context.screenWidth,
+              child: Align(
                   alignment: Alignment.bottomCenter,
-                  child: child ?? const ATModalDismisser()
-                ),
-              ),
+                  child: child ?? const ATModalDismisser()),
             ),
-          );
-        }
-      ),
+          ),
+        );
+      }),
     );
   }
 }
 
-
-
-class BlurredHeaderCubit extends Cubit<bool>{
-  BlurredHeaderCubit():super(false);
-
+class BlurredHeaderCubit extends Cubit<bool> {
+  BlurredHeaderCubit() : super(false);
 
   bool onScrollNotification(ScrollNotification notification) {
-    if (notification is ScrollUpdateNotification && notification.metrics.axis == Axis.vertical) {
+    if (notification is ScrollUpdateNotification &&
+        notification.metrics.axis == Axis.vertical) {
       final double extentBefore = notification.metrics.extentBefore;
-      if(extentBefore > 0.0 && !state){
+      if (extentBefore > 0.0 && !state) {
         // log('backdrop is shown');
         // log(notification.metrics.extentInside.toString());
         emit(true);
-      }
-      else if(extentBefore == 0.0 && state){
+      } else if (extentBefore == 0.0 && state) {
         //log('Backdrop is hidden');
         emit(false);
       }

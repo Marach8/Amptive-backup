@@ -20,7 +20,7 @@ class ATBlurredBgBtn extends StatelessWidget {
   final String? btnTitle;
   final Widget? child;
   final Color? bgColor, fgColor;
-  final double? height; 
+  final double? height;
   final EdgeInsetsGeometry? padding;
   final bool isLoading;
 
@@ -29,13 +29,12 @@ class ATBlurredBgBtn extends StatelessWidget {
     return ATContainer(
       height: height ?? 110,
       gradient: LinearGradient(
-        begin: Alignment.topCenter,
-        end: Alignment.bottomCenter,
-        colors: <Color>[
-          ATColors.hex0D0D0D.withValues(alpha: 0.1),
-          ATColors.hex0D0D0D
-        ]
-      ),
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
+          colors: <Color>[
+            ATColors.hex0D0D0D.withValues(alpha: 0.1),
+            ATColors.hex0D0D0D
+          ]),
       padding: padding ?? const EdgeInsets.fromLTRB(15, 10, 15, 50),
       child: ATPlainElevatedBtn(
         isLoading: isLoading,

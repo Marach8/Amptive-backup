@@ -13,8 +13,6 @@ import '../../../../config/routing/route_strings.dart';
 import '../../../../config/utils/dialogs/app_notification_dialog.dart';
 import '../../../../shared/switch_widget.dart';
 
-
-
 class ATPrivacyScreen extends StatelessWidget {
   const ATPrivacyScreen({super.key});
 
@@ -37,56 +35,49 @@ class ATPrivacyScreen extends StatelessWidget {
                 padding: const EdgeInsets.fromLTRB(15, 5, 0, 0),
                 child: Row(
                   children: <Widget>[
-                    Text(
-                      ATStrings.PRIVATE_ACCT,
-                      style: Theme.of(context).textTheme.labelMedium?.copyWith(
-                        color: ATColors.white
-                      )
-                    ),
+                    Text(ATStrings.PRIVATE_ACCT,
+                        style: Theme.of(context)
+                            .textTheme
+                            .labelMedium
+                            ?.copyWith(color: ATColors.white)),
                     const Spacer(),
                     BlocConsumer<PrivateAccountBloc, bool>(
-                      listener: (_, bool state){
-                        if(state){
-                          showAppNotification(
-                            context: context,
-                            icon: const Icon(Icons.check_circle),
-                            text: ATStrings.ACCT_PRIVATE
-                          );
-                        }
-                      },
-                      builder: (_, bool state)  => ATSwitch(
-                        value: state,
-                        onChanged: (bool value){
-                          context.read<PrivateAccountBloc>().togglePrivateAcct();
-                        }
-                      )
-                    ),
+                        listener: (_, bool state) {
+                          if (state) {
+                            showAppNotification(
+                                context: context,
+                                icon: const Icon(Icons.check_circle),
+                                text: ATStrings.ACCT_PRIVATE);
+                          }
+                        },
+                        builder: (_, bool state) => ATSwitch(
+                            value: state,
+                            onChanged: (bool value) {
+                              context
+                                  .read<PrivateAccountBloc>()
+                                  .togglePrivateAcct();
+                            })),
                   ],
                 ),
               ),
-        
               Padding(
                 padding: const EdgeInsets.fromLTRB(15, 0, 15, 15),
-                child: Text(
-                  ATStrings.APPROVED_USERS_CAN_FOLLOW,
-                  maxLines: 2,
-                  style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                    fontWeight: ATFontWeights.w500,
-                    color: ATColors.white.withValues(alpha: 0.4)
-                  )
-                ),
+                child: Text(ATStrings.APPROVED_USERS_CAN_FOLLOW,
+                    maxLines: 2,
+                    style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                        fontWeight: ATFontWeights.w500,
+                        color: ATColors.white.withValues(alpha: 0.4))),
               ),
               const MenuHeading(text: ATStrings.MUTES_ND_BLOCKS),
               MenuItem(
-                firstIcon: const Icon(Icons.notifications_off_outlined),
-                middleText: ATStrings.mutedAccounts,
-                onTap: () => context.pushNamed(ATRoutes.MUTED_ACCTS_SCREEN)
-              ),
+                  firstIcon: const Icon(Icons.notifications_off_outlined),
+                  middleText: ATStrings.mutedAccounts,
+                  onTap: () => context.pushNamed(ATRoutes.MUTED_ACCTS_SCREEN)),
               MenuItem(
-                firstIcon: const Icon(Icons.block),
-                middleText: ATStrings.blockedAccounts,
-                onTap: () => context.pushNamed(ATRoutes.BLOCKED_ACCTS_SCREEN)
-              ),
+                  firstIcon: const Icon(Icons.block),
+                  middleText: ATStrings.blockedAccounts,
+                  onTap: () =>
+                      context.pushNamed(ATRoutes.BLOCKED_ACCTS_SCREEN)),
             ],
           ),
         ),

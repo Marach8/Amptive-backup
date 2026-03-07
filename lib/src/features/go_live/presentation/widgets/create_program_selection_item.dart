@@ -26,21 +26,25 @@ class CreateProgramSelectionItem extends StatelessWidget {
       color: ATColors.white.withValues(alpha: 0.1),
       child: Row(
         children: <Widget>[
-          leading ?? Expanded(
-            child: Text(
-              description,
-              style: descStyle ?? context.textTheme.bodySmall?.copyWith(
+          leading ??
+              Expanded(
+                child: Text(
+                  description,
+                  style: descStyle ??
+                      context.textTheme.bodySmall?.copyWith(
+                        color: ATColors.white.withValues(alpha: 0.4),
+                      ),
+                ),
+              ),
+          const SizedBox(
+            width: 10,
+          ),
+          trailing ??
+              Icon(
+                Icons.arrow_forward_ios,
+                size: 20,
                 color: ATColors.white.withValues(alpha: 0.4),
               ),
-            ),
-          ),
-          const SizedBox(width: 10,),
-    
-          trailing ?? Icon(
-            Icons.arrow_forward_ios,
-            size: 20,
-            color: ATColors.white.withValues(alpha: 0.4),
-          ),
         ],
       ),
     );

@@ -16,29 +16,28 @@ class SingleRingRippleAnimation extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ValueListenableBuilder<bool>(
-      valueListenable: rippleNotifier,
-      builder: (_, bool shouldAnimate, __) {
-        if(!shouldAnimate) return const SizedBox.shrink();
-        return TweenAnimationBuilder<double>(
-          tween: Tween<double>(begin: minRadius, end: maxRadius),
-          duration: const Duration(milliseconds: 2000),
-          curve: Curves.easeOut,
-          builder: (_, double currentRadius, __) {
-            final double opacity = 1.0 - ((currentRadius - minRadius) / (maxRadius - minRadius));        
-            return Container(
-              width: currentRadius * 2,
-              height: currentRadius * 2,
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                border: Border.all(
-                  color: ATColors.white.withValues(alpha: opacity * 0.3),
-                  width: 2
+        valueListenable: rippleNotifier,
+        builder: (_, bool shouldAnimate, __) {
+          if (!shouldAnimate) return const SizedBox.shrink();
+          return TweenAnimationBuilder<double>(
+            tween: Tween<double>(begin: minRadius, end: maxRadius),
+            duration: const Duration(milliseconds: 2000),
+            curve: Curves.easeOut,
+            builder: (_, double currentRadius, __) {
+              final double opacity =
+                  1.0 - ((currentRadius - minRadius) / (maxRadius - minRadius));
+              return Container(
+                width: currentRadius * 2,
+                height: currentRadius * 2,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  border: Border.all(
+                      color: ATColors.white.withValues(alpha: opacity * 0.3),
+                      width: 2),
                 ),
-              ),
-            );
-          },
-        );
-      }
-    );
+              );
+            },
+          );
+        });
   }
 }

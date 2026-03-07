@@ -21,91 +21,100 @@ class SocietyHastagScreen extends StatelessWidget {
       child: Scaffold(
         body: BlocProvider<BlurredHeaderCubit>(
           create: (_) => BlurredHeaderCubit(),
-          child: Builder(
-            builder: (BuildContext blocContext) {
-              return NotificationListener<ScrollNotification>(
-                onNotification: blocContext.read<BlurredHeaderCubit>().onScrollNotification,
-                child: CustomScrollView(
-                  physics: const BouncingScrollPhysics(),
-                  slivers: <Widget>[
-                    SliverPersistentHeader(
-                      pinned: true,
-                      delegate: ATSliverHDelegate(
-                        maxExt: kToolbarHeight + MediaQuery.paddingOf(context).top,
-                        minExt: kToolbarHeight + MediaQuery.paddingOf(context).top,
+          child: Builder(builder: (BuildContext blocContext) {
+            return NotificationListener<ScrollNotification>(
+              onNotification:
+                  blocContext.read<BlurredHeaderCubit>().onScrollNotification,
+              child: CustomScrollView(
+                physics: const BouncingScrollPhysics(),
+                slivers: <Widget>[
+                  SliverPersistentHeader(
+                    pinned: true,
+                    delegate: ATSliverHDelegate(
+                        maxExt:
+                            kToolbarHeight + MediaQuery.paddingOf(context).top,
+                        minExt:
+                            kToolbarHeight + MediaQuery.paddingOf(context).top,
                         child: ATBlurredHeaderWidget(
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: <Widget>[
                               Padding(
                                 padding: const EdgeInsets.only(left: 4),
-                                child: ATRoundedBackBtn(bgColor: ATColors.transparent,),
+                                child: ATRoundedBackBtn(
+                                  bgColor: ATColors.transparent,
+                                ),
                               ),
                               Text(
-                                ATStrings.HASH + ATStrings.SOCIETY.toLowerCase(),
+                                ATStrings.HASH +
+                                    ATStrings.SOCIETY.toLowerCase(),
                                 style: Theme.of(context).textTheme.bodyMedium,
                               ),
-                              const SizedBox(width: 30,)
+                              const SizedBox(
+                                width: 30,
+                              )
                             ],
                           ),
-                        )
-                      ),
-                    ),
-        
-                    SliverToBoxAdapter(
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 15),
-                        child: Row(
-                          children: <Widget>[
-                            const ATHashtagBadge(),
-                            const SizedBox(width: 10,),
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: <Widget>[
-                                Text(
-                                  ATStrings.HASH + ATStrings.SOCIETY,
-                                  style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                                    fontSize: ATSizes.size15
-                                  ),
-                                ),
-                                Text(
-                                 'ankira22, emmanuel, and 15k others are live',
-                                  style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                                    fontSize: ATSizes.size13,
-                                    color: ATColors.hexA8A8A8
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                          
-                    const SliverToBoxAdapter(child: SizedBox(height: 15,)),
-                          
-                    SliverPadding(
+                        )),
+                  ),
+                  SliverToBoxAdapter(
+                    child: Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 15),
-                      sliver: SliverGrid(
-                        delegate: SliverChildListDelegate.fixed(
-                          List<Widget>.generate(
-                            28,
-                            (_) => const TrendingSocietyHashtagWidget(trendingPicture: ATImgStrings.weCanDoHardThingsBgImage)
-                          ).toList()
-                        ),
-                        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 2,
-                          crossAxisSpacing: 15,
-                          mainAxisSpacing: 18,
-                          childAspectRatio: 0.72
-                        )
+                      child: Row(
+                        children: <Widget>[
+                          const ATHashtagBadge(),
+                          const SizedBox(
+                            width: 10,
+                          ),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: <Widget>[
+                              Text(
+                                ATStrings.HASH + ATStrings.SOCIETY,
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .bodySmall
+                                    ?.copyWith(fontSize: ATSizes.size15),
+                              ),
+                              Text(
+                                'ankira22, emmanuel, and 15k others are live',
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .titleSmall
+                                    ?.copyWith(
+                                        fontSize: ATSizes.size13,
+                                        color: ATColors.hexA8A8A8),
+                              ),
+                            ],
+                          ),
+                        ],
                       ),
-                    )
-                  ],
-                ),
-              );
-            }
-          ),
+                    ),
+                  ),
+                  const SliverToBoxAdapter(
+                      child: SizedBox(
+                    height: 15,
+                  )),
+                  SliverPadding(
+                    padding: const EdgeInsets.symmetric(horizontal: 15),
+                    sliver: SliverGrid(
+                        delegate: SliverChildListDelegate.fixed(
+                            List<Widget>.generate(
+                                28,
+                                (_) => const TrendingSocietyHashtagWidget(
+                                    trendingPicture: ATImgStrings
+                                        .weCanDoHardThingsBgImage)).toList()),
+                        gridDelegate:
+                            const SliverGridDelegateWithFixedCrossAxisCount(
+                                crossAxisCount: 2,
+                                crossAxisSpacing: 15,
+                                mainAxisSpacing: 18,
+                                childAspectRatio: 0.72)),
+                  )
+                ],
+              ),
+            );
+          }),
         ),
       ),
     );

@@ -1,7 +1,6 @@
 import 'dart:math';
 import 'package:amptive/src/global_export.dart';
 
-
 class PlayProgressIndicator extends StatefulWidget {
   const PlayProgressIndicator({super.key});
 
@@ -9,7 +8,7 @@ class PlayProgressIndicator extends StatefulWidget {
   State<PlayProgressIndicator> createState() => _PlayProgressIndicatorState();
 }
 
-class _PlayProgressIndicatorState extends State<PlayProgressIndicator> 
+class _PlayProgressIndicatorState extends State<PlayProgressIndicator>
     with SingleTickerProviderStateMixin {
   late final AnimationController _controller = AnimationController(
     vsync: this,
@@ -27,9 +26,7 @@ class _PlayProgressIndicatorState extends State<PlayProgressIndicator>
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback(
-      (_) => _controller.forward()
-    );
+    WidgetsBinding.instance.addPostFrameCallback((_) => _controller.forward());
   }
 
   @override
@@ -53,7 +50,6 @@ class _PlayProgressIndicatorState extends State<PlayProgressIndicator>
 }
 
 class CircleBorderPainter extends CustomPainter {
-
   CircleBorderPainter(this.progress);
   final double progress;
 
@@ -81,6 +77,6 @@ class CircleBorderPainter extends CustomPainter {
   }
 
   @override
-  bool shouldRepaint(CircleBorderPainter oldDelegate)
-    => oldDelegate.progress != progress;
+  bool shouldRepaint(CircleBorderPainter oldDelegate) =>
+      oldDelegate.progress != progress;
 }

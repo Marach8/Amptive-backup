@@ -10,24 +10,22 @@ import 'package:amptive/src/features/profile/data/repository/profile_repo.dart';
 import 'package:dio/dio.dart';
 
 class ProfileRepoImpl implements ProfileRepo {
-  ProfileRepoImpl({
-    NetworkService ? mockNetworkService
-  }): networkService = mockNetworkService ?? DioNetworkServiceImpl();
+  ProfileRepoImpl({NetworkService? mockNetworkService})
+      : networkService = mockNetworkService ?? DioNetworkServiceImpl();
 
   final NetworkService networkService;
 
   @override
-  Future <ApiResponse<UserProfileResponseModel>> fetchUserProfile () async {
+  Future<ApiResponse<UserProfileResponseModel>> fetchUserProfile() async {
     try {
-      final Response<dynamic> response = await networkService.get(
-        ATEndpoints.getUserprofile
-      );
-      final userProfile = UserProfileResponseModel.fromJson(response.data);
+      final Response<dynamic> response =
+          await networkService.get(ATEndpoints.getUserprofile);
+      final UserProfileResponseModel userProfile = UserProfileResponseModel.fromJson(response.data);
       return Successful<UserProfileResponseModel>(data: userProfile);
     } catch (e) {
       log('Error in getting user profile');
-      return Unsuccessful<UserProfileResponseModel>(error: ATException.resolveException(e));
+      return Unsuccessful<UserProfileResponseModel>(
+          error: ATException.resolveException(e));
     }
   }
-  
 }

@@ -28,7 +28,6 @@ class AmptiveProfileMenuScreen extends StatelessWidget {
           leading: ATRoundedBackBtn(),
           titleText: ATStrings.menu,
         ),
-
         body: SingleChildScrollView(
           physics: const BouncingScrollPhysics(),
           padding: const EdgeInsets.only(bottom: 60),
@@ -37,88 +36,75 @@ class AmptiveProfileMenuScreen extends StatelessWidget {
             children: <Widget>[
               const MenuHeading(text: ATStrings.CALENDER),
               MenuItem(
-                firstIcon: const ATImgLoader(imgPath: ATImgStrings.CALENDER_ICON),
-                middleText: ATStrings.VIEW_CALENDER,
-                onTap: () => context.pushNamed(ATRoutes.CALENDER_SCREEN)
-              ),
+                  firstIcon:
+                      const ATImgLoader(imgPath: ATImgStrings.CALENDER_ICON),
+                  middleText: ATStrings.VIEW_CALENDER,
+                  onTap: () => context.pushNamed(ATRoutes.CALENDER_SCREEN)),
               MenuItem(
                 onTap: null,
                 firstIcon: const Icon(Icons.visibility_outlined),
                 middleText: ATStrings.GRANT_CALENDER_ACCESS,
                 margin: const EdgeInsets.fromLTRB(15, 0, 5, 5),
                 lastIcon: BlocConsumer<CalenderVisibleBloc, bool>(
-                  listener: (_, bool state){
-                    if(state){
-                      showAppNotification(
-                        context: context,
-                        icon: const Icon(Icons.check_circle),
-                        text: ATStrings.USERS_CAN_SEE_UR_CALENDER
-                      );
-                    }
-                  },
-                  builder: (_, bool state)  => ATSwitch(
-                    value: state,
-                    onChanged: (bool value){
-                      context.read<CalenderVisibleBloc>().toggleSeeCalender();
-                    }
-                  )
-                ),
+                    listener: (_, bool state) {
+                      if (state) {
+                        showAppNotification(
+                            context: context,
+                            icon: const Icon(Icons.check_circle),
+                            text: ATStrings.USERS_CAN_SEE_UR_CALENDER);
+                      }
+                    },
+                    builder: (_, bool state) => ATSwitch(
+                        value: state,
+                        onChanged: (bool value) {
+                          context
+                              .read<CalenderVisibleBloc>()
+                              .toggleSeeCalender();
+                        })),
               ),
-
               const MenuHeading(text: ATStrings.ACCT_SETTINGS),
               MenuItem(
-                firstIcon: const Icon(Icons.account_circle_outlined),
-                middleText: ATStrings.ACCT,
-                onTap: () => context.pushNamed(ATRoutes.accountLandingScreen)
-              ),
+                  firstIcon: const Icon(Icons.account_circle_outlined),
+                  middleText: ATStrings.ACCT,
+                  onTap: () =>
+                      context.pushNamed(ATRoutes.accountLandingScreen)),
               MenuItem(
-                firstIcon: const Icon(Icons.lock_outline_rounded),
-                middleText: ATStrings.privacy,
-                onTap: () => context.pushNamed(ATRoutes.PRIVACY_SCREEN)
-              ),
+                  firstIcon: const Icon(Icons.lock_outline_rounded),
+                  middleText: ATStrings.privacy,
+                  onTap: () => context.pushNamed(ATRoutes.PRIVACY_SCREEN)),
               MenuItem(
-                firstIcon: const Icon(Icons.password),
-                middleText: ATStrings.PSWRD_ND_SECURITY,
-                onTap: (){}
-              ),
-
+                  firstIcon: const Icon(Icons.password),
+                  middleText: ATStrings.PSWRD_ND_SECURITY,
+                  onTap: () {}),
               const MenuHeading(text: ATStrings.APP_SETTINGS),
               MenuItem(
-                firstIcon: const Icon(Icons.settings_outlined),
-                middleText: ATStrings.SETTINGS,
-                onTap: (){}
-              ),
+                  firstIcon: const Icon(Icons.settings_outlined),
+                  middleText: ATStrings.SETTINGS,
+                  onTap: () {}),
               MenuItem(
-                firstIcon: const Icon(Iconsax.global),
-                middleText: ATStrings.language,
-                onTap: () => context.pushNamed(ATRoutes.LANGUAGE_SCREEN)
-              ),
+                  firstIcon: const Icon(Iconsax.global),
+                  middleText: ATStrings.language,
+                  onTap: () => context.pushNamed(ATRoutes.LANGUAGE_SCREEN)),
               MenuItem(
-                firstIcon: const ATImgLoader(
-                  imgPath: ATImgStrings.SUBSCRIBER_BADGE,
-                ),
-                middleText: ATStrings.SUBSCRIPTION,
-                onTap: (){}
-              ),
-
+                  firstIcon: const ATImgLoader(
+                    imgPath: ATImgStrings.SUBSCRIBER_BADGE,
+                  ),
+                  middleText: ATStrings.SUBSCRIPTION,
+                  onTap: () {}),
               const MenuHeading(text: ATStrings.HELP_SUPPORT),
               MenuItem(
-                firstIcon: const Icon(Icons.info_outline_rounded),
-                middleText: ATStrings.ABOUT,
-                onTap: (){}
-              ),
+                  firstIcon: const Icon(Icons.info_outline_rounded),
+                  middleText: ATStrings.ABOUT,
+                  onTap: () {}),
               MenuItem(
-                firstIcon: const Icon(Iconsax.message),
-                middleText: ATStrings.HELP_SUPPORT,
-                onTap: (){}
-              ),
-
+                  firstIcon: const Icon(Iconsax.message),
+                  middleText: ATStrings.HELP_SUPPORT,
+                  onTap: () {}),
               const SizedBox(height: 20),
               MenuItem(
-                firstIcon: const Icon(Icons.logout),
-                middleText: ATStrings.LOGOUT,
-                onTap: (){}
-              ),
+                  firstIcon: const Icon(Icons.logout),
+                  middleText: ATStrings.LOGOUT,
+                  onTap: () {}),
             ],
           ),
         ),
@@ -127,17 +113,14 @@ class AmptiveProfileMenuScreen extends StatelessWidget {
   }
 }
 
-
-
 class MenuItem extends StatelessWidget {
-  const MenuItem({
-    super.key,
-    required this.firstIcon,
-    required this.middleText,
-    this.lastIcon,
-    this.margin,
-    required this.onTap
-  });
+  const MenuItem(
+      {super.key,
+      required this.firstIcon,
+      required this.middleText,
+      this.lastIcon,
+      this.margin,
+      required this.onTap});
   final Widget firstIcon;
   final Widget? lastIcon;
   final String middleText;
@@ -156,32 +139,34 @@ class MenuItem extends StatelessWidget {
           Expanded(
             child: Text(
               middleText,
-              style: Theme.of(context).textTheme.labelMedium?.copyWith(
-                color: ATColors.white
-              ),
+              style: Theme.of(context)
+                  .textTheme
+                  .labelMedium
+                  ?.copyWith(color: ATColors.white),
             ),
           ),
-          lastIcon ?? Icon(Icons.keyboard_arrow_right_outlined, color: ATColors.hexC2C2C2)
+          lastIcon ??
+              Icon(Icons.keyboard_arrow_right_outlined,
+                  color: ATColors.hexC2C2C2)
         ],
       ),
     );
   }
 }
 
-
 class MenuHeading extends StatelessWidget {
   const MenuHeading({super.key, required this.text});
   final String text;
 
   @override
-  Widget build(BuildContext context) 
-    => Padding(
-      padding: const EdgeInsets.fromLTRB(15, 30, 15, 16),
-      child: Text(
-        text,
-        style: Theme.of(context).textTheme.bodySmall?.copyWith(
-          color: ATColors.hexC2C2C2
+  Widget build(BuildContext context) => Padding(
+        padding: const EdgeInsets.fromLTRB(15, 30, 15, 16),
+        child: Text(
+          text,
+          style: Theme.of(context)
+              .textTheme
+              .bodySmall
+              ?.copyWith(color: ATColors.hexC2C2C2),
         ),
-      ),
-    );
+      );
 }

@@ -11,7 +11,6 @@ import '../../../../shared/back_button.dart';
 import '../../../../shared/custom_container_widget.dart';
 import '../widgets/followed_program.dart';
 
-
 class ATFollowedPrograms extends StatelessWidget {
   const ATFollowedPrograms({
     super.key,
@@ -23,54 +22,47 @@ class ATFollowedPrograms extends StatelessWidget {
       child: Scaffold(
         body: SafeArea(
           child: NestedScrollView(
-            floatHeaderSlivers: true,
-            headerSliverBuilder: (_, __) => <Widget>[
-              SliverAppBar(
-                floating: true,   
-                leadingWidth: 200.w,
-                leading: Padding(
-                  padding: const EdgeInsets.only(left: 20),
-                  child: ATBackBtn(
-                    alignment: Alignment.centerLeft,
-                    leadingText: ATStrings.following,
-                    leadingStyle: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                      fontSize: ATSizes.size23
-                    ),
-                  )
-                ),
-                bottom: PreferredSize(
-                  preferredSize: const Size.fromHeight(0),
-                  child: ATContainer(
-                    color: ATColors.white,
-                    height: 0.15,
-                    width: double.infinity,
-                    child: const SizedBox.shrink(),
-                  ),
-                ),     
-              ),
-            ],
-             
-            body: ATRefreshIndicator(
-              child: ListView(              
-                padding: EdgeInsets.zero,
-                children: <Widget>[      
-                  ...Iterable.generate(
-                    10,
-                    (_) => Padding(
-                      padding: const EdgeInsets.fromLTRB(20, 5, 20, 20),
-                      child: GestureDetector(
-                        onTap: () => context.pushNamed(ATRoutes.LIVE_SHOW_DETAILED),
-                        child: const FollowedProgram()
+              floatHeaderSlivers: true,
+              headerSliverBuilder: (_, __) => <Widget>[
+                    SliverAppBar(
+                      floating: true,
+                      leadingWidth: 200.w,
+                      leading: Padding(
+                          padding: const EdgeInsets.only(left: 20),
+                          child: ATBackBtn(
+                            alignment: Alignment.centerLeft,
+                            leadingText: ATStrings.following,
+                            leadingStyle: Theme.of(context)
+                                .textTheme
+                                .bodyMedium
+                                ?.copyWith(fontSize: ATSizes.size23),
+                          )),
+                      bottom: PreferredSize(
+                        preferredSize: const Size.fromHeight(0),
+                        child: ATContainer(
+                          color: ATColors.white,
+                          height: 0.15,
+                          width: double.infinity,
+                          child: const SizedBox.shrink(),
+                        ),
                       ),
-                    )
-                  )
-                ]
-              ),
-            )
-          ),
+                    ),
+                  ],
+              body: ATRefreshIndicator(
+                child: ListView(padding: EdgeInsets.zero, children: <Widget>[
+                  ...Iterable.generate(
+                      10,
+                      (_) => Padding(
+                            padding: const EdgeInsets.fromLTRB(20, 5, 20, 20),
+                            child: GestureDetector(
+                                onTap: () => context
+                                    .pushNamed(ATRoutes.LIVE_SHOW_DETAILED),
+                                child: const FollowedProgram()),
+                          ))
+                ]),
+              )),
         ),
       ),
     );
   }
 }
-

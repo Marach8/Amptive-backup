@@ -2,8 +2,7 @@ import 'package:amptive/src/config/utils/colors.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class ATFilterWidget<B extends BlocBase<String>> extends StatelessWidget{
-
+class ATFilterWidget<B extends BlocBase<String>> extends StatelessWidget {
   const ATFilterWidget({
     super.key,
     required this.title,
@@ -11,7 +10,7 @@ class ATFilterWidget<B extends BlocBase<String>> extends StatelessWidget{
     this.padLeft,
     this.padRight,
   });
-  
+
   final String title;
   final TextStyle? style;
   final String? padLeft, padRight;
@@ -25,25 +24,28 @@ class ATFilterWidget<B extends BlocBase<String>> extends StatelessWidget{
         return Text.rich(
           TextSpan(
             children: <InlineSpan>[
-              if (padLeft != null) TextSpan(
-                text: padLeft,
-                style: style,
-              ),
+              if (padLeft != null)
+                TextSpan(
+                  text: padLeft,
+                  style: style,
+                ),
               ...characters.map(
                 (String char) {
-                  final bool shouldHighlightString = state.toLowerCase().contains(char.toLowerCase());
+                  final bool shouldHighlightString =
+                      state.toLowerCase().contains(char.toLowerCase());
                   return TextSpan(
                     text: char,
-                    style: shouldHighlightString 
-                      ? style?.copyWith(color: ATColors.hex307FE2)
-                      : style,
+                    style: shouldHighlightString
+                        ? style?.copyWith(color: ATColors.hex307FE2)
+                        : style,
                   );
                 },
               ),
-              if (padRight != null) TextSpan(
-                text: padRight,
-                style: style,
-              ),
+              if (padRight != null)
+                TextSpan(
+                  text: padRight,
+                  style: style,
+                ),
             ],
           ),
         );
@@ -52,7 +54,6 @@ class ATFilterWidget<B extends BlocBase<String>> extends StatelessWidget{
   }
 }
 
-
 class ATSearchIcon extends StatelessWidget {
   const ATSearchIcon({super.key, this.size});
 
@@ -60,14 +61,12 @@ class ATSearchIcon extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Padding(
-    padding: const EdgeInsets.fromLTRB(15, 0, 20, 0),
-    child: Icon(CupertinoIcons.search, size: size),
-  );
+        padding: const EdgeInsets.fromLTRB(15, 0, 20, 0),
+        child: Icon(CupertinoIcons.search, size: size),
+      );
 }
 
-
-
-class SearchkeyCubit extends Cubit<String>{
+class SearchkeyCubit extends Cubit<String> {
   SearchkeyCubit() : super('');
 
   void updateSearchKey(String searchKey) => emit(searchKey);

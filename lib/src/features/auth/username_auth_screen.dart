@@ -45,7 +45,9 @@ class _AddUsernameScreenState extends State<AddUsernameScreen> {
     return ATAnnotatedRegion(
       child: Scaffold(
         backgroundColor: ATColors.hex0D0D0D,
-        appBar: const ATAppBar(leading: ATBackBtn(),),
+        appBar: const ATAppBar(
+          leading: ATBackBtn(),
+        ),
         body: Padding(
           padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 20.h),
           child: BlocListener<AmptiveAuthBloc, AmptiveAuthState>(
@@ -70,8 +72,8 @@ class _AddUsernameScreenState extends State<AddUsernameScreen> {
                   SizedBox(
                     height: 11.h,
                   ),
-                  BlocBuilder<AmptiveAuthBloc, AmptiveAuthState>(
-                      buildWhen: (AmptiveAuthState p, AmptiveAuthState current) {
+                  BlocBuilder<AmptiveAuthBloc, AmptiveAuthState>(buildWhen:
+                      (AmptiveAuthState p, AmptiveAuthState current) {
                     return true;
                   }, builder: (_, AmptiveAuthState state) {
                     return ATTextFormField(
@@ -102,8 +104,8 @@ class _AddUsernameScreenState extends State<AddUsernameScreen> {
                                 height: 18,
                                 child: CircularProgressIndicator(
                                   color: ATColors.hex307FE2,
-                                  backgroundColor: ATColors.hex307FE2
-                                      .withOpacity(0.5),
+                                  backgroundColor:
+                                      ATColors.hex307FE2.withOpacity(0.5),
                                   strokeWidth: 3.w,
                                 ),
                               )
@@ -201,7 +203,6 @@ class _AddUsernameScreenState extends State<AddUsernameScreen> {
             ),
           ),
         ),
-
         bottomSheet: Padding(
           padding: const EdgeInsets.all(15),
           child: BlocBuilder<AmptiveAuthBloc, AmptiveAuthState>(

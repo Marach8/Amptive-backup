@@ -15,7 +15,7 @@ class ATTextFormField extends StatelessWidget {
     this.hintText,
     this.focusedBorder,
     this.enabledBorder,
-    this.cursorColor, 
+    this.cursorColor,
     this.decoration,
     this.constraints,
     this.suffixIcon,
@@ -41,6 +41,7 @@ class ATTextFormField extends StatelessWidget {
     this.filled,
     this.readOnly,
     this.onTap,
+    this.onTapOutside,
     this.autoValidateMode,
   });
 
@@ -53,11 +54,14 @@ class ATTextFormField extends StatelessWidget {
   final TextAlign? textAlign;
   final double? cursorHeight;
   final Widget? suffixIcon, prefixIcon, prefix, suffix;
-  final bool? obscureText, disableBlueBorder,
-  enabled, filled, isDense, readOnly;
+  final bool? obscureText,
+      disableBlueBorder,
+      enabled,
+      filled,
+      isDense,
+      readOnly;
   final Color? cursorColor, fillColor;
-  final BoxConstraints? suffixConstraints,
-  prefixConstraints, constraints;
+  final BoxConstraints? suffixConstraints, prefixConstraints, constraints;
   final InputDecoration? decoration;
   final InputBorder? enabledBorder, focusedBorder, disabledBorder;
   final FocusNode? focusNode;
@@ -67,24 +71,22 @@ class ATTextFormField extends StatelessWidget {
   final EdgeInsetsGeometry? contentPadding;
   final AutovalidateMode? autoValidateMode;
   final VoidCallback? onTap;
-  final Widget? Function(
-    BuildContext, {
-      required int currentLength, 
-      required bool isFocused, 
-      required int? maxLength
-    }
-  )? buildCounter;
-
+  final void Function(PointerDownEvent)? onTapOutside;
+  final Widget? Function(BuildContext,
+      {required int currentLength,
+      required bool isFocused,
+      required int? maxLength})? buildCounter;
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
       controller: controller,
-      onTapOutside: (_) => FocusScope.of(context).unfocus(),
-      enabled: enabled,      
+      onTapOutside: onTapOutside ?? (_) => FocusScope.of(context).unfocus(),
+      enabled: enabled,
       textAlign: textAlign ?? TextAlign.start,
       validator: validator,
-      maxLines: maxLines, focusNode: focusNode,
+      maxLines: maxLines,
+      focusNode: focusNode,
       autovalidateMode: autoValidateMode ?? AutovalidateMode.onUserInteraction,
       onChanged: onChanged,
       maxLength: maxLength,
@@ -93,8 +95,8 @@ class ATTextFormField extends StatelessWidget {
       textInputAction: textInputAction,
       onSaved: onSaved,
       readOnly: readOnly ?? false,
-      cursorColor: disableBlueBorder ?? false ? ATColors.white
-        : ATColors.hex307FE2,
+      cursorColor:
+          disableBlueBorder ?? false ? ATColors.white : ATColors.hex307FE2,
       obscureText: obscureText ?? false,
       cursorHeight: cursorHeight,
       cursorErrorColor: ATColors.textRedColor,
@@ -104,35 +106,34 @@ class ATTextFormField extends StatelessWidget {
         fontSize: ATSizes.size16,
         color: ATColors.white,
       ),
-      decoration: decoration ?? InputDecoration(     
-        counterText: counterText,   
-        hintText: hintText,
-        isDense: isDense, errorMaxLines: 5,
-        constraints: constraints,
-        fillColor: fillColor ?? ATColors.white.withValues(alpha: 0.1), 
-        filled: filled ?? true,
-        contentPadding: contentPadding ?? EdgeInsets.zero,
-        focusedBorder: focusedBorder ?? (
-            disableBlueBorder ?? false ? OutlineInputBorder(
-            borderRadius: BorderRadius.circular(14),
-            borderSide: BorderSide(color: ATColors.transparent)
-          ) : null
-        ),
-        hintStyle: hintStyle,
-        suffixIcon: suffixIcon,
-        prefixIcon: prefixIcon ?? const ATSearchIcon(),
-        prefix: prefix, suffix: suffix,
-        prefixIconConstraints: prefixConstraints ?? const BoxConstraints(
-          maxHeight: 35,
-          maxWidth: 35
-        ),
-        suffixIconConstraints: suffixConstraints ?? const BoxConstraints(
-          maxHeight: 35,
-          maxWidth: 35
-        ),
-        enabledBorder: enabledBorder,
-        disabledBorder: disabledBorder,
-      ),
+      decoration: decoration ??
+          InputDecoration(
+            counterText: counterText,
+            hintText: hintText,
+            isDense: isDense,
+            errorMaxLines: 5,
+            constraints: constraints,
+            fillColor: fillColor ?? ATColors.white.withValues(alpha: 0.1),
+            filled: filled ?? true,
+            contentPadding: contentPadding ?? EdgeInsets.zero,
+            focusedBorder: focusedBorder ??
+                (disableBlueBorder ?? false
+                    ? OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(14),
+                        borderSide: BorderSide(color: ATColors.transparent))
+                    : null),
+            hintStyle: hintStyle,
+            suffixIcon: suffixIcon,
+            prefixIcon: prefixIcon ?? const ATSearchIcon(),
+            prefix: prefix,
+            suffix: suffix,
+            prefixIconConstraints: prefixConstraints ??
+                const BoxConstraints(maxHeight: 35, maxWidth: 35),
+            suffixIconConstraints: suffixConstraints ??
+                const BoxConstraints(maxHeight: 35, maxWidth: 35),
+            enabledBorder: enabledBorder,
+            disabledBorder: disabledBorder,
+          ),
     );
   }
 }

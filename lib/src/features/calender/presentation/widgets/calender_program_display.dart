@@ -6,12 +6,8 @@ import 'package:amptive/src/shared/custom_container_widget.dart';
 import 'package:amptive/src/shared/show_event_nd_paid_icons.dart';
 import 'package:flutter/material.dart';
 
-
 class CalenderProgramDisplay extends StatelessWidget {
-  const CalenderProgramDisplay({
-    super.key,
-    required this.program
-  });
+  const CalenderProgramDisplay({super.key, required this.program});
   final CalenderProgram program;
 
   @override
@@ -20,15 +16,18 @@ class CalenderProgramDisplay extends StatelessWidget {
     final bool isEvent = program.isEvent;
     final bool isPaid = program.isPaid;
     final String type = program.eventType;
-    final Iterable<String> hostsImgs = program.hosts.map((ObjectWithNotifier host) => (host.obj as Host).profilePicture ?? '');
+    final Iterable<String> hostsImgs = program.hosts.map(
+        (ObjectWithNotifier host) => (host.obj as Host).profilePicture ?? '');
 
     return ATContainer(
       width: context.screenWidth * 0.5,
-      radius: 5, clipBehavior: Clip.hardEdge,
-      color: isEvent ? ATColors.hex27E8DB.withValues(alpha: 0.2) 
-        : ATColors.hexF79E1E.withValues(alpha: 0.2),
+      radius: 5,
+      clipBehavior: Clip.hardEdge,
+      color: isEvent
+          ? ATColors.hex27E8DB.withValues(alpha: 0.2)
+          : ATColors.hexF79E1E.withValues(alpha: 0.2),
       child: CustomPaint(
-        painter:LeftBorderPainter(
+        painter: LeftBorderPainter(
           color: isEvent ? ATColors.hex27E8DB : ATColors.hexF79E1E,
           width: 5,
         ),
@@ -42,31 +41,26 @@ class CalenderProgramDisplay extends StatelessWidget {
                   isEvent ? const EventIcon() : const ATShowIcon(),
                   const SizedBox(width: 5),
                   Expanded(
-                    child: Text(
-                      title,
-                      style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                        fontSize: ATSizes.size13,
-                        color: isEvent ? ATColors.hex27E8DB : ATColors.hexF79E1E
-                      )
-                    ),
+                    child: Text(title,
+                        style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                            fontSize: ATSizes.size13,
+                            color: isEvent
+                                ? ATColors.hex27E8DB
+                                : ATColors.hexF79E1E)),
                   ),
-    
                   Padding(
                     padding: const EdgeInsets.fromLTRB(20, 0, 5, 0),
                     child: ATOverlappingImages(imgPaths: hostsImgs.toList()),
                   )
                 ],
               ),
-                              
               Row(
                 children: <Widget>[
-                  if(isPaid) const ATPaidIndicatorIcon(),
-                  if(isPaid) const SizedBox(width: 5),
+                  if (isPaid) const ATPaidIndicatorIcon(),
+                  if (isPaid) const SizedBox(width: 5),
                   Expanded(
-                    child: Text(
-                      type,
-                      style: Theme.of(context).textTheme.titleSmall
-                    ),
+                    child: Text(type,
+                        style: Theme.of(context).textTheme.titleSmall),
                   )
                 ],
               ),
@@ -78,10 +72,7 @@ class CalenderProgramDisplay extends StatelessWidget {
   }
 }
 
-
-
 class LeftBorderPainter extends CustomPainter {
-
   LeftBorderPainter({required this.color, this.width = 3.0});
   final Color color;
   final double width;

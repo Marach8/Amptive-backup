@@ -1,10 +1,6 @@
 class GenericResponseModel {
-
-  GenericResponseModel({
-    this.isSuccessful,
-    this.responseMessage,
-    this.entityData
-  });
+  GenericResponseModel(
+      {this.isSuccessful, this.responseMessage, this.entityData});
 
   GenericResponseModel.fromJson(Map<String, dynamic> json) {
     isSuccessful = json['success'];

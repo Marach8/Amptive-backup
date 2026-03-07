@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 
 import '../models/preferences.dart';
@@ -40,7 +39,6 @@ class PreferenceService {
 
   Future<void> getAll() async {
     await Future.delayed(Durations.extralong4);
-
   }
 
   Future<void> personalize() async {

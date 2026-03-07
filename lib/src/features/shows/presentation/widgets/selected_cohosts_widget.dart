@@ -5,7 +5,6 @@ import 'package:amptive/src/shared/global_model_objects.dart';
 import 'package:amptive/src/shared/image_loader_widget.dart';
 import 'package:flutter/material.dart';
 
-
 class SelectedCoHostsWidget extends StatelessWidget {
   const SelectedCoHostsWidget({
     super.key,
@@ -18,8 +17,8 @@ class SelectedCoHostsWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final Iterable<String> cohostNames = selectedCohosts.map(
-      (User cohost) => cohost.username ?? '');
+    final Iterable<String> cohostNames =
+        selectedCohosts.map((User cohost) => cohost.username ?? '');
 
     return ATContainer(
       radius: 14,
@@ -31,26 +30,28 @@ class SelectedCoHostsWidget extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               Expanded(
-                child: _OverlappingCohosts(
-                  cohosts: selectedCohosts
-                ),
+                child: _OverlappingCohosts(cohosts: selectedCohosts),
               ),
-              const SizedBox(width: 20,),
+              const SizedBox(
+                width: 20,
+              ),
               ATContainer(
-                onTap: onEdit, radius: 5,
+                onTap: onEdit,
+                radius: 5,
                 color: ATColors.white.withValues(alpha: 0.1),
                 padding: const EdgeInsets.fromLTRB(15, 10, 15, 10),
                 child: Text(
                   ATStrings.editCohost,
                   style: context.textTheme.labelSmall?.copyWith(
-                    color: ATColors.white.withValues(alpha: 0.7),
-                    height: 1.1
-                  ),
+                      color: ATColors.white.withValues(alpha: 0.7),
+                      height: 1.1),
                 ),
-              )            
+              )
             ],
           ),
-          const SizedBox(height: 15,),
+          const SizedBox(
+            height: 15,
+          ),
           Text(
             '${cohostNames.join(', ')} will be notified',
             maxLines: 5,
@@ -64,7 +65,6 @@ class SelectedCoHostsWidget extends StatelessWidget {
     );
   }
 }
-
 
 class _OverlappingCohosts extends StatelessWidget {
   const _OverlappingCohosts({
@@ -91,8 +91,7 @@ class _OverlappingCohosts extends StatelessWidget {
       height: imgSize,
       width: width,
       child: Stack(
-        children: List<Widget>.generate(
-          visibleCount, (int index) {
+        children: List<Widget>.generate(visibleCount, (int index) {
           final bool hasUser = index < cohosts.length;
 
           return Positioned(
@@ -104,8 +103,7 @@ class _OverlappingCohosts extends StatelessWidget {
               clipBehavior: Clip.hardEdge,
               radius: imgSize,
               border: Border.all(
-                color: borderColor ??
-                    ATColors.white.withValues(alpha: 0.4),
+                color: borderColor ?? ATColors.white.withValues(alpha: 0.4),
                 width: borderWidth,
               ),
               child: ClipRRect(
@@ -150,7 +148,6 @@ class _OverlappingCohosts extends StatelessWidget {
 //     this.borderWidth = 1,
 //     this.borderColor,
 //   });
-
 
 //   final List<ATCohost<T>> cohosts;
 //   final double imgSize;

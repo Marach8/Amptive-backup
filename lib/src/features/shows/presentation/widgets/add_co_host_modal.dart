@@ -8,11 +8,12 @@ import 'package:amptive/src/shared/search_filter_widget.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:nested/nested.dart';
-import '../../../../models/host.dart';
 import '../../../../shared/global_model_objects.dart';
 
-
-enum CohostSelectionMode {single, multiple,}
+enum CohostSelectionMode {
+  single,
+  multiple,
+}
 
 Future<List<User>?> showAvailableCoHostsModal({
   required BuildContext context,
@@ -31,30 +32,32 @@ Future<List<User>?> showAvailableCoHostsModal({
           BlocProvider<AllUsersCubit>.value(value: allUsersCubit),
           BlocProvider<SearchkeyCubit>(create: (_) => SearchkeyCubit()),
           BlocProvider<SelectedCohostsCubit>(
-            create: (_) => SelectedCohostsCubit(initialCohosts: selectedCoHosts)),
+              create: (_) =>
+                  SelectedCohostsCubit(initialCohosts: selectedCoHosts)),
         ],
         child: Stack(
           children: <Widget>[
             DraggableScrollableSheet(
               expand: false,
               initialChildSize: 0.7,
-              builder: (BuildContext bContext, ScrollController scrollController) {
+              builder:
+                  (BuildContext bContext, ScrollController scrollController) {
                 return _SelectCohostModal(scrollController: scrollController);
               },
             ),
-        
             Positioned(
-              bottom: 0, left: 0, right: 0,
+              bottom: 0,
+              left: 0,
+              right: 0,
               child: BlocBuilder<SelectedCohostsCubit, List<User>>(
-                builder: (_, List<User> selectedCoHosts) {
-                  final bool activateBtn = selectedCoHosts.isNotEmpty;
-                  return ATBlurredBgBtn(
-                    onPressed: activateBtn ? () => 
-                      dContext.pop(selectedCoHosts) : null,
-                    btnTitle: ATStrings.cContinue,
-                  );
-                }
-              ),
+                  builder: (_, List<User> selectedCoHosts) {
+                final bool activateBtn = selectedCoHosts.isNotEmpty;
+                return ATBlurredBgBtn(
+                  onPressed:
+                      activateBtn ? () => dContext.pop(selectedCoHosts) : null,
+                  btnTitle: ATStrings.cContinue,
+                );
+              }),
             )
           ],
         ),
@@ -85,21 +88,16 @@ class _SelectCohostModalState extends State<_SelectCohostModal> {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
-              const SizedBox(width: 70,),
-              Text(
-                ATStrings.addCohost,
-                style: context.textTheme.bodyLarge
+              const SizedBox(
+                width: 70,
               ),
+              Text(ATStrings.addCohost, style: context.textTheme.bodyLarge),
               BlocBuilder<SelectedCohostsCubit, List<User>>(
-                builder: (_, List<User> selectedCoHosts) {
-                  return Text(
-                    '${selectedCoHosts.length} selected',
-                    style: context.textTheme.titleSmall?.copyWith(
-                      color: ATColors.hexC2C2C2
-                    )
-                  );
-                }
-              ),
+                  builder: (_, List<User> selectedCoHosts) {
+                return Text('${selectedCoHosts.length} selected',
+                    style: context.textTheme.titleSmall
+                        ?.copyWith(color: ATColors.hexC2C2C2));
+              }),
             ],
           ),
         ),
@@ -107,51 +105,45 @@ class _SelectCohostModalState extends State<_SelectCohostModal> {
         Padding(
           padding: const EdgeInsets.fromLTRB(15, 0, 15, 0),
           child: Text(
-            ATStrings.addCohostDesc, maxLines: 2,
-            style: context.textTheme.labelSmall!.copyWith(
-              color: ATColors.hexC2C2C2.withValues(alpha: 0.76)
-            ),
+            ATStrings.addCohostDesc,
+            maxLines: 2,
+            style: context.textTheme.labelSmall!
+                .copyWith(color: ATColors.hexC2C2C2.withValues(alpha: 0.76)),
           ),
         ),
         const SizedBox(height: 20),
-                  
         Padding(
           padding: const EdgeInsets.fromLTRB(15, 0, 15, 10),
           child: BlocBuilder<AllUsersCubit, ATAppState<AllUsersResponseModel>>(
-            builder: (_, ATAppState<AllUsersResponseModel> state) {
-              final List<User> currentUsers = context.read<AllUsersCubit>()
-                .currentUsersData?.data ?? <User>[];
-              final bool disableTextfield = currentUsers.isEmpty;
+              builder: (_, ATAppState<AllUsersResponseModel> state) {
+            final List<User> currentUsers =
+                context.read<AllUsersCubit>().currentUsersData?.data ??
+                    <User>[];
+            final bool disableTextfield = currentUsers.isEmpty;
 
-              return AbsorbPointer(
-                absorbing: disableTextfield,
-                child: SearchFieldWithXSuffix(
-                  hintText: ATStrings.searchForCohost,
-                  onClear: (){
-                    context.read<SearchkeyCubit>().resetSearch();
-                    context.read<AllUsersCubit>().resetSearch();
-                  },
-                  onChanged: (String searchKey){
-                    ATHelperFuncs.callDebouncer(
-                      500,
-                      (){
-                        context.read<AllUsersCubit>().searchUsers(searchKey);
-                        context.read<SearchkeyCubit>().updateSearchKey(searchKey);
-                      }
-                    );
-                  },
-                ),
-              );
-            }
-          ),
+            return AbsorbPointer(
+              absorbing: disableTextfield,
+              child: SearchFieldWithXSuffix(
+                hintText: ATStrings.searchForCohost,
+                onClear: () {
+                  context.read<SearchkeyCubit>().resetSearch();
+                  context.read<AllUsersCubit>().resetSearch();
+                },
+                onChanged: (String searchKey) {
+                  ATHelperFuncs.callDebouncer(500, () {
+                    context.read<AllUsersCubit>().searchUsers(searchKey);
+                    context.read<SearchkeyCubit>().updateSearchKey(searchKey);
+                  });
+                },
+              ),
+            );
+          }),
         ),
-        
         const SelectedCohostsRow(),
-        
-        Expanded(child: AvailableCohostsList(
-          scrollController: widget.scrollController,
-          selectionMode: CohostSelectionMode.multiple
-        )),
+        Expanded(
+            child: AvailableCohostsList(
+                scrollController: widget.scrollController,
+                selectionMode: CohostSelectionMode.multiple)),
       ],
     );
   }

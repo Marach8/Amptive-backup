@@ -8,7 +8,6 @@ import 'package:go_router/go_router.dart';
 import '../../../../shared/app_bar_widget.dart';
 import '../../../../shared/back_button.dart';
 
-
 class ATSelectLanguageScreen extends StatelessWidget {
   const ATSelectLanguageScreen({super.key});
 
@@ -25,79 +24,72 @@ class ATSelectLanguageScreen extends StatelessWidget {
         ),
         body: Padding(
           padding: const EdgeInsets.fromLTRB(15, 5, 15, 50),
-          child: StatefulBuilder(
-            builder: (_, StateSetter setter) {
-              return ATContainer(
-                onTap: (){
-                  _showAvailableLanguagesModal(
-                    context: context, 
-                    selectedLanguage: selectedLanguge,
-                  ).then((String? lang) {
-                    if(lang != null){
-                      setter((){
-                        selectedLanguge = lang;
-                      });
-                    }
-                  });
-                },
-                color: ATColors.white.withValues(alpha: 0.1),
-                padding: const EdgeInsets.fromLTRB(10, 15, 10, 15),
-                radius: 14,
-                child: Row(
-                  children: <Widget>[
-                    Text(
-                      ATStrings.appLanguage,
-                      style: context.textTheme.bodySmall,
-                    ),
-                    const Spacer(),
-                     Text(
-                      selectedLanguge,
-                      style: context.textTheme.bodySmall?.copyWith(
-                        color: ATColors.white.withValues(alpha: 0.4)
-                      ),
-                    ),
-                    Icon(
-                      Icons.keyboard_arrow_right, size: 20, 
-                      color: ATColors.white.withValues(alpha: 0.4)
-                    ),
-                  ],
-                ),
-              );
-            }
-          ),
+          child: StatefulBuilder(builder: (_, StateSetter setter) {
+            return ATContainer(
+              onTap: () {
+                _showAvailableLanguagesModal(
+                  context: context,
+                  selectedLanguage: selectedLanguge,
+                ).then((String? lang) {
+                  if (lang != null) {
+                    setter(() {
+                      selectedLanguge = lang;
+                    });
+                  }
+                });
+              },
+              color: ATColors.white.withValues(alpha: 0.1),
+              padding: const EdgeInsets.fromLTRB(10, 15, 10, 15),
+              radius: 14,
+              child: Row(
+                children: <Widget>[
+                  Text(
+                    ATStrings.appLanguage,
+                    style: context.textTheme.bodySmall,
+                  ),
+                  const Spacer(),
+                  Text(
+                    selectedLanguge,
+                    style: context.textTheme.bodySmall?.copyWith(
+                        color: ATColors.white.withValues(alpha: 0.4)),
+                  ),
+                  Icon(Icons.keyboard_arrow_right,
+                      size: 20, color: ATColors.white.withValues(alpha: 0.4)),
+                ],
+              ),
+            );
+          }),
         ),
       ),
     );
   }
 }
 
-
 final List<String> _languages = <String>['English', 'China', 'Francais'];
-
 
 Future<String?> _showAvailableLanguagesModal({
   required BuildContext context,
   required String selectedLanguage,
 }) async {
   return await showModalBottomSheet(
-    context: context, isScrollControlled: true,
+    context: context,
+    isScrollControlled: true,
     backgroundColor: ATColors.hex202020,
-    shape: RoundedRectangleBorder(
-      borderRadius: BorderRadius.circular(15)
-    ),
+    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
     builder: (BuildContext dContext) {
       return Column(
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
-          const SizedBox(height: 10,),
+          const SizedBox(
+            height: 10,
+          ),
           const ATModalDismisser(),
           Column(
-            mainAxisSize: MainAxisSize.min,
-            children: _languages.map(
-              (String lang){
+              mainAxisSize: MainAxisSize.min,
+              children: _languages.map((String lang) {
                 final bool isSelected = lang == selectedLanguage;
                 return ATContainer(
-                  onTap: (){
+                  onTap: () {
                     dContext.pop(lang);
                   },
                   margin: const EdgeInsets.all(15),
@@ -105,22 +97,18 @@ Future<String?> _showAvailableLanguagesModal({
                   child: Row(
                     children: <Widget>[
                       Expanded(
-                        child: Text(
-                          lang,
-                          style: context.textTheme.titleMedium
-                        ),
+                        child: Text(lang, style: context.textTheme.titleMedium),
                       ),
                       ATRadioBtn(isSelected: isSelected)
                     ],
                   ),
                 );
-              }
-            ).toList()
-          ),
-          const SizedBox(height: 60,)
+              }).toList()),
+          const SizedBox(
+            height: 60,
+          )
         ],
       );
     },
   );
 }
-

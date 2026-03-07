@@ -52,8 +52,7 @@ class _CropPageState extends State<RectImageCropperScreen> {
                   const Spacer(),
                   ATContainer(
                     onTap: () async {
-                      final MemoryImage? image =
-                          await controller.onCropImage();
+                      final MemoryImage? image = await controller.onCropImage();
                       if (context.mounted) context.pop(image);
                     },
                     padding: const EdgeInsets.fromLTRB(10, 3, 10, 3),

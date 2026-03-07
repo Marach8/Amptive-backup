@@ -1,4 +1,3 @@
-
 import 'package:equatable/equatable.dart';
 
 class HostedShowsResponseModel {
@@ -28,8 +27,6 @@ class HostedShowsResponseModel {
   final int? pageSize;
   final bool? hasMore;
 }
-
-
 
 class HostedShow extends Equatable {
   const HostedShow({
@@ -97,10 +94,7 @@ class HostedShow extends Equatable {
 
   final double? price;
 
-  final int? episodeCount,
-      totalViewers,
-      goingCount,
-      followerCount;
+  final int? episodeCount, totalViewers, goingCount, followerCount;
 
   final Host? host;
   final List<Host>? coHosts;
@@ -130,8 +124,6 @@ class HostedShow extends Equatable {
         activeEpisode,
       ];
 }
-
-
 
 class Host {
   Host({
@@ -214,8 +206,5 @@ class Episode {
       startedAt,
       endedAt;
 
-  final int? episodeNumber,
-      viewerCount,
-      goingCount,
-      durationSeconds;
+  final int? episodeNumber, viewerCount, goingCount, durationSeconds;
 }

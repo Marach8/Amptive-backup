@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class ATFontWeights{
+class ATFontWeights {
   const ATFontWeights._();
 
   static const FontWeight w100 = FontWeight.w100;
@@ -18,6 +18,6 @@ class ATFontWeights{
   static const FontWeight w700 = FontWeight.w700;
 
   static const FontWeight w800 = FontWeight.w800;
-  
+
   static const FontWeight w900 = FontWeight.w900;
 }

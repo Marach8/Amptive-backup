@@ -25,7 +25,6 @@ class AllUsersResponseModel {
     );
   }
 
-
   AllUsersResponseModel copyWith({
     bool? status,
     String? message,

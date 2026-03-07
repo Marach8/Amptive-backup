@@ -177,10 +177,9 @@ class _SearchResultsTabsViewState extends State<SearchResultsTabsView>
                         SuccessState<AllUsersResponseModel>() =>
                           Builder(
                             builder: (_) {
-                              final AllUsersResponseModel? usersData =
-                                  context
-                                      .read<AllUsersCubit>()
-                                      .currentUsersData;
+                              final AllUsersResponseModel? usersData = context
+                                  .read<AllUsersCubit>()
+                                  .currentUsersData;
                               final List<User> users =
                                   usersData?.data ?? <User>[];
 
@@ -188,7 +187,6 @@ class _SearchResultsTabsViewState extends State<SearchResultsTabsView>
                                 if (state
                                     is LoadingState<AllUsersResponseModel>) {
                                   return const _UsersListShimmer();
-                                    
                                 }
                                 // Show retry button on failure or empty
                                 return Center(
@@ -257,9 +255,8 @@ class _SearchResultsTabsViewState extends State<SearchResultsTabsView>
   }
 }
 
-
 class _UsersListShimmer extends StatelessWidget {
-  const _UsersListShimmer({super.key});
+  const _UsersListShimmer();
 
   @override
   Widget build(BuildContext context) {
@@ -277,9 +274,9 @@ class _UserTileShimmer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const Padding(
-      padding:  EdgeInsets.only(bottom: 20),
+      padding: EdgeInsets.only(bottom: 20),
       child: Row(
-        children:  <Widget>[
+        children: <Widget>[
           // Leading circular avatar shimmer
           ATShimmer(
             height: 50,

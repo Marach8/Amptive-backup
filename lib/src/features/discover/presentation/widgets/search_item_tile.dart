@@ -9,7 +9,6 @@ import '../../../../config/utils/image_strings.dart';
 import '../../../../shared/image_loader_widget.dart';
 
 class SearchItemTile extends StatelessWidget {
-
   const SearchItemTile({
     super.key,
     required this.title,
@@ -29,40 +28,40 @@ class SearchItemTile extends StatelessWidget {
       child: Row(
         children: <Widget>[
           ClipRRect(
-            borderRadius: BorderRadius.circular(
-              isCircular ? size * 0.6 : 5
-            ),
+            borderRadius: BorderRadius.circular(isCircular ? size * 0.6 : 5),
             child: ATImgLoader(
               imgPath: leadingImagePath,
-              height: size, width: size,
+              height: size,
+              width: size,
               boxFit: BoxFit.cover,
             ),
           ),
-          const SizedBox(width: 8,),
-
+          const SizedBox(
+            width: 8,
+          ),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 Text(
                   title,
-                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                    fontSize: ATSizes.size14
-                  ),
+                  style: Theme.of(context)
+                      .textTheme
+                      .bodyMedium
+                      ?.copyWith(fontSize: ATSizes.size14),
                 ),
-
-                const SizedBox(height: 5,),
-
+                const SizedBox(
+                  height: 5,
+                ),
                 Row(
                   children: <Widget>[
                     Text(
                       'Show',
                       style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                        color: ATColors.hexC2C2C2,
-                        fontWeight: ATFontWeights.w500,
-                        fontSize: ATSizes.size13,
-                        height: 1.5
-                      ),
+                          color: ATColors.hexC2C2C2,
+                          fontWeight: ATFontWeights.w500,
+                          fontSize: ATSizes.size13,
+                          height: 1.5),
                     ),
                     const SizedBox(width: 5),
                     const ATCircleAvatar(diameter: 3),
@@ -70,37 +69,38 @@ class SearchItemTile extends StatelessWidget {
                     Text(
                       'MONDAY AT 20:00',
                       style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                        color: ATColors.hexC2C2C2,
-                        fontWeight: ATFontWeights.w500,
-                        fontSize: ATSizes.size13,
-                        height: 1.5
-                      ),
+                          color: ATColors.hexC2C2C2,
+                          fontWeight: ATFontWeights.w500,
+                          fontSize: ATSizes.size13,
+                          height: 1.5),
                     ),
                   ],
                 ),
               ],
             ),
           ),
-
-          const SizedBox(width: 15,),
-
-          trailing ?? InkWell(
-            onTap: (){},
-            splashColor: ATColors.hex303030,
-            borderRadius: BorderRadius.circular(30),
-            child: SizedBox(
-              height: 30, width: 30,
-              child: Icon(Icons.close, color: ATColors.hexB6B6B6,),
-            ),
+          const SizedBox(
+            width: 15,
           ),
+          trailing ??
+              InkWell(
+                onTap: () {},
+                splashColor: ATColors.hex303030,
+                borderRadius: BorderRadius.circular(30),
+                child: SizedBox(
+                  height: 30,
+                  width: 30,
+                  child: Icon(
+                    Icons.close,
+                    color: ATColors.hexB6B6B6,
+                  ),
+                ),
+              ),
         ],
       ),
     );
   }
 }
-
-
-
 
 class HashTagSearchItemTile extends StatelessWidget {
   const HashTagSearchItemTile({
@@ -120,59 +120,64 @@ class HashTagSearchItemTile extends StatelessWidget {
         children: <Widget>[
           ATContainer(
             alignment: Alignment.center,
-            height: 50, width: 50,
+            height: 50,
+            width: 50,
             boxShape: BoxShape.circle,
             color: ATColors.white,
             child: ColorFiltered(
-              colorFilter: ColorFilter.mode(
-                ATColors.black,
-                BlendMode.srcATop
-              ),
+              colorFilter: ColorFilter.mode(ATColors.black, BlendMode.srcATop),
               child: const ATImgLoader(
                 imgPath: ATImgStrings.hashIcon,
-                height: 28, width: 28,
+                height: 28,
+                width: 28,
               ),
             ),
           ),
-          const SizedBox(width: 8,),
-
+          const SizedBox(
+            width: 8,
+          ),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 Text(
                   '${ATStrings.HASH}$title'.toLowerCase(),
-                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                    fontSize: ATSizes.size14
-                  ),
+                  style: Theme.of(context)
+                      .textTheme
+                      .bodyMedium
+                      ?.copyWith(fontSize: ATSizes.size14),
                 ),
-
-                const SizedBox(height: 5,),
-
+                const SizedBox(
+                  height: 5,
+                ),
                 Text(
                   ATStrings.hashtags.toLowerCase(),
                   style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                    color: ATColors.hexC2C2C2,
-                    fontWeight: ATFontWeights.w500,
-                    fontSize: ATSizes.size13,
-                    height: 1.5
-                  ),
+                      color: ATColors.hexC2C2C2,
+                      fontWeight: ATFontWeights.w500,
+                      fontSize: ATSizes.size13,
+                      height: 1.5),
                 ),
               ],
             ),
           ),
-
-          const SizedBox(width: 15,),
-
-          trailing ?? InkWell(
-            onTap: (){},
-            splashColor: ATColors.hex303030,
-            borderRadius: BorderRadius.circular(30),
-            child: SizedBox(
-              height: 30, width: 30,
-              child: Icon(Icons.close, color: ATColors.hexB6B6B6,),
-            ),
+          const SizedBox(
+            width: 15,
           ),
+          trailing ??
+              InkWell(
+                onTap: () {},
+                splashColor: ATColors.hex303030,
+                borderRadius: BorderRadius.circular(30),
+                child: SizedBox(
+                  height: 30,
+                  width: 30,
+                  child: Icon(
+                    Icons.close,
+                    color: ATColors.hexB6B6B6,
+                  ),
+                ),
+              ),
         ],
       ),
     );

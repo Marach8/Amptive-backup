@@ -14,23 +14,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
-
 class ATAccountInfoScreen extends StatelessWidget {
-  const ATAccountInfoScreen({
-    super.key,
-    this.email,
-    this.phone,
-    this.country
-  });
+  const ATAccountInfoScreen({super.key, this.email, this.phone, this.country});
   final String? email, phone, country;
 
   @override
   Widget build(BuildContext context) {
     Country selectedCountry = CountryPickerUtils.getCountryByIsoCode('NG');
     return BlocProvider<ATSelectCountryBloc>(
-      create: (_) => ATSelectCountryBloc(),
-      child: ATAnnotatedRegion(
-        child: Scaffold(
+        create: (_) => ATSelectCountryBloc(),
+        child: ATAnnotatedRegion(
+            child: Scaffold(
           appBar: const ATAppBar(
             leadingWidth: 30,
             padding: EdgeInsets.only(left: 7),
@@ -41,56 +35,64 @@ class ATAccountInfoScreen extends StatelessWidget {
             physics: const BouncingScrollPhysics(),
             padding: const EdgeInsets.all(15),
             child: BlocBuilder<LocalUserDataCubit, ATAppState<CachedUserData>>(
-              builder: (_, ATAppState<CachedUserData> state) {
-                final CachedUserData? userData = context.read<LocalUserDataCubit>().currentUserData;
+                builder: (_, ATAppState<CachedUserData> state) {
+              final CachedUserData? userData =
+                  context.read<LocalUserDataCubit>().currentUserData;
               return Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   RenderRowInfo(
-                    title: ATStrings.email,
-                    value: userData?.email ?? ATStrings.ADD_UR_EMAIL,
-                    onTap: ()async{
-                      bool? shouldUpdateEmail;
-              
-                      if(userData?.email != null){
-                        shouldUpdateEmail = await showConfirmationDialog(
-                          context: context,
-                          title: ATStrings.WANT_2_CHANGE_EMAIL,
-                          content: '',
-                          yesString: ATStrings.CHANGE,
-                          noString: ATStrings.cancel
-                        );
-                      }
-                      else{
-                        shouldUpdateEmail = true;
-                      }
-              
-                      if(context.mounted && (shouldUpdateEmail ?? false)){
-                        final String? newEmail = await context.pushNamed(
-                          ATRoutes.updateEmailScreen, 
-                          extra: userData?.email == null ? ATStrings.ADDING_EMAIL : ATStrings.CHANGING_EMAIL,
-                        ) as String?;
-              
-                        if(context.mounted && (newEmail != null)){
-                          final CachedUserData? currentData = context.read<LocalUserDataCubit>().currentUserData;
-                          final CachedUserData updatedData = (currentData ?? const CachedUserData()).copyWith(email: newEmail);
-                          context.read<LocalUserDataCubit>().updateUserDataLocally(updatedData);
-                          
-                          showAppNotification(
-                            context: context,
-                            icon: const Icon(Icons.check_circle),
-                            text: userData?.email == null ? ATStrings.EMAIL_ADDED : ATStrings.EMAIL_CHANGED,
-                          );
+                      title: ATStrings.email,
+                      value: userData?.email ?? ATStrings.ADD_UR_EMAIL,
+                      onTap: () async {
+                        bool? shouldUpdateEmail;
+
+                        if (userData?.email != null) {
+                          shouldUpdateEmail = await showConfirmationDialog(
+                              context: context,
+                              title: ATStrings.WANT_2_CHANGE_EMAIL,
+                              content: '',
+                              yesString: ATStrings.CHANGE,
+                              noString: ATStrings.cancel);
+                        } else {
+                          shouldUpdateEmail = true;
                         }
-                      }
-                    }
-                  ),
+
+                        if (context.mounted && (shouldUpdateEmail ?? false)) {
+                          final String? newEmail = await context.pushNamed(
+                            ATRoutes.updateEmailScreen,
+                            extra: userData?.email == null
+                                ? ATStrings.ADDING_EMAIL
+                                : ATStrings.CHANGING_EMAIL,
+                          ) as String?;
+
+                          if (context.mounted && (newEmail != null)) {
+                            final CachedUserData? currentData = context
+                                .read<LocalUserDataCubit>()
+                                .currentUserData;
+                            final CachedUserData updatedData =
+                                (currentData ?? const CachedUserData())
+                                    .copyWith(email: newEmail);
+                            context
+                                .read<LocalUserDataCubit>()
+                                .updateUserDataLocally(updatedData);
+
+                            showAppNotification(
+                              context: context,
+                              icon: const Icon(Icons.check_circle),
+                              text: userData?.email == null
+                                  ? ATStrings.EMAIL_ADDED
+                                  : ATStrings.EMAIL_CHANGED,
+                            );
+                          }
+                        }
+                      }),
                   // RenderRowInfo(
                   //   title: ATStrings.name,
                   //   value: userData?.name ?? ATStrings.addYourName,
                   //   onTap: ()async{
                   //     bool? shouldUpdateName;
-              
+
                   //     if(userData?.name != null){
                   //       shouldUpdateName = await showConfirmationDialog(
                   //         context: context,
@@ -103,18 +105,18 @@ class ATAccountInfoScreen extends StatelessWidget {
                   //     else{
                   //       shouldUpdateName = true;
                   //     }
-              
+
                   //     if(context.mounted && (shouldUpdateName ?? false)){
                   //       final String? newName = await context.pushNamed(
-                  //         ATRoutes.updateNameScreen, 
+                  //         ATRoutes.updateNameScreen,
                   //         extra: userData?.name == null ? ATStrings.addingName : ATStrings.changingName,
                   //       ) as String?;
-              
+
                   //       if(context.mounted && (newName != null)){
                   //         final CachedUserData? currentData = context.read<LocalUserDataCubit>().currentUserData;
                   //         final CachedUserData updatedData = (currentData ?? const CachedUserData()).copyWith(name: newName);
                   //         context.read<LocalUserDataCubit>().updateUserDataLocally(updatedData);
-                          
+
                   //         showAppNotification(
                   //           context: context,
                   //           icon: const Icon(Icons.check_circle),
@@ -129,7 +131,7 @@ class ATAccountInfoScreen extends StatelessWidget {
                   //   value: userData?.username ?? ATStrings.addYourUsername,
                   //   onTap: ()async{
                   //     bool? shouldUpdateUsername;
-              
+
                   //     if(userData?.username != null){
                   //       shouldUpdateUsername = await showConfirmationDialog(
                   //         context: context,
@@ -142,18 +144,18 @@ class ATAccountInfoScreen extends StatelessWidget {
                   //     else{
                   //       shouldUpdateUsername = true;
                   //     }
-              
+
                   //     if(context.mounted && (shouldUpdateUsername ?? false)){
                   //       final String? newUsername = await context.pushNamed(
-                  //         ATRoutes.updateUsernameScreen, 
+                  //         ATRoutes.updateUsernameScreen,
                   //         extra: userData?.username == null ? ATStrings.addingUsername : ATStrings.changingUsername,
                   //       ) as String?;
-              
+
                   //       if(context.mounted && (newUsername != null)){
                   //         final CachedUserData? currentData = context.read<LocalUserDataCubit>().currentUserData;
                   //         final CachedUserData updatedData = (currentData ?? const CachedUserData()).copyWith(username: newUsername);
                   //         context.read<LocalUserDataCubit>().updateUserDataLocally(updatedData);
-                          
+
                   //         showAppNotification(
                   //           context: context,
                   //           icon: const Icon(Icons.check_circle),
@@ -166,36 +168,45 @@ class ATAccountInfoScreen extends StatelessWidget {
                   RenderRowInfo(
                     title: ATStrings.phoneNumber,
                     value: userData?.phoneNumber ?? ATStrings.ADD_UR_PHONE,
-                    onTap: ()async{
+                    onTap: () async {
                       bool? shouldUpdatePhone;
-                      final bool noPhone = (userData?.phoneNumber ?? '').isEmpty;
-              
-                      if(!noPhone){
+                      final bool noPhone =
+                          (userData?.phoneNumber ?? '').isEmpty;
+
+                      if (!noPhone) {
                         shouldUpdatePhone = await showConfirmationDialog(
-                          context: context,
-                          title: ATStrings.WANT_2_CHANGE_FONE,
-                          content: '',
-                          yesString: ATStrings.CHANGE,
-                          noString: ATStrings.cancel
-                        );
-                      }
-                      else{
+                            context: context,
+                            title: ATStrings.WANT_2_CHANGE_FONE,
+                            content: '',
+                            yesString: ATStrings.CHANGE,
+                            noString: ATStrings.cancel);
+                      } else {
                         shouldUpdatePhone = true;
                       }
-                      if(context.mounted && (shouldUpdatePhone ?? false)){
+                      if (context.mounted && (shouldUpdatePhone ?? false)) {
                         final String? newPhoneNumber = await context.pushNamed(
                           ATRoutes.updatePhoneNoScreen,
-                          extra: noPhone ? ATStrings.ADDING_PHONE : ATStrings.CHANGING_PHONE,
+                          extra: noPhone
+                              ? ATStrings.ADDING_PHONE
+                              : ATStrings.CHANGING_PHONE,
                         ) as String?;
-                        if(context.mounted && (newPhoneNumber != null)){
-                          final CachedUserData? currentData = context.read<LocalUserDataCubit>().currentUserData;
-                          final CachedUserData updatedData = (currentData ?? const CachedUserData()).copyWith(phoneNumber: newPhoneNumber);
-                          context.read<LocalUserDataCubit>().updateUserDataLocally(updatedData);
-                          
+                        if (context.mounted && (newPhoneNumber != null)) {
+                          final CachedUserData? currentData = context
+                              .read<LocalUserDataCubit>()
+                              .currentUserData;
+                          final CachedUserData updatedData =
+                              (currentData ?? const CachedUserData())
+                                  .copyWith(phoneNumber: newPhoneNumber);
+                          context
+                              .read<LocalUserDataCubit>()
+                              .updateUserDataLocally(updatedData);
+
                           showAppNotification(
                             context: context,
                             icon: const Icon(Icons.check_circle),
-                            text: noPhone ? ATStrings.FONE_ADDED : ATStrings.FONE_CHANGED,
+                            text: noPhone
+                                ? ATStrings.FONE_ADDED
+                                : ATStrings.FONE_CHANGED,
                           );
                         }
                       }
@@ -207,7 +218,7 @@ class ATAccountInfoScreen extends StatelessWidget {
                   //   onTap: ()async{
                   //     bool? shouldUpdateDob;
                   //     final bool noDob = (userData?.dob ?? '').isEmpty;
-              
+
                   //     if(!noDob){
                   //       shouldUpdateDob = await showConfirmationDialog(
                   //         context: context,
@@ -229,7 +240,7 @@ class ATAccountInfoScreen extends StatelessWidget {
                   //         final CachedUserData? currentData = context.read<LocalUserDataCubit>().currentUserData;
                   //         final CachedUserData updatedData = (currentData ?? const CachedUserData()).copyWith(dob: newDob);
                   //         context.read<LocalUserDataCubit>().updateUserDataLocally(updatedData);
-                          
+
                   //         showAppNotification(
                   //           context: context,
                   //           icon: const Icon(Icons.check_circle),
@@ -249,38 +260,31 @@ class ATAccountInfoScreen extends StatelessWidget {
                   //   value: userData?.followingCount ?? '0',
                   //   onTap: () {}
                   // ),
-                  
-                  StatefulBuilder(
-                    builder: (_, StateSetter setter) {
-                      return RenderRowInfo(
+
+                  StatefulBuilder(builder: (_, StateSetter setter) {
+                    return RenderRowInfo(
                         title: ATStrings.COUNTRY,
                         value: selectedCountry.name,
-                        onTap: ()async{
-                          final Country? newSelectedCountry = await showCupertinoCountryPickerModal(
+                        onTap: () async {
+                          final Country? newSelectedCountry =
+                              await showCupertinoCountryPickerModal(
                             context: context,
                             initialCountry: selectedCountry,
                           );
-                          if(newSelectedCountry != null){
-                            setter((){
+                          if (newSelectedCountry != null) {
+                            setter(() {
                               selectedCountry = newSelectedCountry;
                             });
                           }
-                        }
-                      );
-                    }
-                  ),
+                        });
+                  }),
                 ],
-              ); 
-              }
-        ),
-      ),
-        )
-      )
-      );
-    
+              );
+            }),
+          ),
+        )));
   }
 }
-
 
 class RenderRowInfo extends StatelessWidget {
   const RenderRowInfo({
@@ -310,16 +314,19 @@ class RenderRowInfo extends StatelessWidget {
             onTap: onTap,
             child: Row(
               children: <Widget>[
-                if(valueLeading != null)...<Widget>[
-                  valueLeading!, const SizedBox(width: 5,)
+                if (valueLeading != null) ...<Widget>[
+                  valueLeading!,
+                  const SizedBox(
+                    width: 5,
+                  )
                 ],
                 Text(
                   value,
-                  style: context.textTheme.bodySmall?.copyWith(
-                    color: ATColors.white.withValues(alpha: 0.4)
-                  ),
+                  style: context.textTheme.bodySmall
+                      ?.copyWith(color: ATColors.white.withValues(alpha: 0.4)),
                 ),
-                Icon(Icons.keyboard_arrow_right, color: ATColors.white.withValues(alpha: 0.4)),
+                Icon(Icons.keyboard_arrow_right,
+                    color: ATColors.white.withValues(alpha: 0.4)),
               ],
             ),
           ),

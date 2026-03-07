@@ -1,5 +1,4 @@
 abstract class AmptivePasswordAuthState {
-
   AmptivePasswordAuthState({this.error});
   String? error;
 }

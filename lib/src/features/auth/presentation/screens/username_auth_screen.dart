@@ -20,14 +20,13 @@ class AddUsernameScreen extends StatefulWidget {
   State<AddUsernameScreen> createState() => _AddUsernameScreenState();
 }
 
-class _AddUsernameScreenState extends State<AddUsernameScreen> 
-  with ATValidators{
-
+class _AddUsernameScreenState extends State<AddUsernameScreen>
+    with ATValidators {
   final TextEditingController _userNameCntrl = TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   @override
-  void dispose(){
+  void dispose() {
     _formKey.currentState?.dispose();
     _userNameCntrl.dispose();
     super.dispose();
@@ -36,26 +35,22 @@ class _AddUsernameScreenState extends State<AddUsernameScreen>
   @override
   Widget build(BuildContext context) {
     return BlocProvider<CheckIdentityAvailabilityCubit>(
-      create:(_) => CheckIdentityAvailabilityCubit(),
-      child: Builder(
-        builder: (BuildContext context) {
-          return ATAnnotatedRegion(
-            child: Scaffold(
-              appBar: const ATAppBar(leading: ATBackBtn()),
-              body: Form(
-                key: _formKey,
-                child: SingleChildScrollView(
-                  padding: const EdgeInsets.all(15),
-                  child: Column(
-                    spacing: 10,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      Text(
-                        ATStrings.whatShouldWeCallYou,
-                        style: context.textTheme.headlineMedium
-                      ),
-          
-                      ATTextFormField(
+      create: (_) => CheckIdentityAvailabilityCubit(),
+      child: Builder(builder: (BuildContext context) {
+        return ATAnnotatedRegion(
+          child: Scaffold(
+            appBar: const ATAppBar(leading: ATBackBtn()),
+            body: Form(
+              key: _formKey,
+              child: SingleChildScrollView(
+                padding: const EdgeInsets.all(15),
+                child: Column(
+                  spacing: 10,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Text(ATStrings.whatShouldWeCallYou,
+                        style: context.textTheme.headlineMedium),
+                    ATTextFormField(
                         controller: _userNameCntrl,
                         maxLines: 1,
                         hintText: ATStrings.userName,
@@ -72,84 +67,96 @@ class _AddUsernameScreenState extends State<AddUsernameScreen>
                         ),
                         suffixIcon: Padding(
                           padding: const EdgeInsets.only(right: 10),
-                          child: BlocConsumer<CheckIdentityAvailabilityCubit, ATAppState<bool>>(
-                            listener: (_, ATAppState<bool> state) {
-                              if(state is FailureState<bool>){
-                                showAppNotification2(
-                                  context: context,
-                                  text: state.message,
-                                  type: NotificationType.failure,
-                                );
-                              }
-                            },
-                            builder: (_, ATAppState<bool> state) => switch(state){
-                              InitialState<bool>() => const SizedBox.shrink(),
-                              LoadingState<bool>() => const ATLoadingIndicator(size: 20,),
-                              SuccessState<bool>() => Icon(
-                                Icons.check, color: ATColors.successColor,
-                              ),
-                              FailureState<bool>() => Icon(
-                                Icons.close, color: ATColors.textRedColor,
-                              )
-                            }
-                          ),
+                          child: BlocConsumer<CheckIdentityAvailabilityCubit,
+                                  ATAppState<bool>>(
+                              listener: (_, ATAppState<bool> state) {
+                                if (state is FailureState<bool>) {
+                                  showAppNotification2(
+                                    context: context,
+                                    text: state.message,
+                                    type: NotificationType.failure,
+                                  );
+                                }
+                              },
+                              builder: (_, ATAppState<bool> state) =>
+                                  switch (state) {
+                                    InitialState<bool>() =>
+                                      const SizedBox.shrink(),
+                                    LoadingState<bool>() =>
+                                      const ATLoadingIndicator(
+                                        size: 20,
+                                      ),
+                                    SuccessState<bool>() => Icon(
+                                        Icons.check,
+                                        color: ATColors.successColor,
+                                      ),
+                                    FailureState<bool>() => Icon(
+                                        Icons.close,
+                                        color: ATColors.textRedColor,
+                                      )
+                                  }),
                         ),
-                        onChanged: (String text){
+                        onChanged: (String text) {
                           ATHelperFuncs.callDebouncer(
-                            1500,
-                            () => context.read<CheckIdentityAvailabilityCubit>()
-                              .checkIdentityAvailability(param: <String, dynamic>{'username': text})
-                          );
-                        }
-                      ),
-                      BlocBuilder<CheckIdentityAvailabilityCubit, ATAppState<bool>>(
-                        builder: (_, ATAppState<bool> state){
-                          if(state is InitialState<bool>) return const SizedBox.shrink();
-                          final bool isLoading = state is LoadingState<bool>;
-                          final bool isSuccess = state is SuccessState<bool>;
-                          return Text(
-                            isLoading ? ATStrings.checkerLoading :
-                            isSuccess ? ATStrings.usernameIsAvailable 
-                              : 'Username not available!',
-                            style: context.textTheme.titleSmall?.copyWith(
-                              color: isSuccess ? ATColors.successColor
-                                : isLoading ? ATColors.white : ATColors.textRedColor,
-                            ),
-                          );
-                        }
-                      ),
-                    ],
-                  ),
+                              1500,
+                              () => context
+                                      .read<CheckIdentityAvailabilityCubit>()
+                                      .checkIdentityAvailability(
+                                          param: <String, dynamic>{
+                                        'username': text
+                                      }));
+                        }),
+                    BlocBuilder<CheckIdentityAvailabilityCubit,
+                        ATAppState<bool>>(builder: (_, ATAppState<bool> state) {
+                      if (state is InitialState<bool>) {
+                        return const SizedBox.shrink();
+                      }
+                      final bool isLoading = state is LoadingState<bool>;
+                      final bool isSuccess = state is SuccessState<bool>;
+                      return Text(
+                        isLoading
+                            ? ATStrings.checkerLoading
+                            : isSuccess
+                                ? ATStrings.usernameIsAvailable
+                                : 'Username not available!',
+                        style: context.textTheme.titleSmall?.copyWith(
+                          color: isSuccess
+                              ? ATColors.successColor
+                              : isLoading
+                                  ? ATColors.white
+                                  : ATColors.textRedColor,
+                        ),
+                      );
+                    }),
+                  ],
                 ),
               ),
-           
-              bottomSheet: Builder(
-                builder: (BuildContext context) {
-                  final double bottom = MediaQuery.viewInsetsOf(context).bottom;
-                  final double bottomPad = bottom > 0 ? 10 : 50;
-                  return Padding(
-                    padding: EdgeInsets.fromLTRB(15, 0, 15, bottomPad),
-                    child: BlocBuilder<CheckIdentityAvailabilityCubit, ATAppState<bool>>(
-                      builder: (_, ATAppState<bool> state) {
-                        final bool shouldEnableBtn = state is SuccessState<bool>;
-                        return ATPlainElevatedBtn(
-                          onPressed: shouldEnableBtn ? (){
-                            if(_formKey.currentState?.validate() ?? false){
-                              RegistrationData().copyWith(username: _userNameCntrl.text.trim());
-                              context.pushNamed(ATRoutes.addNameAuthScreen);
-                            }
-                          } : null,
-                          btnTitle: ATStrings.next
-                        );
-                      }
-                    ),
-                  );
-                }
-              ),
             ),
-          );
-        }
-      ),
+            bottomSheet: Builder(builder: (BuildContext context) {
+              final double bottom = MediaQuery.viewInsetsOf(context).bottom;
+              final double bottomPad = bottom > 0 ? 10 : 50;
+              return Padding(
+                padding: EdgeInsets.fromLTRB(15, 0, 15, bottomPad),
+                child: BlocBuilder<CheckIdentityAvailabilityCubit,
+                    ATAppState<bool>>(builder: (_, ATAppState<bool> state) {
+                  final bool shouldEnableBtn = state is SuccessState<bool>;
+                  return ATPlainElevatedBtn(
+                      onPressed: shouldEnableBtn
+                          ? () {
+                              if (_formKey.currentState?.validate() ?? false) {
+                                RegistrationData().copyWith(
+                                    username: _userNameCntrl.text.trim());
+                                context.pushNamed(ATRoutes.addNameAuthScreen);
+                              }
+                            }
+                          : null,
+                      btnTitle: ATStrings.next);
+                }),
+              );
+            }),
+          ),
+        );
+      }),
     );
   }
 }

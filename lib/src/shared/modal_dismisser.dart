@@ -8,12 +8,14 @@ class ATModalDismisser extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return  Align(
+    return Align(
       alignment: Alignment.center,
       child: ATContainer(
         onTap: () => context.pop(),
         margin: const EdgeInsets.symmetric(vertical: 10),
-        radius: 5, height: 4, width: 30,
+        radius: 5,
+        height: 4,
+        width: 30,
         color: ATColors.white.withValues(alpha: 0.6),
         child: const SizedBox.shrink(),
       ),

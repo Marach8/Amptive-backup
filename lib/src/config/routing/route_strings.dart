@@ -33,14 +33,16 @@ class ATRoutes {
   static const String CREATE_EVENT_FORM = "create-event-form";
   static const String CREATE_EPISODE_FORM = "create-episode-form";
 
-
   //MAIN APPLICATION
   static const String mainAppShell = "main_app_shell";
   static const String LIVE_SHOW_DETAILED = "show_detailed_screen";
   static const String LIVE_EVENT_DETAILED = "event_detailed_screen";
-  static const String SCHEDULED_EVENTS_OR_SHOWS_SCREEN = 'scheduled_events_or_shows';
-  static const String SUBSCRIBED_EVENTS_OR_SHOWS_SCREEN = 'subscribed_events_or_shows';
-  static const String FOLLOWING_EVENTS_OR_SHOWS_SCREEN = 'following_events_or_shows';
+  static const String SCHEDULED_EVENTS_OR_SHOWS_SCREEN =
+      'scheduled_events_or_shows';
+  static const String SUBSCRIBED_EVENTS_OR_SHOWS_SCREEN =
+      'subscribed_events_or_shows';
+  static const String FOLLOWING_EVENTS_OR_SHOWS_SCREEN =
+      'following_events_or_shows';
   static const String COMMUNITY_SCREEN = 'community_screen';
   static const String SOCIETY_SCREEN = 'society_screen';
   static const String TRENDING_SOCIETY_SCREEN = 'trending_society_screen';
@@ -58,7 +60,8 @@ class ATRoutes {
   static const String PROFILE_SUBSCRIBERS_SCREEN = 'profile_sub_screen';
   static const String USER_PROFILE_SCREEN = 'user_profile';
   static const String listHostedShowsScreen = 'choose_or_create_show';
-  static const String GO_LIVE_PROGRAM_CREATION_SUCCESS = 'create_show_success_screen';
+  static const String GO_LIVE_PROGRAM_CREATION_SUCCESS =
+      'create_show_success_screen';
   static const String EVENT_SCHEDULED_SCREEN = 'event_scheduled';
   static const String showPreviewScreen = 'show_preview';
   static const String EPISODE_PREVIEW_SCREEN = 'episode_preview';
@@ -81,13 +84,14 @@ class ATRoutes {
   static const String SELECT_ACCT_TYPE = 'switch_account';
   static const String SELECTED_ACCT = 'creator_landing';
   static const String SELECT_CAT = 'select_category';
-  static const String CREATOR_SUB_PLAN = 'creator_sub_plan';
-  static const String CO_HOST_FEE_SETUP = 'co_host_fee_setup';
+  static const String creatorSubPlanSetup = 'creator_sub_plan';
+  static const String cohostFeeSetup = 'co_host_fee_setup';
   static const String CREATOR_SUCCESS = 'creator_success';
   static const String WALLET_ONBOARDING = 'wallet_landing';
   static const String WALLET_PIN_SETUP = 'wallet_pin_setup';
   static const String securityQuestionScreen = 'security_question';
-  static const String walletCreationAnimationScreen = 'wallet_creation_animation';
+  static const String walletCreationAnimationScreen =
+      'wallet_creation_animation';
   static const String walletScreen = 'wallet';
   static const String SELECT_RECIPIENT = 'transfer_funds';
   static const String FUND_WALLET = 'fund_wallet';

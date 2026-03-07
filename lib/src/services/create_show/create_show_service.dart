@@ -9,7 +9,6 @@ import '../../models/host.dart';
 import '../../config/utils/image_strings.dart';
 
 class CreateShowService {
-
   factory CreateShowService() => _instance;
 
   // constructorÏ
@@ -42,7 +41,6 @@ class CreateShowService {
   late ValueNotifier<Set<ObjectWithNotifier<Hashtag>>> selectedHashtags;
   late ValueNotifier<Set<ObjectWithNotifier<Host>>> goLiveHostListNotifier;
 
-
   late ValueNotifier<Uint8List?> selectedImage;
 
   DateTime? eventDateTime;
@@ -60,21 +58,13 @@ class CreateShowService {
     selectedHashtags = ValueNotifier(<ObjectWithNotifier<Hashtag>>{});
     selectedImage = ValueNotifier(null);
     selectedCoHosts = ValueNotifier(
-      List.generate(
-        5,
-        (_) => ObjectWithNotifier<Host>(obj: Host.empty())
-      ).toSet()
-    );
+        List.generate(5, (_) => ObjectWithNotifier<Host>(obj: Host.empty()))
+            .toSet());
     coHostsListData = getHostList();
     hashTagListData = getHashTags();
-    goLiveHostListNotifier = ValueNotifier(
-      getHostList().take(1).toSet()..addAll(
-        List.generate(
-          5,
-          (_) => ObjectWithNotifier<Host>(obj: Host.empty())
-        )
-      )
-    );
+    goLiveHostListNotifier = ValueNotifier(getHostList().take(1).toSet()
+      ..addAll(List.generate(
+          5, (_) => ObjectWithNotifier<Host>(obj: Host.empty()))));
 
     // init controllers
     titleController = TextEditingController();
@@ -88,7 +78,8 @@ class CreateShowService {
         TextEditingController(text: userEventFee.toString());
 
     eventDateTime = null;
-    eventPaymentController = TextEditingController(text: userEventFee.toString());
+    eventPaymentController =
+        TextEditingController(text: userEventFee.toString());
   }
 
   void dispose() {
@@ -189,35 +180,39 @@ class CreateShowService {
 
   void removeSelectedCoHost(ObjectWithNotifier<Host> selectedCoHost) {
     // final currentSet = selectedCoHosts.value;
-    final List<ObjectWithNotifier<Host>> currentList = selectedCoHosts.value.toList();
+    final List<ObjectWithNotifier<Host>> currentList =
+        selectedCoHosts.value.toList();
     currentList.remove(selectedCoHost);
-    currentList.insert((selectedCoHostLength.value - 1), ObjectWithNotifier<Host>(obj: Host.empty()));
+    currentList.insert((selectedCoHostLength.value - 1),
+        ObjectWithNotifier<Host>(obj: Host.empty()));
     selectedCoHostLength.value = selectedCoHostLength.value - 1;
     selectedCoHosts.value = currentList.toSet();
     selectedCoHost.notifier.value = false;
 
-    if(selectedCoHostLength.value == 0){
+    if (selectedCoHostLength.value == 0) {
       coHostSelectionStarted.value = false;
+    } else {
+      coHostSelectionStarted.value = true;
     }
-    else{coHostSelectionStarted.value = true;}
   }
 
   void addSelectedCoHost(ObjectWithNotifier<Host> selectedCoHost) {
     // final currentSet = selectedCoHosts.value;
-    if(selectedCoHostLength.value < 5){
-      final List<ObjectWithNotifier<Host>> currentSet = selectedCoHosts.value.toList();
+    if (selectedCoHostLength.value < 5) {
+      final List<ObjectWithNotifier<Host>> currentSet =
+          selectedCoHosts.value.toList();
       currentSet[selectedCoHostLength.value] = selectedCoHost;
       selectedCoHostLength.value = selectedCoHostLength.value + 1;
       selectedCoHosts.value = currentSet.toSet();
       selectedCoHost.notifier.value = true;
 
-      if(selectedCoHostLength.value == 0){
+      if (selectedCoHostLength.value == 0) {
         coHostSelectionStarted.value = false;
+      } else {
+        coHostSelectionStarted.value = true;
       }
-      else{coHostSelectionStarted.value = true;}
     }
   }
-
 
   void removeSelectedHashtags(ObjectWithNotifier<Hashtag> selHashtag) {
     final Set<ObjectWithNotifier<Hashtag>> currentSet = selectedHashtags.value;
@@ -247,19 +242,20 @@ class CreateShowService {
     return eventDateTime!.isAfter(DateTime.now());
   }
 
-  void hostAddCohost(ObjectWithNotifier<Host> host, int index){
-    final List<ObjectWithNotifier<Host>> newList = List<ObjectWithNotifier<Host>>.from(goLiveHostListNotifier.value);
+  void hostAddCohost(ObjectWithNotifier<Host> host, int index) {
+    final List<ObjectWithNotifier<Host>> newList =
+        List<ObjectWithNotifier<Host>>.from(goLiveHostListNotifier.value);
     newList[index] = host;
     goLiveHostListNotifier.value = newList.toSet();
   }
 
-  void hostRemoveCohost(ObjectWithNotifier<Host> host, int index){
-    final List<ObjectWithNotifier<Host>> newList = List<ObjectWithNotifier<Host>>.from(goLiveHostListNotifier.value);
+  void hostRemoveCohost(ObjectWithNotifier<Host> host, int index) {
+    final List<ObjectWithNotifier<Host>> newList =
+        List<ObjectWithNotifier<Host>>.from(goLiveHostListNotifier.value);
     newList[index] = ObjectWithNotifier<Host>(obj: Host.empty());
     goLiveHostListNotifier.value = newList.toSet();
   }
 }
-
 
 List<ObjectWithNotifier<Host>> getHostList() {
   List<ObjectWithNotifier<Host>> hostsList = <ObjectWithNotifier<Host>>[];
@@ -273,30 +269,27 @@ List<ObjectWithNotifier<Host>> getHostList() {
     ATImgStrings.MAN_PHOTO: <String>['Daniel Adesua', 'myownbrother'],
     ATImgStrings.COMMUNITY_CARD: <String>['Erica Nwosu', 'ricababygirl'],
     ATImgStrings.CRIMINAL: <String>['Peter Nwokeji', 'sirpee'],
-    ATImgStrings.createShowPlaceholder: <String>[
-      'Arlan Walker',
-      'walkerboss'
-    ],
+    ATImgStrings.createShowPlaceholder: <String>['Arlan Walker', 'walkerboss'],
     ATImgStrings.JOE_POMP_SHOW: <String>['Man Drone', 'ikennegodadi'],
   };
 
-  for (int i = 0; i < coHostsData.entries.length; i++){
-    final MapEntry<String, List<String>> item = coHostsData.entries.elementAt(i);
+  for (int i = 0; i < coHostsData.entries.length; i++) {
+    final MapEntry<String, List<String>> item =
+        coHostsData.entries.elementAt(i);
     String name = item.value[0];
     String username = item.value[1];
     Host host = Host(
-      id: i, name: name,
-      username: username,
-      email: '',
-      profilePicture: item.key
-    );
+        id: i,
+        name: name,
+        username: username,
+        email: '',
+        profilePicture: item.key);
 
     hostsList.add(ObjectWithNotifier<Host>(obj: host));
   }
 
   return hostsList;
 }
-
 
 List<ATCohost<bool>> getCoHostList() {
   List<ATCohost<bool>> coHostsList = <ATCohost<bool>>[];
@@ -310,19 +303,18 @@ List<ATCohost<bool>> getCoHostList() {
     ATImgStrings.MAN_PHOTO: <String>['Daniel Adesua', 'myownbrother'],
     ATImgStrings.COMMUNITY_CARD: <String>['Erica Nwosu', 'ricababygirl'],
     ATImgStrings.CRIMINAL: <String>['Peter Nwokeji', 'sirpee'],
-    ATImgStrings.createShowPlaceholder: <String>[
-      'Arlan Walker',
-      'walkerboss'
-    ],
+    ATImgStrings.createShowPlaceholder: <String>['Arlan Walker', 'walkerboss'],
     ATImgStrings.JOE_POMP_SHOW: <String>['Man Drone', 'ikennegodadi'],
   };
 
-  for (int i = 0; i < coHostsData.entries.length; i++){
-    final MapEntry<String, List<String>> item = coHostsData.entries.elementAt(i);
+  for (int i = 0; i < coHostsData.entries.length; i++) {
+    final MapEntry<String, List<String>> item =
+        coHostsData.entries.elementAt(i);
     String name = item.value[0];
     String username = item.value[1];
     ATCohost<bool> coHost = ATCohost<bool>(
-      id: i, name: name,
+      id: i,
+      name: name,
       username: username,
       email: '',
       profilePicture: item.key,
@@ -335,17 +327,23 @@ List<ATCohost<bool>> getCoHostList() {
   return coHostsList;
 }
 
-List<ATHashtag<bool>> getHashTagsList(){
+List<ATHashtag<bool>> getHashTagsList() {
   List<ATHashtag<bool>> hashTagsList = <ATHashtag<bool>>[];
 
   final List<String> stringTags = <String>[
-    'wecandohardthings', 'society', 'trumpisdead',
-    'documentary', 'amptiveliveshow', 'heavenisgood',
-    'theworldsfirstjet', 'everythingyouwant', 'buggati',
+    'wecandohardthings',
+    'society',
+    'trumpisdead',
+    'documentary',
+    'amptiveliveshow',
+    'heavenisgood',
+    'theworldsfirstjet',
+    'everythingyouwant',
+    'buggati',
     'thingsfallapart'
   ];
 
-  for (int i = 0; i < stringTags.length; i++){
+  for (int i = 0; i < stringTags.length; i++) {
     final String stringTag = stringTags.elementAt(i);
     final ATHashtag<bool> hashtag = ATHashtag<bool>(
       title: stringTag,
@@ -358,9 +356,9 @@ List<ATHashtag<bool>> getHashTagsList(){
   return hashTagsList;
 }
 
-
 List<ObjectWithNotifier<Hashtag>> getHashTags() {
-  List<ObjectWithNotifier<Hashtag>> hashTagList = <ObjectWithNotifier<Hashtag>>[];
+  List<ObjectWithNotifier<Hashtag>> hashTagList =
+      <ObjectWithNotifier<Hashtag>>[];
 
   final List<List<String>> availableHashtags = <List<String>>[
     <String>['Emmanuel Ajah', 'Hashtag'],

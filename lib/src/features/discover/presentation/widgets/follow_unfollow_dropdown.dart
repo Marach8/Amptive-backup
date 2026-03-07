@@ -21,42 +21,41 @@ class FollowUnfollowDropDown extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return PopupMenuButton<String>(
-      offset: Offset(context.screenWidth, 30),
-      padding: EdgeInsets.zero,
-      menuPadding: EdgeInsets.zero,
-      onSelected: onSelected,
-      color: ATColors.transparent,
-      elevation: 0,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(12)
-      ),
-      child: child,      
-      itemBuilder: (_) => <PopupMenuItem<String>>[
-        PopupMenuItem<String>(
-          height: 44,
-          padding: EdgeInsets.zero,
-          value: text,
-          child: ATContainer(
-            padding: const EdgeInsets.fromLTRB(16, 11, 16, 11),
-            clipBehavior: Clip.hardEdge,
-            radius: 12, height: 44,
-            child: BackdropFilter(
-              filter: ImageFilter.blur(sigmaX: 80, sigmaY: 80),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: <Widget>[
-                  Text(
-                    text,
-                    style: Theme.of(context).textTheme.titleLarge,
-                  ),
-                  const SizedBox(width: 50,),
-                  popUpTrailingIcon
-                ],
-              ),
-            ),
-          )
-        )
-      ]
-    );
+        offset: Offset(context.screenWidth, 30),
+        padding: EdgeInsets.zero,
+        menuPadding: EdgeInsets.zero,
+        onSelected: onSelected,
+        color: ATColors.transparent,
+        elevation: 0,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+        child: child,
+        itemBuilder: (_) => <PopupMenuItem<String>>[
+              PopupMenuItem<String>(
+                  height: 44,
+                  padding: EdgeInsets.zero,
+                  value: text,
+                  child: ATContainer(
+                    padding: const EdgeInsets.fromLTRB(16, 11, 16, 11),
+                    clipBehavior: Clip.hardEdge,
+                    radius: 12,
+                    height: 44,
+                    child: BackdropFilter(
+                      filter: ImageFilter.blur(sigmaX: 80, sigmaY: 80),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: <Widget>[
+                          Text(
+                            text,
+                            style: Theme.of(context).textTheme.titleLarge,
+                          ),
+                          const SizedBox(
+                            width: 50,
+                          ),
+                          popUpTrailingIcon
+                        ],
+                      ),
+                    ),
+                  ))
+            ]);
   }
 }

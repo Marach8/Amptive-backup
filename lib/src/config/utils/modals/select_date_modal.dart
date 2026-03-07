@@ -26,8 +26,8 @@ Future<void> selectDateModal(
 
   return await showModalBottomSheet(
       backgroundColor: ATColors.transparent,
-      constraints: BoxConstraints.expand(
-          height: ATHelperFuncs.getScreenHeight(context)),
+      constraints:
+          BoxConstraints.expand(height: ATHelperFuncs.getScreenHeight(context)),
       context: context,
       isScrollControlled: true,
       useSafeArea: true,
