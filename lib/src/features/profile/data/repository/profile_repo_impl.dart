@@ -1,4 +1,5 @@
 import 'dart:developer';
+import 'dart:typed_data';
 
 import 'package:amptive/src/config/api_response_and_app_state.dart';
 import 'package:amptive/src/config/endpoints.dart';
@@ -8,6 +9,7 @@ import 'package:amptive/src/config/services/network_service/network_service.dart
 import 'package:amptive/src/features/auth/data/models/response/user_profile_response_model.dart';
 import 'package:amptive/src/features/profile/data/repository/profile_repo.dart';
 import 'package:dio/dio.dart';
+import 'package:http/http.dart' hide MultipartFile, Response;
 
 class ProfileRepoImpl implements ProfileRepo {
   ProfileRepoImpl({NetworkService? mockNetworkService})
@@ -25,7 +27,30 @@ class ProfileRepoImpl implements ProfileRepo {
     } catch (e) {
       log('Error in getting user profile');
       return Unsuccessful<UserProfileResponseModel>(
+          
           error: ATException.resolveException(e));
+    }
+  }
+
+  @override
+  Future<ApiResponse<dynamic>> updateUserProfile({
+    required String profilePicture,
+  }) async {
+    try {
+      final Map<String, dynamic> body = <String, dynamic>{
+        "profile_picture": profilePicture,
+      };
+
+      // 2. Send the request
+      final Response<dynamic> response = await networkService.patch(
+        ATEndpoints.updateUserProfile,
+        data: body,
+      );
+
+      return Successful<dynamic>(data: response.data);
+    } catch (e) {
+      log('Error in updating user profile: $e');
+      return Unsuccessful<dynamic>(error: ATException.resolveException(e));
     }
   }
 }

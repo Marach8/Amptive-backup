@@ -43,7 +43,7 @@ class UserData {
       username: json['username'],
       dob: json['dob'],
       name: json['name'],
-      pictureUrl: json['picture_url'],
+      pictureUrl: json['profile_picture'],
     );
   }
 

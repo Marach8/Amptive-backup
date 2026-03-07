@@ -1,6 +1,7 @@
 // ignore_for_file: constant_identifier_names
 
 class ATStrings {
+class ATStrings {
   const ATStrings._();
 
   static const String inter = 'Inter';
@@ -16,7 +17,7 @@ class ATStrings {
   static const String accessToken = 'Access Token';
   static const String refreshToken = 'Refresh Token';
   static const String cachedUserData = 'Cached User Data';
-  static const String profilePicture = 'Profile Picture';
+  static const String profilePicture = 'profile_picture';
   static const String userId = 'User Id';
   static const String email = 'Email';
   static const String username = 'Username';

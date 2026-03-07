@@ -26,6 +26,7 @@ class ATUser {
     this.username,
     this.dob,
     this.name,
+    this.pictureUrl, // 1. Add this
   });
 
   factory ATUser.fromJson(Map<String, dynamic> json) {
@@ -35,10 +36,11 @@ class ATUser {
       username: json['username'] as String?,
       dob: json['dob'] as String?,
       name: json['name'] as String?,
+      pictureUrl: json['profile_picture'] as String?,
     );
   }
 
-  String? id, email, username, dob, name;
+  final String? id, email, username, dob, name, pictureUrl;
 }
 
 class LoginResponseModel {

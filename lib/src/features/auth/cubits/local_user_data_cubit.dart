@@ -27,7 +27,6 @@ class LocalUserDataCubit extends Cubit<ATAppState<CachedUserData>> {
     try {
       final dynamic json =
           await localStorage.getObject(ATStrings.cachedUserData);
-
       emit(
         SuccessState<CachedUserData>(
           newData: json == null
@@ -41,12 +40,12 @@ class LocalUserDataCubit extends Cubit<ATAppState<CachedUserData>> {
   }
 
   Future<void> updateUserDataLocally(CachedUserData user) async {
-    emit(const LoadingState<CachedUserData>());
     try {
       await localStorage.setObject(
         ATStrings.cachedUserData,
         user.toJson(),
       );
+
       emit(SuccessState<CachedUserData>(newData: user));
     } catch (e) {
       emit(FailureState<CachedUserData>(
