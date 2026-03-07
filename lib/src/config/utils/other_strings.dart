@@ -328,8 +328,8 @@ class ATStrings {
   static const String verify_fone = 'Verify phone number';
   static const String UR_FON_NUMBER = "What is your phone number?";
 
-  static const String ALLOW = 'Allow';
-  static const String DONT_ALLOW = "Don't Allow";
+  static const String allow = 'Allow';
+  static const String dontAllow = "Don't Allow";
   static const String noThanks = "No thanks";
 
   static const String SOCIETY = 'Society';
@@ -410,7 +410,7 @@ class ATStrings {
   static const String SEARCH_FOR_EVENTS_ND_SHOWS =
       'Search for events, shows and more';
   static const String cancel = 'Cancel';
-  static const String TRENDING_HASHTAGS = 'Trending Hashtags';
+  static const String trendingHashtags = 'Trending Hashtags';
   static const String TRENDING = 'Trending';
   static const String SPORTS = 'Sports';
   static const String TRUE_CRIME = 'True Crime';
@@ -562,7 +562,7 @@ class ATStrings {
   static const String choose2AllowHandRasing =
       'Choose whether to allow hand-rasing';
   static const String AUDIENCE_INTERACTION = 'Select audience interaction';
-  static const String U_WILL_HAVE_ACCESS_2_MODERATION_TOOLS =
+  static const String youWillHaveAccessToModerationTools =
       "While you're live, you'll have full access to your moderation tools so you can control and manage audience interactions throughout the session.";
   static const String ALL_FOLLOWERS = 'All Followers';
   static const String ALL_SUBSCRIBERS = 'All Subscribers';
@@ -601,9 +601,9 @@ class ATStrings {
   static const String CNTRL_HAND_RAISING =
       "While you're live, you'll have full access to your moderation tools, allowing you to manage interactions and maintain control throughout the session.";
   static const String DISALLOW = "Don't Allow";
-  static const String AUDIENCE_CAN_RAISE_HAND =
+  static const String audienceCanRaiseHand =
       'Audience can raise their hands during your live.';
-  static const String AUDIENCE_CANNOT_RAISE_HAND =
+  static const String audienceCannotRaiseHand =
       'Audience cannot raise their hands during your live.';
   static const String promptToSetupSubPlan =
       "You will be prompted to setup subscription plan if you haven't set it up yet";

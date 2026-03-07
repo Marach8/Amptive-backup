@@ -337,12 +337,13 @@ class _CreateShowFormScreenState extends State<CreateEventFormScreen> {
                               padding: const EdgeInsets.fromLTRB(15, 0, 15, 10),
                               child: CreateProgramSelectionItem(
                                 description: '${ATStrings.addHashtags}s',
-                                onTap: () => showTrendingHashtagsModal(context),
+                                onTap: () {
+                                  
+                                }
                               ),
                             ),
 
-                            const SelectedHashtagsRow(
-                                margin: EdgeInsets.only(bottom: 10)),
+                            const SelectedHashtagsRow(),
 
                             Padding(
                               padding: const EdgeInsets.fromLTRB(15, 0, 15, 30),
@@ -469,7 +470,7 @@ class _CreateShowFormScreenState extends State<CreateEventFormScreen> {
                                 child: ATRichText(
                                   items: <String, TextStyle>{
                                     ATStrings
-                                            .U_WILL_HAVE_ACCESS_2_MODERATION_TOOLS:
+                                            .youWillHaveAccessToModerationTools:
                                         context.textTheme.labelSmall!.copyWith(
                                             color: ATColors.hexC2C2C2
                                                 .withValues(alpha: 0.76)),

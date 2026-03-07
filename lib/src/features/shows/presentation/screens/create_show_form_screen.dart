@@ -35,15 +35,12 @@ class CreateShowFormScreen extends StatelessWidget {
         BlocProvider<CreateShowCubit>(create: (_) => CreateShowCubit()),
         BlocProvider<UploadImageCubit>(create: (_) => UploadImageCubit()),
         BlocProvider<BlurredHeaderCubit>(
-          create: (_) => BlurredHeaderCubit(),
-        ),
+          create: (_) => BlurredHeaderCubit(),),
         BlocProvider<BgImageCubit>(create: (_) => BgImageCubit()),
-        BlocProvider<AllUsersCubit>(
-          create: (_) => AllUsersCubit(),
-        ),
-        BlocProvider<HashtagsCubit>(
-          create: (_) => HashtagsCubit(),
-        ),
+        BlocProvider<AllUsersCubit>(create: (_) => AllUsersCubit()),
+        BlocProvider<AllHashtagsCubit>(create: (_) => AllHashtagsCubit()),
+        BlocProvider<SelectedHashTagsCubit>(
+          create: (_) => SelectedHashTagsCubit()),
       ],
       child: const _SubWidget(),
     );
@@ -62,14 +59,15 @@ class __SubWidgetState extends State<_SubWidget> {
   final StreamController<String> _titleStreamCntrl = StreamController<String>();
   final StreamController<String> _descStreamCntrl = StreamController<String>();
 
-  //Null for loading, false for disabled, true for enabled. All for the launch show button.
-  final ValueNotifier<bool?> _launchShowNotifier = ValueNotifier<bool?>(false);
+  //Null for loading, false for disabled, true for enabled.
+  final ValueNotifier<bool?> _launchShowBtnNotifier = ValueNotifier<bool?>(false);
 
   String selectedDescription = ATStrings.tellListenersAboutYourShow;
-  String shouldAllowHandRasing = ATStrings.choose2AllowHandRasing;
+  HandRaisingPermission? selectedPermission;
 
   Community? selectedCommunity;
   List<User>? selectedCohosts;
+  List<HashTag>? selectedHashtags;
   ProgramAccessTypeSelectionData accessTypeData =
       const ProgramAccessTypeSelectionData();
 
@@ -81,7 +79,7 @@ class __SubWidgetState extends State<_SubWidget> {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       context.read<CommunitiesCubit>().fetchCommunities();
       context.read<AllUsersCubit>().fetchAllUsers();
-      context.read<HashtagsCubit>().fetchTags();
+      context.read<AllHashtagsCubit>().fetchHashTags();
     });
   }
 
@@ -147,8 +145,8 @@ class __SubWidgetState extends State<_SubWidget> {
                                       InkWell(
                                         onTap: () {
                                           context
-                                              .read<HashtagsCubit>()
-                                              .fetchTags();
+                                              .read<AllHashtagsCubit>()
+                                              .fetchHashTags();
                                         },
                                         child: Text(
                                           ATStrings.createShow,
@@ -163,9 +161,9 @@ class __SubWidgetState extends State<_SubWidget> {
                                 ))),
                       ),
                     ],
+
                     body: SingleChildScrollView(
                       padding: const EdgeInsets.fromLTRB(0, 10, 0, 100),
-                      physics: const BouncingScrollPhysics(),
                       child: Column(
                         children: <Widget>[
                           Padding(
@@ -227,6 +225,9 @@ class __SubWidgetState extends State<_SubWidget> {
                                 (_, void Function(void Function()) setter) {
                               return CreateProgramSelectionItem(
                                 description: selectedDescription,
+                                descStyle: selectedDescription == 
+                                  ATStrings.tellListenersAboutYourShow ? null :
+                                    context.textTheme.bodySmall,
                                 onTap: () async {
                                   final String? enteredDescription =
                                       await enterDescriptionModal(
@@ -319,12 +320,10 @@ class __SubWidgetState extends State<_SubWidget> {
                                               await showAvailableCoHostsModal(
                                             context: context,
                                             selectedCoHosts: selectedCohosts,
-                                            allUsersCubit:
-                                                context.read<AllUsersCubit>(),
+                                            allUsersCubit: context.read<AllUsersCubit>(),
                                           );
                                           if (newCohosts != null) {
-                                            setter(() =>
-                                                selectedCohosts = newCohosts);
+                                            setter(() => selectedCohosts = newCohosts);
                                           }
                                         },
                                         selectedCohosts: selectedCohosts!)
@@ -336,8 +335,7 @@ class __SubWidgetState extends State<_SubWidget> {
                                         ),
                                         trailing: Flexible(
                                           child: Text(
-                                            ATStrings
-                                                .searchAndAddCohost4YourShow,
+                                            ATStrings.searchAndAddCohost4YourShow,
                                             style: context.textTheme.bodySmall
                                                 ?.copyWith(
                                               color: ATColors.white
@@ -349,12 +347,10 @@ class __SubWidgetState extends State<_SubWidget> {
                                           final List<User>? newCohosts =
                                               await showAvailableCoHostsModal(
                                             context: context,
-                                            allUsersCubit:
-                                                context.read<AllUsersCubit>(),
+                                            allUsersCubit: context.read<AllUsersCubit>(),
                                           );
                                           if (newCohosts != null) {
-                                            setter(() =>
-                                                selectedCohosts = newCohosts);
+                                            setter(() => selectedCohosts = newCohosts);
                                           }
                                         }),
                               );
@@ -376,12 +372,32 @@ class __SubWidgetState extends State<_SubWidget> {
                           ),
                           Padding(
                             padding: const EdgeInsets.fromLTRB(15, 0, 15, 10),
-                            child: CreateProgramSelectionItem(
-                              description: '${ATStrings.addHashtags}s',
-                              onTap: () => showTrendingHashtagsModal(context),
+                            child: StatefulBuilder(
+                              builder: (_, StateSetter setter) {
+                                return Column(
+                                  spacing: 10,
+                                  children: <Widget>[
+                                    CreateProgramSelectionItem(
+                                      description: '${ATStrings.addHashtags}s',
+                                      onTap: () async {
+                                        final List<HashTag>? newHashTags =
+                                            await showNewHashTagsModal(
+                                          context: context,
+                                          allHashTagsCubit: context.read<AllHashtagsCubit>(),
+                                          selectedHashTagsCubit: context.read<SelectedHashTagsCubit>(),
+                                        );
+                                        if (newHashTags != null) {
+                                          setter(() => selectedHashtags = newHashTags);
+                                        }
+                                      },
+                                    ),
+                                    const SelectedHashtagsRow(),
+                                  ],
+                                );
+                              }
                             ),
                           ),
-                          const SelectedHashtagsRow(margin: EdgeInsets.zero),
+
                           Padding(
                             padding: const EdgeInsets.fromLTRB(15, 0, 15, 30),
                             child: Text(
@@ -394,8 +410,7 @@ class __SubWidgetState extends State<_SubWidget> {
                           ),
                           const Padding(
                             padding: EdgeInsets.fromLTRB(15, 0, 15, 10),
-                            child:
-                                RowWith2Texts(text1: ATStrings.audienceAccess),
+                            child: RowWith2Texts(text1: ATStrings.audienceAccess),
                           ),
                           Padding(
                             padding: const EdgeInsets.fromLTRB(15, 0, 15, 10),
@@ -472,55 +487,52 @@ class __SubWidgetState extends State<_SubWidget> {
                                   Text(
                                     ATStrings.handRaising,
                                     style: context.textTheme.titleLarge
-                                        ?.copyWith(
-                                            fontWeight: ATFontWeights.w500),
+                                        ?.copyWith(fontWeight: ATFontWeights.w500),
                                   ),
                                 ],
                               )),
                           Padding(
                             padding: const EdgeInsets.fromLTRB(15, 0, 15, 10),
-                            child: StatefulBuilder(builder:
-                                (_, void Function(void Function()) setter) {
-                              return ATScalingSwitcher(
+                            child: StatefulBuilder(
+                              builder:(_, StateSetter setter) {
+                                String descriptionText = ATStrings.choose2AllowHandRasing;
+
+                                if (selectedPermission == HandRaisingPermission.allow) {
+                                  descriptionText = ATStrings.allow;
+                                } else if (selectedPermission == HandRaisingPermission.dontAllow) {
+                                  descriptionText = ATStrings.dontAllow;
+                                }
+
+                                return ATScalingSwitcher(
                                   duration: 300,
                                   child: CreateProgramSelectionItem(
-                                    description: shouldAllowHandRasing,
-                                    descStyle: shouldAllowHandRasing ==
-                                            ATStrings.choose2AllowHandRasing
-                                        ? null
+                                    description: descriptionText,
+                                    descStyle: descriptionText ==
+                                      ATStrings.choose2AllowHandRasing ? null
                                         : context.textTheme.bodySmall,
                                     onTap: () async {
-                                      final String? selectedHandRaising =
-                                          await choose2AllowHandRaisingModal(
-                                              context: context,
-                                              initialHandRaising:
-                                                  shouldAllowHandRasing);
-                                      setter(() {
-                                        if (selectedHandRaising == null) {
-                                          shouldAllowHandRasing = ATStrings
-                                              .selectWhoCanAccessYourShow;
-                                        } else {
-                                          shouldAllowHandRasing =
-                                              selectedHandRaising;
-                                        }
-                                      });
+                                      final HandRaisingPermission? newPermission =
+                                        await showHandRaisingPermissionModal(
+                                          context: context,
+                                          initialPermission: selectedPermission
+                                        );
+                                      setter(() => selectedPermission = newPermission);
                                     },
                                   ));
                             }),
                           ),
                           Padding(
-                              padding: const EdgeInsets.fromLTRB(15, 0, 15, 30),
-                              child: ATRichText(
-                                items: <String, TextStyle>{
-                                  ATStrings
-                                          .U_WILL_HAVE_ACCESS_2_MODERATION_TOOLS:
-                                      context.textTheme.labelSmall!.copyWith(
-                                          color: ATColors.hexC2C2C2
-                                              .withValues(alpha: 0.76)),
-                                  ' ${ATStrings.learnMore}':
-                                      context.textTheme.labelSmall!
-                                },
-                              )),
+                            padding: const EdgeInsets.fromLTRB(15, 0, 15, 30),
+                            child: ATRichText(
+                              items: <String, TextStyle>{
+                                ATStrings.youWillHaveAccessToModerationTools:
+                                  context.textTheme.labelSmall!.copyWith(
+                                    color: ATColors.hexC2C2C2
+                                        .withValues(alpha: 0.76)),
+                                ' ${ATStrings.learnMore}':
+                                    context.textTheme.labelSmall!
+                              },
+                            )),
                         ],
                       ),
                     ),
@@ -536,47 +548,54 @@ class __SubWidgetState extends State<_SubWidget> {
               BlocListener<BgImageCubit, (String, Uint8List?)>(
                 listener: (_, (String, Uint8List?) state) {
                   if (state.$2 != null) {
-                    _launchShowNotifier.value = true;
+                    _launchShowBtnNotifier.value = true;
                   } else {
-                    _launchShowNotifier.value = false;
+                    _launchShowBtnNotifier.value = false;
                   }
                 },
               ),
               BlocListener<UploadImageCubit, ATAppState<String>>(
                 listener: (_, ATAppState<String> state) {
                   if (state is SuccessState<String>) {
+                    //If we upload image successfully, create the show.
                     context.read<CreateShowCubit>().createShow(
-                      tagIds: <String>[const Uuid().v4(), const Uuid().v4()],
-                      coHostIds: <String>[const Uuid().v4(), const Uuid().v4()],
+                      tagIds: (selectedHashtags ?? <HashTag>[])
+                        .map((HashTag tag) => tag.id ?? '')
+                        .toList(),
+                      coHostIds: (selectedCohosts ?? <User>[])
+                        .map((User cohost) => cohost.id ?? '')
+                        .toList(),
                       title: _titleCntrl.text.trim(),
                       description: selectedDescription,
                       coverUrl: state.newData!,
                       category: 'Category',
-                      showType: 'free',
-                      price: 20,
+                      showType: accessTypeData.accessType 
+                        == ProgramAccessType.free ? 'free' : 'paid',
+                      price: accessTypeData.subscriptionAmount 
+                        ?? accessTypeData.oneTimePaymentAmount ?? 0,
                     );
                   } else if (state is FailureState<String>) {
-                    //if uploading coverart fails, stop loading and show notif
+                    //if uploading cover art fails, stop loading and show notif
                     showAppNotification2(
                       context: context,
                       text: state.message,
                       type: NotificationType.failure,
                     );
-                    _launchShowNotifier.value = true;
+                    _launchShowBtnNotifier.value = true;
                   }
                 },
               ),
               BlocListener<CreateShowCubit, ATAppState<dynamic>>(
                 listener: (_, ATAppState<dynamic> state) {
                   if (state is SuccessState<dynamic>) {
-                    _launchShowNotifier.value = true;
+                    _launchShowBtnNotifier.value = true;
                     showAppNotification2(
                       context: context,
                       text: 'Show created successfully',
                       type: NotificationType.success,
                     );
                   } else if (state is FailureState<dynamic>) {
-                    _launchShowNotifier.value = true;
+                    _launchShowBtnNotifier.value = true;
                     showAppNotification2(
                       context: context,
                       text: state.message,
@@ -587,41 +606,67 @@ class __SubWidgetState extends State<_SubWidget> {
               )
             ],
             child: ValueListenableBuilder<bool?>(
-                valueListenable: _launchShowNotifier,
+                valueListenable: _launchShowBtnNotifier,
                 builder: (_, bool? value, __) {
                   return ATBlurredBgBtn(
                     isLoading: value == null,
-                    onPressed: value == false
-                        ? null
-                        : () {
-                            //Start loading on button press.
-                            _launchShowNotifier.value = null;
-                            //Try to upload the cover image.
-                            context.read<UploadImageCubit>().uploadBytesImage(
-                                  bytes: context.read<BgImageCubit>().state.$2!,
-                                  purpose: 'cover-art',
-                                );
-                            // final dynamic params = (
-                            //   coverArtBytes: state.$2,
-                            //   title: ATStrings.SHOW_IS_SETUP,
-                            //   subtitle: ATStrings.BEGIN_JOURNEY,
-                            //   btnTitle: ATStrings.CREATE_1ST_EPISODE,
-                            //   txtBtnTitle: ATStrings.VIEW_SHOW_PAGE,
-                            //   btnOnPressed: () => context.pushReplacementNamed(ATRoutes.CREATE_EPISODE_FORM),
-                            //   txtBtnOnPressed: () {
-                            //     // handle text button press
-                            //   },
-                            //   topLogo: const Icon(Icons.check_circle_sharp, size: 45),
-                            // );
+                    onPressed: value == false ? null : () {
+                      String errorMessage = '';
+                      if (_titleCntrl.text.trim().isEmpty) {
+                        errorMessage = 'Please enter a title';
+                      } else if (selectedDescription == 
+                        ATStrings.tellListenersAboutYourShow) {
+                        errorMessage = 'Please enter a description';
+                      } else if(selectedCommunity == null) {
+                        errorMessage = 'Please select a community';
+                      } else if((selectedCohosts ?? <User>[]).isEmpty) {
+                        errorMessage = 'Please select at least 1 cohost';
+                      } else if((selectedHashtags ?? <HashTag>[]).isEmpty) {
+                        errorMessage = 'Please select at least 1 hashtag';
+                      } else if(selectedPermission == null) {
+                        errorMessage = 'Please choose whether to allow hand-raising for this show';
+                      } else if(accessTypeData.accessType == null) {
+                        errorMessage = 'Please choose whether this show is free or paid';
+                      }
+                      if(errorMessage.isNotEmpty){
+                        showAppNotification2(
+                          context: context,
+                          text: errorMessage,
+                          type: NotificationType.failure,
+                        );
+                        return;
+                      }
 
-                            // context.pushNamed(
-                            //   ATRoutes.GO_LIVE_PROGRAM_CREATION_SUCCESS,
-                            //   extra: params
-                            // );
-                          },
+                      //Start loading on button press.
+                      _launchShowBtnNotifier.value = null;
+                      //Try to upload the cover image.
+                      context.read<UploadImageCubit>().uploadBytesImage(
+                        bytes: context.read<BgImageCubit>().state.$2!,
+                        purpose: 'cover-art',
+                      );
+                      // final dynamic params = (
+                      //   coverArtBytes: state.$2,
+                      //   title: ATStrings.SHOW_IS_SETUP,
+                      //   subtitle: ATStrings.BEGIN_JOURNEY,
+                      //   btnTitle: ATStrings.CREATE_1ST_EPISODE,
+                      //   txtBtnTitle: ATStrings.VIEW_SHOW_PAGE,
+                      //   btnOnPressed: () => context.pushReplacementNamed(ATRoutes.CREATE_EPISODE_FORM),
+                      //   txtBtnOnPressed: () {
+                      //     // handle text button press
+                      //   },
+                      //   topLogo: const Icon(Icons.check_circle_sharp, size: 45),
+                      // );
+
+                      // context.pushNamed(
+                      //   ATRoutes.GO_LIVE_PROGRAM_CREATION_SUCCESS,
+                      //   extra: params
+                      // );
+                    },
                     btnTitle: ATStrings.launchShow,
                   );
-                })),
+                }
+              )
+            ),
       ),
     );
   }

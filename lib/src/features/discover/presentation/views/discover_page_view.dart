@@ -28,7 +28,7 @@ class MainDiscoverView extends StatelessWidget {
           height: 48,
         ),
         HastagHeadingRow(
-          title: ATStrings.TRENDING_HASHTAGS,
+          title: ATStrings.trendingHashtags,
           viewAllOnpressed: () {
             context.pushNamed(ATRoutes.TRENDING_HASHTAGS_SCREEN);
           },

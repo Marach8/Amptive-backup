@@ -188,6 +188,7 @@ class _AddSubPlanWidgetState extends State<_SubPlanWidget> {
                         controller: _oneTimePaymentCntrl,
                         fillColor: isActive ? null : ATColors.hex202020,
                         enabled: isActive,
+                        onTapOutside: (_){},
                         keyboardType: TextInputType.number,
                         textInputAction: TextInputAction.done,
                         hintStyle: Theme.of(context)

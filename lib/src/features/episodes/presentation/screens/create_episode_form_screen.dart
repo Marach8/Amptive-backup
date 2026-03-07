@@ -331,10 +331,10 @@ class _CreateShowFormScreenState extends State<CreateEpisodeFormScreen> {
                               padding: const EdgeInsets.fromLTRB(15, 0, 15, 10),
                               child: CreateProgramSelectionItem(
                                 description: '${ATStrings.addHashtags}s',
-                                onTap: () => showTrendingHashtagsModal(context),
+                                onTap: (){},
                               ),
                             ),
-                            const SelectedHashtagsRow(margin: EdgeInsets.zero),
+                            const SelectedHashtagsRow(),
                             Padding(
                               padding: const EdgeInsets.fromLTRB(15, 0, 15, 30),
                               child: Text(
@@ -397,21 +397,21 @@ class _CreateShowFormScreenState extends State<CreateEpisodeFormScreen> {
                                           ? null
                                           : context.textTheme.bodySmall,
                                       onTap: () async {
-                                        final String? selectedHandRaising =
-                                            await choose2AllowHandRaisingModal(
-                                                context: context,
-                                                initialHandRaising:
-                                                    handRaisingDesc);
-                                        setter(() {
-                                          if (selectedHandRaising == null) {
-                                            handRaisingDesc = ATStrings
-                                                .selectWhoCanAccessYourShow;
-                                          } else {
-                                            handRaisingDesc =
-                                                selectedHandRaising;
-                                          }
-                                          _check4BtnActivation(blocContext);
-                                        });
+                                        // final String? selectedHandRaising =
+                                        //     await showHandRaisingPermissionModal(
+                                        //         context: context,
+                                        //         initialHandRaising:
+                                        //             handRaisingDesc);
+                                        // setter(() {
+                                        //   if (selectedHandRaising == null) {
+                                        //     handRaisingDesc = ATStrings
+                                        //         .selectWhoCanAccessYourShow;
+                                        //   } else {
+                                        //     handRaisingDesc =
+                                        //         selectedHandRaising;
+                                        //   }
+                                        //   _check4BtnActivation(blocContext);
+                                        // });
                                       },
                                     ));
                               }),
@@ -422,7 +422,7 @@ class _CreateShowFormScreenState extends State<CreateEpisodeFormScreen> {
                                 child: ATRichText(
                                   items: <String, TextStyle>{
                                     ATStrings
-                                            .U_WILL_HAVE_ACCESS_2_MODERATION_TOOLS:
+                                            .youWillHaveAccessToModerationTools:
                                         context.textTheme.labelSmall!.copyWith(
                                             color: ATColors.hexC2C2C2
                                                 .withValues(alpha: 0.76)),

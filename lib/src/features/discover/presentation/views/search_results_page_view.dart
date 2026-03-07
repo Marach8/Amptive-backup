@@ -1,7 +1,7 @@
 import 'package:amptive/src/config/api_response_and_app_state.dart';
 import 'package:amptive/src/config/utils/dialogs/app_notification_dialog.dart';
 import 'package:amptive/src/features/discover/cubits/users_cubits.dart';
-import 'package:amptive/src/features/discover/data/models/response/get_all_users_response_model.dart';
+import 'package:amptive/src/features/discover/data/models/response/all_users_response_model.dart';
 import 'package:amptive/src/features/discover/presentation/widgets/search_item_tile.dart';
 import 'package:amptive/src/config/utils/colors.dart';
 import 'package:amptive/src/config/utils/helper_functions.dart';

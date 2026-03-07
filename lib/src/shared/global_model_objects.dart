@@ -95,17 +95,52 @@ class Community {
 }
 
 class HashTag {
-  HashTag({
+  const HashTag({
     this.id,
     this.name,
+    this.displayName,
+    this.description,
+    this.usageCount,
+    this.followerCount,
+    this.createdAt,
+    this.updatedAt,
   });
 
   factory HashTag.fromJson(Map<String, dynamic> json) {
     return HashTag(
       id: json['id'],
       name: json['name'],
+      displayName: json['display_name'],
+      description: json['description'],
+      usageCount: json['usage_count'],
+      followerCount: json['follower_count'],
+      createdAt: json['created_at'],
+      updatedAt: json['updated_at'],
     );
   }
 
-  final String? id, name;
+  final String? id, name, displayName, description, createdAt, updatedAt;
+  final int? usageCount, followerCount;
+
+  HashTag copyWith({
+    String? id,
+    String? name,
+    String? displayName,
+    String? description,
+    String? createdAt,
+    String? updatedAt,
+    int? usageCount,
+    int? followerCount,
+  }) {
+    return HashTag(
+      id: id ?? this.id,
+      name: name ?? this.name,
+      displayName: displayName ?? this.displayName,
+      description: description ?? this.description,
+      createdAt: createdAt ?? this.createdAt,
+      updatedAt: updatedAt ?? this.updatedAt,
+      usageCount: usageCount ?? this.usageCount,
+      followerCount: followerCount ?? this.followerCount,
+    );
+  }
 }

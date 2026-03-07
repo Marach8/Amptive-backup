@@ -5,9 +5,10 @@ import 'package:amptive/src/config/exception.dart';
 import 'package:amptive/src/config/services/network_service/dio_network_service_impl.dart';
 import 'package:amptive/src/config/services/network_service/network_service.dart';
 import 'package:amptive/src/features/discover/data/models/response/communities_response_model.dart';
+import 'package:amptive/src/features/discover/data/models/response/all_users_response_model.dart';
+import 'package:amptive/src/features/discover/data/models/response/all_hashtags_response_model.dart';
 import 'package:amptive/src/features/discover/data/repository/discover_repo.dart';
 import 'package:dio/dio.dart';
-import 'package:amptive/src/features/discover/data/models/response/get_all_users_response_model.dart';
 
 class DiscoverRepoImpl implements DiscoverRepo {
   DiscoverRepoImpl({
@@ -65,22 +66,25 @@ class DiscoverRepoImpl implements DiscoverRepo {
   }
 
   @override
-  Future<ApiResponse<dynamic>> fetchTags({
+  Future<ApiResponse<AllHashtagsResponseModel>> fetchHashTags({
     required int page,
     required int pageSize,
   }) async {
     try {
       final Response<dynamic> response = await networkService.get(
-        ATEndpoints.tags,
+        '${ATEndpoints.tags}/hashtags',
         queryParameters: <String, dynamic>{
           'page': page,
           'pageSize': pageSize,
         },
       );
-      return Successful<dynamic>(data: response.data);
+      return Successful<AllHashtagsResponseModel>(
+        data: AllHashtagsResponseModel.fromJson(response.data),
+      );
     } catch (e) {
       log('Error in fetching tags: $e');
-      return Unsuccessful<dynamic>(error: ATException.resolveException(e));
+      return Unsuccessful<AllHashtagsResponseModel>(
+          error: ATException.resolveException(e));
     }
   }
 }

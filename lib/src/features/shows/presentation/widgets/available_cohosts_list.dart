@@ -2,7 +2,7 @@
 import 'package:amptive/src/config/api_response_and_app_state.dart';
 import 'package:amptive/src/config/utils/dialogs/app_notification_dialog.dart';
 import 'package:amptive/src/features/discover/cubits/users_cubits.dart';
-import 'package:amptive/src/features/discover/data/models/response/get_all_users_response_model.dart';
+import 'package:amptive/src/features/discover/data/models/response/all_users_response_model.dart';
 import 'package:amptive/src/features/go_live/go_live_export.dart';
 import 'package:amptive/src/features/shows/presentation/widgets/cohost_with_check_icon.dart';
 import 'package:amptive/src/global_export.dart';
@@ -116,54 +116,6 @@ class AvailableCohostsList extends StatelessWidget {
           )
       };
     });
-    // return BlocSelector<CohostServiceBloc, (List<ATCohost<bool>>, List<ATCohost<bool>>), List<ATCohost<bool>>>(
-    //   selector: ((List<ATCohost<bool>>, List<ATCohost<bool>>) state) => state.$1,
-    //   builder: (_, List<ATCohost<bool>> coHosts) {
-    //     if(coHosts.isEmpty){
-    //       return Padding(
-    //         padding: const EdgeInsets.fromLTRB(15, 10, 15, 100),
-    //         child: Column(
-    //           crossAxisAlignment: CrossAxisAlignment.start,
-    //           children: <Widget>[
-    //             Text(
-    //               ATStrings.noSuggestions,
-    //               style: context.textTheme.bodySmall?.copyWith(
-    //                 fontSize: ATSizes.size16
-    //               )
-    //             ),
-    //             const SizedBox(height: 5,),
-    //             Text(
-    //               maxLines: 2,
-    //               ATStrings.searchForCohosts,
-    //               style: context.textTheme.bodySmall?.copyWith(color: ATColors.hexC2C2C2),
-    //             ),
-    //           ],
-    //         ),
-    //       );
-    //     }
-
-    // return ListView.builder(
-    //   itemCount: coHosts.length + 1,
-    //   padding: const EdgeInsets.only(right: 10, bottom: 20),
-    //   itemBuilder: (_, int index){
-    //     if(index == 0){
-    //       return Padding(
-    //         padding: const EdgeInsets.fromLTRB(15, 10, 15, 10),
-    //         child: Text(
-    //           ATStrings.SUGGESTIONS,
-    //           style: context.textTheme.bodySmall?.copyWith(
-    //             fontSize: ATSizes.size16
-    //           )
-    //         ),
-    //       );
-    //     }
-
-    //     final ATCohost<bool> coHost = coHosts.elementAt(index - 1);
-    //     return CohostWithCheckIconWidget(coHost: coHost, selectionMode: selectionMode,);
-    //   },
-    // );
-    //   }
-    // );
   }
 }
 
@@ -188,8 +140,10 @@ class CohosListInitialLoadingShimmer extends StatelessWidget {
   const CohosListInitialLoadingShimmer({
     super.key,
     required this.scrollController,
+    this.text,
   });
   final ScrollController scrollController;
+  final String? text;
 
   @override
   Widget build(BuildContext context) {
@@ -201,7 +155,7 @@ class CohosListInitialLoadingShimmer extends StatelessWidget {
         if (index == 0) {
           return Padding(
             padding: const EdgeInsets.fromLTRB(15, 10, 15, 10),
-            child: Text(ATStrings.suggestions,
+            child: Text(text ?? ATStrings.suggestions,
                 style: context.textTheme.bodySmall
                     ?.copyWith(fontSize: ATSizes.size16)),
           );

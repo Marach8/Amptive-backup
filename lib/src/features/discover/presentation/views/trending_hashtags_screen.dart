@@ -21,7 +21,7 @@ class TrendingHashTagsScreen extends StatelessWidget {
             slivers: <Widget>[
               SliverAppBar(
                 title: Text(
-                  ATStrings.TRENDING_HASHTAGS,
+                  ATStrings.trendingHashtags,
                   style: Theme.of(context).textTheme.bodyMedium,
                 ),
                 elevation: 0,

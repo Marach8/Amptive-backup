@@ -1,5 +1,5 @@
 import 'package:amptive/src/config/api_response_and_app_state.dart';
-import 'package:amptive/src/features/discover/data/models/response/get_all_users_response_model.dart';
+import 'package:amptive/src/features/discover/data/models/response/all_users_response_model.dart';
 import 'package:amptive/src/features/discover/data/repository/discover_repo.dart';
 import 'package:amptive/src/features/discover/data/repository/discover_repo_impl.dart';
 import 'package:amptive/src/shared/global_model_objects.dart';
@@ -58,6 +58,7 @@ class AllUsersCubit extends Cubit<ATAppState<AllUsersResponseModel>> {
     }
   }
 
+
   Future<void> searchUsers(String query) async {
     final List<User> allUsers = currentUsersData?.data ?? <User>[];
     if (allUsers.isEmpty) {
@@ -100,8 +101,8 @@ class AllUsersCubit extends Cubit<ATAppState<AllUsersResponseModel>> {
   }
 
   void resetSearch() => emit(SuccessState<AllUsersResponseModel>(
-        newData: currentUsersData?.copyWith(
-          data: _cachedUsers,
-        ),
-      ));
+    newData: currentUsersData?.copyWith(
+      data: _cachedUsers,
+    ),
+  ));
 }

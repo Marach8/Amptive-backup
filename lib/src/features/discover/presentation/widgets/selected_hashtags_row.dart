@@ -1,44 +1,29 @@
 import 'package:amptive/src/features/go_live/go_live_export.dart';
 import 'package:amptive/src/global_export.dart';
-import 'package:amptive/src/models/host.dart';
+import 'package:amptive/src/shared/global_model_objects.dart';
 import 'package:amptive/src/views/widgets/animation_widgets/common_animation_widgets/animated_crossfade_widget.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class SelectedHashtagsRow extends StatelessWidget {
-  const SelectedHashtagsRow({
-    super.key,
-    this.margin,
-  });
-
-  final EdgeInsetsGeometry? margin;
+  const SelectedHashtagsRow({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return BlocSelector<HashtagServiceBloc,
-        (List<ATHashtag<bool>>, List<ATHashtag<bool>>), List<ATHashtag<bool>>>(
-      selector: ((List<ATHashtag<bool>>, List<ATHashtag<bool>>) state) =>
-          state.$2,
-      builder: (_, List<ATHashtag<bool>> selectedHashtags) {
+    return BlocBuilder<SelectedHashTagsCubit, List<HashTag>>(
+      builder: (_, List<HashTag> selectedHashtags) {
         return ATAnimatedXFade(
           condition: selectedHashtags.isNotEmpty,
           secondChild: const SizedBox.shrink(),
-          firstChild: ATContainer(
+          firstChild: SizedBox(
             height: 45,
-            margin: margin ?? const EdgeInsets.fromLTRB(0, 15, 0, 10),
             child: SingleChildScrollView(
               padding: const EdgeInsets.only(bottom: 15),
-              physics: const BouncingScrollPhysics(),
               scrollDirection: Axis.horizontal,
               child: Row(
+                spacing: 15,
                 mainAxisAlignment: MainAxisAlignment.center,
-                children: selectedHashtags.indexed
-                    .map(((int, ATHashtag<bool>) entry) => Padding(
-                          padding: entry.$1 == (selectedHashtags.length - 1)
-                              ? const EdgeInsets.only(right: 15)
-                              : EdgeInsets.zero,
-                          child: SelectedHashtag(hashtag: entry.$2),
-                        ))
-                    .toList(),
+                children: selectedHashtags.map((HashTag hashtag) 
+                  => _SelectedHashtag(hashtag: hashtag)).toList(),
               ),
             ),
           ),
@@ -48,34 +33,33 @@ class SelectedHashtagsRow extends StatelessWidget {
   }
 }
 
-class SelectedHashtag extends StatelessWidget {
-  const SelectedHashtag({super.key, required this.hashtag});
+class _SelectedHashtag extends StatelessWidget {
+  const _SelectedHashtag({ required this.hashtag});
 
-  final ATHashtag<bool> hashtag;
+  final HashTag hashtag;
 
   @override
   Widget build(BuildContext context) {
-    return ATContainer(
+    return Container(
       height: 30,
-      radius: 10,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(10),
+        color: ATColors.white.withValues(alpha: 0.1),
+      ),
       alignment: Alignment.center,
-      margin: const EdgeInsets.only(left: 15),
       padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
-      color: ATColors.white.withValues(alpha: 0.1),
       child: Row(
         children: <Widget>[
           Text(
-            hashtag.title ?? '',
+            (hashtag.displayName ?? '').toLowerCase(),
             style: context.textTheme.labelSmall?.copyWith(
                 fontSize: ATSizes.size11,
                 color: ATColors.white.withValues(alpha: 0.7)),
           ),
-          const SizedBox(
-            width: 6,
-          ),
+          const SizedBox(width: 6),
           InkWell(
             onTap: () =>
-                context.read<HashtagServiceBloc>().removeHashtag(hashtag),
+                context.read<SelectedHashTagsCubit>().removeHashtag(hashtag),
             splashColor: ATColors.hex303030,
             borderRadius: BorderRadius.circular(6),
             child: Icon(

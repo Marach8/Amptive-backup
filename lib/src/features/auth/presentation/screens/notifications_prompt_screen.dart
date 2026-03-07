@@ -355,7 +355,7 @@ class _AnimExperimentState extends State<_SubWidget>
                             key: ATStrings.isNewUser, value: false.toString());
                         context.goNamed(ATRoutes.mainAppShell);
                       },
-                      btnTitle: ATStrings.ALLOW,
+                      btnTitle: ATStrings.allow,
                     ),
                     InkWell(
                         onTap: () {
