@@ -4,7 +4,6 @@ import 'dart:ui';
 
 import 'package:amptive/src/config/config_export.dart';
 import 'package:amptive/src/features/go_live/go_live_export.dart';
-import 'package:amptive/src/models/community.dart';
 import 'package:amptive/src/services/create_show/create_show_service.dart';
 import 'package:amptive/src/shared/animated_switcher.dart';
 import 'package:amptive/src/shared/annotated_region__widget.dart';
@@ -27,23 +26,8 @@ import 'package:amptive/src/shared/blurred_header.dart';
 import 'package:amptive/src/shared/sliver_header_delegate.dart';
 import '../../../../models/host.dart';
 import '../../../../shared/rich_text.dart';
-import '../../../../config/utils/dialogs/add_communities_dialog.dart';
 import '../../../../views/widgets/other_widgets/main_application_widgets/widgets_in_create_show_event/create_show_text_form_field.dart';
 import '../../../auth/data/models/response/communities_response_model.dart' show Community;
-
-//     ShowTypeVisibilityWidget(
-          //       showType: widget.showType,
-          //       allowedShowTypes: const <ShowType>[ShowType.event],
-          //       child: IconButton(
-          //         icon: const Icon(Iconsax.calendar_2),
-          //         onPressed: () async {
-          //           await selectDateModal(context, service.selectedImage.value);
-          //         },
-          //       ),
-          //     ),
-
-
-
 
 
 class CreateEventFormScreen extends StatefulWidget {

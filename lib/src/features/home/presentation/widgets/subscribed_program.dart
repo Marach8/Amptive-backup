@@ -5,7 +5,7 @@ import 'package:amptive/src/config/utils/font_sizes.dart';
 import 'package:amptive/src/config/utils/font_weights.dart';
 import 'package:amptive/src/config/utils/image_strings.dart';
 import 'package:amptive/src/config/utils/other_strings.dart';
-import 'package:amptive/src/features/home/presentation/widgets/program_options_modal.dart';
+import 'package:amptive/src/features/home/presentation/widgets/program_actions_modal.dart';
 import 'package:amptive/src/shared/custom_container_widget.dart';
 import 'package:amptive/src/shared/image_loader_widget.dart';
 import 'package:amptive/src/shared/live_indicator_with_animating_dot_widget.dart';
@@ -26,7 +26,7 @@ class SubscribedProgram extends StatelessWidget {
         TileWithLeadingImage(
           leadingImagePath: ATImgStrings.jpeg3,
           trailingOnPressed: (){
-            showProgramOptions(context);
+            //showProgramOptions(context);
           },
           title: 'glennodoyle',
           subtitle: 'scheduled a live show',

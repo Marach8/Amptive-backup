@@ -1,7 +1,6 @@
 import 'package:amptive/src/config/api_response_and_app_state.dart';
 import 'package:amptive/src/config/config_export.dart';
 import 'package:amptive/src/config/utils/dialogs/app_notification_dialog.dart';
-import 'package:amptive/src/features/auth/cubits/login_cubit.dart';
 import 'package:amptive/src/features/auth/cubits/reset_password_cubit.dart';
 import 'package:amptive/src/shared/annotated_region__widget.dart';
 import 'package:amptive/src/shared/elevated_button_widget.dart';

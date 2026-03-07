@@ -1,18 +1,10 @@
-import 'dart:ui';
-import 'package:amptive/src/config/api_response_and_app_state.dart';
-import 'package:amptive/src/features/go_live/cubits/hosted_shows_cubit.dart';
-import 'package:amptive/src/features/go_live/data/models/response/show_response_model.dart';
+import 'package:amptive/src/features/shows/data/models/response/show_response_model.dart';
+import 'package:amptive/src/features/shows/presentation/screens/list_hosted_shows_screen.dart';
 import 'package:amptive/src/features/go_live/go_live_export.dart';
 import 'package:amptive/src/global_export.dart';
-import 'package:amptive/src/shared/annotated_region__widget.dart';
-import 'package:amptive/src/shared/back_button.dart';
-import 'package:amptive/src/shared/circle_avatar.dart';
 import 'package:amptive/src/shared/image_loader_widget.dart';
-import 'package:amptive/src/features/go_live/presentation/widgets/existing_go_live_program_widget.dart';
 import 'package:amptive/src/shared/shimmer.dart';
 import 'package:go_router/go_router.dart';
-import 'package:nested/nested.dart' show SingleChildWidget;
-import 'package:amptive/src/shared/sliver_header_delegate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class RenderHostedShow extends StatelessWidget {
@@ -23,13 +15,13 @@ class RenderHostedShow extends StatelessWidget {
   Widget build(BuildContext context) {
     return LayoutBuilder(
       builder: (_, BoxConstraints kst) {
-        return BlocBuilder<HostedShowSelectionCubit, String?>(
-          builder: (BuildContext blocContext, String? selectedImg) {
-            final bool isSelected = hostedShow.coverUrl == selectedImg;
+        return BlocBuilder<HostedShowSelectionCubit, HostedShow?>(
+          builder: (BuildContext blocContext, HostedShow? selected) {
+            final bool isSelected = hostedShow.showId == selected?.showId;
             return ATContainer(
               duration: 200,
-              onTap: () => blocContext.read<HostedShowSelectionCubit>().setBgImage(
-                isSelected ? null : hostedShow.coverUrl
+              onTap: () => blocContext.read<HostedShowSelectionCubit>().setSelection(
+                show: isSelected ? null : hostedShow
               ),
               radius: 5,
               border: Border.all(

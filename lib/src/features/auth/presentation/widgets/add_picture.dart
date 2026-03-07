@@ -1,7 +1,5 @@
 import 'dart:io';
 import 'dart:typed_data';
-import 'package:amptive/src/bloc/authentication/general/auth_bloc.dart';
-import 'package:amptive/src/bloc/authentication/general/auth_states.dart';
 import 'package:amptive/src/config/api_response_and_app_state.dart';
 import 'package:amptive/src/config/utils/helper_functions.dart';
 import 'package:amptive/src/features/auth/cubits/upload_image_cubit.dart';
@@ -10,12 +8,10 @@ import 'package:amptive/src/shared/elevated_button_widget.dart';
 import 'package:amptive/src/shared/image_source_selection_dialog.dart';
 import 'package:amptive/src/shared/image_loader_widget.dart';
 import 'package:custom_image_crop/custom_image_crop.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:image_picker/image_picker.dart';
-import '../../../../bloc/authentication/general/auth_events.dart';
 import '../../../../config/utils/colors.dart';
 import '../../../../config/utils/dialogs/app_notification_dialog.dart';
 import '../../../../config/utils/font_weights.dart';
@@ -47,7 +43,7 @@ class _AddPictureWidgetState extends State<AddPictureWidget> {
                   fontWeight: ATFontWeights.w600,
                 ),
           ),
-          SizedBox(
+          const SizedBox(
             height: 4,
           ),
           Text(
@@ -122,7 +118,7 @@ class _AddPictureWidgetState extends State<AddPictureWidget> {
           const Spacer(),
           Container(
             margin: const EdgeInsets.only(bottom: 20),
-            padding: EdgeInsets.symmetric(vertical: 7),
+            padding: const EdgeInsets.symmetric(vertical: 7),
             alignment: Alignment.center,
             child: GestureDetector(
               onTap: () {

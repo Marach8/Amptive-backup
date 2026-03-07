@@ -1,6 +1,5 @@
 import 'dart:ui';
 import 'package:amptive/src/global_export.dart';
-import 'package:amptive/src/shared/blurred_header.dart';
 import 'package:amptive/src/shared/annotated_region__widget.dart';
 import 'package:amptive/src/shared/image_loader_widget.dart';
 import 'package:amptive/src/shared/loading_indicator.dart';
@@ -12,7 +11,6 @@ import '../../../../shared/circle_avatar.dart';
 import '../../../../shared/list_tile_with_leading_picture_widget.dart';
 import '../../../../shared/row_of_people_listening_widget.dart';
 import '../widgets/event_or_show_card.dart';
-import '../widgets/people_listening.dart';
 import '../widgets/live_and_society_widget.dart';
 import '../widgets/whispers_list.dart';
 

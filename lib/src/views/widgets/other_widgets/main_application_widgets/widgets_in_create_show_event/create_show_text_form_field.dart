@@ -24,7 +24,9 @@ class CreateShowTextFormField extends ATTextFormField {
         this.counterText = ""
       });
 
+  @override
   final bool readOnly;
+  @override
   final GestureTapCallback? onTap;
   @override
   final int maxLength;

@@ -90,7 +90,7 @@ class RenderACommunityCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Builder(
-      builder: (context) {
+      builder: (BuildContext context) {
         return GestureDetector(
           onTap: (){
             
