@@ -91,7 +91,8 @@ class __SubWidgetState extends State<_SubWidget> {
 
       context.read<HomeFeedCubit>().fetchHomeFeed();
       context.read<LiveUsersCubit>().fetchLiveUsers();
-      context.read<RemoteUserDataCubit>().fetchUserProfile();
+      //context.read<RemoteUserDataCubit>().fetchUserProfile();
+      context.read<LocalUserDataCubit>().initializeCachedData();
     });
   }
 
@@ -113,45 +114,27 @@ class __SubWidgetState extends State<_SubWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocListener<RemoteUserDataCubit, ATAppState<UserData>>(
-      listener: (BuildContext context, ATAppState<UserData> state) {
-        if (state is SuccessState<UserData>) {
-          final UserData? userProfile = state.newData;
-
-          context.read<LocalUserDataCubit>().updateUserDataLocally(
-                CachedUserData(
-                  userId: userProfile?.id,
-                  email: userProfile?.email,
-                  username: userProfile?.username,
-                  dob: userProfile?.dob,
-                  name: userProfile?.name,
-                  pictureUrl: userProfile?.pictureUrl,
-                ),
-              );
-        }
-      },
-      child: ATAnnotatedRegion(
-        child: SafeArea(
-          bottom: false,
-          top: false,
-          child: Scaffold(
-              body: BlocSelector<ATNavBarBloc, (int, bool), int>(
-                  selector: ((int, bool) st) => st.$1,
-                  builder: (_, int index) {
-                    return IndexedStack(index: index, children: <Widget>[
-                      HomeTabView(
-                        nestedKey: _nestedKey,
-                        liveUsersScrollController: _liveUsersScrollController,
-                      ),
-                      const DiscoverTabView(),
-                      const SizedBox(),
-                      const NotificationTabView()
-                    ]);
-                  }),
-              resizeToAvoidBottomInset: false,
-              backgroundColor: ATColors.transparent,
-              bottomSheet: const MainAppBottomNav()),
-        ),
+    return ATAnnotatedRegion(
+      child: SafeArea(
+        bottom: false,
+        top: false,
+        child: Scaffold(
+            body: BlocSelector<ATNavBarBloc, (int, bool), int>(
+                selector: ((int, bool) st) => st.$1,
+                builder: (_, int index) {
+                  return IndexedStack(index: index, children: <Widget>[
+                    HomeTabView(
+                      nestedKey: _nestedKey,
+                      liveUsersScrollController: _liveUsersScrollController,
+                    ),
+                    const DiscoverTabView(),
+                    const SizedBox(),
+                    const NotificationTabView()
+                  ]);
+                }),
+            resizeToAvoidBottomInset: false,
+            backgroundColor: ATColors.transparent,
+            bottomSheet: const MainAppBottomNav()),
       ),
     );
   }
