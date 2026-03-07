@@ -6,6 +6,7 @@ import 'package:amptive/src/features/discover/presentation/widgets/search_item_t
 import 'package:amptive/src/config/utils/colors.dart';
 import 'package:amptive/src/config/utils/helper_functions.dart';
 import 'package:amptive/src/shared/custom_container_widget.dart';
+import 'package:amptive/src/shared/global_model_objects.dart';
 import 'package:amptive/src/shared/shimmer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -42,8 +43,8 @@ class _SearchResultsTabsViewState extends State<SearchResultsTabsView>
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider<GetUsersCubit>(
-      create: (_) => GetUsersCubit()..fetchAllUsers(),
+    return BlocProvider<AllUsersCubit>(
+      create: (_) => AllUsersCubit()..fetchAllUsers(),
       child: Column(
         children: <Widget>[
           TabBar(
@@ -154,11 +155,11 @@ class _SearchResultsTabsViewState extends State<SearchResultsTabsView>
                       ),
                     ),
                   )),
-                  BlocConsumer<GetUsersCubit,
-                      ATAppState<GetAllUsersResponseModel>>(
+                  BlocConsumer<AllUsersCubit,
+                      ATAppState<AllUsersResponseModel>>(
                     listener: (BuildContext context,
-                        ATAppState<GetAllUsersResponseModel> state) {
-                      if (state is FailureState<GetAllUsersResponseModel>) {
+                        ATAppState<AllUsersResponseModel> state) {
+                      if (state is FailureState<AllUsersResponseModel>) {
                         showAppNotification2(
                           context: context,
                           text: state.message,
@@ -167,25 +168,25 @@ class _SearchResultsTabsViewState extends State<SearchResultsTabsView>
                       }
                     },
                     builder: (BuildContext context,
-                        ATAppState<GetAllUsersResponseModel> state) {
+                        ATAppState<AllUsersResponseModel> state) {
                       return switch (state) {
-                        InitialState<GetAllUsersResponseModel>() =>
+                        InitialState<AllUsersResponseModel>() =>
                           const SizedBox.shrink(),
-                        LoadingState<GetAllUsersResponseModel>() ||
-                        FailureState<GetAllUsersResponseModel>() ||
-                        SuccessState<GetAllUsersResponseModel>() =>
+                        LoadingState<AllUsersResponseModel>() ||
+                        FailureState<AllUsersResponseModel>() ||
+                        SuccessState<AllUsersResponseModel>() =>
                           Builder(
                             builder: (_) {
-                              final GetAllUsersResponseModel? usersData =
+                              final AllUsersResponseModel? usersData =
                                   context
-                                      .read<GetUsersCubit>()
+                                      .read<AllUsersCubit>()
                                       .currentUsersData;
-                              final List<UserModel> users =
-                                  usersData?.data ?? <UserModel>[];
+                              final List<User> users =
+                                  usersData?.data ?? <User>[];
 
                               if (users.isEmpty) {
                                 if (state
-                                    is LoadingState<GetAllUsersResponseModel>) {
+                                    is LoadingState<AllUsersResponseModel>) {
                                   return const _UsersListShimmer();
                                     
                                 }
@@ -197,7 +198,7 @@ class _SearchResultsTabsViewState extends State<SearchResultsTabsView>
                                       const Text('No users found'),
                                       TextButton(
                                         onPressed: () => context
-                                            .read<GetUsersCubit>()
+                                            .read<AllUsersCubit>()
                                             .fetchAllUsers(),
                                         child: const Text('Retry'),
                                       ),
@@ -210,7 +211,7 @@ class _SearchResultsTabsViewState extends State<SearchResultsTabsView>
                                 padding: const EdgeInsets.all(15),
                                 itemCount: users.length,
                                 itemBuilder: (BuildContext _, int index) {
-                                  final UserModel user = users[index];
+                                  final User user = users[index];
                                   return SearchItemTile(
                                     leadingImagePath: user.profilePicture ?? '',
                                     title: user.name ??

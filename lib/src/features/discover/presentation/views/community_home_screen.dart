@@ -19,12 +19,12 @@ class ATCommunityScreen extends StatelessWidget {
     return ATAnnotatedRegion(
       statusBarColor: ATColors.transparent,
       child: Scaffold(
-        body: BlocProvider<BlurredHeaderBloc>(
-          create: (_) => BlurredHeaderBloc(),
+        body: BlocProvider<BlurredHeaderCubit>(
+          create: (_) => BlurredHeaderCubit(),
           child: Builder(
             builder: (BuildContext blocContext) {
               return NotificationListener<ScrollNotification>(
-                onNotification: blocContext.read<BlurredHeaderBloc>().onScrollNotification,
+                onNotification: blocContext.read<BlurredHeaderCubit>().onScrollNotification,
                 child: CustomScrollView(
                   physics: const BouncingScrollPhysics(),
                   slivers: <Widget>[

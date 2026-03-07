@@ -41,12 +41,12 @@ class ATScheduleDetailedScreen extends StatelessWidget {
             ),
             ATContainer(
               color: ATColors.hex0D0D0D.withValues(alpha: 0.75),
-              child: BlocProvider<BlurredHeaderBloc>(
-                create: (_) => BlurredHeaderBloc(),
+              child: BlocProvider<BlurredHeaderCubit>(
+                create: (_) => BlurredHeaderCubit(),
                 child: Builder(
                   builder: (BuildContext blocContext) {
                     return NotificationListener<ScrollNotification>(
-                      onNotification: blocContext.read<BlurredHeaderBloc>().onScrollNotification,
+                      onNotification: blocContext.read<BlurredHeaderCubit>().onScrollNotification,
                       child: NestedScrollView(
                         headerSliverBuilder: (_, __) => <Widget>[
                           SliverPersistentHeader(

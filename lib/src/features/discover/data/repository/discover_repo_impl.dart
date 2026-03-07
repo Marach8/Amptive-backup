@@ -41,7 +41,7 @@ class DiscoverRepoImpl implements DiscoverRepo {
   }
 
   @override
-  Future<ApiResponse<GetAllUsersResponseModel>> fetchAllUsers({
+  Future<ApiResponse<AllUsersResponseModel>> fetchAllUsers({
     required int page,
     required int pageSize,
   }) async {
@@ -53,12 +53,12 @@ class DiscoverRepoImpl implements DiscoverRepo {
           'pageSize': pageSize,
         },
       );
-      return Successful<GetAllUsersResponseModel>(
-        data: GetAllUsersResponseModel.fromJson(response.data),
+      return Successful<AllUsersResponseModel>(
+        data: AllUsersResponseModel.fromJson(response.data),
         );
     } catch (e) {
       log('Error in fetching users');
-      return Unsuccessful<GetAllUsersResponseModel>(error: ATException.resolveException(e));
+      return Unsuccessful<AllUsersResponseModel>(error: ATException.resolveException(e));
     }
   }
 }

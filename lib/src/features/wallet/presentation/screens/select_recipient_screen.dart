@@ -52,7 +52,7 @@ class _ATSelectRecipientScreenState extends State<ATSelectRecipientScreen> {
       child: MultiBlocProvider(
         providers: <SingleChildWidget>[
           BlocProvider(create: (_) => RecentRecipientsBloc()),
-          BlocProvider(create: (_) => SearchkeyBloc())
+          BlocProvider(create: (_) => SearchkeyCubit())
         ],
         child: Builder(
           builder: (BuildContext context) {
@@ -102,7 +102,7 @@ class _ATSelectRecipientScreenState extends State<ATSelectRecipientScreen> {
                                   ATHelperFuncs.callDebouncer(
                                     500,
                                     (){
-                                      context.read<SearchkeyBloc>().updateSearchKey(text);
+                                      context.read<SearchkeyCubit>().updateSearchKey(text);
                                       context.read<RecentRecipientsBloc>().add(
                                         SearchRecentRecipients(text)
                                       );
@@ -229,7 +229,7 @@ class _UserWithTrailingRadio extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  ATFilterWidget<SearchkeyBloc>(
+                  ATFilterWidget<SearchkeyCubit>(
                     title: user.obj.name ?? '',
                     style: Theme.of(context).textTheme.bodySmall?.copyWith(
                       fontSize: ATSizes.size15

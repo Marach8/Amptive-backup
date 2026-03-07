@@ -65,7 +65,7 @@ class CohostWidget4HostView extends StatelessWidget {
             SizedBox(
               width: 80,
               child: Text(
-                coHostName ?? ATStrings.ADD_CO_HOST.toLowerCase(),
+                coHostName ?? ATStrings.addCohost.toLowerCase(),
                 textAlign: TextAlign.center,
                 style: context.textTheme.titleSmall?.copyWith(
                   height: 0.8

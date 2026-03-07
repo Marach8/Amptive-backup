@@ -1,71 +1,76 @@
 class User {
   User({
-    this.userId,
+    this.id,
     this.username,
-    this.displayName,
-    this.profileImageUrl,
-    this.isVerified,
+    this.profilePicture,
     this.followersCount,
+    this.followingCount,
+    this.firstName,
+    this.lastName,
+    this.name,
+    this.isVerified,
   });
 
-  factory User.fromJson(Map<String, dynamic> json) {
-    return User(
-      userId: json['user_id'],
-      username: json['username'],
-      displayName: json['display_name'],
-      profileImageUrl: json['profile_image_url'],
-      isVerified: json['is_verified'],
-      followersCount: json['followers_count'],
-    );
-  }
+  User.fromJson(Map<String, dynamic> json)
+      : id = json['id'],
+        username = json['username'],
+        profilePicture = json['profile_picture'],
+        followersCount = json['followers_count'],
+        followingCount = json['following_count'],
+        firstName = json['first_name'],
+        lastName = json['last_name'],
+        name = json['name'],
+        isVerified = json['is_verified'];
 
-  final String? userId, username, displayName, profileImageUrl;
+  final String? id, username, profilePicture, firstName,
+  lastName, name;
+  final int? followersCount, followingCount;
   final bool? isVerified;
-  final int? followersCount;
 }
+
 
 class Host extends User {
   Host({
-    super.userId,
+    this.hostLevel,
+    this.totalShows,
+    super.id,
     super.username,
-    super.displayName,
-    super.profileImageUrl,
-    super.isVerified,
+    super.profilePicture,
     super.followersCount,
+    super.followingCount,
+    super.firstName,
+    super.lastName,
+    super.name,
+    super.isVerified,
   });
 
-  factory Host.fromJson(Map<String, dynamic> json) {
-    return Host(
-      userId: json['user_id'],
-      username: json['username'],
-      displayName: json['display_name'],
-      profileImageUrl: json['profile_image_url'],
-      isVerified: json['is_verified'],
-      followersCount: json['followers_count'],
-    );
-  }
+  Host.fromJson(super.json)
+      : hostLevel = json['host_level'],
+        totalShows = json['total_shows'],
+        super.fromJson();
+
+  final int? hostLevel, totalShows;
 }
 
 class CoHost extends User {
   CoHost({
-    super.userId,
+    this.invitedAt,
+    super.id,
     super.username,
-    super.displayName,
-    super.profileImageUrl,
-    super.isVerified,
+    super.profilePicture,
     super.followersCount,
+    super.followingCount,
+    super.firstName,
+    super.lastName,
+    super.name,
+    super.isVerified,
   });
 
-  factory CoHost.fromJson(Map<String, dynamic> json) {
-    return CoHost(
-      userId: json['user_id'],
-      username: json['username'],
-      displayName: json['display_name'],
-      profileImageUrl: json['profile_image_url'],
-      isVerified: json['is_verified'],
-      followersCount: json['followers_count'],
-    );
-  }
+  CoHost.fromJson(super.json)
+      : invitedAt = json['invited_at'],
+        super.fromJson();
+
+  final String? invitedAt;
 }
 
 class Community {

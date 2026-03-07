@@ -33,7 +33,7 @@ class PreviewShowScreen extends StatelessWidget {
           create: (_) => ShowDetailCubit(initialShow: hostedShow)
             ..fetchShowDetails()
         ),
-        BlocProvider<BlurredHeaderBloc>(create: (_) => BlurredHeaderBloc()),
+        BlocProvider<BlurredHeaderCubit>(create: (_) => BlurredHeaderCubit()),
         BlocProvider<ToggleFollowingCubit>(
           create: (_) => ToggleFollowingCubit(
             initialStatus: FollowingStatus(
@@ -68,7 +68,7 @@ class PreviewShowScreen extends StatelessWidget {
                   ATContainer(
                     color: ATColors.hex0D0D0D.withValues(alpha: 0.75),
                     child: NotificationListener<ScrollNotification>(
-                      onNotification: context.read<BlurredHeaderBloc>().onScrollNotification,
+                      onNotification: context.read<BlurredHeaderCubit>().onScrollNotification,
                       child: NestedScrollView(
                         headerSliverBuilder: (_, __) => <Widget>[
                           SliverPersistentHeader(

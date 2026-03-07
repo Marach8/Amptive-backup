@@ -30,7 +30,7 @@ Future<String?> selectWithdrawalBankDialog(BuildContext context) {
       return MultiBlocProvider(
         providers: <SingleChildWidget>[
           BlocProvider(create: (_) => WithdrawalBanksBloc()),
-          BlocProvider(create: (_) => SearchkeyBloc())
+          BlocProvider(create: (_) => SearchkeyCubit())
         ],
         child: Material(
           color: ATColors.transparent,
@@ -102,7 +102,7 @@ Future<String?> selectWithdrawalBankDialog(BuildContext context) {
                               onPressed: () => setter(
                                 (){
                                   context.read<WithdrawalBanksBloc>().add(ResetBanksSearchEvent());
-                                  context.read<SearchkeyBloc>().updateSearchKey('');
+                                  context.read<SearchkeyCubit>().updateSearchKey('');
                                   cntrl.clear(); showCancelIcon = false;
                                 }
                               ),
@@ -118,7 +118,7 @@ Future<String?> selectWithdrawalBankDialog(BuildContext context) {
                               ATHelperFuncs.callDebouncer(
                                 500,
                                 (){
-                                  context.read<SearchkeyBloc>().updateSearchKey(text);
+                                  context.read<SearchkeyCubit>().updateSearchKey(text);
                                   context.read<WithdrawalBanksBloc>().add(
                                     SearchBanksEvent(text)
                                   );
@@ -175,7 +175,7 @@ Future<String?> selectWithdrawalBankDialog(BuildContext context) {
                                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                         children: <Widget>[
                                           Expanded(
-                                            child: ATFilterWidget<SearchkeyBloc>(
+                                            child: ATFilterWidget<SearchkeyCubit>(
                                               title: bank ?? '',
                                               style: context.textTheme.bodySmall?.copyWith(
                                                 fontSize: ATSizes.size15

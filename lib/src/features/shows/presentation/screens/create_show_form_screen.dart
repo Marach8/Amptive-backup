@@ -5,7 +5,7 @@ import 'package:amptive/src/config/api_response_and_app_state.dart';
 import 'package:amptive/src/config/utils/dialogs/app_notification_dialog.dart';
 import 'package:amptive/src/features/discover/cubits/communities_cubit.dart';
 import 'package:amptive/src/features/auth/cubits/upload_image_cubit.dart';
-import 'package:amptive/src/features/discover/data/models/response/communities_response_model.dart';
+import 'package:amptive/src/features/discover/cubits/users_cubits.dart';
 import 'package:amptive/src/features/shows/cubits/create_show_cubit.dart';
 import 'package:amptive/src/features/go_live/go_live_export.dart';
 import 'package:amptive/src/global_export.dart';
@@ -35,8 +35,9 @@ class CreateShowFormScreen extends StatelessWidget {
         BlocProvider<CommunitiesCubit>(create: (_) => CommunitiesCubit()),
         BlocProvider<CreateShowCubit>(create: (_) => CreateShowCubit()),
         BlocProvider<UploadImageCubit>(create: (_) => UploadImageCubit()),
-        BlocProvider<BlurredHeaderBloc>(create: (_) => BlurredHeaderBloc(),),
-        BlocProvider<BgImageCubit>(create: (_) => BgImageCubit())
+        BlocProvider<BlurredHeaderCubit>(create: (_) => BlurredHeaderCubit(),),
+        BlocProvider<BgImageCubit>(create: (_) => BgImageCubit()),
+        BlocProvider<AllUsersCubit>(create: (_) => AllUsersCubit(),)
       ],
       child: const _SubWidget(),
     );
@@ -63,6 +64,7 @@ class __SubWidgetState extends State<_SubWidget> {
   String shouldAllowHandRasing = ATStrings.choose2AllowHandRasing;
 
   Community? selectedCommunity;
+  List<User>? selectedCohosts;
 
   @override 
   void initState(){
@@ -73,6 +75,7 @@ class __SubWidgetState extends State<_SubWidget> {
     WidgetsBinding.instance.addPostFrameCallback(
       (_){
         context.read<CommunitiesCubit>().fetchCommunities();
+        context.read<AllUsersCubit>().fetchAllUsers();
       }
     );
   }
@@ -88,12 +91,7 @@ class __SubWidgetState extends State<_SubWidget> {
   @override
   Widget build(BuildContext context) {
     final double blurredHeaderHeight = kToolbarHeight + MediaQuery.paddingOf(context).top;
-    WidgetsBinding.instance.addPostFrameCallback(
-      (_){
-        context.read<CohostServiceBloc>().resetBloc();
-        context.read<HashtagServiceBloc>().resetBloc();
-      }
-    );
+
     return ATAnnotatedRegion(
       statusBarColor: ATColors.transparent,
       child: Scaffold(
@@ -118,7 +116,7 @@ class __SubWidgetState extends State<_SubWidget> {
                 ATContainer(
                   color: ATColors.hex0D0D0D.withValues(alpha: 0.75),
                   child: NotificationListener<ScrollNotification>(
-                    onNotification: blocContext.read<BlurredHeaderBloc>().onScrollNotification,
+                    onNotification: blocContext.read<BlurredHeaderCubit>().onScrollNotification,
                     child: NestedScrollView(
                       headerSliverBuilder: (_, __) => <Widget>[
                         SliverPersistentHeader(
@@ -137,7 +135,7 @@ class __SubWidgetState extends State<_SubWidget> {
                                       child: ATRoundedBackBtn(bgColor: ATColors.transparent,),
                                     ),
                                     Text(
-                                      ATStrings.CREATE_SHOW,
+                                      ATStrings.createShow,
                                       style: context.textTheme.bodyMedium,
                                     ),
                                     const SizedBox(width: 30,)
@@ -283,22 +281,27 @@ class __SubWidgetState extends State<_SubWidget> {
     
                             const Padding(
                               padding: EdgeInsets.fromLTRB(15, 0, 15, 10),
-                              child: RowWith2Texts(text1: ATStrings.ADD_CO_HOST, text2: '5 max',),
+                              child: RowWith2Texts(text1: ATStrings.addCohost, text2: '5 max',),
                             ),
                             Padding(
                               padding: const EdgeInsets.fromLTRB(15, 0, 15, 10),
-                              child: BlocSelector<CohostServiceBloc, (List<ATCohost<bool>>, List<ATCohost<bool>>), List<ATCohost<bool>>>(
-                                selector: ((List<ATCohost<bool>>, List<ATCohost<bool>>) state) => state.$2,
-                                builder: (_, List<ATCohost<bool>> selectedCoHosts) { 
-                                  final bool coHostExists = selectedCoHosts.any(
-                                    (ATCohost<bool> cohost) => cohost.profilePicture != null
-                                  );
-                              
+                              child: StatefulBuilder(
+                                builder: (_, StateSetter setter) {
+                                  final bool hasCohosts = (selectedCohosts ?? <User>[]).isNotEmpty;
                                   return ATScalingSwitcher(
                                     duration: 300,
-                                    child: coHostExists ? SelectedCoHostsWidget(
-                                        onEdit: () => showAvailableCoHostsModal(context: context),
-                                        selectedCohosts: selectedCoHosts,
+                                    child: hasCohosts ? SelectedCoHostsWidget(
+                                        onEdit: ()async{
+                                          final List<User>? newCohosts = await showAvailableCoHostsModal(
+                                            context: context,
+                                            selectedCoHosts: selectedCohosts,
+                                            allUsersCubit: context.read<AllUsersCubit>(),
+                                          );
+                                          if(newCohosts != null){
+                                            setter(() => selectedCohosts = newCohosts);
+                                          }
+                                        },
+                                        selectedCohosts: selectedCohosts!
                                       ) : CreateProgramSelectionItem(
                                         leading: const ATImgLoader(
                                           height: 20, width: 20,
@@ -306,13 +309,21 @@ class __SubWidgetState extends State<_SubWidget> {
                                         ),
                                         trailing: Flexible(
                                           child: Text(
-                                            ATStrings.SEARCH_ND_ADD_COHOSTS_4_SHOW,
+                                            ATStrings.searchAndAddCohost4YourShow,
                                             style: context.textTheme.bodySmall?.copyWith(
                                               color: ATColors.white.withValues(alpha: 0.4),
                                             ),
                                           ),
                                         ),
-                                        onTap: () => showAvailableCoHostsModal(context: context),
+                                        onTap: ()async{
+                                          final List<User>? newCohosts = await showAvailableCoHostsModal(
+                                            context: context,
+                                            allUsersCubit: context.read<AllUsersCubit>(),
+                                          );
+                                          if(newCohosts != null){
+                                            setter(() => selectedCohosts = newCohosts);
+                                          }
+                                        }
                                       ),
                                   );
                                 }
@@ -321,7 +332,7 @@ class __SubWidgetState extends State<_SubWidget> {
                             Padding(
                               padding: const EdgeInsets.fromLTRB(15, 0, 15, 30),
                               child: Text(
-                                ATStrings.ADD_COHOST_DESC, maxLines: 5,
+                                ATStrings.addCohostDesc, maxLines: 5,
                                 style: context.textTheme.labelSmall!.copyWith(
                                   color: ATColors.hexC2C2C2.withValues(alpha: 0.76)
                                 ),

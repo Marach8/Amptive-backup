@@ -12,11 +12,13 @@ class SearchFieldWithXSuffix extends StatefulWidget {
     required this.onChanged,
     required this.hintText,
     this.onClear,
+    this.fillColor,
   });
 
   final void Function(String) onChanged;
   final VoidCallback? onClear;
   final String hintText;
+  final Color? fillColor;
 
   @override
   State<SearchFieldWithXSuffix> createState() => _SearchFieldWithXSuffixState();
@@ -59,6 +61,7 @@ class _SearchFieldWithXSuffixState extends State<SearchFieldWithXSuffix> {
       cursorColor: ATColors.white.withValues(alpha: 0.6),
       contentPadding: const EdgeInsets.fromLTRB(12, 10, 12, 10),
       hintText: widget.hintText,
+      fillColor: widget.fillColor,
       enabledBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(14),
         borderSide: BorderSide(color: ATColors.transparent)

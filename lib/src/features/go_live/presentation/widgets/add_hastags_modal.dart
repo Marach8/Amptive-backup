@@ -15,8 +15,8 @@ Future<void> showTrendingHashtagsModal(BuildContext context) async {
     builder: (BuildContext dContext) {
       return Stack(
         children: <Widget>[
-          BlocProvider<SearchkeyBloc>(
-            create: (_) => SearchkeyBloc(),
+          BlocProvider<SearchkeyCubit>(
+            create: (_) => SearchkeyCubit(),
             child: DraggableScrollableSheet(
               expand: false,
               initialChildSize: 0.7,
@@ -83,7 +83,7 @@ Future<void> showTrendingHashtagsModal(BuildContext context) async {
                         child: SearchFieldWithXSuffix(
                           hintText: ATStrings.SEARCH_4_HASHTAGS,
                           onClear: (){
-                            bContext.read<SearchkeyBloc>().resetSearch();
+                            bContext.read<SearchkeyCubit>().resetSearch();
                             dContext.read<HashtagServiceBloc>().resetHashtagsSearch();
                           },
                           onChanged: (String searchKey){
@@ -91,7 +91,7 @@ Future<void> showTrendingHashtagsModal(BuildContext context) async {
                               500,
                               (){
                                 dContext.read<HashtagServiceBloc>().searchHashtags(searchKey);
-                                bContext.read<SearchkeyBloc>().updateSearchKey(searchKey);
+                                bContext.read<SearchkeyCubit>().updateSearchKey(searchKey);
                               }
                             );
                           },

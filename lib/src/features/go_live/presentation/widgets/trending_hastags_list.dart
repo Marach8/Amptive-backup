@@ -104,7 +104,7 @@ class HashtagWithCheckIconWidget extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                ATFilterWidget<SearchkeyBloc>(
+                ATFilterWidget<SearchkeyCubit>(
                   title: '#${hashtag.title ?? ''}',
                   style: context.textTheme.bodySmall?.copyWith(
                     fontSize: ATSizes.size15

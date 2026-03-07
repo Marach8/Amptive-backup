@@ -1,5 +1,7 @@
-class GetAllUsersResponseModel {
-  GetAllUsersResponseModel({
+import 'package:amptive/src/shared/global_model_objects.dart';
+
+class AllUsersResponseModel {
+  AllUsersResponseModel({
     this.status,
     this.statusCode,
     this.message,
@@ -9,53 +11,44 @@ class GetAllUsersResponseModel {
     this.hasMore,
   });
 
-  factory GetAllUsersResponseModel.fromJson(Map<String, dynamic> json) {
-    return GetAllUsersResponseModel(
-      status: json['status'] as bool?,
-      statusCode: json['status_code'] as int?,
-      message: json['message'] as String?,
+  factory AllUsersResponseModel.fromJson(Map<String, dynamic> json) {
+    return AllUsersResponseModel(
+      status: json['status'],
+      statusCode: json['status_code'],
+      message: json['message'],
       data: (json['data'] as List<dynamic>?)
-          ?.map((e) => UserModel.fromJson(e as Map<String, dynamic>))
+          ?.map((dynamic e) => User.fromJson(e as Map<String, dynamic>))
           .toList(),
-      page: json['page'] as int?,
-      pageSize: json['page_size'] as int?,
-      hasMore: json['has_more'] as bool?,
+      page: json['page'],
+      pageSize: json['page_size'],
+      hasMore: json['has_more'],
+    );
+  }
+
+
+  AllUsersResponseModel copyWith({
+    bool? status,
+    String? message,
+    List<User>? data,
+    int? page,
+    int? pageSize,
+    int? statusCode,
+    bool? hasMore,
+  }) {
+    return AllUsersResponseModel(
+      status: status ?? this.status,
+      statusCode: statusCode ?? this.statusCode,
+      message: message ?? this.message,
+      data: data ?? this.data,
+      page: page ?? this.page,
+      pageSize: pageSize ?? this.pageSize,
+      hasMore: hasMore ?? this.hasMore,
     );
   }
 
   final bool? status;
-  final int? statusCode;
   final String? message;
-  final List<UserModel>? data;
-  final int? page, pageSize;
+  final List<User>? data;
+  final int? page, pageSize, statusCode;
   final bool? hasMore;
-}
-
-class UserModel {
-  UserModel({
-    this.id,
-    this.username,
-    this.profilePicture,
-    this.followersCount,
-    this.followingCount,
-    this.firstName,
-    this.lastName,
-    this.name,
-  });
-
-  factory UserModel.fromJson(Map<String, dynamic> json) {
-    return UserModel(
-      id: json['id'] as String?,
-      username: json['username'] as String?,
-      profilePicture: json['profile_picture'] as String?,
-      followersCount: json['followers_count'] as int?,
-      followingCount: json['following_count'] as int?,
-      firstName: json['first_name'] as String?,
-      lastName: json['last_name'] as String?,
-      name: json['name'] as String?,
-    );
-  }
-
-  final String? id, username, profilePicture, firstName, lastName, name;
-  final int? followersCount, followingCount;
 }

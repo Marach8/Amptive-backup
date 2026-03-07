@@ -31,8 +31,8 @@ Future<ATCohost<bool>?> showListenersDialog({
     context: context, isScrollControlled: true,
     backgroundColor: ATColors.hex202020,
     builder: (BuildContext dContext) {
-      return BlocProvider<SearchkeyBloc>(
-        create: (_) => SearchkeyBloc(),
+      return BlocProvider<SearchkeyCubit>(
+        create: (_) => SearchkeyCubit(),
         child: DraggableScrollableSheet(
           expand: false, initialChildSize: 0.7,
           builder: (BuildContext bContext, ScrollController scrollController) {

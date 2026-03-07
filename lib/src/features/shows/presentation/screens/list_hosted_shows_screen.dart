@@ -23,7 +23,7 @@ class ListHostedShowsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: <SingleChildWidget>[
-        BlocProvider<BlurredHeaderBloc>(create: (_) => BlurredHeaderBloc(),),
+        BlocProvider<BlurredHeaderCubit>(create: (_) => BlurredHeaderCubit(),),
         BlocProvider<HostedShowSelectionCubit>(create: (_) => HostedShowSelectionCubit()),
         BlocProvider<HostedShowsCubit>(create: (_) => HostedShowsCubit())
       ],
@@ -98,7 +98,7 @@ class __SubWidgetState extends State<_SubWidget> {
                 ATContainer(
                   color: ATColors.hex0D0D0D.withValues(alpha: 0.75),
                   child: NotificationListener<ScrollNotification>(
-                    onNotification: blocContext.read<BlurredHeaderBloc>().onScrollNotification,
+                    onNotification: blocContext.read<BlurredHeaderCubit>().onScrollNotification,
                     child: NestedScrollView(
                       headerSliverBuilder: (_, __) => <Widget>[
                         SliverPersistentHeader(

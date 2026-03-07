@@ -101,25 +101,25 @@ Future<void> _onCohostTap({
   required int coHostNo,
   required BuildContext context,
 }) async {
-  if(cohost.profilePicture == null){
-    final ATCohost<bool>? selectedCohost = 
-      await showAvailableCoHostsModal(context: context, selectionMode: CohostSelectionMode.single);
-    if (context.mounted && selectedCohost != null) {
-      context.read<AddCohostsBloc>().addCohost(cohost: selectedCohost, cohostNo: coHostNo);
-    }
-  }
-  else{
-    final bool? removeCohost = await showConfirmationDialog(
-      context: context,
-      title: '${ATStrings.REMOVE} ${ATStrings.COHOST}',
-      content: '${ATStrings.CONFIRM_COHOST_REMOVAL} ${cohost.name}?',
-      yesString: ATStrings.REMOVE,
-      noString: ATStrings.cancel,
-    );
-    if(context.mounted && removeCohost == true) {
-      context.read<AddCohostsBloc>().removeCohost(cohostNo: coHostNo);
-    }
-  }
+  // if(cohost.profilePicture == null){
+  //   final ATCohost<bool>? selectedCohost = 
+  //     await showAvailableCoHostsModal(context: context, selectionMode: CohostSelectionMode.single);
+  //   if (context.mounted && selectedCohost != null) {
+  //     context.read<AddCohostsBloc>().addCohost(cohost: selectedCohost, cohostNo: coHostNo);
+  //   }
+  // }
+  // else{
+  //   final bool? removeCohost = await showConfirmationDialog(
+  //     context: context,
+  //     title: '${ATStrings.REMOVE} ${ATStrings.COHOST}',
+  //     content: '${ATStrings.CONFIRM_COHOST_REMOVAL} ${cohost.name}?',
+  //     yesString: ATStrings.REMOVE,
+  //     noString: ATStrings.cancel,
+  //   );
+  //   if(context.mounted && removeCohost == true) {
+  //     context.read<AddCohostsBloc>().removeCohost(cohostNo: coHostNo);
+  //   }
+  // }
 }
 
 

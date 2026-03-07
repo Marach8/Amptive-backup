@@ -9,7 +9,7 @@ abstract class DiscoverRepo {
     required int pageNo, required int pageSize,
   });
 
-  Future<ApiResponse<GetAllUsersResponseModel>> fetchAllUsers({
+  Future<ApiResponse<AllUsersResponseModel>> fetchAllUsers({
     required int page,
     required int pageSize,
   });

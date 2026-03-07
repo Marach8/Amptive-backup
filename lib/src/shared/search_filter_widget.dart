@@ -67,8 +67,8 @@ class ATSearchIcon extends StatelessWidget {
 
 
 
-class SearchkeyBloc extends Cubit<String>{
-  SearchkeyBloc() : super('');
+class SearchkeyCubit extends Cubit<String>{
+  SearchkeyCubit() : super('');
 
   void updateSearchKey(String searchKey) => emit(searchKey);
 

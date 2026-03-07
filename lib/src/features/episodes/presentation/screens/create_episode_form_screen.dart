@@ -6,6 +6,7 @@ import 'package:amptive/src/global_export.dart';
 import 'package:amptive/src/models/community.dart';
 import 'package:amptive/src/shared/annotated_region__widget.dart';
 import 'package:amptive/src/shared/divider_widget.dart';
+import 'package:amptive/src/shared/global_model_objects.dart';
 import 'package:amptive/src/shared/textformfield_widget.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -95,7 +96,7 @@ class _CreateShowFormScreenState extends State<CreateEpisodeFormScreen> {
     );
     return MultiBlocProvider(
       providers: <SingleChildWidget>[
-        BlocProvider<BlurredHeaderBloc>(create: (_) => BlurredHeaderBloc(),),
+        BlocProvider<BlurredHeaderCubit>(create: (_) => BlurredHeaderCubit(),),
         BlocProvider<BgImageCubit>(create: (_) => BgImageCubit())
       ],
       child: ATAnnotatedRegion(
@@ -122,7 +123,7 @@ class _CreateShowFormScreenState extends State<CreateEpisodeFormScreen> {
                   ATContainer(
                     color: ATColors.hex0D0D0D.withValues(alpha: 0.75),
                     child: NotificationListener<ScrollNotification>(
-                      onNotification: blocContext.read<BlurredHeaderBloc>().onScrollNotification,
+                      onNotification: blocContext.read<BlurredHeaderCubit>().onScrollNotification,
                       child: NestedScrollView(
                         headerSliverBuilder: (_, __) => <Widget>[
                           SliverPersistentHeader(
@@ -248,7 +249,7 @@ class _CreateShowFormScreenState extends State<CreateEpisodeFormScreen> {
 
                               const Padding(
                                 padding: EdgeInsets.fromLTRB(15, 0, 15, 10),
-                                child: RowWith2Texts(text1: ATStrings.ADD_CO_HOST, text2: '5 max',),
+                                child: RowWith2Texts(text1: ATStrings.addCohost, text2: '5 max',),
                               ),
                               Padding(
                                 padding: const EdgeInsets.fromLTRB(15, 0, 15, 10),
@@ -262,8 +263,10 @@ class _CreateShowFormScreenState extends State<CreateEpisodeFormScreen> {
                                     return ATScalingSwitcher(
                                       duration: 300,
                                       child: coHostExists ? SelectedCoHostsWidget(
-                                          onEdit: () => showAvailableCoHostsModal(context: context),
-                                          selectedCohosts: selectedCoHosts,
+                                          onEdit: (){
+                                            //showAvailableCoHostsModal(context: context),
+                                          },
+                                          selectedCohosts: <User>[]
                                         ) : CreateProgramSelectionItem(
                                           leading: const ATImgLoader(
                                             height: 20, width: 20,
@@ -271,13 +274,15 @@ class _CreateShowFormScreenState extends State<CreateEpisodeFormScreen> {
                                           ),
                                           trailing: Flexible(
                                             child: Text(
-                                              ATStrings.SEARCH_ND_ADD_COHOSTS_4_SHOW,
+                                              ATStrings.searchAndAddCohost4YourShow,
                                               style: context.textTheme.bodySmall?.copyWith(
                                                 color: ATColors.white.withValues(alpha: 0.4),
                                               ),
                                             ),
                                           ),
-                                          onTap: () => showAvailableCoHostsModal(context: context),
+                                          onTap: (){
+                                            //showAvailableCoHostsModal
+                                          }
                                         ),
                                     );
                                   }
@@ -286,7 +291,7 @@ class _CreateShowFormScreenState extends State<CreateEpisodeFormScreen> {
                               Padding(
                                 padding: const EdgeInsets.fromLTRB(15, 0, 15, 30),
                                 child: Text(
-                                  ATStrings.ADD_COHOST_DESC, maxLines: 5,
+                                  ATStrings.addCohostDesc, maxLines: 5,
                                   style: context.textTheme.labelSmall!.copyWith(
                                     color: ATColors.hexC2C2C2.withValues(alpha: 0.76)
                                   ),

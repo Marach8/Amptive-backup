@@ -16,7 +16,7 @@ class ATBlurredHeaderWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ClipRect(
-      child: BlocBuilder<BlurredHeaderBloc, bool>(
+      child: BlocBuilder<BlurredHeaderCubit, bool>(
         builder: (_, bool shouldBlur) {
           return RepaintBoundary(
             child: BackdropFilter(
@@ -41,8 +41,8 @@ class ATBlurredHeaderWidget extends StatelessWidget {
 
 
 
-class BlurredHeaderBloc extends Cubit<bool>{
-  BlurredHeaderBloc():super(false);
+class BlurredHeaderCubit extends Cubit<bool>{
+  BlurredHeaderCubit():super(false);
 
 
   bool onScrollNotification(ScrollNotification notification) {

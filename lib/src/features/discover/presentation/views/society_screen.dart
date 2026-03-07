@@ -21,13 +21,13 @@ class DiscoverSocietyScreen extends StatelessWidget {
       child: DefaultTabController(
         length: 3,
         child: Scaffold(
-          body: BlocProvider<BlurredHeaderBloc>(
-            create: (_) => BlurredHeaderBloc(),
+          body: BlocProvider<BlurredHeaderCubit>(
+            create: (_) => BlurredHeaderCubit(),
             child: Builder(
               builder: (BuildContext blocContext) {
                 final TabController tabController = DefaultTabController.of(blocContext);
                 return NotificationListener<ScrollNotification>(
-                  onNotification: blocContext.read<BlurredHeaderBloc>().onScrollNotification,
+                  onNotification: blocContext.read<BlurredHeaderCubit>().onScrollNotification,
                   child: NestedScrollView(
                     physics: const BouncingScrollPhysics(),
                     headerSliverBuilder: (_, __) =>  <Widget>[
