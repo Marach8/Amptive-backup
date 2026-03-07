@@ -110,8 +110,8 @@ class PreviewShowScreen extends StatelessWidget {
                                     toggleFollowingCubit:
                                         context.read<ToggleFollowingCubit>(),
                                     targetUserName:
-                                        hostedShow.host?.displayName ?? '',
-                                    targetUserId: hostedShow.host?.userId ?? '',
+                                        hostedShow.host?.name ?? '',
+                                    targetUserId: hostedShow.host?.id ?? '',
                                   );
                                 }),
                             const SizedBox(height: 24),

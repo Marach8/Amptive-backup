@@ -1,3 +1,4 @@
+import 'package:amptive/src/shared/global_model_objects.dart';
 import 'package:equatable/equatable.dart';
 
 class HostedShowsResponseModel {
@@ -67,10 +68,10 @@ class HostedShow extends Equatable {
       followerCount: json['follower_count'],
       host: json['host'] != null ? Host.fromJson(json['host']) : null,
       coHosts: (json['co_hosts'] as List<dynamic>?)
-          ?.map((dynamic e) => Host.fromJson(e))
+          ?.map((dynamic e) => CoHost.fromJson(e))
           .toList(),
       tags: (json['tags'] as List<dynamic>?)
-          ?.map((dynamic e) => Tag.fromJson(e))
+          ?.map((dynamic e) => HashTag.fromJson(e))
           .toList(),
       publishedAt: json['published_at'],
       createdAt: json['created_at'],
@@ -93,12 +94,10 @@ class HostedShow extends Equatable {
       updatedAt;
 
   final double? price;
-
   final int? episodeCount, totalViewers, goingCount, followerCount;
-
   final Host? host;
-  final List<Host>? coHosts;
-  final List<Tag>? tags;
+  final List<CoHost>? coHosts;
+  final List<HashTag>? tags;
   final Episode? activeEpisode;
 
   @override
@@ -123,88 +122,4 @@ class HostedShow extends Equatable {
         updatedAt,
         activeEpisode,
       ];
-}
-
-class Host {
-  Host({
-    this.userId,
-    this.username,
-    this.displayName,
-    this.profileImageUrl,
-    this.isVerified,
-    this.followersCount,
-  });
-
-  factory Host.fromJson(Map<String, dynamic> json) {
-    return Host(
-      userId: json['user_id'],
-      username: json['username'],
-      displayName: json['display_name'],
-      profileImageUrl: json['profile_image_url'],
-      isVerified: json['is_verified'],
-      followersCount: json['followers_count'],
-    );
-  }
-
-  final String? userId, username, displayName, profileImageUrl;
-  final bool? isVerified;
-  final int? followersCount;
-}
-
-class Tag {
-  Tag({
-    this.id,
-    this.name,
-  });
-
-  factory Tag.fromJson(Map<String, dynamic> json) {
-    return Tag(
-      id: json['id'],
-      name: json['name'],
-    );
-  }
-
-  final String? id, name;
-}
-
-class Episode {
-  Episode({
-    this.episodeId,
-    this.episodeNumber,
-    this.title,
-    this.thumbnailUrl,
-    this.status,
-    this.scheduledFor,
-    this.startedAt,
-    this.endedAt,
-    this.viewerCount,
-    this.goingCount,
-    this.durationSeconds,
-  });
-
-  factory Episode.fromJson(Map<String, dynamic> json) {
-    return Episode(
-      episodeId: json['episode_id'],
-      episodeNumber: json['episode_number'],
-      title: json['title'],
-      thumbnailUrl: json['thumbnail_url'],
-      status: json['status'],
-      scheduledFor: json['scheduled_for'],
-      startedAt: json['started_at'],
-      endedAt: json['ended_at'],
-      viewerCount: json['viewer_count'],
-      goingCount: json['going_count'],
-      durationSeconds: json['duration_seconds'],
-    );
-  }
-
-  final String? episodeId,
-      title,
-      thumbnailUrl,
-      status,
-      scheduledFor,
-      startedAt,
-      endedAt;
-
-  final int? episodeNumber, viewerCount, goingCount, durationSeconds;
 }

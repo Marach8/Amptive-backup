@@ -21,6 +21,7 @@ class CreateShowCubit extends Cubit<ATAppState<HostedShow>> {
     required double price,
     required List<String> tagIds,
     required List<String> coHostIds,
+    required String communityId,
   }) async {
     emit(const LoadingState<HostedShow>());
     try {
@@ -33,6 +34,7 @@ class CreateShowCubit extends Cubit<ATAppState<HostedShow>> {
         price: price,
         tagIds: tagIds,
         coHostIds: coHostIds,
+        communityId: communityId,
       );
 
       final ApiResponse<HostedShow> response = await showsRepo.createShow(

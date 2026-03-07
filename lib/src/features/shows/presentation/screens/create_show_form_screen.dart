@@ -9,6 +9,7 @@ import 'package:amptive/src/features/discover/cubits/hashtags_cubit.dart';
 import 'package:amptive/src/features/discover/cubits/users_cubits.dart';
 import 'package:amptive/src/features/shows/cubits/create_show_cubit.dart';
 import 'package:amptive/src/features/go_live/go_live_export.dart';
+import 'package:amptive/src/features/shows/data/models/response/show_response_model.dart';
 import 'package:amptive/src/global_export.dart';
 import 'package:amptive/src/shared/annotated_region__widget.dart';
 import 'package:amptive/src/shared/divider_widget.dart';
@@ -568,11 +569,12 @@ class __SubWidgetState extends State<_SubWidget> {
                       title: _titleCntrl.text.trim(),
                       description: selectedDescription,
                       coverUrl: state.newData!,
+                      communityId: selectedCommunity?.communityId ?? '',
                       category: 'Category',
                       showType: accessTypeData.accessType 
                         == ProgramAccessType.free ? 'free' : 'paid',
                       price: accessTypeData.subscriptionAmount 
-                        ?? accessTypeData.oneTimePaymentAmount ?? 0,
+                        ?? accessTypeData.oneTimePaymentAmount ?? 0.01,
                     );
                   } else if (state is FailureState<String>) {
                     //if uploading cover art fails, stop loading and show notif
@@ -585,16 +587,16 @@ class __SubWidgetState extends State<_SubWidget> {
                   }
                 },
               ),
-              BlocListener<CreateShowCubit, ATAppState<dynamic>>(
-                listener: (_, ATAppState<dynamic> state) {
-                  if (state is SuccessState<dynamic>) {
+              BlocListener<CreateShowCubit, ATAppState<HostedShow>>(
+                listener: (_, ATAppState<HostedShow> state) {
+                  if (state is SuccessState<HostedShow>) {
                     _launchShowBtnNotifier.value = true;
                     showAppNotification2(
                       context: context,
                       text: 'Show created successfully',
                       type: NotificationType.success,
                     );
-                  } else if (state is FailureState<dynamic>) {
+                  } else if (state is FailureState<HostedShow>) {
                     _launchShowBtnNotifier.value = true;
                     showAppNotification2(
                       context: context,
