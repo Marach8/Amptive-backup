@@ -26,37 +26,38 @@ class DotIndicatorRow extends StatelessWidget {
           SmoothPageIndicator(
             controller: pageCntrl,
             count: 3,
-            onDotClicked: (int index) => pageCntrl.animateToPage(
-              index, duration: const Duration(milliseconds: 500),
-              curve: Curves.decelerate
-            ),
+            onDotClicked: (int index) => pageCntrl.animateToPage(index,
+                duration: const Duration(milliseconds: 500),
+                curve: Curves.decelerate),
             effect: ExpandingDotsEffect(
-              dotHeight: 10, dotWidth: 10, spacing: 3,
+              dotHeight: 10,
+              dotWidth: 10,
+              spacing: 3,
               activeDotColor: ATColors.hexD9D9D9,
               dotColor: ATColors.hex5B5B5B,
             ),
           ),
           ListenableBuilder(
-            listenable: pageCntrl,
-            builder: (_, __) {
-              final bool isLast = pageCntrl.page == 2;
-              return ATContainer(
-                onTap: (){
-                  isLast ? context.pushNamed(ATRoutes.POST_ONBOARDING_SCREEN) 
-                  : pageCntrl.animateToPage(
-                    2, duration: const Duration(seconds: 1),
-                    curve: Curves.decelerate
-                  );
-                },
-                padding: const EdgeInsets.fromLTRB(10, 3, 10, 3),
-                color: ATColors.hex307FE2, radius: 30,
-                child: Text(
-                  isLast ? ATStrings.next : ATStrings.SKIP,
-                  style: Theme.of(context).textTheme.bodyMedium,
-                ),
-              );
-            }
-          )
+              listenable: pageCntrl,
+              builder: (_, __) {
+                final bool isLast = pageCntrl.page == 2;
+                return ATContainer(
+                  onTap: () {
+                    isLast
+                        ? context.pushNamed(ATRoutes.POST_ONBOARDING_SCREEN)
+                        : pageCntrl.animateToPage(2,
+                            duration: const Duration(seconds: 1),
+                            curve: Curves.decelerate);
+                  },
+                  padding: const EdgeInsets.fromLTRB(10, 3, 10, 3),
+                  color: ATColors.hex307FE2,
+                  radius: 30,
+                  child: Text(
+                    isLast ? ATStrings.next : ATStrings.SKIP,
+                    style: Theme.of(context).textTheme.bodyMedium,
+                  ),
+                );
+              })
         ],
       ),
     );

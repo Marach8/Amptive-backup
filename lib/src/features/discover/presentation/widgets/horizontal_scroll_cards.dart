@@ -20,7 +20,6 @@ class _HorizontalScrollCardsState extends State<HorizontalScrollCards> {
     ATImgStrings.discoverPic1
   ];
 
-
   @override
   void dispose() {
     _indexNotifier.dispose();
@@ -35,42 +34,37 @@ class _HorizontalScrollCardsState extends State<HorizontalScrollCards> {
       child: Column(
         children: <Widget>[
           CarouselSlider.builder(
-            itemCount: _adverts.length,
-            itemBuilder: (_, int pageIndex, __){
-              final String? advert = _adverts.elementAtOrNull(pageIndex);
-              return ATImgLoader(imgPath: advert ?? '');
-            },
-            options: CarouselOptions(
-              autoPlay: true,
-              scrollPhysics: const BouncingScrollPhysics(),
-              autoPlayCurve: Curves.decelerate,
-              autoPlayInterval: const Duration(seconds: 5),
-              onPageChanged: (int pageIndex, _) => _indexNotifier.value = pageIndex
-            )
-          ),
+              itemCount: _adverts.length,
+              itemBuilder: (_, int pageIndex, __) {
+                final String? advert = _adverts.elementAtOrNull(pageIndex);
+                return ATImgLoader(imgPath: advert ?? '');
+              },
+              options: CarouselOptions(
+                  autoPlay: true,
+                  scrollPhysics: const BouncingScrollPhysics(),
+                  autoPlayCurve: Curves.decelerate,
+                  autoPlayInterval: const Duration(seconds: 5),
+                  onPageChanged: (int pageIndex, _) =>
+                      _indexNotifier.value = pageIndex)),
           const Spacer(),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 15),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
-              children: List.generate(
-                3,
-                (int index){
-                  return AmptiveRebuilderWidget(
+              children: List.generate(3, (int index) {
+                return AmptiveRebuilderWidget(
                     notifier: _indexNotifier,
-                    builder: (_, int value, __){
+                    builder: (_, int value, __) {
                       final bool isActive = index == value;
                       return ATContainer(
-                        margin: const EdgeInsets.only(left: 3),
-                        radius: 8, height: 8,
-                        color: isActive ? ATColors.white : ATColors.hex5B5B5B, 
-                        width: isActive ? 25 : 8,
-                        child: const SizedBox.shrink()
-                      );
-                    }
-                  );
-                }
-              ),
+                          margin: const EdgeInsets.only(left: 3),
+                          radius: 8,
+                          height: 8,
+                          color: isActive ? ATColors.white : ATColors.hex5B5B5B,
+                          width: isActive ? 25 : 8,
+                          child: const SizedBox.shrink());
+                    });
+              }),
             ),
           )
         ],

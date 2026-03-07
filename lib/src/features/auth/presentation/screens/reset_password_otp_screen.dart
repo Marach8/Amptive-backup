@@ -18,9 +18,9 @@ import '../../../../config/utils/other_strings.dart';
 import '../../../../shared/app_bar_widget.dart';
 import '../../../../shared/elevated_button_widget.dart';
 
+enum OTPVerificationType { email, phoneNumber }
 
-enum OTPVerificationType{email, phoneNumber}
-class VerifyPasswordResetOTPScreenParams{
+class VerifyPasswordResetOTPScreenParams {
   const VerifyPasswordResetOTPScreenParams({
     required this.identifier,
     required this.verificationType,
@@ -45,12 +45,14 @@ class ResetPasswordOtpScreen extends StatefulWidget {
 }
 
 class _ResetPasswordOtpScreenState extends State<ResetPasswordOtpScreen> {
-  final ValueNotifier<({bool otpcorrect, bool notresendingotp})> activateBtnNotifier =
-      ValueNotifier<({bool otpcorrect, bool notresendingotp})>((otpcorrect: false, notresendingotp: true));
+  final ValueNotifier<({bool otpcorrect, bool notresendingotp})>
+      activateBtnNotifier =
+      ValueNotifier<({bool otpcorrect, bool notresendingotp})>(
+          (otpcorrect: false, notresendingotp: true));
   final ValueNotifier<bool> didSendAgainNotifier = ValueNotifier<bool>(false);
   final TapGestureRecognizer _tapGestureRecognizer = TapGestureRecognizer();
   final int countDownStart = 10;
-  
+
   String? _matchingOtp;
 
   Stream<int> generateCountDown() async* {
@@ -61,8 +63,8 @@ class _ResetPasswordOtpScreenState extends State<ResetPasswordOtpScreen> {
     didSendAgainNotifier.value = false;
   }
 
-  @override 
-  void initState(){
+  @override
+  void initState() {
     super.initState();
     _matchingOtp = widget.params.otp;
   }
@@ -72,7 +74,6 @@ class _ResetPasswordOtpScreenState extends State<ResetPasswordOtpScreen> {
     activateBtnNotifier.dispose();
     didSendAgainNotifier.dispose();
     _tapGestureRecognizer.dispose();
-     
 
     super.dispose();
   }
@@ -80,17 +81,21 @@ class _ResetPasswordOtpScreenState extends State<ResetPasswordOtpScreen> {
   @override
   Widget build(BuildContext context) {
     String identifierKey = '';
-    switch(widget.params.verificationType){
+    switch (widget.params.verificationType) {
       case OTPVerificationType.email:
-        identifierKey = 'email'; break;
+        identifierKey = 'email';
+        break;
       case OTPVerificationType.phoneNumber:
-        identifierKey = 'phone_number'; break;
+        identifierKey = 'phone_number';
+        break;
     }
 
     return MultiBlocProvider(
       providers: <SingleChildWidget>[
-        BlocProvider<VerifyResetPasswordOtpCubit>(create: (_) => VerifyResetPasswordOtpCubit()),
-        BlocProvider<PasswordResetOtpCubit>(create:(_) => PasswordResetOtpCubit()),
+        BlocProvider<VerifyResetPasswordOtpCubit>(
+            create: (_) => VerifyResetPasswordOtpCubit()),
+        BlocProvider<PasswordResetOtpCubit>(
+            create: (_) => PasswordResetOtpCubit()),
       ],
       child: ATAnnotatedRegion(
         child: Scaffold(
@@ -99,7 +104,6 @@ class _ResetPasswordOtpScreenState extends State<ResetPasswordOtpScreen> {
             titleText: widget.params.title,
             leading: const ATBackBtn(),
           ),
-      
           body: Padding(
             padding: const EdgeInsets.fromLTRB(15, 15, 15, 0),
             child: Form(
@@ -108,15 +112,16 @@ class _ResetPasswordOtpScreenState extends State<ResetPasswordOtpScreen> {
                 children: <Widget>[
                   BlocListener<PasswordResetOtpCubit, ATAppState<String>>(
                     listener: (_, ATAppState<String> sendOtpState) {
-                      final ({bool notresendingotp, bool otpcorrect})
-                        currentState = activateBtnNotifier.value;
-                      if(sendOtpState is LoadingState<String>){
+                      final ({
+                        bool notresendingotp,
+                        bool otpcorrect
+                      }) currentState = activateBtnNotifier.value;
+                      if (sendOtpState is LoadingState<String>) {
                         activateBtnNotifier.value = (
                           otpcorrect: currentState.otpcorrect,
                           notresendingotp: false
                         );
-                      }
-                      else{
+                      } else {
                         activateBtnNotifier.value = (
                           otpcorrect: currentState.otpcorrect,
                           notresendingotp: true
@@ -126,17 +131,18 @@ class _ResetPasswordOtpScreenState extends State<ResetPasswordOtpScreen> {
                     child: Text(
                       '${ATStrings.enterCodeSentTo} ${widget.params.identifier}',
                       maxLines: 2,
-                      style: context.textTheme.headlineMedium?.copyWith(
-                        fontSize: ATSizes.size17
-                      ),
+                      style: context.textTheme.headlineMedium
+                          ?.copyWith(fontSize: ATSizes.size17),
                     ),
                   ),
                   const SizedBox(height: 11),
                   ATOTPFieldsWidget(
-                    onPinComplete: (String pin) async{
+                    onPinComplete: (String pin) async {
                       final bool isCorrect = pin == _matchingOtp;
-                      final ({bool notresendingotp, bool otpcorrect}) 
-                        currentState = activateBtnNotifier.value;
+                      final ({
+                        bool notresendingotp,
+                        bool otpcorrect
+                      }) currentState = activateBtnNotifier.value;
                       activateBtnNotifier.value = (
                         otpcorrect: isCorrect,
                         notresendingotp: currentState.notresendingotp
@@ -144,73 +150,74 @@ class _ResetPasswordOtpScreenState extends State<ResetPasswordOtpScreen> {
                       return isCorrect;
                     },
                   ),
-      
                   const SizedBox(height: 11),
-      
                   ValueListenableBuilder<bool>(
-                    valueListenable: didSendAgainNotifier,
-                    builder: (BuildContext context, bool didSendAgain, __) {
-                      if(didSendAgain){
-                        return StreamBuilder<int>(
-                          stream: generateCountDown(),
-                          initialData: 10,
-                          builder: (_, AsyncSnapshot<int> asyncSnapshot) {
-                            final int timeLeft = asyncSnapshot.data!;
-                            return Text(
-                              maxLines: 2,
-                              '${ATStrings.codeHasBeenSent} $timeLeft ${timeLeft == 1 ? 'second' : 'seconds'}',
-                              style: context.textTheme.titleSmall,
-                            );
-                          }
-                        );
-                      }
-                      return RichText(
-                        text: TextSpan(
-                          children: <InlineSpan>[
-                            TextSpan(
-                              text: ATStrings.didNotGetCode,
-                              style: context.textTheme.titleSmall
-                            ),
-                            TextSpan(
-                              text: ATStrings.sendAgain,
-                              recognizer: _tapGestureRecognizer..onTap = (){                                
-                                context.read<PasswordResetOtpCubit>().resetPasswordOtp(
-                                  param: <String, dynamic>{identifierKey: widget.params.identifier}
+                      valueListenable: didSendAgainNotifier,
+                      builder: (BuildContext context, bool didSendAgain, __) {
+                        if (didSendAgain) {
+                          return StreamBuilder<int>(
+                              stream: generateCountDown(),
+                              initialData: 10,
+                              builder: (_, AsyncSnapshot<int> asyncSnapshot) {
+                                final int timeLeft = asyncSnapshot.data!;
+                                return Text(
+                                  maxLines: 2,
+                                  '${ATStrings.codeHasBeenSent} $timeLeft ${timeLeft == 1 ? 'second' : 'seconds'}',
+                                  style: context.textTheme.titleSmall,
                                 );
-                                didSendAgainNotifier.value = true;
-                              },
-                              style: context.textTheme.titleSmall?.copyWith(
-                                decoration: TextDecoration.underline,
-                                fontWeight: ATFontWeights.w400,
-                                decorationColor: ATColors.white,
+                              });
+                        }
+                        return RichText(
+                          text: TextSpan(
+                            children: <InlineSpan>[
+                              TextSpan(
+                                  text: ATStrings.didNotGetCode,
+                                  style: context.textTheme.titleSmall),
+                              TextSpan(
+                                text: ATStrings.sendAgain,
+                                recognizer: _tapGestureRecognizer
+                                  ..onTap = () {
+                                    context
+                                        .read<PasswordResetOtpCubit>()
+                                        .resetPasswordOtp(
+                                            param: <String, dynamic>{
+                                          identifierKey:
+                                              widget.params.identifier
+                                        });
+                                    didSendAgainNotifier.value = true;
+                                  },
+                                style: context.textTheme.titleSmall?.copyWith(
+                                  decoration: TextDecoration.underline,
+                                  fontWeight: ATFontWeights.w400,
+                                  decorationColor: ATColors.white,
+                                ),
                               ),
-                            ),
-                          ],
-                        ),
-                      );
-                    }
-                  ),
+                            ],
+                          ),
+                        );
+                      }),
                 ],
               ),
             ),
           ),
-      
-          bottomSheet: Builder(
-            builder: (BuildContext context) {
-              final double bottom = MediaQuery.viewInsetsOf(context).bottom;
-              final double bottomPadding = bottom > 0 ? 10 : 50;
-              return Padding(
-                padding: EdgeInsets.fromLTRB(15, 0, 15, bottomPadding),
-                child: ValueListenableBuilder<({bool otpcorrect, bool notresendingotp})>(
+          bottomSheet: Builder(builder: (BuildContext context) {
+            final double bottom = MediaQuery.viewInsetsOf(context).bottom;
+            final double bottomPadding = bottom > 0 ? 10 : 50;
+            return Padding(
+              padding: EdgeInsets.fromLTRB(15, 0, 15, bottomPadding),
+              child: ValueListenableBuilder<
+                      ({bool otpcorrect, bool notresendingotp})>(
                   valueListenable: activateBtnNotifier,
-                  builder: (_, ({bool otpcorrect, bool notresendingotp}) state, __) {
-                    final bool shouldEnable = state.otpcorrect && state.notresendingotp;
-                    return BlocConsumer<VerifyResetPasswordOtpCubit, ATAppState<dynamic>>(
+                  builder:
+                      (_, ({bool otpcorrect, bool notresendingotp}) state, __) {
+                    final bool shouldEnable =
+                        state.otpcorrect && state.notresendingotp;
+                    return BlocConsumer<VerifyResetPasswordOtpCubit,
+                        ATAppState<dynamic>>(
                       listener: (_, ATAppState<dynamic> state) {
-                        if(state is SuccessState<dynamic>){
+                        if (state is SuccessState<dynamic>) {
                           context.pop(true);
-                        }
-                        else if(state is FailureState<dynamic>){
+                        } else if (state is FailureState<dynamic>) {
                           showAppNotification2(
                             context: context,
                             text: state.message,
@@ -218,27 +225,29 @@ class _ResetPasswordOtpScreenState extends State<ResetPasswordOtpScreen> {
                           );
                         }
                       },
-                      builder: (BuildContext context, ATAppState<dynamic> verifyOtpState) {       
+                      builder: (BuildContext context,
+                          ATAppState<dynamic> verifyOtpState) {
                         return ATPlainElevatedBtn(
                           isLoading: verifyOtpState is LoadingState<dynamic>,
-                          onPressed: shouldEnable ? (){
-                            context.read<VerifyResetPasswordOtpCubit>().verifyResetPasswordOtp(
-                              param: <String, dynamic>{
-                                identifierKey: widget.params.identifier,
-                                'otp': _matchingOtp,
-                                
-                              },
-                            );
-                          } : null,
+                          onPressed: shouldEnable
+                              ? () {
+                                  context
+                                      .read<VerifyResetPasswordOtpCubit>()
+                                      .verifyResetPasswordOtp(
+                                    param: <String, dynamic>{
+                                      identifierKey: widget.params.identifier,
+                                      'otp': _matchingOtp,
+                                    },
+                                  );
+                                }
+                              : null,
                           btnTitle: ATStrings.next,
                         );
                       },
                     );
-                  }
-                ),
-              );
-            }
-          ),
+                  }),
+            );
+          }),
         ),
       ),
     );

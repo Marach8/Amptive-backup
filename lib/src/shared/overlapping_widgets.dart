@@ -3,9 +3,7 @@ import 'package:amptive/src/global_export.dart';
 import 'package:amptive/src/shared/circular_image.dart';
 import 'package:amptive/src/shared/shimmer.dart';
 
-
 class ATOverlappingImages extends StatelessWidget {
-
   const ATOverlappingImages({
     super.key,
     required this.imgPaths,
@@ -14,7 +12,6 @@ class ATOverlappingImages extends StatelessWidget {
     this.borderWidth = 0.5,
     this.borderColor,
   });
-
 
   final List<String> imgPaths;
   final double imgSize;
@@ -30,29 +27,24 @@ class ATOverlappingImages extends StatelessWidget {
       height: imgSize,
       width: width,
       child: Stack(
-        children: imgPaths.indexed.map(
-          ((int, String) entry) {
-            return Positioned(
-              left: entry.$1 * overlapOffset,
-              child: ATCircularImage(
-                imagePath: entry.$2,
-                diameter: imgSize,
-                addBorder: true,
-                borderColor: borderColor,
-                borderWidth: borderWidth,
-              ),
-            );
-          }
-        ).toList(),
+        children: imgPaths.indexed.map(((int, String) entry) {
+          return Positioned(
+            left: entry.$1 * overlapOffset,
+            child: ATCircularImage(
+              imagePath: entry.$2,
+              diameter: imgSize,
+              addBorder: true,
+              borderColor: borderColor,
+              borderWidth: borderWidth,
+            ),
+          );
+        }).toList(),
       ),
     );
   }
 }
 
-
-
 class ATOverlappingCircles extends StatelessWidget {
-
   const ATOverlappingCircles({
     super.key,
     required this.maxNumber,
@@ -69,54 +61,47 @@ class ATOverlappingCircles extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final List<int> numbers = List<int>.generate(maxNumber, (int index) => index);
+    final List<int> numbers =
+        List<int>.generate(maxNumber, (int index) => index);
     final double width = circleSize + ((numbers.length - 1) * overlapOffset);
 
     return SizedBox(
       height: circleSize,
       width: width,
       child: Stack(
-        children: numbers.indexed.map(
-          ((int, int) entry) {
-            return Positioned(
-              left: entry.$1 * overlapOffset,
-              child: Container(
-                height: circleSize, width: circleSize,
-                color: ATColors.black.withValues(alpha: 0.05),
-                clipBehavior: Clip.hardEdge,
-                decoration: BoxDecoration(
+        children: numbers.indexed.map(((int, int) entry) {
+          return Positioned(
+            left: entry.$1 * overlapOffset,
+            child: Container(
+              height: circleSize,
+              width: circleSize,
+              color: ATColors.black.withValues(alpha: 0.05),
+              clipBehavior: Clip.hardEdge,
+              decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(circleSize),
                   border: Border.all(
                     color: borderColor ?? ATColors.white.withValues(alpha: 0.4),
                     width: borderWidth,
-                  )
-                ),
-                child: ClipRRect(
+                  )),
+              child: ClipRRect(
                   borderRadius: BorderRadiusGeometry.circular(20),
                   child: BackdropFilter(
                     filter: ImageFilter.blur(sigmaX: 10.0, sigmaY: 10.0),
                     child: Center(
-                      child: Text(
-                        (entry.$1 + 1).toString(),
-                        style: context.textTheme.labelSmall?.copyWith(
-                          fontSize: ATSizes.size11
-                        )
-                      ),
+                      child: Text((entry.$1 + 1).toString(),
+                          style: context.textTheme.labelSmall
+                              ?.copyWith(fontSize: ATSizes.size11)),
                     ),
-                  )
-                ),
-              ),
-            );
-          }
-        ).toList(),
+                  )),
+            ),
+          );
+        }).toList(),
       ),
     );
   }
 }
 
-
 class OverlappingImagesShimmer extends StatelessWidget {
-
   const OverlappingImagesShimmer({
     super.key,
     this.size = 35,
@@ -136,27 +121,26 @@ class OverlappingImagesShimmer extends StatelessWidget {
       height: size,
       width: width,
       child: Stack(
-        children: List<Widget>.generate(
-          number.toInt(),
-          (int index){
-            return Positioned(
-              left: index * overlapOffset,
-              child: Container(
-                height: size, width: size,
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  border: Border.all(
-                    color: ATColors.white,
-                    width: borderWidth,
-                  )
-                ),
-                child: ATShimmer(
-                  height: size, width: size, radius: size,
-                ),
-              ),
-            );
-          })
-      ),
+          children: List<Widget>.generate(number.toInt(), (int index) {
+        return Positioned(
+          left: index * overlapOffset,
+          child: Container(
+            height: size,
+            width: size,
+            decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                border: Border.all(
+                  color: ATColors.white,
+                  width: borderWidth,
+                )),
+            child: ATShimmer(
+              height: size,
+              width: size,
+              radius: size,
+            ),
+          ),
+        );
+      })),
     );
   }
 }

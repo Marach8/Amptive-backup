@@ -12,21 +12,19 @@ class ScheduleIcon extends StatelessWidget {
       clipBehavior: Clip.none,
       children: <Widget>[
         const ATImgLoader(
-          height: 20, width: 20,
-          imgPath: ATImgStrings.CALENDER_ICON
-        ),
+            height: 20, width: 20, imgPath: ATImgStrings.CALENDER_ICON),
         Positioned(
-          bottom: -2, right: -2,
+          bottom: -2,
+          right: -2,
           child: ATContainer(
             color: ATColors.white,
             border: Border.all(width: 2, color: ATColors.black),
             padding: const EdgeInsets.all(2),
-            height: 13, width: 13, radius: 8,
+            height: 13,
+            width: 13,
+            radius: 8,
             child: CustomPaint(
-              painter: _LShapePainter(
-                color: ATColors.black,
-                strokeWidth: 1.5
-              ),
+              painter: _LShapePainter(color: ATColors.black, strokeWidth: 1.5),
             ),
           ),
         ),
@@ -35,13 +33,8 @@ class ScheduleIcon extends StatelessWidget {
   }
 }
 
-
-
 class _LShapePainter extends CustomPainter {
-  _LShapePainter({
-    required this.color,
-    required this.strokeWidth
-  });
+  _LShapePainter({required this.color, required this.strokeWidth});
   final Color color;
   final double strokeWidth;
 

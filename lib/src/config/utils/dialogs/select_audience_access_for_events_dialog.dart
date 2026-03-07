@@ -23,8 +23,8 @@ Future<void> showSelectAudienceAccessForEventsDialog(
 
   return await showModalBottomSheet(
       backgroundColor: ATColors.hex0D0D0D,
-      constraints: BoxConstraints.expand(
-          height: ATHelperFuncs.getScreenHeight(context)),
+      constraints:
+          BoxConstraints.expand(height: ATHelperFuncs.getScreenHeight(context)),
       context: context,
       isScrollControlled: true,
       useSafeArea: true,
@@ -32,152 +32,83 @@ Future<void> showSelectAudienceAccessForEventsDialog(
       builder: (_) {
         return Padding(
           padding: const EdgeInsets.fromLTRB(15, 20, 15, 10),
-          child:
-              Column(crossAxisAlignment: CrossAxisAlignment.start, children: <Widget>[
-            Center(
-              child: GestureDetector(
-                onTap: () => context.pop(),
-                child: Platform.isAndroid
-                    ? Icon(
-                        Icons.keyboard_arrow_down,
-                        color: ATColors.white.withOpacity(0.6),
-                      )
-                    : ATContainer(
-                        margin: const EdgeInsets.symmetric(vertical: 10),
-                        radius: 5,
-                        height: 4,
-                        width: 30,
-                        color: ATColors.white.withOpacity(0.6),
-                        child: const SizedBox.shrink(),
-                      ),
-              ),
-            ),
-            Align(
-              alignment: Alignment.center,
-              child: Text(
-                ATStrings.AUDIENCE_ACCESS,
-                style: Theme.of(context).textTheme.bodyLarge,
-              ),
-            ),
-            const SizedBox(height: 20),
-            Text(
-              maxLines: 5,
-              ATStrings.EVENT_AUDIENCE_ACCESS_DESC,
-              style: Theme.of(context)
-                  .textTheme
-                  .titleMedium
-                  ?.copyWith(color: ATColors.hexC2C2C2),
-            ),
-            const SizedBox(height: 20),
-            AmptiveRebuilderWidget(
-                notifier: freeAccesNotifier,
-                shouldDispose: true,
-                builder: (_, bool value, __) {
-                  return ATContainer(
-                    duration: 100,
-                    onTap: () {
-                      activateBtnNotifier.value = !value;
-                      paidAccessNotifier.value = false;
-                      freeAccesNotifier.value = !value;
-                    },
-                    padding: const EdgeInsets.fromLTRB(15, 13, 15, 13),
-                    radius: 15,
-                    color: ATColors.hex2D2D2D,
-                    border: Border.all(
-                        width: 2,
-                        color: value
-                            ? ATColors.hex307FE2
-                            : ATColors.transparent),
-                    child: Row(
-                      children: <Widget>[
-                        const ATImgLoader(
-                            imgPath: ATImgStrings.PEOPLE),
-                        const SizedBox(width: 10),
-                        Expanded(
-                          child: Column(
-                            mainAxisSize: MainAxisSize.min,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: <Widget>[
-                              Text(ATStrings.FREE,
-                                  style:
-                                      Theme.of(context).textTheme.bodyMedium),
-                              Text(
-                                maxLines: 5,
-                                ATStrings.EVENT_FREE_ACCESS,
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .titleMedium
-                                    ?.copyWith(
-                                        color: ATColors.hexC2C2C2),
-                              ),
-                            ],
+          child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Center(
+                  child: GestureDetector(
+                    onTap: () => context.pop(),
+                    child: Platform.isAndroid
+                        ? Icon(
+                            Icons.keyboard_arrow_down,
+                            color: ATColors.white.withOpacity(0.6),
+                          )
+                        : ATContainer(
+                            margin: const EdgeInsets.symmetric(vertical: 10),
+                            radius: 5,
+                            height: 4,
+                            width: 30,
+                            color: ATColors.white.withOpacity(0.6),
+                            child: const SizedBox.shrink(),
                           ),
-                        ),
-                        const SizedBox(width: 15),
-                        ATContainer(
-                            height: 20,
-                            width: 20,
-                            radius: 20,
-                            padding: const EdgeInsets.all(3),
+                  ),
+                ),
+                Align(
+                  alignment: Alignment.center,
+                  child: Text(
+                    ATStrings.audienceAccess,
+                    style: Theme.of(context).textTheme.bodyLarge,
+                  ),
+                ),
+                const SizedBox(height: 20),
+                Text(
+                  maxLines: 5,
+                  ATStrings.EVENT_AUDIENCE_ACCESS_DESC,
+                  style: Theme.of(context)
+                      .textTheme
+                      .titleMedium
+                      ?.copyWith(color: ATColors.hexC2C2C2),
+                ),
+                const SizedBox(height: 20),
+                AmptiveRebuilderWidget(
+                    notifier: freeAccesNotifier,
+                    shouldDispose: true,
+                    builder: (_, bool value, __) {
+                      return ATContainer(
+                        duration: 100,
+                        onTap: () {
+                          activateBtnNotifier.value = !value;
+                          paidAccessNotifier.value = false;
+                          freeAccesNotifier.value = !value;
+                        },
+                        padding: const EdgeInsets.fromLTRB(15, 13, 15, 13),
+                        radius: 15,
+                        color: ATColors.hex2D2D2D,
+                        border: Border.all(
+                            width: 2,
                             color: value
                                 ? ATColors.hex307FE2
-                                : ATColors.transparent,
-                            border: Border.all(
-                                color: value
-                                    ? ATColors.hex307FE2
-                                    : ATColors.white,
-                                strokeAlign: 5.0),
-                            child: const SizedBox.shrink())
-                      ],
-                    ),
-                  );
-                }),
-            const SizedBox(height: 15),
-            AmptiveRebuilderWidget(
-                shouldDispose: true,
-                notifier: paidAccessNotifier,
-                builder: (_, bool value, __) {
-                  return ATContainer(
-                    onTap: () {
-                      activateBtnNotifier.value = !value;
-                      freeAccesNotifier.value = false;
-                      paidAccessNotifier.value = !value;
-                    },
-                    padding: const EdgeInsets.fromLTRB(15, 13, 15, 13),
-                    radius: 15,
-                    duration: 100,
-                    color: ATColors.hex2D2D2D,
-                    border: Border.all(
-                        width: 2,
-                        color: value
-                            ? ATColors.hex307FE2
-                            : ATColors.transparent),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisSize: MainAxisSize.min,
-                      children: <Widget>[
-                        Row(
+                                : ATColors.transparent),
+                        child: Row(
                           children: <Widget>[
-                            const ATImgLoader(
-                                imgPath: ATImgStrings.PADLOCK),
+                            const ATImgLoader(imgPath: ATImgStrings.people),
                             const SizedBox(width: 10),
                             Expanded(
                               child: Column(
                                 mainAxisSize: MainAxisSize.min,
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: <Widget>[
-                                  Text(ATStrings.PAID,
+                                  Text(ATStrings.free,
                                       style: Theme.of(context)
                                           .textTheme
                                           .bodyMedium),
                                   Text(
                                     maxLines: 5,
-                                    ATStrings.PAID_ACCESS,
+                                    ATStrings.EVENT_FREE_ACCESS,
                                     style: Theme.of(context)
                                         .textTheme
                                         .titleMedium
-                                        ?.copyWith(
-                                            color: ATColors.hexC2C2C2),
+                                        ?.copyWith(color: ATColors.hexC2C2C2),
                                   ),
                                 ],
                               ),
@@ -199,67 +130,140 @@ Future<void> showSelectAudienceAccessForEventsDialog(
                                 child: const SizedBox.shrink())
                           ],
                         ),
-                        const SizedBox(height: 15),
-                        const Divider(height: 0.5),
-                        const SizedBox(height: 15),
-                        Row(
+                      );
+                    }),
+                const SizedBox(height: 15),
+                AmptiveRebuilderWidget(
+                    shouldDispose: true,
+                    notifier: paidAccessNotifier,
+                    builder: (_, bool value, __) {
+                      return ATContainer(
+                        onTap: () {
+                          activateBtnNotifier.value = !value;
+                          freeAccesNotifier.value = false;
+                          paidAccessNotifier.value = !value;
+                        },
+                        padding: const EdgeInsets.fromLTRB(15, 13, 15, 13),
+                        radius: 15,
+                        duration: 100,
+                        color: ATColors.hex2D2D2D,
+                        border: Border.all(
+                            width: 2,
+                            color: value
+                                ? ATColors.hex307FE2
+                                : ATColors.transparent),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisSize: MainAxisSize.min,
                           children: <Widget>[
-                            ATContainer(
-                              onTap: () async {
-                                freeAccesNotifier.value = false;
-                                paidAccessNotifier.value = true;
-                                await showEventPaymentFeeDialog(
-                                    context: context,
-                                );
-                              },
-                              padding: const EdgeInsets.fromLTRB(10, 5, 10, 5),
-                              color: ATColors.grey2Color,
-                              radius: 5,
-                              child: Text(ATStrings.SETUP_PAYMENT_FEE,
-                                  style:
-                                      Theme.of(context).textTheme.titleMedium),
+                            Row(
+                              children: <Widget>[
+                                const ATImgLoader(
+                                    imgPath: ATImgStrings.padlock),
+                                const SizedBox(width: 10),
+                                Expanded(
+                                  child: Column(
+                                    mainAxisSize: MainAxisSize.min,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: <Widget>[
+                                      Text(ATStrings.PAID,
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .bodyMedium),
+                                      Text(
+                                        maxLines: 5,
+                                        ATStrings.PAID_ACCESS,
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .titleMedium
+                                            ?.copyWith(
+                                                color: ATColors.hexC2C2C2),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                const SizedBox(width: 15),
+                                ATContainer(
+                                    height: 20,
+                                    width: 20,
+                                    radius: 20,
+                                    padding: const EdgeInsets.all(3),
+                                    color: value
+                                        ? ATColors.hex307FE2
+                                        : ATColors.transparent,
+                                    border: Border.all(
+                                        color: value
+                                            ? ATColors.hex307FE2
+                                            : ATColors.white,
+                                        strokeAlign: 5.0),
+                                    child: const SizedBox.shrink())
+                              ],
                             ),
-                            const Spacer(),
-                            AmptiveRebuilderWidget(
-                                notifier: service.eventPaymentController,
-                                builder: (_, TextEditingValue val, __) {
-                                  return Text('₦${service.eventPaymentController.text}',
+                            const SizedBox(height: 15),
+                            const Divider(height: 0.5),
+                            const SizedBox(height: 15),
+                            Row(
+                              children: <Widget>[
+                                ATContainer(
+                                  onTap: () async {
+                                    freeAccesNotifier.value = false;
+                                    paidAccessNotifier.value = true;
+                                    await showEventPaymentFeeDialog(
+                                      context: context,
+                                    );
+                                  },
+                                  padding:
+                                      const EdgeInsets.fromLTRB(10, 5, 10, 5),
+                                  color: ATColors.grey2Color,
+                                  radius: 5,
+                                  child: Text(ATStrings.SETUP_PAYMENT_FEE,
                                       style: Theme.of(context)
                                           .textTheme
-                                          .bodyMedium);
-                                }),
+                                          .titleMedium),
+                                ),
+                                const Spacer(),
+                                AmptiveRebuilderWidget(
+                                    notifier: service.eventPaymentController,
+                                    builder: (_, TextEditingValue val, __) {
+                                      return Text(
+                                          '₦${service.eventPaymentController.text}',
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .bodyMedium);
+                                    }),
+                              ],
+                            )
                           ],
-                        )
-                      ],
-                    ),
-                  );
-                }),
-            const Spacer(),
-            AmptiveRebuilderWidget(
-                notifier: activateBtnNotifier,
-                shouldDispose: true,
-                builder: (_, bool value, __) {
-                  return AmptiveElevatedButtonWidget(
-                    margin: EdgeInsets.zero,
-                    onPressed: value
-                        ? () async {
-                            if (paidAccessNotifier.value) {
-                              service.audienceAccessController.text =
-                                  "${ATStrings.PAY} • ₦${service.userEventFee}";
-                            } else if (freeAccesNotifier.value) {
-                              service.audienceAccessController.text =
-                                  ATStrings.FREE;
-                            }
+                        ),
+                      );
+                    }),
+                const Spacer(),
+                AmptiveRebuilderWidget(
+                    notifier: activateBtnNotifier,
+                    shouldDispose: true,
+                    builder: (_, bool value, __) {
+                      return AmptiveElevatedButtonWidget(
+                        margin: EdgeInsets.zero,
+                        onPressed: value
+                            ? () async {
+                                if (paidAccessNotifier.value) {
+                                  service.audienceAccessController.text =
+                                      "${ATStrings.PAY} • ₦${service.userEventFee}";
+                                } else if (freeAccesNotifier.value) {
+                                  service.audienceAccessController.text =
+                                      ATStrings.free;
+                                }
 
-                            Navigator.pop(context);
-                          }
-                        : null,
-                    buttonTitle: ATStrings.cContinue,
-                    bgColor: ATColors.white,
-                    fgColor: ATColors.black,
-                  );
-                })
-          ]),
+                                Navigator.pop(context);
+                              }
+                            : null,
+                        buttonTitle: ATStrings.cContinue,
+                        bgColor: ATColors.white,
+                        fgColor: ATColors.black,
+                      );
+                    })
+              ]),
         );
       });
 }

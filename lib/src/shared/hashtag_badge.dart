@@ -5,11 +5,7 @@ import 'package:amptive/src/shared/image_loader_widget.dart';
 import 'package:flutter/material.dart';
 
 class ATHashtagBadge extends StatelessWidget {
-  const ATHashtagBadge({
-    super.key,
-    this.badgeSize = 40,
-    this.hashSize = 25
-  });
+  const ATHashtagBadge({super.key, this.badgeSize = 40, this.hashSize = 25});
 
   final double badgeSize, hashSize;
 
@@ -17,17 +13,16 @@ class ATHashtagBadge extends StatelessWidget {
   Widget build(BuildContext context) {
     return ATContainer(
       alignment: Alignment.center,
-      height: badgeSize, width: badgeSize,
+      height: badgeSize,
+      width: badgeSize,
       boxShape: BoxShape.circle,
       color: ATColors.white,
       child: ColorFiltered(
-        colorFilter: ColorFilter.mode(
-          ATColors.black,
-          BlendMode.srcATop
-        ),
+        colorFilter: ColorFilter.mode(ATColors.black, BlendMode.srcATop),
         child: ATImgLoader(
-          imgPath: ATImgStrings.HASH_ICON,
-          height: hashSize, width: hashSize,
+          imgPath: ATImgStrings.hashIcon,
+          height: hashSize,
+          width: hashSize,
         ),
       ),
     );

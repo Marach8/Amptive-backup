@@ -9,7 +9,6 @@ import 'package:go_router/go_router.dart';
 
 import 'dart:async';
 
-
 class UpdateEmailScreen extends StatefulWidget {
   const UpdateEmailScreen({super.key, required this.title});
   final String title;
@@ -18,7 +17,8 @@ class UpdateEmailScreen extends StatefulWidget {
   State<UpdateEmailScreen> createState() => _UpdateEmailScreenState();
 }
 
-class _UpdateEmailScreenState extends State<UpdateEmailScreen> with ATValidators{
+class _UpdateEmailScreenState extends State<UpdateEmailScreen>
+    with ATValidators {
   final TextEditingController _controller = TextEditingController();
   final StreamController<bool> _activateButtonCntrl = StreamController<bool>();
 
@@ -27,11 +27,10 @@ class _UpdateEmailScreenState extends State<UpdateEmailScreen> with ATValidators
     super.initState();
     _controller.addListener(() {
       ATHelperFuncs.callDebouncer(
-        500,
-        () => _activateButtonCntrl.add(
-          validateEmail(_controller.text) == null,
-        )
-      );
+          500,
+          () => _activateButtonCntrl.add(
+                validateEmail(_controller.text) == null,
+              ));
     });
   }
 
@@ -55,7 +54,6 @@ class _UpdateEmailScreenState extends State<UpdateEmailScreen> with ATValidators
           leading: const ATRoundedBackBtn(),
           titleText: widget.title,
         ),
-
         body: SingleChildScrollView(
           padding: const EdgeInsets.fromLTRB(15, 10, 15, 10),
           child: Column(
@@ -74,13 +72,13 @@ class _UpdateEmailScreenState extends State<UpdateEmailScreen> with ATValidators
                 maxLines: 2,
                 ' You will receive a verification code on this email address.',
                 style: context.textTheme.titleSmall?.copyWith(
-                  height: 1.5, fontSize: ATSizes.size11,
+                  height: 1.5,
+                  fontSize: ATSizes.size11,
                 ),
               ),
             ],
           ),
         ),
-
         bottomSheet: Builder(
           builder: (BuildContext context) {
             final double bottom = MediaQuery.viewInsetsOf(context).bottom;
@@ -91,21 +89,23 @@ class _UpdateEmailScreenState extends State<UpdateEmailScreen> with ATValidators
               child: StreamBuilder<bool>(
                 stream: _activateButtonCntrl.stream,
                 builder: (_, AsyncSnapshot<bool> snapshot) {
-                  final bool isActive = snapshot.hasData && snapshot.data == true;
+                  final bool isActive =
+                      snapshot.hasData && snapshot.data == true;
 
                   return ATPlainElevatedBtn(
-                    onPressed: isActive ? ()async {
-                      final String? newEmail = await context.pushNamed(
-                        ATRoutes.ENTER_OTP_SCREEN,
-                        extra: <String>[
-                          _controller.text.trim(),
-                          widget.title
-                        ]
-                      );
-                      if(context.mounted && newEmail != null){
-                        context.pop(newEmail);
-                      }
-                    } : null,
+                    onPressed: isActive
+                        ? () async {
+                            final String? newEmail = await context.pushNamed(
+                                ATRoutes.ENTER_OTP_SCREEN,
+                                extra: <String>[
+                                  _controller.text.trim(),
+                                  widget.title
+                                ]);
+                            if (context.mounted && newEmail != null) {
+                              context.pop(newEmail);
+                            }
+                          }
+                        : null,
                     btnTitle: 'Verify Email',
                   );
                 },

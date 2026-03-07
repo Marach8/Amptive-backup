@@ -26,7 +26,8 @@ class _SliderAnimationStat extends State<GoLiveProgramTitle> {
   @override
   void initState() {
     super.initState();
-    _childrenKeys = List<GlobalKey>.generate(widget.slidingChildren.length, (_) => GlobalKey());
+    _childrenKeys = List<GlobalKey>.generate(
+        widget.slidingChildren.length, (_) => GlobalKey());
   }
 
   @override
@@ -52,7 +53,8 @@ class _SliderAnimationStat extends State<GoLiveProgramTitle> {
 
     setState(() {
       _widthOfItems = compoundedWidth;
-      _animationDuration = Duration(milliseconds: (durationSeconds * 1000).round());
+      _animationDuration =
+          Duration(milliseconds: (durationSeconds * 1000).round());
     });
   }
 
@@ -68,14 +70,18 @@ class _SliderAnimationStat extends State<GoLiveProgramTitle> {
           AnimatedPositioned(
             duration: _animationDuration,
             onEnd: () => setState(() => shouldAnimate = !shouldAnimate),
-            right: shouldAnimate ? halfWidthOfSpace : -(_widthOfItems - halfWidthOfSpace),
+            right: shouldAnimate
+                ? halfWidthOfSpace
+                : -(_widthOfItems - halfWidthOfSpace),
             child: Row(
-              children: widget.slidingChildren.indexed.map(
-                ((int, Widget) entry) => SizedBox(
-                  key: _childrenKeys[entry.$1],
-                  child: entry.$2,
-                ),
-              ).toList(),
+              children: widget.slidingChildren.indexed
+                  .map(
+                    ((int, Widget) entry) => SizedBox(
+                      key: _childrenKeys[entry.$1],
+                      child: entry.$2,
+                    ),
+                  )
+                  .toList(),
             ),
           ),
         ],

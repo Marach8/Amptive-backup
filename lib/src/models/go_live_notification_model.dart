@@ -1,8 +1,6 @@
 import 'package:amptive/src/models/host.dart';
 
-
 class AmptiveGoLiveNotificationModel {
-
   const AmptiveGoLiveNotificationModel({
     required this.user,
     required this.notificationType,

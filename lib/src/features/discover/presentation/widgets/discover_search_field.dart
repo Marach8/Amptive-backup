@@ -23,46 +23,41 @@ class _ATDiscoverSearchFieldState extends State<ATDiscoverSearchField> {
   bool _hasFocus = false;
   bool _hasInput = false;
 
-  @override 
-  void initState(){
+  @override
+  void initState() {
     super.initState();
     _focusNode = FocusNode()..addListener(_handleFocus);
     _controller = TextEditingController()..addListener(_handleTextInput);
   }
 
-  void _handleFocus(){
-    if(_focusNode.hasFocus){
+  void _handleFocus() {
+    if (_focusNode.hasFocus) {
       setState(() => _hasFocus = true);
-      if(mounted){
+      if (mounted) {
         context.read<DiscoverTrnstnBlc>().showRecentSearches();
       }
-    }
-    else{
+    } else {
       setState(() => _hasFocus = false);
       context.read<DiscoverTrnstnBlc>().reset();
     }
   }
 
-  void _handleTextInput(){
-    if(_controller.text.isNotEmpty){
+  void _handleTextInput() {
+    if (_controller.text.isNotEmpty) {
       setState(() => _hasInput = true);
-      Future<void>.delayed(
-        const Duration(seconds: 2),
-        (){
-          if(mounted){
-            context.read<DiscoverTrnstnBlc>().showSearchResults();
-          }
+      Future<void>.delayed(const Duration(seconds: 2), () {
+        if (mounted) {
+          context.read<DiscoverTrnstnBlc>().showSearchResults();
         }
-      );
-    }
-    else{
+      });
+    } else {
       setState(() => _hasInput = false);
       context.read<DiscoverTrnstnBlc>().reset();
     }
   }
 
   @override
-  void dispose(){
+  void dispose() {
     _focusNode.removeListener(_handleFocus);
     _focusNode.dispose();
     _controller.removeListener(_handleTextInput);
@@ -73,7 +68,8 @@ class _ATDiscoverSearchFieldState extends State<ATDiscoverSearchField> {
   @override
   Widget build(BuildContext context) {
     return ATContainer(
-      color: ATColors.black, height: 60,
+      color: ATColors.black,
+      height: 60,
       child: Padding(
         padding: const EdgeInsets.fromLTRB(15, 0, 15, 10),
         child: Row(
@@ -84,34 +80,41 @@ class _ATDiscoverSearchFieldState extends State<ATDiscoverSearchField> {
                 controller: _controller,
                 disableBlueBorder: true,
                 isDense: true,
-                cursorHeight: 20, maxLines: 1,
+                cursorHeight: 20,
+                maxLines: 1,
                 cursorColor: ATColors.white.withValues(alpha: 0.6),
                 contentPadding: const EdgeInsets.fromLTRB(12, 10, 12, 10),
                 hintText: ATStrings.SEARCH_FOR_EVENTS_ND_SHOWS,
                 prefixIcon: Padding(
                   padding: const EdgeInsets.only(left: 12),
                   child: ColorFiltered(
-                    colorFilter: ColorFilter.mode(ATColors.white, BlendMode.srcATop),
+                    colorFilter:
+                        ColorFilter.mode(ATColors.white, BlendMode.srcATop),
                     child: const ATImgLoader(
-                      height: 25, width: 25,
+                      height: 25,
+                      width: 25,
                       imgPath: ATImgStrings.outlinedSearch,
                     ),
                   ),
                 ),
                 suffixIcon: Padding(
-                  padding: const EdgeInsets.only(right: 10,),
+                  padding: const EdgeInsets.only(
+                    right: 10,
+                  ),
                   child: ATAnimatedXFade(
                     condition: _hasInput,
                     secondChild: const SizedBox.shrink(),
                     firstChild: GestureDetector(
-                      onTap: () => _controller.clear(),
-                      child: Icon(Icons.close, size: 20, color: ATColors.white)
-                    ),
+                        onTap: () => _controller.clear(),
+                        child:
+                            Icon(Icons.close, size: 20, color: ATColors.white)),
                   ),
                 ),
               ),
             ),
-            const SizedBox(width: 10,),
+            const SizedBox(
+              width: 10,
+            ),
             ATAnimatedXFade(
               condition: _hasFocus,
               secondChild: const SizedBox.shrink(),

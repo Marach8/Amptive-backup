@@ -17,31 +17,38 @@ class RowOfSocials extends StatelessWidget {
     return Row(
       mainAxisSize: MainAxisSize.min,
       children: <Widget>[
-        Icon(Iconsax.instagram, color: ATColors.hexC2C2C2, size: 15,),
+        Icon(
+          Iconsax.instagram,
+          color: ATColors.hexC2C2C2,
+          size: 15,
+        ),
         const SizedBox(width: 3),
         Text(
           ATStrings.INSTAGRAM,
-          style: Theme.of(context).textTheme.bodySmall?.copyWith(
-            color: ATColors.hexC2C2C2
-          ),
+          style: Theme.of(context)
+              .textTheme
+              .bodySmall
+              ?.copyWith(color: ATColors.hexC2C2C2),
         ),
         const SizedBox(width: 15),
         const ATImgLoader(imgPath: ATImgStrings.X_LOGO),
         const SizedBox(width: 3),
         Text(
           'x',
-          style: Theme.of(context).textTheme.bodySmall?.copyWith(
-            color: ATColors.hexC2C2C2
-          ),
+          style: Theme.of(context)
+              .textTheme
+              .bodySmall
+              ?.copyWith(color: ATColors.hexC2C2C2),
         ),
         const SizedBox(width: 15),
         FaIcon(FontAwesomeIcons.linkedin, color: ATColors.hexC2C2C2, size: 15),
         const SizedBox(width: 3),
         Text(
           ATStrings.LINKEDIN,
-          style: Theme.of(context).textTheme.bodySmall?.copyWith(
-            color: ATColors.hexC2C2C2
-          ),
+          style: Theme.of(context)
+              .textTheme
+              .bodySmall
+              ?.copyWith(color: ATColors.hexC2C2C2),
         ),
         const SizedBox(width: 15),
         Transform.rotate(
@@ -51,9 +58,10 @@ class RowOfSocials extends StatelessWidget {
         const SizedBox(width: 3),
         Text(
           ATStrings.WEBSITE,
-          style: Theme.of(context).textTheme.bodySmall?.copyWith(
-            color: ATColors.hexC2C2C2
-          ),
+          style: Theme.of(context)
+              .textTheme
+              .bodySmall
+              ?.copyWith(color: ATColors.hexC2C2C2),
         ),
       ],
     );

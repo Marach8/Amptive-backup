@@ -75,7 +75,8 @@ class ShowsRepoImpl implements ShowsRepo {
         },
       );
 
-      final HostedShowsResponseModel hostedShowsResponse = HostedShowsResponseModel.fromJson(
+      final HostedShowsResponseModel hostedShowsResponse =
+          HostedShowsResponseModel.fromJson(
         response.data as Map<String, dynamic>,
       );
       return Successful<HostedShowsResponseModel>(data: hostedShowsResponse);

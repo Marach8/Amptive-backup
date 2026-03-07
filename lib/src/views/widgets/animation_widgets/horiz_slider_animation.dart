@@ -1,21 +1,18 @@
 import 'package:flutter/material.dart';
 
 class AmptiveHorizSliderAnimationWidget extends StatefulWidget {
-
-  const AmptiveHorizSliderAnimationWidget({
-    super.key,
-    required this.child,
-    required this.duration
-  });
+  const AmptiveHorizSliderAnimationWidget(
+      {super.key, required this.child, required this.duration});
   final Widget child;
   final double duration;
 
   @override
-  State<AmptiveHorizSliderAnimationWidget> createState() => _SliderAnimationState();
+  State<AmptiveHorizSliderAnimationWidget> createState() =>
+      _SliderAnimationState();
 }
 
 class _SliderAnimationState extends State<AmptiveHorizSliderAnimationWidget>
-with SingleTickerProviderStateMixin {
+    with SingleTickerProviderStateMixin {
   late AnimationController sliderController;
   late Animation<Offset> sliderAnimation;
 
@@ -46,11 +43,7 @@ with SingleTickerProviderStateMixin {
   Widget build(BuildContext context) {
     return SlideTransition(
       position: sliderAnimation,
-      child: Container(
-        color: Colors.blue,
-        child: widget.child
-      ),
+      child: Container(color: Colors.blue, child: widget.child),
     );
   }
 }
-

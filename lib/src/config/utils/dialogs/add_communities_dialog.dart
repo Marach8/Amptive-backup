@@ -1,15 +1,15 @@
 import 'package:amptive/src/config/api_response_and_app_state.dart';
 import 'package:amptive/src/config/utils/dialogs/app_notification_dialog.dart';
-import 'package:amptive/src/features/auth/cubits/communities_cubit.dart';
-import 'package:amptive/src/features/auth/data/models/response/communities_response_model.dart';
+import 'package:amptive/src/features/discover/cubits/communities_cubit.dart';
+import 'package:amptive/src/features/discover/data/models/response/communities_response_model.dart';
 import 'package:amptive/src/global_export.dart';
+import 'package:amptive/src/shared/global_model_objects.dart';
 import 'package:amptive/src/shared/loading_indicator.dart';
 import 'package:amptive/src/shared/modal_dismisser.dart';
 import 'package:amptive/src/shared/image_loader_widget.dart';
 import 'package:amptive/src/shared/rich_text.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-
 
 Future<Community?> showCommunitiesModal({
   required BuildContext context,
@@ -37,8 +37,6 @@ Future<Community?> showCommunitiesModal({
   );
 }
 
-
-
 class _SubWidget extends StatefulWidget {
   const _SubWidget({required this.controller});
   final ScrollController controller;
@@ -48,17 +46,17 @@ class _SubWidget extends StatefulWidget {
 }
 
 class __SubWidgetState extends State<_SubWidget> {
-  @override 
-  void initState(){
+  @override
+  void initState() {
     super.initState();
     widget.controller.addListener(_onScrollToEnd);
   }
 
   void _onScrollToEnd() {
     const double dragThreshold = 80;
-    if (widget.controller.position.pixels >= 
-      widget.controller.position.maxScrollExtent + dragThreshold) {
-        context.read<CommunitiesCubit>().fetchCommunities();
+    if (widget.controller.position.pixels >=
+        widget.controller.position.maxScrollExtent + dragThreshold) {
+      context.read<CommunitiesCubit>().fetchCommunities();
     }
   }
 
@@ -67,64 +65,58 @@ class __SubWidgetState extends State<_SubWidget> {
     return Column(
       children: <Widget>[
         const ATModalDismisser(),
-        Text(
-          ATStrings.addCommunity,
-          style: context.textTheme.bodyLarge
-        ),
+        Text(ATStrings.addCommunity, style: context.textTheme.bodyLarge),
         const SizedBox(height: 15),
         ATRichText(
           maxLines: 4,
           items: <String, TextStyle>{
-            ATStrings.addCommunityDesc: context.textTheme.labelSmall!.copyWith(
-              color: ATColors.hexC2C2C2.withValues(alpha: 0.76)
-            ),
+            ATStrings.addCommunityDesc: context.textTheme.labelSmall!
+                .copyWith(color: ATColors.hexC2C2C2.withValues(alpha: 0.76)),
             ATStrings.learnMore: context.textTheme.labelSmall!
           },
-          textOnTap: (String text){
-            if(text == ATStrings.learnMore){
-
-            }
+          textOnTap: (String text) {
+            if (text == ATStrings.learnMore) {}
           },
         ),
         const SizedBox(height: 25),
         Expanded(
-          child: BlocConsumer<CommunitiesCubit, ATAppState<CommunitiesResponseModel>>(
-            listener: (_, ATAppState<CommunitiesResponseModel> state){
-              if(state is FailureState<CommunitiesResponseModel>){
-                showAppNotification2(
+          child: BlocConsumer<CommunitiesCubit,
+                  ATAppState<CommunitiesResponseModel>>(
+              listener: (_, ATAppState<CommunitiesResponseModel> state) {
+            if (state is FailureState<CommunitiesResponseModel>) {
+              showAppNotification2(
                   context: context,
                   text: state.message,
-                  type: NotificationType.failure
-                );
-              }
-            },
-            builder: (_, ATAppState<CommunitiesResponseModel> state) {
-              return switch(state){
-                InitialState<CommunitiesResponseModel>() => const SizedBox.shrink(),
-                LoadingState<CommunitiesResponseModel>() ||
-                FailureState<CommunitiesResponseModel>() ||
-                SuccessState<CommunitiesResponseModel>() =>Builder(
-                  builder: (_){
-                    final CommunitiesResponseModel? communitiesData = 
-                      context.read<CommunitiesCubit>().currentCommunities;
-                    final Map<String, Community> communities = 
-                      communitiesData?.communities ?? <String, Community>{};
-                    final List<String> communityIds = 
-                      communitiesData?.communityIds ?? <String>[];
-                    
-                    if(communities.isEmpty){
-                      if(state is LoadingState<CommunitiesResponseModel>){
+                  type: NotificationType.failure);
+            }
+          }, builder: (_, ATAppState<CommunitiesResponseModel> state) {
+            return switch (state) {
+              InitialState<CommunitiesResponseModel>() =>
+                const SizedBox.shrink(),
+              LoadingState<CommunitiesResponseModel>() ||
+              FailureState<CommunitiesResponseModel>() ||
+              SuccessState<CommunitiesResponseModel>() =>
+                Builder(
+                  builder: (_) {
+                    final CommunitiesResponseModel? communitiesData =
+                        context.read<CommunitiesCubit>().currentCommunities;
+                    final Map<String, Community> communities =
+                        communitiesData?.communities ?? <String, Community>{};
+                    final List<String> communityIds =
+                        communitiesData?.communityIds ?? <String>[];
+
+                    if (communities.isEmpty) {
+                      if (state is LoadingState<CommunitiesResponseModel>) {
                         return const Center(child: ATLoadingIndicator());
                       }
-                      if(state is FailureState<CommunitiesResponseModel>){
+                      if (state is FailureState<CommunitiesResponseModel>) {
                         return Center(
-                          child: IconButton(
-                            onPressed: (){
-                              context.read<CommunitiesCubit>().fetchCommunities();
-                            },
-                            icon: const Icon(Icons.refresh),
-                          )
-                        );
+                            child: IconButton(
+                          onPressed: () {
+                            context.read<CommunitiesCubit>().fetchCommunities();
+                          },
+                          icon: const Icon(Icons.refresh),
+                        ));
                       }
                       return Center(
                         child: Text(
@@ -140,8 +132,8 @@ class __SubWidgetState extends State<_SubWidget> {
                     return ListView.builder(
                       controller: widget.controller,
                       itemCount: hasMoreItems ? count + 1 : count,
-                      itemBuilder: (_, int index){
-                        if(index < count){
+                      itemBuilder: (_, int index) {
+                        if (index < count) {
                           final String id = communityIds[index];
                           final Community? community = communities[id];
                           return GestureDetector(
@@ -153,18 +145,19 @@ class __SubWidgetState extends State<_SubWidget> {
                                   ClipRRect(
                                     borderRadius: BorderRadius.circular(5),
                                     child: ATImgLoader(
-                                      width: 70, height: 50,
-                                      imgPath: community?.image ?? '',
-                                      boxFit: BoxFit.cover
-                                    ),
+                                        width: 70,
+                                        height: 50,
+                                        imgPath: community?.image ?? '',
+                                        boxFit: BoxFit.cover),
                                   ),
-                                  const SizedBox(width: 15,),
+                                  const SizedBox(
+                                    width: 15,
+                                  ),
                                   Flexible(
                                     child: Text(
                                       community?.name ?? '',
-                                      style: context.textTheme.bodySmall?.copyWith(
-                                        fontSize: ATSizes.size15
-                                      ),
+                                      style: context.textTheme.bodySmall
+                                          ?.copyWith(fontSize: ATSizes.size15),
                                     ),
                                   )
                                 ],
@@ -172,7 +165,7 @@ class __SubWidgetState extends State<_SubWidget> {
                             ),
                           );
                         }
-                        if(state is LoadingState<CommunitiesResponseModel>){
+                        if (state is LoadingState<CommunitiesResponseModel>) {
                           return const Center(child: ATLoadingIndicator());
                         }
                         return const SizedBox.shrink();
@@ -180,9 +173,8 @@ class __SubWidgetState extends State<_SubWidget> {
                     );
                   },
                 )
-              };
-            }
-          ),
+            };
+          }),
         ),
       ],
     );

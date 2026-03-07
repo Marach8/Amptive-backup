@@ -24,4 +24,4 @@ class ATDivider extends StatelessWidget {
   }
 }
 
-enum AxisType {vertical, horizontal}
+enum AxisType { vertical, horizontal }

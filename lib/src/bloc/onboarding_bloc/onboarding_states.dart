@@ -1,6 +1,6 @@
-abstract class AmptiveOnboardingState{}
+abstract class AmptiveOnboardingState {}
 
-class CurrentOnboardingPageViewIndexState extends AmptiveOnboardingState{
+class CurrentOnboardingPageViewIndexState extends AmptiveOnboardingState {
   CurrentOnboardingPageViewIndexState({required this.currentPageIndex});
   int currentPageIndex;
 }

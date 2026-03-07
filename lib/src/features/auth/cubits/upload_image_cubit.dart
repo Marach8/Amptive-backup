@@ -50,7 +50,6 @@ class UploadImageCubit extends Cubit<ATAppState<String>> {
     }
   }
 
-
   Future<void> uploadFileImage({
     required String filepath,
     String? purpose,

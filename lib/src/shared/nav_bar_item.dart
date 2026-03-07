@@ -16,7 +16,6 @@
 //   final String selectedImagePath, unselectedImagePath;
 //   final int itemIdentityIndex;
 
-
 //   @override
 //   Widget build(BuildContext context) {
 //     return BlocSelector<ATNavBarBloc, (int, bool), int>(

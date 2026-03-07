@@ -21,119 +21,123 @@ class TrendingHashTagsScreen extends StatelessWidget {
             slivers: <Widget>[
               SliverAppBar(
                 title: Text(
-                  ATStrings.TRENDING_HASHTAGS,
+                  ATStrings.trendingHashtags,
                   style: Theme.of(context).textTheme.bodyMedium,
                 ),
-                elevation: 0, centerTitle: true, floating: true,
+                elevation: 0,
+                centerTitle: true,
+                floating: true,
                 leading: const ATRoundedBackBtn(),
               ),
-          
               SliverList(
-                delegate: SliverChildListDelegate.fixed(
-                  <Widget>[
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 15),
-                      child: HashTagsSubtitleRow(
-                        hashTagTitle: ATStrings.SOCIETY,
-                        hashTagSubTitle: 'ankira22, glendonnor, and 15k other are live',
-                        trailingOnpressed: (){
-                          context.pushNamed(ATRoutes.SOCIETY_HASHTAG_SCREEN);
-                        },
-                      ),
-                    ),              
-                    const SizedBox(height: 15,),
-                    SizedBox(
-                      height: 180,
-                      child: ListView(
-                        physics: const BouncingScrollPhysics(),
-                        scrollDirection: Axis.horizontal,
-                        children: List<Widget>.generate(
-                          5,
-                          (_) => const RenderTrendingHashTag(
-                            trendingPicture: ATImgStrings.weCanDoHardThingsBgImage,
-                          )
-                        ),
-                      ),
-                    ),
-
-                    const SizedBox(height: 40,),
-          
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 15),
-                      child: HashTagsSubtitleRow(
-                        trailingOnpressed: (){},
-                        hashTagTitle: 'Katerinisback',
-                        hashTagSubTitle: 'emmanuel, nnanna and 205 others are live',
-                      ),
-                    ),              
-                    const SizedBox(height: 15),            
-                    SizedBox(
-                      height: 180,
-                      child: ListView(
-                        physics: const BouncingScrollPhysics(),
-                        scrollDirection: Axis.horizontal,
-                        children: List<Widget>.generate(
-                          5,
-                          (_) => const RenderTrendingHashTag(
-                            trendingPicture: ATImgStrings.OFFICE_LADIES
-                          )
-                        ),
-                      ),
-                    ),
-          
-                    const SizedBox(height: 40,),
-          
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 15),
-                      child: HashTagsSubtitleRow(
-                        hashTagTitle: ATStrings.SOCIETY,
-                        hashTagSubTitle: 'ankira22, glendonnor, and 15k other are live',
-                        trailingOnpressed: (){},
-                      ),
-                    ),              
-                    const SizedBox(height: 15,),
-                    SizedBox(
-                      height: 180,
-                      child: ListView(
-                        physics: const BouncingScrollPhysics(),
-                        scrollDirection: Axis.horizontal,
-                        children: List<Widget>.generate(
-                          5,
-                          (_) => const RenderTrendingHashTag(
-                            trendingPicture: ATImgStrings.weCanDoHardThingsBgImage,
-                          )
-                        ),
-                      ),
-                    ),
-          
-                    const SizedBox(height: 40,),
-          
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 15),
-                      child: HashTagsSubtitleRow(
-                        trailingOnpressed: (){},
-                        hashTagTitle: 'Katerinisback',
-                        hashTagSubTitle: 'emmanuel, nnanna and 205 others are live',
-                      ),
-                    ),              
-                    const SizedBox(height: 15,),
-                    SizedBox(
-                      height: 180,
-                      child: ListView(
-                        physics: const BouncingScrollPhysics(),
-                        scrollDirection: Axis.horizontal,
-                        children: List<Widget>.generate(
-                          5,
-                          (_) => const RenderTrendingHashTag(
-                            trendingPicture: ATImgStrings.OFFICE_LADIES
-                          )
-                        ),
-                      ),
-                    ),
-                    const SizedBox(height: 60,)
-                  ]
+                  delegate: SliverChildListDelegate.fixed(<Widget>[
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 15),
+                  child: HashTagsSubtitleRow(
+                    hashTagTitle: ATStrings.SOCIETY,
+                    hashTagSubTitle:
+                        'ankira22, glendonnor, and 15k other are live',
+                    trailingOnpressed: () {
+                      context.pushNamed(ATRoutes.SOCIETY_HASHTAG_SCREEN);
+                    },
+                  ),
+                ),
+                const SizedBox(
+                  height: 15,
+                ),
+                SizedBox(
+                  height: 180,
+                  child: ListView(
+                    physics: const BouncingScrollPhysics(),
+                    scrollDirection: Axis.horizontal,
+                    children: List<Widget>.generate(
+                        5,
+                        (_) => const RenderTrendingHashTag(
+                              trendingPicture:
+                                  ATImgStrings.weCanDoHardThingsBgImage,
+                            )),
+                  ),
+                ),
+                const SizedBox(
+                  height: 40,
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 15),
+                  child: HashTagsSubtitleRow(
+                    trailingOnpressed: () {},
+                    hashTagTitle: 'Katerinisback',
+                    hashTagSubTitle: 'emmanuel, nnanna and 205 others are live',
+                  ),
+                ),
+                const SizedBox(height: 15),
+                SizedBox(
+                  height: 180,
+                  child: ListView(
+                    physics: const BouncingScrollPhysics(),
+                    scrollDirection: Axis.horizontal,
+                    children: List<Widget>.generate(
+                        5,
+                        (_) => const RenderTrendingHashTag(
+                            trendingPicture: ATImgStrings.OFFICE_LADIES)),
+                  ),
+                ),
+                const SizedBox(
+                  height: 40,
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 15),
+                  child: HashTagsSubtitleRow(
+                    hashTagTitle: ATStrings.SOCIETY,
+                    hashTagSubTitle:
+                        'ankira22, glendonnor, and 15k other are live',
+                    trailingOnpressed: () {},
+                  ),
+                ),
+                const SizedBox(
+                  height: 15,
+                ),
+                SizedBox(
+                  height: 180,
+                  child: ListView(
+                    physics: const BouncingScrollPhysics(),
+                    scrollDirection: Axis.horizontal,
+                    children: List<Widget>.generate(
+                        5,
+                        (_) => const RenderTrendingHashTag(
+                              trendingPicture:
+                                  ATImgStrings.weCanDoHardThingsBgImage,
+                            )),
+                  ),
+                ),
+                const SizedBox(
+                  height: 40,
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 15),
+                  child: HashTagsSubtitleRow(
+                    trailingOnpressed: () {},
+                    hashTagTitle: 'Katerinisback',
+                    hashTagSubTitle: 'emmanuel, nnanna and 205 others are live',
+                  ),
+                ),
+                const SizedBox(
+                  height: 15,
+                ),
+                SizedBox(
+                  height: 180,
+                  child: ListView(
+                    physics: const BouncingScrollPhysics(),
+                    scrollDirection: Axis.horizontal,
+                    children: List<Widget>.generate(
+                        5,
+                        (_) => const RenderTrendingHashTag(
+                            trendingPicture: ATImgStrings.OFFICE_LADIES)),
+                  ),
+                ),
+                const SizedBox(
+                  height: 60,
                 )
-              )
+              ]))
             ],
           ),
         ),

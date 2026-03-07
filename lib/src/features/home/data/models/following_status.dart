@@ -28,7 +28,7 @@ class FollowingStatus extends Equatable {
 
   @override
   List<Object?> get props => <Object?>[
-    isFollowing,
-    followerCount,
-  ];
+        isFollowing,
+        followerCount,
+      ];
 }

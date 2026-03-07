@@ -15,7 +15,6 @@ class ATOnboardingScreen extends StatefulWidget {
 class _ATOnboardingScreenState extends State<ATOnboardingScreen> {
   final PageController _pageCntrl = PageController();
 
-
   @override
   void dispose() {
     _pageCntrl.dispose();
@@ -35,7 +34,7 @@ class _ATOnboardingScreenState extends State<ATOnboardingScreen> {
                 children: <Widget>[
                   CustomOnboardPageWidget(
                     title: ATStrings.GO_LIVE_LIKE_NEVER_B4,
-                    description:  ATStrings.READILY_MONETIZE_UR_LIVE_AUDIO_PROGS,
+                    description: ATStrings.READILY_MONETIZE_UR_LIVE_AUDIO_PROGS,
                     pictureBgColor: ATColors.hex2D2D2D,
                   ),
                   CustomOnboardPageWidget(

@@ -17,8 +17,7 @@ class GoLiveTypeSelectionWidget extends StatelessWidget {
     required this.onTap,
   });
 
-  final String selectedImgPath, unselectedImgPath,
-  title, subtitle, alphabet;
+  final String selectedImgPath, unselectedImgPath, title, subtitle, alphabet;
   final bool isSelected;
   final void Function(bool) onTap;
 
@@ -30,36 +29,42 @@ class GoLiveTypeSelectionWidget extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           ATContainer(
-            duration: 200, height: 120,
-            width: double.infinity, radius: 5,
-            clipBehavior: Clip.hardEdge,
-            color: isSelected ? ATColors.hex307FE2 : ATColors.hex2D2D2D,
-            child: AnimatedScale(
-              scale: isSelected ? 1.1 : 0.5,
-              duration: const Duration(milliseconds: 200),
-              child: ATImgLoader(
-                key: ValueKey<String>(selectedImgPath),
-                imgPath: isSelected ? selectedImgPath : unselectedImgPath,
-                boxFit: BoxFit.fill,
-              ),
-            )
+              duration: 200,
+              height: 120,
+              width: double.infinity,
+              radius: 5,
+              clipBehavior: Clip.hardEdge,
+              color: isSelected ? ATColors.hex307FE2 : ATColors.hex2D2D2D,
+              child: AnimatedScale(
+                scale: isSelected ? 1.1 : 0.5,
+                duration: const Duration(milliseconds: 200),
+                child: ATImgLoader(
+                  key: ValueKey<String>(selectedImgPath),
+                  imgPath: isSelected ? selectedImgPath : unselectedImgPath,
+                  boxFit: BoxFit.fill,
+                ),
+              )),
+          const SizedBox(
+            height: 20,
           ),
-          const SizedBox(height: 20,),
           Row(
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
               ATCircleAvatar(
                 animationDuration: 200,
                 diameter: 15,
-                color: isSelected ? ATColors.hexF91880 : ATColors. hex2D2D2D,
+                color: isSelected ? ATColors.hexF91880 : ATColors.hex2D2D2D,
                 child: FittedBox(child: Text(alphabet)),
               ),
-              const SizedBox(width: 5,),
+              const SizedBox(
+                width: 5,
+              ),
               Text(
                 title,
-                style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                  fontSize: ATSizes.size13
-                ),
+                style: Theme.of(context)
+                    .textTheme
+                    .bodyMedium
+                    ?.copyWith(fontSize: ATSizes.size13),
               )
             ],
           ),
@@ -67,9 +72,10 @@ class GoLiveTypeSelectionWidget extends StatelessWidget {
           Text(
             maxLines: 2,
             subtitle,
-            style: Theme.of(context).textTheme.titleSmall?.copyWith(
-              color: ATColors.hexC2C2C2
-            ),
+            style: Theme.of(context)
+                .textTheme
+                .titleSmall
+                ?.copyWith(color: ATColors.hexC2C2C2),
           )
         ],
       ),

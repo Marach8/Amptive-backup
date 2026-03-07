@@ -11,18 +11,17 @@ import '../../../../../shared/textformfield_widget.dart';
 class CreateShowTextFormField extends ATTextFormField {
   const CreateShowTextFormField(
       {super.key,
-        super.controller,
-        super.hintText,
-        super.prefixIcon,
-        super.suffixIcon,
-        super.onChanged,
-        super.keyboardType,
-        this.onTap,
-        this.readOnly = false,
-        this.maxLength = 400,
-        this.maxLines = 1,
-        this.counterText = ""
-      });
+      super.controller,
+      super.hintText,
+      super.prefixIcon,
+      super.suffixIcon,
+      super.onChanged,
+      super.keyboardType,
+      this.onTap,
+      this.readOnly = false,
+      this.maxLength = 400,
+      this.maxLines = 1,
+      this.counterText = ""});
 
   @override
   final bool readOnly;
@@ -45,8 +44,8 @@ class CreateShowTextFormField extends ATTextFormField {
       maxLength: maxLength,
       maxLines: maxLines,
       style: Theme.of(context).textTheme.bodySmall?.copyWith(
-        overflow: TextOverflow.ellipsis,
-      ),
+            overflow: TextOverflow.ellipsis,
+          ),
       decoration: InputDecoration(
         counterText: counterText,
         contentPadding: EdgeInsets.symmetric(vertical: 12.h, horizontal: 16.w),
@@ -79,9 +78,7 @@ class CreateShowTextFormField extends ATTextFormField {
   }
 }
 
-
 class CreateShowTextFieldTitle extends StatelessWidget {
-
   const CreateShowTextFieldTitle({
     super.key,
     required this.title,
@@ -118,8 +115,8 @@ class CreateShowTextFieldTitle extends StatelessWidget {
         ),
         Expanded(
             child: SizedBox(
-              width: 1.w,
-            )),
+          width: 1.w,
+        )),
         Text(
           otherInfo ?? "",
           style: Theme.of(context)
@@ -131,7 +128,6 @@ class CreateShowTextFieldTitle extends StatelessWidget {
     );
   }
 }
-
 
 class SelectedHashTags extends StatelessWidget {
   const SelectedHashTags({
@@ -162,9 +158,9 @@ class SelectedHashTags extends StatelessWidget {
                   Text(
                     hashtag.obj.name,
                     style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                      fontSize: ATSizes.size10,
-                      color: ATColors.white.withOpacity(0.7),
-                    ),
+                          fontSize: ATSizes.size10,
+                          color: ATColors.white.withOpacity(0.7),
+                        ),
                   ),
                   SizedBox(width: 4.w),
                   GestureDetector(
@@ -184,5 +180,3 @@ class SelectedHashTags extends StatelessWidget {
     );
   }
 }
-
-

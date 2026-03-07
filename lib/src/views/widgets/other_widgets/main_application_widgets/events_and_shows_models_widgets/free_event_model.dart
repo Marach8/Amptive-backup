@@ -5,12 +5,8 @@ import '../../../../../shared/circle_avatar.dart';
 import '../../../../../shared/custom_container_widget.dart';
 import '../../../../../shared/image_loader_widget.dart';
 
-
 class AmptiveFreeEventModel extends StatelessWidget {
-  const AmptiveFreeEventModel({
-    super.key,
-    required this.trendingPicture
-  });
+  const AmptiveFreeEventModel({super.key, required this.trendingPicture});
   final String trendingPicture;
 
   @override
@@ -40,13 +36,12 @@ class AmptiveFreeEventModel extends StatelessWidget {
                 child: Text(
                   'achidon',
                   style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                    fontSize: ATSizes.size13,
-                    color: ATColors.hexA8A8A8,
-                  ),
+                        fontSize: ATSizes.size13,
+                        color: ATColors.hexA8A8A8,
+                      ),
                 ),
               ),
               const SizedBox(width: 5),
-
               Align(
                 alignment: Alignment.bottomCenter,
                 child: ATCircleAvatar(
@@ -57,8 +52,8 @@ class AmptiveFreeEventModel extends StatelessWidget {
               Text(
                 'LIVE',
                 style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                  color: ATColors.hexA8A8A8,
-                ),
+                      color: ATColors.hexA8A8A8,
+                    ),
               ),
             ],
           )

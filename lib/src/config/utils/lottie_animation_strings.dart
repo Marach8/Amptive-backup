@@ -1,4 +1,4 @@
-class AmptiveLottieStrings{
+class AmptiveLottieStrings {
   const AmptiveLottieStrings._();
 
   static const String generalLottiePath = 'assets/json_lotties';

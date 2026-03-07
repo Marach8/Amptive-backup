@@ -1,6 +1,4 @@
-
 class UnusedCommunity {
-
   UnusedCommunity({
     required this.id,
     required this.name,

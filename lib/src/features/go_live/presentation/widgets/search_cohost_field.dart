@@ -5,18 +5,19 @@ import '../../../../config/utils/colors.dart';
 import '../../../../views/widgets/animation_widgets/common_animation_widgets/animated_crossfade_widget.dart';
 import '../../../../shared/textformfield_widget.dart';
 
-
 class SearchFieldWithXSuffix extends StatefulWidget {
   const SearchFieldWithXSuffix({
     super.key,
     required this.onChanged,
     required this.hintText,
     this.onClear,
+    this.fillColor,
   });
 
   final void Function(String) onChanged;
   final VoidCallback? onClear;
   final String hintText;
+  final Color? fillColor;
 
   @override
   State<SearchFieldWithXSuffix> createState() => _SearchFieldWithXSuffixState();
@@ -26,23 +27,22 @@ class _SearchFieldWithXSuffixState extends State<SearchFieldWithXSuffix> {
   late TextEditingController _controller;
   bool _hasInput = false;
 
-  @override 
-  void initState(){
+  @override
+  void initState() {
     super.initState();
     _controller = TextEditingController()..addListener(_handleTextInput);
   }
 
-  void _handleTextInput(){
-    if(_controller.text.isNotEmpty && !_hasInput){
+  void _handleTextInput() {
+    if (_controller.text.isNotEmpty && !_hasInput) {
       setState(() => _hasInput = true);
-    }
-    else if (_controller.text.isEmpty && _hasInput){
+    } else if (_controller.text.isEmpty && _hasInput) {
       setState(() => _hasInput = false);
     }
   }
 
   @override
-  void dispose(){
+  void dispose() {
     _controller.removeListener(_handleTextInput);
     _controller.dispose();
     super.dispose();
@@ -55,38 +55,41 @@ class _SearchFieldWithXSuffixState extends State<SearchFieldWithXSuffix> {
       disableBlueBorder: true,
       isDense: true,
       onChanged: widget.onChanged,
-      cursorHeight: 20, maxLines: 1,
+      cursorHeight: 20,
+      maxLines: 1,
       cursorColor: ATColors.white.withValues(alpha: 0.6),
       contentPadding: const EdgeInsets.fromLTRB(12, 10, 12, 10),
       hintText: widget.hintText,
+      fillColor: widget.fillColor,
       enabledBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(14),
-        borderSide: BorderSide(color: ATColors.transparent)
-      ),
+          borderRadius: BorderRadius.circular(14),
+          borderSide: BorderSide(color: ATColors.transparent)),
       prefixIcon: Padding(
         padding: const EdgeInsets.only(left: 12),
         child: ColorFiltered(
           colorFilter: ColorFilter.mode(ATColors.white, BlendMode.srcATop),
           child: const ATImgLoader(
-            height: 25, width: 25,
+            height: 25,
+            width: 25,
             imgPath: ATImgStrings.outlinedSearch,
           ),
         ),
       ),
       suffixIcon: Padding(
-        padding: const EdgeInsets.only(right: 10,),
+        padding: const EdgeInsets.only(
+          right: 10,
+        ),
         child: ATAnimatedXFade(
           condition: _hasInput,
           secondChild: const SizedBox.shrink(),
           firstChild: GestureDetector(
-            onTap: (){
-              _controller.clear();
-              if(widget.onClear != null){
-                widget.onClear!();
-              }
-            },
-            child: Icon(Icons.close, size: 20, color: ATColors.white)
-          ),
+              onTap: () {
+                _controller.clear();
+                if (widget.onClear != null) {
+                  widget.onClear!();
+                }
+              },
+              child: Icon(Icons.close, size: 20, color: ATColors.white)),
         ),
       ),
     );

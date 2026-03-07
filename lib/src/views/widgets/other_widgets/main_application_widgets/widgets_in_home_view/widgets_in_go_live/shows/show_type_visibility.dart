@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 enum ShowType { event, episode, show, all }
 
 class ShowTypeVisibilityWidget extends StatelessWidget {
-
   ShowTypeVisibilityWidget({
     super.key,
     required this.showType,

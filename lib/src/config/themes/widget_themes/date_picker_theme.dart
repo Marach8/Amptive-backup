@@ -1,5 +1,4 @@
-
-class ChariotDatePickerTheme{
+class ChariotDatePickerTheme {
   const ChariotDatePickerTheme._();
 
   // static DatePickerThemeData lightDatePickerTheme = DatePickerThemeData(
@@ -61,7 +60,7 @@ class ChariotDatePickerTheme{
   //   dayStyle: const TextStyle(
   //     fontSize: ChariotFontSizes.size13,
   //     fontWeight: ChariotFontWeights.bold
-  //   ),   
+  //   ),
   //   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
   //   todayBorder: BorderSide(color: ChariotColors.deepOrange),
   //   rangeSelectionOverlayColor: WidgetStatePropertyAll(ChariotColors.deepOrange),

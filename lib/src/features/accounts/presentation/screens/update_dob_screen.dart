@@ -49,7 +49,8 @@ class _UpdateDOBScreenState extends State<UpdateDOBScreen> with ATValidators {
   Future<void> _selectDOBModal(BuildContext context) async {
     final DateTime? picked = await showDatePicker(
       context: context,
-      initialDate: selectedDOB ?? DateTime.now().subtract(const Duration(days: 365 * 18)),
+      initialDate: selectedDOB ??
+          DateTime.now().subtract(const Duration(days: 365 * 18)),
       firstDate: DateTime(1900),
       lastDate: DateTime.now().subtract(const Duration(days: 365 * 13)),
     );
@@ -101,16 +102,24 @@ class _UpdateDOBScreenState extends State<UpdateDOBScreen> with ATValidators {
               child: StreamBuilder<bool>(
                 stream: _activateButtonCntrl.stream,
                 builder: (_, AsyncSnapshot<bool> snapshot) {
-                  final bool isActive = snapshot.hasData && snapshot.data == true;
+                  final bool isActive =
+                      snapshot.hasData && snapshot.data == true;
 
                   return ATPlainElevatedBtn(
                     onPressed: isActive
                         ? () {
                             // Update LocalUserDataCubit directly
-                            final String formattedDate = DateFormat('yyyy-MM-dd').format(selectedDOB!);
-                            final CachedUserData? currentData = context.read<LocalUserDataCubit>().currentUserData;
-                            final CachedUserData updatedData = (currentData ?? const CachedUserData()).copyWith(dob: formattedDate);
-                            context.read<LocalUserDataCubit>().updateUserDataLocally(updatedData);
+                            final String formattedDate =
+                                DateFormat('yyyy-MM-dd').format(selectedDOB!);
+                            final CachedUserData? currentData = context
+                                .read<LocalUserDataCubit>()
+                                .currentUserData;
+                            final CachedUserData updatedData =
+                                (currentData ?? const CachedUserData())
+                                    .copyWith(dob: formattedDate);
+                            context
+                                .read<LocalUserDataCubit>()
+                                .updateUserDataLocally(updatedData);
                             context.pop(formattedDate);
                           }
                         : null,

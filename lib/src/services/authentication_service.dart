@@ -3,8 +3,6 @@ import 'package:amptive/src/models/user_model.dart';
 import 'api_handler.dart';
 
 class AuthenticationService {
-
-
   final APIHandler _apiHandler = APIHandler();
 
   Future<AmptiveUser?> registerUser({
@@ -19,11 +17,11 @@ class AuthenticationService {
 
       if (res != null) {
         return AmptiveUser(
-          id: res.id,
-          email: res.email ?? '',
-          username: res.username ?? '',
-          profilePicture: null, name: ''
-        );
+            id: res.id,
+            email: res.email ?? '',
+            username: res.username ?? '',
+            profilePicture: null,
+            name: '');
       }
     } catch (e) {
       print(e.toString());
@@ -43,7 +41,8 @@ class AuthenticationService {
           id: res.id,
           email: res.email ?? '',
           username: res.username ?? '',
-          profilePicture: null, name: '',
+          profilePicture: null,
+          name: '',
         );
       }
     } catch (e) {
@@ -73,5 +72,4 @@ class AuthenticationService {
     await Future.delayed(const Duration(seconds: 3));
     return usr == "peter";
   }
-
 }

@@ -1,10 +1,7 @@
 import 'package:amptive/src/global_export.dart';
 
 class OneTwoThreeCountDown extends StatelessWidget {
-  const OneTwoThreeCountDown({
-    super.key,
-    required this.onCountDownFinished
-  });
+  const OneTwoThreeCountDown({super.key, required this.onCountDownFinished});
 
   final VoidCallback onCountDownFinished;
 
@@ -21,31 +18,28 @@ class OneTwoThreeCountDown extends StatelessWidget {
   Widget build(BuildContext context) {
     return Center(
       child: SizedBox(
-        height: 45, width: 45,
+        height: 45,
+        width: 45,
         child: StreamBuilder<(double?, double?, double?)>(
-          initialData: (0, -50, -100),
-          stream: _generate123BottomValues(),
-          builder: (_, AsyncSnapshot<(double?, double?, double?)> snap) {
-            final (double?, double?, double?) values = snap.data!;
-            return Stack(
-              alignment: Alignment.center,
-              children: <Widget>[
-                _PText(
-                  text: '3',
-                  bottom: values.$1,
-                ),
-                _PText(
-                  text: '2',
-                  bottom: values.$2,
-                ),
-                _PText(
-                  text: '1',
-                  bottom: values.$3
-                ),
-              ],
-            );
-          }
-        ),
+            initialData: (0, -50, -100),
+            stream: _generate123BottomValues(),
+            builder: (_, AsyncSnapshot<(double?, double?, double?)> snap) {
+              final (double?, double?, double?) values = snap.data!;
+              return Stack(
+                alignment: Alignment.center,
+                children: <Widget>[
+                  _PText(
+                    text: '3',
+                    bottom: values.$1,
+                  ),
+                  _PText(
+                    text: '2',
+                    bottom: values.$2,
+                  ),
+                  _PText(text: '1', bottom: values.$3),
+                ],
+              );
+            }),
       ),
     );
   }
@@ -65,13 +59,9 @@ class _PText extends StatelessWidget {
     return AnimatedPositioned(
       bottom: bottom,
       duration: const Duration(milliseconds: 500),
-      child: Text(
-        text,
-        style: context.textTheme.displaySmall?.copyWith(
-          fontSize: 30,
-          height: 1.5
-        )
-      ),
+      child: Text(text,
+          style: context.textTheme.displaySmall
+              ?.copyWith(fontSize: 30, height: 1.5)),
     );
   }
 }

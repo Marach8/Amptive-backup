@@ -6,7 +6,8 @@ final DateTime now = DateTime.now();
 typedef CalenderViewsState = (int index, String viewName);
 
 class CalenderViewsBloc extends Cubit<CalenderViewsState> {
-  CalenderViewsBloc() : super((0, '${DateFormat('MMMM').format(now)} ${now.year}'));
+  CalenderViewsBloc()
+      : super((0, '${DateFormat('MMMM').format(now)} ${now.year}'));
 
   void selectView(int index) => emit((index, state.$2));
 
@@ -14,6 +15,6 @@ class CalenderViewsBloc extends Cubit<CalenderViewsState> {
 
   void showOnlyYear() => emit((state.$1, '${now.year}'));
 
-  void showMonthAndYear() 
-    => emit((state.$1, '${DateFormat('MMMM').format(now)} ${now.year}'));
+  void showMonthAndYear() =>
+      emit((state.$1, '${DateFormat('MMMM').format(now)} ${now.year}'));
 }

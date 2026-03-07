@@ -1,5 +1,5 @@
 import 'package:amptive/src/config/utils/extensions/context_extensions.dart';
-import 'package:amptive/src/features/auth/data/models/response/communities_response_model.dart';
+import 'package:amptive/src/shared/global_model_objects.dart';
 import 'package:amptive/src/shared/image_loader_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -79,58 +79,44 @@ class CommunityCardPreferenceWidget extends StatelessWidget {
   }
 }
 
-
-
 class RenderACommunityCard extends StatelessWidget {
-  const RenderACommunityCard({
-    super.key,
-    required this.community});
+  const RenderACommunityCard({super.key, required this.community});
   final Community community;
 
   @override
   Widget build(BuildContext context) {
-    return Builder(
-      builder: (BuildContext context) {
-        return GestureDetector(
-          onTap: (){
-            
-          },
-          child: Stack(
-            children: <Widget>[
-              ClipRRect(
-                borderRadius: BorderRadius.circular(6),
-                child: ATImgLoader(
-                  imgPath: community.image ?? '',
-                  boxFit: BoxFit.cover,
-                  height: 120,
-                  width: 170,
+    return Builder(builder: (BuildContext context) {
+      return GestureDetector(
+        onTap: () {},
+        child: Stack(
+          children: <Widget>[
+            ClipRRect(
+              borderRadius: BorderRadius.circular(6),
+              child: ATImgLoader(
+                imgPath: community.image ?? '',
+                boxFit: BoxFit.cover,
+                height: 120,
+                width: 170,
+              ),
+            ),
+            Positioned(
+              bottom: 8,
+              left: 8,
+              child: DecoratedBox(
+                decoration: BoxDecoration(boxShadow: <BoxShadow>[
+                  BoxShadow(
+                      color: ATColors.black, blurRadius: 15, spreadRadius: 0.1)
+                ]),
+                child: Text(
+                  community.name ?? '',
+                  style: context.textTheme.titleMedium
+                      ?.copyWith(fontWeight: FontWeight.w600),
                 ),
               ),
-              Positioned(
-                bottom: 8,
-                left: 8,
-                child: DecoratedBox(
-                  decoration: BoxDecoration(
-                    boxShadow: <BoxShadow>[
-                      BoxShadow(
-                        color: ATColors.black,
-                        blurRadius: 15,
-                        spreadRadius: 0.1
-                      )
-                    ]
-                  ),
-                  child: Text(
-                    community.name ?? '',
-                    style: context.textTheme.titleMedium?.copyWith(
-                      fontWeight: FontWeight.w600
-                    ),
-                  ),
-                ),
-              )
-            ],
-          ),
-        );
-      }
-    );
+            )
+          ],
+        ),
+      );
+    });
   }
 }

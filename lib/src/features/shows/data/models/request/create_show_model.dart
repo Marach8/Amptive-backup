@@ -8,16 +8,13 @@ class CreateShowModel {
     required this.price,
     required this.tagIds,
     required this.coHostIds,
+    required this.communityId,
   });
 
-  final String title;
-  final String description;
-  final String coverUrl;
-  final String category;
-  final String showType;
+  final String title, description, coverUrl, 
+    category, showType, communityId;
   final double price;
-  final List<String> tagIds;
-  final List<String> coHostIds;
+  final List<String> tagIds, coHostIds;
 
   /// Convert to JSON
   Map<String, dynamic> toJson() {
@@ -30,6 +27,7 @@ class CreateShowModel {
       'price': price,
       'tag_ids': tagIds,
       'co_host_ids': coHostIds,
+      "community_id": communityId,
     };
   }
 }

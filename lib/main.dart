@@ -5,7 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
-void main() async{
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
   setup();
@@ -28,16 +28,10 @@ void main() async{
   // );
 }
 
-
-Future<void> _initializeRedirect()async{
+Future<void> _initializeRedirect() async {
   const FlutterSecureStorage storage = FlutterSecureStorage();
-  await storage.write(
-    key: ATStrings.SHOULD_REDIRECT,
-    value: true.toString()
-  );
+  await storage.write(key: ATStrings.SHOULD_REDIRECT, value: true.toString());
 }
-
-
 
 class AmptiveApp extends StatelessWidget {
   const AmptiveApp({super.key});
@@ -71,7 +65,6 @@ class AmptiveApp extends StatelessWidget {
     );
   }
 }
-
 
 final GlobalKey<ScaffoldMessengerState> scaffoldMessengerKey =
     GlobalKey<ScaffoldMessengerState>();

@@ -10,51 +10,51 @@ Future<void> showTopCreationCommunitiesModal(BuildContext context) async {
   final List<UnusedCommunity> communities = service.generateCommunities();
 
   return await showModalBottomSheet(
-    backgroundColor: ATColors.hex202020,
-    context: context, useSafeArea: true,
-    isScrollControlled: true,
-    barrierColor: ATColors.black.withValues(alpha:0.6),
-    shape: const RoundedRectangleBorder(
-      borderRadius: BorderRadius.only(
-      topLeft: Radius.circular(15), topRight: Radius.circular(15),
-    )),
-    builder: (BuildContext context) {
-      return DraggableScrollableSheet(
-        expand: false,
-        builder: (_, ScrollController scrollController) {
-          return Padding(
-            padding: const EdgeInsets.fromLTRB(15, 10, 15, 50),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisSize: MainAxisSize.min,
-              children: <Widget>[
-                const ATModalDismisser(),
-                const SizedBox(height: 5),
-                Text(
-                  ATStrings.TOP_CREATOR_IN,
-                  style: Theme.of(context).textTheme.bodyLarge,
-                ),
-                const SizedBox(height: 25,),
-                Expanded(
-                  child: ListView.builder(
-                    itemCount: communities.length,
-                    controller: scrollController,
-                    itemBuilder: (_, int index){
-                      final UnusedCommunity community = communities[index];                        
-                      return _RenderACommunity(community);
-                    },
-                  ),
-                )
-              ]
-            ),
-          );
-        }
-      );
-    }
-  );
+      backgroundColor: ATColors.hex202020,
+      context: context,
+      useSafeArea: true,
+      isScrollControlled: true,
+      barrierColor: ATColors.black.withValues(alpha: 0.6),
+      shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.only(
+        topLeft: Radius.circular(15),
+        topRight: Radius.circular(15),
+      )),
+      builder: (BuildContext context) {
+        return DraggableScrollableSheet(
+            expand: false,
+            builder: (_, ScrollController scrollController) {
+              return Padding(
+                padding: const EdgeInsets.fromLTRB(15, 10, 15, 50),
+                child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisSize: MainAxisSize.min,
+                    children: <Widget>[
+                      const ATModalDismisser(),
+                      const SizedBox(height: 5),
+                      Text(
+                        ATStrings.TOP_CREATOR_IN,
+                        style: Theme.of(context).textTheme.bodyLarge,
+                      ),
+                      const SizedBox(
+                        height: 25,
+                      ),
+                      Expanded(
+                        child: ListView.builder(
+                          itemCount: communities.length,
+                          controller: scrollController,
+                          itemBuilder: (_, int index) {
+                            final UnusedCommunity community =
+                                communities[index];
+                            return _RenderACommunity(community);
+                          },
+                        ),
+                      )
+                    ]),
+              );
+            });
+      });
 }
-
-
 
 class _RenderACommunity extends StatelessWidget {
   const _RenderACommunity(this.community);
@@ -68,7 +68,8 @@ class _RenderACommunity extends StatelessWidget {
       child: Row(
         children: <Widget>[
           SizedBox(
-            height: 50, width: 70,
+            height: 50,
+            width: 70,
             child: ATImgLoader(imgPath: community?.coverPic ?? ''),
           ),
           const SizedBox(width: 10),
@@ -79,7 +80,7 @@ class _RenderACommunity extends StatelessWidget {
             ),
           ),
           AmptiveElevatedButtonWidget(
-            onPressed: (){},
+            onPressed: () {},
             bgColor: ATColors.hex307FE2,
             buttonTitle: ATStrings.VIEW,
           )

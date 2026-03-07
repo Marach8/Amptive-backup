@@ -4,21 +4,20 @@ import 'package:flutter/material.dart';
 import '../../../../../../features/discover/presentation/views/recent_searches_page_view.dart';
 
 class AmptiveRecentSearchesAndTabsView extends StatefulWidget {
-  const AmptiveRecentSearchesAndTabsView({
-    super.key,
-    required this.controller
-  });
+  const AmptiveRecentSearchesAndTabsView({super.key, required this.controller});
   final TextEditingController controller;
 
   @override
-  State<AmptiveRecentSearchesAndTabsView> createState() => _AmptiveRecentSearchesAndTabsViewState();
+  State<AmptiveRecentSearchesAndTabsView> createState() =>
+      _AmptiveRecentSearchesAndTabsViewState();
 }
 
-class _AmptiveRecentSearchesAndTabsViewState extends State<AmptiveRecentSearchesAndTabsView> {
+class _AmptiveRecentSearchesAndTabsViewState
+    extends State<AmptiveRecentSearchesAndTabsView> {
   late ValueNotifier<bool> _showTabs;
 
-  @override 
-  void initState(){
+  @override
+  void initState() {
     super.initState();
     _showTabs = ValueNotifier(false);
 
@@ -33,8 +32,8 @@ class _AmptiveRecentSearchesAndTabsViewState extends State<AmptiveRecentSearches
     widget.controller.addListener(updateTabsVisibility);
   }
 
-  @override 
-  void dispose(){
+  @override
+  void dispose() {
     //_showTabs.dispose();
     super.dispose();
   }
@@ -42,18 +41,19 @@ class _AmptiveRecentSearchesAndTabsViewState extends State<AmptiveRecentSearches
   @override
   Widget build(BuildContext context) {
     return ValueListenableBuilder(
-      valueListenable: _showTabs,
-      builder: (_, bool value, __) {
-        int index = value ? 1 : 0;
-        final List<Widget> listOfWidgets = <Widget>[
-          RecentSearchesView(key: UniqueKey(),),
-          SearchResultsTabsView(key: UniqueKey()),
-        ];
+        valueListenable: _showTabs,
+        builder: (_, bool value, __) {
+          int index = value ? 1 : 0;
+          final List<Widget> listOfWidgets = <Widget>[
+            RecentSearchesView(
+              key: UniqueKey(),
+            ),
+            SearchResultsTabsView(key: UniqueKey()),
+          ];
 
-        return ATFadingSwitcher(
-          child: listOfWidgets.elementAt(index),
-        );
-      }
-    );
+          return ATFadingSwitcher(
+            child: listOfWidgets.elementAt(index),
+          );
+        });
   }
 }

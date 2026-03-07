@@ -3,7 +3,6 @@ import 'dart:math';
 import 'package:amptive/src/config/utils/colors.dart';
 import 'package:flutter/material.dart';
 
-
 class SineWaveImplementer extends StatefulWidget {
   const SineWaveImplementer({super.key});
 
@@ -44,14 +43,41 @@ class _SineWaveImplementerState extends State<SineWaveImplementer>
   }
 }
 
-class SinePainter extends CustomPainter { // Define amplitude values
-
+class SinePainter extends CustomPainter {
+  // Define amplitude values
 
   SinePainter(this.controller);
   final AnimationController controller;
-  final List<int> amplitudeValues = <int>[ 8, 40, 10, 20, 80, 5, 10, 20, 7,  120, 8,
-    20,  160, 80, 250, 10, 20, 40, 80,
-    10, 20, 120, 160, 20,  250, 5, 10, 20];
+  final List<int> amplitudeValues = <int>[
+    8,
+    40,
+    10,
+    20,
+    80,
+    5,
+    10,
+    20,
+    7,
+    120,
+    8,
+    20,
+    160,
+    80,
+    250,
+    10,
+    20,
+    40,
+    80,
+    10,
+    20,
+    120,
+    160,
+    20,
+    250,
+    5,
+    10,
+    20
+  ];
 
   @override
   void paint(Canvas canvas, Size size) {
@@ -64,20 +90,20 @@ class SinePainter extends CustomPainter { // Define amplitude values
     double height = size.height;
     double centerY = height / 2;
 
-
     int index = (controller.value * (amplitudeValues.length - 1)).round();
 
     double period = width / 1.75; // Adjust the period of the sine wave
     double scale = 200 / height;
-    double amplitude = (-1 * scale * height / amplitudeValues[index]); // Adjust the amplitude of the sine wave
+    double amplitude = (-1 *
+        scale *
+        height /
+        amplitudeValues[index]); // Adjust the amplitude of the sine wave
 
     Path path = Path();
     path.moveTo(0, centerY);
 
-
     for (double x = 0; x <= width; x += 4) {
-      double y =
-          centerY + sin((x / period) * 2 * pi) * amplitude ;
+      double y = centerY + sin((x / period) * 2 * pi) * amplitude;
       path.lineTo(x, y);
     }
 
@@ -86,6 +112,4 @@ class SinePainter extends CustomPainter { // Define amplitude values
 
   @override
   bool shouldRepaint(covariant CustomPainter oldDelegate) => true;
-
-
 }

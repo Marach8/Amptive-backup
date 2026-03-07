@@ -4,12 +4,9 @@ import 'package:amptive/src/features/profile/data/repository/profile_repo_impl.d
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class GetUserProfileCubit extends Cubit<ATAppState<dynamic>> {
-  GetUserProfileCubit({
-    ProfileRepo ? mockProfileRepo
-  }): profileRepo = mockProfileRepo ?? ProfileRepoImpl(),
-  super (const InitialState<dynamic>());
+  GetUserProfileCubit({ProfileRepo? mockProfileRepo})
+      : profileRepo = mockProfileRepo ?? ProfileRepoImpl(),
+        super(const InitialState<dynamic>());
 
   final ProfileRepo profileRepo;
-  
-
 }

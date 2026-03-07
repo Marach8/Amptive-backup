@@ -7,7 +7,6 @@ import 'package:go_router/go_router.dart';
 import '../../../../config/utils/other_strings.dart';
 import '../../../../shared/app_bar_widget.dart';
 
-
 class AmptiveViewProfilePicScreen extends StatelessWidget {
   const AmptiveViewProfilePicScreen({super.key, required this.imgPath});
   final String imgPath;
@@ -23,17 +22,13 @@ class AmptiveViewProfilePicScreen extends StatelessWidget {
           ),
           leadingWidth: 30,
           actions: <Widget>[
-            Text(
-              ATStrings.EDIT,
-              style: Theme.of(context).textTheme.bodyMedium
-            ),
+            Text(ATStrings.EDIT, style: Theme.of(context).textTheme.bodyMedium),
           ],
           title: Text(
             ATStrings.PROFILE_PIC,
             style: Theme.of(context).textTheme.bodyMedium,
           ),
         ),
-
         body: Center(
           child: Hero(
             tag: imgPath,
@@ -47,10 +42,8 @@ class AmptiveViewProfilePicScreen extends StatelessWidget {
           padding: const EdgeInsets.fromLTRB(17, 5, 17, 5),
           color: ATColors.white.withValues(alpha: 0.1),
           radius: 100,
-          child: Text(
-            ATStrings.SHARE_PROFILE,
-            style: Theme.of(context).textTheme.bodyMedium
-          ),
+          child: Text(ATStrings.SHARE_PROFILE,
+              style: Theme.of(context).textTheme.bodyMedium),
         ),
       ),
     );

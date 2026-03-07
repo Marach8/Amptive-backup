@@ -6,11 +6,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
-
 Future<Country?> showCupertinoCountryPickerModal({
   required BuildContext context,
   required Country initialCountry,
-}) async{
+}) async {
   Country? selectedCountry;
 
   return await showCupertinoModalPopup<Country>(
@@ -24,18 +23,14 @@ Future<Country?> showCupertinoCountryPickerModal({
             alignment: Alignment.centerRight,
             child: CupertinoButton(
               padding: const EdgeInsets.fromLTRB(10, 5, 10, 5),
-              child: Text(
-                'Done',
-                style: context.textTheme.labelSmall?.copyWith(
-                  fontSize: ATSizes.size16, height: 1.5
-                )
-              ),
+              child: Text('Done',
+                  style: context.textTheme.labelSmall
+                      ?.copyWith(fontSize: ATSizes.size16, height: 1.5)),
               onPressed: () {
                 context.pop(selectedCountry);
               },
             ),
           ),
-
           Expanded(
             child: CupertinoTheme(
               data: const CupertinoThemeData(
@@ -74,7 +69,8 @@ class _CupertinoCountryItem extends StatelessWidget {
         children: <Widget>[
           ATImgLoader(
             imgPath: CountryPickerUtils.getFlagImageAssetPath(country.isoCode),
-            height: 30, width: 41,
+            height: 30,
+            width: 41,
             boxFit: BoxFit.fill,
             package: ATStrings.countryPickers,
           ),

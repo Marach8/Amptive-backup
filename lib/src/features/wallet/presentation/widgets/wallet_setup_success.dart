@@ -11,7 +11,6 @@ import 'package:amptive/src/shared/back_button.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../bloc/wallet_bloc_export.dart';
 
-
 class WalletCretionSuccess extends StatelessWidget {
   const WalletCretionSuccess({super.key});
 
@@ -28,31 +27,31 @@ class WalletCretionSuccess extends StatelessWidget {
             clipBehavior: Clip.none,
             children: <Widget>[
               BlocSelector<WalletCreationAnimBloc, List<bool>, bool>(
-                selector: (List<bool> state) => state.elementAt(3),
-                builder: (_, bool isVisible) {
-                  return SpotlightBeam(
-                    width: ATHelperFuncs.getScreenWidth(context),
-                    height: ATHelperFuncs.getScreenHeight(context) * 0.45,
-                    gradient: isVisible ? LinearGradient(
-                      begin: Alignment.topCenter,
-                      end: Alignment.bottomCenter,
-                      colors: <Color>[
-                        ATColors.hex23221C,
-                        ATColors.black
-                      ],
-                    ) : null,
-                  );
-                }
-              ),
+                  selector: (List<bool> state) => state.elementAt(3),
+                  builder: (_, bool isVisible) {
+                    return SpotlightBeam(
+                      width: ATHelperFuncs.getScreenWidth(context),
+                      height: ATHelperFuncs.getScreenHeight(context) * 0.45,
+                      gradient: isVisible
+                          ? LinearGradient(
+                              begin: Alignment.topCenter,
+                              end: Alignment.bottomCenter,
+                              colors: <Color>[
+                                ATColors.hex23221C,
+                                ATColors.black
+                              ],
+                            )
+                          : null,
+                    );
+                  }),
               const Positioned(
                 bottom: 0,
-                child: ATImgLoader(imgPath: ATImgStrings.BIG_WALLET_COLORED_ICON,),
+                child: ATImgLoader(
+                  imgPath: ATImgStrings.BIG_WALLET_COLORED_ICON,
+                ),
               ),
-
               const Positioned(
-                top: kToolbarHeight * 0.9, left: 7,
-                child: ATXBackBtn()
-              )
+                  top: kToolbarHeight * 0.9, left: 7, child: ATXBackBtn())
             ],
           ),
         ),
@@ -61,22 +60,20 @@ class WalletCretionSuccess extends StatelessWidget {
           padding: const EdgeInsets.fromLTRB(15, 0, 15, 0),
           child: Text(
             ATStrings.WALLET_CREATED,
-            maxLines: 2, textAlign: TextAlign.center,
-            style: context.textTheme.bodyLarge?.copyWith(
-              fontSize: ATSizes.size24, height: 1
-            ),
+            maxLines: 2,
+            textAlign: TextAlign.center,
+            style: context.textTheme.bodyLarge
+                ?.copyWith(fontSize: ATSizes.size24, height: 1),
           ),
         ),
         const SizedBox(height: 15),
         Padding(
           padding: const EdgeInsets.fromLTRB(15, 0, 15, 0),
-          child: Text(
-            ATStrings.RECEIVE_EARNINGS_WITH_WALLET,
-            maxLines: 2, textAlign: TextAlign.center,
-            style: context.textTheme.bodySmall?.copyWith(
-              color: ATColors.hexC2C2C2
-            )
-          ),
+          child: Text(ATStrings.RECEIVE_EARNINGS_WITH_WALLET,
+              maxLines: 2,
+              textAlign: TextAlign.center,
+              style: context.textTheme.bodySmall
+                  ?.copyWith(color: ATColors.hexC2C2C2)),
         ),
       ],
     );

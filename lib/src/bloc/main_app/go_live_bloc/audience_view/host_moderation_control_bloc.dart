@@ -1,44 +1,41 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+class AmptiveGoLiveHostModerationToolsBloc extends Cubit<List<bool>> {
+  AmptiveGoLiveHostModerationToolsBloc() : super(<bool>[true, true, true]);
 
-class AmptiveGoLiveHostModerationToolsBloc extends Cubit<List<bool>>{
-  AmptiveGoLiveHostModerationToolsBloc(): super(<bool>[true, true, true]);
-
-  void allowComments(){
+  void allowComments() {
     final List<bool> newState = List<bool>.from(state);
     newState[0] = true;
     emit(newState);
   }
 
-  void disableComments(){
+  void disableComments() {
     final List<bool> newState = List<bool>.from(state);
     newState[0] = false;
     emit(newState);
   }
 
-  void allowAudienceMic(){
+  void allowAudienceMic() {
     final List<bool> newState = List<bool>.from(state);
     newState[1] = true;
     emit(newState);
   }
 
-  void disableAudienceMic(){
+  void disableAudienceMic() {
     final List<bool> newState = List<bool>.from(state);
     newState[1] = false;
     emit(newState);
   }
 
-  void allowHandRaising(){
+  void allowHandRaising() {
     final List<bool> newState = List<bool>.from(state);
     newState[2] = true;
     emit(newState);
   }
 
-  void disableHandRaising(){
+  void disableHandRaising() {
     final List<bool> newState = List<bool>.from(state);
     newState[2] = false;
     emit(newState);
   }
 }
-
-

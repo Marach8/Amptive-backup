@@ -6,7 +6,6 @@ import 'package:amptive/src/shared/loading_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-
 class WalletCreationLoading extends StatelessWidget {
   const WalletCreationLoading({super.key});
 
@@ -17,7 +16,7 @@ class WalletCreationLoading extends StatelessWidget {
   ];
 
   @override
-  Widget build(BuildContext context) {   
+  Widget build(BuildContext context) {
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: <Widget>[
@@ -25,32 +24,30 @@ class WalletCreationLoading extends StatelessWidget {
           height: 30,
           child: Stack(
             alignment: Alignment.center,
-            children: walletList.map(
-              (String item){
-                final int index = walletList.indexOf(item);
-                return BlocSelector<WalletCreationAnimBloc, List<bool>, bool>(
+            children: walletList.map((String item) {
+              final int index = walletList.indexOf(item);
+              return BlocSelector<WalletCreationAnimBloc, List<bool>, bool>(
                   selector: (List<bool> state) => state.elementAt(index),
                   builder: (_, bool isVisible) {
                     return AnimatedPositioned(
                       bottom: isVisible ? 0 : -30,
                       curve: Curves.decelerate,
                       duration: const Duration(milliseconds: 500),
-                      onEnd: () => isVisible ? 
-                        Future<void>.delayed(
-                          const Duration(milliseconds: 2500),
-                          () => context.mounted ? context.read<WalletCreationAnimBloc>().triggerNext(index + 1) : <dynamic, dynamic>{}
-                        ) : null,
-                      child:Text(
-                        item, 
-                        style: context.textTheme.bodyMedium?.copyWith(
-                          fontSize: ATSizes.size17
-                        )
-                      ),
+                      onEnd: () => isVisible
+                          ? Future<void>.delayed(
+                              const Duration(milliseconds: 2500),
+                              () => context.mounted
+                                  ? context
+                                      .read<WalletCreationAnimBloc>()
+                                      .triggerNext(index + 1)
+                                  : <dynamic, dynamic>{})
+                          : null,
+                      child: Text(item,
+                          style: context.textTheme.bodyMedium
+                              ?.copyWith(fontSize: ATSizes.size17)),
                     );
-                  }
-                );
-              }
-            ).toList(),
+                  });
+            }).toList(),
           ),
         ),
         const SizedBox(height: 20),

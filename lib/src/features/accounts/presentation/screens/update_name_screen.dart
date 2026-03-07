@@ -79,15 +79,22 @@ class _UpdateNameScreenState extends State<UpdateNameScreen> with ATValidators {
               child: StreamBuilder<bool>(
                 stream: _activateButtonCntrl.stream,
                 builder: (_, AsyncSnapshot<bool> snapshot) {
-                  final bool isActive = snapshot.hasData && snapshot.data == true;
+                  final bool isActive =
+                      snapshot.hasData && snapshot.data == true;
 
                   return ATPlainElevatedBtn(
                     onPressed: isActive
                         ? () {
                             // Update LocalUserDataCubit directly
-                            final CachedUserData? currentData = context.read<LocalUserDataCubit>().currentUserData;
-                            final CachedUserData updatedData = (currentData ?? const CachedUserData()).copyWith(name: _controller.text.trim());
-                            context.read<LocalUserDataCubit>().updateUserDataLocally(updatedData);
+                            final CachedUserData? currentData = context
+                                .read<LocalUserDataCubit>()
+                                .currentUserData;
+                            final CachedUserData updatedData =
+                                (currentData ?? const CachedUserData())
+                                    .copyWith(name: _controller.text.trim());
+                            context
+                                .read<LocalUserDataCubit>()
+                                .updateUserDataLocally(updatedData);
                             context.pop(_controller.text.trim());
                           }
                         : null,

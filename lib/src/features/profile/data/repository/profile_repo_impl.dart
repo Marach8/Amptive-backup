@@ -27,6 +27,7 @@ class ProfileRepoImpl implements ProfileRepo {
     } catch (e) {
       log('Error in getting user profile');
       return Unsuccessful<UserProfileResponseModel>(
+          
           error: ATException.resolveException(e));
     }
   }

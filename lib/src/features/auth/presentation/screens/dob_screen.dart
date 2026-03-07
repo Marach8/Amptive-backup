@@ -22,7 +22,7 @@ class AddDOBScreen extends StatefulWidget {
   State<AddDOBScreen> createState() => _AddDOBScreenState();
 }
 
-class _AddDOBScreenState extends State<AddDOBScreen> with ATValidators{
+class _AddDOBScreenState extends State<AddDOBScreen> with ATValidators {
   final TextEditingController _dobController = TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   DateTime? selectedDOB;
@@ -48,29 +48,28 @@ class _AddDOBScreenState extends State<AddDOBScreen> with ATValidators{
                   controller: _dobController,
                   maxLines: 1,
                   validator: validateDOB,
-                  onTap: ()async{
+                  onTap: () async {
                     final dynamic data = await _selectDOBModal(
-                      context: context,
-                      initialDate: selectedDOB
-                    );
-                    if(data != null){
-                      if(context.mounted && data is String){
+                        context: context, initialDate: selectedDOB);
+                    if (data != null) {
+                      if (context.mounted && data is String) {
                         showAppNotification2(
-                          context: context,
-                          text: olderThan13Years,
-                          type: NotificationType.failure
-                        );
-                      }
-                      else if(data is DateTime){
+                            context: context,
+                            text: olderThan13Years,
+                            type: NotificationType.failure);
+                      } else if (data is DateTime) {
                         selectedDOB = data;
-                        final String formattedDate = DateFormat('MMMM d y').format(data);
+                        final String formattedDate =
+                            DateFormat('MMMM d y').format(data);
                         _dobController.text = formattedDate;
                       }
                     }
                   },
                   hintText: ATStrings.selectDate,
                   fillColor: ATColors.hex9E9E9E.withValues(alpha: 0.3),
-                  prefixIcon: const SizedBox(width: 10,),
+                  prefixIcon: const SizedBox(
+                    width: 10,
+                  ),
                   readOnly: true,
                   keyboardType: TextInputType.none,
                 ),
@@ -82,38 +81,36 @@ class _AddDOBScreenState extends State<AddDOBScreen> with ATValidators{
             ),
           ),
         ),
-
-
-        bottomSheet: Builder(
-          builder: (BuildContext context) {
-            final double bottom = MediaQuery.viewInsetsOf(context).bottom;
-            final double bottomPad = bottom > 0 ? 10 : 50;
-            return Padding(
+        bottomSheet: Builder(builder: (BuildContext context) {
+          final double bottom = MediaQuery.viewInsetsOf(context).bottom;
+          final double bottomPad = bottom > 0 ? 10 : 50;
+          return Padding(
               padding: EdgeInsets.fromLTRB(15, 0, 15, bottomPad),
               child: AnimatedBuilder(
-                animation: _dobController,
-                builder: (_, __) {
-                  final bool shouldEnable = _dobController.text.trim().isNotEmpty;
-                  return ATPlainElevatedBtn(
-                    btnTitle: ATStrings.next,
-                    onPressed: shouldEnable ? (){
-                      if(_formKey.currentState?.validate() ?? false){
-                        final String formattedDate = DateFormat('yyyy-MM-dd').format(selectedDOB!);
-                        RegistrationData().copyWith(dob: formattedDate);
-                        context.pushNamed(ATRoutes.addUserNameScreen);
-                      }
-                    } : null,
-                  );
-                }
-              )
-            );
-          }
-        ),
+                  animation: _dobController,
+                  builder: (_, __) {
+                    final bool shouldEnable =
+                        _dobController.text.trim().isNotEmpty;
+                    return ATPlainElevatedBtn(
+                      btnTitle: ATStrings.next,
+                      onPressed: shouldEnable
+                          ? () {
+                              if (_formKey.currentState?.validate() ?? false) {
+                                final String formattedDate =
+                                    DateFormat('yyyy-MM-dd')
+                                        .format(selectedDOB!);
+                                RegistrationData().copyWith(dob: formattedDate);
+                                context.pushNamed(ATRoutes.addUserNameScreen);
+                              }
+                            }
+                          : null,
+                    );
+                  }));
+        }),
       ),
     );
   }
 }
-
 
 const String olderThan13Years = 'You must be older than 13 years!';
 Future<dynamic> _selectDOBModal({

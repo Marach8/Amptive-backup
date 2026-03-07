@@ -60,12 +60,10 @@ class APIHandler extends BaseAPI {
     return await Future.delayed(const Duration(seconds: 3), () {
       return dummyEmailList.contains(email);
     });
-
   }
 }
 
 class LoginResponse {
-
   LoginResponse({this.id, this.email, this.username});
 
   factory LoginResponse.fromResponseBody(String body) {
@@ -83,7 +81,6 @@ class LoginResponse {
 }
 
 class RegisterResponse {
-
   RegisterResponse({this.id, this.email, this.username});
 
   factory RegisterResponse.fromResponseBody(String body) {
@@ -99,10 +96,6 @@ class RegisterResponse {
   String? username;
   String? email;
 }
-
-
-
-
 
 class BaseAPI {
   static String base = "http://localhost:3000";

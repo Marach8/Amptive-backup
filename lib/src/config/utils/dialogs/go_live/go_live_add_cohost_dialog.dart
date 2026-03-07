@@ -23,7 +23,6 @@
 // import '../../../../views/widgets/common_widgets/custom_rebuilder_widget.dart';
 // import '../../../../shared/elevated_button_widget.dart';
 
-
 // Future<bool?> showGoLiveHostAddCoHostDialog({
 //   required BuildContext context,
 // }) async {
@@ -90,7 +89,7 @@
 //                                 final int number = listOfCoHosts.where(
 //                                   (ObjectWithNotifier<Host> coHost) => (coHost.obj.profilePicture ?? '').isNotEmpty
 //                                 ).length;
-          
+
 //                                 return Text(
 //                                   '$number ${ATStrings.SELECTED}',
 //                                   style: Theme.of(context).textTheme.bodySmall?.copyWith(
@@ -102,7 +101,7 @@
 //                           ],
 //                         ),
 //                         const Gap(20),
-          
+
 //                         Text(
 //                           maxLines: 3,
 //                           ATStrings.ADD_COHOST_DESC,
@@ -111,7 +110,7 @@
 //                           ),
 //                         ),
 //                         const Gap(20),
-          
+
 //                         // search SEARCH
 //                         ATTextFormField(
 //                           controller: controller,
@@ -146,14 +145,13 @@
 //                             }
 //                           ),
 //                         ),
-          
-          
+
 //                         BlocBuilder<AmptiveGoLiveSelectCoHostBloc, List<ObjectWithNotifier<Host>>>(
 //                           builder: (_, List<ObjectWithNotifier<Host>> listOfCohosts) {
 //                             final bool showSelectedCohosts = listOfCohosts.any(
 //                               (ObjectWithNotifier<Host> cohost) => (cohost.obj.profilePicture ?? '').isNotEmpty
 //                             );
-          
+
 //                             return ATAnimatedXFade(
 //                               condition: showSelectedCohosts,
 //                               secondChild: const SizedBox.shrink(),
@@ -167,7 +165,7 @@
 //                                       (ObjectWithNotifier<Host> cohost) {
 //                                         final bool showCoHost = (cohost.obj.profilePicture ?? '').isNotEmpty;
 //                                         final int index = listOfCohosts.indexOf(cohost);
-                                        
+
 //                                         if(!showCoHost){
 //                                           return ATContainer(
 //                                             alignment: Alignment.center,
@@ -182,7 +180,7 @@
 //                                             ),
 //                                           );
 //                                         }
-                                  
+
 //                                         return Padding(
 //                                           padding: const EdgeInsets.only(right: 15),
 //                                           child: Stack(
@@ -199,7 +197,7 @@
 //                                                 ),
 //                                               ),
 //                                               Positioned(
-//                                                 top: 0, right: -4, 
+//                                                 top: 0, right: -4,
 //                                                 child: ATContainer(
 //                                                   onTap: () => context.read<AmptiveGoLiveSelectCoHostBloc>()
 //                                                     .hostRemoveCohost(cohost),
@@ -224,14 +222,14 @@
 //                           },
 //                         ),
 //                         const Gap(20),
-          
+
 //                         //Column of cohosts
 //                         BlocBuilder<AmptiveGoLiveAvailableCoHostsBloc, AmptiveCohostsState>(
 //                           builder: (_, AmptiveCohostsState cohostState) {
 //                             if(cohostState is CohostsLoadingState){
 //                               return const ATLoadingIndicator();
 //                             }
-                            
+
 //                             return AmptiveListOfCoHostsWidget(
 //                               availableCoHosts: cohostState.cohosts ?? <ObjectWithNotifier<Host>>[]
 //                             );
@@ -283,8 +281,6 @@
 //     );
 // }
 
-
-
 // class AmptiveListOfCoHostsWidget extends StatelessWidget {
 
 //   AmptiveListOfCoHostsWidget({
@@ -326,7 +322,7 @@
 //           // return CohostWithCheckIconWidget(
 //           //   coHost: coHost,
 //           //   onCohostTap: (bool isSelected) {
-//           //     if (isSelected) {         
+//           //     if (isSelected) {
 //           //       context.read<AmptiveGoLiveSelectCoHostBloc>().hostRemoveCohost(coHost);
 //           //     } else {
 //           //       context.read<AmptiveGoLiveSelectCoHostBloc>().hostAddCohost(coHost);

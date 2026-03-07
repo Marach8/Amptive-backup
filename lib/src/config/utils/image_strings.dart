@@ -1,6 +1,6 @@
 // ignore_for_file: constant_identifier_names
 
-class ATImgStrings{
+class ATImgStrings {
   const ATImgStrings._();
 
   static const String _svgPath = 'assets/images/svg_images';
@@ -16,13 +16,16 @@ class ATImgStrings{
   static const String robot = '$_svgPath/delivery robot.svg';
   static const String filledBell = '$_svgPath/Bell=Fill.svg';
   static const String outlinedBell = '$_svgPath/Bell=Outline.svg';
-  static const String filledSearch = '$_svgPath/Discover animation icon=Fill.svg';
-  static const String outlinedSearch = '$_svgPath/Discover animation icon=Outline.svg';
+  static const String filledSearch =
+      '$_svgPath/Discover animation icon=Fill.svg';
+  static const String outlinedSearch =
+      '$_svgPath/Discover animation icon=Outline.svg';
   static const String filledHome = '$_svgPath/Home=Fill.svg';
   static const String outlinedHome = '$_svgPath/Home.svg';
   static const String addImageIcon = '$_svgPath/add_image_icon.svg';
   static const String filledBroadCast = '$_svgPath/Broadcast icon=Fill.svg';
-  static const String outlinedBroadCast = '$_svgPath/Broadcast icon=Outline.svg';
+  static const String outlinedBroadCast =
+      '$_svgPath/Broadcast icon=Outline.svg';
   static const String CALENDER_ICON = '$_svgPath/Contextual menu icon.svg';
   static const String PERSON_CHECKED = '$_svgPath/Contextual menu icon (1).svg';
   static const String SHARE_LIVE = '$_svgPath/Icon.svg';
@@ -43,7 +46,7 @@ class ATImgStrings{
   static const String appleIcon = '$_svgPath/apple_icon.svg';
   static const String PAYPAL_ICON = '$_svgPath/paypal.svg';
   static const String NAIRA_ICON = '$_svgPath/₦.svg';
-  static const String HASH_ICON = '$_svgPath/hash.svg';
+  static const String hashIcon = '$_svgPath/hash.svg';
   static const String FILLED_CALENDER_ICON = '$_svgPath/Date_fill.svg';
   static const String CREATE_SHOW_ICON1 = '$_svgPath/Frame 20216.svg';
   static const String CREATE_SHOW_ICON2 = '$_svgPath/Frame 20217.svg';
@@ -51,7 +54,8 @@ class ATImgStrings{
   static const String CREATE_EVENT_ICON2 = '$_svgPath/Simplification (5).svg';
   static const String ROTOR_IMG = '$_svgPath/Group 50.svg';
   static const String ROTOR_IMG1 = '$_svgPath/Group 51.svg';
-  static const String BLUE_ROTOR_IMG = '$_svgPath/Moving Gradient Animation.svg';
+  static const String BLUE_ROTOR_IMG =
+      '$_svgPath/Moving Gradient Animation.svg';
   static const String SELECT_IMG_ICON = '$_svgPath/Rectangle 1.svg';
   static const String HAND_RAISING_ICON = '$_svgPath/Vector.svg';
   // static const String CREATOR_MIC = '$_svgPath/creator-microphone.svg';
@@ -62,7 +66,8 @@ class ATImgStrings{
   static const String jpeg2 = '$_generalJpegImagePath/welcomeAvatar2.jpeg';
   static const String jpeg1 = '$_generalJpegImagePath/welcomeAvatar1.jpeg';
   static const String jpeg3 = '$_generalJpegImagePath/welcomeAvatar3.jpeg';
-  static const String weCanDoHardThingsBgImage = '$_generalJpegImagePath/weCanDoAllThings.jpg';
+  static const String weCanDoHardThingsBgImage =
+      '$_generalJpegImagePath/weCanDoAllThings.jpg';
 
   static const String FB_ICON = '$_pngPath/facebook.png';
   static const String googleIcon = '$_pngPath/google_icon.png';
@@ -75,19 +80,23 @@ class ATImgStrings{
   static const String CRIMINAL = '$_pngPath/Frame 71 (2).png';
   static const String COMMUNITY_CARD = '$_pngPath/Community card 1.png';
   static const String MAN_PHOTO = '$_pngPath/Pexels Photo by Key  Notez.png';
-  static const String comingSoonImage1 = '$_pngPath/coming_soon_blurred_image1.png';
-  static const String comingSoonImage2 = '$_pngPath/coming_soon_blurred_image2.png';
-  static const String exploreListingsImage = '$_pngPath/explore_listings_image.png';
+  static const String comingSoonImage1 =
+      '$_pngPath/coming_soon_blurred_image1.png';
+  static const String comingSoonImage2 =
+      '$_pngPath/coming_soon_blurred_image2.png';
+  static const String exploreListingsImage =
+      '$_pngPath/explore_listings_image.png';
   static const String vestingOverviewImage = '$_pngPath/vesting_overview.png';
   //static const String CREATE_EVENT_ICON = '$_pngPath/cube tiny (1).png';
   //static const String event2 = '$_pngPath/cube tiny.png';
   // static const String CREATE_SHOW_ICON = '$_pngPath/Group 31 (1).png';
   //static const String event4 = '$_pngPath/Group 31.png';
-  static const String PADLOCK = '$_pngPath/metalic padlock.png';
-  static const String PEOPLE = '$_pngPath/people.png';
-  static const String createShowPlaceholder = '$_pngPath/create-show-placeholder.png';
+  static const String padlock = '$_pngPath/metalic padlock.png';
+  static const String people = '$_pngPath/people.png';
+  static const String createShowPlaceholder =
+      '$_pngPath/create-show-placeholder.png';
   static const String artCard = '$_pngPath/art-card.png';
-  static const String techCard= '$_pngPath/tech-card.png';
+  static const String techCard = '$_pngPath/tech-card.png';
   static const String societyCard = '$_pngPath/society-card.png';
   static const String MIC_ICON = '$_pngPath/public speaking.png';
   static const String MONEY_ICON = '$_pngPath/Stack of bills.png';

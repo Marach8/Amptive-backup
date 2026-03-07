@@ -1,5 +1,4 @@
 class OtpService {
-
   factory OtpService() => _instance;
   OtpService._();
 
@@ -30,8 +29,6 @@ class OtpService {
     return true;
   }
 }
-
-
 
 class OTPModel {
   String? pin1;

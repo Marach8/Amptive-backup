@@ -1,11 +1,7 @@
 import 'package:flutter/material.dart';
 
 class ATFadingSwitcher extends StatelessWidget {
-  const ATFadingSwitcher({
-    super.key,
-    required this.child,
-    this.duration
-  });
+  const ATFadingSwitcher({super.key, required this.child, this.duration});
 
   final Widget child;
   final int? duration;
@@ -13,22 +9,16 @@ class ATFadingSwitcher extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AnimatedSwitcher(
-      duration: Duration(milliseconds: duration ?? 500),
-      reverseDuration: Duration(milliseconds: duration ?? 500),
-      switchInCurve: Curves.easeIn,
-      switchOutCurve: Curves.easeIn,
-      transitionBuilder: (Widget child, Animation<double> animation) {
-        return FadeTransition(
-          opacity: animation,
-          child: child
-        );
-      },
-      child: child
-    );
+        duration: Duration(milliseconds: duration ?? 500),
+        reverseDuration: Duration(milliseconds: duration ?? 500),
+        switchInCurve: Curves.easeIn,
+        switchOutCurve: Curves.easeIn,
+        transitionBuilder: (Widget child, Animation<double> animation) {
+          return FadeTransition(opacity: animation, child: child);
+        },
+        child: child);
   }
 }
-
-
 
 class ATScalingSwitcher extends StatelessWidget {
   const ATScalingSwitcher({
@@ -37,7 +27,7 @@ class ATScalingSwitcher extends StatelessWidget {
     this.duration,
     this.curve,
   });
-  
+
   final Widget child;
   final int? duration;
   final Curve? curve;
@@ -45,23 +35,16 @@ class ATScalingSwitcher extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AnimatedSwitcher(
-      duration: Duration(milliseconds: duration ?? 500),
-      reverseDuration: Duration(milliseconds: duration ?? 500),
-      switchInCurve: curve ?? Curves.easeIn,
-      switchOutCurve: curve ?? Curves.easeIn,
-      transitionBuilder: (Widget child, Animation<double> animation) {
-        return ScaleTransition(
-          scale: animation,
-          child: child
-        );
-      },
-      child: child
-    );
+        duration: Duration(milliseconds: duration ?? 500),
+        reverseDuration: Duration(milliseconds: duration ?? 500),
+        switchInCurve: curve ?? Curves.easeIn,
+        switchOutCurve: curve ?? Curves.easeIn,
+        transitionBuilder: (Widget child, Animation<double> animation) {
+          return ScaleTransition(scale: animation, child: child);
+        },
+        child: child);
   }
 }
-
-
-
 
 class ATSlidingSwitcher extends StatelessWidget {
   const ATSlidingSwitcher({
@@ -70,7 +53,7 @@ class ATSlidingSwitcher extends StatelessWidget {
     this.duration,
     this.curve,
   });
-  
+
   final Widget child;
   final int? duration;
   final Curve? curve;
@@ -78,25 +61,18 @@ class ATSlidingSwitcher extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AnimatedSwitcher(
-      duration: Duration(milliseconds: duration ?? 500),
-      reverseDuration: Duration(milliseconds: duration ?? 500),
-      switchInCurve: curve ?? Curves.easeIn,
-      switchOutCurve: curve ?? Curves.easeIn,
-      transitionBuilder: (Widget child, Animation<double> animation) {
-        final Animation<Offset> inAnimation = Tween<Offset>(
-          begin: const Offset(0, 1.5),
-          end: Offset.zero,
-        ).animate(CurvedAnimation(
-          parent: animation,
-          curve: Curves.easeIn
-        ));
+        duration: Duration(milliseconds: duration ?? 500),
+        reverseDuration: Duration(milliseconds: duration ?? 500),
+        switchInCurve: curve ?? Curves.easeIn,
+        switchOutCurve: curve ?? Curves.easeIn,
+        transitionBuilder: (Widget child, Animation<double> animation) {
+          final Animation<Offset> inAnimation = Tween<Offset>(
+            begin: const Offset(0, 1.5),
+            end: Offset.zero,
+          ).animate(CurvedAnimation(parent: animation, curve: Curves.easeIn));
 
-        return SlideTransition(
-          position: inAnimation,
-          child: child
-        );
-      },
-      child: child
-    );
+          return SlideTransition(position: inAnimation, child: child);
+        },
+        child: child);
   }
 }

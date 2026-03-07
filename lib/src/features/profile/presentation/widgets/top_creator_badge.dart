@@ -8,7 +8,6 @@ import 'package:flutter/material.dart';
 import '../../../../config/utils/image_strings.dart';
 import '../../../../shared/image_loader_widget.dart';
 
-
 class TopCreatorBadge extends StatelessWidget {
   const TopCreatorBadge({
     super.key,
@@ -18,29 +17,30 @@ class TopCreatorBadge extends StatelessWidget {
   Widget build(BuildContext context) {
     return ATContainer(
       onTap: () => showTopCreationCommunitiesModal(context),
-      border: Border.all(color: ATColors.hexC2C2C2.withValues(alpha:0.23)),
+      border: Border.all(color: ATColors.hexC2C2C2.withValues(alpha: 0.23)),
       radius: 20,
       padding: const EdgeInsets.fromLTRB(10, 5, 10, 5),
       gradient: LinearGradient(
-        begin: Alignment.topCenter,
-        end: Alignment.bottomCenter,
-        colors: <Color>[
-          ATColors.white.withValues(alpha:0.1),
-          ATColors.hex303030.withValues(alpha:0.1),
-          ATColors.white.withValues(alpha:0.1),
-        ]
-      ),
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
+          colors: <Color>[
+            ATColors.white.withValues(alpha: 0.1),
+            ATColors.hex303030.withValues(alpha: 0.1),
+            ATColors.white.withValues(alpha: 0.1),
+          ]),
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
           const ATImgLoader(imgPath: ATImgStrings.TOP_CREATOR_BADGE),
-          const SizedBox(width: 5,),
+          const SizedBox(
+            width: 5,
+          ),
           Text(
             ATStrings.TOP_CREATORS_IN_SOCIETY,
-            style: Theme.of(context).textTheme.bodySmall?.copyWith(
-              color: ATColors.hexEECEA0,
-              fontSize: ATSizes.size13
-            ),
+            style: Theme.of(context)
+                .textTheme
+                .bodySmall
+                ?.copyWith(color: ATColors.hexEECEA0, fontSize: ATSizes.size13),
           ),
         ],
       ),

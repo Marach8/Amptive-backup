@@ -5,16 +5,15 @@ import '../../../services/auth/auth_field_service.dart';
 import 'password_auth_events.dart';
 import 'password_auth_states.dart';
 
-
-class AmptivePasswordAuthBloc extends Bloc<AmptivePasswordAuthEvent, AmptivePasswordAuthState> {
+class AmptivePasswordAuthBloc
+    extends Bloc<AmptivePasswordAuthEvent, AmptivePasswordAuthState> {
   AmptivePasswordAuthBloc() : super(InitialAuthState()) {
-
     // password auth listeners
-    on<PasswordChangedAuthEvent>((PasswordChangedAuthEvent event, Emitter<AmptivePasswordAuthState> emit) {
+    on<PasswordChangedAuthEvent>((PasswordChangedAuthEvent event,
+        Emitter<AmptivePasswordAuthState> emit) {
       final AuthFieldService service = GetIt.I<AuthFieldService>();
 
       service.validatePassword(event.value);
-
 
       if (service.isPasswordValid) {
         emit(ValidPasswordAuthState(error: service.password.error));

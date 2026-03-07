@@ -1,1 +1,1 @@
-enum AmptiveHomeScreenPages{marach, emmanuel, nnanna}
+enum AmptiveHomeScreenPages { marach, emmanuel, nnanna }
