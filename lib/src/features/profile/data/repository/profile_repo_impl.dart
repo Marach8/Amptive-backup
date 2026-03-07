@@ -22,7 +22,7 @@ class ProfileRepoImpl implements ProfileRepo {
     try {
       final Response<dynamic> response =
           await networkService.get(ATEndpoints.getUserprofile);
-      final userProfile = UserProfileResponseModel.fromJson(response.data);
+      final UserProfileResponseModel userProfile = UserProfileResponseModel.fromJson(response.data);
       return Successful<UserProfileResponseModel>(data: userProfile);
     } catch (e) {
       log('Error in getting user profile');
@@ -33,11 +33,10 @@ class ProfileRepoImpl implements ProfileRepo {
 
   @override
   Future<ApiResponse<dynamic>> updateUserProfile({
-    required String profilePicture, // Change from String to Uint8List
+    required String profilePicture,
   }) async {
     try {
-      // 1. Create the Form Data object
-      final Map<String, dynamic> body = {
+      final Map<String, dynamic> body = <String, dynamic>{
         "profile_picture": profilePicture,
       };
 
