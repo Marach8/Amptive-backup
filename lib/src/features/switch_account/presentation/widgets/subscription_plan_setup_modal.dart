@@ -1,4 +1,3 @@
-
 import 'package:amptive/src/config/config_export.dart';
 import 'package:amptive/src/shared/modal_dismisser.dart';
 import 'package:amptive/src/shared/elevated_button_widget.dart';
@@ -75,7 +74,14 @@ class _AddSubPlanWidgetState extends State<_SubPlanWidget> {
       ..addListener(_handleSetFeeButtonActivation);
 
     _oneTimePaymentNotifier = ValueNotifier<bool>(
-        (widget.existingSubPlanData?.oneTimePaymentAmount ?? 0) > 0);
+        (widget.existingSubPlanData?.oneTimePaymentAmount ?? 0) > 0)
+        ..addListener(
+          (){
+            if(_oneTimePaymentNotifier.value == false){
+              _oneTimePaymentCntrl.clear();
+            }
+          }
+        );
 
     _setFeeButtonNotifier = ValueNotifier<bool>(
         widget.existingSubPlanData?.subAmount != null ||
@@ -228,20 +234,31 @@ class _AddSubPlanWidgetState extends State<_SubPlanWidget> {
                 return ATPlainElevatedBtn(
                     fgColor: ATColors.black,
                     bgColor: ATColors.white,
-                    onPressed: shouldSetFee
-                        ? () {
-                            final double? selectedSubAmount =
-                                double.tryParse(_subAmountCntrl.text.trim());
-                            final double? selectedOneTimePayment =
-                                double.tryParse(
-                                    _oneTimePaymentCntrl.text.trim());
-                            context.pop(widget.existingSubPlanData?.copyWith(
-                              oneTimePaymentAmount: selectedOneTimePayment,
-                              subAmount: selectedSubAmount,
-                            ));
-                          }
-                        : null,
-                    btnTitle: ATStrings.setFee);
+                    onPressed: shouldSetFee ? () {
+                      final double? selectedSubAmount =
+                          double.tryParse(_subAmountCntrl.text.trim());
+                      final double? selectedOneTimePayment =
+                          double.tryParse(_oneTimePaymentCntrl.text.trim());
+                      
+                      if(_oneTimePaymentNotifier.value == true){
+                        context.pop(
+                          SubscriptionPlanData(
+                            entryPoint: widget.existingSubPlanData!.entryPoint,
+                            oneTimePaymentAmount: selectedOneTimePayment,
+                          )
+                        );
+                      }
+                      else {
+                        context.pop(
+                          SubscriptionPlanData(
+                            entryPoint: widget.existingSubPlanData!.entryPoint,
+                            subAmount: selectedSubAmount,
+                          )
+                        );
+                      }
+                    }
+                  : null,
+                  btnTitle: ATStrings.setFee);
               }),
         ],
       ),

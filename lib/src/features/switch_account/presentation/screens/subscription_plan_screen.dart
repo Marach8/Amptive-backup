@@ -80,7 +80,12 @@ class _CreatorSubPlanScreenState extends State<CreatorSubPlanScreen> {
                   setState(() => _localSubPlan = newSubPlan);
                 },
                 onDeleteSubPlan: () {
-                  setState(() => _localSubPlan = null);
+                  setState((){
+                    //We retain the entryPoint
+                    _localSubPlan = SubscriptionPlanData(
+                      entryPoint: widget.incomingSubPlan.entryPoint,
+                    );
+                  });
                 },
               ),
               const SizedBox(
