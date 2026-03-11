@@ -22,4 +22,5 @@ class ATEndpoints {
   static const String episodes = '/api/v1/episodes/';
   static const String getUserprofile = '/api/v1/users/me';
   static const String followers = '/api/v1/users/following';
+
 }
