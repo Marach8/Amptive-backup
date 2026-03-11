@@ -134,7 +134,7 @@ class CreatorProfileScreen extends StatelessWidget {
                                 children: <Widget>[
                                   NoOfFollowers(
                                     noOfFollowers:
-                                        userData?.followersCount ?? '1.1m',
+                                        userData?.followersCount ?? '',
                                   ),
                                   const NoOfSubscribers(),
                                 ],

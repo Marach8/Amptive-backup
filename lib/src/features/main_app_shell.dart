@@ -126,6 +126,7 @@ class __SubWidgetState extends State<_SubWidget> {
                   dob: userProfile?.dob,
                   name: userProfile?.name,
                   pictureUrl: userProfile?.pictureUrl,
+                  followersCount: userProfile?.followersCount
                 ),
               );
         }

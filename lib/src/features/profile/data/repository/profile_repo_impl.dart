@@ -6,6 +6,7 @@ import 'package:amptive/src/config/exception.dart';
 import 'package:amptive/src/config/services/network_service/dio_network_service_impl.dart';
 import 'package:amptive/src/config/services/network_service/network_service.dart';
 import 'package:amptive/src/features/auth/data/models/response/user_profile_response_model.dart';
+import 'package:amptive/src/features/profile/data/models/followers_response_model.dart';
 import 'package:amptive/src/features/profile/data/repository/profile_repo.dart';
 import 'package:dio/dio.dart';
 
@@ -31,19 +32,23 @@ class ProfileRepoImpl implements ProfileRepo {
   }
   
    @override
-  Future <ApiResponse<dynamic>> fetchFollowers ({
-    required int pageNo,
+  Future <ApiResponse<FollowersResponseModel>> fetchFollowers ({
+    required int page,
     required int pageSize,
   }) async {
     
     try {
       final Response<dynamic> response = await networkService.get(
-        ATEndpoints.followers
+        ATEndpoints.followers,
+        queryParameters: {
+          'page': page,
+          'page_size': pageSize,
+        },
       );
-      return Successful<dynamic>(data: response.data);
+      return Successful<FollowersResponseModel>(data: FollowersResponseModel.fromJson(response.data));
     } catch (e) {
       log('Error in getting followers');
-      return Unsuccessful<dynamic>(error: ATException.resolveException(e));
+      return Unsuccessful<FollowersResponseModel>(error: ATException.resolveException(e));
     }
   }
 }

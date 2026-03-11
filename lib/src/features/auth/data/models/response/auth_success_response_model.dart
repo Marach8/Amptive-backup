@@ -27,6 +27,7 @@ class ATUser {
     this.username,
     this.dob,
     this.name,
+    this.followersCount
   });
 
   factory ATUser.fromJson(Map<String, dynamic> json) {
@@ -36,10 +37,11 @@ class ATUser {
       username: json['username'] as String?,
       dob: json['dob'] as String?,
       name: json['name'] as String?,
+      followersCount: json['followers_count'],
     );
   }
 
-  String? id, email, username, dob, name;
+  String? id, email, username, dob, name, followersCount;
 }
 
 

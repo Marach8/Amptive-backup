@@ -34,6 +34,7 @@ class UserData {
     this.dob,
     this.name,
     this.pictureUrl,
+    this.followersCount
   });
 
   factory UserData.fromJson(Map<String, dynamic> json) {
@@ -44,8 +45,9 @@ class UserData {
       dob: json['dob'] ,
       name: json['name'] ,
       pictureUrl: json['picture_url'] ,
+      followersCount: json['followers_count']?.toString()
     );
   }
 
-  final String? id, email, username, dob, name, pictureUrl;
+  final String? id, email, username, dob, name, pictureUrl, followersCount;
 }
