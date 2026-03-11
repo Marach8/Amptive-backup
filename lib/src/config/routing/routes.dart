@@ -349,26 +349,18 @@ final GoRouter amptiveAppRouter = GoRouter(
                     child: const CreateEventFormScreen(),
                   )),
           GoRoute(
-              name: ATRoutes.CREATE_EPISODE_FORM,
-              path: ATRoutes.CREATE_EPISODE_FORM,
+              name: ATRoutes.createEpisodeForm,
+              path: ATRoutes.createEpisodeForm,
               pageBuilder: (_, __) => ATSlidingRouteTransition<void>(
                   child: const CreateEpisodeFormScreen())),
           GoRoute(
-            name: ATRoutes.GO_LIVE_PROGRAM_CREATION_SUCCESS,
-            path: ATRoutes.GO_LIVE_PROGRAM_CREATION_SUCCESS,
+            name: ATRoutes.programCreationSuccessScreen,
+            path: ATRoutes.programCreationSuccessScreen,
             pageBuilder: (_, GoRouterState state) {
-              final dynamic params = state.extra as ({
-                Uint8List coverArtBytes,
-                String title,
-                String subtitle,
-                String btnTitle,
-                String txtBtnTitle,
-                VoidCallback btnOnPressed,
-                VoidCallback txtBtnOnPressed,
-                Widget topLogo
-              });
+              final ProgramCreationSuccessScreenParams params = 
+                state.extra as ProgramCreationSuccessScreenParams;
               return ATSlidingRouteTransition<void>(
-                child: GoLiveProgramCreationSuccessScreen(
+                child: ProgramCreationSuccessScreen(
                   params: params,
                 ),
               );

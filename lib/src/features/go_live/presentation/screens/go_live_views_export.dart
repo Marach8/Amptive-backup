@@ -1,6 +1,6 @@
 export '../../../shows/presentation/screens/list_hosted_shows_screen.dart';
 export '../../../shows/presentation/screens/create_show_form_screen.dart';
-export 'go_live_program_creation_success_screen.dart';
+export 'program_creation_success_screen.dart';
 export 'even_scheduled_screen.dart';
 export 'go_live_type_selection_screen.dart';
 export '../../../events/presentation/screens/create_event_form_screen.dart';

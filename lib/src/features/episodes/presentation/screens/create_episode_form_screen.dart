@@ -558,7 +558,7 @@ class _CreateShowFormScreenState extends State<CreateEpisodeFormScreen> {
                               );
 
                               context.pushNamed(
-                                  ATRoutes.GO_LIVE_PROGRAM_CREATION_SUCCESS,
+                                  ATRoutes.programCreationSuccessScreen,
                                   extra: params);
                             }
                           }

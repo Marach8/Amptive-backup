@@ -628,12 +628,12 @@ class ATStrings {
   static const String editSubPlan = 'Edit subscription plan';
   static const String SETUP_PAYMENT_FEE = 'Set up payment fee';
   static const String setupSubPlan = 'Set up subscription plan';
-  static const String SHOW_IS_SETUP = 'Your Show is setup and airing!';
-  static const String BEGIN_JOURNEY =
+  static const String showIsSetup = 'Your Show is setup and airing!';
+  static const String beginYourJourney =
       'Begin your journey by creating your first episode';
-  static const String CREATE_1ST_EPISODE = 'Create first epidode';
+  static const String createFirstEpisode = 'Create first epidode';
   static const String createAnEpisode = 'Create an Episode';
-  static const String VIEW_SHOW_PAGE = 'View show page';
+  static const String viewShowPage = 'View show page';
   static const String VIEW_EVENT_PAGE = 'View event page';
   static const String EVENT_SCHEDULED = 'Your Event is scheduled!';
   static const String SHARE_EVENT_LINK =

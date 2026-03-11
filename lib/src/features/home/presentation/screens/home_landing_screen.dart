@@ -8,6 +8,7 @@ import 'package:amptive/src/features/home/cubits/toggle_following_cubit.dart';
 import 'package:amptive/src/features/home/data/models/following_status.dart';
 import 'package:amptive/src/features/home/data/models/response/home_feed_response_model.dart';
 import 'package:amptive/src/features/home/presentation/widgets/render_home_feed_item.dart';
+import 'package:amptive/src/features/home/presentation/widgets/row_of_live_users.dart';
 import 'package:amptive/src/features/main_app_nav_bar.dart';
 import 'package:amptive/src/shared/circle_avatar.dart';
 import 'package:amptive/src/shared/loading_indicator.dart';
@@ -122,28 +123,7 @@ class HomeTabView extends StatelessWidget {
                         )),
                   ],
                 ),
-                SliverToBoxAdapter(
-                  child: SizedBox(
-                    height: 100,
-                    child: ListView(
-                        physics: const BouncingScrollPhysics(),
-                        padding: EdgeInsets.zero,
-                        shrinkWrap: true,
-                        scrollDirection: Axis.horizontal,
-                        children: <Widget>[
-                          const Padding(
-                            padding: EdgeInsets.only(left: 11, right: 14),
-                            child: GoLiveWidgetInHome(),
-                          ),
-                          ...Iterable<Widget>.generate(
-                              20,
-                              (_) => const Padding(
-                                    padding: EdgeInsets.only(right: 14),
-                                    child: LiveUserWidget(),
-                                  )),
-                        ]),
-                  ),
-                ),
+                const SliverToBoxAdapter(child: RowOfLiveUsers()),
                 const SliverToBoxAdapter(
                   child: Padding(
                     padding: EdgeInsets.symmetric(vertical: 14.0),
@@ -160,7 +140,8 @@ class HomeTabView extends StatelessWidget {
                 type: NotificationType.failure,
               );
             }
-          }, builder: (_, ATAppState<HomeFeedResponseModel> state) {
+          },
+          builder: (_, ATAppState<HomeFeedResponseModel> state) {
             return switch (state) {
               InitialState<HomeFeedResponseModel>() => const SizedBox.shrink(),
               LoadingState<HomeFeedResponseModel>() ||
@@ -230,6 +211,7 @@ class HomeTabView extends StatelessWidget {
     );
   }
 }
+
 
 class _InitialLoadingShimmer extends StatelessWidget {
   const _InitialLoadingShimmer();

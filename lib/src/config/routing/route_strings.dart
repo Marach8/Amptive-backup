@@ -31,7 +31,7 @@ class ATRoutes {
   static const String allowNotificationsScreen = "pre-homepage";
   static const String createShowForm = "create-show-form";
   static const String CREATE_EVENT_FORM = "create-event-form";
-  static const String CREATE_EPISODE_FORM = "create-episode-form";
+  static const String createEpisodeForm = "create-episode-form";
 
   //MAIN APPLICATION
   static const String mainAppShell = "main_app_shell";
@@ -60,7 +60,7 @@ class ATRoutes {
   static const String PROFILE_SUBSCRIBERS_SCREEN = 'profile_sub_screen';
   static const String USER_PROFILE_SCREEN = 'user_profile';
   static const String listHostedShowsScreen = 'choose_or_create_show';
-  static const String GO_LIVE_PROGRAM_CREATION_SUCCESS =
+  static const String programCreationSuccessScreen =
       'create_show_success_screen';
   static const String EVENT_SCHEDULED_SCREEN = 'event_scheduled';
   static const String showPreviewScreen = 'show_preview';

@@ -11,34 +11,43 @@ import '../../../../shared/elevated_button_widget.dart';
 
 enum _AnimStage { start, end }
 
-class GoLiveProgramCreationSuccessScreen extends StatefulWidget {
-  const GoLiveProgramCreationSuccessScreen({super.key, required this.params});
+class ProgramCreationSuccessScreenParams {
+  const ProgramCreationSuccessScreenParams({
+    required this.coverArtBytes,
+    required this.title,
+    required this.subtitle,
+    required this.btnTitle,
+    required this.txtBtnTitle,
+    required this.btnOnPressed,
+    required this.txtBtnOnPressed,
+    required this.topLogo,
+  });
 
-  final ({
-    Uint8List coverArtBytes,
-    String title,
-    String subtitle,
-    String btnTitle,
-    String txtBtnTitle,
-    VoidCallback btnOnPressed,
-    VoidCallback txtBtnOnPressed,
-    Widget topLogo
-  }) params;
-
-  @override
-  State<GoLiveProgramCreationSuccessScreen> createState() =>
-      _GoLiveProgramCreationSuccessScreenState();
+  final Uint8List coverArtBytes;
+  final String title, subtitle, btnTitle, txtBtnTitle;
+  final VoidCallback btnOnPressed, txtBtnOnPressed;
+  final Widget topLogo;
 }
 
-class _GoLiveProgramCreationSuccessScreenState
-    extends State<GoLiveProgramCreationSuccessScreen> {
+class ProgramCreationSuccessScreen extends StatefulWidget {
+  const ProgramCreationSuccessScreen({super.key, required this.params});
+  final ProgramCreationSuccessScreenParams params;
+
+  @override
+  State<ProgramCreationSuccessScreen> createState() =>
+      _ProgramCreationSuccessScreenState();
+}
+
+class _ProgramCreationSuccessScreenState
+    extends State<ProgramCreationSuccessScreen> {
   final StreamController<_AnimStage> _streamCntrl =
       StreamController<_AnimStage>();
 
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) => _driveCoverArtAnim());
+    WidgetsBinding.instance.addPostFrameCallback(
+      (_) => _driveCoverArtAnim());
   }
 
   @override
@@ -79,9 +88,7 @@ class _GoLiveProgramCreationSuccessScreenState
                   maxLines: 2,
                   style: context.textTheme.displaySmall
                       ?.copyWith(fontSize: ATSizes.size23)),
-              const SizedBox(
-                height: 10,
-              ),
+              const SizedBox(height: 10),
               Text(
                   textAlign: TextAlign.center,
                   widget.params.subtitle,
@@ -161,9 +168,7 @@ class _GoLiveProgramCreationSuccessScreenState
                                 bgColor: ATColors.white,
                                 fgColor: ATColors.black,
                               ),
-                              const SizedBox(
-                                height: 15,
-                              ),
+                              const SizedBox(height: 15),
                               InkWell(
                                   onTap: widget.params.txtBtnOnPressed,
                                   borderRadius: BorderRadius.circular(5),

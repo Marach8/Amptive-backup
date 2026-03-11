@@ -16,6 +16,7 @@ import 'package:amptive/src/shared/divider_widget.dart';
 import 'package:amptive/src/shared/global_model_objects.dart';
 import 'package:amptive/src/shared/textformfield_widget.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:nested/nested.dart';
 import 'package:amptive/src/shared/back_button.dart';
 import 'package:amptive/src/shared/image_loader_widget.dart';
@@ -591,11 +592,28 @@ class __SubWidgetState extends State<_SubWidget> {
                 listener: (_, ATAppState<HostedShow> state) {
                   if (state is SuccessState<HostedShow>) {
                     _launchShowBtnNotifier.value = true;
-                    showAppNotification2(
-                      context: context,
-                      text: 'Show created successfully',
-                      type: NotificationType.success,
-                    );
+                    final dynamic params = ProgramCreationSuccessScreenParams(
+                        coverArtBytes: context.read<BgImageCubit>().state.$2!,
+                        title: ATStrings.showIsSetup,
+                        subtitle: ATStrings.beginYourJourney,
+                        btnTitle: ATStrings.createFirstEpisode,
+                        txtBtnTitle: ATStrings.viewShowPage,
+                        btnOnPressed: () => context.pushReplacementNamed(ATRoutes.createEpisodeForm),
+                        txtBtnOnPressed: () {
+                          // handle text button press
+                        },
+                        topLogo: const Icon(Icons.check_circle_sharp, size: 45),
+                      );
+
+                      context.pushNamed(
+                        ATRoutes.programCreationSuccessScreen,
+                        extra: params
+                      );
+                    // showAppNotification2(
+                    //   context: context,
+                    //   text: 'Show created successfully',
+                    //   type: NotificationType.success,
+                    // );
                   } else if (state is FailureState<HostedShow>) {
                     _launchShowBtnNotifier.value = true;
                     showAppNotification2(
@@ -646,23 +664,6 @@ class __SubWidgetState extends State<_SubWidget> {
                         bytes: context.read<BgImageCubit>().state.$2!,
                         purpose: 'cover-art',
                       );
-                      // final dynamic params = (
-                      //   coverArtBytes: state.$2,
-                      //   title: ATStrings.SHOW_IS_SETUP,
-                      //   subtitle: ATStrings.BEGIN_JOURNEY,
-                      //   btnTitle: ATStrings.CREATE_1ST_EPISODE,
-                      //   txtBtnTitle: ATStrings.VIEW_SHOW_PAGE,
-                      //   btnOnPressed: () => context.pushReplacementNamed(ATRoutes.CREATE_EPISODE_FORM),
-                      //   txtBtnOnPressed: () {
-                      //     // handle text button press
-                      //   },
-                      //   topLogo: const Icon(Icons.check_circle_sharp, size: 45),
-                      // );
-
-                      // context.pushNamed(
-                      //   ATRoutes.GO_LIVE_PROGRAM_CREATION_SUCCESS,
-                      //   extra: params
-                      // );
                     },
                     btnTitle: ATStrings.launchShow,
                   );

@@ -241,7 +241,7 @@ class PreviewShowScreen extends StatelessWidget {
             ),
             bottomSheet: ATBlurredBgBtn(
               onPressed: () {
-                context.pushNamed(ATRoutes.CREATE_EPISODE_FORM);
+                context.pushNamed(ATRoutes.createEpisodeForm);
               },
               btnTitle: 'Add Episode',
             ),
