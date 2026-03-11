@@ -14,6 +14,7 @@ import 'package:amptive/src/features/main_app_nav_bar.dart';
 import 'package:amptive/src/shared/circle_avatar.dart';
 import 'package:amptive/src/shared/loading_indicator.dart';
 import 'package:amptive/src/shared/shimmer.dart';
+import 'package:custom_refresh_indicator/custom_refresh_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -26,16 +27,21 @@ import '../../../../shared/empty.dart';
 import '../../../../views/widgets/other_widgets/main_application_widgets/widgets_in_home_view/appbar_drop_down.dart';
 import '../widgets/go_live_widget_in_home.dart';
 import 'package:amptive/src/config/utils/image_strings.dart';
-import 'package:amptive/src/views/widgets/animation_widgets/other_animation_widgets/live_user_animation.dart';
-import 'package:amptive/src/views/widgets/other_widgets/main_application_widgets/widgets_in_home_view/live_indicator_widget.dart';
+import 'package:amptive/src/shared/live_user_animation.dart';
+import 'package:amptive/src/shared/horizontal_refresh_indicator.dart';
 import 'package:flutter/material.dart';
+import 'package:amptive/src/config/utils/colors.dart';
+import 'package:amptive/src/config/utils/font_weights.dart';
+import 'package:amptive/src/config/utils/other_strings.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class RowOfLiveUsers extends StatelessWidget {
   const RowOfLiveUsers({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Container(color: Colors.red,
+    return SizedBox(
       height: 100,
       child: BlocConsumer<LiveUsersCubit, ATAppState<LiveUsersResponseModel>>(
         listener: (_, ATAppState<LiveUsersResponseModel> state) {
@@ -61,11 +67,11 @@ class RowOfLiveUsers extends StatelessWidget {
       
                 if (liveUsers.isEmpty) {
                   if (state is LoadingState<LiveUsersResponseModel>) {
-                    return _InitialLoading();
+                    return const _InitialLoading();
                   }
                   if(state is FailureState<LiveUsersResponseModel>) {
                     return Row(
-                      children: [
+                      children: <Widget>[
                         const Padding(
                           padding: EdgeInsets.only(left: 11),
                           child: GoLiveWidgetInHome(),
@@ -79,33 +85,46 @@ class RowOfLiveUsers extends StatelessWidget {
                     );
                   }
                   return const Center(
-                    child: Text('No feed items available'),
+                    child: Text('No live users available yet...'),
                   );
                 }
-      
-                final int count = liveUsers.length;
-      
-                return ListView.separated(
-                  physics: const BouncingScrollPhysics(),
-                  padding: EdgeInsets.zero,
-                  shrinkWrap: true,
-                  scrollDirection: Axis.horizontal,
-                  separatorBuilder: (_, __) => const SizedBox(width: 14),
-                  itemCount: count + 1,
-                  itemBuilder: (_, int index) {
-                    if (index == 0) {
-                      return const Padding(
-                        padding: EdgeInsets.only(left: 11),
-                        child: GoLiveWidgetInHome(),
-                      );
-                    }
-                    final LiveUser liveUser = liveUsers[index - 1];
-                    return LiveUserWidget(
-                      // TODO: Pass liveUser data once LiveUserWidget is updated to accept LiveUser
-                      key: ValueKey<String?>(
-                          liveUser.userId ?? 'live_user_$index'),
-                    );
-                  },
+
+                bool hasMore = liveUsersData?.hasMore ?? true;
+                final int count = hasMore ? liveUsers.length + 2 : liveUsers.length + 1;
+
+                return HorizontalRefreshIndicator(
+                  onRefresh: () => context.read<LiveUsersCubit>()
+                    .fetchLiveUsers(isRefresh: true),
+                  child: ListView.separated(
+                    padding: EdgeInsets.zero,
+                    scrollDirection: Axis.horizontal,
+                    separatorBuilder: (_, __) => const SizedBox(width: 14),
+                    itemCount: count,
+                    itemBuilder: (_, int index) {
+                      if (index == 0) {
+                        return const Padding(
+                          padding: EdgeInsets.only(left: 11),
+                          child: GoLiveWidgetInHome(),
+                        );
+                      }
+                  
+                      final int adjustedIndex = index - 1;
+                  
+                      if (adjustedIndex < liveUsers.length) {
+                        final LiveUser liveUser = liveUsers[adjustedIndex];
+                        return LiveUserWidget(
+                          user: liveUser,
+                          key: ValueKey<String>(liveUser.userId ?? ''),
+                        );
+                      }
+                  
+                      if (state is LoadingState<LiveUsersResponseModel>) {
+                        return const _LiveUserShimmer();
+                      }
+                  
+                      return const SizedBox.shrink();
+                    },
+                  ),
                 );
               })
           };
@@ -115,10 +134,13 @@ class RowOfLiveUsers extends StatelessWidget {
   }
 }
 
+
 class LiveUserWidget extends StatelessWidget {
   const LiveUserWidget({
     super.key,
+    required this.user,
   });
+  final LiveUser user;
 
   @override
   Widget build(BuildContext context) {
@@ -126,16 +148,21 @@ class LiveUserWidget extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       mainAxisAlignment: MainAxisAlignment.end,
       children: <Widget>[
-        const Stack(
+        Stack(
           clipBehavior: Clip.none,
           alignment: Alignment.center,
           children: <Widget>[
-            AnimatedPicPaddingWidget(
-              imagePath: ATImgStrings.jpeg3,
+            LiveUserAnimationWidget(
+              child: ATImgLoader(
+                imgPath: user.profileImageUrl ?? ATImgStrings.jpeg3,
+                boxFit: BoxFit.cover,
+                height: 60,
+                width: 60,
+              ),
             ),
-            Positioned(
+            const Positioned(
               bottom: -4,
-              child: AmptiveLiveIndicatorWidget(),
+              child: _LiveIndicator(),
             )
           ],
         ),
@@ -146,10 +173,42 @@ class LiveUserWidget extends StatelessWidget {
   }
 }
 
+class _LiveIndicator extends StatelessWidget {
+  const _LiveIndicator();
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      alignment: Alignment.center,
+      padding: const EdgeInsets.all(0),
+      height: 22,
+      width: 38,
+      decoration: BoxDecoration(
+          gradient: LinearGradient(
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+              colors: <Color>[
+                ATColors.hexF91880,
+                ATColors.orangeGradientColorB
+              ]),
+          borderRadius: BorderRadius.circular(5),
+          border: Border.all(
+            color: ATColors.hex0D0D0D,
+            width: 2,
+          )),
+      child: Text(
+        ATStrings.live.toUpperCase(),
+          style: Theme.of(context)
+              .textTheme
+              .titleSmall
+              ?.copyWith(fontWeight: ATFontWeights.w600)),
+    );
+  }
+}
 
 
 class _InitialLoading extends StatelessWidget {
-  const _InitialLoading({super.key});
+  const _InitialLoading();
 
   @override
   Widget build(BuildContext context) {
@@ -166,7 +225,7 @@ class _InitialLoading extends StatelessWidget {
             child: GoLiveWidgetInHome(),
           );
         }
-        return _LiveUserShimmer();
+        return const _LiveUserShimmer();
       }
     );
   }
@@ -174,31 +233,49 @@ class _InitialLoading extends StatelessWidget {
 
 
 class _LiveUserShimmer extends StatelessWidget {
-  const _LiveUserShimmer({super.key});
+  const _LiveUserShimmer();
 
   @override
   Widget build(BuildContext context) {
     return Column(
       mainAxisSize: MainAxisSize.min,
-      mainAxisAlignment: MainAxisAlignment.end,
+      mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
-        const Stack(
+        Stack(
           clipBehavior: Clip.none,
           alignment: Alignment.center,
           children: <Widget>[
-            AnimatedPicPaddingWidget(
-              imagePath: ATImgStrings.jpeg3,
+            const LiveUserAnimationWidget(
+              child: ATShimmer(height: 60, width: 60,),
             ),
             Positioned(
               bottom: -4,
-              child: ATShimmer(
-                height: 10, width: 50,
+              child: Container(
+                alignment: Alignment.center,
+                padding: const EdgeInsets.all(0),
+                height: 22,
+                width: 38,
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter,
+                    colors: <Color>[
+                      ATColors.hexF91880,
+                      ATColors.orangeGradientColorB
+                    ]
+                  ),
+                  borderRadius: BorderRadius.circular(5),
+                  border: Border.all(
+                    color: ATColors.hex0D0D0D,
+                    width: 2,
+                  )),
+                child: const ATShimmer(height: 20, width: 30)
               )
             )
           ],
         ),
-        const SizedBox(height: 10),
-        ATShimmer(height: 8, width: 60,)
+        const SizedBox(height: 15),
+        const ATShimmer(height: 9, width: 50, radius: 2.5,)
       ],
     );
   }

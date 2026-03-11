@@ -2,15 +2,15 @@ import 'package:amptive/src/config/utils/colors.dart';
 import 'package:amptive/src/shared/image_loader_widget.dart';
 import 'package:flutter/material.dart';
 
-class AnimatedPicPaddingWidget extends StatefulWidget {
-  const AnimatedPicPaddingWidget({super.key, required this.imagePath});
-  final String imagePath;
+class LiveUserAnimationWidget extends StatefulWidget {
+  const LiveUserAnimationWidget({super.key, required this.child});
+  final Widget child;
 
   @override
-  State<AnimatedPicPaddingWidget> createState() => _SizeAnimationState();
+  State<LiveUserAnimationWidget> createState() => _SizeAnimationState();
 }
 
-class _SizeAnimationState extends State<AnimatedPicPaddingWidget>
+class _SizeAnimationState extends State<LiveUserAnimationWidget>
     with SingleTickerProviderStateMixin {
   late AnimationController sizeController;
   late Animation<double> paddingAnimation;
@@ -45,12 +45,7 @@ class _SizeAnimationState extends State<AnimatedPicPaddingWidget>
           border: Border.all(color: ATColors.hexF91880, width: 2)),
       child: ClipRRect(
         borderRadius: BorderRadius.circular(35),
-        child: ATImgLoader(
-          imgPath: widget.imagePath,
-          boxFit: BoxFit.cover,
-          height: 60,
-          width: 60,
-        ),
+        child: widget.child,
       ),
     ),
   );

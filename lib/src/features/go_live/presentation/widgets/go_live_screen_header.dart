@@ -43,7 +43,7 @@ class GoLiveScreenHeader extends StatelessWidget {
               width: kst.maxWidth,
               slidingChildren: <Widget>[
                 Text(
-                  ATStrings.LIVE,
+                  ATStrings.live,
                   style: context.textTheme.bodyMedium,
                 ),
                 const SizedBox(width: 5),

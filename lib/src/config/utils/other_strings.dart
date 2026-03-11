@@ -80,7 +80,7 @@ class ATStrings {
   static const String flutterWave = 'Flutterwave';
   static const String googlePay = 'Google Pay';
   static const String emailOrUsername = 'Email Or Username';
-  static const String LIVE = 'Live';
+  static const String live = 'Live';
   static const String ALL = 'All';
   static const String RECORDING_WILL_AUTOPLAY = 'Your recording will play in';
   static const String ENTER_VALID_URL = 'Please, enter a valid URL!';

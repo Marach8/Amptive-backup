@@ -39,7 +39,7 @@ class LiveIndicatorRow extends StatelessWidget {
           width: 5,
         ),
         Text(
-          ATStrings.LIVE.toUpperCase(),
+          ATStrings.live.toUpperCase(),
           style: context.textTheme.bodyMedium
               ?.copyWith(color: ATColors.hexA8A8A8, fontSize: ATSizes.size14),
         ),

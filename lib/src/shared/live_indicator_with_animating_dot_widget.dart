@@ -33,7 +33,7 @@ class LiveWithAnimatingDot extends StatelessWidget {
             ),
           ),
           SizedBox(width: 4.w),
-          Text(ATStrings.LIVE.toUpperCase(),
+          Text(ATStrings.live.toUpperCase(),
               style: Theme.of(context).textTheme.titleSmall?.copyWith(
                     fontSize: ATSizes.size14,
                     fontWeight: ATFontWeights.w600,
