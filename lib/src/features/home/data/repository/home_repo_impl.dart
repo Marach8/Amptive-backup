@@ -9,6 +9,7 @@ import 'package:amptive/src/features/home/data/models/following_status.dart';
 import 'package:amptive/src/features/home/data/repository/home_repo.dart';
 import 'package:dio/dio.dart';
 import 'package:amptive/src/features/home/data/models/response/home_feed_response_model.dart';
+import 'package:amptive/src/features/home/data/models/response/live_users_response_model.dart';
 import 'package:dio/dio.dart' show Response;
 
 class HomeRepoImpl implements HomeRepo {
@@ -109,14 +110,14 @@ class HomeRepoImpl implements HomeRepo {
   }
 
   @override
-  Future<ApiResponse<dynamic>> fetchLiveShows({
+  Future<ApiResponse<LiveUsersResponseModel>> fetchLiveUsers({
     required int page,
     required int pageSize,
     required bool refresh,
   }) async {
     try {
       final Response<dynamic> response = await networkService.get(
-        ATEndpoints.liveShowsFeed,
+        ATEndpoints.liveUsersFeed,
         queryParameters: <String, dynamic>{
           'page': page,
           'page_size': pageSize,
@@ -124,26 +125,12 @@ class HomeRepoImpl implements HomeRepo {
         },
       );
 
-      return Successful<dynamic>(data: response.data);
+      return Successful<LiveUsersResponseModel>(
+        data: LiveUsersResponseModel.fromJson(response.data),
+      );
     } catch (e) {
       log('Get live shows error: $e');
-      return Unsuccessful<dynamic>(
-        error: ATException.resolveException(e),
-      );
-    }
-  }
-
-  @override
-  Future<ApiResponse<dynamic>> fetchLiveUsers() async {
-    try {
-      final Response<dynamic> response = await networkService.get(
-        ATEndpoints.liveShowsFeed,
-      );
-
-      return Successful<dynamic>(data: response.data);
-    } catch (e) {
-      log('Get live users error: $e');
-      return Unsuccessful<dynamic>(
+      return Unsuccessful<LiveUsersResponseModel>(
         error: ATException.resolveException(e),
       );
     }

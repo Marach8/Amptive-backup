@@ -2,6 +2,7 @@ import 'package:amptive/src/config/api_response_and_app_state.dart';
 import 'package:amptive/src/features/auth/cubits/local_user_data_cubit.dart';
 import 'package:amptive/src/features/auth/data/models/response/user_profile_response_model.dart';
 import 'package:amptive/src/features/home/cubits/home_feed_cubit.dart';
+import 'package:amptive/src/features/home/cubits/empty.dart.dart';
 import 'package:amptive/src/features/home/cubits/live_users_cubit.dart';
 import 'package:amptive/src/features/profile/cubits/remote_user_data_cubit.dart';
 import 'package:amptive/src/shared/annotated_region__widget.dart';
@@ -91,7 +92,6 @@ class __SubWidgetState extends State<_SubWidget> {
 
       context.read<HomeFeedCubit>().fetchHomeFeed();
       context.read<LiveUsersCubit>().fetchLiveUsers();
-      //context.read<RemoteUserDataCubit>().fetchUserProfile();
       context.read<LocalUserDataCubit>().initializeCachedData();
     });
   }
@@ -119,22 +119,27 @@ class __SubWidgetState extends State<_SubWidget> {
         bottom: false,
         top: false,
         child: Scaffold(
-            body: BlocSelector<ATNavBarBloc, (int, bool), int>(
-                selector: ((int, bool) st) => st.$1,
-                builder: (_, int index) {
-                  return IndexedStack(index: index, children: <Widget>[
-                    HomeTabView(
-                      nestedKey: _nestedKey,
-                      liveUsersScrollController: _liveUsersScrollController,
-                    ),
-                    const DiscoverTabView(),
-                    const SizedBox(),
-                    const NotificationTabView()
-                  ]);
-                }),
-            resizeToAvoidBottomInset: false,
-            backgroundColor: ATColors.transparent,
-            bottomSheet: const MainAppBottomNav()),
+          body: BlocSelector<ATNavBarBloc, (int, bool), int>(
+            selector: ((int, bool) st) => st.$1,
+            builder: (_, int index) {
+              return IndexedStack(
+                index: index,
+                children: <Widget>[
+                  HomeTabView(
+                    nestedKey: _nestedKey,
+                    liveUsersScrollController: _liveUsersScrollController,
+                  ),
+                  const DiscoverTabView(),
+                  const SizedBox(),
+                  const NotificationTabView()
+                ]
+              );
+            }
+          ),
+          resizeToAvoidBottomInset: false,
+          backgroundColor: ATColors.transparent,
+          bottomSheet: const MainAppBottomNav()
+        ),
       ),
     );
   }
