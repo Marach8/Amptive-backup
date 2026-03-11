@@ -1,4 +1,6 @@
 import 'package:amptive/src/features/discover/cubits/hashtags_cubit.dart';
+import 'package:amptive/src/features/discover/cubits/create_hashtag_cubit.dart';
+import 'package:amptive/src/features/discover/cubits/search_query_cubit.dart';
 import 'package:amptive/src/features/discover/data/models/response/all_hashtags_response_model.dart';
 import 'package:go_router/go_router.dart';
 import 'package:amptive/src/features/go_live/go_live_export.dart';
@@ -30,6 +32,8 @@ Future<List<HashTag>?> showNewHashTagsModal({
           BlocProvider<AllHashtagsCubit>.value(value: allHashTagsCubit),
           BlocProvider<SearchkeyCubit>(create: (_) => SearchkeyCubit()),
           BlocProvider<SelectedHashTagsCubit>.value(value: selectedHashTagsCubit),
+          BlocProvider<CreateHashtagCubit>(create: (_) => CreateHashtagCubit()),
+          BlocProvider<SearchQueryCubit>(create: (_) => SearchQueryCubit()),
         ],
         child: Stack(
           children: <Widget>[
@@ -45,15 +49,43 @@ Future<List<HashTag>?> showNewHashTagsModal({
               bottom: 0,
               left: 0,
               right: 0,
-              child: BlocBuilder<SelectedHashTagsCubit, List<HashTag>>(
-                  builder: (_, List<HashTag> selectedHashtags) {
-                final bool activateBtn = selectedHashtags.isNotEmpty;
-                return ATBlurredBgBtn(
-                  onPressed:
-                      activateBtn ? () => dContext.pop(selectedHashtags) : null,
-                  btnTitle: ATStrings.cContinue,
-                );
-              }),
+              child: BlocBuilder<AllHashtagsCubit, ATAppState<AllHashtagsResponseModel>>(
+                builder: (BuildContext ctx, ATAppState<AllHashtagsResponseModel> state) {
+                  final List<HashTag> selectedHashtags = ctx.read<SelectedHashTagsCubit>().state;
+                  final bool hasSelectedHashtags = selectedHashtags.isNotEmpty;
+                  
+                  // Check if we're showing "no results" state
+                  final bool noResultsFound = state is FailureState<AllHashtagsResponseModel> &&
+                      ctx.read<SearchQueryCubit>().state.isNotEmpty;
+                  
+                  if (noResultsFound) {
+                    return BlocBuilder<SearchQueryCubit, String>(
+                      builder: (_, String query) {
+                        return ATBlurredBgBtn(
+                          onPressed: () async {
+                            final HashTag? newHashtag = await ctx.read<CreateHashtagCubit>().createHashtag(query);
+                            if (newHashtag != null && ctx.mounted) {
+                              ctx.read<SelectedHashTagsCubit>().addHashtag(newHashtag);
+                            }
+                          },
+                          btnTitle: 'Add Hashtag',
+                        );
+                      },
+                    );
+                  }
+                  
+                  return BlocBuilder<SelectedHashTagsCubit, List<HashTag>>(
+                    builder: (_, List<HashTag> selectedHashtags) {
+                      final bool activateBtn = selectedHashtags.isNotEmpty;
+                      return ATBlurredBgBtn(
+                        onPressed:
+                            activateBtn ? () => dContext.pop(selectedHashtags) : null,
+                        btnTitle: ATStrings.cContinue,
+                      );
+                    },
+                  );
+                },
+              ),
             )
           ],
         ),
@@ -120,10 +152,12 @@ class _SelectHashtagsModalState extends State<_SelectHashtagsModal> {
               child: SearchFieldWithXSuffix(
                 hintText: ATStrings.searchForCohost,
                 onClear: () {
+                  context.read<SearchQueryCubit>().clear();
                   context.read<SearchkeyCubit>().resetSearch();
                   context.read<AllHashtagsCubit>().resetSearch();
                 },
                 onChanged: (String searchKey) {
+                  context.read<SearchQueryCubit>().updateQuery(searchKey);
                   ATHelperFuncs.callDebouncer(500, () {
                     context.read<AllHashtagsCubit>().searchHashtags(searchKey);
                     context.read<SearchkeyCubit>().updateSearchKey(searchKey);

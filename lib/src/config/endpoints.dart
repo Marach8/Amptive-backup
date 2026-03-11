@@ -26,5 +26,6 @@ class ATEndpoints {
   static const String getUserprofile = '/api/v1/users/me';
   static const String getUsers = '/api/v1/users';
   static const String tags = '/api/v1/tags/'; 
+  static const String createHashtag = '${tags}hashtags'; 
   static const String updateUserProfile = '/api/v1/users/me';
 }
