@@ -13,4 +13,6 @@ abstract class ProfileRepo{
   Future<ApiResponse<dynamic>> updateUserProfile({
     required String profilePicture,
   });
+   
+
 }

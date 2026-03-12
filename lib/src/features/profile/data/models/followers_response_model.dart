@@ -10,19 +10,19 @@ class FollowersResponseModel {
   });
 
   factory FollowersResponseModel.fromJson(Map<String, dynamic> json) {
-    final data = json['data'] ?? {};
-    final usersList = (data['users'] as List? ?? <dynamic>[]);
+    final data = json['data'] ?? <dynamic, dynamic>{};
+    final List<dynamic> usersList = (data['users'] as List? ?? <dynamic>[]);
 
     return FollowersResponseModel(
-      status: json['status'] ?? false,
-      statusCode: json['status_code'] ?? 0,
-      message: json['message'] ?? '',
+      status: json['status'] ,
+      statusCode: json['status_code'] ,
+      message: json['message'] ,
       followers: usersList
           .map((item) => Followers.fromJson(item as Map<String, dynamic>))
           .toList(),
-      page: json['page'] ?? 1,
-      pageSize: json['page_size'] ?? usersList.length,
-      hasMore: (json['page'] ?? 1) < (json['total_pages'] ?? 1),
+      page: json['page'] ,
+      pageSize: json['page_size'] ,
+      hasMore: (json['has_more'] ),
     );
   }
 
@@ -51,12 +51,12 @@ class Followers {
     return Followers(
       id: json['id'] ?? json['_id'],
       username: json['username'],
-      profilePicture: json['profile_picture'] ?? json['avatar'],
+      profilePicture: json['profile_picture'] ,
       firstName: json['first_name'],
       lastName: json['last_name'],
       name: json['name'],
-      followersCount: json['followers_count'] ?? 0,
-      followingCount: json['following_count'] ?? 0,
+      followersCount: json['followers_count'] ,
+      followingCount: json['following_count'] ,
     );
   }
 
