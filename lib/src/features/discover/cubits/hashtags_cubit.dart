@@ -116,4 +116,5 @@ class AllHashtagsCubit extends Cubit<ATAppState<AllHashtagsResponseModel>> {
       hashtags: _cachedHashTags,
     ),
   ));
+
 }

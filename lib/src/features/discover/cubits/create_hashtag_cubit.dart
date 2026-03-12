@@ -11,8 +11,9 @@ class CreateHashtagCubit extends Cubit<ATAppState<HashTag>> {
 
   final DiscoverRepo discoverRepo;
 
-  Future<HashTag?> createHashtag(String name) async {
-    emit(LoadingState<HashTag>());
+  // Changed return type to Future<void>
+  Future<void> createHashtag(String name) async {
+    emit(const LoadingState<HashTag>());
 
     try {
       final ApiResponse<HashTag> response = await discoverRepo.createHashtag(
@@ -20,19 +21,18 @@ class CreateHashtagCubit extends Cubit<ATAppState<HashTag>> {
         displayName: name,
       );
 
-      return response.when(
+      response.when(
         successful: (Successful<HashTag> data) {
           emit(SuccessState<HashTag>(newData: data.data));
-          return data.data;
+          // No return needed
         },
         unSuccessful: (Unsuccessful<HashTag> error) {
           emit(FailureState<HashTag>(error.error.message));
-          return null;
+          // No return needed
         },
       );
     } catch (e) {
       emit(FailureState<HashTag>('Unable to create hashtag: $e'));
-      return null;
     }
   }
 
