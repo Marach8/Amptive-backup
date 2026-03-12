@@ -9,7 +9,6 @@ import 'package:flutter/material.dart';
 import 'package:amptive/main.dart';
 import 'dart:developer' as marach show log;
 
-
 Future<void> showMinimizedGoLiveState() async {
   scaffoldMessengerKey.currentState?.showSnackBar(
     SnackBar(
@@ -20,15 +19,15 @@ Future<void> showMinimizedGoLiveState() async {
       padding: const EdgeInsets.all(8),
       margin: const EdgeInsets.only(left: 10, right: 10),
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(10),
-        side: BorderSide(color: ATColors.hex2D2D2D)
-      ),
+          borderRadius: BorderRadius.circular(10),
+          side: BorderSide(color: ATColors.hex2D2D2D)),
       content: Row(
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
           const AmptivePictureWidget(
             imagePath: ATImgStrings.weCanDoHardThingsBgImage,
-            diameter: 40, radius: 2,            
+            diameter: 40,
+            radius: 2,
           ),
           const SizedBox(width: 5),
           Flexible(
@@ -47,12 +46,12 @@ Future<void> showMinimizedGoLiveState() async {
                   children: <Widget>[
                     const ATImgLoader(
                       imgPath: ATImgStrings.filledBroadCast,
-                      height: 15, width: 15,
+                      height: 15,
+                      width: 15,
                     ),
-
                     Flexible(
                       child: _HorizontalScrollCards(
-                       // spaceSize: constraints.maxWidth,
+                        // spaceSize: constraints.maxWidth,
                         child: Text(
                           "Don't forget who you are ft. Jacob Scipio and the boy is cooljdkjfkafkdajdjjakdjfkajeiefkdjfkdjakjdkjkja",
                           style: TextStyle(
@@ -63,14 +62,14 @@ Future<void> showMinimizedGoLiveState() async {
                         ),
                       ),
                     )
-                    
                   ],
                 ),
               ],
             ),
           ),
           GestureDetector(
-            onTap: () => scaffoldMessengerKey.currentState?.hideCurrentSnackBar(),
+            onTap: () =>
+                scaffoldMessengerKey.currentState?.hideCurrentSnackBar(),
             child: Icon(Icons.close, color: ATColors.white, size: 20),
           )
         ],
@@ -79,14 +78,12 @@ Future<void> showMinimizedGoLiveState() async {
   );
 }
 
-
-
-
-
-
 class _HorizontalScrollCards extends StatefulWidget {
   //final double spaceSize;
-  const _HorizontalScrollCards({required this.child, /*required this.spaceSize*/});
+  const _HorizontalScrollCards({
+    required this.child,
+    /*required this.spaceSize*/
+  });
   final Widget child;
 
   @override
@@ -104,12 +101,13 @@ class _HorizontalScrollCardsState extends State<_HorizontalScrollCards> {
   }
 
   void _getChildWidth() {
-    final RenderBox? renderBox = _measurementKey.currentContext?.findRenderObject() as RenderBox?;
+    final RenderBox? renderBox =
+        _measurementKey.currentContext?.findRenderObject() as RenderBox?;
     if (renderBox != null && mounted) {
       final double childWidth = renderBox.size.width;
       final double screenWidth = MediaQuery.sizeOf(context).width;
       final double foo = (childWidth / screenWidth).clamp(0.1, 1.0);
-      
+
       marach.log(childWidth.toString());
       marach.log(foo.toString());
       marach.log(screenWidth.toString());

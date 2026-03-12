@@ -1,6 +1,5 @@
 import 'package:amptive/src/config/exception.dart';
 
-
 //API RESPONSE
 abstract class ApiResponse<T> {
   const ApiResponse();
@@ -19,7 +18,8 @@ class Successful<T> extends ApiResponse<T> {
   R when<R>({
     required R Function(Successful<T> _) successful,
     required R Function(Unsuccessful<T> _) unSuccessful,
-  }) => successful(this);
+  }) =>
+      successful(this);
 }
 
 class Unsuccessful<T> extends ApiResponse<T> {
@@ -30,10 +30,9 @@ class Unsuccessful<T> extends ApiResponse<T> {
   R when<R>({
     required R Function(Successful<T> _) successful,
     required R Function(Unsuccessful<T> _) unSuccessful,
-  }) => unSuccessful(this);
+  }) =>
+      unSuccessful(this);
 }
-
-
 
 //APP STATES
 sealed class ATAppState<T> {

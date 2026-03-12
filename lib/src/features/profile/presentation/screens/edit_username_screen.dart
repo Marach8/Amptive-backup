@@ -26,8 +26,8 @@ class EditUsernameScreen extends StatefulWidget {
 class _EditNameScreen extends State<EditUsernameScreen> {
   late final TextEditingController _cntrl;
 
-  @override 
-  void initState(){
+  @override
+  void initState() {
     super.initState();
     _cntrl = TextEditingController(text: widget.initialUsername.toLowerCase())
       ..addListener(_handleTextChange);
@@ -35,13 +35,14 @@ class _EditNameScreen extends State<EditUsernameScreen> {
 
   void _handleTextChange() {
     ATHelperFuncs.callDebouncer(
-      1000,
-      () => context.read<AmptiveAuthBloc>().add(UsernameChangedEvent(_cntrl.text.trim()))
-    );
+        1000,
+        () => context
+            .read<AmptiveAuthBloc>()
+            .add(UsernameChangedEvent(_cntrl.text.trim())));
   }
 
   @override
-  void dispose(){
+  void dispose() {
     _cntrl.removeListener(_handleTextChange);
     _cntrl.dispose();
     super.dispose();
@@ -52,70 +53,73 @@ class _EditNameScreen extends State<EditUsernameScreen> {
     return ATAnnotatedRegion(
       child: Scaffold(
         appBar: const ATAppBar(
-          leadingWidth: 30,
-          padding: EdgeInsets.only(left: 7),
-          leading: ATRoundedBackBtn(),
-          titleText: ATStrings.userName
-        ),
+            leadingWidth: 30,
+            padding: EdgeInsets.only(left: 7),
+            leading: ATRoundedBackBtn(),
+            titleText: ATStrings.userName),
         body: Padding(
           padding: const EdgeInsets.fromLTRB(15, 10, 15, 0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               ATTextFormField(
-                controller: _cntrl, maxLines: 1,
+                controller: _cntrl,
+                maxLines: 1,
                 prefixIcon: Padding(
                   padding: const EdgeInsets.only(left: 10),
-                  child: Text(
-                    ATStrings.AT_SIGN,
-                    style: Theme.of(context).textTheme.bodyMedium
-                  ),
+                  child: Text(ATStrings.AT_SIGN,
+                      style: Theme.of(context).textTheme.bodyMedium),
                 ),
                 suffixIcon: Padding(
                   padding: const EdgeInsets.only(right: 15),
                   child: BlocBuilder<AmptiveAuthBloc, AmptiveAuthState>(
-                    builder: (_, AmptiveAuthState state) {
-                      if(state is VerifyingUsernameState) return const ATLoadingIndicator(size: 20,);
-                      if(state is UsernameVerifiedState) return Icon(Icons.check, color: ATColors.hex54C981);
-                      return const SizedBox.shrink();
+                      builder: (_, AmptiveAuthState state) {
+                    if (state is VerifyingUsernameState) {
+                      return const ATLoadingIndicator(
+                        size: 20,
+                      );
                     }
-                  ),
+                    if (state is UsernameVerifiedState) {
+                      return Icon(Icons.check, color: ATColors.hex54C981);
+                    }
+                    return const SizedBox.shrink();
+                  }),
                 ),
               ),
               const SizedBox(height: 10),
               BlocBuilder<AmptiveAuthBloc, AmptiveAuthState>(
-                builder: (_, AmptiveAuthState state) {
-                  return Text(
-                    (state is VerifyingUsernameState) ? ATStrings.checkerLoading 
-                      : (state is UsernameVerifiedState) ? ATStrings.usernameIsAvailable : '',
+                  builder: (_, AmptiveAuthState state) {
+                return Text(
+                    (state is VerifyingUsernameState)
+                        ? ATStrings.checkerLoading
+                        : (state is UsernameVerifiedState)
+                            ? ATStrings.usernameIsAvailable
+                            : '',
                     style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                      fontSize: ATSizes.size11,
-                      color: state is UsernameVerifiedState ? ATColors.hex54C981 : null
-                    )
-                  );
-                }
-              )
+                        fontSize: ATSizes.size11,
+                        color: state is UsernameVerifiedState
+                            ? ATColors.hex54C981
+                            : null));
+              })
             ],
           ),
         ),
-
-        bottomSheet: Builder(
-          builder: (BuildContext context) {
-            final double bottomInset = MediaQuery.viewInsetsOf(context).bottom;
-            final double bottom = bottomInset == 0 ? 50.0 : 15;
-            return Padding(
-              padding: EdgeInsets.fromLTRB(15, 5, 15, bottom),
-              child: BlocBuilder<AmptiveAuthBloc, AmptiveAuthState>(
+        bottomSheet: Builder(builder: (BuildContext context) {
+          final double bottomInset = MediaQuery.viewInsetsOf(context).bottom;
+          final double bottom = bottomInset == 0 ? 50.0 : 15;
+          return Padding(
+            padding: EdgeInsets.fromLTRB(15, 5, 15, bottom),
+            child: BlocBuilder<AmptiveAuthBloc, AmptiveAuthState>(
                 builder: (_, AmptiveAuthState state) {
-                  return ATPlainElevatedBtn(
-                    onPressed: (state is UsernameVerifiedState) ? () => context.pop(_cntrl.text.trim()) : null,
-                    btnTitle: ATStrings.ACCEPT_CHANGES,
-                  );
-                }
-              ),
-            );
-          }
-        ),
+              return ATPlainElevatedBtn(
+                onPressed: (state is UsernameVerifiedState)
+                    ? () => context.pop(_cntrl.text.trim())
+                    : null,
+                btnTitle: ATStrings.ACCEPT_CHANGES,
+              );
+            }),
+          );
+        }),
       ),
     );
   }

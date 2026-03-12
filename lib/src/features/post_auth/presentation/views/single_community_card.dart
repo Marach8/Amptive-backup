@@ -49,8 +49,8 @@ class SingleCommunityCardWidget extends StatelessWidget {
             child: Text(
               preference.name,
               style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                fontWeight: ATFontWeights.w600,
-              ),
+                    fontWeight: ATFontWeights.w600,
+                  ),
             ),
           ),
           Visibility(

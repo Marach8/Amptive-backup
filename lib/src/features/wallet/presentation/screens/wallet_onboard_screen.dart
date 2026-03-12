@@ -17,58 +17,52 @@ class _ATWalletOnboardScreenState extends State<ATWalletOnboardScreen> {
   bool _shouldShow = false;
   @override
   Widget build(_) {
-    return Builder(
-      builder: (BuildContext context) {
-        return ATAnnotatedRegion(
+    return Builder(builder: (BuildContext context) {
+      return ATAnnotatedRegion(
           child: Scaffold(
-            appBar: const ATAppBar(
-              leading: ATRoundedBackBtn(),
-              leadingWidth: 30,
-              padding: EdgeInsets.only(left: 5),
-            ),
-            body: AnimatedPadding(
-              duration: const Duration(milliseconds: 100),
-              padding: EdgeInsets.fromLTRB(20, 
-                context.screenHeight * (_shouldShow ? 0.18 : 0.3),
-                20, 0
-              ),
-              child: ATFadingSwitcher(
-                child: _shouldShow ? const _WalletIconColumn()
-                  : UrWalletUrWayWidget(
+        appBar: const ATAppBar(
+          leading: ATRoundedBackBtn(),
+          leadingWidth: 30,
+          padding: EdgeInsets.only(left: 5),
+        ),
+        body: AnimatedPadding(
+          duration: const Duration(milliseconds: 100),
+          padding: EdgeInsets.fromLTRB(
+              20, context.screenHeight * (_shouldShow ? 0.18 : 0.3), 20, 0),
+          child: ATFadingSwitcher(
+            child: _shouldShow
+                ? const _WalletIconColumn()
+                : UrWalletUrWayWidget(
                     onDone: () => Future<void>.delayed(
-                      const Duration(seconds: 1),
-                      () => setState(() => _shouldShow = true),
-                    )
-                  ),
-              ),
-            ),
-    
-            bottomSheet: Padding(
-              padding: const EdgeInsets.fromLTRB(15, 15, 15, 50),
-              child: AnimatedOpacity(
-                duration: const Duration(milliseconds: 500),
-                opacity: _shouldShow ? 1.0 : 0.0,
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  spacing: 10,
-                  children: <Widget>[
-                    const WalletOnboardInfoWidget(),
-                    ATPlainElevatedBtn(
-                      onPressed: (){context.pushReplacementNamed(ATRoutes.WALLET_PIN_SETUP);},
-                      btnTitle: ATStrings.beginSetup,
-                    ),
-                  ],
+                          const Duration(seconds: 1),
+                          () => setState(() => _shouldShow = true),
+                        )),
+          ),
+        ),
+        bottomSheet: Padding(
+          padding: const EdgeInsets.fromLTRB(15, 15, 15, 50),
+          child: AnimatedOpacity(
+            duration: const Duration(milliseconds: 500),
+            opacity: _shouldShow ? 1.0 : 0.0,
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              spacing: 10,
+              children: <Widget>[
+                const WalletOnboardInfoWidget(),
+                ATPlainElevatedBtn(
+                  onPressed: () {
+                    context.pushReplacementNamed(ATRoutes.WALLET_PIN_SETUP);
+                  },
+                  btnTitle: ATStrings.beginSetup,
                 ),
-              ),
+              ],
             ),
-          )
-        );
-      }
-    );
+          ),
+        ),
+      ));
+    });
   }
 }
-
-
 
 class _WalletIconColumn extends StatelessWidget {
   const _WalletIconColumn();
@@ -84,12 +78,11 @@ class _WalletIconColumn extends StatelessWidget {
           ATStrings.SETUP_WALLET,
           style: Theme.of(context).textTheme.displaySmall,
         ),
-        Text(
-          '${ATStrings.UR_WALLET}, ${ATStrings.UR_WAY}',
-          style: Theme.of(context).textTheme.bodySmall?.copyWith(
-            color: ATColors.hexC2C2C2
-          )
-        ),
+        Text('${ATStrings.UR_WALLET}, ${ATStrings.UR_WAY}',
+            style: Theme.of(context)
+                .textTheme
+                .bodySmall
+                ?.copyWith(color: ATColors.hexC2C2C2)),
       ],
     );
   }

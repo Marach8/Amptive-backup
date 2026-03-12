@@ -30,10 +30,11 @@ class ATBackBtn extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
             Icon(Icons.arrow_back_ios, size: iconSize ?? 20),
-            leadingWidget ?? Text(
-              leadingText ?? ATStrings.BACK,
-              style: leadingStyle ?? context.textTheme.titleMedium,
-            )
+            leadingWidget ??
+                Text(
+                  leadingText ?? ATStrings.BACK,
+                  style: leadingStyle ?? context.textTheme.titleMedium,
+                )
           ],
         ),
       ),
@@ -41,15 +42,9 @@ class ATBackBtn extends StatelessWidget {
   }
 }
 
-
-
 class ATRoundedBackBtn extends StatelessWidget {
-  const ATRoundedBackBtn({
-    super.key,
-    this.bgColor,
-    this.splashColor,
-    this.icon
-  });
+  const ATRoundedBackBtn(
+      {super.key, this.bgColor, this.splashColor, this.icon});
 
   final Color? bgColor, splashColor;
   final Widget? icon;
@@ -66,7 +61,8 @@ class ATRoundedBackBtn extends StatelessWidget {
           splashColor: splashColor ?? ATColors.white.withValues(alpha: 0.5),
           borderRadius: BorderRadius.circular(30),
           child: SizedBox(
-            height: 30, width: 30,
+            height: 30,
+            width: 30,
             child: icon ?? const Icon(Icons.keyboard_arrow_left),
           ),
         ),
@@ -74,8 +70,6 @@ class ATRoundedBackBtn extends StatelessWidget {
     );
   }
 }
-
-
 
 class ATXBackBtn extends StatelessWidget {
   const ATXBackBtn({super.key, this.onTapOverride});
@@ -90,7 +84,8 @@ class ATXBackBtn extends StatelessWidget {
         splashColor: ATColors.white.withValues(alpha: 0.5),
         borderRadius: BorderRadius.circular(30),
         child: const SizedBox(
-          height: 30, width: 30,
+          height: 30,
+          width: 30,
           child: Icon(Icons.close),
         ),
       ),

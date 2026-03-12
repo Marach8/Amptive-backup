@@ -23,40 +23,42 @@ class ATBlockedAcctsScreen extends StatelessWidget {
           leading: ATRoundedBackBtn(),
           titleText: ATStrings.blockedAccounts,
         ),
-        body: BlocBuilder<AmptiveProfileFollowersBloc, List<ObjectWithNotifier<Host>>>(
-          builder: (_, List<ObjectWithNotifier<Host>> state) {
-            return Expanded(
-              child: ListView.builder(
+        body: BlocBuilder<AmptiveProfileFollowersBloc,
+                List<ObjectWithNotifier<Host>>>(
+            builder: (_, List<ObjectWithNotifier<Host>> state) {
+          return Expanded(
+            child: ListView.builder(
                 padding: const EdgeInsets.fromLTRB(15, 0, 15, 50),
                 physics: const BouncingScrollPhysics(),
                 itemCount: state.length,
-                itemBuilder: (_, int listIndex){
-                  final ObjectWithNotifier<Host> subscriber = state.elementAt(listIndex);
+                itemBuilder: (_, int listIndex) {
+                  final ObjectWithNotifier<Host> subscriber =
+                      state.elementAt(listIndex);
                   return RenderBlockedOrMutedAccount(
                     subscriber: subscriber,
                     text: ATStrings.unblock,
-                    onTap: (ObjectWithNotifier<Host> follower, bool isSelected) async{
+                    onTap: (ObjectWithNotifier<Host> follower,
+                        bool isSelected) async {
                       final bool? shouldUnblock = await showConfirmationDialog(
-                        context: context,
-                        title: '${ATStrings.unblock} ${follower.obj.username}',
-                        content: '${follower.obj.username} ${ATStrings.unblockDesc}',
-                        yesString: ATStrings.unblock,
-                        noString: ATStrings.cancel
-                      );
-                      if(context.mounted && (shouldUnblock ?? false)){
-                        showAppNotification(
                           context: context,
-                          icon: const Icon(Icons.check_circle),
-                          text: '${follower.obj.username} ${ATStrings.isUnblocked}'
-                        );
+                          title:
+                              '${ATStrings.unblock} ${follower.obj.username}',
+                          content:
+                              '${follower.obj.username} ${ATStrings.unblockDesc}',
+                          yesString: ATStrings.unblock,
+                          noString: ATStrings.cancel);
+                      if (context.mounted && (shouldUnblock ?? false)) {
+                        showAppNotification(
+                            context: context,
+                            icon: const Icon(Icons.check_circle),
+                            text:
+                                '${follower.obj.username} ${ATStrings.isUnblocked}');
                       }
                     },
                   );
-                }
-              ),
-            );
-          }
-        ),
+                }),
+          );
+        }),
       ),
     );
   }

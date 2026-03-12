@@ -22,7 +22,6 @@ class HomeFeedResponseModel {
   final bool? hasMore;
 }
 
-
 class HomeFeedItem {
   HomeFeedItem({
     this.id,

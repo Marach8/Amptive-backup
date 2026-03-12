@@ -19,87 +19,68 @@ Future<void> showHostEndShowDialog({
   required BuildContext context,
 }) async {
   return await showModalBottomSheet(
-    backgroundColor: ATColors.hex202020,
-    context: context,
-    isScrollControlled: true,
-    useSafeArea: true,
-    barrierColor: ATColors.black.withOpacity(0.6),
-    shape: const RoundedRectangleBorder(
-      borderRadius: BorderRadius.only(
-      topLeft: Radius.circular(15), topRight: Radius.circular(15),
-    )),
-    builder: (BuildContext context) {
-      return ATContainer(
-        height: ATHelperFuncs.getScreenHeight(context),
-        width: ATHelperFuncs.getScreenWidth(context),
-        color: ATColors.black,
-        child: Stack(
-          alignment: Alignment.center,
-          children: <Widget>[            
-            BlocConsumer<AmptiveEndShowBloc, EndShowState>(
-              listener: (_, EndShowState state){
-                if(state is ShowBlankScreenState){
-                  Future.delayed(
-                    const Duration(seconds: 2),
-                    (){
-                      if(context.mounted){
-                        context.read<ATNavBarBloc>().goToPage(0, context);                        
-                        context.pop();
-                        showAppNotification(
+      backgroundColor: ATColors.hex202020,
+      context: context,
+      isScrollControlled: true,
+      useSafeArea: true,
+      barrierColor: ATColors.black.withOpacity(0.6),
+      shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.only(
+        topLeft: Radius.circular(15),
+        topRight: Radius.circular(15),
+      )),
+      builder: (BuildContext context) {
+        return ATContainer(
+          height: ATHelperFuncs.getScreenHeight(context),
+          width: ATHelperFuncs.getScreenWidth(context),
+          color: ATColors.black,
+          child: Stack(
+            alignment: Alignment.center,
+            children: <Widget>[
+              BlocConsumer<AmptiveEndShowBloc, EndShowState>(
+                  listener: (_, EndShowState state) {
+                if (state is ShowBlankScreenState) {
+                  Future.delayed(const Duration(seconds: 2), () {
+                    if (context.mounted) {
+                      context.read<ATNavBarBloc>().goToPage(0, context);
+                      context.pop();
+                      showAppNotification(
                           context: context,
                           icon: const Icon(Icons.check_circle),
                           text: 'Your live show has ended',
-                          bgColor: ATColors.notifBg
-                        );
-                      }
+                          bgColor: ATColors.notifBg);
                     }
-                  );
-                }
-
-                else if(state is EndShowIsLoadingState){
-                  Future.delayed(
-                    const Duration(seconds: 5),
-                    (){
-                      if(context.mounted){
-                        context.read<AmptiveEndShowBloc>().add(
-                          ShowNoOfListenersEvent()
-                        );
-                      }
+                  });
+                } else if (state is EndShowIsLoadingState) {
+                  Future.delayed(const Duration(seconds: 5), () {
+                    if (context.mounted) {
+                      context
+                          .read<AmptiveEndShowBloc>()
+                          .add(ShowNoOfListenersEvent());
                     }
-                  );
-                }
-
-                else if(state is ShowNoOfListenersState){
-                  Future.delayed(
-                    const Duration(seconds: 5),
-                    (){
-                      if(context.mounted){
-                        context.read<AmptiveEndShowBloc>().add(
-                          ShowNoOfGiftsEvent()
-                        );
-                      }
+                  });
+                } else if (state is ShowNoOfListenersState) {
+                  Future.delayed(const Duration(seconds: 5), () {
+                    if (context.mounted) {
+                      context
+                          .read<AmptiveEndShowBloc>()
+                          .add(ShowNoOfGiftsEvent());
                     }
-                  );
-                }
-
-                else if(state is ShowNoOfGiftsState){
-                  Future.delayed(
-                    const Duration(seconds: 5),
-                    (){
-                      if(context.mounted){
-                        context.read<AmptiveEndShowBloc>().add(
-                          ShowBlankScreenEvent()
-                        );
-                      }
+                  });
+                } else if (state is ShowNoOfGiftsState) {
+                  Future.delayed(const Duration(seconds: 5), () {
+                    if (context.mounted) {
+                      context
+                          .read<AmptiveEndShowBloc>()
+                          .add(ShowBlankScreenEvent());
                     }
-                  );
+                  });
                 }
-              },
-              builder: (_, EndShowState state) {
+              }, builder: (_, EndShowState state) {
                 final bool initialState = state is ConfirmEndShowState;
                 final bool finalState = state is ShowBlankScreenState;
 
-                if(finalState){
+                if (finalState) {
                   return const SizedBox.shrink();
                 }
 
@@ -108,75 +89,80 @@ Future<void> showHostEndShowDialog({
                   top: initialState ? 200 : 220,
                   child: ATContainer(
                     clipBehavior: Clip.hardEdge,
-                    radius: 5, height: initialState ? 150 : 200, 
+                    radius: 5,
+                    height: initialState ? 150 : 200,
                     width: initialState ? 150 : 200,
-                    child: const ATImgLoader(                  
-                      imgPath: ATImgStrings.weCanDoHardThingsBgImage
-                    ),
+                    child: const ATImgLoader(
+                        imgPath: ATImgStrings.weCanDoHardThingsBgImage),
                   ),
                 );
-              }
-            ),
-
-            BlocBuilder<AmptiveEndShowBloc, EndShowState>(
-              builder: (_, EndShowState state) {
-                final bool showNoOfListeners = state is ShowNoOfListenersState; 
+              }),
+              BlocBuilder<AmptiveEndShowBloc, EndShowState>(
+                  builder: (_, EndShowState state) {
+                final bool showNoOfListeners = state is ShowNoOfListenersState;
                 final bool showNoOfGifters = state is ShowNoOfGiftsState;
                 final bool initialState = state is ConfirmEndShowState;
                 final bool finalState = state is ShowBlankScreenState;
 
-                if(finalState){
+                if (finalState) {
                   return const SizedBox.shrink();
                 }
 
                 return AnimatedPositioned(
-                  duration: const Duration(seconds: 1), left: 15, right: 15,
-                  top: (showNoOfListeners || showNoOfGifters) ? 140 :100, 
+                  duration: const Duration(seconds: 1),
+                  left: 15,
+                  right: 15,
+                  top: (showNoOfListeners || showNoOfGifters) ? 140 : 100,
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     children: <Widget>[
-                      if(initialState)Text(
-                        ATStrings.END_LIVE_SHOW,
-                        maxLines: 2, textAlign: TextAlign.center,
-                        style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                          fontSize: ATSizes.size23
-                        )
-                      ),
-                      if(showNoOfListeners || showNoOfGifters)ATRichText(
-                        items: <String, TextStyle>{
-                          'You had a total of ': Theme.of(context).textTheme.bodySmall!.copyWith(
-                            color: ATColors.hexC2C2C2
-                          ),
-                          '144k listeners' : Theme.of(context).textTheme.bodyMedium!.copyWith(
-                            fontSize: ATSizes.size14
-                          ),
-                        },
-                      ),
+                      if (initialState)
+                        Text(ATStrings.END_LIVE_SHOW,
+                            maxLines: 2,
+                            textAlign: TextAlign.center,
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodyMedium
+                                ?.copyWith(fontSize: ATSizes.size23)),
+                      if (showNoOfListeners || showNoOfGifters)
+                        ATRichText(
+                          items: <String, TextStyle>{
+                            'You had a total of ': Theme.of(context)
+                                .textTheme
+                                .bodySmall!
+                                .copyWith(color: ATColors.hexC2C2C2),
+                            '144k listeners': Theme.of(context)
+                                .textTheme
+                                .bodyMedium!
+                                .copyWith(fontSize: ATSizes.size14),
+                          },
+                        ),
                       const SizedBox(height: 10),
-                      if(showNoOfGifters)ATRichText(
-                        items: <String, TextStyle>{
-                          'You received ': Theme.of(context).textTheme.bodySmall!.copyWith(
-                            color: ATColors.hexC2C2C2
-                          ),
-                          '200 gifts': Theme.of(context).textTheme.bodyMedium!.copyWith(
-                            fontSize: ATSizes.size14
-                          ),
-                        },
-                      ),
+                      if (showNoOfGifters)
+                        ATRichText(
+                          items: <String, TextStyle>{
+                            'You received ': Theme.of(context)
+                                .textTheme
+                                .bodySmall!
+                                .copyWith(color: ATColors.hexC2C2C2),
+                            '200 gifts': Theme.of(context)
+                                .textTheme
+                                .bodyMedium!
+                                .copyWith(fontSize: ATSizes.size14),
+                          },
+                        ),
                     ],
                   ),
                 );
-              }
-            ),
-
-            BlocBuilder<AmptiveEndShowBloc, EndShowState>(
-              builder: (_, EndShowState state) {
-                final bool isLoading = state is EndShowIsLoadingState 
-                  || state is ShowNoOfListenersState 
-                  || state is ShowNoOfGiftsState;
+              }),
+              BlocBuilder<AmptiveEndShowBloc, EndShowState>(
+                  builder: (_, EndShowState state) {
+                final bool isLoading = state is EndShowIsLoadingState ||
+                    state is ShowNoOfListenersState ||
+                    state is ShowNoOfGiftsState;
                 final bool finalState = state is ShowBlankScreenState;
 
-                if(isLoading){
+                if (isLoading) {
                   return Positioned(
                     bottom: 0,
                     child: Padding(
@@ -186,8 +172,7 @@ Future<void> showHostEndShowDialog({
                       ),
                     ),
                   );
-                }
-                else if(finalState){
+                } else if (finalState) {
                   return const SizedBox.shrink();
                 }
 
@@ -201,9 +186,9 @@ Future<void> showHostEndShowDialog({
                         width: ATHelperFuncs.getScreenWidth(context),
                         height: 50,
                         child: AmptiveElevatedButtonWidget(
-                          onPressed: () => context.read<AmptiveEndShowBloc>().add(
-                            Proceed2EndShowEvent()
-                          ),
+                          onPressed: () => context
+                              .read<AmptiveEndShowBloc>()
+                              .add(Proceed2EndShowEvent()),
                           bgColor: ATColors.hexECO404,
                           fgColor: ATColors.white,
                           buttonTitle: ATStrings.END_NOW,
@@ -212,22 +197,19 @@ Future<void> showHostEndShowDialog({
                       const SizedBox(height: 15),
                       GestureDetector(
                         onTap: () => context.pop(),
-                        child: Text(
-                          ATStrings.cancel,
-                          style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                            fontSize: ATSizes.size17
-                          )
-                        ),
+                        child: Text(ATStrings.cancel,
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodyMedium
+                                ?.copyWith(fontSize: ATSizes.size17)),
                       ),
                       const SizedBox(height: 15),
                     ],
                   ),
                 );
-              }
-            )
-          ],
-        ),
-      );
-    }
-  );
+              })
+            ],
+          ),
+        );
+      });
 }

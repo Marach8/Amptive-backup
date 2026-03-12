@@ -1,5 +1,4 @@
 abstract class ATLocalStorageService {
-  
   Future<void> remove(String key);
 
   Future<String?> get(String key);

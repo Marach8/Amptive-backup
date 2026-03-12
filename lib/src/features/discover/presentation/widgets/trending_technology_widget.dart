@@ -7,10 +7,7 @@ import '../../../../shared/custom_container_widget.dart';
 import '../../../../shared/image_loader_widget.dart';
 
 class TrendingTechnologyWidget extends StatelessWidget {
-  const TrendingTechnologyWidget({
-    super.key,
-    required this.trendingPicture
-  });
+  const TrendingTechnologyWidget({super.key, required this.trendingPicture});
   final String trendingPicture;
 
   @override
@@ -31,42 +28,44 @@ class TrendingTechnologyWidget extends StatelessWidget {
               ),
             ),
           ),
-          const SizedBox(height: 12,),
-          LayoutBuilder(
-            builder: (_, BoxConstraints kst) {
-              return SizedBox(
-                width: kst.maxWidth,
-                child: Text(
-                  "Don't forget who you are",
-                  style: Theme.of(context).textTheme.bodySmall,
-                ),
-              );
-            }
+          const SizedBox(
+            height: 12,
           ),
+          LayoutBuilder(builder: (_, BoxConstraints kst) {
+            return SizedBox(
+              width: kst.maxWidth,
+              child: Text(
+                "Don't forget who you are",
+                style: Theme.of(context).textTheme.bodySmall,
+              ),
+            );
+          }),
           Row(
             children: <Widget>[
               const PaidIcon(),
-              const SizedBox(width: 5,),
+              const SizedBox(
+                width: 5,
+              ),
               Flexible(
                 child: Text(
                   'glendonnor',
                   style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                    fontSize: ATSizes.size13,
-                    color: ATColors.hexCDCDCD
-                  ),
+                      fontSize: ATSizes.size13, color: ATColors.hexCDCDCD),
                 ),
               ),
-              const SizedBox(width: 5,),
-              ATCircleAvatar(
-                diameter: 4,
-                color: ATColors.hexCDCDCD
+              const SizedBox(
+                width: 5,
               ),
-              const SizedBox(width: 5,),
+              ATCircleAvatar(diameter: 4, color: ATColors.hexCDCDCD),
+              const SizedBox(
+                width: 5,
+              ),
               Text(
                 'FRIDAY',
-                style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                  color: ATColors.hexCDCDCD
-                ),
+                style: Theme.of(context)
+                    .textTheme
+                    .titleSmall
+                    ?.copyWith(color: ATColors.hexCDCDCD),
               ),
             ],
           )

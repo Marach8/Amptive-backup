@@ -4,17 +4,15 @@ import 'package:amptive/src/shared/image_loader_widget.dart';
 import 'package:flutter/material.dart';
 
 class ATCircularImage extends StatelessWidget {
-
-  const ATCircularImage({
-    super.key,
-    required this.imagePath,
-    this.diameter,
-    this.picturePadding, 
-    this.borderWidth,
-    this.borderColor,
-    this.addBorder,
-    this.onTap
-  });
+  const ATCircularImage(
+      {super.key,
+      required this.imagePath,
+      this.diameter,
+      this.picturePadding,
+      this.borderWidth,
+      this.borderColor,
+      this.addBorder,
+      this.onTap});
   final String imagePath;
   final double? diameter, picturePadding, borderWidth;
   final Color? borderColor;
@@ -29,12 +27,14 @@ class ATCircularImage extends StatelessWidget {
       width: diameter ?? 30,
       boxShape: BoxShape.circle,
       padding: EdgeInsets.all(picturePadding ?? 0),
-      border: addBorder ?? false ? Border.all(
-        color: borderColor ?? ATColors.white,
-        width: borderWidth ?? 0.5,
-      ) : null,
+      border: addBorder ?? false
+          ? Border.all(
+              color: borderColor ?? ATColors.white,
+              width: borderWidth ?? 0.5,
+            )
+          : null,
       child: ClipRRect(
-        borderRadius: BorderRadius.circular((diameter ?? 30)/2),
+        borderRadius: BorderRadius.circular((diameter ?? 30) / 2),
         child: ATImgLoader(
           imgPath: imagePath,
           boxFit: BoxFit.cover,

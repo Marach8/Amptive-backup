@@ -57,13 +57,12 @@ Future<void> showEventPaymentFeeDialog({
                 const SizedBox(height: 5),
                 const Align(
                     alignment: Alignment.center,
-                    child: ATImgLoader(
-                        imgPath: ATImgStrings.PADLOCK)),
+                    child: ATImgLoader(imgPath: ATImgStrings.padlock)),
                 const SizedBox(height: 10),
                 Align(
                   alignment: Alignment.center,
                   child: Text(
-                    ATStrings.AUDIENCE_ACCESS,
+                    ATStrings.audienceAccess,
                     style: Theme.of(context).textTheme.bodyLarge,
                   ),
                 ),
@@ -121,7 +120,7 @@ Future<void> showEventPaymentFeeDialog({
                                 context.pop();
                               }
                             : null,
-                        buttonTitle: ATStrings.SET_FEE,
+                        buttonTitle: ATStrings.setFee,
                         bgColor: ATColors.white,
                         fgColor: ATColors.black,
                       );

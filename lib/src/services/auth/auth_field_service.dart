@@ -7,7 +7,6 @@ import '../../models/validation_model.dart';
 import '../authentication_service.dart';
 
 class AuthFieldService {
-
   factory AuthFieldService() => _instance;
 
   // constructor

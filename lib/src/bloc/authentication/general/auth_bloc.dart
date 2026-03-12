@@ -8,20 +8,22 @@ import 'auth_events.dart';
 import 'auth_states.dart';
 
 class AmptiveAuthBloc extends Bloc<AmptiveAuthEvent, AmptiveAuthState> {
-
   AmptiveAuthBloc() : super(InitialAuthState()) {
-    on<EditDOBAuthEvent>((EditDOBAuthEvent event, Emitter<AmptiveAuthState> emit) {
+    on<EditDOBAuthEvent>(
+        (EditDOBAuthEvent event, Emitter<AmptiveAuthState> emit) {
       AuthFieldService service = GetIt.I<AuthFieldService>();
       service.setDOB(event.selectedDate);
 
       emit(EditDOBAuthState(dob: service.dob));
     });
 
-    on<HideOrShowPasswordAuthEvent>((HideOrShowPasswordAuthEvent event, Emitter<AmptiveAuthState> emit) {
+    on<HideOrShowPasswordAuthEvent>(
+        (HideOrShowPasswordAuthEvent event, Emitter<AmptiveAuthState> emit) {
       emit(HideOrShowPasswordAuthState());
     });
 
-    on<UsernameChangedEvent>((UsernameChangedEvent event, Emitter<AmptiveAuthState> emit) async {
+    on<UsernameChangedEvent>(
+        (UsernameChangedEvent event, Emitter<AmptiveAuthState> emit) async {
       emit(VerifyingUsernameState());
       await service.validateUsername(event.username);
       emit(UsernameVerifiedState());
@@ -29,11 +31,13 @@ class AmptiveAuthBloc extends Bloc<AmptiveAuthEvent, AmptiveAuthState> {
         transformer: (Stream<UsernameChangedEvent> events, mapper) =>
             events.debounceTime(Durations.extralong4).switchMap(mapper));
 
-    on<NameChangedEvent>((NameChangedEvent event, Emitter<AmptiveAuthState> emit) {
+    on<NameChangedEvent>(
+        (NameChangedEvent event, Emitter<AmptiveAuthState> emit) {
       emit(NameChangedState());
     });
 
-    on<AddProfilePictureEvent>((AddProfilePictureEvent event, Emitter<AmptiveAuthState> emit) {
+    on<AddProfilePictureEvent>(
+        (AddProfilePictureEvent event, Emitter<AmptiveAuthState> emit) {
       if (event.cancel) {
         service.clearProfilePicture();
         emit(ProfilePictureAddedState(image: null));
@@ -42,22 +46,26 @@ class AmptiveAuthBloc extends Bloc<AmptiveAuthEvent, AmptiveAuthState> {
       }
     });
 
-    on<ProfilePictureAddedEvent>((ProfilePictureAddedEvent event, Emitter<AmptiveAuthState> emit) {
+    on<ProfilePictureAddedEvent>(
+        (ProfilePictureAddedEvent event, Emitter<AmptiveAuthState> emit) {
       service.setProfilePicture(event.image);
       emit(ProfilePictureAddedState(image: event.image.bytes));
     });
 
-    on<AddPhoneNumberEvent>((AddPhoneNumberEvent event, Emitter<AmptiveAuthState> emit) {
+    on<AddPhoneNumberEvent>(
+        (AddPhoneNumberEvent event, Emitter<AmptiveAuthState> emit) {
       service.validatePhoneNumber(event.value);
       emit(AddPhoneNumberState(isPhoneValid: service.isPhoneValid));
     });
 
-    on<PickCountryCodeEvent>((PickCountryCodeEvent event, Emitter<AmptiveAuthState> emit) {
+    on<PickCountryCodeEvent>(
+        (PickCountryCodeEvent event, Emitter<AmptiveAuthState> emit) {
       service.setCountry(event.country);
       emit(PickCountryCodeState(selectedCountry: service.country));
     });
 
-    on<OpenCountryBottomSheetEvent>((OpenCountryBottomSheetEvent event, Emitter<AmptiveAuthState> emit) {
+    on<OpenCountryBottomSheetEvent>(
+        (OpenCountryBottomSheetEvent event, Emitter<AmptiveAuthState> emit) {
       emit(OpenCountryBottomSheetState(selectedCountry: service.country));
     });
   }

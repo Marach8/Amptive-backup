@@ -60,7 +60,6 @@
 //     _notifItemsPositon4rmTop = List<double>.filled(_originalItems.length, 0.0, growable: true);
 //   }
 
-
 //   @override
 //   void didChangeDependencies(){
 //     super.didChangeDependencies();
@@ -86,19 +85,17 @@
 //     if(mounted){setState(() {});}
 //   }
 
-
 //   void _removeFirstItem() {
 //     // setState(() {
-//     //   _originalItems.removeAt(0); 
+//     //   _originalItems.removeAt(0);
 //     //   _notifItemKeys.removeAt(0);
 //     //   _notifItemsPositon4rmTop.removeAt(0);
 //     // });
-//     _originalItems.removeAt(0); 
+//     _originalItems.removeAt(0);
 //     _notifItemKeys.removeAt(0);
 //     _notifItemsPositon4rmTop.removeAt(0);
 //     _initializePositions4rmTop();
 //   }
-
 
 //   @override
 //   Widget build(BuildContext context) {
@@ -174,14 +171,14 @@
 //                           ),
 //                         )
 //                       )
-                                
+
 //                       // ..._originalItems.asMap().entries.map(
 //                       //   (MapEntry<int, ({String description, String title})> entry) {
 //                       //     final int index = entry.key;
 //                       //     final ({String description, String title}) item = entry.value;
-                                
+
 //                       //     final double scale = 1.0 - (0.1 * index);
-                                
+
 //                       //     return AnimatedPositioned(
 //                       //       duration: const Duration(milliseconds: 200),
 //                       //       left: (index * 8) + 10,
@@ -217,10 +214,6 @@
 //     );
 //   }
 // }
-
-
-
-
 
 // class AnimatedListLoop extends StatefulWidget {
 //   const AnimatedListLoop({super.key, required this.originalItems});
@@ -271,7 +264,6 @@
 //       duration: const Duration(milliseconds: 400),
 //     );
 
-
 //     // // Wait for the remove animation to finish before inserting
 //     // Future.delayed(const Duration(milliseconds: 400), () {
 //     //   addItem(removedItem);
@@ -303,12 +295,12 @@
 //         Expanded(
 //           child: AnimatedList(
 //             key: _animListKey,
-            
+
 //             initialItemCount: widget.originalItems.length,
 //             itemBuilder: (context, index, animation) {
 //               final item = widget.originalItems.elementAt(index);
 //               final double scale = 1.0 - (0.1 * index);
-          
+
 //               return NotifTile(
 //                 horizMargin: (index * 8) + 10,
 //                 pictureSize: _normalPicSize * scale,
@@ -325,8 +317,6 @@
 //     );
 //   }
 // }
-
-
 
 // class RemoveAnimatedItem extends StatelessWidget {
 //   final Animation<double> animation;

@@ -29,8 +29,8 @@ class ATImgLoader extends StatelessWidget {
 
     final String imageExtension = imgPath.split('.').last.toLowerCase();
     final ColorFilter? colorFilter = color == null
-      ? null
-      : ColorFilter.mode(color ?? ATColors.transparent, BlendMode.srcIn);
+        ? null
+        : ColorFilter.mode(color ?? ATColors.transparent, BlendMode.srcIn);
 
     //Network images
     if (imgPath.startsWith('http://') || imgPath.startsWith('https://')) {

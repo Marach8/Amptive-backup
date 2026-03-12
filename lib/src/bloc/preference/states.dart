@@ -1,7 +1,6 @@
 import 'package:amptive/src/models/preferences.dart';
 
 abstract class AmptivePreferenceState {
-
   AmptivePreferenceState({required this.items, required this.selectedItems});
   final List<Preferences> items;
   List selectedItems = <dynamic>[];
@@ -16,9 +15,11 @@ class SelectPreferenceState extends AmptivePreferenceState {
 }
 
 class SelectPreferenceCompletedState extends AmptivePreferenceState {
-  SelectPreferenceCompletedState() : super(items: <Preferences>[], selectedItems: <dynamic>[]);
+  SelectPreferenceCompletedState()
+      : super(items: <Preferences>[], selectedItems: <dynamic>[]);
 }
 
 class PreferencePersonalizedState extends AmptivePreferenceState {
-  PreferencePersonalizedState() : super(items: <Preferences>[], selectedItems: <dynamic>[]);
+  PreferencePersonalizedState()
+      : super(items: <Preferences>[], selectedItems: <dynamic>[]);
 }

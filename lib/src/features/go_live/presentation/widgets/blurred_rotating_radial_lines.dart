@@ -14,7 +14,9 @@ class RotatingRadialLines extends StatefulWidget {
   @override
   State<RotatingRadialLines> createState() => _RotatingRadialLinesState();
 }
-class _RotatingRadialLinesState extends State<RotatingRadialLines> with SingleTickerProviderStateMixin {
+
+class _RotatingRadialLinesState extends State<RotatingRadialLines>
+    with SingleTickerProviderStateMixin {
   late final AnimationController _controller;
 
   @override
@@ -49,7 +51,6 @@ class _RotatingRadialLinesState extends State<RotatingRadialLines> with SingleTi
   }
 }
 
-
 class RadialLinesWidget extends StatelessWidget {
   const RadialLinesWidget({
     super.key,
@@ -65,14 +66,12 @@ class RadialLinesWidget extends StatelessWidget {
       isComplex: true,
       size: Size(context.screenWidth * 0.7, context.screenHeight * 0.3),
       painter: RadialLinesPainter(
-        startAngle: startAngle,
-        endAngle: endAngle,
-        lineLength: context.screenHeight * 0.45
-      ),
+          startAngle: startAngle,
+          endAngle: endAngle,
+          lineLength: context.screenHeight * 0.45),
     );
   }
 }
-
 
 class RadialLinesPainter extends CustomPainter {
   RadialLinesPainter({
@@ -82,7 +81,7 @@ class RadialLinesPainter extends CustomPainter {
     this.noOfFanLines = 20,
     this.radius = 50,
   });
-  
+
   final double startAngle, endAngle, radius, lineLength;
   final int noOfFanLines;
 

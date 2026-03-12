@@ -12,21 +12,32 @@ class HomeFeedCubit extends Cubit<ATAppState<HomeFeedResponseModel>> {
   final HomeRepo homeRepo;
 
   HomeFeedResponseModel? get currentHomeFeedData => switch (state) {
-    InitialState<HomeFeedResponseModel>(:final HomeFeedResponseModel? initialData) => initialData,
-    LoadingState<HomeFeedResponseModel>(:final HomeFeedResponseModel? currentData) => currentData,
-    SuccessState<HomeFeedResponseModel>(:final HomeFeedResponseModel? newData) => newData,
-    FailureState<HomeFeedResponseModel>(:final HomeFeedResponseModel? oldData) => oldData,
-  };
+        InitialState<HomeFeedResponseModel>(
+          :final HomeFeedResponseModel? initialData
+        ) =>
+          initialData,
+        LoadingState<HomeFeedResponseModel>(
+          :final HomeFeedResponseModel? currentData
+        ) =>
+          currentData,
+        SuccessState<HomeFeedResponseModel>(
+          :final HomeFeedResponseModel? newData
+        ) =>
+          newData,
+        FailureState<HomeFeedResponseModel>(
+          :final HomeFeedResponseModel? oldData
+        ) =>
+          oldData,
+      };
 
   Future<void> fetchHomeFeed() async {
     final bool hasMore = currentHomeFeedData?.hasMore ?? true;
-    if(state is LoadingState<HomeFeedResponseModel> || !hasMore){
+    if (state is LoadingState<HomeFeedResponseModel> || !hasMore) {
       return;
     }
 
-    emit(LoadingState<HomeFeedResponseModel>(
-      currentData: currentHomeFeedData));
-    
+    emit(LoadingState<HomeFeedResponseModel>(currentData: currentHomeFeedData));
+
     try {
       final ApiResponse<HomeFeedResponseModel> response =
           await homeRepo.fetchHomeFeed(
@@ -43,8 +54,7 @@ class HomeFeedCubit extends Cubit<ATAppState<HomeFeedResponseModel>> {
         },
       );
     } catch (e) {
-      emit(FailureState<HomeFeedResponseModel>(
-          'Unable to get home feed: $e'));
+      emit(FailureState<HomeFeedResponseModel>('Unable to get home feed: $e'));
     }
   }
 }

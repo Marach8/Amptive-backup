@@ -10,7 +10,7 @@ import 'package:amptive/src/config/themes/widget_themes/text_theme.dart';
 import 'package:amptive/src/config/themes/widget_themes/textbutton_theme.dart';
 import 'package:flutter/material.dart';
 
-class AmptiveThemeData{
+class AmptiveThemeData {
   const AmptiveThemeData._();
 
   static ThemeData darkTheme = ThemeData(
@@ -35,7 +35,6 @@ class AmptiveThemeData{
     outlinedButtonTheme: AmptiveOutlinedButtonTheme.darkOutlinedButtonTheme,
     // datePickerTheme: AmptiveDatePickerTheme.darkDatePickerTheme
   );
-
 
   //lightTheme will be added here when the need arises
 }

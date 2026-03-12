@@ -8,10 +8,8 @@ import '../../../../shared/custom_container_widget.dart';
 import '../../../../shared/image_loader_widget.dart';
 
 class TrendingSocietyHashtagWidget extends StatelessWidget {
-  const TrendingSocietyHashtagWidget({
-    super.key,
-    required this.trendingPicture
-  });
+  const TrendingSocietyHashtagWidget(
+      {super.key, required this.trendingPicture});
 
   final String trendingPicture;
 
@@ -22,25 +20,27 @@ class TrendingSocietyHashtagWidget extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
         ATContainer(
-          radius: 5, clipBehavior: Clip.hardEdge,
-          height: 160, width: context.screenWidth,
+          radius: 5,
+          clipBehavior: Clip.hardEdge,
+          height: 160,
+          width: context.screenWidth,
           child: ATImgLoader(
             imgPath: trendingPicture,
             boxFit: BoxFit.fill,
           ),
         ),
-        const SizedBox(height: 12,),
-        LayoutBuilder(
-          builder: (_, BoxConstraints kst) {
-            return SizedBox(
-              width: kst.maxWidth,
-              child: Text(
-                "Former CIA Agent on The Name",
-                style: Theme.of(context).textTheme.bodySmall,
-              ),
-            );
-          }
+        const SizedBox(
+          height: 12,
         ),
+        LayoutBuilder(builder: (_, BoxConstraints kst) {
+          return SizedBox(
+            width: kst.maxWidth,
+            child: Text(
+              "Former CIA Agent on The Name",
+              style: Theme.of(context).textTheme.bodySmall,
+            ),
+          );
+        }),
         Row(
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
@@ -51,14 +51,15 @@ class TrendingSocietyHashtagWidget extends StatelessWidget {
                 child: Text(
                   'glendonnoyle',
                   style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                    fontSize: ATSizes.size13,
-                    color: ATColors.hexA8A8A8,
-                  ),
+                        fontSize: ATSizes.size13,
+                        color: ATColors.hexA8A8A8,
+                      ),
                 ),
               ),
             ),
-            const SizedBox(width: 5,),
-
+            const SizedBox(
+              width: 5,
+            ),
             Align(
               alignment: Alignment.bottomCenter,
               child: ATCircleAvatar(
@@ -66,12 +67,14 @@ class TrendingSocietyHashtagWidget extends StatelessWidget {
                 color: ATColors.hexA8A8A8,
               ),
             ),
-            const SizedBox(width: 5,),
+            const SizedBox(
+              width: 5,
+            ),
             Text(
               'LIVE',
               style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                color: ATColors.hexA8A8A8,
-              ),
+                    color: ATColors.hexA8A8A8,
+                  ),
             ),
           ],
         )

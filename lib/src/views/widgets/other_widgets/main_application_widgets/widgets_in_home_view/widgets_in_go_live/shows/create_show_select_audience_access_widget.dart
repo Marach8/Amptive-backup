@@ -9,7 +9,8 @@ class AmptiveCreateShowSelectAudienceAccessWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final ValueNotifier<String> selectAudienceAccessNotifier = ValueNotifier<String>('');
+    final ValueNotifier<String> selectAudienceAccessNotifier =
+        ValueNotifier<String>('');
     return ATContainer(
       radius: 14,
       padding: const EdgeInsets.fromLTRB(17, 15, 17, 15),
@@ -17,24 +18,28 @@ class AmptiveCreateShowSelectAudienceAccessWidget extends StatelessWidget {
       child: AmptiveRebuilderWidget(
         shouldDispose: true,
         notifier: selectAudienceAccessNotifier,
-        builder: (_, String selectedAudienceAccess, __){
+        builder: (_, String selectedAudienceAccess, __) {
           return Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
               Text(
-                selectedAudienceAccess.isEmpty ? "Select who can access this show" 
-                  : selectedAudienceAccess,
-                style: selectedAudienceAccess.isEmpty ? Theme.of(context).textTheme.bodySmall?.copyWith(
-                  color: ATColors.white.withOpacity(0.4),
-                ) : Theme.of(context).textTheme.bodySmall,
+                selectedAudienceAccess.isEmpty
+                    ? "Select who can access this show"
+                    : selectedAudienceAccess,
+                style: selectedAudienceAccess.isEmpty
+                    ? Theme.of(context).textTheme.bodySmall?.copyWith(
+                          color: ATColors.white.withOpacity(0.4),
+                        )
+                    : Theme.of(context).textTheme.bodySmall,
               ),
               GestureDetector(
-                onTap: ()async{
+                onTap: () async {
                   // final String? result = await chooseAudienceAccess4ShowModal(context);
                   // selectAudienceAccessNotifier.value = result!;
                 },
                 child: Icon(
-                  Icons.arrow_forward_ios, size: 20.w,
+                  Icons.arrow_forward_ios,
+                  size: 20.w,
                   color: ATColors.white.withOpacity(0.4),
                 ),
               ),

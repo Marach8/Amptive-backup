@@ -3,7 +3,8 @@ import 'dart:typed_data';
 import 'package:amptive/src/config/config_export.dart';
 import 'package:amptive/src/shared/image_source_selection_dialog.dart';
 import 'package:amptive/src/shared/image_loader_widget.dart';
-import 'package:custom_image_crop/custom_image_crop.dart' show Ratio, CustomCropShape;
+import 'package:custom_image_crop/custom_image_crop.dart'
+    show Ratio, CustomCropShape;
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:image_picker/image_picker.dart';
@@ -30,21 +31,19 @@ class _SelectProgramCoverArtState extends State<SelectProgramCoverArt> {
       radius: 10,
       clipBehavior: Clip.hardEdge,
       color: ATColors.transparent,
-      onTap: ()async{
+      onTap: () async {
         final ImageSource? selectedSrc = await showImageSourceOptions(context);
         final XFile? selectedFile = await ATHelperFuncs.pickImage(selectedSrc);
-        if(context.mounted && selectedFile != null){
+        if (context.mounted && selectedFile != null) {
           final File file = File(selectedFile.path);
-          final MemoryImage? croppedImage = await context.pushNamed(
-            ATRoutes.rectImageCropperScreen, 
-            extra: (
-              file,
-              Ratio(width: 160, height: 160),
-              CustomCropShape.Ratio,
-            )
-          );
+          final MemoryImage? croppedImage =
+              await context.pushNamed(ATRoutes.rectImageCropperScreen, extra: (
+            file,
+            Ratio(width: 160, height: 160),
+            CustomCropShape.Ratio,
+          ));
 
-          if(croppedImage != null){
+          if (croppedImage != null) {
             setState(() {
               widget.onImageSelected(croppedImage.bytes);
               selectedImgBytes = croppedImage.bytes;
@@ -52,29 +51,30 @@ class _SelectProgramCoverArtState extends State<SelectProgramCoverArt> {
           }
         }
       },
-      height: 160, width: 160,
+      height: 160,
+      width: 160,
       alignment: Alignment.center,
       child: Stack(
         alignment: Alignment.center,
         children: <Widget>[
-          selectedImgBytes == null ? const ATImgLoader(
-            imgPath: ATImgStrings.createShowPlaceholder,
-            boxFit: BoxFit.cover,
-            height: 160, width: 160,
-          ) : Image.memory(
-            height: 160, width: 160,
-            selectedImgBytes!,
-            fit: BoxFit.cover,
-          ),
-
+          selectedImgBytes == null
+              ? const ATImgLoader(
+                  imgPath: ATImgStrings.createShowPlaceholder,
+                  boxFit: BoxFit.cover,
+                  height: 160,
+                  width: 160,
+                )
+              : Image.memory(
+                  height: 160,
+                  width: 160,
+                  selectedImgBytes!,
+                  fit: BoxFit.cover,
+                ),
           CircleAvatar(
-            backgroundColor: ATColors.black.withValues(alpha: 0.5),
-            radius: 20,
-            child: const ATImgLoader(
-              imgPath: ATImgStrings.addImageIcon,
-              height: 20, width: 20
-            )
-          ),
+              backgroundColor: ATColors.black.withValues(alpha: 0.5),
+              radius: 20,
+              child: const ATImgLoader(
+                  imgPath: ATImgStrings.addImageIcon, height: 20, width: 20)),
         ],
       ),
     );

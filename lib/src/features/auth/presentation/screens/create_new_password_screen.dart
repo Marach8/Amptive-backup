@@ -13,14 +13,14 @@ import 'package:go_router/go_router.dart';
 import '../../../../shared/app_bar_widget.dart';
 
 class CreateNewPasswordScreenParams {
-  CreateNewPasswordScreenParams({required this.email,  this.title});
+  CreateNewPasswordScreenParams({required this.email, this.title});
 
   final String? email, title;
 }
 
 class CreateNewPasswordScreen extends StatefulWidget {
   const CreateNewPasswordScreen({super.key, required this.params});
-  
+
   final CreateNewPasswordScreenParams params;
 
   @override

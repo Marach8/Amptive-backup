@@ -1,7 +1,5 @@
 import 'package:amptive/src/config/api_response_and_app_state.dart';
 import 'package:amptive/src/features/shows/data/models/response/show_response_model.dart';
-import 'package:amptive/src/features/go_live/data/repository/go_live_repo.dart';
-import 'package:amptive/src/features/go_live/data/repository/go_live_repo_impl.dart';
 import 'package:amptive/src/features/shows/data/repository/shows_repo.dart';
 import 'package:amptive/src/features/shows/data/repository/shows_repo_impl.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -14,22 +12,35 @@ class HostedShowsCubit extends Cubit<ATAppState<HostedShowsResponseModel>> {
   final ShowsRepo showsRepo;
 
   HostedShowsResponseModel? get currentHostedShowsData => switch (state) {
-    InitialState<HostedShowsResponseModel>(:final HostedShowsResponseModel? initialData) => initialData,
-    LoadingState<HostedShowsResponseModel>(:final HostedShowsResponseModel? currentData) => currentData,
-    SuccessState<HostedShowsResponseModel>(:final HostedShowsResponseModel? newData) => newData,
-    FailureState<HostedShowsResponseModel>(:final HostedShowsResponseModel? oldData) => oldData,
-  };
+        InitialState<HostedShowsResponseModel>(
+          :final HostedShowsResponseModel? initialData
+        ) =>
+          initialData,
+        LoadingState<HostedShowsResponseModel>(
+          :final HostedShowsResponseModel? currentData
+        ) =>
+          currentData,
+        SuccessState<HostedShowsResponseModel>(
+          :final HostedShowsResponseModel? newData
+        ) =>
+          newData,
+        FailureState<HostedShowsResponseModel>(
+          :final HostedShowsResponseModel? oldData
+        ) =>
+          oldData,
+      };
 
   Future<void> fetchHostedShows([bool forceRefresh = false]) async {
     final bool hasMore = currentHostedShowsData?.hasMore ?? true;
-    if(state is LoadingState<HostedShowsResponseModel> || !hasMore){
+    if (state is LoadingState<HostedShowsResponseModel> || !hasMore) {
       return;
     }
 
-    emit(LoadingState<HostedShowsResponseModel>(currentData: currentHostedShowsData));
+    emit(LoadingState<HostedShowsResponseModel>(
+        currentData: currentHostedShowsData));
     try {
-      final ApiResponse<HostedShowsResponseModel> response = 
-      await showsRepo.fetchHostedShows(
+      final ApiResponse<HostedShowsResponseModel> response =
+          await showsRepo.fetchHostedShows(
         page: (currentHostedShowsData?.page ?? -1) + 1,
         pageSize: 20,
         refresh: forceRefresh,
@@ -52,17 +63,13 @@ class HostedShowsCubit extends Cubit<ATAppState<HostedShowsResponseModel>> {
           emit(SuccessState<HostedShowsResponseModel>(newData: newData));
         },
         unSuccessful: (Unsuccessful<HostedShowsResponseModel> error) {
-          emit(FailureState<HostedShowsResponseModel>(
-            error.error.message,
-            oldData: currentHostedShowsData
-          ));
+          emit(FailureState<HostedShowsResponseModel>(error.error.message,
+              oldData: currentHostedShowsData));
         },
       );
     } catch (e) {
-      emit(FailureState<HostedShowsResponseModel>(
-        'Unable to get shows: $e',
-        oldData: currentHostedShowsData
-      ));
+      emit(FailureState<HostedShowsResponseModel>('Unable to get shows: $e',
+          oldData: currentHostedShowsData));
     }
   }
 }

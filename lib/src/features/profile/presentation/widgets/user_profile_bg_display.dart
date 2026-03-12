@@ -18,32 +18,28 @@ class UserBgProfileWidget extends StatelessWidget {
       color: ATColors.white.withOpacity(0.5),
       height: 150,
       gradient: LinearGradient(
-        begin: Alignment.topCenter,
-        end: Alignment.bottomCenter,
-        colors: <Color>[
-          ATColors.black,
-          ATColors.white.withOpacity(0.5),
-          ATColors.hexD9D9D9
-        ]
-      ),
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
+          colors: <Color>[
+            ATColors.black,
+            ATColors.white.withOpacity(0.5),
+            ATColors.hexD9D9D9
+          ]),
       width: context.screenWidth,
       child: Stack(
         alignment: Alignment.center,
         clipBehavior: Clip.none,
         children: <Widget>[
           Positioned(
-            bottom: -35,
-            child: ATCircularImage(
-              onTap: () => context.pushNamed(
-                ATRoutes.PROFILE_PIC_SCREEN,
-                extra: ATImgStrings.jpeg2
-              ),
-              diameter: 70, addBorder: true,
-              borderColor: ATColors.black,
-              borderWidth: 3,
-              imagePath: ATImgStrings.jpeg2
-            )
-          ),
+              bottom: -35,
+              child: ATCircularImage(
+                  onTap: () => context.pushNamed(ATRoutes.PROFILE_PIC_SCREEN,
+                      extra: ATImgStrings.jpeg2),
+                  diameter: 70,
+                  addBorder: true,
+                  borderColor: ATColors.black,
+                  borderWidth: 3,
+                  imagePath: ATImgStrings.jpeg2)),
         ],
       ),
     );

@@ -1,5 +1,4 @@
-
-class ChariotCheckBoxTheme{
+class ChariotCheckBoxTheme {
   const ChariotCheckBoxTheme._();
 
   // static CheckboxThemeData lightCheckBoxTheme = CheckboxThemeData(

@@ -6,10 +6,7 @@ import 'package:flutter/material.dart';
 import '../../../../config/utils/extensions/context_extensions.dart';
 
 class PaidShowAndPlayBtnWidget extends StatelessWidget {
-  const PaidShowAndPlayBtnWidget({
-    super.key,
-    this.icon
-  });
+  const PaidShowAndPlayBtnWidget({super.key, this.icon});
   final IconData? icon;
 
   @override
@@ -22,26 +19,20 @@ class PaidShowAndPlayBtnWidget extends StatelessWidget {
           child: Container(
             padding: const EdgeInsets.all(8.5),
             decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(5),
-              color: ATColors.hex0D0D0D
-            ),
-            child: Text(
-              ATStrings.paidShow.toUpperCase(),
-              style: context.textTheme.titleSmall?.copyWith(
-                fontWeight: ATFontWeights.w500,
-                fontSize: ATSizes.size10
-              )
-            ),
+                borderRadius: BorderRadius.circular(5),
+                color: ATColors.hex0D0D0D),
+            child: Text(ATStrings.paidShow.toUpperCase(),
+                style: context.textTheme.titleSmall?.copyWith(
+                    fontWeight: ATFontWeights.w500, fontSize: ATSizes.size10)),
           ),
         ),
         SizedBox(
           height: 45,
           width: 45,
           child: CircleAvatar(
-            backgroundColor: ATColors.hexB6B6B6,
-            child: Icon(icon ?? Icons.play_arrow, color: ATColors.hex0D0D0D,
-            size: 30)
-          ),
+              backgroundColor: ATColors.hexB6B6B6,
+              child: Icon(icon ?? Icons.play_arrow,
+                  color: ATColors.hex0D0D0D, size: 30)),
         )
       ],
     );

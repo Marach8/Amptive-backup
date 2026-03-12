@@ -4,19 +4,16 @@ import 'package:amptive/src/shared/image_loader_widget.dart';
 import 'package:flutter/material.dart';
 import '../../../../config/utils/font_sizes.dart';
 
-
 class ATScaleUpAndDownWidget extends StatelessWidget {
-  const ATScaleUpAndDownWidget({
-    super.key,
-    required this.imgPath,
-    required this.subtitle,
-    required this.title,
-    required this.isSelected,
-    required this.onTap
-  });
+  const ATScaleUpAndDownWidget(
+      {super.key,
+      required this.imgPath,
+      required this.subtitle,
+      required this.title,
+      required this.isSelected,
+      required this.onTap});
 
-  final String imgPath,
-  title, subtitle;
+  final String imgPath, title, subtitle;
   final bool isSelected;
   final VoidCallback onTap;
 
@@ -29,36 +26,39 @@ class ATScaleUpAndDownWidget extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           ATContainer(
-            duration: 200, height: 120, radius: 5,
-            clipBehavior: Clip.hardEdge,
-            width: double.infinity,
-            color: isSelected ? ATColors.hex307FE2 : ATColors.hex2D2D2D,
-            child: AnimatedScale(
-              scale: isSelected ? 2 : 1,
-              duration: const Duration(milliseconds: 200),
-              child: Center(
-                child: ATImgLoader(
-                  key: Key(subtitle),
-                  imgPath: imgPath,
-                  boxFit: BoxFit.fill,
+              duration: 200,
+              height: 120,
+              radius: 5,
+              clipBehavior: Clip.hardEdge,
+              width: double.infinity,
+              color: isSelected ? ATColors.hex307FE2 : ATColors.hex2D2D2D,
+              child: AnimatedScale(
+                scale: isSelected ? 2 : 1,
+                duration: const Duration(milliseconds: 200),
+                child: Center(
+                  child: ATImgLoader(
+                    key: Key(subtitle),
+                    imgPath: imgPath,
+                    boxFit: BoxFit.fill,
+                  ),
                 ),
-              ),
-            )
-          ),
+              )),
           const SizedBox(height: 20),
           Text(
             title,
-            style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-              fontSize: ATSizes.size13
-            ),
+            style: Theme.of(context)
+                .textTheme
+                .bodyMedium
+                ?.copyWith(fontSize: ATSizes.size13),
           ),
           const SizedBox(height: 5),
           Text(
             maxLines: 2,
             subtitle,
-            style: Theme.of(context).textTheme.titleSmall?.copyWith(
-              color: ATColors.hexC2C2C2
-            ),
+            style: Theme.of(context)
+                .textTheme
+                .titleSmall
+                ?.copyWith(color: ATColors.hexC2C2C2),
           )
         ],
       ),

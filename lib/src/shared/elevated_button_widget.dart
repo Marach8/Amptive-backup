@@ -3,20 +3,18 @@ import 'package:amptive/src/shared/loading_indicator.dart';
 import 'package:flutter/material.dart';
 
 class AmptiveElevatedButtonWidget extends StatelessWidget {
-
-  const AmptiveElevatedButtonWidget({
-    super.key,
-    this.buttonTitle,
-    required this.onPressed,
-    this.margin,
-    this.height,
-    this.bgColor,
-    this.fgColor,
-    this.text1,
-    this.text2,
-    this.buttonStyle,
-    this.child
-  });
+  const AmptiveElevatedButtonWidget(
+      {super.key,
+      this.buttonTitle,
+      required this.onPressed,
+      this.margin,
+      this.height,
+      this.bgColor,
+      this.fgColor,
+      this.text1,
+      this.text2,
+      this.buttonStyle,
+      this.child});
   final String? buttonTitle, text1, text2;
   final void Function()? onPressed;
   final EdgeInsetsGeometry? margin;
@@ -30,10 +28,11 @@ class AmptiveElevatedButtonWidget extends StatelessWidget {
     final bool shouldAddMiddleDot = text1 != null && text2 != null;
     return ElevatedButton(
         onPressed: onPressed,
-        style: buttonStyle ?? ElevatedButton.styleFrom(
-          foregroundColor: fgColor,
-          backgroundColor: bgColor,
-        ),
+        style: buttonStyle ??
+            ElevatedButton.styleFrom(
+              foregroundColor: fgColor,
+              backgroundColor: bgColor,
+            ),
         child: shouldAddMiddleDot
             ? Row(
                 mainAxisSize: MainAxisSize.min,
@@ -60,10 +59,7 @@ class AmptiveElevatedButtonWidget extends StatelessWidget {
   }
 }
 
-
-
 class ATPlainElevatedBtn extends StatelessWidget {
-
   const ATPlainElevatedBtn({
     super.key,
     this.btnTitle,
@@ -77,7 +73,7 @@ class ATPlainElevatedBtn extends StatelessWidget {
     this.style,
     this.isLoading = false,
   });
-  
+
   final EdgeInsetsGeometry? padding;
   final String? btnTitle;
   final void Function()? onPressed;
@@ -92,22 +88,24 @@ class ATPlainElevatedBtn extends StatelessWidget {
     return AbsorbPointer(
       absorbing: isLoading,
       child: ElevatedButton(
-        onPressed: onPressed,
-        style: ElevatedButton.styleFrom(
-          padding: padding,
-          foregroundColor: fgColor,
-          backgroundColor: bgColor,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(30)
-          ),
-          fixedSize: Size(width ?? context.screenWidth, height ?? 54)
-        ),
-        child: isLoading ? ATLoadingIndicator(
-          color: fgColor ?? ATColors.white,
-          size: 30,
-        ) : (child ?? Text(btnTitle ?? '', style: style,))
-      ),
+          onPressed: onPressed,
+          style: ElevatedButton.styleFrom(
+              padding: padding,
+              foregroundColor: fgColor,
+              backgroundColor: bgColor,
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(30)),
+              fixedSize: Size(width ?? context.screenWidth, height ?? 54)),
+          child: isLoading
+              ? ATLoadingIndicator(
+                  color: fgColor ?? ATColors.white,
+                  size: 30,
+                )
+              : (child ??
+                  Text(
+                    btnTitle ?? '',
+                    style: style,
+                  ))),
     );
   }
 }
-

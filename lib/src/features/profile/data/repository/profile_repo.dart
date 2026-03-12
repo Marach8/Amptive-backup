@@ -10,5 +10,7 @@ abstract class ProfileRepo{
     required int pageSize,
   });
 
-
+  Future<ApiResponse<dynamic>> updateUserProfile({
+    required String profilePicture,
+  });
 }

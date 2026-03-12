@@ -14,17 +14,15 @@ class EnterAmountBloc extends Cubit<(String, bool)> {
     if (state.$1.isEmpty) return;
     final String string = state.$1.substring(0, state.$1.length - 1);
     emit((string, _hasSufficientFunds(string)));
-
   }
 
   void clearInput() => emit(('', state.$2));
 
-  bool _hasSufficientFunds(String input){
+  bool _hasSufficientFunds(String input) {
     final double inputNum = double.tryParse(input) ?? 0.0;
-    if(inputNum > 1000000.0){
+    if (inputNum > 1000000.0) {
       return false;
-    }
-    else{
+    } else {
       return true;
     }
   }

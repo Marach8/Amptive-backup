@@ -35,7 +35,7 @@
 
 //   @override
 //   Widget build(BuildContext context) {
-//     return Scaffold(      
+//     return Scaffold(
 //       backgroundColor: ATColors.hex0D0D0D,
 //       body: SafeArea(
 //         child: Column(

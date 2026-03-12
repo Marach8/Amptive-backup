@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 
 class ATAnimatedXFade extends StatelessWidget {
-  const ATAnimatedXFade({
-    super.key,
-    required this.firstChild,
-    required this.secondChild,
-    required this.condition,
-    this.duration
-  });
+  const ATAnimatedXFade(
+      {super.key,
+      required this.firstChild,
+      required this.secondChild,
+      required this.condition,
+      this.duration});
   final Widget firstChild, secondChild;
   final bool condition;
   final int? duration;
@@ -21,7 +20,8 @@ class ATAnimatedXFade extends StatelessWidget {
       duration: Duration(milliseconds: duration ?? 500),
       firstChild: firstChild,
       secondChild: secondChild,
-      crossFadeState: condition ? CrossFadeState.showFirst : CrossFadeState.showSecond,
+      crossFadeState:
+          condition ? CrossFadeState.showFirst : CrossFadeState.showSecond,
     );
   }
 }

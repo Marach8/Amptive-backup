@@ -24,18 +24,17 @@ class HomeRepoImpl implements HomeRepo {
       final Response<dynamic> response = await networkService.delete(
         '${ATEndpoints.users}/$targetUserId/follow',
       );
-      
+
       return Successful<FollowingStatus>(
-        data: FollowingStatus.fromJson(response.data,)
-      );
+          data: FollowingStatus.fromJson(
+        response.data,
+      ));
     } catch (e) {
       log('error in unfollowing user: $e');
       return Unsuccessful<FollowingStatus>(
-        error: ATException.resolveException(e)
-      );
+          error: ATException.resolveException(e));
     }
   }
-
 
   @override
   Future<ApiResponse<FollowingStatus>> followTargetUser(
@@ -44,18 +43,17 @@ class HomeRepoImpl implements HomeRepo {
       final Response<dynamic> response = await networkService.post(
         '${ATEndpoints.users}/$targetUserId/follow',
       );
-      
+
       return Successful<FollowingStatus>(
-        data: FollowingStatus.fromJson(response.data,)
-      );
+          data: FollowingStatus.fromJson(
+        response.data,
+      ));
     } catch (e) {
       log('error in unfollowing user: $e');
       return Unsuccessful<FollowingStatus>(
-        error: ATException.resolveException(e)
-      );
+          error: ATException.resolveException(e));
     }
   }
-
 
   @override
   Future<ApiResponse<HomeFeedResponseModel>> fetchHomeFeed({
@@ -74,7 +72,8 @@ class HomeRepoImpl implements HomeRepo {
       );
 
       return Successful<HomeFeedResponseModel>(
-        data: HomeFeedResponseModel.fromJson(response.data as Map<String, dynamic>),
+        data: HomeFeedResponseModel.fromJson(
+            response.data as Map<String, dynamic>),
       );
     } catch (e) {
       log('Get home feed error: $e');

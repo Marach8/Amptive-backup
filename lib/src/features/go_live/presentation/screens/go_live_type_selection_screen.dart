@@ -21,89 +21,94 @@ class GoLiveTypeSelectionScreen extends StatelessWidget {
       child: BlocProvider<_PrivateBloc>(
         create: (_) => _PrivateBloc(),
         child: BlocBuilder<_PrivateBloc, int?>(
-          builder: (BuildContext blocContext, int? state) {
-            final bool isBtnActive = state != null;
-            return Scaffold(
-              appBar: ATAppBar(
-                leading: const ATXBackBtn(), leadingWidth: 30,
-                padding: const EdgeInsets.fromLTRB(7, 0, 15, 0),
-                title: Text(
-                  ATStrings.CREATE_SHOW_OR_EVENT,
-                  style: Theme.of(context).textTheme.bodyMedium,
-                ),
+            builder: (BuildContext blocContext, int? state) {
+          final bool isBtnActive = state != null;
+          return Scaffold(
+            appBar: ATAppBar(
+              leading: const ATXBackBtn(),
+              leadingWidth: 30,
+              padding: const EdgeInsets.fromLTRB(7, 0, 15, 0),
+              title: Text(
+                ATStrings.CREATE_SHOW_OR_EVENT,
+                style: Theme.of(context).textTheme.bodyMedium,
               ),
-            
-              body: SingleChildScrollView(
-                physics: const BouncingScrollPhysics(),
-                padding: const EdgeInsets.fromLTRB(15, 10, 15, 0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    Text(
-                      maxLines: 3,
-                      ATStrings.CHOOSE_2_CREATE_SHOW_OR_EVENT,
-                      style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                        color: ATColors.hexC2C2C2
-                      ),
-                    ),
-                    const SizedBox(height: 20),
-                    Row(
-                      children: <Widget>[
-                        Expanded(
-                          child: GoLiveTypeSelectionWidget(
-                            onTap: (bool isSelected) => blocContext.read<_PrivateBloc>().setValue(
-                              isSelected ? null : 0
-                            ),
-                            isSelected: state == 0,
-                            unselectedImgPath: ATImgStrings.CREATE_SHOW_ICON1,
-                            selectedImgPath: ATImgStrings.CREATE_SHOW_ICON2,
-                            title: ATStrings.CREATE_SHOW,
-                            subtitle: ATStrings.CREATE_SHOW_DESC,
-                            alphabet: 'S',
-                          ),
+            ),
+            body: SingleChildScrollView(
+              physics: const BouncingScrollPhysics(),
+              padding: const EdgeInsets.fromLTRB(15, 10, 15, 0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Text(
+                    maxLines: 3,
+                    ATStrings.CHOOSE_2_CREATE_SHOW_OR_EVENT,
+                    style: Theme.of(context)
+                        .textTheme
+                        .bodySmall
+                        ?.copyWith(color: ATColors.hexC2C2C2),
+                  ),
+                  const SizedBox(height: 20),
+                  Row(
+                    children: <Widget>[
+                      Expanded(
+                        child: GoLiveTypeSelectionWidget(
+                          onTap: (bool isSelected) => blocContext
+                              .read<_PrivateBloc>()
+                              .setValue(isSelected ? null : 0),
+                          isSelected: state == 0,
+                          unselectedImgPath: ATImgStrings.CREATE_SHOW_ICON1,
+                          selectedImgPath: ATImgStrings.CREATE_SHOW_ICON2,
+                          title: ATStrings.createShow,
+                          subtitle: ATStrings.CREATE_SHOW_DESC,
+                          alphabet: 'S',
                         ),
-                        const SizedBox(width: 15,),
-                        Expanded(
-                          child: GoLiveTypeSelectionWidget(
-                            onTap: (bool isSelected) => blocContext.read<_PrivateBloc>().setValue(
-                              isSelected ? null : 1
-                            ),
-                            isSelected: state == 1,
-                            unselectedImgPath: ATImgStrings.CREATE_EVENT_ICON1,
-                            selectedImgPath: ATImgStrings.CREATE_EVENT_ICON2,
-                            title: ATStrings.CREATE_EVENT,
-                            subtitle: ATStrings.CREATE_EVENT_DESC,
-                            alphabet: 'E',
-                          ),
+                      ),
+                      const SizedBox(
+                        width: 15,
+                      ),
+                      Expanded(
+                        child: GoLiveTypeSelectionWidget(
+                          onTap: (bool isSelected) => blocContext
+                              .read<_PrivateBloc>()
+                              .setValue(isSelected ? null : 1),
+                          isSelected: state == 1,
+                          unselectedImgPath: ATImgStrings.CREATE_EVENT_ICON1,
+                          selectedImgPath: ATImgStrings.CREATE_EVENT_ICON2,
+                          title: ATStrings.CREATE_EVENT,
+                          subtitle: ATStrings.CREATE_EVENT_DESC,
+                          alphabet: 'E',
+                        ),
+                      )
+                    ],
+                  )
+                ],
+              ),
+            ),
+            bottomNavigationBar: Padding(
+              padding: const EdgeInsets.fromLTRB(15, 5, 15, 50),
+              child: ATPlainElevatedBtn(
+                onPressed: isBtnActive
+                    ? () => context.pushNamed(
+                          ATRoutes.listHostedShowsScreen,
+                          extra: state == 0
+                              ? GoLiveProgramType.show
+                              : GoLiveProgramType.event,
                         )
-                      ],
-                    )
-                  ],
-                ),
+                    : null,
+                btnTitle: ATStrings.cContinue,
+                bgColor: ATColors.white,
+                fgColor: ATColors.black,
               ),
-              
-              bottomNavigationBar: Padding(
-                padding: const EdgeInsets.fromLTRB(15, 5, 15, 50),
-                child: ATPlainElevatedBtn(
-                  onPressed: isBtnActive ? () => context.pushNamed(
-                    ATRoutes.listHostedShowsScreen,
-                    extra: state == 0 ? GoLiveProgramType.show : GoLiveProgramType.event,
-                  ) : null,
-                  btnTitle: ATStrings.cContinue,
-                  bgColor: ATColors.white,
-                  fgColor: ATColors.black,
-                ),
-              ),
-            );
-          }
-        ),
+            ),
+          );
+        }),
       ),
     );
   }
 }
 
-class _PrivateBloc extends Cubit<int?>{
-  _PrivateBloc(): super(null);
+class _PrivateBloc extends Cubit<int?> {
+  _PrivateBloc() : super(null);
 
   void setValue(int? value) => emit(value);
 }

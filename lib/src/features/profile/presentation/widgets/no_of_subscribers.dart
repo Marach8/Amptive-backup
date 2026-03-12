@@ -21,27 +21,29 @@ class NoOfSubscribers extends StatelessWidget {
         children: <Widget>[
           CustomPaint(
             size: const Size(16, 16),
-            painter: RoundedScallopedPainter(
-              color: ATColors.yellowColor
-            ),
+            painter: RoundedScallopedPainter(color: ATColors.yellowColor),
             child: Padding(
               padding: const EdgeInsets.all(5),
               child: Icon(Icons.favorite, color: ATColors.black, size: 12),
             ),
           ),
-          const SizedBox(width: 2,),
+          const SizedBox(
+            width: 2,
+          ),
           Text(
             '150k',
-            style: Theme.of(context).textTheme.bodySmall?.copyWith(
-              fontSize: ATSizes.size16
-            ),
+            style: Theme.of(context)
+                .textTheme
+                .bodySmall
+                ?.copyWith(fontSize: ATSizes.size16),
           ),
           const SizedBox(width: 5),
           Text(
             ATStrings.subscribers,
-            style: Theme.of(context).textTheme.bodySmall?.copyWith(
-              fontSize: ATSizes.size16
-            ),
+            style: Theme.of(context)
+                .textTheme
+                .bodySmall
+                ?.copyWith(fontSize: ATSizes.size16),
           ),
         ],
       ),

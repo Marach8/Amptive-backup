@@ -1,5 +1,4 @@
 class AmptiveUser {
-
   AmptiveUser({
     required this.id,
     required this.name,

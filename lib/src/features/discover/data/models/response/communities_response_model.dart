@@ -1,3 +1,5 @@
+import 'package:amptive/src/shared/global_model_objects.dart';
+
 class CommunitiesResponseModel {
   CommunitiesResponseModel({
     this.status,
@@ -76,22 +78,4 @@ class CommunitiesResponseModel {
 
   final Map<String, Community>? communities;
   final List<String>? communityIds;
-}
-
-class Community {
-  Community({
-    this.id,
-    this.name,
-    this.image,
-  });
-
-  factory Community.fromJson(Map<String, dynamic> json) {
-    return Community(
-      id: json['id'],
-      name: json['name'],
-      image: json['image'],
-    );
-  }
-
-  final String? id, name, image;
 }

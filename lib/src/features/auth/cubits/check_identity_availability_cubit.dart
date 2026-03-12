@@ -6,22 +6,22 @@ import 'package:amptive/src/features/auth/data/repository/auth_repo_impl.dart';
 class CheckIdentityAvailabilityCubit extends Cubit<ATAppState<bool>> {
   CheckIdentityAvailabilityCubit({
     AuthRepo? mockAuthRepo,
-  }) : authRepo = mockAuthRepo ?? AuthRepoImpl(),
+  })  : authRepo = mockAuthRepo ?? AuthRepoImpl(),
         super(const InitialState<bool>());
 
   final AuthRepo authRepo;
 
   bool? get currentAvailability => switch (state) {
-    InitialState<bool>(:final bool? initialData) => initialData,
-    LoadingState<bool>(:final bool? currentData) => currentData,
-    SuccessState<bool>(:final bool? newData) => newData,
-    FailureState<bool>(:final bool? oldData) => oldData,
-  };
+        InitialState<bool>(:final bool? initialData) => initialData,
+        LoadingState<bool>(:final bool? currentData) => currentData,
+        SuccessState<bool>(:final bool? newData) => newData,
+        FailureState<bool>(:final bool? oldData) => oldData,
+      };
 
   Future<void> checkIdentityAvailability({
     required Map<String, dynamic> param,
   }) async {
-    if(state is LoadingState<bool>) return;
+    if (state is LoadingState<bool>) return;
     emit(const LoadingState<bool>());
     try {
       final ApiResponse<bool> response =

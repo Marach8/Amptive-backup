@@ -11,7 +11,6 @@ import '../../../../../config/utils/colors.dart';
 import '../../../../../config/utils/other_strings.dart';
 
 class AmptiveLiveHostAndCoHostWidgetForAudienceView extends StatelessWidget {
-
   const AmptiveLiveHostAndCoHostWidgetForAudienceView(
       {super.key,
       this.top,

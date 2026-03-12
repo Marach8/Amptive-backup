@@ -1,7 +1,6 @@
 import 'package:amptive/src/config/config_export.dart';
 import 'package:flutter/material.dart';
 
-
 //Any scrollable widget that will be a child of this ATScrollBar should set its "primary" to true
 class ATScrollBar extends StatefulWidget {
   const ATScrollBar({
@@ -42,7 +41,7 @@ class _ATScrollBarState extends State<ATScrollBar> {
   void didChangeDependencies() {
     super.didChangeDependencies();
     //Manually call here for initial padding update
-    WidgetsBinding.instance.addPostFrameCallback((_)  => _updatePadding());
+    WidgetsBinding.instance.addPostFrameCallback((_) => _updatePadding());
   }
 
   void _updatePadding() {
@@ -72,8 +71,9 @@ class _ATScrollBarState extends State<ATScrollBar> {
       scrollbarOrientation: widget.orientation,
       mainAxisMargin: widget.mainAxisMargin,
       crossAxisMargin: widget.xAxisMargin,
-      thumbColor: ctx.textTheme.headlineMedium?.color?.withValues(alpha:0.5),
-      controller: _mainScrollCntrl, thumbVisibility: true,
+      thumbColor: ctx.textTheme.headlineMedium?.color?.withValues(alpha: 0.5),
+      controller: _mainScrollCntrl,
+      thumbVisibility: true,
       trackBorderColor: ctx.textTheme.headlineMedium?.color,
       thickness: widget.thickness,
       radius: Radius.circular(widget.thickness),
@@ -84,7 +84,8 @@ class _ATScrollBarState extends State<ATScrollBar> {
           child: widget.child,
           builder: (_, bool shouldPad, Widget? child) {
             return Padding(
-              padding: EdgeInsets.only(right: shouldPad ? (widget.thickness + 5) : 0),
+              padding: EdgeInsets.only(
+                  right: shouldPad ? (widget.thickness + 5) : 0),
               child: child,
             );
           },

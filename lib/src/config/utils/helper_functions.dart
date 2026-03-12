@@ -9,15 +9,14 @@ import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:permission_handler/permission_handler.dart';
 
-
-class ATHelperFuncs{
+class ATHelperFuncs {
   const ATHelperFuncs._();
 
-  static double getScreenWidth(BuildContext context)
-    => MediaQuery.sizeOf(context).width;
+  static double getScreenWidth(BuildContext context) =>
+      MediaQuery.sizeOf(context).width;
 
-  static double getScreenHeight(BuildContext context)
-    => MediaQuery.sizeOf(context).height;
+  static double getScreenHeight(BuildContext context) =>
+      MediaQuery.sizeOf(context).height;
 
   static bool platformIsAndroid() => Platform.isAndroid;
 
@@ -29,55 +28,47 @@ class ATHelperFuncs{
     return "Code has been sent. You can send another in $time";
   }
 
+  static void hideAnyMountedSnackbar(BuildContext context) =>
+      ScaffoldMessenger.maybeOf(context)?.hideCurrentSnackBar();
 
-  static void hideAnyMountedSnackbar(BuildContext context)
-    => ScaffoldMessenger.maybeOf(context)?.hideCurrentSnackBar();
-
-
-  static double getRandomNumber(double ceiling){
+  static double getRandomNumber(double ceiling) {
     final int number = Random().nextInt(ceiling.toInt()) + 1;
-    if(number < 100){
+    if (number < 100) {
       return (100 + number).toDouble();
     }
     return number.toDouble();
   }
 
-  static void startTimer({
-    required Timer timer,
-    required BuildContext context
-  }){
-    timer = Timer.periodic(
-      const Duration(seconds: 1),
-      (Timer timer) {
-        if(timer.tick == 61){timer.cancel();}
-        else{
-          // context.read<AmptiveAuthBloc>().add(
-          //   ResendOTPCountDownTimerAuthEvent(countDownTime: timer.tick)
-          // );
-        }
-        
+  static void startTimer(
+      {required Timer timer, required BuildContext context}) {
+    timer = Timer.periodic(const Duration(seconds: 1), (Timer timer) {
+      if (timer.tick == 61) {
+        timer.cancel();
+      } else {
+        // context.read<AmptiveAuthBloc>().add(
+        //   ResendOTPCountDownTimerAuthEvent(countDownTime: timer.tick)
+        // );
       }
-    );
+    });
   }
 
-
   static Timer? _debounce;
-  static void callDebouncer(int duration, Function func, [List<dynamic>? args]) {
+  static void callDebouncer(int duration, Function func,
+      [List<dynamic>? args]) {
     if (_debounce?.isActive ?? false) _debounce!.cancel();
 
-    _debounce = Timer(
-      Duration(milliseconds: duration),
-      () {
-        if (args != null) {Function.apply(func, args);}
-        else {func();}
+    _debounce = Timer(Duration(milliseconds: duration), () {
+      if (args != null) {
+        Function.apply(func, args);
+      } else {
+        func();
       }
-    );
+    });
   }
 
   static void disposeDebouncer() {
     _debounce?.cancel();
-  } 
-
+  }
 
   static T? safeGetElementFromList<T>(List<T> list, int index) {
     if (index >= 0 && index < list.length) {
@@ -85,7 +76,6 @@ class ATHelperFuncs{
     }
     return null;
   }
-
 
   static List<String> generateHoursInADay(dynamic _) {
     final List<String> timeList = <String>[];
@@ -100,8 +90,6 @@ class ATHelperFuncs{
 
     return timeList;
   }
-
-
 
   static List<List<DateTime?>> getWeeksInAMonth(List<int> args) {
     final int year = args[0];
@@ -143,15 +131,14 @@ class ATHelperFuncs{
     return weeks;
   }
 
-
   static String formatDate(String isoString) {
     final DateTime parsed = DateTime.parse(isoString);
     final DateFormat formatter = DateFormat('d MMMM yyyy');
     return formatter.format(parsed);
   }
 
-
-  static Map<String, List<List<DateTime?>>> generateCalendarData(List<int> args) {
+  static Map<String, List<List<DateTime?>>> generateCalendarData(
+      List<int> args) {
     final int year = args[0];
     final int month = args[1];
 
@@ -199,42 +186,38 @@ class ATHelperFuncs{
     }
 
     final String monthName = getMonthName(year, month);
-    final List<List<DateTime?>> calendarDays = generateCalendarDays(year, month);
+    final List<List<DateTime?>> calendarDays =
+        generateCalendarDays(year, month);
 
     return <String, List<List<DateTime?>>>{monthName: calendarDays};
   }
 
-
-  static Future<XFile?> pickImage(ImageSource? imageSource) async{
-    if(imageSource == null) return null;
+  static Future<XFile?> pickImage(ImageSource? imageSource) async {
+    if (imageSource == null) return null;
 
     Permission? permission;
 
-    if(imageSource == ImageSource.camera){
+    if (imageSource == ImageSource.camera) {
       permission = Permission.camera;
-    }
-    else{
+    } else {
       if (Platform.isAndroid) {
         final DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
         final AndroidDeviceInfo androidInfo = await deviceInfo.androidInfo;
         if (androidInfo.version.sdkInt <= 32) {
           permission = Permission.storage;
-        }
-        else{
+        } else {
           permission = Permission.photos;
         }
-      }
-      else{
+      } else {
         permission = Permission.photos;
-      } 
+      }
     }
 
     final PermissionStatus permStatus = await permission.request();
-    if(permStatus == PermissionStatus.permanentlyDenied){
+    if (permStatus == PermissionStatus.permanentlyDenied) {
       openAppSettings();
       return null;
-    }
-    else if (!permStatus.isGranted){
+    } else if (!permStatus.isGranted) {
       return null;
     }
 
@@ -252,8 +235,8 @@ class ATHelperFuncs{
     return pickedFile;
   }
 
-
-  static Future<PermissionStatus> requestUserPermission(Permission permType) async {
+  static Future<PermissionStatus> requestUserPermission(
+      Permission permType) async {
     PermissionStatus status = await permType.status;
 
     if (status.isGranted || status.isPermanentlyDenied || status.isRestricted) {
@@ -263,10 +246,10 @@ class ATHelperFuncs{
     return await permType.request();
   }
 
-
   static Future<File?> getImageFromGallery() async {
     final ImagePicker picker = ImagePicker();
-    final XFile? pickedFile = await picker.pickImage(source: ImageSource.gallery);
+    final XFile? pickedFile =
+        await picker.pickImage(source: ImageSource.gallery);
     if (pickedFile != null) {
       return File(pickedFile.path);
     }
@@ -275,31 +258,34 @@ class ATHelperFuncs{
 
   static Future<File?> getImageFromCamera() async {
     final ImagePicker picker = ImagePicker();
-    final XFile? pickedFile = await picker.pickImage(source: ImageSource.camera);
+    final XFile? pickedFile =
+        await picker.pickImage(source: ImageSource.camera);
     if (pickedFile != null) {
       return File(pickedFile.path);
     }
     return null;
   }
 
-
-
   static Map<String, List<List<Map<DateTime?, List<CalenderProgram>>>>>
-    transformDateTimes2Programs(List<dynamic> args) {
-
-    final Map<String, List<List<DateTime?>>> date = args[0] as Map<String, List<List<DateTime?>>>;
+      transformDateTimes2Programs(List<dynamic> args) {
+    final Map<String, List<List<DateTime?>>> date =
+        args[0] as Map<String, List<List<DateTime?>>>;
     final String name = args[1] as String;
     final bool isEvent = args[2] as bool;
     final Random random = Random();
 
     return date.map((String key, List<List<DateTime?>> value) {
-      final List<List<Map<DateTime?, List<CalenderProgram>>>> transformedValue = value.map((List<DateTime?> week) {
+      final List<List<Map<DateTime?, List<CalenderProgram>>>> transformedValue =
+          value.map((List<DateTime?> week) {
         return week.map((DateTime? dateTime) {
           final List<CalenderProgram> programs = List.generate(
             random.nextInt(3),
             (_) => CalenderProgram(
-              name: name, id: 1, isEvent: isEvent,
-              isPaid: false, eventType: 'Comedy',
+              name: name,
+              id: 1,
+              isEvent: isEvent,
+              isPaid: false,
+              eventType: 'Comedy',
               hosts: getHostList().take(3).toList(),
               dateTime: dateTime,
             ),
