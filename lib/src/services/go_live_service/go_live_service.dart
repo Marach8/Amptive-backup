@@ -4,7 +4,6 @@ import '../../config/utils/image_strings.dart';
 import 'dart:developer' as marach show log;
 
 class GoLiveService {
-
   factory GoLiveService() => _instance;
 
   // constructorÏ
@@ -15,38 +14,28 @@ class GoLiveService {
   late List<ObjectWithNotifier<Host>> coHostsListData;
   late TextEditingController titleController;
 
-
   late ValueNotifier<bool> coHostSelectionStarted;
   late ValueNotifier<bool> scroll2Bottom;
 
   late ValueNotifier<int> selectedCoHostLength;
   late ValueNotifier<Set<ObjectWithNotifier<Host>>> selectedCoHosts;
   late ValueNotifier<Set<ObjectWithNotifier<Host>>> goLiveHostListNotifier;
-  late ValueNotifier<List<ObjectWithNotifier<Host>>> goLiveHostList4AudienceNotifier;
-
+  late ValueNotifier<List<ObjectWithNotifier<Host>>>
+      goLiveHostList4AudienceNotifier;
 
   void initFormControl() {
     coHostSelectionStarted = ValueNotifier(false);
     selectedCoHostLength = ValueNotifier(0);
     scroll2Bottom = ValueNotifier(false);
     selectedCoHosts = ValueNotifier(
-      List.generate(
-        5,
-        (_) => ObjectWithNotifier<Host>(obj: Host.empty())
-      ).toSet()
-    );
+        List.generate(5, (_) => ObjectWithNotifier<Host>(obj: Host.empty()))
+            .toSet());
     coHostsListData = getHostList();
-    goLiveHostListNotifier = ValueNotifier(
-      getHostList().take(1).toSet()..addAll(
-        List.generate(
-          5,
-          (_) => ObjectWithNotifier<Host>(obj: Host.empty())
-        )
-      )
-    );
-    goLiveHostList4AudienceNotifier = ValueNotifier(
-      getHostList().take(1).toList()
-    );
+    goLiveHostListNotifier = ValueNotifier(getHostList().take(1).toSet()
+      ..addAll(List.generate(
+          5, (_) => ObjectWithNotifier<Host>(obj: Host.empty()))));
+    goLiveHostList4AudienceNotifier =
+        ValueNotifier(getHostList().take(1).toList());
 
     // init controllers
     titleController = TextEditingController();
@@ -62,7 +51,6 @@ class GoLiveService {
       coHostNotifier.notifier.dispose();
     }
   }
-
 
   // removeSelectedCoHost(HostWithNotifier selectedCoHost) {
   //   final currentList = selectedCoHosts.value.toList();
@@ -93,45 +81,39 @@ class GoLiveService {
   //   }
   // }
 
-  
   int counter = 1;
 
-  void hostAddCohost(ObjectWithNotifier<Host> host, int index){
+  void hostAddCohost(ObjectWithNotifier<Host> host, int index) {
     // final newList = List<HostWithNotifier>.from(goLiveHostListNotifier.value);
     // newList[index] = host;
     // host.notifier.value = true;
     // goLiveHostListNotifier.value = newList.toSet();
 
-
-    if(counter <= 5){
+    if (counter <= 5) {
       marach.log(counter.toString());
-      final List<ObjectWithNotifier<Host>> audienceList = goLiveHostList4AudienceNotifier.value;
+      final List<ObjectWithNotifier<Host>> audienceList =
+          goLiveHostList4AudienceNotifier.value;
       audienceList.add(coHostsListData[counter]);
       goLiveHostList4AudienceNotifier.value = List.from(audienceList);
-      counter ++;
+      counter++;
     }
   }
-  
 
-  void hostRemoveCohost(ObjectWithNotifier<Host> host, int index){
+  void hostRemoveCohost(ObjectWithNotifier<Host> host, int index) {
     // final newList = List<HostWithNotifier>.from(goLiveHostListNotifier.value);
     // newList[index] = HostWithNotifier(host: Host.empty());
     // host.notifier.value = false;
     // goLiveHostListNotifier.value = newList.toSet();
 
-
-    if(counter > 1){
-      final List<ObjectWithNotifier<Host>> audienceList = goLiveHostList4AudienceNotifier.value;
+    if (counter > 1) {
+      final List<ObjectWithNotifier<Host>> audienceList =
+          goLiveHostList4AudienceNotifier.value;
       audienceList.removeAt(counter - 1);
       goLiveHostList4AudienceNotifier.value = List.from(audienceList);
-      counter --;
+      counter--;
     }
   }
 }
-
-
-
-
 
 List<ObjectWithNotifier<Host>> getHostList() {
   List<ObjectWithNotifier<Host>> hostsList = <ObjectWithNotifier<Host>>[];
@@ -145,10 +127,7 @@ List<ObjectWithNotifier<Host>> getHostList() {
     ATImgStrings.MAN_PHOTO: <String>['Daniel Adesua', 'myownbrother'],
     ATImgStrings.COMMUNITY_CARD: <String>['Erica Nwosu', 'ricababygirl'],
     ATImgStrings.CRIMINAL: <String>['Peter Nwokeji', 'sirpee'],
-    ATImgStrings.createShowPlaceholder: <String>[
-      'Arlan Walker',
-      'walkerboss'
-    ],
+    ATImgStrings.createShowPlaceholder: <String>['Arlan Walker', 'walkerboss'],
     ATImgStrings.JOE_POMP_SHOW: <String>['Man Drone', 'ikennegodadi'],
   };
 

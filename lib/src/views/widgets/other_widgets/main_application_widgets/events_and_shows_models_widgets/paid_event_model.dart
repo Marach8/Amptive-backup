@@ -5,12 +5,8 @@ import '../../../../../shared/circle_avatar.dart';
 import '../../../../../shared/custom_container_widget.dart';
 import '../../../../../shared/image_loader_widget.dart';
 
-
 class AmptivePaidEventModel extends StatelessWidget {
-  const AmptivePaidEventModel({
-    super.key,
-    required this.trendingPicture
-  });
+  const AmptivePaidEventModel({super.key, required this.trendingPicture});
   final String trendingPicture;
 
   @override
@@ -24,10 +20,8 @@ class AmptivePaidEventModel extends StatelessWidget {
           ClipRRect(
             clipBehavior: Clip.hardEdge,
             borderRadius: BorderRadius.circular(5),
-            child: ATImgLoader(
-              boxFit: BoxFit.scaleDown,
-              imgPath: trendingPicture
-            ),
+            child:
+                ATImgLoader(boxFit: BoxFit.scaleDown, imgPath: trendingPicture),
           ),
           const SizedBox(height: 5),
           SizedBox(
@@ -40,15 +34,17 @@ class AmptivePaidEventModel extends StatelessWidget {
           Row(
             children: <Widget>[
               ATContainer(
-                height: 12, width: 12,
+                height: 12,
+                width: 12,
                 color: ATColors.hexA8A8A8,
                 child: FittedBox(
                   fit: BoxFit.scaleDown,
                   child: Text(
                     "P",
-                    style: Theme.of(context).textTheme.displayMedium?.copyWith(
-                      color: ATColors.hex0D0D0D
-                    ),
+                    style: Theme.of(context)
+                        .textTheme
+                        .displayMedium
+                        ?.copyWith(color: ATColors.hex0D0D0D),
                   ),
                 ),
               ),
@@ -57,13 +53,12 @@ class AmptivePaidEventModel extends StatelessWidget {
                 child: Text(
                   'glendonnoyle',
                   style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                    fontSize: ATSizes.size13,
-                    color: ATColors.hexA8A8A8,
-                  ),
+                        fontSize: ATSizes.size13,
+                        color: ATColors.hexA8A8A8,
+                      ),
                 ),
               ),
               const SizedBox(width: 5),
-
               Align(
                 alignment: Alignment.bottomCenter,
                 child: ATCircleAvatar(
@@ -74,8 +69,8 @@ class AmptivePaidEventModel extends StatelessWidget {
               Text(
                 'LIVE',
                 style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                  color: ATColors.hexA8A8A8,
-                ),
+                      color: ATColors.hexA8A8A8,
+                    ),
               ),
             ],
           )

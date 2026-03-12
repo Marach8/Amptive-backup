@@ -1,7 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class SubPlanSetupBloc extends Cubit<List<int?>>{
-  SubPlanSetupBloc(): super(<int?>[null, null]);
+class SubPlanSetupBloc extends Cubit<List<int?>> {
+  SubPlanSetupBloc() : super(<int?>[null, null]);
 
   void selectAFee(int? fee) => emit(<int?>[fee, state.last]);
 
@@ -10,14 +10,12 @@ class SubPlanSetupBloc extends Cubit<List<int?>>{
   void resetPlan() => emit(<int?>[null, null]);
 }
 
-
-
-class CohostFeeSetupBloc extends Cubit<List<int?>>{
-  CohostFeeSetupBloc(): super(<int?>[null, 0]);
+class CohostFeeSetupBloc extends Cubit<List<int?>> {
+  CohostFeeSetupBloc() : super(<int?>[null, 0]);
 
   void selectFee(int? index) => emit(<int?>[index, state.last]);
 
-  void setSelectedFee(){}
+  void setSelectedFee() {}
 
   void removeDesc() => emit(<int?>[state.first, null]);
 }

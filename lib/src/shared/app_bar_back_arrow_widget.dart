@@ -9,7 +9,10 @@ class AmptiveBackArrowWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () => context.pop(),
-      child: Icon(Icons.arrow_back_ios, size: 20.r,),
+      child: Icon(
+        Icons.arrow_back_ios,
+        size: 20.r,
+      ),
     );
   }
 }

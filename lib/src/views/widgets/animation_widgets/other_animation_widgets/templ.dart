@@ -20,7 +20,6 @@ class _TempLState extends State<TempL> with SingleTickerProviderStateMixin {
   late AnimationController _controller;
   late Animation<double> _animation;
 
-
   @override
   void initState() {
     super.initState();
@@ -41,7 +40,8 @@ class _TempLState extends State<TempL> with SingleTickerProviderStateMixin {
     _initialDelayTimer = Timer(const Duration(milliseconds: 5000), () {
       setState(() {
         // Start the periodic timer after the initial delay
-        _periodicTimer = Timer.periodic(const Duration(milliseconds: 5000), (Timer timer) {
+        _periodicTimer =
+            Timer.periodic(const Duration(milliseconds: 5000), (Timer timer) {
           setState(() {
             _isFirstImage = !_isFirstImage;
             _controller.reset();
@@ -51,6 +51,7 @@ class _TempLState extends State<TempL> with SingleTickerProviderStateMixin {
       });
     });
   }
+
   @override
   void dispose() {
     _initialDelayTimer.cancel();
@@ -58,7 +59,6 @@ class _TempLState extends State<TempL> with SingleTickerProviderStateMixin {
     _controller.dispose();
     super.dispose();
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -71,52 +71,59 @@ class _TempLState extends State<TempL> with SingleTickerProviderStateMixin {
               top: 57.h,
               left: -108.w,
               child: Container(
-                width: 390.13.w,
-                height: 375.95.h,
-                decoration: const ShapeDecoration(
-                  shape: OvalBorder(),
-                ),
-                child: AnimatedBuilder(
-                  animation: _animation,
-                  builder: (BuildContext child, Widget? animation){
-                    return Opacity(
-                      opacity: _animation.value,
-                      child: _isFirstImage
-                          ? Image.asset('assets/movAnimate.png', key: const ValueKey(1),  fit: BoxFit.fill,)
-                          : Image.asset('assets/movAnimate2.png', key: const ValueKey(2),  fit: BoxFit.fill,),
-
-                    );
-                  },
-                )
-              ),
+                  width: 390.13.w,
+                  height: 375.95.h,
+                  decoration: const ShapeDecoration(
+                    shape: OvalBorder(),
+                  ),
+                  child: AnimatedBuilder(
+                    animation: _animation,
+                    builder: (BuildContext child, Widget? animation) {
+                      return Opacity(
+                        opacity: _animation.value,
+                        child: _isFirstImage
+                            ? Image.asset(
+                                'assets/movAnimate.png',
+                                key: const ValueKey(1),
+                                fit: BoxFit.fill,
+                              )
+                            : Image.asset(
+                                'assets/movAnimate2.png',
+                                key: const ValueKey(2),
+                                fit: BoxFit.fill,
+                              ),
+                      );
+                    },
+                  )),
             ),
             Positioned(
               top: 124.42.h,
               right: -41.3.w,
               child: Container(
-                width: 249.w,
-                height: 291.h,
+                  width: 249.w,
+                  height: 291.h,
                   clipBehavior: Clip.antiAlias,
-                  decoration: const ShapeDecoration(
-                    shape: OvalBorder()
-                  ),
-
-
-                  child:  AnimatedBuilder(
-                  animation: _animation,
-                  builder: (BuildContext child, Widget? animation){
-                    return Opacity(
-                      opacity: _animation.value,
-                      child: _isFirstImage
-                          ? Image.asset('assets/whiteAnimate.png', key: const ValueKey(1), fit: BoxFit.fill,)
-                          : Image.asset('assets/whiteAnimate2.png', key: const ValueKey(2), fit: BoxFit.fill,),
-
-                    );
-                  },
-                )
-              ),
+                  decoration: const ShapeDecoration(shape: OvalBorder()),
+                  child: AnimatedBuilder(
+                    animation: _animation,
+                    builder: (BuildContext child, Widget? animation) {
+                      return Opacity(
+                        opacity: _animation.value,
+                        child: _isFirstImage
+                            ? Image.asset(
+                                'assets/whiteAnimate.png',
+                                key: const ValueKey(1),
+                                fit: BoxFit.fill,
+                              )
+                            : Image.asset(
+                                'assets/whiteAnimate2.png',
+                                key: const ValueKey(2),
+                                fit: BoxFit.fill,
+                              ),
+                      );
+                    },
+                  )),
             ),
-
           ],
         ),
       ),

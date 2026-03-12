@@ -11,7 +11,7 @@ class UserProfileResponseModel {
     return UserProfileResponseModel(
       status: json['status'] as bool?,
       statusCode: json['status_code'] as int?,
-      message: json['message'] ,
+      message: json['message'],
       data: json['data'] != null
           ? UserData.fromJson(json['data'] as Map<String, dynamic>)
           : null,

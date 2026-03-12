@@ -3,10 +3,7 @@ import '../../../../shared/custom_container_widget.dart';
 import '../../../../shared/image_loader_widget.dart';
 
 class TopCreatorWidget extends StatelessWidget {
-  const TopCreatorWidget({
-    super.key,
-    required this.picture
-  });
+  const TopCreatorWidget({super.key, required this.picture});
   final String picture;
 
   @override
@@ -17,10 +14,7 @@ class TopCreatorWidget extends StatelessWidget {
         children: <Widget>[
           ATImgLoader(imgPath: picture),
           const SizedBox(height: 5),
-          Text(
-            'ammybach',
-            style: Theme.of(context).textTheme.titleMedium
-          ),
+          Text('ammybach', style: Theme.of(context).textTheme.titleMedium),
         ],
       ),
     );

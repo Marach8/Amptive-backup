@@ -28,55 +28,56 @@ class NewFollowerNotif extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only(top: 10, bottom: 10),
-      child: Row(
-        children: <Widget>[
-          Stack(
-            clipBehavior: Clip.none,
-            children: <Widget>[
-              ATCircularImage(
-                diameter: 40,
-                imagePath: follower.obj.profilePicture ?? ''
+      child: Row(children: <Widget>[
+        Stack(
+          clipBehavior: Clip.none,
+          children: <Widget>[
+            ATCircularImage(
+                diameter: 40, imagePath: follower.obj.profilePicture ?? ''),
+            Positioned(
+              right: -4,
+              top: -2,
+              child: ATCircleAvatar(
+                padding: const EdgeInsets.all(3),
+                diameter: 20,
+                color: ATColors.hex307FE2,
+                child: const Icon(Icons.person_add_alt_sharp),
               ),
-              Positioned(
-                right: -4, top: -2,
-                child: ATCircleAvatar(
-                  padding: const EdgeInsets.all(3),
-                  diameter: 20, color: ATColors.hex307FE2,
-                  child: const Icon(Icons.person_add_alt_sharp),
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(width: 10,),
-          Expanded(
-            child: ATRichText(
-              maxLines: 2,
-              items: <String, TextStyle>{
-                follower.obj.username ?? '': Theme.of(context).textTheme.bodySmall!.copyWith(
-                  fontSize: ATSizes.size13
-                ),
-                ' ${ATStrings.JUST_FOLLOWED_U}. $timeOfFollow ${ATStrings.AGO}'.toLowerCase()
-                  : Theme.of(context).textTheme.titleSmall!
-              }
             ),
+          ],
+        ),
+        const SizedBox(
+          width: 10,
+        ),
+        Expanded(
+          child: ATRichText(maxLines: 2, items: <String, TextStyle>{
+            follower.obj.username ?? '': Theme.of(context)
+                .textTheme
+                .bodySmall!
+                .copyWith(fontSize: ATSizes.size13),
+            ' ${ATStrings.JUST_FOLLOWED_U}. $timeOfFollow ${ATStrings.AGO}'
+                .toLowerCase(): Theme.of(context).textTheme.titleSmall!
+          }),
+        ),
+        const SizedBox(
+          width: 15,
+        ),
+        ATContainer(
+          onTap: () {
+            debugPrint('Hello');
+          },
+          radius: 20,
+          padding: const EdgeInsets.fromLTRB(10, 5, 10, 5),
+          color: ATColors.hex307FE2,
+          child: Text(
+            '${ATStrings.FOLLOW} ${ATStrings.BACK}'.capitalize,
+            style: Theme.of(context).textTheme.bodySmall,
           ),
-          const SizedBox(width: 15,),
-          ATContainer(
-            onTap: (){debugPrint('Hello');},
-            radius: 20, padding: const EdgeInsets.fromLTRB(10, 5, 10, 5),
-            color: ATColors.hex307FE2,
-            child: Text(
-              '${ATStrings.FOLLOW} ${ATStrings.BACK}'.capitalize,
-              style: Theme.of(context).textTheme.bodySmall,
-            ),
-          )
-        ]
-      ),
+        )
+      ]),
     );
   }
 }
-
-
 
 class NewSubscriberNotif extends StatelessWidget {
   const NewSubscriberNotif({
@@ -91,54 +92,57 @@ class NewSubscriberNotif extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only(top: 10, bottom: 10),
-      child: Row(
-        children: <Widget>[
-          Stack(
-            clipBehavior: Clip.none,
-            children: <Widget>[
-              ATCircularImage(
-                imagePath: subscriber.obj.profilePicture ?? '',
-                diameter: 40,
-              ),
-              Positioned(
-                right: -2, top: -2,
-                child: ATCircleAvatar(
-                  diameter: 20, color: ATColors.yellowColor,
-                  child: Icon(Icons.favorite, color: ATColors.black, size: 15,),
-                ),
-              )
-            ],
-          ),
-          const SizedBox(width: 10,),
-          Expanded(
-            child: ATRichText(
-              maxLines: 2,
-              items: <String, TextStyle>{
-                subscriber.obj.username ?? '': Theme.of(context).textTheme.bodySmall!.copyWith(
-                  fontSize: ATSizes.size13
-                ),
-                ' ${ATStrings.JUST_SUBSCRIBED}. $timeOfSub ${ATStrings.AGO}'.toLowerCase()
-                  : Theme.of(context).textTheme.titleSmall!
-              }
+      child: Row(children: <Widget>[
+        Stack(
+          clipBehavior: Clip.none,
+          children: <Widget>[
+            ATCircularImage(
+              imagePath: subscriber.obj.profilePicture ?? '',
+              diameter: 40,
             ),
-          ),
-        ]
-      ),
+            Positioned(
+              right: -2,
+              top: -2,
+              child: ATCircleAvatar(
+                diameter: 20,
+                color: ATColors.yellowColor,
+                child: Icon(
+                  Icons.favorite,
+                  color: ATColors.black,
+                  size: 15,
+                ),
+              ),
+            )
+          ],
+        ),
+        const SizedBox(
+          width: 10,
+        ),
+        Expanded(
+          child: ATRichText(maxLines: 2, items: <String, TextStyle>{
+            subscriber.obj.username ?? '': Theme.of(context)
+                .textTheme
+                .bodySmall!
+                .copyWith(fontSize: ATSizes.size13),
+            ' ${ATStrings.JUST_SUBSCRIBED}. $timeOfSub ${ATStrings.AGO}'
+                .toLowerCase(): Theme.of(context).textTheme.titleSmall!
+          }),
+        ),
+      ]),
     );
   }
 }
 
-
 class NewAttendeesNotif extends StatelessWidget {
-  const NewAttendeesNotif({
-    super.key,
-    required this.attendees,
-    required this.time,
-    required this.progName,
-    this.isEvent = false
-  });
+  const NewAttendeesNotif(
+      {super.key,
+      required this.attendees,
+      required this.time,
+      required this.progName,
+      this.isEvent = false});
   final List<ObjectWithNotifier<Host>> attendees;
-  final String time, progName; final bool isEvent;
+  final String time, progName;
+  final bool isEvent;
 
   @override
   Widget build(BuildContext context) {
@@ -146,55 +150,59 @@ class NewAttendeesNotif extends StatelessWidget {
     final bool oneAttendee = attendees.length == 1;
     return Padding(
       padding: const EdgeInsets.only(top: 10, bottom: 10),
-      child: Row(
-        children: <Widget>[
-          if(oneAttendee)ATCircularImage(
-            diameter: 40,
-            imagePath: attendees.first.obj.profilePicture ?? ''
-          ) else ATOverlappingImages(
-            overlapOffset: 7, imgSize: 25,
-            imgPaths: attendees.map((ObjectWithNotifier<Host> attendee) => attendee.obj.profilePicture ?? '')
-              .take(3).toList(),
+      child: Row(children: <Widget>[
+        if (oneAttendee)
+          ATCircularImage(
+              diameter: 40, imagePath: attendees.first.obj.profilePicture ?? '')
+        else
+          ATOverlappingImages(
+            overlapOffset: 7,
+            imgSize: 25,
+            imgPaths: attendees
+                .map((ObjectWithNotifier<Host> attendee) =>
+                    attendee.obj.profilePicture ?? '')
+                .take(3)
+                .toList(),
           ),
-          const SizedBox(width: 10,),
-          Expanded(
-            child: ATRichText(
-              maxLines: 2,
-              items: <String, TextStyle>{
-                firstName: Theme.of(context).textTheme.bodySmall!.copyWith(
-                  fontSize: ATSizes.size13
-                ),
-                if(!oneAttendee)' and ' : Theme.of(context).textTheme.titleSmall!,
-                if(!oneAttendee)'${attendees.length - 1} others ': Theme.of(context).textTheme.bodySmall!.copyWith(
-                  fontSize: ATSizes.size13
-                ),
-                '${ATStrings.WILL_B_GOING_2_UR} ${isEvent ? ATStrings.EVENT : ATStrings.SHOW}: '
-                  : Theme.of(context).textTheme.titleSmall!,
-                progName: Theme.of(context).textTheme.bodySmall!.copyWith(
-                  fontSize: ATSizes.size13
-                ),
-                '. $time ${ATStrings.AGO}' : Theme.of(context).textTheme.titleSmall!,
-              }
-            ),
-          ),
-        ]
-      ),
+        const SizedBox(
+          width: 10,
+        ),
+        Expanded(
+          child: ATRichText(maxLines: 2, items: <String, TextStyle>{
+            firstName: Theme.of(context)
+                .textTheme
+                .bodySmall!
+                .copyWith(fontSize: ATSizes.size13),
+            if (!oneAttendee) ' and ': Theme.of(context).textTheme.titleSmall!,
+            if (!oneAttendee)
+              '${attendees.length - 1} others ': Theme.of(context)
+                  .textTheme
+                  .bodySmall!
+                  .copyWith(fontSize: ATSizes.size13),
+            '${ATStrings.WILL_B_GOING_2_UR} ${isEvent ? ATStrings.EVENT : ATStrings.SHOW}: ':
+                Theme.of(context).textTheme.titleSmall!,
+            progName: Theme.of(context)
+                .textTheme
+                .bodySmall!
+                .copyWith(fontSize: ATSizes.size13),
+            '. $time ${ATStrings.AGO}': Theme.of(context).textTheme.titleSmall!,
+          }),
+        ),
+      ]),
     );
   }
 }
 
-
-
 class NewGiftersNotif extends StatelessWidget {
-  const NewGiftersNotif({
-    super.key,
-    required this.gifters,
-    required this.time,
-    required this.progName,
-    this.isEvent = false
-  });
+  const NewGiftersNotif(
+      {super.key,
+      required this.gifters,
+      required this.time,
+      required this.progName,
+      this.isEvent = false});
   final List<ObjectWithNotifier<Host>> gifters;
-  final String time, progName; final bool isEvent;
+  final String time, progName;
+  final bool isEvent;
 
   @override
   Widget build(BuildContext context) {
@@ -202,45 +210,48 @@ class NewGiftersNotif extends StatelessWidget {
     final bool oneGifter = gifters.length == 1;
     return Padding(
       padding: const EdgeInsets.only(top: 10, bottom: 10),
-      child: Row(
-        children: <Widget>[
-          if(oneGifter)ATCircularImage(
-            diameter: 40,
-            imagePath: gifters.first.obj.profilePicture ?? ''
-          ) else ATOverlappingImages(
-            overlapOffset: 7, imgSize: 25,
-            imgPaths: gifters.map(
-              (ObjectWithNotifier<Host> gifter) => gifter.obj.profilePicture ?? '')
-              .take(3).toList(),
+      child: Row(children: <Widget>[
+        if (oneGifter)
+          ATCircularImage(
+              diameter: 40, imagePath: gifters.first.obj.profilePicture ?? '')
+        else
+          ATOverlappingImages(
+            overlapOffset: 7,
+            imgSize: 25,
+            imgPaths: gifters
+                .map((ObjectWithNotifier<Host> gifter) =>
+                    gifter.obj.profilePicture ?? '')
+                .take(3)
+                .toList(),
           ),
-          const SizedBox(width: 10,),
-          Expanded(
-            child: ATRichText(
-              maxLines: 2,
-              items: <String, TextStyle>{
-                firstName: Theme.of(context).textTheme.bodySmall!.copyWith(
-                  fontSize: ATSizes.size13
-                ),
-                if(!oneGifter)' and ' : Theme.of(context).textTheme.titleSmall!,
-                if(!oneGifter)'${gifters.length - 1} others ': Theme.of(context).textTheme.bodySmall!.copyWith(
-                  fontSize: ATSizes.size13
-                ),
-                '${ATStrings.SENT_U_A_GITF_DURING_LIVE} ${isEvent ? ATStrings.EVENT : ATStrings.SHOW}: '
-                  : Theme.of(context).textTheme.titleSmall!,
-                progName: Theme.of(context).textTheme.bodySmall!.copyWith(
-                  fontSize: ATSizes.size13
-                ),
-                '. $time ${ATStrings.AGO}' : Theme.of(context).textTheme.titleSmall!,
-              }
-            ),
-          ),
-        ]
-      ),
+        const SizedBox(
+          width: 10,
+        ),
+        Expanded(
+          child: ATRichText(maxLines: 2, items: <String, TextStyle>{
+            firstName: Theme.of(context)
+                .textTheme
+                .bodySmall!
+                .copyWith(fontSize: ATSizes.size13),
+            if (!oneGifter) ' and ': Theme.of(context).textTheme.titleSmall!,
+            if (!oneGifter)
+              '${gifters.length - 1} others ': Theme.of(context)
+                  .textTheme
+                  .bodySmall!
+                  .copyWith(fontSize: ATSizes.size13),
+            '${ATStrings.SENT_U_A_GITF_DURING_LIVE} ${isEvent ? ATStrings.EVENT : ATStrings.SHOW}: ':
+                Theme.of(context).textTheme.titleSmall!,
+            progName: Theme.of(context)
+                .textTheme
+                .bodySmall!
+                .copyWith(fontSize: ATSizes.size13),
+            '. $time ${ATStrings.AGO}': Theme.of(context).textTheme.titleSmall!,
+          }),
+        ),
+      ]),
     );
   }
 }
-
-
 
 class DeclinedCohostInviteNotif extends StatelessWidget {
   const DeclinedCohostInviteNotif({
@@ -255,32 +266,26 @@ class DeclinedCohostInviteNotif extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only(top: 10, bottom: 10),
-      child: Row(
-        children: <Widget>[
-          ATCircularImage(
-            diameter: 40,
-            imagePath: cohost.obj.profilePicture ?? ''
-          ),
-          const SizedBox(width: 10,),
-          Expanded(
-            child: ATRichText(
-              maxLines: 2,
-              items: <String, TextStyle>{
-                cohost.obj.name ?? '': Theme.of(context).textTheme.bodySmall!.copyWith(
-                  fontSize: ATSizes.size13
-                ),
-                ' ${ATStrings.DECLINED_UR_COHOST_REQUEST}. $timeOfDecline ${ATStrings.AGO}'.toLowerCase()
-                  : Theme.of(context).textTheme.titleSmall!
-              }
-            ),
-          ),
-        ]
-      ),
+      child: Row(children: <Widget>[
+        ATCircularImage(
+            diameter: 40, imagePath: cohost.obj.profilePicture ?? ''),
+        const SizedBox(
+          width: 10,
+        ),
+        Expanded(
+          child: ATRichText(maxLines: 2, items: <String, TextStyle>{
+            cohost.obj.name ?? '': Theme.of(context)
+                .textTheme
+                .bodySmall!
+                .copyWith(fontSize: ATSizes.size13),
+            ' ${ATStrings.DECLINED_UR_COHOST_REQUEST}. $timeOfDecline ${ATStrings.AGO}'
+                .toLowerCase(): Theme.of(context).textTheme.titleSmall!
+          }),
+        ),
+      ]),
     );
   }
 }
-
-
 
 class ProgramRescheduledNotif extends StatelessWidget {
   const ProgramRescheduledNotif({
@@ -295,45 +300,49 @@ class ProgramRescheduledNotif extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only(top: 10, bottom: 10),
-      child: Row(
-        children: <Widget>[
-          ClipRRect(
-            borderRadius: BorderRadius.circular(3),
-            child: ATImgLoader(
-              imgPath: progImg, boxFit: BoxFit.cover,
-              height: 40, width: 40,
-            ),
+      child: Row(children: <Widget>[
+        ClipRRect(
+          borderRadius: BorderRadius.circular(3),
+          child: ATImgLoader(
+            imgPath: progImg,
+            boxFit: BoxFit.cover,
+            height: 40,
+            width: 40,
           ),
-          const SizedBox(width: 10,),
-          Expanded(
-            child: ATRichText(
-              maxLines: 2,
-              items: <String, TextStyle>{
-                '${ATStrings.D_EVENT}: ' : Theme.of(context).textTheme.titleSmall!,
-                progName : Theme.of(context).textTheme.bodySmall!.copyWith(
-                  fontSize: ATSizes.size13
-                ),
-                ' ${ATStrings.HAS_BEEN_RESCHEDULED}. $timeOfReschedule ${ATStrings.AGO}'.toLowerCase() 
-                  : Theme.of(context).textTheme.titleSmall!,
-              }
-            ),
+        ),
+        const SizedBox(
+          width: 10,
+        ),
+        Expanded(
+          child: ATRichText(maxLines: 2, items: <String, TextStyle>{
+            '${ATStrings.D_EVENT}: ': Theme.of(context).textTheme.titleSmall!,
+            progName: Theme.of(context)
+                .textTheme
+                .bodySmall!
+                .copyWith(fontSize: ATSizes.size13),
+            ' ${ATStrings.HAS_BEEN_RESCHEDULED}. $timeOfReschedule ${ATStrings.AGO}'
+                .toLowerCase(): Theme.of(context).textTheme.titleSmall!,
+          }),
+        ),
+        const SizedBox(
+          width: 15,
+        ),
+        ATContainer(
+          onTap: () {
+            debugPrint('Hello');
+          },
+          radius: 20,
+          padding: const EdgeInsets.fromLTRB(10, 5, 10, 5),
+          color: ATColors.hex307FE2,
+          child: Text(
+            '${ATStrings.VIEW} ${ATStrings.DETAILS}'.capitalize,
+            style: Theme.of(context).textTheme.bodySmall,
           ),
-          const SizedBox(width: 15,),
-          ATContainer(
-            onTap: (){debugPrint('Hello');},
-            radius: 20, padding: const EdgeInsets.fromLTRB(10, 5, 10, 5),
-            color: ATColors.hex307FE2,
-            child: Text(
-              '${ATStrings.VIEW} ${ATStrings.DETAILS}'.capitalize,
-              style: Theme.of(context).textTheme.bodySmall,
-            ),
-          )
-        ]
-      ),
+        )
+      ]),
     );
   }
 }
-
 
 class ProgramEndedNotif extends StatelessWidget {
   const ProgramEndedNotif({
@@ -348,36 +357,33 @@ class ProgramEndedNotif extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only(top: 10, bottom: 10),
-      child: Row(
-        children: <Widget>[
-          ClipRRect(
-            borderRadius: BorderRadius.circular(3),
-            child: ATImgLoader(
-              imgPath: progImg, boxFit: BoxFit.cover,
-              height: 40, width: 40,
-            ),
+      child: Row(children: <Widget>[
+        ClipRRect(
+          borderRadius: BorderRadius.circular(3),
+          child: ATImgLoader(
+            imgPath: progImg,
+            boxFit: BoxFit.cover,
+            height: 40,
+            width: 40,
           ),
-          const SizedBox(width: 10,),
-          Expanded(
-            child: ATRichText(
-              maxLines: 2,
-              items: <String, TextStyle>{
-                progName : Theme.of(context).textTheme.bodySmall!.copyWith(
-                  fontSize: ATSizes.size13
-                ),
-                ' ${ATStrings.HAS_ENDED}. $timeOfEnd ${ATStrings.AGO}'.toLowerCase()
-                : Theme.of(context).textTheme.titleSmall!,
-              }
-            ),
-          ),
-        ]
-      ),
+        ),
+        const SizedBox(
+          width: 10,
+        ),
+        Expanded(
+          child: ATRichText(maxLines: 2, items: <String, TextStyle>{
+            progName: Theme.of(context)
+                .textTheme
+                .bodySmall!
+                .copyWith(fontSize: ATSizes.size13),
+            ' ${ATStrings.HAS_ENDED}. $timeOfEnd ${ATStrings.AGO}'
+                .toLowerCase(): Theme.of(context).textTheme.titleSmall!,
+          }),
+        ),
+      ]),
     );
   }
 }
-
-
-
 
 class ProgramIsLiveNotif extends StatelessWidget {
   const ProgramIsLiveNotif({
@@ -394,32 +400,36 @@ class ProgramIsLiveNotif extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only(top: 10, bottom: 10),
-      child: Row(
-        children: <Widget>[
-          ClipRRect(
-            borderRadius: BorderRadius.circular(3),
-            child: ATImgLoader(
-              imgPath: progImg, boxFit: BoxFit.cover,
-              height: 40, width: 40,
-            ),
+      child: Row(children: <Widget>[
+        ClipRRect(
+          borderRadius: BorderRadius.circular(3),
+          child: ATImgLoader(
+            imgPath: progImg,
+            boxFit: BoxFit.cover,
+            height: 40,
+            width: 40,
           ),
-          const SizedBox(width: 10,),
-          Expanded(
-            child: ATRichText(
-              maxLines: 2,
-              items: <String, TextStyle>{
-                '${isEvent ? ATStrings.D_EVENT : ATStrings.D_SHOW}: ': Theme.of(context).textTheme.titleSmall!,
-                progName : Theme.of(context).textTheme.bodySmall!.copyWith(
-                  fontSize: ATSizes.size13
-                ),
-                ' ${ATStrings.IS_LIVE}. $startTime ${ATStrings.AGO}' : Theme.of(context).textTheme.titleSmall!,
-              }
-            ),
-          ),
-          const SizedBox(width: 20,),
-          const _LiveProgramIndicator()
-        ]
-      ),
+        ),
+        const SizedBox(
+          width: 10,
+        ),
+        Expanded(
+          child: ATRichText(maxLines: 2, items: <String, TextStyle>{
+            '${isEvent ? ATStrings.D_EVENT : ATStrings.D_SHOW}: ':
+                Theme.of(context).textTheme.titleSmall!,
+            progName: Theme.of(context)
+                .textTheme
+                .bodySmall!
+                .copyWith(fontSize: ATSizes.size13),
+            ' ${ATStrings.IS_LIVE}. $startTime ${ATStrings.AGO}':
+                Theme.of(context).textTheme.titleSmall!,
+          }),
+        ),
+        const SizedBox(
+          width: 20,
+        ),
+        const _LiveProgramIndicator()
+      ]),
     );
   }
 }
@@ -437,23 +447,17 @@ class _LiveProgramIndicatorState extends State<_LiveProgramIndicator> {
   @override
   Widget build(BuildContext context) {
     return TweenAnimationBuilder<double>(
-      duration: const Duration(milliseconds: 500),
-      tween: Tween<double>(
-        begin: isDone ? 3 : 10,
-        end: isDone ? 10 : 3
-      ),
-      onEnd: () => setState(() => isDone = !isDone),
-      builder: (_, double size, __) {
-        return ATCircleAvatar(
-          diameter: size, 
-          color: ATColors.textRedColor,
-        );
-      }
-    );
+        duration: const Duration(milliseconds: 500),
+        tween: Tween<double>(begin: isDone ? 3 : 10, end: isDone ? 10 : 3),
+        onEnd: () => setState(() => isDone = !isDone),
+        builder: (_, double size, __) {
+          return ATCircleAvatar(
+            diameter: size,
+            color: ATColors.textRedColor,
+          );
+        });
   }
 }
-
-
 
 class ProgramAbout2StartNotif extends StatelessWidget {
   const ProgramAbout2StartNotif({
@@ -468,35 +472,33 @@ class ProgramAbout2StartNotif extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only(top: 10, bottom: 10),
-      child: Row(
-        children: <Widget>[
-          ClipRRect(
-            borderRadius: BorderRadius.circular(3),
-            child: ATImgLoader(
-              imgPath: progImg, boxFit: BoxFit.cover,
-              height: 40, width: 40,
-            ),
+      child: Row(children: <Widget>[
+        ClipRRect(
+          borderRadius: BorderRadius.circular(3),
+          child: ATImgLoader(
+            imgPath: progImg,
+            boxFit: BoxFit.cover,
+            height: 40,
+            width: 40,
           ),
-          const SizedBox(width: 10,),
-          Expanded(
-            child: ATRichText(
-              maxLines: 2,
-              items: <String, TextStyle>{
-                progName : Theme.of(context).textTheme.bodySmall!.copyWith(
-                  fontSize: ATSizes.size13
-                ),
-                ' ${ATStrings.STARTS_IN} $startTime. $notifTime ${ATStrings.AGO}'
-                  : Theme.of(context).textTheme.titleSmall!,
-              }
-            ),
-          ),
-        ]
-      ),
+        ),
+        const SizedBox(
+          width: 10,
+        ),
+        Expanded(
+          child: ATRichText(maxLines: 2, items: <String, TextStyle>{
+            progName: Theme.of(context)
+                .textTheme
+                .bodySmall!
+                .copyWith(fontSize: ATSizes.size13),
+            ' ${ATStrings.STARTS_IN} $startTime. $notifTime ${ATStrings.AGO}':
+                Theme.of(context).textTheme.titleSmall!,
+          }),
+        ),
+      ]),
     );
   }
 }
-
-
 
 class CohostInviteNotif extends StatelessWidget {
   const CohostInviteNotif({
@@ -516,47 +518,47 @@ class CohostInviteNotif extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only(top: 10, bottom: 10),
-      child: Row(
-        children: <Widget>[
-          ATCircularImage(
-            diameter: 40,
-            imagePath: progOwner.obj.profilePicture ?? '',
+      child: Row(children: <Widget>[
+        ATCircularImage(
+          diameter: 40,
+          imagePath: progOwner.obj.profilePicture ?? '',
+        ),
+        const SizedBox(
+          width: 10,
+        ),
+        Expanded(
+          child: ATRichText(maxLines: 2, items: <String, TextStyle>{
+            progOwner.obj.username ?? '': Theme.of(context)
+                .textTheme
+                .bodySmall!
+                .copyWith(fontSize: ATSizes.size13),
+            ' ${ATStrings.INVITED_U_2_COHOST_IN_THE} ${isEvent ? ATStrings.EVENT : ATStrings.SHOW} ':
+                Theme.of(context).textTheme.titleSmall!,
+            progName: Theme.of(context)
+                .textTheme
+                .bodySmall!
+                .copyWith(fontSize: ATSizes.size13),
+            '. $inviteTime ${ATStrings.AGO}':
+                Theme.of(context).textTheme.titleSmall!,
+          }),
+        ),
+        const SizedBox(
+          width: 15,
+        ),
+        ATContainer(
+          onTap: onResponse,
+          radius: 20,
+          padding: const EdgeInsets.fromLTRB(10, 5, 10, 5),
+          color: ATColors.hex307FE2,
+          child: Text(
+            ATStrings.RESPOND,
+            style: Theme.of(context).textTheme.bodySmall,
           ),
-          const SizedBox(width: 10,),
-
-          Expanded(
-            child: ATRichText(
-              maxLines: 2,
-              items: <String, TextStyle>{
-                progOwner.obj.username ?? '' : Theme.of(context).textTheme.bodySmall!.copyWith(
-                  fontSize: ATSizes.size13
-                ),
-                ' ${ATStrings.INVITED_U_2_COHOST_IN_THE} ${isEvent ? ATStrings.EVENT : ATStrings.SHOW} ' 
-                  : Theme.of(context).textTheme.titleSmall!,
-                progName : Theme.of(context).textTheme.bodySmall!.copyWith(
-                  fontSize: ATSizes.size13
-                ),
-                '. $inviteTime ${ATStrings.AGO}' : Theme.of(context).textTheme.titleSmall!,
-              }
-            ),
-          ),
-          const SizedBox(width: 15,),
-          ATContainer(
-            onTap: onResponse,
-            radius: 20, padding: const EdgeInsets.fromLTRB(10, 5, 10, 5),
-            color: ATColors.hex307FE2,
-            child: Text(
-              ATStrings.RESPOND,
-              style: Theme.of(context).textTheme.bodySmall,
-            ),
-          )
-        ]
-      ),
+        )
+      ]),
     );
   }
 }
-
-
 
 class CohostInvitePaymentNotif extends StatelessWidget {
   const CohostInvitePaymentNotif({
@@ -573,33 +575,30 @@ class CohostInvitePaymentNotif extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only(top: 10, bottom: 10),
-      child: Row(
-        children: <Widget>[
-          ATCircularImage(
-            diameter: 40,
-            imagePath: progImg,
-          ),
-          const SizedBox(width: 10,),
-          Expanded(
-            child: ATRichText(
-              maxLines: 2,
-              items: <String, TextStyle>{
-                '${ATStrings.U_R_PAID_2_COHOST_A_LIVE} ${isEvent ? ATStrings.EVENT : ATStrings.SHOW} ' 
-                  : Theme.of(context).textTheme.titleSmall!,
-                progName : Theme.of(context).textTheme.bodySmall!.copyWith(
-                  fontSize: ATSizes.size13
-                ),
-                ' $inviteTime ${ATStrings.AGO}' : Theme.of(context).textTheme.titleSmall!,
-              }
-            ),
-          ),
-        ]
-      ),
+      child: Row(children: <Widget>[
+        ATCircularImage(
+          diameter: 40,
+          imagePath: progImg,
+        ),
+        const SizedBox(
+          width: 10,
+        ),
+        Expanded(
+          child: ATRichText(maxLines: 2, items: <String, TextStyle>{
+            '${ATStrings.U_R_PAID_2_COHOST_A_LIVE} ${isEvent ? ATStrings.EVENT : ATStrings.SHOW} ':
+                Theme.of(context).textTheme.titleSmall!,
+            progName: Theme.of(context)
+                .textTheme
+                .bodySmall!
+                .copyWith(fontSize: ATSizes.size13),
+            ' $inviteTime ${ATStrings.AGO}':
+                Theme.of(context).textTheme.titleSmall!,
+          }),
+        ),
+      ]),
     );
   }
 }
-
-
 
 class WithdrawalProcessedNotif extends StatelessWidget {
   const WithdrawalProcessedNotif({
@@ -614,33 +613,31 @@ class WithdrawalProcessedNotif extends StatelessWidget {
     return ATContainer(
       onTap: () => context.pushNamed(ATRoutes.walletTransactionsHistoryScreen),
       padding: const EdgeInsets.only(top: 10, bottom: 10),
-      child: Row(
-        children: <Widget>[
-          ATCircleAvatar(
-            diameter: 40,
-            color: ATColors.hex307FE2,
-            child: const Icon(CupertinoIcons.arrow_up),
-          ),
-          const SizedBox(width: 10,),
-          Expanded(
-            child: ATRichText(
-              maxLines: 2,
-              items: <String, TextStyle>{
-                ATStrings.UR_WITHDRAWAL_REQUEST : Theme.of(context).textTheme.titleSmall!,
-                ' N$amount': Theme.of(context).textTheme.bodySmall!.copyWith(
-                  fontSize: ATSizes.size13
-                ),
-                ' ${ATStrings.HAS_BEEN_PROCESSED}. $time': Theme.of(context).textTheme.titleSmall!
-              }
-            ),
-          ),
-        ]
-      ),
+      child: Row(children: <Widget>[
+        ATCircleAvatar(
+          diameter: 40,
+          color: ATColors.hex307FE2,
+          child: const Icon(CupertinoIcons.arrow_up),
+        ),
+        const SizedBox(
+          width: 10,
+        ),
+        Expanded(
+          child: ATRichText(maxLines: 2, items: <String, TextStyle>{
+            ATStrings.UR_WITHDRAWAL_REQUEST:
+                Theme.of(context).textTheme.titleSmall!,
+            ' N$amount': Theme.of(context)
+                .textTheme
+                .bodySmall!
+                .copyWith(fontSize: ATSizes.size13),
+            ' ${ATStrings.HAS_BEEN_PROCESSED}. $time':
+                Theme.of(context).textTheme.titleSmall!
+          }),
+        ),
+      ]),
     );
   }
 }
-
-
 
 class DepositSuccessNotif extends StatelessWidget {
   const DepositSuccessNotif({
@@ -655,41 +652,37 @@ class DepositSuccessNotif extends StatelessWidget {
     return ATContainer(
       onTap: () => context.pushNamed(ATRoutes.walletTransactionsHistoryScreen),
       padding: const EdgeInsets.only(top: 10, bottom: 10),
-      child: Row(
-        children: <Widget>[
-          ATCircleAvatar(
-            diameter: 40,
-            color: ATColors.hex307FE2,
-            child: const Icon(CupertinoIcons.arrow_down),
-          ),
-          const SizedBox(width: 10,),
-          Expanded(
-            child: ATRichText(
-              maxLines: 2,
-              items: <String, TextStyle>{
-                ATStrings.UR_DEPOSIT : Theme.of(context).textTheme.titleSmall!,
-                ' N$amount': Theme.of(context).textTheme.bodySmall!.copyWith(
-                  fontSize: ATSizes.size13
-                ),
-                ' ${ATStrings.WAS_SUCCESSFUL}. $time': Theme.of(context).textTheme.titleSmall!
-              }
-            ),
-          ),
-        ]
-      ),
+      child: Row(children: <Widget>[
+        ATCircleAvatar(
+          diameter: 40,
+          color: ATColors.hex307FE2,
+          child: const Icon(CupertinoIcons.arrow_down),
+        ),
+        const SizedBox(
+          width: 10,
+        ),
+        Expanded(
+          child: ATRichText(maxLines: 2, items: <String, TextStyle>{
+            ATStrings.UR_DEPOSIT: Theme.of(context).textTheme.titleSmall!,
+            ' N$amount': Theme.of(context)
+                .textTheme
+                .bodySmall!
+                .copyWith(fontSize: ATSizes.size13),
+            ' ${ATStrings.WAS_SUCCESSFUL}. $time':
+                Theme.of(context).textTheme.titleSmall!
+          }),
+        ),
+      ]),
     );
   }
 }
 
-
-
 class MoneyReceivedNotif extends StatelessWidget {
-  const MoneyReceivedNotif({
-    super.key,
-    required this.amount,
-    required this.time,
-    required this.senderName
-  });
+  const MoneyReceivedNotif(
+      {super.key,
+      required this.amount,
+      required this.time,
+      required this.senderName});
   final String amount, time, senderName;
 
   @override
@@ -697,28 +690,27 @@ class MoneyReceivedNotif extends StatelessWidget {
     return ATContainer(
       onTap: () => context.pushNamed(ATRoutes.walletTransactionsHistoryScreen),
       padding: const EdgeInsets.only(top: 10, bottom: 10),
-      child: Row(
-        children: <Widget>[
-          ATCircleAvatar(
-            diameter: 40,
-            color: ATColors.hex307FE2,
-            child: const Icon(CupertinoIcons.arrow_down),
-          ),
-          const SizedBox(width: 10,),
-          Expanded(
-            child: ATRichText(
-              maxLines: 2,
-              items: <String, TextStyle>{
-                '$senderName sent' : Theme.of(context).textTheme.titleSmall!,
-                ' N$amount': Theme.of(context).textTheme.bodySmall!.copyWith(
-                  fontSize: ATSizes.size13
-                ),
-                ' ${ATStrings.TO_UR_WALLET}. $time': Theme.of(context).textTheme.titleSmall!
-              }
-            ),
-          ),
-        ]
-      ),
+      child: Row(children: <Widget>[
+        ATCircleAvatar(
+          diameter: 40,
+          color: ATColors.hex307FE2,
+          child: const Icon(CupertinoIcons.arrow_down),
+        ),
+        const SizedBox(
+          width: 10,
+        ),
+        Expanded(
+          child: ATRichText(maxLines: 2, items: <String, TextStyle>{
+            '$senderName sent': Theme.of(context).textTheme.titleSmall!,
+            ' N$amount': Theme.of(context)
+                .textTheme
+                .bodySmall!
+                .copyWith(fontSize: ATSizes.size13),
+            ' ${ATStrings.TO_UR_WALLET}. $time':
+                Theme.of(context).textTheme.titleSmall!
+          }),
+        ),
+      ]),
     );
   }
 }

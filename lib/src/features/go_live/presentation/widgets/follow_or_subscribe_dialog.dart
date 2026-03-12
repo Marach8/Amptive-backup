@@ -155,14 +155,13 @@ Future<void> showFollowHostOrCohostDialog(
                         final bool isSubscribed = state is SubscribedState;
                         final bool isLoading =
                             state is SubscriptionLoadingState;
-                        final bool unSubscribed =
-                            state is Ready2SubscribeState;
+                        final bool unSubscribed = state is Ready2SubscribeState;
                         final bool initialState = state is InitialSubState;
-        
+
                         if (initialState) {
                           return const SizedBox.shrink();
                         }
-        
+
                         return Expanded(
                           flex: 4,
                           child: ATPlainElevatedBtn(
@@ -181,7 +180,7 @@ Future<void> showFollowHostOrCohostDialog(
                                             'Unsubscribing will remove your access to "subscribers-only" live shows!',
                                         yesString: ATStrings.UNSUBSCRIBE,
                                         noString: ATStrings.cancel);
-        
+
                                 if (context.mounted &&
                                     (shouldUnSubscribe ?? false)) {
                                   context
@@ -192,8 +191,7 @@ Future<void> showFollowHostOrCohostDialog(
                             },
                             bgColor: ATColors.hexFED601,
                             fgColor: ATColors.hex0D0D0D,
-                            btnTitle:
-                                isSubscribed ? ATStrings.UNSUBSCRIBE : '',
+                            btnTitle: isSubscribed ? ATStrings.UNSUBSCRIBE : '',
                             child: isLoading
                                 ? ATLoadingIndicator(
                                     color: ATColors.white,
@@ -224,10 +222,8 @@ Future<void> showFollowHostOrCohostDialog(
                                                   .textTheme
                                                   .bodyMedium
                                                   ?.copyWith(
-                                                      color:
-                                                          ATColors.hex0D0D0D,
-                                                      fontSize:
-                                                          ATSizes.size17),
+                                                      color: ATColors.hex0D0D0D,
+                                                      fontSize: ATSizes.size17),
                                             ),
                                           ),
                                         ],

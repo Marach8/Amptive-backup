@@ -41,65 +41,63 @@ class ATCalenderLandingScreen extends StatelessWidget {
       ],
       child: ATAnnotatedRegion(
         child: Scaffold(
-          appBar: ATAppBar(
-            leadingWidth: 200,
-            padding: const EdgeInsets.fromLTRB(15, 0, 15, 0),
-            leading: ATBackBtn(
-              alignment: Alignment.centerLeft,
-              leadingWidget: BlocSelector<CalenderViewsBloc, CalenderViewsState, String>(
-                selector: (CalenderViewsState curr) => curr.$2,
-                builder: (_, String state) {
-                  return Text(
-                    state,
-                    style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                      fontSize: ATSizes.size23
-                    ),
+            appBar: ATAppBar(
+              leadingWidth: 200,
+              padding: const EdgeInsets.fromLTRB(15, 0, 15, 0),
+              leading: ATBackBtn(
+                alignment: Alignment.centerLeft,
+                leadingWidget:
+                    BlocSelector<CalenderViewsBloc, CalenderViewsState, String>(
+                        selector: (CalenderViewsState curr) => curr.$2,
+                        builder: (_, String state) {
+                          return Text(
+                            state,
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodyLarge
+                                ?.copyWith(fontSize: ATSizes.size23),
+                          );
+                        }),
+              ),
+              actions: <Widget>[
+                BlocSelector<CalenderViewsBloc, CalenderViewsState, int>(
+                    selector: (CalenderViewsState curr) => curr.$1,
+                    builder: (_, int state) {
+                      return CalenderDropDown(currIndex: state);
+                    }),
+              ],
+            ),
+            body: BlocConsumer<CalenderViewsBloc, CalenderViewsState>(
+                listener: (_, CalenderViewsState state) {
+                  if (state.$1 == 1) {
+                    context.read<CalenderViewsBloc>().showOnlyYear();
+                  } else {
+                    context.read<CalenderViewsBloc>().showMonthAndYear();
+                  }
+                },
+                buildWhen: (CalenderViewsState prev, CalenderViewsState curr) =>
+                    prev.$1 != curr.$1,
+                listenWhen:
+                    (CalenderViewsState prev, CalenderViewsState curr) =>
+                        prev.$1 != curr.$1,
+                builder: (_, CalenderViewsState state) {
+                  return IndexedStack(
+                    index: state.$1,
+                    children: const <Widget>[
+                      CalenderDayView(),
+                      CalenderMonthView(),
+                      ScheduledEventsView()
+                    ],
                   );
-                }
-              ),
-            ),
-            actions: <Widget>[
-              BlocSelector<CalenderViewsBloc, CalenderViewsState, int>(
-                selector: (CalenderViewsState curr) => curr.$1,
-                builder: (_, int state) {
-                  return CalenderDropDown(currIndex: state);
-                }
-              ),
-            ],
-          ),
-          body: BlocConsumer<CalenderViewsBloc, CalenderViewsState>(
-            listener: (_, CalenderViewsState state){
-              if(state.$1 == 1){
-                context.read<CalenderViewsBloc>().showOnlyYear();
-              }
-              else{
-                context.read<CalenderViewsBloc>().showMonthAndYear();
-              }
-            },
-            buildWhen: (CalenderViewsState prev, CalenderViewsState curr) => prev.$1 != curr.$1,
-            listenWhen: (CalenderViewsState prev, CalenderViewsState curr) => prev.$1 != curr.$1,
-            builder: (_, CalenderViewsState state) {
-              return IndexedStack(
-                index: state.$1,
-                children: const <Widget>[
-                  CalenderDayView(),
-                  CalenderMonthView(),
-                  ScheduledEventsView()
-                ],
-              );
-            }
-          ),
-      
-          bottomSheet: Padding(
-            padding: const EdgeInsets.fromLTRB(15, 5, 15, 60),
-            child: ATPlainElevatedBtn(
-              onPressed: (){},
-              btnTitle: ATStrings.createSchedule,
-              bgColor: ATColors.white,
-              fgColor: ATColors.hex0D0D0D
-            ),
-          )
-        ),
+                }),
+            bottomSheet: Padding(
+              padding: const EdgeInsets.fromLTRB(15, 5, 15, 60),
+              child: ATPlainElevatedBtn(
+                  onPressed: () {},
+                  btnTitle: ATStrings.createSchedule,
+                  bgColor: ATColors.white,
+                  fgColor: ATColors.hex0D0D0D),
+            )),
       ),
     );
   }

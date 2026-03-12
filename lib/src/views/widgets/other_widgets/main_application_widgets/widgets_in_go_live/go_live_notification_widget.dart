@@ -18,56 +18,55 @@ class AmptiveGoLiveNotificationsWidget extends StatelessWidget {
     final Host user = state.user.obj;
     final bool isTalking = state.notificationType == ATStrings.IS_TALKING;
     final bool isGifting = state.notificationType == ATStrings.IS_GIFTING;
-    final String? giftedAmount = (state.extraDetail as Map<String, String>?)?.values.first;
+    final String? giftedAmount =
+        (state.extraDetail as Map<String, String>?)?.values.first;
 
     return ATContainer(
       padding: const EdgeInsets.fromLTRB(2, 0, 0, 0),
-      height: 35, radius: 30,
-      gradient: isTalking ? LinearGradient(
-        colors: <Color>[
-          ATColors.hexF91880.withOpacity(1),
-          ATColors.orangeColor2.withOpacity(0),
-        ]
-      ) :  isGifting ? LinearGradient(
-        colors: <Color>[
-          ATColors.green1.withOpacity(1),
-          ATColors.hex009C80.withOpacity(0)
-        ]
-      ) : null,
+      height: 35,
+      radius: 30,
+      gradient: isTalking
+          ? LinearGradient(colors: <Color>[
+              ATColors.hexF91880.withOpacity(1),
+              ATColors.orangeColor2.withOpacity(0),
+            ])
+          : isGifting
+              ? LinearGradient(colors: <Color>[
+                  ATColors.green1.withOpacity(1),
+                  ATColors.hex009C80.withOpacity(0)
+                ])
+              : null,
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
-          ATCircularImage(
-            diameter: 30,
-            imagePath: user.profilePicture ?? ''
-          ),
+          ATCircularImage(diameter: 30, imagePath: user.profilePicture ?? ''),
           const SizedBox(width: 5),
           Text(
             user.name ?? '',
-            style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-              fontSize: ATSizes.size12
-            ),
+            style: Theme.of(context)
+                .textTheme
+                .bodyMedium
+                ?.copyWith(fontSize: ATSizes.size12),
           ),
           const SizedBox(width: 5),
           Text(
-            isGifting ? '${ATStrings.GIFTED} $giftedAmount' : ATStrings.IS_TALKING,
+            isGifting
+                ? '${ATStrings.GIFTED} $giftedAmount'
+                : ATStrings.IS_TALKING,
             style: Theme.of(context).textTheme.titleSmall,
           ),
           const SizedBox(width: 10),
           ATImgLoader(
-            imgPath: isTalking ? ATImgStrings.MIC_ICON
-              : isGifting ? ATImgStrings.MONEY_ICON : ''
-          )
+              imgPath: isTalking
+                  ? ATImgStrings.MIC_ICON
+                  : isGifting
+                      ? ATImgStrings.MONEY_ICON
+                      : '')
         ],
       ),
     );
   }
 }
-
-
-
-
-
 
 class AmptiveGoLivePinnedMsgNtfctnWidget extends StatelessWidget {
   const AmptiveGoLivePinnedMsgNtfctnWidget({super.key, required this.state});
@@ -76,7 +75,8 @@ class AmptiveGoLivePinnedMsgNtfctnWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final Host user = state.user.obj;
-    final Map<String, String>? extraDetails = state.extraDetail as Map<String, String>?;
+    final Map<String, String>? extraDetails =
+        state.extraDetail as Map<String, String>?;
     final String? role = extraDetails?[ATStrings.ROLE];
     final String? msgTitle = extraDetails?[ATStrings.MSG_TITLE];
     final String? msgContent = extraDetails?[ATStrings.MSG_CONTENT];
@@ -93,10 +93,7 @@ class AmptiveGoLivePinnedMsgNtfctnWidget extends StatelessWidget {
       radius: 10,
       child: Row(
         children: <Widget>[
-          ATCircularImage(
-            diameter: 30,
-            imagePath: user.profilePicture ?? ''
-          ),
+          ATCircularImage(diameter: 30, imagePath: user.profilePicture ?? ''),
           const SizedBox(width: 10),
           Expanded(
             child: Column(
@@ -106,57 +103,54 @@ class AmptiveGoLivePinnedMsgNtfctnWidget extends StatelessWidget {
                 Row(
                   children: <Widget>[
                     Expanded(
-                      child: Text(
-                        user.name ?? '',
-                        style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                          color: ATColors.white.withOpacity(0.7)
-                        )
-                      ),
+                      child: Text(user.name ?? '',
+                          style: Theme.of(context)
+                              .textTheme
+                              .bodySmall
+                              ?.copyWith(
+                                  color: ATColors.white.withOpacity(0.7))),
                     ),
-    
                     ATContainer(
                       color: ATColors.white.withOpacity(0.2),
-                      padding: const EdgeInsets.all(2), radius: 4,
-                      child: Text(
-                        (role ?? '').toUpperCase(),
-                        style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                          fontSize: ATSizes.size10
-                        )
-                      ),
+                      padding: const EdgeInsets.all(2),
+                      radius: 4,
+                      child: Text((role ?? '').toUpperCase(),
+                          style: Theme.of(context)
+                              .textTheme
+                              .bodyMedium
+                              ?.copyWith(fontSize: ATSizes.size10)),
                     ),
                     const SizedBox(width: 5),
                     ATContainer(
                       color: ATColors.white.withOpacity(0.2),
-                      padding: const EdgeInsets.all(2), radius: 4,
+                      padding: const EdgeInsets.all(2),
+                      radius: 4,
                       child: Row(
                         children: <Widget>[
                           Transform.rotate(
-                            angle: 44.5,
-                            child: const Icon(Icons.push_pin, size: 14)
-                          ),
+                              angle: 44.5,
+                              child: const Icon(Icons.push_pin, size: 14)),
                           const SizedBox(width: 2),
-                          Text(
-                            ATStrings.PINNED.toUpperCase(),
-                            style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                              fontSize: ATSizes.size10
-                            )
-                          ),
+                          Text(ATStrings.PINNED.toUpperCase(),
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .bodyMedium
+                                  ?.copyWith(fontSize: ATSizes.size10)),
                         ],
                       ),
                     ),
                     const Spacer()
                   ],
                 ),
-
                 const SizedBox(height: 5),
-
                 Row(
                   children: <Widget>[
                     Text(
                       '$msgTitle: ',
-                      style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                        fontSize: ATSizes.size13
-                      ),
+                      style: Theme.of(context)
+                          .textTheme
+                          .titleMedium
+                          ?.copyWith(fontSize: ATSizes.size13),
                     ),
                     Expanded(
                       child: Text(

@@ -2,11 +2,8 @@ import 'package:amptive/src/global_export.dart';
 import 'package:flutter/material.dart';
 
 class ATSelectCountryScreen extends StatelessWidget {
-  const ATSelectCountryScreen({
-    super.key,
-    this.selectedCountry,
-    required this.countries
-  });
+  const ATSelectCountryScreen(
+      {super.key, this.selectedCountry, required this.countries});
 
   final String? selectedCountry;
   final List<String> countries;

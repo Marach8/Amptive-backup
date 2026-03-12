@@ -15,32 +15,29 @@ class AmptiveMore2DiscoverTitle extends StatelessWidget {
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            Text(
-              ATStrings.MORE_2_DISCOVER,
-              style: Theme.of(context).textTheme.bodyLarge 
-            ),
+            Text(ATStrings.MORE_2_DISCOVER,
+                style: Theme.of(context).textTheme.bodyLarge),
             Text(
               ATStrings.SEE_COMMUNITIES,
               style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                fontSize: ATSizes.size13,
-                color: ATColors.hexCDCDCD
-              ),
+                  fontSize: ATSizes.size13, color: ATColors.hexCDCDCD),
             ),
           ],
         ),
         const Spacer(),
         InkWell(
-          onTap: (){
+          onTap: () {
             context.pushNamed(ATRoutes.COMMUNITY_SCREEN);
           },
           borderRadius: BorderRadius.circular(5),
           child: Row(
             children: <Widget>[
-              Text(
-                ATStrings.VIEW_ALL,
-                style: Theme.of(context).textTheme.labelMedium
-              ),
-              Icon(Icons.keyboard_arrow_right_sharp, color: ATColors.hexB6B6B6,)
+              Text(ATStrings.VIEW_ALL,
+                  style: Theme.of(context).textTheme.labelMedium),
+              Icon(
+                Icons.keyboard_arrow_right_sharp,
+                color: ATColors.hexB6B6B6,
+              )
             ],
           ),
         )

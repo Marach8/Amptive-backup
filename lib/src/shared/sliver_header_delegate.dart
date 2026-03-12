@@ -31,8 +31,7 @@ class ATSliverHDelegate extends SliverPersistentHeaderDelegate {
 
     if (maxExtent == minExtent) {
       pinnedNow = overlapsContent;
-    } 
-    else {
+    } else {
       pinnedNow = shrinkOffset >= (maxExtent - minExtent);
     }
 

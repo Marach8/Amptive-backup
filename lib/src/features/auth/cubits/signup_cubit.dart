@@ -13,8 +13,9 @@ class SignupCubit extends Cubit<ATAppState<SignupResponseModel>> {
   SignupCubit({
     AuthRepo? mockAuthRepo,
     ATLocalStorageService? mockLocalStorageService,
-  }) : authRepo = mockAuthRepo ?? AuthRepoImpl(),
-        localStorageService = mockLocalStorageService ?? FlutterSecureStorageServiceImpl(),
+  })  : authRepo = mockAuthRepo ?? AuthRepoImpl(),
+        localStorageService =
+            mockLocalStorageService ?? FlutterSecureStorageServiceImpl(),
         super(const InitialState<SignupResponseModel>());
 
   final AuthRepo authRepo;
@@ -23,13 +24,12 @@ class SignupCubit extends Cubit<ATAppState<SignupResponseModel>> {
   Future<void> signupUser({
     required RegistrationData param,
   }) async {
-
     emit(const LoadingState<SignupResponseModel>());
     try {
       final ApiResponse<SignupResponseModel> response =
           await authRepo.registerUser(param: param);
       response.when(
-        successful: (Successful<SignupResponseModel> data)async{
+        successful: (Successful<SignupResponseModel> data) async {
           final SignupResponseModel? responseModel = data.data;
           final String? accessToken = responseModel?.accessToken;
           final String? userName = responseModel?.user?.username;
@@ -38,7 +38,7 @@ class SignupCubit extends Cubit<ATAppState<SignupResponseModel>> {
           final String? userId = responseModel?.user?.id;
           final String? dob = responseModel?.user?.dob;
 
-          if(accessToken != null){
+          if (accessToken != null) {
             await localStorageService.set(ATStrings.accessToken, accessToken);
           }
           final CachedUserData cachedUserData = CachedUserData(

@@ -9,14 +9,10 @@ import 'package:amptive/src/shared/spotlight_beam.dart';
 import 'package:flutter/material.dart';
 import '../../../../shared/elevated_button_widget.dart';
 
-enum _AnimStage{start, end}
+enum _AnimStage { start, end }
 
 class GoLiveProgramCreationSuccessScreen extends StatefulWidget {
-
-  const GoLiveProgramCreationSuccessScreen({
-    super.key,
-    required this.params
-  });
+  const GoLiveProgramCreationSuccessScreen({super.key, required this.params});
 
   final ({
     Uint8List coverArtBytes,
@@ -30,27 +26,28 @@ class GoLiveProgramCreationSuccessScreen extends StatefulWidget {
   }) params;
 
   @override
-  State<GoLiveProgramCreationSuccessScreen> createState() => _GoLiveProgramCreationSuccessScreenState();
+  State<GoLiveProgramCreationSuccessScreen> createState() =>
+      _GoLiveProgramCreationSuccessScreenState();
 }
 
-class _GoLiveProgramCreationSuccessScreenState extends State<GoLiveProgramCreationSuccessScreen> {
-  final StreamController<_AnimStage> _streamCntrl = StreamController<_AnimStage>();
+class _GoLiveProgramCreationSuccessScreenState
+    extends State<GoLiveProgramCreationSuccessScreen> {
+  final StreamController<_AnimStage> _streamCntrl =
+      StreamController<_AnimStage>();
 
   @override
-  void initState(){
+  void initState() {
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback(
-      (_) => _driveCoverArtAnim()
-    );
+    WidgetsBinding.instance.addPostFrameCallback((_) => _driveCoverArtAnim());
   }
 
   @override
-  void dispose(){
+  void dispose() {
     _streamCntrl.close();
     super.dispose();
   }
 
-  void _driveCoverArtAnim()async{
+  void _driveCoverArtAnim() async {
     await Future<void>.delayed(const Duration(milliseconds: 500));
     _streamCntrl.add(_AnimStage.start);
     await Future<void>.delayed(const Duration(milliseconds: 20));
@@ -62,119 +59,126 @@ class _GoLiveProgramCreationSuccessScreenState extends State<GoLiveProgramCreati
     return ATAnnotatedRegion(
       child: Scaffold(
         appBar: const ATAppBar(
-          leadingWidth: 30, leading: ATXBackBtn(),
+          leadingWidth: 30,
+          leading: ATXBackBtn(),
           padding: EdgeInsets.fromLTRB(7, 0, 15, 0),
         ),
         body: Container(
           height: context.screenHeight,
           width: context.screenWidth,
           padding: const EdgeInsets.fromLTRB(15, 0, 15, 0),
-          child: Column(           
+          child: Column(
             children: <Widget>[
               widget.params.topLogo,
-              const SizedBox(height: 15,),
-              Text(
-                textAlign: TextAlign.center,
-                widget.params.title, maxLines: 2,
-                style: context.textTheme.displaySmall?.copyWith(
-                  fontSize: ATSizes.size23
-                )
+              const SizedBox(
+                height: 15,
               ),
-              const SizedBox(height: 10,),
               Text(
-                textAlign: TextAlign.center,
-                widget.params.subtitle, maxLines: 3,
-                style: context.textTheme.bodySmall?.copyWith(
-                  color: ATColors.hexC2C2C2
-                )
+                  textAlign: TextAlign.center,
+                  widget.params.title,
+                  maxLines: 2,
+                  style: context.textTheme.displaySmall
+                      ?.copyWith(fontSize: ATSizes.size23)),
+              const SizedBox(
+                height: 10,
               ),
-              const SizedBox(height: 30,),
+              Text(
+                  textAlign: TextAlign.center,
+                  widget.params.subtitle,
+                  maxLines: 3,
+                  style: context.textTheme.bodySmall
+                      ?.copyWith(color: ATColors.hexC2C2C2)),
+              const SizedBox(
+                height: 30,
+              ),
               Expanded(
-                child: LayoutBuilder(
-                  builder: (_, BoxConstraints kst) {
-                    return Stack(
-                      clipBehavior: Clip.none,
-                      alignment: Alignment.topCenter,
-                      children: <Widget>[
-                        Positioned(
-                          top: 140,
-                          child: FutureBuilder<void>(
-                          future: Future<void>.delayed(const Duration(milliseconds: 800)),
-                          builder: (_, AsyncSnapshot<void> snapshot) {
-                            final bool isDone = snapshot.connectionState == ConnectionState.done;
+                child: LayoutBuilder(builder: (_, BoxConstraints kst) {
+                  return Stack(
+                    clipBehavior: Clip.none,
+                    alignment: Alignment.topCenter,
+                    children: <Widget>[
+                      Positioned(
+                        top: 140,
+                        child: FutureBuilder<void>(
+                            future: Future<void>.delayed(
+                                const Duration(milliseconds: 800)),
+                            builder: (_, AsyncSnapshot<void> snapshot) {
+                              final bool isDone = snapshot.connectionState ==
+                                  ConnectionState.done;
                               return SpotlightBeam(
-                                height: kst.maxHeight, width: context.screenWidth * 2,
-                                halfWidthOfSpot: 67, duration: 200,
-                                gradient: isDone ? LinearGradient(
-                                  begin: Alignment.topCenter,
-                                  end: Alignment.bottomCenter,
-                                  colors: <Color>[ATColors.hex0D0D0D, ATColors.hex090909],
-                                ) : null
-                              );
-                            }
-                          ),
-                        ),
-
-                        StreamBuilder<_AnimStage>(
+                                  height: kst.maxHeight,
+                                  width: context.screenWidth * 2,
+                                  halfWidthOfSpot: 67,
+                                  duration: 200,
+                                  gradient: isDone
+                                      ? LinearGradient(
+                                          begin: Alignment.topCenter,
+                                          end: Alignment.bottomCenter,
+                                          colors: <Color>[
+                                            ATColors.hex0D0D0D,
+                                            ATColors.hex090909
+                                          ],
+                                        )
+                                      : null);
+                            }),
+                      ),
+                      StreamBuilder<_AnimStage>(
                           stream: _streamCntrl.stream,
                           builder: (_, AsyncSnapshot<_AnimStage> snapshot) {
-                            if(snapshot.data == null){
+                            if (snapshot.data == null) {
                               return const SizedBox.shrink();
                             }
                             final bool isDone = snapshot.data == _AnimStage.end;
                             return AnimatedPositioned(
                               duration: const Duration(milliseconds: 100),
-                              left: !isDone ? -200 : null, 
-                              right: !isDone ? -200 : null, 
+                              left: !isDone ? -200 : null,
+                              right: !isDone ? -200 : null,
                               child: ClipRRect(
                                 borderRadius: BorderRadius.circular(5),
                                 child: ATContainer(
                                   duration: 200,
-                                  height: isDone ? 140 : kst.maxHeight, 
-                                  width: isDone ? 134 : context.screenWidth * 1.5,
+                                  height: isDone ? 140 : kst.maxHeight,
+                                  width:
+                                      isDone ? 134 : context.screenWidth * 1.5,
                                   child: Image.memory(
-                                    widget.params.coverArtBytes,
-                                    fit: BoxFit.cover
-                                  ),
+                                      widget.params.coverArtBytes,
+                                      fit: BoxFit.cover),
                                 ),
                               ),
                             );
-                          }
-                        ),
-                        
-                        Positioned(
-                          bottom: 10,
-                          child: Container(
-                            width: context.screenWidth,
-                            padding: const EdgeInsets.fromLTRB(15, 0, 15, 0),
-                            child: Column(
-                              mainAxisSize: MainAxisSize.min,
-                              children: <Widget>[
-                                ATPlainElevatedBtn(
-                                  onPressed: widget.params.btnOnPressed,
-                                  btnTitle: widget.params.btnTitle,
-                                  bgColor: ATColors.white,
-                                  fgColor: ATColors.black,
-                                ),
-                                const SizedBox(height: 15,),
-                                InkWell(
+                          }),
+                      Positioned(
+                        bottom: 10,
+                        child: Container(
+                          width: context.screenWidth,
+                          padding: const EdgeInsets.fromLTRB(15, 0, 15, 0),
+                          child: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            children: <Widget>[
+                              ATPlainElevatedBtn(
+                                onPressed: widget.params.btnOnPressed,
+                                btnTitle: widget.params.btnTitle,
+                                bgColor: ATColors.white,
+                                fgColor: ATColors.black,
+                              ),
+                              const SizedBox(
+                                height: 15,
+                              ),
+                              InkWell(
                                   onTap: widget.params.txtBtnOnPressed,
                                   borderRadius: BorderRadius.circular(5),
                                   child: Text(
                                     widget.params.txtBtnTitle,
-                                    style: context.textTheme.bodyLarge?.copyWith(
-                                      fontSize: ATSizes.size17
-                                    ),
-                                  )
-                                )
-                              ],
-                            ),
+                                    style: context.textTheme.bodyLarge
+                                        ?.copyWith(fontSize: ATSizes.size17),
+                                  ))
+                            ],
                           ),
-                        )
-                      ],
-                    );
-                  }
-                ),
+                        ),
+                      )
+                    ],
+                  );
+                }),
               ),
             ],
           ),

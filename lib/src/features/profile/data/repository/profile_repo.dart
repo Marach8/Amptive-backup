@@ -4,11 +4,13 @@ import 'package:amptive/src/features/profile/data/models/followers_response_mode
 
 abstract class ProfileRepo{
   Future<ApiResponse<UserProfileResponseModel>> fetchUserProfile ();
-
-  Future<ApiResponse<FollowersResponseModel>> fetchFollowers ({
+  
+  Future<ApiResponse<dynamic>> updateUserProfile({
+    required String profilePicture,
+  });
+   Future<ApiResponse<FollowersResponseModel>> fetchFollowers ({
     required int limit,
     required int offset,
   });
-
 
 }

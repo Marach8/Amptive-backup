@@ -1,4 +1,3 @@
-import 'package:amptive/src/features/home/presentation/widgets/program_actions_modal.dart';
 import 'package:flutter/material.dart';
 import '../../../../config/utils/colors.dart';
 import '../../../../config/utils/image_strings.dart';
@@ -17,7 +16,8 @@ class ATEventOrShowCard extends StatelessWidget {
     return ATContainer(
       padding: const EdgeInsets.all(10),
       alignment: Alignment.topRight,
-      height: 360, radius: 16,
+      height: 360,
+      radius: 16,
       decorImage: imgPath,
       child: ATContainer(
         //onTap: () => showProgramOptions(context),
@@ -29,7 +29,6 @@ class ATEventOrShowCard extends StatelessWidget {
     );
   }
 }
-
 
 class CoverPicWithTopRightMoreIcon extends StatelessWidget {
   const CoverPicWithTopRightMoreIcon({
@@ -56,7 +55,8 @@ class CoverPicWithTopRightMoreIcon extends StatelessWidget {
       ),
       child: ATContainer(
         onTap: onMoreTapped,
-        height: 32, width: 32,
+        height: 32,
+        width: 32,
         boxShape: BoxShape.circle,
         color: ATColors.hex0D0D0D.withValues(alpha: 0.7),
         child: const Icon(Icons.more_horiz),

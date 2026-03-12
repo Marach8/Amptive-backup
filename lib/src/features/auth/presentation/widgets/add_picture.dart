@@ -53,9 +53,7 @@ class _AddPictureWidgetState extends State<AddPictureWidget> {
                   color: ATColors.hexCDCDCD,
                 ),
           ),
-      
           const SizedBox(height: 100),
-      
           Align(
             alignment: Alignment.center,
             child: SizedBox(
@@ -63,14 +61,19 @@ class _AddPictureWidgetState extends State<AddPictureWidget> {
               width: 132,
               child: Stack(
                 children: <Widget>[
-                  if(_pickedImage == null) const ATImgLoader(
-                    imgPath: ATImgStrings.noAvatarImage,
-                    height: 132, width: 132,
-                  ) else Image.memory(
-                    _pickedImage!,
-                    height: 132, width: 132,
-                    fit: BoxFit.cover,
-                  ),
+                  if (_pickedImage == null)
+                    const ATImgLoader(
+                      imgPath: ATImgStrings.noAvatarImage,
+                      height: 132,
+                      width: 132,
+                    )
+                  else
+                    Image.memory(
+                      _pickedImage!,
+                      height: 132,
+                      width: 132,
+                      fit: BoxFit.cover,
+                    ),
                   Positioned(
                     top: 111,
                     left: 49,
@@ -81,22 +84,27 @@ class _AddPictureWidgetState extends State<AddPictureWidget> {
                       child: SizedBox(
                         child: IconButton(
                           style: IconButton.styleFrom(),
-                          onPressed: () async{
-                            if(_pickedImage == null){
-                              final ImageSource? selectedSrc = await showImageSourceOptions(context);
-                              final XFile? selectedFile = await ATHelperFuncs.pickImage(selectedSrc);
-                              if(context.mounted && selectedFile != null){
+                          onPressed: () async {
+                            if (_pickedImage == null) {
+                              final ImageSource? selectedSrc =
+                                  await showImageSourceOptions(context);
+                              final XFile? selectedFile =
+                                  await ATHelperFuncs.pickImage(selectedSrc);
+                              if (context.mounted && selectedFile != null) {
                                 final File file = File(selectedFile.path);
-                                final MemoryImage? imageData = await context.pushNamed(
+                                final MemoryImage? imageData =
+                                    await context.pushNamed(
                                   ATRoutes.rectImageCropperScreen,
                                   extra: (file, null, CustomCropShape.Circle),
                                 ) as MemoryImage?;
-                                if(imageData != null){
-                                  setState(() => _pickedImage = imageData.bytes);
+                                if (imageData != null) {
+                                  setState(
+                                      () => _pickedImage = imageData.bytes);
                                 }
                               }
+                            } else {
+                              setState(() => _pickedImage = null);
                             }
-                            else {setState(() => _pickedImage = null);}
                           },
                           icon: SizedBox(
                             width: 41.25,
@@ -134,34 +142,36 @@ class _AddPictureWidgetState extends State<AddPictureWidget> {
             ),
           ),
           BlocConsumer<UploadImageCubit, ATAppState<String>>(
-            listener: (_, ATAppState<String> state)async{
-              if(state is SuccessState<String>){
-                await context.read<LocalUserDataCubit>().updateUserDataLocally(
-                  CachedUserData(pictureUrl: state.newData,)
-                );
-                if(context.mounted){
-                  context.pushNamed(ATRoutes.select5CommunitiesScreen);
-                }
+              listener: (_, ATAppState<String> state) async {
+            if (state is SuccessState<String>) {
+              await context
+                  .read<LocalUserDataCubit>()
+                  .updateUserDataLocally(CachedUserData(
+                    pictureUrl: state.newData,
+                  ));
+              if (context.mounted) {
+                context.pushNamed(ATRoutes.select5CommunitiesScreen);
               }
-              else if(state is FailureState<String>){
-                showAppNotification2(
-                  context: context,
-                  text: state.message,
-                  type: NotificationType.failure,
-                );
-              }
-            },
-            builder: (BuildContext context, ATAppState<String> state) {
-              return ATPlainElevatedBtn(
-                btnTitle: ATStrings.next,
-                isLoading: state is LoadingState<String>,
-                onPressed: _pickedImage != null ? (){
-                  context.read<UploadImageCubit>()
-                    .uploadBytesImage(bytes: _pickedImage!); 
-                } : null,
+            } else if (state is FailureState<String>) {
+              showAppNotification2(
+                context: context,
+                text: state.message,
+                type: NotificationType.failure,
               );
             }
-          )
+          }, builder: (BuildContext context, ATAppState<String> state) {
+            return ATPlainElevatedBtn(
+              btnTitle: ATStrings.next,
+              isLoading: state is LoadingState<String>,
+              onPressed: _pickedImage != null
+                  ? () {
+                      context
+                          .read<UploadImageCubit>()
+                          .uploadBytesImage(bytes: _pickedImage!);
+                    }
+                  : null,
+            );
+          })
         ],
       ),
     );

@@ -27,38 +27,37 @@ class WalletLandingScreen extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               const AvailableBalanceWidget(),
-              const SizedBox(height: 20,),
+              const SizedBox(
+                height: 20,
+              ),
               Row(
                 children: <Widget>[
-                  Text(
-                    ATStrings.transactionHistory,
-                    style: context.textTheme.bodySmall?.copyWith(
-                      color: ATColors.hexC2C2C2
-                    )
-                  ),
+                  Text(ATStrings.transactionHistory,
+                      style: context.textTheme.bodySmall
+                          ?.copyWith(color: ATColors.hexC2C2C2)),
                   const Spacer(),
                   InkWell(
-                    onTap: (){
-                      context.pushNamed(ATRoutes.walletTransactionsHistoryScreen);
+                    onTap: () {
+                      context
+                          .pushNamed(ATRoutes.walletTransactionsHistoryScreen);
                     },
                     splashColor: ATColors.white,
                     borderRadius: BorderRadius.circular(5),
                     child: Row(
                       children: <Widget>[
-                        Text(
-                          ATStrings.VIEW_ALL,
-                          style: context.textTheme.bodySmall?.copyWith(
-                            color: ATColors.hexC2C2C2
-                          )
-                        ),
-                        Icon(Icons.keyboard_arrow_right_outlined, color: ATColors.hexC2C2C2)
+                        Text(ATStrings.VIEW_ALL,
+                            style: context.textTheme.bodySmall
+                                ?.copyWith(color: ATColors.hexC2C2C2)),
+                        Icon(Icons.keyboard_arrow_right_outlined,
+                            color: ATColors.hexC2C2C2)
                       ],
                     ),
                   ),
                 ],
               ),
-              const SizedBox(height: 10,),
-              
+              const SizedBox(
+                height: 10,
+              ),
               RenderATransaction(
                 time: 'Today, 5:50 PM',
                 txnType: ATStrings.SUB_RECEIVED,
@@ -67,7 +66,9 @@ class WalletLandingScreen extends StatelessWidget {
                 icon: Icons.favorite,
                 imgPath: ATImgStrings.jpeg1,
               ),
-              const SizedBox(height: 10,),
+              const SizedBox(
+                height: 10,
+              ),
               RenderATransaction(
                 time: 'Today, 7:00 PM',
                 txnType: ATStrings.SUB_RECEIVED,
@@ -77,40 +78,37 @@ class WalletLandingScreen extends StatelessWidget {
                 descriptionIconColor: ATColors.white,
                 imgPath: ATImgStrings.jpeg3,
               ),
-
-              const SizedBox(height: 20,),
-              Text(
-                ATStrings.EVENT_ND_SHOW_VEST,
-                style: context.textTheme.bodyLarge
+              const SizedBox(
+                height: 20,
               ),
+              Text(ATStrings.EVENT_ND_SHOW_VEST,
+                  style: context.textTheme.bodyLarge),
               const SizedBox(height: 20),
-              StatefulBuilder(
-                builder: (_, StateSetter setter) {
-                  return InkWell(
-                    onTap: (){
-                      setter(() => shouldShowCommingSoon = true);
-                    },
-                    child: Row(
-                      children: <Widget>[
-                        Expanded(
-                          child: ATImgLoader(
-                            imgPath: shouldShowCommingSoon ? ATImgStrings.comingSoonImage2:
-                              ATImgStrings.vestingOverviewImage,
-                            height: 240,
-                          ),
-                        ),
-                        Expanded(
-                          child: ATImgLoader(
-                            imgPath: shouldShowCommingSoon ? ATImgStrings.comingSoonImage1 :
-                              ATImgStrings.exploreListingsImage,
-                            height: 240,
-                          ),
-                        ),
-                      ]
+              StatefulBuilder(builder: (_, StateSetter setter) {
+                return InkWell(
+                  onTap: () {
+                    setter(() => shouldShowCommingSoon = true);
+                  },
+                  child: Row(children: <Widget>[
+                    Expanded(
+                      child: ATImgLoader(
+                        imgPath: shouldShowCommingSoon
+                            ? ATImgStrings.comingSoonImage2
+                            : ATImgStrings.vestingOverviewImage,
+                        height: 240,
+                      ),
                     ),
-                  );
-                }
-              ),
+                    Expanded(
+                      child: ATImgLoader(
+                        imgPath: shouldShowCommingSoon
+                            ? ATImgStrings.comingSoonImage1
+                            : ATImgStrings.exploreListingsImage,
+                        height: 240,
+                      ),
+                    ),
+                  ]),
+                );
+              }),
               const SizedBox(height: 100),
             ],
           ),
@@ -119,4 +117,3 @@ class WalletLandingScreen extends StatelessWidget {
     );
   }
 }
-

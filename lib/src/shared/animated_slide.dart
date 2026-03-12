@@ -1,16 +1,15 @@
 import 'package:flutter/material.dart';
 
 class ATAnimatedSlide extends StatelessWidget {
-  const ATAnimatedSlide({
-    super.key,
-    required this.startOffset,
-    required this.child,
-    required this.endOffset,
-    required this.shouldSlide,
-    this.curve,
-    this.duration,
-    this.onEnd
-  });
+  const ATAnimatedSlide(
+      {super.key,
+      required this.startOffset,
+      required this.child,
+      required this.endOffset,
+      required this.shouldSlide,
+      this.curve,
+      this.duration,
+      this.onEnd});
 
   final Widget child;
   final Offset startOffset, endOffset;

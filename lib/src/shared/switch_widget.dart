@@ -1,4 +1,5 @@
 import 'package:amptive/src/config/utils/colors.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class ATSwitch extends StatelessWidget {
@@ -17,14 +18,14 @@ class ATSwitch extends StatelessWidget {
       color: ATColors.transparent,
       child: Transform.scale(
         scale: 0.6,
-        child: Switch.adaptive(
-          value: value,
-          applyCupertinoTheme: true,
-          thumbColor: WidgetStatePropertyAll<Color>(ATColors.white),
-          activeTrackColor: ATColors.activeSwitch,
-          inactiveTrackColor: ATColors.white.withValues(alpha: 0.2),
-          onChanged: onChanged
-        ),
+        child: CupertinoSwitch(
+            value: value,
+            thumbColor: ATColors.white,
+            trackOutlineColor: WidgetStatePropertyAll<Color>(
+                ATColors.white.withValues(alpha: 0.1)),
+            activeTrackColor: ATColors.activeSwitch,
+            inactiveTrackColor: ATColors.white.withValues(alpha: 0.2),
+            onChanged: onChanged),
       ),
     );
   }

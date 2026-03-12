@@ -19,21 +19,19 @@ class RecentSearchesView extends StatelessWidget {
           children: <Widget>[
             Row(
               children: <Widget>[
-                Text(
-                  ATStrings.RECENT_SEARCHES,
-                  style: Theme.of(context).textTheme.bodyLarge
-                ),
+                Text(ATStrings.RECENT_SEARCHES,
+                    style: Theme.of(context).textTheme.bodyLarge),
                 const Spacer(),
                 Text(
                   ATStrings.CLEAR,
-                  style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                    color: ATColors.hexB6B6B6
-                  ),
+                  style: Theme.of(context)
+                      .textTheme
+                      .titleLarge
+                      ?.copyWith(color: ATColors.hexB6B6B6),
                 ),
               ],
             ),
             SizedBox(height: 20.h),
-
             const SearchItemTile(
               leadingImagePath: ATImgStrings.OFFICE_LADIES,
               title: 'Glennon Doyle',

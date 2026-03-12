@@ -22,7 +22,8 @@ class UpdateUsernameScreen extends StatefulWidget {
   State<UpdateUsernameScreen> createState() => _UpdateUsernameScreenState();
 }
 
-class _UpdateUsernameScreenState extends State<UpdateUsernameScreen> with ATValidators {
+class _UpdateUsernameScreenState extends State<UpdateUsernameScreen>
+    with ATValidators {
   final TextEditingController _controller = TextEditingController();
   final StreamController<bool> _activateButtonCntrl = StreamController<bool>();
 
@@ -78,18 +79,24 @@ class _UpdateUsernameScreenState extends State<UpdateUsernameScreen> with ATVali
                           style: context.textTheme.headlineMedium,
                         ),
                       ),
-                      suffixIcon: BlocBuilder<CheckIdentityAvailabilityCubit, ATAppState<bool>>(
+                      suffixIcon: BlocBuilder<CheckIdentityAvailabilityCubit,
+                          ATAppState<bool>>(
                         builder: (_, ATAppState<bool> state) => switch (state) {
                           InitialState<bool>() => const SizedBox.shrink(),
-                          LoadingState<bool>() => const ATLoadingIndicator(size: 20),
-                          SuccessState<bool>() => Icon(Icons.check, color: ATColors.successColor),
-                          FailureState<bool>() => Icon(Icons.close, color: ATColors.textRedColor)
+                          LoadingState<bool>() =>
+                            const ATLoadingIndicator(size: 20),
+                          SuccessState<bool>() =>
+                            Icon(Icons.check, color: ATColors.successColor),
+                          FailureState<bool>() =>
+                            Icon(Icons.close, color: ATColors.textRedColor)
                         },
                       ),
                       onChanged: (String text) {
                         ATHelperFuncs.callDebouncer(
                           1500,
-                          () => context.read<CheckIdentityAvailabilityCubit>().checkIdentityAvailability(
+                          () => context
+                              .read<CheckIdentityAvailabilityCubit>()
+                              .checkIdentityAvailability(
                             param: <String, dynamic>{'username': text},
                           ),
                         );
@@ -105,16 +112,25 @@ class _UpdateUsernameScreenState extends State<UpdateUsernameScreen> with ATVali
 
                   return Padding(
                     padding: EdgeInsets.fromLTRB(15, 10, 15, bottomPadding),
-                    child: BlocBuilder<CheckIdentityAvailabilityCubit, ATAppState<bool>>(
+                    child: BlocBuilder<CheckIdentityAvailabilityCubit,
+                        ATAppState<bool>>(
                       builder: (_, ATAppState<bool> state) {
                         final bool isAvailable = state is SuccessState<bool>;
 
                         return ATPlainElevatedBtn(
                           onPressed: isAvailable
                               ? () {
-                                  final CachedUserData? currentData = context.read<LocalUserDataCubit>().currentUserData;
-                                  final CachedUserData updatedData = (currentData ?? const CachedUserData()).copyWith(username: _controller.text.trim());
-                                  context.read<LocalUserDataCubit>().updateUserDataLocally(updatedData);
+                                  final CachedUserData? currentData = context
+                                      .read<LocalUserDataCubit>()
+                                      .currentUserData;
+                                  final CachedUserData updatedData =
+                                      (currentData ?? const CachedUserData())
+                                          .copyWith(
+                                              username:
+                                                  _controller.text.trim());
+                                  context
+                                      .read<LocalUserDataCubit>()
+                                      .updateUserDataLocally(updatedData);
                                   context.pop(_controller.text.trim());
                                 }
                               : null,

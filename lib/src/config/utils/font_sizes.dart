@@ -1,5 +1,4 @@
-
-class ATSizes{
+class ATSizes {
   const ATSizes._();
 
   static double size8 = 8.0;
@@ -33,6 +32,6 @@ class ATSizes{
   static double size24 = 24.0;
 
   static double size25 = 25.0;
-  
+
   static double size30 = 30.0;
 }

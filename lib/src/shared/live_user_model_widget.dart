@@ -27,12 +27,8 @@ class LiveUserWidget extends StatelessWidget {
             )
           ],
         ),
-
         const SizedBox(height: 10),
-        Text(
-          'emmanuel',
-          style: Theme.of(context).textTheme.titleSmall
-        ),
+        Text('emmanuel', style: Theme.of(context).textTheme.titleSmall),
       ],
     );
   }

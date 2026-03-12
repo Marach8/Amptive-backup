@@ -8,10 +8,10 @@ import 'package:amptive/src/shared/shimmer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-
 class CalenderDayView extends StatelessWidget {
   const CalenderDayView({super.key});
-  static final List<String> hoursInADay = ATHelperFuncs.generateHoursInADay(null);
+  static final List<String> hoursInADay =
+      ATHelperFuncs.generateHoursInADay(null);
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +25,6 @@ class CalenderDayView extends StatelessWidget {
     );
   }
 }
-
 
 class _HoursAndProgramsList extends StatelessWidget {
   const _HoursAndProgramsList({required this.hoursInADay});
@@ -54,73 +53,82 @@ class _HoursAndProgramsList extends StatelessWidget {
                 spacing: 5,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  Text(
-                    formattedActiveHour, 
-                    style: context.textTheme.bodyMedium?.copyWith(
-                      fontSize: ATSizes.size11,
-                      color: ATColors.hexC2C2C2, height: 0.01
-                    )
-                  ),
+                  Text(formattedActiveHour,
+                      style: context.textTheme.bodyMedium?.copyWith(
+                          fontSize: ATSizes.size11,
+                          color: ATColors.hexC2C2C2,
+                          height: 0.01)),
                   Expanded(
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: <Widget>[
-                        Divider(color: ATColors.white.withValues(alpha: 0.2), height: 0,),
-                        const SizedBox(height: 4,),
-                        BlocBuilder<CalenderProgramBloc, ProgramsState>(
-                          builder: (_, ProgramsState state) {
-                            final bool isLoading = state is ProgramsLoadingState;
-                            final bool hasError = state is ProgramsErrorState;
-                            final bool initialState = state is NoProgramsState;
-                        
-                            if(initialState) return const SizedBox(height: itemHeight);
-                            if(isLoading) return const ATShimmer();
-                            if(hasError) return const Text('Error occured');
-                        
-                            final ProgramsDataState programs = state as ProgramsDataState;
-                            final List<CalenderProgram>? listOfProgs = programs.programs[formattedActiveHour];
-                        
-                            if(listOfProgs == null) return const SizedBox(height: itemHeight);
-                                          
-                            return SizedBox(
-                              height: itemHeight,
-                              child: ListView.builder(
-                                scrollDirection: Axis.horizontal,
-                                itemCount: listOfProgs.length,
-                                physics: const BouncingScrollPhysics(),
-                                itemBuilder: (_, int index) {
-                                  return Padding(
-                                    padding: EdgeInsets.only(
-                                      right: index == listOfProgs.length - 1 ? 50 : 5,
-                                    ),
-                                    child: CalenderProgramDisplay(
-                                      program: listOfProgs[index],
-                                    ),
-                                  );
-                                },
-                              ),
-                            );
-                          }
+                        Divider(
+                          color: ATColors.white.withValues(alpha: 0.2),
+                          height: 0,
                         ),
-                        const SizedBox(height: 5,),
+                        const SizedBox(
+                          height: 4,
+                        ),
+                        BlocBuilder<CalenderProgramBloc, ProgramsState>(
+                            builder: (_, ProgramsState state) {
+                          final bool isLoading = state is ProgramsLoadingState;
+                          final bool hasError = state is ProgramsErrorState;
+                          final bool initialState = state is NoProgramsState;
+
+                          if (initialState) {
+                            return const SizedBox(height: itemHeight);
+                          }
+                          if (isLoading) return const ATShimmer();
+                          if (hasError) return const Text('Error occured');
+
+                          final ProgramsDataState programs =
+                              state as ProgramsDataState;
+                          final List<CalenderProgram>? listOfProgs =
+                              programs.programs[formattedActiveHour];
+
+                          if (listOfProgs == null) {
+                            return const SizedBox(height: itemHeight);
+                          }
+
+                          return SizedBox(
+                            height: itemHeight,
+                            child: ListView.builder(
+                              scrollDirection: Axis.horizontal,
+                              itemCount: listOfProgs.length,
+                              physics: const BouncingScrollPhysics(),
+                              itemBuilder: (_, int index) {
+                                return Padding(
+                                  padding: EdgeInsets.only(
+                                    right: index == listOfProgs.length - 1
+                                        ? 50
+                                        : 5,
+                                  ),
+                                  child: CalenderProgramDisplay(
+                                    program: listOfProgs[index],
+                                  ),
+                                );
+                              },
+                            ),
+                          );
+                        }),
+                        const SizedBox(
+                          height: 5,
+                        ),
                       ],
                     ),
                   ),
                 ],
               ),
-              BlocSelector<
-                DayViewDateTimeIndicatorCubit,
-                DayViewDateTimeIndicatorState,
-                String
-              >(
-                selector: (DayViewDateTimeIndicatorState state) => state.activeHour,
-                builder: (_, String activeHour) {
-                  if(activeHour == formattedActiveHour){
-                    return const CurrentTimeIndicator();
-                  }
-                  return const SizedBox.shrink();
-                }
-              )
+              BlocSelector<DayViewDateTimeIndicatorCubit,
+                      DayViewDateTimeIndicatorState, String>(
+                  selector: (DayViewDateTimeIndicatorState state) =>
+                      state.activeHour,
+                  builder: (_, String activeHour) {
+                    if (activeHour == formattedActiveHour) {
+                      return const CurrentTimeIndicator();
+                    }
+                    return const SizedBox.shrink();
+                  })
             ],
           ),
         );

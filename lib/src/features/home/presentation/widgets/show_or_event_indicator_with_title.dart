@@ -21,16 +21,22 @@ class ShowOrEventIndicatorWithTitle extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       children: <Widget>[
         leading ?? ATImgLoader(imgPath: eventOrShowImgPath),
-        const SizedBox(width: 5,),
+        const SizedBox(
+          width: 5,
+        ),
         Text(
           title,
           style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-            fontSize: ATSizes.size15,
-            color: ATColors.dimWhiteColor1
-          ),
+              fontSize: ATSizes.size15, color: ATColors.dimWhiteColor1),
         ),
-        const SizedBox(height: 5,),
-        const Icon(Icons.arrow_forward_ios_sharp, size: 12, weight: 20,)
+        const SizedBox(
+          height: 5,
+        ),
+        const Icon(
+          Icons.arrow_forward_ios_sharp,
+          size: 12,
+          weight: 20,
+        )
       ],
     );
   }

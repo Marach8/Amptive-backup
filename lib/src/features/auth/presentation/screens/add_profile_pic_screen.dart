@@ -12,7 +12,8 @@ class AddProfilePictureScreen extends StatefulWidget {
   const AddProfilePictureScreen({super.key});
 
   @override
-  State<AddProfilePictureScreen> createState() => _AddProfilePictureScreenState();
+  State<AddProfilePictureScreen> createState() =>
+      _AddProfilePictureScreenState();
 }
 
 class _AddProfilePictureScreenState extends State<AddProfilePictureScreen> {
@@ -29,7 +30,6 @@ class _AddProfilePictureScreenState extends State<AddProfilePictureScreen> {
     );
   }
 
-
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -37,7 +37,9 @@ class _AddProfilePictureScreenState extends State<AddProfilePictureScreen> {
       backgroundColor: ATColors.hex0D0D0D,
       body: Padding(
         padding: const EdgeInsets.fromLTRB(15, 20, 15, 10),
-        child: _isLoading ? const LoadingAccountWidget() : const AddPictureWidget(),
+        child: _isLoading
+            ? const LoadingAccountWidget()
+            : const AddPictureWidget(),
       ),
     ));
   }
@@ -90,7 +92,8 @@ class _LoadingAccountWidgetState extends State<LoadingAccountWidget> {
             child: AnimatedSwitcher(
               duration: const Duration(milliseconds: 300),
               transitionBuilder: (Widget child, Animation<double> animation) {
-                final Animation<Offset> inAnimation = TweenSequence(<TweenSequenceItem<Offset>>[
+                final Animation<Offset> inAnimation =
+                    TweenSequence(<TweenSequenceItem<Offset>>[
                   TweenSequenceItem(
                       tween: ConstantTween(const Offset(0.0, 1.0)), weight: 2),
                   TweenSequenceItem(
@@ -101,7 +104,8 @@ class _LoadingAccountWidgetState extends State<LoadingAccountWidget> {
                       weight: 1),
                 ]).animate(animation);
 
-                final Animation<Offset> outAnimation = TweenSequence(<TweenSequenceItem<Offset>>[
+                final Animation<Offset> outAnimation =
+                    TweenSequence(<TweenSequenceItem<Offset>>[
                   TweenSequenceItem(
                       tween: ConstantTween(const Offset(0.0, 1.0)), weight: 1),
                   TweenSequenceItem(

@@ -58,7 +58,8 @@ class _ProcessingPreferenceWidgetState
             child: AnimatedSwitcher(
               duration: const Duration(milliseconds: 300),
               transitionBuilder: (Widget child, Animation<double> animation) {
-                final Animation<Offset> inAnimation = TweenSequence(<TweenSequenceItem<Offset>>[
+                final Animation<Offset> inAnimation =
+                    TweenSequence(<TweenSequenceItem<Offset>>[
                   TweenSequenceItem(
                       tween: ConstantTween(const Offset(0.0, 1.0)), weight: 2),
                   TweenSequenceItem(
@@ -69,7 +70,8 @@ class _ProcessingPreferenceWidgetState
                       weight: 1),
                 ]).animate(animation);
 
-                final Animation<Offset> outAnimation = TweenSequence(<TweenSequenceItem<Offset>>[
+                final Animation<Offset> outAnimation =
+                    TweenSequence(<TweenSequenceItem<Offset>>[
                   TweenSequenceItem(
                       tween: ConstantTween(const Offset(0.0, 1.0)), weight: 1),
                   TweenSequenceItem(

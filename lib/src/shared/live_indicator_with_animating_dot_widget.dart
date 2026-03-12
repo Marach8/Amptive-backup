@@ -17,13 +17,9 @@ class LiveWithAnimatingDot extends StatelessWidget {
       padding: EdgeInsets.fromLTRB(8.44.w, 5.h, 8.44.w, 5.h),
       decoration: BoxDecoration(
         gradient: LinearGradient(
-          begin: Alignment.topCenter,
-          end: Alignment.bottomCenter,
-          colors: <Color>[
-            ATColors.hexF91880,
-            ATColors.orangeGradientColorB
-          ]
-        ),
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            colors: <Color>[ATColors.hexF91880, ATColors.orangeGradientColorB]),
         borderRadius: BorderRadius.circular(5.r),
       ),
       child: Row(
@@ -37,14 +33,12 @@ class LiveWithAnimatingDot extends StatelessWidget {
             ),
           ),
           SizedBox(width: 4.w),
-          Text(
-            ATStrings.LIVE.toUpperCase(),
-            style: Theme.of(context).textTheme.titleSmall?.copyWith(
-              fontSize: ATSizes.size14,
-              fontWeight: ATFontWeights.w600,
-              height: 0,
-            )
-          ),
+          Text(ATStrings.LIVE.toUpperCase(),
+              style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                    fontSize: ATSizes.size14,
+                    fontWeight: ATFontWeights.w600,
+                    height: 0,
+                  )),
         ],
       ),
     );

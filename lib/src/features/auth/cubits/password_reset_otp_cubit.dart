@@ -6,17 +6,17 @@ import 'package:amptive/src/features/auth/data/repository/auth_repo_impl.dart';
 class PasswordResetOtpCubit extends Cubit<ATAppState<String>> {
   PasswordResetOtpCubit({
     AuthRepo? mockAuthRepo,
-  }) : authRepo = mockAuthRepo ?? AuthRepoImpl(),
+  })  : authRepo = mockAuthRepo ?? AuthRepoImpl(),
         super(const InitialState<String>());
 
   final AuthRepo authRepo;
 
   String? get currentOtp => switch (state) {
-    InitialState<String>(:final String? initialData) => initialData,
-    LoadingState<String>(:final String? currentData) => currentData,
-    SuccessState<String>(:final String? newData) => newData,
-    FailureState<String>(:final String? oldData) => oldData,
-  };
+        InitialState<String>(:final String? initialData) => initialData,
+        LoadingState<String>(:final String? currentData) => currentData,
+        SuccessState<String>(:final String? newData) => newData,
+        FailureState<String>(:final String? oldData) => oldData,
+      };
 
   Future<void> resetPasswordOtp({
     required Map<String, dynamic> param,

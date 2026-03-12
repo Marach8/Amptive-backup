@@ -28,8 +28,7 @@ class PhoneAuthScreen extends StatefulWidget {
   State<PhoneAuthScreen> createState() => _PhoneAuthScreenState();
 }
 
-class _PhoneAuthScreenState extends State<PhoneAuthScreen>
-    with ATValidators {
+class _PhoneAuthScreenState extends State<PhoneAuthScreen> with ATValidators {
   final TextEditingController _phoneController = TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   Country selectedCountry = CountryPickerUtils.getCountryByIsoCode(
@@ -70,10 +69,12 @@ class _PhoneAuthScreenState extends State<PhoneAuthScreen>
                     children: <Widget>[
                       Text(
                         ATStrings.UR_FON_NUMBER,
-                        style:
-                            Theme.of(context).textTheme.headlineMedium?.copyWith(
-                                  fontSize: ATSizes.size17,
-                                ),
+                        style: Theme.of(context)
+                            .textTheme
+                            .headlineMedium
+                            ?.copyWith(
+                              fontSize: ATSizes.size17,
+                            ),
                       ),
                       const SizedBox(height: 11),
                       Row(
@@ -81,8 +82,7 @@ class _PhoneAuthScreenState extends State<PhoneAuthScreen>
                         children: <Widget>[
                           ATContainer(
                             onTap: () => _selectCountry(),
-                            padding:
-                                const EdgeInsets.fromLTRB(16, 12, 16, 12),
+                            padding: const EdgeInsets.fromLTRB(16, 12, 16, 12),
                             color: ATColors.hex9E9E9E.withOpacity(0.3),
                             radius: 14,
                             border: Border.all(
@@ -115,13 +115,14 @@ class _PhoneAuthScreenState extends State<PhoneAuthScreen>
                               ],
                             ),
                           ),
-                       Expanded(
+                          Expanded(
                             child: ATTextFormField(
                               controller: _phoneController,
                               keyboardType: TextInputType.number,
                               cursorColor: ATColors.hex307FE2,
                               maxLines: 1,
-                              fillColor: ATColors.hex9E9E9E.withValues(alpha: 0.3),
+                              fillColor:
+                                  ATColors.hex9E9E9E.withValues(alpha: 0.3),
                               prefixIcon: const SizedBox(width: 10),
                               autoValidateMode: AutovalidateMode.disabled,
                               validator: validatePhoneNumber,
@@ -130,8 +131,7 @@ class _PhoneAuthScreenState extends State<PhoneAuthScreen>
                                 child: BlocConsumer<
                                     CheckIdentityAvailabilityCubit,
                                     ATAppState<bool>>(
-                                  listener:
-                                      (_, ATAppState<bool> state) {
+                                  listener: (_, ATAppState<bool> state) {
                                     if (state is FailureState<bool>) {
                                       showAppNotification2(
                                         context: context,
@@ -147,13 +147,13 @@ class _PhoneAuthScreenState extends State<PhoneAuthScreen>
                                     LoadingState<bool>() =>
                                       const ATLoadingIndicator(size: 20),
                                     SuccessState<bool>() => Icon(
-                                      Icons.check,
-                                      color: ATColors.successColor,
-                                    ),
+                                        Icons.check,
+                                        color: ATColors.successColor,
+                                      ),
                                     FailureState<bool>() => Icon(
-                                      Icons.close,
-                                      color: ATColors.textRedColor,
-                                    )
+                                        Icons.close,
+                                        color: ATColors.textRedColor,
+                                      )
                                   },
                                 ),
                               ),
@@ -163,10 +163,10 @@ class _PhoneAuthScreenState extends State<PhoneAuthScreen>
                                   () => context
                                       .read<CheckIdentityAvailabilityCubit>()
                                       .checkIdentityAvailability(
-                                        param: <String, dynamic>{
-                                          'phone_number': text
-                                        },
-                                      ),
+                                    param: <String, dynamic>{
+                                      'phone_number': text
+                                    },
+                                  ),
                                 );
                               },
                               decoration: InputDecoration(
@@ -182,8 +182,7 @@ class _PhoneAuthScreenState extends State<PhoneAuthScreen>
                                       color: ATColors.textRedColor,
                                     ),
                                 filled: true,
-                                fillColor:
-                                    ATColors.hex9E9E9E.withOpacity(0.3),
+                                fillColor: ATColors.hex9E9E9E.withOpacity(0.3),
                                 focusedBorder: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(14),
                                   borderSide: BorderSide(
@@ -209,22 +208,20 @@ class _PhoneAuthScreenState extends State<PhoneAuthScreen>
               ),
               bottomSheet: Builder(
                 builder: (BuildContext context) {
-                  final double bottom =
-                      MediaQuery.viewInsetsOf(context).bottom;
+                  final double bottom = MediaQuery.viewInsetsOf(context).bottom;
                   final double bottomPad = bottom > 0 ? 10 : 50;
                   return Padding(
                     padding: EdgeInsets.fromLTRB(15, 0, 15, bottomPad),
-                    child: BlocBuilder<
-                        CheckIdentityAvailabilityCubit,
+                    child: BlocBuilder<CheckIdentityAvailabilityCubit,
                         ATAppState<bool>>(
                       builder: (_, ATAppState<bool> state) {
                         final bool shouldEnableBtn =
                             state is SuccessState<bool>;
                         return BlocConsumer<SendOtpCubit, ATAppState<String>>(
-                          listener:
-                              (_, ATAppState<String> sendOtpState) async {
+                          listener: (_, ATAppState<String> sendOtpState) async {
                             if (sendOtpState is SuccessState<String>) {
-                              final  bool? didVerifyOTP = await context.pushNamed(
+                              final bool? didVerifyOTP =
+                                  await context.pushNamed(
                                 ATRoutes.enterOtpScreen,
                                 extra: VerifyOTPScreenParams(
                                   verificationType:
@@ -257,18 +254,13 @@ class _PhoneAuthScreenState extends State<PhoneAuthScreen>
                                   ? () {
                                       if (_formKey.currentState?.validate() ??
                                           false) {
-                                        context
-                                            .read<SendOtpCubit>()
-                                            .sendOtp(
-                                              param: <String, dynamic>{
-                                                'phone_number':
-                                                    ATStrings.plus +
-                                                        selectedCountry
-                                                            .phoneCode +
-                                                        _phoneController.text
-                                                            .trim(),
-                                              },
-                                            );
+                                        context.read<SendOtpCubit>().sendOtp(
+                                          param: <String, dynamic>{
+                                            'phone_number': ATStrings.plus +
+                                                selectedCountry.phoneCode +
+                                                _phoneController.text.trim(),
+                                          },
+                                        );
                                       }
                                     }
                                   : null,

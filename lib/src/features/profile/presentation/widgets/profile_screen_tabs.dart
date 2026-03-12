@@ -10,31 +10,34 @@ class ProfileScreenTabs extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TabBar(
-      indicator: BoxDecoration(
-        color: ATColors.white,
-        borderRadius: BorderRadius.circular(50),
-      ),
-      indicatorColor: ATColors.white,
-      dividerColor: ATColors.transparent,
-      labelColor: ATColors.black,
-      unselectedLabelColor: ATColors.white,
-      padding: const EdgeInsets.only(left: 15),
-      labelPadding: const EdgeInsets.fromLTRB(0, 0, 10, 0),
-      indicatorPadding: const EdgeInsets.only(bottom: 2),
-      tabAlignment: TabAlignment.start,
-      isScrollable: true,
-      physics: const BouncingScrollPhysics(),
-      tabs: tabs.map(
-        (String tab) => Tab(child: _TabWidget(text: tab,),)
-      ).toList()
-    );
+        indicator: BoxDecoration(
+          color: ATColors.white,
+          borderRadius: BorderRadius.circular(50),
+        ),
+        indicatorColor: ATColors.white,
+        dividerColor: ATColors.transparent,
+        labelColor: ATColors.black,
+        unselectedLabelColor: ATColors.white,
+        padding: const EdgeInsets.only(left: 15),
+        labelPadding: const EdgeInsets.fromLTRB(0, 0, 10, 0),
+        indicatorPadding: const EdgeInsets.only(bottom: 2),
+        tabAlignment: TabAlignment.start,
+        isScrollable: true,
+        physics: const BouncingScrollPhysics(),
+        tabs: tabs
+            .map((String tab) => Tab(
+                  child: _TabWidget(
+                    text: tab,
+                  ),
+                ))
+            .toList());
   }
 }
 
-
-
 class _TabWidget extends StatelessWidget {
-  const _TabWidget({required this.text,});
+  const _TabWidget({
+    required this.text,
+  });
 
   final String text;
 
@@ -46,21 +49,15 @@ class _TabWidget extends StatelessWidget {
       alignment: Alignment.center,
       padding: const EdgeInsets.fromLTRB(20, 5, 20, 5),
       decoration: BoxDecoration(
-        color: ATColors.transparent,
-        borderRadius: BorderRadius.circular(50),
-        border: Border.all(
-          color: ATColors.white.withValues(alpha: 0.1),
-          width: 2
-        )
-      ),
-      child: Text(
-        text,
-        style: textStyle.copyWith(
-          fontSize: ATSizes.size13,
-          fontWeight: FontWeight.w500,
-          letterSpacing: 0
-        )
-      ),
+          color: ATColors.transparent,
+          borderRadius: BorderRadius.circular(50),
+          border: Border.all(
+              color: ATColors.white.withValues(alpha: 0.1), width: 2)),
+      child: Text(text,
+          style: textStyle.copyWith(
+              fontSize: ATSizes.size13,
+              fontWeight: FontWeight.w500,
+              letterSpacing: 0)),
     );
   }
 }

@@ -11,22 +11,23 @@ class ProfileEventOrShowDisplay extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ATContainer(
-      onTap: (){
+      onTap: () {
         //context.pushNamed(ATRoutes.LIVE_SHOW_DETAILED);
       },
       margin: const EdgeInsets.fromLTRB(15, 12, 15, 12),
-      height: 80, radius: 0,
+      height: 80,
+      radius: 0,
       child: Row(
         children: <Widget>[
           ClipRRect(
             borderRadius: BorderRadius.circular(5),
             child: const ATImgLoader(
               imgPath: ATImgStrings.weCanDoHardThingsBgImage,
-              height: 77, width: 77,
+              height: 77,
+              width: 77,
             ),
           ),
           const SizedBox(width: 10),
-      
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -36,17 +37,19 @@ class ProfileEventOrShowDisplay extends StatelessWidget {
                 Row(
                   children: <Widget>[
                     const ATShowIcon(),
-                    const SizedBox(width: 5,),
+                    const SizedBox(
+                      width: 5,
+                    ),
                     Flexible(
                       child: Text(
                         'We Can Do Hard Things',
                         style: context.textTheme.bodySmall?.copyWith(
-                          fontSize: ATSizes.size12,
-                          color: ATColors.hexC2C2C2
-                        ),
+                            fontSize: ATSizes.size12,
+                            color: ATColors.hexC2C2C2),
                       ),
                     ),
-                    Icon(Icons.keyboard_arrow_right_outlined, color: ATColors.hexC2C2C2, size: 20)
+                    Icon(Icons.keyboard_arrow_right_outlined,
+                        color: ATColors.hexC2C2C2, size: 20)
                   ],
                 ),
                 //Row 2
@@ -57,33 +60,34 @@ class ProfileEventOrShowDisplay extends StatelessWidget {
                     fontSize: ATSizes.size15,
                   ),
                 ),
-      
+
                 //Row 3
                 Row(
                   children: <Widget>[
                     ATPaidIndicatorIcon(
-                      size: 10, radius: 1,
-                      color: ATColors.hexC2C2C2
+                        size: 10, radius: 1, color: ATColors.hexC2C2C2),
+                    const SizedBox(
+                      width: 5,
                     ),
-                    const SizedBox(width: 5,),
                     Text(
                       'Society',
-                      style: context.textTheme.titleSmall?.copyWith(
-                        color: ATColors.hexC2C2C2
-                      ),
+                      style: context.textTheme.titleSmall
+                          ?.copyWith(color: ATColors.hexC2C2C2),
                     ),
-                    const SizedBox(width: 5,),
+                    const SizedBox(
+                      width: 5,
+                    ),
                     ATCircleAvatar(
                       diameter: 3,
                       color: ATColors.hexC2C2C2,
                     ),
-                    
-                    const SizedBox(width: 5,),
+                    const SizedBox(
+                      width: 5,
+                    ),
                     Text(
                       '15 JAN 2034 at 19:00',
-                      style: context.textTheme.titleSmall?.copyWith(
-                        color: ATColors.hexC2C2C2
-                      ),
+                      style: context.textTheme.titleSmall
+                          ?.copyWith(color: ATColors.hexC2C2C2),
                     ),
                   ],
                 )

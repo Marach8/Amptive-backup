@@ -4,17 +4,15 @@ import 'package:amptive/src/shared/custom_container_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:shimmer/shimmer.dart';
 
-
 class ATShimmer extends StatelessWidget {
-  const ATShimmer({
-    super.key,
-    this.height,
-    this.width,
-    this.baseColor,
-    this.highlightColor,
-    this.margin,
-    this.radius
-  });
+  const ATShimmer(
+      {super.key,
+      this.height,
+      this.width,
+      this.baseColor,
+      this.highlightColor,
+      this.margin,
+      this.radius});
 
   final double? height, width, radius;
   final EdgeInsetsGeometry? margin;
@@ -23,15 +21,15 @@ class ATShimmer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Shimmer.fromColors(
-      baseColor: baseColor ?? ATColors.white.withValues(alpha: 0.5),
-      highlightColor: highlightColor ?? ATColors.hex9E9E9E,
-      child: ATContainer(
-        margin: margin,
-        height: height ?? 40, radius: radius ?? 5,
-        color: baseColor ?? ATColors.white.withValues(alpha: 0.5),
-        width: width ?? ATHelperFuncs.getScreenWidth(context),
-        child: const SizedBox.shrink(),
-      )
-    );
+        baseColor: baseColor ?? ATColors.white.withValues(alpha: 0.5),
+        highlightColor: highlightColor ?? ATColors.hex9E9E9E,
+        child: ATContainer(
+          margin: margin,
+          height: height ?? 40,
+          radius: radius ?? 5,
+          color: baseColor ?? ATColors.white.withValues(alpha: 0.5),
+          width: width ?? ATHelperFuncs.getScreenWidth(context),
+          child: const SizedBox.shrink(),
+        ));
   }
 }

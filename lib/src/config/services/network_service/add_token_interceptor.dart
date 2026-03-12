@@ -18,7 +18,8 @@ class AddTokenInterceptor extends Interceptor {
     }
 
     try {
-      final String? token = await localStorageService.get(ATStrings.accessToken);
+      final String? token =
+          await localStorageService.get(ATStrings.accessToken);
       if (token != null && token.isNotEmpty) {
         options.headers['Authorization'] = 'Bearer $token';
       }

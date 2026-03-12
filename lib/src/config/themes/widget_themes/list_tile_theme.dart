@@ -1,5 +1,4 @@
-
-class ChariotListTileTheme{
+class ChariotListTileTheme {
   const ChariotListTileTheme._();
 
   // static ListTileThemeData lightListTileTheme = ListTileThemeData(

@@ -8,17 +8,17 @@ class ShowDetailCubit extends Cubit<ATAppState<HostedShow>> {
   ShowDetailCubit({
     ShowsRepo? mockShowsRepo,
     required HostedShow initialShow,
-  }) : showsRepo = mockShowsRepo ?? ShowsRepoImpl(),
+  })  : showsRepo = mockShowsRepo ?? ShowsRepoImpl(),
         super(InitialState<HostedShow>(initialData: initialShow));
 
   final ShowsRepo showsRepo;
 
   HostedShow? get currentShowDetail => switch (state) {
-    InitialState<HostedShow>(:final HostedShow? initialData) => initialData,
-    LoadingState<HostedShow>(:final HostedShow? currentData) => currentData,  
-    SuccessState<HostedShow>(:final HostedShow? newData) => newData,
-    FailureState<HostedShow>(:final HostedShow? oldData) => oldData,
-  };
+        InitialState<HostedShow>(:final HostedShow? initialData) => initialData,
+        LoadingState<HostedShow>(:final HostedShow? currentData) => currentData,
+        SuccessState<HostedShow>(:final HostedShow? newData) => newData,
+        FailureState<HostedShow>(:final HostedShow? oldData) => oldData,
+      };
 
   Future<void> fetchShowDetails() async {
     if (state is LoadingState<HostedShow>) return;

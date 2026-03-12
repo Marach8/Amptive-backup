@@ -91,7 +91,8 @@ class __SubWidgetState extends State<_SubWidget> {
 
       context.read<HomeFeedCubit>().fetchHomeFeed();
       context.read<LiveUsersCubit>().fetchLiveUsers();
-      context.read<RemoteUserDataCubit>().fetchUserProfile();
+      //context.read<RemoteUserDataCubit>().fetchUserProfile();
+      context.read<LocalUserDataCubit>().initializeCachedData();
     });
   }
 

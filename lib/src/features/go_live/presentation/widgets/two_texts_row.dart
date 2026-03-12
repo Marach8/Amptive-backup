@@ -21,16 +21,17 @@ class RowWith2Texts extends StatelessWidget {
       children: <Widget>[
         Text(
           text1,
-          style: text1Style ?? Theme.of(context).textTheme.titleLarge?.copyWith(
-            fontWeight: ATFontWeights.w500
-          ),
+          style: text1Style ??
+              Theme.of(context)
+                  .textTheme
+                  .titleLarge
+                  ?.copyWith(fontWeight: ATFontWeights.w500),
         ),
         Text(
           text2,
-          style: text1Style ?? Theme.of(context).textTheme.titleSmall?.copyWith(
-            color: ATColors.white.withValues(alpha: 0.4),
-            height: 1.78
-          ),
+          style: text1Style ??
+              Theme.of(context).textTheme.titleSmall?.copyWith(
+                  color: ATColors.white.withValues(alpha: 0.4), height: 1.78),
         ),
       ],
     );

@@ -1,10 +1,9 @@
-
 import 'package:amptive/src/config/utils/colors.dart';
 import 'package:amptive/src/config/utils/font_sizes.dart';
 import 'package:amptive/src/config/utils/font_weights.dart';
 import 'package:flutter/material.dart';
 
-class AmptiveInputDecorationTheme{
+class AmptiveInputDecorationTheme {
   const AmptiveInputDecorationTheme._();
 
   static InputDecorationTheme darkInputDecorationTheme = InputDecorationTheme(
@@ -16,23 +15,20 @@ class AmptiveInputDecorationTheme{
     // suffixIconColor: AmptiveColors.deepOrange,
     //labelStyle: const TextStyle().copyWith(fontSize: AmptiveFontSizes.size13),
     hintStyle: TextStyle(
-      letterSpacing: 0,
-      color: ATColors.strokeGreyColor,
-      fontSize: ATSizes.size15,
-      fontWeight: ATFontWeights.w400,
-      overflow: TextOverflow.ellipsis
-    ),
+        letterSpacing: 0,
+        color: ATColors.strokeGreyColor,
+        fontSize: ATSizes.size15,
+        fontWeight: ATFontWeights.w400,
+        overflow: TextOverflow.ellipsis),
     contentPadding: const EdgeInsets.fromLTRB(16, 12, 16, 12),
     errorStyle: TextStyle(
-      color: ATColors.textRedColor,
-      fontSize: ATSizes.size12,
-      fontWeight: ATFontWeights.w400
-    ),
+        color: ATColors.textRedColor,
+        fontSize: ATSizes.size12,
+        fontWeight: ATFontWeights.w400),
 
     enabledBorder: const OutlineInputBorder().copyWith(
-      borderRadius: BorderRadius.circular(14),
-      borderSide: const BorderSide(width: 2)
-    ),
+        borderRadius: BorderRadius.circular(14),
+        borderSide: const BorderSide(width: 2)),
     focusedBorder: const OutlineInputBorder().copyWith(
       borderRadius: BorderRadius.circular(14),
       borderSide: BorderSide(width: 2, color: ATColors.hex307FE2),

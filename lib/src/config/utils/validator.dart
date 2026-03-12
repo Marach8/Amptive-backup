@@ -14,9 +14,8 @@ class Validators {
   }
 }
 
-
-mixin ATValidators{
-  String? validateUrl(String? value){
+mixin ATValidators {
+  String? validateUrl(String? value) {
     final RegExp strictUrlRegex = RegExp(
       r'^https?:\/\/(?:www\.)?' // http:// or https:// + optional www.
       r'[-\w@:%._\+~#=]{1,256}\.' // subdomains
@@ -24,15 +23,14 @@ mixin ATValidators{
       r'\b(?:[-\w()@:%_\+.~#?&\/=]*)$', // path and parameters
       caseSensitive: false,
     );
-    if(strictUrlRegex.hasMatch(value ?? '')){
+    if (strictUrlRegex.hasMatch(value ?? '')) {
       return null;
     }
     return ATStrings.ENTER_VALID_URL;
   }
 
-
-  String? validateField(String? text){
-    if(text == null || text.isEmpty){
+  String? validateField(String? text) {
+    if (text == null || text.isEmpty) {
       return ATStrings.emptyField;
     }
     return null;
@@ -52,36 +50,34 @@ mixin ATValidators{
     }
   }
 
+  String? validatePassword(String? password) {
+    final RegExp regex =
+        RegExp(r'^(?=.*[A-Z])(?=.*[a-z])(?=.*[!@#$%^&*(),.?":{}|<>]).{8,}$');
 
-  String? validatePassword(String? password){
-    final RegExp regex = RegExp(r'^(?=.*[A-Z])(?=.*[a-z])(?=.*[!@#$%^&*(),.?":{}|<>]).{8,}$');
-    
-    if(password == null || password.isEmpty){
+    if (password == null || password.isEmpty) {
       return ATStrings.emptyField;
-    }
-    else if(!regex.hasMatch(password)){
+    } else if (!regex.hasMatch(password)) {
       return ATStrings.weakPassword;
     }
     return null;
   }
 
-  String? validateEmail(String? email){
-    final RegExp regexExpression = RegExp(r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$');
+  String? validateEmail(String? email) {
+    final RegExp regexExpression =
+        RegExp(r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$');
 
-    if(email == null || email.isEmpty){
+    if (email == null || email.isEmpty) {
       return ATStrings.emptyField;
-    }
-    else if(!regexExpression.hasMatch(email)){
+    } else if (!regexExpression.hasMatch(email)) {
       return ATStrings.invalidEmail;
     }
     return null;
   }
 
-  String? validatePhoneNumber(String? phoneNumber){
-    if(phoneNumber == null || phoneNumber.isEmpty){
+  String? validatePhoneNumber(String? phoneNumber) {
+    if (phoneNumber == null || phoneNumber.isEmpty) {
       return ATStrings.emptyField;
-    }
-    else if(phoneNumber.length != 10){
+    } else if (phoneNumber.length != 10) {
       return ATStrings.invalidPhone;
     }
     return null;

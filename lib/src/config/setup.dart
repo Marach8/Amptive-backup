@@ -12,7 +12,8 @@ import 'package:amptive/src/services/auth/auth_field_service.dart';
 import 'package:amptive/src/services/auth/otp_service.dart';
 import 'package:amptive/src/services/authentication_service.dart';
 import 'package:amptive/src/services/create_show/create_show_service.dart';
-import 'package:amptive/src/services/go_live_service/go_live_service.dart' hide getHostList;
+import 'package:amptive/src/services/go_live_service/go_live_service.dart'
+    hide getHostList;
 import 'package:amptive/src/services/preference_service.dart';
 import 'package:amptive/src/features/profile/bloc/profile_bloc_export.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -54,7 +55,9 @@ List<SingleChildWidget> providers() {
     BlocProvider(create: (_) => AmptivePreferenceBloc()),
     BlocProvider(create: (_) => ATNavBarBloc()),
     BlocProvider(create: (_) => AmptiveGoLiveSelectCoHostBloc()),
-    BlocProvider(create: (_) => AmptiveGoLiveAvailableCoHostsBloc(hostList: getHostList())),
+    BlocProvider(
+        create: (_) =>
+            AmptiveGoLiveAvailableCoHostsBloc(hostList: getHostList())),
     BlocProvider(create: (_) => AmptiveGoLiveNotificationBloc()),
     BlocProvider(create: (_) => AmptiveFollowingBloc()),
     BlocProvider(create: (_) => AmptiveSubscriptionBloc()),

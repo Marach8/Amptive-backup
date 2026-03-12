@@ -5,22 +5,25 @@ import 'package:amptive/src/features/home/data/repository/home_repo.dart';
 import 'package:amptive/src/features/home/data/repository/home_repo_impl.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-
 class ToggleFollowingCubit extends Cubit<ATAppState<FollowingStatus>> {
   ToggleFollowingCubit({
     HomeRepo? mockHomeRepo,
     required FollowingStatus initialStatus,
-  }) : homeRepo = mockHomeRepo ?? HomeRepoImpl(),
-      super(InitialState<FollowingStatus>(initialData: initialStatus));
+  })  : homeRepo = mockHomeRepo ?? HomeRepoImpl(),
+        super(InitialState<FollowingStatus>(initialData: initialStatus));
 
   final HomeRepo homeRepo;
 
   FollowingStatus? get currentFollowStatus => switch (state) {
-    InitialState<FollowingStatus>(:final FollowingStatus? initialData) => initialData,
-    LoadingState<FollowingStatus>(:final FollowingStatus? currentData) => currentData,
-    SuccessState<FollowingStatus>(:final FollowingStatus? newData) => newData,
-    FailureState<FollowingStatus>(:final FollowingStatus? oldData) => oldData,
-  };
+        InitialState<FollowingStatus>(:final FollowingStatus? initialData) =>
+          initialData,
+        LoadingState<FollowingStatus>(:final FollowingStatus? currentData) =>
+          currentData,
+        SuccessState<FollowingStatus>(:final FollowingStatus? newData) =>
+          newData,
+        FailureState<FollowingStatus>(:final FollowingStatus? oldData) =>
+          oldData,
+      };
 
   //This represents the initial follow status just before the first tap to toggle.
   FollowingStatus? _firstInitialFollowStatus;
@@ -37,8 +40,8 @@ class ToggleFollowingCubit extends Cubit<ATAppState<FollowingStatus>> {
     final FollowingStatus? expectedFollowStatus = currentFollowStatus?.copyWith(
       isFollowing: !isCurrentlyFollowing,
       followerCount: isCurrentlyFollowing
-        ? (currentFollowersCount > 0 ? currentFollowersCount - 1 : 0)
-        : currentFollowersCount + 1,
+          ? (currentFollowersCount > 0 ? currentFollowersCount - 1 : 0)
+          : currentFollowersCount + 1,
     );
 
     _firstInitialFollowStatus ??= currentFollowStatus;
@@ -52,22 +55,20 @@ class ToggleFollowingCubit extends Cubit<ATAppState<FollowingStatus>> {
     );
   }
 
-
   @override
   Future<void> close() {
-    if(!_didExecuteDebouncedToggle && _cachedTargetUserId != null){
+    if (!_didExecuteDebouncedToggle && _cachedTargetUserId != null) {
       _executeDebouncedToggle(_cachedTargetUserId!);
     }
     ATHelperFuncs.disposeDebouncer();
     return super.close();
   }
 
-
   Future<void> _executeDebouncedToggle(String targetUserId) async {
     _didExecuteDebouncedToggle = true;
 
     final FollowingStatus? initialFollowStatus =
-      _firstInitialFollowStatus ?? currentFollowStatus;
+        _firstInitialFollowStatus ?? currentFollowStatus;
 
     _firstInitialFollowStatus = null;
 
@@ -79,7 +80,8 @@ class ToggleFollowingCubit extends Cubit<ATAppState<FollowingStatus>> {
       late ApiResponse<FollowingStatus> response;
 
       if (initialFollowStatus?.isFollowing == true) {
-        response = await homeRepo.unFollowTargetUser(targetUserId: targetUserId);
+        response =
+            await homeRepo.unFollowTargetUser(targetUserId: targetUserId);
       } else {
         response = await homeRepo.followTargetUser(targetUserId: targetUserId);
       }

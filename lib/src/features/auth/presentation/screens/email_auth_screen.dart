@@ -24,7 +24,8 @@ class ATEmailAuthScreen extends StatefulWidget {
   State<ATEmailAuthScreen> createState() => _ATEmailAuthScreenState();
 }
 
-class _ATEmailAuthScreenState extends State<ATEmailAuthScreen> with ATValidators{
+class _ATEmailAuthScreenState extends State<ATEmailAuthScreen>
+    with ATValidators {
   final TextEditingController _emailCntrl = TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
@@ -40,139 +41,143 @@ class _ATEmailAuthScreenState extends State<ATEmailAuthScreen> with ATValidators
     return MultiBlocProvider(
       providers: <SingleChildWidget>[
         BlocProvider<CheckIdentityAvailabilityCubit>(
-          create:(_) => CheckIdentityAvailabilityCubit(),
+          create: (_) => CheckIdentityAvailabilityCubit(),
         ),
-        BlocProvider<SendOtpCubit>(create:(_) => SendOtpCubit()),
+        BlocProvider<SendOtpCubit>(create: (_) => SendOtpCubit()),
       ],
-      child: Builder(
-        builder: (BuildContext context) {
-          return ATAnnotatedRegion(
-            child: Scaffold(
-              appBar: ATAppBar(
-                leading: const ATBackBtn(),
-                titleText: widget.title ?? ''
-              ),
-              body: Form(
-                key: _formKey,
-                child: SingleChildScrollView(
-                  padding: const EdgeInsets.all(15),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      Text(
-                        ATStrings.whatIsYourEmail,
-                        style: context.textTheme.headlineMedium
-                      ),
-                      const SizedBox(height: 10),
-          
-                      ATTextFormField(
+      child: Builder(builder: (BuildContext context) {
+        return ATAnnotatedRegion(
+          child: Scaffold(
+            appBar: ATAppBar(
+                leading: const ATBackBtn(), titleText: widget.title ?? ''),
+            body: Form(
+              key: _formKey,
+              child: SingleChildScrollView(
+                padding: const EdgeInsets.all(15),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Text(ATStrings.whatIsYourEmail,
+                        style: context.textTheme.headlineMedium),
+                    const SizedBox(height: 10),
+                    ATTextFormField(
                         controller: _emailCntrl,
                         maxLines: 1,
                         hintText: ATStrings.enterYourEmail,
                         fillColor: ATColors.hex9E9E9E.withValues(alpha: 0.3),
-                        prefixIcon: const SizedBox(width: 10,),
+                        prefixIcon: const SizedBox(
+                          width: 10,
+                        ),
                         keyboardType: TextInputType.emailAddress,
                         autoValidateMode: AutovalidateMode.disabled,
                         validator: validateEmail,
                         suffixIcon: Padding(
                           padding: const EdgeInsets.only(right: 10),
-                          child: BlocConsumer<CheckIdentityAvailabilityCubit, ATAppState<bool>>(
-                            listener: (_, ATAppState<bool> state) {
-                              if(state is FailureState<bool>){
-                                showAppNotification2(
-                                  context: context,
-                                  text: state.message,
-                                  type: NotificationType.failure,
-                                );
-                              }
-                            },
-                            builder: (_, ATAppState<bool> state) => switch(state){
-                              InitialState<bool>() => const SizedBox.shrink(),
-                              LoadingState<bool>() => const ATLoadingIndicator(size: 20,),
-                              SuccessState<bool>() => Icon(
-                                Icons.check, color: ATColors.successColor,
-                              ),
-                              FailureState<bool>() => Icon(
-                                Icons.close, color: ATColors.textRedColor,
-                              )
-                            }
-                          ),
+                          child: BlocConsumer<CheckIdentityAvailabilityCubit,
+                                  ATAppState<bool>>(
+                              listener: (_, ATAppState<bool> state) {
+                                if (state is FailureState<bool>) {
+                                  showAppNotification2(
+                                    context: context,
+                                    text: state.message,
+                                    type: NotificationType.failure,
+                                  );
+                                }
+                              },
+                              builder: (_, ATAppState<bool> state) =>
+                                  switch (state) {
+                                    InitialState<bool>() =>
+                                      const SizedBox.shrink(),
+                                    LoadingState<bool>() =>
+                                      const ATLoadingIndicator(
+                                        size: 20,
+                                      ),
+                                    SuccessState<bool>() => Icon(
+                                        Icons.check,
+                                        color: ATColors.successColor,
+                                      ),
+                                    FailureState<bool>() => Icon(
+                                        Icons.close,
+                                        color: ATColors.textRedColor,
+                                      )
+                                  }),
                         ),
-                        onChanged: (String text){
+                        onChanged: (String text) {
                           ATHelperFuncs.callDebouncer(
-                            1500,
-                            () => context.read<CheckIdentityAvailabilityCubit>()
-                              .checkIdentityAvailability(param: <String, dynamic>{'email': text})
-                          );
-                        }
-                      ),
-                      const SizedBox(height: 6,),
-                      Text(
-                        "This email will be verified in the next step.",
-                        style: context.textTheme.titleSmall,
-                      ),
-                    ],
-                  ),
+                              1500,
+                              () => context
+                                  .read<CheckIdentityAvailabilityCubit>()
+                                  .checkIdentityAvailability(
+                                      param: <String, dynamic>{'email': text}));
+                        }),
+                    const SizedBox(
+                      height: 6,
+                    ),
+                    Text(
+                      "This email will be verified in the next step.",
+                      style: context.textTheme.titleSmall,
+                    ),
+                  ],
                 ),
               ),
-           
-              bottomSheet: Builder(
-                builder: (BuildContext context) {
-                  final double bottom = MediaQuery.viewInsetsOf(context).bottom;
-                  final double bottomPad = bottom > 0 ? 10 : 50;
-                  return Padding(
-                    padding: EdgeInsets.fromLTRB(15, 0, 15, bottomPad),
-                    child: BlocBuilder<CheckIdentityAvailabilityCubit, ATAppState<bool>>(
-                      builder: (_, ATAppState<bool> state) {
-                        final bool shouldEnableBtn = state is SuccessState<bool>;
-                        return BlocConsumer<SendOtpCubit, ATAppState<String>>(
-                          listener: (_, ATAppState<String> sendOtpState) async{
-                            if(sendOtpState is SuccessState<String>){
-                              final bool? didVerifyOTP = await context.pushNamed(
-                                ATRoutes.enterOtpScreen,
-                                extra: VerifyOTPScreenParams(
-                                  verificationType: OTPVerificationType.email,
-                                  identifier: _emailCntrl.text.trim(),
-                                  title: widget.title,
-                                  otp: sendOtpState.newData
-                                )
-                              ) as bool?;
+            ),
+            bottomSheet: Builder(builder: (BuildContext context) {
+              final double bottom = MediaQuery.viewInsetsOf(context).bottom;
+              final double bottomPad = bottom > 0 ? 10 : 50;
+              return Padding(
+                padding: EdgeInsets.fromLTRB(15, 0, 15, bottomPad),
+                child: BlocBuilder<CheckIdentityAvailabilityCubit,
+                    ATAppState<bool>>(builder: (_, ATAppState<bool> state) {
+                  final bool shouldEnableBtn = state is SuccessState<bool>;
+                  return BlocConsumer<SendOtpCubit, ATAppState<String>>(
+                    listener: (_, ATAppState<String> sendOtpState) async {
+                      if (sendOtpState is SuccessState<String>) {
+                        final bool? didVerifyOTP = await context.pushNamed(
+                            ATRoutes.enterOtpScreen,
+                            extra: VerifyOTPScreenParams(
+                                verificationType: OTPVerificationType.email,
+                                identifier: _emailCntrl.text.trim(),
+                                title: widget.title,
+                                otp: sendOtpState.newData)) as bool?;
 
-                              if(context.mounted && didVerifyOTP == true){
-                                RegistrationData().copyWith(email: _emailCntrl.text.trim());
-                                context.pushNamed(ATRoutes.createPasswordScreen);
-                              }
-                            }
-                            else if(sendOtpState is FailureState<String>){
-                              showAppNotification2(
-                                context: context,
-                                text: sendOtpState.message,
-                                type: NotificationType.failure,
-                              );
-                            }
-                          },
-                          builder: (BuildContext context, ATAppState<String> sendOtpState) {                   
-                            return ATPlainElevatedBtn(
-                              isLoading: sendOtpState is LoadingState<String>,
-                              onPressed: shouldEnableBtn ? (){
-                                if(_formKey.currentState?.validate() ?? false){
-                                  context.read<SendOtpCubit>()
-                                    .sendOtp(param: <String, dynamic>{'email': _emailCntrl.text.trim()});
-                                }
-                              } : null,
-                              btnTitle: ATStrings.verifyEmail,
-                            );
-                          },
+                        if (context.mounted && didVerifyOTP == true) {
+                          RegistrationData()
+                              .copyWith(email: _emailCntrl.text.trim());
+                          context.pushNamed(ATRoutes.createPasswordScreen);
+                        }
+                      } else if (sendOtpState is FailureState<String>) {
+                        showAppNotification2(
+                          context: context,
+                          text: sendOtpState.message,
+                          type: NotificationType.failure,
                         );
                       }
-                    ),
+                    },
+                    builder: (BuildContext context,
+                        ATAppState<String> sendOtpState) {
+                      return ATPlainElevatedBtn(
+                        isLoading: sendOtpState is LoadingState<String>,
+                        onPressed: shouldEnableBtn
+                            ? () {
+                                if (_formKey.currentState?.validate() ??
+                                    false) {
+                                  context.read<SendOtpCubit>().sendOtp(
+                                      param: <String, dynamic>{
+                                        'email': _emailCntrl.text.trim()
+                                      });
+                                }
+                              }
+                            : null,
+                        btnTitle: ATStrings.verifyEmail,
+                      );
+                    },
                   );
-                }
-              ),
-            ),
-          );
-        }
-      ),
+                }),
+              );
+            }),
+          ),
+        );
+      }),
     );
   }
 }
