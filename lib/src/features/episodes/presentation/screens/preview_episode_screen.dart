@@ -1,8 +1,8 @@
 import 'dart:typed_data' show Uint8List;
 import 'dart:ui';
 import 'package:amptive/src/features/home/presentation/widgets/event_or_show_card.dart';
-import 'package:amptive/src/features/home/presentation/widgets/live_and_society_widget.dart';
-import 'package:amptive/src/features/home/presentation/widgets/show_or_event_indicator_with_title.dart';
+import 'package:amptive/src/features/home/presentation/widgets/render_community_name.dart';
+import 'package:amptive/src/features/home/presentation/widgets/existing_episodes_indicator.dart';
 import 'package:amptive/src/global_export.dart';
 import 'package:amptive/src/shared/annotated_region__widget.dart';
 import 'package:amptive/src/shared/sliver_header_delegate.dart';
@@ -87,7 +87,7 @@ class EpisodeDetailPreviewScreen extends StatelessWidget {
                                 color: ATColors.white.withValues(alpha: 0.1),
                               ),
                               const SizedBox(height: 5),
-                              const ATHashtagsWidget(),
+                              const RenderHashTags(),
                               const SizedBox(height: 20),
                               Text(
                                 ATStrings.hostedBy,

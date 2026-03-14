@@ -11,7 +11,7 @@ import '../../../../shared/circle_avatar.dart';
 import '../../../../shared/list_tile_with_leading_picture_widget.dart';
 import '../../../../shared/row_of_people_listening_widget.dart';
 import '../widgets/event_or_show_card.dart';
-import '../widgets/live_and_society_widget.dart';
+import '../widgets/render_community_name.dart';
 import '../widgets/whispers_list.dart';
 
 class ATLiveEventDetailedScreen extends StatelessWidget {
@@ -80,8 +80,8 @@ class ATLiveEventDetailedScreen extends StatelessWidget {
                                       ),
                                     ),
                                     const SizedBox(height: 20),
-                                    const LiveIndicatorRow(
-                                        text2: ATStrings.TECHNOLOGY),
+                                    // const IsLiveIndicator(
+                                    //     text2: ATStrings.TECHNOLOGY),
                                     const SizedBox(height: 30),
                                     Text(
                                       ATStrings.hashtags,
@@ -93,7 +93,7 @@ class ATLiveEventDetailedScreen extends StatelessWidget {
                                           ATColors.white.withValues(alpha: 0.1),
                                     ),
                                     const SizedBox(height: 5),
-                                    const ATHashtagsWidget(),
+                                    const RenderHashTags(),
                                     const SizedBox(height: 20),
                                     Text(
                                       ATStrings.hostedBy,

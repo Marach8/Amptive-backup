@@ -5,7 +5,7 @@ import 'package:amptive/src/features/episodes/data/repository/episodes_repo.dart
 import 'package:amptive/src/features/episodes/data/repository/episodes_repo_impl.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-/// Cubit for creating a new episode
+
 class CreateEpisodeCubit extends Cubit<ATAppState<CreateEpisodeResponseModel>> {
   CreateEpisodeCubit({EpisodesRepo? mockEpisodesRepo})
       : episodesRepo = mockEpisodesRepo ?? EpisodesRepoImpl(),

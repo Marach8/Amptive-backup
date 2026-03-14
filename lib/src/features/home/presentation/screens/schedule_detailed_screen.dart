@@ -13,10 +13,10 @@ import '../../../../config/utils/font_sizes.dart';
 import '../../../../config/utils/font_weights.dart';
 import '../../../../shared/list_tile_with_leading_picture_widget.dart';
 import '../../../../shared/sliver_header_delegate.dart';
-import 'package:amptive/src/shared/hashtags_widget.dart';
+import 'package:amptive/src/shared/render_hashtags.dart';
 import 'package:amptive/src/shared/blurred_header.dart';
 import '../widgets/event_or_show_card.dart';
-import '../widgets/live_and_society_widget.dart';
+import '../widgets/render_community_name.dart';
 import '../widgets/people_listening.dart';
 
 class ATScheduleDetailedScreen extends StatelessWidget {
@@ -102,7 +102,7 @@ class ATScheduleDetailedScreen extends StatelessWidget {
                               color: ATColors.white.withValues(alpha: 0.1),
                             ),
                             const SizedBox(height: 5),
-                            const ATHashtagsWidget(),
+                            const RenderHashTags(),
                             const SizedBox(
                               height: 30,
                             ),

@@ -53,7 +53,7 @@ Future<WhispersState?> controlWhispersModal(
                       height: 15,
                     ),
                     Text(
-                      ATStrings.WHISPERS_DESC,
+                      ATStrings.whispersDesc,
                       maxLines: 5,
                       style: Theme.of(context).textTheme.labelSmall?.copyWith(
                           color: ATColors.hexC2C2C2.withValues(alpha: 0.76)),
@@ -62,7 +62,7 @@ Future<WhispersState?> controlWhispersModal(
                       height: 15,
                     ),
                     Text(
-                      ATStrings.NON_ATTENDING_ENCOURAGED_2_JOIN,
+                      ATStrings.nonAttendeesEncouragedToJoin,
                       maxLines: 5,
                       style: Theme.of(context).textTheme.labelSmall?.copyWith(
                           color: ATColors.hexC2C2C2.withValues(alpha: 0.76)),
@@ -229,7 +229,7 @@ class _WhispersBloc extends Cubit<WhispersState?> {
     if (initialWhisper == ATStrings.toggleWhispers) {
       emit(null);
     } else {
-      if (initialWhisper == ATStrings.TURNED_ON) {
+      if (initialWhisper == ATStrings.turnedOn) {
         emit(WhispersState.turnedOn);
       } else {
         emit(WhispersState.turnedOff);

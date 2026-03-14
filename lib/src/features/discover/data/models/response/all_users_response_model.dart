@@ -8,20 +8,22 @@ class AllUsersResponseModel {
     this.data,
     this.page,
     this.pageSize,
-    this.hasMore,
+    this.totalPages,
   });
 
   factory AllUsersResponseModel.fromJson(Map<String, dynamic> json) {
+  final Map<String, dynamic>? dataMap = json['data'] as Map<String, dynamic>?;
+
     return AllUsersResponseModel(
       status: json['status'],
       statusCode: json['status_code'],
       message: json['message'],
-      data: (json['data'] as List<dynamic>?)
+      data: (dataMap?['users'] as List<dynamic>?)
           ?.map((dynamic e) => User.fromJson(e as Map<String, dynamic>))
           .toList(),
       page: json['page'],
       pageSize: json['page_size'],
-      hasMore: json['has_more'],
+      totalPages: json['total_pages'],
     );
   }
 
@@ -33,6 +35,7 @@ class AllUsersResponseModel {
     int? pageSize,
     int? statusCode,
     bool? hasMore,
+    int? totalPages,
   }) {
     return AllUsersResponseModel(
       status: status ?? this.status,
@@ -41,13 +44,14 @@ class AllUsersResponseModel {
       data: data ?? this.data,
       page: page ?? this.page,
       pageSize: pageSize ?? this.pageSize,
-      hasMore: hasMore ?? this.hasMore,
+      totalPages: totalPages ?? this.totalPages,
     );
   }
+
+  bool get hasMore => (page ?? 0) < (totalPages ?? 0);
 
   final bool? status;
   final String? message;
   final List<User>? data;
-  final int? page, pageSize, statusCode;
-  final bool? hasMore;
+  final int? page, pageSize, statusCode, totalPages;
 }

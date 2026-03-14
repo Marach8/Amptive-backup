@@ -72,4 +72,23 @@ class HostedShowsCubit extends Cubit<ATAppState<HostedShowsResponseModel>> {
           oldData: currentHostedShowsData));
     }
   }
+
+
+
+  void addNewHostedShow(HostedShow? show) {
+    if (show == null) return;
+    final List<HostedShow> updatedShows = <HostedShow>[
+      show, ...?currentHostedShowsData?.hostedShows,
+    ];
+
+    final HostedShowsResponseModel newData = HostedShowsResponseModel(
+      hostedShows: updatedShows,
+      total: (currentHostedShowsData?.total ?? 0) + 1,
+      page: currentHostedShowsData?.page,
+      pageSize: currentHostedShowsData?.pageSize,
+      hasMore: currentHostedShowsData?.hasMore,
+    );
+
+    emit(SuccessState<HostedShowsResponseModel>(newData: newData));
+  }
 }

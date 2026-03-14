@@ -30,7 +30,7 @@ class ATRoutes {
   static const String CIRCLE_IMG_CROPPER_SCREEN = "crop_image";
   static const String allowNotificationsScreen = "pre-homepage";
   static const String createShowForm = "create-show-form";
-  static const String CREATE_EVENT_FORM = "create-event-form";
+  static const String createEventForm = "create-event-form";
   static const String createEpisodeForm = "create-episode-form";
 
   //MAIN APPLICATION
@@ -103,6 +103,6 @@ class ATRoutes {
   static const String paperPlaneSuccessScreen = 'paper_plane_success';
   static const String walletTransactionsHistoryScreen = 'wallet_transactions';
   static const String SCHEDULE_DETAILED = 'schedule_detailed_screen';
-  static const String GO_LIVE_ONBOARDING = 'go_live_onboarding_screen';
+  static const String goLiveOnboarding = 'go_live_onboarding_screen';
   static const String MAIN_GO_LIVE_PROGRAM = 'main_go_live_program';
 }

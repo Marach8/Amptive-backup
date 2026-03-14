@@ -40,7 +40,7 @@ class ATHomeDropDown extends StatelessWidget {
                             .bodySmall
                             ?.copyWith(fontSize: ATSizes.size15),
                       ),
-                      const ATImgLoader(imgPath: ATImgStrings.CALENDER_ICON)
+                      const ATImgLoader(imgPath: ATImgStrings.calenderIcon)
                     ],
                   )),
               PopupMenuItem<String>(

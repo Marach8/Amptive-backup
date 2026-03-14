@@ -7,9 +7,11 @@ import 'package:amptive/src/shared/back_button.dart';
 import 'package:amptive/src/shared/custom_container_widget.dart';
 import 'package:amptive/src/shared/spotlight_beam.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import '../../../../shared/elevated_button_widget.dart';
 
 enum _AnimStage { start, end }
+enum ButtonPressed{elevatedBtn, textBtn}
 
 class ProgramCreationSuccessScreenParams {
   const ProgramCreationSuccessScreenParams({
@@ -18,14 +20,11 @@ class ProgramCreationSuccessScreenParams {
     required this.subtitle,
     required this.btnTitle,
     required this.txtBtnTitle,
-    required this.btnOnPressed,
-    required this.txtBtnOnPressed,
     required this.topLogo,
   });
 
   final Uint8List coverArtBytes;
   final String title, subtitle, btnTitle, txtBtnTitle;
-  final VoidCallback btnOnPressed, txtBtnOnPressed;
   final Widget topLogo;
 }
 
@@ -130,32 +129,33 @@ class _ProgramCreationSuccessScreenState
                             }),
                       ),
                       StreamBuilder<_AnimStage>(
-                          stream: _streamCntrl.stream,
-                          builder: (_, AsyncSnapshot<_AnimStage> snapshot) {
-                            if (snapshot.data == null) {
-                              return const SizedBox.shrink();
-                            }
-                            final bool isDone = snapshot.data == _AnimStage.end;
-                            return AnimatedPositioned(
-                              duration: const Duration(milliseconds: 100),
-                              left: !isDone ? -200 : null,
-                              right: !isDone ? -200 : null,
-                              child: ClipRRect(
-                                borderRadius: BorderRadius.circular(5),
-                                child: ATContainer(
-                                  duration: 200,
-                                  height: isDone ? 140 : kst.maxHeight,
-                                  width:
-                                      isDone ? 134 : context.screenWidth * 1.5,
-                                  child: Image.memory(
-                                      widget.params.coverArtBytes,
-                                      fit: BoxFit.cover),
-                                ),
+                        stream: _streamCntrl.stream,
+                        builder: (_, AsyncSnapshot<_AnimStage> snapshot) {
+                          if (snapshot.data == null) {
+                            return const SizedBox.shrink();
+                          }
+                          final bool isDone = snapshot.data == _AnimStage.end;
+                          return AnimatedPositioned(
+                            duration: const Duration(milliseconds: 100),
+                            left: !isDone ? -200 : null,
+                            right: !isDone ? -200 : null,
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(5),
+                              child: ATContainer(
+                                duration: 200,
+                                height: isDone ? 140 : kst.maxHeight,
+                                width:
+                                    isDone ? 134 : context.screenWidth * 1.5,
+                                child: Image.memory(
+                                    widget.params.coverArtBytes,
+                                    fit: BoxFit.cover),
                               ),
-                            );
-                          }),
+                            ),
+                          );
+                        }
+                      ),
                       Positioned(
-                        bottom: 10,
+                        bottom: 60,
                         child: Container(
                           width: context.screenWidth,
                           padding: const EdgeInsets.fromLTRB(15, 0, 15, 0),
@@ -163,14 +163,14 @@ class _ProgramCreationSuccessScreenState
                             mainAxisSize: MainAxisSize.min,
                             children: <Widget>[
                               ATPlainElevatedBtn(
-                                onPressed: widget.params.btnOnPressed,
+                                onPressed: () => context.pop(ButtonPressed.elevatedBtn),
                                 btnTitle: widget.params.btnTitle,
                                 bgColor: ATColors.white,
                                 fgColor: ATColors.black,
                               ),
                               const SizedBox(height: 15),
                               InkWell(
-                                  onTap: widget.params.txtBtnOnPressed,
+                                  onTap: () => context.pop(ButtonPressed.textBtn),
                                   borderRadius: BorderRadius.circular(5),
                                   child: Text(
                                     widget.params.txtBtnTitle,
@@ -188,11 +188,6 @@ class _ProgramCreationSuccessScreenState
             ],
           ),
         ),
-
-        // bottomSheet: Container(
-        //   color: ATColors.trsprnt,
-        //   child: ,
-        // ),
       ),
     );
   }

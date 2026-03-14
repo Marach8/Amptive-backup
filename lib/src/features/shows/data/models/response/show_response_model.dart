@@ -23,9 +23,7 @@ class HostedShowsResponseModel {
   }
 
   final List<HostedShow>? hostedShows;
-  final int? total;
-  final int? page;
-  final int? pageSize;
+  final int? total, page, pageSize;
   final bool? hasMore;
 }
 
@@ -50,6 +48,8 @@ class HostedShow extends Equatable {
     this.createdAt,
     this.updatedAt,
     this.activeEpisode,
+    this.isLive,
+    this.community,
   });
 
   factory HostedShow.fromJson(Map<String, dynamic> json) {
@@ -66,6 +66,7 @@ class HostedShow extends Equatable {
       totalViewers: json['total_viewers'],
       goingCount: json['going_count'],
       followerCount: json['follower_count'],
+      isLive: json['is_live'],
       host: json['host'] != null ? Host.fromJson(json['host']) : null,
       coHosts: (json['co_hosts'] as List<dynamic>?)
           ?.map((dynamic e) => CoHost.fromJson(e))
@@ -75,6 +76,7 @@ class HostedShow extends Equatable {
           .toList(),
       publishedAt: json['published_at'],
       createdAt: json['created_at'],
+      community: json['community'],
       updatedAt: json['updated_at'],
       activeEpisode: json['active_episode'] != null
           ? Episode.fromJson(json['active_episode'])
@@ -96,8 +98,10 @@ class HostedShow extends Equatable {
   final double? price;
   final int? episodeCount, totalViewers, goingCount, followerCount;
   final Host? host;
+  final bool? isLive;
   final List<CoHost>? coHosts;
   final List<HashTag>? tags;
+  final Community? community;
   final Episode? activeEpisode;
 
   @override
@@ -121,5 +125,7 @@ class HostedShow extends Equatable {
         createdAt,
         updatedAt,
         activeEpisode,
+        isLive,
+        community,
       ];
 }

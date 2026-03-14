@@ -4,7 +4,7 @@ import 'package:amptive/src/config/utils/image_strings.dart';
 import 'package:amptive/src/config/utils/helper_functions.dart';
 import 'package:amptive/src/shared/custom_container_widget.dart';
 import 'package:amptive/src/shared/image_loader_widget.dart';
-import 'package:amptive/src/shared/live_indicator_with_animating_dot_widget.dart';
+import 'package:amptive/src/shared/live_indicators.dart';
 import 'package:amptive/src/shared/list_tile_with_leading_picture_widget.dart';
 import 'package:amptive/src/features/home/presentation/widgets/row_of_paid_show_and_play_button_widget.dart';
 import 'package:amptive/src/shared/row_of_people_listening_widget.dart';
@@ -60,7 +60,7 @@ class ATShowOrEventInfo extends StatelessWidget {
                     children: <Widget>[
                       const With2OthersWidget(),
                       const Spacer(),
-                      const LiveWithAnimatingDot(),
+                      const LiveIndicatorWithAnimatingDot(),
                       const SizedBox(height: 10),
                       Text(
                         maxLines: 2,

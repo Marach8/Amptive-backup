@@ -22,8 +22,11 @@ class SelectedHashtagsRow extends StatelessWidget {
               child: Row(
                 spacing: 15,
                 mainAxisAlignment: MainAxisAlignment.center,
-                children: selectedHashtags.map((HashTag hashtag) 
-                  => _SelectedHashtag(hashtag: hashtag)).toList(),
+                children: <Widget>[
+                  const SizedBox(width: 0.1,),
+                  ...selectedHashtags.map((HashTag hashtag) 
+                  => _SelectedHashtag(hashtag: hashtag)),
+                ],
               ),
             ),
           ),

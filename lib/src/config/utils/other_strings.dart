@@ -573,14 +573,14 @@ class ATStrings {
   static const String SET_CAPACITY = 'Set capacity';
   static const String REMOVE = 'Remove';
   static const String SEND_GIFT_2_HOST = 'Send a gift to the host';
-  static const String WHISPERS_DESC =
+  static const String whispersDesc =
       'Whispers are randomly selected comments from your live audience that appear on your event page while your are live.';
-  static const String NON_ATTENDING_ENCOURAGED_2_JOIN =
+  static const String nonAttendeesEncouragedToJoin =
       'Non-attending users can see these comments, encouraging them to join your live event.';
   static const String TURN_ON = 'Turn On';
-  static const String TURNED_ON = 'Turned On';
+  static const String turnedOn = 'Turned On';
   static const String TURN_OFF = 'Turn Off';
-  static const String TURNED_OFF = 'Turned Off';
+  static const String turnedOff = 'Turned Off';
   static const String IS_TALKING = 'is talking';
   static const String IS_GIFTING = 'is gifting';
   static const String GIFTED = 'Gifted';

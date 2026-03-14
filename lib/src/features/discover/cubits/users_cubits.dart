@@ -42,12 +42,25 @@ class AllUsersCubit extends Cubit<ATAppState<AllUsersResponseModel>> {
 
     try {
       final ApiResponse<AllUsersResponseModel> response =
-          await discoverRepo.fetchAllUsers(
-              page: (currentUsersData?.page ?? -1) + 1, pageSize: 50);
+      await discoverRepo.fetchAllUsers(
+        page: (currentUsersData?.page ?? 0) + 1, 
+        pageSize: 20
+      );
       response.when(
         successful: (Successful<AllUsersResponseModel> data) {
           _cachedUsers = data.data?.data ?? <User>[];
-          emit(SuccessState<AllUsersResponseModel>(newData: data.data));
+          final List<User>? newUsers = data.data?.data;
+          final List<User>? currentUsers = currentUsersData?.data;
+
+          final List<User> mergedUsers = <User>[...?currentUsers, ...?newUsers];
+          final AllUsersResponseModel? newData = currentUsersData?.copyWith(
+            data: mergedUsers,
+            page: data.data?.page,
+            totalPages: data.data?.totalPages,
+            pageSize: data.data?.pageSize,
+            message: data.data?.message,
+          ) ?? data.data;
+          emit(SuccessState<AllUsersResponseModel>(newData: newData));
         },
         unSuccessful: (Unsuccessful<AllUsersResponseModel> error) {
           emit(FailureState<AllUsersResponseModel>(error.error.message));

@@ -229,8 +229,8 @@ class AvailableHashtagsList extends StatelessWidget {
                     final int adjustedIndex = index - 1;
                     if (adjustedIndex < hashtags.length) {
                       final HashTag hashtag = hashtags[adjustedIndex];
-                      final bool isLastItem =
-                          adjustedIndex == hashtags.length - 1;
+                      final bool isLastItem = (adjustedIndex == hashtags.length - 1)
+                        && state is! LoadingState<AllHashtagsResponseModel>;
                       return Padding(
                         padding: EdgeInsets.only(bottom: isLastItem ? 100 : 0),
                         child: HastagWithCheckIconWidget(
@@ -251,7 +251,10 @@ class AvailableHashtagsList extends StatelessWidget {
                     }
 
                     if (state is LoadingState<AllHashtagsResponseModel>) {
-                      return const CohostWithCheckIconShimmer();
+                      return const Padding(
+                        padding: EdgeInsets.only(bottom: 100),
+                        child: CohostWithCheckIconShimmer(),
+                      );
                     }
                     return const SizedBox.shrink();
                   },

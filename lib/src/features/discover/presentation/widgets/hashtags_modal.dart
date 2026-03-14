@@ -74,6 +74,20 @@ class _SelectHashtagsModal extends StatefulWidget {
 }
 
 class _SelectHashtagsModalState extends State<_SelectHashtagsModal> {
+  @override 
+  void initState(){
+    super.initState();
+    widget.scrollController.addListener(_onHashTagsScrollToEnd);
+  }
+
+  void _onHashTagsScrollToEnd() {
+    const double threshHold = 80;
+    if (widget.scrollController.position.pixels >=
+        widget.scrollController.position.maxScrollExtent + threshHold) {
+      context.read<AllHashtagsCubit>().fetchHashTags();
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(

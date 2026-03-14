@@ -3,15 +3,17 @@ import 'package:amptive/src/features/calender/calender_export.dart';
 import 'package:amptive/src/features/home/cubits/toggle_following_cubit.dart';
 import 'package:amptive/src/features/home/data/models/following_status.dart';
 import 'package:amptive/src/features/home/presentation/widgets/event_or_show_card.dart';
-import 'package:amptive/src/features/home/presentation/widgets/live_and_society_widget.dart';
+import 'package:amptive/src/features/home/presentation/widgets/render_community_name.dart';
 import 'package:amptive/src/features/home/presentation/widgets/people_listening.dart';
 import 'package:amptive/src/features/home/presentation/widgets/program_actions_modal.dart';
-import 'package:amptive/src/features/home/presentation/widgets/show_or_event_indicator_with_title.dart';
+import 'package:amptive/src/features/home/presentation/widgets/existing_episodes_indicator.dart';
 import 'package:amptive/src/features/shows/data/models/response/show_response_model.dart';
 import 'package:amptive/src/global_export.dart';
 import 'package:amptive/src/shared/annotated_region__widget.dart';
 import 'package:amptive/src/shared/back_button.dart';
+import 'package:amptive/src/shared/global_model_objects.dart';
 import 'package:amptive/src/shared/image_loader_widget.dart';
+import 'package:amptive/src/shared/live_indicators.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:nested/nested.dart';
@@ -30,7 +32,7 @@ class PreviewShowScreen extends StatelessWidget {
       providers: <SingleChildWidget>[
         BlocProvider<ShowDetailCubit>(
             create: (_) =>
-                ShowDetailCubit(initialShow: hostedShow)..fetchShowDetails()),
+                ShowDetailCubit(initialShow: hostedShow)),
         BlocProvider<BlurredHeaderCubit>(create: (_) => BlurredHeaderCubit()),
         BlocProvider<ToggleFollowingCubit>(
             create: (_) => ToggleFollowingCubit(
@@ -45,6 +47,9 @@ class PreviewShowScreen extends StatelessWidget {
         WidgetsBinding.instance.addPostFrameCallback(
           (_) => context.read<ShowDetailCubit>().fetchShowDetails(),
         );
+        final bool hasEpisodes = (hostedShow.episodeCount ?? 0) > 0;
+        final bool isLive = hostedShow.isLive ?? false;
+
         return ATAnnotatedRegion(
           statusBarColor: ATColors.transparent,
           child: Scaffold(
@@ -52,7 +57,7 @@ class PreviewShowScreen extends StatelessWidget {
               children: <Widget>[
                 Positioned.fill(
                   child: ImageFiltered(
-                    imageFilter: ImageFilter.blur(sigmaX: 250, sigmaY: 250),
+                    imageFilter: ImageFilter.blur(sigmaX: 50, sigmaY: 50),
                     child: ATImgLoader(
                         boxFit: BoxFit.fill,
                         imgPath: hostedShow.coverUrl ?? ''),
@@ -68,32 +73,31 @@ class PreviewShowScreen extends StatelessWidget {
                         SliverPersistentHeader(
                           pinned: true,
                           delegate: ATSliverHDelegate(
-                              maxExt: blurredHeaderHeight,
-                              minExt: blurredHeaderHeight,
-                              child: ATBlurredHeaderWidget(
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  spacing: 20,
-                                  children: <Widget>[
-                                    Padding(
-                                      padding: const EdgeInsets.only(left: 5),
-                                      child: ATRoundedBackBtn(
-                                        bgColor: ATColors.transparent,
-                                      ),
+                            maxExt: blurredHeaderHeight,
+                            minExt: blurredHeaderHeight,
+                            child: ATBlurredHeaderWidget(
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                spacing: 20,
+                                children: <Widget>[
+                                  Padding(
+                                    padding: const EdgeInsets.only(left: 5),
+                                    child: ATRoundedBackBtn(
+                                      bgColor: ATColors.transparent,
                                     ),
-                                    Flexible(
-                                      child: Text(
-                                        hostedShow.title ?? '',
-                                        style: context.textTheme.bodyMedium,
-                                      ),
+                                  ),
+                                  Flexible(
+                                    child: Text(
+                                      hostedShow.title ?? '',
+                                      style: context.textTheme.bodyMedium,
                                     ),
-                                    const SizedBox(
-                                      width: 30,
-                                    )
-                                  ],
-                                ),
-                              )),
+                                  ),
+                                  const SizedBox(width: 30)
+                                ],
+                              ),
+                            )
+                          ),
                         )
                       ],
                       body: SingleChildScrollView(
@@ -110,22 +114,17 @@ class PreviewShowScreen extends StatelessWidget {
                                     toggleFollowingCubit:
                                         context.read<ToggleFollowingCubit>(),
                                     targetUserName:
-                                        hostedShow.host?.name ?? '',
+                                        hostedShow.host?.username ?? '',
                                     targetUserId: hostedShow.host?.id ?? '',
                                   );
                                 }),
                             const SizedBox(height: 24),
-                            ShowOrEventIndicatorWithTitle(
-                                leading: ATContainer(
-                              height: 20,
-                              width: 20,
-                              color: ATColors.hexFF6482,
-                              child: const ATImgLoader(
-                                  imgPath: ATImgStrings.CALENDER_ICON),
-                            )),
-                            const SizedBox(
-                              height: 12,
-                            ),
+
+                            if(hasEpisodes) ...<Widget>[
+                              ExistingEpisodesIndicator(episode: hostedShow.activeEpisode),
+                              const SizedBox(height: 12),
+                            ],
+                            
                             Text(
                               maxLines: 2,
                               hostedShow.title ?? '',
@@ -135,13 +134,15 @@ class PreviewShowScreen extends StatelessWidget {
                                 fontWeight: ATFontWeights.w600,
                               ),
                             ),
-                            const SizedBox(
-                              height: 12,
+                            const SizedBox(height: 12),
+                            Row(
+                              spacing: 20,
+                              children: <Widget>[
+                                if(isLive) const LiveIndicatorWithAnimatinWifiIcon(),
+                                RenderCommunityName(communityName: hostedShow.community?.name)
+                              ],
                             ),
-                            const LiveIndicatorRow(),
-                            const SizedBox(
-                              height: 40,
-                            ),
+                            const SizedBox(height: 40),
                             Text(
                               ATStrings.hashtags,
                               style: context.textTheme.bodySmall
@@ -151,10 +152,8 @@ class PreviewShowScreen extends StatelessWidget {
                               color: ATColors.white.withValues(alpha: 0.1),
                             ),
                             const SizedBox(height: 5),
-                            const ATHashtagsWidget(),
-                            const SizedBox(
-                              height: 30,
-                            ),
+                            RenderHashTags(hashtags: hostedShow.tags),
+                            const SizedBox(height: 30),
                             Text(
                               ATStrings.hostedBy,
                               style: context.textTheme.bodySmall
@@ -163,42 +162,37 @@ class PreviewShowScreen extends StatelessWidget {
                             Divider(
                               color: ATColors.white.withValues(alpha: 0.1),
                             ),
-                            ...List<Widget>.generate(
-                                3,
-                                (_) => const TileWithLeadingImage(
-                                      padding:
-                                          EdgeInsets.symmetric(vertical: 9),
-                                      title: 'Gerald',
-                                      subtitle: 'Host',
-                                      diameter: 42,
-                                      leadingImagePath: ATImgStrings.jpeg1,
-                                    )),
-                            const SizedBox(
-                              height: 30,
+                            ...(hostedShow.coHosts ?? <CoHost>[]).map(
+                              (CoHost cohost) => TileWithLeadingImage(
+                                padding: const EdgeInsets.symmetric(vertical: 9),
+                                title: cohost.username ?? '',
+                                subtitle: 'Host',
+                                diameter: 42,
+                                leadingImagePath: cohost.profilePicture ?? ATImgStrings.jpeg1,
+                              )
                             ),
-                            Text(
-                              '656 Listening',
-                              style: context.textTheme.bodySmall
-                                  ?.copyWith(fontSize: ATSizes.size17),
-                            ),
-                            Divider(
-                              color: ATColors.white.withValues(alpha: 0.1),
-                            ),
-                            const SizedBox(
-                              height: 10,
-                            ),
-                            const NoOfListenersWidget(),
-                            const SizedBox(
-                              height: 20,
-                            ),
-                            Text(
-                              'daniel, jessica, gerald, peter and 652 more',
-                              style: context.textTheme.bodySmall?.copyWith(
-                                  color: ATColors.white.withValues(alpha: 0.6)),
-                            ),
-                            const SizedBox(
-                              height: 35,
-                            ),
+                            const SizedBox(height: 30),
+                            // Text(
+                            //   '656 Listening',
+                            //   style: context.textTheme.bodySmall
+                            //       ?.copyWith(fontSize: ATSizes.size17),
+                            // ),
+                            // Divider(
+                            //   color: ATColors.white.withValues(alpha: 0.1),
+                            // ),
+                            // const SizedBox(
+                            //   height: 10,
+                            // ),
+                            // const NoOfListenersWidget(),
+                            // const SizedBox(
+                            //   height: 20,
+                            // ),
+                            // Text(
+                            //   'daniel, jessica, gerald, peter and 652 more',
+                            //   style: context.textTheme.bodySmall?.copyWith(
+                            //       color: ATColors.white.withValues(alpha: 0.6)),
+                            // ),
+                            // const SizedBox( height: 35),
                             Text(
                               'About Show',
                               style: context.textTheme.bodySmall
@@ -208,7 +202,7 @@ class PreviewShowScreen extends StatelessWidget {
                               color: ATColors.white.withValues(alpha: 0.1),
                             ),
                             ReadMoreText(
-                              'Jessica Yellin, founder of the Webby-Award Winning Independent News Brand, News Not Noise, returns to walk us through what is going on right now in the political landscape.',
+                              hostedShow.description ?? '',
                               trimMode: TrimMode.Length,
                               trimExpandedText: ATStrings.showLess,
                               trimCollapsedText: ATStrings.showMore,
@@ -220,17 +214,15 @@ class PreviewShowScreen extends StatelessWidget {
                                 fontWeight: ATFontWeights.w500,
                               ),
                             ),
-                            const SizedBox(
-                              height: 30,
-                            ),
-                            Text(
-                              ATStrings.whispers,
-                              style: context.textTheme.bodySmall
-                                  ?.copyWith(fontSize: ATSizes.size17),
-                            ),
-                            Divider(
-                              color: ATColors.white.withValues(alpha: 0.1),
-                            ),
+                            const SizedBox(height: 150),
+                            // Text(
+                            //   ATStrings.whispers,
+                            //   style: context.textTheme.bodySmall
+                            //       ?.copyWith(fontSize: ATSizes.size17),
+                            // ),
+                            // Divider(
+                            //   color: ATColors.white.withValues(alpha: 0.1),
+                            // ),
                           ],
                         ),
                       ),
@@ -241,9 +233,12 @@ class PreviewShowScreen extends StatelessWidget {
             ),
             bottomSheet: ATBlurredBgBtn(
               onPressed: () {
-                context.pushNamed(ATRoutes.createEpisodeForm);
+                context.pushNamed(
+                  ATRoutes.createEpisodeForm,
+                  extra: hostedShow.showId ?? ''
+                );
               },
-              btnTitle: 'Add Episode',
+              btnTitle: hasEpisodes ? 'Add Episode' : 'Create Episode',
             ),
           ),
         );

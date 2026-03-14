@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:developer' show log;
 import 'dart:typed_data';
 import 'dart:ui';
 import 'package:amptive/src/config/api_response_and_app_state.dart';
@@ -9,6 +10,7 @@ import 'package:amptive/src/features/discover/cubits/hashtags_cubit.dart';
 import 'package:amptive/src/features/discover/cubits/users_cubits.dart';
 import 'package:amptive/src/features/shows/cubits/create_show_cubit.dart';
 import 'package:amptive/src/features/go_live/go_live_export.dart';
+import 'package:amptive/src/features/shows/cubits/hosted_shows_cubit.dart';
 import 'package:amptive/src/features/shows/data/models/response/show_response_model.dart';
 import 'package:amptive/src/global_export.dart';
 import 'package:amptive/src/shared/annotated_region__widget.dart';
@@ -24,10 +26,14 @@ import 'package:nested/nested.dart' show SingleChildWidget;
 import 'package:amptive/src/shared/sliver_header_delegate.dart';
 import 'package:uuid/uuid.dart';
 import '../../../../shared/rich_text.dart';
-import '../../../../config/utils/dialogs/add_communities_dialog.dart';
+import '../../../../config/utils/dialogs/communities_modal.dart';
 
 class CreateShowFormScreen extends StatelessWidget {
-  const CreateShowFormScreen({super.key});
+  const CreateShowFormScreen({
+    super.key,
+    required this.hostedShowsCubit,
+  });
+  final HostedShowsCubit hostedShowsCubit;
 
   @override
   Widget build(BuildContext context) {
@@ -43,6 +49,7 @@ class CreateShowFormScreen extends StatelessWidget {
         BlocProvider<AllHashtagsCubit>(create: (_) => AllHashtagsCubit()),
         BlocProvider<SelectedHashTagsCubit>(
           create: (_) => SelectedHashTagsCubit()),
+        BlocProvider<HostedShowsCubit>.value(value: hostedShowsCubit,),
       ],
       child: const _SubWidget(),
     );
@@ -89,6 +96,7 @@ class __SubWidgetState extends State<_SubWidget> {
   void dispose() {
     _titleCntrl.dispose();
     _titleStreamCntrl.close();
+    _launchShowBtnNotifier.dispose();
     _descStreamCntrl.close();
     super.dispose();
   }
@@ -118,7 +126,7 @@ class __SubWidgetState extends State<_SubWidget> {
                   }),
                 ),
               ),
-              ATContainer(
+              Container(
                 color: ATColors.hex0D0D0D.withValues(alpha: 0.75),
                 child: NotificationListener<ScrollNotification>(
                   onNotification: blocContext
@@ -129,38 +137,39 @@ class __SubWidgetState extends State<_SubWidget> {
                       SliverPersistentHeader(
                         pinned: true,
                         delegate: ATSliverHDelegate(
-                            maxExt: blurredHeaderHeight,
-                            minExt: blurredHeaderHeight,
-                            child: SizedBox(
-                                height: blurredHeaderHeight,
-                                child: ATBlurredHeaderWidget(
-                                  child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: <Widget>[
-                                      Padding(
-                                        padding: const EdgeInsets.only(left: 4),
-                                        child: ATRoundedBackBtn(
-                                          bgColor: ATColors.transparent,
-                                        ),
-                                      ),
-                                      InkWell(
-                                        onTap: () {
-                                          context
-                                              .read<AllHashtagsCubit>()
-                                              .fetchHashTags();
-                                        },
-                                        child: Text(
-                                          ATStrings.createShow,
-                                          style: context.textTheme.bodyMedium,
-                                        ),
-                                      ),
-                                      const SizedBox(
-                                        width: 30,
-                                      )
-                                    ],
+                          maxExt: blurredHeaderHeight,
+                          minExt: blurredHeaderHeight,
+                          child: SizedBox(
+                            height: blurredHeaderHeight,
+                            child: ATBlurredHeaderWidget(
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: <Widget>[
+                                  Padding(
+                                    padding: const EdgeInsets.only(left: 4),
+                                    child: ATRoundedBackBtn(
+                                      bgColor: ATColors.transparent,
+                                    ),
                                   ),
-                                ))),
+                                  InkWell(
+                                    onTap: () {
+                                      context
+                                          .read<CommunitiesCubit>().fetchCommunities();
+                                    },
+                                    child: Text(
+                                      ATStrings.createShow,
+                                      style: context.textTheme.bodyMedium,
+                                    ),
+                                  ),
+                                  const SizedBox(
+                                    width: 30,
+                                  )
+                                ],
+                              ),
+                            )
+                          )
+                        ),
                       ),
                     ],
 
@@ -270,6 +279,7 @@ class __SubWidgetState extends State<_SubWidget> {
                                               communitiesCubit: context
                                                   .read<CommunitiesCubit>(),
                                             );
+                                            log('selectedCom id: ${selectedCom?.communityId}');
                                             if (selectedCom != null) {
                                               setter(() => selectedCommunity =
                                                   selectedCom);
@@ -372,14 +382,14 @@ class __SubWidgetState extends State<_SubWidget> {
                             padding: EdgeInsets.fromLTRB(15, 0, 15, 10),
                             child: RowWith2Texts(text1: ATStrings.hashtags),
                           ),
-                          Padding(
-                            padding: const EdgeInsets.fromLTRB(15, 0, 15, 10),
-                            child: StatefulBuilder(
-                              builder: (_, StateSetter setter) {
-                                return Column(
-                                  spacing: 10,
-                                  children: <Widget>[
-                                    CreateProgramSelectionItem(
+                          StatefulBuilder(
+                            builder: (_, StateSetter setter) {
+                              return Column(
+                                spacing: 10,
+                                children: <Widget>[
+                                  Padding(
+                                    padding: const EdgeInsets.fromLTRB(15, 0, 15, 0),
+                                    child: CreateProgramSelectionItem(
                                       description: '${ATStrings.addHashtags}s',
                                       onTap: () async {
                                         final List<HashTag>? newHashTags =
@@ -393,11 +403,11 @@ class __SubWidgetState extends State<_SubWidget> {
                                         }
                                       },
                                     ),
-                                    const SelectedHashtagsRow(),
-                                  ],
-                                );
-                              }
-                            ),
+                                  ),
+                                  const SelectedHashtagsRow(),
+                                ],
+                              );
+                            }
                           ),
 
                           Padding(
@@ -576,6 +586,7 @@ class __SubWidgetState extends State<_SubWidget> {
                         == ProgramAccessType.free ? 'free' : 'paid',
                       price: accessTypeData.subscriptionAmount 
                         ?? accessTypeData.oneTimePaymentAmount ?? 0.01,
+                      allowHandRaising: selectedPermission == HandRaisingPermission.allow,
                     );
                   } else if (state is FailureState<String>) {
                     //if uploading cover art fails, stop loading and show notif
@@ -589,8 +600,9 @@ class __SubWidgetState extends State<_SubWidget> {
                 },
               ),
               BlocListener<CreateShowCubit, ATAppState<HostedShow>>(
-                listener: (_, ATAppState<HostedShow> state) {
+                listener: (_, ATAppState<HostedShow> state) async{
                   if (state is SuccessState<HostedShow>) {
+                    context.read<HostedShowsCubit>().addNewHostedShow(state.newData);
                     _launchShowBtnNotifier.value = true;
                     final dynamic params = ProgramCreationSuccessScreenParams(
                         coverArtBytes: context.read<BgImageCubit>().state.$2!,
@@ -598,23 +610,27 @@ class __SubWidgetState extends State<_SubWidget> {
                         subtitle: ATStrings.beginYourJourney,
                         btnTitle: ATStrings.createFirstEpisode,
                         txtBtnTitle: ATStrings.viewShowPage,
-                        btnOnPressed: () => context.pushReplacementNamed(ATRoutes.createEpisodeForm),
-                        txtBtnOnPressed: () {
-                          // handle text button press
-                        },
                         topLogo: const Icon(Icons.check_circle_sharp, size: 45),
                       );
 
-                      context.pushNamed(
+                      final ButtonPressed? onPressedResult = await context.pushNamed(
                         ATRoutes.programCreationSuccessScreen,
                         extra: params
-                      );
-                    // showAppNotification2(
-                    //   context: context,
-                    //   text: 'Show created successfully',
-                    //   type: NotificationType.success,
-                    // );
-                  } else if (state is FailureState<HostedShow>) {
+                      ) as ButtonPressed?;
+
+                      if(context.mounted){
+                        if(onPressedResult == ButtonPressed.elevatedBtn){
+                          context.pushReplacementNamed(
+                            ATRoutes.createEpisodeForm);
+                        } else if(onPressedResult == ButtonPressed.textBtn){
+                          context.pushReplacementNamed(
+                            ATRoutes.showPreviewScreen,
+                            extra: state.newData
+                          );
+                        }
+                      }
+                  } 
+                  else if (state is FailureState<HostedShow>) {
                     _launchShowBtnNotifier.value = true;
                     showAppNotification2(
                       context: context,

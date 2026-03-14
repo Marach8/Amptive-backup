@@ -6,7 +6,7 @@ export 'go_live_type_selection_screen.dart';
 export '../../../events/presentation/screens/create_event_form_screen.dart';
 export '../../../episodes/presentation/screens/preview_episode_screen.dart';
 export '../../../episodes/presentation/screens/create_episode_form_screen.dart';
-export '../../../shows/presentation/screens/show_detail_screen.dart';
+export '../../../shows/presentation/screens/preview_show_screen.dart';
 export 'go_live_onboarding_screen.dart';
 export 'live_program_audience_view.dart';
 export 'live_program_cohost_view.dart';
