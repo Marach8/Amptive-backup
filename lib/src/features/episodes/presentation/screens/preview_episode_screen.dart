@@ -137,7 +137,7 @@ class EpisodeDetailPreviewScreen extends StatelessWidget {
                               ),
                               const SizedBox(height: 20),
                               Text(
-                                ATStrings.SHARE_EPISODE_LINK_DESC,
+                                ATStrings.shareEpisodeLinkDescription,
                                 maxLines: 2,
                                 style: context.textTheme.bodySmall?.copyWith(
                                     color:

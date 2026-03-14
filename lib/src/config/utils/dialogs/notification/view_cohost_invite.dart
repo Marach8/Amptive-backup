@@ -43,7 +43,7 @@ Future<(int?, bool)?> viewCoHostInviteDetails(
                         style: Theme.of(context).textTheme.bodyLarge),
                     const SizedBox(height: 15),
                     Text(
-                        '$hostUsername ${ATStrings.INVITED_U_2_COHOST_IN_THE} ${isEvent ? ATStrings.EVENT : ATStrings.SHOW} $progName',
+                        '$hostUsername ${ATStrings.INVITED_U_2_COHOST_IN_THE} ${isEvent ? ATStrings.event : ATStrings.SHOW} $progName',
                         maxLines: 2,
                         textAlign: TextAlign.center,
                         //style: Theme.of(context).textTheme.labelSmall

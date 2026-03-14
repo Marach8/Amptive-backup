@@ -26,7 +26,7 @@ class CreateShowCubit extends Cubit<ATAppState<HostedShow>> {
   }) async {
     emit(const LoadingState<HostedShow>());
     try {
-      final CreateShowModel createShowModel = CreateShowModel(
+      final CreateShowPayload createShowModel = CreateShowPayload(
         title: title,
         description: description,
         coverUrl: coverUrl,

@@ -1,5 +1,5 @@
-class CreateShowModel {
-  CreateShowModel({
+class CreateShowPayload {
+  CreateShowPayload({
     required this.title,
     required this.description,
     required this.coverUrl,

@@ -95,7 +95,7 @@ class _SubWidgetState extends State<_SubWidget> {
               child: Column(
                 spacing: 15,
                 children: <Widget>[
-                  _SelectionWidget(
+                  SelectionWidgetWithLeadinRadioBtn(
                     isSelected: _localPermission == HandRaisingPermission.allow,
                     title: ATStrings.allow,
                     subtitle: ATStrings.audienceCanRaiseHand,
@@ -106,7 +106,7 @@ class _SubWidgetState extends State<_SubWidget> {
                       });
                     }
                   ),
-                  _SelectionWidget(
+                  SelectionWidgetWithLeadinRadioBtn(
                     isSelected: _localPermission == HandRaisingPermission.dontAllow,
                     title: ATStrings.dontAllow,
                     subtitle: ATStrings.audienceCannotRaiseHand,
@@ -135,8 +135,9 @@ class _SubWidgetState extends State<_SubWidget> {
   }
 }
 
-class _SelectionWidget extends StatelessWidget {
-  const _SelectionWidget({
+class SelectionWidgetWithLeadinRadioBtn extends StatelessWidget {
+  const SelectionWidgetWithLeadinRadioBtn({
+    super.key,
     required this.isSelected,
     required this.title,
     required this.subtitle,

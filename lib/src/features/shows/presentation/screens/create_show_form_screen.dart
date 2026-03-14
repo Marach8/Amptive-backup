@@ -556,136 +556,136 @@ class __SubWidgetState extends State<_SubWidget> {
         }),
         resizeToAvoidBottomInset: false,
         bottomSheet: MultiBlocListener(
-            listeners: <SingleChildWidget>[
-              BlocListener<BgImageCubit, (String, Uint8List?)>(
-                listener: (_, (String, Uint8List?) state) {
-                  if (state.$2 != null) {
-                    _launchShowBtnNotifier.value = true;
-                  } else {
-                    _launchShowBtnNotifier.value = false;
-                  }
-                },
-              ),
-              BlocListener<UploadImageCubit, ATAppState<String>>(
-                listener: (_, ATAppState<String> state) {
-                  if (state is SuccessState<String>) {
-                    //If we upload image successfully, create the show.
-                    context.read<CreateShowCubit>().createShow(
-                      tagIds: (selectedHashtags ?? <HashTag>[])
-                        .map((HashTag tag) => tag.id ?? '')
-                        .toList(),
-                      coHostIds: (selectedCohosts ?? <User>[])
-                        .map((User cohost) => cohost.id ?? '')
-                        .toList(),
-                      title: _titleCntrl.text.trim(),
-                      description: selectedDescription,
-                      coverUrl: state.newData!,
-                      communityId: selectedCommunity?.communityId ?? '',
-                      category: 'Category',
-                      showType: accessTypeData.accessType 
-                        == ProgramAccessType.free ? 'free' : 'paid',
-                      price: accessTypeData.subscriptionAmount 
-                        ?? accessTypeData.oneTimePaymentAmount ?? 0.01,
-                      allowHandRaising: selectedPermission == HandRaisingPermission.allow,
+          listeners: <SingleChildWidget>[
+            BlocListener<BgImageCubit, (String, Uint8List?)>(
+              listener: (_, (String, Uint8List?) state) {
+                if (state.$2 != null) {
+                  _launchShowBtnNotifier.value = true;
+                } else {
+                  _launchShowBtnNotifier.value = false;
+                }
+              },
+            ),
+            BlocListener<UploadImageCubit, ATAppState<String>>(
+              listener: (_, ATAppState<String> state) {
+                if (state is SuccessState<String>) {
+                  //If we upload image successfully, create the show.
+                  context.read<CreateShowCubit>().createShow(
+                    tagIds: (selectedHashtags ?? <HashTag>[])
+                      .map((HashTag tag) => tag.id ?? '')
+                      .toList(),
+                    coHostIds: (selectedCohosts ?? <User>[])
+                      .map((User cohost) => cohost.id ?? '')
+                      .toList(),
+                    title: _titleCntrl.text.trim(),
+                    description: selectedDescription,
+                    coverUrl: state.newData!,
+                    communityId: selectedCommunity?.communityId ?? '',
+                    category: 'Category',
+                    showType: accessTypeData.accessType 
+                      == ProgramAccessType.free ? 'free' : 'paid',
+                    price: accessTypeData.subscriptionAmount 
+                      ?? accessTypeData.oneTimePaymentAmount ?? 0.01,
+                    allowHandRaising: selectedPermission == HandRaisingPermission.allow,
+                  );
+                } else if (state is FailureState<String>) {
+                  //if uploading cover art fails, stop loading and show notif
+                  showAppNotification2(
+                    context: context,
+                    text: state.message,
+                    type: NotificationType.failure,
+                  );
+                  _launchShowBtnNotifier.value = true;
+                }
+              },
+            ),
+            BlocListener<CreateShowCubit, ATAppState<HostedShow>>(
+              listener: (_, ATAppState<HostedShow> state) async{
+                if (state is SuccessState<HostedShow>) {
+                  context.read<HostedShowsCubit>().addNewHostedShow(state.newData);
+                  _launchShowBtnNotifier.value = true;
+                  final dynamic params = ProgramCreationSuccessScreenParams(
+                      coverArtBytes: context.read<BgImageCubit>().state.$2!,
+                      title: ATStrings.showIsSetup,
+                      subtitle: ATStrings.beginYourJourney,
+                      btnTitle: ATStrings.createFirstEpisode,
+                      txtBtnTitle: ATStrings.viewShowPage,
+                      topLogo: const Icon(Icons.check_circle_sharp, size: 45),
                     );
-                  } else if (state is FailureState<String>) {
-                    //if uploading cover art fails, stop loading and show notif
-                    showAppNotification2(
-                      context: context,
-                      text: state.message,
-                      type: NotificationType.failure,
-                    );
-                    _launchShowBtnNotifier.value = true;
-                  }
-                },
-              ),
-              BlocListener<CreateShowCubit, ATAppState<HostedShow>>(
-                listener: (_, ATAppState<HostedShow> state) async{
-                  if (state is SuccessState<HostedShow>) {
-                    context.read<HostedShowsCubit>().addNewHostedShow(state.newData);
-                    _launchShowBtnNotifier.value = true;
-                    final dynamic params = ProgramCreationSuccessScreenParams(
-                        coverArtBytes: context.read<BgImageCubit>().state.$2!,
-                        title: ATStrings.showIsSetup,
-                        subtitle: ATStrings.beginYourJourney,
-                        btnTitle: ATStrings.createFirstEpisode,
-                        txtBtnTitle: ATStrings.viewShowPage,
-                        topLogo: const Icon(Icons.check_circle_sharp, size: 45),
-                      );
 
-                      final ButtonPressed? onPressedResult = await context.pushNamed(
-                        ATRoutes.programCreationSuccessScreen,
-                        extra: params
-                      ) as ButtonPressed?;
+                    final ButtonPressed? onPressedResult = await context.pushNamed(
+                      ATRoutes.programCreationSuccessScreen,
+                      extra: params
+                    ) as ButtonPressed?;
 
-                      if(context.mounted){
-                        if(onPressedResult == ButtonPressed.elevatedBtn){
-                          context.pushReplacementNamed(
-                            ATRoutes.createEpisodeForm);
-                        } else if(onPressedResult == ButtonPressed.textBtn){
-                          context.pushReplacementNamed(
-                            ATRoutes.showPreviewScreen,
-                            extra: state.newData
-                          );
-                        }
-                      }
-                  } 
-                  else if (state is FailureState<HostedShow>) {
-                    _launchShowBtnNotifier.value = true;
-                    showAppNotification2(
-                      context: context,
-                      text: state.message,
-                      type: NotificationType.failure,
-                    );
-                  }
-                },
-              )
-            ],
-            child: ValueListenableBuilder<bool?>(
-                valueListenable: _launchShowBtnNotifier,
-                builder: (_, bool? value, __) {
-                  return ATBlurredBgBtn(
-                    isLoading: value == null,
-                    onPressed: value == false ? null : () {
-                      String errorMessage = '';
-                      if (_titleCntrl.text.trim().isEmpty) {
-                        errorMessage = 'Please enter a title';
-                      } else if (selectedDescription == 
-                        ATStrings.tellListenersAboutYourShow) {
-                        errorMessage = 'Please enter a description';
-                      } else if(selectedCommunity == null) {
-                        errorMessage = 'Please select a community';
-                      } else if((selectedCohosts ?? <User>[]).isEmpty) {
-                        errorMessage = 'Please select at least 1 cohost';
-                      } else if((selectedHashtags ?? <HashTag>[]).isEmpty) {
-                        errorMessage = 'Please select at least 1 hashtag';
-                      } else if(selectedPermission == null) {
-                        errorMessage = 'Please choose whether to allow hand-raising for this show';
-                      } else if(accessTypeData.accessType == null) {
-                        errorMessage = 'Please choose whether this show is free or paid';
-                      }
-                      if(errorMessage.isNotEmpty){
-                        showAppNotification2(
-                          context: context,
-                          text: errorMessage,
-                          type: NotificationType.failure,
+                    if(context.mounted){
+                      if(onPressedResult == ButtonPressed.elevatedBtn){
+                        context.pushReplacementNamed(
+                          ATRoutes.createEpisodeForm);
+                      } else if(onPressedResult == ButtonPressed.textBtn){
+                        context.pushReplacementNamed(
+                          ATRoutes.showPreviewScreen,
+                          extra: state.newData
                         );
-                        return;
                       }
-
-                      //Start loading on button press.
-                      _launchShowBtnNotifier.value = null;
-                      //Try to upload the cover image.
-                      context.read<UploadImageCubit>().uploadBytesImage(
-                        bytes: context.read<BgImageCubit>().state.$2!,
-                        purpose: 'cover-art',
-                      );
-                    },
-                    btnTitle: ATStrings.launchShow,
+                    }
+                } 
+                else if (state is FailureState<HostedShow>) {
+                  _launchShowBtnNotifier.value = true;
+                  showAppNotification2(
+                    context: context,
+                    text: state.message,
+                    type: NotificationType.failure,
                   );
                 }
-              )
-            ),
+              },
+            )
+          ],
+          child: ValueListenableBuilder<bool?>(
+              valueListenable: _launchShowBtnNotifier,
+              builder: (_, bool? value, __) {
+                return ATBlurredBgBtn(
+                  isLoading: value == null,
+                  onPressed: value == false ? null : () {
+                    String errorMessage = '';
+                    if (_titleCntrl.text.trim().isEmpty) {
+                      errorMessage = 'Please enter a title';
+                    } else if (selectedDescription == 
+                      ATStrings.tellListenersAboutYourShow) {
+                      errorMessage = 'Please enter a description';
+                    } else if(selectedCommunity == null) {
+                      errorMessage = 'Please select a community';
+                    } else if((selectedCohosts ?? <User>[]).isEmpty) {
+                      errorMessage = 'Please select at least 1 cohost';
+                    } else if((selectedHashtags ?? <HashTag>[]).isEmpty) {
+                      errorMessage = 'Please select at least 1 hashtag';
+                    } else if(selectedPermission == null) {
+                      errorMessage = 'Please choose whether to allow hand-raising for this show';
+                    } else if(accessTypeData.accessType == null) {
+                      errorMessage = 'Please choose whether this show is free or paid';
+                    }
+                    if(errorMessage.isNotEmpty){
+                      showAppNotification2(
+                        context: context,
+                        text: errorMessage,
+                        type: NotificationType.failure,
+                      );
+                      return;
+                    }
+
+                    //Start loading on button press.
+                    _launchShowBtnNotifier.value = null;
+                    //Try to upload the cover image.
+                    context.read<UploadImageCubit>().uploadBytesImage(
+                      bytes: context.read<BgImageCubit>().state.$2!,
+                      purpose: 'cover-art',
+                    );
+                  },
+                  btnTitle: ATStrings.launchShow,
+                );
+              }
+            )
+          ),
       ),
     );
   }

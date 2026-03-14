@@ -8,7 +8,7 @@ abstract class ShowsRepo {
   });
 
   Future<ApiResponse<HostedShow>> createShow({
-    required CreateShowModel createShowModel,
+    required CreateShowPayload createShowModel,
   });
 
   Future<ApiResponse<HostedShowsResponseModel>> fetchHostedShows({
