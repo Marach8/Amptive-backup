@@ -34,30 +34,35 @@ class LoginCubit extends Cubit<ATAppState<ATUser>> {
         final String? userId = data.data?.user?.id;
         final String? dob = data.data?.user?.dob;
         final String? profilePicture = data.data?.user?.pictureUrl;
+       final String? followersCount = data.data?.user?.followersCount?.toString();
 
-        if (accessToken != null) {
-          await localStorageService.set(ATStrings.accessToken, accessToken);
-        }
-        if (refreshToken != null) {
-          await localStorageService.set(ATStrings.refreshToken, refreshToken);
-        }
-        final CachedUserData cachedUserData = CachedUserData(
-            username: userName,
-            email: email,
-            name: name,
-            userId: userId,
-            dob: dob,
-            pictureUrl: profilePicture);
-        await localStorageService.setObject(
-          ATStrings.cachedUserData,
-          cachedUserData.toJson(),
+            if(accessToken != null){
+              await localStorageService.set(ATStrings.accessToken, accessToken);
+            }
+            if(refreshToken != null){
+              await localStorageService.set(ATStrings.refreshToken, refreshToken);
+            }
+            final CachedUserData cachedUserData = CachedUserData(
+              username: userName,
+              email: email,
+              name: name,
+              userId: userId,
+              dob: dob,
+              pictureUrl: profilePicture,
+              followersCount: followersCount
+            );
+            await localStorageService.setObject(
+              ATStrings.cachedUserData,
+              cachedUserData.toJson(),
+            );
+            emit(SuccessState<ATUser>(newData: data.data?.user,));
+          },
+          unSuccessful: (Unsuccessful<LoginResponseModel> error){
+            emit(FailureState<ATUser>(error.error.message));
+          }
         );
-        emit(SuccessState<ATUser>(
-          newData: data.data?.user,
-        ));
-      }, unSuccessful: (Unsuccessful<LoginResponseModel> error) {
-        emit(FailureState<ATUser>(error.error.message));
-      });
+       
+      
     } catch (e) {
       emit(FailureState<ATUser>('Unable to login user: $e'));
     }
