@@ -1,9 +1,7 @@
-import 'package:amptive/src/config/utils/extensions/context_extensions.dart';
-import 'package:amptive/src/shared/global_model_objects.dart';
+import 'package:amptive/src/config/config_export.dart';
+import 'package:amptive/src/features/episodes/data/models/response/episode_model.dart';
 import 'package:flutter/material.dart';
-import '../../../../config/utils/colors.dart';
-import '../../../../config/utils/font_sizes.dart';
-import '../../../../config/utils/image_strings.dart';
+import 'package:go_router/go_router.dart';
 import '../../../../shared/image_loader_widget.dart';
 
 class ShowOrEventIndicatorWithTitle extends StatelessWidget {
@@ -46,14 +44,19 @@ class ShowOrEventIndicatorWithTitle extends StatelessWidget {
 class ExistingEpisodesIndicator extends StatelessWidget {
   const ExistingEpisodesIndicator({
     super.key,
-    this.episode,
+    this.activeEpisode,
   });
-  final Episode? episode;
+  final Episode? activeEpisode;
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: (){},
+      onTap: (){
+        context.pushNamed(
+          ATRoutes.previewEpisodeScreen,
+          extra: activeEpisode ?? Episode(),
+        );
+      },
       child: Row(
         mainAxisSize: MainAxisSize.min,
         spacing: 5,
@@ -70,7 +73,7 @@ class ExistingEpisodesIndicator extends StatelessWidget {
             ),
           ),
           Text(
-            episode?.title ?? '',
+            activeEpisode?.title ?? '',
             style: context.textTheme.bodyMedium?.copyWith(
               fontSize: ATSizes.size15,
               color: ATColors.dimWhiteColor1

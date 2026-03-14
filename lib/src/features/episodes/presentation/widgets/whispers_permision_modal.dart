@@ -1,5 +1,4 @@
 import 'package:amptive/src/features/go_live/presentation/widgets/hand_raising_permission_modal.dart';
-import 'package:amptive/src/shared/rich_text.dart';
 import 'package:go_router/go_router.dart';
 import 'package:iconsax/iconsax.dart';
 

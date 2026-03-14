@@ -10,13 +10,10 @@ import 'package:amptive/src/features/discover/cubits/hashtags_cubit.dart';
 import 'package:amptive/src/features/discover/cubits/users_cubits.dart';
 import 'package:amptive/src/features/episodes/cubits/create_episode_cubit.dart';
 import 'package:amptive/src/features/episodes/data/models/request/create_episode_request_model.dart';
+import 'package:amptive/src/features/episodes/data/models/response/episode_model.dart';
 import 'package:amptive/src/features/episodes/presentation/widgets/whispers_permision_modal.dart';
 import 'package:amptive/src/features/go_live/go_live_export.dart';
-import 'package:amptive/src/features/shows/cubits/create_show_cubit.dart';
-import 'package:amptive/src/features/shows/cubits/hosted_shows_cubit.dart';
-import 'package:amptive/src/features/shows/data/models/response/show_response_model.dart';
 import 'package:amptive/src/global_export.dart';
-import 'package:amptive/src/models/community.dart';
 import 'package:amptive/src/shared/annotated_region__widget.dart';
 import 'package:amptive/src/shared/divider_widget.dart';
 import 'package:amptive/src/shared/global_model_objects.dart';
@@ -29,7 +26,6 @@ import 'package:amptive/src/shared/back_button.dart';
 import 'package:amptive/src/shared/image_loader_widget.dart';
 import 'package:nested/nested.dart' show SingleChildWidget;
 import 'package:amptive/src/shared/sliver_header_delegate.dart';
-import '../../../../models/host.dart';
 import '../../../../shared/rich_text.dart';
 
 enum ScheduleBtnOnTap { goLive, scheduleEvent }
@@ -53,8 +49,7 @@ class CreateEpisodeFormScreen extends StatelessWidget {
         BlocProvider<BgImageCubit>(create: (_) => BgImageCubit()),
         BlocProvider<AllUsersCubit>(create: (_) => AllUsersCubit()),
         BlocProvider<AllHashtagsCubit>(create: (_) => AllHashtagsCubit()),
-        BlocProvider<SelectedHashTagsCubit>(
-          create: (_) => SelectedHashTagsCubit()),
+        BlocProvider<SelectedHashTagsCubit>(create: (_) => SelectedHashTagsCubit()),
         //BlocProvider<HostedShowsCubit>.value(value: hostedShowsCubit,),
       ],
       child: _SubWidget(showId: showId),
@@ -635,7 +630,9 @@ class _CreateShowFormScreenState extends State<_SubWidget> {
             ),
           ],
         ),
+
         resizeToAvoidBottomInset: false,
+
         bottomSheet: MultiBlocListener(
         listeners: <SingleChildWidget>[
           BlocListener<BgImageCubit, (String, Uint8List?)>(
@@ -688,48 +685,58 @@ class _CreateShowFormScreenState extends State<_SubWidget> {
           BlocListener<CreateEpisodeCubit, ATAppState<Episode>>(
             listener: (_, ATAppState<Episode> state) async{
               if (state is SuccessState<Episode>) {
-                //context.read<HostedShowsCubit>().addNewHostedShow(state.newData);
                 _activateBtn.value = (true, _activateBtn.value.$2);
-                final dynamic params = ProgramCreationSuccessScreenParams(
-                    coverArtBytes: context.read<BgImageCubit>().state.$2!,
-                    title: ATStrings.episodeCreated,
-                    subtitle: ATStrings.shareEpisodeLinkDescription,
-                    btnTitle: ATStrings.shareEpisode,
-                    txtBtnTitle: ATStrings.viewEpisode,
-                    topLogo: Container(
-                      height: 40, width: 40,
-                      decoration: BoxDecoration(
-                        color: ATColors.white,
-                        borderRadius: BorderRadius.circular(22.5),
-                      ),
-                      padding: const EdgeInsets.all(8),
-                      child: ColorFiltered(
-                        colorFilter: ColorFilter.mode(
-                            ATColors.black, BlendMode.srcATop),
-                        child: const ATImgLoader(
-                          imgPath: ATImgStrings.calenderIcon,
-                          boxFit: BoxFit.cover,
-                        ),
-                      ),
-                    )
+
+                final bool shouldGoToLive = _activateBtn.value.$2 
+                  == ScheduleBtnOnTap.goLive;
+                if(shouldGoToLive){
+                  context.pushReplacementNamed(
+                    ATRoutes.goLiveOnboarding,
+                    extra: state.newData
                   );
-    
-                  final ButtonPressed? onPressedResult = await context.pushNamed(
-                    ATRoutes.programCreationSuccessScreen,
-                    extra: params
-                  ) as ButtonPressed?;
-    
-                  // if(context.mounted){
-                  //   if(onPressedResult == ButtonPressed.elevatedBtn){
-                  //     context.pushReplacementNamed(
-                  //       ATRoutes.createEpisodeForm);
-                  //   } else if(onPressedResult == ButtonPressed.textBtn){
-                  //     context.pushReplacementNamed(
-                  //       ATRoutes.showPreviewScreen,
-                  //       extra: state.newData
-                  //     );
-                  //   }
-                  // }
+                  return;
+                }
+
+                final dynamic params = ProgramCreationSuccessScreenParams(
+                  coverArtBytes: context.read<BgImageCubit>().state.$2!,
+                  title: ATStrings.episodeCreated,
+                  subtitle: ATStrings.shareEpisodeLinkDescription,
+                  btnTitle: ATStrings.shareEpisode,
+                  txtBtnTitle: ATStrings.viewEpisode,
+                  topLogo: Container(
+                    height: 40, width: 40,
+                    decoration: BoxDecoration(
+                      color: ATColors.white,
+                      borderRadius: BorderRadius.circular(22.5),
+                    ),
+                    padding: const EdgeInsets.all(8),
+                    child: ColorFiltered(
+                      colorFilter: ColorFilter.mode(
+                          ATColors.black, BlendMode.srcATop),
+                      child: const ATImgLoader(
+                        imgPath: ATImgStrings.calenderIcon,
+                        boxFit: BoxFit.cover,
+                      ),
+                    ),
+                  )
+                );
+  
+                final ButtonPressed? onPressedResult = await context.pushNamed(
+                  ATRoutes.programCreationSuccessScreen,
+                  extra: params
+                ) as ButtonPressed?;
+  
+                if(context.mounted){
+                  if(onPressedResult == ButtonPressed.elevatedBtn){
+                    // context.pushReplacementNamed(
+                    //   ATRoutes.createEpisodeForm);
+                  } else if(onPressedResult == ButtonPressed.textBtn){
+                    context.pushReplacementNamed(
+                      ATRoutes.previewEpisodeScreen,
+                      extra: state.newData
+                    );
+                  }
+                }
               } 
               else if (state is FailureState<Episode>) {
                 _activateBtn.value = (true, _activateBtn.value.$2);

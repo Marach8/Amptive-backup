@@ -24,7 +24,6 @@ import 'package:amptive/src/shared/back_button.dart';
 import 'package:amptive/src/shared/image_loader_widget.dart';
 import 'package:nested/nested.dart' show SingleChildWidget;
 import 'package:amptive/src/shared/sliver_header_delegate.dart';
-import 'package:uuid/uuid.dart';
 import '../../../../shared/rich_text.dart';
 import '../../../../config/utils/dialogs/communities_modal.dart';
 

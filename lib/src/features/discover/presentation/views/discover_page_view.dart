@@ -41,7 +41,7 @@ class MainDiscoverView extends StatelessWidget {
           child: HashTagsSubtitleRow(
             trailingOnpressed: () =>
                 context.pushNamed(ATRoutes.SOCIETY_HASHTAG_SCREEN),
-            hashTagTitle: ATStrings.SOCIETY,
+            hashTagTitle: ATStrings.society,
             hashTagSubTitle: 'ankira22, glendonnor, and 15k other are live',
           ),
         ),

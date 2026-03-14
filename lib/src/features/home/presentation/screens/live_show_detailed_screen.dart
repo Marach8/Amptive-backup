@@ -8,8 +8,7 @@ import 'package:readmore/readmore.dart';
 import '../../../../shared/list_tile_with_leading_picture_widget.dart';
 import '../../../../shared/sliver_header_delegate.dart';
 import '../widgets/event_or_show_card.dart';
-import '../widgets/existing_episodes_indicator.dart';
-import '../widgets/render_community_name.dart';
+import '../../../episodes/presentation/widgets/existing_episodes_indicator.dart';
 import '../widgets/people_listening.dart';
 import '../widgets/whispers_list.dart';
 

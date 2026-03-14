@@ -20,9 +20,7 @@ import '../../../../config/utils/image_strings.dart';
 import '../../../../shared/circular_image.dart';
 import '../../../../shared/divider_widget.dart';
 import '../../../../shared/image_loader_widget.dart';
-import '../../../../shared/empty.dart';
 import '../../../../views/widgets/other_widgets/main_application_widgets/widgets_in_home_view/appbar_drop_down.dart';
-import '../widgets/go_live_widget_in_home.dart';
 
 class HomeTabView extends StatelessWidget {
   const HomeTabView({

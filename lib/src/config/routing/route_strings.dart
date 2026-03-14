@@ -64,7 +64,7 @@ class ATRoutes {
       'create_show_success_screen';
   static const String EVENT_SCHEDULED_SCREEN = 'event_scheduled';
   static const String showPreviewScreen = 'show_preview';
-  static const String EPISODE_PREVIEW_SCREEN = 'episode_preview';
+  static const String previewEpisodeScreen = 'episode_preview';
   static const String COMMUNITY_TASK_SCREEN = 'community_task';
   static const String PROFILE_PIC_SCREEN = 'profile_picture';
   static const String LANGUAGE_SCREEN = 'language_screen';

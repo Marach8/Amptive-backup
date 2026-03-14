@@ -86,7 +86,7 @@ class ATScheduleDetailedScreen extends StatelessWidget {
                             const SizedBox(
                               height: 12,
                             ),
-                            const ScheduleDateIndicator(),
+                            const EpisodeScheduleDateIndicator(),
                             const SizedBox(
                               height: 40,
                             ),

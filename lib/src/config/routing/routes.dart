@@ -23,6 +23,7 @@ import 'package:amptive/src/features/auth/presentation/screens/username_auth_scr
 import 'package:amptive/src/features/calender/presentation/screens/calender_landing_screen.dart';
 import 'package:amptive/src/features/discover/presentation/views/society_screen.dart';
 import 'package:amptive/src/features/discover/presentation/views/trending_hashtags_screen.dart';
+import 'package:amptive/src/features/episodes/data/models/response/episode_model.dart';
 import 'package:amptive/src/features/home/presentation/screens/following_screen.dart';
 import 'package:amptive/src/features/home/presentation/screens/live_show_detailed_screen.dart';
 import 'package:amptive/src/features/home/presentation/screens/schedule_detailed_screen.dart';
@@ -43,7 +44,6 @@ import 'package:amptive/src/features/onboarding/presentation/screens/onboarding_
 import 'package:amptive/src/features/onboarding/presentation/screens/post_onboarding_screen.dart';
 import 'package:custom_image_crop/custom_image_crop.dart'
     show Ratio, CustomCropShape;
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import '../../features/discover/presentation/views/community_home_screen.dart';
@@ -622,12 +622,12 @@ final GoRouter amptiveAppRouter = GoRouter(
             },
           ),
           GoRoute(
-            name: ATRoutes.EPISODE_PREVIEW_SCREEN,
-            path: ATRoutes.EPISODE_PREVIEW_SCREEN,
+            name: ATRoutes.previewEpisodeScreen,
+            path: ATRoutes.previewEpisodeScreen.addSlash,
             pageBuilder: (_, GoRouterState st) =>
                 ATSlidingRouteTransition<void>(
-                    child: EpisodeDetailPreviewScreen(
-              coverArtBytes: st.extra as Uint8List,
+                    child: PreviewEpisodeScreen(
+                      episode: st.extra as Episode,
             )),
           ),
           GoRoute(

@@ -62,7 +62,7 @@ class _SubWidget extends StatelessWidget {
                         const ATImgLoader(imgPath: ATImgStrings.groupIcon),
                         const SizedBox(width: 5),
                         Text(
-                          ATStrings.SOCIETY,
+                          ATStrings.society,
                           style: context.textTheme.bodyMedium?.copyWith(
                               overflow: TextOverflow.fade,
                               fontSize: ATSizes.size13,

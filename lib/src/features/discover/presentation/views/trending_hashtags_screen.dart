@@ -34,7 +34,7 @@ class TrendingHashTagsScreen extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 15),
                   child: HashTagsSubtitleRow(
-                    hashTagTitle: ATStrings.SOCIETY,
+                    hashTagTitle: ATStrings.society,
                     hashTagSubTitle:
                         'ankira22, glendonnor, and 15k other are live',
                     trailingOnpressed: () {
@@ -87,7 +87,7 @@ class TrendingHashTagsScreen extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 15),
                   child: HashTagsSubtitleRow(
-                    hashTagTitle: ATStrings.SOCIETY,
+                    hashTagTitle: ATStrings.society,
                     hashTagSubTitle:
                         'ankira22, glendonnor, and 15k other are live',
                     trailingOnpressed: () {},

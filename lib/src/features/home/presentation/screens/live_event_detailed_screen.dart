@@ -11,7 +11,6 @@ import '../../../../shared/circle_avatar.dart';
 import '../../../../shared/list_tile_with_leading_picture_widget.dart';
 import '../../../../shared/row_of_people_listening_widget.dart';
 import '../widgets/event_or_show_card.dart';
-import '../widgets/render_community_name.dart';
 import '../widgets/whispers_list.dart';
 
 class ATLiveEventDetailedScreen extends StatelessWidget {

@@ -332,7 +332,7 @@ class ATStrings {
   static const String dontAllow = "Don't Allow";
   static const String noThanks = "No thanks";
 
-  static const String SOCIETY = 'Society';
+  static const String society = 'Society';
   static const String goLive = 'Go live';
   static const String paidShow = '\$paid show';
   static const String INSTAGRAM = 'Instagram';
@@ -650,7 +650,7 @@ class ATStrings {
   static const String END_NOW = 'End now';
   static const String HOST = 'Host';
   static const String EDIT_EPISODE = 'Edit episode';
-  static const String ATTENDEES_WILL_SHOW_HERE = 'Attendees will appear here!';
+  static const String attendeesWillShowHere = 'Attendees will appear here!';
   static const String episodeCreated = 'Your episode has been scheduled!';
   static const String shareEpisodeLinkDescription =
       'Share your episode link to build excitement and attract more attendees';
@@ -658,7 +658,7 @@ class ATStrings {
   static const String shareEpisode = 'Share episode';
   static const String unblock = 'Unblock';
   static const String UNMUTE = 'Unmute';
-  static const String ABOUT_EPISODE = 'About Episode';
+  static const String aboutEpisode = 'About Episode';
   static const String AMPTIVE_4_CREATORS = 'Amptive for Creators';
   static const String AMPTIVE_4_BIZ = 'Amptive for Business';
   static const String CONNECT_SELL = 'Connect, sell and grow';

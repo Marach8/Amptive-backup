@@ -18,7 +18,7 @@ class RenderCommunityName extends StatelessWidget {
           width: 24,
         ),
         Text(
-          (communityName ?? ATStrings.SOCIETY).toUpperCase(),
+          (communityName ?? ATStrings.society).toUpperCase(),
           style: context.textTheme.bodyMedium
               ?.copyWith(color: ATColors.hexA8A8A8, fontSize: ATSizes.size14),
         ),
@@ -29,24 +29,23 @@ class RenderCommunityName extends StatelessWidget {
 
 
 
-class ScheduleDateIndicator extends StatelessWidget {
-  const ScheduleDateIndicator(
-      {super.key,
-      this.text2 = ATStrings.SOCIETY,
-      this.text1 = '27 Sep, 2025 at 18:00'});
+class EpisodeScheduleDateIndicator extends StatelessWidget {
+  const EpisodeScheduleDateIndicator(
+      {super.key, this.text1 = '27 Sep, 2025 at 18:00'});
 
-  final String text1, text2;
+  final String text1;
 
   @override
   Widget build(BuildContext context) {
     return Row(
       mainAxisSize: MainAxisSize.min,
+      spacing: 5,
       children: <Widget>[
         const ATImgLoader(
-          imgPath: ATImgStrings.FILLED_CALENDER_ICON,
-        ),
-        const SizedBox(
-          width: 5,
+          imgPath: ATImgStrings.filledCalenderIcon,
+          height: 20,
+          width: 20,
+          boxFit: BoxFit.scaleDown,
         ),
         Flexible(
           child: Text(
@@ -54,20 +53,6 @@ class ScheduleDateIndicator extends StatelessWidget {
             style: context.textTheme.bodyMedium
                 ?.copyWith(color: ATColors.hexA8A8A8, fontSize: ATSizes.size14),
           ),
-        ),
-        const SizedBox(width: 20),
-        const ATImgLoader(
-          imgPath: ATImgStrings.groupIcon,
-          height: 24,
-          width: 24,
-        ),
-        const SizedBox(
-          width: 5,
-        ),
-        Text(
-          text2.toUpperCase(),
-          style: context.textTheme.bodyMedium
-              ?.copyWith(color: ATColors.hexA8A8A8, fontSize: ATSizes.size14),
         ),
       ],
     );
