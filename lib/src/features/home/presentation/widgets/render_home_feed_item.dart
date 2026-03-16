@@ -58,7 +58,7 @@ class RenderHomeFeedItem extends StatelessWidget {
             child: Stack(
               children: <Widget>[
                 ATImgLoader(
-                  imgPath: homeFeedItem.coverUrl ?? '',
+                  imgPath: homeFeedItem.coverUrl ?? ATImgStrings.jpeg2,
                   boxFit: BoxFit.cover,
                   height: 425,
                   width: context.screenWidth,
@@ -206,11 +206,7 @@ class RenderHomeFeedItemShimmer extends StatelessWidget {
                             const ATShimmer(height: 10, width: 70, radius: 3),
                       ),
                       const Spacer(),
-                      const ATShimmer(
-                        height: 30,
-                        width: 60,
-                        radius: 5,
-                      ),
+                      const LiveIndicatorWithAnimatingDot(),
                       const SizedBox(height: 10),
                       ATShimmer(
                         height: 20,

@@ -1,6 +1,7 @@
 import 'package:amptive/src/config/api_response_and_app_state.dart';
 import 'package:amptive/src/config/utils/colors.dart';
 import 'package:amptive/src/config/utils/dialogs/app_notification_dialog.dart';
+import 'package:amptive/src/config/utils/extensions/context_extensions.dart';
 import 'package:amptive/src/features/home/cubits/live_users_cubit.dart';
 import 'package:amptive/src/features/home/data/models/response/live_users_response_model.dart';
 import 'package:amptive/src/shared/shimmer.dart';
@@ -176,9 +177,7 @@ class _LiveIndicator extends StatelessWidget {
           )),
       child: Text(
         ATStrings.live.toUpperCase(),
-          style: Theme.of(context)
-              .textTheme
-              .titleSmall
+          style: context.textTheme.titleSmall
               ?.copyWith(fontWeight: ATFontWeights.w600)),
     );
   }
@@ -215,7 +214,7 @@ class _LiveUserShimmer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
+    return const Column(
       mainAxisSize: MainAxisSize.min,
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
@@ -223,37 +222,17 @@ class _LiveUserShimmer extends StatelessWidget {
           clipBehavior: Clip.none,
           alignment: Alignment.center,
           children: <Widget>[
-            const LiveUserAnimationWidget(
+            LiveUserAnimationWidget(
               child: ATShimmer(height: 60, width: 60,),
             ),
             Positioned(
               bottom: -4,
-              child: Container(
-                alignment: Alignment.center,
-                padding: const EdgeInsets.all(0),
-                height: 22,
-                width: 38,
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    begin: Alignment.topCenter,
-                    end: Alignment.bottomCenter,
-                    colors: <Color>[
-                      ATColors.hexF91880,
-                      ATColors.orangeGradientColorB
-                    ]
-                  ),
-                  borderRadius: BorderRadius.circular(5),
-                  border: Border.all(
-                    color: ATColors.hex0D0D0D,
-                    width: 2,
-                  )),
-                child: const ATShimmer(height: 20, width: 30)
-              )
+              child: _LiveIndicator(),
             )
           ],
         ),
-        const SizedBox(height: 15),
-        const ATShimmer(height: 9, width: 50, radius: 2.5,)
+        SizedBox(height: 15),
+        ATShimmer(height: 9, width: 50, radius: 2.5,)
       ],
     );
   }

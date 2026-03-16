@@ -197,9 +197,7 @@ class HomeTabView extends StatelessWidget {
                           );
                         }
                         if (state is LoadingState<HomeFeedResponseModel>) {
-                          return const Center(
-                            child: ATLoadingIndicator(),
-                          );
+                          return const RenderHomeFeedItemShimmer();
                         }
                         return const SizedBox.shrink();
                       });
