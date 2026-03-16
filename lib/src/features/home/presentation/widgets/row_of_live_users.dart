@@ -67,44 +67,45 @@ class RowOfLiveUsers extends StatelessWidget {
                     child: Text('No live users available yet...'),
                   );
                 }
+                return const _InitialLoading();
 
-                bool hasMore = liveUsersData?.hasMore ?? true;
-                final int count = hasMore ? liveUsers.length + 2 : liveUsers.length + 1;
+                // bool hasMore = liveUsersData?.hasMore ?? true;
+                // final int count = hasMore ? liveUsers.length + 2 : liveUsers.length + 1;
 
-                return HorizontalRefreshIndicator(
-                  onRefresh: () => context.read<LiveUsersCubit>()
-                    .fetchLiveUsers(isRefresh: true),
-                  child: ListView.separated(
-                    padding: EdgeInsets.zero,
-                    scrollDirection: Axis.horizontal,
-                    separatorBuilder: (_, __) => const SizedBox(width: 14),
-                    itemCount: count,
-                    itemBuilder: (_, int index) {
-                      if (index == 0) {
-                        return const Padding(
-                          padding: EdgeInsets.only(left: 11),
-                          child: GoLiveWidgetInHome(),
-                        );
-                      }
+                // return HorizontalRefreshIndicator(
+                //   onRefresh: () => context.read<LiveUsersCubit>()
+                //     .fetchLiveUsers(isRefresh: true),
+                //   child: ListView.separated(
+                //     padding: EdgeInsets.zero,
+                //     scrollDirection: Axis.horizontal,
+                //     separatorBuilder: (_, __) => const SizedBox(width: 14),
+                //     itemCount: count,
+                //     itemBuilder: (_, int index) {
+                //       if (index == 0) {
+                //         return const Padding(
+                //           padding: EdgeInsets.only(left: 11),
+                //           child: GoLiveWidgetInHome(),
+                //         );
+                //       }
                   
-                      final int adjustedIndex = index - 1;
+                //       final int adjustedIndex = index - 1;
                   
-                      if (adjustedIndex < liveUsers.length) {
-                        final LiveUser liveUser = liveUsers[adjustedIndex];
-                        return LiveUserWidget(
-                          user: liveUser,
-                          key: ValueKey<String>(liveUser.userId ?? ''),
-                        );
-                      }
+                //       if (adjustedIndex < liveUsers.length) {
+                //         final LiveUser liveUser = liveUsers[adjustedIndex];
+                //         return LiveUserWidget(
+                //           user: liveUser,
+                //           key: ValueKey<String>(liveUser.userId ?? ''),
+                //         );
+                //       }
                   
-                      if (state is LoadingState<LiveUsersResponseModel>) {
-                        return const _LiveUserShimmer();
-                      }
+                //       if (state is LoadingState<LiveUsersResponseModel>) {
+                //         return const _LiveUserShimmer();
+                //       }
                   
-                      return const SizedBox.shrink();
-                    },
-                  ),
-                );
+                //       return const SizedBox.shrink();
+                //     },
+                //   ),
+                // );
               })
           };
         },
