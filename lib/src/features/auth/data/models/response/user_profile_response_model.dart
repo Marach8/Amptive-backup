@@ -34,18 +34,20 @@ class UserData {
     this.dob,
     this.name,
     this.pictureUrl,
+    this.followersCount
   });
 
   factory UserData.fromJson(Map<String, dynamic> json) {
     return UserData(
-      id: json['id'],
-      email: json['email'],
-      username: json['username'],
-      dob: json['dob'],
-      name: json['name'],
-      pictureUrl: json['profile_picture'],
+      id: json['id'] ,
+      email: json['email'] ,
+      username: json['username'] ,
+      dob: json['dob'] ,
+      name: json['name'] ,
+      pictureUrl: json['picture_url'] ,
+      followersCount: json['followers_count']?.toString()
     );
   }
 
-  final String? id, email, username, dob, name, pictureUrl;
+  final String? id, email, username, dob, name, pictureUrl, followersCount;
 }
