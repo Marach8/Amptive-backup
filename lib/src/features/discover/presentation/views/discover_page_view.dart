@@ -1,6 +1,7 @@
 import 'package:amptive/src/config/api_response_and_app_state.dart';
 import 'package:amptive/src/features/discover/cubits/trending_hashtags_cubit.dart';
 import 'package:amptive/src/features/discover/data/models/response/trending_hashtags_response_model.dart';
+import 'package:amptive/src/features/discover/presentation/views/trending_hashtags_screen.dart';
 import 'package:amptive/src/features/discover/presentation/widgets/follow_unfollow_dropdown.dart';
 import 'package:amptive/src/features/discover/presentation/widgets/horizontal_scroll_cards.dart';
 import 'package:amptive/src/config/routing/route_strings.dart';
@@ -32,7 +33,7 @@ class MainDiscoverView extends StatelessWidget {
         children: <Widget>[
           const HorizontalScrollCards(),
           const SizedBox(height: 48),
-          
+
           HastagHeadingRow(
             title: ATStrings.trendingHashtags,
             viewAllOnpressed: () {
@@ -40,73 +41,122 @@ class MainDiscoverView extends StatelessWidget {
             },
           ),
           const SizedBox(height: 10),
-      
-          BlocBuilder<TrendingHashtagsCubit, ATAppState<TrendingTagsResponseModel>>(
-            builder: (BuildContext context, ATAppState<TrendingTagsResponseModel> state) {
-              final TrendingTagsResponseModel? hashtagsData = context.read<TrendingHashtagsCubit>().currentTrendingTags;
-              final List<HashTag> trendingHashtags = hashtagsData?.trendingHashtag ?? <HashTag>[];
-      
-              if (trendingHashtags.isEmpty) {
-                return const SizedBox.shrink();
-              }
-      
-              return Column(
-                children: <Widget>[
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 15),
-                    child: HashTagsSubtitleRow(
-                      trailingOnpressed: () => context.pushNamed(ATRoutes.SOCIETY_HASHTAG_SCREEN),
-                      hashTagTitle: trendingHashtags[0].name ?? '',
-                      hashTagSubTitle: '${trendingHashtags[0].usageCount ?? 0} posts trending',
-                    ),
-                  ),
-                  const SizedBox(height: 15),
-                  SizedBox(
-                    height: 180,
-                    child: ListView.builder(
-                      physics: const BouncingScrollPhysics(),
-                      scrollDirection: Axis.horizontal,
-                      itemCount: 5,
-                      padding: const EdgeInsets.only(left: 15),
-                      itemBuilder: (_, __) => const RenderTrendingHashTag(
-                        trendingPicture: ATImgStrings.weCanDoHardThingsBgImage,
-                      ),
-                    ),
-                  ),
-                  Divider(indent: 15, endIndent: 15, color: ATColors.hex252525),
-                  const SizedBox(height: 30),
-      
-                  if (trendingHashtags.length > 1) ...<Widget>[
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 15),
-                      child: HashTagsSubtitleRow(
-                        trailingOnpressed: () {},
-                        hashTagTitle: trendingHashtags[1].name ?? '',
-                        hashTagSubTitle: '${trendingHashtags[1].usageCount ?? 0} posts trending',
-                      ),
-                    ),
-                    const SizedBox(height: 15),
-                    SizedBox(
-                      height: 170,
-                      child: ListView.builder(
-                        physics: const BouncingScrollPhysics(),
-                        scrollDirection: Axis.horizontal,
-                        itemCount: 5,
-                        padding: const EdgeInsets.only(left: 15),
-                        itemBuilder: (_, __) => const RenderTrendingHashTag(
-                          trendingPicture: ATImgStrings.OFFICE_LADIES,
-                        ),
-                      ),
-                    ),
-                    Divider(indent: 15, endIndent: 15, color: ATColors.hex252525),
-                  ],
-                ],
-              );
+
+          BlocBuilder<TrendingHashtagsCubit,
+              ATAppState<TrendingTagsResponseModel>>(
+            builder: (BuildContext context,
+                ATAppState<TrendingTagsResponseModel> state) {
+              return switch (state) {
+                InitialState<TrendingTagsResponseModel>() =>
+                  const SizedBox.shrink(),
+                LoadingState<TrendingTagsResponseModel>() ||
+                FailureState<TrendingTagsResponseModel>() ||
+                SuccessState<TrendingTagsResponseModel>() =>
+                  Builder(
+                    builder: (BuildContext context) {
+                      final TrendingTagsResponseModel? hashtagsData = context
+                          .read<TrendingHashtagsCubit>()
+                          .currentTrendingTags;
+                      final List<HashTag> trendingHashtags =
+                          hashtagsData?.trendingHashtag ?? <HashTag>[];
+
+                      if (trendingHashtags.isEmpty) {
+                        if (state is LoadingState) {
+                          return const Column(
+                            children: <Widget>[
+                              RenderTrendingHashtagRowShimmer(),
+                              RenderTrendingHashtagRowShimmer(),
+                            ],
+                          );
+                        }
+                        if (state is FailureState) {
+                          return Center(
+                            child: IconButton(
+                              icon: const Icon(Icons.refresh),
+                              onPressed: () => context
+                                  .read<TrendingHashtagsCubit>()
+                                  .fetchTrendingTags(),
+                            ),
+                          );
+                        }
+                        return const Center(
+                          child: Text(
+                              'No trending hashtags available at the moment'),
+                        );
+                      }
+
+                      return Column(
+                        children: <Widget>[
+                          Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 15),
+                            child: HashTagsSubtitleRow(
+                              trailingOnpressed: () => context
+                                  .pushNamed(ATRoutes.SOCIETY_HASHTAG_SCREEN),
+                              hashTagTitle: trendingHashtags[0].name ?? '',
+                              hashTagSubTitle:
+                                  '${trendingHashtags[0].usageCount ?? 0} posts trending',
+                            ),
+                          ),
+                          const SizedBox(height: 15),
+                          SizedBox(
+                            height: 180,
+                            child: ListView.builder(
+                              physics: const BouncingScrollPhysics(),
+                              scrollDirection: Axis.horizontal,
+                              itemCount: 5,
+                              padding: const EdgeInsets.only(left: 15),
+                              itemBuilder: (_, __) =>
+                                  const RenderTrendingHashTag(
+                                trendingPicture:
+                                    ATImgStrings.weCanDoHardThingsBgImage,
+                              ),
+                            ),
+                          ),
+                          Divider(
+                              indent: 15,
+                              endIndent: 15,
+                              color: ATColors.hex252525),
+                          const SizedBox(height: 30),
+                          if (trendingHashtags.length > 1) ...<Widget>[
+                            Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 15),
+                              child: HashTagsSubtitleRow(
+                                trailingOnpressed: () {},
+                                hashTagTitle: trendingHashtags[1].name ?? '',
+                                hashTagSubTitle:
+                                    '${trendingHashtags[1].usageCount ?? 0} posts trending',
+                              ),
+                            ),
+                            const SizedBox(height: 15),
+                            SizedBox(
+                              height: 170,
+                              child: ListView.builder(
+                                physics: const BouncingScrollPhysics(),
+                                scrollDirection: Axis.horizontal,
+                                itemCount: 5,
+                                padding: const EdgeInsets.only(left: 15),
+                                itemBuilder: (_, __) =>
+                                    const RenderTrendingHashTag(
+                                  trendingPicture: ATImgStrings.OFFICE_LADIES,
+                                ),
+                              ),
+                            ),
+                            Divider(
+                                indent: 15,
+                                endIndent: 15,
+                                color: ATColors.hex252525),
+                          ],
+                        ],
+                      );
+                    },
+                  )
+              };
             },
           ),
-      
+
           const SizedBox(height: 40),
-      
+
           // Technology Section
           DiscoverCategoriesTile(
             categoryName: ATStrings.TECHNOLOGY,
@@ -139,7 +189,7 @@ class MainDiscoverView extends StatelessWidget {
           ),
           Divider(indent: 15, endIndent: 15, color: ATColors.hex252525),
           const SizedBox(height: 40),
-      
+
           // Sports Section
           DiscoverCategoriesTile(
             categoryName: ATStrings.SPORTS,
@@ -172,7 +222,7 @@ class MainDiscoverView extends StatelessWidget {
           ),
           Divider(indent: 15, endIndent: 15, color: ATColors.hex252525),
           const SizedBox(height: 40),
-      
+
           // True Crime Section
           DiscoverCategoriesTile(
             categoryName: ATStrings.TRUE_CRIME,
@@ -205,7 +255,7 @@ class MainDiscoverView extends StatelessWidget {
           ),
           Divider(indent: 15, endIndent: 15, color: ATColors.hex252525),
           const SizedBox(height: 40),
-      
+
           // More to Discover Section
           const Padding(
             padding: EdgeInsets.symmetric(horizontal: 15),
@@ -230,7 +280,7 @@ class MainDiscoverView extends StatelessWidget {
           ),
           Divider(indent: 15, endIndent: 15, color: ATColors.hex252525),
           const SizedBox(height: 40),
-      
+
           // Top Creators Section
           ATContainer(
             padding: const EdgeInsets.only(left: 15),
@@ -253,7 +303,7 @@ class MainDiscoverView extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 48),
-      
+
           // Spotlight Section
           ATContainer(
             padding: const EdgeInsets.only(left: 15),

@@ -21,8 +21,10 @@ class TrendingHashTagsScreen extends StatelessWidget {
       child: ATAnnotatedRegion(
         child: Scaffold(
           body: SafeArea(
-            child: BlocConsumer<TrendingHashtagsCubit, ATAppState<TrendingTagsResponseModel>>(
-              listener: (BuildContext context, ATAppState<TrendingTagsResponseModel> state) {
+            child: BlocConsumer<TrendingHashtagsCubit,
+                ATAppState<TrendingTagsResponseModel>>(
+              listener: (BuildContext context,
+                  ATAppState<TrendingTagsResponseModel> state) {
                 if (state is FailureState<TrendingTagsResponseModel>) {
                   showAppNotification2(
                     context: context,
@@ -31,9 +33,11 @@ class TrendingHashTagsScreen extends StatelessWidget {
                   );
                 }
               },
-              builder: (BuildContext context, ATAppState<TrendingTagsResponseModel> state) {
+              builder: (BuildContext context,
+                  ATAppState<TrendingTagsResponseModel> state) {
                 return switch (state) {
-                  InitialState<TrendingTagsResponseModel>() => const SizedBox.shrink(),
+                  InitialState<TrendingTagsResponseModel>() =>
+                    const SizedBox.shrink(),
                   LoadingState<TrendingTagsResponseModel>() ||
                   FailureState<TrendingTagsResponseModel>() ||
                   SuccessState<TrendingTagsResponseModel>() =>
@@ -52,8 +56,11 @@ class TrendingHashTagsScreen extends StatelessWidget {
                         ),
                         Builder(
                           builder: (BuildContext context) {
-                            final TrendingTagsResponseModel? hashtags = context.read<TrendingHashtagsCubit>().currentTrendingTags;
-                            final List<HashTag> trendingHashtags = hashtags?.trendingHashtag ?? <HashTag>[];
+                            final TrendingTagsResponseModel? hashtags = context
+                                .read<TrendingHashtagsCubit>()
+                                .currentTrendingTags;
+                            final List<HashTag> trendingHashtags =
+                                hashtags?.trendingHashtag ?? <HashTag>[];
 
                             if (trendingHashtags.isEmpty) {
                               if (state is LoadingState) {
@@ -64,14 +71,17 @@ class TrendingHashTagsScreen extends StatelessWidget {
                                   child: Center(
                                     child: IconButton(
                                       icon: const Icon(Icons.refresh),
-                                      onPressed: () => context.read<TrendingHashtagsCubit>().fetchTrendingTags(),
+                                      onPressed: () => context
+                                          .read<TrendingHashtagsCubit>()
+                                          .fetchTrendingTags(),
                                     ),
                                   ),
                                 );
                               }
                               return const SliverFillRemaining(
                                 child: Center(
-                                  child: Text('No trending hashtags available at the moment'),
+                                  child: Text(
+                                      'No trending hashtags available at the moment'),
                                 ),
                               );
                             }
@@ -79,30 +89,36 @@ class TrendingHashTagsScreen extends StatelessWidget {
                             return SliverList(
                               delegate: SliverChildListDelegate.fixed(<Widget>[
                                 ...trendingHashtags.map((HashTag tag) => Column(
-                                  children: <Widget>[
-                                    Padding(
-                                      padding: const EdgeInsets.symmetric(horizontal: 15),
-                                      child: HashTagsSubtitleRow(
-                                        hashTagTitle: tag.name ?? '', // Adjust based on model
-                                        hashTagSubTitle: '${tag.usageCount ?? 0} posts',
-                                        trailingOnpressed: () {},
-                                      ),
-                                    ),
-                                    const SizedBox(height: 15),
-                                    SizedBox(
-                                      height: 180,
-                                      child: ListView.builder(
-                                        physics: const BouncingScrollPhysics(),
-                                        scrollDirection: Axis.horizontal,
-                                        itemCount: 5,
-                                        itemBuilder: (_, __) => const RenderTrendingHashTag(
-                                          trendingPicture: ATImgStrings.weCanDoHardThingsBgImage,
+                                      children: <Widget>[
+                                        Padding(
+                                          padding: const EdgeInsets.symmetric(
+                                              horizontal: 15),
+                                          child: HashTagsSubtitleRow(
+                                            hashTagTitle: tag.name ??
+                                                '', // Adjust based on model
+                                            hashTagSubTitle:
+                                                '${tag.usageCount ?? 0} posts',
+                                            trailingOnpressed: () {},
+                                          ),
                                         ),
-                                      ),
-                                    ),
-                                    const SizedBox(height: 40),
-                                  ],
-                                )),
+                                        const SizedBox(height: 15),
+                                        SizedBox(
+                                          height: 180,
+                                          child: ListView.builder(
+                                            physics:
+                                                const BouncingScrollPhysics(),
+                                            scrollDirection: Axis.horizontal,
+                                            itemCount: 5,
+                                            itemBuilder: (_, __) =>
+                                                const RenderTrendingHashTag(
+                                              trendingPicture: ATImgStrings
+                                                  .weCanDoHardThingsBgImage,
+                                            ),
+                                          ),
+                                        ),
+                                        const SizedBox(height: 40),
+                                      ],
+                                    )),
                                 const SizedBox(height: 60),
                               ]),
                             );
@@ -119,6 +135,7 @@ class TrendingHashTagsScreen extends StatelessWidget {
     );
   }
 }
+
 class TrendingHashtagsShimmer extends StatelessWidget {
   const TrendingHashtagsShimmer({super.key});
 
@@ -126,9 +143,9 @@ class TrendingHashtagsShimmer extends StatelessWidget {
   Widget build(BuildContext context) {
     return SliverList(
       delegate: SliverChildBuilderDelegate(
-        (BuildContext context, int index) => const RenderTrendingHashtagRowShimmer(),
-        childCount: 5
-      ),
+          (BuildContext context, int index) =>
+              const RenderTrendingHashtagRowShimmer(),
+          childCount: 5),
     );
   }
 }
@@ -141,7 +158,6 @@ class RenderTrendingHashtagRowShimmer extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
-        // Title Row Placeholder (Mimicking HashTagsSubtitleRow)
         const Padding(
           padding: EdgeInsets.symmetric(horizontal: 15, vertical: 5),
           child: Row(
@@ -163,7 +179,8 @@ class RenderTrendingHashtagRowShimmer extends StatelessWidget {
                   ),
                 ],
               ),
-              ATShimmer(width: 20, height: 20, radius: 4), // Trailing arrow icon
+              ATShimmer(
+                  width: 20, height: 20, radius: 4), // Trailing arrow icon
             ],
           ),
         ),
@@ -176,7 +193,7 @@ class RenderTrendingHashtagRowShimmer extends StatelessWidget {
             padding: const EdgeInsets.only(left: 15),
             physics: const NeverScrollableScrollPhysics(),
             itemBuilder: (_, __) => const Padding(
-              padding: const EdgeInsets.only(right: 15),
+              padding: EdgeInsets.only(right: 15),
               child: ATShimmer(
                 width: 140,
                 height: 180,
