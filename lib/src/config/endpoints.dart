@@ -27,6 +27,7 @@ class ATEndpoints {
   static const String followers = '/api/v1/users/following';
   static const String getUsers = '/api/v1/users';
   static const String tags = '/api/v1/tags/'; 
+  static const String createHashtag = '${tags}hashtags'; 
   static const String updateUserProfile = '/api/v1/users/me';
   static const String trendingHashtags = '/api/v1/tags/trending';
 }

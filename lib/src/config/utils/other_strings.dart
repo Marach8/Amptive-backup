@@ -536,6 +536,7 @@ class ATStrings {
       'Gifters are ranked base on the total amount they have contributed to the host during live sessions.';
   static const String TOP_GIFTERS = 'Top Gifters';
   static const String searchForCohost = 'Search for co-hosts';
+  static const String searchForHashtag = 'Search for hashtag';
   static const String searchAndAddCohost4YourShow =
       'Search and add co-hosts for your show';
   static const String searchForUser = 'Search for user';
