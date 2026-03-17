@@ -12,11 +12,13 @@ class SearchItemTile extends StatelessWidget {
   const SearchItemTile({
     super.key,
     required this.title,
+    this.subtitle,
     required this.leadingImagePath,
     this.isCircular = false,
     this.trailing,
   });
   final String title, leadingImagePath;
+  final String? subtitle;
   final bool isCircular;
   final Widget? trailing;
 
@@ -56,24 +58,24 @@ class SearchItemTile extends StatelessWidget {
                 Row(
                   children: <Widget>[
                     Text(
-                      'Show',
+                      subtitle ?? '',
                       style: Theme.of(context).textTheme.titleSmall?.copyWith(
                           color: ATColors.hexC2C2C2,
                           fontWeight: ATFontWeights.w500,
                           fontSize: ATSizes.size13,
                           height: 1.5),
                     ),
-                    const SizedBox(width: 5),
-                    const ATCircleAvatar(diameter: 3),
-                    const SizedBox(width: 5),
-                    Text(
-                      'MONDAY AT 20:00',
-                      style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                          color: ATColors.hexC2C2C2,
-                          fontWeight: ATFontWeights.w500,
-                          fontSize: ATSizes.size13,
-                          height: 1.5),
-                    ),
+                    // const SizedBox(width: 5),
+                    // const ATCircleAvatar(diameter: 3),
+                    // const SizedBox(width: 5),
+                    // Text(
+                    //   'MONDAY AT 20:00',
+                    //   style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                    //       color: ATColors.hexC2C2C2,
+                    //       fontWeight: ATFontWeights.w500,
+                    //       fontSize: ATSizes.size13,
+                    //       height: 1.5),
+                    // ),
                   ],
                 ),
               ],

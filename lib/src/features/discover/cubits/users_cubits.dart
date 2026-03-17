@@ -43,7 +43,7 @@ class AllUsersCubit extends Cubit<ATAppState<AllUsersResponseModel>> {
     try {
       final ApiResponse<AllUsersResponseModel> response =
           await discoverRepo.fetchAllUsers(
-              page: (currentUsersData?.page ?? -1) + 1, pageSize: 50);
+              page: (currentUsersData?.page ?? 0) + 1, pageSize: 50);
       response.when(
         successful: (Successful<AllUsersResponseModel> data) {
           _cachedUsers = data.data?.data ?? <User>[];
