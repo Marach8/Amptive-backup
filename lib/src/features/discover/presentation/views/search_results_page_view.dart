@@ -78,6 +78,7 @@ class _SearchResultsTabsViewState extends State<SearchResultsTabsView>
             splashFactory: NoSplash.splashFactory,
             tabAlignment: TabAlignment.start,
             labelPadding: EdgeInsets.zero,
+            indicator: const BoxDecoration(),
             indicatorColor: ATColors.transparent,
             padding: const EdgeInsets.only(left: 15),
             isScrollable: true,
