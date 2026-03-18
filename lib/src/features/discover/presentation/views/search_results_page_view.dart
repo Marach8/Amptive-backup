@@ -291,8 +291,12 @@ class _SearchResultsTabsViewState extends State<SearchResultsTabsView>
                               itemCount: hashtags.length,
                               itemBuilder: (BuildContext _, int index) {
                                 final HashTag hashtag = hashtags[index];
-                                return _HashtagTile(
-                                  hashtag: hashtag,
+                                final bool isLastItem = index == hashtags.length - 1;
+                                return Padding(
+                                  padding:  EdgeInsets.only(bottom: isLastItem? 200 : 0),
+                                  child: _HashtagTile(
+                                    hashtag: hashtag,
+                                  ),
                                 );
                               },
                             );
