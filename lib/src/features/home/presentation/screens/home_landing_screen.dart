@@ -4,6 +4,7 @@ import 'package:amptive/src/config/routing/route_strings.dart';
 import 'package:amptive/src/config/utils/dialogs/app_notification_dialog.dart';
 import 'package:amptive/src/features/auth/cubits/local_user_data_cubit.dart';
 import 'package:amptive/src/features/home/cubits/home_feed_cubit.dart';
+import 'package:amptive/src/features/home/cubits/live_users_cubit.dart';
 import 'package:amptive/src/features/home/cubits/toggle_following_cubit.dart';
 import 'package:amptive/src/features/home/data/models/following_status.dart';
 import 'package:amptive/src/features/home/data/models/response/home_feed_response_model.dart';
@@ -172,35 +173,42 @@ class HomeTabView extends StatelessWidget {
                   final bool hasMore = homeFeedData?.hasMore ?? false;
                   final int count = homeFeedItems.length;
 
-                  return ListView.separated(
-                      separatorBuilder: (_, int index) =>
-                          const SizedBox(height: 30),
-                      itemCount: hasMore ? count + 1 : count,
-                      padding: const EdgeInsets.fromLTRB(15, 0, 15, 60),
-                      itemBuilder: (_, int index) {
-                        if (index < count) {
-                          final HomeFeedItem homeFeedItem =
-                              homeFeedItems[index];
-                          return MultiBlocProvider(
-                            providers: <SingleChildWidget>[
-                              BlocProvider<ToggleFollowingCubit>(
-                                  create: (_) => ToggleFollowingCubit(
-                                        initialStatus: FollowingStatus(
-                                            isFollowing: homeFeedItem
-                                                .requesterFollowsHost,
-                                            followerCount:
-                                                homeFeedItem.goingCount),
-                                      ))
-                            ],
-                            child:
-                                RenderHomeFeedItem(homeFeedItem: homeFeedItem),
-                          );
-                        }
-                        if (state is LoadingState<HomeFeedResponseModel>) {
-                          return const RenderHomeFeedItemShimmer();
-                        }
-                        return const SizedBox.shrink();
-                      });
+                  return RefreshIndicator(
+                    onRefresh: () {
+                      context.read<LiveUsersCubit>()
+                        .refreshLiveUsers();
+                      return context.read<HomeFeedCubit>().refreshHomeFeed();
+                    },
+                    child: ListView.separated(
+                        separatorBuilder: (_, int index) =>
+                            const SizedBox(height: 30),
+                        itemCount: hasMore ? count + 1 : count,
+                        padding: const EdgeInsets.fromLTRB(15, 0, 15, 60),
+                        itemBuilder: (_, int index) {
+                          if (index < count) {
+                            final HomeFeedItem homeFeedItem =
+                                homeFeedItems[index];
+                            return MultiBlocProvider(
+                              providers: <SingleChildWidget>[
+                                BlocProvider<ToggleFollowingCubit>(
+                                    create: (_) => ToggleFollowingCubit(
+                                          initialStatus: FollowingStatus(
+                                              isFollowing: homeFeedItem
+                                                  .requesterFollowsHost,
+                                              followerCount:
+                                                  homeFeedItem.goingCount),
+                                        ))
+                              ],
+                              child:
+                                  RenderHomeFeedItem(homeFeedItem: homeFeedItem),
+                            );
+                          }
+                          if (state is LoadingState<HomeFeedResponseModel>) {
+                            return const RenderHomeFeedItemShimmer();
+                          }
+                          return const SizedBox.shrink();
+                        }),
+                  );
                 })
             };
           })),

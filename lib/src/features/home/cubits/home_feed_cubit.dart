@@ -47,6 +47,41 @@ class HomeFeedCubit extends Cubit<ATAppState<HomeFeedResponseModel>> {
       );
       response.when(
         successful: (Successful<HomeFeedResponseModel> data) {
+          final List<HomeFeedItem>? oldFeedItems = currentHomeFeedData?.homeFeedItems;
+          final List<HomeFeedItem>? newFeedItems = data.data?.homeFeedItems;
+
+          final List<HomeFeedItem> mergedFeedItems = <HomeFeedItem>[...?oldFeedItems, ...?newFeedItems];
+          final HomeFeedResponseModel newData = HomeFeedResponseModel(
+            homeFeedItems: mergedFeedItems,
+            hasMore: data.data?.hasMore ?? true,
+            page: data.data?.page,
+            pageSize: data.data?.pageSize,
+          );
+          emit(SuccessState<HomeFeedResponseModel>(newData: newData));
+        },
+        unSuccessful: (Unsuccessful<HomeFeedResponseModel> error) {
+          emit(FailureState<HomeFeedResponseModel>(error.error.message));
+        },
+      );
+    } catch (e) {
+      emit(FailureState<HomeFeedResponseModel>('Unable to get home feed: $e'));
+    }
+  }
+
+
+  Future<void> refreshHomeFeed() async {
+    if (state is LoadingState<HomeFeedResponseModel>) return;
+    emit(LoadingState<HomeFeedResponseModel>(currentData: currentHomeFeedData));
+
+    try {
+      final ApiResponse<HomeFeedResponseModel> response =
+          await homeRepo.fetchHomeFeed(
+        page: 0,
+        pageSize: 20,
+        refresh: true,
+      );
+      response.when(
+        successful: (Successful<HomeFeedResponseModel> data) {
           emit(SuccessState<HomeFeedResponseModel>(newData: data.data));
         },
         unSuccessful: (Unsuccessful<HomeFeedResponseModel> error) {

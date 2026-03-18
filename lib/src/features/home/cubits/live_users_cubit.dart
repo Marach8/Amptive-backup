@@ -26,10 +26,10 @@ class LiveUsersCubit extends Cubit<ATAppState<LiveUsersResponseModel>> {
         ) => oldData,
       };
 
-  Future<void> fetchLiveUsers({bool isRefresh = false}) async {
+  Future<void> fetchLiveUsers() async {
     final bool hasMore = currentLiveUsersData?.hasMore ?? true;
 
-    if(!isRefresh && (state is LoadingState<LiveUsersResponseModel> || !hasMore)) return;
+    if(state is LoadingState<LiveUsersResponseModel> || !hasMore) return;
 
     emit(LoadingState<LiveUsersResponseModel>(currentData: currentLiveUsersData));
     try {
@@ -37,7 +37,7 @@ class LiveUsersCubit extends Cubit<ATAppState<LiveUsersResponseModel>> {
           await homeRepo.fetchLiveUsers(
         page: (currentLiveUsersData?.page ?? 0) + 1,
         pageSize: 20,
-        refresh: isRefresh,
+        refresh: false,
       );
       response.when(
         successful: (Successful<LiveUsersResponseModel> data) {
@@ -55,6 +55,39 @@ class LiveUsersCubit extends Cubit<ATAppState<LiveUsersResponseModel>> {
               total: newData.total,
               totalPages: newData.totalPages,
             ),
+          ));
+        },
+        unSuccessful: (Unsuccessful<LiveUsersResponseModel> error) {
+          emit(FailureState<LiveUsersResponseModel>(
+            error.error.message,
+            oldData: currentLiveUsersData,
+          ));
+        },
+      );
+    } catch (e) {
+      emit(FailureState<LiveUsersResponseModel>(
+        'Unable to get live shows: $e',
+        oldData: currentLiveUsersData,
+      ));
+    }
+  }
+
+
+  Future<void> refreshLiveUsers() async {
+    if(state is LoadingState<LiveUsersResponseModel>) return;
+
+    emit(LoadingState<LiveUsersResponseModel>(currentData: currentLiveUsersData));
+    try {
+      final ApiResponse<LiveUsersResponseModel> response =
+          await homeRepo.fetchLiveUsers(
+        page: 1,
+        pageSize: 20,
+        refresh: true,
+      );
+      response.when(
+        successful: (Successful<LiveUsersResponseModel> data) {
+          emit(SuccessState<LiveUsersResponseModel>(
+            newData: data.data
           ));
         },
         unSuccessful: (Unsuccessful<LiveUsersResponseModel> error) {
