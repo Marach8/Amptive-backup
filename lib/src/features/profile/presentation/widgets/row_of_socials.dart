@@ -31,7 +31,7 @@ class RowOfSocials extends StatelessWidget {
               ?.copyWith(color: ATColors.hexC2C2C2),
         ),
         const SizedBox(width: 15),
-        const ATImgLoader(imgPath: ATImgStrings.X_LOGO),
+        const ATImgLoader(imgPath: ATImgStrings.X_LOGO, height: 15),
         const SizedBox(width: 3),
         Text(
           'x',
