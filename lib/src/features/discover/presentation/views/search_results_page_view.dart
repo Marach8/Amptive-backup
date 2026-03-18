@@ -135,10 +135,11 @@ class _SearchResultsTabsViewState extends State<SearchResultsTabsView>
                         Icons.play_arrow,
                         size: 15,
                         color: ATColors.hex0D0D0D,
+                         ),
                       ),
                     ),
-                  ),
-                )),
+                  )),
+
                 Column(
                     children: List<Widget>.generate(
                   10,
@@ -205,26 +206,27 @@ class _SearchResultsTabsViewState extends State<SearchResultsTabsView>
                                 context.read<AllUsersCubit>().currentUsersData;
                             final List<User> users =
                                 usersData?.data ?? <User>[];
+ if (users.isEmpty) {
+                                if (state
+                                    is LoadingState<AllUsersResponseModel>) {
+                                  return const _UsersListShimmer();
+                                }
 
-                            if (users.isEmpty) {
-                              if (state
-                                  is LoadingState<AllUsersResponseModel>) {
-                                return const _UsersListShimmer();
-                              }
-                              return Center(
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: <Widget>[
-                                    const Text('No users found'),
-                                    TextButton(
+                                if (state
+                                    is FailureState<AllUsersResponseModel>) {
+                                  return Center(
+                                    child: IconButton(
+                                      icon: const Icon(Icons.refresh),
                                       onPressed: () => context
                                           .read<AllUsersCubit>()
                                           .fetchAllUsers(),
-                                      child: const Text('Retry'),
                                     ),
-                                  ],
-                                ),
-                              );
+                                  );
+                                }
+
+                                return const Center(
+                                  child: Text('No users found'),
+                                );
                             }
 
                             return ListView.builder(
@@ -235,8 +237,8 @@ class _SearchResultsTabsViewState extends State<SearchResultsTabsView>
                                 return SearchItemTile(
                                   leadingImagePath: user.profilePicture ?? '',
                                   title: user.name ??
-                                      user.username ??
-                                      'Unknown User',
+                                    'Unknown User',
+                                    subtitle: user.username ?? 'Unknown Username',
                                   trailing:
                                       const Icon(Icons.keyboard_arrow_right),
                                 );
@@ -332,57 +334,66 @@ class _UserTileShimmer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Padding(
-      padding: EdgeInsets.only(bottom: 20),
-      child: Row(
-        children: <Widget>[
-          ATShimmer(
-            height: 50,
-            width: 50,
-            radius: 25, // Circular
-          ),
-          SizedBox(width: 8),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                ATShimmer(
-                  height: 14,
-                  width: 120,
-                  radius: 3,
-                ),
-                SizedBox(height: 5),
-                Row(
-                  children: <Widget>[
-                    ATShimmer(
-                      height: 13,
-                      width: 50,
-                      radius: 2,
-                    ),
-                    SizedBox(width: 5),
-                    ATShimmer(
-                      height: 3,
-                      width: 3,
-                      radius: 1.5,
-                    ),
-                    SizedBox(width: 5),
-                    ATShimmer(
-                      height: 13,
-                      width: 80,
-                      radius: 2,
-                    ),
-                  ],
-                ),
-              ],
+    return  Padding(
+      padding: const EdgeInsets.only(bottom: 20),
+      child: LayoutBuilder(
+        builder: (_, BoxConstraints constraints) {
+          return  Row(
+          children: <Widget>[
+            const ATShimmer(
+              height: 50,
+              width: 50,
+              radius: 25, // Circular
             ),
-          ),
-          SizedBox(width: 15),
-          ATShimmer(
-            height: 30,
-            width: 30,
-            radius: 4,
-          ),
-        ],
+            const SizedBox(width: 8),
+        
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  ATShimmer(
+                    height: 14,
+                    width: ATHelperFuncs.getRandomNumber(constraints.maxWidth * 0.8),
+                    radius: 3,
+                  ),
+                  const SizedBox(height: 5),
+        
+                  Row(
+                    children: <Widget>[
+                      // ATShimmer(
+                      //   height: 13,
+                      //   width: 50,
+                      //   radius: 2,
+                      // ),
+                      // SizedBox(width: 5),
+                      // ATShimmer(
+                      //   height: 3,
+                      //   width: 3,
+                      //   radius: 1.5,
+                      // ),
+                      const SizedBox(width: 5),
+                      ATShimmer(
+                        height: 13,
+                        width: ATHelperFuncs.getRandomNumber(constraints.maxWidth * 0.5),
+                        radius: 2,
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+        
+            const SizedBox(width: 15),
+        
+            // Trailing icon shimmer
+            const ATShimmer(
+              height: 24,
+              width: 24,
+              radius: 4,
+            ),
+          ],
+        );
+        }
       ),
     );
   }
