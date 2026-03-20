@@ -56,7 +56,7 @@ class _DiscoverTabViewState extends State<DiscoverTabView> {
                       ? const MainDiscoverView(key: ValueKey<int>(100))
                       : pageState == DiscoverPageState.showRecentSearches
                           ? const RecentSearchesView(key: ValueKey<int>(200))
-                          : const SearchResultsTabsView(
+                          : const SearchResultsPage(
                               key: ValueKey<int>(300)),
                 );
               })),

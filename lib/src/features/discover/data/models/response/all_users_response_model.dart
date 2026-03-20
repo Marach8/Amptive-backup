@@ -12,14 +12,14 @@ class AllUsersResponseModel {
   });
 
   factory AllUsersResponseModel.fromJson(Map<String, dynamic> json) {
-  final Map<String, dynamic>? dataMap = json['data'] as Map<String, dynamic>?;
-
+    final data =json['data'] ?? <dynamic, dynamic>{};
+    final List<dynamic> usersList = (data ['users'] as List? ?? <dynamic>[]);
     return AllUsersResponseModel(
       status: json['status'],
       statusCode: json['status_code'],
       message: json['message'],
-      data: (dataMap?['users'] as List<dynamic>?)
-          ?.map((dynamic e) => User.fromJson(e as Map<String, dynamic>))
+      data: usersList
+          .map((dynamic e) => User.fromJson(e as Map<String, dynamic>))
           .toList(),
       page: json['page'],
       pageSize: json['page_size'],

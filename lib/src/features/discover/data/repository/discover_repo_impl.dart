@@ -7,7 +7,9 @@ import 'package:amptive/src/config/services/network_service/network_service.dart
 import 'package:amptive/src/features/discover/data/models/response/communities_response_model.dart';
 import 'package:amptive/src/features/discover/data/models/response/all_users_response_model.dart';
 import 'package:amptive/src/features/discover/data/models/response/all_hashtags_response_model.dart';
+import 'package:amptive/src/features/discover/data/models/response/trending_hashtags_response_model.dart';
 import 'package:amptive/src/features/discover/data/repository/discover_repo.dart';
+import 'package:amptive/src/shared/global_model_objects.dart';
 import 'package:dio/dio.dart';
 
 class DiscoverRepoImpl implements DiscoverRepo {
@@ -87,4 +89,51 @@ class DiscoverRepoImpl implements DiscoverRepo {
           error: ATException.resolveException(e));
     }
   }
+
+  @override
+  Future<ApiResponse<HashTag>> createHashtag({
+    required String name,
+    required String displayName,
+  }) async {
+    try {
+      final Response<dynamic> response = await networkService.post(
+        ATEndpoints.createHashtag,
+        data: <String, dynamic>{
+          'name': name,
+          'displayName': displayName,
+        },
+      );
+      return Successful<HashTag>(
+        data: HashTag.fromJson(response.data),
+      );
+    } catch (e) {
+      log('Error in creating hashtag: $e');
+      return Unsuccessful<HashTag>(
+          error: ATException.resolveException(e));
+    }
+  }
+  @override
+Future<ApiResponse<TrendingTagsResponseModel>> fetchTrendingTags({
+  required int limit,
+  String? tagType,
+}) async {
+  try {
+    final Response<dynamic> response = await networkService.get(
+      ATEndpoints.trendingHashtags,
+      queryParameters: <String, dynamic>{
+        'limit': limit,
+        if (tagType != null) 'tag_type': tagType,
+      },
+    );
+    return Successful<TrendingTagsResponseModel>(
+      data: TrendingTagsResponseModel.fromJson(response.data),
+    );
+  } catch (e) {
+   log('Error fetching trending tags: $e');
+    return Unsuccessful<TrendingTagsResponseModel>(
+      error: ATException.resolveException(e),
+    );
+  }
+}
+
 }

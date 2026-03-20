@@ -26,7 +26,8 @@ class ATUser {
     this.username,
     this.dob,
     this.name,
-    this.pictureUrl, // 1. Add this
+    this.followersCount,
+    this.pictureUrl, 
   });
 
   factory ATUser.fromJson(Map<String, dynamic> json) {
@@ -37,11 +38,15 @@ class ATUser {
       dob: json['dob'] as String?,
       name: json['name'] as String?,
       pictureUrl: json['profile_picture'] as String?,
+      followersCount: json['followers_count'],
     );
   }
+  final String? id, email, username, dob, name, pictureUrl, followersCount;
 
-  final String? id, email, username, dob, name, pictureUrl;
-}
+    
+  }
+
+
 
 class LoginResponseModel {
   LoginResponseModel({

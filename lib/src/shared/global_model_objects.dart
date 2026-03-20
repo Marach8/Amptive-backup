@@ -104,6 +104,8 @@ class HashTag {
     this.followerCount,
     this.createdAt,
     this.updatedAt,
+    this.tagType,
+    this.icon,
   });
 
   factory HashTag.fromJson(Map<String, dynamic> json) {
@@ -116,12 +118,13 @@ class HashTag {
       followerCount: json['follower_count'],
       createdAt: json['created_at'],
       updatedAt: json['updated_at'],
+      tagType: json['tag_type'],
+      icon: json['icon'],
     );
   }
 
-  final String? id, name, displayName, description, createdAt, updatedAt;
+  final String? id, name, displayName, description, createdAt, updatedAt, tagType, icon;
   final int? usageCount, followerCount;
-
   HashTag copyWith({
     String? id,
     String? name,
@@ -131,6 +134,8 @@ class HashTag {
     String? updatedAt,
     int? usageCount,
     int? followerCount,
+    String? tagType,
+    String? icon, 
   }) {
     return HashTag(
       id: id ?? this.id,
@@ -141,6 +146,8 @@ class HashTag {
       updatedAt: updatedAt ?? this.updatedAt,
       usageCount: usageCount ?? this.usageCount,
       followerCount: followerCount ?? this.followerCount,
+      tagType: tagType ?? this.tagType,
+      icon: icon ?? this.icon,
     );
   }
 }
