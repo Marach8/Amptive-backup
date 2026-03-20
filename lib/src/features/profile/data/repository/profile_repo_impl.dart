@@ -1,5 +1,4 @@
 import 'dart:developer';
-import 'dart:typed_data';
 
 import 'package:amptive/src/config/api_response_and_app_state.dart';
 import 'package:amptive/src/config/endpoints.dart';
@@ -10,7 +9,6 @@ import 'package:amptive/src/features/auth/data/models/response/user_profile_resp
 import 'package:amptive/src/features/profile/data/models/followers_response_model.dart';
 import 'package:amptive/src/features/profile/data/repository/profile_repo.dart';
 import 'package:dio/dio.dart';
-import 'package:http/http.dart' hide MultipartFile, Response;
 
 class ProfileRepoImpl implements ProfileRepo {
   ProfileRepoImpl({NetworkService? mockNetworkService})

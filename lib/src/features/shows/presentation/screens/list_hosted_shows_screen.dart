@@ -42,29 +42,30 @@ class _SubWidget extends StatefulWidget {
 }
 
 class __SubWidgetState extends State<_SubWidget> {
-  final ScrollController _scrollCntrl = ScrollController();
+  final GlobalKey<NestedScrollViewState> _nestedKey =
+      GlobalKey<NestedScrollViewState>();
 
   @override
   void initState() {
     super.initState();
-    _scrollCntrl.addListener(_onScrollToEnd);
     WidgetsBinding.instance.addPostFrameCallback(
-      (_) => context.read<HostedShowsCubit>().fetchHostedShows(),
+      (_){
+        final ScrollController? sController =
+          _nestedKey.currentState?.innerController;
+        if (sController != null) {
+          sController.addListener(() => _onShowsScrollToEnd(sController));
+        }
+        context.read<HostedShowsCubit>().fetchHostedShows();
+      }
     );
   }
 
-  void _onScrollToEnd() {
-    const double dragThreshold = 80;
-    if (_scrollCntrl.position.pixels >=
-        _scrollCntrl.position.maxScrollExtent + dragThreshold) {
+  void _onShowsScrollToEnd(ScrollController sController) {
+    const double threshHold = 100;
+    if (sController.position.pixels >=
+        sController.position.maxScrollExtent + threshHold) {
       context.read<HostedShowsCubit>().fetchHostedShows();
     }
-  }
-
-  @override
-  void dispose() {
-    _scrollCntrl.dispose();
-    super.dispose();
   }
 
   @override
@@ -101,37 +102,38 @@ class __SubWidgetState extends State<_SubWidget> {
                         .read<BlurredHeaderCubit>()
                         .onScrollNotification,
                     child: NestedScrollView(
-                        headerSliverBuilder: (_, __) => <Widget>[
-                              SliverPersistentHeader(
-                                pinned: true,
-                                delegate: ATSliverHDelegate(
-                                    maxExt: blurredHeaderHeight,
-                                    minExt: blurredHeaderHeight,
-                                    child: SizedBox(
-                                        height: blurredHeaderHeight,
-                                        child: ATBlurredHeaderWidget(
-                                          child: Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceBetween,
-                                            children: <Widget>[
-                                              Padding(
-                                                padding: const EdgeInsets.only(
-                                                    left: 5),
-                                                child: ATRoundedBackBtn(
-                                                  bgColor: ATColors.transparent,
-                                                ),
-                                              ),
-                                              Text(
-                                                ATStrings.chooseShow,
-                                                style: context
-                                                    .textTheme.bodyMedium,
-                                              ),
-                                              const SizedBox(
-                                                width: 30,
-                                              )
-                                            ],
+                      key: _nestedKey,
+                      headerSliverBuilder: (_, __) => <Widget>[
+                        SliverPersistentHeader(
+                          pinned: true,
+                          delegate: ATSliverHDelegate(
+                              maxExt: blurredHeaderHeight,
+                              minExt: blurredHeaderHeight,
+                              child: SizedBox(
+                                  height: blurredHeaderHeight,
+                                  child: ATBlurredHeaderWidget(
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: <Widget>[
+                                        Padding(
+                                          padding: const EdgeInsets.only(
+                                              left: 5),
+                                          child: ATRoundedBackBtn(
+                                            bgColor: ATColors.transparent,
                                           ),
-                                        ))),
+                                        ),
+                                        Text(
+                                          ATStrings.chooseShow,
+                                          style: context
+                                              .textTheme.bodyMedium,
+                                        ),
+                                        const SizedBox(width: 30)
+                                      ],
+                                    ),
+                                  )
+                                )
+                              ),
                               ),
                               SliverToBoxAdapter(
                                 child: Padding(
@@ -146,10 +148,8 @@ class __SubWidgetState extends State<_SubWidget> {
                                 ),
                               ),
                             ],
-                        body: BlocConsumer<HostedShowsCubit,
-                                ATAppState<HostedShowsResponseModel>>(
-                            listener: (_,
-                                ATAppState<HostedShowsResponseModel> state) {
+                        body: BlocConsumer<HostedShowsCubit, ATAppState<HostedShowsResponseModel>>(
+                            listener: (_, ATAppState<HostedShowsResponseModel> state) {
                           if (state is FailureState<HostedShowsResponseModel>) {
                             showAppNotification2(
                               context: context,
@@ -191,7 +191,6 @@ class __SubWidgetState extends State<_SubWidget> {
                                 return GridView.builder(
                                     padding: const EdgeInsets.fromLTRB(
                                         15, 0, 15, 100),
-                                    controller: _scrollCntrl,
                                     gridDelegate:
                                         const SliverGridDelegateWithFixedCrossAxisCount(
                                             crossAxisCount: 2,

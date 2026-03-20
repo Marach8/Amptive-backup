@@ -50,7 +50,7 @@ class GoLiveWidgetInHome extends StatelessWidget {
           const SizedBox(
             height: 10,
           ),
-          Text(ATStrings.GO_LIVE, style: context.textTheme.titleSmall),
+          Text(ATStrings.goLive, style: context.textTheme.titleSmall),
         ],
       ),
     );

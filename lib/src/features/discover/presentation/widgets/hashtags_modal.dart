@@ -80,23 +80,10 @@ Future<List<HashTag>?> showNewHashTagsModal({
                         builder: (_, String query) {
                           return BlocBuilder<CreateHashtagCubit, ATAppState<HashTag>>(
                             builder: (BuildContext context, ATAppState<HashTag> state) {
-                              final bool isLoading = state is LoadingState;
-
                               return ATBlurredBgBtn(
-                                onPressed: isLoading
-                                    ? null
-                                    : () => ctx.read<CreateHashtagCubit>().createHashtag(query),
-                                btnTitle: isLoading ? '' : 'Add Hashtag',
-                                child: isLoading
-                                    ? const SizedBox(
-                                        height: 18,
-                                        width: 18,
-                                        child: CircularProgressIndicator(
-                                          strokeWidth: 2,
-                                          color: Colors.white,
-                                        ),
-                                      )
-                                    : null,
+                                isLoading: state is LoadingState<HashTag>,
+                                onPressed: () => ctx.read<CreateHashtagCubit>().createHashtag(query),
+                                btnTitle: 'Add Hashtag',
                               );
                             },
                           );
@@ -134,27 +121,24 @@ class _SelectHashtagsModal extends StatefulWidget {
 
 class _SelectHashtagsModalState extends State<_SelectHashtagsModal> {
 
-  @override
-  void initState() {
+  @override 
+  void initState(){
     super.initState();
-
-    context.read<AllHashtagsCubit>().fetchHashTags();
-
-    widget.scrollController.addListener(_onScroll);
+    widget.scrollController.addListener(_onHashTagsScrollToEnd);
+    WidgetsBinding.instance.addPostFrameCallback(
+      (_){
+        if(!mounted) return;
+        context.read<AllHashtagsCubit>().fetchHashTags();
+      }
+    );
   }
 
-  void _onScroll() {
+  void _onHashTagsScrollToEnd() {
+    const double threshHold = 80;
     if (widget.scrollController.position.pixels >=
-        widget.scrollController.position.maxScrollExtent - 100) {
-
+        widget.scrollController.position.maxScrollExtent + threshHold) {
       context.read<AllHashtagsCubit>().fetchHashTags();
     }
-  }
-
-  @override
-  void dispose() {
-    widget.scrollController.removeListener(_onScroll);
-    super.dispose();
   }
 
   @override

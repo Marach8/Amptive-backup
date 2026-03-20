@@ -84,7 +84,7 @@ class _LiveProgramCohostViewState extends State<LiveProgramCohostView> {
               child: Row(
                 children: <Widget>[
                   Text(
-                    ATStrings.LIVE,
+                    ATStrings.live,
                     style: Theme.of(context).textTheme.bodyMedium,
                   ),
                   SizedBox(width: 5.w),

@@ -12,7 +12,7 @@ class ScheduleIcon extends StatelessWidget {
       clipBehavior: Clip.none,
       children: <Widget>[
         const ATImgLoader(
-            height: 20, width: 20, imgPath: ATImgStrings.CALENDER_ICON),
+            height: 20, width: 20, imgPath: ATImgStrings.calenderIcon),
         Positioned(
           bottom: -2,
           right: -2,

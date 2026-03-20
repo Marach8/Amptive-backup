@@ -37,7 +37,7 @@ class AmptiveProfileMenuScreen extends StatelessWidget {
               const MenuHeading(text: ATStrings.CALENDER),
               MenuItem(
                   firstIcon:
-                      const ATImgLoader(imgPath: ATImgStrings.CALENDER_ICON),
+                      const ATImgLoader(imgPath: ATImgStrings.calenderIcon),
                   middleText: ATStrings.VIEW_CALENDER,
                   onTap: () => context.pushNamed(ATRoutes.CALENDER_SCREEN)),
               MenuItem(

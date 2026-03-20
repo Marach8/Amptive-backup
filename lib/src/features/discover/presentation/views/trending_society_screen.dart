@@ -40,7 +40,7 @@ class TrendingSocietyScreen extends StatelessWidget {
                               const Padding(
                                   padding: EdgeInsets.only(left: 15),
                                   child: ATBackBtn(
-                                    leadingText: ATStrings.SOCIETY,
+                                    leadingText: ATStrings.society,
                                   )),
                               Text(
                                 ATStrings.TRENDING,

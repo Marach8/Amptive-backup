@@ -1,3 +1,4 @@
+import 'package:amptive/src/features/shows/cubits/hosted_shows_cubit.dart';
 import 'package:amptive/src/features/shows/data/models/response/show_response_model.dart';
 import 'package:amptive/src/features/shows/presentation/screens/list_hosted_shows_screen.dart';
 import 'package:amptive/src/features/go_live/go_live_export.dart';
@@ -13,7 +14,8 @@ class RenderHostedShow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return LayoutBuilder(builder: (_, BoxConstraints kst) {
+    return LayoutBuilder(
+      builder: (_, BoxConstraints kst) {
       return BlocBuilder<HostedShowSelectionCubit, HostedShow?>(
           builder: (BuildContext blocContext, HostedShow? selected) {
         final bool isSelected = hostedShow.showId == selected?.showId;
@@ -43,10 +45,12 @@ class RenderHostedShow extends StatelessWidget {
                 padding: const EdgeInsets.only(top: 5),
                 color: isSelected ? ATColors.hex1F1F23 : ATColors.transparent,
                 child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     Text(
                       maxLines: 2,
                       hostedShow.title ?? '',
+                      textAlign: TextAlign.start,
                       style: context.textTheme.bodyMedium,
                     ),
                     Row(
@@ -58,9 +62,7 @@ class RenderHostedShow extends StatelessWidget {
                             color: ATColors.hexA8A8A8,
                           ),
                         ),
-                        const SizedBox(
-                          width: 5,
-                        ),
+                        const SizedBox(width: 5),
                         Align(
                           alignment: Alignment.bottomCenter,
                           child: CircleAvatar(
@@ -150,7 +152,10 @@ class CreateNewShowWidget extends StatelessWidget {
         children: <Widget>[
           ATContainer(
             onTap: () {
-              context.pushNamed(ATRoutes.createShowForm);
+              context.pushNamed(
+                ATRoutes.createShowForm,
+                extra: context.read<HostedShowsCubit>(),
+              );
             },
             radius: 5,
             color: ATColors.hex2D2D2D,
@@ -158,9 +163,7 @@ class CreateNewShowWidget extends StatelessWidget {
             height: kst.maxHeight * 0.65,
             child: const Icon(Icons.add, size: 100),
           ),
-          const SizedBox(
-            height: 5,
-          ),
+          const SizedBox(height: 5),
           Text(
             ATStrings.createNewShow,
             style: context.textTheme.bodyMedium,

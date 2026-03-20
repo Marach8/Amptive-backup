@@ -20,6 +20,7 @@ Future<Community?> showCommunitiesModal({
     isScrollControlled: true,
     useSafeArea: true,
     backgroundColor: ATColors.hex202020,
+    barrierColor: ATColors.black.withValues(alpha: 0.5),
     builder: (BuildContext dContext) {
       return BlocProvider<CommunitiesCubit>.value(
         value: communitiesCubit,
@@ -49,10 +50,10 @@ class __SubWidgetState extends State<_SubWidget> {
   @override
   void initState() {
     super.initState();
-    widget.controller.addListener(_onScrollToEnd);
+    widget.controller.addListener(_onCommunitiesScrollToEnd);
   }
 
-  void _onScrollToEnd() {
+  void _onCommunitiesScrollToEnd() {
     const double dragThreshold = 80;
     if (widget.controller.position.pixels >=
         widget.controller.position.maxScrollExtent + dragThreshold) {
@@ -150,9 +151,7 @@ class __SubWidgetState extends State<_SubWidget> {
                                         imgPath: community?.image ?? '',
                                         boxFit: BoxFit.cover),
                                   ),
-                                  const SizedBox(
-                                    width: 15,
-                                  ),
+                                  const SizedBox(width: 15),
                                   Flexible(
                                     child: Text(
                                       community?.name ?? '',

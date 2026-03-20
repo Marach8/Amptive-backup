@@ -76,6 +76,20 @@ class _SelectCohostModal extends StatefulWidget {
 }
 
 class _SelectCohostModalState extends State<_SelectCohostModal> {
+  @override 
+  void initState(){
+    super.initState();
+    widget.scrollController.addListener(_onCohostsScrollToEnd);
+  }
+
+  void _onCohostsScrollToEnd() {
+    const double threshHold = 80;
+    if (widget.scrollController.position.pixels >=
+        widget.scrollController.position.maxScrollExtent + threshHold) {
+      context.read<AllUsersCubit>().fetchAllUsers();
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(

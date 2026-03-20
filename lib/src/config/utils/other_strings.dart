@@ -80,7 +80,7 @@ class ATStrings {
   static const String flutterWave = 'Flutterwave';
   static const String googlePay = 'Google Pay';
   static const String emailOrUsername = 'Email Or Username';
-  static const String LIVE = 'Live';
+  static const String live = 'Live';
   static const String ALL = 'All';
   static const String RECORDING_WILL_AUTOPLAY = 'Your recording will play in';
   static const String ENTER_VALID_URL = 'Please, enter a valid URL!';
@@ -332,8 +332,8 @@ class ATStrings {
   static const String dontAllow = "Don't Allow";
   static const String noThanks = "No thanks";
 
-  static const String SOCIETY = 'Society';
-  static const String GO_LIVE = 'Go live';
+  static const String society = 'Society';
+  static const String goLive = 'Go live';
   static const String paidShow = '\$paid show';
   static const String INSTAGRAM = 'Instagram';
   static const String X = 'X';
@@ -342,7 +342,7 @@ class ATStrings {
   static const String PAID_SHOWS = 'Paid Shows';
   static const String SHOW = 'Show';
   static const String paid = 'Paid';
-  static const String EVENT = 'Event';
+  static const String event = 'Event';
   static const String FREE_EVENTS = 'Free Events';
   static const String PAID_EVENTS = 'Paid Events';
   static const String FREE_SHOWS = 'Free Shows';
@@ -356,7 +356,7 @@ class ATStrings {
   static const String ATTENDED = 'Attended';
   static const String UPCOMING = 'Upcoming';
   static const String scheduled = 'Scheduled';
-  static const String SCHEDULE = 'Schedule';
+  static const String schedule = 'Schedule';
   static const String SUBSCRIBED = 'Subscribed';
   static const String SUBSCRIBE = 'Subscribe';
   static const String DAY_VIEW = 'Day view';
@@ -562,6 +562,8 @@ class ATStrings {
   static const String CAPACITY = 'Capacity';
   static const String choose2AllowHandRasing =
       'Choose whether to allow hand-rasing';
+  static const String choose2AllowWhispers =
+      'Choose whether to allow whispers';
   static const String AUDIENCE_INTERACTION = 'Select audience interaction';
   static const String youWillHaveAccessToModerationTools =
       "While you're live, you'll have full access to your moderation tools so you can control and manage audience interactions throughout the session.";
@@ -574,14 +576,14 @@ class ATStrings {
   static const String SET_CAPACITY = 'Set capacity';
   static const String REMOVE = 'Remove';
   static const String SEND_GIFT_2_HOST = 'Send a gift to the host';
-  static const String WHISPERS_DESC =
+  static const String whispersDesc =
       'Whispers are randomly selected comments from your live audience that appear on your event page while your are live.';
-  static const String NON_ATTENDING_ENCOURAGED_2_JOIN =
+  static const String nonAttendeesEncouragedToJoin =
       'Non-attending users can see these comments, encouraging them to join your live event.';
-  static const String TURN_ON = 'Turn On';
-  static const String TURNED_ON = 'Turned On';
-  static const String TURN_OFF = 'Turn Off';
-  static const String TURNED_OFF = 'Turned Off';
+  static const String turnOn = 'Turn On';
+  static const String turnedOn = 'Turned On';
+  static const String turnOff = 'Turn Off';
+  static const String turnedOff = 'Turned Off';
   static const String IS_TALKING = 'is talking';
   static const String IS_GIFTING = 'is gifting';
   static const String GIFTED = 'Gifted';
@@ -594,9 +596,9 @@ class ATStrings {
       "You will still need to enable the Listeners's mic";
   static const String ALLOW_AUDIENCE_MIC = 'Allow audience mic';
   static const String ALLOW_HANDRAISING = 'Allow hand raising';
-  static const String WHISPERS_ENABLED =
+  static const String whispersEnabled =
       'Whispers will be enabled for your event.';
-  static const String WHISPERS_DISABLED =
+  static const String whispersDisabled =
       'Whispers will be disabled for your event.';
   static const String handRaising = 'Hand Raising';
   static const String CNTRL_HAND_RAISING =
@@ -629,12 +631,12 @@ class ATStrings {
   static const String editSubPlan = 'Edit subscription plan';
   static const String SETUP_PAYMENT_FEE = 'Set up payment fee';
   static const String setupSubPlan = 'Set up subscription plan';
-  static const String SHOW_IS_SETUP = 'Your Show is setup and airing!';
-  static const String BEGIN_JOURNEY =
+  static const String showIsSetup = 'Your Show is setup and airing!';
+  static const String beginYourJourney =
       'Begin your journey by creating your first episode';
-  static const String CREATE_1ST_EPISODE = 'Create first epidode';
+  static const String createFirstEpisode = 'Create first epidode';
   static const String createAnEpisode = 'Create an Episode';
-  static const String VIEW_SHOW_PAGE = 'View show page';
+  static const String viewShowPage = 'View show page';
   static const String VIEW_EVENT_PAGE = 'View event page';
   static const String EVENT_SCHEDULED = 'Your Event is scheduled!';
   static const String SHARE_EVENT_LINK =
@@ -649,15 +651,15 @@ class ATStrings {
   static const String END_NOW = 'End now';
   static const String HOST = 'Host';
   static const String EDIT_EPISODE = 'Edit episode';
-  static const String ATTENDEES_WILL_SHOW_HERE = 'Attendees will appear here!';
-  static const String EPISODE_CREATED = 'Your episode has been scheduled!';
-  static const String SHARE_EPISODE_LINK_DESC =
+  static const String attendeesWillShowHere = 'Attendees will appear here!';
+  static const String episodeCreated = 'Your episode has been scheduled!';
+  static const String shareEpisodeLinkDescription =
       'Share your episode link to build excitement and attract more attendees';
-  static const String VIEW_EPISODE_DETAILS = 'View episode details';
-  static const String SHARE_EPISODE = 'Share episode';
+  static const String viewEpisode = 'View episode details';
+  static const String shareEpisode = 'Share episode';
   static const String unblock = 'Unblock';
   static const String UNMUTE = 'Unmute';
-  static const String ABOUT_EPISODE = 'About Episode';
+  static const String aboutEpisode = 'About Episode';
   static const String AMPTIVE_4_CREATORS = 'Amptive for Creators';
   static const String AMPTIVE_4_BIZ = 'Amptive for Business';
   static const String CONNECT_SELL = 'Connect, sell and grow';

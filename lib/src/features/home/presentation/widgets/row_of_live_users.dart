@@ -1,0 +1,235 @@
+import 'package:amptive/src/config/api_response_and_app_state.dart';
+import 'package:amptive/src/config/utils/colors.dart';
+import 'package:amptive/src/config/utils/dialogs/app_notification_dialog.dart';
+import 'package:amptive/src/config/utils/extensions/context_extensions.dart';
+import 'package:amptive/src/features/home/cubits/live_users_cubit.dart';
+import 'package:amptive/src/features/home/data/models/response/live_users_response_model.dart';
+import 'package:amptive/src/shared/shimmer.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import '../../../../config/utils/image_strings.dart';
+import '../../../../shared/image_loader_widget.dart';
+import '../widgets/go_live_widget_in_home.dart';
+import 'package:amptive/src/shared/live_user_animation.dart';
+import 'package:amptive/src/shared/horizontal_refresh_indicator.dart';
+import 'package:amptive/src/config/utils/font_weights.dart';
+import 'package:amptive/src/config/utils/other_strings.dart';
+
+class RowOfLiveUsers extends StatelessWidget {
+  const RowOfLiveUsers({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      height: 100,
+      child: BlocConsumer<LiveUsersCubit, ATAppState<LiveUsersResponseModel>>(
+        listener: (_, ATAppState<LiveUsersResponseModel> state) {
+          if (state is FailureState<LiveUsersResponseModel>) {
+            showAppNotification2(
+              context: context,
+              text: state.message,
+              type: NotificationType.failure,
+            );
+          }
+        },
+        builder: (_, ATAppState<LiveUsersResponseModel> state) {
+          return switch (state) {
+            InitialState<LiveUsersResponseModel>() => const SizedBox.shrink(),
+            LoadingState<LiveUsersResponseModel>() ||
+            FailureState<LiveUsersResponseModel>() ||
+            SuccessState<LiveUsersResponseModel>() =>
+              Builder(builder: (_) {
+                final LiveUsersResponseModel? liveUsersData =
+                    context.read<LiveUsersCubit>().currentLiveUsersData;
+                final List<LiveUser> liveUsers =
+                    liveUsersData?.liveUsers ?? <LiveUser>[];
+      
+                if (liveUsers.isEmpty) {
+                  if (state is LoadingState<LiveUsersResponseModel>) {
+                    return const _InitialLoading();
+                  }
+                  if(state is FailureState<LiveUsersResponseModel>) {
+                    return Row(
+                      children: <Widget>[
+                        const Padding(
+                          padding: EdgeInsets.only(left: 11),
+                          child: GoLiveWidgetInHome(),
+                        ),
+                        IconButton(
+                          icon: const Icon(Icons.refresh),
+                          onPressed: () =>
+                            context.read<LiveUsersCubit>().fetchLiveUsers()
+                        ),
+                      ],
+                    );
+                  }
+                  return const Center(
+                    child: Text('No live users available yet...'),
+                  );
+                }
+
+                bool hasMore = liveUsersData?.hasMore ?? true;
+                final int count = hasMore ? liveUsers.length + 2 : liveUsers.length + 1;
+
+                return ListView.separated(
+                  padding: EdgeInsets.zero,
+                  scrollDirection: Axis.horizontal,
+                  separatorBuilder: (_, __) => const SizedBox(width: 14),
+                  itemCount: count,
+                  itemBuilder: (_, int index) {
+                    if (index == 0) {
+                      return const Padding(
+                        padding: EdgeInsets.only(left: 11),
+                        child: GoLiveWidgetInHome(),
+                      );
+                    }
+                
+                    final int adjustedIndex = index - 1;
+                
+                    if (adjustedIndex < liveUsers.length) {
+                      final LiveUser liveUser = liveUsers[adjustedIndex];
+                      return LiveUserWidget(
+                        user: liveUser,
+                        key: ValueKey<String>(liveUser.userId ?? ''),
+                      );
+                    }
+                
+                    if (state is LoadingState<LiveUsersResponseModel>) {
+                      return const _LiveUserShimmer();
+                    }
+                
+                    return const SizedBox.shrink();
+                  },
+                );
+              })
+          };
+        },
+      ),
+    );
+  }
+}
+
+
+class LiveUserWidget extends StatelessWidget {
+  const LiveUserWidget({
+    super.key,
+    required this.user,
+  });
+  final LiveUser user;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      mainAxisAlignment: MainAxisAlignment.end,
+      children: <Widget>[
+        Stack(
+          clipBehavior: Clip.none,
+          alignment: Alignment.center,
+          children: <Widget>[
+            LiveUserAnimationWidget(
+              child: ATImgLoader(
+                imgPath: user.profileImageUrl ?? ATImgStrings.jpeg3,
+                boxFit: BoxFit.cover,
+                height: 60,
+                width: 60,
+              ),
+            ),
+            const Positioned(
+              bottom: -4,
+              child: _LiveIndicator(),
+            )
+          ],
+        ),
+        const SizedBox(height: 10),
+        Text('emmanuel', style: Theme.of(context).textTheme.titleSmall),
+      ],
+    );
+  }
+}
+
+class _LiveIndicator extends StatelessWidget {
+  const _LiveIndicator();
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      alignment: Alignment.center,
+      padding: const EdgeInsets.all(0),
+      height: 22,
+      width: 38,
+      decoration: BoxDecoration(
+          gradient: LinearGradient(
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+              colors: <Color>[
+                ATColors.hexF91880,
+                ATColors.orangeGradientColorB
+              ]),
+          borderRadius: BorderRadius.circular(5),
+          border: Border.all(
+            color: ATColors.hex0D0D0D,
+            width: 2,
+          )),
+      child: Text(
+        ATStrings.live.toUpperCase(),
+          style: context.textTheme.titleSmall
+              ?.copyWith(fontWeight: ATFontWeights.w600)),
+    );
+  }
+}
+
+
+class _InitialLoading extends StatelessWidget {
+  const _InitialLoading();
+
+  @override
+  Widget build(BuildContext context) {
+    return ListView.separated(
+      padding: EdgeInsets.zero,
+      shrinkWrap: true,
+      scrollDirection: Axis.horizontal,
+      separatorBuilder: (_, __) => const SizedBox(width: 14),
+      itemCount: 10,
+      itemBuilder: (_, int index){
+        if(index == 0){
+          return const Padding(
+            padding: EdgeInsets.only(left: 11),
+            child: GoLiveWidgetInHome(),
+          );
+        }
+        return const _LiveUserShimmer();
+      }
+    );
+  }
+}
+
+
+class _LiveUserShimmer extends StatelessWidget {
+  const _LiveUserShimmer();
+
+  @override
+  Widget build(BuildContext context) {
+    return const Column(
+      mainAxisSize: MainAxisSize.min,
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: <Widget>[
+        Stack(
+          clipBehavior: Clip.none,
+          alignment: Alignment.center,
+          children: <Widget>[
+            LiveUserAnimationWidget(
+              child: ATShimmer(height: 60, width: 60,),
+            ),
+            Positioned(
+              bottom: -4,
+              child: _LiveIndicator(),
+            )
+          ],
+        ),
+        SizedBox(height: 15),
+        ATShimmer(height: 9, width: 50, radius: 2.5,)
+      ],
+    );
+  }
+}

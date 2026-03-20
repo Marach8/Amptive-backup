@@ -5,7 +5,7 @@ import 'package:amptive/src/config/exception.dart';
 import 'package:amptive/src/config/services/network_service/dio_network_service_impl.dart';
 import 'package:amptive/src/config/services/network_service/network_service.dart';
 import 'package:amptive/src/features/episodes/data/models/request/create_episode_request_model.dart';
-import 'package:amptive/src/features/episodes/data/models/response/create_episode_response_model.dart';
+import 'package:amptive/src/features/episodes/data/models/response/episode_model.dart';
 import 'package:amptive/src/features/episodes/data/repository/episodes_repo.dart';
 import 'package:dio/dio.dart' show Response;
 
@@ -16,9 +16,9 @@ class EpisodesRepoImpl implements EpisodesRepo {
   final NetworkService networkService;
 
   @override
-  Future<ApiResponse<CreateEpisodeResponseModel>> createEpisode({
+  Future<ApiResponse<Episode>> createEpisode({
     required String showId,
-    required CreateEpisodeRequestModel episodeData,
+    required CreateEpisodePayload episodeData,
   }) async {
     try {
       final Response<dynamic> response = await networkService.post(
@@ -26,12 +26,33 @@ class EpisodesRepoImpl implements EpisodesRepo {
         data: episodeData.toJson(),
       );
 
-      final CreateEpisodeResponseModel episodeResponse =
-          CreateEpisodeResponseModel.fromJson(response.data);
-      return Successful<CreateEpisodeResponseModel>(data: episodeResponse);
+      final Episode episodeResponse =
+          Episode.fromJson(response.data);
+      return Successful<Episode>(data: episodeResponse);
     } catch (e) {
       log('Create episode error: $e');
-      return Unsuccessful<CreateEpisodeResponseModel>(
+      return Unsuccessful<Episode>(
+        error: ATException.resolveException(e),
+      );
+    }
+  }
+
+  @override
+  Future<ApiResponse<Episode>> fetchEpisodeDetail({
+    required String showId,
+    required String episodeId,
+  }) async {
+    try {
+      final Response<dynamic> response = await networkService.get(
+        '${ATEndpoints.shows}$showId/episodes/$episodeId',
+      );
+
+      final Episode episodeResponse =
+          Episode.fromJson(response.data);
+      return Successful<Episode>(data: episodeResponse);
+    } catch (e) {
+      log('Fetch episode error: $e');
+      return Unsuccessful<Episode>(
         error: ATException.resolveException(e),
       );
     }

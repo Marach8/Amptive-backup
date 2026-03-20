@@ -26,7 +26,7 @@ class ATAuthOptionsScreen extends StatelessWidget {
     return ATAnnotatedRegion(
       child: Scaffold(
         appBar: const ATAppBar(
-          title: ATImgLoader(imgPath: ATImgStrings.AMPTIVE_NAME_LOGO),
+          title: ATImgLoader(imgPath: ATImgStrings.amptiveNameLogo),
           leading: ATBackBtn(),
         ),
         body: Center(

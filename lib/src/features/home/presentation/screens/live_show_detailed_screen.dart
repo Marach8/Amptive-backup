@@ -8,8 +8,7 @@ import 'package:readmore/readmore.dart';
 import '../../../../shared/list_tile_with_leading_picture_widget.dart';
 import '../../../../shared/sliver_header_delegate.dart';
 import '../widgets/event_or_show_card.dart';
-import '../widgets/show_or_event_indicator_with_title.dart';
-import '../widgets/live_and_society_widget.dart';
+import '../../../episodes/presentation/widgets/existing_episodes_indicator.dart';
 import '../widgets/people_listening.dart';
 import '../widgets/whispers_list.dart';
 
@@ -80,7 +79,7 @@ class ATLiveShowDetailedScreen extends StatelessWidget {
                                   const SizedBox(
                                     height: 12,
                                   ),
-                                  const LiveIndicatorRow(),
+                                  //const IsLiveIndicator(),
                                   const SizedBox(
                                     height: 40,
                                   ),
@@ -94,7 +93,7 @@ class ATLiveShowDetailedScreen extends StatelessWidget {
                                         ATColors.white.withValues(alpha: 0.1),
                                   ),
                                   const SizedBox(height: 5),
-                                  const ATHashtagsWidget(),
+                                  const RenderHashTags(),
                                   const SizedBox(
                                     height: 30,
                                   ),

@@ -4,8 +4,7 @@ class ATEndpoints {
   static const String baseUrl = 'https://amptive.onrender.com';
 
   static const String checkIdentityAvailability =
-     
-      '/api/v1/auth/check-availability';
+    '/api/v1/auth/check-availability';
   static const String sendOtp = '/api/v1/auth/init';
   static const String verifyOtp = '/api/v1/auth/verify-otp';
   static const String login = '/api/v1/auth/login';
@@ -19,7 +18,7 @@ class ATEndpoints {
   static const String users = '/api/v1/shows/users';
   static const String homeFeed = '/api/v1/shows/feed/home';
   static const String followedShowsFeed = '/api/v1/shows/feed/following';
-  static const String liveShowsFeed = '/api/v1/shows/feed/live-now';
+  static const String liveUsersFeed = '/api/v1/shows/feed/live-now';
   static const String shows = '/api/v1/shows/';
   static const String events = '/api/v1/events/';
   static const String episodes = '/api/v1/episodes/';

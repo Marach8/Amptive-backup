@@ -9,10 +9,10 @@ class ATImgStrings {
 
   static const String emptyImage = '$_svgPath/empty_image.svg';
   static const String AMPTIVE_LOGO = '$_svgPath/Logo.svg';
-  static const String AMPTIVE_NAME_LOGO = '$_svgPath/amptive_logotype.svg';
+  static const String amptiveNameLogo = '$_svgPath/amptive_logotype.svg';
   static const String walletIcon = '$_svgPath/WALLET ICON.svg';
   static const String showIcon = '$_svgPath/Frame 79.svg';
-  static const String WIFI_ICON = '$_svgPath/Start or Schedule.svg';
+  static const String wifiIcon = '$_svgPath/Start or Schedule.svg';
   static const String robot = '$_svgPath/delivery robot.svg';
   static const String filledBell = '$_svgPath/Bell=Fill.svg';
   static const String outlinedBell = '$_svgPath/Bell=Outline.svg';
@@ -26,7 +26,7 @@ class ATImgStrings {
   static const String filledBroadCast = '$_svgPath/Broadcast icon=Fill.svg';
   static const String outlinedBroadCast =
       '$_svgPath/Broadcast icon=Outline.svg';
-  static const String CALENDER_ICON = '$_svgPath/Contextual menu icon.svg';
+  static const String calenderIcon = '$_svgPath/Contextual menu icon.svg';
   static const String PERSON_CHECKED = '$_svgPath/Contextual menu icon (1).svg';
   static const String SHARE_LIVE = '$_svgPath/Icon.svg';
   static const String followIcon = '$_svgPath/Icon (1).svg';
@@ -36,7 +36,7 @@ class ATImgStrings {
   static const String KICK_USER_OUT = '$_svgPath/user out.svg';
   static const String USER_ICON = '$_svgPath/user.svg';
   static const String X_LOGO = '$_svgPath/x_logo.svg.svg';
-  static const String GROUP_ICON = '$_svgPath/Group_fill.svg';
+  static const String groupIcon = '$_svgPath/Group_fill.svg';
   static const String TOP_CREATOR_BADGE = '$_svgPath/RANK BADGES.svg';
   static const String SUBSCRIBER_BADGE = '$_svgPath/Subscribers badge.svg';
   static const String BIZ_ACCT_LOGO = '$_svgPath/Simplification (3).svg';
@@ -47,7 +47,7 @@ class ATImgStrings {
   static const String PAYPAL_ICON = '$_svgPath/paypal.svg';
   static const String NAIRA_ICON = '$_svgPath/₦.svg';
   static const String hashIcon = '$_svgPath/hash.svg';
-  static const String FILLED_CALENDER_ICON = '$_svgPath/Date_fill.svg';
+  static const String filledCalenderIcon = '$_svgPath/Date_fill.svg';
   static const String CREATE_SHOW_ICON1 = '$_svgPath/Frame 20216.svg';
   static const String CREATE_SHOW_ICON2 = '$_svgPath/Frame 20217.svg';
   static const String CREATE_EVENT_ICON1 = '$_svgPath/Simplification (4).svg';

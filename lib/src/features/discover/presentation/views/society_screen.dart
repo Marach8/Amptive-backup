@@ -50,7 +50,7 @@ class DiscoverSocietyScreen extends StatelessWidget {
                                   ),
                                 ),
                                 Text(
-                                  ATStrings.SOCIETY,
+                                  ATStrings.society,
                                   style: Theme.of(context).textTheme.bodyMedium,
                                 ),
                                 Padding(

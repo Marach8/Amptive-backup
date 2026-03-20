@@ -47,7 +47,7 @@ class SocietyHastagScreen extends StatelessWidget {
                               ),
                               Text(
                                 ATStrings.HASH +
-                                    ATStrings.SOCIETY.toLowerCase(),
+                                    ATStrings.society.toLowerCase(),
                                 style: Theme.of(context).textTheme.bodyMedium,
                               ),
                               const SizedBox(
@@ -70,7 +70,7 @@ class SocietyHastagScreen extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: <Widget>[
                               Text(
-                                ATStrings.HASH + ATStrings.SOCIETY,
+                                ATStrings.HASH + ATStrings.society,
                                 style: Theme.of(context)
                                     .textTheme
                                     .bodySmall

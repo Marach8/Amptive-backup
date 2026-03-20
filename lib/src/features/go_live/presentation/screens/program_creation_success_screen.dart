@@ -7,38 +7,46 @@ import 'package:amptive/src/shared/back_button.dart';
 import 'package:amptive/src/shared/custom_container_widget.dart';
 import 'package:amptive/src/shared/spotlight_beam.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import '../../../../shared/elevated_button_widget.dart';
 
 enum _AnimStage { start, end }
+enum ButtonPressed{elevatedBtn, textBtn}
 
-class GoLiveProgramCreationSuccessScreen extends StatefulWidget {
-  const GoLiveProgramCreationSuccessScreen({super.key, required this.params});
+class ProgramCreationSuccessScreenParams {
+  const ProgramCreationSuccessScreenParams({
+    required this.coverArtBytes,
+    required this.title,
+    required this.subtitle,
+    required this.btnTitle,
+    required this.txtBtnTitle,
+    required this.topLogo,
+  });
 
-  final ({
-    Uint8List coverArtBytes,
-    String title,
-    String subtitle,
-    String btnTitle,
-    String txtBtnTitle,
-    VoidCallback btnOnPressed,
-    VoidCallback txtBtnOnPressed,
-    Widget topLogo
-  }) params;
-
-  @override
-  State<GoLiveProgramCreationSuccessScreen> createState() =>
-      _GoLiveProgramCreationSuccessScreenState();
+  final Uint8List coverArtBytes;
+  final String title, subtitle, btnTitle, txtBtnTitle;
+  final Widget topLogo;
 }
 
-class _GoLiveProgramCreationSuccessScreenState
-    extends State<GoLiveProgramCreationSuccessScreen> {
+class ProgramCreationSuccessScreen extends StatefulWidget {
+  const ProgramCreationSuccessScreen({super.key, required this.params});
+  final ProgramCreationSuccessScreenParams params;
+
+  @override
+  State<ProgramCreationSuccessScreen> createState() =>
+      _ProgramCreationSuccessScreenState();
+}
+
+class _ProgramCreationSuccessScreenState
+    extends State<ProgramCreationSuccessScreen> {
   final StreamController<_AnimStage> _streamCntrl =
       StreamController<_AnimStage>();
 
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) => _driveCoverArtAnim());
+    WidgetsBinding.instance.addPostFrameCallback(
+      (_) => _driveCoverArtAnim());
   }
 
   @override
@@ -79,9 +87,7 @@ class _GoLiveProgramCreationSuccessScreenState
                   maxLines: 2,
                   style: context.textTheme.displaySmall
                       ?.copyWith(fontSize: ATSizes.size23)),
-              const SizedBox(
-                height: 10,
-              ),
+              const SizedBox(height: 10),
               Text(
                   textAlign: TextAlign.center,
                   widget.params.subtitle,
@@ -123,32 +129,33 @@ class _GoLiveProgramCreationSuccessScreenState
                             }),
                       ),
                       StreamBuilder<_AnimStage>(
-                          stream: _streamCntrl.stream,
-                          builder: (_, AsyncSnapshot<_AnimStage> snapshot) {
-                            if (snapshot.data == null) {
-                              return const SizedBox.shrink();
-                            }
-                            final bool isDone = snapshot.data == _AnimStage.end;
-                            return AnimatedPositioned(
-                              duration: const Duration(milliseconds: 100),
-                              left: !isDone ? -200 : null,
-                              right: !isDone ? -200 : null,
-                              child: ClipRRect(
-                                borderRadius: BorderRadius.circular(5),
-                                child: ATContainer(
-                                  duration: 200,
-                                  height: isDone ? 140 : kst.maxHeight,
-                                  width:
-                                      isDone ? 134 : context.screenWidth * 1.5,
-                                  child: Image.memory(
-                                      widget.params.coverArtBytes,
-                                      fit: BoxFit.cover),
-                                ),
+                        stream: _streamCntrl.stream,
+                        builder: (_, AsyncSnapshot<_AnimStage> snapshot) {
+                          if (snapshot.data == null) {
+                            return const SizedBox.shrink();
+                          }
+                          final bool isDone = snapshot.data == _AnimStage.end;
+                          return AnimatedPositioned(
+                            duration: const Duration(milliseconds: 100),
+                            left: !isDone ? -200 : null,
+                            right: !isDone ? -200 : null,
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(5),
+                              child: ATContainer(
+                                duration: 200,
+                                height: isDone ? 140 : kst.maxHeight,
+                                width:
+                                    isDone ? 134 : context.screenWidth * 1.5,
+                                child: Image.memory(
+                                    widget.params.coverArtBytes,
+                                    fit: BoxFit.cover),
                               ),
-                            );
-                          }),
+                            ),
+                          );
+                        }
+                      ),
                       Positioned(
-                        bottom: 10,
+                        bottom: 60,
                         child: Container(
                           width: context.screenWidth,
                           padding: const EdgeInsets.fromLTRB(15, 0, 15, 0),
@@ -156,16 +163,14 @@ class _GoLiveProgramCreationSuccessScreenState
                             mainAxisSize: MainAxisSize.min,
                             children: <Widget>[
                               ATPlainElevatedBtn(
-                                onPressed: widget.params.btnOnPressed,
+                                onPressed: () => context.pop(ButtonPressed.elevatedBtn),
                                 btnTitle: widget.params.btnTitle,
                                 bgColor: ATColors.white,
                                 fgColor: ATColors.black,
                               ),
-                              const SizedBox(
-                                height: 15,
-                              ),
+                              const SizedBox(height: 15),
                               InkWell(
-                                  onTap: widget.params.txtBtnOnPressed,
+                                  onTap: () => context.pop(ButtonPressed.textBtn),
                                   borderRadius: BorderRadius.circular(5),
                                   child: Text(
                                     widget.params.txtBtnTitle,
@@ -183,11 +188,6 @@ class _GoLiveProgramCreationSuccessScreenState
             ],
           ),
         ),
-
-        // bottomSheet: Container(
-        //   color: ATColors.trsprnt,
-        //   child: ,
-        // ),
       ),
     );
   }

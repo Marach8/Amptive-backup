@@ -60,8 +60,8 @@ class DiscoverRepoImpl implements DiscoverRepo {
       return Successful<AllUsersResponseModel>(
         data: AllUsersResponseModel.fromJson(response.data),
       );
-    } catch (e) {
-      log('Error in fetching users');
+    } catch (e, s) {
+      log('Error in fetching users: $e $s');
       return Unsuccessful<AllUsersResponseModel>(
           error: ATException.resolveException(e));
     }

@@ -16,7 +16,6 @@ export '../../../discover/presentation/widgets/available_hashtags_list.dart';
 export '../../../shows/presentation/widgets/show_audience_access_modal.dart';
 export 'hand_raising_permission_modal.dart';
 export 'add_link_modal.dart';
-export 'control_whispers_modal.dart';
 export 'schedule_icon.dart';
 export 'one_two_three_animation.dart';
 export 'single_ring_ripple_animation.dart';

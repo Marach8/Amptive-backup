@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:developer' show log;
 import 'dart:typed_data';
 import 'dart:ui';
 import 'package:amptive/src/config/api_response_and_app_state.dart';
@@ -9,6 +10,7 @@ import 'package:amptive/src/features/discover/cubits/hashtags_cubit.dart';
 import 'package:amptive/src/features/discover/cubits/users_cubits.dart';
 import 'package:amptive/src/features/shows/cubits/create_show_cubit.dart';
 import 'package:amptive/src/features/go_live/go_live_export.dart';
+import 'package:amptive/src/features/shows/cubits/hosted_shows_cubit.dart';
 import 'package:amptive/src/features/shows/data/models/response/show_response_model.dart';
 import 'package:amptive/src/global_export.dart';
 import 'package:amptive/src/shared/annotated_region__widget.dart';
@@ -16,17 +18,21 @@ import 'package:amptive/src/shared/divider_widget.dart';
 import 'package:amptive/src/shared/global_model_objects.dart';
 import 'package:amptive/src/shared/textformfield_widget.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:nested/nested.dart';
 import 'package:amptive/src/shared/back_button.dart';
 import 'package:amptive/src/shared/image_loader_widget.dart';
 import 'package:nested/nested.dart' show SingleChildWidget;
 import 'package:amptive/src/shared/sliver_header_delegate.dart';
-import 'package:uuid/uuid.dart';
 import '../../../../shared/rich_text.dart';
-import '../../../../config/utils/dialogs/add_communities_dialog.dart';
+import '../../../../config/utils/dialogs/communities_modal.dart';
 
 class CreateShowFormScreen extends StatelessWidget {
-  const CreateShowFormScreen({super.key});
+  const CreateShowFormScreen({
+    super.key,
+    required this.hostedShowsCubit,
+  });
+  final HostedShowsCubit hostedShowsCubit;
 
   @override
   Widget build(BuildContext context) {
@@ -42,6 +48,7 @@ class CreateShowFormScreen extends StatelessWidget {
         BlocProvider<AllHashtagsCubit>(create: (_) => AllHashtagsCubit()),
         BlocProvider<SelectedHashTagsCubit>(
           create: (_) => SelectedHashTagsCubit()),
+        BlocProvider<HostedShowsCubit>.value(value: hostedShowsCubit,),
       ],
       child: const _SubWidget(),
     );
@@ -88,6 +95,7 @@ class __SubWidgetState extends State<_SubWidget> {
   void dispose() {
     _titleCntrl.dispose();
     _titleStreamCntrl.close();
+    _launchShowBtnNotifier.dispose();
     _descStreamCntrl.close();
     super.dispose();
   }
@@ -117,7 +125,7 @@ class __SubWidgetState extends State<_SubWidget> {
                   }),
                 ),
               ),
-              ATContainer(
+              Container(
                 color: ATColors.hex0D0D0D.withValues(alpha: 0.75),
                 child: NotificationListener<ScrollNotification>(
                   onNotification: blocContext
@@ -128,38 +136,39 @@ class __SubWidgetState extends State<_SubWidget> {
                       SliverPersistentHeader(
                         pinned: true,
                         delegate: ATSliverHDelegate(
-                            maxExt: blurredHeaderHeight,
-                            minExt: blurredHeaderHeight,
-                            child: SizedBox(
-                                height: blurredHeaderHeight,
-                                child: ATBlurredHeaderWidget(
-                                  child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: <Widget>[
-                                      Padding(
-                                        padding: const EdgeInsets.only(left: 4),
-                                        child: ATRoundedBackBtn(
-                                          bgColor: ATColors.transparent,
-                                        ),
-                                      ),
-                                      InkWell(
-                                        onTap: () {
-                                          context
-                                              .read<AllHashtagsCubit>()
-                                              .fetchHashTags();
-                                        },
-                                        child: Text(
-                                          ATStrings.createShow,
-                                          style: context.textTheme.bodyMedium,
-                                        ),
-                                      ),
-                                      const SizedBox(
-                                        width: 30,
-                                      )
-                                    ],
+                          maxExt: blurredHeaderHeight,
+                          minExt: blurredHeaderHeight,
+                          child: SizedBox(
+                            height: blurredHeaderHeight,
+                            child: ATBlurredHeaderWidget(
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: <Widget>[
+                                  Padding(
+                                    padding: const EdgeInsets.only(left: 4),
+                                    child: ATRoundedBackBtn(
+                                      bgColor: ATColors.transparent,
+                                    ),
                                   ),
-                                ))),
+                                  InkWell(
+                                    onTap: () {
+                                      context
+                                          .read<CommunitiesCubit>().fetchCommunities();
+                                    },
+                                    child: Text(
+                                      ATStrings.createShow,
+                                      style: context.textTheme.bodyMedium,
+                                    ),
+                                  ),
+                                  const SizedBox(
+                                    width: 30,
+                                  )
+                                ],
+                              ),
+                            )
+                          )
+                        ),
                       ),
                     ],
 
@@ -269,6 +278,7 @@ class __SubWidgetState extends State<_SubWidget> {
                                               communitiesCubit: context
                                                   .read<CommunitiesCubit>(),
                                             );
+                                            log('selectedCom id: ${selectedCom?.communityId}');
                                             if (selectedCom != null) {
                                               setter(() => selectedCommunity =
                                                   selectedCom);
@@ -371,14 +381,14 @@ class __SubWidgetState extends State<_SubWidget> {
                             padding: EdgeInsets.fromLTRB(15, 0, 15, 10),
                             child: RowWith2Texts(text1: ATStrings.hashtags),
                           ),
-                          Padding(
-                            padding: const EdgeInsets.fromLTRB(15, 0, 15, 10),
-                            child: StatefulBuilder(
-                              builder: (_, StateSetter setter) {
-                                return Column(
-                                  spacing: 10,
-                                  children: <Widget>[
-                                    CreateProgramSelectionItem(
+                          StatefulBuilder(
+                            builder: (_, StateSetter setter) {
+                              return Column(
+                                spacing: 10,
+                                children: <Widget>[
+                                  Padding(
+                                    padding: const EdgeInsets.fromLTRB(15, 0, 15, 0),
+                                    child: CreateProgramSelectionItem(
                                       description: '${ATStrings.addHashtags}s',
                                       onTap: () async {
                                         final List<HashTag>? newHashTags =
@@ -392,11 +402,11 @@ class __SubWidgetState extends State<_SubWidget> {
                                         }
                                       },
                                     ),
-                                    const SelectedHashtagsRow(),
-                                  ],
-                                );
-                              }
-                            ),
+                                  ),
+                                  const SelectedHashtagsRow(),
+                                ],
+                              );
+                            }
                           ),
 
                           Padding(
@@ -545,130 +555,136 @@ class __SubWidgetState extends State<_SubWidget> {
         }),
         resizeToAvoidBottomInset: false,
         bottomSheet: MultiBlocListener(
-            listeners: <SingleChildWidget>[
-              BlocListener<BgImageCubit, (String, Uint8List?)>(
-                listener: (_, (String, Uint8List?) state) {
-                  if (state.$2 != null) {
-                    _launchShowBtnNotifier.value = true;
-                  } else {
-                    _launchShowBtnNotifier.value = false;
-                  }
-                },
-              ),
-              BlocListener<UploadImageCubit, ATAppState<String>>(
-                listener: (_, ATAppState<String> state) {
-                  if (state is SuccessState<String>) {
-                    //If we upload image successfully, create the show.
-                    context.read<CreateShowCubit>().createShow(
-                      tagIds: (selectedHashtags ?? <HashTag>[])
-                        .map((HashTag tag) => tag.id ?? '')
-                        .toList(),
-                      coHostIds: (selectedCohosts ?? <User>[])
-                        .map((User cohost) => cohost.id ?? '')
-                        .toList(),
-                      title: _titleCntrl.text.trim(),
-                      description: selectedDescription,
-                      coverUrl: state.newData!,
-                      communityId: selectedCommunity?.communityId ?? '',
-                      category: 'Category',
-                      showType: accessTypeData.accessType 
-                        == ProgramAccessType.free ? 'free' : 'paid',
-                      price: accessTypeData.subscriptionAmount 
-                        ?? accessTypeData.oneTimePaymentAmount ?? 0.01,
+          listeners: <SingleChildWidget>[
+            BlocListener<BgImageCubit, (String, Uint8List?)>(
+              listener: (_, (String, Uint8List?) state) {
+                if (state.$2 != null) {
+                  _launchShowBtnNotifier.value = true;
+                } else {
+                  _launchShowBtnNotifier.value = false;
+                }
+              },
+            ),
+            BlocListener<UploadImageCubit, ATAppState<String>>(
+              listener: (_, ATAppState<String> state) {
+                if (state is SuccessState<String>) {
+                  //If we upload image successfully, create the show.
+                  context.read<CreateShowCubit>().createShow(
+                    tagIds: (selectedHashtags ?? <HashTag>[])
+                      .map((HashTag tag) => tag.id ?? '')
+                      .toList(),
+                    coHostIds: (selectedCohosts ?? <User>[])
+                      .map((User cohost) => cohost.id ?? '')
+                      .toList(),
+                    title: _titleCntrl.text.trim(),
+                    description: selectedDescription,
+                    coverUrl: state.newData!,
+                    communityId: selectedCommunity?.communityId ?? '',
+                    category: 'Category',
+                    showType: accessTypeData.accessType 
+                      == ProgramAccessType.free ? 'free' : 'paid',
+                    price: accessTypeData.subscriptionAmount 
+                      ?? accessTypeData.oneTimePaymentAmount ?? 0.01,
+                    allowHandRaising: selectedPermission == HandRaisingPermission.allow,
+                  );
+                } else if (state is FailureState<String>) {
+                  //if uploading cover art fails, stop loading and show notif
+                  showAppNotification2(
+                    context: context,
+                    text: state.message,
+                    type: NotificationType.failure,
+                  );
+                  _launchShowBtnNotifier.value = true;
+                }
+              },
+            ),
+            BlocListener<CreateShowCubit, ATAppState<HostedShow>>(
+              listener: (_, ATAppState<HostedShow> state) async{
+                if (state is SuccessState<HostedShow>) {
+                  context.read<HostedShowsCubit>().addNewHostedShow(state.newData);
+                  _launchShowBtnNotifier.value = true;
+                  final dynamic params = ProgramCreationSuccessScreenParams(
+                      coverArtBytes: context.read<BgImageCubit>().state.$2!,
+                      title: ATStrings.showIsSetup,
+                      subtitle: ATStrings.beginYourJourney,
+                      btnTitle: ATStrings.createFirstEpisode,
+                      txtBtnTitle: ATStrings.viewShowPage,
+                      topLogo: const Icon(Icons.check_circle_sharp, size: 45),
                     );
-                  } else if (state is FailureState<String>) {
-                    //if uploading cover art fails, stop loading and show notif
-                    showAppNotification2(
-                      context: context,
-                      text: state.message,
-                      type: NotificationType.failure,
-                    );
-                    _launchShowBtnNotifier.value = true;
-                  }
-                },
-              ),
-              BlocListener<CreateShowCubit, ATAppState<HostedShow>>(
-                listener: (_, ATAppState<HostedShow> state) {
-                  if (state is SuccessState<HostedShow>) {
-                    _launchShowBtnNotifier.value = true;
-                    showAppNotification2(
-                      context: context,
-                      text: 'Show created successfully',
-                      type: NotificationType.success,
-                    );
-                  } else if (state is FailureState<HostedShow>) {
-                    _launchShowBtnNotifier.value = true;
-                    showAppNotification2(
-                      context: context,
-                      text: state.message,
-                      type: NotificationType.failure,
-                    );
-                  }
-                },
-              )
-            ],
-            child: ValueListenableBuilder<bool?>(
-                valueListenable: _launchShowBtnNotifier,
-                builder: (_, bool? value, __) {
-                  return ATBlurredBgBtn(
-                    isLoading: value == null,
-                    onPressed: value == false ? null : () {
-                      String errorMessage = '';
-                      if (_titleCntrl.text.trim().isEmpty) {
-                        errorMessage = 'Please enter a title';
-                      } else if (selectedDescription == 
-                        ATStrings.tellListenersAboutYourShow) {
-                        errorMessage = 'Please enter a description';
-                      } else if(selectedCommunity == null) {
-                        errorMessage = 'Please select a community';
-                      } else if((selectedCohosts ?? <User>[]).isEmpty) {
-                        errorMessage = 'Please select at least 1 cohost';
-                      } else if((selectedHashtags ?? <HashTag>[]).isEmpty) {
-                        errorMessage = 'Please select at least 1 hashtag';
-                      } else if(selectedPermission == null) {
-                        errorMessage = 'Please choose whether to allow hand-raising for this show';
-                      } else if(accessTypeData.accessType == null) {
-                        errorMessage = 'Please choose whether this show is free or paid';
-                      }
-                      if(errorMessage.isNotEmpty){
-                        showAppNotification2(
-                          context: context,
-                          text: errorMessage,
-                          type: NotificationType.failure,
+
+                    final ButtonPressed? onPressedResult = await context.pushNamed(
+                      ATRoutes.programCreationSuccessScreen,
+                      extra: params
+                    ) as ButtonPressed?;
+
+                    if(context.mounted){
+                      if(onPressedResult == ButtonPressed.elevatedBtn){
+                        context.pushReplacementNamed(
+                          ATRoutes.createEpisodeForm);
+                      } else if(onPressedResult == ButtonPressed.textBtn){
+                        context.pushReplacementNamed(
+                          ATRoutes.showPreviewScreen,
+                          extra: state.newData
                         );
-                        return;
                       }
-
-                      //Start loading on button press.
-                      _launchShowBtnNotifier.value = null;
-                      //Try to upload the cover image.
-                      context.read<UploadImageCubit>().uploadBytesImage(
-                        bytes: context.read<BgImageCubit>().state.$2!,
-                        purpose: 'cover-art',
-                      );
-                      // final dynamic params = (
-                      //   coverArtBytes: state.$2,
-                      //   title: ATStrings.SHOW_IS_SETUP,
-                      //   subtitle: ATStrings.BEGIN_JOURNEY,
-                      //   btnTitle: ATStrings.CREATE_1ST_EPISODE,
-                      //   txtBtnTitle: ATStrings.VIEW_SHOW_PAGE,
-                      //   btnOnPressed: () => context.pushReplacementNamed(ATRoutes.CREATE_EPISODE_FORM),
-                      //   txtBtnOnPressed: () {
-                      //     // handle text button press
-                      //   },
-                      //   topLogo: const Icon(Icons.check_circle_sharp, size: 45),
-                      // );
-
-                      // context.pushNamed(
-                      //   ATRoutes.GO_LIVE_PROGRAM_CREATION_SUCCESS,
-                      //   extra: params
-                      // );
-                    },
-                    btnTitle: ATStrings.launchShow,
+                    }
+                } 
+                else if (state is FailureState<HostedShow>) {
+                  _launchShowBtnNotifier.value = true;
+                  showAppNotification2(
+                    context: context,
+                    text: state.message,
+                    type: NotificationType.failure,
                   );
                 }
-              )
-            ),
+              },
+            )
+          ],
+          child: ValueListenableBuilder<bool?>(
+              valueListenable: _launchShowBtnNotifier,
+              builder: (_, bool? value, __) {
+                return ATBlurredBgBtn(
+                  isLoading: value == null,
+                  onPressed: value == false ? null : () {
+                    String errorMessage = '';
+                    if (_titleCntrl.text.trim().isEmpty) {
+                      errorMessage = 'Please enter a title';
+                    } else if (selectedDescription == 
+                      ATStrings.tellListenersAboutYourShow) {
+                      errorMessage = 'Please enter a description';
+                    } else if(selectedCommunity == null) {
+                      errorMessage = 'Please select a community';
+                    } else if((selectedCohosts ?? <User>[]).isEmpty) {
+                      errorMessage = 'Please select at least 1 cohost';
+                    } else if((selectedHashtags ?? <HashTag>[]).isEmpty) {
+                      errorMessage = 'Please select at least 1 hashtag';
+                    } else if(selectedPermission == null) {
+                      errorMessage = 'Please choose whether to allow hand-raising for this show';
+                    } else if(accessTypeData.accessType == null) {
+                      errorMessage = 'Please choose whether this show is free or paid';
+                    }
+                    if(errorMessage.isNotEmpty){
+                      showAppNotification2(
+                        context: context,
+                        text: errorMessage,
+                        type: NotificationType.failure,
+                      );
+                      return;
+                    }
+
+                    //Start loading on button press.
+                    _launchShowBtnNotifier.value = null;
+                    //Try to upload the cover image.
+                    context.read<UploadImageCubit>().uploadBytesImage(
+                      bytes: context.read<BgImageCubit>().state.$2!,
+                      purpose: 'cover-art',
+                    );
+                  },
+                  btnTitle: ATStrings.launchShow,
+                );
+              }
+            )
+          ),
       ),
     );
   }

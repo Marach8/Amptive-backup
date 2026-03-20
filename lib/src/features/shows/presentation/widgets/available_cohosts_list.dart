@@ -1,4 +1,3 @@
-
 import 'package:amptive/src/config/api_response_and_app_state.dart';
 import 'package:amptive/src/config/utils/dialogs/app_notification_dialog.dart';
 import 'package:amptive/src/features/discover/cubits/users_cubits.dart';
@@ -82,8 +81,8 @@ class AvailableCohostsList extends StatelessWidget {
                     final int adjustedIndex = index - 1;
                     if (adjustedIndex < cohosts.length) {
                       final User cohost = cohosts[adjustedIndex];
-                      final bool isLastItem =
-                          adjustedIndex == cohosts.length - 1;
+                      final bool isLastItem = (adjustedIndex == cohosts.length - 1) 
+                        && state is! LoadingState<AllUsersResponseModel>;
                       return Padding(
                         padding: EdgeInsets.only(bottom: isLastItem ? 100 : 0),
                         child: CohostWithCheckIconWidget(
@@ -106,7 +105,10 @@ class AvailableCohostsList extends StatelessWidget {
                     }
 
                     if (state is LoadingState<AllUsersResponseModel>) {
-                      return const CohostWithCheckIconShimmer();
+                      return const Padding(
+                        padding: EdgeInsets.only(bottom: 100),
+                        child: CohostWithCheckIconShimmer(),
+                      );
                     }
                     return const SizedBox.shrink();
                   },

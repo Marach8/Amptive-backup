@@ -5,7 +5,7 @@ export 'animated_slide.dart';
 export 'btn_with_bg_blur_widget.dart';
 export 'hashtag_badge.dart';
 export 'animated_positioned.dart';
-export 'hashtags_widget.dart';
+export 'render_hashtags.dart';
 export 'overlapping_widgets.dart';
 export 'animated_switcher.dart';
 export 'outlined_button_widget.dart';

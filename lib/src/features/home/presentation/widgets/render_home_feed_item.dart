@@ -7,7 +7,7 @@ import 'package:amptive/src/features/home/cubits/toggle_following_cubit.dart';
 import 'package:amptive/src/features/home/data/models/response/home_feed_response_model.dart';
 import 'package:amptive/src/shared/overlapping_widgets.dart';
 import 'package:amptive/src/shared/image_loader_widget.dart';
-import 'package:amptive/src/shared/live_indicator_with_animating_dot_widget.dart';
+import 'package:amptive/src/shared/live_indicators.dart';
 import 'package:amptive/src/shared/list_tile_with_leading_picture_widget.dart';
 import 'package:amptive/src/features/home/presentation/widgets/row_of_paid_show_and_play_button_widget.dart';
 import 'package:amptive/src/shared/row_of_people_listening_widget.dart';
@@ -58,7 +58,7 @@ class RenderHomeFeedItem extends StatelessWidget {
             child: Stack(
               children: <Widget>[
                 ATImgLoader(
-                  imgPath: homeFeedItem.coverUrl ?? '',
+                  imgPath: homeFeedItem.coverUrl ?? ATImgStrings.jpeg2,
                   boxFit: BoxFit.cover,
                   height: 425,
                   width: context.screenWidth,
@@ -88,7 +88,7 @@ class RenderHomeFeedItem extends StatelessWidget {
                     children: <Widget>[
                       const With2OthersWidget(),
                       const Spacer(),
-                      const LiveWithAnimatingDot(),
+                      const LiveIndicatorWithAnimatingDot(),
                       const SizedBox(height: 10),
                       Text(
                         maxLines: 2,
@@ -206,11 +206,7 @@ class RenderHomeFeedItemShimmer extends StatelessWidget {
                             const ATShimmer(height: 10, width: 70, radius: 3),
                       ),
                       const Spacer(),
-                      const ATShimmer(
-                        height: 30,
-                        width: 60,
-                        radius: 5,
-                      ),
+                      const LiveIndicatorWithAnimatingDot(),
                       const SizedBox(height: 10),
                       ATShimmer(
                         height: 20,

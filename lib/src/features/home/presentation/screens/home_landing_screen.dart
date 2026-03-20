@@ -4,10 +4,12 @@ import 'package:amptive/src/config/routing/route_strings.dart';
 import 'package:amptive/src/config/utils/dialogs/app_notification_dialog.dart';
 import 'package:amptive/src/features/auth/cubits/local_user_data_cubit.dart';
 import 'package:amptive/src/features/home/cubits/home_feed_cubit.dart';
+import 'package:amptive/src/features/home/cubits/live_users_cubit.dart';
 import 'package:amptive/src/features/home/cubits/toggle_following_cubit.dart';
 import 'package:amptive/src/features/home/data/models/following_status.dart';
 import 'package:amptive/src/features/home/data/models/response/home_feed_response_model.dart';
 import 'package:amptive/src/features/home/presentation/widgets/render_home_feed_item.dart';
+import 'package:amptive/src/features/home/presentation/widgets/row_of_live_users.dart';
 import 'package:amptive/src/features/main_app_nav_bar.dart';
 import 'package:amptive/src/shared/circle_avatar.dart';
 import 'package:amptive/src/shared/loading_indicator.dart';
@@ -19,9 +21,7 @@ import '../../../../config/utils/image_strings.dart';
 import '../../../../shared/circular_image.dart';
 import '../../../../shared/divider_widget.dart';
 import '../../../../shared/image_loader_widget.dart';
-import '../../../../shared/live_user_model_widget.dart';
 import '../../../../views/widgets/other_widgets/main_application_widgets/widgets_in_home_view/appbar_drop_down.dart';
-import '../widgets/go_live_widget_in_home.dart';
 
 class HomeTabView extends StatelessWidget {
   const HomeTabView({
@@ -41,116 +41,95 @@ class HomeTabView extends StatelessWidget {
           floatHeaderSlivers: true,
           key: nestedKey,
           headerSliverBuilder: (_, __) => <Widget>[
-                SliverAppBar(
-                  floating: true,
-                  snap: true,
-                  leadingWidth: 150,
-                  leading: const Padding(
-                    padding: EdgeInsets.only(left: 15),
-                    child: ATHomeDropDown(
-                      offset: Offset(0, 50),
-                      child: Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: <Widget>[
-                          ATImgLoader(
-                              imgPath: ATImgStrings.AMPTIVE_NAME_LOGO,
-                              height: 21,
-                              width: 86),
-                          SizedBox(
-                            width: 4.0,
-                          ),
-                          Icon(
-                            Icons.keyboard_arrow_down_outlined,
-                            size: 25,
-                          ),
-                        ],
+            SliverAppBar(
+              floating: true,
+              snap: true,
+              leadingWidth: 150,
+              leading: const Padding(
+                padding: EdgeInsets.only(left: 15),
+                child: ATHomeDropDown(
+                  offset: Offset(0, 50),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: <Widget>[
+                      ATImgLoader(
+                          imgPath: ATImgStrings.amptiveNameLogo,
+                          height: 21,
+                          width: 86),
+                      SizedBox(
+                        width: 4.0,
                       ),
-                    ),
-                  ),
-                  actions: <Widget>[
-                    // IconButton(
-                    //   onPressed: (){
-                    //     context.read<HomeFeedCubit>().fetchHomeFeed();
-                    //     context.read<LiveUsersCubit>().fetchLiveUsers();
-                    //   },
-                    //   icon: Icon(Icons.add),
-                    // ),
-                    GestureDetector(
-                        onTap: () {
-                          //context.pushNamed(ATRoutes.GO_LIVE_ONBOARDING);
-                          context.pushNamed(ATRoutes.walletScreen);
-                          //context.pushNamed(ATRoutes.WALLET_ONBOARDING);
-                        },
-                        child: Stack(
-                          children: <Widget>[
-                            const ATImgLoader(
-                              imgPath: ATImgStrings.walletIcon,
-                              height: 30,
-                              width: 30,
-                            ),
-                            Positioned(
-                                top: 5,
-                                right: 0,
-                                child: ATCircleAvatar(
-                                    diameter: 8, color: ATColors.hexECO404))
-                          ],
-                        )),
-                    const SizedBox(width: 24),
-                    GestureDetector(
-                        // onTap: (){
-                        //   context.pushReplacementNamed(
-                        //     ATRoutes.MAIN_GO_LIVE_PROGRAM,
-                        //     extra: GoLiveUserType.audience
-                        //   );
-                        // },
-                        onTap: () =>
-                            context.pushNamed(ATRoutes.creatorProfileScreen),
-                        //onTap: () => context.pushNamed(ATRoutes.USER_PROFILE_SCREEN),
-                        child: Padding(
-                          padding: const EdgeInsets.only(right: 15),
-                          child: BlocBuilder<LocalUserDataCubit,
-                                  ATAppState<CachedUserData>>(
-                              builder: (_, ATAppState<CachedUserData> state) {
-                            final CachedUserData? userData = context
-                                .read<LocalUserDataCubit>()
-                                .currentUserData;
-                            return ATCircularImage(
-                              imagePath:
-                                  userData?.pictureUrl ?? ATImgStrings.jpeg2,
-                            );
-                          }),
-                        )),
-                  ],
-                ),
-                SliverToBoxAdapter(
-                  child: SizedBox(
-                    height: 100,
-                    child: ListView(
-                        physics: const BouncingScrollPhysics(),
-                        padding: EdgeInsets.zero,
-                        shrinkWrap: true,
-                        scrollDirection: Axis.horizontal,
-                        children: <Widget>[
-                          const Padding(
-                            padding: EdgeInsets.only(left: 11, right: 14),
-                            child: GoLiveWidgetInHome(),
-                          ),
-                          ...Iterable<Widget>.generate(
-                              20,
-                              (_) => const Padding(
-                                    padding: EdgeInsets.only(right: 14),
-                                    child: LiveUserWidget(),
-                                  )),
-                        ]),
+                      Icon(
+                        Icons.keyboard_arrow_down_outlined,
+                        size: 25,
+                      ),
+                    ],
                   ),
                 ),
-                const SliverToBoxAdapter(
-                  child: Padding(
-                    padding: EdgeInsets.symmetric(vertical: 14.0),
-                    child: ATDivider(),
-                  ),
-                )
+              ),
+              actions: <Widget>[
+                // IconButton(
+                //   onPressed: (){
+                //     context.read<HomeFeedCubit>().fetchHomeFeed();
+                //     context.read<LiveUsersCubit>().fetchLiveUsers();
+                //   },
+                //   icon: Icon(Icons.add),
+                // ),
+                GestureDetector(
+                    onTap: () {
+                      //context.pushNamed(ATRoutes.GO_LIVE_ONBOARDING);
+                      context.pushNamed(ATRoutes.walletScreen);
+                      //context.pushNamed(ATRoutes.WALLET_ONBOARDING);
+                    },
+                    child: Stack(
+                      children: <Widget>[
+                        const ATImgLoader(
+                          imgPath: ATImgStrings.walletIcon,
+                          height: 30,
+                          width: 30,
+                        ),
+                        Positioned(
+                            top: 5,
+                            right: 0,
+                            child: ATCircleAvatar(
+                                diameter: 8, color: ATColors.hexECO404))
+                      ],
+                    )),
+                const SizedBox(width: 24),
+                GestureDetector(
+                    // onTap: (){
+                    //   context.pushReplacementNamed(
+                    //     ATRoutes.MAIN_GO_LIVE_PROGRAM,
+                    //     extra: GoLiveUserType.audience
+                    //   );
+                    // },
+                    onTap: () =>
+                        context.pushNamed(ATRoutes.creatorProfileScreen),
+                    //onTap: () => context.pushNamed(ATRoutes.USER_PROFILE_SCREEN),
+                    child: Padding(
+                      padding: const EdgeInsets.only(right: 15),
+                      child: BlocBuilder<LocalUserDataCubit,
+                              ATAppState<CachedUserData>>(
+                          builder: (_, ATAppState<CachedUserData> state) {
+                        final CachedUserData? userData = context
+                            .read<LocalUserDataCubit>()
+                            .currentUserData;
+                        return ATCircularImage(
+                          imagePath:
+                              userData?.pictureUrl ?? ATImgStrings.jpeg2,
+                        );
+                      }),
+                    )),
               ],
+            ),
+            const SliverToBoxAdapter(child: RowOfLiveUsers()),
+            const SliverToBoxAdapter(
+              child: Padding(
+                padding: EdgeInsets.symmetric(vertical: 14.0),
+                child: ATDivider(),
+              ),
+            )
+          ],
           body: BlocConsumer<HomeFeedCubit, ATAppState<HomeFeedResponseModel>>(
               listener: (_, ATAppState<HomeFeedResponseModel> state) {
             if (state is FailureState<HomeFeedResponseModel>) {
@@ -160,7 +139,8 @@ class HomeTabView extends StatelessWidget {
                 type: NotificationType.failure,
               );
             }
-          }, builder: (_, ATAppState<HomeFeedResponseModel> state) {
+          },
+          builder: (_, ATAppState<HomeFeedResponseModel> state) {
             return switch (state) {
               InitialState<HomeFeedResponseModel>() => const SizedBox.shrink(),
               LoadingState<HomeFeedResponseModel>() ||
@@ -193,43 +173,49 @@ class HomeTabView extends StatelessWidget {
                   final bool hasMore = homeFeedData?.hasMore ?? false;
                   final int count = homeFeedItems.length;
 
-                  return ListView.separated(
-                      separatorBuilder: (_, int index) =>
-                          const SizedBox(height: 30),
-                      itemCount: hasMore ? count + 1 : count,
-                      padding: const EdgeInsets.fromLTRB(15, 0, 15, 60),
-                      itemBuilder: (_, int index) {
-                        if (index < count) {
-                          final HomeFeedItem homeFeedItem =
-                              homeFeedItems[index];
-                          return MultiBlocProvider(
-                            providers: <SingleChildWidget>[
-                              BlocProvider<ToggleFollowingCubit>(
-                                  create: (_) => ToggleFollowingCubit(
-                                        initialStatus: FollowingStatus(
-                                            isFollowing: homeFeedItem
-                                                .requesterFollowsHost,
-                                            followerCount:
-                                                homeFeedItem.goingCount),
-                                      ))
-                            ],
-                            child:
-                                RenderHomeFeedItem(homeFeedItem: homeFeedItem),
-                          );
-                        }
-                        if (state is LoadingState<HomeFeedResponseModel>) {
-                          return const Center(
-                            child: ATLoadingIndicator(),
-                          );
-                        }
-                        return const SizedBox.shrink();
-                      });
+                  return RefreshIndicator(
+                    onRefresh: () {
+                      context.read<LiveUsersCubit>()
+                        .refreshLiveUsers();
+                      return context.read<HomeFeedCubit>().refreshHomeFeed();
+                    },
+                    child: ListView.separated(
+                        separatorBuilder: (_, int index) =>
+                            const SizedBox(height: 30),
+                        itemCount: hasMore ? count + 1 : count,
+                        padding: const EdgeInsets.fromLTRB(15, 0, 15, 60),
+                        itemBuilder: (_, int index) {
+                          if (index < count) {
+                            final HomeFeedItem homeFeedItem =
+                                homeFeedItems[index];
+                            return MultiBlocProvider(
+                              providers: <SingleChildWidget>[
+                                BlocProvider<ToggleFollowingCubit>(
+                                    create: (_) => ToggleFollowingCubit(
+                                          initialStatus: FollowingStatus(
+                                              isFollowing: homeFeedItem
+                                                  .requesterFollowsHost,
+                                              followerCount:
+                                                  homeFeedItem.goingCount),
+                                        ))
+                              ],
+                              child:
+                                  RenderHomeFeedItem(homeFeedItem: homeFeedItem),
+                            );
+                          }
+                          if (state is LoadingState<HomeFeedResponseModel>) {
+                            return const RenderHomeFeedItemShimmer();
+                          }
+                          return const SizedBox.shrink();
+                        }),
+                  );
                 })
             };
           })),
     );
   }
 }
+
 
 class _InitialLoadingShimmer extends StatelessWidget {
   const _InitialLoadingShimmer();

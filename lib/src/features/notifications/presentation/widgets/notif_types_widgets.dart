@@ -179,7 +179,7 @@ class NewAttendeesNotif extends StatelessWidget {
                   .textTheme
                   .bodySmall!
                   .copyWith(fontSize: ATSizes.size13),
-            '${ATStrings.WILL_B_GOING_2_UR} ${isEvent ? ATStrings.EVENT : ATStrings.SHOW}: ':
+            '${ATStrings.WILL_B_GOING_2_UR} ${isEvent ? ATStrings.event : ATStrings.SHOW}: ':
                 Theme.of(context).textTheme.titleSmall!,
             progName: Theme.of(context)
                 .textTheme
@@ -239,7 +239,7 @@ class NewGiftersNotif extends StatelessWidget {
                   .textTheme
                   .bodySmall!
                   .copyWith(fontSize: ATSizes.size13),
-            '${ATStrings.SENT_U_A_GITF_DURING_LIVE} ${isEvent ? ATStrings.EVENT : ATStrings.SHOW}: ':
+            '${ATStrings.SENT_U_A_GITF_DURING_LIVE} ${isEvent ? ATStrings.event : ATStrings.SHOW}: ':
                 Theme.of(context).textTheme.titleSmall!,
             progName: Theme.of(context)
                 .textTheme
@@ -532,7 +532,7 @@ class CohostInviteNotif extends StatelessWidget {
                 .textTheme
                 .bodySmall!
                 .copyWith(fontSize: ATSizes.size13),
-            ' ${ATStrings.INVITED_U_2_COHOST_IN_THE} ${isEvent ? ATStrings.EVENT : ATStrings.SHOW} ':
+            ' ${ATStrings.INVITED_U_2_COHOST_IN_THE} ${isEvent ? ATStrings.event : ATStrings.SHOW} ':
                 Theme.of(context).textTheme.titleSmall!,
             progName: Theme.of(context)
                 .textTheme
@@ -585,7 +585,7 @@ class CohostInvitePaymentNotif extends StatelessWidget {
         ),
         Expanded(
           child: ATRichText(maxLines: 2, items: <String, TextStyle>{
-            '${ATStrings.U_R_PAID_2_COHOST_A_LIVE} ${isEvent ? ATStrings.EVENT : ATStrings.SHOW} ':
+            '${ATStrings.U_R_PAID_2_COHOST_A_LIVE} ${isEvent ? ATStrings.event : ATStrings.SHOW} ':
                 Theme.of(context).textTheme.titleSmall!,
             progName: Theme.of(context)
                 .textTheme

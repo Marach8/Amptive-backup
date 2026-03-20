@@ -39,7 +39,7 @@ class ShowsRepoImpl implements ShowsRepo {
 
   @override
   Future<ApiResponse<HostedShow>> createShow({
-    required CreateShowModel createShowModel,
+    required CreateShowPayload createShowModel,
   }) async {
     try {
       final Response<dynamic> response = await networkService.post(

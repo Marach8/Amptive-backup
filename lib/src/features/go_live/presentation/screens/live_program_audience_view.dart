@@ -65,10 +65,10 @@ class _SubWidget extends StatelessWidget {
                     child: Row(
                       mainAxisSize: MainAxisSize.min,
                       children: <Widget>[
-                        const ATImgLoader(imgPath: ATImgStrings.GROUP_ICON),
+                        const ATImgLoader(imgPath: ATImgStrings.groupIcon),
                         const SizedBox(width: 5),
                         Text(
-                          ATStrings.SOCIETY,
+                          ATStrings.society,
                           style: context.textTheme.bodyMedium?.copyWith(
                               overflow: TextOverflow.fade,
                               fontSize: ATSizes.size13,

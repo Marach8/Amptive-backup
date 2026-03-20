@@ -1,7 +1,7 @@
 import 'package:amptive/src/shared/global_model_objects.dart';
 
-class CreateEpisodeResponseModel {
-  CreateEpisodeResponseModel({
+class Episode {
+  Episode({
     this.episodeId,
     this.showId,
     this.episodeNumber,
@@ -15,6 +15,7 @@ class CreateEpisodeResponseModel {
     this.streamUrl,
     this.streamKey,
     this.playbackUrl,
+    this.livestreamId,
     this.viewerCount,
     this.peakViewers,
     this.reactionCount,
@@ -25,12 +26,14 @@ class CreateEpisodeResponseModel {
     this.coHosts,
     this.community,
     this.tags,
+    this.handRaising,
     this.createdAt,
     this.updatedAt,
+    this.whispers,
   });
 
-  factory CreateEpisodeResponseModel.fromJson(Map<String, dynamic> json) {
-    return CreateEpisodeResponseModel(
+  factory Episode.fromJson(Map<String, dynamic> json) {
+    return Episode(
       episodeId: json['episode_id'],
       showId: json['show_id'],
       episodeNumber: json['episode_number'],
@@ -44,6 +47,7 @@ class CreateEpisodeResponseModel {
       streamUrl: json['stream_url'],
       streamKey: json['stream_key'],
       playbackUrl: json['playback_url'],
+      livestreamId: json['livestream_id'],
       viewerCount: json['viewer_count'],
       peakViewers: json['peak_viewers'],
       reactionCount: json['reaction_count'],
@@ -52,16 +56,52 @@ class CreateEpisodeResponseModel {
       durationSeconds: json['duration_seconds'],
       host: json['host'] != null ? Host.fromJson(json['host']) : null,
       coHosts: (json['co_hosts'] as List<dynamic>?)
-          ?.map((dynamic e) => CoHost.fromJson(e))
+          ?.map((dynamic e) => CoHost.fromJson(e as Map<String, dynamic>))
           .toList(),
       community: json['community'] != null
           ? Community.fromJson(json['community'])
           : null,
       tags: (json['tags'] as List<dynamic>?)
-          ?.map((dynamic e) => HashTag.fromJson(e))
+          ?.map((dynamic e) => HashTag.fromJson(e as Map<String, dynamic>))
           .toList(),
+      handRaising: json['hand_raising'],
+      whispers: json['whispers'],
       createdAt: json['created_at'],
       updatedAt: json['updated_at'],
+    );
+  }
+
+  /// CopyWith that only changes showId
+  Episode copyShowId({String? showId}) {
+    return Episode(
+      episodeId: episodeId,
+      showId: showId ?? this.showId,
+      episodeNumber: episodeNumber,
+      title: title,
+      description: description,
+      thumbnailUrl: thumbnailUrl,
+      status: status,
+      scheduledFor: scheduledFor,
+      startedAt: startedAt,
+      endedAt: endedAt,
+      streamUrl: streamUrl,
+      streamKey: streamKey,
+      playbackUrl: playbackUrl,
+      livestreamId: livestreamId,
+      viewerCount: viewerCount,
+      peakViewers: peakViewers,
+      reactionCount: reactionCount,
+      commentCount: commentCount,
+      goingCount: goingCount,
+      durationSeconds: durationSeconds,
+      host: host,
+      coHosts: coHosts,
+      community: community,
+      tags: tags,
+      handRaising: handRaising,
+      createdAt: createdAt,
+      updatedAt: updatedAt,
+      whispers: whispers,
     );
   }
 
@@ -77,6 +117,7 @@ class CreateEpisodeResponseModel {
       streamUrl,
       streamKey,
       playbackUrl,
+      livestreamId,
       createdAt,
       updatedAt;
 
@@ -87,6 +128,8 @@ class CreateEpisodeResponseModel {
       commentCount,
       goingCount,
       durationSeconds;
+
+  final bool? handRaising, whispers;
 
   final Host? host;
   final List<CoHost>? coHosts;

@@ -1,5 +1,5 @@
-class CreateShowModel {
-  CreateShowModel({
+class CreateShowPayload {
+  CreateShowPayload({
     required this.title,
     required this.description,
     required this.coverUrl,
@@ -9,12 +9,14 @@ class CreateShowModel {
     required this.tagIds,
     required this.coHostIds,
     required this.communityId,
+    required this.allowHandRaising,
   });
 
   final String title, description, coverUrl, 
     category, showType, communityId;
   final double price;
   final List<String> tagIds, coHostIds;
+  final bool allowHandRaising;
 
   /// Convert to JSON
   Map<String, dynamic> toJson() {
@@ -28,6 +30,7 @@ class CreateShowModel {
       'tag_ids': tagIds,
       'co_host_ids': coHostIds,
       "community_id": communityId,
+      'hand_raising': allowHandRaising,
     };
   }
 }

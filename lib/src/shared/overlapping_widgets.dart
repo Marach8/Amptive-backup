@@ -75,10 +75,10 @@ class ATOverlappingCircles extends StatelessWidget {
             child: Container(
               height: circleSize,
               width: circleSize,
-              color: ATColors.black.withValues(alpha: 0.05),
               clipBehavior: Clip.hardEdge,
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(circleSize),
+                  color: ATColors.black.withValues(alpha: 0.05),
                   border: Border.all(
                     color: borderColor ?? ATColors.white.withValues(alpha: 0.4),
                     width: borderWidth,

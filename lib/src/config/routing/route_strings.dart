@@ -30,8 +30,8 @@ class ATRoutes {
   static const String CIRCLE_IMG_CROPPER_SCREEN = "crop_image";
   static const String allowNotificationsScreen = "pre-homepage";
   static const String createShowForm = "create-show-form";
-  static const String CREATE_EVENT_FORM = "create-event-form";
-  static const String CREATE_EPISODE_FORM = "create-episode-form";
+  static const String createEventForm = "create-event-form";
+  static const String createEpisodeForm = "create-episode-form";
 
   //MAIN APPLICATION
   static const String mainAppShell = "main_app_shell";
@@ -60,11 +60,11 @@ class ATRoutes {
   static const String PROFILE_SUBSCRIBERS_SCREEN = 'profile_sub_screen';
   static const String USER_PROFILE_SCREEN = 'user_profile';
   static const String listHostedShowsScreen = 'choose_or_create_show';
-  static const String GO_LIVE_PROGRAM_CREATION_SUCCESS =
+  static const String programCreationSuccessScreen =
       'create_show_success_screen';
   static const String EVENT_SCHEDULED_SCREEN = 'event_scheduled';
   static const String showPreviewScreen = 'show_preview';
-  static const String EPISODE_PREVIEW_SCREEN = 'episode_preview';
+  static const String previewEpisodeScreen = 'episode_preview';
   static const String COMMUNITY_TASK_SCREEN = 'community_task';
   static const String PROFILE_PIC_SCREEN = 'profile_picture';
   static const String LANGUAGE_SCREEN = 'language_screen';
@@ -103,6 +103,6 @@ class ATRoutes {
   static const String paperPlaneSuccessScreen = 'paper_plane_success';
   static const String walletTransactionsHistoryScreen = 'wallet_transactions';
   static const String SCHEDULE_DETAILED = 'schedule_detailed_screen';
-  static const String GO_LIVE_ONBOARDING = 'go_live_onboarding_screen';
+  static const String goLiveOnboarding = 'go_live_onboarding_screen';
   static const String MAIN_GO_LIVE_PROGRAM = 'main_go_live_program';
 }
