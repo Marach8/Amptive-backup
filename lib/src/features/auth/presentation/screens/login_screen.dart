@@ -13,9 +13,21 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import '../../../../shared/app_bar_widget.dart';
 
+class LoginScreenEntryParams{
+  const LoginScreenEntryParams({
+    this.title,
+    this.notification,
+  });
+
+  final String? title, notification;
+}
+
 class LoginScreen extends StatefulWidget {
-  const LoginScreen({super.key, this.title});
-  final String? title;
+  const LoginScreen({
+    super.key,
+    this.params,
+  });
+  final LoginScreenEntryParams? params;
 
   @override
   State<LoginScreen> createState() => _LoginScreenState();
@@ -51,6 +63,18 @@ class _LoginScreenState extends State<LoginScreen> with ATValidators {
         _btnNotifier.value = (_btnNotifier.value.$1, false);
       }
     });
+
+    WidgetsBinding.instance.addPostFrameCallback(
+      (_){
+        if(widget.params?.notification != null){
+          showAppNotification2(
+            context: context,
+            text: widget.params?.notification ?? '',
+            type: NotificationType.failure,
+          );
+        }
+      }
+    );
   }
 
   @override
@@ -71,7 +95,7 @@ class _LoginScreenState extends State<LoginScreen> with ATValidators {
         child: Scaffold(
           appBar: ATAppBar(
             leading: const ATBackBtn(),
-            titleText: widget.title ?? '',
+            titleText: widget.params?.title ?? '',
           ),
           body: SingleChildScrollView(
             physics: const BouncingScrollPhysics(),

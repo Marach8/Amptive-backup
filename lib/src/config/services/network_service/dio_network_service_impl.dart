@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'package:amptive/src/config/endpoints.dart';
 import 'package:amptive/src/config/services/local_storage_service/flutter_secure_storage_service_impl.dart';
-import 'package:amptive/src/config/services/network_service/add_token_interceptor.dart';
+import 'package:amptive/src/config/services/network_service/interceptor.dart';
 import 'package:amptive/src/config/services/network_service/network_service.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
@@ -35,8 +35,10 @@ class DioNetworkServiceImpl implements NetworkService {
     );
 
     dio.interceptors.addAll(<Interceptor>[
-      AddTokenInterceptor(
-          localStorageService: FlutterSecureStorageServiceImpl()),
+      ATInterceptorClass(
+        localStorageService: FlutterSecureStorageServiceImpl(),
+        authGuardCubit: authGuardCubit,
+      ),
       if (kDebugMode)
         PrettyDioLogger(
           requestHeader: true,

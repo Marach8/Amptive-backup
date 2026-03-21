@@ -34,11 +34,14 @@ class RenderHostedShow extends StatelessWidget {
             children: <Widget>[
               ClipRRect(
                 borderRadius: BorderRadius.circular(5),
-                child: ATImgLoader(
-                  boxFit: BoxFit.fill,
-                  height: kst.maxHeight * 0.65,
-                  width: context.screenWidth,
-                  imgPath: hostedShow.coverUrl ?? '',
+                child: Hero(
+                  tag: hostedShow.showId ?? '',
+                  child: ATImgLoader(
+                    boxFit: BoxFit.fill,
+                    height: kst.maxHeight * 0.65,
+                    width: context.screenWidth,
+                    imgPath: hostedShow.coverUrl ?? '',
+                  ),
                 ),
               ),
               Container(
