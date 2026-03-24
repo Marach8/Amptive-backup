@@ -142,20 +142,20 @@ class PreviewEventScreen extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
                           // Event Details
-                          _EventInfoRow(
-                            icon: Icons.calendar_today,
-                            label: 'Date',
-                            value: hostedEvent.startTime ?? '',
-                          ),
-                          const SizedBox(height: 12),
-                          if (hostedEvent.location != null) ...[
-                            _EventInfoRow(
-                              icon: Icons.location_on,
-                              label: 'Location',
-                              value: hostedEvent.location ?? '',
-                            ),
-                            const SizedBox(height: 12),
-                          ],
+                          // _EventInfoRow(
+                          //   icon: Icons.calendar_today,
+                          //   label: 'Date',
+                          //   value: hostedEvent.startTime ?? '',
+                          // ),
+                          // const SizedBox(height: 12),
+                          // if (hostedEvent.location != null) ...[
+                          //   _EventInfoRow(
+                          //     icon: Icons.location_on,
+                          //     label: 'Location',
+                          //     value: hostedEvent.location ?? '',
+                          //   ),
+                          //   const SizedBox(height: 12),
+                          // ],
                           _EventInfoRow(
                             icon: Icons.attach_money,
                             label: 'Price',

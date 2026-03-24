@@ -39,6 +39,7 @@ import 'package:amptive/src/features/accounts/presentation/screens/account_info_
 import 'package:amptive/src/features/accounts/presentation/screens/acounts_landing_screen.dart';
 import 'package:amptive/src/features/shows/data/models/response/show_response_model.dart';
 import 'package:amptive/src/features/events/presentation/screens/list_hosted_events_screen.dart';
+import 'package:amptive/src/features/events/cubits/hosted_events_cubit.dart';
 import 'package:amptive/src/features/events/presentation/screens/preview_event_screen.dart';
 import 'package:amptive/src/features/events/data/models/response/event_response_model.dart';
 import 'package:amptive/src/features/switch_account/presentation/switch_acct/switch_acct_export.dart';
@@ -365,7 +366,7 @@ final GoRouter amptiveAppRouter = GoRouter(
               path: ATRoutes.createEventFormScreen.addSlash,
               pageBuilder: (_, GoRouterState state) => ATSlidingRouteTransition<void>(
                     child: CreateEventFormScreen(
-                      hostedShowsCubit: state.extra as HostedShowsCubit,
+                      hostedEventsCubit: state.extra as HostedEventsCubit,
                     ),
                   )),
           GoRoute(

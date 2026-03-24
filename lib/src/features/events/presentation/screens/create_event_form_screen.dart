@@ -37,6 +37,8 @@ import 'package:amptive/src/features/auth/cubits/upload_image_cubit.dart';
 import 'package:amptive/src/features/discover/cubits/hashtags_cubit.dart';
 import 'package:amptive/src/features/discover/cubits/users_cubits.dart';
 import 'package:amptive/src/features/shows/cubits/create_show_cubit.dart';
+import 'package:amptive/src/features/events/cubits/create_event_cubit.dart';
+import 'package:amptive/src/features/events/data/models/response/event_response_model.dart';
 import 'package:amptive/src/features/go_live/go_live_export.dart';
 import 'package:amptive/src/features/shows/cubits/hosted_shows_cubit.dart';
 import 'package:amptive/src/features/shows/data/models/response/show_response_model.dart';
@@ -77,6 +79,7 @@ class CreateEventFormScreen extends StatelessWidget {
         BlocProvider<SelectedHashTagsCubit>(
           create: (_) => SelectedHashTagsCubit()),
         BlocProvider<HostedEventsCubit>.value(value: hostedEventsCubit,),
+        BlocProvider<CreateEventCubit>(create: (_) => CreateEventCubit()),
       ],
       child: const _SubWidget(),
     );
@@ -596,8 +599,8 @@ class __SubWidgetState extends State<_SubWidget> {
             BlocListener<UploadImageCubit, ATAppState<String>>(
               listener: (_, ATAppState<String> state) {
                 if (state is SuccessState<String>) {
-                  //If we upload image successfully, create the show.
-                  context.read<CreateShowCubit>().createShow(
+                  //If we upload image successfully, create the event.
+                  context.read<CreateEventCubit>().createEvent(
                     tagIds: (selectedHashtags ?? <HashTag>[])
                       .map((HashTag tag) => tag.id ?? '')
                       .toList(),
@@ -606,14 +609,16 @@ class __SubWidgetState extends State<_SubWidget> {
                       .toList(),
                     title: _titleCntrl.text.trim(),
                     description: selectedDescription,
-                    coverUrl: state.newData!,
+                    thumbnailUrl: state.newData!,
                     communityId: selectedCommunity?.communityId ?? '',
                     category: 'Category',
-                    showType: accessTypeData.accessType 
+                    eventType: accessTypeData.accessType 
                       == ProgramAccessType.free ? 'free' : 'paid',
                     price: accessTypeData.subscriptionAmount 
                       ?? accessTypeData.oneTimePaymentAmount ?? 0.01,
-                    allowHandRaising: selectedPermission == HandRaisingPermission.allow,
+                    scheduledFor: DateTime.now().toUtc().toIso8601String(),
+                    handRaising: selectedPermission == HandRaisingPermission.allow,
+                    allowWhispers: false,
                   );
                 } else if (state is FailureState<String>) {
                   //if uploading cover art fails, stop loading and show notif
@@ -626,16 +631,16 @@ class __SubWidgetState extends State<_SubWidget> {
                 }
               },
             ),
-            BlocListener<CreateShowCubit, ATAppState<HostedShow>>(
-              listener: (_, ATAppState<HostedShow> state) async{
-                if (state is SuccessState<HostedShow>) {
-                  context.read<HostedShowsCubit>().addNewHostedShow(state.newData);
+            BlocListener<CreateEventCubit, ATAppState<HostedEvent>>(
+              listener: (_, ATAppState<HostedEvent> state) async{
+                if (state is SuccessState<HostedEvent>) {
+                  context.read<HostedEventsCubit>().addNewHostedEvent(state.newData);
                   _launchShowBtnNotifier.value = true;
                   final dynamic params = ProgramCreationSuccessScreenParams(
                       coverArtBytes: context.read<BgImageCubit>().state.$2!,
                       title: ATStrings.showIsSetup,
                       subtitle: ATStrings.beginYourJourney,
-                      btnTitle: ATStrings.createFirstEpisode,
+                      btnTitle: ATStrings.goLive,
                       txtBtnTitle: ATStrings.viewShowPage,
                       topLogo: const Icon(Icons.check_circle_sharp, size: 45),
                     );
@@ -647,21 +652,23 @@ class __SubWidgetState extends State<_SubWidget> {
 
                     if(context.mounted){
                       if(onPressedResult == ButtonPressed.elevatedBtn){
+                        // For events, go live directly or navigate to event preview
                         context.pushReplacementNamed(
-                          ATRoutes.createEpisodeForm);
+                          ATRoutes.eventPreviewScreen,
+                          extra: state.newData);
                       } else if(onPressedResult == ButtonPressed.textBtn){
                         context.pushReplacementNamed(
-                          ATRoutes.showPreviewScreen,
+                          ATRoutes.eventPreviewScreen,
                           extra: state.newData
                         );
                       }
                     }
                 } 
-                else if (state is FailureState<HostedShow>) {
+                else if (state is FailureState<HostedEvent>) {
                   _launchShowBtnNotifier.value = true;
                   showAppNotification2(
                     context: context,
-                    text: state.message,
+                    text: (state as FailureState<HostedEvent>).message,
                     type: NotificationType.failure,
                   );
                 }

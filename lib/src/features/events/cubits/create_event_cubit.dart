@@ -3,10 +3,6 @@ import 'package:amptive/src/features/events/data/models/request/create_event_mod
 import 'package:amptive/src/features/events/data/models/response/event_response_model.dart';
 import 'package:amptive/src/features/events/data/repository/events_repo.dart';
 import 'package:amptive/src/features/events/data/repository/events_repo_impl.dart';
-import 'package:amptive/src/features/shows/data/models/request/create_show_model.dart';
-import 'package:amptive/src/features/shows/data/models/response/show_response_model.dart';
-import 'package:amptive/src/features/shows/data/repository/shows_repo.dart';
-import 'package:amptive/src/features/shows/data/repository/shows_repo_impl.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class CreateEventCubit extends Cubit<ATAppState<HostedEvent>> {
@@ -19,42 +15,47 @@ class CreateEventCubit extends Cubit<ATAppState<HostedEvent>> {
   Future<void> createEvent({
     required String title,
     required String description,
-    required String coverUrl,
+    required String thumbnailUrl,
     required String category,
-    required String showType,
+    required String eventType,
     required double price,
+    required String scheduledFor,
+    required String communityId,
     required List<String> tagIds,
     required List<String> coHostIds,
-    required String communityId,
-    required bool allowHandRaising,
+    required bool handRaising,
+    required bool allowWhispers,
   }) async {
     emit(const LoadingState<HostedEvent>());
     try {
       final CreateEventPayload createEventModel = CreateEventPayload(
         title: title,
         description: description,
-        coverUrl: coverUrl,
+        thumbnailUrl: thumbnailUrl,
         category: category,
-        eventType: showType,
+        eventType: eventType,
         price: price,
+        scheduledFor: scheduledFor,
+        communityId: communityId,
         tagIds: tagIds,
         coHostIds: coHostIds,
-        communityId: communityId,
+        handRaising: handRaising,
+        allowWhispers: allowWhispers,
       );
 
       final ApiResponse<HostedEvent> response = await eventsRepo.createEvent(
         createEventModel: createEventModel,
       );
       response.when(
-        successful: (Successful<HostedShow> data) {
-          emit(SuccessState<HostedShow>(newData: data.data));
+        successful: (Successful<HostedEvent> data) {
+          emit(SuccessState<HostedEvent>(newData: data.data));
         },
-        unSuccessful: (Unsuccessful<HostedShow> error) {
-          emit(FailureState<HostedShow>(error.error.message));
+        unSuccessful: (Unsuccessful<HostedEvent> error) {
+          emit(FailureState<HostedEvent>(error.error.message));
         },
       );
     } catch (e) {
-      emit(FailureState<HostedShow>('Unable to create show: $e'));
+      emit(FailureState<HostedEvent>('Unable to create event: $e'));
     }
   }
 }
