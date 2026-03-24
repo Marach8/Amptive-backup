@@ -29,7 +29,7 @@ class GoLiveTypeSelectionScreen extends StatelessWidget {
               leadingWidth: 30,
               padding: const EdgeInsets.fromLTRB(7, 0, 15, 0),
               title: Text(
-                ATStrings.CREATE_SHOW_OR_EVENT,
+                ATStrings.createShowOrEvent,
                 style: Theme.of(context).textTheme.bodyMedium,
               ),
             ),
@@ -41,7 +41,7 @@ class GoLiveTypeSelectionScreen extends StatelessWidget {
                 children: <Widget>[
                   Text(
                     maxLines: 3,
-                    ATStrings.CHOOSE_2_CREATE_SHOW_OR_EVENT,
+                    ATStrings.chooseToCreateShowOrEvent,
                     style: Theme.of(context)
                         .textTheme
                         .bodySmall

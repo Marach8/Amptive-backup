@@ -28,34 +28,104 @@ import '../../../../models/host.dart';
 import '../../../../shared/rich_text.dart';
 import '../../../../views/widgets/other_widgets/main_application_widgets/widgets_in_create_show_event/create_show_text_form_field.dart';
 
-class CreateEventFormScreen extends StatefulWidget {
-  const CreateEventFormScreen({super.key});
+import 'dart:async';
+import 'dart:developer' show log;
+import 'dart:typed_data';
+import 'dart:ui';
+import 'package:amptive/src/config/api_response_and_app_state.dart';
+import 'package:amptive/src/config/utils/dialogs/app_notification_dialog.dart';
+import 'package:amptive/src/features/discover/cubits/communities_cubit.dart';
+import 'package:amptive/src/features/auth/cubits/upload_image_cubit.dart';
+import 'package:amptive/src/features/discover/cubits/hashtags_cubit.dart';
+import 'package:amptive/src/features/discover/cubits/users_cubits.dart';
+import 'package:amptive/src/features/shows/cubits/create_show_cubit.dart';
+import 'package:amptive/src/features/go_live/go_live_export.dart';
+import 'package:amptive/src/features/shows/cubits/hosted_shows_cubit.dart';
+import 'package:amptive/src/features/shows/data/models/response/show_response_model.dart';
+import 'package:amptive/src/global_export.dart';
+import 'package:amptive/src/shared/annotated_region__widget.dart';
+import 'package:amptive/src/shared/divider_widget.dart';
+import 'package:amptive/src/shared/global_model_objects.dart';
+import 'package:amptive/src/shared/textformfield_widget.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
+import 'package:nested/nested.dart';
+import 'package:amptive/src/shared/back_button.dart';
+import 'package:amptive/src/shared/image_loader_widget.dart';
+import 'package:nested/nested.dart' show SingleChildWidget;
+import 'package:amptive/src/shared/sliver_header_delegate.dart';
+import '../../../../shared/rich_text.dart';
+import '../../../../config/utils/dialogs/communities_modal.dart';
+
+class CreateEventFormScreen extends StatelessWidget {
+  const CreateEventFormScreen({
+    super.key,
+    required this.hostedShowsCubit,
+  });
+  final HostedShowsCubit hostedShowsCubit;
 
   @override
-  State<CreateEventFormScreen> createState() => _CreateShowFormScreenState();
+  Widget build(BuildContext context) {
+    return MultiBlocProvider(
+      providers: <SingleChildWidget>[
+        BlocProvider<CommunitiesCubit>(create: (_) => CommunitiesCubit()),
+        BlocProvider<CreateShowCubit>(create: (_) => CreateShowCubit()),
+        BlocProvider<UploadImageCubit>(create: (_) => UploadImageCubit()),
+        BlocProvider<BlurredHeaderCubit>(
+          create: (_) => BlurredHeaderCubit(),),
+        BlocProvider<BgImageCubit>(create: (_) => BgImageCubit()),
+        BlocProvider<AllUsersCubit>(create: (_) => AllUsersCubit()),
+        BlocProvider<AllHashtagsCubit>(create: (_) => AllHashtagsCubit()),
+        BlocProvider<SelectedHashTagsCubit>(
+          create: (_) => SelectedHashTagsCubit()),
+        BlocProvider<HostedShowsCubit>.value(value: hostedShowsCubit,),
+      ],
+      child: const _SubWidget(),
+    );
+  }
 }
 
-class _CreateShowFormScreenState extends State<CreateEventFormScreen> {
+class _SubWidget extends StatefulWidget {
+  const _SubWidget();
+
+  @override
+  State<_SubWidget> createState() => __SubWidgetState();
+}
+
+class __SubWidgetState extends State<_SubWidget> {
   late final TextEditingController _titleCntrl;
   final StreamController<String> _titleStreamCntrl = StreamController<String>();
   final StreamController<String> _descStreamCntrl = StreamController<String>();
-  String programDesc = ATStrings.tellListenersAboutYourShow;
-  String chooseAudienceAccess = ATStrings.selectWhoCanAccessYourShow;
+
+  //Null for loading, false for disabled, true for enabled.
+  final ValueNotifier<bool?> _launchShowBtnNotifier = ValueNotifier<bool?>(false);
+
+  String selectedDescription = ATStrings.tellListenersAboutYourShow;
+  HandRaisingPermission? selectedPermission;
+
   Community? selectedCommunity;
-  CreateShowService service = GetIt.I<CreateShowService>();
+  List<User>? selectedCohosts;
+  List<HashTag>? selectedHashtags;
+  ProgramAccessTypeSelectionData accessTypeData =
+      const ProgramAccessTypeSelectionData();
 
   @override
   void initState() {
     super.initState();
-    service.initFormControl();
     _titleCntrl = TextEditingController()
       ..addListener(() => _titleStreamCntrl.add(_titleCntrl.text.trim()));
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      context.read<CommunitiesCubit>().fetchCommunities();
+      context.read<AllUsersCubit>().fetchAllUsers();
+      context.read<AllHashtagsCubit>().fetchHashTags();
+    });
   }
 
   @override
   void dispose() {
     _titleCntrl.dispose();
     _titleStreamCntrl.close();
+    _launchShowBtnNotifier.dispose();
     _descStreamCntrl.close();
     super.dispose();
   }
@@ -65,628 +135,1255 @@ class _CreateShowFormScreenState extends State<CreateEventFormScreen> {
     final double blurredHeaderHeight =
         kToolbarHeight + MediaQuery.paddingOf(context).top;
 
-    return MultiBlocProvider(
-      providers: <SingleChildWidget>[
-        BlocProvider<BlurredHeaderCubit>(
-          create: (_) => BlurredHeaderCubit(),
-        ),
-        BlocProvider<BgImageCubit>(create: (_) => BgImageCubit())
-      ],
-      child: ATAnnotatedRegion(
-        statusBarColor: ATColors.transparent,
-        child: Scaffold(
-          body: Builder(builder: (BuildContext blocContext) {
-            return Stack(
-              children: <Widget>[
-                Positioned.fill(
+    return ATAnnotatedRegion(
+      statusBarColor: ATColors.transparent,
+      child: Scaffold(
+        body: Builder(builder: (BuildContext blocContext) {
+          return Stack(
+            children: <Widget>[
+              Positioned.fill(
+                child: ImageFiltered(
+                  imageFilter: ImageFilter.blur(sigmaX: 100, sigmaY: 100),
                   child: BlocBuilder<BgImageCubit, (String, Uint8List?)>(
                       builder: (_, (String, Uint8List?) state) {
-                    return ImageFiltered(
-                        imageFilter: ImageFilter.blur(sigmaX: 200, sigmaY: 200),
-                        child: state.$2 == null
-                            ? ATImgLoader(
-                                boxFit: BoxFit.fill,
-                                imgPath: state.$1,
-                              )
-                            : Image.memory(state.$2!, fit: BoxFit.fill));
+                    return state.$2 == null
+                        ? ATImgLoader(
+                            boxFit: BoxFit.fill,
+                            imgPath: state.$1,
+                          )
+                        : Image.memory(state.$2!, fit: BoxFit.fill);
                   }),
                 ),
-                ATContainer(
-                  color: ATColors.hex0D0D0D.withValues(alpha: 0.75),
-                  child: NotificationListener<ScrollNotification>(
-                    onNotification: blocContext
-                        .read<BlurredHeaderCubit>()
-                        .onScrollNotification,
-                    child: NestedScrollView(
-                      headerSliverBuilder: (_, __) => <Widget>[
-                        SliverPersistentHeader(
-                          pinned: true,
-                          delegate: ATSliverHDelegate(
-                              maxExt: blurredHeaderHeight,
-                              minExt: blurredHeaderHeight,
-                              child: SizedBox(
-                                  height: blurredHeaderHeight,
-                                  child: ATBlurredHeaderWidget(
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: <Widget>[
-                                        Padding(
-                                          padding:
-                                              const EdgeInsets.only(left: 4),
-                                          child: ATRoundedBackBtn(
-                                            bgColor: ATColors.transparent,
+              ),
+              Container(
+                color: ATColors.hex0D0D0D.withValues(alpha: 0.75),
+                child: NotificationListener<ScrollNotification>(
+                  onNotification: blocContext
+                      .read<BlurredHeaderCubit>()
+                      .onScrollNotification,
+                  child: NestedScrollView(
+                    headerSliverBuilder: (_, __) => <Widget>[
+                      SliverPersistentHeader(
+                        pinned: true,
+                        delegate: ATSliverHDelegate(
+                          maxExt: blurredHeaderHeight,
+                          minExt: blurredHeaderHeight,
+                          child: SizedBox(
+                            height: blurredHeaderHeight,
+                            child: ATBlurredHeaderWidget(
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: <Widget>[
+                                  Padding(
+                                    padding: const EdgeInsets.only(left: 4),
+                                    child: ATRoundedBackBtn(
+                                      bgColor: ATColors.transparent,
+                                    ),
+                                  ),
+                                  InkWell(
+                                    onTap: () {
+                                      context
+                                          .read<CommunitiesCubit>().fetchCommunities();
+                                    },
+                                    child: Text(
+                                      ATStrings.createShow,
+                                      style: context.textTheme.bodyMedium,
+                                    ),
+                                  ),
+                                  const SizedBox(
+                                    width: 30,
+                                  )
+                                ],
+                              ),
+                            )
+                          )
+                        ),
+                      ),
+                    ],
+
+                    body: SingleChildScrollView(
+                      padding: const EdgeInsets.fromLTRB(0, 10, 0, 100),
+                      child: Column(
+                        children: <Widget>[
+                          Padding(
+                            padding: const EdgeInsets.fromLTRB(15, 0, 15, 30),
+                            child: SelectProgramCoverArt(
+                              onImageSelected:
+                                  blocContext.read<BgImageCubit>().setBgImage,
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.fromLTRB(15, 0, 15, 10),
+                            child: StreamBuilder<String>(
+                                stream: _titleStreamCntrl.stream,
+                                builder: (_, AsyncSnapshot<String> snapshot) {
+                                  final int remaining =
+                                      140 - (snapshot.data?.length ?? 0);
+                                  return RowWith2Texts(
+                                    text1: ATStrings.title,
+                                    text2: '$remaining remaining',
+                                  );
+                                }),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.fromLTRB(15, 0, 15, 30),
+                            child: ATTextFormField(
+                              controller: _titleCntrl,
+                              maxLines: 1,
+                              cursorHeight: 20,
+                              hintText: ATStrings.titleOfYourShow,
+                              prefixIcon: const SizedBox(
+                                width: 12,
+                              ),
+                              hintStyle: context.textTheme.bodySmall?.copyWith(
+                                color: ATColors.white.withValues(alpha: 0.4),
+                              ),
+                              disableBlueBorder: true,
+                              enabledBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(14),
+                                  borderSide:
+                                      BorderSide(color: ATColors.transparent)),
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.fromLTRB(15, 0, 15, 10),
+                            child: StreamBuilder<String>(
+                                stream: _descStreamCntrl.stream,
+                                builder: (_, AsyncSnapshot<String> snapshot) {
+                                  final int remaining =
+                                      4000 - (snapshot.data?.length ?? 0);
+                                  return RowWith2Texts(
+                                    text1: ATStrings.description,
+                                    text2: '$remaining remaining',
+                                  );
+                                }),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.fromLTRB(15, 0, 15, 30),
+                            child: StatefulBuilder(builder:
+                                (_, void Function(void Function()) setter) {
+                              return CreateProgramSelectionItem(
+                                description: selectedDescription,
+                                descStyle: selectedDescription == 
+                                  ATStrings.tellListenersAboutYourShow ? null :
+                                    context.textTheme.bodySmall,
+                                onTap: () async {
+                                  final String? enteredDescription =
+                                      await enterDescriptionModal(
+                                    context: context,
+                                    initialDesc: selectedDescription ==
+                                            ATStrings.tellListenersAboutYourShow
+                                        ? null
+                                        : selectedDescription,
+                                  );
+                                  if ((enteredDescription ?? '').isNotEmpty) {
+                                    setter(() {
+                                      selectedDescription = enteredDescription!;
+                                      _descStreamCntrl.add(enteredDescription);
+                                    });
+                                  }
+                                },
+                              );
+                            }),
+                          ),
+                          const Padding(
+                            padding: EdgeInsets.fromLTRB(15, 0, 15, 10),
+                            child: RowWith2Texts(text1: ATStrings.COMMUNITY),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.fromLTRB(15, 0, 15, 10),
+                            child: StatefulBuilder(builder:
+                                (_, void Function(void Function()) setter) {
+                              return ATScalingSwitcher(
+                                  duration: 300,
+                                  child: selectedCommunity == null
+                                      ? CreateProgramSelectionItem(
+                                          description: ATStrings
+                                              .selectCommunity4YourShow,
+                                          onTap: () async {
+                                            final Community? selectedCom =
+                                                await showCommunitiesModal(
+                                              context: context,
+                                              communitiesCubit: context
+                                                  .read<CommunitiesCubit>(),
+                                            );
+                                            log('selectedCom id: ${selectedCom?.communityId}');
+                                            if (selectedCom != null) {
+                                              setter(() => selectedCommunity =
+                                                  selectedCom);
+                                            }
+                                          },
+                                        )
+                                      : SelectedCommunityWidget(
+                                          selectedCommunity: selectedCommunity!,
+                                          onClose: () => setter(
+                                              () => selectedCommunity = null),
+                                          onView: () {}));
+                            }),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.fromLTRB(15, 0, 15, 30),
+                            child: ATRichText(
+                              maxLines: 4,
+                              items: <String, TextStyle>{
+                                ATStrings.addCommunityDesc:
+                                    context.textTheme.labelSmall!.copyWith(
+                                        color: ATColors.hexC2C2C2
+                                            .withValues(alpha: 0.76)),
+                                ATStrings.learnMore:
+                                    context.textTheme.labelSmall!
+                              },
+                              textOnTap: (String text) {
+                                if (text == ATStrings.learnMore) {}
+                              },
+                            ),
+                          ),
+                          const Padding(
+                            padding: EdgeInsets.fromLTRB(15, 0, 15, 10),
+                            child: RowWith2Texts(
+                              text1: ATStrings.addCohost,
+                              text2: '5 max',
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.fromLTRB(15, 0, 15, 10),
+                            child: StatefulBuilder(
+                                builder: (_, StateSetter setter) {
+                              final bool hasCohosts =
+                                  (selectedCohosts ?? <User>[]).isNotEmpty;
+                              return ATScalingSwitcher(
+                                duration: 300,
+                                child: hasCohosts
+                                    ? SelectedCoHostsWidget(
+                                        onEdit: () async {
+                                          final List<User>? newCohosts =
+                                              await showAvailableCoHostsModal(
+                                            context: context,
+                                            selectedCoHosts: selectedCohosts,
+                                            allUsersCubit: context.read<AllUsersCubit>(),
+                                          );
+                                          if (newCohosts != null) {
+                                            setter(() => selectedCohosts = newCohosts);
+                                          }
+                                        },
+                                        selectedCohosts: selectedCohosts!)
+                                    : CreateProgramSelectionItem(
+                                        leading: const ATImgLoader(
+                                          height: 20,
+                                          width: 20,
+                                          imgPath: ATImgStrings.outlinedSearch,
+                                        ),
+                                        trailing: Flexible(
+                                          child: Text(
+                                            ATStrings.searchAndAddCohost4YourShow,
+                                            style: context.textTheme.bodySmall
+                                                ?.copyWith(
+                                              color: ATColors.white
+                                                  .withValues(alpha: 0.4),
+                                            ),
                                           ),
                                         ),
-                                        Text(
-                                          ATStrings.createShow,
-                                          style: context.textTheme.bodyMedium,
-                                        ),
-                                        const SizedBox(
-                                          width: 30,
-                                        )
-                                      ],
+                                        onTap: () async {
+                                          final List<User>? newCohosts =
+                                              await showAvailableCoHostsModal(
+                                            context: context,
+                                            allUsersCubit: context.read<AllUsersCubit>(),
+                                          );
+                                          if (newCohosts != null) {
+                                            setter(() => selectedCohosts = newCohosts);
+                                          }
+                                        }),
+                              );
+                            }),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.fromLTRB(15, 0, 15, 30),
+                            child: Text(
+                              ATStrings.addCohostDesc,
+                              maxLines: 5,
+                              style: context.textTheme.labelSmall!.copyWith(
+                                  color: ATColors.hexC2C2C2
+                                      .withValues(alpha: 0.76)),
+                            ),
+                          ),
+                          const Padding(
+                            padding: EdgeInsets.fromLTRB(15, 0, 15, 10),
+                            child: RowWith2Texts(text1: ATStrings.hashtags),
+                          ),
+                          StatefulBuilder(
+                            builder: (_, StateSetter setter) {
+                              return Column(
+                                spacing: 10,
+                                children: <Widget>[
+                                  Padding(
+                                    padding: const EdgeInsets.fromLTRB(15, 0, 15, 0),
+                                    child: CreateProgramSelectionItem(
+                                      description: '${ATStrings.addHashtags}s',
+                                      onTap: () async {
+                                        final List<HashTag>? newHashTags =
+                                            await showNewHashTagsModal(
+                                          context: context,
+                                          allHashTagsCubit: context.read<AllHashtagsCubit>(),
+                                          selectedHashTagsCubit: context.read<SelectedHashTagsCubit>(),
+                                        );
+                                        if (newHashTags != null) {
+                                          setter(() => selectedHashtags = newHashTags);
+                                        }
+                                      },
                                     ),
-                                  ))),
-                        ),
-                      ],
-                      body: SingleChildScrollView(
-                        padding: const EdgeInsets.fromLTRB(0, 10, 0, 100),
-                        physics: const BouncingScrollPhysics(),
-                        child: Column(
-                          children: <Widget>[
-                            Padding(
-                              padding: const EdgeInsets.fromLTRB(15, 0, 15, 30),
-                              child: SelectProgramCoverArt(
-                                onImageSelected:
-                                    blocContext.read<BgImageCubit>().setBgImage,
-                              ),
-                            ),
+                                  ),
+                                  const SelectedHashtagsRow(),
+                                ],
+                              );
+                            }
+                          ),
 
-                            Padding(
-                              padding: const EdgeInsets.fromLTRB(15, 0, 15, 10),
-                              child: StreamBuilder<String>(
-                                  stream: _titleStreamCntrl.stream,
-                                  builder: (_, AsyncSnapshot<String> snapshot) {
-                                    final int remaining =
-                                        140 - (snapshot.data?.length ?? 0);
-                                    return RowWith2Texts(
-                                      text1: ATStrings.title,
-                                      text2: '$remaining remaining',
-                                    );
-                                  }),
+                          Padding(
+                            padding: const EdgeInsets.fromLTRB(15, 0, 15, 30),
+                            child: Text(
+                              ATStrings.addHashtagsDesc,
+                              maxLines: 5,
+                              style: context.textTheme.labelSmall?.copyWith(
+                                  color: ATColors.hexC2C2C2
+                                      .withValues(alpha: 0.76)),
                             ),
-                            Padding(
-                              padding: const EdgeInsets.fromLTRB(15, 0, 15, 30),
-                              child: ATTextFormField(
-                                controller: _titleCntrl,
-                                hintText: ATStrings.titleOfYourShow,
-                                prefixIcon: const SizedBox(
-                                  width: 12,
-                                ),
-                                hintStyle:
-                                    context.textTheme.bodySmall?.copyWith(
-                                  color: ATColors.white.withValues(alpha: 0.4),
-                                ),
-                                disableBlueBorder: true,
-                                enabledBorder: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(14),
-                                    borderSide: BorderSide(
-                                        color: ATColors.transparent)),
-                              ),
-                            ),
-
-                            Padding(
-                              padding: const EdgeInsets.fromLTRB(15, 0, 15, 10),
-                              child: StreamBuilder<String>(
-                                  stream: _descStreamCntrl.stream,
-                                  builder: (_, AsyncSnapshot<String> snapshot) {
-                                    final int remaining =
-                                        4000 - (snapshot.data?.length ?? 0);
-                                    return RowWith2Texts(
-                                      text1: ATStrings.description,
-                                      text2: '$remaining remaining',
-                                    );
-                                  }),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.fromLTRB(15, 0, 15, 30),
-                              child: StatefulBuilder(builder:
-                                  (_, void Function(void Function()) setter) {
-                                return CreateProgramSelectionItem(
-                                  description: programDesc,
-                                  onTap: () async {
-                                    final String? description =
-                                        await enterDescriptionModal(
-                                            context: context);
-                                    if (description != null) {
+                          ),
+                          const Padding(
+                            padding: EdgeInsets.fromLTRB(15, 0, 15, 10),
+                            child: RowWith2Texts(text1: ATStrings.audienceAccess),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.fromLTRB(15, 0, 15, 10),
+                            child: StatefulBuilder(
+                                builder: (_, StateSetter setter) {
+                              final String accessTypeDescText =
+                                  getAccessTypeDescText(
+                                      accessTypeData: accessTypeData);
+                              return ATScalingSwitcher(
+                                  duration: 300,
+                                  child: CreateProgramSelectionItem(
+                                    description: accessTypeDescText,
+                                    descStyle: accessTypeDescText ==
+                                            ATStrings.selectWhoCanAccessYourShow
+                                        ? null
+                                        : context.textTheme.bodySmall,
+                                    onTap: () async {
+                                      final ProgramAccessTypeSelectionData?
+                                          newAccessTypeData =
+                                          await showAudienceAccessTypeModal(
+                                              context: context,
+                                              initialAccessTypeData:
+                                                  accessTypeData);
                                       setter(() {
-                                        programDesc = description;
-                                        _descStreamCntrl.add(description);
+                                        if (newAccessTypeData != null) {
+                                          accessTypeData = newAccessTypeData;
+                                        }
                                       });
-                                    }
-                                  },
-                                );
-                              }),
+                                    },
+                                  ));
+                            }),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.fromLTRB(15, 0, 15, 30),
+                            child: Text(
+                              ATStrings.promptToSetupSubPlan,
+                              maxLines: 5,
+                              style: context.textTheme.labelSmall!.copyWith(
+                                  color: ATColors.hexC2C2C2
+                                      .withValues(alpha: 0.76)),
                             ),
-
-                            const Padding(
-                              padding: EdgeInsets.fromLTRB(15, 0, 15, 10),
-                              child: RowWith2Texts(text1: ATStrings.COMMUNITY),
+                          ),
+                          const Padding(
+                            padding: EdgeInsets.fromLTRB(15, 0, 15, 30),
+                            child: ATDivider(
+                              height: 1.1,
                             ),
-
-                            Padding(
-                              padding: const EdgeInsets.fromLTRB(15, 0, 15, 10),
-                              child: StatefulBuilder(builder:
-                                  (_, void Function(void Function()) setter) {
-                                return ATScalingSwitcher(
-                                    duration: 300,
-                                    child: selectedCommunity == null
-                                        ? CreateProgramSelectionItem(
-                                            description: ATStrings
-                                                .selectCommunity4YourShow,
-                                            onTap: () async {
-                                              // final UnusedCommunity? selectedCom = await showCommunitiesDialog(context);
-                                              // if(selectedCom != null){
-                                              //   setter(() => selectedCommunity = selectedCom);
-                                              // }
-                                            },
-                                          )
-                                        : SelectedCommunityWidget(
-                                            selectedCommunity:
-                                                selectedCommunity!,
-                                            onClose: () => setter(
-                                                () => selectedCommunity = null),
-                                            onView: () {}));
-                              }),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.fromLTRB(15, 0, 15, 30),
-                              child: ATRichText(
-                                maxLines: 4,
-                                items: <String, TextStyle>{
-                                  ATStrings.addCommunityDesc:
-                                      context.textTheme.labelSmall!.copyWith(
-                                          color: ATColors.hexC2C2C2
-                                              .withValues(alpha: 0.76)),
-                                  ATStrings.learnMore:
-                                      context.textTheme.labelSmall!
-                                },
-                                textOnTap: (String text) {
-                                  if (text == ATStrings.learnMore) {}
-                                },
-                              ),
-                            ),
-
-                            const Padding(
-                              padding: EdgeInsets.fromLTRB(15, 0, 15, 10),
-                              child: RowWith2Texts(
-                                text1: ATStrings.addCohost,
-                                text2: '5 max',
-                              ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.fromLTRB(15, 0, 15, 10),
-                              child: BlocSelector<
-                                      CohostServiceBloc,
-                                      (
-                                        List<ATCohost<bool>>,
-                                        List<ATCohost<bool>>
-                                      ),
-                                      List<ATCohost<bool>>>(
-                                  selector: ((
-                                            List<ATCohost<bool>>,
-                                            List<ATCohost<bool>>
-                                          ) state) =>
-                                      state.$2,
-                                  builder: (_,
-                                      List<ATCohost<bool>> selectedCoHosts) {
-                                    final bool coHostExists = selectedCoHosts
-                                        .any((ATCohost<bool> cohost) =>
-                                            cohost.profilePicture != null);
-
-                                    return ATScalingSwitcher(
-                                      duration: 300,
-                                      child: coHostExists
-                                          ? SelectedCoHostsWidget(
-                                              onEdit: () {
-                                                //showAvailableCoHostsModal(context: context),
-                                              },
-                                              selectedCohosts: const <User>[])
-                                          : CreateProgramSelectionItem(
-                                              leading: const ATImgLoader(
-                                                height: 20,
-                                                width: 20,
-                                                imgPath:
-                                                    ATImgStrings.outlinedSearch,
-                                              ),
-                                              trailing: Flexible(
-                                                child: Text(
-                                                  ATStrings
-                                                      .searchAndAddCohost4YourShow,
-                                                  style: context
-                                                      .textTheme.bodySmall
-                                                      ?.copyWith(
-                                                    color: ATColors.white
-                                                        .withValues(alpha: 0.4),
-                                                  ),
-                                                ),
-                                              ),
-                                              onTap: () {
-                                                //showAvailableCoHostsModal(context: context),
-                                              }),
-                                    );
-                                  }),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.fromLTRB(15, 0, 15, 30),
+                          ),
+                          Align(
+                            alignment: Alignment.centerLeft,
+                            child: Padding(
+                              padding:
+                                  const EdgeInsets.only(left: 15, right: 15),
                               child: Text(
-                                ATStrings.addCohostDesc,
-                                maxLines: 5,
-                                style: context.textTheme.labelSmall!.copyWith(
-                                    color: ATColors.hexC2C2C2
-                                        .withValues(alpha: 0.76)),
-                              ),
-                            ),
-
-                            const Padding(
-                              padding: EdgeInsets.fromLTRB(15, 0, 15, 10),
-                              child: RowWith2Texts(text1: ATStrings.hashtags),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.fromLTRB(15, 0, 15, 10),
-                              child: CreateProgramSelectionItem(
-                                description: '${ATStrings.addHashtags}s',
-                                onTap: () {
-                                  
-                                }
-                              ),
-                            ),
-
-                            const SelectedHashtagsRow(),
-
-                            Padding(
-                              padding: const EdgeInsets.fromLTRB(15, 0, 15, 30),
-                              child: Text(
-                                ATStrings.addHashtagsDesc,
-                                maxLines: 5,
+                                ATStrings.moderationTools,
                                 style: context.textTheme.labelSmall?.copyWith(
+                                  fontSize: ATSizes.size13,
+                                ),
+                              ),
+                            ),
+                          ),
+                          Padding(
+                              padding:
+                                  const EdgeInsets.fromLTRB(15, 15, 15, 10),
+                              child: Row(
+                                children: <Widget>[
+                                  const Icon(
+                                    Icons.front_hand_outlined,
+                                    size: 18,
+                                  ),
+                                  const SizedBox(
+                                    width: 5,
+                                  ),
+                                  Text(
+                                    ATStrings.handRaising,
+                                    style: context.textTheme.titleLarge
+                                        ?.copyWith(fontWeight: ATFontWeights.w500),
+                                  ),
+                                ],
+                              )),
+                          Padding(
+                            padding: const EdgeInsets.fromLTRB(15, 0, 15, 10),
+                            child: StatefulBuilder(
+                              builder:(_, StateSetter setter) {
+                                String descriptionText = ATStrings.choose2AllowHandRasing;
+
+                                if (selectedPermission == HandRaisingPermission.allow) {
+                                  descriptionText = ATStrings.allow;
+                                } else if (selectedPermission == HandRaisingPermission.dontAllow) {
+                                  descriptionText = ATStrings.dontAllow;
+                                }
+
+                                return ATScalingSwitcher(
+                                  duration: 300,
+                                  child: CreateProgramSelectionItem(
+                                    description: descriptionText,
+                                    descStyle: descriptionText ==
+                                      ATStrings.choose2AllowHandRasing ? null
+                                        : context.textTheme.bodySmall,
+                                    onTap: () async {
+                                      final HandRaisingPermission? newPermission =
+                                        await showHandRaisingPermissionModal(
+                                          context: context,
+                                          initialPermission: selectedPermission
+                                        );
+                                      setter(() => selectedPermission = newPermission);
+                                    },
+                                  ));
+                            }),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.fromLTRB(15, 0, 15, 30),
+                            child: ATRichText(
+                              items: <String, TextStyle>{
+                                ATStrings.youWillHaveAccessToModerationTools:
+                                  context.textTheme.labelSmall!.copyWith(
                                     color: ATColors.hexC2C2C2
                                         .withValues(alpha: 0.76)),
-                              ),
-                            ),
-
-                            const Padding(
-                              padding: EdgeInsets.fromLTRB(15, 0, 15, 10),
-                              child: RowWith2Texts(
-                                  text1: ATStrings.audienceAccess),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.fromLTRB(15, 0, 15, 10),
-                              child: StatefulBuilder(builder:
-                                  (_, void Function(void Function()) setter) {
-                                return ATScalingSwitcher(
-                                    duration: 300,
-                                    child: CreateProgramSelectionItem(
-                                      description: chooseAudienceAccess,
-                                      descStyle: chooseAudienceAccess ==
-                                              ATStrings
-                                                  .selectWhoCanAccessYourShow
-                                          ? null
-                                          : context.textTheme.bodySmall,
-                                      onTap: () async {
-                                        //showSelectAudienceAccessForEventsDialog(context);
-                                        // final String? selectedAccessType = await showAudienceAccessTypeModal(
-                                        //   context: context,
-                                        // );
-                                        // setter(
-                                        //   (){
-                                        //     if(selectedAccessType == null){
-                                        //       chooseAudienceAccess = ATStrings.selectWhoCanAccessYourShow;
-                                        //     }
-                                        //     else{
-                                        //       chooseAudienceAccess = selectedAccessType;
-                                        //     }
-                                        //   }
-                                        // );
-                                      },
-                                    ));
-                              }),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.fromLTRB(15, 0, 15, 30),
-                              child: Text(
-                                ATStrings.promptToSetupSubPlan,
-                                maxLines: 5,
-                                style: context.textTheme.labelSmall!.copyWith(
-                                    color: ATColors.hexC2C2C2
-                                        .withValues(alpha: 0.76)),
-                              ),
-                            ),
-
-                            const Padding(
-                              padding: EdgeInsets.fromLTRB(15, 0, 15, 30),
-                              child: ATDivider(
-                                height: 1.1,
-                              ),
-                            ),
-
-                            Align(
-                              alignment: Alignment.centerLeft,
-                              child: Padding(
-                                padding:
-                                    const EdgeInsets.only(left: 15, right: 15),
-                                child: Text(
-                                  ATStrings.moderationTools,
-                                  style: context.textTheme.labelSmall?.copyWith(
-                                    fontSize: ATSizes.size13,
-                                  ),
-                                ),
-                              ),
-                            ),
-
-                            Padding(
-                                padding:
-                                    const EdgeInsets.fromLTRB(15, 15, 15, 10),
-                                child: Row(
-                                  children: <Widget>[
-                                    const Icon(
-                                      Icons.front_hand_outlined,
-                                      size: 18,
-                                    ),
-                                    const SizedBox(
-                                      width: 5,
-                                    ),
-                                    Text(
-                                      ATStrings.handRaising,
-                                      style: context.textTheme.titleLarge
-                                          ?.copyWith(
-                                              fontWeight: ATFontWeights.w500),
-                                    ),
-                                  ],
-                                )),
-                            Padding(
-                              padding: const EdgeInsets.fromLTRB(15, 0, 15, 10),
-                              child: StatefulBuilder(builder:
-                                  (_, void Function(void Function()) setter) {
-                                return ATScalingSwitcher(
-                                    duration: 300,
-                                    child: CreateProgramSelectionItem(
-                                      description: chooseAudienceAccess,
-                                      descStyle: chooseAudienceAccess ==
-                                              ATStrings
-                                                  .selectWhoCanAccessYourShow
-                                          ? null
-                                          : context.textTheme.bodySmall,
-                                      onTap: () async {
-                                        //await choose2AllowHandRaisingModal(context);
-                                      },
-                                    ));
-                              }),
-                            ),
-                            Padding(
-                                padding:
-                                    const EdgeInsets.fromLTRB(15, 0, 15, 30),
-                                child: ATRichText(
-                                  items: <String, TextStyle>{
-                                    ATStrings
-                                            .youWillHaveAccessToModerationTools:
-                                        context.textTheme.labelSmall!.copyWith(
-                                            color: ATColors.hexC2C2C2
-                                                .withValues(alpha: 0.76)),
-                                    ' ${ATStrings.learnMore}':
-                                        context.textTheme.labelSmall!
-                                  },
-                                )),
-
-                            CreateShowTextFieldTitle(
-                              title: "Moderation Tools",
-                              titleStyle: context.textTheme.titleMedium
-                                  ?.copyWith(fontWeight: ATFontWeights.w500),
-                            ),
-                            SizedBox(height: 16.h),
-
-                            // Hand Raising
-                            ShowTypeVisibilityWidget(
-                              showType: ShowType.all,
-                              child: Container(
-                                margin: EdgeInsets.only(bottom: 12.h),
-                                child: const CreateShowTextFieldTitle(
-                                  prefixIcon: Icons.front_hand_outlined,
-                                  title: "Hand Raising",
-                                ),
-                              ),
-                            ),
-                            ShowTypeVisibilityWidget(
-                              showType: ShowType.all,
-                              child: CreateShowTextFormField(
-                                readOnly: true,
-                                controller: service.handRaisingController,
-                                hintText: "Select audience interaction",
-                                suffixIcon: Icon(
-                                  Icons.arrow_forward_ios,
-                                  size: 20.w,
-                                  color: ATColors.white.withOpacity(0.4),
-                                ),
-                                onTap: () async {
-                                  //await choose2AllowHandRaisingModal(context);
-                                },
-                              ),
-                            ),
-                            ShowTypeVisibilityWidget(
-                              showType: ShowType.all,
-                              child: Container(
-                                margin: EdgeInsets.only(top: 8.h, bottom: 30.h),
-                                width: 360.w,
-                                child: Text(
-                                  "While you're live, you’ll have full access to your moderation tools, allowing you to manage interactions and maintain control throughout the session. Learn more",
-                                  overflow: TextOverflow.visible,
-                                  style: context.textTheme.titleSmall?.copyWith(
-                                    fontWeight: ATFontWeights.w500,
-                                    color: ATColors.white.withOpacity(0.4),
-                                  ),
-                                ),
-                              ),
-                            ),
-
-                            // Capacity
-                            // ShowTypeVisibilityWidget(
-                            //   showType: widget.showType,
-                            //   allowedShowTypes: const <ShowType>[ShowType.event],
-                            //   child: Container(
-                            //     margin: EdgeInsets.only(bottom: 12.h),
-                            //     child: const CreateShowTextFieldTitle(
-                            //       prefixIcon: Icons.people_outline,
-                            //       title: "Capacity",
-                            //     ),
-                            //   ),
-                            // ),
-                            // ShowTypeVisibilityWidget(
-                            //   showType: widget.showType,
-                            //   allowedShowTypes: const <ShowType>[ShowType.event],
-                            //   child: CreateShowTextFormField(
-                            //     readOnly: true,
-                            //     controller: service.capacityController,
-                            //     hintText: "Unlimited",
-                            //     suffixIcon: Icon(
-                            //       Icons.arrow_forward_ios,
-                            //       size: 20.w,
-                            //       color: ATColors.white.withOpacity(0.4),
-                            //     ),
-                            //     onTap: () async {
-                            //       await showEventCapacitySelectionDialog(
-                            //           context: context);
-                            //     },
-                            //   ),
-                            // ),
-                            // ShowTypeVisibilityWidget(
-                            //   showType: widget.showType,
-                            //   allowedShowTypes: const <ShowType>[ShowType.event],
-                            //   child: Container(
-                            //     margin: EdgeInsets.only(top: 8.h, bottom: 30.h),
-                            //     width: 360.w,
-                            //     child: Text(
-                            //       "Set the maximum number of listeners for your event. Once the limit is reached, no additional participants can join or pay.",
-                            //       overflow: TextOverflow.visible,
-                            //       style: context
-                            //           .textTheme
-                            //           .titleSmall
-                            //           ?.copyWith(
-                            //         fontWeight: ATFontWeights.w500,
-                            //         color:
-                            //         ATColors.white.withOpacity(0.4),
-                            //       ),
-                            //     ),
-                            //   ),
-                            // ),
-
-                            // Whispers
-                            // ShowTypeVisibilityWidget(
-                            //   showType: widget.showType,
-                            //   allowedShowTypes: const <ShowType>[
-                            //     ShowType.event,
-                            //     ShowType.episode
-                            //   ],
-                            //   child: Container(
-                            //     margin: EdgeInsets.only(bottom: 12.h),
-                            //     child: const CreateShowTextFieldTitle(
-                            //       prefixIcon: Iconsax.message,
-                            //       title: "Whispers",
-                            //     ),
-                            //   ),
-                            // ),
-                            // ShowTypeVisibilityWidget(
-                            //   showType: widget.showType,
-                            //   allowedShowTypes: const <ShowType>[
-                            //     ShowType.event,
-                            //     ShowType.episode
-                            //   ],
-                            //   child: CreateShowTextFormField(
-                            //     readOnly: true,
-                            //     controller: service.whisperController,
-                            //     hintText: "Turn whispers on or off for this event",
-                            //     suffixIcon: Icon(
-                            //       Icons.arrow_forward_ios,
-                            //       size: 20.w,
-                            //       color: ATColors.white.withOpacity(0.4),
-                            //     ),
-                            //     onTap: () async {
-                            //       await showWhispersDialog(context);
-                            //     },
-                            //   ),
-                            // ),
-                            // ShowTypeVisibilityWidget(
-                            //   showType: widget.showType,
-                            //   allowedShowTypes: const <ShowType>[
-                            //     ShowType.event,
-                            //     ShowType.episode
-                            //   ],
-                            //   child: Container(
-                            //     margin: EdgeInsets.only(top: 8.h, bottom: 30.h),
-                            //     width: 360.w,
-                            //     child: Text(
-                            //       "Whispers are randomly selected comments from your live audience that appear on your event page while you are live. \n \nNon-attending users can see these comments, encouraging them to join your live event.",
-                            //       overflow: TextOverflow.visible,
-                            //       style: context
-                            //           .textTheme
-                            //           .titleSmall
-                            //           ?.copyWith(
-                            //         fontWeight: ATFontWeights.w500,
-                            //         color:
-                            //         ATColors.white.withOpacity(0.4),
-                            //       ),
-                            //     ),
-                            //   ),
-                            // ),
-                          ],
-                        ),
+                                ' ${ATStrings.learnMore}':
+                                    context.textTheme.labelSmall!
+                              },
+                            )),
+                        ],
                       ),
                     ),
                   ),
                 ),
-              ],
-            );
-          }),
-          resizeToAvoidBottomInset: false,
-          bottomSheet: ATContainer(
-            height: 70,
-            gradient: LinearGradient(
-                begin: Alignment.topCenter,
-                end: Alignment.bottomCenter,
-                colors: <Color>[
-                  ATColors.hex0D0D0D.withValues(alpha: 0.1),
-                  ATColors.hex0D0D0D
-                ]),
-            padding: const EdgeInsets.fromLTRB(15, 10, 15, 10),
-            child: BlocBuilder<BgImageCubit, (String, Uint8List?)>(
-                builder: (_, (String, Uint8List?) selectedImgPath) {
-              return ATPlainElevatedBtn(
-                bgColor: ATColors.white,
-                fgColor: ATColors.hex0D0D0D,
-                btnTitle: ATStrings.next,
-                onPressed: () async {
-                  //await showAddCoHostDialog(context);
-                  //await showAddHashtagDialog(context);
-                  //await showHandRaisingDialog(context);
-                  //showAddCommunitiesDialog(context);
-                  //showSelectAudienceAccessForShowsDialog(context);
-                  //context.pushNamed(AmptiveRoutes.CREATE_SHOW_SUCCESS);
-                },
+              ),
+            ],
+          );
+        }),
+        resizeToAvoidBottomInset: false,
+        bottomSheet: MultiBlocListener(
+          listeners: <SingleChildWidget>[
+            BlocListener<BgImageCubit, (String, Uint8List?)>(
+              listener: (_, (String, Uint8List?) state) {
+                if (state.$2 != null) {
+                  _launchShowBtnNotifier.value = true;
+                } else {
+                  _launchShowBtnNotifier.value = false;
+                }
+              },
+            ),
+            BlocListener<UploadImageCubit, ATAppState<String>>(
+              listener: (_, ATAppState<String> state) {
+                if (state is SuccessState<String>) {
+                  //If we upload image successfully, create the show.
+                  context.read<CreateShowCubit>().createShow(
+                    tagIds: (selectedHashtags ?? <HashTag>[])
+                      .map((HashTag tag) => tag.id ?? '')
+                      .toList(),
+                    coHostIds: (selectedCohosts ?? <User>[])
+                      .map((User cohost) => cohost.id ?? '')
+                      .toList(),
+                    title: _titleCntrl.text.trim(),
+                    description: selectedDescription,
+                    coverUrl: state.newData!,
+                    communityId: selectedCommunity?.communityId ?? '',
+                    category: 'Category',
+                    showType: accessTypeData.accessType 
+                      == ProgramAccessType.free ? 'free' : 'paid',
+                    price: accessTypeData.subscriptionAmount 
+                      ?? accessTypeData.oneTimePaymentAmount ?? 0.01,
+                    allowHandRaising: selectedPermission == HandRaisingPermission.allow,
+                  );
+                } else if (state is FailureState<String>) {
+                  //if uploading cover art fails, stop loading and show notif
+                  showAppNotification2(
+                    context: context,
+                    text: state.message,
+                    type: NotificationType.failure,
+                  );
+                  _launchShowBtnNotifier.value = true;
+                }
+              },
+            ),
+            BlocListener<CreateShowCubit, ATAppState<HostedShow>>(
+              listener: (_, ATAppState<HostedShow> state) async{
+                if (state is SuccessState<HostedShow>) {
+                  context.read<HostedShowsCubit>().addNewHostedShow(state.newData);
+                  _launchShowBtnNotifier.value = true;
+                  final dynamic params = ProgramCreationSuccessScreenParams(
+                      coverArtBytes: context.read<BgImageCubit>().state.$2!,
+                      title: ATStrings.showIsSetup,
+                      subtitle: ATStrings.beginYourJourney,
+                      btnTitle: ATStrings.createFirstEpisode,
+                      txtBtnTitle: ATStrings.viewShowPage,
+                      topLogo: const Icon(Icons.check_circle_sharp, size: 45),
+                    );
 
-                //onPressed: activate ? () async{
-                //await showAddCoHostDialog(context);
-                //await showAddHashtagDialog(context);
-                //showAddCommunitiesDialog(context);
-                //showSelectAudienceAccessForEventsDialog(context);
-                //showWhispersDialog(context);
-                //await showEventCapacitySelectionDialog(context: context);
-                //context.pushNamed(ATRoutes.EVENT_SCHEDULED_SCREEN);
-                //} : null,
-              );
-            }),
+                    final ButtonPressed? onPressedResult = await context.pushNamed(
+                      ATRoutes.programCreationSuccessScreen,
+                      extra: params
+                    ) as ButtonPressed?;
+
+                    if(context.mounted){
+                      if(onPressedResult == ButtonPressed.elevatedBtn){
+                        context.pushReplacementNamed(
+                          ATRoutes.createEpisodeForm);
+                      } else if(onPressedResult == ButtonPressed.textBtn){
+                        context.pushReplacementNamed(
+                          ATRoutes.showPreviewScreen,
+                          extra: state.newData
+                        );
+                      }
+                    }
+                } 
+                else if (state is FailureState<HostedShow>) {
+                  _launchShowBtnNotifier.value = true;
+                  showAppNotification2(
+                    context: context,
+                    text: state.message,
+                    type: NotificationType.failure,
+                  );
+                }
+              },
+            )
+          ],
+          child: ValueListenableBuilder<bool?>(
+              valueListenable: _launchShowBtnNotifier,
+              builder: (_, bool? value, __) {
+                return ATBlurredBgBtn(
+                  isLoading: value == null,
+                  onPressed: value == false ? null : () {
+                    String errorMessage = '';
+                    if (_titleCntrl.text.trim().isEmpty) {
+                      errorMessage = 'Please enter a title';
+                    } else if (selectedDescription == 
+                      ATStrings.tellListenersAboutYourShow) {
+                      errorMessage = 'Please enter a description';
+                    } else if(selectedCommunity == null) {
+                      errorMessage = 'Please select a community';
+                    } else if((selectedCohosts ?? <User>[]).isEmpty) {
+                      errorMessage = 'Please select at least 1 cohost';
+                    } else if((selectedHashtags ?? <HashTag>[]).isEmpty) {
+                      errorMessage = 'Please select at least 1 hashtag';
+                    } else if(selectedPermission == null) {
+                      errorMessage = 'Please choose whether to allow hand-raising for this show';
+                    } else if(accessTypeData.accessType == null) {
+                      errorMessage = 'Please choose whether this show is free or paid';
+                    }
+                    if(errorMessage.isNotEmpty){
+                      showAppNotification2(
+                        context: context,
+                        text: errorMessage,
+                        type: NotificationType.failure,
+                      );
+                      return;
+                    }
+
+                    //Start loading on button press.
+                    _launchShowBtnNotifier.value = null;
+                    //Try to upload the cover image.
+                    context.read<UploadImageCubit>().uploadBytesImage(
+                      bytes: context.read<BgImageCubit>().state.$2!,
+                      purpose: 'cover-art',
+                    );
+                  },
+                  btnTitle: ATStrings.launchShow,
+                );
+              }
+            )
           ),
-        ),
       ),
     );
   }
 }
+
+
+
+
+
+
+// class NewFoo extends StatefulWidget {
+//   const NewFoo({super.key});
+
+//   @override
+//   State<NewFoo> createState() => _CreateEventFormScreenState();
+// }
+
+// class _CreateEventFormScreenState extends State<NewFoo> {
+//   late final TextEditingController _titleCntrl;
+//   final StreamController<String> _titleStreamCntrl = StreamController<String>();
+//   final StreamController<String> _descStreamCntrl = StreamController<String>();
+//   String programDesc = ATStrings.tellListenersAboutYourShow;
+//   String chooseAudienceAccess = ATStrings.selectWhoCanAccessYourShow;
+//   Community? selectedCommunity;
+//   CreateShowService service = GetIt.I<CreateShowService>();
+
+//   @override
+//   void initState() {
+//     super.initState();
+//     service.initFormControl();
+//     _titleCntrl = TextEditingController()
+//       ..addListener(() => _titleStreamCntrl.add(_titleCntrl.text.trim()));
+//   }
+
+//   @override
+//   void dispose() {
+//     _titleCntrl.dispose();
+//     _titleStreamCntrl.close();
+//     _descStreamCntrl.close();
+//     super.dispose();
+//   }
+
+//   @override
+//   Widget build(BuildContext context) {
+//     final double blurredHeaderHeight =
+//         kToolbarHeight + MediaQuery.paddingOf(context).top;
+
+//     return MultiBlocProvider(
+//       providers: <SingleChildWidget>[
+//         BlocProvider<BlurredHeaderCubit>(
+//           create: (_) => BlurredHeaderCubit(),
+//         ),
+//         BlocProvider<BgImageCubit>(create: (_) => BgImageCubit())
+//       ],
+//       child: ATAnnotatedRegion(
+//         statusBarColor: ATColors.transparent,
+//         child: Scaffold(
+//           body: Builder(builder: (BuildContext blocContext) {
+//             return Stack(
+//               children: <Widget>[
+//                 Positioned.fill(
+//                   child: BlocBuilder<BgImageCubit, (String, Uint8List?)>(
+//                       builder: (_, (String, Uint8List?) state) {
+//                     return ImageFiltered(
+//                         imageFilter: ImageFilter.blur(sigmaX: 200, sigmaY: 200),
+//                         child: state.$2 == null
+//                             ? ATImgLoader(
+//                                 boxFit: BoxFit.fill,
+//                                 imgPath: state.$1,
+//                               )
+//                             : Image.memory(state.$2!, fit: BoxFit.fill));
+//                   }),
+//                 ),
+//                 ATContainer(
+//                   color: ATColors.hex0D0D0D.withValues(alpha: 0.75),
+//                   child: NotificationListener<ScrollNotification>(
+//                     onNotification: blocContext
+//                         .read<BlurredHeaderCubit>()
+//                         .onScrollNotification,
+//                     child: NestedScrollView(
+//                       headerSliverBuilder: (_, __) => <Widget>[
+//                         SliverPersistentHeader(
+//                           pinned: true,
+//                           delegate: ATSliverHDelegate(
+//                               maxExt: blurredHeaderHeight,
+//                               minExt: blurredHeaderHeight,
+//                               child: SizedBox(
+//                                   height: blurredHeaderHeight,
+//                                   child: ATBlurredHeaderWidget(
+//                                     child: Row(
+//                                       mainAxisAlignment:
+//                                           MainAxisAlignment.spaceBetween,
+//                                       children: <Widget>[
+//                                         Padding(
+//                                           padding:
+//                                               const EdgeInsets.only(left: 4),
+//                                           child: ATRoundedBackBtn(
+//                                             bgColor: ATColors.transparent,
+//                                           ),
+//                                         ),
+//                                         Text(
+//                                           ATStrings.createShow,
+//                                           style: context.textTheme.bodyMedium,
+//                                         ),
+//                                         const SizedBox(
+//                                           width: 30,
+//                                         )
+//                                       ],
+//                                     ),
+//                                   ))),
+//                         ),
+//                       ],
+//                       body: SingleChildScrollView(
+//                         padding: const EdgeInsets.fromLTRB(0, 10, 0, 100),
+//                         physics: const BouncingScrollPhysics(),
+//                         child: Column(
+//                           children: <Widget>[
+//                             Padding(
+//                               padding: const EdgeInsets.fromLTRB(15, 0, 15, 30),
+//                               child: SelectProgramCoverArt(
+//                                 onImageSelected:
+//                                     blocContext.read<BgImageCubit>().setBgImage,
+//                               ),
+//                             ),
+
+//                             Padding(
+//                               padding: const EdgeInsets.fromLTRB(15, 0, 15, 10),
+//                               child: StreamBuilder<String>(
+//                                   stream: _titleStreamCntrl.stream,
+//                                   builder: (_, AsyncSnapshot<String> snapshot) {
+//                                     final int remaining =
+//                                         140 - (snapshot.data?.length ?? 0);
+//                                     return RowWith2Texts(
+//                                       text1: ATStrings.title,
+//                                       text2: '$remaining remaining',
+//                                     );
+//                                   }),
+//                             ),
+//                             Padding(
+//                               padding: const EdgeInsets.fromLTRB(15, 0, 15, 30),
+//                               child: ATTextFormField(
+//                                 controller: _titleCntrl,
+//                                 hintText: ATStrings.titleOfYourShow,
+//                                 prefixIcon: const SizedBox(
+//                                   width: 12,
+//                                 ),
+//                                 hintStyle:
+//                                     context.textTheme.bodySmall?.copyWith(
+//                                   color: ATColors.white.withValues(alpha: 0.4),
+//                                 ),
+//                                 disableBlueBorder: true,
+//                                 enabledBorder: OutlineInputBorder(
+//                                     borderRadius: BorderRadius.circular(14),
+//                                     borderSide: BorderSide(
+//                                         color: ATColors.transparent)),
+//                               ),
+//                             ),
+
+//                             Padding(
+//                               padding: const EdgeInsets.fromLTRB(15, 0, 15, 10),
+//                               child: StreamBuilder<String>(
+//                                   stream: _descStreamCntrl.stream,
+//                                   builder: (_, AsyncSnapshot<String> snapshot) {
+//                                     final int remaining =
+//                                         4000 - (snapshot.data?.length ?? 0);
+//                                     return RowWith2Texts(
+//                                       text1: ATStrings.description,
+//                                       text2: '$remaining remaining',
+//                                     );
+//                                   }),
+//                             ),
+//                             Padding(
+//                               padding: const EdgeInsets.fromLTRB(15, 0, 15, 30),
+//                               child: StatefulBuilder(builder:
+//                                   (_, void Function(void Function()) setter) {
+//                                 return CreateProgramSelectionItem(
+//                                   description: programDesc,
+//                                   onTap: () async {
+//                                     final String? description =
+//                                         await enterDescriptionModal(
+//                                             context: context);
+//                                     if (description != null) {
+//                                       setter(() {
+//                                         programDesc = description;
+//                                         _descStreamCntrl.add(description);
+//                                       });
+//                                     }
+//                                   },
+//                                 );
+//                               }),
+//                             ),
+
+//                             const Padding(
+//                               padding: EdgeInsets.fromLTRB(15, 0, 15, 10),
+//                               child: RowWith2Texts(text1: ATStrings.COMMUNITY),
+//                             ),
+
+//                             Padding(
+//                               padding: const EdgeInsets.fromLTRB(15, 0, 15, 10),
+//                               child: StatefulBuilder(builder:
+//                                   (_, void Function(void Function()) setter) {
+//                                 return ATScalingSwitcher(
+//                                     duration: 300,
+//                                     child: selectedCommunity == null
+//                                         ? CreateProgramSelectionItem(
+//                                             description: ATStrings
+//                                                 .selectCommunity4YourShow,
+//                                             onTap: () async {
+//                                               // final UnusedCommunity? selectedCom = await showCommunitiesDialog(context);
+//                                               // if(selectedCom != null){
+//                                               //   setter(() => selectedCommunity = selectedCom);
+//                                               // }
+//                                             },
+//                                           )
+//                                         : SelectedCommunityWidget(
+//                                             selectedCommunity:
+//                                                 selectedCommunity!,
+//                                             onClose: () => setter(
+//                                                 () => selectedCommunity = null),
+//                                             onView: () {}));
+//                               }),
+//                             ),
+//                             Padding(
+//                               padding: const EdgeInsets.fromLTRB(15, 0, 15, 30),
+//                               child: ATRichText(
+//                                 maxLines: 4,
+//                                 items: <String, TextStyle>{
+//                                   ATStrings.addCommunityDesc:
+//                                       context.textTheme.labelSmall!.copyWith(
+//                                           color: ATColors.hexC2C2C2
+//                                               .withValues(alpha: 0.76)),
+//                                   ATStrings.learnMore:
+//                                       context.textTheme.labelSmall!
+//                                 },
+//                                 textOnTap: (String text) {
+//                                   if (text == ATStrings.learnMore) {}
+//                                 },
+//                               ),
+//                             ),
+
+//                             const Padding(
+//                               padding: EdgeInsets.fromLTRB(15, 0, 15, 10),
+//                               child: RowWith2Texts(
+//                                 text1: ATStrings.addCohost,
+//                                 text2: '5 max',
+//                               ),
+//                             ),
+//                             Padding(
+//                               padding: const EdgeInsets.fromLTRB(15, 0, 15, 10),
+//                               child: BlocSelector<
+//                                       CohostServiceBloc,
+//                                       (
+//                                         List<ATCohost<bool>>,
+//                                         List<ATCohost<bool>>
+//                                       ),
+//                                       List<ATCohost<bool>>>(
+//                                   selector: ((
+//                                             List<ATCohost<bool>>,
+//                                             List<ATCohost<bool>>
+//                                           ) state) =>
+//                                       state.$2,
+//                                   builder: (_,
+//                                       List<ATCohost<bool>> selectedCoHosts) {
+//                                     final bool coHostExists = selectedCoHosts
+//                                         .any((ATCohost<bool> cohost) =>
+//                                             cohost.profilePicture != null);
+
+//                                     return ATScalingSwitcher(
+//                                       duration: 300,
+//                                       child: coHostExists
+//                                           ? SelectedCoHostsWidget(
+//                                               onEdit: () {
+//                                                 //showAvailableCoHostsModal(context: context),
+//                                               },
+//                                               selectedCohosts: const <User>[])
+//                                           : CreateProgramSelectionItem(
+//                                               leading: const ATImgLoader(
+//                                                 height: 20,
+//                                                 width: 20,
+//                                                 imgPath:
+//                                                     ATImgStrings.outlinedSearch,
+//                                               ),
+//                                               trailing: Flexible(
+//                                                 child: Text(
+//                                                   ATStrings
+//                                                       .searchAndAddCohost4YourShow,
+//                                                   style: context
+//                                                       .textTheme.bodySmall
+//                                                       ?.copyWith(
+//                                                     color: ATColors.white
+//                                                         .withValues(alpha: 0.4),
+//                                                   ),
+//                                                 ),
+//                                               ),
+//                                               onTap: () {
+//                                                 //showAvailableCoHostsModal(context: context),
+//                                               }),
+//                                     );
+//                                   }),
+//                             ),
+//                             Padding(
+//                               padding: const EdgeInsets.fromLTRB(15, 0, 15, 30),
+//                               child: Text(
+//                                 ATStrings.addCohostDesc,
+//                                 maxLines: 5,
+//                                 style: context.textTheme.labelSmall!.copyWith(
+//                                     color: ATColors.hexC2C2C2
+//                                         .withValues(alpha: 0.76)),
+//                               ),
+//                             ),
+
+//                             const Padding(
+//                               padding: EdgeInsets.fromLTRB(15, 0, 15, 10),
+//                               child: RowWith2Texts(text1: ATStrings.hashtags),
+//                             ),
+//                             Padding(
+//                               padding: const EdgeInsets.fromLTRB(15, 0, 15, 10),
+//                               child: CreateProgramSelectionItem(
+//                                 description: '${ATStrings.addHashtags}s',
+//                                 onTap: () {
+                                  
+//                                 }
+//                               ),
+//                             ),
+
+//                             const SelectedHashtagsRow(),
+
+//                             Padding(
+//                               padding: const EdgeInsets.fromLTRB(15, 0, 15, 30),
+//                               child: Text(
+//                                 ATStrings.addHashtagsDesc,
+//                                 maxLines: 5,
+//                                 style: context.textTheme.labelSmall?.copyWith(
+//                                     color: ATColors.hexC2C2C2
+//                                         .withValues(alpha: 0.76)),
+//                               ),
+//                             ),
+
+//                             const Padding(
+//                               padding: EdgeInsets.fromLTRB(15, 0, 15, 10),
+//                               child: RowWith2Texts(
+//                                   text1: ATStrings.audienceAccess),
+//                             ),
+//                             Padding(
+//                               padding: const EdgeInsets.fromLTRB(15, 0, 15, 10),
+//                               child: StatefulBuilder(builder:
+//                                   (_, void Function(void Function()) setter) {
+//                                 return ATScalingSwitcher(
+//                                     duration: 300,
+//                                     child: CreateProgramSelectionItem(
+//                                       description: chooseAudienceAccess,
+//                                       descStyle: chooseAudienceAccess ==
+//                                               ATStrings
+//                                                   .selectWhoCanAccessYourShow
+//                                           ? null
+//                                           : context.textTheme.bodySmall,
+//                                       onTap: () async {
+//                                         //showSelectAudienceAccessForEventsDialog(context);
+//                                         // final String? selectedAccessType = await showAudienceAccessTypeModal(
+//                                         //   context: context,
+//                                         // );
+//                                         // setter(
+//                                         //   (){
+//                                         //     if(selectedAccessType == null){
+//                                         //       chooseAudienceAccess = ATStrings.selectWhoCanAccessYourShow;
+//                                         //     }
+//                                         //     else{
+//                                         //       chooseAudienceAccess = selectedAccessType;
+//                                         //     }
+//                                         //   }
+//                                         // );
+//                                       },
+//                                     ));
+//                               }),
+//                             ),
+//                             Padding(
+//                               padding: const EdgeInsets.fromLTRB(15, 0, 15, 30),
+//                               child: Text(
+//                                 ATStrings.promptToSetupSubPlan,
+//                                 maxLines: 5,
+//                                 style: context.textTheme.labelSmall!.copyWith(
+//                                     color: ATColors.hexC2C2C2
+//                                         .withValues(alpha: 0.76)),
+//                               ),
+//                             ),
+
+//                             const Padding(
+//                               padding: EdgeInsets.fromLTRB(15, 0, 15, 30),
+//                               child: ATDivider(
+//                                 height: 1.1,
+//                               ),
+//                             ),
+
+//                             Align(
+//                               alignment: Alignment.centerLeft,
+//                               child: Padding(
+//                                 padding:
+//                                     const EdgeInsets.only(left: 15, right: 15),
+//                                 child: Text(
+//                                   ATStrings.moderationTools,
+//                                   style: context.textTheme.labelSmall?.copyWith(
+//                                     fontSize: ATSizes.size13,
+//                                   ),
+//                                 ),
+//                               ),
+//                             ),
+
+//                             Padding(
+//                                 padding:
+//                                     const EdgeInsets.fromLTRB(15, 15, 15, 10),
+//                                 child: Row(
+//                                   children: <Widget>[
+//                                     const Icon(
+//                                       Icons.front_hand_outlined,
+//                                       size: 18,
+//                                     ),
+//                                     const SizedBox(
+//                                       width: 5,
+//                                     ),
+//                                     Text(
+//                                       ATStrings.handRaising,
+//                                       style: context.textTheme.titleLarge
+//                                           ?.copyWith(
+//                                               fontWeight: ATFontWeights.w500),
+//                                     ),
+//                                   ],
+//                                 )),
+//                             Padding(
+//                               padding: const EdgeInsets.fromLTRB(15, 0, 15, 10),
+//                               child: StatefulBuilder(builder:
+//                                   (_, void Function(void Function()) setter) {
+//                                 return ATScalingSwitcher(
+//                                     duration: 300,
+//                                     child: CreateProgramSelectionItem(
+//                                       description: chooseAudienceAccess,
+//                                       descStyle: chooseAudienceAccess ==
+//                                               ATStrings
+//                                                   .selectWhoCanAccessYourShow
+//                                           ? null
+//                                           : context.textTheme.bodySmall,
+//                                       onTap: () async {
+//                                         //await choose2AllowHandRaisingModal(context);
+//                                       },
+//                                     ));
+//                               }),
+//                             ),
+//                             Padding(
+//                                 padding:
+//                                     const EdgeInsets.fromLTRB(15, 0, 15, 30),
+//                                 child: ATRichText(
+//                                   items: <String, TextStyle>{
+//                                     ATStrings
+//                                             .youWillHaveAccessToModerationTools:
+//                                         context.textTheme.labelSmall!.copyWith(
+//                                             color: ATColors.hexC2C2C2
+//                                                 .withValues(alpha: 0.76)),
+//                                     ' ${ATStrings.learnMore}':
+//                                         context.textTheme.labelSmall!
+//                                   },
+//                                 )),
+
+//                             CreateShowTextFieldTitle(
+//                               title: "Moderation Tools",
+//                               titleStyle: context.textTheme.titleMedium
+//                                   ?.copyWith(fontWeight: ATFontWeights.w500),
+//                             ),
+//                             SizedBox(height: 16.h),
+
+//                             // Hand Raising
+//                             ShowTypeVisibilityWidget(
+//                               showType: ShowType.all,
+//                               child: Container(
+//                                 margin: EdgeInsets.only(bottom: 12.h),
+//                                 child: const CreateShowTextFieldTitle(
+//                                   prefixIcon: Icons.front_hand_outlined,
+//                                   title: "Hand Raising",
+//                                 ),
+//                               ),
+//                             ),
+//                             ShowTypeVisibilityWidget(
+//                               showType: ShowType.all,
+//                               child: CreateShowTextFormField(
+//                                 readOnly: true,
+//                                 controller: service.handRaisingController,
+//                                 hintText: "Select audience interaction",
+//                                 suffixIcon: Icon(
+//                                   Icons.arrow_forward_ios,
+//                                   size: 20.w,
+//                                   color: ATColors.white.withOpacity(0.4),
+//                                 ),
+//                                 onTap: () async {
+//                                   //await choose2AllowHandRaisingModal(context);
+//                                 },
+//                               ),
+//                             ),
+//                             ShowTypeVisibilityWidget(
+//                               showType: ShowType.all,
+//                               child: Container(
+//                                 margin: EdgeInsets.only(top: 8.h, bottom: 30.h),
+//                                 width: 360.w,
+//                                 child: Text(
+//                                   "While you're live, you’ll have full access to your moderation tools, allowing you to manage interactions and maintain control throughout the session. Learn more",
+//                                   overflow: TextOverflow.visible,
+//                                   style: context.textTheme.titleSmall?.copyWith(
+//                                     fontWeight: ATFontWeights.w500,
+//                                     color: ATColors.white.withOpacity(0.4),
+//                                   ),
+//                                 ),
+//                               ),
+//                             ),
+
+//                             // Capacity
+//                             // ShowTypeVisibilityWidget(
+//                             //   showType: widget.showType,
+//                             //   allowedShowTypes: const <ShowType>[ShowType.event],
+//                             //   child: Container(
+//                             //     margin: EdgeInsets.only(bottom: 12.h),
+//                             //     child: const CreateShowTextFieldTitle(
+//                             //       prefixIcon: Icons.people_outline,
+//                             //       title: "Capacity",
+//                             //     ),
+//                             //   ),
+//                             // ),
+//                             // ShowTypeVisibilityWidget(
+//                             //   showType: widget.showType,
+//                             //   allowedShowTypes: const <ShowType>[ShowType.event],
+//                             //   child: CreateShowTextFormField(
+//                             //     readOnly: true,
+//                             //     controller: service.capacityController,
+//                             //     hintText: "Unlimited",
+//                             //     suffixIcon: Icon(
+//                             //       Icons.arrow_forward_ios,
+//                             //       size: 20.w,
+//                             //       color: ATColors.white.withOpacity(0.4),
+//                             //     ),
+//                             //     onTap: () async {
+//                             //       await showEventCapacitySelectionDialog(
+//                             //           context: context);
+//                             //     },
+//                             //   ),
+//                             // ),
+//                             // ShowTypeVisibilityWidget(
+//                             //   showType: widget.showType,
+//                             //   allowedShowTypes: const <ShowType>[ShowType.event],
+//                             //   child: Container(
+//                             //     margin: EdgeInsets.only(top: 8.h, bottom: 30.h),
+//                             //     width: 360.w,
+//                             //     child: Text(
+//                             //       "Set the maximum number of listeners for your event. Once the limit is reached, no additional participants can join or pay.",
+//                             //       overflow: TextOverflow.visible,
+//                             //       style: context
+//                             //           .textTheme
+//                             //           .titleSmall
+//                             //           ?.copyWith(
+//                             //         fontWeight: ATFontWeights.w500,
+//                             //         color:
+//                             //         ATColors.white.withOpacity(0.4),
+//                             //       ),
+//                             //     ),
+//                             //   ),
+//                             // ),
+
+//                             // Whispers
+//                             // ShowTypeVisibilityWidget(
+//                             //   showType: widget.showType,
+//                             //   allowedShowTypes: const <ShowType>[
+//                             //     ShowType.event,
+//                             //     ShowType.episode
+//                             //   ],
+//                             //   child: Container(
+//                             //     margin: EdgeInsets.only(bottom: 12.h),
+//                             //     child: const CreateShowTextFieldTitle(
+//                             //       prefixIcon: Iconsax.message,
+//                             //       title: "Whispers",
+//                             //     ),
+//                             //   ),
+//                             // ),
+//                             // ShowTypeVisibilityWidget(
+//                             //   showType: widget.showType,
+//                             //   allowedShowTypes: const <ShowType>[
+//                             //     ShowType.event,
+//                             //     ShowType.episode
+//                             //   ],
+//                             //   child: CreateShowTextFormField(
+//                             //     readOnly: true,
+//                             //     controller: service.whisperController,
+//                             //     hintText: "Turn whispers on or off for this event",
+//                             //     suffixIcon: Icon(
+//                             //       Icons.arrow_forward_ios,
+//                             //       size: 20.w,
+//                             //       color: ATColors.white.withOpacity(0.4),
+//                             //     ),
+//                             //     onTap: () async {
+//                             //       await showWhispersDialog(context);
+//                             //     },
+//                             //   ),
+//                             // ),
+//                             // ShowTypeVisibilityWidget(
+//                             //   showType: widget.showType,
+//                             //   allowedShowTypes: const <ShowType>[
+//                             //     ShowType.event,
+//                             //     ShowType.episode
+//                             //   ],
+//                             //   child: Container(
+//                             //     margin: EdgeInsets.only(top: 8.h, bottom: 30.h),
+//                             //     width: 360.w,
+//                             //     child: Text(
+//                             //       "Whispers are randomly selected comments from your live audience that appear on your event page while you are live. \n \nNon-attending users can see these comments, encouraging them to join your live event.",
+//                             //       overflow: TextOverflow.visible,
+//                             //       style: context
+//                             //           .textTheme
+//                             //           .titleSmall
+//                             //           ?.copyWith(
+//                             //         fontWeight: ATFontWeights.w500,
+//                             //         color:
+//                             //         ATColors.white.withOpacity(0.4),
+//                             //       ),
+//                             //     ),
+//                             //   ),
+//                             // ),
+//                           ],
+//                         ),
+//                       ),
+//                     ),
+//                   ),
+//                 ),
+//               ],
+//             );
+//           }),
+//           resizeToAvoidBottomInset: false,
+//           bottomSheet: ATContainer(
+//             height: 70,
+//             gradient: LinearGradient(
+//                 begin: Alignment.topCenter,
+//                 end: Alignment.bottomCenter,
+//                 colors: <Color>[
+//                   ATColors.hex0D0D0D.withValues(alpha: 0.1),
+//                   ATColors.hex0D0D0D
+//                 ]),
+//             padding: const EdgeInsets.fromLTRB(15, 10, 15, 10),
+//             child: BlocBuilder<BgImageCubit, (String, Uint8List?)>(
+//                 builder: (_, (String, Uint8List?) selectedImgPath) {
+//               return ATPlainElevatedBtn(
+//                 bgColor: ATColors.white,
+//                 fgColor: ATColors.hex0D0D0D,
+//                 btnTitle: ATStrings.next,
+//                 onPressed: () async {
+//                   //await showAddCoHostDialog(context);
+//                   //await showAddHashtagDialog(context);
+//                   //await showHandRaisingDialog(context);
+//                   //showAddCommunitiesDialog(context);
+//                   //showSelectAudienceAccessForShowsDialog(context);
+//                   //context.pushNamed(AmptiveRoutes.CREATE_SHOW_SUCCESS);
+//                 },
+
+//                 //onPressed: activate ? () async{
+//                 //await showAddCoHostDialog(context);
+//                 //await showAddHashtagDialog(context);
+//                 //showAddCommunitiesDialog(context);
+//                 //showSelectAudienceAccessForEventsDialog(context);
+//                 //showWhispersDialog(context);
+//                 //await showEventCapacitySelectionDialog(context: context);
+//                 //context.pushNamed(ATRoutes.EVENT_SCHEDULED_SCREEN);
+//                 //} : null,
+//               );
+//             }),
+//           ),
+//         ),
+//       ),
+//     );
+//   }
+// }

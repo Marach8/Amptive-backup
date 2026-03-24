@@ -491,7 +491,7 @@ class ATStrings {
   static const String DISCOVER_COMMUNITIES =
       'Discover communities with interesting shows and events';
 
-  static const String CREATE_SHOW_OR_EVENT = 'Create Show or Event';
+  static const String createShowOrEvent = 'Create Show or Event';
   static const String ENTER_10_DIGIT_ACCT_NO = 'Your 10-digit account number';
 
   static const String CHOOSE_WITHDRWAL_METHOD =
@@ -502,7 +502,7 @@ class ATStrings {
   static const String selectBank = 'Select Bank';
   static const String selectBankCountry =
       'Please select the country where your bank is located.';
-  static const String CHOOSE_2_CREATE_SHOW_OR_EVENT =
+  static const String chooseToCreateShowOrEvent =
       "Choose whether you'd like to create a Show or an Event befor proceeding.";
   static const String createShow = 'Create Show';
   static const String CREATE_EVENT = 'Create Event';
