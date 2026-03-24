@@ -1,9 +1,12 @@
 import 'package:amptive/src/config/config_export.dart';
+import 'package:amptive/src/config/services/network_service/interceptor.dart';
+import 'package:amptive/src/features/auth/cubits/local_user_data_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:nested/nested.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -42,24 +45,32 @@ class AmptiveApp extends StatelessWidget {
       minTextAdapt: true,
       splitScreenMode: true,
       builder: (_, Widget? child) {
-        return MaterialApp.router(
-          scaffoldMessengerKey: scaffoldMessengerKey,
-          debugShowCheckedModeBanner: false,
-          themeMode: ThemeMode.dark,
-          darkTheme: AmptiveThemeData.darkTheme,
-          theme: AmptiveThemeData.darkTheme,
-          routerConfig: amptiveAppRouter,
-          builder: (BuildContext context, Widget? child) {
-            final MediaQueryData mediaQuery = MediaQuery.of(context)
-                .copyWith(textScaler: TextScaler.noScaling);
-            return MediaQuery(
-              data: mediaQuery,
-              child: ScrollConfiguration(
-                behavior: const _GlobalScrollBehavior(),
-                child: child!,
-              ),
-            );
-          },
+        return MultiBlocProvider(
+          providers: <SingleChildWidget>[
+            BlocProvider<LocalUserDataCubit>(
+              create: (_) => LocalUserDataCubit()),
+            BlocProvider<AuthGuardCubit>.value(
+              value: authGuardCubit),
+          ],
+          child: MaterialApp.router(
+            scaffoldMessengerKey: scaffoldMessengerKey,
+            debugShowCheckedModeBanner: false,
+            themeMode: ThemeMode.dark,
+            darkTheme: AmptiveThemeData.darkTheme,
+            theme: AmptiveThemeData.darkTheme,
+            routerConfig: amptiveAppRouter,
+            builder: (BuildContext context, Widget? child) {
+              final MediaQueryData mediaQuery = MediaQuery.of(context)
+                  .copyWith(textScaler: TextScaler.noScaling);
+              return MediaQuery(
+                data: mediaQuery,
+                child: ScrollConfiguration(
+                  behavior: const _GlobalScrollBehavior(),
+                  child: child!,
+                ),
+              );
+            },
+          ),
         );
       },
     );

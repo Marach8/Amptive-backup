@@ -80,6 +80,5 @@ List<SingleChildWidget> providers() {
     BlocProvider(create: (_) => AccountTypeBloc()),
     BlocProvider(create: (_) => CohostServiceBloc()),
     BlocProvider(create: (_) => HashtagServiceBloc()),
-    BlocProvider<LocalUserDataCubit>(create: (_) => LocalUserDataCubit()),
   ];
 }

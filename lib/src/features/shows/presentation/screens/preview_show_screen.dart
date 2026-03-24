@@ -93,7 +93,7 @@ class _SubWidgetState extends State<_SubWidget> {
                       imgPath: widget.hostedShow.coverUrl ?? ''),
                 ),
               ),
-              ATContainer(
+              Container(
                 color: ATColors.hex0D0D0D.withValues(alpha: 0.75),
                 child: NotificationListener<ScrollNotification>(
                   onNotification:
@@ -131,139 +131,138 @@ class _SubWidgetState extends State<_SubWidget> {
                       )
                     ],
 
-                    body: Builder(
-                      builder: (BuildContext context) {
-                        return SingleChildScrollView(
-                          padding: const EdgeInsets.fromLTRB(15, 10, 15, 5),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
+                    body: SingleChildScrollView(
+                      padding: const EdgeInsets.fromLTRB(15, 10, 15, 5),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          Hero(
+                            tag: widget.hostedShow.showId ?? '',
+                            child: CoverPicWithTopRightMoreIcon(
+                                imgPath: widget.hostedShow.coverUrl ?? '',
+                                onMoreTapped: () async {
+                                  final SelectedProgramAction? foo =
+                                      await showProgramOptions(
+                                    context: context,
+                                    toggleFollowingCubit:
+                                        context.read<ToggleFollowingCubit>(),
+                                    targetUserName:
+                                        widget.hostedShow.host?.username ?? '',
+                                    targetUserId: widget.hostedShow.host?.id ?? '',
+                                  );
+                                }),
+                          ),
+                          const SizedBox(height: 24),
+                        
+                          if(hasEpisodes) ...<Widget>[
+                            ExistingEpisodesIndicator(
+                              activeEpisode: widget.hostedShow.activeEpisode?.copyShowId(
+                                showId: widget.hostedShow.showId
+                              )
+                            ),
+                            const SizedBox(height: 12),
+                          ],
+                          
+                          Text(
+                            maxLines: 2,
+                            widget.hostedShow.title ?? '',
+                            overflow: TextOverflow.clip,
+                            style: context.textTheme.displayMedium?.copyWith(
+                              fontSize: ATSizes.size24,
+                              fontWeight: ATFontWeights.w600,
+                            ),
+                          ),
+                          const SizedBox(height: 12),
+                          Row(
+                            spacing: 20,
                             children: <Widget>[
-                              CoverPicWithTopRightMoreIcon(
-                                  imgPath: widget.hostedShow.coverUrl ?? '',
-                                  onMoreTapped: () async {
-                                    final SelectedProgramAction? foo =
-                                        await showProgramOptions(
-                                      context: context,
-                                      toggleFollowingCubit:
-                                          context.read<ToggleFollowingCubit>(),
-                                      targetUserName:
-                                          widget.hostedShow.host?.username ?? '',
-                                      targetUserId: widget.hostedShow.host?.id ?? '',
-                                    );
-                                  }),
-                              const SizedBox(height: 24),
-                            
-                              if(hasEpisodes) ...<Widget>[
-                                ExistingEpisodesIndicator(
-                                  activeEpisode: widget.hostedShow.activeEpisode?.copyShowId(
-                                    showId: widget.hostedShow.showId
-                                  )
-                                ),
-                                const SizedBox(height: 12),
-                              ],
-                              
-                              Text(
-                                maxLines: 2,
-                                widget.hostedShow.title ?? '',
-                                overflow: TextOverflow.clip,
-                                style: context.textTheme.displayMedium?.copyWith(
-                                  fontSize: ATSizes.size24,
-                                  fontWeight: ATFontWeights.w600,
-                                ),
-                              ),
-                              const SizedBox(height: 12),
-                              Row(
-                                spacing: 20,
-                                children: <Widget>[
-                                  if(isLive) const LiveIndicatorWithAnimatinWifiIcon(),
-                                  RenderCommunityName(communityName: widget.hostedShow.community?.name)
-                                ],
-                              ),
-                              const SizedBox(height: 40),
-                              Text(
-                                ATStrings.hashtags,
-                                style: context.textTheme.bodySmall
-                                    ?.copyWith(fontSize: ATSizes.size17),
-                              ),
-                              Divider(
-                                color: ATColors.white.withValues(alpha: 0.1),
-                              ),
-                              const SizedBox(height: 5),
-                              RenderHashTags(hashtags: widget.hostedShow.tags),
-                              const SizedBox(height: 30),
-                              Text(
-                                ATStrings.hostedBy,
-                                style: context.textTheme.bodySmall
-                                    ?.copyWith(fontSize: ATSizes.size17),
-                              ),
-                              Divider(
-                                color: ATColors.white.withValues(alpha: 0.1),
-                              ),
-                              ...(widget.hostedShow.coHosts ?? <CoHost>[]).map(
-                                (CoHost cohost) => TileWithLeadingImage(
-                                  padding: const EdgeInsets.symmetric(vertical: 9),
-                                  title: cohost.username ?? '',
-                                  subtitle: 'Host',
-                                  diameter: 42,
-                                  leadingImagePath: cohost.profilePicture ?? ATImgStrings.jpeg1,
-                                )
-                              ),
-                              const SizedBox(height: 30),
-                              // Text(
-                              //   '656 Listening',
-                              //   style: context.textTheme.bodySmall
-                              //       ?.copyWith(fontSize: ATSizes.size17),
-                              // ),
-                              // Divider(
-                              //   color: ATColors.white.withValues(alpha: 0.1),
-                              // ),
-                              // const SizedBox(
-                              //   height: 10,
-                              // ),
-                              // const NoOfListenersWidget(),
-                              // const SizedBox(
-                              //   height: 20,
-                              // ),
-                              // Text(
-                              //   'daniel, jessica, gerald, peter and 652 more',
-                              //   style: context.textTheme.bodySmall?.copyWith(
-                              //       color: ATColors.white.withValues(alpha: 0.6)),
-                              // ),
-                              // const SizedBox( height: 35),
-                              Text(
-                                'About Show',
-                                style: context.textTheme.bodySmall
-                                    ?.copyWith(fontSize: ATSizes.size17),
-                              ),
-                              Divider(
-                                color: ATColors.white.withValues(alpha: 0.1),
-                              ),
-                              ReadMoreText(
-                                widget.hostedShow.description ?? '',
-                                trimMode: TrimMode.Length,
-                                trimExpandedText: ATStrings.showLess,
-                                trimCollapsedText: ATStrings.showMore,
-                                colorClickableText: ATColors.white,
-                                trimLength: 100,
-                                style: TextStyle(
-                                  color: ATColors.white.withValues(alpha: 0.6),
-                                  fontSize: ATSizes.size14,
-                                  fontWeight: ATFontWeights.w500,
-                                ),
-                              ),
-                              const SizedBox(height: 150),
-                              // Text(
-                              //   ATStrings.whispers,
-                              //   style: context.textTheme.bodySmall
-                              //       ?.copyWith(fontSize: ATSizes.size17),
-                              // ),
-                              // Divider(
-                              //   color: ATColors.white.withValues(alpha: 0.1),
-                              // ),
+                              if(isLive) const LiveIndicatorWithAnimatinWifiIcon(),
+                              RenderCommunityName(communityName: widget.hostedShow.community?.name)
                             ],
                           ),
-                        );
-                      }
+                          const SizedBox(height: 40),
+                          Text(
+                            ATStrings.hashtags,
+                            style: context.textTheme.bodySmall
+                                ?.copyWith(fontSize: ATSizes.size17),
+                          ),
+                          Divider(
+                            color: ATColors.white.withValues(alpha: 0.1),
+                          ),
+                          const SizedBox(height: 5),
+                          RenderHashTags(hashtags: widget.hostedShow.tags),
+                          const SizedBox(height: 30),
+                          Text(
+                            ATStrings.hostedBy,
+                            style: context.textTheme.bodySmall
+                                ?.copyWith(fontSize: ATSizes.size17),
+                          ),
+                          Divider(
+                            color: ATColors.white.withValues(alpha: 0.1),
+                          ),
+                          ...(widget.hostedShow.coHosts ?? <CoHost>[]).map(
+                            (CoHost cohost) => TileWithLeadingImage(
+                              padding: const EdgeInsets.symmetric(vertical: 9),
+                              title: cohost.username ?? '',
+                              subtitle: 'Host',
+                              diameter: 42,
+                              leadingImagePath: cohost.profilePicture ?? ATImgStrings.jpeg1,
+                            )
+                          ),
+                          const SizedBox(height: 30),
+                          // Text(
+                          //   '656 Listening',
+                          //   style: context.textTheme.bodySmall
+                          //       ?.copyWith(fontSize: ATSizes.size17),
+                          // ),
+                          // Divider(
+                          //   color: ATColors.white.withValues(alpha: 0.1),
+                          // ),
+                          // const SizedBox(
+                          //   height: 10,
+                          // ),
+                          // const NoOfListenersWidget(),
+                          // const SizedBox(
+                          //   height: 20,
+                          // ),
+                          // Text(
+                          //   'daniel, jessica, gerald, peter and 652 more',
+                          //   style: context.textTheme.bodySmall?.copyWith(
+                          //       color: ATColors.white.withValues(alpha: 0.6)),
+                          // ),
+                          // const SizedBox( height: 35),
+                          Text(
+                            'About Show',
+                            style: context.textTheme.bodySmall
+                                ?.copyWith(fontSize: ATSizes.size17),
+                          ),
+                          Divider(
+                            color: ATColors.white.withValues(alpha: 0.1),
+                          ),
+                          ReadMoreText(
+                            widget.hostedShow.description ?? '',
+                            trimMode: TrimMode.Length,
+                            trimExpandedText: ATStrings.showLess,
+                            trimCollapsedText: ATStrings.showMore,
+                            colorClickableText: ATColors.white,
+                            trimLength: 100,
+                            style: TextStyle(
+                              color: ATColors.white.withValues(alpha: 0.6),
+                              fontSize: ATSizes.size14,
+                              fontWeight: ATFontWeights.w500,
+                            ),
+                          ),
+                          const SizedBox(height: 150),
+                          // Text(
+                          //   ATStrings.whispers,
+                          //   style: context.textTheme.bodySmall
+                          //       ?.copyWith(fontSize: ATSizes.size17),
+                          // ),
+                          // Divider(
+                          //   color: ATColors.white.withValues(alpha: 0.1),
+                          // ),
+                        ],
+                      ),
                     ),
                   ),
                 ),

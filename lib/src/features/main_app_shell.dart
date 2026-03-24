@@ -1,4 +1,6 @@
+import 'package:amptive/src/config/services/network_service/interceptor.dart' show AuthGuardCubit;
 import 'package:amptive/src/features/auth/cubits/local_user_data_cubit.dart';
+import 'package:amptive/src/features/auth/presentation/screens/login_screen.dart';
 import 'package:amptive/src/features/home/cubits/home_feed_cubit.dart';
 import 'package:amptive/src/features/home/cubits/live_users_cubit.dart';
 import 'package:amptive/src/features/profile/cubits/remote_user_data_cubit.dart';
@@ -7,6 +9,7 @@ import 'package:amptive/src/features/main_app_nav_bar.dart';
 import 'package:amptive/src/features/home/presentation/screens/home_landing_screen.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:nested/nested.dart';
 import '../global_export.dart';
 import '../services/go_live_service/go_live_service.dart';
@@ -111,31 +114,45 @@ class __SubWidgetState extends State<_SubWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return ATAnnotatedRegion(
-      child: SafeArea(
-        bottom: false,
-        top: false,
-        child: Scaffold(
-          body: BlocSelector<ATNavBarBloc, (int, bool), int>(
-            selector: ((int, bool) st) => st.$1,
-            builder: (_, int index) {
-              return IndexedStack(
-                index: index,
-                children: <Widget>[
-                  HomeTabView(
-                    nestedKey: _nestedKey,
-                    liveUsersScrollController: _liveUsersScrollController,
-                  ),
-                  const DiscoverTabView(),
-                  const SizedBox(),
-                  const NotificationTabView()
-                ]
-              );
-            }
+    return BlocListener<AuthGuardCubit, bool?>(
+      listener: (_, bool? isNotAuthenticated){
+        if(isNotAuthenticated == true){
+          context.read<AuthGuardCubit>().reset();
+          context.goNamed(
+            ATRoutes.temporaryLoginScreen,
+            extra: const LoginScreenEntryParams(
+              title: 'Login',
+              notification: 'Session Expired. Please login',
+            )
+          );
+        }
+      },
+      child: ATAnnotatedRegion(
+        child: SafeArea(
+          bottom: false,
+          top: false,
+          child: Scaffold(
+            body: BlocSelector<ATNavBarBloc, (int, bool), int>(
+              selector: ((int, bool) st) => st.$1,
+              builder: (_, int index) {
+                return IndexedStack(
+                  index: index,
+                  children: <Widget>[
+                    HomeTabView(
+                      nestedKey: _nestedKey,
+                      liveUsersScrollController: _liveUsersScrollController,
+                    ),
+                    const DiscoverTabView(),
+                    const SizedBox(),
+                    const NotificationTabView()
+                  ]
+                );
+              }
+            ),
+            resizeToAvoidBottomInset: false,
+            backgroundColor: ATColors.transparent,
+            bottomSheet: const MainAppBottomNav()
           ),
-          resizeToAvoidBottomInset: false,
-          backgroundColor: ATColors.transparent,
-          bottomSheet: const MainAppBottomNav()
         ),
       ),
     );
