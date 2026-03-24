@@ -89,10 +89,9 @@ class GoLiveTypeSelectionScreen extends StatelessWidget {
               child: ATPlainElevatedBtn(
                 onPressed: isBtnActive
                     ? () => context.pushNamed(
-                          ATRoutes.listHostedShowsScreen,
-                          extra: state == 0
-                              ? GoLiveProgramType.show
-                              : GoLiveProgramType.event,
+                          state == 0
+                              ? ATRoutes.listHostedShowsScreen
+                              : ATRoutes.listHostedEventsScreen,
                         )
                     : null,
                 btnTitle: ATStrings.cContinue,

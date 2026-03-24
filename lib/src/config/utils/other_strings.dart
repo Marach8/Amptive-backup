@@ -516,7 +516,7 @@ class ATStrings {
   static const String createNewShow = 'Create new show';
   static const String createNewEvent = 'Create new event';
   static const String chooseShow = 'Choose Show';
-  static const String CHOOSE_EVENT = 'Choose Event';
+  static const String chooseEvent = 'Choose Event';
   static const String CREATE_UR_SHOW = 'Create your show';
   static const String CREATE_UR_EVENT = 'Create your event';
   static const String addCommunity = 'Add Community';

@@ -41,7 +41,7 @@ class HostedShowsCubit extends Cubit<ATAppState<HostedShowsResponseModel>> {
     try {
       final ApiResponse<HostedShowsResponseModel> response =
           await showsRepo.fetchHostedShows(
-        page: (currentHostedShowsData?.page ?? -1) + 1,
+        page: (currentHostedShowsData?.page ?? 0) + 1,
         pageSize: 20,
         refresh: forceRefresh,
       );

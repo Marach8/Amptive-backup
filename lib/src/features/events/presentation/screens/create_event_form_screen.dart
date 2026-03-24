@@ -1,8 +1,8 @@
 import 'dart:async';
 import 'dart:typed_data';
 import 'dart:ui';
-
 import 'package:amptive/src/config/config_export.dart';
+import 'package:amptive/src/features/events/cubits/hosted_events_cubit.dart';
 import 'package:amptive/src/features/go_live/go_live_export.dart';
 import 'package:amptive/src/services/create_show/create_show_service.dart';
 import 'package:amptive/src/shared/animated_switcher.dart';
@@ -16,7 +16,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get_it/get_it.dart';
 import 'package:nested/nested.dart';
-
 import 'package:amptive/src/shared/back_button.dart';
 import 'package:amptive/src/shared/custom_container_widget.dart';
 import 'package:amptive/src/shared/elevated_button_widget.dart';
@@ -27,7 +26,6 @@ import 'package:amptive/src/shared/sliver_header_delegate.dart';
 import '../../../../models/host.dart';
 import '../../../../shared/rich_text.dart';
 import '../../../../views/widgets/other_widgets/main_application_widgets/widgets_in_create_show_event/create_show_text_form_field.dart';
-
 import 'dart:async';
 import 'dart:developer' show log;
 import 'dart:typed_data';
@@ -60,9 +58,9 @@ import '../../../../config/utils/dialogs/communities_modal.dart';
 class CreateEventFormScreen extends StatelessWidget {
   const CreateEventFormScreen({
     super.key,
-    required this.hostedShowsCubit,
+    required this.hostedEventsCubit,
   });
-  final HostedShowsCubit hostedShowsCubit;
+  final HostedEventsCubit hostedEventsCubit;
 
   @override
   Widget build(BuildContext context) {
@@ -78,7 +76,7 @@ class CreateEventFormScreen extends StatelessWidget {
         BlocProvider<AllHashtagsCubit>(create: (_) => AllHashtagsCubit()),
         BlocProvider<SelectedHashTagsCubit>(
           create: (_) => SelectedHashTagsCubit()),
-        BlocProvider<HostedShowsCubit>.value(value: hostedShowsCubit,),
+        BlocProvider<HostedEventsCubit>.value(value: hostedEventsCubit,),
       ],
       child: const _SubWidget(),
     );
