@@ -32,26 +32,43 @@ class ProfileRepoImpl implements ProfileRepo {
   }
 
   @override
-  Future<ApiResponse<dynamic>> updateUserProfile({
-    required String profilePicture,
-  }) async {
-    try {
-      final Map<String, dynamic> body = <String, dynamic>{
-        "profile_picture": profilePicture,
-      };
+Future<ApiResponse<dynamic>> updateUserProfile({
+  String? profilePicture,
+  String? name,
+  String? username,
+  String? bio,
+  String? country,
+  String? coverPhoto,
+  String? xUrl,
+  String? instagramUrl,
+  String? linkedinUrl,
+  String? websiteUrl,
+}) async {
+  try {
+    final Map<String, dynamic> body = <String, dynamic>{};
+    
+    if (profilePicture != null) body["profile_picture"] = profilePicture;
+    if (name != null) body["name"] = name;
+    if (username != null) body["username"] = username;
+    if (bio != null) body["bio"] = bio;
+    if (country != null) body["country"] = country;
+    if (coverPhoto != null) body["cover_photo"] = coverPhoto;
+    if (xUrl != null) body["x_url"] = xUrl;
+    if (instagramUrl != null) body["instagram_url"] = instagramUrl;
+    if (linkedinUrl != null) body["linkedin_url"] = linkedinUrl;
+    if (websiteUrl != null) body["website_url"] = websiteUrl;
 
-      // 2. Send the request
-      final Response<dynamic> response = await networkService.patch(
-        ATEndpoints.updateUserProfile,
-        data: body,
-      );
-
-      return Successful<dynamic>(data: response.data);
-    } catch (e) {
-      log('Error in updating user profile: $e');
-      return Unsuccessful<dynamic>(error: ATException.resolveException(e));
-    }
+    final Response<dynamic> response = await networkService.patch(
+      ATEndpoints.updateUserProfile,
+      data: body,
+    );
+    return Successful<dynamic>(data: response.data);
+  } catch (e) {
+    return Unsuccessful<dynamic>(error: ATException.resolveException(e));
   }
+}
+
+
   
    @override
   Future <ApiResponse<FollowersResponseModel>> fetchFollowers ({
@@ -73,4 +90,41 @@ class ProfileRepoImpl implements ProfileRepo {
       return Unsuccessful<FollowersResponseModel>(error: ATException.resolveException(e));
     }
   }
+
+  @override
+Future<ApiResponse<String>> sendEmailAndPhoneOtp({required Map<String, dynamic> param}) async {
+  try {
+    final Response<dynamic> response = await networkService.patch(
+      ATEndpoints.updateEmailAndPhone,
+      data: param
+    );
+    print('📥 sendEmailAndPhoneOtp Response: ${response.data}');
+    print('📥 Type: ${response.data.runtimeType}');
+    final String otpCode = response.data['data']['otp_code'] as String;
+    return Successful<String>(data: otpCode);
+  } catch (e) {
+    return Unsuccessful<String>(error: ATException.resolveException(e));
+  }
+}
+
+  @override
+  Future<ApiResponse<dynamic>> verifyOtp({
+    required Map<String, dynamic> param,
+  }) async {
+    try {
+      final Response<dynamic> response = await networkService.post(
+        ATEndpoints.verifyEmailOrPhoneOtp,
+        data: param,
+      );
+
+      return Successful<dynamic>(data: response.data);
+    } catch (e) {
+      log('Verify OTP error: $e');
+      return Unsuccessful<dynamic>(
+        error: ATException.resolveException(e),
+      );
+    }
+  }
+
+
 }

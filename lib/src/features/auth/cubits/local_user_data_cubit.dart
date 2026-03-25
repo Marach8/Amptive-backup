@@ -66,7 +66,13 @@ class CachedUserData extends Equatable {
       this.pictureUrl,
       this.phoneNumber,
       this.followersCount,
-      this.followingCount});
+      this.followingCount,
+      this.bio,
+      this.xUrl,
+      this.instagramUrl,
+      this.linkedinUrl,
+      this.websiteUrl,
+      });
 
   factory CachedUserData.fromJson(Map<String, dynamic> json) => CachedUserData(
       userId: json[ATStrings.userId],
@@ -77,7 +83,14 @@ class CachedUserData extends Equatable {
       pictureUrl: json[ATStrings.profilePicture],
       phoneNumber: json[ATStrings.phoneNumber],
       followersCount: json[ATStrings.followerCount],
-      followingCount: json[ATStrings.followingCount]);
+      followingCount: json[ATStrings.followingCount],
+      bio: json[ATStrings.bio],
+      xUrl: json[ATStrings.X],
+      instagramUrl: json[ATStrings.INSTAGRAM],
+      linkedinUrl: json[ATStrings.LINKEDIN],
+      websiteUrl: json[ATStrings.WEBSITE],
+
+      );
 
   final String? userId,
       email,
@@ -87,7 +100,12 @@ class CachedUserData extends Equatable {
       pictureUrl,
       phoneNumber,
       followingCount,
-      followersCount;
+      followersCount,
+      bio,
+      xUrl,
+      instagramUrl,
+      linkedinUrl,
+      websiteUrl;
 
   CachedUserData copyWith(
           {String? userId,
@@ -98,6 +116,12 @@ class CachedUserData extends Equatable {
           String? pictureUrl,
           String? followersCount,
           String? followingCount,
+          String? bio,
+          String? xUrl,
+          String? instagramUrl,
+          String? linkedinUrl,
+          String? websiteUrl,
+
           String? phoneNumber}) =>
       CachedUserData(
           userId: userId ?? this.userId,
@@ -108,7 +132,14 @@ class CachedUserData extends Equatable {
           pictureUrl: pictureUrl ?? this.pictureUrl,
           phoneNumber: phoneNumber ?? this.phoneNumber,
           followersCount: followersCount ?? this.followersCount,
-          followingCount: followingCount ?? this.followingCount);
+          followingCount: followingCount ?? this.followingCount,
+          bio: bio ?? this.bio,
+          xUrl: xUrl ?? this.xUrl,
+          instagramUrl: instagramUrl ?? this.instagramUrl,
+          linkedinUrl: linkedinUrl ?? this.linkedinUrl,
+          websiteUrl: websiteUrl ?? this.websiteUrl,
+
+          );
 
   Map<String, dynamic> toJson() => <String, dynamic>{
         ATStrings.userId: userId,
@@ -119,7 +150,13 @@ class CachedUserData extends Equatable {
         ATStrings.profilePicture: pictureUrl,
         ATStrings.phoneNumber: phoneNumber,
         ATStrings.followerCount: followersCount,
-        ATStrings.followingCount: followingCount
+        ATStrings.followingCount: followingCount,
+        ATStrings.bio: bio,
+        ATStrings.X: xUrl,
+        ATStrings.INSTAGRAM: instagramUrl,
+        ATStrings.LINKEDIN: linkedinUrl,
+        ATStrings.WEBSITE: websiteUrl,
+
       };
 
   @override
@@ -132,6 +169,7 @@ class CachedUserData extends Equatable {
         pictureUrl,
         phoneNumber,
         followersCount,
-        followingCount
+        followingCount,
+        bio,
       ];
 }

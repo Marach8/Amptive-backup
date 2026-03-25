@@ -47,6 +47,8 @@ class RemoteUserDataCubit extends Cubit<ATAppState<UserData>> {
               dob: userData.dob,
               name: userData.name,
               pictureUrl: userData.pictureUrl,
+              bio: userData.bio,
+              phoneNumber: userData.phoneNumber,
             );
 
             await localStorageService.setObject(
@@ -68,8 +70,22 @@ class RemoteUserDataCubit extends Cubit<ATAppState<UserData>> {
     }
   }
 
-  Future<void> updateProfilePicture(Uint8List imageBytes) async {
-    try {
+ Future<void> updateProfile({
+  Uint8List? imageBytes,
+  String? name,
+  String? username,
+  String? bio,
+  String? country,
+  String? coverPhoto,
+  String? xUrl,
+  String? instagramUrl,
+  String? linkedinUrl,
+  String? websiteUrl,
+}) async {
+  try {
+    String? imageUrl;
+
+    if (imageBytes != null) {
       final Directory tempDir = await getTemporaryDirectory();
       final String filePath =
           '${tempDir.path}/profile_${DateTime.now().millisecondsSinceEpoch}.png';
@@ -82,32 +98,45 @@ class RemoteUserDataCubit extends Cubit<ATAppState<UserData>> {
 
       await uploadResponse.when(
         successful: (Successful<String> uploadData) async {
-          final String imageUrl = uploadData.data!;
-
-          final ApiResponse<dynamic> response =
-              await profileRepo.updateUserProfile(
-            profilePicture: imageUrl,
-          );
-
-          response.when(
-            successful: (_) async {
-              await fetchUserProfile();
-            },
-            unSuccessful: (Unsuccessful<dynamic> error) {
-              emit(FailureState<UserData>(error.error.message));
-            },
-          );
+          imageUrl = uploadData.data!;
         },
         unSuccessful: (Unsuccessful<dynamic> error) {
           emit(FailureState<UserData>(error.error.message));
+          return; // Exit early if upload fails
         },
       );
 
       if (await file.exists()) {
         await file.delete();
       }
-    } catch (e) {
-      emit(FailureState<UserData>('Unable to update profile: $e'));
     }
+
+    final ApiResponse<dynamic> response =
+        await profileRepo.updateUserProfile(
+      profilePicture: imageUrl,
+      name: name,
+      username: username,
+      bio: bio,
+      country: country,
+      coverPhoto: coverPhoto,
+      xUrl: xUrl,
+      instagramUrl: instagramUrl,
+      linkedinUrl: linkedinUrl,
+      websiteUrl: websiteUrl,
+      
+    );
+
+    response.when(
+      successful: (_) async {
+        await fetchUserProfile();
+      },
+      unSuccessful: (Unsuccessful<dynamic> error) {
+        emit(FailureState<UserData>(error.error.message));
+      },
+    );
+  } catch (e) {
+    emit(FailureState<UserData>('Unable to update profile: $e'));
   }
+}
+
 }

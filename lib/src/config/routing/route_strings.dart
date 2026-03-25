@@ -75,6 +75,7 @@ class ATRoutes {
   static const String SELECT_COUNTRY_SCREEN = 'select_country_screen';
   static const String ACCT_INFO_SCREEN = 'account_infomation_screen';
   static const String accountLandingScreen = 'account_screen';
+  static const String enterEmailAndPhoneNoOtpScreen = "enter_email_and_phone_no_otp";
   static const String EDIT_PROFILE = 'edit_profile';
   static const String rectImageCropperScreen = 'profile_bg_crop';
   static const String EDIT_NAME = 'edit_name';
