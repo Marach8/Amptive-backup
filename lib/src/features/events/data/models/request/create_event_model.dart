@@ -6,7 +6,7 @@ class CreateEventPayload {
     required this.category,
     required this.eventType,
     required this.price,
-    required this.scheduledFor,
+    this.scheduledFor,
     required this.communityId,
     required this.tagIds,
     required this.coHostIds,
@@ -15,9 +15,10 @@ class CreateEventPayload {
     required this.capacity,
   });
 
-  final String title, description, thumbnailUrl, category, eventType, 
-    scheduledFor, communityId, capacity;
+  final String title, description, thumbnailUrl, category, eventType,
+    communityId, capacity;
   final double price;
+  final String? scheduledFor;
   final List<String> tagIds, coHostIds;
   final bool handRaising, allowWhispers;
 
@@ -30,7 +31,7 @@ class CreateEventPayload {
       'category': category,
       'show_type': eventType,
       'price': price,
-      'scheduled_for': scheduledFor,
+      if(scheduledFor != null)'scheduled_for': scheduledFor,
       'community_id': communityId,
       'tag_ids': tagIds,
       'co_host_ids': coHostIds,

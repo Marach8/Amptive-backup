@@ -91,6 +91,7 @@ class __SubWidgetState extends State<_SubWidget> {
   List<HashTag>? selectedHashtags;
   ProgramAccessTypeSelectionData accessTypeData =
       const ProgramAccessTypeSelectionData();
+  DateTime? _scheduleDate;
 
   @override
   void initState() {
@@ -188,9 +189,10 @@ class __SubWidgetState extends State<_SubWidget> {
                                               extra: SelectScheduleDataScreenEntryParams(
                                                 bgImage: context.read<BgImageCubit>().state.$2,
                                                 programName: 'Event',
-                                                currentDate: null,
+                                                currentDate: _scheduleDate
                                               )
                                             ) as DateTime?;
+                                            _scheduleDate = selectedDate;
                                           }
                                           _toggleBtnOnTap();
                                         },
@@ -738,7 +740,7 @@ class __SubWidgetState extends State<_SubWidget> {
                       handRaising: selectedPermission == HandRaisingPermission.allow,
                       price: accessTypeData.subscriptionAmount ?? 0.01,
                       capacity: selectedCapacity,
-                      scheduledFor: ''
+                      scheduledFor: _scheduleDate?.toUtc().toIso8601String() ?? '',
                     ),
                   );
                 } else if (state is FailureState<String>) {
@@ -847,6 +849,11 @@ class __SubWidgetState extends State<_SubWidget> {
                     }
                     else if(selectedWhispersPermission == null) {
                       errorMessage = 'Please choose whether to allow whispers for this episode';
+                    }
+                    final ScheduleBtnOnTap currentOnTap = _activateBtn.value.$2;
+                    if(currentOnTap == ScheduleBtnOnTap.scheduleEvent 
+                      && _scheduleDate == null){
+                      errorMessage = 'Please choose a schedule date/time for this event';
                     }
       
                     if(errorMessage.isNotEmpty){
