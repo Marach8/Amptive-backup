@@ -1,11 +1,23 @@
 import 'dart:ui';
+import 'package:amptive/src/features/calender/calender_export.dart';
+import 'package:amptive/src/features/home/cubits/toggle_following_cubit.dart';
+import 'package:amptive/src/features/home/data/models/following_status.dart';
+import 'package:amptive/src/features/home/presentation/widgets/event_or_show_card.dart';
+import 'package:amptive/src/features/home/presentation/widgets/render_community_name.dart';
+import 'package:amptive/src/features/home/presentation/widgets/program_actions_modal.dart';
 import 'package:amptive/src/features/events/data/models/response/event_response_model.dart';
 import 'package:amptive/src/global_export.dart';
 import 'package:amptive/src/shared/annotated_region__widget.dart';
 import 'package:amptive/src/shared/back_button.dart';
+import 'package:amptive/src/shared/global_model_objects.dart';
 import 'package:amptive/src/shared/image_loader_widget.dart';
-import 'package:flutter/material.dart';
+import 'package:amptive/src/shared/live_indicators.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:nested/nested.dart';
+import 'package:readmore/readmore.dart';
+import '../../../../shared/list_tile_with_leading_picture_widget.dart';
+import '../../../../shared/sliver_header_delegate.dart';
 
 class PreviewEventScreen extends StatelessWidget {
   const PreviewEventScreen({
@@ -16,263 +28,217 @@ class PreviewEventScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final double blurredHeaderHeight =
-        kToolbarHeight + MediaQuery.paddingOf(context).top;
-    final bool isLive = hostedEvent.isLive ?? false;
-     
-    return ATAnnotatedRegion(
-      statusBarColor: ATColors.transparent,
-      child: Scaffold(
-        body: Stack(
-          children: <Widget>[
-            Positioned.fill(
-              child: ImageFiltered(
-                imageFilter: ImageFilter.blur(sigmaX: 50, sigmaY: 50),
-                child: ATImgLoader(
-                    boxFit: BoxFit.fill,
-                    imgPath: hostedEvent.coverUrl ?? ''),
-              ),
-            ),
-            Container(
-              color: ATColors.hex0D0D0D.withValues(alpha: 0.75),
-              child: CustomScrollView(
-                slivers: <Widget>[
-                  SliverAppBar(
-                    backgroundColor: ATColors.transparent,
-                    pinned: true,
-                    expandedHeight: blurredHeaderHeight + 300,
-                    leading: const ATXBackBtn(),
-                    flexibleSpace: FlexibleSpaceBar(
-                      background: Stack(
-                        fit: StackFit.expand,
-                        children: <Widget>[
-                          ATImgLoader(
-                            boxFit: BoxFit.fill,
-                            imgPath: hostedEvent.coverUrl ?? '',
-                          ),
-                          Positioned.fill(
-                            child: Container(
-                              decoration: BoxDecoration(
-                                gradient: LinearGradient(
-                                  begin: Alignment.topCenter,
-                                  end: Alignment.bottomCenter,
-                                  colors: <Color>[
-                                    ATColors.transparent,
-                                    ATColors.hex0D0D0D.withValues(alpha: 0.75),
-                                    ATColors.hex0D0D0D,
-                                  ],
-                                  stops: const <double>[0.0, 0.75, 1.0],
-                                ),
-                              ),
-                            ),
-                          ),
-                          Positioned(
-                            bottom: 40,
-                            left: 15,
-                            right: 15,
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: <Widget>[
-                                if (isLive)
-                                  Container(
-                                    padding: const EdgeInsets.symmetric(
-                                      horizontal: 8,
-                                      vertical: 4,
-                                    ),
-                                    decoration: BoxDecoration(
-                                      color: Colors.red,
-                                      borderRadius: BorderRadius.circular(4),
-                                    ),
-                                    child: const Row(
-                                      mainAxisSize: MainAxisSize.min,
-                                      children: <Widget>[
-                                        Icon(Icons.circle, size: 8, color: Colors.white),
-                                        SizedBox(width: 5),
-                                        Text(
-                                          'LIVE',
-                                          style: TextStyle(
-                                            color: Colors.white,
-                                            fontSize: 12,
-                                            fontWeight: FontWeight.bold,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                const SizedBox(height: 10),
-                                Text(
-                                  hostedEvent.title ?? '',
-                                  style: context.textTheme.headlineSmall?.copyWith(
-                                    color: ATColors.white,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                                const SizedBox(height: 10),
-                                Row(
-                                  children: <Widget>[
-                                    CircleAvatar(
-                                      radius: 12,
-                                      backgroundImage: hostedEvent.host?.profilePicture != null
-                                          ? NetworkImage(hostedEvent.host!.profilePicture!)
-                                          : null,
-                                      child: hostedEvent.host?.profilePicture == null
-                                          ? const Icon(Icons.person, size: 14)
-                                          : null,
-                                    ),
-                                    const SizedBox(width: 8),
-                                    Text(
-                                      hostedEvent.host?.name ?? '',
-                                      style: context.textTheme.bodySmall?.copyWith(
-                                        color: ATColors.white,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ],
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                  SliverToBoxAdapter(
-                    child: Container(
-                      padding: const EdgeInsets.all(15),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          // Event Details
-                          // _EventInfoRow(
-                          //   icon: Icons.calendar_today,
-                          //   label: 'Date',
-                          //   value: hostedEvent.startTime ?? '',
-                          // ),
-                          // const SizedBox(height: 12),
-                          // if (hostedEvent.location != null) ...[
-                          //   _EventInfoRow(
-                          //     icon: Icons.location_on,
-                          //     label: 'Location',
-                          //     value: hostedEvent.location ?? '',
-                          //   ),
-                          //   const SizedBox(height: 12),
-                          // ],
-                          _EventInfoRow(
-                            icon: Icons.attach_money,
-                            label: 'Price',
-                            value: hostedEvent.price != null 
-                                ? '\$${hostedEvent.price!.toStringAsFixed(2)}' 
-                                : 'Free',
-                          ),
-                          const SizedBox(height: 20),
-                          
-                          // Description
-                          Text(
-                            'About this event',
-                            style: context.textTheme.titleMedium?.copyWith(
-                              color: ATColors.white,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          const SizedBox(height: 10),
-                          Text(
-                            hostedEvent.description ?? '',
-                            style: context.textTheme.bodySmall?.copyWith(
-                              color: ATColors.hexC2C2C2,
-                            ),
-                          ),
-                          const SizedBox(height: 20),
-                          
-                          // Tags
-                          if (hostedEvent.tags?.isNotEmpty ?? false) ...[
-                            Text(
-                              'Tags',
-                              style: context.textTheme.titleMedium?.copyWith(
-                                color: ATColors.white,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                            const SizedBox(height: 10),
-                            Wrap(
-                              spacing: 8,
-                              runSpacing: 8,
-                              children: hostedEvent.tags!
-                                  .map((tag) => Container(
-                                        padding: const EdgeInsets.symmetric(
-                                          horizontal: 12,
-                                          vertical: 6,
-                                        ),
-                                        decoration: BoxDecoration(
-                                          color: ATColors.hex1F1F23,
-                                          borderRadius: BorderRadius.circular(20),
-                                        ),
-                                        child: Text(
-                                          '#${tag.name}',
-                                          style: context.textTheme.bodySmall?.copyWith(
-                                            color: ATColors.hex307FE2,
-                                          ),
-                                        ),
-                                      ))
-                                  .toList(),
-                            ),
-                            const SizedBox(height: 20),
-                          ],
-                          
-                          const SizedBox(height: 100),
-                        ],
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ],
-        ),
-        bottomNavigationBar: Padding(
-          padding: const EdgeInsets.fromLTRB(15, 5, 15, 50),
-          child: ATBlurredBgBtn(
-            btnTitle: isLive ? 'Go Live' : 'Start Event',
-            onPressed: () {
-              // Navigate to go live or start event
-            },
-          ),
-        ),
-      ),
+    return MultiBlocProvider(
+      providers: <SingleChildWidget>[
+        BlocProvider<BlurredHeaderCubit>(
+          create: (_) => BlurredHeaderCubit()),
+        BlocProvider<ToggleFollowingCubit>(
+          create: (_) => ToggleFollowingCubit(
+            initialStatus: FollowingStatus(
+              isFollowing: true,
+              followerCount: hostedEvent.followerCount ?? 0,
+            )
+          )
+        )
+      ],
+      child: _EventSubWidget(hostedEvent: hostedEvent),
     );
   }
 }
 
-class _EventInfoRow extends StatelessWidget {
-  const _EventInfoRow({
-    required this.icon,
-    required this.label,
-    required this.value,
-  });
+class _EventSubWidget extends StatefulWidget {
+  const _EventSubWidget({required this.hostedEvent});
 
-  final IconData icon;
-  final String label;
-  final String value;
+  final HostedEvent hostedEvent;
 
   @override
-  Widget build(BuildContext context) {
-    return Row(
-      children: <Widget>[
-        Icon(icon, size: 20, color: ATColors.hexA8A8A8),
-        const SizedBox(width: 10),
-        Text(
-          '$label: ',
-          style: context.textTheme.bodySmall?.copyWith(
-            color: ATColors.hexA8A8A8,
+  State<_EventSubWidget> createState() => _EventSubWidgetState();
+}
+
+class _EventSubWidgetState extends State<_EventSubWidget> {
+  @override 
+  void initState(){
+    super.initState();
+  }
+
+  @override
+  Widget build(_) {
+    return Builder(
+      builder: (BuildContext context) {
+      final double blurredHeaderHeight =
+          kToolbarHeight + MediaQuery.paddingOf(context).top;
+      final bool isLive = widget.hostedEvent.isLive ?? false;
+     
+      return ATAnnotatedRegion(
+        statusBarColor: ATColors.transparent,
+        child: Scaffold(
+          body: Stack(
+            children: <Widget>[
+              Positioned.fill(
+                child: ImageFiltered(
+                  imageFilter: ImageFilter.blur(sigmaX: 50, sigmaY: 50),
+                  child: ATImgLoader(
+                      boxFit: BoxFit.fill,
+                      imgPath: widget.hostedEvent.coverUrl ?? ''),
+                ),
+              ),
+              Container(
+                color: ATColors.hex0D0D0D.withValues(alpha: 0.75),
+                child: NotificationListener<ScrollNotification>(
+                  onNotification:
+                      context.read<BlurredHeaderCubit>().onScrollNotification,
+                  child: NestedScrollView(
+                    headerSliverBuilder: (_, __) => <Widget>[
+                      SliverPersistentHeader(
+                        pinned: true,
+                        delegate: ATSliverHDelegate(
+                          maxExt: blurredHeaderHeight,
+                          minExt: blurredHeaderHeight,
+                          child: ATBlurredHeaderWidget(
+                            child: Row(
+                              mainAxisAlignment:
+                                  MainAxisAlignment.spaceBetween,
+                              spacing: 20,
+                              children: <Widget>[
+                                Padding(
+                                  padding: const EdgeInsets.only(left: 5),
+                                  child: ATRoundedBackBtn(
+                                    bgColor: ATColors.transparent,
+                                  ),
+                                ),
+                                Flexible(
+                                  child: Text(
+                                    widget.hostedEvent.title ?? '',
+                                    style: context.textTheme.bodyMedium,
+                                  ),
+                                ),
+                                const SizedBox(width: 30)
+                              ],
+                            ),
+                          )
+                        ),
+                      )
+                    ],
+
+                    body: SingleChildScrollView(
+                      padding: const EdgeInsets.fromLTRB(15, 10, 15, 5),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          Hero(
+                            tag: widget.hostedEvent.eventId ?? '',
+                            child: CoverPicWithTopRightMoreIcon(
+                                imgPath: widget.hostedEvent.coverUrl ?? '',
+                                onMoreTapped: () async {
+                                  final SelectedProgramAction? foo =
+                                      await showProgramOptions(
+                                    context: context,
+                                    toggleFollowingCubit:
+                                        context.read<ToggleFollowingCubit>(),
+                                    targetUserName:
+                                        widget.hostedEvent.host?.username ?? '',
+                                    targetUserId: widget.hostedEvent.host?.id ?? '',
+                                  );
+                                }),
+                          ),
+                          const SizedBox(height: 24),
+                          
+                          // Event doesn't have episodes like shows, so no ExistingEpisodesIndicator
+                          
+                          Text(
+                            maxLines: 2,
+                            widget.hostedEvent.title ?? '',
+                            overflow: TextOverflow.clip,
+                            style: context.textTheme.displayMedium?.copyWith(
+                              fontSize: ATSizes.size24,
+                              fontWeight: ATFontWeights.w600,
+                            ),
+                          ),
+                          const SizedBox(height: 12),
+                          Row(
+                            spacing: 20,
+                            children: <Widget>[
+                              if(isLive) const LiveIndicatorWithAnimatinWifiIcon(),
+                              RenderCommunityName(communityName: widget.hostedEvent.community?.name)
+                            ],
+                          ),
+                          const SizedBox(height: 40),
+                          Text(
+                            ATStrings.hashtags,
+                            style: context.textTheme.bodySmall
+                                ?.copyWith(fontSize: ATSizes.size17),
+                          ),
+                          Divider(
+                            color: ATColors.white.withValues(alpha: 0.1),
+                          ),
+                          const SizedBox(height: 5),
+                          RenderHashTags(hashtags: widget.hostedEvent.tags),
+                          const SizedBox(height: 30),
+                          Text(
+                            ATStrings.hostedBy,
+                            style: context.textTheme.bodySmall
+                                ?.copyWith(fontSize: ATSizes.size17),
+                          ),
+                          Divider(
+                            color: ATColors.white.withValues(alpha: 0.1),
+                          ),
+                          TileWithLeadingImage(
+                            padding: const EdgeInsets.symmetric(vertical: 9),
+                            title: widget.hostedEvent.host?.username ?? '',
+                            subtitle: 'Host',
+                            diameter: 42,
+                            leadingImagePath: widget.hostedEvent.host?.profilePicture ?? ATImgStrings.jpeg1,
+                          ),
+                          ...(widget.hostedEvent.coHosts ?? <CoHost>[]).map(
+                            (CoHost cohost) => TileWithLeadingImage(
+                              padding: const EdgeInsets.symmetric(vertical: 9),
+                              title: cohost.username ?? '',
+                              subtitle: 'Host',
+                              diameter: 42,
+                              leadingImagePath: cohost.profilePicture ?? ATImgStrings.jpeg1,
+                            )
+                          ),
+                          const SizedBox(height: 30),
+                          Text(
+                            'About Show',
+                            style: context.textTheme.bodySmall
+                                ?.copyWith(fontSize: ATSizes.size17),
+                          ),
+                          Divider(
+                            color: ATColors.white.withValues(alpha: 0.1),
+                          ),
+                          ReadMoreText(
+                            widget.hostedEvent.description ?? '',
+                            trimMode: TrimMode.Length,
+                            trimExpandedText: ATStrings.showLess,
+                            trimCollapsedText: ATStrings.showMore,
+                            colorClickableText: ATColors.white,
+                            trimLength: 100,
+                            style: TextStyle(
+                              color: ATColors.white.withValues(alpha: 0.6),
+                              fontSize: ATSizes.size14,
+                              fontWeight: ATFontWeights.w500,
+                            ),
+                          ),
+                          const SizedBox(height: 150),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+          bottomSheet: ATBlurredBgBtn(
+            onPressed: () {
+              // Navigate to go live or event details
+              // For events, we don't have episodes, so just go live
+            },
+            btnTitle: isLive ? 'Go Live' : 'Start Event',
           ),
         ),
-        Expanded(
-          child: Text(
-            value,
-            style: context.textTheme.bodySmall?.copyWith(
-              color: ATColors.white,
-            ),
-          ),
-        ),
-      ],
+      );
+      }
     );
   }
 }

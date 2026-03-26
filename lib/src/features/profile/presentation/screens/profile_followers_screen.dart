@@ -171,7 +171,7 @@ class _RenderAFollower extends StatelessWidget {
               onPressed: () => onRemove(followers),
               padding: EdgeInsets.zero,
               bgColor: ATColors.white,
-              btnTitle: ATStrings.REMOVE,
+              btnTitle: ATStrings.remove,
               style: context.textTheme.bodySmall?.copyWith(
                 fontSize: ATSizes.size13, 
                 color: ATColors.black,

@@ -12,10 +12,11 @@ class CreateEventPayload {
     required this.coHostIds,
     required this.handRaising,
     required this.allowWhispers,
+    required this.capacity,
   });
 
   final String title, description, thumbnailUrl, category, eventType, 
-    scheduledFor, communityId;
+    scheduledFor, communityId, capacity;
   final double price;
   final List<String> tagIds, coHostIds;
   final bool handRaising, allowWhispers;
@@ -35,6 +36,7 @@ class CreateEventPayload {
       'co_host_ids': coHostIds,
       'hand_raising': handRaising,
       'allow_whispers': allowWhispers,
+      'capacity': capacity,
     };
   }
 }

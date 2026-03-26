@@ -13,35 +13,9 @@ class CreateEventCubit extends Cubit<ATAppState<HostedEvent>> {
   final EventsRepo eventsRepo;
 
   Future<void> createEvent({
-    required String title,
-    required String description,
-    required String thumbnailUrl,
-    required String category,
-    required String eventType,
-    required double price,
-    required String scheduledFor,
-    required String communityId,
-    required List<String> tagIds,
-    required List<String> coHostIds,
-    required bool handRaising,
-    required bool allowWhispers,
-  }) async {
+    required CreateEventPayload createEventModel}) async {
     emit(const LoadingState<HostedEvent>());
     try {
-      final CreateEventPayload createEventModel = CreateEventPayload(
-        title: title,
-        description: description,
-        thumbnailUrl: thumbnailUrl,
-        category: category,
-        eventType: eventType,
-        price: price,
-        scheduledFor: scheduledFor,
-        communityId: communityId,
-        tagIds: tagIds,
-        coHostIds: coHostIds,
-        handRaising: handRaising,
-        allowWhispers: allowWhispers,
-      );
 
       final ApiResponse<HostedEvent> response = await eventsRepo.createEvent(
         createEventModel: createEventModel,

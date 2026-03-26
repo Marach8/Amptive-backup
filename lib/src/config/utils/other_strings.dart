@@ -13,6 +13,7 @@ class ATStrings {
   static const String HASH = '#';
   static const String AT_SIGN = '@';
   static const String nairaText = '₦';
+  static const String dot = '•';
   static const String accessToken = 'Access Token';
   static const String refreshToken = 'Refresh Token';
   static const String cachedUserData = 'Cached User Data';
@@ -444,8 +445,12 @@ class ATStrings {
   static const String titleOfYourShow = 'What is the title of your show?';
   static const String tellListenersAboutYourShow =
       'Tell your listeners what your show is about.';
+  static const String tellListenersAboutYourEvent =
+      'Tell your listeners what your event is about.';
   static const String selectCommunity4YourShow =
       'Select a community for your show';
+  static const String selectCommunity4YourEvent =
+      'Select a community for your event';
   static const String title = 'Title';
   static const String toggleWhispers = 'Activate or de-activate whispers';
   static const String description = 'Description';
@@ -480,7 +485,7 @@ class ATStrings {
       'Code has been sent. You can request another in';
   static const String SEE_COMMUNITIES = 'See communities on Amptive';
   static const String COMMUNITIES = 'Communities';
-  static const String COMMUNITY = 'Community';
+  static const String community = 'Community';
   static const String VIEW_COMMUNITY = 'View Community';
   static const String RECENT_SEARCHES = 'Recent Searches';
   static const String CLEAR = 'Clear';
@@ -505,7 +510,7 @@ class ATStrings {
   static const String chooseToCreateShowOrEvent =
       "Choose whether you'd like to create a Show or an Event befor proceeding.";
   static const String createShow = 'Create Show';
-  static const String CREATE_EVENT = 'Create Event';
+  static const String createEvent = 'Create Event';
   static const String CREATE_EVENT_DESC = 'For one-time live audio experience';
   static const String CREATE_SHOW_DESC =
       'For live audio series with recurring episodes';
@@ -539,6 +544,8 @@ class ATStrings {
   static const String searchForHashtag = 'Search for hashtag';
   static const String searchAndAddCohost4YourShow =
       'Search and add co-hosts for your show';
+  static const String searchAndAddCohost4YourEvent =
+      'Search and add co-hosts for your event';
   static const String searchForUser = 'Search for user';
   static const String searchForBank = 'Search for bank';
   static const String SEARCH_4_FOLLOWERS = 'Search for followers';
@@ -559,7 +566,9 @@ class ATStrings {
   static const String audienceAccess = 'Audience Access';
   static const String selectWhoCanAccessYourShow =
       'Choose who can access this show';
-  static const String CAPACITY = 'Capacity';
+  static const String selectWhoCanAccessYourEvent =
+      'Choose who can access this event';
+  static const String capacity = 'Capacity';
   static const String choose2AllowHandRasing =
       'Choose whether to allow hand-rasing';
   static const String choose2AllowWhispers =
@@ -569,12 +578,13 @@ class ATStrings {
       "While you're live, you'll have full access to your moderation tools so you can control and manage audience interactions throughout the session.";
   static const String ALL_FOLLOWERS = 'All Followers';
   static const String ALL_SUBSCRIBERS = 'All Subscribers';
-  static const String MAX_CAPACITY =
-      'Kindly enter the maximun number of users/listeners that can access your event.';
-  static const String MAX_CAPACITY_LIMIT =
+  static const String maxCapacity =
+      'Enter the maximum number of users/listeners that can access your event.';
+  static const String maxCapacityLimit =
       'Once maximun capacity is reached, other users will not be allowed to join or pay for your event';
-  static const String SET_CAPACITY = 'Set capacity';
-  static const String REMOVE = 'Remove';
+  static const String setCapacity = 'Set capacity';
+  static const String setCapacityDesc = 'Set the maximum number of listeners that can access your event. Once this limit is reached, no other additional participants can join or pay';
+  static const String remove = 'Remove';
   static const String SEND_GIFT_2_HOST = 'Send a gift to the host';
   static const String whispersDesc =
       'Whispers are randomly selected comments from your live audience that appear on your event page while your are live.';
@@ -610,10 +620,10 @@ class ATStrings {
       'Audience cannot raise their hands during your live.';
   static const String promptToSetupSubPlan =
       "You will be prompted to setup subscription plan if you haven't set it up yet";
-  static const String EVENT_AUDIENCE_ACCESS_DESC =
-      'You will be prompted to setup your payment fee for your event';
-  static const String AMOUNT_2_CHARGE_4_EVENT =
-      'Kindly enter the amount you would want to charge users for your event';
+  static const String eventAudienceAccessDesc =
+      'You will be prompted to setup payment fee for your event';
+  static const String enterAmountToChargeForEvent =
+      'Enter the amount you would want to charge users for your event. This amount will determine your event\'s tier.';
   static const String PAID = 'Paid';
   static const String PAY = 'Pay';
   static const String ENDED = 'Ended';

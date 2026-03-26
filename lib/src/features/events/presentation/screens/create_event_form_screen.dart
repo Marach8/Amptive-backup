@@ -2,7 +2,11 @@ import 'dart:async';
 import 'dart:typed_data';
 import 'dart:ui';
 import 'package:amptive/src/config/config_export.dart';
+import 'package:amptive/src/features/episodes/presentation/widgets/whispers_permision_modal.dart';
+import 'package:amptive/src/features/events/data/models/request/create_event_model.dart';
+import 'package:amptive/src/features/events/presentation/widgets/events_audience_access_modal.dart';
 import 'package:amptive/src/features/events/cubits/hosted_events_cubit.dart';
+import 'package:amptive/src/features/events/presentation/widgets/set_event_capacity_modal.dart';
 import 'package:amptive/src/features/go_live/go_live_export.dart';
 import 'package:amptive/src/services/create_show/create_show_service.dart';
 import 'package:amptive/src/shared/animated_switcher.dart';
@@ -15,6 +19,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get_it/get_it.dart';
+import 'package:iconsax/iconsax.dart';
 import 'package:nested/nested.dart';
 import 'package:amptive/src/shared/back_button.dart';
 import 'package:amptive/src/shared/custom_container_widget.dart';
@@ -100,9 +105,13 @@ class __SubWidgetState extends State<_SubWidget> {
 
   //Null for loading, false for disabled, true for enabled.
   final ValueNotifier<bool?> _launchShowBtnNotifier = ValueNotifier<bool?>(false);
+  final ValueNotifier<(bool?, ScheduleBtnOnTap)> _activateBtn =
+      ValueNotifier<(bool?, ScheduleBtnOnTap)>((false, ScheduleBtnOnTap.goLive));
 
-  String selectedDescription = ATStrings.tellListenersAboutYourShow;
+  String selectedDescription = ATStrings.tellListenersAboutYourEvent;
+  String selectedCapacity = 'Unlimited';
   HandRaisingPermission? selectedPermission;
+  WhispersPermission? selectedWhispersPermission;
 
   Community? selectedCommunity;
   List<User>? selectedCohosts;
@@ -122,11 +131,21 @@ class __SubWidgetState extends State<_SubWidget> {
     });
   }
 
+  void _toggleBtnOnTap() {
+    final ScheduleBtnOnTap initialOnTap = _activateBtn.value.$2;
+    if (initialOnTap == ScheduleBtnOnTap.goLive) {
+      _activateBtn.value = (_activateBtn.value.$1, ScheduleBtnOnTap.scheduleEvent);
+    } else {
+      _activateBtn.value = (_activateBtn.value.$1, ScheduleBtnOnTap.goLive);
+    }
+  }
+
   @override
   void dispose() {
     _titleCntrl.dispose();
     _titleStreamCntrl.close();
     _launchShowBtnNotifier.dispose();
+    _activateBtn.dispose();
     _descStreamCntrl.close();
     super.dispose();
   }
@@ -144,7 +163,7 @@ class __SubWidgetState extends State<_SubWidget> {
             children: <Widget>[
               Positioned.fill(
                 child: ImageFiltered(
-                  imageFilter: ImageFilter.blur(sigmaX: 100, sigmaY: 100),
+                  imageFilter: ImageFilter.blur(sigmaX: 50, sigmaY: 50),
                   child: BlocBuilder<BgImageCubit, (String, Uint8List?)>(
                       builder: (_, (String, Uint8List?) state) {
                     return state.$2 == null
@@ -156,6 +175,7 @@ class __SubWidgetState extends State<_SubWidget> {
                   }),
                 ),
               ),
+
               Container(
                 color: ATColors.hex0D0D0D.withValues(alpha: 0.75),
                 child: NotificationListener<ScrollNotification>(
@@ -176,24 +196,21 @@ class __SubWidgetState extends State<_SubWidget> {
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
                                 children: <Widget>[
+                                  const Padding(
+                                      padding: EdgeInsets.only(left: 7),
+                                      child: ATXBackBtn()),
+                                  Text(
+                                    ATStrings.createEvent,
+                                    style: context.textTheme.bodyMedium,
+                                  ),
                                   Padding(
-                                    padding: const EdgeInsets.only(left: 4),
-                                    child: ATRoundedBackBtn(
-                                      bgColor: ATColors.transparent,
-                                    ),
-                                  ),
-                                  InkWell(
-                                    onTap: () {
-                                      context
-                                          .read<CommunitiesCubit>().fetchCommunities();
-                                    },
-                                    child: Text(
-                                      ATStrings.createShow,
-                                      style: context.textTheme.bodyMedium,
-                                    ),
-                                  ),
-                                  const SizedBox(
-                                    width: 30,
+                                    padding:
+                                        const EdgeInsets.only(right: 15),
+                                    child: InkWell(
+                                        onTap: _toggleBtnOnTap,
+                                        borderRadius:
+                                            BorderRadius.circular(30),
+                                        child: const ScheduleIcon()),
                                   )
                                 ],
                               ),
@@ -204,7 +221,7 @@ class __SubWidgetState extends State<_SubWidget> {
                     ],
 
                     body: SingleChildScrollView(
-                      padding: const EdgeInsets.fromLTRB(0, 10, 0, 100),
+                      padding: const EdgeInsets.fromLTRB(0, 10, 0, 120),
                       child: Column(
                         children: <Widget>[
                           Padding(
@@ -233,7 +250,7 @@ class __SubWidgetState extends State<_SubWidget> {
                               controller: _titleCntrl,
                               maxLines: 1,
                               cursorHeight: 20,
-                              hintText: ATStrings.titleOfYourShow,
+                              hintText:'What is the title of your event?',
                               prefixIcon: const SizedBox(
                                 width: 12,
                               ),
@@ -247,6 +264,7 @@ class __SubWidgetState extends State<_SubWidget> {
                                       BorderSide(color: ATColors.transparent)),
                             ),
                           ),
+
                           Padding(
                             padding: const EdgeInsets.fromLTRB(15, 0, 15, 10),
                             child: StreamBuilder<String>(
@@ -267,14 +285,14 @@ class __SubWidgetState extends State<_SubWidget> {
                               return CreateProgramSelectionItem(
                                 description: selectedDescription,
                                 descStyle: selectedDescription == 
-                                  ATStrings.tellListenersAboutYourShow ? null :
+                                  ATStrings.tellListenersAboutYourEvent ? null :
                                     context.textTheme.bodySmall,
                                 onTap: () async {
                                   final String? enteredDescription =
                                       await enterDescriptionModal(
                                     context: context,
                                     initialDesc: selectedDescription ==
-                                            ATStrings.tellListenersAboutYourShow
+                                            ATStrings.tellListenersAboutYourEvent
                                         ? null
                                         : selectedDescription,
                                   );
@@ -288,9 +306,10 @@ class __SubWidgetState extends State<_SubWidget> {
                               );
                             }),
                           ),
+                          
                           const Padding(
                             padding: EdgeInsets.fromLTRB(15, 0, 15, 10),
-                            child: RowWith2Texts(text1: ATStrings.COMMUNITY),
+                            child: RowWith2Texts(text1: ATStrings.community),
                           ),
                           Padding(
                             padding: const EdgeInsets.fromLTRB(15, 0, 15, 10),
@@ -301,7 +320,7 @@ class __SubWidgetState extends State<_SubWidget> {
                                   child: selectedCommunity == null
                                       ? CreateProgramSelectionItem(
                                           description: ATStrings
-                                              .selectCommunity4YourShow,
+                                              .selectCommunity4YourEvent,
                                           onTap: () async {
                                             final Community? selectedCom =
                                                 await showCommunitiesModal(
@@ -340,6 +359,7 @@ class __SubWidgetState extends State<_SubWidget> {
                               },
                             ),
                           ),
+
                           const Padding(
                             padding: EdgeInsets.fromLTRB(15, 0, 15, 10),
                             child: RowWith2Texts(
@@ -377,7 +397,7 @@ class __SubWidgetState extends State<_SubWidget> {
                                         ),
                                         trailing: Flexible(
                                           child: Text(
-                                            ATStrings.searchAndAddCohost4YourShow,
+                                            ATStrings.searchAndAddCohost4YourEvent,
                                             style: context.textTheme.bodySmall
                                                 ?.copyWith(
                                               color: ATColors.white
@@ -408,6 +428,7 @@ class __SubWidgetState extends State<_SubWidget> {
                                       .withValues(alpha: 0.76)),
                             ),
                           ),
+
                           const Padding(
                             padding: EdgeInsets.fromLTRB(15, 0, 15, 10),
                             child: RowWith2Texts(text1: ATStrings.hashtags),
@@ -439,7 +460,6 @@ class __SubWidgetState extends State<_SubWidget> {
                               );
                             }
                           ),
-
                           Padding(
                             padding: const EdgeInsets.fromLTRB(15, 0, 15, 30),
                             child: Text(
@@ -450,6 +470,7 @@ class __SubWidgetState extends State<_SubWidget> {
                                       .withValues(alpha: 0.76)),
                             ),
                           ),
+
                           const Padding(
                             padding: EdgeInsets.fromLTRB(15, 0, 15, 10),
                             child: RowWith2Texts(text1: ATStrings.audienceAccess),
@@ -459,20 +480,21 @@ class __SubWidgetState extends State<_SubWidget> {
                             child: StatefulBuilder(
                                 builder: (_, StateSetter setter) {
                               final String accessTypeDescText =
-                                  getAccessTypeDescText(
-                                      accessTypeData: accessTypeData);
+                                  getEventAccessTypeDescText(
+                                    accessTypeData: accessTypeData,
+                                  );
                               return ATScalingSwitcher(
                                   duration: 300,
                                   child: CreateProgramSelectionItem(
                                     description: accessTypeDescText,
                                     descStyle: accessTypeDescText ==
-                                            ATStrings.selectWhoCanAccessYourShow
+                                            ATStrings.selectWhoCanAccessYourEvent
                                         ? null
                                         : context.textTheme.bodySmall,
                                     onTap: () async {
                                       final ProgramAccessTypeSelectionData?
                                           newAccessTypeData =
-                                          await showAudienceAccessTypeModal(
+                                          await showEventsAudienceAccessTypeModal(
                                               context: context,
                                               initialAccessTypeData:
                                                   accessTypeData);
@@ -495,11 +517,10 @@ class __SubWidgetState extends State<_SubWidget> {
                                       .withValues(alpha: 0.76)),
                             ),
                           ),
+
                           const Padding(
                             padding: EdgeInsets.fromLTRB(15, 0, 15, 30),
-                            child: ATDivider(
-                              height: 1.1,
-                            ),
+                            child: ATDivider(height: 1.1),
                           ),
                           Align(
                             alignment: Alignment.centerLeft,
@@ -523,9 +544,7 @@ class __SubWidgetState extends State<_SubWidget> {
                                     Icons.front_hand_outlined,
                                     size: 18,
                                   ),
-                                  const SizedBox(
-                                    width: 5,
-                                  ),
+                                  const SizedBox(width: 5),
                                   Text(
                                     ATStrings.handRaising,
                                     style: context.textTheme.titleLarge
@@ -538,29 +557,26 @@ class __SubWidgetState extends State<_SubWidget> {
                             child: StatefulBuilder(
                               builder:(_, StateSetter setter) {
                                 String descriptionText = ATStrings.choose2AllowHandRasing;
-
                                 if (selectedPermission == HandRaisingPermission.allow) {
                                   descriptionText = ATStrings.allow;
                                 } else if (selectedPermission == HandRaisingPermission.dontAllow) {
                                   descriptionText = ATStrings.dontAllow;
                                 }
 
-                                return ATScalingSwitcher(
-                                  duration: 300,
-                                  child: CreateProgramSelectionItem(
-                                    description: descriptionText,
-                                    descStyle: descriptionText ==
-                                      ATStrings.choose2AllowHandRasing ? null
-                                        : context.textTheme.bodySmall,
-                                    onTap: () async {
-                                      final HandRaisingPermission? newPermission =
-                                        await showHandRaisingPermissionModal(
-                                          context: context,
-                                          initialPermission: selectedPermission
-                                        );
-                                      setter(() => selectedPermission = newPermission);
-                                    },
-                                  ));
+                                return CreateProgramSelectionItem(
+                                  description: descriptionText,
+                                  descStyle: descriptionText ==
+                                    ATStrings.choose2AllowHandRasing ? null
+                                      : context.textTheme.bodySmall,
+                                  onTap: () async {
+                                    final HandRaisingPermission? newPermission =
+                                      await showHandRaisingPermissionModal(
+                                        context: context,
+                                        initialPermission: selectedPermission
+                                      );
+                                    setter(() => selectedPermission = newPermission);
+                                  },
+                                );
                             }),
                           ),
                           Padding(
@@ -574,7 +590,123 @@ class __SubWidgetState extends State<_SubWidget> {
                                 ' ${ATStrings.learnMore}':
                                     context.textTheme.labelSmall!
                               },
-                            )),
+                            )
+                          ),
+
+                          Padding(
+                            padding:
+                                const EdgeInsets.fromLTRB(15, 0, 15, 10),
+                            child: Row(
+                              children: <Widget>[
+                                const ATImgLoader(
+                                  imgPath: ATImgStrings.usersIcon,
+                                  height: 18, width: 18,
+                                ),
+                                const SizedBox(width: 5),
+                                Text(
+                                  ATStrings.capacity,
+                                  style: context.textTheme.titleLarge
+                                      ?.copyWith(fontWeight: ATFontWeights.w500),
+                                ),
+                              ],
+                            )
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.fromLTRB(15, 0, 15, 10),
+                            child: StatefulBuilder(
+                              builder:(_, StateSetter setter) {
+                                return CreateProgramSelectionItem(
+                                  description: selectedCapacity,
+                                  descStyle: context.textTheme.bodySmall,
+                                  onTap: () async {
+                                    final String? newCapacity = await showEventCapacitySelectionDialog(
+                                      context: context,
+                                      currentCapacity: selectedCapacity == 'Unlimited' ? null : selectedCapacity,
+                                    );
+                                    setter(() => selectedCapacity = newCapacity ?? 'Unlimited');
+                                  },
+                                );
+                            }),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.fromLTRB(15, 0, 15, 30),
+                            child: Text(
+                              ATStrings.setCapacityDesc,
+                              maxLines: 5,
+                              style: context.textTheme.labelSmall!.copyWith(
+                                  color: ATColors.hexC2C2C2
+                                      .withValues(alpha: 0.76)),
+                            ),
+                          ),
+
+                          Padding(
+                            padding: const EdgeInsets.fromLTRB(15, 0, 15, 10),
+                            child: Row(
+                              spacing: 5,
+                              children: <Widget>[
+                                const Icon(
+                                  Iconsax.message,
+                                  size: 18,
+                                ),
+                                Text(
+                                  ATStrings.whispers,
+                                  style: context.textTheme.titleLarge
+                                      ?.copyWith(fontWeight: ATFontWeights.w500),
+                                ),
+                              ],
+                            )
+                          ),
+    
+                          Padding(
+                            padding: const EdgeInsets.fromLTRB(15, 0, 15, 10),
+                            child: StatefulBuilder(
+                              builder:(_, StateSetter setter) {
+                                String descriptionText = ATStrings.choose2AllowWhispers;
+    
+                                if (selectedWhispersPermission == WhispersPermission.allow) {
+                                  descriptionText = ATStrings.turnedOn;
+                                } else if (selectedWhispersPermission == WhispersPermission.dontAllow) {
+                                  descriptionText = ATStrings.turnedOff;
+                                }
+    
+                                return CreateProgramSelectionItem(
+                                  description: descriptionText,
+                                  descStyle: descriptionText ==
+                                    ATStrings.choose2AllowWhispers ? null
+                                      : context.textTheme.bodySmall,
+                                  onTap: () async {
+                                    final WhispersPermission? newPermission =
+                                      await showWhispersPermissionModal(
+                                        context: context,
+                                        initialPermission: selectedWhispersPermission
+                                      );
+                                    setter(() => selectedWhispersPermission = newPermission);
+                                  },
+                                );
+                            }),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.fromLTRB(15, 0, 15, 15),
+                            child: Text(
+                              ATStrings.whispersDesc,
+                              maxLines: 3,
+                              style: context.textTheme.labelSmall?.copyWith(
+                                color: ATColors.hexC2C2C2
+                                    .withValues(alpha: 0.76)
+                              ),
+                            )
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.fromLTRB(15, 0, 15, 30),
+                            child: Text(
+                              ATStrings.nonAttendeesEncouragedToJoin,
+                              maxLines: 3,
+                              style: context.textTheme.labelSmall?.copyWith(
+                                color: ATColors.hexC2C2C2
+                                    .withValues(alpha: 0.76)
+                              ),
+                            )
+                          ),
                         ],
                       ),
                     ),
@@ -584,41 +716,44 @@ class __SubWidgetState extends State<_SubWidget> {
             ],
           );
         }),
+
         resizeToAvoidBottomInset: false,
         bottomSheet: MultiBlocListener(
           listeners: <SingleChildWidget>[
             BlocListener<BgImageCubit, (String, Uint8List?)>(
               listener: (_, (String, Uint8List?) state) {
                 if (state.$2 != null) {
-                  _launchShowBtnNotifier.value = true;
+                  _activateBtn.value = (true, _activateBtn.value.$2);
                 } else {
-                  _launchShowBtnNotifier.value = false;
+                  _activateBtn.value = (false, _activateBtn.value.$2);
                 }
               },
             ),
             BlocListener<UploadImageCubit, ATAppState<String>>(
               listener: (_, ATAppState<String> state) {
                 if (state is SuccessState<String>) {
-                  //If we upload image successfully, create the event.
+                  //If we upload image successfully, create the episode.
                   context.read<CreateEventCubit>().createEvent(
-                    tagIds: (selectedHashtags ?? <HashTag>[])
-                      .map((HashTag tag) => tag.id ?? '')
-                      .toList(),
-                    coHostIds: (selectedCohosts ?? <User>[])
-                      .map((User cohost) => cohost.id ?? '')
-                      .toList(),
-                    title: _titleCntrl.text.trim(),
-                    description: selectedDescription,
-                    thumbnailUrl: state.newData!,
-                    communityId: selectedCommunity?.communityId ?? '',
-                    category: 'Category',
-                    eventType: accessTypeData.accessType 
-                      == ProgramAccessType.free ? 'free' : 'paid',
-                    price: accessTypeData.subscriptionAmount 
-                      ?? accessTypeData.oneTimePaymentAmount ?? 0.01,
-                    scheduledFor: DateTime.now().toUtc().toIso8601String(),
-                    handRaising: selectedPermission == HandRaisingPermission.allow,
-                    allowWhispers: false,
+                    createEventModel: CreateEventPayload(
+                      tagIds: (selectedHashtags ?? <HashTag>[])
+                        .map((HashTag tag) => tag.id ?? '')
+                        .toList(),
+                      coHostIds: (selectedCohosts ?? <User>[])
+                        .map((User cohost) => cohost.id ?? '')
+                        .toList(),
+                      title: _titleCntrl.text.trim(),
+                      description: selectedDescription,
+                      thumbnailUrl: state.newData!,
+                      communityId: selectedCommunity?.communityId ?? '',
+                      category: 'Category',
+                      allowWhispers: selectedWhispersPermission == WhispersPermission.allow,
+                      eventType: accessTypeData.accessType 
+                        == ProgramAccessType.free ? 'free' : 'paid',
+                      handRaising: selectedPermission == HandRaisingPermission.allow,
+                      price: accessTypeData.subscriptionAmount ?? 0.01,
+                      capacity: selectedCapacity,
+                      scheduledFor: ''
+                    ),
                   );
                 } else if (state is FailureState<String>) {
                   //if uploading cover art fails, stop loading and show notif
@@ -627,60 +762,86 @@ class __SubWidgetState extends State<_SubWidget> {
                     text: state.message,
                     type: NotificationType.failure,
                   );
-                  _launchShowBtnNotifier.value = true;
+                  _activateBtn.value = (true, _activateBtn.value.$2);
                 }
               },
             ),
             BlocListener<CreateEventCubit, ATAppState<HostedEvent>>(
               listener: (_, ATAppState<HostedEvent> state) async{
                 if (state is SuccessState<HostedEvent>) {
-                  context.read<HostedEventsCubit>().addNewHostedEvent(state.newData);
-                  _launchShowBtnNotifier.value = true;
-                  final dynamic params = ProgramCreationSuccessScreenParams(
-                      coverArtBytes: context.read<BgImageCubit>().state.$2!,
-                      title: ATStrings.showIsSetup,
-                      subtitle: ATStrings.beginYourJourney,
-                      btnTitle: ATStrings.goLive,
-                      txtBtnTitle: ATStrings.viewShowPage,
-                      topLogo: const Icon(Icons.check_circle_sharp, size: 45),
+                  _activateBtn.value = (true, _activateBtn.value.$2);
+
+                  final bool shouldGoToLive = _activateBtn.value.$2 
+                    == ScheduleBtnOnTap.goLive;
+                  if(shouldGoToLive){
+                    context.pushReplacementNamed(
+                      ATRoutes.goLiveOnboarding,
+                      extra: state.newData
                     );
+                    return;
+                  }
 
-                    final ButtonPressed? onPressedResult = await context.pushNamed(
-                      ATRoutes.programCreationSuccessScreen,
-                      extra: params
-                    ) as ButtonPressed?;
-
-                    if(context.mounted){
-                      if(onPressedResult == ButtonPressed.elevatedBtn){
-                        // For events, go live directly or navigate to event preview
-                        context.pushReplacementNamed(
-                          ATRoutes.eventPreviewScreen,
-                          extra: state.newData);
-                      } else if(onPressedResult == ButtonPressed.textBtn){
-                        context.pushReplacementNamed(
-                          ATRoutes.eventPreviewScreen,
-                          extra: state.newData
-                        );
-                      }
+                  final dynamic params = ProgramCreationSuccessScreenParams(
+                    coverArtBytes: context.read<BgImageCubit>().state.$2!,
+                    title: ATStrings.episodeCreated,
+                    subtitle: ATStrings.shareEpisodeLinkDescription,
+                    btnTitle: ATStrings.shareEpisode,
+                    txtBtnTitle: ATStrings.viewEpisode,
+                    topLogo: Container(
+                      height: 40, width: 40,
+                      decoration: BoxDecoration(
+                        color: ATColors.white,
+                        borderRadius: BorderRadius.circular(22.5),
+                      ),
+                      padding: const EdgeInsets.all(8),
+                      child: ColorFiltered(
+                        colorFilter: ColorFilter.mode(
+                            ATColors.black, BlendMode.srcATop),
+                        child: const ATImgLoader(
+                          imgPath: ATImgStrings.calenderIcon,
+                          boxFit: BoxFit.cover,
+                        ),
+                      ),
+                    )
+                  );
+    
+                  final ButtonPressed? onPressedResult = await context.pushNamed(
+                    ATRoutes.programCreationSuccessScreen,
+                    extra: params
+                  ) as ButtonPressed?;
+    
+                  if(context.mounted){
+                    if(onPressedResult == ButtonPressed.elevatedBtn){
+                      // context.pushReplacementNamed(
+                      //   ATRoutes.createEpisodeForm);
+                    } else if(onPressedResult == ButtonPressed.textBtn){
+                      context.pushReplacementNamed(
+                        ATRoutes.previewEpisodeScreen,
+                        extra: state.newData
+                      );
                     }
+                  }
                 } 
                 else if (state is FailureState<HostedEvent>) {
-                  _launchShowBtnNotifier.value = true;
+                  _activateBtn.value = (true, _activateBtn.value.$2);
                   showAppNotification2(
                     context: context,
-                    text: (state as FailureState<HostedEvent>).message,
+                    text: state.message,
                     type: NotificationType.failure,
                   );
                 }
               },
             )
           ],
-          child: ValueListenableBuilder<bool?>(
-              valueListenable: _launchShowBtnNotifier,
-              builder: (_, bool? value, __) {
+          child: ValueListenableBuilder<(bool?, ScheduleBtnOnTap)>(
+              valueListenable: _activateBtn,
+              builder: (_, (bool?, ScheduleBtnOnTap) value, __) {
+                final bool shouldGoToGoLive = _activateBtn.value.$2 == ScheduleBtnOnTap.goLive;
+      
+                //null for loading, false for disabled, true for enabled for the bool.
                 return ATBlurredBgBtn(
-                  isLoading: value == null,
-                  onPressed: value == false ? null : () {
+                  isLoading: value.$1 == null,
+                  onPressed: value.$1 == false ? null : () {
                     String errorMessage = '';
                     if (_titleCntrl.text.trim().isEmpty) {
                       errorMessage = 'Please enter a title';
@@ -694,10 +855,14 @@ class __SubWidgetState extends State<_SubWidget> {
                     } else if((selectedHashtags ?? <HashTag>[]).isEmpty) {
                       errorMessage = 'Please select at least 1 hashtag';
                     } else if(selectedPermission == null) {
-                      errorMessage = 'Please choose whether to allow hand-raising for this show';
+                      errorMessage = 'Please choose whether to allow hand-raising for this episode';
                     } else if(accessTypeData.accessType == null) {
-                      errorMessage = 'Please choose whether this show is free or paid';
+                      errorMessage = 'Please choose whether this episode is free or paid';
                     }
+                    else if(selectedWhispersPermission == null) {
+                      errorMessage = 'Please choose whether to allow whispers for this episode';
+                    }
+      
                     if(errorMessage.isNotEmpty){
                       showAppNotification2(
                         context: context,
@@ -706,689 +871,44 @@ class __SubWidgetState extends State<_SubWidget> {
                       );
                       return;
                     }
-
+      
                     //Start loading on button press.
-                    _launchShowBtnNotifier.value = null;
+                    _activateBtn.value = (null, _activateBtn.value.$2);
                     //Try to upload the cover image.
                     context.read<UploadImageCubit>().uploadBytesImage(
                       bytes: context.read<BgImageCubit>().state.$2!,
                       purpose: 'cover-art',
                     );
                   },
-                  btnTitle: ATStrings.launchShow,
+                  btnTitle: shouldGoToGoLive ? ATStrings.goLive 
+                    : '${ATStrings.schedule} event',
                 );
               }
             )
-          ),
+        ),
       ),
     );
   }
 }
 
 
+String getEventAccessTypeDescText({
+  required ProgramAccessTypeSelectionData? accessTypeData,
+}) {
+  String accessTypeTextDesc = ATStrings.selectWhoCanAccessYourEvent;
 
+  if (accessTypeData?.accessType == null) {
+    accessTypeTextDesc = ATStrings.selectWhoCanAccessYourEvent;
+  } else {
+    final ProgramAccessType? accessType = accessTypeData?.accessType;
+    if (accessType == ProgramAccessType.free) {
+      accessTypeTextDesc = ATStrings.free;
+    } else {
+      final double? subAmount = accessTypeData?.subscriptionAmount;
+      accessTypeTextDesc =
+        '${ATStrings.paid} ${ATStrings.dot} ${ATStrings.nairaText}$subAmount';
+    }
+  }
 
-
-
-// class NewFoo extends StatefulWidget {
-//   const NewFoo({super.key});
-
-//   @override
-//   State<NewFoo> createState() => _CreateEventFormScreenState();
-// }
-
-// class _CreateEventFormScreenState extends State<NewFoo> {
-//   late final TextEditingController _titleCntrl;
-//   final StreamController<String> _titleStreamCntrl = StreamController<String>();
-//   final StreamController<String> _descStreamCntrl = StreamController<String>();
-//   String programDesc = ATStrings.tellListenersAboutYourShow;
-//   String chooseAudienceAccess = ATStrings.selectWhoCanAccessYourShow;
-//   Community? selectedCommunity;
-//   CreateShowService service = GetIt.I<CreateShowService>();
-
-//   @override
-//   void initState() {
-//     super.initState();
-//     service.initFormControl();
-//     _titleCntrl = TextEditingController()
-//       ..addListener(() => _titleStreamCntrl.add(_titleCntrl.text.trim()));
-//   }
-
-//   @override
-//   void dispose() {
-//     _titleCntrl.dispose();
-//     _titleStreamCntrl.close();
-//     _descStreamCntrl.close();
-//     super.dispose();
-//   }
-
-//   @override
-//   Widget build(BuildContext context) {
-//     final double blurredHeaderHeight =
-//         kToolbarHeight + MediaQuery.paddingOf(context).top;
-
-//     return MultiBlocProvider(
-//       providers: <SingleChildWidget>[
-//         BlocProvider<BlurredHeaderCubit>(
-//           create: (_) => BlurredHeaderCubit(),
-//         ),
-//         BlocProvider<BgImageCubit>(create: (_) => BgImageCubit())
-//       ],
-//       child: ATAnnotatedRegion(
-//         statusBarColor: ATColors.transparent,
-//         child: Scaffold(
-//           body: Builder(builder: (BuildContext blocContext) {
-//             return Stack(
-//               children: <Widget>[
-//                 Positioned.fill(
-//                   child: BlocBuilder<BgImageCubit, (String, Uint8List?)>(
-//                       builder: (_, (String, Uint8List?) state) {
-//                     return ImageFiltered(
-//                         imageFilter: ImageFilter.blur(sigmaX: 200, sigmaY: 200),
-//                         child: state.$2 == null
-//                             ? ATImgLoader(
-//                                 boxFit: BoxFit.fill,
-//                                 imgPath: state.$1,
-//                               )
-//                             : Image.memory(state.$2!, fit: BoxFit.fill));
-//                   }),
-//                 ),
-//                 ATContainer(
-//                   color: ATColors.hex0D0D0D.withValues(alpha: 0.75),
-//                   child: NotificationListener<ScrollNotification>(
-//                     onNotification: blocContext
-//                         .read<BlurredHeaderCubit>()
-//                         .onScrollNotification,
-//                     child: NestedScrollView(
-//                       headerSliverBuilder: (_, __) => <Widget>[
-//                         SliverPersistentHeader(
-//                           pinned: true,
-//                           delegate: ATSliverHDelegate(
-//                               maxExt: blurredHeaderHeight,
-//                               minExt: blurredHeaderHeight,
-//                               child: SizedBox(
-//                                   height: blurredHeaderHeight,
-//                                   child: ATBlurredHeaderWidget(
-//                                     child: Row(
-//                                       mainAxisAlignment:
-//                                           MainAxisAlignment.spaceBetween,
-//                                       children: <Widget>[
-//                                         Padding(
-//                                           padding:
-//                                               const EdgeInsets.only(left: 4),
-//                                           child: ATRoundedBackBtn(
-//                                             bgColor: ATColors.transparent,
-//                                           ),
-//                                         ),
-//                                         Text(
-//                                           ATStrings.createShow,
-//                                           style: context.textTheme.bodyMedium,
-//                                         ),
-//                                         const SizedBox(
-//                                           width: 30,
-//                                         )
-//                                       ],
-//                                     ),
-//                                   ))),
-//                         ),
-//                       ],
-//                       body: SingleChildScrollView(
-//                         padding: const EdgeInsets.fromLTRB(0, 10, 0, 100),
-//                         physics: const BouncingScrollPhysics(),
-//                         child: Column(
-//                           children: <Widget>[
-//                             Padding(
-//                               padding: const EdgeInsets.fromLTRB(15, 0, 15, 30),
-//                               child: SelectProgramCoverArt(
-//                                 onImageSelected:
-//                                     blocContext.read<BgImageCubit>().setBgImage,
-//                               ),
-//                             ),
-
-//                             Padding(
-//                               padding: const EdgeInsets.fromLTRB(15, 0, 15, 10),
-//                               child: StreamBuilder<String>(
-//                                   stream: _titleStreamCntrl.stream,
-//                                   builder: (_, AsyncSnapshot<String> snapshot) {
-//                                     final int remaining =
-//                                         140 - (snapshot.data?.length ?? 0);
-//                                     return RowWith2Texts(
-//                                       text1: ATStrings.title,
-//                                       text2: '$remaining remaining',
-//                                     );
-//                                   }),
-//                             ),
-//                             Padding(
-//                               padding: const EdgeInsets.fromLTRB(15, 0, 15, 30),
-//                               child: ATTextFormField(
-//                                 controller: _titleCntrl,
-//                                 hintText: ATStrings.titleOfYourShow,
-//                                 prefixIcon: const SizedBox(
-//                                   width: 12,
-//                                 ),
-//                                 hintStyle:
-//                                     context.textTheme.bodySmall?.copyWith(
-//                                   color: ATColors.white.withValues(alpha: 0.4),
-//                                 ),
-//                                 disableBlueBorder: true,
-//                                 enabledBorder: OutlineInputBorder(
-//                                     borderRadius: BorderRadius.circular(14),
-//                                     borderSide: BorderSide(
-//                                         color: ATColors.transparent)),
-//                               ),
-//                             ),
-
-//                             Padding(
-//                               padding: const EdgeInsets.fromLTRB(15, 0, 15, 10),
-//                               child: StreamBuilder<String>(
-//                                   stream: _descStreamCntrl.stream,
-//                                   builder: (_, AsyncSnapshot<String> snapshot) {
-//                                     final int remaining =
-//                                         4000 - (snapshot.data?.length ?? 0);
-//                                     return RowWith2Texts(
-//                                       text1: ATStrings.description,
-//                                       text2: '$remaining remaining',
-//                                     );
-//                                   }),
-//                             ),
-//                             Padding(
-//                               padding: const EdgeInsets.fromLTRB(15, 0, 15, 30),
-//                               child: StatefulBuilder(builder:
-//                                   (_, void Function(void Function()) setter) {
-//                                 return CreateProgramSelectionItem(
-//                                   description: programDesc,
-//                                   onTap: () async {
-//                                     final String? description =
-//                                         await enterDescriptionModal(
-//                                             context: context);
-//                                     if (description != null) {
-//                                       setter(() {
-//                                         programDesc = description;
-//                                         _descStreamCntrl.add(description);
-//                                       });
-//                                     }
-//                                   },
-//                                 );
-//                               }),
-//                             ),
-
-//                             const Padding(
-//                               padding: EdgeInsets.fromLTRB(15, 0, 15, 10),
-//                               child: RowWith2Texts(text1: ATStrings.COMMUNITY),
-//                             ),
-
-//                             Padding(
-//                               padding: const EdgeInsets.fromLTRB(15, 0, 15, 10),
-//                               child: StatefulBuilder(builder:
-//                                   (_, void Function(void Function()) setter) {
-//                                 return ATScalingSwitcher(
-//                                     duration: 300,
-//                                     child: selectedCommunity == null
-//                                         ? CreateProgramSelectionItem(
-//                                             description: ATStrings
-//                                                 .selectCommunity4YourShow,
-//                                             onTap: () async {
-//                                               // final UnusedCommunity? selectedCom = await showCommunitiesDialog(context);
-//                                               // if(selectedCom != null){
-//                                               //   setter(() => selectedCommunity = selectedCom);
-//                                               // }
-//                                             },
-//                                           )
-//                                         : SelectedCommunityWidget(
-//                                             selectedCommunity:
-//                                                 selectedCommunity!,
-//                                             onClose: () => setter(
-//                                                 () => selectedCommunity = null),
-//                                             onView: () {}));
-//                               }),
-//                             ),
-//                             Padding(
-//                               padding: const EdgeInsets.fromLTRB(15, 0, 15, 30),
-//                               child: ATRichText(
-//                                 maxLines: 4,
-//                                 items: <String, TextStyle>{
-//                                   ATStrings.addCommunityDesc:
-//                                       context.textTheme.labelSmall!.copyWith(
-//                                           color: ATColors.hexC2C2C2
-//                                               .withValues(alpha: 0.76)),
-//                                   ATStrings.learnMore:
-//                                       context.textTheme.labelSmall!
-//                                 },
-//                                 textOnTap: (String text) {
-//                                   if (text == ATStrings.learnMore) {}
-//                                 },
-//                               ),
-//                             ),
-
-//                             const Padding(
-//                               padding: EdgeInsets.fromLTRB(15, 0, 15, 10),
-//                               child: RowWith2Texts(
-//                                 text1: ATStrings.addCohost,
-//                                 text2: '5 max',
-//                               ),
-//                             ),
-//                             Padding(
-//                               padding: const EdgeInsets.fromLTRB(15, 0, 15, 10),
-//                               child: BlocSelector<
-//                                       CohostServiceBloc,
-//                                       (
-//                                         List<ATCohost<bool>>,
-//                                         List<ATCohost<bool>>
-//                                       ),
-//                                       List<ATCohost<bool>>>(
-//                                   selector: ((
-//                                             List<ATCohost<bool>>,
-//                                             List<ATCohost<bool>>
-//                                           ) state) =>
-//                                       state.$2,
-//                                   builder: (_,
-//                                       List<ATCohost<bool>> selectedCoHosts) {
-//                                     final bool coHostExists = selectedCoHosts
-//                                         .any((ATCohost<bool> cohost) =>
-//                                             cohost.profilePicture != null);
-
-//                                     return ATScalingSwitcher(
-//                                       duration: 300,
-//                                       child: coHostExists
-//                                           ? SelectedCoHostsWidget(
-//                                               onEdit: () {
-//                                                 //showAvailableCoHostsModal(context: context),
-//                                               },
-//                                               selectedCohosts: const <User>[])
-//                                           : CreateProgramSelectionItem(
-//                                               leading: const ATImgLoader(
-//                                                 height: 20,
-//                                                 width: 20,
-//                                                 imgPath:
-//                                                     ATImgStrings.outlinedSearch,
-//                                               ),
-//                                               trailing: Flexible(
-//                                                 child: Text(
-//                                                   ATStrings
-//                                                       .searchAndAddCohost4YourShow,
-//                                                   style: context
-//                                                       .textTheme.bodySmall
-//                                                       ?.copyWith(
-//                                                     color: ATColors.white
-//                                                         .withValues(alpha: 0.4),
-//                                                   ),
-//                                                 ),
-//                                               ),
-//                                               onTap: () {
-//                                                 //showAvailableCoHostsModal(context: context),
-//                                               }),
-//                                     );
-//                                   }),
-//                             ),
-//                             Padding(
-//                               padding: const EdgeInsets.fromLTRB(15, 0, 15, 30),
-//                               child: Text(
-//                                 ATStrings.addCohostDesc,
-//                                 maxLines: 5,
-//                                 style: context.textTheme.labelSmall!.copyWith(
-//                                     color: ATColors.hexC2C2C2
-//                                         .withValues(alpha: 0.76)),
-//                               ),
-//                             ),
-
-//                             const Padding(
-//                               padding: EdgeInsets.fromLTRB(15, 0, 15, 10),
-//                               child: RowWith2Texts(text1: ATStrings.hashtags),
-//                             ),
-//                             Padding(
-//                               padding: const EdgeInsets.fromLTRB(15, 0, 15, 10),
-//                               child: CreateProgramSelectionItem(
-//                                 description: '${ATStrings.addHashtags}s',
-//                                 onTap: () {
-                                  
-//                                 }
-//                               ),
-//                             ),
-
-//                             const SelectedHashtagsRow(),
-
-//                             Padding(
-//                               padding: const EdgeInsets.fromLTRB(15, 0, 15, 30),
-//                               child: Text(
-//                                 ATStrings.addHashtagsDesc,
-//                                 maxLines: 5,
-//                                 style: context.textTheme.labelSmall?.copyWith(
-//                                     color: ATColors.hexC2C2C2
-//                                         .withValues(alpha: 0.76)),
-//                               ),
-//                             ),
-
-//                             const Padding(
-//                               padding: EdgeInsets.fromLTRB(15, 0, 15, 10),
-//                               child: RowWith2Texts(
-//                                   text1: ATStrings.audienceAccess),
-//                             ),
-//                             Padding(
-//                               padding: const EdgeInsets.fromLTRB(15, 0, 15, 10),
-//                               child: StatefulBuilder(builder:
-//                                   (_, void Function(void Function()) setter) {
-//                                 return ATScalingSwitcher(
-//                                     duration: 300,
-//                                     child: CreateProgramSelectionItem(
-//                                       description: chooseAudienceAccess,
-//                                       descStyle: chooseAudienceAccess ==
-//                                               ATStrings
-//                                                   .selectWhoCanAccessYourShow
-//                                           ? null
-//                                           : context.textTheme.bodySmall,
-//                                       onTap: () async {
-//                                         //showSelectAudienceAccessForEventsDialog(context);
-//                                         // final String? selectedAccessType = await showAudienceAccessTypeModal(
-//                                         //   context: context,
-//                                         // );
-//                                         // setter(
-//                                         //   (){
-//                                         //     if(selectedAccessType == null){
-//                                         //       chooseAudienceAccess = ATStrings.selectWhoCanAccessYourShow;
-//                                         //     }
-//                                         //     else{
-//                                         //       chooseAudienceAccess = selectedAccessType;
-//                                         //     }
-//                                         //   }
-//                                         // );
-//                                       },
-//                                     ));
-//                               }),
-//                             ),
-//                             Padding(
-//                               padding: const EdgeInsets.fromLTRB(15, 0, 15, 30),
-//                               child: Text(
-//                                 ATStrings.promptToSetupSubPlan,
-//                                 maxLines: 5,
-//                                 style: context.textTheme.labelSmall!.copyWith(
-//                                     color: ATColors.hexC2C2C2
-//                                         .withValues(alpha: 0.76)),
-//                               ),
-//                             ),
-
-//                             const Padding(
-//                               padding: EdgeInsets.fromLTRB(15, 0, 15, 30),
-//                               child: ATDivider(
-//                                 height: 1.1,
-//                               ),
-//                             ),
-
-//                             Align(
-//                               alignment: Alignment.centerLeft,
-//                               child: Padding(
-//                                 padding:
-//                                     const EdgeInsets.only(left: 15, right: 15),
-//                                 child: Text(
-//                                   ATStrings.moderationTools,
-//                                   style: context.textTheme.labelSmall?.copyWith(
-//                                     fontSize: ATSizes.size13,
-//                                   ),
-//                                 ),
-//                               ),
-//                             ),
-
-//                             Padding(
-//                                 padding:
-//                                     const EdgeInsets.fromLTRB(15, 15, 15, 10),
-//                                 child: Row(
-//                                   children: <Widget>[
-//                                     const Icon(
-//                                       Icons.front_hand_outlined,
-//                                       size: 18,
-//                                     ),
-//                                     const SizedBox(
-//                                       width: 5,
-//                                     ),
-//                                     Text(
-//                                       ATStrings.handRaising,
-//                                       style: context.textTheme.titleLarge
-//                                           ?.copyWith(
-//                                               fontWeight: ATFontWeights.w500),
-//                                     ),
-//                                   ],
-//                                 )),
-//                             Padding(
-//                               padding: const EdgeInsets.fromLTRB(15, 0, 15, 10),
-//                               child: StatefulBuilder(builder:
-//                                   (_, void Function(void Function()) setter) {
-//                                 return ATScalingSwitcher(
-//                                     duration: 300,
-//                                     child: CreateProgramSelectionItem(
-//                                       description: chooseAudienceAccess,
-//                                       descStyle: chooseAudienceAccess ==
-//                                               ATStrings
-//                                                   .selectWhoCanAccessYourShow
-//                                           ? null
-//                                           : context.textTheme.bodySmall,
-//                                       onTap: () async {
-//                                         //await choose2AllowHandRaisingModal(context);
-//                                       },
-//                                     ));
-//                               }),
-//                             ),
-//                             Padding(
-//                                 padding:
-//                                     const EdgeInsets.fromLTRB(15, 0, 15, 30),
-//                                 child: ATRichText(
-//                                   items: <String, TextStyle>{
-//                                     ATStrings
-//                                             .youWillHaveAccessToModerationTools:
-//                                         context.textTheme.labelSmall!.copyWith(
-//                                             color: ATColors.hexC2C2C2
-//                                                 .withValues(alpha: 0.76)),
-//                                     ' ${ATStrings.learnMore}':
-//                                         context.textTheme.labelSmall!
-//                                   },
-//                                 )),
-
-//                             CreateShowTextFieldTitle(
-//                               title: "Moderation Tools",
-//                               titleStyle: context.textTheme.titleMedium
-//                                   ?.copyWith(fontWeight: ATFontWeights.w500),
-//                             ),
-//                             SizedBox(height: 16.h),
-
-//                             // Hand Raising
-//                             ShowTypeVisibilityWidget(
-//                               showType: ShowType.all,
-//                               child: Container(
-//                                 margin: EdgeInsets.only(bottom: 12.h),
-//                                 child: const CreateShowTextFieldTitle(
-//                                   prefixIcon: Icons.front_hand_outlined,
-//                                   title: "Hand Raising",
-//                                 ),
-//                               ),
-//                             ),
-//                             ShowTypeVisibilityWidget(
-//                               showType: ShowType.all,
-//                               child: CreateShowTextFormField(
-//                                 readOnly: true,
-//                                 controller: service.handRaisingController,
-//                                 hintText: "Select audience interaction",
-//                                 suffixIcon: Icon(
-//                                   Icons.arrow_forward_ios,
-//                                   size: 20.w,
-//                                   color: ATColors.white.withOpacity(0.4),
-//                                 ),
-//                                 onTap: () async {
-//                                   //await choose2AllowHandRaisingModal(context);
-//                                 },
-//                               ),
-//                             ),
-//                             ShowTypeVisibilityWidget(
-//                               showType: ShowType.all,
-//                               child: Container(
-//                                 margin: EdgeInsets.only(top: 8.h, bottom: 30.h),
-//                                 width: 360.w,
-//                                 child: Text(
-//                                   "While you're live, you’ll have full access to your moderation tools, allowing you to manage interactions and maintain control throughout the session. Learn more",
-//                                   overflow: TextOverflow.visible,
-//                                   style: context.textTheme.titleSmall?.copyWith(
-//                                     fontWeight: ATFontWeights.w500,
-//                                     color: ATColors.white.withOpacity(0.4),
-//                                   ),
-//                                 ),
-//                               ),
-//                             ),
-
-//                             // Capacity
-//                             // ShowTypeVisibilityWidget(
-//                             //   showType: widget.showType,
-//                             //   allowedShowTypes: const <ShowType>[ShowType.event],
-//                             //   child: Container(
-//                             //     margin: EdgeInsets.only(bottom: 12.h),
-//                             //     child: const CreateShowTextFieldTitle(
-//                             //       prefixIcon: Icons.people_outline,
-//                             //       title: "Capacity",
-//                             //     ),
-//                             //   ),
-//                             // ),
-//                             // ShowTypeVisibilityWidget(
-//                             //   showType: widget.showType,
-//                             //   allowedShowTypes: const <ShowType>[ShowType.event],
-//                             //   child: CreateShowTextFormField(
-//                             //     readOnly: true,
-//                             //     controller: service.capacityController,
-//                             //     hintText: "Unlimited",
-//                             //     suffixIcon: Icon(
-//                             //       Icons.arrow_forward_ios,
-//                             //       size: 20.w,
-//                             //       color: ATColors.white.withOpacity(0.4),
-//                             //     ),
-//                             //     onTap: () async {
-//                             //       await showEventCapacitySelectionDialog(
-//                             //           context: context);
-//                             //     },
-//                             //   ),
-//                             // ),
-//                             // ShowTypeVisibilityWidget(
-//                             //   showType: widget.showType,
-//                             //   allowedShowTypes: const <ShowType>[ShowType.event],
-//                             //   child: Container(
-//                             //     margin: EdgeInsets.only(top: 8.h, bottom: 30.h),
-//                             //     width: 360.w,
-//                             //     child: Text(
-//                             //       "Set the maximum number of listeners for your event. Once the limit is reached, no additional participants can join or pay.",
-//                             //       overflow: TextOverflow.visible,
-//                             //       style: context
-//                             //           .textTheme
-//                             //           .titleSmall
-//                             //           ?.copyWith(
-//                             //         fontWeight: ATFontWeights.w500,
-//                             //         color:
-//                             //         ATColors.white.withOpacity(0.4),
-//                             //       ),
-//                             //     ),
-//                             //   ),
-//                             // ),
-
-//                             // Whispers
-//                             // ShowTypeVisibilityWidget(
-//                             //   showType: widget.showType,
-//                             //   allowedShowTypes: const <ShowType>[
-//                             //     ShowType.event,
-//                             //     ShowType.episode
-//                             //   ],
-//                             //   child: Container(
-//                             //     margin: EdgeInsets.only(bottom: 12.h),
-//                             //     child: const CreateShowTextFieldTitle(
-//                             //       prefixIcon: Iconsax.message,
-//                             //       title: "Whispers",
-//                             //     ),
-//                             //   ),
-//                             // ),
-//                             // ShowTypeVisibilityWidget(
-//                             //   showType: widget.showType,
-//                             //   allowedShowTypes: const <ShowType>[
-//                             //     ShowType.event,
-//                             //     ShowType.episode
-//                             //   ],
-//                             //   child: CreateShowTextFormField(
-//                             //     readOnly: true,
-//                             //     controller: service.whisperController,
-//                             //     hintText: "Turn whispers on or off for this event",
-//                             //     suffixIcon: Icon(
-//                             //       Icons.arrow_forward_ios,
-//                             //       size: 20.w,
-//                             //       color: ATColors.white.withOpacity(0.4),
-//                             //     ),
-//                             //     onTap: () async {
-//                             //       await showWhispersDialog(context);
-//                             //     },
-//                             //   ),
-//                             // ),
-//                             // ShowTypeVisibilityWidget(
-//                             //   showType: widget.showType,
-//                             //   allowedShowTypes: const <ShowType>[
-//                             //     ShowType.event,
-//                             //     ShowType.episode
-//                             //   ],
-//                             //   child: Container(
-//                             //     margin: EdgeInsets.only(top: 8.h, bottom: 30.h),
-//                             //     width: 360.w,
-//                             //     child: Text(
-//                             //       "Whispers are randomly selected comments from your live audience that appear on your event page while you are live. \n \nNon-attending users can see these comments, encouraging them to join your live event.",
-//                             //       overflow: TextOverflow.visible,
-//                             //       style: context
-//                             //           .textTheme
-//                             //           .titleSmall
-//                             //           ?.copyWith(
-//                             //         fontWeight: ATFontWeights.w500,
-//                             //         color:
-//                             //         ATColors.white.withOpacity(0.4),
-//                             //       ),
-//                             //     ),
-//                             //   ),
-//                             // ),
-//                           ],
-//                         ),
-//                       ),
-//                     ),
-//                   ),
-//                 ),
-//               ],
-//             );
-//           }),
-//           resizeToAvoidBottomInset: false,
-//           bottomSheet: ATContainer(
-//             height: 70,
-//             gradient: LinearGradient(
-//                 begin: Alignment.topCenter,
-//                 end: Alignment.bottomCenter,
-//                 colors: <Color>[
-//                   ATColors.hex0D0D0D.withValues(alpha: 0.1),
-//                   ATColors.hex0D0D0D
-//                 ]),
-//             padding: const EdgeInsets.fromLTRB(15, 10, 15, 10),
-//             child: BlocBuilder<BgImageCubit, (String, Uint8List?)>(
-//                 builder: (_, (String, Uint8List?) selectedImgPath) {
-//               return ATPlainElevatedBtn(
-//                 bgColor: ATColors.white,
-//                 fgColor: ATColors.hex0D0D0D,
-//                 btnTitle: ATStrings.next,
-//                 onPressed: () async {
-//                   //await showAddCoHostDialog(context);
-//                   //await showAddHashtagDialog(context);
-//                   //await showHandRaisingDialog(context);
-//                   //showAddCommunitiesDialog(context);
-//                   //showSelectAudienceAccessForShowsDialog(context);
-//                   //context.pushNamed(AmptiveRoutes.CREATE_SHOW_SUCCESS);
-//                 },
-
-//                 //onPressed: activate ? () async{
-//                 //await showAddCoHostDialog(context);
-//                 //await showAddHashtagDialog(context);
-//                 //showAddCommunitiesDialog(context);
-//                 //showSelectAudienceAccessForEventsDialog(context);
-//                 //showWhispersDialog(context);
-//                 //await showEventCapacitySelectionDialog(context: context);
-//                 //context.pushNamed(ATRoutes.EVENT_SCHEDULED_SCREEN);
-//                 //} : null,
-//               );
-//             }),
-//           ),
-//         ),
-//       ),
-//     );
-//   }
-// }
+  return accessTypeTextDesc;
+}

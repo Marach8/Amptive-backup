@@ -13,7 +13,7 @@ export 'create_program_selection_item.dart';
 export '../../../discover/presentation/widgets/selected_hashtags_row.dart';
 export '../../../discover/presentation/widgets/hashtags_modal.dart';
 export '../../../discover/presentation/widgets/available_hashtags_list.dart';
-export '../../../shows/presentation/widgets/show_audience_access_modal.dart';
+export '../../../shows/presentation/widgets/audience_access_modal.dart';
 export 'hand_raising_permission_modal.dart';
 export 'add_link_modal.dart';
 export 'schedule_icon.dart';

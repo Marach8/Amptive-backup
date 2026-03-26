@@ -74,7 +74,7 @@ class GoLiveTypeSelectionScreen extends StatelessWidget {
                           isSelected: state == 1,
                           unselectedImgPath: ATImgStrings.CREATE_EVENT_ICON1,
                           selectedImgPath: ATImgStrings.CREATE_EVENT_ICON2,
-                          title: ATStrings.CREATE_EVENT,
+                          title: ATStrings.createEvent,
                           subtitle: ATStrings.CREATE_EVENT_DESC,
                           alphabet: 'E',
                         ),

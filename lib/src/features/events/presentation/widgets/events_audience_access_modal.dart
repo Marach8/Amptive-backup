@@ -1,3 +1,20 @@
+import 'dart:io';
+import 'package:amptive/src/config/utils/colors.dart';
+import 'package:amptive/src/config/utils/image_strings.dart';
+import 'package:amptive/src/features/events/presentation/widgets/events_subscription_setup_modal.dart';
+import 'package:amptive/src/config/utils/helper_functions.dart';
+import 'package:amptive/src/features/shows/presentation/widgets/audience_access_modal.dart';
+import 'package:amptive/src/shared/custom_container_widget.dart';
+import 'package:amptive/src/shared/image_loader_widget.dart';
+import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
+import 'package:go_router/go_router.dart';
+import '../../../../services/create_show/create_show_service.dart';
+import '../../../../shared/custom_rebuilder_widget.dart';
+import 'package:amptive/src/shared/elevated_button_widget.dart';
+import '../../../../config/utils/other_strings.dart';
+
+
 import 'package:amptive/src/config/utils/dialogs/app_notification_dialog.dart';
 import 'package:amptive/src/shared/divider_widget.dart';
 import 'package:amptive/src/shared/image_loader_widget.dart';
@@ -7,20 +24,8 @@ import 'package:amptive/src/global_export.dart';
 import 'package:amptive/src/shared/modal_dismisser.dart';
 import '../../../switch_account/presentation/switch_acct/switch_acct_export.dart';
 
-enum ProgramAccessType { free, paid }
 
-class ProgramAccessTypeSelectionData {
-  const ProgramAccessTypeSelectionData({
-    this.accessType,
-    this.subscriptionAmount,
-    this.oneTimePaymentAmount,
-  });
-
-  final ProgramAccessType? accessType;
-  final double? subscriptionAmount, oneTimePaymentAmount;
-}
-
-Future<ProgramAccessTypeSelectionData?> showAudienceAccessTypeModal({
+Future<ProgramAccessTypeSelectionData?> showEventsAudienceAccessTypeModal({
   required BuildContext context,
   required ProgramAccessTypeSelectionData initialAccessTypeData,
 }) async {
@@ -100,18 +105,14 @@ class _SubWidgetState extends State<_SubWidget> {
               style: context.textTheme.bodyLarge,
             ),
           ),
-          const SizedBox(
-            height: 15,
-          ),
+          const SizedBox(height: 15),
           Text(
             maxLines: 5,
             ATStrings.promptToSetupSubPlan,
             style: context.textTheme.labelSmall
                 ?.copyWith(color: ATColors.hexC2C2C2.withValues(alpha: 0.76)),
           ),
-          const SizedBox(
-            height: 15,
-          ),
+          const SizedBox(height: 15),
           Expanded(
               child: SingleChildScrollView(
             controller: widget.controller,
@@ -146,9 +147,7 @@ class _SubWidgetState extends State<_SubWidget> {
               ],
             ),
           )),
-          const SizedBox(
-            height: 15,
-          ),
+          const SizedBox(height: 15),
           ATPlainElevatedBtn(
             height: 50,
             onPressed: _localAccessType == null
@@ -178,14 +177,14 @@ class _SubWidgetState extends State<_SubWidget> {
                   },
             btnTitle: ATStrings.cContinue,
           ),
-          const SizedBox(
-            height: 54,
-          )
+          const SizedBox(height: 54)
         ],
       ),
     );
   }
 }
+
+
 
 class _PaidAccessWidget extends StatelessWidget {
   const _PaidAccessWidget({
@@ -205,14 +204,7 @@ class _PaidAccessWidget extends StatelessWidget {
     final bool hasExistingSubPlan = initialSubPlan.subAmount != null ||
         initialSubPlan.oneTimePaymentAmount != null;
 
-    final double? subPlanPrice =
-        initialSubPlan.subAmount ?? initialSubPlan.oneTimePaymentAmount;
-    String recurrence = '';
-    if (initialSubPlan.subAmount != null) {
-      recurrence = 'month';
-    } else if (initialSubPlan.oneTimePaymentAmount != null) {
-      recurrence = 'one time';
-    }
+    final double? subPlanPrice = initialSubPlan.subAmount;
 
     return ATContainer(
       onTap: () => onPaidAccessTapped(isPaid),
@@ -247,30 +239,24 @@ class _PaidAccessWidget extends StatelessWidget {
                   ],
                 ),
               ),
-              const SizedBox(
-                width: 15,
-              ),
+              const SizedBox(width: 15),
               ATRadioBtn(isSelected: isPaid),
             ],
           ),
-          const SizedBox(
-            height: 15,
-          ),
+          const SizedBox(height: 15),
           const ATDivider(),
-          const SizedBox(
-            height: 15,
-          ),
+          const SizedBox(height: 15),
           Row(
             children: <Widget>[
               ATContainer(
                 onTap: () async {
-                  final SubscriptionPlanData? selectedSubPlan =
-                      await context.pushNamed(
-                    ATRoutes.creatorSubPlanSetup,
-                    extra: initialSubPlan,
+                  final SubscriptionPlanData? newSubPlan =
+                    await showEventsSubscriptionSetupModal(
+                    context: context,
+                    existingSubPlanData: initialSubPlan,
                   );
-                  if (selectedSubPlan != null) {
-                    onSubscriptionPlanSet(selectedSubPlan);
+                  if(newSubPlan != null){
+                    onSubscriptionPlanSet(newSubPlan);
                   }
                 },
                 padding: const EdgeInsets.fromLTRB(10, 5, 10, 5),
@@ -283,15 +269,13 @@ class _PaidAccessWidget extends StatelessWidget {
                     style: context.textTheme.labelSmall?.copyWith(
                         color: ATColors.white.withValues(alpha: 0.7))),
               ),
-              const SizedBox(
-                width: 10,
-              ),
+              const SizedBox(width: 10),
               Expanded(
                 child: Align(
                   alignment: Alignment.centerRight,
                   child: Text(
                       hasExistingSubPlan
-                          ? '${ATStrings.nairaText}$subPlanPrice/$recurrence'
+                          ? '${ATStrings.nairaText}$subPlanPrice'
                           : '',
                       style: context.textTheme.bodyMedium?.copyWith(
                         fontSize: ATSizes.size14,
@@ -305,6 +289,8 @@ class _PaidAccessWidget extends StatelessWidget {
     );
   }
 }
+
+
 
 class _FreeAccessWidget extends StatelessWidget {
   const _FreeAccessWidget({
@@ -347,9 +333,7 @@ class _FreeAccessWidget extends StatelessWidget {
               ],
             ),
           ),
-          const SizedBox(
-            width: 15,
-          ),
+          const SizedBox(width: 15),
           ATRadioBtn(isSelected: isFreeSelected),
         ],
       ),

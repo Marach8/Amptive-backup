@@ -133,7 +133,7 @@ Future<void> selectDateModal(
                     service.eventDateTime = null;
                     Navigator.pop(context);
                   },
-                  buttonTitle: ATStrings.REMOVE,
+                  buttonTitle: ATStrings.remove,
                   bgColor: ATColors.transparent,
                   fgColor: ATColors.white,
                 ),
