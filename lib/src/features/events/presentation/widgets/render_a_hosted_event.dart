@@ -1,13 +1,7 @@
 import 'package:amptive/src/features/events/data/models/response/event_response_model.dart';
 import 'package:amptive/src/features/events/presentation/screens/list_hosted_events_screen.dart';
-import 'package:amptive/src/features/shows/cubits/hosted_shows_cubit.dart';
-import 'package:amptive/src/features/shows/data/models/response/show_response_model.dart';
-import 'package:amptive/src/features/shows/presentation/screens/list_hosted_shows_screen.dart';
-import 'package:amptive/src/features/go_live/go_live_export.dart';
 import 'package:amptive/src/global_export.dart';
 import 'package:amptive/src/shared/image_loader_widget.dart';
-import 'package:amptive/src/shared/shimmer.dart';
-import 'package:go_router/go_router.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class RenderHostedEvent extends StatelessWidget {

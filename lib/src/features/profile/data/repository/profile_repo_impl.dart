@@ -62,7 +62,7 @@ class ProfileRepoImpl implements ProfileRepo {
     try {
       final Response<dynamic> response = await networkService.get(
         ATEndpoints.followers,
-        queryParameters: {
+        queryParameters: <String, dynamic>{
           'page': page,
           'page_size': pageSize,
         },

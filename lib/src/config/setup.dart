@@ -1,6 +1,5 @@
 import 'package:amptive/src/bloc/main_app/go_live_bloc/audience_view/following_bloc.dart';
 import 'package:amptive/src/bloc/main_app/go_live_bloc/audience_view/subscription_bloc.dart';
-import 'package:amptive/src/features/auth/cubits/local_user_data_cubit.dart';
 import 'package:amptive/src/features/calender/cubits/calender_month_view_bloc.dart';
 import 'package:amptive/src/features/calender/cubits/calender_visibile_bloc.dart';
 import 'package:amptive/src/features/calender/cubits/calender_views_bloc.dart';

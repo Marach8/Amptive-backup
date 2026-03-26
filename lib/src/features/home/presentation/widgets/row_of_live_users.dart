@@ -11,7 +11,6 @@ import '../../../../config/utils/image_strings.dart';
 import '../../../../shared/image_loader_widget.dart';
 import '../widgets/go_live_widget_in_home.dart';
 import 'package:amptive/src/shared/live_user_animation.dart';
-import 'package:amptive/src/shared/horizontal_refresh_indicator.dart';
 import 'package:amptive/src/config/utils/font_weights.dart';
 import 'package:amptive/src/config/utils/other_strings.dart';
 

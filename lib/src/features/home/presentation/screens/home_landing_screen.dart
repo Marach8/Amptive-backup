@@ -12,7 +12,6 @@ import 'package:amptive/src/features/home/presentation/widgets/render_home_feed_
 import 'package:amptive/src/features/home/presentation/widgets/row_of_live_users.dart';
 import 'package:amptive/src/features/main_app_nav_bar.dart';
 import 'package:amptive/src/shared/circle_avatar.dart';
-import 'package:amptive/src/shared/loading_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
