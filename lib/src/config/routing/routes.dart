@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'dart:typed_data';
 import 'package:amptive/src/config/routing/routing_export.dart';
 import 'package:amptive/src/features/accounts/presentation/screens/update_email_screen.dart';
 import 'package:amptive/src/features/accounts/presentation/screens/update_phone_no_screen.dart';
@@ -24,6 +25,7 @@ import 'package:amptive/src/features/calender/presentation/screens/calender_land
 import 'package:amptive/src/features/discover/presentation/views/society_screen.dart';
 import 'package:amptive/src/features/discover/presentation/views/trending_hashtags_screen.dart';
 import 'package:amptive/src/features/episodes/data/models/response/episode_model.dart';
+import 'package:amptive/src/features/events/presentation/screens/select_schedule_date_screen.dart';
 import 'package:amptive/src/features/home/presentation/screens/following_screen.dart';
 import 'package:amptive/src/features/home/presentation/screens/live_show_detailed_screen.dart';
 import 'package:amptive/src/features/home/presentation/screens/schedule_detailed_screen.dart';
@@ -639,13 +641,25 @@ final GoRouter amptiveAppRouter = GoRouter(
           ),
           GoRoute(
             name: ATRoutes.eventPreviewScreen,
-            path: ATRoutes.eventPreviewScreen,
+            path: ATRoutes.eventPreviewScreen.addSlash,
             pageBuilder: (_, GoRouterState state) {
               HostedEvent hostedEvent = state.extra as HostedEvent;
               return ATSlidingRouteTransition<void>(
                   child: PreviewEventScreen(
                 hostedEvent: hostedEvent,
               ));
+            },
+          ),
+
+          GoRoute(
+            name: ATRoutes.selectScheduleDateScreen,
+            path: ATRoutes.selectScheduleDateScreen.addSlash,
+            pageBuilder: (_, GoRouterState state) {
+              final SelectScheduleDataScreenEntryParams params =
+                state.extra as SelectScheduleDataScreenEntryParams;
+              return ATSlidingRouteTransition<void>(
+                child: SelectScheduleDateScreen(params: params)
+              );
             },
           ),
           GoRoute(

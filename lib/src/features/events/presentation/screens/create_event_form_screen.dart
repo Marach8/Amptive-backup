@@ -3,6 +3,7 @@ import 'dart:typed_data';
 import 'dart:ui';
 import 'package:amptive/src/features/episodes/presentation/widgets/whispers_permision_modal.dart';
 import 'package:amptive/src/features/events/data/models/request/create_event_model.dart';
+import 'package:amptive/src/features/events/presentation/screens/select_schedule_date_screen.dart';
 import 'package:amptive/src/features/events/presentation/widgets/events_audience_access_modal.dart';
 import 'package:amptive/src/features/events/cubits/hosted_events_cubit.dart';
 import 'package:amptive/src/features/events/presentation/widgets/set_event_capacity_modal.dart';
@@ -179,7 +180,20 @@ class __SubWidgetState extends State<_SubWidget> {
                                     padding:
                                         const EdgeInsets.only(right: 15),
                                     child: InkWell(
-                                        onTap: _toggleBtnOnTap,
+                                        onTap: ()async{
+                                          final ScheduleBtnOnTap currentOnTap = _activateBtn.value.$2;
+                                          if(currentOnTap == ScheduleBtnOnTap.goLive){
+                                            final DateTime? selectedDate = await context.pushNamed(
+                                              ATRoutes.selectScheduleDateScreen,
+                                              extra: SelectScheduleDataScreenEntryParams(
+                                                bgImage: context.read<BgImageCubit>().state.$2,
+                                                programName: 'Event',
+                                                currentDate: null,
+                                              )
+                                            ) as DateTime?;
+                                          }
+                                          _toggleBtnOnTap();
+                                        },
                                         borderRadius:
                                             BorderRadius.circular(30),
                                         child: const ScheduleIcon()),
