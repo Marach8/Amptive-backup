@@ -2,6 +2,7 @@ import 'dart:ui';
 import 'package:amptive/src/config/api_response_and_app_state.dart';
 import 'package:amptive/src/features/episodes/cubits/episode_detail_cubit.dart';
 import 'package:amptive/src/features/episodes/data/models/response/episode_model.dart';
+import 'package:amptive/src/features/events/presentation/screens/preview_event_screen.dart';
 import 'package:amptive/src/features/home/presentation/widgets/event_or_show_card.dart';
 import 'package:amptive/src/features/home/presentation/widgets/render_community_name.dart';
 import 'package:amptive/src/features/episodes/presentation/widgets/existing_episodes_indicator.dart';
@@ -152,7 +153,10 @@ class _SubWidgetState extends State<_SubWidget> {
                               }),
                             const SizedBox(height: 24),
                           
-                            ExistingEpisodesIndicator(activeEpisode: episode),
+                            ExistingEpisodesIndicator(
+                              activeEpisode: episode,
+                              onTappOverride: () => context.pop(),
+                            ),
                             const SizedBox(height: 12),
                             
                             Text(
@@ -169,7 +173,9 @@ class _SubWidgetState extends State<_SubWidget> {
                               spacing: 20,
                               children: <Widget>[
                                 if(isLive) const LiveIndicatorWithAnimatinWifiIcon()
-                                  else const EpisodeScheduleDateIndicator(),
+                                  else EpisodeScheduleDateIndicator(
+                                    text1: formatScheduleDate(episode?.scheduledFor ?? ''),
+                                  ),
                                 RenderCommunityName(communityName: episode?.community?.name)
                               ],
                             ),

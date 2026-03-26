@@ -1,5 +1,6 @@
 import 'dart:ui';
 import 'package:amptive/src/config/api_response_and_app_state.dart';
+import 'package:amptive/src/features/events/cubits/event_detail_cubit.dart';
 import 'package:amptive/src/features/home/cubits/toggle_following_cubit.dart';
 import 'package:amptive/src/features/home/data/models/following_status.dart';
 import 'package:amptive/src/features/home/presentation/widgets/event_or_show_card.dart';
@@ -13,6 +14,7 @@ import 'package:amptive/src/shared/global_model_objects.dart';
 import 'package:amptive/src/shared/image_loader_widget.dart';
 import 'package:amptive/src/shared/live_indicators.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:intl/intl.dart';
 import 'package:nested/nested.dart';
 import 'package:readmore/readmore.dart';
 import '../../../../shared/list_tile_with_leading_picture_widget.dart';
@@ -29,6 +31,11 @@ class PreviewEventScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: <SingleChildWidget>[
+        BlocProvider<EventDetailCubit>(
+          create: (_) => EventDetailCubit(
+            initialEvent: hostedEvent,
+          ),
+        ),
         BlocProvider<BlurredHeaderCubit>(
           create: (_) => BlurredHeaderCubit()),
         BlocProvider<ToggleFollowingCubit>(
@@ -58,6 +65,13 @@ class _EventSubWidgetState extends State<_EventSubWidget> {
   @override 
   void initState(){
     super.initState();
+    WidgetsBinding.instance.addPostFrameCallback(
+      (_){
+        if(mounted){
+          context.read<EventDetailCubit>().fetchEventDetails();
+        }
+      }
+    );
   }
 
   @override
@@ -125,8 +139,7 @@ class _EventSubWidgetState extends State<_EventSubWidget> {
                         listener: (_, ATAppState<HostedEvent> state){},
                         builder: (_, ATAppState<HostedEvent> state) {
                           final HostedEvent? event = context.read<EventDetailCubit>().currentEventDetail;
-                          final bool isLive = episode?.livestreamId != null;
-                          final int goingCount = episode?.goingCount ?? 0;
+                          final int goingCount = event?.goingCount ?? 0;
                           return Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: <Widget>[
@@ -163,8 +176,10 @@ class _EventSubWidgetState extends State<_EventSubWidget> {
                               Row(
                                 spacing: 20,
                                 children: <Widget>[
-                                  if(isLive) const LiveIndicatorWithAnimatinWifiIcon(),
-                                  RenderCommunityName(communityName: widget.hostedEvent.community?.name)
+                                  EpisodeScheduleDateIndicator(
+                                    text1: formatScheduleDate(event?.scheduledFor ?? ''),
+                                  ),
+                                  RenderCommunityName(communityName: event?.community?.name)
                                 ],
                               ),
                               const SizedBox(height: 40),
@@ -282,5 +297,19 @@ class _EventSubWidgetState extends State<_EventSubWidget> {
       );
       }
     );
+  }
+}
+
+
+
+String formatScheduleDate(String isoString) {
+  try {
+    final DateTime parsed = DateTime.parse(isoString).toLocal();
+
+    final DateFormat formatter = DateFormat("d MMM, y 'at' HH:mm");
+
+    return formatter.format(parsed);
+  } catch (e) {
+    return isoString; // fallback if parsing fails
   }
 }
