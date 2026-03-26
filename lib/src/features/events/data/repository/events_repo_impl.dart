@@ -77,7 +77,7 @@ class EventsRepoImpl implements EventsRepo {
 
       final HostedEventsResponseModel hostedEventsResponse =
           HostedEventsResponseModel.fromJson(
-        response.data as Map<String, dynamic>,
+        response.data
       );
       return Successful<HostedEventsResponseModel>(data: hostedEventsResponse);
     } catch (e) {

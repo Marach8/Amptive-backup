@@ -12,7 +12,7 @@ class HostedEventsResponseModel {
 
   factory HostedEventsResponseModel.fromJson(Map<String, dynamic> json) {
     return HostedEventsResponseModel(
-      hostedEvents: (json['items'] as List<dynamic>?)
+      hostedEvents: (json['data']['events'] as List<dynamic>?)
           ?.map((dynamic e) => HostedEvent.fromJson(e))
           .toList(),
       total: json['total'],
@@ -60,6 +60,7 @@ class HostedEvent extends Equatable {
     this.followerCount,
     this.isLive,
     this.community,
+    this.capacity
   });
 
   factory HostedEvent.fromJson(Map<String, dynamic> json) {
@@ -98,6 +99,7 @@ class HostedEvent extends Equatable {
       price: json['price']?.toDouble(),
       followerCount: json['follower_count'],
       isLive: json['is_live'],
+      capacity: json['capacity'],
       community: json['community'] != null 
           ? Community.fromJson(json['community']) 
           : null,
@@ -119,7 +121,8 @@ class HostedEvent extends Equatable {
       eventType,
       publishedAt,
       createdAt,
-      updatedAt;
+      updatedAt,
+      capacity;
 
   final int? viewerCount, peakViewers, reactionCount, commentCount, 
     goingCount, durationSeconds, followerCount;

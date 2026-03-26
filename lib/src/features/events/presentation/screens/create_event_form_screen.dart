@@ -112,6 +112,7 @@ class __SubWidgetState extends State<_SubWidget> {
     if (initialOnTap == ScheduleBtnOnTap.goLive) {
       _activateBtn.value = (_activateBtn.value.$1, ScheduleBtnOnTap.scheduleEvent);
     } else {
+      _scheduleDate = null;
       _activateBtn.value = (_activateBtn.value.$1, ScheduleBtnOnTap.goLive);
     }
   }
@@ -716,6 +717,8 @@ class __SubWidgetState extends State<_SubWidget> {
               listener: (_, ATAppState<HostedEvent> state){
                 if(state is SuccessState<HostedEvent>){
                   _activateBtn.value = (true, _activateBtn.value.$2);
+                  context.read<HostedEventsCubit>()
+                    .addNewHostedEvent(state.newData);
 
                   context.pushReplacementNamed(
                     ATRoutes.goLiveOnboarding,
@@ -799,29 +802,16 @@ class __SubWidgetState extends State<_SubWidget> {
                   }
 
                   _activateBtn.value = (true, _activateBtn.value.$2);
+                  context.read<HostedEventsCubit>()
+                    .addNewHostedEvent(state.newData);
 
                   final dynamic params = ProgramCreationSuccessScreenParams(
                     coverArtBytes: context.read<BgImageCubit>().state.$2!,
-                    title: ATStrings.episodeCreated,
-                    subtitle: ATStrings.shareEpisodeLinkDescription,
-                    btnTitle: ATStrings.shareEpisode,
-                    txtBtnTitle: ATStrings.viewEpisode,
-                    topLogo: Container(
-                      height: 40, width: 40,
-                      decoration: BoxDecoration(
-                        color: ATColors.white,
-                        borderRadius: BorderRadius.circular(22.5),
-                      ),
-                      padding: const EdgeInsets.all(8),
-                      child: ColorFiltered(
-                        colorFilter: ColorFilter.mode(
-                            ATColors.black, BlendMode.srcATop),
-                        child: const ATImgLoader(
-                          imgPath: ATImgStrings.calenderIcon,
-                          boxFit: BoxFit.cover,
-                        ),
-                      ),
-                    )
+                    title: ATStrings.eventScheduled,
+                    subtitle: ATStrings.shareEventLinkDesc,
+                    btnTitle: ATStrings.shareEvent,
+                    txtBtnTitle: ATStrings.viewEventPage,
+                    topLogo: const ProgramSuccessCalenderIcon()
                   );
     
                   final ButtonPressed? onPressedResult = await context.pushNamed(
@@ -835,7 +825,7 @@ class __SubWidgetState extends State<_SubWidget> {
                       //   ATRoutes.createEpisodeForm);
                     } else if(onPressedResult == ButtonPressed.textBtn){
                       context.pushReplacementNamed(
-                        ATRoutes.previewEpisodeScreen,
+                        ATRoutes.eventPreviewScreen,
                         extra: state.newData
                       );
                     }

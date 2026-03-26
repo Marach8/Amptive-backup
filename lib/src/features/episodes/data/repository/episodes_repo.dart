@@ -12,4 +12,12 @@ abstract class EpisodesRepo {
     required String showId,
     required String episodeId,
   });
+
+  Future<ApiResponse<Episode>> startEpisode({
+    required String showId,
+    required String episodeId,
+    required String streamUrl,
+    required String streamKey,
+    required String reason,
+  });
 }

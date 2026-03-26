@@ -647,16 +647,16 @@ class ATStrings {
   static const String createFirstEpisode = 'Create first epidode';
   static const String createAnEpisode = 'Create an Episode';
   static const String viewShowPage = 'View show page';
-  static const String VIEW_EVENT_PAGE = 'View event page';
-  static const String EVENT_SCHEDULED = 'Your Event is scheduled!';
-  static const String SHARE_EVENT_LINK =
+  static const String viewEventPage = 'View event page';
+  static const String eventScheduled = 'Your Event is scheduled!';
+  static const String shareEventLinkDesc =
       'Share your event link to build excitement and attract more attendees.';
   static const String emptyField = 'Field(s) cannot be empty';
   static const String invalidEmail = 'Please enter a valid email address!';
   static const String invalidPhone = 'Please enter a valid phone number!';
   static const String weakPassword =
       'Password must contain at least one upper case letter, and must be at least 8 characters!';
-  static const String SHARE_EVENT = 'Share event';
+  static const String shareEvent = 'Share event';
   static const String COMMENT = 'Comment';
   static const String END_NOW = 'End now';
   static const String HOST = 'Host';

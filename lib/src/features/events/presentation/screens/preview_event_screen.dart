@@ -1,4 +1,5 @@
 import 'dart:ui';
+import 'package:amptive/src/config/api_response_and_app_state.dart';
 import 'package:amptive/src/features/home/cubits/toggle_following_cubit.dart';
 import 'package:amptive/src/features/home/data/models/following_status.dart';
 import 'package:amptive/src/features/home/presentation/widgets/event_or_show_card.dart';
@@ -120,106 +121,149 @@ class _EventSubWidgetState extends State<_EventSubWidget> {
 
                     body: SingleChildScrollView(
                       padding: const EdgeInsets.fromLTRB(15, 10, 15, 5),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          Hero(
-                            tag: widget.hostedEvent.eventId ?? '',
-                            child: CoverPicWithTopRightMoreIcon(
-                                imgPath: widget.hostedEvent.coverUrl ?? '',
-                                onMoreTapped: () async {
-                                  final SelectedProgramAction? foo =
-                                      await showProgramOptions(
-                                    context: context,
-                                    toggleFollowingCubit:
-                                        context.read<ToggleFollowingCubit>(),
-                                    targetUserName:
-                                        widget.hostedEvent.host?.username ?? '',
-                                    targetUserId: widget.hostedEvent.host?.id ?? '',
-                                  );
-                                }),
-                          ),
-                          const SizedBox(height: 24),
-                          
-                          // Event doesn't have episodes like shows, so no ExistingEpisodesIndicator
-                          
-                          Text(
-                            maxLines: 2,
-                            widget.hostedEvent.title ?? '',
-                            overflow: TextOverflow.clip,
-                            style: context.textTheme.displayMedium?.copyWith(
-                              fontSize: ATSizes.size24,
-                              fontWeight: ATFontWeights.w600,
-                            ),
-                          ),
-                          const SizedBox(height: 12),
-                          Row(
-                            spacing: 20,
+                      child: BlocConsumer<EventDetailCubit, ATAppState<HostedEvent>>(
+                        listener: (_, ATAppState<HostedEvent> state){},
+                        builder: (_, ATAppState<HostedEvent> state) {
+                          final HostedEvent? event = context.read<EventDetailCubit>().currentEventDetail;
+                          final bool isLive = episode?.livestreamId != null;
+                          final int goingCount = episode?.goingCount ?? 0;
+                          return Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: <Widget>[
-                              if(isLive) const LiveIndicatorWithAnimatinWifiIcon(),
-                              RenderCommunityName(communityName: widget.hostedEvent.community?.name)
+                              Hero(
+                                tag: widget.hostedEvent.eventId ?? '',
+                                child: CoverPicWithTopRightMoreIcon(
+                                    imgPath: widget.hostedEvent.coverUrl ?? '',
+                                    onMoreTapped: () async {
+                                      final SelectedProgramAction? foo =
+                                          await showProgramOptions(
+                                        context: context,
+                                        toggleFollowingCubit:
+                                            context.read<ToggleFollowingCubit>(),
+                                        targetUserName:
+                                            widget.hostedEvent.host?.username ?? '',
+                                        targetUserId: widget.hostedEvent.host?.id ?? '',
+                                      );
+                                    }),
+                              ),
+                              const SizedBox(height: 24),
+                              
+                              // Event doesn't have episodes like shows, so no ExistingEpisodesIndicator
+                              
+                              Text(
+                                maxLines: 2,
+                                widget.hostedEvent.title ?? '',
+                                overflow: TextOverflow.clip,
+                                style: context.textTheme.displayMedium?.copyWith(
+                                  fontSize: ATSizes.size24,
+                                  fontWeight: ATFontWeights.w600,
+                                ),
+                              ),
+                              const SizedBox(height: 12),
+                              Row(
+                                spacing: 20,
+                                children: <Widget>[
+                                  if(isLive) const LiveIndicatorWithAnimatinWifiIcon(),
+                                  RenderCommunityName(communityName: widget.hostedEvent.community?.name)
+                                ],
+                              ),
+                              const SizedBox(height: 40),
+                              Text(
+                                ATStrings.hashtags,
+                                style: context.textTheme.bodySmall
+                                    ?.copyWith(fontSize: ATSizes.size17),
+                              ),
+                              Divider(
+                                color: ATColors.white.withValues(alpha: 0.1),
+                              ),
+                              const SizedBox(height: 5),
+                              RenderHashTags(hashtags: widget.hostedEvent.tags),
+                              const SizedBox(height: 30),
+                              Text(
+                                ATStrings.hostedBy,
+                                style: context.textTheme.bodySmall
+                                    ?.copyWith(fontSize: ATSizes.size17),
+                              ),
+                              Divider(
+                                color: ATColors.white.withValues(alpha: 0.1),
+                              ),
+                              TileWithLeadingImage(
+                                padding: const EdgeInsets.symmetric(vertical: 9),
+                                title: widget.hostedEvent.host?.username ?? '',
+                                subtitle: 'Host',
+                                diameter: 42,
+                                leadingImagePath: widget.hostedEvent.host?.profilePicture ?? ATImgStrings.jpeg1,
+                              ),
+                              ...(widget.hostedEvent.coHosts ?? <CoHost>[]).map(
+                                (CoHost cohost) => TileWithLeadingImage(
+                                  padding: const EdgeInsets.symmetric(vertical: 9),
+                                  title: cohost.username ?? '',
+                                  subtitle: 'Host',
+                                  diameter: 42,
+                                  leadingImagePath: cohost.profilePicture ?? ATImgStrings.jpeg1,
+                                )
+                              ),
+                              const SizedBox(height: 30),
+                              Text(
+                                '$goingCount Going',
+                                style: context.textTheme.bodySmall
+                                    ?.copyWith(fontSize: ATSizes.size17),
+                              ),
+                              Divider(
+                                color: ATColors.white.withValues(alpha: 0.1),
+                              ),
+                              const SizedBox(height: 10),
+                              if(goingCount == 0) Row(
+                                children: <Widget>[
+                                  const ATOverlappingCircles(maxNumber: 3),
+                                  const SizedBox(
+                                    width: 10,
+                                  ),
+                                  Flexible(
+                                    child: Text(
+                                      ATStrings.attendeesWillShowHere,
+                                      maxLines: 2,
+                                      style: context.textTheme.titleMedium
+                                          ?.copyWith(fontSize: ATSizes.size13),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              const SizedBox(height: 20),
+                              Text(
+                                ATStrings.shareEpisodeLinkDescription,
+                                maxLines: 2,
+                                style: context.textTheme.bodySmall?.copyWith(
+                                    color:
+                                        ATColors.white.withValues(alpha: 0.6)),
+                              ),
+                              const SizedBox(height: 35),
+                              
+                              Text(
+                                'About Event',
+                                style: context.textTheme.bodySmall
+                                    ?.copyWith(fontSize: ATSizes.size17),
+                              ),
+                              Divider(
+                                color: ATColors.white.withValues(alpha: 0.1),
+                              ),
+                              ReadMoreText(
+                                widget.hostedEvent.description ?? '',
+                                trimMode: TrimMode.Length,
+                                trimExpandedText: ATStrings.showLess,
+                                trimCollapsedText: ATStrings.showMore,
+                                colorClickableText: ATColors.white,
+                                trimLength: 100,
+                                style: TextStyle(
+                                  color: ATColors.white.withValues(alpha: 0.6),
+                                  fontSize: ATSizes.size14,
+                                  fontWeight: ATFontWeights.w500,
+                                ),
+                              ),
+                              const SizedBox(height: 150),
                             ],
-                          ),
-                          const SizedBox(height: 40),
-                          Text(
-                            ATStrings.hashtags,
-                            style: context.textTheme.bodySmall
-                                ?.copyWith(fontSize: ATSizes.size17),
-                          ),
-                          Divider(
-                            color: ATColors.white.withValues(alpha: 0.1),
-                          ),
-                          const SizedBox(height: 5),
-                          RenderHashTags(hashtags: widget.hostedEvent.tags),
-                          const SizedBox(height: 30),
-                          Text(
-                            ATStrings.hostedBy,
-                            style: context.textTheme.bodySmall
-                                ?.copyWith(fontSize: ATSizes.size17),
-                          ),
-                          Divider(
-                            color: ATColors.white.withValues(alpha: 0.1),
-                          ),
-                          TileWithLeadingImage(
-                            padding: const EdgeInsets.symmetric(vertical: 9),
-                            title: widget.hostedEvent.host?.username ?? '',
-                            subtitle: 'Host',
-                            diameter: 42,
-                            leadingImagePath: widget.hostedEvent.host?.profilePicture ?? ATImgStrings.jpeg1,
-                          ),
-                          ...(widget.hostedEvent.coHosts ?? <CoHost>[]).map(
-                            (CoHost cohost) => TileWithLeadingImage(
-                              padding: const EdgeInsets.symmetric(vertical: 9),
-                              title: cohost.username ?? '',
-                              subtitle: 'Host',
-                              diameter: 42,
-                              leadingImagePath: cohost.profilePicture ?? ATImgStrings.jpeg1,
-                            )
-                          ),
-                          const SizedBox(height: 30),
-                          Text(
-                            'About Show',
-                            style: context.textTheme.bodySmall
-                                ?.copyWith(fontSize: ATSizes.size17),
-                          ),
-                          Divider(
-                            color: ATColors.white.withValues(alpha: 0.1),
-                          ),
-                          ReadMoreText(
-                            widget.hostedEvent.description ?? '',
-                            trimMode: TrimMode.Length,
-                            trimExpandedText: ATStrings.showLess,
-                            trimCollapsedText: ATStrings.showMore,
-                            colorClickableText: ATColors.white,
-                            trimLength: 100,
-                            style: TextStyle(
-                              color: ATColors.white.withValues(alpha: 0.6),
-                              fontSize: ATSizes.size14,
-                              fontWeight: ATFontWeights.w500,
-                            ),
-                          ),
-                          const SizedBox(height: 150),
-                        ],
+                          );
+                        }
                       ),
                     ),
                   ),
@@ -232,7 +276,7 @@ class _EventSubWidgetState extends State<_EventSubWidget> {
               // Navigate to go live or event details
               // For events, we don't have episodes, so just go live
             },
-            btnTitle: isLive ? 'Go Live' : 'Start Event',
+            btnTitle: 'Edit Event'
           ),
         ),
       );

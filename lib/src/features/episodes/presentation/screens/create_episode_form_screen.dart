@@ -9,9 +9,11 @@ import 'package:amptive/src/features/discover/cubits/communities_cubit.dart';
 import 'package:amptive/src/features/discover/cubits/hashtags_cubit.dart';
 import 'package:amptive/src/features/discover/cubits/users_cubits.dart';
 import 'package:amptive/src/features/episodes/cubits/create_episode_cubit.dart';
+import 'package:amptive/src/features/episodes/cubits/start_episode_cubit.dart';
 import 'package:amptive/src/features/episodes/data/models/request/create_episode_request_model.dart';
 import 'package:amptive/src/features/episodes/data/models/response/episode_model.dart';
 import 'package:amptive/src/features/episodes/presentation/widgets/whispers_permision_modal.dart';
+import 'package:amptive/src/features/events/presentation/screens/select_schedule_date_screen.dart';
 import 'package:amptive/src/features/go_live/go_live_export.dart';
 import 'package:amptive/src/global_export.dart';
 import 'package:amptive/src/shared/annotated_region__widget.dart';
@@ -50,7 +52,7 @@ class CreateEpisodeFormScreen extends StatelessWidget {
         BlocProvider<AllUsersCubit>(create: (_) => AllUsersCubit()),
         BlocProvider<AllHashtagsCubit>(create: (_) => AllHashtagsCubit()),
         BlocProvider<SelectedHashTagsCubit>(create: (_) => SelectedHashTagsCubit()),
-        //BlocProvider<HostedShowsCubit>.value(value: hostedShowsCubit,),
+        BlocProvider<StartEpisodeCubit>(create: (_) => StartEpisodeCubit()),
       ],
       child: _SubWidget(showId: showId),
     );
@@ -76,6 +78,7 @@ class _CreateShowFormScreenState extends State<_SubWidget> {
     if (initialOnTap == ScheduleBtnOnTap.goLive) {
       _activateBtn.value = (_activateBtn.value.$1, ScheduleBtnOnTap.scheduleEvent);
     } else {
+      _scheduleDate = null;
       _activateBtn.value = (_activateBtn.value.$1, ScheduleBtnOnTap.goLive);
     }
   }
@@ -93,6 +96,7 @@ class _CreateShowFormScreenState extends State<_SubWidget> {
   List<HashTag>? selectedHashtags;
   ProgramAccessTypeSelectionData accessTypeData =
       const ProgramAccessTypeSelectionData();
+  DateTime? _scheduleDate;
 
   @override
   void initState() {
@@ -167,14 +171,28 @@ class _CreateShowFormScreenState extends State<_SubWidget> {
                                   style: context.textTheme.bodyMedium,
                                 ),
                                 Padding(
-                                  padding:
-                                      const EdgeInsets.only(right: 15),
-                                  child: InkWell(
-                                      onTap: _toggleBtnOnTap,
+                                    padding: const EdgeInsets.only(right: 15),
+                                    child: InkWell(
+                                      onTap: ()async{
+                                        final ScheduleBtnOnTap currentOnTap = _activateBtn.value.$2;
+                                        if(currentOnTap == ScheduleBtnOnTap.goLive){
+                                          final DateTime? selectedDate = await context.pushNamed(
+                                            ATRoutes.selectScheduleDateScreen,
+                                            extra: SelectScheduleDataScreenEntryParams(
+                                              bgImage: context.read<BgImageCubit>().state.$2,
+                                              programName: 'Episode',
+                                              currentDate: _scheduleDate
+                                            )
+                                          ) as DateTime?;
+                                          _scheduleDate = selectedDate;
+                                        }
+                                        _toggleBtnOnTap();
+                                      },
                                       borderRadius:
                                           BorderRadius.circular(30),
-                                      child: const ScheduleIcon()),
-                                )
+                                      child: const ScheduleIcon()
+                                    ),
+                                  )
                               ],
                             ),
                           )
@@ -213,9 +231,7 @@ class _CreateShowFormScreenState extends State<_SubWidget> {
                             maxLines: 1,
                             cursorHeight: 20,
                             hintText: ATStrings.titleOfYourShow,
-                            prefixIcon: const SizedBox(
-                              width: 12,
-                            ),
+                            prefixIcon: const SizedBox(width: 12),
                             hintStyle: context.textTheme.bodySmall?.copyWith(
                               color: ATColors.white.withValues(alpha: 0.4),
                             ),
@@ -634,6 +650,27 @@ class _CreateShowFormScreenState extends State<_SubWidget> {
 
         bottomSheet: MultiBlocListener(
           listeners: <SingleChildWidget>[
+            BlocListener<StartEpisodeCubit, ATAppState<Episode>>(
+              listener: (_, ATAppState<Episode> state){
+                if(state is SuccessState<Episode>){
+                  _activateBtn.value = (true, _activateBtn.value.$2);
+
+                  context.pushReplacementNamed(
+                    ATRoutes.goLiveOnboarding,
+                    extra: state.newData
+                  );
+                }
+                else if(state is FailureState<Episode>){
+                  _activateBtn.value = (true, _activateBtn.value.$2);
+
+                  showAppNotification2(
+                    context: context,
+                    text: state.message,
+                    type: NotificationType.failure,
+                  );
+                }
+              },
+            ),
             BlocListener<BgImageCubit, (String, Uint8List?)>(
               listener: (_, (String, Uint8List?) state) {
                 if (state.$2 != null) {
@@ -667,7 +704,7 @@ class _CreateShowFormScreenState extends State<_SubWidget> {
                         ?? accessTypeData.oneTimePaymentAmount ?? 0.01,
                       allowHandRaising: selectedHandRaisePermission == HandRaisingPermission.allow,
                       allowWhispers: whispersDesc == ATStrings.turnedOn,
-                      // scheduledFor: '',
+                      scheduledFor: _scheduleDate?.toUtc().toIso8601String(),
                     ),
                   );
                 } else if (state is FailureState<String>) {
@@ -684,17 +721,22 @@ class _CreateShowFormScreenState extends State<_SubWidget> {
             BlocListener<CreateEpisodeCubit, ATAppState<Episode>>(
               listener: (_, ATAppState<Episode> state) async{
                 if (state is SuccessState<Episode>) {
-                  _activateBtn.value = (true, _activateBtn.value.$2);
 
-                  final bool shouldGoToLive = _activateBtn.value.$2 
+                  final bool shouldStartLive = _activateBtn.value.$2 
                     == ScheduleBtnOnTap.goLive;
-                  if(shouldGoToLive){
-                    context.pushReplacementNamed(
-                      ATRoutes.goLiveOnboarding,
-                      extra: state.newData
+                  if(shouldStartLive){
+                    final Episode? episode = state.newData;
+                    context.read<StartEpisodeCubit>().startEpisode(
+                      showId: widget.showId,
+                      episodeId: episode?.episodeId ?? '',
+                      streamUrl: episode?.streamUrl ?? '', 
+                      streamKey: episode?.streamKey ?? '',
+                      reason: 'Starting an episode'
                     );
                     return;
                   }
+
+                  _activateBtn.value = (true, _activateBtn.value.$2);
 
                   final dynamic params = ProgramCreationSuccessScreenParams(
                     coverArtBytes: context.read<BgImageCubit>().state.$2!,
@@ -702,22 +744,7 @@ class _CreateShowFormScreenState extends State<_SubWidget> {
                     subtitle: ATStrings.shareEpisodeLinkDescription,
                     btnTitle: ATStrings.shareEpisode,
                     txtBtnTitle: ATStrings.viewEpisode,
-                    topLogo: Container(
-                      height: 40, width: 40,
-                      decoration: BoxDecoration(
-                        color: ATColors.white,
-                        borderRadius: BorderRadius.circular(22.5),
-                      ),
-                      padding: const EdgeInsets.all(8),
-                      child: ColorFiltered(
-                        colorFilter: ColorFilter.mode(
-                            ATColors.black, BlendMode.srcATop),
-                        child: const ATImgLoader(
-                          imgPath: ATImgStrings.calenderIcon,
-                          boxFit: BoxFit.cover,
-                        ),
-                      ),
-                    )
+                    topLogo: const ProgramSuccessCalenderIcon()
                   );
     
                   final ButtonPressed? onPressedResult = await context.pushNamed(
@@ -776,6 +803,11 @@ class _CreateShowFormScreenState extends State<_SubWidget> {
                     }
                     else if(selectedWhispersPermission == null) {
                       errorMessage = 'Please choose whether to allow whispers for this episode';
+                    }
+                    final ScheduleBtnOnTap currentOnTap = _activateBtn.value.$2;
+                    if(currentOnTap == ScheduleBtnOnTap.scheduleEvent 
+                      && _scheduleDate == null){
+                      errorMessage = 'Please choose a schedule date/time for this episode';
                     }
       
                     if(errorMessage.isNotEmpty){
