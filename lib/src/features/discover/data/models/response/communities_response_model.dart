@@ -22,7 +22,7 @@ class CommunitiesResponseModel {
 
     if (rawList != null) {
       for (final dynamic communityEntry in rawList) {
-        final String? id = communityEntry['id'];
+        final String? id = communityEntry['community_id'];
         if (id != null) {
           communitiesMap[id] = Community.fromJson(communityEntry);
           communityIds.add(id);

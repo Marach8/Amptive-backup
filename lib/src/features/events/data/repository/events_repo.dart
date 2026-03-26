@@ -16,4 +16,11 @@ abstract class EventsRepo {
     required int pageSize,
     required bool refresh,
   });
+
+  Future<ApiResponse<HostedEvent>> startEvent({
+    required String eventId,
+    required String streamUrl,
+    required String streamKey,
+    required String reason,
+  });
 }

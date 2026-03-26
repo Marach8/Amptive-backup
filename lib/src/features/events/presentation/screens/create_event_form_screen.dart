@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:typed_data';
 import 'dart:ui';
 import 'package:amptive/src/features/episodes/presentation/widgets/whispers_permision_modal.dart';
+import 'package:amptive/src/features/events/cubits/start_event_cubit.dart';
 import 'package:amptive/src/features/events/data/models/request/create_event_model.dart';
 import 'package:amptive/src/features/events/presentation/screens/select_schedule_date_screen.dart';
 import 'package:amptive/src/features/events/presentation/widgets/events_audience_access_modal.dart';
@@ -56,8 +57,9 @@ class CreateEventFormScreen extends StatelessWidget {
         BlocProvider<AllHashtagsCubit>(create: (_) => AllHashtagsCubit()),
         BlocProvider<SelectedHashTagsCubit>(
           create: (_) => SelectedHashTagsCubit()),
-        BlocProvider<HostedEventsCubit>.value(value: hostedEventsCubit,),
+        BlocProvider<HostedEventsCubit>.value(value: hostedEventsCubit),
         BlocProvider<CreateEventCubit>(create: (_) => CreateEventCubit()),
+        BlocProvider<StartEventCubit>(create: (_) => StartEventCubit())
       ],
       child: const _SubWidget(),
     );
@@ -425,6 +427,7 @@ class __SubWidgetState extends State<_SubWidget> {
                             builder: (_, StateSetter setter) {
                               return Column(
                                 spacing: 10,
+                                crossAxisAlignment: CrossAxisAlignment.start,
                                 children: <Widget>[
                                   Padding(
                                     padding: const EdgeInsets.fromLTRB(15, 0, 15, 0),
@@ -708,6 +711,29 @@ class __SubWidgetState extends State<_SubWidget> {
         resizeToAvoidBottomInset: false,
         bottomSheet: MultiBlocListener(
           listeners: <SingleChildWidget>[
+            //Listen to starting an event
+            BlocListener<StartEventCubit, ATAppState<HostedEvent>>(
+              listener: (_, ATAppState<HostedEvent> state){
+                if(state is SuccessState<HostedEvent>){
+                  _activateBtn.value = (true, _activateBtn.value.$2);
+
+                  context.pushReplacementNamed(
+                    ATRoutes.goLiveOnboarding,
+                    extra: state.newData
+                  );
+                }
+                else if(state is FailureState<HostedEvent>){
+                  _activateBtn.value = (true, _activateBtn.value.$2);
+
+                  showAppNotification2(
+                    context: context,
+                    text: state.message,
+                    type: NotificationType.failure,
+                  );
+                }
+              },
+            ),
+            //Listen to Background image selection
             BlocListener<BgImageCubit, (String, Uint8List?)>(
               listener: (_, (String, Uint8List?) state) {
                 if (state.$2 != null) {
@@ -717,6 +743,7 @@ class __SubWidgetState extends State<_SubWidget> {
                 }
               },
             ),
+            //Listen to uploading bacground cover art
             BlocListener<UploadImageCubit, ATAppState<String>>(
               listener: (_, ATAppState<String> state) {
                 if (state is SuccessState<String>) {
@@ -740,7 +767,7 @@ class __SubWidgetState extends State<_SubWidget> {
                       handRaising: selectedPermission == HandRaisingPermission.allow,
                       price: accessTypeData.subscriptionAmount ?? 0.01,
                       capacity: selectedCapacity,
-                      scheduledFor: _scheduleDate?.toUtc().toIso8601String() ?? '',
+                      scheduledFor: _scheduleDate?.toUtc().toIso8601String(),
                     ),
                   );
                 } else if (state is FailureState<String>) {
@@ -754,20 +781,24 @@ class __SubWidgetState extends State<_SubWidget> {
                 }
               },
             ),
+            //Listen to creating the event draft.
             BlocListener<CreateEventCubit, ATAppState<HostedEvent>>(
               listener: (_, ATAppState<HostedEvent> state) async{
                 if (state is SuccessState<HostedEvent>) {
-                  _activateBtn.value = (true, _activateBtn.value.$2);
-
-                  final bool shouldGoToLive = _activateBtn.value.$2 
+                  final bool shouldStartLive = _activateBtn.value.$2 
                     == ScheduleBtnOnTap.goLive;
-                  if(shouldGoToLive){
-                    context.pushReplacementNamed(
-                      ATRoutes.goLiveOnboarding,
-                      extra: state.newData
+                  if(shouldStartLive){
+                    final HostedEvent? event = state.newData;
+                    context.read<StartEventCubit>().startEvent(
+                      eventId: event?.eventId ?? '',
+                      streamUrl: event?.streamUrl ?? '', 
+                      streamKey: event?.streamKey ?? '',
+                      reason: 'Starting an event'
                     );
                     return;
                   }
+
+                  _activateBtn.value = (true, _activateBtn.value.$2);
 
                   final dynamic params = ProgramCreationSuccessScreenParams(
                     coverArtBytes: context.read<BgImageCubit>().state.$2!,

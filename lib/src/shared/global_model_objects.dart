@@ -78,6 +78,8 @@ class Community {
     this.description,
     this.image,
     this.memberCount,
+    this.isPrivate,
+    this.creatorId
   });
 
   factory Community.fromJson(Map<String, dynamic> json) {
@@ -87,11 +89,15 @@ class Community {
       description: json['description'],
       image: json['image'],
       memberCount: json['member_count'],
+      isPrivate: json['is_private'],
+      creatorId: json['created_by']
     );
   }
 
-  final String? communityId, name, description, image;
+  final String? communityId, name, description,
+    image, creatorId;
   final int? memberCount;
+  bool? isPrivate;
 }
 
 class HashTag {

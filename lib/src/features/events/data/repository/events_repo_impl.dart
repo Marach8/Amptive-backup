@@ -87,4 +87,33 @@ class EventsRepoImpl implements EventsRepo {
       );
     }
   }
+
+  @override
+  Future<ApiResponse<HostedEvent>> startEvent({
+    required String eventId,
+    required String streamUrl,
+    required String streamKey,
+    required String reason,
+  }) async {
+    try {
+      final Response<dynamic> response = await networkService.post(
+        '${ATEndpoints.events}$eventId/start',
+        data: <String, dynamic>{
+          'stream_url': streamUrl,
+          'stream_key': streamKey,
+          'reason': reason,
+        },
+      );
+
+      final HostedEvent eventResponse = HostedEvent.fromJson(
+        response.data as Map<String, dynamic>,
+      );
+      return Successful<HostedEvent>(data: eventResponse);
+    } catch (e) {
+      log('Start event error: $e');
+      return Unsuccessful<HostedEvent>(
+        error: ATException.resolveException(e),
+      );
+    }
+  }
 }
