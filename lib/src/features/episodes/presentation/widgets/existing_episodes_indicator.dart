@@ -45,13 +45,15 @@ class ExistingEpisodesIndicator extends StatelessWidget {
   const ExistingEpisodesIndicator({
     super.key,
     this.activeEpisode,
+    this.onTappOverride,
   });
   final Episode? activeEpisode;
+  final VoidCallback? onTappOverride;
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: (){
+      onTap: onTappOverride ?? (){
         context.pushNamed(
           ATRoutes.previewEpisodeScreen,
           extra: activeEpisode ?? Episode(),

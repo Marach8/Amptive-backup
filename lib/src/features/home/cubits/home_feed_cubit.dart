@@ -41,7 +41,7 @@ class HomeFeedCubit extends Cubit<ATAppState<HomeFeedResponseModel>> {
     try {
       final ApiResponse<HomeFeedResponseModel> response =
           await homeRepo.fetchHomeFeed(
-        page: (currentHomeFeedData?.page ?? -1) + 1,
+        page: (currentHomeFeedData?.page ?? 0) + 1,
         pageSize: 20,
         refresh: false,
       );

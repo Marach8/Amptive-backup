@@ -1,0 +1,315 @@
+import 'dart:ui';
+import 'package:amptive/src/config/api_response_and_app_state.dart';
+import 'package:amptive/src/features/events/cubits/event_detail_cubit.dart';
+import 'package:amptive/src/features/home/cubits/toggle_following_cubit.dart';
+import 'package:amptive/src/features/home/data/models/following_status.dart';
+import 'package:amptive/src/features/home/presentation/widgets/event_or_show_card.dart';
+import 'package:amptive/src/features/home/presentation/widgets/render_community_name.dart';
+import 'package:amptive/src/features/home/presentation/widgets/program_actions_modal.dart';
+import 'package:amptive/src/features/events/data/models/response/event_response_model.dart';
+import 'package:amptive/src/global_export.dart';
+import 'package:amptive/src/shared/annotated_region__widget.dart';
+import 'package:amptive/src/shared/back_button.dart';
+import 'package:amptive/src/shared/global_model_objects.dart';
+import 'package:amptive/src/shared/image_loader_widget.dart';
+import 'package:amptive/src/shared/live_indicators.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:intl/intl.dart';
+import 'package:nested/nested.dart';
+import 'package:readmore/readmore.dart';
+import '../../../../shared/list_tile_with_leading_picture_widget.dart';
+import '../../../../shared/sliver_header_delegate.dart';
+
+class PreviewEventScreen extends StatelessWidget {
+  const PreviewEventScreen({
+    super.key, 
+    required this.hostedEvent,
+  });
+  final HostedEvent hostedEvent;
+
+  @override
+  Widget build(BuildContext context) {
+    return MultiBlocProvider(
+      providers: <SingleChildWidget>[
+        BlocProvider<EventDetailCubit>(
+          create: (_) => EventDetailCubit(
+            initialEvent: hostedEvent,
+          ),
+        ),
+        BlocProvider<BlurredHeaderCubit>(
+          create: (_) => BlurredHeaderCubit()),
+        BlocProvider<ToggleFollowingCubit>(
+          create: (_) => ToggleFollowingCubit(
+            initialStatus: FollowingStatus(
+              isFollowing: true,
+              followerCount: hostedEvent.followerCount ?? 0,
+            )
+          )
+        )
+      ],
+      child: _EventSubWidget(hostedEvent: hostedEvent),
+    );
+  }
+}
+
+class _EventSubWidget extends StatefulWidget {
+  const _EventSubWidget({required this.hostedEvent});
+
+  final HostedEvent hostedEvent;
+
+  @override
+  State<_EventSubWidget> createState() => _EventSubWidgetState();
+}
+
+class _EventSubWidgetState extends State<_EventSubWidget> {
+  @override 
+  void initState(){
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback(
+      (_){
+        if(mounted){
+          context.read<EventDetailCubit>().fetchEventDetails();
+        }
+      }
+    );
+  }
+
+  @override
+  Widget build(_) {
+    return Builder(
+      builder: (BuildContext context) {
+      final double blurredHeaderHeight =
+          kToolbarHeight + MediaQuery.paddingOf(context).top;
+      final bool isLive = widget.hostedEvent.isLive ?? false;
+     
+      return ATAnnotatedRegion(
+        statusBarColor: ATColors.transparent,
+        child: Scaffold(
+          body: Stack(
+            children: <Widget>[
+              Positioned.fill(
+                child: ImageFiltered(
+                  imageFilter: ImageFilter.blur(sigmaX: 50, sigmaY: 50),
+                  child: ATImgLoader(
+                      boxFit: BoxFit.fill,
+                      imgPath: widget.hostedEvent.coverUrl ?? ''),
+                ),
+              ),
+              Container(
+                color: ATColors.hex0D0D0D.withValues(alpha: 0.75),
+                child: NotificationListener<ScrollNotification>(
+                  onNotification:
+                      context.read<BlurredHeaderCubit>().onScrollNotification,
+                  child: NestedScrollView(
+                    headerSliverBuilder: (_, __) => <Widget>[
+                      SliverPersistentHeader(
+                        pinned: true,
+                        delegate: ATSliverHDelegate(
+                          maxExt: blurredHeaderHeight,
+                          minExt: blurredHeaderHeight,
+                          child: ATBlurredHeaderWidget(
+                            child: Row(
+                              mainAxisAlignment:
+                                  MainAxisAlignment.spaceBetween,
+                              spacing: 20,
+                              children: <Widget>[
+                                Padding(
+                                  padding: const EdgeInsets.only(left: 5),
+                                  child: ATRoundedBackBtn(
+                                    bgColor: ATColors.transparent,
+                                  ),
+                                ),
+                                Flexible(
+                                  child: Text(
+                                    widget.hostedEvent.title ?? '',
+                                    style: context.textTheme.bodyMedium,
+                                  ),
+                                ),
+                                const SizedBox(width: 30)
+                              ],
+                            ),
+                          )
+                        ),
+                      )
+                    ],
+
+                    body: SingleChildScrollView(
+                      padding: const EdgeInsets.fromLTRB(15, 10, 15, 5),
+                      child: BlocConsumer<EventDetailCubit, ATAppState<HostedEvent>>(
+                        listener: (_, ATAppState<HostedEvent> state){},
+                        builder: (_, ATAppState<HostedEvent> state) {
+                          final HostedEvent? event = context.read<EventDetailCubit>().currentEventDetail;
+                          final int goingCount = event?.goingCount ?? 0;
+                          return Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: <Widget>[
+                              Hero(
+                                tag: widget.hostedEvent.eventId ?? '',
+                                child: CoverPicWithTopRightMoreIcon(
+                                    imgPath: widget.hostedEvent.coverUrl ?? '',
+                                    onMoreTapped: () async {
+                                      final SelectedProgramAction? foo =
+                                          await showProgramOptions(
+                                        context: context,
+                                        toggleFollowingCubit:
+                                            context.read<ToggleFollowingCubit>(),
+                                        targetUserName:
+                                            widget.hostedEvent.host?.username ?? '',
+                                        targetUserId: widget.hostedEvent.host?.id ?? '',
+                                      );
+                                    }),
+                              ),
+                              const SizedBox(height: 24),
+                              
+                              // Event doesn't have episodes like shows, so no ExistingEpisodesIndicator
+                              
+                              Text(
+                                maxLines: 2,
+                                widget.hostedEvent.title ?? '',
+                                overflow: TextOverflow.clip,
+                                style: context.textTheme.displayMedium?.copyWith(
+                                  fontSize: ATSizes.size24,
+                                  fontWeight: ATFontWeights.w600,
+                                ),
+                              ),
+                              const SizedBox(height: 12),
+                              Row(
+                                spacing: 20,
+                                children: <Widget>[
+                                  EpisodeScheduleDateIndicator(
+                                    text1: formatScheduleDate(event?.scheduledFor ?? ''),
+                                  ),
+                                  RenderCommunityName(communityName: event?.community?.name)
+                                ],
+                              ),
+                              const SizedBox(height: 40),
+                              Text(
+                                ATStrings.hashtags,
+                                style: context.textTheme.bodySmall
+                                    ?.copyWith(fontSize: ATSizes.size17),
+                              ),
+                              Divider(
+                                color: ATColors.white.withValues(alpha: 0.1),
+                              ),
+                              const SizedBox(height: 5),
+                              RenderHashTags(hashtags: widget.hostedEvent.tags),
+                              const SizedBox(height: 30),
+                              Text(
+                                ATStrings.hostedBy,
+                                style: context.textTheme.bodySmall
+                                    ?.copyWith(fontSize: ATSizes.size17),
+                              ),
+                              Divider(
+                                color: ATColors.white.withValues(alpha: 0.1),
+                              ),
+                              TileWithLeadingImage(
+                                padding: const EdgeInsets.symmetric(vertical: 9),
+                                title: widget.hostedEvent.host?.username ?? '',
+                                subtitle: 'Host',
+                                diameter: 42,
+                                leadingImagePath: widget.hostedEvent.host?.profilePicture ?? ATImgStrings.jpeg1,
+                              ),
+                              ...(widget.hostedEvent.coHosts ?? <CoHost>[]).map(
+                                (CoHost cohost) => TileWithLeadingImage(
+                                  padding: const EdgeInsets.symmetric(vertical: 9),
+                                  title: cohost.username ?? '',
+                                  subtitle: 'Host',
+                                  diameter: 42,
+                                  leadingImagePath: cohost.profilePicture ?? ATImgStrings.jpeg1,
+                                )
+                              ),
+                              const SizedBox(height: 30),
+                              Text(
+                                '$goingCount Going',
+                                style: context.textTheme.bodySmall
+                                    ?.copyWith(fontSize: ATSizes.size17),
+                              ),
+                              Divider(
+                                color: ATColors.white.withValues(alpha: 0.1),
+                              ),
+                              const SizedBox(height: 10),
+                              if(goingCount == 0) Row(
+                                children: <Widget>[
+                                  const ATOverlappingCircles(maxNumber: 3),
+                                  const SizedBox(
+                                    width: 10,
+                                  ),
+                                  Flexible(
+                                    child: Text(
+                                      ATStrings.attendeesWillShowHere,
+                                      maxLines: 2,
+                                      style: context.textTheme.titleMedium
+                                          ?.copyWith(fontSize: ATSizes.size13),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              const SizedBox(height: 20),
+                              Text(
+                                ATStrings.shareEpisodeLinkDescription,
+                                maxLines: 2,
+                                style: context.textTheme.bodySmall?.copyWith(
+                                    color:
+                                        ATColors.white.withValues(alpha: 0.6)),
+                              ),
+                              const SizedBox(height: 35),
+                              
+                              Text(
+                                'About Event',
+                                style: context.textTheme.bodySmall
+                                    ?.copyWith(fontSize: ATSizes.size17),
+                              ),
+                              Divider(
+                                color: ATColors.white.withValues(alpha: 0.1),
+                              ),
+                              ReadMoreText(
+                                widget.hostedEvent.description ?? '',
+                                trimMode: TrimMode.Length,
+                                trimExpandedText: ATStrings.showLess,
+                                trimCollapsedText: ATStrings.showMore,
+                                colorClickableText: ATColors.white,
+                                trimLength: 100,
+                                style: TextStyle(
+                                  color: ATColors.white.withValues(alpha: 0.6),
+                                  fontSize: ATSizes.size14,
+                                  fontWeight: ATFontWeights.w500,
+                                ),
+                              ),
+                              const SizedBox(height: 150),
+                            ],
+                          );
+                        }
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+          bottomSheet: ATBlurredBgBtn(
+            onPressed: () {
+              // Navigate to go live or event details
+              // For events, we don't have episodes, so just go live
+            },
+            btnTitle: 'Edit Event'
+          ),
+        ),
+      );
+      }
+    );
+  }
+}
+
+
+
+String formatScheduleDate(String isoString) {
+  try {
+    final DateTime parsed = DateTime.parse(isoString).toLocal();
+
+    final DateFormat formatter = DateFormat("d MMM, y 'at' HH:mm");
+
+    return formatter.format(parsed);
+  } catch (e) {
+    return isoString; // fallback if parsing fails
+  }
+}

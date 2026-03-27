@@ -151,19 +151,11 @@ class __SubWidgetState extends State<_SubWidget> {
                                       bgColor: ATColors.transparent,
                                     ),
                                   ),
-                                  InkWell(
-                                    onTap: () {
-                                      context
-                                          .read<CommunitiesCubit>().fetchCommunities();
-                                    },
-                                    child: Text(
-                                      ATStrings.createShow,
-                                      style: context.textTheme.bodyMedium,
-                                    ),
+                                  Text(
+                                    ATStrings.createShow,
+                                    style: context.textTheme.bodyMedium,
                                   ),
-                                  const SizedBox(
-                                    width: 30,
-                                  )
+                                  const SizedBox(width: 30)
                                 ],
                               ),
                             )
@@ -259,7 +251,7 @@ class __SubWidgetState extends State<_SubWidget> {
                           ),
                           const Padding(
                             padding: EdgeInsets.fromLTRB(15, 0, 15, 10),
-                            child: RowWith2Texts(text1: ATStrings.COMMUNITY),
+                            child: RowWith2Texts(text1: ATStrings.community),
                           ),
                           Padding(
                             padding: const EdgeInsets.fromLTRB(15, 0, 15, 10),
@@ -429,7 +421,9 @@ class __SubWidgetState extends State<_SubWidget> {
                                 builder: (_, StateSetter setter) {
                               final String accessTypeDescText =
                                   getAccessTypeDescText(
-                                      accessTypeData: accessTypeData);
+                                    accessTypeData: accessTypeData,
+                                    initialAccessTypeTextDesc: ATStrings.selectWhoCanAccessYourShow,
+                                  );
                               return ATScalingSwitcher(
                                   duration: 300,
                                   child: CreateProgramSelectionItem(
@@ -603,6 +597,7 @@ class __SubWidgetState extends State<_SubWidget> {
                 if (state is SuccessState<HostedShow>) {
                   context.read<HostedShowsCubit>().addNewHostedShow(state.newData);
                   _launchShowBtnNotifier.value = true;
+                  
                   final dynamic params = ProgramCreationSuccessScreenParams(
                       coverArtBytes: context.read<BgImageCubit>().state.$2!,
                       title: ATStrings.showIsSetup,
@@ -691,11 +686,14 @@ class __SubWidgetState extends State<_SubWidget> {
 }
 
 String getAccessTypeDescText(
-    {required ProgramAccessTypeSelectionData? accessTypeData}) {
-  String accessTypeTextDesc = ATStrings.selectWhoCanAccessYourShow;
+    {
+      required ProgramAccessTypeSelectionData? accessTypeData,
+      required String initialAccessTypeTextDesc,
+    }) {
+  String accessTypeTextDesc = initialAccessTypeTextDesc;
 
   if (accessTypeData?.accessType == null) {
-    accessTypeTextDesc = ATStrings.selectWhoCanAccessYourShow;
+    accessTypeTextDesc = initialAccessTypeTextDesc;
   } else {
     final ProgramAccessType? accessType = accessTypeData?.accessType;
     if (accessType == ProgramAccessType.free) {

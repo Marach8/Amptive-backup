@@ -1,8 +1,11 @@
 import 'dart:ui';
 import 'package:amptive/src/config/api_response_and_app_state.dart';
 import 'package:amptive/src/config/utils/dialogs/app_notification_dialog.dart';
-import 'package:amptive/src/features/shows/cubits/hosted_shows_cubit.dart';
+import 'package:amptive/src/features/events/cubits/hosted_events_cubit.dart';
+import 'package:amptive/src/features/events/data/models/response/event_response_model.dart';
+import 'package:amptive/src/features/events/presentation/widgets/render_a_hosted_event.dart';
 import 'package:amptive/src/features/shows/data/models/response/show_response_model.dart';
+import 'package:amptive/src/features/shows/presentation/screens/list_hosted_shows_screen.dart';
 import 'package:amptive/src/features/shows/presentation/widgets/render_hosted_show.dart';
 import 'package:amptive/src/global_export.dart';
 import 'package:amptive/src/shared/annotated_region__widget.dart';
@@ -13,10 +16,8 @@ import 'package:nested/nested.dart' show SingleChildWidget;
 import 'package:amptive/src/shared/sliver_header_delegate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-enum GoLiveProgramType { event, show }
-
-class ListHostedShowsScreen extends StatelessWidget {
-  const ListHostedShowsScreen({super.key});
+class ListHostedEventsScreen extends StatelessWidget {
+  const ListHostedEventsScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -25,9 +26,9 @@ class ListHostedShowsScreen extends StatelessWidget {
         BlocProvider<BlurredHeaderCubit>(
           create: (_) => BlurredHeaderCubit(),
         ),
-        BlocProvider<HostedShowSelectionCubit>(
-            create: (_) => HostedShowSelectionCubit()),
-        BlocProvider<HostedShowsCubit>(create: (_) => HostedShowsCubit())
+        BlocProvider<HostedEventSelectionCubit>(
+            create: (_) => HostedEventSelectionCubit()),
+        BlocProvider<HostedEventsCubit>(create: (_) => HostedEventsCubit())
       ],
       child: const _SubWidget(),
     );
@@ -53,18 +54,18 @@ class __SubWidgetState extends State<_SubWidget> {
         final ScrollController? sController =
           _nestedKey.currentState?.innerController;
         if (sController != null) {
-          sController.addListener(() => _onShowsScrollToEnd(sController));
+          sController.addListener(() => _onEventsScrollToEnd(sController));
         }
-        context.read<HostedShowsCubit>().fetchHostedShows();
+        context.read<HostedEventsCubit>().fetchHostedEvents();
       }
     );
   }
 
-  void _onShowsScrollToEnd(ScrollController sController) {
+  void _onEventsScrollToEnd(ScrollController sController) {
     const double threshHold = 100;
     if (sController.position.pixels >=
         sController.position.maxScrollExtent + threshHold) {
-      context.read<HostedShowsCubit>().fetchHostedShows();
+      context.read<HostedEventsCubit>().fetchHostedEvents();
     }
   }
 
@@ -80,8 +81,8 @@ class __SubWidgetState extends State<_SubWidget> {
             return Stack(
               children: <Widget>[
                 Positioned.fill(
-                  child: BlocBuilder<HostedShowSelectionCubit, HostedShow?>(
-                      builder: (_, HostedShow? selected) {
+                  child: BlocBuilder<HostedEventSelectionCubit, HostedEvent?>(
+                      builder: (_, HostedEvent? selected) {
                     final String? selectedImgString = selected?.coverUrl;
                     if (selectedImgString == null) {
                       return ATContainer(
@@ -95,7 +96,8 @@ class __SubWidgetState extends State<_SubWidget> {
                     );
                   }),
                 ),
-                ATContainer(
+
+                Container(
                   color: ATColors.hex0D0D0D.withValues(alpha: 0.75),
                   child: NotificationListener<ScrollNotification>(
                     onNotification: blocContext
@@ -117,16 +119,14 @@ class __SubWidgetState extends State<_SubWidget> {
                                           MainAxisAlignment.spaceBetween,
                                       children: <Widget>[
                                         Padding(
-                                          padding: const EdgeInsets.only(
-                                              left: 5),
+                                          padding: const EdgeInsets.only(left: 5),
                                           child: ATRoundedBackBtn(
                                             bgColor: ATColors.transparent,
                                           ),
                                         ),
                                         Text(
-                                          ATStrings.chooseShow,
-                                          style: context
-                                              .textTheme.bodyMedium,
+                                          ATStrings.chooseEvent,
+                                          style: context.textTheme.bodyMedium,
                                         ),
                                         const SizedBox(width: 30)
                                       ],
@@ -141,68 +141,69 @@ class __SubWidgetState extends State<_SubWidget> {
                                       const EdgeInsets.fromLTRB(15, 10, 15, 20),
                                   child: Text(
                                     maxLines: 3,
-                                    ATStrings.chooseOrCreateShowDesc,
+                                    ATStrings.chooseOrCreateEventDesc,
                                     style: context.textTheme.bodySmall
                                         ?.copyWith(color: ATColors.hexC2C2C2),
                                   ),
                                 ),
                               ),
                             ],
-                        body: BlocConsumer<HostedShowsCubit, ATAppState<HostedShowsResponseModel>>(
-                            listener: (_, ATAppState<HostedShowsResponseModel> state) {
-                          if (state is FailureState<HostedShowsResponseModel>) {
+                        body: BlocConsumer<HostedEventsCubit, ATAppState<HostedEventsResponseModel>>(
+                            listener: (_, ATAppState<HostedEventsResponseModel> state) {
+                          if (state is FailureState<HostedEventsResponseModel>) {
                             showAppNotification2(
                               context: context,
                               text: state.message,
                               type: NotificationType.failure,
                             );
                           }
-                        }, builder: (_, ATAppState<HostedShowsResponseModel> state) {
+                        },
+                        builder: (_, ATAppState<HostedEventsResponseModel> state) {
                           return switch (state) {
-                            InitialState<HostedShowsResponseModel>() ||
-                            LoadingState<HostedShowsResponseModel>() ||
-                            SuccessState<HostedShowsResponseModel>() ||
-                            FailureState<HostedShowsResponseModel>() =>
+                            InitialState<HostedEventsResponseModel>() ||
+                            LoadingState<HostedEventsResponseModel>() ||
+                            SuccessState<HostedEventsResponseModel>() ||
+                            FailureState<HostedEventsResponseModel>() =>
                               Builder(builder: (_) {
-                                final HostedShowsResponseModel?
-                                    hostedShowsData = context
-                                        .read<HostedShowsCubit>()
-                                        .currentHostedShowsData;
-                                final List<HostedShow> hostedShows =
-                                    hostedShowsData?.hostedShows ??
-                                        <HostedShow>[];
+                                final HostedEventsResponseModel?
+                                    hostedEventsData = context
+                                        .read<HostedEventsCubit>()
+                                        .currentHostedEventsData;
+                                final List<HostedEvent> hostedEvents =
+                                    hostedEventsData?.hostedEvents ??
+                                        <HostedEvent>[];
 
-                                if (hostedShows.isEmpty) {
-                                  if (state is LoadingState<HostedShowsResponseModel>) {
+                                if (hostedEvents.isEmpty) {
+                                  if (state is LoadingState<HostedEventsResponseModel>) {
                                     return RenderEventOrShowInitialLoadingShimmer(
-                                      createNewLabel: ATStrings.createNewShow,
+                                      createNewLabel: ATStrings.createNewEvent,
                                       onCreateNewTapped: (){
                                         context.pushNamed(
-                                          ATRoutes.createShowFormScreen,
-                                          extra: context.read<HostedShowsCubit>(),
+                                          ATRoutes.createEventFormScreen,
+                                          extra: context.read<HostedEventsCubit>(),
                                         );
                                       },
                                     );
                                   }
-                                  if (state is FailureState<HostedShowsResponseModel>) {
+                                  if (state is FailureState<HostedEventsResponseModel>) {
                                     return RenderInitialEventOrShowLoadFailureWidget(
-                                      createNewLabel: ATStrings.createNewShow,
+                                      createNewLabel: ATStrings.createNewEvent,
                                       onCreateNewTapped: (){
                                         context.pushNamed(
-                                          ATRoutes.createShowFormScreen,
-                                          extra: context.read<HostedShowsCubit>(),
+                                          ATRoutes.createEventFormScreen,
+                                          extra: context.read<HostedEventsCubit>(),
                                         );
                                       },
                                       onRefresh: (){
-                                        context.read<HostedShowsCubit>().fetchHostedShows();
+                                        context.read<HostedEventsCubit>().fetchHostedEvents();
                                       },
                                     );
                                   }
                                 }
 
                                 final bool hasMoreItems =
-                                    hostedShowsData?.hasMore ?? true;
-                                final int count = hostedShows.length;
+                                    hostedEventsData?.hasMore ?? true;
+                                final int count = hostedEvents.length;
 
                                 return GridView.builder(
                                     padding: const EdgeInsets.fromLTRB(
@@ -218,22 +219,23 @@ class __SubWidgetState extends State<_SubWidget> {
                                     itemBuilder: (_, int gridIndex) {
                                       if (gridIndex == 0) {
                                         return CreateNewEventOrShowWidget(
-                                          label: ATStrings.createNewShow,
+                                          label: ATStrings.createNewEvent,
                                           onTap: (){
                                             context.pushNamed(
-                                              ATRoutes.createShowFormScreen,
-                                              extra: context.read<HostedShowsCubit>(),
+                                              ATRoutes.createEventFormScreen,
+                                              extra: context.read<HostedEventsCubit>(),
                                             );
                                           },
                                         );
                                       }
-
                                       final int adjustedIndex = gridIndex - 1;
                                       if (adjustedIndex < count) {
-                                        final HostedShow hostedShow = hostedShows[adjustedIndex];
-                                        return RenderHostedShow(hostedShow: hostedShow);
+                                        final HostedEvent hostedEvent =
+                                            hostedEvents[adjustedIndex];
+                                        return RenderHostedEvent(hostedEvent: hostedEvent);
                                       }
-                                      if (state is LoadingState<HostedShowsResponseModel>) {
+                                      if (state is LoadingState<
+                                          HostedShowsResponseModel>) {
                                         return const RenderAHostedEventOrShowShimmer();
                                       }
                                       return const SizedBox.shrink();
@@ -251,16 +253,16 @@ class __SubWidgetState extends State<_SubWidget> {
             );
           }),
           resizeToAvoidBottomInset: false,
-          bottomSheet: BlocBuilder<HostedShowSelectionCubit, HostedShow?>(
-              builder: (_, HostedShow? selectedShow) {
-            final bool shouldActivate = selectedShow != null;
+          bottomSheet: BlocBuilder<HostedEventSelectionCubit, HostedEvent?>(
+              builder: (_, HostedEvent? selectedEvent) {
+            final bool shouldActivate = selectedEvent != null;
             return ATBlurredBgBtn(
               btnTitle: ATStrings.next,
               onPressed: shouldActivate
                   ? () {
                       context.pushNamed(
-                        ATRoutes.showPreviewScreen,
-                        extra: selectedShow,
+                        ATRoutes.eventPreviewScreen,
+                        extra: selectedEvent,
                       );
                     }
                   : null,
@@ -274,82 +276,10 @@ class __SubWidgetState extends State<_SubWidget> {
 
 
 
-class RenderEventOrShowInitialLoadingShimmer extends StatelessWidget {
-  const RenderEventOrShowInitialLoadingShimmer({
-    super.key,
-    required this.onCreateNewTapped,
-    required this.createNewLabel,
-  });
-  final VoidCallback onCreateNewTapped;
-  final String createNewLabel;
+class HostedEventSelectionCubit extends Cubit<HostedEvent?> {
+  HostedEventSelectionCubit() : super(null);
 
-  @override
-  Widget build(BuildContext context) {
-    return GridView.builder(
-        padding: const EdgeInsets.fromLTRB(15, 0, 15, 100),
-        physics: const BouncingScrollPhysics(),
-        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 2,
-            childAspectRatio: 0.7,
-            crossAxisSpacing: 20,
-            mainAxisSpacing: 20),
-        itemCount: 9,
-        itemBuilder: (_, int gridIndex) {
-          if (gridIndex == 0) {
-            return CreateNewEventOrShowWidget(
-              label: createNewLabel,
-              onTap: onCreateNewTapped
-            );
-          }
-          return const RenderAHostedEventOrShowShimmer();
-        }
-      );
-  }
-}
-
-class RenderInitialEventOrShowLoadFailureWidget extends StatelessWidget {
-  const RenderInitialEventOrShowLoadFailureWidget({
-    super.key,
-    required this.onCreateNewTapped,
-    required this.onRefresh,
-    required this.createNewLabel,
-  });
-
-  final VoidCallback onCreateNewTapped, onRefresh;
-  final String createNewLabel;
-
-  @override
-  Widget build(BuildContext context) {
-    return GridView.builder(
-        padding: const EdgeInsets.fromLTRB(15, 0, 15, 100),
-        physics: const BouncingScrollPhysics(),
-        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 2,
-            childAspectRatio: 0.7,
-            crossAxisSpacing: 20,
-            mainAxisSpacing: 20),
-        itemCount: 2,
-        itemBuilder: (_, int gridIndex) {
-          if (gridIndex == 0) {
-            return CreateNewEventOrShowWidget(
-              onTap: onCreateNewTapped,
-              label: createNewLabel,
-            );
-          }
-          return Center(
-            child: IconButton(
-              onPressed: onRefresh,
-              icon: Icon(Icons.refresh, color: ATColors.white),
-            ),
-          );
-        });
-  }
-}
-
-class HostedShowSelectionCubit extends Cubit<HostedShow?> {
-  HostedShowSelectionCubit() : super(null);
-
-  void setSelection({HostedShow? show}) {
-    emit(show);
+  void setSelection({HostedEvent? event}) {
+    emit(event);
   }
 }

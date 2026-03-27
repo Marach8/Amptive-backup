@@ -4,7 +4,6 @@ import 'package:amptive/src/features/discover/data/models/response/all_users_res
 import 'package:amptive/src/features/discover/data/models/response/all_hashtags_response_model.dart';
 import 'package:amptive/src/shared/global_model_objects.dart';
 import 'package:amptive/src/features/discover/data/models/response/trending_hashtags_response_model.dart';
-import 'package:amptive/src/features/discover/discover_export.dart';
 
 abstract class DiscoverRepo {
   Future<ApiResponse<CommunitiesResponseModel>> fetchCommunities({

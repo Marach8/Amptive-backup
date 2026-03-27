@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'dart:typed_data';
 import 'package:amptive/src/config/routing/routing_export.dart';
 import 'package:amptive/src/features/accounts/presentation/screens/update_email_screen.dart';
 import 'package:amptive/src/features/accounts/presentation/screens/update_phone_no_screen.dart';
@@ -24,6 +25,7 @@ import 'package:amptive/src/features/calender/presentation/screens/calender_land
 import 'package:amptive/src/features/discover/presentation/views/society_screen.dart';
 import 'package:amptive/src/features/discover/presentation/views/trending_hashtags_screen.dart';
 import 'package:amptive/src/features/episodes/data/models/response/episode_model.dart';
+import 'package:amptive/src/features/events/presentation/screens/select_schedule_date_screen.dart';
 import 'package:amptive/src/features/home/presentation/screens/following_screen.dart';
 import 'package:amptive/src/features/home/presentation/screens/live_show_detailed_screen.dart';
 import 'package:amptive/src/features/home/presentation/screens/schedule_detailed_screen.dart';
@@ -38,6 +40,10 @@ import 'package:amptive/src/features/home/presentation/screens/scheduled_screen.
 import 'package:amptive/src/features/accounts/presentation/screens/account_info_screen.dart';
 import 'package:amptive/src/features/accounts/presentation/screens/acounts_landing_screen.dart';
 import 'package:amptive/src/features/shows/data/models/response/show_response_model.dart';
+import 'package:amptive/src/features/events/presentation/screens/list_hosted_events_screen.dart';
+import 'package:amptive/src/features/events/cubits/hosted_events_cubit.dart';
+import 'package:amptive/src/features/events/presentation/screens/preview_event_screen.dart';
+import 'package:amptive/src/features/events/data/models/response/event_response_model.dart';
 import 'package:amptive/src/features/switch_account/presentation/switch_acct/switch_acct_export.dart';
 import 'package:amptive/src/features/wallet/presentation/screens/wallet_transactions_history_screen.dart';
 import 'package:amptive/src/features/onboarding/presentation/screens/onboarding_screen.dart';
@@ -343,8 +349,14 @@ final GoRouter amptiveAppRouter = GoRouter(
                     child: const ListHostedShowsScreen(),
                   )),
           GoRoute(
-              name: ATRoutes.createShowForm,
-              path: ATRoutes.createShowForm.addSlash,
+              name: ATRoutes.listHostedEventsScreen,
+              path: ATRoutes.listHostedEventsScreen.addSlash,
+              pageBuilder: (_, __) => ATSlidingRouteTransition<void>(
+                    child: const ListHostedEventsScreen(),
+                  )),
+          GoRoute(
+              name: ATRoutes.createShowFormScreen,
+              path: ATRoutes.createShowFormScreen.addSlash,
               pageBuilder: (_, GoRouterState state) 
                 => ATSlidingRouteTransition<void>(
                   child: CreateShowFormScreen(
@@ -352,10 +364,12 @@ final GoRouter amptiveAppRouter = GoRouter(
                   )
               )),
           GoRoute(
-              name: ATRoutes.createEventForm,
-              path: ATRoutes.createEventForm.addSlash,
-              pageBuilder: (_, __) => ATSlidingRouteTransition<void>(
-                    child: const CreateEventFormScreen(),
+              name: ATRoutes.createEventFormScreen,
+              path: ATRoutes.createEventFormScreen.addSlash,
+              pageBuilder: (_, GoRouterState state) => ATSlidingRouteTransition<void>(
+                    child: CreateEventFormScreen(
+                      hostedEventsCubit: state.extra as HostedEventsCubit,
+                    ),
                   )),
           GoRoute(
               name: ATRoutes.createEpisodeForm,
@@ -623,6 +637,29 @@ final GoRouter amptiveAppRouter = GoRouter(
                   child: PreviewShowScreen(
                 hostedShow: hostedShow,
               ));
+            },
+          ),
+          GoRoute(
+            name: ATRoutes.eventPreviewScreen,
+            path: ATRoutes.eventPreviewScreen.addSlash,
+            pageBuilder: (_, GoRouterState state) {
+              HostedEvent hostedEvent = state.extra as HostedEvent;
+              return ATSlidingRouteTransition<void>(
+                  child: PreviewEventScreen(
+                hostedEvent: hostedEvent,
+              ));
+            },
+          ),
+
+          GoRoute(
+            name: ATRoutes.selectScheduleDateScreen,
+            path: ATRoutes.selectScheduleDateScreen.addSlash,
+            pageBuilder: (_, GoRouterState state) {
+              final SelectScheduleDataScreenEntryParams params =
+                state.extra as SelectScheduleDataScreenEntryParams;
+              return ATSlidingRouteTransition<void>(
+                child: SelectScheduleDateScreen(params: params)
+              );
             },
           ),
           GoRoute(
