@@ -597,6 +597,7 @@ class __SubWidgetState extends State<_SubWidget> {
                 if (state is SuccessState<HostedShow>) {
                   context.read<HostedShowsCubit>().addNewHostedShow(state.newData);
                   _launchShowBtnNotifier.value = true;
+                  
                   final dynamic params = ProgramCreationSuccessScreenParams(
                       coverArtBytes: context.read<BgImageCubit>().state.$2!,
                       title: ATStrings.showIsSetup,
