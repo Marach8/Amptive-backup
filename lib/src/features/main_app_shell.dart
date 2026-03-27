@@ -114,8 +114,8 @@ class __SubWidgetState extends State<_SubWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocListener<AuthGuardCubit, bool?>(
-      listener: (_, bool? isNotAuthenticated){
+    return BlocListener<AuthGuardCubit, bool>(
+      listener: (_, bool isNotAuthenticated){
         if(isNotAuthenticated == true){
           context.read<AuthGuardCubit>().reset();
           context.goNamed(
