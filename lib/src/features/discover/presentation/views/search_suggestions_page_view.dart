@@ -1,6 +1,5 @@
 import 'package:amptive/src/config/api_response_and_app_state.dart';
 import 'package:amptive/src/config/config_export.dart';
-import 'package:amptive/src/config/utils/colors.dart';
 import 'package:amptive/src/features/discover/cubits/search_suggestions_cubit.dart';
 import 'package:amptive/src/features/discover/discover_export.dart';
 import 'package:amptive/src/shared/shimmer.dart';
@@ -25,7 +24,7 @@ class SearchSuggestionsPageView extends StatelessWidget {
               LoadingState<dynamic>() ||
               FailureState<dynamic>() ||
               SuccessState<dynamic>() =>
-                Builder(builder: (context) {
+                Builder(builder: (BuildContext context) {
                   final dynamic suggestionsData =
                       context.read<SearchSuggestionsCubit>().currentSearchData;
                   final List<String> suggestions =
@@ -44,14 +43,13 @@ class SearchSuggestionsPageView extends StatelessWidget {
                             title: Text(query,
                                 style: Theme.of(context).textTheme.bodyMedium),
                             onTap: () {
-                              final navBloc = context.read<DiscoverTrnstnBlc>();
+                              final DiscoverTrnstnBlc navBloc = context.read<DiscoverTrnstnBlc>();
                               navBloc.updateSearchQuery(query);
                               navBloc.showSearchResults();
                             },
                           ),
 
-                        // Your original nested empty state handling
-                        if (suggestions.isEmpty) ...[
+                        if (suggestions.isEmpty) ...<Widget>[
                           if (state is LoadingState<dynamic>)
                             const SearchSuggestionsShimmer(),
                             
@@ -71,10 +69,9 @@ class SearchSuggestionsPageView extends StatelessWidget {
                             padding: EdgeInsets.only(top: 10.h),
                             physics: const NeverScrollableScrollPhysics(),
                             itemCount: suggestions.length,
-                            itemBuilder: (context, index) {
+                            itemBuilder: (BuildContext context, int index) {
                               final String text = suggestions[index];
 
-                              // Skip exact match
                               if (text.toLowerCase() == query.toLowerCase()) {
                                 return const SizedBox.shrink();
                               }
@@ -108,7 +105,7 @@ class SearchSuggestionsPageView extends StatelessWidget {
                                   ),
                                 ),
                                 onTap: () {
-                                  final navBloc = context.read<DiscoverTrnstnBlc>();
+                                  final DiscoverTrnstnBlc navBloc = context.read<DiscoverTrnstnBlc>();
                                   navBloc.updateSearchQuery(text);
                                   navBloc.showSearchResults();
                                 },
@@ -140,7 +137,7 @@ class SearchSuggestionsShimmer extends StatelessWidget {
         children: <Widget>[
           ...List.generate(
             5,
-            (index) => const _SuggestionTileShimmer(),
+            (int index) => const _SuggestionTileShimmer(),
           ),
         ],
       ),

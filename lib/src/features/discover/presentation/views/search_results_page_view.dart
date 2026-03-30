@@ -237,7 +237,6 @@ class _SearchResultsTabsViewState extends State<SearchResultsTabsView>
                                   );
                                 }
 
-                                // Users (Circular)
                                 if (item is User) {
                                   return SearchItemTile(
                                     leadingImagePath: item.profilePicture ?? '',
@@ -250,7 +249,6 @@ class _SearchResultsTabsViewState extends State<SearchResultsTabsView>
                                   );
                                 }
 
-                                // Hashtags
                                 if (item is HashTag) {
                                   return _HashtagTile(
                                     hashtag: item,
