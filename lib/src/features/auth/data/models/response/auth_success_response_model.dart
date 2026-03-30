@@ -43,7 +43,8 @@ class ATUser {
       phoneNumber: json['phone_number'] as String?,
     );
   }
-  final String? id, email, username, dob, name, pictureUrl, followersCount, phoneNumber;
+  final String? id, email, username, dob, name, pictureUrl, phoneNumber;
+  final int?  followersCount;
 
     
   }

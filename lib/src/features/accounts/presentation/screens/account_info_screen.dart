@@ -61,6 +61,9 @@ class ATAccountInfoScreen extends StatelessWidget {
               padding: const EdgeInsets.all(15),
               child: BlocBuilder<LocalUserDataCubit, ATAppState<CachedUserData>>(
                 builder: (BuildContext context, ATAppState<CachedUserData> state) {
+                  if (state is LoadingState<CachedUserData>) {
+                   return const CircularProgressIndicator(); 
+                  }
                   final CachedUserData? userData =
                       context.read<LocalUserDataCubit>().currentUserData;
                   return Column(

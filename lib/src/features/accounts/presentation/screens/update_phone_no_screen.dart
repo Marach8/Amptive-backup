@@ -198,6 +198,7 @@ class _UpdatePhoneNoScreenState extends State<UpdatePhoneNoScreen> {
                           builder: (BuildContext context, ATAppState<String> state) {
       
                     return ATPlainElevatedBtn(
+                      isLoading: state is LoadingState<String>,
                       onPressed: isActive
                           ? ()  {
                               context.read<UpdateEmailAndPhoneNumberCubit>().sendEmailAndPhoneOtp(
