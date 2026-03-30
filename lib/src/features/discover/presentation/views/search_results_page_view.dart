@@ -1,17 +1,29 @@
 import 'package:amptive/src/config/api_response_and_app_state.dart';
 import 'package:amptive/src/config/utils/dialogs/app_notification_dialog.dart';
 import 'package:amptive/src/features/discover/cubits/hashtags_cubit.dart';
+import 'package:amptive/src/features/discover/cubits/search_events_cubit.dart';
+import 'package:amptive/src/features/discover/cubits/search_hashtags_cubits.dart';
+import 'package:amptive/src/features/discover/cubits/search_shows_cubit.dart';
+import 'package:amptive/src/features/discover/cubits/search_users_cubit.dart';
+import 'package:amptive/src/features/discover/cubits/unified_search_cubit.dart';
 import 'package:amptive/src/features/discover/cubits/users_cubits.dart';
-import 'package:amptive/src/features/discover/data/models/response/all_hashtags_response_model.dart';
-import 'package:amptive/src/features/discover/data/models/response/all_users_response_model.dart';
+import 'package:amptive/src/features/discover/data/models/response/search_events_response_model.dart';
+import 'package:amptive/src/features/discover/data/models/response/search_hashtags_response_model.dart';
+import 'package:amptive/src/features/discover/data/models/response/search_shows_response_model.dart';
+import 'package:amptive/src/features/discover/data/models/response/search_users_response_model.dart';
+import 'package:amptive/src/features/discover/data/models/response/unified_search_response_model.dart';
+import 'package:amptive/src/features/discover/presentation/widgets/All_resources_tab_shimmers.dart';
+import 'package:amptive/src/features/events/data/models/response/event_response_model.dart';
+import 'package:amptive/src/features/shows/data/models/response/show_response_model.dart';
 import 'package:amptive/src/global_export.dart';
 import 'package:amptive/src/shared/global_model_objects.dart';
-import 'package:amptive/src/shared/shimmer.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:nested/nested.dart';
 
 class SearchResultsPage extends StatelessWidget {
-  const SearchResultsPage({super.key});
+  const SearchResultsPage({super.key, this.searchQuery});
+
+  final String? searchQuery;
 
   @override
   Widget build(BuildContext context) {
@@ -19,14 +31,20 @@ class SearchResultsPage extends StatelessWidget {
       providers: <SingleChildWidget>[
         BlocProvider<AllUsersCubit>(create: (_) => AllUsersCubit()),
         BlocProvider<AllHashtagsCubit>(create: (_) => AllHashtagsCubit()),
+        BlocProvider<SearchUsersCubit>(create: (_) => SearchUsersCubit()),
+        BlocProvider<UnifiedSearchCubit>(create: (_) => UnifiedSearchCubit()),
+        BlocProvider<SearchHashtagsCubit>(create: (_) => SearchHashtagsCubit()),
+        BlocProvider<SearchShowsCubit>(create: (_) => SearchShowsCubit()),
+        BlocProvider<SearchEventsCubit>(create: (_) => SearchEventsCubit()),
       ],
-      child: const SearchResultsTabsView(),
+      child: SearchResultsTabsView(searchQuery: searchQuery),
     );
   }
 }
 
 class SearchResultsTabsView extends StatefulWidget {
-  const SearchResultsTabsView({super.key});
+  const SearchResultsTabsView({super.key, this.searchQuery});
+  final String? searchQuery;
 
   @override
   State<SearchResultsTabsView> createState() => _SearchResultsTabsViewState();
@@ -36,35 +54,41 @@ class _SearchResultsTabsViewState extends State<SearchResultsTabsView>
     with SingleTickerProviderStateMixin {
   late TabController _tabController;
   late ValueNotifier<int> _isTabSelected;
-  late ScrollController _hashtagsScrollController;
+  //late ScrollController _hashtagsScrollController;
 
   @override
   void initState() {
     super.initState();
     _tabController = TabController(length: 5, vsync: this);
     _isTabSelected = ValueNotifier(0);
-    _hashtagsScrollController = ScrollController();
-    _hashtagsScrollController.addListener(_onHashtagsScroll);
+    //_hashtagsScrollController = ScrollController();
+    //_hashtagsScrollController.addListener(_onHashtagsScroll);
 
     _tabController
         .addListener(() => _isTabSelected.value = _tabController.index);
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      context.read<AllUsersCubit>().fetchAllUsers();
-      context.read<AllHashtagsCubit>().fetchHashTags();
+      final String query = widget.searchQuery ?? '';
+      if (query.isNotEmpty) {
+        context.read<SearchUsersCubit>().searchUsers(query);
+        context.read<UnifiedSearchCubit>().searchAll(query);
+        context.read<SearchHashtagsCubit>().searchHashtags(query);
+        context.read<SearchShowsCubit>().searchShows(query);
+        context.read<SearchEventsCubit>().searchEvents(query);
+      }
     });
   }
 
-  void _onHashtagsScroll() {
-    if (_hashtagsScrollController.position.pixels >=
-        _hashtagsScrollController.position.maxScrollExtent - 100) {
-      context.read<AllHashtagsCubit>().fetchHashTags();
-    }
-  }
+  // void _onHashtagsScroll() {
+  //   if (_hashtagsScrollController.position.pixels >=
+  //       _hashtagsScrollController.position.maxScrollExtent - 100) {
+  //     context.read<AllHashtagsCubit>().fetchHashTags();
+  //   }
+  // }
 
   @override
   void dispose() {
     _tabController.dispose();
-    _hashtagsScrollController.dispose();
+    // _hashtagsScrollController.dispose();
     super.dispose();
   }
 
@@ -120,71 +144,11 @@ class _SearchResultsTabsViewState extends State<SearchResultsTabsView>
             child: TabBarView(
               controller: _tabController,
               children: <Widget>[
-                Column(
-                    children: List<Widget>.generate(
-                  10,
-                  (_) => SearchItemTile(
-                    leadingImagePath: ATImgStrings.weCanDoHardThingsBgImage,
-                    title: 'We Can Do Hard Things',
-                    trailing: ATContainer(
-                      onTap: () {},
-                      boxShape: BoxShape.circle,
-                      height: 24,
-                      width: 24,
-                      color: ATColors.hexB6B6B6,
-                      child: Icon(
-                        Icons.play_arrow,
-                        size: 15,
-                        color: ATColors.hex0D0D0D,
-                      ),
-                    ),
-                  ),
-                )),
-                Column(
-                    children: List<Widget>.generate(
-                  10,
-                  (_) => SearchItemTile(
-                    leadingImagePath: ATImgStrings.OFFICE_LADIES,
-                    isCircular: true,
-                    title: 'We Can Do Hard Things',
-                    trailing: ATContainer(
-                      onTap: () {},
-                      boxShape: BoxShape.circle,
-                      height: 24,
-                      width: 24,
-                      color: ATColors.hexB6B6B6,
-                      child: Icon(
-                        Icons.play_arrow,
-                        size: 15,
-                        color: ATColors.hex0D0D0D,
-                      ),
-                    ),
-                  ),
-                )),
-                Column(
-                    children: List<Widget>.generate(
-                  10,
-                  (_) => SearchItemTile(
-                    leadingImagePath: ATImgStrings.weCanDoHardThingsBgImage,
-                    title: 'We Can Do Hard Things',
-                    trailing: ATContainer(
-                      onTap: () {},
-                      boxShape: BoxShape.circle,
-                      height: 24,
-                      width: 24,
-                      color: ATColors.hexB6B6B6,
-                      child: Icon(
-                        Icons.play_arrow,
-                        size: 15,
-                        color: ATColors.hex0D0D0D,
-                      ),
-                    ),
-                  ),
-                )),
-                BlocConsumer<AllUsersCubit, ATAppState<AllUsersResponseModel>>(
+                BlocConsumer<UnifiedSearchCubit,
+                    ATAppState<UnifiedSearchResponseModel>>(
                   listener: (BuildContext context,
-                      ATAppState<AllUsersResponseModel> state) {
-                    if (state is FailureState<AllUsersResponseModel>) {
+                      ATAppState<UnifiedSearchResponseModel> state) {
+                    if (state is FailureState<UnifiedSearchResponseModel>) {
                       showAppNotification2(
                         context: context,
                         text: state.message,
@@ -193,33 +157,340 @@ class _SearchResultsTabsViewState extends State<SearchResultsTabsView>
                     }
                   },
                   builder: (BuildContext context,
-                      ATAppState<AllUsersResponseModel> state) {
+                      ATAppState<UnifiedSearchResponseModel> state) {
                     return switch (state) {
-                      InitialState<AllUsersResponseModel>() =>
+                      InitialState<UnifiedSearchResponseModel>() =>
                         const SizedBox.shrink(),
-                      LoadingState<AllUsersResponseModel>() ||
-                      FailureState<AllUsersResponseModel>() ||
-                      SuccessState<AllUsersResponseModel>() =>
+                      LoadingState<UnifiedSearchResponseModel>() ||
+                      FailureState<UnifiedSearchResponseModel>() ||
+                      SuccessState<UnifiedSearchResponseModel>() =>
                         Builder(
                           builder: (_) {
-                            final AllUsersResponseModel? usersData =
-                                context.read<AllUsersCubit>().currentUsersData;
-                            final List<User> users =
-                                usersData?.data ?? <User>[];
-                            if (users.isEmpty) {
+                            final UnifiedSearchResponseModel? searchData =
+                                context
+                                    .read<UnifiedSearchCubit>()
+                                    .currentSearchData;
+
+                            final List<dynamic> allResults = <dynamic>[
+                              ...?searchData?.shows,
+                              ...?searchData?.events,
+                              ...?searchData?.hashtags,
+                              ...?searchData?.users,
+                            ];
+
+                            if (allResults.isEmpty) {
                               if (state
-                                  is LoadingState<AllUsersResponseModel>) {
-                                return const _UsersListShimmer();
+                                  is LoadingState<UnifiedSearchResponseModel>) {
+                                return const UnifiedSearchShimmer();
                               }
 
                               if (state
-                                  is FailureState<AllUsersResponseModel>) {
+                                  is FailureState<UnifiedSearchResponseModel>) {
                                 return Center(
                                   child: IconButton(
                                     icon: const Icon(Icons.refresh),
                                     onPressed: () => context
-                                        .read<AllUsersCubit>()
-                                        .fetchAllUsers(),
+                                        .read<UnifiedSearchCubit>()
+                                        .searchAll(widget.searchQuery ?? ''),
+                                  ),
+                                );
+                              }
+
+                              return Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: <Widget>[
+                                  Text(
+                                    'Nothing to show here right now.',
+                                    style: context.textTheme.bodyMedium,
+                                  ),
+                                  Text(
+                                      'All shows and events created under "${widget.searchQuery}" will appear here.',
+                                      style: context.textTheme.labelSmall),
+                                ],
+                              );
+                            }
+
+                            return ListView.builder(
+                              padding: const EdgeInsets.all(15),
+                              itemCount: allResults.length,
+                              itemBuilder: (BuildContext _, int index) {
+                                final dynamic item = allResults[index];
+                                // Shows & Events (Rectangular)
+                                if (item is HostedShow) {
+                                  return SearchItemTile(
+                                    leadingImagePath: item.coverUrl ?? '',
+                                    title: item.title ?? '',
+                                    subtitle: item.host?.username ?? '',
+                                    trailing: ATContainer(
+                                      onTap: () {},
+                                      boxShape: BoxShape.circle,
+                                      height: 24,
+                                      width: 24,
+                                      color: ATColors.hexB6B6B6,
+                                      child: Icon(
+                                        Icons.play_arrow,
+                                        size: 15,
+                                        color: ATColors.hex0D0D0D,
+                                      ),
+                                    ),
+                                  );
+                                }
+
+                                // Users (Circular)
+                                if (item is User) {
+                                  return SearchItemTile(
+                                    leadingImagePath: item.profilePicture ?? '',
+                                    isCircular: true,
+                                    title: item.name ?? 'Unknown User',
+                                    subtitle: item.username ?? '',
+                                    trailing: const Icon(
+                                      Icons.keyboard_arrow_right,
+                                    ),
+                                  );
+                                }
+
+                                // Hashtags
+                                if (item is HashTag) {
+                                  return _HashtagTile(
+                                    hashtag: item,
+                                  );
+                                }
+
+                                return const SizedBox.shrink();
+                              },
+                            );
+                          },
+                        ),
+                    };
+                  },
+                ),
+                BlocConsumer<SearchShowsCubit,
+                    ATAppState<SearchShowsResponseModel>>(
+                  listener: (BuildContext context,
+                      ATAppState<SearchShowsResponseModel> state) {
+                    if (state is FailureState<SearchShowsResponseModel>) {
+                      showAppNotification2(
+                        context: context,
+                        text: state.message,
+                        type: NotificationType.failure,
+                      );
+                    }
+                  },
+                  builder: (BuildContext context,
+                      ATAppState<SearchShowsResponseModel> state) {
+                    return switch (state) {
+                      InitialState<SearchShowsResponseModel>() =>
+                        const SizedBox.shrink(),
+                      LoadingState<SearchShowsResponseModel>() ||
+                      FailureState<SearchShowsResponseModel>() ||
+                      SuccessState<SearchShowsResponseModel>() =>
+                        Builder(
+                          builder: (_) {
+                            final SearchShowsResponseModel? searchData = context
+                                .read<SearchShowsCubit>()
+                                .currentSearchData;
+
+                            final List<HostedShow> shows =
+                                searchData?.shows ?? <HostedShow>[];
+
+                            if (shows.isEmpty) {
+                              if (state
+                                  is LoadingState<SearchShowsResponseModel>) {
+                                return const ShowsListShimmer();
+                              }
+
+                              if (state
+                                  is FailureState<SearchShowsResponseModel>) {
+                                return Center(
+                                  child: IconButton(
+                                    icon: const Icon(Icons.refresh),
+                                    onPressed: () => context
+                                        .read<SearchShowsCubit>()
+                                        .searchShows(widget.searchQuery ?? ''),
+                                  ),
+                                );
+                              }
+
+                              return Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: <Widget>[
+                                  Text(
+                                    'Nothing to show here right now.',
+                                    style: context.textTheme.bodyMedium,
+                                  ),
+                                  Text(
+                                      'All shows created under "${widget.searchQuery}" will appear here.',
+                                      style: context.textTheme.labelSmall),
+                                ],
+                              );
+                            }
+
+                            return ListView.builder(
+                              padding: const EdgeInsets.all(15),
+                              itemCount: shows.length,
+                              itemBuilder: (BuildContext _, int index) {
+                                final HostedShow show = shows[index];
+                                return SearchItemTile(
+                                  leadingImagePath: show.coverUrl ?? '',
+                                  isCircular: false,
+                                  title: show.title ?? '',
+                                  subtitle: show.category ?? 'Unknown Category',
+                                  trailing: ATContainer(
+                                    onTap: () {},
+                                    boxShape: BoxShape.circle,
+                                    height: 24,
+                                    width: 24,
+                                    color: ATColors.hexB6B6B6,
+                                    child: Icon(
+                                      Icons.play_arrow,
+                                      size: 15,
+                                      color: ATColors.hex0D0D0D,
+                                    ),
+                                  ),
+                                );
+                              },
+                            );
+                          },
+                        ),
+                    };
+                  },
+                ),
+                BlocConsumer<SearchEventsCubit,
+                    ATAppState<SearchEventsResponseModel>>(
+                  listener: (BuildContext context,
+                      ATAppState<SearchEventsResponseModel> state) {
+                    if (state is FailureState<SearchEventsResponseModel>) {
+                      showAppNotification2(
+                        context: context,
+                        text: state.message,
+                        type: NotificationType.failure,
+                      );
+                    }
+                  },
+                  builder: (BuildContext context,
+                      ATAppState<SearchEventsResponseModel> state) {
+                    return switch (state) {
+                      InitialState<SearchEventsResponseModel>() =>
+                        const SizedBox.shrink(),
+                      LoadingState<SearchEventsResponseModel>() ||
+                      FailureState<SearchEventsResponseModel>() ||
+                      SuccessState<SearchEventsResponseModel>() =>
+                        Builder(
+                          builder: (_) {
+                            final SearchEventsResponseModel? searchData = context
+                                .read<SearchEventsCubit>()
+                                .currentSearchData;
+
+                            final List<HostedEvent> events =
+                                searchData?.events ?? <HostedEvent>[];
+
+                            if (events.isEmpty) {
+                              if (state
+                                  is LoadingState<SearchShowsResponseModel>) {
+                                return const ShowsListShimmer();
+                              }
+
+                              if (state
+                                  is FailureState<SearchEventsResponseModel>) {
+                                return Center(
+                                  child: IconButton(
+                                    icon: const Icon(Icons.refresh),
+                                    onPressed: () => context
+                                        .read<SearchEventsCubit>()
+                                        .searchEvents(widget.searchQuery ?? ''),
+                                  ),
+                                );
+                              }
+
+                              return Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: <Widget>[
+                                  Text(
+                                    'Nothing to show here right now.',
+                                    style: context.textTheme.bodyMedium,
+                                  ),
+                                  Text(
+                                      'All events created under "${widget.searchQuery}" will appear here.',
+                                      style: context.textTheme.labelSmall),
+                                ],
+                              );
+                            }
+
+                            return ListView.builder(
+                              padding: const EdgeInsets.all(15),
+                              itemCount: events.length,
+                              itemBuilder: (BuildContext _, int index) {
+                                final HostedEvent event = events[index];
+                                return SearchItemTile(
+                                  leadingImagePath: event.coverUrl ?? '',
+                                  isCircular: false,
+                                  title: event.title ?? '',
+                                  subtitle: event.category ?? 'Unknown Category',
+                                  trailing: ATContainer(
+                                    onTap: () {},
+                                    boxShape: BoxShape.circle,
+                                    height: 24,
+                                    width: 24,
+                                    color: ATColors.hexB6B6B6,
+                                    child: Icon(
+                                      Icons.play_arrow,
+                                      size: 15,
+                                      color: ATColors.hex0D0D0D,
+                                    ),
+                                  ),
+                                );
+                              },
+                            );
+                          },
+                        ),
+                    };
+                  },
+                ),
+                BlocConsumer<SearchUsersCubit,
+                    ATAppState<SearchUsersResponseModel>>(
+                  listener: (BuildContext context,
+                      ATAppState<SearchUsersResponseModel> state) {
+                    if (state is FailureState<SearchUsersResponseModel>) {
+                      showAppNotification2(
+                        context: context,
+                        text: state.message,
+                        type: NotificationType.failure,
+                      );
+                    }
+                  },
+                  builder: (BuildContext context,
+                      ATAppState<SearchUsersResponseModel> state) {
+                    return switch (state) {
+                      InitialState<SearchUsersResponseModel>() =>
+                        const SizedBox.shrink(),
+                      LoadingState<SearchUsersResponseModel>() ||
+                      FailureState<SearchUsersResponseModel>() ||
+                      SuccessState<SearchUsersResponseModel>() =>
+                        Builder(
+                          builder: (_) {
+                            final SearchUsersResponseModel? searchData = context
+                                .read<SearchUsersCubit>()
+                                .currentSearchData;
+                            final List<User> users =
+                                searchData?.data ?? <User>[];
+
+                            if (users.isEmpty) {
+                              if (state
+                                  is LoadingState<SearchUsersResponseModel>) {
+                                return const UsersListShimmer();
+                              }
+
+                              if (state
+                                  is FailureState<SearchUsersResponseModel>) {
+                                return Center(
+                                  child: IconButton(
+                                    icon: const Icon(Icons.refresh),
+                                    onPressed: () => context
+                                        .read<SearchUsersCubit>()
+                                        .searchUsers(widget.searchQuery ?? ''),
                                   ),
                                 );
                               }
@@ -248,11 +519,11 @@ class _SearchResultsTabsViewState extends State<SearchResultsTabsView>
                     };
                   },
                 ),
-                BlocConsumer<AllHashtagsCubit,
-                    ATAppState<AllHashtagsResponseModel>>(
+                BlocConsumer<SearchHashtagsCubit,
+                    ATAppState<SearchHashtagsResponseModel>>(
                   listener: (BuildContext context,
-                      ATAppState<AllHashtagsResponseModel> state) {
-                    if (state is FailureState<AllHashtagsResponseModel>) {
+                      ATAppState<SearchHashtagsResponseModel> state) {
+                    if (state is FailureState<SearchHashtagsResponseModel>) {
                       showAppNotification2(
                         context: context,
                         text: state.message,
@@ -261,33 +532,33 @@ class _SearchResultsTabsViewState extends State<SearchResultsTabsView>
                     }
                   },
                   builder: (BuildContext context,
-                      ATAppState<AllHashtagsResponseModel> state) {
+                      ATAppState<SearchHashtagsResponseModel> state) {
                     return switch (state) {
-                      InitialState<AllHashtagsResponseModel>() =>
+                      InitialState<SearchHashtagsResponseModel>() =>
                         const SizedBox.shrink(),
-                      LoadingState<AllHashtagsResponseModel>() ||
-                      FailureState<AllHashtagsResponseModel>() ||
-                      SuccessState<AllHashtagsResponseModel>() =>
+                      LoadingState<SearchHashtagsResponseModel>() ||
+                      FailureState<SearchHashtagsResponseModel>() ||
+                      SuccessState<SearchHashtagsResponseModel>() =>
                         Builder(
                           builder: (_) {
-                            final AllHashtagsResponseModel? hashtagsData =
+                            final SearchHashtagsResponseModel? hashtagsData =
                                 context
-                                    .read<AllHashtagsCubit>()
-                                    .currentTagsData;
+                                    .read<SearchHashtagsCubit>()
+                                    .currentSearchData;
                             final List<HashTag> hashtags =
                                 hashtagsData?.hashtags ?? <HashTag>[];
 
                             if (hashtags.isEmpty) {
-                              if (state
-                                  is LoadingState<AllHashtagsResponseModel>) {
-                                return const _HashtagsListShimmer();
+                              if (state is LoadingState<
+                                  SearchHashtagsResponseModel>) {
+                                return const HashtagsListShimmer();
                               }
                               return const Center(
                                   child: Text('No hashtags found'));
                             }
 
                             return ListView.builder(
-                              controller: _hashtagsScrollController,
+                              //controller: _hashtagsScrollController,
                               padding: const EdgeInsets.all(15),
                               itemCount: hashtags.length,
                               itemBuilder: (BuildContext _, int index) {
@@ -313,88 +584,6 @@ class _SearchResultsTabsViewState extends State<SearchResultsTabsView>
           ),
         )
       ],
-    );
-  }
-}
-
-class _UsersListShimmer extends StatelessWidget {
-  const _UsersListShimmer();
-
-  @override
-  Widget build(BuildContext context) {
-    return ListView.builder(
-      padding: const EdgeInsets.all(15),
-      itemCount: 10, // Number of shimmer items to show
-      itemBuilder: (_, __) => const _UserTileShimmer(),
-    );
-  }
-}
-
-class _UserTileShimmer extends StatelessWidget {
-  const _UserTileShimmer();
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(bottom: 20),
-      child: LayoutBuilder(builder: (_, BoxConstraints constraints) {
-        return Row(
-          children: <Widget>[
-            const ATShimmer(
-              height: 50,
-              width: 50,
-              radius: 25, // Circular
-            ),
-            const SizedBox(width: 8),
-
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  ATShimmer(
-                    height: 14,
-                    width: ATHelperFuncs.getRandomNumber(
-                        constraints.maxWidth * 0.8),
-                    radius: 3,
-                  ),
-                  const SizedBox(height: 5),
-                  Row(
-                    children: <Widget>[
-                      // ATShimmer(
-                      //   height: 13,
-                      //   width: 50,
-                      //   radius: 2,
-                      // ),
-                      // SizedBox(width: 5),
-                      // ATShimmer(
-                      //   height: 3,
-                      //   width: 3,
-                      //   radius: 1.5,
-                      // ),
-                      const SizedBox(width: 5),
-                      ATShimmer(
-                        height: 13,
-                        width: ATHelperFuncs.getRandomNumber(
-                            constraints.maxWidth * 0.5),
-                        radius: 2,
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-            ),
-
-            const SizedBox(width: 15),
-
-            // Trailing icon shimmer
-            const ATShimmer(
-              height: 24,
-              width: 24,
-              radius: 4,
-            ),
-          ],
-        );
-      }),
     );
   }
 }
@@ -436,58 +625,6 @@ class _HashtagTile extends StatelessWidget {
           const Icon(Icons.keyboard_arrow_right, size: 24),
         ],
       ),
-    );
-  }
-}
-
-class _HashtagsListShimmer extends StatelessWidget {
-  const _HashtagsListShimmer();
-
-  @override
-  Widget build(BuildContext context) {
-    return ListView.builder(
-      padding: const EdgeInsets.all(15),
-      itemCount: 10,
-      itemBuilder: (_, __) => const _HashtagsTileShimmer(),
-    );
-  }
-}
-
-class _HashtagsTileShimmer extends StatelessWidget {
-  const _HashtagsTileShimmer();
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(bottom: 15),
-      child: LayoutBuilder(builder: (_, BoxConstraints constraints) {
-        return Row(
-          children: <Widget>[
-            const ATShimmer(height: 50, width: 50, radius: 30),
-            const SizedBox(width: 10),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  ATShimmer(
-                      height: 12,
-                      width: ATHelperFuncs.getRandomNumber(
-                          constraints.maxWidth * 0.5),
-                      radius: 4),
-                  const SizedBox(height: 8),
-                  const ATShimmer(height: 10, width: 70, radius: 2),
-                ],
-              ),
-            ),
-            const SizedBox(width: 15),
-            const ATShimmer(
-              height: 24,
-              width: 24,
-              radius: 4,
-            ),
-          ],
-        );
-      }),
     );
   }
 }
