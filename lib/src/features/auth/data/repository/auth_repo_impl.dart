@@ -200,28 +200,5 @@ class AuthRepoImpl implements AuthRepo {
     }
   }
 
-  @override
-Future<ApiResponse<String>> registerDevice({
-  required String userId,
-  required String fcmToken,
-  required String deviceName,
-  required String platform,
-}) async {
-  try {
-    final Response<dynamic> response = await networkService.post(
-      ATEndpoints.registerDevice,
-      data: <String, String>{
-        'user_id': userId,
-        'fcm_token': fcmToken,
-        'device_name': deviceName,
-        'platform': platform,
-      },
-    );
-    return Successful<String>(data: response.data);
-  } catch (e) {
-    log('Register device error: $e');
-    return Unsuccessful<String>(error: ATException.resolveException(e));
-  }
-}
-
+  
 }

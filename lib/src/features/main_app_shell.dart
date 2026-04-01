@@ -1,11 +1,8 @@
 import 'dart:developer';
 import 'dart:io';
-
-import 'package:amptive/src/config/api_response_and_app_state.dart';
 import 'package:amptive/src/config/services/network_service/interceptor.dart' show AuthGuardCubit;
 import 'package:amptive/src/features/auth/cubits/local_user_data_cubit.dart';
-import 'package:amptive/src/features/auth/cubits/register_device_fcm_cubit.dart';
-import 'package:amptive/src/features/auth/data/repository/auth_repo_impl.dart';
+import 'package:amptive/src/features/notifications/cubits/register_device_fcm_cubit.dart';
 import 'package:amptive/src/features/auth/presentation/screens/login_screen.dart';
 import 'package:amptive/src/features/home/cubits/home_feed_cubit.dart';
 import 'package:amptive/src/features/home/cubits/live_users_cubit.dart';
@@ -13,8 +10,6 @@ import 'package:amptive/src/features/profile/cubits/remote_user_data_cubit.dart'
 import 'package:amptive/src/shared/annotated_region__widget.dart';
 import 'package:amptive/src/features/main_app_nav_bar.dart';
 import 'package:amptive/src/features/home/presentation/screens/home_landing_screen.dart';
-import 'package:device_info_plus/device_info_plus.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -104,12 +99,7 @@ class __SubWidgetState extends State<_SubWidget> {
       await context.read<LocalUserDataCubit>().initializeCachedData();
             _registerDeviceForPush();
 
-//       context.read<RegisterDeviceFCMCubit>().registerDevice(
-//   userId: userData!.userId!,
-//   fcmToken: fcmToken,
-//   deviceName: deviceName,
-//   platform: 'android',
-// );
+
     });
   }
 
@@ -130,57 +120,20 @@ class __SubWidgetState extends State<_SubWidget> {
   }
   
   Future<void> _registerDeviceForPush() async {
-  log("Attempting to register device for push...");
   
-  // 1. Get the data again AFTER initialization
-  final userData = context.read<LocalUserDataCubit>().currentUserData;
+  final CachedUserData? userData = context.read<LocalUserDataCubit>().currentUserData;
   
   if (userData == null || userData.userId == null) {
-    log("Registration aborted: User ID is null.");
     return;
   }
-  
-  try {
-    // 2. Get FCM token
-    final String? fcmToken = await FirebaseMessaging.instance.getToken();
-    if (fcmToken == null) {
-      log("Registration aborted: FCM Token is null.");
-      return;
-    }
-    
-    final DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
-    String deviceName = "Unknown Device";
-    String platform = "unknown";
-
-    if (Platform.isAndroid) {
-      final AndroidDeviceInfo androidInfo = await deviceInfo.androidInfo;
-      deviceName = '${androidInfo.manufacturer} ${androidInfo.model}';
-      platform = 'android';
-    } else if (Platform.isIOS) {
-      final IosDeviceInfo iosInfo = await deviceInfo.iosInfo;
-      deviceName = iosInfo.name;
-      platform = 'ios';
-    }
-    
-    if (mounted) {
-      log("Triggering Cubit for User: ${userData.userId}");
+  if (mounted) {
       context.read<RegisterDeviceFCMCubit>().registerDevice(
         userId: userData.userId!,
-        fcmToken: fcmToken,
-        deviceName: deviceName,
-        platform: platform,
+      
       );
     }
-  } catch (e) {
-    log("Error gathering device info: $e");
-  }
+  
 }
-
-
-
-
-
-
 
   @override
   Widget build(BuildContext context) {

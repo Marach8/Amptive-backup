@@ -31,4 +31,8 @@ class ATEndpoints {
   static const String trendingHashtags = '/api/v1/tags/trending';
   static const String registerDevice = '/api/v1/notif/devices/register';
 
+  // websockets
+  static const String wsBaseUrl = 'wss://amptive.onrender.com';
+  static const String wsUsers = '/api/v1/ws/user';
+
 }
