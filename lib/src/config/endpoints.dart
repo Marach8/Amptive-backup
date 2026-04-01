@@ -29,4 +29,6 @@ class ATEndpoints {
   static const String createHashtag = '${tags}hashtags'; 
   static const String updateUserProfile = '/api/v1/users/me';
   static const String trendingHashtags = '/api/v1/tags/trending';
+  static const String registerDevice = '/api/v1/notif/devices/register';
+
 }

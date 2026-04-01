@@ -41,7 +41,8 @@ class ATUser {
       followersCount: json['followers_count'],
     );
   }
-  final String? id, email, username, dob, name, pictureUrl, followersCount;
+  final String? id, email, username, dob, name, pictureUrl;
+  final int? followersCount;
 
     
   }

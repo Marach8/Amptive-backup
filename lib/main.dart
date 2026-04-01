@@ -1,6 +1,7 @@
 import 'package:amptive/src/config/config_export.dart';
 import 'package:amptive/src/config/services/network_service/interceptor.dart';
 import 'package:amptive/src/features/auth/cubits/local_user_data_cubit.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -8,8 +9,14 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:nested/nested.dart';
 
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  try {
+    await Firebase.initializeApp(); 
+  } catch (e) {
+    debugPrint("Firebase initialization failed: $e");
+  }
   SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
   setup();
   await _initializeRedirect();
