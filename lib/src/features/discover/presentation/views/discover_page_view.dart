@@ -1,6 +1,9 @@
 import 'package:amptive/src/config/api_response_and_app_state.dart';
+import 'package:amptive/src/features/discover/cubits/communities_cubit.dart';
 import 'package:amptive/src/features/discover/cubits/trending_hashtags_cubit.dart';
+import 'package:amptive/src/features/discover/data/models/response/communities_response_model.dart';
 import 'package:amptive/src/features/discover/data/models/response/trending_hashtags_response_model.dart';
+import 'package:amptive/src/features/discover/discover_export.dart';
 import 'package:amptive/src/features/discover/presentation/views/trending_hashtags_screen.dart';
 import 'package:amptive/src/features/discover/presentation/widgets/follow_unfollow_dropdown.dart';
 import 'package:amptive/src/features/discover/presentation/widgets/horizontal_scroll_cards.dart';
@@ -9,6 +12,7 @@ import 'package:amptive/src/shared/global_model_objects.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:nested/nested.dart';
 import '../../../../config/utils/colors.dart';
 import '../../../../config/utils/image_strings.dart';
 import '../../../../config/utils/other_strings.dart';
@@ -27,12 +31,15 @@ class MainDiscoverView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider<TrendingHashtagsCubit>(
-      create: (_) => TrendingHashtagsCubit()..fetchTrendingTags(),
-      child: Column(
-        children: <Widget>[
-          const HorizontalScrollCards(),
-          const SizedBox(height: 48),
+    return MultiBlocProvider(providers: <SingleChildWidget>[
+      BlocProvider<TrendingHashtagsCubit>(
+        create: (_) => TrendingHashtagsCubit()..fetchTrendingTags()),
+      BlocProvider<CommunitiesCubit>(
+        create: (_) => CommunitiesCubit()..fetchCommunities())  
+    ], child: Column(
+      children: <Widget>[
+        const HorizontalScrollCards(),
+        const SizedBox(height: 48),
 
           HastagHeadingRow(
             title: ATStrings.trendingHashtags,
@@ -256,32 +263,68 @@ class MainDiscoverView extends StatelessWidget {
           Divider(indent: 15, endIndent: 15, color: ATColors.hex252525),
           const SizedBox(height: 40),
 
-          // More to Discover Section
-          const Padding(
-            padding: EdgeInsets.symmetric(horizontal: 15),
-            child: AmptiveMore2DiscoverTitle(),
-          ),
-          const SizedBox(height: 15),
-          SizedBox(
-            height: 122,
-            child: ListView(
-              physics: const BouncingScrollPhysics(),
-              scrollDirection: Axis.horizontal,
-              children: <Widget>[
-                const SizedBox(width: 5),
-                ...List<Widget>.generate(
-                  5,
-                  (_) => const CommunityCardWidget(
-                    picture: ATImgStrings.COMMUNITY_CARD,
+          
+         const Padding(
+  padding: EdgeInsets.symmetric(horizontal: 15),
+  child: AmptiveMore2DiscoverTitle(),
+),
+const SizedBox(height: 15),
+
+BlocBuilder<CommunitiesCubit, ATAppState<CommunitiesResponseModel>>(
+  builder: (BuildContext context, ATAppState<CommunitiesResponseModel> state) {
+    return switch (state) {
+      InitialState<CommunitiesResponseModel>() => const SizedBox.shrink(),
+      LoadingState<CommunitiesResponseModel>() ||
+      FailureState<CommunitiesResponseModel>() ||
+      SuccessState<CommunitiesResponseModel>() =>
+        Builder(
+          builder: (BuildContext context) {
+            final CommunitiesResponseModel? community = context.read<CommunitiesCubit>().currentCommunities;
+            final Map<String, Community> communities = community?.communities ?? <String, Community>{};
+            final List<String> communityIds = community?.communityIds ?? <String>[];
+
+            if (communities.isEmpty) {
+              if (state is LoadingState) {
+                return const Center(child: CommunitiesShimmer());
+              }
+              if (state is FailureState) {
+                return Center(
+                  child: IconButton(
+                    icon: const Icon(Icons.refresh),
+                    onPressed: () => context.read<CommunitiesCubit>().fetchCommunities(),
                   ),
-                ),
-              ],
-            ),
-          ),
-          Divider(indent: 15, endIndent: 15, color: ATColors.hex252525),
+                );
+              }
+              return const Center(child: Text('Communities not available yet'));
+            }
+
+            return SizedBox(
+              height: 122,
+              child: ListView.builder(
+                physics: const BouncingScrollPhysics(),
+                scrollDirection: Axis.horizontal,
+                padding: const EdgeInsets.only(left: 15),
+                itemCount: communityIds.length,
+                itemBuilder: (BuildContext context, int index) {
+                  final String id = communityIds[index];
+                  final Community? community = communities[id];
+                  
+                  return CommunityCardWidget(
+                    picture: community?.image ?? ATImgStrings.COMMUNITY_CARD,
+                    title: community?.name,
+                  );
+                },
+              ),
+            );
+          },
+        ),
+    }; 
+  },
+),
+const SizedBox(height: 10),
+Divider(indent: 15, endIndent: 15, color: ATColors.hex252525),
           const SizedBox(height: 40),
 
-          // Top Creators Section
           ATContainer(
             padding: const EdgeInsets.only(left: 15),
             alignment: Alignment.centerLeft,
@@ -304,7 +347,6 @@ class MainDiscoverView extends StatelessWidget {
           ),
           const SizedBox(height: 48),
 
-          // Spotlight Section
           ATContainer(
             padding: const EdgeInsets.only(left: 15),
             alignment: Alignment.centerLeft,
