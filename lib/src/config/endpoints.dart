@@ -29,4 +29,9 @@ class ATEndpoints {
   static const String createHashtag = '${tags}hashtags'; 
   static const String updateUserProfile = '/api/v1/users/me';
   static const String trendingHashtags = '/api/v1/tags/trending';
+
+  // websockets
+  static const String wsBaseUrl = 'wss://amptive.onrender.com';
+  static const String wsUsers = '/api/v1/ws/user';
+
 }

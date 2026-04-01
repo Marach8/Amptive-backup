@@ -1,17 +1,19 @@
 import 'package:amptive/src/config/config_export.dart';
 import 'package:amptive/src/config/services/network_service/interceptor.dart';
 import 'package:amptive/src/features/auth/cubits/local_user_data_cubit.dart';
+import 'package:amptive/src/services/notification/notification_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:get_it/get_it.dart';
 import 'package:nested/nested.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
-  setup();
+  await setup();
   await _initializeRedirect();
   runApp(
     MultiBlocProvider(
@@ -36,8 +38,21 @@ Future<void> _initializeRedirect() async {
   await storage.write(key: ATStrings.SHOULD_REDIRECT, value: true.toString());
 }
 
-class AmptiveApp extends StatelessWidget {
+class AmptiveApp extends StatefulWidget {
   const AmptiveApp({super.key});
+
+  @override
+  State<AmptiveApp> createState() => _AmptiveAppState();
+}
+
+class _AmptiveAppState extends State<AmptiveApp> {
+  @override
+  void initState() {
+    super.initState();
+
+    GetIt.I<NotificationService>().init();
+  }
+
   @override
   Widget build(BuildContext context) {
     return ScreenUtilInit(
@@ -48,9 +63,8 @@ class AmptiveApp extends StatelessWidget {
         return MultiBlocProvider(
           providers: <SingleChildWidget>[
             BlocProvider<LocalUserDataCubit>(
-              create: (_) => LocalUserDataCubit()),
-            BlocProvider<AuthGuardCubit>.value(
-              value: authGuardCubit),
+                create: (_) => LocalUserDataCubit()),
+            BlocProvider<AuthGuardCubit>.value(value: authGuardCubit),
           ],
           child: MaterialApp.router(
             scaffoldMessengerKey: scaffoldMessengerKey,
