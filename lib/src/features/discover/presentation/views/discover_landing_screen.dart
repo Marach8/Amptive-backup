@@ -1,4 +1,5 @@
 import 'package:amptive/src/config/utils/font_sizes.dart';
+import 'package:amptive/src/features/discover/presentation/views/search_suggestions_page_view.dart';
 import 'package:amptive/src/features/main_app_nav_bar.dart';
 import 'package:amptive/src/shared/animated_switcher.dart';
 import 'package:amptive/src/shared/sliver_header_delegate.dart';
@@ -56,8 +57,12 @@ class _DiscoverTabViewState extends State<DiscoverTabView> {
                       ? const MainDiscoverView(key: ValueKey<int>(100))
                       : pageState == DiscoverPageState.showRecentSearches
                           ? const RecentSearchesView(key: ValueKey<int>(200))
-                          : const SearchResultsPage(
-                              key: ValueKey<int>(300)),
+                          : pageState == DiscoverPageState.showSearchSuggestions
+                              ?  SearchSuggestionsPageView(key: ValueKey<int>(300),
+                              searchQuery: state.$2,)
+                              :  SearchResultsPage(
+                                  key: ValueKey<int>(400),
+                                  searchQuery: state.$2,),
                 );
               })),
             ],
@@ -68,7 +73,7 @@ class _DiscoverTabViewState extends State<DiscoverTabView> {
   }
 }
 
-enum DiscoverPageState { showMainPage, showRecentSearches, showSearchResult }
+enum DiscoverPageState { showMainPage, showRecentSearches, showSearchResult, showSearchSuggestions }
 
 class DiscoverTrnstnBlc extends Cubit<(DiscoverPageState, String?)> {
   DiscoverTrnstnBlc() : super((DiscoverPageState.showMainPage, null));
@@ -79,5 +84,11 @@ class DiscoverTrnstnBlc extends Cubit<(DiscoverPageState, String?)> {
   void showSearchResults() =>
       emit((DiscoverPageState.showSearchResult, state.$2));
 
+  void showSearchSuggestions() =>
+      emit((DiscoverPageState.showSearchSuggestions, state.$2));
+
   void reset() => emit((DiscoverPageState.showMainPage, null));
+
+  void updateSearchQuery(String query) => emit((state.$1, query));
+
 }
