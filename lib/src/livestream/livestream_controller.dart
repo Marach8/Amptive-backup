@@ -5,60 +5,46 @@ import './services/livestream_api_service.dart';
 import './services/media_service.dart';
 import './services/signaling_service.dart';
 
-/// [LivestreamController] is the single entry-point for the UI layer.
-///
-/// It orchestrates the full join flow from the guide:
-///
-///   1. POST /token → receive JWT + LiveKit URL
-///   2. Connect WebSocket → receive initial_state snapshot
-///   3. Connect LiveKit room  → attach existing remote audio tracks
-///   4. Keep signaling events in sync with local state
-///   5. Expose clean action methods: send chat, react, raise hand, etc.
-///   6. Graceful tear-down on stream end or explicit dispose
 class LivestreamController {
   LivestreamController({
-    required this.apiService,
-    required this.baseWsUrl,
-    required this.userAuthToken,
     this.isHost = false,
-    this.contentId,
     this.streamId,
     MediaService? mediaService,
-  }) : _media = mediaService ?? MediaService();
+    LivestreamApiService? apiService,
+  })  : _media = mediaService ?? MediaService(),
+        apiService = apiService ?? LivestreamApiService();
 
-  String? streamId;   // this is required by participants to join
-  final String? contentId;  // this is required by host to start stream
+  String? streamId;
   final LivestreamApiService apiService;
-  final String baseWsUrl;
-  final String userAuthToken;
   final bool isHost;
   final MediaService _media;
 
   SignalingService? _signaling;
   StreamSubscription<SignalingEvent>? _sigSub;
 
+  // Store ALL subscriptions so they are cancelled on teardown.
+  // The original code leaked the two _media subscriptions.
+  final List<StreamSubscription<dynamic>> _mediaSubs = [];
+
   // ── Observable state ───────────────────────────────────────────────────
 
-  final _stateController =
-  StreamController<LivestreamState>.broadcast();
+  final _stateController = StreamController<LivestreamState>.broadcast();
+
   Stream<LivestreamState> get stateStream => _stateController.stream;
 
   LivestreamState _state = const LivestreamState();
+
   LivestreamState get state => _state;
 
   // ── Join flow ──────────────────────────────────────────────────────────
 
-  /// Full join sequence. Throws [LivestreamApiException] (status 403)
-  /// if the stream is not live yet.
   Future<void> join() async {
     // Step 1 — fetch token
     final LivestreamToken tokenData = await apiService.fetchToken(streamId!);
 
     // Step 2 — connect signaling WebSocket
     _signaling = SignalingService(
-      baseWsUrl: baseWsUrl,
       streamId: streamId!,
-      authToken: userAuthToken,
     );
     _sigSub = _signaling!.events.listen(
       _handleSignalingEvent,
@@ -73,47 +59,47 @@ class LivestreamController {
       isSpeaker: isHost,
     );
 
-    // Wire up media events
-    _media.onParticipantJoined.listen((p) {
-      // LiveKit join is already reflected in signaling; just update speaker UI
-    });
-    _media.onActiveSpeakers.listen((speakers) {
-      final ids = speakers.map((s) => s.identity).toSet();
-      final updated = _state.participants.map((p) {
-        return p.copyWith(isSpeaker: ids.contains(p.identity));
-      }).toList();
-      _emit(_state.copyWith(participants: updated));
-    });
+    // Store media subscriptions so _tearDown can cancel them.
+    _mediaSubs.add(
+      _media.onActiveSpeakers.listen((speakers) {
+        final ids = speakers.map((s) => s.identity).toSet();
+        final updated = _state.participants
+            .map((p) => p.copyWith(isSpeaker: ids.contains(p.identity)))
+            .toList();
+        _emit(_state.copyWith(participants: updated));
+      }),
+    );
+
+    // onParticipantJoined: signaling already handles roster updates,
+    // but we still need to store the sub so teardown can cancel it.
+    _mediaSubs.add(_media.onParticipantJoined.listen((_) {}));
   }
 
   // ── Host lifecycle ─────────────────────────────────────────────────────
 
-  Future<void> startStream() async {
-    // contentId is required to start stream
-    String streamId = await apiService.startStream(contentId!);
-    this.streamId = streamId;
+  Future<void> startStream(String contentId) async {
+    final id = await apiService.startStream(contentId);
+    streamId = id;
   }
 
   Future<void> endStream() async {
     await apiService.endStream(streamId!);
-    // Backend will broadcast stream_ended; _handleSignalingEvent tears down.
+    // Backend broadcasts stream_ended → _handleSignalingEvent tears down.
   }
 
   // ── Interaction actions ────────────────────────────────────────────────
 
-  void sendChat(String message) =>
-      _signaling?.sendChat(message);
+  void sendChat(String message) => _signaling?.sendChat(message);
 
-  /// Sends a reaction both over WebSocket (speed) and via REST (persistence).
   void sendReaction(String emoji) {
     _signaling?.sendReaction(emoji);
     apiService.sendReaction(streamId!, emoji).ignore();
   }
 
   void raiseHand() => _signaling?.raiseHand();
+
   void lowerHand() => _signaling?.lowerHand();
 
-  /// Host only: approve [identity]'s hand raise.
   void approveHandRaise(String identity) =>
       _signaling?.approveHandRaise(identity);
 
@@ -139,14 +125,10 @@ class LivestreamController {
         _tearDown();
 
       case ChatEvent(:final message):
-        _emit(_state.copyWith(
-          messages: [..._state.messages, message],
-        ));
+        _emit(_state.copyWith(messages: [..._state.messages, message]));
 
       case ReactionReceivedEvent(:final reaction):
-        _emit(_state.copyWith(
-          reactions: [..._state.reactions, reaction],
-        ));
+        _emit(_state.copyWith(reactions: [..._state.reactions, reaction]));
 
       case HandRaiseEvent(:final identity, :final action):
         _handleHandRaise(identity, action);
@@ -157,10 +139,7 @@ class LivestreamController {
             if (p.identity == participant.identity) participant else p,
         ];
         _emit(_state.copyWith(participants: updated));
-        // If this client was promoted, publish audio
-        if (participant.isSpeaker) {
-          _media.publishAudio();
-        }
+        if (participant.isSpeaker) _media.publishAudio();
 
       case ViewerCountEvent(:final count):
         _emit(_state.copyWith(viewerCount: count));
@@ -179,15 +158,12 @@ class LivestreamController {
           ));
         }
       case 'lower':
-        _emit(_state.copyWith(
-          handQueue: _state.handQueue.where((i) => i != identity).toList(),
-        ));
+      // Both lower and approve remove from the queue.
+      // Actual speaker promotion arrives via participant_updated.
       case 'approve':
         _emit(_state.copyWith(
           handQueue: _state.handQueue.where((i) => i != identity).toList(),
         ));
-    // Promotion is confirmed via a follow-up participant_updated event
-    // that sets is_speaker = true and triggers publishAudio().
     }
   }
 
@@ -200,6 +176,10 @@ class LivestreamController {
 
   Future<void> _tearDown() async {
     await _sigSub?.cancel();
+    for (final StreamSubscription<dynamic> sub in _mediaSubs) {
+      await sub.cancel();
+    }
+    _mediaSubs.clear();
     _signaling?.dispose();
     await _media.disconnect();
   }
@@ -207,7 +187,6 @@ class LivestreamController {
   Future<void> dispose() async {
     await _tearDown();
     _stateController.close();
-    apiService.dispose();
   }
 }
 

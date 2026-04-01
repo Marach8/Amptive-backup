@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:developer' as developer show log;
 import 'package:livekit_client/livekit_client.dart';
 
 /// Manages the **Media Plane** LiveKit room connection.
@@ -71,6 +72,8 @@ class MediaService {
     _room = Room();
     _listener = _room!.createListener();
     _registerRoomEvents();
+
+    developer.log('Connecting to LiveKit room', name: 'MediaService');
 
     await _room!.connect(
       url,

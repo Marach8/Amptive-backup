@@ -30,8 +30,15 @@ class ATEndpoints {
   static const String updateUserProfile = '/api/v1/users/me';
   static const String trendingHashtags = '/api/v1/tags/trending';
 
+  static String getStreamTokenEndpoint(String streamId) => '/api/v1/livestreams/$streamId/token';
+  static String startStreamEndpoint(String contentId) => '/api/v1/livestreams/$contentId/start';
+  static String endStreamEndpoint(String streamId) => '/api/v1/livestreams/$streamId/end';
+
+
   // websockets
   static const String wsBaseUrl = 'wss://amptive.onrender.com';
   static const String wsUsers = '/api/v1/ws/user';
+
+  static String wsSignalEndpoint(String streamId, String authToken) => '$wsBaseUrl/api/v1/ws/stream/$streamId?token=$authToken';
 
 }

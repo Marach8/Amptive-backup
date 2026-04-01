@@ -1,8 +1,14 @@
 import 'dart:async';
 import 'dart:convert';
+import 'dart:developer' as developer show log;
+import 'package:amptive/src/config/endpoints.dart';
+import 'package:amptive/src/config/services/local_storage_service/flutter_secure_storage_service_impl.dart';
+import 'package:flutter/material.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
 import 'package:web_socket_channel/status.dart' as ws_status;
 
+import '../../config/config_export.dart';
+import '../../config/services/local_storage_service/storage_service.dart';
 import '../models/livestream_models.dart';
 
 /// Manages the **Control/Signaling** WebSocket connection to
@@ -16,18 +22,15 @@ import '../models/livestream_models.dart';
 ///   - Provide send helpers for every outbound message type
 class SignalingService {
   SignalingService({
-    required String baseWsUrl,
     required String streamId,
-    required String authToken,
+     ATLocalStorageService? localStorageService,
     this.maxReconnectAttempts = 5,
-  })  : _baseWsUrl = baseWsUrl,
-        _streamId = streamId,
-        _authToken = authToken;
+  })  : _streamId = streamId,
+        _localStorageService = localStorageService ?? FlutterSecureStorageServiceImpl();
 
-  final String _baseWsUrl;
   final String _streamId;
-  final String _authToken;
   final int maxReconnectAttempts;
+  final ATLocalStorageService _localStorageService;
 
   WebSocketChannel? _channel;
   StreamSubscription<dynamic>? _sub;
@@ -44,18 +47,33 @@ class SignalingService {
 
   Future<void> connect() async {
     if (_disposed) return;
-    final uri = Uri.parse(
-      '$_baseWsUrl/ws/stream/$_streamId?token=$_authToken',
-    );
-    _channel = WebSocketChannel.connect(uri);
-    _sub = _channel!.stream.listen(
-      _onFrame,
-      onError: _onError,
-      onDone: _onDone,
-      cancelOnError: false,
-    );
-    _reconnectAttempts = 0;
+    try {
+      final String? token =
+      await _localStorageService.get(ATStrings.accessToken);
+      if (token == null || token.isEmpty) {
+        developer.log('No token found', name: 'SignalingService');
+        return;
+      }
+
+      final uri = Uri.parse(
+        ATEndpoints.wsSignalEndpoint(_streamId, token),
+      );
+
+      developer.log('Connecting to WebSocket: $uri', name: 'SignalingService');
+
+      _channel = WebSocketChannel.connect(uri);
+      _sub = _channel!.stream.listen(
+        _onFrame,
+        onError: _onError,
+        onDone: _onDone,
+        cancelOnError: false,
+      );
+      _reconnectAttempts = 0;
+    } catch (e) {
+      debugPrint(e.toString());
+    }
   }
+
 
   void disconnect() {
     _sub?.cancel();
@@ -72,8 +90,7 @@ class SignalingService {
   // ── Outbound helpers ───────────────────────────────────────────────────
 
   /// Send a chat message.
-  void sendChat(String message) =>
-      _send({'type': 'chat', 'message': message});
+  void sendChat(String message) => _send({'type': 'chat', 'message': message});
 
   /// Send a reaction emoji.  Uses the WebSocket path for speed; callers
   /// may also POST to /react if persistence is required.
@@ -81,11 +98,9 @@ class SignalingService {
       _send({'type': 'reaction', 'emoji': emoji});
 
   /// Raise or lower the current user's hand.
-  void raiseHand() =>
-      _send({'type': 'hand_raise', 'action': 'raise'});
+  void raiseHand() => _send({'type': 'hand_raise', 'action': 'raise'});
 
-  void lowerHand() =>
-      _send({'type': 'hand_raise', 'action': 'lower'});
+  void lowerHand() => _send({'type': 'hand_raise', 'action': 'lower'});
 
   /// Host approves a participant's hand raise.
   void approveHandRaise(String identity) =>
@@ -151,6 +166,9 @@ class SignalingService {
   }
 
   void _onError(Object error) {
+    developer.log('WebSocket error: $error',
+        name: 'SignalingService', level: 1000);
+
     // Bubble as a stream error so callers can log; then attempt reconnect.
     if (!_controller.isClosed) {
       _controller.addError(error);
@@ -167,6 +185,11 @@ class SignalingService {
     if (_disposed || _reconnectAttempts >= maxReconnectAttempts) return;
     _reconnectAttempts++;
     final delay = Duration(seconds: 1 << _reconnectAttempts); // 2, 4, 8 …
+
+    developer.log(
+        'Scheduling reconnect attempt $_reconnectAttempts in ${delay.inSeconds}s',
+        name: 'SignalingService');
+
     await Future<void>.delayed(delay);
     if (!_disposed) await connect();
   }

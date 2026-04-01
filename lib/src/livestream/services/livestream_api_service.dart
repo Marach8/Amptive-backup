@@ -1,26 +1,29 @@
 import 'dart:convert';
-import 'package:http/http.dart' as http;
+import 'dart:developer' as developer show log;
 
+import 'package:amptive/src/config/endpoints.dart';
+
+import '../../config/services/network_service/dio_network_service_impl.dart';
+import '../../config/services/network_service/network_service.dart';
 import '../models/livestream_models.dart';
 
 /// Handles all REST calls to the Amptive API.
 class LivestreamApiService {
-  LivestreamApiService({
-    required String baseUrl,
-    required String authToken,
-    http.Client? client,
-  })  : _baseUrl = baseUrl.replaceAll(RegExp(r'/$'), ''),
-        _authToken = authToken,
-        _client = client ?? http.Client();
+  factory LivestreamApiService({
+    NetworkService? networkService,
+  }) {
+    _instance ??= LivestreamApiService._internal(
+      networkService: networkService ?? DioNetworkServiceImpl(),
+    );
+    return _instance!;
+  }
 
-  final String _baseUrl;
-  final String _authToken;
-  final http.Client _client;
+  LivestreamApiService._internal({
+    required NetworkService networkService,
+  }) : _networkService = networkService;
 
-  Map<String, String> get _headers => {
-    'Authorization': 'Bearer $_authToken',
-    'Content-Type': 'application/json',
-  };
+  static LivestreamApiService? _instance;
+  final NetworkService _networkService;
 
   // ── Token ──────────────────────────────────────────────────────────────
 
@@ -29,39 +32,51 @@ class LivestreamApiService {
   /// Throws [LivestreamApiException] with status 403 if the stream is
   /// not yet LIVE (guest guard).
   Future<LivestreamToken> fetchToken(String streamId) async {
-    final res = await _client.post(
-      Uri.parse('$_baseUrl/api/v1/livestreams/$streamId/token'),
-      headers: _headers,
-    );
-    _assertOk(res);
-    return LivestreamToken.fromJson(
-      jsonDecode(res.body) as Map<String, dynamic>,
-    );
+    try {
+      final res = await _networkService.post(
+        ATEndpoints.getStreamTokenEndpoint(streamId),
+      );
+
+      return LivestreamToken.fromJson(
+        res.data['data'] as Map<String, dynamic>,
+      );
+    } catch (e) {
+      throw LivestreamApiException(
+        statusCode: _extractStatusCode(e),
+        message: _extractErrorMessage(e),
+      );
+    }
   }
 
   // ── Room lifecycle (host only) ─────────────────────────────────────────
 
   Future<String> startStream(String contentId) async {
-    final res = await _client.post(
-      Uri.parse('$_baseUrl/api/v1/livestreams/$contentId/start'),
-      headers: _headers,
-    );
+    try {
+      final res = await _networkService.post(
+        ATEndpoints.startStreamEndpoint(contentId),
+      );
 
-    _assertOk(res);
-
-    final Map<String, dynamic> body = jsonDecode(res.body);
-
-    final String liveId = body['data']['livestream_id'];
-
-    return liveId;
+      final String liveId = res.data['data']['livestream_id'];
+      return liveId;
+    } catch (e) {
+      throw LivestreamApiException(
+        statusCode: _extractStatusCode(e),
+        message: _extractErrorMessage(e),
+      );
+    }
   }
 
   Future<void> endStream(String streamId) async {
-    final res = await _client.post(
-      Uri.parse('$_baseUrl/api/v1/livestreams/$streamId/end'),
-      headers: _headers,
-    );
-    _assertOk(res);
+    try {
+      await _networkService.post(
+        ATEndpoints.endStreamEndpoint(streamId),
+      );
+    } catch (e) {
+      throw LivestreamApiException(
+        statusCode: _extractStatusCode(e),
+        message: _extractErrorMessage(e),
+      );
+    }
   }
 
   // ── Reactions (persistent path) ────────────────────────────────────────
@@ -69,37 +84,67 @@ class LivestreamApiService {
   /// POST to /react for persistence.  For fire-and-forget speed, use
   /// [SignalingService.sendReaction] instead (or in addition).
   Future<void> sendReaction(String streamId, String emoji) async {
-    final res = await _client.post(
-      Uri.parse('$_baseUrl/api/v1/livestreams/$streamId/react'),
-      headers: _headers,
-      body: jsonEncode({'emoji': emoji}),
-    );
-    _assertOk(res);
-  }
-
-  // ── Helpers ────────────────────────────────────────────────────────────
-
-  void _assertOk(http.Response res) {
-    if (res.statusCode < 200 || res.statusCode >= 300) {
+    try {
+      await _networkService.post(
+        '/api/v1/livestreams/$streamId/react',
+        data: {'emoji': emoji},
+      );
+    } catch (e) {
       throw LivestreamApiException(
-        statusCode: res.statusCode,
-        message: _tryParseErrorMessage(res.body),
+        statusCode: _extractStatusCode(e),
+        message: _extractErrorMessage(e),
       );
     }
   }
 
-  String _tryParseErrorMessage(String body) {
-    try {
-      final json = jsonDecode(body) as Map<String, dynamic>;
-      return json['detail'] as String? ??
-          json['message'] as String? ??
-          body;
-    } catch (_) {
-      return body;
+  // ── Helpers ────────────────────────────────────────────────────────────
+
+  int _extractStatusCode(dynamic error) {
+    if (error is Exception) {
+      // Try to extract status code from Dio error or other network errors
+      final errorString = error.toString();
+      final statusCodeMatch =
+          RegExp(r'status code: (\d+)').firstMatch(errorString);
+      return int.tryParse(statusCodeMatch?.group(1) ?? '') ?? 500;
     }
+    return 500;
   }
 
-  void dispose() => _client.close();
+  String _extractErrorMessage(dynamic error) {
+    if (error is Exception) {
+      final errorString = error.toString();
+
+      // Try to extract message from various error formats
+      final messageMatch =
+          RegExp(r'message[:\s]+([^\n]+)').firstMatch(errorString);
+      if (messageMatch != null) {
+        return messageMatch.group(1)?.trim() ?? errorString;
+      }
+
+      // For Dio errors, try to get response data
+      if (errorString.contains('DioError')) {
+        try {
+          final dataMatch =
+              RegExp(r'response: ({.*?})').firstMatch(errorString);
+          if (dataMatch != null) {
+            final dataStr = dataMatch.group(1)!;
+            final data = jsonDecode(dataStr) as Map<String, dynamic>;
+            return data['message'] as String? ??
+                data['detail'] as String? ??
+                data['error'] as String? ??
+                errorString;
+          }
+        } catch (_) {
+          // Fall back to error string
+        }
+      }
+
+      return errorString;
+    }
+    return error.toString();
+  }
+
+  static void resetInstance() => _instance = null;
 }
 
 class LivestreamApiException implements Exception {
@@ -112,6 +157,7 @@ class LivestreamApiException implements Exception {
   });
 
   bool get isForbidden => statusCode == 403;
+
   bool get isNotFound => statusCode == 404;
 
   @override

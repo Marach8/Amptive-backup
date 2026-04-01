@@ -16,11 +16,11 @@ import './src/livestream/livestream.dart';
 class LivestreamPage extends StatefulWidget {
   LivestreamPage({
     super.key,
-    this.isHost = false,
+    this.isHost = true,
   });
 
-  String streamId = "";
-  String userAuthToken = "";
+  String? streamId;
+  String contentId = "65f3b7f0-c6fa-4e3f-a272-2e1f5d06df15";
   final bool isHost;
 
   @override
@@ -38,12 +38,6 @@ class _LivestreamPageState extends State<LivestreamPage> {
     super.initState();
     _controller = LivestreamController(
       streamId: widget.streamId,
-      apiService: LivestreamApiService(
-        baseUrl: 'https://api.amptive.io',
-        authToken: widget.userAuthToken,
-      ),
-      baseWsUrl: 'wss://api.amptive.io',
-      userAuthToken: widget.userAuthToken,
       isHost: widget.isHost,
     );
     _joinStream();
@@ -54,7 +48,7 @@ class _LivestreamPageState extends State<LivestreamPage> {
     try {
       if (widget.isHost) {
         // Host starts the stream first, then joins
-        await _controller.startStream();
+        await _controller.startStream(widget.contentId);
       }
       await _controller.join();
     } on LivestreamApiException catch (e) {
@@ -150,10 +144,9 @@ class _LivestreamPageState extends State<LivestreamPage> {
                     spacing: 8,
                     children: state.handQueue
                         .map((id) => ActionChip(
-                      label: Text(id),
-                      onPressed: () =>
-                          _controller.approveHandRaise(id),
-                    ))
+                              label: Text(id),
+                              onPressed: () => _controller.approveHandRaise(id),
+                            ))
                         .toList(),
                   ),
                 ),
@@ -182,8 +175,8 @@ class _LivestreamPageState extends State<LivestreamPage> {
               // ── Chat input + hand raise ──────────────────────────────
               SafeArea(
                 child: Padding(
-                  padding: const EdgeInsets.symmetric(
-                      horizontal: 12, vertical: 8),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
                   child: Row(
                     children: [
                       if (!widget.isHost)
