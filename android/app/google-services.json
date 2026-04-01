@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "423228270595",
+    "project_id": "my-amptive",
+    "storage_bucket": "my-amptive.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:423228270595:android:b65b729ef146552113c636",
+        "android_client_info": {
+          "package_name": "com.beevibe.amptive"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBHsaLeA0sHmSusVILmIMFySaarkxoPqQY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

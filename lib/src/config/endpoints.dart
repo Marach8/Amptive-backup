@@ -35,4 +35,9 @@ class ATEndpoints {
   static const String searchEvents = '/api/v1/search/events';
   static const String searchHashtags = '/api/v1/search/hashtags';
   static const String searchSuggestions = '/api/v1/search/suggestions';
+
+  // websockets
+  static const String wsBaseUrl = 'wss://amptive.onrender.com';
+  static const String wsUsers = '/api/v1/ws/user';
+
 }
