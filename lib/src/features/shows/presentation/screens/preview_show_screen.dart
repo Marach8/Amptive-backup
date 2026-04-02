@@ -148,7 +148,7 @@ class _SubWidgetState extends State<_SubWidget> {
                                         context.read<ToggleFollowingCubit>(),
                                     targetUserName:
                                         widget.hostedShow.host?.username ?? '',
-                                    targetUserId: widget.hostedShow.host?.id ?? '',
+                                    targetUserId: widget.hostedShow.host?.userId ?? '',
                                   );
                                 }),
                           ),

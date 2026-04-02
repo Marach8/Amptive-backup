@@ -148,7 +148,7 @@ class _SubWidgetState extends State<_SubWidget> {
                                       context.read<ToggleFollowingCubit>(),
                                   targetUserName:
                                       episode?.host?.username ?? '',
-                                  targetUserId: episode?.host?.id ?? '',
+                                  targetUserId: episode?.host?.userId ?? '',
                                 );
                               }),
                             const SizedBox(height: 24),

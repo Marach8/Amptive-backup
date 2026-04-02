@@ -15,9 +15,15 @@ class UploadImageCubit extends Cubit<ATAppState<String>> {
   final AuthRepo authRepo;
 
   Future<void> uploadBytesImage({
-    required Uint8List bytes,
+    required Uint8List? bytes,
     String? purpose,
+    String? existingImageUrl,
   }) async {
+    if (bytes == null && existingImageUrl != null){
+      emit(SuccessState<String>(newData: existingImageUrl));
+      return;
+    }
+
     emit(const LoadingState<String>());
 
     File? file;
@@ -28,7 +34,7 @@ class UploadImageCubit extends Cubit<ATAppState<String>> {
           '${tempDir.path}/profile_${DateTime.now().millisecondsSinceEpoch}.png';
 
       file = File(filePath);
-      await file.writeAsBytes(bytes);
+      await file.writeAsBytes(bytes!);
 
       final ApiResponse<String> response =
           await authRepo.uploadImage(filePath: file.path);

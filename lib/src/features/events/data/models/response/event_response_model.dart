@@ -60,7 +60,8 @@ class HostedEvent extends Equatable {
     this.followerCount,
     this.isLive,
     this.community,
-    this.capacity
+    this.capacity,
+    this.whispers,
   });
 
   factory HostedEvent.fromJson(Map<String, dynamic> json) {
@@ -95,6 +96,7 @@ class HostedEvent extends Equatable {
       createdAt: json['created_at'],
       updatedAt: json['updated_at'],
       handRaising: json['hand_raising'],
+      whispers: json['whispers'],
       category: json['category'],
       price: json['price']?.toDouble(),
       followerCount: json['follower_count'],
@@ -128,7 +130,7 @@ class HostedEvent extends Equatable {
     goingCount, durationSeconds, followerCount;
   final double? price;
   final Host? host;
-  final bool? isLive, handRaising;
+  final bool? isLive, handRaising, whispers;
   final List<CoHost>? coHosts;
   final List<HashTag>? tags;
   final Community? community;
@@ -167,5 +169,7 @@ class HostedEvent extends Equatable {
         followerCount,
         isLive,
         community,
+        capacity,
+        whispers,
       ];
 }

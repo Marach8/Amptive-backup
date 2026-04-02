@@ -1,5 +1,6 @@
 import 'dart:ui';
 import 'package:amptive/src/config/api_response_and_app_state.dart';
+import 'package:amptive/src/config/utils/dialogs/app_notification_dialog.dart';
 import 'package:amptive/src/features/events/cubits/event_detail_cubit.dart';
 import 'package:amptive/src/features/home/cubits/toggle_following_cubit.dart';
 import 'package:amptive/src/features/home/data/models/following_status.dart';
@@ -14,6 +15,7 @@ import 'package:amptive/src/shared/global_model_objects.dart';
 import 'package:amptive/src/shared/image_loader_widget.dart';
 import 'package:amptive/src/shared/live_indicators.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 import 'package:nested/nested.dart';
 import 'package:readmore/readmore.dart';
@@ -75,14 +77,21 @@ class _EventSubWidgetState extends State<_EventSubWidget> {
   }
 
   @override
-  Widget build(_) {
-    return Builder(
-      builder: (BuildContext context) {
-      final double blurredHeaderHeight =
+  Widget build(BuildContext context) {
+    final double blurredHeaderHeight =
           kToolbarHeight + MediaQuery.paddingOf(context).top;
-      final bool isLive = widget.hostedEvent.isLive ?? false;
-     
-      return ATAnnotatedRegion(
+    final bool isLive = widget.hostedEvent.isLive ?? false;
+    
+    return PopScope(
+      canPop: false,
+      onPopInvokedWithResult: (bool didPop, _) {
+        if (didPop) return;
+
+        final HostedEvent? updatedEvent = context
+          .read<EventDetailCubit>().currentEventDetail;
+        context.pop(updatedEvent);
+      },
+      child: ATAnnotatedRegion(
         statusBarColor: ATColors.transparent,
         child: Scaffold(
           body: Stack(
@@ -90,9 +99,16 @@ class _EventSubWidgetState extends State<_EventSubWidget> {
               Positioned.fill(
                 child: ImageFiltered(
                   imageFilter: ImageFilter.blur(sigmaX: 50, sigmaY: 50),
-                  child: ATImgLoader(
-                      boxFit: BoxFit.fill,
-                      imgPath: widget.hostedEvent.coverUrl ?? ''),
+                  child: BlocBuilder<EventDetailCubit, ATAppState<HostedEvent>>(
+                    builder: (_, __) {
+                      final String? coverUrl = context
+                        .read<EventDetailCubit>().currentEventDetail?.coverUrl;
+                      return ATImgLoader(
+                        boxFit: BoxFit.fill,
+                        imgPath: coverUrl ?? ''
+                      );
+                    }
+                  ),
                 ),
               ),
               Container(
@@ -117,6 +133,11 @@ class _EventSubWidgetState extends State<_EventSubWidget> {
                                   padding: const EdgeInsets.only(left: 5),
                                   child: ATRoundedBackBtn(
                                     bgColor: ATColors.transparent,
+                                    onTapOverride: (){
+                                      final HostedEvent? updatedEvent = context
+                                        .read<EventDetailCubit>().currentEventDetail;
+                                      context.pop(updatedEvent);
+                                    }
                                   ),
                                 ),
                                 Flexible(
@@ -132,11 +153,19 @@ class _EventSubWidgetState extends State<_EventSubWidget> {
                         ),
                       )
                     ],
-
+      
                     body: SingleChildScrollView(
                       padding: const EdgeInsets.fromLTRB(15, 10, 15, 5),
                       child: BlocConsumer<EventDetailCubit, ATAppState<HostedEvent>>(
-                        listener: (_, ATAppState<HostedEvent> state){},
+                        listener: (_, ATAppState<HostedEvent> state){
+                          if(state is FailureState<HostedEvent>){
+                            showAppNotification2(
+                              context: context,
+                              text: state.message,
+                              type: NotificationType.failure,
+                            );
+                          }
+                        },
                         builder: (_, ATAppState<HostedEvent> state) {
                           final HostedEvent? event = context.read<EventDetailCubit>().currentEventDetail;
                           final int goingCount = event?.goingCount ?? 0;
@@ -144,9 +173,9 @@ class _EventSubWidgetState extends State<_EventSubWidget> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: <Widget>[
                               Hero(
-                                tag: widget.hostedEvent.eventId ?? '',
+                                tag: event?.eventId ?? '',
                                 child: CoverPicWithTopRightMoreIcon(
-                                    imgPath: widget.hostedEvent.coverUrl ?? '',
+                                    imgPath: event?.coverUrl ?? '',
                                     onMoreTapped: () async {
                                       final SelectedProgramAction? foo =
                                           await showProgramOptions(
@@ -154,8 +183,8 @@ class _EventSubWidgetState extends State<_EventSubWidget> {
                                         toggleFollowingCubit:
                                             context.read<ToggleFollowingCubit>(),
                                         targetUserName:
-                                            widget.hostedEvent.host?.username ?? '',
-                                        targetUserId: widget.hostedEvent.host?.id ?? '',
+                                            event?.host?.username ?? '',
+                                        targetUserId: event?.host?.userId ?? '',
                                       );
                                     }),
                               ),
@@ -165,7 +194,7 @@ class _EventSubWidgetState extends State<_EventSubWidget> {
                               
                               Text(
                                 maxLines: 2,
-                                widget.hostedEvent.title ?? '',
+                                event?.title ?? '',
                                 overflow: TextOverflow.clip,
                                 style: context.textTheme.displayMedium?.copyWith(
                                   fontSize: ATSizes.size24,
@@ -192,7 +221,7 @@ class _EventSubWidgetState extends State<_EventSubWidget> {
                                 color: ATColors.white.withValues(alpha: 0.1),
                               ),
                               const SizedBox(height: 5),
-                              RenderHashTags(hashtags: widget.hostedEvent.tags),
+                              RenderHashTags(hashtags: event?.tags),
                               const SizedBox(height: 30),
                               Text(
                                 ATStrings.hostedBy,
@@ -204,12 +233,12 @@ class _EventSubWidgetState extends State<_EventSubWidget> {
                               ),
                               TileWithLeadingImage(
                                 padding: const EdgeInsets.symmetric(vertical: 9),
-                                title: widget.hostedEvent.host?.username ?? '',
+                                title: event?.host?.username ?? '',
                                 subtitle: 'Host',
                                 diameter: 42,
-                                leadingImagePath: widget.hostedEvent.host?.profilePicture ?? ATImgStrings.jpeg1,
+                                leadingImagePath: event?.host?.profilePicture ?? ATImgStrings.jpeg1,
                               ),
-                              ...(widget.hostedEvent.coHosts ?? <CoHost>[]).map(
+                              ...(event?.coHosts ?? <CoHost>[]).map(
                                 (CoHost cohost) => TileWithLeadingImage(
                                   padding: const EdgeInsets.symmetric(vertical: 9),
                                   title: cohost.username ?? '',
@@ -263,7 +292,7 @@ class _EventSubWidgetState extends State<_EventSubWidget> {
                                 color: ATColors.white.withValues(alpha: 0.1),
                               ),
                               ReadMoreText(
-                                widget.hostedEvent.description ?? '',
+                                event?.description ?? '',
                                 trimMode: TrimMode.Length,
                                 trimExpandedText: ATStrings.showLess,
                                 trimCollapsedText: ATStrings.showMore,
@@ -286,16 +315,29 @@ class _EventSubWidgetState extends State<_EventSubWidget> {
               ),
             ],
           ),
+      
           bottomSheet: ATBlurredBgBtn(
-            onPressed: () {
-              // Navigate to go live or event details
-              // For events, we don't have episodes, so just go live
+            onPressed: () async{
+              final HostedEvent? updatedEvent = context
+                .read<EventDetailCubit>().currentEventDetail;
+              final HostedEvent? editedEvent = await context.pushNamed(
+                ATRoutes.editEventScreen,
+                extra: updatedEvent ?? widget.hostedEvent
+              );
+              if(context.mounted && editedEvent != null
+                && editedEvent != updatedEvent){
+                context.read<EventDetailCubit>().updateEvent(editedEvent);
+                showAppNotification2(
+                  context: context,
+                  text: 'Event detail updated.',
+                  type: NotificationType.success,
+                );
+              }
             },
             btnTitle: 'Edit Event'
           ),
         ),
-      );
-      }
+      ),
     );
   }
 }

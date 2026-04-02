@@ -22,7 +22,7 @@ class AmptiveViewProfilePicScreen extends StatelessWidget {
           ),
           leadingWidth: 30,
           actions: <Widget>[
-            Text(ATStrings.EDIT, style: Theme.of(context).textTheme.bodyMedium),
+            Text(ATStrings.edit, style: Theme.of(context).textTheme.bodyMedium),
           ],
           title: Text(
             ATStrings.PROFILE_PIC,

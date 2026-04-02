@@ -87,7 +87,7 @@ class AvailableCohostsList extends StatelessWidget {
                         padding: EdgeInsets.only(bottom: isLastItem ? 100 : 0),
                         child: CohostWithCheckIconWidget(
                           cohost: cohost,
-                          key: ValueKey<String?>(cohost.id),
+                          key: ValueKey<String?>(cohost.userId),
                           isSelected: selectedCohosts.contains(cohost),
                           onTap: (bool isSelected) {
                             if (isSelected) {
@@ -134,7 +134,7 @@ class SelectedCohostsCubit extends Cubit<List<User>> {
   }
 
   void removeCohost(User cohostToRemove) {
-    emit(state.where((User cohost) => cohost.id != cohostToRemove.id).toList());
+    emit(state.where((User cohost) => cohost.userId != cohostToRemove.userId).toList());
   }
 }
 

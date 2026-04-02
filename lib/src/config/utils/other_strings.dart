@@ -368,7 +368,7 @@ class ATStrings {
   static const String NO_TASK = 'No task available right now';
   static const String PROFILE_PIC = 'Profile Picture';
   static const String SHARE_PROFILE = 'Share profile';
-  static const String EDIT = 'Edit';
+  static const String edit = 'Edit';
   static const String COHOST_FEE = 'Co-host fee';
   static const String TASKS_WILL_APPEAR_HERE =
       'Available tasks for the communities you follow will appear here';

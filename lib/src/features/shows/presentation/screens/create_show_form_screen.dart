@@ -568,7 +568,7 @@ class __SubWidgetState extends State<_SubWidget> {
                       .map((HashTag tag) => tag.id ?? '')
                       .toList(),
                     coHostIds: (selectedCohosts ?? <User>[])
-                      .map((User cohost) => cohost.id ?? '')
+                      .map((User cohost) => cohost.userId ?? '')
                       .toList(),
                     title: _titleCntrl.text.trim(),
                     description: selectedDescription,

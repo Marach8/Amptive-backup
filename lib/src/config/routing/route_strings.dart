@@ -66,6 +66,7 @@ class ATRoutes {
   static const String EVENT_SCHEDULED_SCREEN = 'event_scheduled';
   static const String showPreviewScreen = 'show_preview';
   static const String eventPreviewScreen = 'event_preview';
+  static const String editEventScreen = 'edit_event';
   static const String selectScheduleDateScreen = 'select_schedule_date';
   static const String previewEpisodeScreen = 'episode_preview';
   static const String COMMUNITY_TASK_SCREEN = 'community_task';
