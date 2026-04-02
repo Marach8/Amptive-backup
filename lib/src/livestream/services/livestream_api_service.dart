@@ -86,7 +86,7 @@ class LivestreamApiService {
   Future<void> sendReaction(String streamId, String emoji) async {
     try {
       await _networkService.post(
-        '/api/v1/livestreams/$streamId/react',
+        ATEndpoints.reactToStream(streamId),
         data: {'emoji': emoji},
       );
     } catch (e) {

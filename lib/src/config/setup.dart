@@ -15,6 +15,7 @@ import 'package:amptive/src/services/go_live_service/go_live_service.dart'
     hide getHostList;
 import 'package:amptive/src/services/preference_service.dart';
 import 'package:amptive/src/features/profile/bloc/profile_bloc_export.dart';
+import 'package:amptive/src/services/websocket/user_ws_service.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
@@ -51,6 +52,8 @@ Future<void> setup() async {
   GetIt.I.registerSingleton<CreateShowService>(CreateShowService());
   GetIt.I.registerSingleton<GoLiveService>(GoLiveService());
   GetIt.I.registerSingleton<NotificationService>(NotificationService());
+  GetIt.I.registerSingleton<UserWsService>(UserWsService());
+
 
 
 }

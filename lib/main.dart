@@ -1,7 +1,9 @@
+import 'package:amptive/example_stream.dart';
 import 'package:amptive/src/config/config_export.dart';
 import 'package:amptive/src/config/services/network_service/interceptor.dart';
 import 'package:amptive/src/features/auth/cubits/local_user_data_cubit.dart';
 import 'package:amptive/src/services/notification/notification_service.dart';
+import 'package:device_preview/device_preview.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -10,27 +12,40 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get_it/get_it.dart';
 import 'package:nested/nested.dart';
 
+import 'src/mya.dart';
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
   await setup();
   await _initializeRedirect();
-  runApp(
-    MultiBlocProvider(
-      providers: providers(),
-      child: const AmptiveApp(),
-    ),
-  );
+  // runApp(
+  //   MultiBlocProvider(
+  //     providers: providers(),
+  //     child: LivestreamPage(),
+  //   ),
+  // );
+
+
 
   // runApp(
-  //   DevicePreview(
-  //     enabled: true,
-  //     builder: (_) => MultiBlocProvider(
+  //   MaterialApp(
+  //     home: MultiBlocProvider(
   //       providers: providers(),
-  //       child: const AmptiveApp(),
+  //       child: LivestreamPage(),
   //     ),
   //   ),
   // );
+
+  runApp(
+    DevicePreview(
+      enabled: true,
+      builder: (_) => MultiBlocProvider(
+        providers: providers(),
+        child: const AmptiveApp(),
+      ),
+    ),
+  );
 }
 
 Future<void> _initializeRedirect() async {

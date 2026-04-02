@@ -1,196 +1,208 @@
 import 'dart:async';
-import 'dart:convert';
-import 'dart:developer' as developer show log;
+
 import 'package:amptive/src/config/endpoints.dart';
 import 'package:amptive/src/config/services/local_storage_service/flutter_secure_storage_service_impl.dart';
-import 'package:flutter/material.dart';
-import 'package:web_socket_channel/web_socket_channel.dart';
-import 'package:web_socket_channel/status.dart' as ws_status;
+import 'package:amptive/src/config/services/local_storage_service/storage_service.dart';
+import 'package:amptive/src/config/config_export.dart';
 
-import '../../config/config_export.dart';
-import '../../config/services/local_storage_service/storage_service.dart';
+import '../../services/websocket/base_ws_service.dart';
 import '../models/livestream_models.dart';
 
-/// Manages the **Control/Signaling** WebSocket connection to
-/// `/ws/stream/{id}`.
-///
-/// Responsibilities:
-///   - Connect / reconnect with exponential back-off
-///   - Parse every incoming frame into a typed [SignalingEvent]
-///   - Expose a broadcast [Stream<SignalingEvent>] the rest of the app
-///     can listen to
-///   - Provide send helpers for every outbound message type
-class SignalingService {
+
+// ── SignalingService ───────────────────────────────────────────────────────
+
+class SignalingService extends BaseWsService {
   SignalingService({
     required String streamId,
-     ATLocalStorageService? localStorageService,
-    this.maxReconnectAttempts = 5,
+    ATLocalStorageService? localStorageService,
+    super.maxReconnectAttempts,
   })  : _streamId = streamId,
-        _localStorageService = localStorageService ?? FlutterSecureStorageServiceImpl();
+        _localStorageService =
+            localStorageService ?? FlutterSecureStorageServiceImpl(),
+  // URL is a placeholder; the real one is built in connect()
+        super(logTag: 'SignalingService');
 
   final String _streamId;
-  final int maxReconnectAttempts;
   final ATLocalStorageService _localStorageService;
 
-  WebSocketChannel? _channel;
-  StreamSubscription<dynamic>? _sub;
   final _controller = StreamController<SignalingEvent>.broadcast();
-  bool _disposed = false;
-  int _reconnectAttempts = 0;
 
   // ── Public API ─────────────────────────────────────────────────────────
 
-  /// Broadcast stream of typed signaling events.
   Stream<SignalingEvent> get events => _controller.stream;
 
-  bool get isConnected => _channel != null;
-
+  /// Resolves the auth token, then delegates to [BaseWsService.connect].
+  @override
   Future<void> connect() async {
-    if (_disposed) return;
-    try {
-      final String? token =
-      await _localStorageService.get(ATStrings.accessToken);
-      if (token == null || token.isEmpty) {
-        developer.log('No token found', name: 'SignalingService');
-        return;
-      }
+    log('Resolving auth token…');
+    final token = await _localStorageService.get(ATStrings.accessToken);
 
-      final uri = Uri.parse(
-        ATEndpoints.wsSignalEndpoint(_streamId, token),
-      );
-
-      developer.log('Connecting to WebSocket: $uri', name: 'SignalingService');
-
-      _channel = WebSocketChannel.connect(uri);
-      _sub = _channel!.stream.listen(
-        _onFrame,
-        onError: _onError,
-        onDone: _onDone,
-        cancelOnError: false,
-      );
-      _reconnectAttempts = 0;
-    } catch (e) {
-      debugPrint(e.toString());
+    if (token == null || token.isEmpty) {
+      const msg = 'Auth token missing — cannot open signaling connection.';
+      log(msg, level: LogLevel.error);
+      _emitError(SignalingException(msg));
+      throw SignalingException(msg);
     }
+
+    // Stash the token so buildConnectUrl() can use it.
+    _resolvedToken = token;
+    return super.connect();
   }
 
-
-  void disconnect() {
-    _sub?.cancel();
-    _channel?.sink.close(ws_status.normalClosure);
-    _channel = null;
-  }
-
+  @override
   void dispose() {
-    _disposed = true;
-    disconnect();
+    log('Disposing SignalingService.');
     _controller.close();
+    super.dispose();
+  }
+
+  // ── BaseWsService overrides ────────────────────────────────────────────
+
+  String? _resolvedToken;
+
+  @override
+  String buildConnectUrl() {
+    final String base = ATEndpoints.wsSignalEndpoint(_streamId, _resolvedToken!);
+    return  base;
+  }
+
+  @override
+  void onMessage(Map<String, dynamic> json) {
+    final event = _parseEvent(json);
+    if (event is UnknownEvent) {
+      log('Unrecognised type: "${json['type']}"', level: LogLevel.warn);
+    }
+    _emitEvent(event);
+  }
+
+  @override
+  void onConnected() => log('Signaling connected.', level: LogLevel.info);
+
+  @override
+  void onDisconnected() => log('Signaling disconnected.', level: LogLevel.warn);
+
+  @override
+  void onMaxRetriesExceeded() {
+    const msg = 'Max reconnect attempts reached. Giving up.';
+    log(msg, level: LogLevel.error);
+    _emitError(SignalingException(msg));
   }
 
   // ── Outbound helpers ───────────────────────────────────────────────────
 
-  /// Send a chat message.
-  void sendChat(String message) => _send({'type': 'chat', 'message': message});
+  void sendChat(String message) =>
+      send({'type': OutboundMessageType.chat, 'content': message});
 
-  /// Send a reaction emoji.  Uses the WebSocket path for speed; callers
-  /// may also POST to /react if persistence is required.
   void sendReaction(String emoji) =>
-      _send({'type': 'reaction', 'emoji': emoji});
+      send({'type': OutboundMessageType.reaction, 'content': emoji});
 
-  /// Raise or lower the current user's hand.
-  void raiseHand() => _send({'type': 'hand_raise', 'action': 'raise'});
+  void raiseHand()  => send({'type': OutboundMessageType.handRaise, 'action': 'raise'});
+  void lowerHand()  => send({'type': OutboundMessageType.handRaise, 'action': 'lower'});
 
-  void lowerHand() => _send({'type': 'hand_raise', 'action': 'lower'});
+  void approveHandRaise(String identity) => send({
+    'type': OutboundMessageType.handRaise,
+    'action': 'approve',
+    'identity': identity,
+  });
 
-  /// Host approves a participant's hand raise.
-  void approveHandRaise(String identity) =>
-      _send({'type': 'hand_raise', 'action': 'approve', 'identity': identity});
+  void sendPing() => send({
+    'type': OutboundMessageType.ping,
+    'timestamp': DateTime.now().millisecondsSinceEpoch,
+  });
 
-  // ── Internal ───────────────────────────────────────────────────────────
+  void toggleMedia(String mediaType, bool enabled) => send({
+    'type': OutboundMessageType.mediaToggle,
+    'mediaType': mediaType,
+    'enabled': enabled,
+  });
 
-  void _send(Map<String, dynamic> payload) {
-    if (_channel == null) return;
-    _channel!.sink.add(jsonEncode(payload));
+  void toggleScreenShare(bool start) => send({
+    'type': OutboundMessageType.screenShare,
+    'action': start ? 'start' : 'stop',
+  });
+
+  // ── Private helpers ────────────────────────────────────────────────────
+
+  void _emitEvent(SignalingEvent event) {
+    if (!_controller.isClosed) _controller.add(event);
   }
 
-  void _onFrame(dynamic raw) {
-    if (raw is! String) return;
-    late Map<String, dynamic> json;
-    try {
-      json = jsonDecode(raw) as Map<String, dynamic>;
-    } catch (_) {
-      return;
-    }
-
-    final event = _parseEvent(json);
-    if (!_controller.isClosed) _controller.add(event);
+  void _emitError(Object error) {
+    if (!_controller.isClosed) _controller.addError(error);
   }
 
   SignalingEvent _parseEvent(Map<String, dynamic> json) {
     final type = json['type'] as String?;
-    switch (type) {
-      case 'initial_state':
-        return InitialStateEvent(InitialState.fromJson(json));
 
-      case 'stream_started':
-        return StreamStartedEvent();
-
-      case 'stream_ended':
-        return StreamEndedEvent();
-
-      case 'chat':
-        return ChatEvent(ChatMessage.fromJson(json));
-
-      case 'reaction':
-        return ReactionReceivedEvent(ReactionEvent.fromJson(json));
-
-      case 'hand_raise':
-        return HandRaiseEvent(
-          identity: json['identity'] as String? ?? '',
-          action: json['action'] as String? ?? '',
-        );
-
-      case 'participant_updated':
-        return ParticipantUpdatedEvent(
-          LivestreamParticipant.fromJson(
-            json['participant'] as Map<String, dynamic>,
+    return switch (type) {
+      SignalingEventType.initial =>
+          InitialStateEvent(InitialState.fromJson(json)),
+      SignalingEventType.streamStarted  => StreamStartedEvent(),
+      SignalingEventType.streamEnded    => StreamEndedEvent(),
+      SignalingEventType.error          => _parseErrorEvent(json),
+      SignalingEventType.pong =>
+          PongEvent(json['timestamp'] as int? ?? 0),
+      SignalingEventType.participantJoin =>
+          ParticipantJoinEvent(LivestreamParticipant.fromJson(json)),
+      SignalingEventType.participantLeave =>
+          ParticipantLeaveEvent(
+            json['identity'] as String? ?? '',
+            json['reason'] as String?,
           ),
-        );
-
-      case 'viewer_count':
-        return ViewerCountEvent(json['count'] as int? ?? 0);
-
-      default:
-        return UnknownEvent(json);
-    }
+      SignalingEventType.participantUpdated =>
+          ParticipantUpdatedEvent(
+            LivestreamParticipant.fromJson(
+              json['participant'] as Map<String, dynamic>,
+            ),
+          ),
+      SignalingEventType.chat      => ChatEvent(ChatMessage.fromJson(json)),
+      SignalingEventType.reaction  =>
+          ReactionReceivedEvent(ReactionEvent.fromJson(json)),
+      SignalingEventType.handRaise =>
+          HandRaiseEvent(
+            identity: json['user_id'] as String? ?? '',
+            action:   json['action']  as String? ?? '',
+          ),
+      SignalingEventType.viewerCount      =>
+          ViewerCountEvent(json['count'] as int? ?? 0),
+      SignalingEventType.participantCount =>
+          ParticipantCountEvent(json['count'] as int? ?? 0),
+      SignalingEventType.userMuted =>
+          UserMutedEvent(
+            identity: json['identity'] as String? ?? '',
+            muted:    json['muted']    as bool?   ?? false,
+          ),
+      SignalingEventType.userBanned =>
+          UserBannedEvent(
+            identity: json['identity'] as String? ?? '',
+            reason:   json['reason']   as String?,
+          ),
+      SignalingEventType.userKicked =>
+          UserKickedEvent(
+            identity: json['identity'] as String? ?? '',
+            reason:   json['reason']   as String?,
+          ),
+      SignalingEventType.mediaStateChanged =>
+          MediaStateChangedEvent(
+            identity:  json['identity']  as String? ?? '',
+            mediaType: json['mediaType'] as String? ?? '',
+            enabled:   json['enabled']   as bool?   ?? false,
+          ),
+      _ => UnknownEvent(json),
+    };
   }
 
-  void _onError(Object error) {
-    developer.log('WebSocket error: $error',
-        name: 'SignalingService', level: 1000);
+  SignalingEvent _parseErrorEvent(Map<String, dynamic> json) => ErrorEvent(
+    code:    json['code']    as String? ?? 'unknown',
+    message: json['message'] as String? ?? 'An error occurred',
+    details: json['details'] as String? ?? '',
+  );
+}
 
-    // Bubble as a stream error so callers can log; then attempt reconnect.
-    if (!_controller.isClosed) {
-      _controller.addError(error);
-    }
-    _scheduleReconnect();
-  }
+class SignalingException implements Exception {
+  const SignalingException(this.message);
+  final String message;
 
-  void _onDone() {
-    _channel = null;
-    _scheduleReconnect();
-  }
-
-  Future<void> _scheduleReconnect() async {
-    if (_disposed || _reconnectAttempts >= maxReconnectAttempts) return;
-    _reconnectAttempts++;
-    final delay = Duration(seconds: 1 << _reconnectAttempts); // 2, 4, 8 …
-
-    developer.log(
-        'Scheduling reconnect attempt $_reconnectAttempts in ${delay.inSeconds}s',
-        name: 'SignalingService');
-
-    await Future<void>.delayed(delay);
-    if (!_disposed) await connect();
-  }
+  @override
+  String toString() => 'SignalingException: $message';
 }

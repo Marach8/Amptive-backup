@@ -4,11 +4,13 @@ import 'package:amptive/src/features/auth/presentation/screens/login_screen.dart
 import 'package:amptive/src/features/home/cubits/home_feed_cubit.dart';
 import 'package:amptive/src/features/home/cubits/live_users_cubit.dart';
 import 'package:amptive/src/features/profile/cubits/remote_user_data_cubit.dart';
+import 'package:amptive/src/services/websocket/user_ws_service.dart';
 import 'package:amptive/src/shared/annotated_region__widget.dart';
 import 'package:amptive/src/features/main_app_nav_bar.dart';
 import 'package:amptive/src/features/home/presentation/screens/home_landing_screen.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
 import 'package:nested/nested.dart';
 import '../global_export.dart';
@@ -31,6 +33,7 @@ class _GoLiveScreenState extends State<GoLiveScreen> {
   @override
   void initState() {
     super.initState();
+
     // SystemChrome.setEnabledSystemUIMode(
     //   SystemUiMode.manual,
     //   overlays: <SystemUiOverlay>[SystemUiOverlay.top],
@@ -93,6 +96,7 @@ class __SubWidgetState extends State<_SubWidget> {
       context.read<HomeFeedCubit>().fetchHomeFeed();
       context.read<LiveUsersCubit>().fetchLiveUsers();
       context.read<LocalUserDataCubit>().initializeCachedData();
+      GetIt.I<UserWsService>().connectUser();
     });
   }
 

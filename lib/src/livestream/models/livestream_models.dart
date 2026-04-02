@@ -1,7 +1,22 @@
-enum StreamStatus { waiting, live, ended }
+enum StreamStatus {
+  waiting,
+  live,
+  ended,
+  error,
+}
+
+enum PollStatus {
+  active,
+  ended,
+}
+
+enum MediaType {
+  audio,
+  video,
+  screenShare,
+}
 
 class LivestreamToken {
-
   const LivestreamToken({
     required this.token,
     required this.livekitUrl,
@@ -17,6 +32,7 @@ class LivestreamToken {
       identity: json['identity'] as String,
     );
   }
+
   final String token;
   final String livekitUrl;
   final String room;
@@ -24,39 +40,42 @@ class LivestreamToken {
 }
 
 class LivestreamParticipant {
-
   const LivestreamParticipant({
     required this.identity,
     required this.displayName,
     required this.isSpeaker,
     required this.isHost,
+    required this.avatar,
   });
 
   factory LivestreamParticipant.fromJson(Map<String, dynamic> json) {
     return LivestreamParticipant(
-      identity: json['identity'] as String,
-      displayName: json['display_name'] as String? ?? json['identity'] as String,
+      identity: json['user_id'] as String,
+      displayName: json['username'] as String,
+      avatar: json['avatar'] as String?,
       isSpeaker: json['is_speaker'] as bool? ?? false,
       isHost: json['is_host'] as bool? ?? false,
     );
   }
+
   final String identity;
   final String displayName;
   final bool isSpeaker;
   final bool isHost;
+  final String? avatar;
 
-  LivestreamParticipant copyWith({bool? isSpeaker}) {
+  LivestreamParticipant copyWith({bool? isSpeaker, bool? isMuted}) {
     return LivestreamParticipant(
       identity: identity,
       displayName: displayName,
       isSpeaker: isSpeaker ?? this.isSpeaker,
       isHost: isHost,
+      avatar: null,
     );
   }
 }
 
 class InitialState {
-
   const InitialState({
     required this.participants,
     required this.viewerCount,
@@ -74,13 +93,13 @@ class InitialState {
       handQueue: handQueueJson.map((e) => e as String).toList(),
     );
   }
+
   final List<LivestreamParticipant> participants;
   final int viewerCount;
   final List<String> handQueue;
 }
 
 class ChatMessage {
-
   const ChatMessage({
     required this.identity,
     required this.displayName,
@@ -90,14 +109,15 @@ class ChatMessage {
 
   factory ChatMessage.fromJson(Map<String, dynamic> json) {
     return ChatMessage(
-      identity: json['identity'] as String,
-      displayName: json['display_name'] as String? ?? json['identity'] as String,
-      message: json['message'] as String,
+      identity: json['sender_id'] as String,
+      displayName: json['sender_username'] as String? ?? "",
+      message: json['content'] as String,
       timestamp: json['timestamp'] != null
           ? DateTime.parse(json['timestamp'] as String)
           : DateTime.now(),
     );
   }
+
   final String identity;
   final String displayName;
   final String message;
@@ -105,17 +125,19 @@ class ChatMessage {
 }
 
 class ReactionEvent {
-
-  const ReactionEvent({required this.identity, required this.emoji});
+  const ReactionEvent(
+      {required this.identity, required this.emoji, required this.displayName});
 
   factory ReactionEvent.fromJson(Map<String, dynamic> json) {
     return ReactionEvent(
-      identity: json['identity'] as String,
-      emoji: json['emoji'] as String,
-    );
+        identity: json['sender_id'] as String,
+        emoji: json['content'] as String,
+        displayName: json['sender_username'] as String);
   }
+
   final String identity;
   final String emoji;
+  final String displayName;
 }
 
 // ── Signaling events coming in from the WebSocket ──────────────────────────
@@ -124,6 +146,7 @@ sealed class SignalingEvent {}
 
 class InitialStateEvent extends SignalingEvent {
   InitialStateEvent(this.state);
+
   final InitialState state;
 }
 
@@ -133,31 +156,134 @@ class StreamEndedEvent extends SignalingEvent {}
 
 class ChatEvent extends SignalingEvent {
   ChatEvent(this.message);
+
   final ChatMessage message;
 }
 
 class ReactionReceivedEvent extends SignalingEvent {
   ReactionReceivedEvent(this.reaction);
+
   final ReactionEvent reaction;
 }
 
-class HandRaiseEvent extends SignalingEvent { // "raise" | "lower" | "approve"
+class HandRaiseEvent extends SignalingEvent {
+  // "raise" | "lower" | "approve"
   HandRaiseEvent({required this.identity, required this.action});
+
   final String identity;
   final String action;
 }
 
 class ParticipantUpdatedEvent extends SignalingEvent {
   ParticipantUpdatedEvent(this.participant);
+
   final LivestreamParticipant participant;
 }
 
 class ViewerCountEvent extends SignalingEvent {
   ViewerCountEvent(this.count);
+
   final int count;
 }
 
 class UnknownEvent extends SignalingEvent {
   UnknownEvent(this.raw);
+
   final Map<String, dynamic> raw;
+}
+
+class PongEvent implements SignalingEvent {
+  const PongEvent(this.timestamp);
+
+  final int timestamp;
+}
+
+class ParticipantJoinEvent implements SignalingEvent {
+  const ParticipantJoinEvent(this.participant);
+
+  final LivestreamParticipant participant;
+}
+
+class ParticipantLeaveEvent implements SignalingEvent {
+  const ParticipantLeaveEvent(this.identity, this.reason);
+
+  final String identity;
+  final String? reason;
+}
+
+class ParticipantCountEvent implements SignalingEvent {
+  const ParticipantCountEvent(this.count);
+
+  final int count;
+}
+
+class ErrorEvent implements SignalingEvent {
+  const ErrorEvent({
+    required this.code,
+    required this.message,
+    this.details,
+  });
+
+  final String code;
+  final String message;
+  final String? details;
+}
+
+class UserMutedEvent implements SignalingEvent {
+  const UserMutedEvent({
+    required this.identity,
+    required this.muted,
+  });
+
+  final String identity;
+  final bool muted;
+}
+
+class UserBannedEvent implements SignalingEvent {
+  const UserBannedEvent({
+    required this.identity,
+    this.reason,
+  });
+
+  final String identity;
+  final String? reason;
+}
+
+class UserKickedEvent implements SignalingEvent {
+  const UserKickedEvent({
+    required this.identity,
+    this.reason,
+  });
+
+  final String identity;
+  final String? reason;
+}
+
+class MediaStateChangedEvent implements SignalingEvent {
+  const MediaStateChangedEvent({
+    required this.identity,
+    required this.mediaType,
+    required this.enabled,
+  });
+
+  final String identity;
+  final String mediaType;
+  final bool enabled;
+}
+
+/// Represents a change in media state (audio/video enabled/disabled)
+class MediaStateChange {
+  final String identity;
+  final MediaType type;
+  final bool enabled;
+
+  const MediaStateChange({
+    required this.identity,
+    required this.type,
+    required this.enabled,
+  });
+
+  @override
+  String toString() =>
+      'MediaStateChange(identity: $identity, type: $type, enabled: $enabled)';
 }
