@@ -7,7 +7,12 @@ import 'package:amptive/src/config/services/network_service/network_service.dart
 import 'package:amptive/src/features/discover/data/models/response/communities_response_model.dart';
 import 'package:amptive/src/features/discover/data/models/response/all_users_response_model.dart';
 import 'package:amptive/src/features/discover/data/models/response/all_hashtags_response_model.dart';
+import 'package:amptive/src/features/discover/data/models/response/search_events_response_model.dart';
+import 'package:amptive/src/features/discover/data/models/response/search_shows_response_model.dart';
+import 'package:amptive/src/features/discover/data/models/response/search_users_response_model.dart';
+import 'package:amptive/src/features/discover/data/models/response/search_hashtags_response_model.dart';
 import 'package:amptive/src/features/discover/data/models/response/trending_hashtags_response_model.dart';
+import 'package:amptive/src/features/discover/data/models/response/unified_search_response_model.dart';
 import 'package:amptive/src/features/discover/data/repository/discover_repo.dart';
 import 'package:amptive/src/shared/global_model_objects.dart';
 import 'package:dio/dio.dart';
@@ -136,4 +141,183 @@ Future<ApiResponse<TrendingTagsResponseModel>> fetchTrendingTags({
   }
 }
 
+@override
+Future<ApiResponse<SearchUsersResponseModel>> searchUsers({
+  required String query,
+  required int page,
+  required int pageSize,
+  required String sortBy,
+}) async {
+  try {
+    final Response<dynamic> response = await networkService.get(
+      ATEndpoints.searchUsers,
+      queryParameters: <String, dynamic>{
+        'q': query,
+        'page': page,
+        'page_size': pageSize,
+        'sort_by': sortBy,
+      },
+    );
+    return Successful<SearchUsersResponseModel>(
+      data: SearchUsersResponseModel.fromJson(response.data),
+    );
+  } catch (e) {
+    log('Error fetching users: $e');
+    return Unsuccessful<SearchUsersResponseModel>(
+      error: ATException.resolveException(e),
+    );
+  }
+}
+
+@override
+Future<ApiResponse<UnifiedSearchResponseModel>> unifiedSearch({
+  required String query,
+  required String sortBy,
+}) async {
+  try {
+    final Response<dynamic> response = await networkService.get(
+      ATEndpoints.unifiedSearch,
+      queryParameters: <String, dynamic>{
+        'q': query,
+        'sort_by': sortBy,
+      },
+    );
+    return Successful<UnifiedSearchResponseModel>(
+      data: UnifiedSearchResponseModel.fromJson(response.data),
+    );
+  } catch (e) {
+    log('Error in unified search: $e');
+    return Unsuccessful<UnifiedSearchResponseModel>(
+      error: ATException.resolveException(e),
+    );
+  }
+}
+
+@override
+Future<ApiResponse<SearchHashtagsResponseModel>> searchHashtags({
+  required String query,
+  required int page,
+  required int pageSize,
+  required String sortBy,
+}) async {
+  try {
+    final Response<dynamic> response = await networkService.get(
+      ATEndpoints.searchHashtags,
+      queryParameters: <String, dynamic>{
+        'q': query,
+        'page': page,
+        'page_size': pageSize,
+        'sort_by': sortBy,
+      },
+    );
+    return Successful<SearchHashtagsResponseModel>(
+      data: SearchHashtagsResponseModel.fromJson(response.data),
+    );
+  } catch (e) {
+    log('Error fetching hashtags: $e');
+    return Unsuccessful<SearchHashtagsResponseModel>(
+      error: ATException.resolveException(e),
+    );
+  }
+}
+
+@override
+Future<ApiResponse<SearchShowsResponseModel>> searchShows({
+  required String query,
+  required int page,
+  required int pageSize,
+  required String sortBy,
+  String? category,
+  String? status,
+  String? showType,
+  String? hostId,
+}) async {
+  try {
+    final Response<dynamic> response = await networkService.get(
+      ATEndpoints.searchShows,
+      queryParameters: <String, dynamic>{
+        'q': query,
+        'page': page,
+        'page_size': pageSize,
+        'sort_by': sortBy,
+        if (category != null && category.isNotEmpty) 'category': category,
+        if (status != null && status.isNotEmpty) 'status': status,
+        if (showType != null && showType.isNotEmpty) 'show_type': showType,
+        if (hostId != null && hostId.isNotEmpty) 'host_id': hostId,
+      },
+      
+
+    );
+    return Successful<SearchShowsResponseModel>(
+      data: SearchShowsResponseModel.fromJson(response.data),
+    );
+  } catch (e) {
+    log('Error searching shows: $e');
+    return Unsuccessful<SearchShowsResponseModel>(
+      error: ATException.resolveException(e),
+    );
+  }
+
+
+}
+@override
+Future<ApiResponse<SearchEventsResponseModel>> searchEvents({
+  required String query,
+  required int page,
+  required int pageSize,
+  required String sortBy,
+  String? category,
+  String? status,
+  String? showType,
+  String? hostId,
+}) async {
+  try {
+    final Response<dynamic> response = await networkService.get(
+      ATEndpoints.searchEvents,
+      queryParameters: <String, dynamic>{
+        'q': query,
+        'page': page,
+        'page_size': pageSize,
+        'sort_by': sortBy,
+        // if (category != null && category.isNotEmpty) 'category': category,
+        // if (status != null && status.isNotEmpty) 'status': status,
+        // if (showType != null && showType.isNotEmpty) 'show_type': showType,
+        // if (hostId != null && hostId.isNotEmpty) 'host_id': hostId,
+      },
+      
+
+    );
+    return Successful<SearchEventsResponseModel>(
+      data:SearchEventsResponseModel.fromJson(response.data),
+    );
+  } catch (e) {
+    log('Error searching events: $e');
+    return Unsuccessful<SearchEventsResponseModel>(
+      error: ATException.resolveException(e),
+    );
+  }
+
+}
+
+@override
+Future<ApiResponse<dynamic>> searchSuggestions({
+  required String query,
+}) async {
+  try {
+    final Response<dynamic> response = await networkService.get(
+      ATEndpoints.searchSuggestions,
+      queryParameters: <String, dynamic>{
+        'q': query,
+      },
+    );
+    return Successful<dynamic>(
+      data:(response.data),
+    );
+  } catch (e) {
+    log('Error fetching search suggestions: $e');
+    return Unsuccessful<dynamic>(
+      error: ATException.resolveException(e),
+    );
+  }
+}
 }

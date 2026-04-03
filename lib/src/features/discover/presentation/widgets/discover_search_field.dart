@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:amptive/src/features/discover/presentation/views/discover_landing_screen.dart';
 import 'package:amptive/src/config/utils/image_strings.dart';
 import 'package:amptive/src/shared/custom_container_widget.dart';
@@ -22,6 +24,7 @@ class _ATDiscoverSearchFieldState extends State<ATDiscoverSearchField> {
 
   bool _hasFocus = false;
   bool _hasInput = false;
+  Timer? _debounceTimer;
 
   @override
   void initState() {
@@ -45,9 +48,11 @@ class _ATDiscoverSearchFieldState extends State<ATDiscoverSearchField> {
   void _handleTextInput() {
     if (_controller.text.isNotEmpty) {
       setState(() => _hasInput = true);
-      Future<void>.delayed(const Duration(seconds: 2), () {
+      _debounceTimer?.cancel(); 
+      _debounceTimer = Timer(const Duration(milliseconds: 500), () {
         if (mounted) {
-          context.read<DiscoverTrnstnBlc>().showSearchResults();
+          context.read<DiscoverTrnstnBlc>().updateSearchQuery(_controller.text);
+          context.read<DiscoverTrnstnBlc>().showSearchSuggestions();
         }
       });
     } else {
@@ -60,6 +65,7 @@ class _ATDiscoverSearchFieldState extends State<ATDiscoverSearchField> {
   void dispose() {
     _focusNode.removeListener(_handleFocus);
     _focusNode.dispose();
+    _debounceTimer?.cancel();
     _controller.removeListener(_handleTextInput);
     _controller.dispose();
     super.dispose();
