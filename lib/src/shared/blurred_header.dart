@@ -9,12 +9,18 @@ class ATBlurredHeaderWidget extends StatelessWidget {
   const ATBlurredHeaderWidget({
     super.key,
     this.child,
+    this.paddingFromTop,
+    this.onDismissOverride,
   });
 
   final Widget? child;
+  final double? paddingFromTop;
+  final VoidCallback? onDismissOverride;
 
   @override
   Widget build(BuildContext context) {
+    final double blurredHeaderHeight =
+          kToolbarHeight + MediaQuery.paddingOf(context).top;
     return ClipRect(
       child:
           BlocBuilder<BlurredHeaderCubit, bool>(builder: (_, bool shouldBlur) {
@@ -24,12 +30,13 @@ class ATBlurredHeaderWidget extends StatelessWidget {
                 ? ImageFilter.blur(sigmaX: 53, sigmaY: 53)
                 : ImageFilter.blur(sigmaX: 0, sigmaY: 0),
             child: Container(
-              padding: const EdgeInsets.only(top: 40),
-              height: kToolbarHeight + MediaQuery.paddingOf(context).top,
+              padding: EdgeInsets.only(top: paddingFromTop ?? 40),
+              height: blurredHeaderHeight,
               width: context.screenWidth,
               child: Align(
                   alignment: Alignment.bottomCenter,
-                  child: child ?? const ATModalDismisser()),
+                  child: child ?? ATModalDismisser(
+                    onDismissOverride: onDismissOverride)),
             ),
           ),
         );

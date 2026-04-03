@@ -11,6 +11,11 @@ abstract class EventsRepo {
     required CreateEventPayload createEventModel,
   });
 
+  Future<ApiResponse<HostedEvent>> updateEvent({
+    required String eventId,
+    required CreateEventPayload createEventModel,
+  });
+
   Future<ApiResponse<HostedEventsResponseModel>> fetchHostedEvents({
     required int page,
     required int pageSize,

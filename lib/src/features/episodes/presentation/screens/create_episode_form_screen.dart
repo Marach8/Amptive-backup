@@ -179,9 +179,9 @@ class _CreateShowFormScreenState extends State<_SubWidget> {
                                           final DateTime? selectedDate = await context.pushNamed(
                                             ATRoutes.selectScheduleDateScreen,
                                             extra: SelectScheduleDataScreenEntryParams(
-                                              bgImage: context.read<BgImageCubit>().state.$2,
+                                              selectedBgImage: context.read<BgImageCubit>().state.$2,
                                               programName: 'Episode',
-                                              currentDate: _scheduleDate
+                                              incomingDate: _scheduleDate
                                             )
                                           ) as DateTime?;
                                           _scheduleDate = selectedDate;
@@ -691,7 +691,7 @@ class _CreateShowFormScreenState extends State<_SubWidget> {
                         .map((HashTag tag) => tag.id ?? '')
                         .toList(),
                       coHostIds: (selectedCohosts ?? <User>[])
-                        .map((User cohost) => cohost.id ?? '')
+                        .map((User cohost) => cohost.userId ?? '')
                         .toList(),
                       title: _titleCntrl.text.trim(),
                       description: selectedDescription,

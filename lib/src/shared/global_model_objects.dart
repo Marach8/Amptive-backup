@@ -1,6 +1,8 @@
-class User {
+import 'package:equatable/equatable.dart';
+
+class User extends Equatable{
   User({
-    this.id,
+    this.userId,
     this.username,
     this.profilePicture,
     this.followersCount,
@@ -12,7 +14,7 @@ class User {
   });
 
   User.fromJson(Map<String, dynamic> json)
-      : id = json['id'],
+      : userId = json['user_id'],
         username = json['username'],
         profilePicture = json['profile_picture'],
         followersCount = json['followers_count'],
@@ -22,16 +24,21 @@ class User {
         name = json['name'],
         isVerified = json['is_verified'];
 
-  final String? id, username, profilePicture, firstName, lastName, name;
+  final String? userId, username, profilePicture, firstName, lastName, name;
   final int? followersCount, followingCount;
   final bool? isVerified;
+
+  @override 
+  List<Object?> get props => <Object?>[
+    userId, profilePicture,
+  ];
 }
 
 class Host extends User {
   Host({
     this.hostLevel,
     this.totalShows,
-    super.id,
+    super.userId,
     super.username,
     super.profilePicture,
     super.followersCount,
@@ -53,7 +60,7 @@ class Host extends User {
 class CoHost extends User {
   CoHost({
     this.invitedAt,
-    super.id,
+    super.userId,
     super.username,
     super.profilePicture,
     super.followersCount,
@@ -100,7 +107,7 @@ class Community {
   bool? isPrivate;
 }
 
-class HashTag {
+class HashTag extends Equatable{
   const HashTag({
     this.id,
     this.name,
@@ -129,7 +136,8 @@ class HashTag {
     );
   }
 
-  final String? id, name, displayName, description, createdAt, updatedAt, tagType, icon;
+  final String? id, name, displayName, description,
+    createdAt, updatedAt, tagType, icon;
   final int? usageCount, followerCount;
   HashTag copyWith({
     String? id,
@@ -156,4 +164,9 @@ class HashTag {
       icon: icon ?? this.icon,
     );
   }
+  
+  @override
+  List<Object?> get props => <Object?>[
+    id, name,
+  ];
 }

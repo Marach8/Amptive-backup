@@ -11,14 +11,16 @@ import 'package:go_router/go_router.dart';
 
 class SelectScheduleDataScreenEntryParams{
   SelectScheduleDataScreenEntryParams({
-    this.bgImage,
+    this.selectedBgImage,
     required this.programName,
-    this.currentDate
+    this.incomingDate,
+    this.incomingBgImageUrl,
   });
 
-  final Uint8List? bgImage;
+  final Uint8List? selectedBgImage;
   final String programName;
-  final DateTime? currentDate;
+  final DateTime? incomingDate;
+  final String? incomingBgImageUrl;
 }
 
 
@@ -40,7 +42,19 @@ class _SelectScheduleDateScreenState extends State<SelectScheduleDateScreen> {
   @override 
   void initState(){
     super.initState();
-    _selectedDateTime = widget.params.currentDate;
+    final DateTime now = DateTime.now();
+    final DateTime minDate = now.add(const Duration(hours: 1));
+    final DateTime maxDate = now.add(const Duration(days: 90));
+
+    final DateTime? incomingDate = widget.params.incomingDate;
+
+    if (incomingDate != null &&
+        !incomingDate.isBefore(minDate) &&
+        !incomingDate.isAfter(maxDate)) {
+      _selectedDateTime = incomingDate;
+    } else {
+      _selectedDateTime = null;
+    }
   }
 
   @override
@@ -54,10 +68,11 @@ class _SelectScheduleDateScreenState extends State<SelectScheduleDateScreen> {
             Positioned.fill(
               child: ImageFiltered(
                 imageFilter: ImageFilter.blur(sigmaX: 50, sigmaY: 50),
-                child: widget.params.bgImage == null ? const ATImgLoader(
+                child: widget.params.selectedBgImage == null ? ATImgLoader(
                   boxFit: BoxFit.fill,
-                  imgPath: ATImgStrings.createShowPlaceholder,
-                ) : Image.memory(widget.params.bgImage!, fit: BoxFit.fill),
+                  imgPath: widget.params.incomingBgImageUrl ??
+                    ATImgStrings.createShowPlaceholder,
+                ) : Image.memory(widget.params.selectedBgImage!, fit: BoxFit.fill),
               ),
             ),
 

@@ -60,6 +60,29 @@ class EventsRepoImpl implements EventsRepo {
   }
 
   @override
+  Future<ApiResponse<HostedEvent>> updateEvent({
+    required String eventId,
+    required CreateEventPayload createEventModel,
+  }) async {
+    try {
+      final Response<dynamic> response = await networkService.patch(
+        '${ATEndpoints.events}$eventId',
+        data: createEventModel.toJson(),
+      );
+
+      final HostedEvent eventResponse = HostedEvent.fromJson(
+        response.data,
+      );
+      return Successful<HostedEvent>(data: eventResponse);
+    } catch (e) {
+      log('Update event error: $e');
+      return Unsuccessful<HostedEvent>(
+        error: ATException.resolveException(e),
+      );
+    }
+  }
+
+  @override
   Future<ApiResponse<HostedEventsResponseModel>> fetchHostedEvents({
     required int page,
     required int pageSize,
