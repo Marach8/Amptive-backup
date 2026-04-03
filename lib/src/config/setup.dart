@@ -15,6 +15,7 @@ import 'package:amptive/src/services/go_live_service/go_live_service.dart'
     hide getHostList;
 import 'package:amptive/src/services/preference_service.dart';
 import 'package:amptive/src/features/profile/bloc/profile_bloc_export.dart';
+import 'package:amptive/src/services/websocket/user_ws_service.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
@@ -35,7 +36,7 @@ import '../features/calender/cubits/calender_programs_bloc.dart';
 import '../features/calender/cubits/selected_calender_date_bloc.dart';
 import '../bloc/main_app/profile/profile_menu/language_bloc.dart';
 import '../bloc/onboarding_bloc/onboarding_bloc.dart';
-import '../services/notification/notification_service.dart';
+import '../services/notification/push_notification_service.dart';
 
 Future<void> setup() async {
   // init firebase
@@ -50,7 +51,9 @@ Future<void> setup() async {
   GetIt.I.registerSingleton<PreferenceService>(PreferenceService());
   GetIt.I.registerSingleton<CreateShowService>(CreateShowService());
   GetIt.I.registerSingleton<GoLiveService>(GoLiveService());
-  GetIt.I.registerSingleton<NotificationService>(NotificationService());
+  GetIt.I.registerSingleton<PushNotificationService>(PushNotificationService());
+  GetIt.I.registerSingleton<UserWsService>(UserWsService());
+
 
 
 }
