@@ -1,5 +1,6 @@
 import 'dart:ui';
 import 'package:amptive/src/config/api_response_and_app_state.dart';
+import 'package:amptive/src/config/utils/dialogs/app_notification_dialog.dart';
 import 'package:amptive/src/features/episodes/cubits/episode_detail_cubit.dart';
 import 'package:amptive/src/features/episodes/data/models/response/episode_model.dart';
 import 'package:amptive/src/features/events/presentation/screens/preview_event_screen.dart';
@@ -297,11 +298,22 @@ class _SubWidgetState extends State<_SubWidget> {
           ],
         ),
         bottomSheet: ATBlurredBgBtn(
-          onPressed: () {
-            context.pushNamed(
-              ATRoutes.createEpisodeForm,
-              extra: widget.episode.showId ?? ''
+          onPressed: () async{
+            final Episode? updatedEpisode = context
+              .read<EpisodeDetailCubit>().currentEpisodeDetail;
+            final Episode? editedEpisode = await context.pushNamed(
+              ATRoutes.editEpisodeScreen,
+              extra: updatedEpisode ?? widget.episode
             );
+            if(context.mounted && editedEpisode != null
+              && editedEpisode != updatedEpisode){
+              context.read<EpisodeDetailCubit>().updateEpisode(editedEpisode);
+              showAppNotification2(
+                context: context,
+                text: 'Episode detail updated.',
+                type: NotificationType.success,
+              );
+            }
           },
           btnTitle: 'Edit Episode'
         ),

@@ -30,6 +30,8 @@ class Episode {
     this.createdAt,
     this.updatedAt,
     this.whispers,
+    this.priceOverride,
+    this.showTypeOverride,
   });
 
   factory Episode.fromJson(Map<String, dynamic> json) {
@@ -68,6 +70,8 @@ class Episode {
       whispers: json['whispers'],
       createdAt: json['created_at'],
       updatedAt: json['updated_at'],
+      priceOverride: json['price_override'],
+      showTypeOverride: json['show_type_override'],
     );
   }
 
@@ -102,6 +106,8 @@ class Episode {
       createdAt: createdAt,
       updatedAt: updatedAt,
       whispers: whispers,
+      priceOverride: priceOverride,
+      showTypeOverride: showTypeOverride,
     );
   }
 
@@ -119,7 +125,8 @@ class Episode {
       playbackUrl,
       livestreamId,
       createdAt,
-      updatedAt;
+      updatedAt,
+      showTypeOverride;
 
   final int? episodeNumber,
       viewerCount,
@@ -130,6 +137,7 @@ class Episode {
       durationSeconds;
 
   final bool? handRaising, whispers;
+  final double? priceOverride;
 
   final Host? host;
   final List<CoHost>? coHosts;

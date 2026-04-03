@@ -85,4 +85,27 @@ class EpisodesRepoImpl implements EpisodesRepo {
       );
     }
   }
+
+  @override
+  Future<ApiResponse<Episode>> updateEpisode({
+    required String showId,
+    required String episodeId,
+    required CreateEpisodePayload episodeData,
+  }) async {
+    try {
+      final Response<dynamic> response = await networkService.patch(
+        '${ATEndpoints.shows}$showId/episodes/$episodeId',
+        data: episodeData.toJson(),
+      );
+
+      final Episode episodeResponse =
+          Episode.fromJson(response.data);
+      return Successful<Episode>(data: episodeResponse);
+    } catch (e) {
+      log('Update episode error: $e');
+      return Unsuccessful<Episode>(
+        error: ATException.resolveException(e),
+      );
+    }
+  }
 }

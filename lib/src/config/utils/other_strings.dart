@@ -660,7 +660,7 @@ class ATStrings {
   static const String COMMENT = 'Comment';
   static const String END_NOW = 'End now';
   static const String HOST = 'Host';
-  static const String EDIT_EPISODE = 'Edit episode';
+  static const String editEpisode = 'Edit episode';
   static const String attendeesWillShowHere = 'Attendees will appear here!';
   static const String episodeCreated = 'Your episode has been scheduled!';
   static const String shareEpisodeLinkDescription =

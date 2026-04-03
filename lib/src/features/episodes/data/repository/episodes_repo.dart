@@ -20,4 +20,10 @@ abstract class EpisodesRepo {
     required String streamKey,
     required String reason,
   });
+
+  Future<ApiResponse<Episode>> updateEpisode({
+    required String showId,
+    required String episodeId,
+    required CreateEpisodePayload episodeData,
+  });
 }

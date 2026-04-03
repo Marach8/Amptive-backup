@@ -52,4 +52,9 @@ class EpisodeDetailCubit extends Cubit<ATAppState<Episode>> {
       );
     }
   }
+
+
+  void updateEpisode(Episode newEpisode){
+    emit(SuccessState<Episode>(newData: newEpisode));
+  }
 }
