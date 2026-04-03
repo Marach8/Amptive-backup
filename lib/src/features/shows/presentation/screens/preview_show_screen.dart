@@ -156,8 +156,9 @@ class _SubWidgetState extends State<_SubWidget> {
                             
                               if(hasEpisodes) ...<Widget>[
                                 ExistingEpisodesIndicator(
-                                  activeEpisode: updatedShow?.activeEpisode?.copyShowId(
-                                    showId: updatedShow.showId
+                                  activeEpisode: updatedShow?.episodes?.first.copyWith(
+                                    showId: updatedShow.showId,
+                                    parentShowTitle: updatedShow.title
                                   )
                                 ),
                                 const SizedBox(height: 12),

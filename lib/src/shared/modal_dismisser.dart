@@ -4,14 +4,15 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 class ATModalDismisser extends StatelessWidget {
-  const ATModalDismisser({super.key});
+  const ATModalDismisser({super.key, this.onDismissOverride});
+  final VoidCallback? onDismissOverride;
 
   @override
   Widget build(BuildContext context) {
     return Align(
       alignment: Alignment.center,
       child: ATContainer(
-        onTap: () => context.pop(),
+        onTap: onDismissOverride ?? () => context.pop(),
         margin: const EdgeInsets.symmetric(vertical: 10),
         radius: 5,
         height: 4,

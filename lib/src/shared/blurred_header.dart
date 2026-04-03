@@ -10,10 +10,12 @@ class ATBlurredHeaderWidget extends StatelessWidget {
     super.key,
     this.child,
     this.paddingFromTop,
+    this.onDismissOverride,
   });
 
   final Widget? child;
   final double? paddingFromTop;
+  final VoidCallback? onDismissOverride;
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +35,8 @@ class ATBlurredHeaderWidget extends StatelessWidget {
               width: context.screenWidth,
               child: Align(
                   alignment: Alignment.bottomCenter,
-                  child: child ?? const ATModalDismisser()),
+                  child: child ?? ATModalDismisser(
+                    onDismissOverride: onDismissOverride)),
             ),
           ),
         );

@@ -6,6 +6,7 @@ import 'package:amptive/src/config/services/network_service/dio_network_service_
 import 'package:amptive/src/config/services/network_service/network_service.dart';
 import 'package:amptive/src/features/episodes/data/models/request/create_episode_request_model.dart';
 import 'package:amptive/src/features/episodes/data/models/response/episode_model.dart';
+import 'package:amptive/src/features/episodes/data/models/response/episodes_response_model.dart';
 import 'package:amptive/src/features/episodes/data/repository/episodes_repo.dart';
 import 'package:dio/dio.dart' show Response;
 
@@ -111,7 +112,7 @@ class EpisodesRepoImpl implements EpisodesRepo {
 
 
   @override
-  Future<ApiResponse<dynamic>> fetchEpisodesOfAShow({
+  Future<ApiResponse<EpisodesResponseModel>> fetchEpisodesOfAShow({
     required String showId,
     required int page,
     required int pageSize,
@@ -127,10 +128,12 @@ class EpisodesRepoImpl implements EpisodesRepo {
         },
       );
 
-      return Successful<dynamic>(data: response.data);
+      final EpisodesResponseModel episodesResponse =
+          EpisodesResponseModel.fromJson(response.data);
+      return Successful<EpisodesResponseModel>(data: episodesResponse);
     } catch (e) {
       log('Fetch episodes of show error: $e');
-      return Unsuccessful<dynamic>(
+      return Unsuccessful<EpisodesResponseModel>(
         error: ATException.resolveException(e),
       );
     }

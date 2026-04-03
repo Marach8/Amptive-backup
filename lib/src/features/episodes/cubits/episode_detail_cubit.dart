@@ -32,7 +32,10 @@ class EpisodeDetailCubit extends Cubit<ATAppState<Episode>> {
 
       response.when(
         successful: (Successful<Episode> data) {
-          emit(SuccessState<Episode>(newData: data.data));
+          emit(SuccessState<Episode>(
+            newData: data.data?.copyWith(
+              parentShowTitle: currentEpisodeDetail?.parentShowTitle)
+          ));
         },
         unSuccessful: (Unsuccessful<Episode> error) {
           emit(

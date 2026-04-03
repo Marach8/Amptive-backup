@@ -2,7 +2,7 @@ import 'package:amptive/src/shared/global_model_objects.dart';
 import 'package:equatable/equatable.dart';
 
 class Episode extends Equatable{
-  Episode({
+  const Episode({
     this.episodeId,
     this.showId,
     this.episodeNumber,
@@ -33,6 +33,7 @@ class Episode extends Equatable{
     this.whispers,
     this.priceOverride,
     this.showTypeOverride,
+    this.parentShowTitle,
   });
 
   factory Episode.fromJson(Map<String, dynamic> json) {
@@ -77,12 +78,16 @@ class Episode extends Equatable{
   }
 
   /// CopyWith that only changes showId
-  Episode copyShowId({String? showId}) {
+  Episode copyWith({
+    String? showId,
+    String? parentShowTitle,
+  }) {
     return Episode(
       episodeId: episodeId,
       showId: showId ?? this.showId,
       episodeNumber: episodeNumber,
       title: title,
+      parentShowTitle: parentShowTitle ?? this.parentShowTitle,
       description: description,
       thumbnailUrl: thumbnailUrl,
       status: status,
@@ -127,7 +132,8 @@ class Episode extends Equatable{
       livestreamId,
       createdAt,
       updatedAt,
-      showTypeOverride;
+      showTypeOverride,
+      parentShowTitle;
 
   final int? episodeNumber,
       viewerCount,
@@ -160,6 +166,7 @@ class Episode extends Equatable{
     streamUrl,
     streamKey,
     playbackUrl,
+    parentShowTitle,
     livestreamId,
     viewerCount,
     peakViewers,

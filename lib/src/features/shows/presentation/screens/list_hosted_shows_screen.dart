@@ -257,11 +257,20 @@ class __SubWidgetState extends State<_SubWidget> {
             return ATBlurredBgBtn(
               btnTitle: ATStrings.next,
               onPressed: shouldActivate
-                  ? () {
-                      context.pushNamed(
-                        ATRoutes.showPreviewScreen,
-                        extra: selectedShow,
-                      );
+                  ? () async{
+                    final HostedShow? editedShow = await context.pushNamed(
+                      ATRoutes.showPreviewScreen,
+                      extra: selectedShow,
+                    ) as HostedShow?;
+
+                    if(context.mounted && editedShow != null
+                      && editedShow != selectedShow){
+                      context.read<HostedShowsCubit>().updateAShow(editedShow);
+                    }
+                      // context.pushNamed(
+                      //   ATRoutes.showPreviewScreen,
+                      //   extra: selectedShow,
+                      // );
                     }
                   : null,
             );
