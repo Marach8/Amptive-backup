@@ -46,6 +46,7 @@ class LivestreamParticipant {
     required this.isSpeaker,
     required this.isHost,
     required this.avatar,
+    required bool isMuted,
   });
 
   factory LivestreamParticipant.fromJson(Map<String, dynamic> json) {
@@ -55,6 +56,7 @@ class LivestreamParticipant {
       avatar: json['avatar'] as String?,
       isSpeaker: json['is_speaker'] as bool? ?? false,
       isHost: json['is_host'] as bool? ?? false,
+      isMuted: json['is_muted'] as bool? ?? false,
     );
   }
 
@@ -63,6 +65,8 @@ class LivestreamParticipant {
   final bool isSpeaker;
   final bool isHost;
   final String? avatar;
+  final bool isMuted = false;
+
 
   LivestreamParticipant copyWith({bool? isSpeaker, bool? isMuted}) {
     return LivestreamParticipant(
@@ -71,6 +75,7 @@ class LivestreamParticipant {
       isSpeaker: isSpeaker ?? this.isSpeaker,
       isHost: isHost,
       avatar: null,
+      isMuted: isMuted ?? this.isMuted,
     );
   }
 }

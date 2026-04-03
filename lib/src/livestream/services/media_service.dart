@@ -13,13 +13,7 @@ import '../models/livestream_models.dart';
 ///   - Expose streams for participant join/leave and track events
 ///   - Publish / unpublish the local audio track when the user is
 ///     promoted to speaker
-///   - Manage video and screen sharing tracks
 ///   - Clean disconnect on stream end
-///
-/// Note on types: livekit_client 2.x removed the concrete
-/// `RemoteAudioTrackPublication` class.  Track publications are now
-/// `RemoteTrackPublication<RemoteTrack>` and the track kind is checked
-/// via `track is RemoteAudioTrack`.
 class MediaService {
   MediaService();
 
@@ -27,65 +21,53 @@ class MediaService {
   EventsListener<RoomEvent>? _listener;
   LocalAudioTrack? _localAudioTrack;
 
-  // Stream controllers for various events
+  bool _disposed = false;
+
   final _remoteAudioController = StreamController<RemoteAudioTrack>.broadcast();
   final _participantJoinedController =
-      StreamController<RemoteParticipant>.broadcast();
+  StreamController<RemoteParticipant>.broadcast();
   final _participantLeftController =
-      StreamController<RemoteParticipant>.broadcast();
-  final _speakingController = StreamController<List<Participant>>.broadcast();
+  StreamController<RemoteParticipant>.broadcast();
   final _activeSpeakersController =
-      StreamController<List<Participant>>.broadcast();
+  StreamController<List<Participant>>.broadcast();
   final _mediaStateController = StreamController<MediaStateChange>.broadcast();
 
   // ── Public streams ─────────────────────────────────────────────────────
 
-  /// Fires whenever a remote audio track is subscribed (attach to widget).
   Stream<RemoteAudioTrack> get onRemoteAudioTrack =>
       _remoteAudioController.stream;
 
-  /// Fires when a participant joins the room.
   Stream<RemoteParticipant> get onParticipantJoined =>
       _participantJoinedController.stream;
 
-  /// Fires when a participant leaves the room.
   Stream<RemoteParticipant> get onParticipantLeft =>
       _participantLeftController.stream;
-
-  /// Fires with the current list of speaking participants (active speakers).
-  Stream<List<Participant>> get onSpeaking => _speakingController.stream;
 
   /// Fires with the current list of active speakers (for UI highlighting).
   Stream<List<Participant>> get onActiveSpeakers =>
       _activeSpeakersController.stream;
 
-  /// Fires when any participant's media state changes (mute/unmute, video on/off).
+  /// Fires when any participant's media state changes (mute/unmute, etc.).
   Stream<MediaStateChange> get onMediaStateChanged =>
       _mediaStateController.stream;
 
   bool get isConnected =>
       _room != null && _room!.connectionState == ConnectionState.connected;
 
-  /// The underlying room, useful for reading [remoteParticipants] directly.
   Room? get room => _room;
 
-  /// The local participant (current user)
   LocalParticipant? get localParticipant => _room?.localParticipant;
 
-  /// Check if local audio is enabled
   bool get isAudioEnabled => localParticipant?.isMicrophoneEnabled() ?? false;
-
-  /// Check if local video is enabled
-  bool get isVideoEnabled => localParticipant?.isCameraEnabled() ?? false;
 
   // ── Connect ────────────────────────────────────────────────────────────
 
   /// Connects to the LiveKit room.
   ///
   /// [token]      – JWT from POST /api/v1/livestreams/{id}/token
-  /// [url]        – wss://... LiveKit server URL from the same response
-  /// [isSpeaker]  – pass true for host / pre-approved speakers so
-  ///                the microphone is published immediately on connect
+  /// [url]        – wss://... LiveKit server URL
+  /// [isSpeaker]  – pass true for host / pre-approved speakers so the
+  ///                microphone is enabled immediately on connect
   Future<void> connect({
     required String url,
     required String token,
@@ -95,7 +77,7 @@ class MediaService {
     _listener = _room!.createListener();
     _registerRoomEvents();
 
-    developer.log('Connecting to LiveKit room', name: 'MediaService');
+    _log('Connecting to LiveKit room');
 
     try {
       await _room!.connect(
@@ -111,43 +93,36 @@ class MediaService {
         ),
       );
 
-      // if (defaultTargetPlatform == TargetPlatform.android) {
-      //   developer.log("Setting speakerphone on");
-      //   await Hardware.instance.setSpeakerphoneOn(true);
-      //   await Hardware.instance.setPreferSpeakerOutput(true);
-      // }
+      _log('Connected to LiveKit room successfully');
 
-      log(
-        'Connected to LiveKit room successfully',
-      );
-
-      // ── Media Snapshot ──────────────────────────────────────────────────
-      // Attach any remote audio tracks that were already present when we
-      // joined (the guide's "Media Snapshot" step).
+      // ── Media Snapshot ────────────────────────────────────────────────
+      // Attach any remote audio tracks already present when joining.
       for (final participant in _room!.remoteParticipants.values) {
         _processExistingTracks(participant);
       }
 
-      // Initial active speakers might already be set
+      // Emit initial active speakers if any.
       final activeSpeakers = _room!.activeSpeakers;
       if (activeSpeakers.isNotEmpty) {
         _activeSpeakersController.add(activeSpeakers);
       }
 
+      // Always publish the audio track; only enable the mic if isSpeaker.
       await setupAndPublishAudio();
       await toggleMicrophone(isSpeaker);
     } catch (e) {
-      developer.log('Failed to connect to LiveKit: $e',
-          name: 'MediaService', level: 1000);
+      _log('Failed to connect to LiveKit: $e', level: LogLevel.error);
       rethrow;
     }
   }
 
-  // ── Media publishing / unpublishing ─────────────────────────────────────
+  // ── Media publishing ───────────────────────────────────────────────────
+
+  /// Creates and publishes the local audio track (muted by default).
+  /// Safe to call multiple times — subsequent calls are no-ops.
   Future<void> setupAndPublishAudio() async {
-    // Don't publish if already published
     if (_localAudioTrack != null) {
-      log('Audio track already published');
+      _log('Audio track already published, skipping');
       return;
     }
 
@@ -155,68 +130,69 @@ class MediaService {
       _localAudioTrack = await LocalAudioTrack.create();
       await _room!.localParticipant?.publishAudioTrack(
         _localAudioTrack!,
-        publishOptions: const AudioPublishOptions(
-          name: 'microphone',
-        ),
+        publishOptions: const AudioPublishOptions(name: 'microphone'),
       );
-      log('Audio track published successfully');
+      _log('Audio track published successfully');
     } catch (e) {
-      log('Mic setup failed: $e', level: LogLevel.warn);
+      _log('Mic setup failed: $e', level: LogLevel.warn);
     }
   }
 
-  /// Called when a hand-raise is approved and `is_speaker` becomes true.
+  /// Enables or disables the microphone for the local participant.
   Future<void> toggleMicrophone(bool enable) async {
     if (_room == null) return;
     if (_localAudioTrack == null) {
-      log('Audio track not published yet, skipping toggle');
+      _log('Audio track not published yet, skipping toggle');
       return;
     }
     try {
       await _room!.localParticipant?.setMicrophoneEnabled(enable);
-      log("Toggling mic to $enable");
+      _log('Microphone set to: $enable');
     } catch (e) {
-      developer.log('Failed to toggle microphone: $e',
-          name: 'MediaService', level: 1000);
+      _log('Failed to toggle microphone: $e', level: LogLevel.error);
       rethrow;
     }
   }
 
+  /// Toggles the local microphone between enabled and disabled.
   Future<void> toggleMute() async {
     final lp = _room?.localParticipant;
     if (lp == null) return;
     final current = lp.isMicrophoneEnabled();
     await lp.setMicrophoneEnabled(!current);
-    developer.log('Audio toggled: ${!current}', name: 'MediaService');
+    _log('Audio toggled: ${!current}');
   }
 
   // ── Disconnect ─────────────────────────────────────────────────────────
 
+  /// Disconnects the room and releases all resources.
+  /// Safe to call multiple times.
   Future<void> disconnect() async {
-    log('Disconnecting MediaService');
-    // Clean up local track
-    await _localAudioTrack?.dispose();
-    _localAudioTrack = null;
+    _log('Disconnecting MediaService');
 
     await _localAudioTrack?.dispose();
     _localAudioTrack = null;
 
     _listener?.dispose();
     _listener = null;
+
     await _room?.disconnect();
     _room = null;
 
-    log(
-      'MediaService disconnected',
-    );
+    _log('MediaService disconnected');
   }
 
-  void dispose() {
-    disconnect();
+  /// Disconnects and closes all stream controllers.
+  /// Call this only when the service will no longer be used.
+  Future<void> dispose() async {
+    if (_disposed) return;
+    _disposed = true;
+
+    await disconnect();
+
     _remoteAudioController.close();
     _participantJoinedController.close();
     _participantLeftController.close();
-    _speakingController.close();
     _activeSpeakersController.close();
     _mediaStateController.close();
   }
@@ -228,56 +204,42 @@ class MediaService {
       ..on<TrackSubscribedEvent>(_onTrackSubscribed)
       ..on<ParticipantConnectedEvent>(_onParticipantConnected)
       ..on<ParticipantDisconnectedEvent>(_onParticipantDisconnected)
-      ..on<ActiveSpeakersChangedEvent>(_onActiveSpeakersChanged)
-      ..on<RoomEvent>((event) {
-        // Log unhandled events for debugging
-        log('Unhandled room event: ${event.runtimeType}', level: LogLevel.warn);
-      });
+      ..on<ActiveSpeakersChangedEvent>(_onActiveSpeakersChanged);
   }
 
   void _onTrackSubscribed(TrackSubscribedEvent event) {
-    log('Track subscribed: ${event.track.kind}');
     final track = event.track;
     final participant = event.participant;
 
     if (track is RemoteAudioTrack) {
-      log('Remote audio track received!');
+      _log('Remote audio track subscribed from ${participant.identity}');
       _remoteAudioController.add(track);
-      _emitMediaStateChange(participant.identity, MediaType.audio, true);
+      _emitMediaStateChange(participant.identity, MediaType.audio, !track.muted);
     }
   }
 
   void _onParticipantConnected(ParticipantConnectedEvent event) {
     final participant = event.participant;
+    _log('Participant joined: ${participant.identity}');
     _participantJoinedController.add(participant);
-
-    // Process existing tracks for this participant
     _processExistingTracks(participant);
-
-    developer.log('Participant joined: ${participant.identity}',
-        name: 'MediaService');
   }
 
   void _onParticipantDisconnected(ParticipantDisconnectedEvent event) {
-    final participant = event.participant;
-    _participantLeftController.add(participant);
-
-    developer.log('Participant left: ${participant.identity}',
-        name: 'MediaService');
+    _log('Participant left: ${event.participant.identity}');
+    _participantLeftController.add(event.participant);
   }
 
   void _onActiveSpeakersChanged(ActiveSpeakersChangedEvent event) {
-    _speakingController.add(event.speakers);
     _activeSpeakersController.add(event.speakers);
   }
 
-  void _processExistingTracks(Participant participant) {
-    // Process audio tracks
+  void _processExistingTracks(RemoteParticipant participant) {
     for (final pub in participant.audioTrackPublications) {
       final track = pub.track;
       if (pub.subscribed && track is RemoteAudioTrack) {
         _remoteAudioController.add(track);
-        _emitMediaStateChange(participant.identity, MediaType.audio, true);
+        _emitMediaStateChange(participant.identity, MediaType.audio, !track.muted);
       }
     }
   }
@@ -290,7 +252,7 @@ class MediaService {
     ));
   }
 
-  void log(String message, {LogLevel level = LogLevel.debug}) {
+  void _log(String message, {LogLevel level = LogLevel.debug}) {
     developer.log(message, name: 'MediaService', level: level.value);
   }
 }

@@ -7,7 +7,6 @@ import 'package:web_socket_channel/status.dart' as ws_status;
 
 import '../../config/config_export.dart';
 
-
 abstract class BaseWsService {
   BaseWsService({
     this.maxReconnectAttempts = 5,
@@ -61,19 +60,19 @@ abstract class BaseWsService {
       _sub = _channel!.stream.listen(
         _onFrame,
         onError: _onSocketError,
-        onDone:  _onSocketDone,
+        onDone: _onSocketDone,
         cancelOnError: false,
       );
 
       _attempt = 0;
-      log('WebSocket connected.', level: LogLevel.info);
+      log('🟢 WebSocket connected.', level: LogLevel.info);
       onConnected();
     } on WebSocketChannelException catch (e) {
-      log('Handshake failed: ${e.message}', level: LogLevel.error);
+      log('🔴 Handshake failed: ${e.message}', level: LogLevel.error);
       _channel = null;
       _scheduleReconnect();
     } catch (e) {
-      log('Unexpected connect error: $e', level: LogLevel.error);
+      log('🔴 Unexpected connect error: $e', level: LogLevel.error);
       _channel = null;
       _scheduleReconnect();
     }

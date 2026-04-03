@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'dart:developer' as developer;
 
-
+import 'package:livekit_client/src/participant/remote.dart';
 import 'package:livekit_client/src/track/remote/audio.dart';
 
 import '../config/config_export.dart';
@@ -23,14 +23,14 @@ class LivestreamController {
   final LivestreamApiService apiService;
   final bool isHost;
   final MediaService _media;
+
   RemoteAudioTrack? _remoteAudioTrack;
 
   SignalingService? _signaling;
   StreamSubscription<SignalingEvent>? _sigSub;
 
-  // Store ALL subscriptions so they are cancelled on teardown.
-  // The original code leaked the two _media subscriptions.
   final List<StreamSubscription<dynamic>> _mediaSubs = [];
+  bool _tornDown = false;
 
   // ── Observable state ───────────────────────────────────────────────────
 
@@ -48,27 +48,22 @@ class LivestreamController {
 
   Future<void> join() async {
     try {
-      // Step 1 — fetch token
       final LivestreamToken tokenData = await apiService.fetchToken(streamId!);
 
-      // Step 2 — connect signaling WebSocket
-      _signaling = SignalingService(
-        streamId: streamId!,
-      );
+      _signaling = SignalingService(streamId: streamId!);
       _sigSub = _signaling!.events.listen(
         _handleSignalingEvent,
-        onError: (Object e) => _emit(_state.copyWith(lastError: e.toString())),
+        onError: (Object e) =>
+            _emit(_state.copyWith(lastError: e.toString())),
       );
       await _signaling!.connect();
 
-      // Step 3 — connect LiveKit media room
       await _media.connect(
         url: tokenData.livekitUrl,
         token: tokenData.token,
         isSpeaker: isHost,
       );
 
-      // Store media subscriptions so _tearDown can cancel them.
       _setupMediaListeners();
     } catch (e) {
       _emit(_state.copyWith(
@@ -82,34 +77,47 @@ class LivestreamController {
   void _setupMediaListeners() {
     _mediaSubs.add(
       _media.onActiveSpeakers.listen((speakers) {
+        if (speakers.isEmpty) return;
+
         final ids = speakers.map((s) => s.identity).toSet();
         final updated = _state.participants
             .map((p) => p.copyWith(isSpeaker: ids.contains(p.identity)))
             .toList();
-        _emit(_state.copyWith(participants: updated));
+
+        final localSid = _media.room?.localParticipant?.sid;
+        double? localLevel;
+        double? remoteLevel;
+
+        for (final speaker in speakers) {
+          if (speaker.sid == localSid) {
+            localLevel = speaker.audioLevel;
+          } else {
+            remoteLevel = speaker.audioLevel;
+          }
+        }
+
+        _emit(_state.copyWith(
+          participants: updated,
+          localLevel: localLevel,
+          remoteLevel: remoteLevel,
+        ));
       }),
     );
-    
-    // Listen to participant joins/leaves from media service to keep roster in sync
+
     _mediaSubs.add(
-      _media.onParticipantJoined.listen((participant) {
-        _handleParticipantJoined(participant as LivestreamParticipant);
+      _media.onParticipantJoined.listen((RemoteParticipant participant) {
+        _log('Participant joined LiveKit: ${participant.identity}');
       }),
     );
-    
+
     _mediaSubs.add(
       _media.onParticipantLeft.listen((participant) {
         _handleParticipantLeft(participant.identity);
       }),
     );
 
-    _mediaSubs.add(
-      _media.onRemoteAudioTrack.listen((RemoteAudioTrack track) {
-        _handleRemoteTrack(track);
-      }),
-    );
-    
-    // Listen to media state changes
+    _mediaSubs.add(_media.onRemoteAudioTrack.listen(_handleRemoteTrack));
+
     _mediaSubs.add(
       _media.onMediaStateChanged.listen((change) {
         _handleMediaStateChange(change.identity, change.type.name, change.enabled);
@@ -124,9 +132,7 @@ class LivestreamController {
       final id = await apiService.startStream(contentId);
       streamId = id;
     } catch (e) {
-      _emit(_state.copyWith(
-        lastError: 'Failed to start stream: $e',
-      ));
+      _emit(_state.copyWith(lastError: 'Failed to start stream: $e'));
       rethrow;
     }
   }
@@ -134,11 +140,9 @@ class LivestreamController {
   Future<void> endStream() async {
     try {
       await apiService.endStream(streamId!);
-      _tearDown();
+      await _tearDown();
     } catch (e) {
-      _emit(_state.copyWith(
-        lastError: 'Failed to end stream: $e',
-      ));
+      _emit(_state.copyWith(lastError: 'Failed to end stream: $e'));
     }
   }
 
@@ -148,37 +152,36 @@ class LivestreamController {
 
   void sendReaction(String emoji) {
     _signaling?.sendReaction(emoji);
-    apiService.sendReaction(streamId!, emoji).ignore();
+    apiService.sendReaction(streamId!, emoji).catchError((Object e) {
+      _log('sendReaction API error: $e', level: LogLevel.warn);
+    });
   }
 
   void raiseHand() => _signaling?.raiseHand();
-
   void lowerHand() => _signaling?.lowerHand();
-
   void approveHandRaise(String identity) =>
       _signaling?.approveHandRaise(identity);
-
   Future<void> toggleMute() => _media.toggleMute();
 
   // ── Signaling event handler ────────────────────────────────────────────
 
   Future<void> _handleSignalingEvent(SignalingEvent event) async {
     switch (event) {
-    // Connection & Stream Events
       case InitialStateEvent(:final state):
         _emit(_state.copyWith(
           status: StreamStatus.live,
           participants: state.participants,
           viewerCount: state.viewerCount,
           handQueue: state.handQueue,
+          lastError: null,
         ));
 
       case StreamStartedEvent():
-        _emit(_state.copyWith(status: StreamStatus.live));
+        _emit(_state.copyWith(status: StreamStatus.live, lastError: null));
 
       case StreamEndedEvent():
         _emit(_state.copyWith(status: StreamStatus.ended));
-        _tearDown();
+        await _tearDown();
 
       case ErrorEvent(:final code, :final message):
         _emit(_state.copyWith(
@@ -187,14 +190,13 @@ class LivestreamController {
         ));
 
       case PongEvent():
-      // Handle ping response if needed for connection health monitoring
         _log('Received pong, connection healthy');
 
-    // Participant Events
       case ParticipantJoinEvent(:final participant):
         _handleParticipantJoined(participant);
 
       case ParticipantLeaveEvent(:final identity, :final reason):
+        if (reason != null) _log('Participant $identity left. Reason: $reason');
         _handleParticipantLeft(identity);
 
       case ParticipantUpdatedEvent(:final participant):
@@ -204,23 +206,21 @@ class LivestreamController {
         ];
         _emit(_state.copyWith(participants: updated));
 
-        // Handle local participant's speaker status change
         if (participant.identity == _media.localParticipant?.identity) {
           if (participant.isSpeaker) {
-            // User was promoted to speaker - publish and enable mic
-            await _media.setupAndPublishAudio(); // Safe even if already published
+            await _media.setupAndPublishAudio();
             await _media.toggleMicrophone(true);
           } else {
-            // User was demoted from speaker - mute mic (optional)
             await _media.toggleMicrophone(false);
           }
         }
 
+    // participantCount is now a computed getter on LivestreamState
+    // (participants.length), so we no longer need to manage it here.
+    // ParticipantCountEvent maps to viewerCount (server-side total).
       case ParticipantCountEvent(:final count):
-      // Use participant count if needed, otherwise keep viewer count
-        _emit(_state.copyWith(participantCount: count));
+        _emit(_state.copyWith(viewerCount: count));
 
-    // Interaction Events
       case ChatEvent(:final message):
         _emit(_state.copyWith(messages: [..._state.messages, message]));
 
@@ -230,11 +230,9 @@ class LivestreamController {
       case HandRaiseEvent(:final identity, :final action):
         _handleHandRaise(identity, action);
 
-    // Statistics Events
       case ViewerCountEvent(:final count):
         _emit(_state.copyWith(viewerCount: count));
 
-    // Moderation Events
       case UserMutedEvent(:final identity, :final muted):
         _handleUserMuted(identity, muted);
 
@@ -244,21 +242,21 @@ class LivestreamController {
       case UserKickedEvent(:final identity, :final reason):
         _handleUserKicked(identity, reason);
 
-    // Media Events
       case MediaStateChangedEvent(:final identity, :final mediaType, :final enabled):
         _handleMediaStateChange(identity, mediaType, enabled);
 
       case UnknownEvent():
-      // Log unknown events for debugging but don't break the stream
-        _log('Received unknown event type: ${event.runtimeType}', level: LogLevel.warn);
-        break;
+        _log('Received unknown event: ${event.runtimeType}', level: LogLevel.warn);
     }
   }
 
   // ── Participant event handlers ─────────────────────────────────────────
 
   void _handleParticipantJoined(LivestreamParticipant participant) {
+    _log('Participant joined via signaling: ${participant.identity}');
     if (!_state.participants.any((p) => p.identity == participant.identity)) {
+      // Updating participants automatically updates participantCount
+      // because it is a computed getter (participants.length).
       _emit(_state.copyWith(
         participants: [..._state.participants, participant],
       ));
@@ -266,10 +264,10 @@ class LivestreamController {
   }
 
   void _handleParticipantLeft(String identity) {
+    // Same: participantCount stays in sync automatically.
     _emit(_state.copyWith(
-      participants: _state.participants
-          .where((p) => p.identity != identity)
-          .toList(),
+      participants:
+      _state.participants.where((p) => p.identity != identity).toList(),
       handQueue: _state.handQueue.where((id) => id != identity).toList(),
     ));
   }
@@ -280,17 +278,13 @@ class LivestreamController {
     switch (action) {
       case 'raise':
         if (!_state.handQueue.contains(identity)) {
-          _emit(_state.copyWith(
-            handQueue: [..._state.handQueue, identity],
-          ));
+          _emit(_state.copyWith(handQueue: [..._state.handQueue, identity]));
         }
-        break;
       case 'lower':
       case 'approve':
         _emit(_state.copyWith(
           handQueue: _state.handQueue.where((i) => i != identity).toList(),
         ));
-        break;
       default:
         _log('Unknown hand raise action: $action', level: LogLevel.warn);
     }
@@ -299,30 +293,25 @@ class LivestreamController {
   // ── Moderation handlers ────────────────────────────────────────────────
 
   void _handleUserMuted(String identity, bool muted) {
-    final updatedParticipants = _state.participants.map((p) {
-      if (p.identity == identity) {
-        return p.copyWith(isMuted: muted);
-      }
-      return p;
-    }).toList();
-
-    _emit(_state.copyWith(participants: updatedParticipants));
+    final updated = _state.participants
+        .map((p) => p.identity == identity ? p.copyWith(isMuted: muted) : p)
+        .toList();
+    _emit(_state.copyWith(participants: updated));
   }
 
   void _handleUserBanned(String identity, String? reason) {
     _handleParticipantLeft(identity);
-    // Optionally show a notification about the ban
     _emit(_state.copyWith(
-      lastError: 'User $identity was banned${reason != null ? ': $reason' : ''}',
+      lastError:
+      'User $identity was banned${reason != null ? ': $reason' : ''}',
     ));
   }
 
   void _handleUserKicked(String identity, String? reason) {
     _handleParticipantLeft(identity);
-    // Optionally show a notification about the kick
     if (identity == _media.localParticipant?.identity) {
       _emit(_state.copyWith(
-        lastError: 'You were kicked from the stream${reason != null ? ': $reason' : ''}',
+        lastError: 'You were kicked${reason != null ? ': $reason' : ''}',
         status: StreamStatus.ended,
       ));
       _tearDown();
@@ -332,25 +321,20 @@ class LivestreamController {
   // ── Media handlers ─────────────────────────────────────────────────────
 
   void _handleMediaStateChange(String identity, String mediaType, bool enabled) {
-    final updatedParticipants = _state.participants.map((p) {
-      if (p.identity == identity) {
-        if (mediaType == 'audio') {
-          return p.copyWith(isMuted: !enabled);
-        }
+    final updated = _state.participants.map((p) {
+      if (p.identity == identity && mediaType == 'audio') {
+        return p.copyWith(isMuted: !enabled);
       }
       return p;
     }).toList();
-
-    _emit(_state.copyWith(participants: updatedParticipants));
+    _emit(_state.copyWith(participants: updated));
   }
 
   void _handleRemoteTrack(RemoteAudioTrack track) {
-    _log('Handling remote audio track - muted: ${track.muted}');
-
+    _log('Handling remote audio track — muted: ${track.muted}');
     _remoteAudioTrack?.stop();
     _remoteAudioTrack = track;
     _remoteAudioTrack?.start();
-
   }
 
   // ── Helpers ────────────────────────────────────────────────────────────
@@ -361,22 +345,29 @@ class LivestreamController {
   }
 
   Future<void> _tearDown() async {
-    _remoteAudioTrack?.dispose();
+    if (_tornDown) return;
+    _tornDown = true;
+
+    _remoteAudioTrack?.stop();
     _remoteAudioTrack = null;
 
     await _sigSub?.cancel();
-    for (final StreamSubscription<dynamic> sub in _mediaSubs) {
+    _sigSub = null;
+
+    for (final sub in _mediaSubs) {
       await sub.cancel();
     }
-
     _mediaSubs.clear();
+
     _signaling?.dispose();
+    _signaling = null;
+
     await _media.disconnect();
   }
 
   Future<void> dispose() async {
     await _tearDown();
-    _stateController.close();
+    await _stateController.close();
   }
 
   void _log(String message, {LogLevel level = LogLevel.debug}) {
@@ -390,42 +381,50 @@ class LivestreamState {
   final StreamStatus status;
   final List<LivestreamParticipant> participants;
   final int viewerCount;
-  final int participantCount;
   final List<String> handQueue;
   final List<ChatMessage> messages;
   final List<ReactionEvent> reactions;
   final String? lastError;
+  final double localLevel;
+  final double remoteLevel;
 
   const LivestreamState({
     this.status = StreamStatus.waiting,
     this.participants = const [],
     this.viewerCount = 0,
-    this.participantCount = 0,
     this.handQueue = const [],
     this.messages = const [],
     this.reactions = const [],
     this.lastError,
+    this.localLevel = 0.0,
+    this.remoteLevel = 0.0,
   });
+
+  int get participantCount => participants.length;
 
   LivestreamState copyWith({
     StreamStatus? status,
     List<LivestreamParticipant>? participants,
     int? viewerCount,
-    int? participantCount,
     List<String>? handQueue,
     List<ChatMessage>? messages,
     List<ReactionEvent>? reactions,
-    String? lastError,
+    Object? lastError = _kUnset,
+    double? localLevel,
+    double? remoteLevel,
   }) {
     return LivestreamState(
       status: status ?? this.status,
       participants: participants ?? this.participants,
       viewerCount: viewerCount ?? this.viewerCount,
-      participantCount: participantCount ?? this.participantCount,
       handQueue: handQueue ?? this.handQueue,
       messages: messages ?? this.messages,
       reactions: reactions ?? this.reactions,
-      lastError: lastError ?? this.lastError,
+      lastError: lastError == _kUnset ? this.lastError : lastError as String?,
+      localLevel: localLevel ?? this.localLevel,
+      remoteLevel: remoteLevel ?? this.remoteLevel,
     );
   }
 }
+
+const Object _kUnset = Object();

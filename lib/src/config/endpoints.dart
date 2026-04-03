@@ -29,6 +29,7 @@ class ATEndpoints {
   static const String createHashtag = '${tags}hashtags'; 
   static const String updateUserProfile = '/api/v1/users/me';
   static const String trendingHashtags = '/api/v1/tags/trending';
+  static const String fcmRegisterDevice = '/api/v1/notif/devices/register';
 
   static String getStreamTokenEndpoint(String streamId) => '/api/v1/livestreams/$streamId/token';
   static String startStreamEndpoint(String contentId) => '/api/v1/livestreams/$contentId/start';

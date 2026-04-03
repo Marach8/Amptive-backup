@@ -36,7 +36,7 @@ import '../features/calender/cubits/calender_programs_bloc.dart';
 import '../features/calender/cubits/selected_calender_date_bloc.dart';
 import '../bloc/main_app/profile/profile_menu/language_bloc.dart';
 import '../bloc/onboarding_bloc/onboarding_bloc.dart';
-import '../services/notification/notification_service.dart';
+import '../services/notification/push_notification_service.dart';
 
 Future<void> setup() async {
   // init firebase
@@ -51,7 +51,7 @@ Future<void> setup() async {
   GetIt.I.registerSingleton<PreferenceService>(PreferenceService());
   GetIt.I.registerSingleton<CreateShowService>(CreateShowService());
   GetIt.I.registerSingleton<GoLiveService>(GoLiveService());
-  GetIt.I.registerSingleton<NotificationService>(NotificationService());
+  GetIt.I.registerSingleton<PushNotificationService>(PushNotificationService());
   GetIt.I.registerSingleton<UserWsService>(UserWsService());
 
 

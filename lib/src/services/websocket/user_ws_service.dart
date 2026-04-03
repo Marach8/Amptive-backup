@@ -11,16 +11,7 @@ class UserWsService extends BaseWsService {
         );
 
   String? token;
-
-  Future<void> connectUser() async {
-    log("called>>>>>>>>>>>>>");
-    token = await _localStorageService.get(ATStrings.accessToken);
-    if (token == null) {
-      log("User Token not found. Connection Skipped", level: LogLevel.error);
-      return;
-    }
-    await connect();
-  }
+  bool _isConnected = false;
 
   final ATLocalStorageService _localStorageService =
       FlutterSecureStorageServiceImpl();
@@ -37,14 +28,32 @@ class UserWsService extends BaseWsService {
   }
 
   @override
-  void onConnected() => log('🟢 Connected', level: LogLevel.info);
+  void onConnected() {
+    _isConnected = true;
+    log('User Ws Connected', level: LogLevel.info);
+  }
 
   @override
-  void onDisconnected() => log('🔴 Disconnected', level: LogLevel.warn);
+  void onDisconnected() {
+    _isConnected = false;
+    log('User Ws Disconnected', level: LogLevel.warn);
+  }
 
   @override
   void onMaxRetriesExceeded() {
     log('Giving up reconnecting.', level: LogLevel.error);
+    _isConnected = false;
     // Notify a controller / Riverpod provider here
+  }
+
+  Future<void> connectUser() async {
+    if (!_isConnected) {
+      token = await _localStorageService.get(ATStrings.accessToken);
+      if (token == null) {
+        log("User Token not found. Connection Skipped", level: LogLevel.error);
+        return;
+      }
+      await connect();
+    }
   }
 }

@@ -15,6 +15,7 @@ import 'package:go_router/go_router.dart';
 import 'package:nested/nested.dart';
 import '../global_export.dart';
 import '../services/go_live_service/go_live_service.dart';
+import '../services/notification/push_notification_service.dart';
 import 'go_live/go_live_export.dart';
 import 'notifications/presentation/screens/notif_landing_screen.dart';
 
@@ -96,6 +97,8 @@ class __SubWidgetState extends State<_SubWidget> {
       context.read<HomeFeedCubit>().fetchHomeFeed();
       context.read<LiveUsersCubit>().fetchLiveUsers();
       context.read<LocalUserDataCubit>().initializeCachedData();
+      // init push notification and connect user to websocket
+      GetIt.I<PushNotificationService>().init();
       GetIt.I<UserWsService>().connectUser();
     });
   }
