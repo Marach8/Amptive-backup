@@ -60,7 +60,7 @@ class PushNotificationService {
 
       log("Token FCM Saved >>>>");
 
-      return res.data;
+      return res.data['message'];
     } catch (e) {
       log('Save token error: $e', level: LogLevel.error);
       return null;
