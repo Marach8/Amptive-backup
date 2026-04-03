@@ -25,10 +25,16 @@ class ATEndpoints {
   static const String getUserprofile = '/api/v1/users/me';
   static const String followers = '/api/v1/users/following';
   static const String getUsers = '/api/v1/users';
-  static const String tags = '/api/v1/tags/'; 
-  static const String createHashtag = '${tags}hashtags'; 
+  static const String tags = '/api/v1/tags/';
+  static const String createHashtag = '${tags}hashtags';
   static const String updateUserProfile = '/api/v1/users/me';
   static const String trendingHashtags = '/api/v1/tags/trending';
+  static const String searchUsers = '/api/v1/search/users';
+  static const String unifiedSearch = '/api/v1/search';
+  static const String searchShows = '/api/v1/search/shows';
+  static const String searchEvents = '/api/v1/search/events';
+  static const String searchHashtags = '/api/v1/search/hashtags';
+  static const String searchSuggestions = '/api/v1/search/suggestions';
   static const String fcmRegisterDevice = '/api/v1/notif/devices/register';
 
   static String getStreamTokenEndpoint(String streamId) => '/api/v1/livestreams/$streamId/token';

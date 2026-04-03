@@ -38,11 +38,11 @@ class ATUser {
       dob: json['dob'] as String?,
       name: json['name'] as String?,
       pictureUrl: json['profile_picture'] as String?,
-      followersCount: json['followers_count'] as int?,
+      followersCount: json['followers_count'],
     );
   }
   final String? id, email, username, dob, name, pictureUrl;
-  final int? followersCount;
+  final int ? followersCount;
 
     
   }
