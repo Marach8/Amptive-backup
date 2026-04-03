@@ -108,4 +108,31 @@ class EpisodesRepoImpl implements EpisodesRepo {
       );
     }
   }
+
+
+  @override
+  Future<ApiResponse<dynamic>> fetchEpisodesOfAShow({
+    required String showId,
+    required int page,
+    required int pageSize,
+    required String status,
+  }) async {
+    try {
+      final Response<dynamic> response = await networkService.get(
+        '${ATEndpoints.shows}$showId/episodes',
+        queryParameters: <String, dynamic>{
+          'page': page,
+          'page_size': pageSize,
+          'status': status,
+        },
+      );
+
+      return Successful<dynamic>(data: response.data);
+    } catch (e) {
+      log('Fetch episodes of show error: $e');
+      return Unsuccessful<dynamic>(
+        error: ATException.resolveException(e),
+      );
+    }
+  }
 }

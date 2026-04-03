@@ -26,4 +26,11 @@ abstract class EpisodesRepo {
     required String episodeId,
     required CreateEpisodePayload episodeData,
   });
+
+  Future<ApiResponse<dynamic>> fetchEpisodesOfAShow({
+    required String showId,
+    required int page,
+    required int pageSize,
+    required String status,
+  });
 }

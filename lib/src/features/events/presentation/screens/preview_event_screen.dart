@@ -123,33 +123,7 @@ class _EventSubWidgetState extends State<_EventSubWidget> {
                         delegate: ATSliverHDelegate(
                           maxExt: blurredHeaderHeight,
                           minExt: blurredHeaderHeight,
-                          child: ATBlurredHeaderWidget(
-                            child: Row(
-                              mainAxisAlignment:
-                                  MainAxisAlignment.spaceBetween,
-                              spacing: 20,
-                              children: <Widget>[
-                                Padding(
-                                  padding: const EdgeInsets.only(left: 5),
-                                  child: ATRoundedBackBtn(
-                                    bgColor: ATColors.transparent,
-                                    onTapOverride: (){
-                                      final HostedEvent? updatedEvent = context
-                                        .read<EventDetailCubit>().currentEventDetail;
-                                      context.pop(updatedEvent);
-                                    }
-                                  ),
-                                ),
-                                Flexible(
-                                  child: Text(
-                                    widget.hostedEvent.title ?? '',
-                                    style: context.textTheme.bodyMedium,
-                                  ),
-                                ),
-                                const SizedBox(width: 30)
-                              ],
-                            ),
-                          )
+                          child: const ATBlurredHeaderWidget(paddingFromTop: 50,),
                         ),
                       )
                     ],

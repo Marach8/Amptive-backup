@@ -101,28 +101,7 @@ class _SubWidgetState extends State<_SubWidget> {
                       delegate: ATSliverHDelegate(
                         maxExt: blurredHeaderHeight,
                         minExt: blurredHeaderHeight,
-                        child: ATBlurredHeaderWidget(
-                          child: Row(
-                            mainAxisAlignment:
-                                MainAxisAlignment.spaceBetween,
-                            spacing: 20,
-                            children: <Widget>[
-                              Padding(
-                                padding: const EdgeInsets.only(left: 5),
-                                child: ATRoundedBackBtn(
-                                  bgColor: ATColors.transparent,
-                                ),
-                              ),
-                              Flexible(
-                                child: Text(
-                                  widget.episode.title ?? '',
-                                  style: context.textTheme.bodyMedium,
-                                ),
-                              ),
-                              const SizedBox(width: 30)
-                            ],
-                          ),
-                        )
+                        child: const ATBlurredHeaderWidget(paddingFromTop: 50,)
                       ),
                     )
                   ],

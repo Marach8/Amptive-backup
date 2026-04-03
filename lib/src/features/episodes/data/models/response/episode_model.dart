@@ -1,6 +1,7 @@
 import 'package:amptive/src/shared/global_model_objects.dart';
+import 'package:equatable/equatable.dart';
 
-class Episode {
+class Episode extends Equatable{
   Episode({
     this.episodeId,
     this.showId,
@@ -143,4 +144,38 @@ class Episode {
   final List<CoHost>? coHosts;
   final Community? community;
   final List<HashTag>? tags;
+  
+  @override
+  List<Object?> get props => <Object?>[
+    episodeId,
+    showId,
+    episodeNumber,
+    title,
+    description,
+    thumbnailUrl,
+    status,
+    scheduledFor,
+    startedAt,
+    endedAt,
+    streamUrl,
+    streamKey,
+    playbackUrl,
+    livestreamId,
+    viewerCount,
+    peakViewers,
+    reactionCount,
+    commentCount,
+    goingCount,
+    durationSeconds,
+    host,
+    coHosts,
+    community,
+    tags,
+    handRaising,
+    createdAt,
+    updatedAt,
+    whispers,
+    priceOverride,
+    showTypeOverride,
+  ];
 }
