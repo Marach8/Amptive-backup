@@ -51,4 +51,9 @@ class EventDetailCubit extends Cubit<ATAppState<HostedEvent>> {
       );
     }
   }
+
+
+  void updateEvent(HostedEvent newEvent){
+    emit(SuccessState<HostedEvent>(newData: newEvent));
+  }
 }

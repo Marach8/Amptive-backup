@@ -1,7 +1,8 @@
 import 'package:amptive/src/shared/global_model_objects.dart';
+import 'package:equatable/equatable.dart';
 
-class Episode {
-  Episode({
+class Episode extends Equatable{
+  const Episode({
     this.episodeId,
     this.showId,
     this.episodeNumber,
@@ -30,6 +31,9 @@ class Episode {
     this.createdAt,
     this.updatedAt,
     this.whispers,
+    this.priceOverride,
+    this.showTypeOverride,
+    this.parentShowTitle,
   });
 
   factory Episode.fromJson(Map<String, dynamic> json) {
@@ -68,16 +72,22 @@ class Episode {
       whispers: json['whispers'],
       createdAt: json['created_at'],
       updatedAt: json['updated_at'],
+      priceOverride: json['price_override'],
+      showTypeOverride: json['show_type_override'],
     );
   }
 
   /// CopyWith that only changes showId
-  Episode copyShowId({String? showId}) {
+  Episode copyWith({
+    String? showId,
+    String? parentShowTitle,
+  }) {
     return Episode(
       episodeId: episodeId,
       showId: showId ?? this.showId,
       episodeNumber: episodeNumber,
       title: title,
+      parentShowTitle: parentShowTitle ?? this.parentShowTitle,
       description: description,
       thumbnailUrl: thumbnailUrl,
       status: status,
@@ -102,6 +112,8 @@ class Episode {
       createdAt: createdAt,
       updatedAt: updatedAt,
       whispers: whispers,
+      priceOverride: priceOverride,
+      showTypeOverride: showTypeOverride,
     );
   }
 
@@ -119,7 +131,9 @@ class Episode {
       playbackUrl,
       livestreamId,
       createdAt,
-      updatedAt;
+      updatedAt,
+      showTypeOverride,
+      parentShowTitle;
 
   final int? episodeNumber,
       viewerCount,
@@ -130,9 +144,45 @@ class Episode {
       durationSeconds;
 
   final bool? handRaising, whispers;
+  final double? priceOverride;
 
   final Host? host;
   final List<CoHost>? coHosts;
   final Community? community;
   final List<HashTag>? tags;
+  
+  @override
+  List<Object?> get props => <Object?>[
+    episodeId,
+    showId,
+    episodeNumber,
+    title,
+    description,
+    thumbnailUrl,
+    status,
+    scheduledFor,
+    startedAt,
+    endedAt,
+    streamUrl,
+    streamKey,
+    playbackUrl,
+    parentShowTitle,
+    livestreamId,
+    viewerCount,
+    peakViewers,
+    reactionCount,
+    commentCount,
+    goingCount,
+    durationSeconds,
+    host,
+    coHosts,
+    community,
+    tags,
+    handRaising,
+    createdAt,
+    updatedAt,
+    whispers,
+    priceOverride,
+    showTypeOverride,
+  ];
 }

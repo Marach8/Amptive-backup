@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:typed_data';
 import 'dart:ui';
 import 'package:amptive/src/features/episodes/presentation/widgets/whispers_permision_modal.dart';
+import 'package:amptive/src/features/events/cubits/edit_event_cubit.dart';
 import 'package:amptive/src/features/events/cubits/start_event_cubit.dart';
 import 'package:amptive/src/features/events/data/models/request/create_event_model.dart';
 import 'package:amptive/src/features/events/presentation/screens/select_schedule_date_screen.dart';
@@ -28,7 +29,6 @@ import 'package:amptive/src/features/discover/cubits/communities_cubit.dart';
 import 'package:amptive/src/features/auth/cubits/upload_image_cubit.dart';
 import 'package:amptive/src/features/discover/cubits/hashtags_cubit.dart';
 import 'package:amptive/src/features/discover/cubits/users_cubits.dart';
-import 'package:amptive/src/features/shows/cubits/create_show_cubit.dart';
 import 'package:amptive/src/features/events/cubits/create_event_cubit.dart';
 import 'package:amptive/src/features/events/data/models/response/event_response_model.dart';
 import 'package:amptive/src/global_export.dart';
@@ -36,38 +36,41 @@ import 'package:go_router/go_router.dart';
 import 'package:nested/nested.dart' show SingleChildWidget;
 import '../../../../config/utils/dialogs/communities_modal.dart';
 
-class CreateEventFormScreen extends StatelessWidget {
-  const CreateEventFormScreen({
+class EditEventFormScreen extends StatelessWidget {
+  const EditEventFormScreen({
     super.key,
-    required this.hostedEventsCubit,
+    required this.editableEvent,
   });
-  final HostedEventsCubit hostedEventsCubit;
+
+  final HostedEvent editableEvent;
 
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: <SingleChildWidget>[
         BlocProvider<CommunitiesCubit>(create: (_) => CommunitiesCubit()),
-        BlocProvider<CreateShowCubit>(create: (_) => CreateShowCubit()),
         BlocProvider<UploadImageCubit>(create: (_) => UploadImageCubit()),
         BlocProvider<BlurredHeaderCubit>(
           create: (_) => BlurredHeaderCubit(),),
-        BlocProvider<BgImageCubit>(create: (_) => BgImageCubit()),
+        BlocProvider<BgImageCubit>(create: (_) => BgImageCubit(
+          initialImage: editableEvent.coverUrl
+        )),
         BlocProvider<AllUsersCubit>(create: (_) => AllUsersCubit()),
         BlocProvider<AllHashtagsCubit>(create: (_) => AllHashtagsCubit()),
         BlocProvider<SelectedHashTagsCubit>(
-          create: (_) => SelectedHashTagsCubit()),
-        BlocProvider<HostedEventsCubit>.value(value: hostedEventsCubit),
-        BlocProvider<CreateEventCubit>(create: (_) => CreateEventCubit()),
-        BlocProvider<StartEventCubit>(create: (_) => StartEventCubit())
+          create: (_) => SelectedHashTagsCubit(
+            initialHashtags: editableEvent.tags,
+          )),
+        BlocProvider<EditEventCubit>(create: (_) => EditEventCubit()),
       ],
-      child: const _SubWidget(),
+      child: _SubWidget(editableEvent: editableEvent),
     );
   }
 }
 
 class _SubWidget extends StatefulWidget {
-  const _SubWidget();
+  const _SubWidget({required this.editableEvent});
+  final HostedEvent editableEvent;
 
   @override
   State<_SubWidget> createState() => __SubWidgetState();
@@ -79,9 +82,8 @@ class __SubWidgetState extends State<_SubWidget> {
   final StreamController<String> _descStreamCntrl = StreamController<String>();
 
   //Null for loading, false for disabled, true for enabled.
-  final ValueNotifier<bool?> _launchShowBtnNotifier = ValueNotifier<bool?>(false);
-  final ValueNotifier<(bool?, ScheduleBtnOnTap)> _activateBtn =
-      ValueNotifier<(bool?, ScheduleBtnOnTap)>((false, ScheduleBtnOnTap.goLive));
+  final ValueNotifier<bool?> _activateBtn =
+      ValueNotifier<bool?>(false);
 
   String selectedDescription = ATStrings.tellListenersAboutYourEvent;
   String selectedCapacity = 'Unlimited';
@@ -98,8 +100,32 @@ class __SubWidgetState extends State<_SubWidget> {
   @override
   void initState() {
     super.initState();
-    _titleCntrl = TextEditingController()
+    _titleCntrl = TextEditingController(text: widget.editableEvent.title)
       ..addListener(() => _titleStreamCntrl.add(_titleCntrl.text.trim()));
+      
+    _titleStreamCntrl.add(_titleCntrl.text.trim());
+    _descStreamCntrl.add(widget.editableEvent.description ?? '');
+    _activateBtn.value = widget.editableEvent.coverUrl != null;
+
+    selectedDescription = widget.editableEvent.description ?? ATStrings.tellListenersAboutYourEvent;
+    selectedCapacity = widget.editableEvent.capacity ?? 'Unlimited';
+    selectedCommunity = widget.editableEvent.community;
+    selectedCohosts = widget.editableEvent.coHosts;
+    selectedHashtags = widget.editableEvent.tags;
+    _scheduleDate = DateTime.tryParse(widget.editableEvent.scheduledFor ?? '');
+
+    selectedPermission = (widget.editableEvent.handRaising ?? false) 
+      ? HandRaisingPermission.allow : HandRaisingPermission.dontAllow;
+      
+    selectedWhispersPermission = (widget.editableEvent.whispers ?? false)
+      ? WhispersPermission.allow : WhispersPermission.dontAllow;
+
+    accessTypeData = ProgramAccessTypeSelectionData(
+      accessType: widget.editableEvent.eventType == 'free'
+        ? ProgramAccessType.free : ProgramAccessType.paid,
+      subscriptionAmount: widget.editableEvent.price ?? 0.01,
+    );
+    
     WidgetsBinding.instance.addPostFrameCallback((_) {
       context.read<CommunitiesCubit>().fetchCommunities();
       context.read<AllUsersCubit>().fetchAllUsers();
@@ -107,21 +133,10 @@ class __SubWidgetState extends State<_SubWidget> {
     });
   }
 
-  void _toggleBtnOnTap() {
-    final ScheduleBtnOnTap initialOnTap = _activateBtn.value.$2;
-    if (initialOnTap == ScheduleBtnOnTap.goLive) {
-      _activateBtn.value = (_activateBtn.value.$1, ScheduleBtnOnTap.scheduleEvent);
-    } else {
-      _scheduleDate = null;
-      _activateBtn.value = (_activateBtn.value.$1, ScheduleBtnOnTap.goLive);
-    }
-  }
-
   @override
   void dispose() {
     _titleCntrl.dispose();
     _titleStreamCntrl.close();
-    _launchShowBtnNotifier.dispose();
     _activateBtn.dispose();
     _descStreamCntrl.close();
     super.dispose();
@@ -177,7 +192,7 @@ class __SubWidgetState extends State<_SubWidget> {
                                       padding: EdgeInsets.only(left: 7),
                                       child: ATXBackBtn()),
                                   Text(
-                                    ATStrings.createEvent,
+                                    '${ATStrings.edit} ${ATStrings.event}',
                                     style: context.textTheme.bodyMedium,
                                   ),
                                   Padding(
@@ -185,19 +200,16 @@ class __SubWidgetState extends State<_SubWidget> {
                                         const EdgeInsets.only(right: 15),
                                     child: InkWell(
                                         onTap: ()async{
-                                          final ScheduleBtnOnTap currentOnTap = _activateBtn.value.$2;
-                                          if(currentOnTap == ScheduleBtnOnTap.goLive){
-                                            final DateTime? selectedDate = await context.pushNamed(
-                                              ATRoutes.selectScheduleDateScreen,
-                                              extra: SelectScheduleDataScreenEntryParams(
-                                                selectedBgImage: context.read<BgImageCubit>().state.$2,
-                                                programName: 'Event',
-                                                incomingDate: _scheduleDate
-                                              )
-                                            ) as DateTime?;
-                                            _scheduleDate = selectedDate;
-                                          }
-                                          _toggleBtnOnTap();
+                                          final DateTime? newDate = await context.pushNamed(
+                                            ATRoutes.selectScheduleDateScreen,
+                                            extra: SelectScheduleDataScreenEntryParams(
+                                              selectedBgImage: context.read<BgImageCubit>().state.$2,
+                                              programName: 'Event',
+                                              incomingBgImageUrl: widget.editableEvent.coverUrl,
+                                              incomingDate: _scheduleDate
+                                            )
+                                          ) as DateTime?;
+                                          _scheduleDate = newDate;
                                         },
                                         borderRadius:
                                             BorderRadius.circular(30),
@@ -220,6 +232,7 @@ class __SubWidgetState extends State<_SubWidget> {
                             child: SelectProgramCoverArt(
                               onImageSelected:
                                   blocContext.read<BgImageCubit>().setBgImage,
+                              initialImage: widget.editableEvent.coverUrl,
                             ),
                           ),
                           Padding(
@@ -272,7 +285,7 @@ class __SubWidgetState extends State<_SubWidget> {
                           Padding(
                             padding: const EdgeInsets.fromLTRB(15, 0, 15, 30),
                             child: StatefulBuilder(builder:
-                                (_, void Function(void Function()) setter) {
+                                (_, StateSetter setter) {
                               return CreateProgramSelectionItem(
                                 description: selectedDescription,
                                 descStyle: selectedDescription == 
@@ -379,7 +392,8 @@ class __SubWidgetState extends State<_SubWidget> {
                                             setter(() => selectedCohosts = newCohosts);
                                           }
                                         },
-                                        selectedCohosts: selectedCohosts!)
+                                        selectedCohosts: selectedCohosts!
+                                    )
                                     : CreateProgramSelectionItem(
                                         leading: const ATImgLoader(
                                           height: 20,
@@ -452,6 +466,7 @@ class __SubWidgetState extends State<_SubWidget> {
                               );
                             }
                           ),
+                          
                           Padding(
                             padding: const EdgeInsets.fromLTRB(15, 0, 15, 30),
                             child: Text(
@@ -712,46 +727,13 @@ class __SubWidgetState extends State<_SubWidget> {
         resizeToAvoidBottomInset: false,
         bottomSheet: MultiBlocListener(
           listeners: <SingleChildWidget>[
-            //Listen to starting an event
-            BlocListener<StartEventCubit, ATAppState<HostedEvent>>(
-              listener: (_, ATAppState<HostedEvent> state){
-                if(state is SuccessState<HostedEvent>){
-                  _activateBtn.value = (true, _activateBtn.value.$2);
-                  context.read<HostedEventsCubit>()
-                    .addNewHostedEvent(state.newData);
-
-                  context.pushReplacementNamed(
-                    ATRoutes.goLiveOnboarding,
-                    extra: state.newData
-                  );
-                }
-                else if(state is FailureState<HostedEvent>){
-                  _activateBtn.value = (true, _activateBtn.value.$2);
-
-                  showAppNotification2(
-                    context: context,
-                    text: state.message,
-                    type: NotificationType.failure,
-                  );
-                }
-              },
-            ),
-            //Listen to Background image selection
-            BlocListener<BgImageCubit, (String, Uint8List?)>(
-              listener: (_, (String, Uint8List?) state) {
-                if (state.$2 != null) {
-                  _activateBtn.value = (true, _activateBtn.value.$2);
-                } else {
-                  _activateBtn.value = (false, _activateBtn.value.$2);
-                }
-              },
-            ),
             //Listen to uploading bacground cover art
             BlocListener<UploadImageCubit, ATAppState<String>>(
               listener: (_, ATAppState<String> state) {
                 if (state is SuccessState<String>) {
                   //If we upload image successfully, create the episode.
-                  context.read<CreateEventCubit>().createEvent(
+                  context.read<EditEventCubit>().editEvent(
+                    eventId: widget.editableEvent.eventId ?? '',
                     createEventModel: CreateEventPayload(
                       tagIds: (selectedHashtags ?? <HashTag>[])
                         .map((HashTag tag) => tag.id ?? '')
@@ -780,59 +762,19 @@ class __SubWidgetState extends State<_SubWidget> {
                     text: state.message,
                     type: NotificationType.failure,
                   );
-                  _activateBtn.value = (true, _activateBtn.value.$2);
+                  _activateBtn.value = true;
                 }
               },
             ),
             //Listen to creating the event draft.
-            BlocListener<CreateEventCubit, ATAppState<HostedEvent>>(
+            BlocListener<EditEventCubit, ATAppState<HostedEvent>>(
               listener: (_, ATAppState<HostedEvent> state) async{
                 if (state is SuccessState<HostedEvent>) {
-                  final bool shouldStartLive = _activateBtn.value.$2 
-                    == ScheduleBtnOnTap.goLive;
-                  if(shouldStartLive){
-                    final HostedEvent? event = state.newData;
-                    context.read<StartEventCubit>().startEvent(
-                      eventId: event?.eventId ?? '',
-                      streamUrl: event?.streamUrl ?? '', 
-                      streamKey: event?.streamKey ?? '',
-                      reason: 'Starting an event'
-                    );
-                    return;
-                  }
-
-                  _activateBtn.value = (true, _activateBtn.value.$2);
-                  context.read<HostedEventsCubit>()
-                    .addNewHostedEvent(state.newData);
-
-                  final dynamic params = ProgramCreationSuccessScreenParams(
-                    coverArtBytes: context.read<BgImageCubit>().state.$2!,
-                    title: ATStrings.eventScheduled,
-                    subtitle: ATStrings.shareEventLinkDesc,
-                    btnTitle: ATStrings.shareEvent,
-                    txtBtnTitle: ATStrings.viewEventPage,
-                    topLogo: const ProgramSuccessCalenderIcon()
-                  );
-    
-                  final ButtonPressed? onPressedResult = await context.pushNamed(
-                    ATRoutes.programCreationSuccessScreen,
-                    extra: params
-                  ) as ButtonPressed?;
-    
-                  if(context.mounted){
-                    if(onPressedResult == ButtonPressed.elevatedBtn){
-                      // context.pushReplacementNamed(
-                      //   ATRoutes.createEpisodeForm);
-                    } else if(onPressedResult == ButtonPressed.textBtn){
-                      context.pushReplacementNamed(
-                        ATRoutes.eventPreviewScreen,
-                        extra: state.newData
-                      );
-                    }
-                  }
+                  _activateBtn.value = true;
+                  context.pop(state.newData);
                 } 
                 else if (state is FailureState<HostedEvent>) {
-                  _activateBtn.value = (true, _activateBtn.value.$2);
+                  _activateBtn.value = true;
                   showAppNotification2(
                     context: context,
                     text: state.message,
@@ -842,15 +784,13 @@ class __SubWidgetState extends State<_SubWidget> {
               },
             )
           ],
-          child: ValueListenableBuilder<(bool?, ScheduleBtnOnTap)>(
+          child: ValueListenableBuilder<bool?>(
               valueListenable: _activateBtn,
-              builder: (_, (bool?, ScheduleBtnOnTap) value, __) {
-                final bool shouldGoToGoLive = _activateBtn.value.$2 == ScheduleBtnOnTap.goLive;
-      
+              builder: (_, bool? value, __) {
                 //null for loading, false for disabled, true for enabled for the bool.
                 return ATBlurredBgBtn(
-                  isLoading: value.$1 == null,
-                  onPressed: value.$1 == false ? null : () {
+                  isLoading: value == null,
+                  onPressed: value == false ? null : () {
                     String errorMessage = '';
                     if (_titleCntrl.text.trim().isEmpty) {
                       errorMessage = 'Please enter a title';
@@ -871,12 +811,7 @@ class __SubWidgetState extends State<_SubWidget> {
                     else if(selectedWhispersPermission == null) {
                       errorMessage = 'Please choose whether to allow whispers for this episode';
                     }
-                    final ScheduleBtnOnTap currentOnTap = _activateBtn.value.$2;
-                    if(currentOnTap == ScheduleBtnOnTap.scheduleEvent 
-                      && _scheduleDate == null){
-                      errorMessage = 'Please choose a schedule date/time for this event';
-                    }
-      
+
                     if(errorMessage.isNotEmpty){
                       showAppNotification2(
                         context: context,
@@ -887,15 +822,15 @@ class __SubWidgetState extends State<_SubWidget> {
                     }
       
                     //Start loading on button press.
-                    _activateBtn.value = (null, _activateBtn.value.$2);
+                    _activateBtn.value = null;
                     //Try to upload the cover image.
                     context.read<UploadImageCubit>().uploadBytesImage(
-                      bytes: context.read<BgImageCubit>().state.$2!,
+                      bytes: context.read<BgImageCubit>().state.$2,
                       purpose: 'cover-art',
+                      existingImageUrl: widget.editableEvent.coverUrl,
                     );
                   },
-                  btnTitle: shouldGoToGoLive ? ATStrings.goLive 
-                    : '${ATStrings.schedule} event',
+                  btnTitle: 'Accept changes'
                 );
               }
             )
@@ -903,26 +838,4 @@ class __SubWidgetState extends State<_SubWidget> {
       ),
     );
   }
-}
-
-
-String getEventAccessTypeDescText({
-  required ProgramAccessTypeSelectionData? accessTypeData,
-}) {
-  String accessTypeTextDesc = ATStrings.selectWhoCanAccessYourEvent;
-
-  if (accessTypeData?.accessType == null) {
-    accessTypeTextDesc = ATStrings.selectWhoCanAccessYourEvent;
-  } else {
-    final ProgramAccessType? accessType = accessTypeData?.accessType;
-    if (accessType == ProgramAccessType.free) {
-      accessTypeTextDesc = ATStrings.free;
-    } else {
-      final double? subAmount = accessTypeData?.subscriptionAmount;
-      accessTypeTextDesc =
-        '${ATStrings.paid} ${ATStrings.dot} ${ATStrings.nairaText}$subAmount';
-    }
-  }
-
-  return accessTypeTextDesc;
 }

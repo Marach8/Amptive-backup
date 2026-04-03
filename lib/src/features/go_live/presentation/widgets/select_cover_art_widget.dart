@@ -14,9 +14,11 @@ class SelectProgramCoverArt extends StatefulWidget {
   const SelectProgramCoverArt({
     super.key,
     required this.onImageSelected,
+    this.initialImage,
   });
 
   final void Function(Uint8List) onImageSelected;
+  final String? initialImage;
 
   @override
   State<SelectProgramCoverArt> createState() => _SelectProgramCoverArtState();
@@ -58,8 +60,9 @@ class _SelectProgramCoverArtState extends State<SelectProgramCoverArt> {
         alignment: Alignment.center,
         children: <Widget>[
           selectedImgBytes == null
-              ? const ATImgLoader(
-                  imgPath: ATImgStrings.createShowPlaceholder,
+              ? ATImgLoader(
+                  imgPath: widget.initialImage 
+                    ?? ATImgStrings.createShowPlaceholder,
                   boxFit: BoxFit.cover,
                   height: 160,
                   width: 160,

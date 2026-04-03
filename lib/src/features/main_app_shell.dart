@@ -121,11 +121,12 @@ class __SubWidgetState extends State<_SubWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocListener<AuthGuardCubit, bool?>(
-      listener: (_, bool? isNotAuthenticated){
+    return BlocListener<AuthGuardCubit, bool>(
+      listener: (_, bool isNotAuthenticated){
         if(isNotAuthenticated == true){
-          context.read<AuthGuardCubit>().reset();
-          context.goNamed(
+          final BuildContext activeContext = navigatorKey.currentContext ?? context;
+          activeContext.read<AuthGuardCubit>().reset();
+          activeContext.goNamed(
             ATRoutes.temporaryLoginScreen,
             extra: const LoginScreenEntryParams(
               title: 'Login',

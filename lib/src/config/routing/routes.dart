@@ -25,6 +25,8 @@ import 'package:amptive/src/features/calender/presentation/screens/calender_land
 import 'package:amptive/src/features/discover/presentation/views/society_screen.dart';
 import 'package:amptive/src/features/discover/presentation/views/trending_hashtags_screen.dart';
 import 'package:amptive/src/features/episodes/data/models/response/episode_model.dart';
+import 'package:amptive/src/features/episodes/presentation/screens/edit_episode_form_screen.dart';
+import 'package:amptive/src/features/events/presentation/screens/edit_event_form_screen.dart';
 import 'package:amptive/src/features/events/presentation/screens/select_schedule_date_screen.dart';
 import 'package:amptive/src/features/home/presentation/screens/following_screen.dart';
 import 'package:amptive/src/features/home/presentation/screens/live_show_detailed_screen.dart';
@@ -64,7 +66,11 @@ import '../../features/shows/cubits/hosted_shows_cubit.dart' show HostedShowsCub
 import '../../features/wallet/wallet_export.dart';
 
 // The route configuration.
+
+final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
+
 final GoRouter amptiveAppRouter = GoRouter(
+  navigatorKey: navigatorKey,
   initialLocation: ATRoutes.mainAppShell.addSlash,
   //redirect: tempRedirect,
   //initialLocation: ATRoutes.temporaryLoginScreen.addSlash,
@@ -647,6 +653,29 @@ final GoRouter amptiveAppRouter = GoRouter(
               return ATSlidingRouteTransition<void>(
                   child: PreviewEventScreen(
                 hostedEvent: hostedEvent,
+              ));
+            },
+          ),
+          
+          GoRoute(
+            name: ATRoutes.editEventScreen,
+            path: ATRoutes.editEventScreen.addSlash,
+            pageBuilder: (_, GoRouterState state) {
+              HostedEvent eventToEdit = state.extra as HostedEvent;
+              return ATSlidingRouteTransition<void>(
+                  child: EditEventFormScreen(
+                editableEvent: eventToEdit,
+              ));
+            },
+          ),
+
+          GoRoute(
+            name: ATRoutes.editEpisodeScreen,
+            path: ATRoutes.editEpisodeScreen.addSlash,
+            pageBuilder: (_, GoRouterState state) {
+              return ATSlidingRouteTransition<void>(
+                  child: EditEpisodeFormScreen(
+                editableEpisode: state.extra as Episode,
               ));
             },
           ),

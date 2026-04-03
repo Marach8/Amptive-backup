@@ -38,8 +38,7 @@ Future<List<User>?> showAvailableCoHostsModal({
             DraggableScrollableSheet(
               expand: false,
               initialChildSize: 0.7,
-              builder:
-                  (BuildContext bContext, ScrollController scrollController) {
+              builder: (_, ScrollController scrollController) {
                 return _SelectCohostModal(scrollController: scrollController);
               },
             ),
@@ -83,7 +82,7 @@ class _SelectCohostModalState extends State<_SelectCohostModal> {
   }
 
   void _onCohostsScrollToEnd() {
-    const double threshHold = 80;
+    const double threshHold = 50;
     if (widget.scrollController.position.pixels >=
         widget.scrollController.position.maxScrollExtent + threshHold) {
       context.read<AllUsersCubit>().fetchAllUsers();
@@ -100,9 +99,7 @@ class _SelectCohostModalState extends State<_SelectCohostModal> {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
-              const SizedBox(
-                width: 70,
-              ),
+              const SizedBox(width: 70),
               Text(ATStrings.addCohost, style: context.textTheme.bodyLarge),
               BlocBuilder<SelectedCohostsCubit, List<User>>(
                   builder: (_, List<User> selectedCoHosts) {
@@ -153,9 +150,11 @@ class _SelectCohostModalState extends State<_SelectCohostModal> {
         ),
         const SelectedCohostsRow(),
         Expanded(
-            child: AvailableCohostsList(
-                scrollController: widget.scrollController,
-                selectionMode: CohostSelectionMode.multiple)),
+          child: AvailableCohostsList(
+            scrollController: widget.scrollController,
+            selectionMode: CohostSelectionMode.multiple
+          )
+        ),
       ],
     );
   }

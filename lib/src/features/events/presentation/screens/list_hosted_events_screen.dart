@@ -252,6 +252,7 @@ class __SubWidgetState extends State<_SubWidget> {
               ],
             );
           }),
+
           resizeToAvoidBottomInset: false,
           bottomSheet: BlocBuilder<HostedEventSelectionCubit, HostedEvent?>(
               builder: (_, HostedEvent? selectedEvent) {
@@ -259,11 +260,16 @@ class __SubWidgetState extends State<_SubWidget> {
             return ATBlurredBgBtn(
               btnTitle: ATStrings.next,
               onPressed: shouldActivate
-                  ? () {
-                      context.pushNamed(
+                  ? () async{
+                      final HostedEvent? editedEvent = await context.pushNamed(
                         ATRoutes.eventPreviewScreen,
                         extra: selectedEvent,
-                      );
+                      ) as HostedEvent?;
+
+                      if(context.mounted && editedEvent != null
+                        && editedEvent != selectedEvent){
+                        context.read<HostedEventsCubit>().updateAnEvent(editedEvent);
+                      }
                     }
                   : null,
             );

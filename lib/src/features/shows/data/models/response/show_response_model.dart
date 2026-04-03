@@ -51,9 +51,14 @@ class HostedShow extends Equatable {
     this.activeEpisode,
     this.isLive,
     this.community,
+    this.episodes,
   });
 
   factory HostedShow.fromJson(Map<String, dynamic> json) {
+    final Episode? activeEpisode = json['active_episode'] != null
+      ? Episode.fromJson(json['active_episode'])
+      : null;
+
     return HostedShow(
       showId: json['show_id'],
       title: json['title'],
@@ -79,9 +84,8 @@ class HostedShow extends Equatable {
       createdAt: json['created_at'],
       community: json['community'],
       updatedAt: json['updated_at'],
-      activeEpisode: json['active_episode'] != null
-          ? Episode.fromJson(json['active_episode'])
-          : null,
+      activeEpisode: activeEpisode,
+      episodes: activeEpisode != null ? <Episode>[activeEpisode] : null,
     );
   }
 
@@ -102,8 +106,38 @@ class HostedShow extends Equatable {
   final bool? isLive;
   final List<CoHost>? coHosts;
   final List<HashTag>? tags;
+  final List<Episode>? episodes;
   final Community? community;
   final Episode? activeEpisode;
+
+
+  HostedShow copyEpisodes(List<Episode> updatedEpisodes){
+    return HostedShow(
+      showId: showId,
+      title: title,
+      description: description,
+      coverUrl: coverUrl,
+      category: category,
+      showType: showType,
+      price: price,
+      status: status,
+      episodeCount: episodeCount,
+      totalViewers: totalViewers,
+      goingCount: goingCount,
+      followerCount: followerCount,
+      isLive: isLive,
+      host: host,
+      coHosts: coHosts,
+      tags: tags,
+      publishedAt: publishedAt,
+      createdAt: createdAt,
+      updatedAt: updatedAt,
+      community: community,
+      activeEpisode: activeEpisode,
+      episodes: updatedEpisodes,
+    );
+  }
+
 
   @override
   List<Object?> get props => <Object?>[
@@ -128,5 +162,6 @@ class HostedShow extends Equatable {
         activeEpisode,
         isLive,
         community,
+        episodes,
       ];
 }

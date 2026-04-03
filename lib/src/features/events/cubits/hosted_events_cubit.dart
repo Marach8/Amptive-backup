@@ -89,4 +89,27 @@ class HostedEventsCubit extends Cubit<ATAppState<HostedEventsResponseModel>> {
 
     emit(SuccessState<HostedEventsResponseModel>(newData: newData));
   }
+
+
+  void updateAnEvent(HostedEvent event) {
+    final String? eventId = event.eventId;
+    final List<HostedEvent>? currentEvents = currentHostedEventsData?.hostedEvents;
+    if (eventId == null || currentEvents == null) return;
+
+    final int eventIndex = currentEvents.indexWhere(
+      (HostedEvent element) => element.eventId == eventId);
+    if (eventIndex == -1) return;
+    final List<HostedEvent> eventsCopy = List<HostedEvent>.from(currentEvents);
+    eventsCopy[eventIndex] = event;
+
+    final HostedEventsResponseModel newData = HostedEventsResponseModel(
+      hostedEvents: eventsCopy,
+      total: (currentHostedEventsData?.total ?? 0),
+      page: currentHostedEventsData?.page,
+      pageSize: currentHostedEventsData?.pageSize,
+      hasMore: currentHostedEventsData?.hasMore,
+    );
+
+    emit(SuccessState<HostedEventsResponseModel>(newData: newData));
+  }
 }
