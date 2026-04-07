@@ -35,6 +35,7 @@ class ATEndpoints {
   static const String searchEvents = '/api/v1/search/events';
   static const String searchHashtags = '/api/v1/search/hashtags';
   static const String searchSuggestions = '/api/v1/search/suggestions';
+  static const String registerDevice = '/api/v1/notif/devices/register';
   static const String fcmRegisterDevice = '/api/v1/notif/devices/register';
 
   static String getStreamTokenEndpoint(String streamId) => '/api/v1/livestreams/$streamId/token';
