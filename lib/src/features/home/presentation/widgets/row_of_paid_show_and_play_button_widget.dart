@@ -1,13 +1,23 @@
+import 'package:amptive/src/config/routing/route_strings.dart';
 import 'package:amptive/src/config/utils/colors.dart';
 import 'package:amptive/src/config/utils/font_sizes.dart';
 import 'package:amptive/src/config/utils/font_weights.dart';
 import 'package:amptive/src/config/utils/other_strings.dart';
+import 'package:amptive/src/features/go_live/models/go_live_program_params.dart';
+import 'package:amptive/src/features/home/data/models/response/home_feed_response_model.dart';
+import 'package:amptive/src/features/main_app_shell.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import '../../../../config/utils/extensions/context_extensions.dart';
 
 class PaidShowAndPlayBtnWidget extends StatelessWidget {
-  const PaidShowAndPlayBtnWidget({super.key, this.icon});
+  const PaidShowAndPlayBtnWidget({
+    super.key,
+    this.icon,
+    this.homeFeedItem,
+  });
   final IconData? icon;
+  final HomeFeedItem? homeFeedItem;
 
   @override
   Widget build(BuildContext context) {
@@ -29,10 +39,24 @@ class PaidShowAndPlayBtnWidget extends StatelessWidget {
         SizedBox(
           height: 45,
           width: 45,
-          child: CircleAvatar(
+          child: GestureDetector(
+            onTap: homeFeedItem?.livestreamId != null
+                ? () {
+                    context.pushNamed(
+                      ATRoutes.MAIN_GO_LIVE_PROGRAM,
+                      extra: GoLiveProgramParams(
+                        streamId: homeFeedItem!.livestreamId!,
+                        userType: GoLiveUserType.audience,
+                      ),
+                    );
+                  }
+                : null,
+            child: CircleAvatar(
               backgroundColor: ATColors.hexB6B6B6,
               child: Icon(icon ?? Icons.play_arrow,
-                  color: ATColors.hex0D0D0D, size: 30)),
+                  color: ATColors.hex0D0D0D, size: 30),
+            ),
+          ),
         )
       ],
     );

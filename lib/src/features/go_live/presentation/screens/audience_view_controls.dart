@@ -1,3 +1,4 @@
+import 'package:amptive/src/features/go_live/cubits/livestream_bloc.dart';
 import 'package:amptive/src/global_export.dart';
 import 'package:amptive/src/shared/circular_image.dart';
 import 'package:amptive/src/shared/image_loader_widget.dart';
@@ -111,6 +112,12 @@ class _GoLiveAudienViewControlsWidgetState
                         return InkWell(
                           onTap: value
                               ? () {
+                                  final String message = _cntrl.text.trim();
+                                  if (message.isNotEmpty) {
+                                    context.read<LivestreamBloc>().add(
+                                          SendChatMessage(message: message),
+                                        );
+                                  }
                                   _cntrl.clear();
                                   _focusNode.unfocus();
                                 }
@@ -176,9 +183,9 @@ class _RowOfBtns extends StatelessWidget {
         ),
         EachGoLiveControlBtn(
           onTap: () async {
-            context
-                .read<AmptiveGoLiveSelectCoHostBloc>()
-                .hostAddCohost(getHostList()[2]);
+            context.read<LivestreamBloc>().add(
+                  const SendReactionEvent(emoji: '❤️'),
+                );
           },
           margin: EdgeInsets.zero,
           child: Icon(

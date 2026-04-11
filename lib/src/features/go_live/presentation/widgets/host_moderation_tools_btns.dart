@@ -1,4 +1,5 @@
 import 'package:amptive/src/bloc/main_app/go_live_bloc/host_view/notifications_bloc.dart';
+import 'package:amptive/src/features/go_live/cubits/livestream_bloc.dart';
 import 'package:amptive/src/features/go_live/presentation/widgets/host_moderation_tools_dialog.dart';
 import 'package:amptive/src/shared/circular_image.dart';
 import 'package:amptive/src/shared/image_loader_widget.dart';
@@ -123,6 +124,12 @@ class _HostModerationToolsBtnsState extends State<HostModerationToolsBtns> {
                         return InkWell(
                           onTap: value
                               ? () {
+                                  final String message = _cntrl.text.trim();
+                                  if (message.isNotEmpty) {
+                                    context.read<LivestreamBloc>().add(
+                                          SendChatMessage(message: message),
+                                        );
+                                  }
                                   _cntrl.clear();
                                   _focusNode.unfocus();
                                 }
@@ -154,9 +161,7 @@ class _RowOfBtns extends StatelessWidget {
       children: <Widget>[
         EachGoLiveControlBtn(
           onTap: () {
-            context
-                .read<AmptiveGoLiveNotificationBloc>()
-                .addGiftingNotification(getHostList()[5]);
+            context.read<LivestreamBloc>().add(const ToggleMuteEvent());
           },
           child: const Icon(Icons.mic, size: 20),
         ),

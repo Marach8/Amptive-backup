@@ -106,7 +106,7 @@ class RenderHomeFeedItem extends StatelessWidget {
                       const SizedBox(
                         height: 10,
                       ),
-                      const PaidShowAndPlayBtnWidget(),
+                      PaidShowAndPlayBtnWidget(homeFeedItem: homeFeedItem),
                     ],
                   ),
                 ),

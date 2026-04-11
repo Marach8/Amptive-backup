@@ -3,6 +3,7 @@ import 'package:amptive/src/config/utils/font_sizes.dart';
 import 'package:amptive/src/config/utils/image_strings.dart';
 import 'package:amptive/src/config/utils/dialogs/app_notification_dialog.dart';
 import 'package:amptive/src/config/utils/helper_functions.dart';
+import 'package:amptive/src/features/go_live/cubits/livestream_bloc.dart';
 import 'package:amptive/src/features/main_app_nav_bar.dart';
 import 'package:amptive/src/shared/custom_container_widget.dart';
 import 'package:amptive/src/shared/elevated_button_widget.dart';
@@ -186,9 +187,14 @@ Future<void> showHostEndShowDialog({
                         width: ATHelperFuncs.getScreenWidth(context),
                         height: 50,
                         child: AmptiveElevatedButtonWidget(
-                          onPressed: () => context
-                              .read<AmptiveEndShowBloc>()
-                              .add(Proceed2EndShowEvent()),
+                          onPressed: () {
+                            context
+                                .read<LivestreamBloc>()
+                                .add(const EndStreamEvent());
+                            context
+                                .read<AmptiveEndShowBloc>()
+                                .add(Proceed2EndShowEvent());
+                          },
                           bgColor: ATColors.hexECO404,
                           fgColor: ATColors.white,
                           buttonTitle: ATStrings.END_NOW,

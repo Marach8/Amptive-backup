@@ -1,9 +1,13 @@
 import 'dart:ui';
+import 'package:amptive/src/config/routing/route_strings.dart';
+import 'package:amptive/src/features/go_live/models/go_live_program_params.dart';
+import 'package:amptive/src/features/main_app_shell.dart';
 import 'package:amptive/src/global_export.dart';
 import 'package:amptive/src/shared/annotated_region__widget.dart';
 import 'package:amptive/src/shared/circle_avatar.dart';
 import 'package:amptive/src/shared/image_loader_widget.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:readmore/readmore.dart';
 import '../../../../shared/list_tile_with_leading_picture_widget.dart';
 import '../../../../shared/sliver_header_delegate.dart';
@@ -199,7 +203,17 @@ class ATLiveShowDetailedScreen extends StatelessWidget {
           ],
         ),
         bottomSheet: ATBlurredBgBtn(
-          onPressed: () {},
+          onPressed: () {
+            // Navigate to live program as audience
+            // In a real app, the streamId would come from the show's livestream data
+            context.pushNamed(
+              ATRoutes.MAIN_GO_LIVE_PROGRAM,
+              extra: const GoLiveProgramParams(
+                streamId: 'placeholder-stream-id',
+                userType: GoLiveUserType.audience,
+              ),
+            );
+          },
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[

@@ -1,6 +1,7 @@
 import 'dart:developer';
 import 'dart:io';
-import 'package:amptive/src/config/services/network_service/interceptor.dart' show AuthGuardCubit;
+import 'package:amptive/src/config/services/network_service/interceptor.dart'
+    show AuthGuardCubit;
 import 'package:amptive/src/features/auth/cubits/local_user_data_cubit.dart';
 import 'package:amptive/src/features/notifications/cubits/register_device_fcm_cubit.dart';
 import 'package:amptive/src/features/auth/presentation/screens/login_screen.dart';
@@ -20,20 +21,24 @@ import '../global_export.dart';
 import '../services/go_live_service/go_live_service.dart';
 import '../services/notification/push_notification_service.dart';
 import 'go_live/go_live_export.dart';
+import 'go_live/models/go_live_program_params.dart';
+import 'go_live/cubits/livestream_bloc.dart';
 import 'notifications/presentation/screens/notif_landing_screen.dart';
 
 enum GoLiveUserType { audience, cohost, host }
 
 class GoLiveScreen extends StatefulWidget {
-  const GoLiveScreen({super.key, required this.userType});
+  const GoLiveScreen({super.key, required this.params});
 
-  final GoLiveUserType userType;
+  final GoLiveProgramParams params;
 
   @override
   State<GoLiveScreen> createState() => _GoLiveScreenState();
 }
 
 class _GoLiveScreenState extends State<GoLiveScreen> {
+  late final LivestreamBloc _livestreamBloc;
+
   @override
   void initState() {
     super.initState();
@@ -43,17 +48,36 @@ class _GoLiveScreenState extends State<GoLiveScreen> {
     //   overlays: <SystemUiOverlay>[SystemUiOverlay.top],
     // );
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
+
+    // Create per-session LivestreamBloc and join the livestream
+    _livestreamBloc = LivestreamBloc();
+    if (widget.params.streamId.isNotEmpty) {
+      _livestreamBloc.add(JoinLivestream(
+        streamId: widget.params.streamId,
+        isHost: widget.params.isHost,
+        contentId: widget.params.contentId,
+      ));
+    }
+  }
+
+  @override
+  void dispose() {
+    _livestreamBloc.close();
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    return switch (widget.userType) {
-      GoLiveUserType.audience =>
-        LiveProgramAudienceView(goLiveHost: getHostList().first),
-      GoLiveUserType.cohost => const LiveProgramCohostView(),
-      GoLiveUserType.host =>
-        LiveProgramHostView(goLiveHost: getHostList().first),
-    };
+    return BlocProvider<LivestreamBloc>.value(
+      value: _livestreamBloc,
+      child: switch (widget.params.userType) {
+        GoLiveUserType.audience =>
+          LiveProgramAudienceView(goLiveHost: getHostList().first),
+        GoLiveUserType.cohost => const LiveProgramCohostView(),
+        GoLiveUserType.host =>
+          LiveProgramHostView(goLiveHost: getHostList().first),
+      },
+    );
   }
 }
 
@@ -67,7 +91,8 @@ class ATMainAppShell extends StatelessWidget {
         BlocProvider<HomeFeedCubit>(create: (_) => HomeFeedCubit()),
         BlocProvider<LiveUsersCubit>(create: (_) => LiveUsersCubit()),
         BlocProvider<RemoteUserDataCubit>(create: (_) => RemoteUserDataCubit()),
-        BlocProvider<RegisterDeviceFCMCubit>(create: (_) => RegisterDeviceFCMCubit())
+        BlocProvider<RegisterDeviceFCMCubit>(
+            create: (_) => RegisterDeviceFCMCubit())
       ],
       child: const _SubWidget(),
     );
@@ -101,8 +126,7 @@ class __SubWidgetState extends State<_SubWidget> {
       context.read<HomeFeedCubit>().fetchHomeFeed();
       context.read<LiveUsersCubit>().fetchLiveUsers();
       await context.read<LocalUserDataCubit>().initializeCachedData();
-            _registerDeviceForPush();
-
+      _registerDeviceForPush();
 
       context.read<LocalUserDataCubit>().initializeCachedData();
       // init push notification and connect user to websocket
@@ -126,37 +150,34 @@ class __SubWidgetState extends State<_SubWidget> {
       context.read<LiveUsersCubit>().fetchLiveUsers();
     }
   }
-  
+
   Future<void> _registerDeviceForPush() async {
-  
-  final CachedUserData? userData = context.read<LocalUserDataCubit>().currentUserData;
-  
-  if (userData == null || userData.userId == null) {
-    return;
-  }
-  if (mounted) {
-      context.read<RegisterDeviceFCMCubit>().registerDevice(
-        userId: userData.userId!,
-      
-      );
+    final CachedUserData? userData =
+        context.read<LocalUserDataCubit>().currentUserData;
+
+    if (userData == null || userData.userId == null) {
+      return;
     }
-  
-}
+    if (mounted) {
+      context.read<RegisterDeviceFCMCubit>().registerDevice(
+            userId: userData.userId!,
+          );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     return BlocListener<AuthGuardCubit, bool>(
-      listener: (_, bool isNotAuthenticated){
-        if(isNotAuthenticated == true){
-          final BuildContext activeContext = navigatorKey.currentContext ?? context;
+      listener: (_, bool isNotAuthenticated) {
+        if (isNotAuthenticated == true) {
+          final BuildContext activeContext =
+              navigatorKey.currentContext ?? context;
           activeContext.read<AuthGuardCubit>().reset();
-          activeContext.goNamed(
-            ATRoutes.temporaryLoginScreen,
-            extra: const LoginScreenEntryParams(
-              title: 'Login',
-              notification: 'Session Expired. Please login',
-            )
-          );
+          activeContext.goNamed(ATRoutes.temporaryLoginScreen,
+              extra: const LoginScreenEntryParams(
+                title: 'Login',
+                notification: 'Session Expired. Please login',
+              ));
         }
       },
       child: ATAnnotatedRegion(
@@ -164,27 +185,22 @@ class __SubWidgetState extends State<_SubWidget> {
           bottom: false,
           top: false,
           child: Scaffold(
-            body: BlocSelector<ATNavBarBloc, (int, bool), int>(
-              selector: ((int, bool) st) => st.$1,
-              builder: (_, int index) {
-                return IndexedStack(
-                  index: index,
-                  children: <Widget>[
-                    HomeTabView(
-                      nestedKey: _nestedKey,
-                      liveUsersScrollController: _liveUsersScrollController,
-                    ),
-                    const DiscoverTabView(),
-                    const SizedBox(),
-                    const NotificationTabView()
-                  ]
-                );
-              }
-            ),
-            resizeToAvoidBottomInset: false,
-            backgroundColor: ATColors.transparent,
-            bottomSheet: const MainAppBottomNav()
-          ),
+              body: BlocSelector<ATNavBarBloc, (int, bool), int>(
+                  selector: ((int, bool) st) => st.$1,
+                  builder: (_, int index) {
+                    return IndexedStack(index: index, children: <Widget>[
+                      HomeTabView(
+                        nestedKey: _nestedKey,
+                        liveUsersScrollController: _liveUsersScrollController,
+                      ),
+                      const DiscoverTabView(),
+                      const SizedBox(),
+                      const NotificationTabView()
+                    ]);
+                  }),
+              resizeToAvoidBottomInset: false,
+              backgroundColor: ATColors.transparent,
+              bottomSheet: const MainAppBottomNav()),
         ),
       ),
     );

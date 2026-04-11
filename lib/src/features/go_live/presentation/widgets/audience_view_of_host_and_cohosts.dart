@@ -1,4 +1,6 @@
+import 'package:amptive/src/features/go_live/cubits/livestream_bloc.dart';
 import 'package:amptive/src/global_export.dart';
+import 'package:amptive/src/livestream/livestream.dart';
 import 'package:amptive/src/models/host.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../bloc/main_app/go_live_bloc/host_view/cohosts_display_bloc.dart';
@@ -17,126 +19,139 @@ class AudienceViewOfHostAndCohostWidget extends StatelessWidget {
     return ATContainer(
         height: 250,
         width: context.screenWidth,
-        child: LayoutBuilder(builder: (_, BoxConstraints constraints) {
-          final double width = constraints.maxWidth;
+        child: BlocBuilder<LivestreamBloc, LivestreamState>(
+          builder: (BuildContext context, LivestreamState state) {
+            final List<LivestreamParticipant> participants = state.participants;
 
-          return BlocBuilder<AmptiveGoLiveSelectCoHostBloc,
-                  List<ObjectWithNotifier<Host>>>(
-              builder: (_, List<ObjectWithNotifier<Host>> listOfHosts) {
-            final ObjectWithNotifier<Host>? cohost1 =
-                listOfHosts.elementAtOrNull(0);
-            final ObjectWithNotifier<Host>? cohost2 =
-                listOfHosts.elementAtOrNull(1);
-            final ObjectWithNotifier<Host>? cohost3 =
-                listOfHosts.elementAtOrNull(2);
-            final ObjectWithNotifier<Host>? cohost4 =
-                listOfHosts.elementAtOrNull(3);
-            final ObjectWithNotifier<Host>? cohost5 =
-                listOfHosts.elementAtOrNull(4);
+            if (participants.isEmpty) {
+              return Center(
+                child: Text(
+                  'Waiting for host...',
+                  style: TextStyle(color: ATColors.hexC2C2C2),
+                ),
+              );
+            }
 
-            final bool onlyHost = listOfHosts.every(
-                (ObjectWithNotifier<Host> a) => a.obj.profilePicture == null);
-            final bool hostAndACohost = listOfHosts
-                    .where((ObjectWithNotifier<Host> a) =>
-                        a.obj.profilePicture != null)
-                    .length ==
-                1;
-            final bool hostAnd2Cohosts = listOfHosts
-                    .where((ObjectWithNotifier<Host> a) =>
-                        a.obj.profilePicture != null)
-                    .length ==
-                2;
-            final bool hostAnd3Cohosts = listOfHosts
-                    .where((ObjectWithNotifier<Host> a) =>
-                        a.obj.profilePicture != null)
-                    .length ==
-                3;
-            final bool hostAnd4Cohosts = listOfHosts
-                    .where((ObjectWithNotifier<Host> a) =>
-                        a.obj.profilePicture != null)
-                    .length ==
-                4;
-            final bool hostAnd5Cohosts = listOfHosts.every(
-                (ObjectWithNotifier<Host> a) => a.obj.profilePicture != null);
+            final List<LivestreamParticipant> hosts =
+                participants.where((p) => p.isHost).toList();
+            final List<LivestreamParticipant> cohosts =
+                participants.where((p) => !p.isHost).toList();
 
-            return Stack(
-              alignment: Alignment.center,
-              children: <Widget>[
-                GoLiveHostWidget(
-                    top: onlyHost ? 80 : 6,
-                    hostName: 'Emmanuel Nnanna',
-                    hostProfilePic: ATImgStrings.jpeg2),
-                // AmptiveLiveHostAndCoHostWidgetForAudienceView(
-                //   top: onlyHost ? 80 : 6, isHost: true, index: 0,
-                //   hostOrCohost: host,
-                //   service: service,
-                //   onTap: (ObjectWithNotifier<Host>? hostOrCohost){},
-                // ),
+            return LayoutBuilder(builder: (_, BoxConstraints constraints) {
+              final double width = constraints.maxWidth;
+              final int totalOthers = hosts.length + cohosts.length;
 
-                AmptiveLiveHostAndCoHostWidgetForAudienceView(
-                  bottom: hostAndACohost || hostAnd3Cohosts || hostAnd5Cohosts
-                      ? 0
-                      : hostAnd2Cohosts || hostAnd4Cohosts
+              final bool onlyHost = totalOthers == 1;
+              final bool hostAndACohost = totalOthers == 2;
+              final bool hostAnd2Cohosts = totalOthers == 3;
+              final bool hostAnd3Cohosts = totalOthers == 4;
+              final bool hostAnd4Cohosts = totalOthers == 5;
+              final bool hostAnd5Cohosts = totalOthers >= 6;
+
+              return Stack(
+                alignment: Alignment.center,
+                children: <Widget>[
+                  if (hosts.isNotEmpty)
+                    GoLiveHostWidget(
+                      top: onlyHost ? 80 : 6,
+                      hostName: hosts.first.displayName,
+                      hostProfilePic: hosts.first.avatar ?? '',
+                    ),
+                  if (cohosts.isNotEmpty)
+                    AmptiveLiveHostAndCoHostWidgetForAudienceView(
+                      bottom:
+                          hostAndACohost || hostAnd3Cohosts || hostAnd5Cohosts
+                              ? 0
+                              : hostAnd2Cohosts || hostAnd4Cohosts
+                                  ? 30
+                                  : null,
+                      left: hostAnd2Cohosts || hostAnd4Cohosts
+                          ? width * 0.1
+                          : null,
+                      index: 1,
+                      service: service,
+                      hostOrCohost: cohosts.length > 0
+                          ? _convertToHost(cohosts[0])
+                          : null,
+                      onTap: (ObjectWithNotifier<Host>? hostOrCohost) {},
+                    ),
+                  if (cohosts.length > 1)
+                    AmptiveLiveHostAndCoHostWidgetForAudienceView(
+                      bottom: hostAnd2Cohosts ||
+                              hostAnd3Cohosts ||
+                              hostAnd4Cohosts ||
+                              hostAnd5Cohosts
                           ? 30
                           : null,
-                  left: hostAnd2Cohosts || hostAnd4Cohosts ? width * 0.1 : null,
-                  index: 1,
-                  service: service,
-                  hostOrCohost: cohost1,
-                  onTap: (ObjectWithNotifier<Host>? hostOrCohost) {},
-                ),
-                AmptiveLiveHostAndCoHostWidgetForAudienceView(
-                  bottom: hostAnd2Cohosts ||
-                          hostAnd3Cohosts ||
-                          hostAnd4Cohosts ||
-                          hostAnd5Cohosts
-                      ? 30
-                      : null,
-                  left: hostAnd5Cohosts ? width * 0.1 : null,
-                  right: hostAnd2Cohosts || hostAnd3Cohosts || hostAnd4Cohosts
-                      ? width * 0.1
-                      : null,
-                  index: 2,
-                  service: service,
-                  hostOrCohost: cohost2,
-                  onTap: (ObjectWithNotifier<Host>? hostOrCohost) {},
-                ),
-                AmptiveLiveHostAndCoHostWidgetForAudienceView(
-                  bottom: hostAnd3Cohosts || hostAnd5Cohosts
-                      ? 30
-                      : hostAnd4Cohosts
-                          ? 127
+                      left: hostAnd5Cohosts ? width * 0.1 : null,
+                      right:
+                          hostAnd2Cohosts || hostAnd3Cohosts || hostAnd4Cohosts
+                              ? width * 0.1
+                              : null,
+                      index: 2,
+                      service: service,
+                      hostOrCohost: cohosts.length > 1
+                          ? _convertToHost(cohosts[1])
                           : null,
-                  //top: hostAnd4Cohosts ? 35: null,
-                  right: hostAnd5Cohosts ? width * 0.1 : null,
-                  left: hostAnd3Cohosts
-                      ? width * 0.1
-                      : hostAnd4Cohosts
-                          ? 0
+                      onTap: (ObjectWithNotifier<Host>? hostOrCohost) {},
+                    ),
+                  if (cohosts.length > 2)
+                    AmptiveLiveHostAndCoHostWidgetForAudienceView(
+                      bottom: hostAnd3Cohosts || hostAnd5Cohosts
+                          ? 30
+                          : hostAnd4Cohosts
+                              ? 127
+                              : null,
+                      right: hostAnd5Cohosts ? width * 0.1 : null,
+                      left: hostAnd3Cohosts
+                          ? width * 0.1
+                          : hostAnd4Cohosts
+                              ? 0
+                              : null,
+                      index: 3,
+                      service: service,
+                      hostOrCohost: cohosts.length > 2
+                          ? _convertToHost(cohosts[2])
                           : null,
-                  index: 3, service: service,
-                  hostOrCohost: cohost3,
-                  onTap: (ObjectWithNotifier<Host>? hostOrCohost) {},
-                ),
-                AmptiveLiveHostAndCoHostWidgetForAudienceView(
-                  top: hostAnd4Cohosts || hostAnd5Cohosts ? 35 : null,
-                  right: hostAnd4Cohosts || hostAnd5Cohosts ? 0 : null,
-                  index: 4,
-                  service: service,
-                  hostOrCohost: cohost4,
-                  onTap: (ObjectWithNotifier<Host>? hostOrCohost) {},
-                ),
-                AmptiveLiveHostAndCoHostWidgetForAudienceView(
-                  top: hostAnd5Cohosts ? 35 : null,
-                  left: hostAnd5Cohosts ? 0 : null,
-                  index: 5,
-                  service: service,
-                  hostOrCohost: cohost5,
-                  onTap: (ObjectWithNotifier<Host>? hostOrCohost) {},
-                ),
-              ],
-            );
-          });
-        }));
+                      onTap: (ObjectWithNotifier<Host>? hostOrCohost) {},
+                    ),
+                  if (cohosts.length > 3)
+                    AmptiveLiveHostAndCoHostWidgetForAudienceView(
+                      top: hostAnd4Cohosts || hostAnd5Cohosts ? 35 : null,
+                      right: hostAnd4Cohosts || hostAnd5Cohosts ? 0 : null,
+                      index: 4,
+                      service: service,
+                      hostOrCohost: cohosts.length > 3
+                          ? _convertToHost(cohosts[3])
+                          : null,
+                      onTap: (ObjectWithNotifier<Host>? hostOrCohost) {},
+                    ),
+                  if (cohosts.length > 4)
+                    AmptiveLiveHostAndCoHostWidgetForAudienceView(
+                      top: hostAnd5Cohosts ? 35 : null,
+                      left: hostAnd5Cohosts ? 0 : null,
+                      index: 5,
+                      service: service,
+                      hostOrCohost: cohosts.length > 4
+                          ? _convertToHost(cohosts[4])
+                          : null,
+                      onTap: (ObjectWithNotifier<Host>? hostOrCohost) {},
+                    ),
+                ],
+              );
+            });
+          },
+        ));
+  }
+
+  ObjectWithNotifier<Host>? _convertToHost(LivestreamParticipant participant) {
+    final Host host = Host(
+      id: null,
+      username: participant.displayName,
+      email: null,
+      profilePicture: participant.avatar,
+      name: participant.displayName,
+    );
+    return ObjectWithNotifier<Host>(obj: host);
   }
 }

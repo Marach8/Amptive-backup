@@ -41,6 +41,7 @@ class HomeFeedItem {
     this.score,
     this.requesterFollowsHost,
     this.requesterIsGoing,
+    this.livestreamId,
   });
 
   factory HomeFeedItem.fromJson(Map<String, dynamic> json) {
@@ -62,6 +63,7 @@ class HomeFeedItem {
       score: json['score']?.toDouble(),
       requesterFollowsHost: json['requester_follows_host'],
       requesterIsGoing: json['requester_is_going'],
+      livestreamId: json['livestream_id'],
     );
   }
 
@@ -75,7 +77,8 @@ class HomeFeedItem {
       showType,
       coverUrl,
       startedAt,
-      scheduledFor;
+      scheduledFor,
+      livestreamId;
 
   final double? price, score;
   final int? viewerCount, goingCount;
