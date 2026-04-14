@@ -170,3 +170,38 @@ class HashTag extends Equatable{
     id, name,
   ];
 }
+
+class Notifications  extends User{
+  Notifications({
+    this.id,
+    super.userId,
+    this.message,
+    this.channel,
+    this.createdAt,
+    this.metadata,
+    this.title,
+    this.type,
+    this.isRead,
+    this.readAt,
+  });
+
+  factory Notifications.fromJson(Map<String, dynamic> json) {
+    return Notifications(
+      id: json['id'],
+      
+      message: json['message'],
+      channel: json['channel'],
+      createdAt: json['created_at'],
+      metadata: json['metadata_'], 
+      title: json['title'],
+      type: json['type'],
+      isRead: json['is_read'],
+      readAt: json['read_at'],
+    );
+  }
+
+  final String? id, message, channel, createdAt, title, type;
+  final dynamic metadata; 
+  final bool? isRead;
+  final String? readAt;
+}

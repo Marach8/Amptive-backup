@@ -714,3 +714,59 @@ class MoneyReceivedNotif extends StatelessWidget {
     );
   }
 }
+
+class AppNotificationTile extends StatelessWidget {
+  const AppNotificationTile({
+    super.key,
+    required this.title,
+    required this.subtitle,
+     this.time,
+    this.isRead = false,
+  });
+
+  final String title;
+  final String subtitle;
+  final String? time;
+  final bool isRead;
+
+  @override
+  Widget build(BuildContext context) {
+    return ATContainer(
+      // You can define a generic route here or leave it empty for now
+      onTap: () => debugPrint('Generic Notification Tapped'),
+      padding: const EdgeInsets.only(top: 10, bottom: 10),
+      child: Row(
+        children: <Widget>[
+          // Icon Section - matches the wallet circle style
+          ATCircleAvatar(
+            diameter: 40,
+            color: ATColors.hex307FE2,
+            child: const Icon(
+              Icons.notifications_none_rounded,
+              size: 22,
+            ),
+          ),
+          const SizedBox(
+            width: 10,
+          ),
+          // Content Section
+          Expanded(
+            child: ATRichText(
+              maxLines: 3, 
+              items: <String, TextStyle>{
+                // The main title (e.g., "System Update")
+                '$title: ': Theme.of(context).textTheme.titleSmall!,
+                // The body/subtitle
+                subtitle: Theme.of(context)
+                    .textTheme
+                    .bodySmall!
+                    .copyWith(fontSize: ATSizes.size13),
+                '. $time': Theme.of(context).textTheme.titleSmall!,
+              },
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}

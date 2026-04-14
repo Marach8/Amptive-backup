@@ -2,6 +2,7 @@ import 'dart:developer';
 import 'dart:io';
 import 'package:amptive/src/config/services/network_service/interceptor.dart' show AuthGuardCubit;
 import 'package:amptive/src/features/auth/cubits/local_user_data_cubit.dart';
+import 'package:amptive/src/features/notifications/cubits/get_notifications_cubit.dart';
 import 'package:amptive/src/features/notifications/cubits/register_device_fcm_cubit.dart';
 import 'package:amptive/src/features/auth/presentation/screens/login_screen.dart';
 import 'package:amptive/src/features/home/cubits/home_feed_cubit.dart';
@@ -67,7 +68,9 @@ class ATMainAppShell extends StatelessWidget {
         BlocProvider<HomeFeedCubit>(create: (_) => HomeFeedCubit()),
         BlocProvider<LiveUsersCubit>(create: (_) => LiveUsersCubit()),
         BlocProvider<RemoteUserDataCubit>(create: (_) => RemoteUserDataCubit()),
-        BlocProvider<RegisterDeviceFCMCubit>(create: (_) => RegisterDeviceFCMCubit())
+        BlocProvider<RegisterDeviceFCMCubit>(create: (_) => RegisterDeviceFCMCubit()),
+        BlocProvider<GetNotificationsCubit>(create: (_) => GetNotificationsCubit()),
+
       ],
       child: const _SubWidget(),
     );
@@ -100,6 +103,7 @@ class __SubWidgetState extends State<_SubWidget> {
 
       context.read<HomeFeedCubit>().fetchHomeFeed();
       context.read<LiveUsersCubit>().fetchLiveUsers();
+      context.read<GetNotificationsCubit>().fetchNotifications();
       await context.read<LocalUserDataCubit>().initializeCachedData();
             _registerDeviceForPush();
 

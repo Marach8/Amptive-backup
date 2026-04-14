@@ -42,4 +42,30 @@ extension ExtString on String {
   String get addSlash => '/$this';
 
   String get capitalize => this[0].toUpperCase() + substring(1).toLowerCase();
+  String get toLocalTime {
+    if (isEmpty) return 'Just now';
+    try {
+      DateTime dateTime = DateTime.parse(this).toLocal();
+      return DateFormat.jm().format(dateTime);
+    } catch (e) {
+      return 'Just now';
+    }
+  }
+
+  String get toTimeAgo {
+    if (isEmpty) return 'now';
+    try {
+      DateTime dateTime = DateTime.parse(this).toLocal();
+      Duration diff = DateTime.now().difference(dateTime);
+
+      if (diff.inDays > 365) return '${(diff.inDays / 365).floor()}y';
+      if (diff.inDays > 30) return '${(diff.inDays / 30).floor()}mo';
+      if (diff.inDays > 0) return '${diff.inDays}d';
+      if (diff.inHours > 0) return '${diff.inHours}h';
+      if (diff.inMinutes > 0) return '${diff.inMinutes}m';
+      return 'now';
+    } catch (e) {
+      return 'now';
+    }
+  }
 }
