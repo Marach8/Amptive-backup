@@ -1,7 +1,7 @@
 import 'package:equatable/equatable.dart';
 
 class User extends Equatable{
-  User({
+  const User({
     this.userId,
     this.username,
     this.profilePicture,
@@ -24,7 +24,8 @@ class User extends Equatable{
         name = json['name'],
         isVerified = json['is_verified'];
 
-  final String? userId, username, profilePicture, firstName, lastName, name;
+  final String? userId, username, profilePicture,
+    firstName, lastName, name;
   final int? followersCount, followingCount;
   final bool? isVerified;
 
@@ -35,7 +36,7 @@ class User extends Equatable{
 }
 
 class Host extends User {
-  Host({
+  const Host({
     this.hostLevel,
     this.totalShows,
     super.userId,
@@ -58,7 +59,7 @@ class Host extends User {
 }
 
 class CoHost extends User {
-  CoHost({
+  const CoHost({
     this.invitedAt,
     super.userId,
     super.username,
@@ -77,6 +78,7 @@ class CoHost extends User {
 
   final String? invitedAt;
 }
+
 
 class Community {
   Community({

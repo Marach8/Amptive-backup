@@ -35,7 +35,8 @@ class HomeTabView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return NotificationListener<ScrollNotification>(
-      onNotification: context.read<ATNavBarBloc>().ctrlNavVisibility,
+      onNotification: context
+        .read<ATNavBarBloc>().ctrlNavVisibility,
       child: NestedScrollView(
           floatHeaderSlivers: true,
           key: nestedKey,

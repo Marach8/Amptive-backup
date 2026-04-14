@@ -27,7 +27,8 @@ class StartEpisodeCubit extends Cubit<ATAppState<Episode>> {
   }) async {
     emit(LoadingState<Episode>(currentData: currentEpisodeData));
     try {
-      final ApiResponse<Episode> response = await episodesRepo.startEpisode(
+      final ApiResponse<Episode> response = 
+      await episodesRepo.startEpisode(
         showId: showId,
         episodeId: episodeId,
         streamUrl: streamUrl,

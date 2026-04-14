@@ -11,7 +11,7 @@ import 'package:country_pickers/utils/utils.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
-import '../../shared/app_bar_widget.dart';
+import '../../../../shared/app_bar_widget.dart';
 
 class PhoneLoginScreen extends StatefulWidget {
   const PhoneLoginScreen({super.key, this.title});
@@ -78,7 +78,8 @@ class _PhoneLoginScreenState extends State<PhoneLoginScreen> with ATValidators {
               if (state is SuccessState<dynamic>) {
                 context.goNamed(ATRoutes.mainAppShell);
               } else if (state is FailureState) {
-                showAppNotification2(context: context, text: state.message);
+                showAppNotification2(
+                  context: context, text: state.message);
               }
             },
             builder: (BuildContext context, ATAppState<dynamic> state) {

@@ -41,7 +41,7 @@ class ATStrings {
   static const String enterCodeSentTo =
       'Enter the 4 digit code we just sent to';
   static const String next = 'Next';
-  static const String SHOULD_REDIRECT = 'should Redirect';
+  static const String shouldRedirect = 'should Redirect';
   static const String isNewUser = 'Is First time user';
   static const String enterAmount = 'Enter Amount';
   static const String or = 'or';

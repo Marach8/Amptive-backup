@@ -52,13 +52,13 @@ FutureOr<String?> tempRedirect(
     BuildContext context, GoRouterState state) async {
   const FlutterSecureStorage storage = FlutterSecureStorage();
   final String? shouldRedirect = await storage.read(
-    key: ATStrings.SHOULD_REDIRECT,
+    key: ATStrings.shouldRedirect,
   );
   final String? isNewUser = await storage.read(key: ATStrings.isNewUser);
 
   if (shouldRedirect == 'true') {
     await storage.write(
-        key: ATStrings.SHOULD_REDIRECT, value: false.toString());
+        key: ATStrings.shouldRedirect, value: false.toString());
 
     if (isNewUser == 'false') {
       return ATRoutes.POST_ONBOARDING_SCREEN.addSlash;

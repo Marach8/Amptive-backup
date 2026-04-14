@@ -7,7 +7,7 @@ import 'package:amptive/src/features/accounts/presentation/screens/update_userna
 import 'package:amptive/src/features/accounts/presentation/screens/update_dob_screen.dart';
 import 'package:amptive/src/features/auth/presentation/screens/create_new_password_screen.dart';
 import 'package:amptive/src/features/auth/presentation/screens/forgot_password_email_screen.dart';
-import 'package:amptive/src/features/auth/phone_login_screen.dart';
+import 'package:amptive/src/features/auth/presentation/screens/phone_login_screen.dart';
 import 'package:amptive/src/features/auth/presentation/screens/reset_password_otp_screen.dart';
 import 'package:amptive/src/features/auth/presentation/screens/phone_auth_screen.dart';
 import 'package:amptive/src/features/auth/presentation/screens/login_screen.dart';
@@ -360,8 +360,8 @@ final GoRouter amptiveAppRouter = GoRouter(
                             )));
               }),
           GoRoute(
-            name: ATRoutes.GO_LIVE_TYPE_SELECTION,
-            path: ATRoutes.GO_LIVE_TYPE_SELECTION,
+            name: ATRoutes.chooseEventOrShowScreen,
+            path: ATRoutes.chooseEventOrShowScreen,
             builder: (_, __) => const GoLiveTypeSelectionScreen(),
           ),
           GoRoute(

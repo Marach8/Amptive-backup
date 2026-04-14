@@ -126,7 +126,7 @@ class ATNavBarBloc extends Cubit<(int, bool)> {
     final int prevIndex = state.$1;
     emit((index, state.$2));
     if (index == 2) {
-      context.pushNamed(ATRoutes.GO_LIVE_TYPE_SELECTION);
+      context.pushNamed(ATRoutes.chooseEventOrShowScreen);
       emit((prevIndex, false));
     } else {
       emit((index, state.$2));

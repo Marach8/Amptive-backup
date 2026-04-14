@@ -19,7 +19,8 @@ class EditEpisodeCubit extends Cubit<ATAppState<Episode>> {
   }) async {
     emit(const LoadingState<Episode>());
     try {
-      final ApiResponse<Episode> response = await episodesRepo.updateEpisode(
+      final ApiResponse<Episode> response = 
+      await episodesRepo.updateEpisode(
         showId: showId,
         episodeId: episodeId,
         episodeData: createEpisodeModel,
