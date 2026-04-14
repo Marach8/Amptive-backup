@@ -18,6 +18,8 @@ class _ReactionsOverlayState extends State<ReactionsOverlay>
     duration: const Duration(seconds: 3),
   );
 
+  int _previousReactionCount = 0;
+
   @override
   void dispose() {
     _controller.dispose();
@@ -28,11 +30,17 @@ class _ReactionsOverlayState extends State<ReactionsOverlay>
   Widget build(BuildContext context) {
     return BlocBuilder<LivestreamBloc, LivestreamState>(
       builder: (BuildContext context, LivestreamState state) {
-        if (state.reactions.isEmpty) {
+        final int currentCount = state.reactions.length;
+
+        // Only trigger animation when a NEW reaction is added
+        if (currentCount > _previousReactionCount && currentCount > 0) {
+          _controller.forward(from: 0);
+        }
+        _previousReactionCount = currentCount;
+
+        if (state.reactions.isEmpty || _controller.value >= 1.0) {
           return const SizedBox.shrink();
         }
-
-        _controller.forward(from: 0);
 
         return AnimatedBuilder(
           animation: _controller,
@@ -52,16 +60,23 @@ class _ReactionsOverlayState extends State<ReactionsOverlay>
                 final double y = startY +
                     (endY - startY) * progress -
                     (progress * progress * 0.3);
-                final double opacity = 1.0 - (progress * 0.8);
+                final double opacity = 1.0 - (progress * 0.5);
 
                 return Positioned(
                   left: x,
                   top: y * MediaQuery.of(context).size.height,
                   child: Opacity(
-                    opacity: opacity.clamp(0.0, 1.0),
-                    child: Text(
-                      reaction.emoji,
-                      style: const TextStyle(fontSize: 32),
+                    opacity: opacity.clamp(0.3, 1.0),
+                    child: Container(
+                      padding: const EdgeInsets.all(8),
+                      decoration: BoxDecoration(
+                        color: ATColors.black.withValues(alpha: 0.3),
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                      child: Text(
+                        reaction.emoji,
+                        style: const TextStyle(fontSize: 40),
+                      ),
                     ),
                   ),
                 );

@@ -51,13 +51,12 @@ class _GoLiveScreenState extends State<GoLiveScreen> {
 
     // Create per-session LivestreamBloc and join the livestream
     _livestreamBloc = LivestreamBloc();
-    if (widget.params.streamId.isNotEmpty) {
-      _livestreamBloc.add(JoinLivestream(
-        streamId: widget.params.streamId,
-        isHost: widget.params.isHost,
-        contentId: widget.params.contentId,
-      ));
-    }
+    // Always dispatch JoinLivestream - for host, it will call startStream first to get streamId
+    _livestreamBloc.add(JoinLivestream(
+      streamId: widget.params.streamId,
+      isHost: widget.params.isHost,
+      contentId: widget.params.contentId,
+    ));
   }
 
   @override

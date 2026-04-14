@@ -43,17 +43,16 @@ class UserWsService extends BaseWsService {
   void onMaxRetriesExceeded() {
     log('Giving up reconnecting.', level: LogLevel.error);
     _isConnected = false;
-    // Notify a controller / Riverpod provider here
   }
 
-  Future<void> connectUser() async {
-    if (!_isConnected) {
+  Future<void> connectUser({Duration? connectTimeout}) async {
+    if (!isConnected && !isReconnecting) {
       token = await _localStorageService.get(ATStrings.accessToken);
       if (token == null) {
         log("User Token not found. Connection Skipped", level: LogLevel.error);
         return;
       }
-      await connect();
+      await connect(connectTimeout: connectTimeout);
     }
   }
 }

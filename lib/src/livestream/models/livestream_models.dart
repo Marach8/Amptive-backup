@@ -67,7 +67,6 @@ class LivestreamParticipant {
   final String? avatar;
   final bool isMuted = false;
 
-
   LivestreamParticipant copyWith({bool? isSpeaker, bool? isMuted}) {
     return LivestreamParticipant(
       identity: identity,
@@ -145,6 +144,35 @@ class ReactionEvent {
   final String displayName;
 }
 
+class GiftEvent {
+  const GiftEvent({
+    required this.identity,
+    required this.giftId,
+    required this.giftName,
+    required this.giftEmoji,
+    required this.displayName,
+    required this.quantity,
+  });
+
+  factory GiftEvent.fromJson(Map<String, dynamic> json) {
+    return GiftEvent(
+      identity: json['sender_id'] as String,
+      giftId: json['gift_id'] as String? ?? '',
+      giftName: json['gift_name'] as String? ?? 'Gift',
+      giftEmoji: json['gift_emoji'] as String? ?? '🎁',
+      displayName: json['sender_username'] as String? ?? 'Someone',
+      quantity: json['quantity'] as int? ?? 1,
+    );
+  }
+
+  final String identity;
+  final String giftId;
+  final String giftName;
+  final String giftEmoji;
+  final String displayName;
+  final int quantity;
+}
+
 // ── Signaling events coming in from the WebSocket ──────────────────────────
 
 sealed class SignalingEvent {}
@@ -177,6 +205,12 @@ class HandRaiseEvent extends SignalingEvent {
 
   final String identity;
   final String action;
+}
+
+class GiftReceivedEvent extends SignalingEvent {
+  GiftReceivedEvent(this.gift);
+
+  final GiftEvent gift;
 }
 
 class ParticipantUpdatedEvent extends SignalingEvent {

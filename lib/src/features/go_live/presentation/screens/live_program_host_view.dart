@@ -5,6 +5,7 @@ import 'package:amptive/src/models/host.dart';
 import 'package:amptive/src/shared/image_loader_widget.dart';
 import 'package:amptive/src/features/go_live/presentation/widgets/go_live_screen_header.dart';
 import 'package:amptive/src/features/go_live/presentation/widgets/reactions_overlay.dart';
+import 'package:amptive/src/features/go_live/presentation/widgets/gift_overlay.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../global_export.dart';
 import '../../go_live_export.dart';
@@ -19,6 +20,9 @@ class LiveProgramHostView extends StatelessWidget {
       providers: <BlocProvider<dynamic>>[
         BlocProvider<GoLiveControlsVisibilityBloc>(
             create: (_) => GoLiveControlsVisibilityBloc()),
+        BlocProvider<LivestreamBloc>.value(
+          value: context.read<LivestreamBloc>(),
+        ),
       ],
       child: _SubWidget(goLiveHost: goLiveHost),
     );
@@ -43,7 +47,6 @@ class _SubWidget extends StatelessWidget {
                       imgPath: ATImgStrings.jpeg1, boxFit: BoxFit.fill),
                 ),
               ),
-              const Positioned.fill(child: ReactionsOverlay()),
               ColoredBox(
                 color: ATColors.hex0D0D0D.withValues(alpha: 0.9),
                 child: Column(
@@ -52,7 +55,8 @@ class _SubWidget extends StatelessWidget {
                       padding:
                           EdgeInsets.fromLTRB(10, kToolbarHeight * 0.5, 15, 20),
                       child: GoLiveScreenHeader(
-                        viewerCount: state.viewerCount,
+                        viewerCount: state.participantCount,
+                        participants: state.participants,
                       ),
                     ),
                     Align(
@@ -107,23 +111,20 @@ class _SubWidget extends StatelessWidget {
                   ],
                 ),
               ),
+              const Positioned.fill(child: ReactionsOverlay()),
+              const Positioned.fill(child: GiftOverlay()),
             ],
           ),
-          resizeToAvoidBottomInset: false,
+          resizeToAvoidBottomInset: true,
           bottomSheet: BlocBuilder<GoLiveControlsVisibilityBloc, bool>(
               builder: (BuildContext context, bool isVisible) {
             final double bottomInset = MediaQuery.viewInsetsOf(context).bottom;
             final double extraSpace = bottomInset == 0 ? 5.0 : bottomInset + 10;
 
-            return ATAnimatedSlide(
-              shouldSlide: isVisible,
-              startOffset: const Offset(0, 1.5),
-              endOffset: const Offset(0, 0),
-              child: Container(
-                color: bottomInset == 0 ? ATColors.black : ATColors.hex2C2F33,
-                padding: EdgeInsets.fromLTRB(15, 5, 15, extraSpace),
-                child: const HostModerationToolsBtns(),
-              ),
+            return Container(
+              color: bottomInset == 0 ? ATColors.black : ATColors.hex2C2F33,
+              padding: EdgeInsets.fromLTRB(15, 5, 15, extraSpace),
+              child: const HostModerationToolsBtns(),
             );
           }),
         );

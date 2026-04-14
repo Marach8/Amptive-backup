@@ -9,10 +9,31 @@ class PeopleListeningWidget extends StatelessWidget {
   const PeopleListeningWidget(
       {super.key,
       this.pictureDiameter,
-      this.showNumberInsideContainer = false});
+      this.showNumberInsideContainer = false,
+      this.viewerProfileUrls,
+      this.totalViewerCount});
 
   final double? pictureDiameter;
   final bool showNumberInsideContainer;
+  final List<String>? viewerProfileUrls;
+  final int? totalViewerCount;
+
+  List<String> get _viewerImages {
+    if (viewerProfileUrls != null && viewerProfileUrls!.isNotEmpty) {
+      return viewerProfileUrls!.take(4).toList();
+    }
+    return <String>[
+      // ATImgStrings.jpeg1,
+      // ATImgStrings.jpeg2,
+      // ATImgStrings.jpeg3,
+      // ATImgStrings.JOE_POMP_SHOW,
+    ];
+  }
+
+  int get _displayCount {
+    final int count = totalViewerCount ?? 0;
+    return count > 4 ? count - 4 : 0;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -20,27 +41,22 @@ class PeopleListeningWidget extends StatelessWidget {
       alignment: Alignment.centerLeft,
       clipBehavior: Clip.none,
       children: <Widget>[
-        const ATOverlappingImages(
-          imgPaths: <String>[
-            ATImgStrings.jpeg1,
-            ATImgStrings.jpeg2,
-            ATImgStrings.jpeg3,
-            ATImgStrings.JOE_POMP_SHOW
-          ],
-          imgSize: 35,
+        ATOverlappingImages(
+          imgPaths: _viewerImages,
+          imgSize: pictureDiameter ?? 35,
           overlapOffset: 25,
           borderWidth: 1,
         ),
-        showNumberInsideContainer
+        showNumberInsideContainer && _displayCount > 0
             ? Positioned(
                 right: 0,
                 child: ATContainer(
                   color: ATColors.hex2D2D2D,
                   alignment: Alignment.center,
-                  height: 35,
-                  width: 35,
+                  height: pictureDiameter ?? 35,
+                  width: pictureDiameter ?? 35,
                   boxShape: BoxShape.circle,
-                  child: Text('+652',
+                  child: Text('+${_displayCount}',
                       style: Theme.of(context)
                           .textTheme
                           .bodySmall

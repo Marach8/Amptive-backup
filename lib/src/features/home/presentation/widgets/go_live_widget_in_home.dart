@@ -1,5 +1,10 @@
 import 'package:amptive/src/global_export.dart';
 import 'package:amptive/src/shared/image_loader_widget.dart';
+import 'package:amptive/src/shared/shimmer.dart';
+import 'package:amptive/src/config/api_response_and_app_state.dart';
+import 'package:amptive/src/features/auth/cubits/local_user_data_cubit.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
 class GoLiveWidgetInHome extends StatelessWidget {
@@ -7,6 +12,8 @@ class GoLiveWidgetInHome extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final String? profilePic =
+        context.read<LocalUserDataCubit>().currentUserData?.pictureUrl;
     return GestureDetector(
       onTap: () {
         context.pushNamed(ATRoutes.GO_LIVE_TYPE_SELECTION);
@@ -19,15 +26,31 @@ class GoLiveWidgetInHome extends StatelessWidget {
             clipBehavior: Clip.none,
             alignment: Alignment.bottomCenter,
             children: <Widget>[
-              ClipRRect(
-                borderRadius: BorderRadius.circular(30),
-                child: const ATImgLoader(
-                  imgPath: ATImgStrings.jpeg1,
-                  boxFit: BoxFit.cover,
+              if (profilePic != null && profilePic.isNotEmpty)
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(30),
+                  child: ATImgLoader(
+                    imgPath: profilePic,
+                    boxFit: BoxFit.cover,
+                    height: 60,
+                    width: 60,
+                  ),
+                )
+              else
+                Container(
                   height: 60,
                   width: 60,
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: ATColors.hex0D0D0D,
+                  ),
+                  child: Center(
+                    child: ATShimmer(
+                      height: 60,
+                      width: 60,
+                    ),
+                  ),
                 ),
-              ),
               Positioned(
                 bottom: -5,
                 child: ATContainer(

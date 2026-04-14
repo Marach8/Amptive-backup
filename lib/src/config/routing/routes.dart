@@ -1,5 +1,4 @@
 import 'dart:io';
-import 'dart:typed_data';
 import 'package:amptive/src/config/routing/routing_export.dart';
 import 'package:amptive/src/features/accounts/presentation/screens/update_email_screen.dart';
 import 'package:amptive/src/features/accounts/presentation/screens/update_phone_no_screen.dart';
@@ -25,7 +24,6 @@ import 'package:amptive/src/features/calender/presentation/screens/calender_land
 import 'package:amptive/src/features/discover/presentation/views/society_screen.dart';
 import 'package:amptive/src/features/discover/presentation/views/trending_hashtags_screen.dart';
 import 'package:amptive/src/features/episodes/data/models/response/episode_model.dart';
-import 'package:amptive/src/features/episodes/data/models/response/episode_model.dart';
 import 'package:amptive/src/features/episodes/presentation/screens/edit_episode_form_screen.dart';
 import 'package:amptive/src/features/events/presentation/screens/edit_event_form_screen.dart';
 import 'package:amptive/src/features/events/presentation/screens/select_schedule_date_screen.dart';
@@ -40,6 +38,7 @@ import 'package:amptive/src/features/profile/presentation/screens/edit_name_scre
 import 'package:amptive/src/features/profile/presentation/screens/edit_username_screen.dart';
 import 'package:amptive/src/features/profile/presentation/screens/profile_views_export.dart';
 import 'package:amptive/src/features/home/presentation/screens/scheduled_screen.dart';
+import 'package:amptive/src/features/home/data/models/response/home_feed_response_model.dart';
 import 'package:amptive/src/features/accounts/presentation/screens/account_info_screen.dart';
 import 'package:amptive/src/features/accounts/presentation/screens/acounts_landing_screen.dart';
 import 'package:amptive/src/features/shows/data/models/response/show_response_model.dart';
@@ -219,8 +218,11 @@ final GoRouter amptiveAppRouter = GoRouter(
           GoRoute(
             name: ATRoutes.SCHEDULE_DETAILED,
             path: ATRoutes.SCHEDULE_DETAILED.addSlash,
-            pageBuilder: (_, __) => ATSlidingRouteTransition<void>(
-                child: const ATScheduleDetailedScreen()),
+            pageBuilder: (_, state) => ATSlidingRouteTransition<void>(
+              child: ATScheduleDetailedScreen(
+                homeFeedItem: state.extra as HomeFeedItem?,
+              ),
+            ),
           ),
           GoRoute(
               name: ATRoutes.WALLET_ONBOARDING,
@@ -321,15 +323,19 @@ final GoRouter amptiveAppRouter = GoRouter(
           GoRoute(
               name: ATRoutes.LIVE_SHOW_DETAILED,
               path: ATRoutes.LIVE_SHOW_DETAILED.addSlash,
-              pageBuilder: (_, __) => ATSlidingRouteTransition<void>(
+              pageBuilder: (_, state) => ATSlidingRouteTransition<void>(
                   beginOffset: const Offset(0.0, 1.0),
-                  child: const ATLiveShowDetailedScreen())),
+                  child: ATLiveShowDetailedScreen(
+                    homeFeedItem: state.extra as HomeFeedItem?,
+                  ))),
           GoRoute(
               name: ATRoutes.LIVE_EVENT_DETAILED,
               path: ATRoutes.LIVE_EVENT_DETAILED.addSlash,
-              pageBuilder: (_, __) => ATSlidingRouteTransition<void>(
+              pageBuilder: (_, state) => ATSlidingRouteTransition<void>(
                     beginOffset: const Offset(0.0, 1.0),
-                    child: const ATLiveEventDetailedScreen(),
+                    child: ATLiveEventDetailedScreen(
+                      homeFeedItem: state.extra as HomeFeedItem?,
+                    ),
                   )),
           GoRoute(
               name: ATRoutes.goLiveOnboarding,

@@ -6,6 +6,7 @@ import 'package:amptive/src/config/exception.dart';
 import 'package:amptive/src/config/services/network_service/dio_network_service_impl.dart';
 import 'package:amptive/src/config/services/network_service/network_service.dart';
 import 'package:amptive/src/features/home/data/models/following_status.dart';
+import 'package:amptive/src/features/home/data/models/response/going_status.dart';
 import 'package:amptive/src/features/home/data/repository/home_repo.dart';
 import 'package:dio/dio.dart';
 import 'package:amptive/src/features/home/data/models/response/home_feed_response_model.dart';
@@ -68,7 +69,7 @@ class HomeRepoImpl implements HomeRepo {
         queryParameters: <String, dynamic>{
           'page': page,
           'page_size': pageSize,
-          'refresh': true,
+          'refresh': false,
         },
       );
 
@@ -131,6 +132,52 @@ class HomeRepoImpl implements HomeRepo {
     } catch (e) {
       log('Get live shows error: $e');
       return Unsuccessful<LiveUsersResponseModel>(
+        error: ATException.resolveException(e),
+      );
+    }
+  }
+
+  @override
+  Future<ApiResponse<GoingStatus>> markAsGoing({
+    required String contentId,
+    required GoingType type,
+  }) async {
+    try {
+      final String endpoint = type == GoingType.event
+          ? ATEndpoints.markEventGoing(contentId)
+          : ATEndpoints.markEpisodeGoing(contentId);
+
+      final Response<dynamic> response = await networkService.post(endpoint);
+
+      return Successful<GoingStatus>(
+        data: GoingStatus.fromJson(response.data),
+      );
+    } catch (e) {
+      log('Mark as going error: $e');
+      return Unsuccessful<GoingStatus>(
+        error: ATException.resolveException(e),
+      );
+    }
+  }
+
+  @override
+  Future<ApiResponse<GoingStatus>> unmarkGoing({
+    required String contentId,
+    required GoingType type,
+  }) async {
+    try {
+      final String endpoint = type == GoingType.event
+          ? ATEndpoints.markEventGoing(contentId)
+          : ATEndpoints.markEpisodeGoing(contentId);
+
+      final Response<dynamic> response = await networkService.delete(endpoint);
+
+      return Successful<GoingStatus>(
+        data: GoingStatus.fromJson(response.data),
+      );
+    } catch (e) {
+      log('Unmark going error: $e');
+      return Unsuccessful<GoingStatus>(
         error: ATException.resolveException(e),
       );
     }

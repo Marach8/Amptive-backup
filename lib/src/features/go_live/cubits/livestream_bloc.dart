@@ -28,6 +28,12 @@ class SendReactionEvent extends LivestreamEvent {
   final String emoji;
 }
 
+class SendGiftEvent extends LivestreamEvent {
+  const SendGiftEvent({required this.giftId, required this.quantity});
+  final String giftId;
+  final int quantity;
+}
+
 class ToggleMuteEvent extends LivestreamEvent {
   const ToggleMuteEvent();
 }
@@ -48,9 +54,11 @@ class LivestreamBloc extends Bloc<LivestreamEvent, LivestreamState> {
     on<LeaveLivestream>(_onLeaveLivestream);
     on<SendChatMessage>(_onSendChatMessage);
     on<SendReactionEvent>(_onSendReactionEvent);
+    on<SendGiftEvent>(_onSendGiftEvent);
     on<ToggleMuteEvent>(_onToggleMuteEvent);
     on<EndStreamEvent>(_onEndStreamEvent);
     on<StartStreamEvent>(_onStartStreamEvent);
+    on<_InternalStateUpdate>(_onInternalStateUpdate);
   }
 
   LivestreamController? _controller;
@@ -109,6 +117,13 @@ class LivestreamBloc extends Bloc<LivestreamEvent, LivestreamState> {
     Emitter<LivestreamState> emit,
   ) {
     _controller?.sendReaction(event.emoji);
+  }
+
+  void _onSendGiftEvent(
+    SendGiftEvent event,
+    Emitter<LivestreamState> emit,
+  ) {
+    _controller?.sendGift(event.giftId, event.quantity);
   }
 
   Future<void> _onToggleMuteEvent(

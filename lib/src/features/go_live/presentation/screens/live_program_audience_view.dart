@@ -8,6 +8,7 @@ import 'package:amptive/src/shared/image_loader_widget.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../config/utils/dialogs/minimized_go_live_dialog.dart';
 import '../../go_live_export.dart';
+import '../widgets/gift_overlay.dart';
 import '../widgets/audience_view_of_host_and_cohosts.dart';
 import '../widgets/go_live_screen_header.dart';
 import '../widgets/reactions_overlay.dart';
@@ -22,6 +23,9 @@ class LiveProgramAudienceView extends StatelessWidget {
       providers: <BlocProvider<dynamic>>[
         BlocProvider<GoLiveControlsVisibilityBloc>(
             create: (_) => GoLiveControlsVisibilityBloc()),
+        BlocProvider<LivestreamBloc>.value(
+          value: context.read<LivestreamBloc>(),
+        ),
       ],
       child: _SubWidget(goLiveHost: goLiveHost),
     );
@@ -47,7 +51,6 @@ class _SubWidget extends StatelessWidget {
                       imgPath: ATImgStrings.jpeg1, boxFit: BoxFit.fill),
                 ),
               ),
-              const Positioned.fill(child: ReactionsOverlay()),
               ColoredBox(
                 color: ATColors.hex0D0D0D.withValues(alpha: 0.9),
                 child: Stack(
@@ -59,7 +62,8 @@ class _SubWidget extends StatelessWidget {
                               10, kToolbarHeight * 0.5, 15, 20),
                           child: GoLiveScreenHeader(
                             exitIcon: _AudienceViewExitIcon(),
-                            viewerCount: state.viewerCount,
+                            viewerCount: state.participantCount,
+                            participants: state.participants,
                           ),
                         ),
                         Align(
@@ -127,9 +131,11 @@ class _SubWidget extends StatelessWidget {
                   ],
                 ),
               ),
+              const Positioned.fill(child: ReactionsOverlay()),
+              const Positioned.fill(child: GiftOverlay()),
             ],
           ),
-          resizeToAvoidBottomInset: false,
+          resizeToAvoidBottomInset: true,
           bottomSheet: BlocBuilder<GoLiveControlsVisibilityBloc, bool>(
             builder: (BuildContext context, bool isVisible) {
               final double bottomInset =
