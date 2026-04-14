@@ -14,6 +14,8 @@ import 'package:amptive/src/shared/back_button.dart';
 import 'package:amptive/src/shared/global_model_objects.dart';
 import 'package:amptive/src/shared/image_loader_widget.dart';
 import 'package:amptive/src/shared/live_indicators.dart';
+import 'package:amptive/src/features/go_live/models/go_live_program_params.dart';
+import 'package:amptive/src/features/auth/cubits/local_user_data_cubit.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
@@ -24,7 +26,7 @@ import '../../../../shared/sliver_header_delegate.dart';
 
 class PreviewEventScreen extends StatelessWidget {
   const PreviewEventScreen({
-    super.key, 
+    super.key,
     required this.hostedEvent,
   });
   final HostedEvent hostedEvent;
@@ -38,16 +40,16 @@ class PreviewEventScreen extends StatelessWidget {
             initialEvent: hostedEvent,
           ),
         ),
-        BlocProvider<BlurredHeaderCubit>(
-          create: (_) => BlurredHeaderCubit()),
+        BlocProvider<BlurredHeaderCubit>(create: (_) => BlurredHeaderCubit()),
         BlocProvider<ToggleFollowingCubit>(
-          create: (_) => ToggleFollowingCubit(
-            initialStatus: FollowingStatus(
-              isFollowing: true,
-              followerCount: hostedEvent.followerCount ?? 0,
-            )
-          )
-        )
+            create: (_) => ToggleFollowingCubit(
+                    initialStatus: FollowingStatus(
+                  isFollowing: true,
+                  followerCount: hostedEvent.followerCount ?? 0,
+                ))),
+        BlocProvider<LocalUserDataCubit>(
+          create: (_) => LocalUserDataCubit()..initializeCachedData(),
+        ),
       ],
       child: _EventSubWidget(hostedEvent: hostedEvent),
     );
@@ -64,31 +66,29 @@ class _EventSubWidget extends StatefulWidget {
 }
 
 class _EventSubWidgetState extends State<_EventSubWidget> {
-  @override 
-  void initState(){
+  @override
+  void initState() {
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback(
-      (_){
-        if(mounted){
-          context.read<EventDetailCubit>().fetchEventDetails();
-        }
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (mounted) {
+        context.read<EventDetailCubit>().fetchEventDetails();
       }
-    );
+    });
   }
 
   @override
   Widget build(BuildContext context) {
     final double blurredHeaderHeight =
-          kToolbarHeight + MediaQuery.paddingOf(context).top;
+        kToolbarHeight + MediaQuery.paddingOf(context).top;
     final bool isLive = widget.hostedEvent.isLive ?? false;
-    
+
     return PopScope(
       canPop: false,
       onPopInvokedWithResult: (bool didPop, _) {
         if (didPop) return;
 
-        final HostedEvent? updatedEvent = context
-          .read<EventDetailCubit>().currentEventDetail;
+        final HostedEvent? updatedEvent =
+            context.read<EventDetailCubit>().currentEventDetail;
         context.pop(updatedEvent);
       },
       child: ATAnnotatedRegion(
@@ -100,15 +100,14 @@ class _EventSubWidgetState extends State<_EventSubWidget> {
                 child: ImageFiltered(
                   imageFilter: ImageFilter.blur(sigmaX: 50, sigmaY: 50),
                   child: BlocBuilder<EventDetailCubit, ATAppState<HostedEvent>>(
-                    builder: (_, __) {
-                      final String? coverUrl = context
-                        .read<EventDetailCubit>().currentEventDetail?.coverUrl;
-                      return ATImgLoader(
-                        boxFit: BoxFit.fill,
-                        imgPath: coverUrl ?? ''
-                      );
-                    }
-                  ),
+                      builder: (_, __) {
+                    final String? coverUrl = context
+                        .read<EventDetailCubit>()
+                        .currentEventDetail
+                        ?.coverUrl;
+                    return ATImgLoader(
+                        boxFit: BoxFit.fill, imgPath: coverUrl ?? '');
+                  }),
                 ),
               ),
               Container(
@@ -123,115 +122,152 @@ class _EventSubWidgetState extends State<_EventSubWidget> {
                         delegate: ATSliverHDelegate(
                           maxExt: blurredHeaderHeight,
                           minExt: blurredHeaderHeight,
-                          child: const ATBlurredHeaderWidget(paddingFromTop: 50,),
+                          child: const ATBlurredHeaderWidget(
+                            paddingFromTop: 50,
+                          ),
                         ),
                       )
                     ],
-      
                     body: SingleChildScrollView(
                       padding: const EdgeInsets.fromLTRB(15, 10, 15, 5),
-                      child: BlocConsumer<EventDetailCubit, ATAppState<HostedEvent>>(
-                        listener: (_, ATAppState<HostedEvent> state){
-                          if(state is FailureState<HostedEvent>){
-                            showAppNotification2(
-                              context: context,
-                              text: state.message,
-                              type: NotificationType.failure,
-                            );
-                          }
-                        },
-                        builder: (_, ATAppState<HostedEvent> state) {
-                          final HostedEvent? event = context.read<EventDetailCubit>().currentEventDetail;
-                          final int goingCount = event?.goingCount ?? 0;
-                          return Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: <Widget>[
-                              Hero(
-                                tag: event?.eventId ?? '',
-                                child: CoverPicWithTopRightMoreIcon(
-                                    imgPath: event?.coverUrl ?? '',
-                                    onMoreTapped: () async {
-                                      final SelectedProgramAction? foo =
-                                          await showProgramOptions(
-                                        context: context,
-                                        toggleFollowingCubit:
-                                            context.read<ToggleFollowingCubit>(),
-                                        targetUserName:
-                                            event?.host?.username ?? '',
-                                        targetUserId: event?.host?.userId ?? '',
-                                      );
-                                    }),
+                      child: BlocConsumer<EventDetailCubit,
+                              ATAppState<HostedEvent>>(
+                          listener: (_, ATAppState<HostedEvent> state) {
+                        if (state is FailureState<HostedEvent>) {
+                          showAppNotification2(
+                            context: context,
+                            text: state.message,
+                            type: NotificationType.failure,
+                          );
+                        }
+                      }, builder: (_, ATAppState<HostedEvent> state) {
+                        final HostedEvent? event =
+                            context.read<EventDetailCubit>().currentEventDetail;
+                        final int goingCount = event?.goingCount ?? 0;
+                        return Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: <Widget>[
+                            Hero(
+                              tag: event?.eventId ?? '',
+                              child: CoverPicWithTopRightMoreIcon(
+                                  imgPath: event?.coverUrl ?? '',
+                                  onMoreTapped: () async {
+                                    final SelectedProgramAction? foo =
+                                        await showProgramOptions(
+                                      context: context,
+                                      toggleFollowingCubit:
+                                          context.read<ToggleFollowingCubit>(),
+                                      targetUserName:
+                                          event?.host?.username ?? '',
+                                      targetUserId: event?.host?.userId ?? '',
+                                    );
+                                  }),
+                            ),
+                            const SizedBox(height: 24),
+
+                            // Event doesn't have episodes like shows, so no ExistingEpisodesIndicator
+
+                            Text(
+                              maxLines: 2,
+                              event?.title ?? '',
+                              overflow: TextOverflow.clip,
+                              style: context.textTheme.displayMedium?.copyWith(
+                                fontSize: ATSizes.size24,
+                                fontWeight: ATFontWeights.w600,
                               ),
-                              const SizedBox(height: 24),
-                              
-                              // Event doesn't have episodes like shows, so no ExistingEpisodesIndicator
-                              
-                              Text(
-                                maxLines: 2,
-                                event?.title ?? '',
-                                overflow: TextOverflow.clip,
-                                style: context.textTheme.displayMedium?.copyWith(
-                                  fontSize: ATSizes.size24,
-                                  fontWeight: ATFontWeights.w600,
+                            ),
+                            const SizedBox(height: 12),
+                            Row(
+                              spacing: 20,
+                              children: <Widget>[
+                                EpisodeScheduleDateIndicator(
+                                  text1: formatScheduleDate(
+                                      event?.scheduledFor ?? ''),
                                 ),
-                              ),
-                              const SizedBox(height: 12),
+                                RenderCommunityName(
+                                    communityName: event?.community?.name)
+                              ],
+                            ),
+                            const SizedBox(height: 16),
+                            BlocBuilder<LocalUserDataCubit,
+                                ATAppState<CachedUserData>>(
+                              builder:
+                                  (_, ATAppState<CachedUserData> userState) {
+                                final bool isHost = context
+                                        .read<LocalUserDataCubit>()
+                                        .currentUserData
+                                        ?.userId ==
+                                    event?.host?.userId;
+                                if (!isHost) return const SizedBox.shrink();
+                                return Row(
+                                  children: <Widget>[
+                                    TextButton(
+                                      onPressed: () {
+                                        context.pushReplacementNamed(
+                                          ATRoutes.MAIN_GO_LIVE_PROGRAM,
+                                          extra: GoLiveProgramParams(
+                                            streamId: event?.livestreamId ?? '',
+                                            userType: GoLiveUserType.host,
+                                            contentId: event?.eventId,
+                                          ),
+                                        );
+                                      },
+                                      child: const Text('Go Live'),
+                                    ),
+                                  ],
+                                );
+                              },
+                            ),
+                            const SizedBox(height: 40),
+                            Text(
+                              ATStrings.hashtags,
+                              style: context.textTheme.bodySmall
+                                  ?.copyWith(fontSize: ATSizes.size17),
+                            ),
+                            Divider(
+                              color: ATColors.white.withValues(alpha: 0.1),
+                            ),
+                            const SizedBox(height: 5),
+                            RenderHashTags(hashtags: event?.tags),
+                            const SizedBox(height: 30),
+                            Text(
+                              ATStrings.hostedBy,
+                              style: context.textTheme.bodySmall
+                                  ?.copyWith(fontSize: ATSizes.size17),
+                            ),
+                            Divider(
+                              color: ATColors.white.withValues(alpha: 0.1),
+                            ),
+                            TileWithLeadingImage(
+                              padding: const EdgeInsets.symmetric(vertical: 9),
+                              title: event?.host?.username ?? '',
+                              subtitle: 'Host',
+                              diameter: 42,
+                              leadingImagePath: event?.host?.profilePicture ??
+                                  ATImgStrings.jpeg1,
+                            ),
+                            ...(event?.coHosts ?? <CoHost>[])
+                                .map((CoHost cohost) => TileWithLeadingImage(
+                                      padding: const EdgeInsets.symmetric(
+                                          vertical: 9),
+                                      title: cohost.username ?? '',
+                                      subtitle: 'Host',
+                                      diameter: 42,
+                                      leadingImagePath: cohost.profilePicture ??
+                                          ATImgStrings.jpeg1,
+                                    )),
+                            const SizedBox(height: 30),
+                            Text(
+                              '$goingCount Going',
+                              style: context.textTheme.bodySmall
+                                  ?.copyWith(fontSize: ATSizes.size17),
+                            ),
+                            Divider(
+                              color: ATColors.white.withValues(alpha: 0.1),
+                            ),
+                            const SizedBox(height: 10),
+                            if (goingCount == 0)
                               Row(
-                                spacing: 20,
-                                children: <Widget>[
-                                  EpisodeScheduleDateIndicator(
-                                    text1: formatScheduleDate(event?.scheduledFor ?? ''),
-                                  ),
-                                  RenderCommunityName(communityName: event?.community?.name)
-                                ],
-                              ),
-                              const SizedBox(height: 40),
-                              Text(
-                                ATStrings.hashtags,
-                                style: context.textTheme.bodySmall
-                                    ?.copyWith(fontSize: ATSizes.size17),
-                              ),
-                              Divider(
-                                color: ATColors.white.withValues(alpha: 0.1),
-                              ),
-                              const SizedBox(height: 5),
-                              RenderHashTags(hashtags: event?.tags),
-                              const SizedBox(height: 30),
-                              Text(
-                                ATStrings.hostedBy,
-                                style: context.textTheme.bodySmall
-                                    ?.copyWith(fontSize: ATSizes.size17),
-                              ),
-                              Divider(
-                                color: ATColors.white.withValues(alpha: 0.1),
-                              ),
-                              TileWithLeadingImage(
-                                padding: const EdgeInsets.symmetric(vertical: 9),
-                                title: event?.host?.username ?? '',
-                                subtitle: 'Host',
-                                diameter: 42,
-                                leadingImagePath: event?.host?.profilePicture ?? ATImgStrings.jpeg1,
-                              ),
-                              ...(event?.coHosts ?? <CoHost>[]).map(
-                                (CoHost cohost) => TileWithLeadingImage(
-                                  padding: const EdgeInsets.symmetric(vertical: 9),
-                                  title: cohost.username ?? '',
-                                  subtitle: 'Host',
-                                  diameter: 42,
-                                  leadingImagePath: cohost.profilePicture ?? ATImgStrings.jpeg1,
-                                )
-                              ),
-                              const SizedBox(height: 30),
-                              Text(
-                                '$goingCount Going',
-                                style: context.textTheme.bodySmall
-                                    ?.copyWith(fontSize: ATSizes.size17),
-                              ),
-                              Divider(
-                                color: ATColors.white.withValues(alpha: 0.1),
-                              ),
-                              const SizedBox(height: 10),
-                              if(goingCount == 0) Row(
                                 children: <Widget>[
                                   const ATOverlappingCircles(maxNumber: 3),
                                   const SizedBox(
@@ -247,76 +283,70 @@ class _EventSubWidgetState extends State<_EventSubWidget> {
                                   ),
                                 ],
                               ),
-                              const SizedBox(height: 20),
-                              Text(
-                                ATStrings.shareEpisodeLinkDescription,
-                                maxLines: 2,
-                                style: context.textTheme.bodySmall?.copyWith(
-                                    color:
-                                        ATColors.white.withValues(alpha: 0.6)),
+                            const SizedBox(height: 20),
+                            Text(
+                              ATStrings.shareEpisodeLinkDescription,
+                              maxLines: 2,
+                              style: context.textTheme.bodySmall?.copyWith(
+                                  color: ATColors.white.withValues(alpha: 0.6)),
+                            ),
+                            const SizedBox(height: 35),
+
+                            Text(
+                              'About Event',
+                              style: context.textTheme.bodySmall
+                                  ?.copyWith(fontSize: ATSizes.size17),
+                            ),
+                            Divider(
+                              color: ATColors.white.withValues(alpha: 0.1),
+                            ),
+                            ReadMoreText(
+                              event?.description ?? '',
+                              trimMode: TrimMode.Length,
+                              trimExpandedText: ATStrings.showLess,
+                              trimCollapsedText: ATStrings.showMore,
+                              colorClickableText: ATColors.white,
+                              trimLength: 100,
+                              style: TextStyle(
+                                color: ATColors.white.withValues(alpha: 0.6),
+                                fontSize: ATSizes.size14,
+                                fontWeight: ATFontWeights.w500,
                               ),
-                              const SizedBox(height: 35),
-                              
-                              Text(
-                                'About Event',
-                                style: context.textTheme.bodySmall
-                                    ?.copyWith(fontSize: ATSizes.size17),
-                              ),
-                              Divider(
-                                color: ATColors.white.withValues(alpha: 0.1),
-                              ),
-                              ReadMoreText(
-                                event?.description ?? '',
-                                trimMode: TrimMode.Length,
-                                trimExpandedText: ATStrings.showLess,
-                                trimCollapsedText: ATStrings.showMore,
-                                colorClickableText: ATColors.white,
-                                trimLength: 100,
-                                style: TextStyle(
-                                  color: ATColors.white.withValues(alpha: 0.6),
-                                  fontSize: ATSizes.size14,
-                                  fontWeight: ATFontWeights.w500,
-                                ),
-                              ),
-                              const SizedBox(height: 150),
-                            ],
-                          );
-                        }
-                      ),
+                            ),
+                            const SizedBox(height: 150),
+                          ],
+                        );
+                      }),
                     ),
                   ),
                 ),
               ),
             ],
           ),
-      
           bottomSheet: ATBlurredBgBtn(
-            onPressed: () async{
-              final HostedEvent? updatedEvent = context
-                .read<EventDetailCubit>().currentEventDetail;
-              final HostedEvent? editedEvent = await context.pushNamed(
-                ATRoutes.editEventScreen,
-                extra: updatedEvent ?? widget.hostedEvent
-              );
-              if(context.mounted && editedEvent != null
-                && editedEvent != updatedEvent){
-                context.read<EventDetailCubit>().updateEvent(editedEvent);
-                showAppNotification2(
-                  context: context,
-                  text: 'Event detail updated.',
-                  type: NotificationType.success,
-                );
-              }
-            },
-            btnTitle: 'Edit Event'
-          ),
+              onPressed: () async {
+                final HostedEvent? updatedEvent =
+                    context.read<EventDetailCubit>().currentEventDetail;
+                final HostedEvent? editedEvent = await context.pushNamed(
+                    ATRoutes.editEventScreen,
+                    extra: updatedEvent ?? widget.hostedEvent);
+                if (context.mounted &&
+                    editedEvent != null &&
+                    editedEvent != updatedEvent) {
+                  context.read<EventDetailCubit>().updateEvent(editedEvent);
+                  showAppNotification2(
+                    context: context,
+                    text: 'Event detail updated.',
+                    type: NotificationType.success,
+                  );
+                }
+              },
+              btnTitle: 'Edit Event'),
         ),
       ),
     );
   }
 }
-
-
 
 String formatScheduleDate(String isoString) {
   try {
