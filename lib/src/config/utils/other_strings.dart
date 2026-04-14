@@ -296,8 +296,8 @@ class ATStrings {
   static const String addProfilePicture = "Add a profile picture";
   static const String useYOurFavImage =
       "Use one of your favourite image or selfie";
-  static const String PHOTO_GALLERY = 'Photo Gallery';
-  static const String CAMERA = 'Camera';
+  static const String photoGallery = 'Photo Gallery';
+  static const String camera = 'Camera';
   static const String skipForNow = 'Skip for now';
   static const String apply = 'Apply';
   static const String addNewPlan = 'Add New Plan';
