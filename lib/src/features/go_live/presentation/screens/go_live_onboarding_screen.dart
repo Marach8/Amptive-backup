@@ -17,24 +17,42 @@ import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 import '../../../../shared/image_loader_widget.dart';
 
-class GoLiveOnboardingScreen extends StatelessWidget {
-  const GoLiveOnboardingScreen({super.key, this.episode});
+class LiveProgramEntryParams{
+  const LiveProgramEntryParams({
+    required this.roomEntryToken,
+    required this.roomUrl,
+    required this.streamId,
+    required this.roomParticipantId,
+    required this.programId,
+    required this.coverUrl,
+  });
 
-  final Episode? episode;
+  final String roomEntryToken, roomUrl,
+  streamId, roomParticipantId, programId,
+  coverUrl;
+}
+
+class GoLiveOnboardingScreen extends StatelessWidget {
+  const GoLiveOnboardingScreen({
+    super.key,
+    this.liveProgramEntryParams,
+  });
+
+  final LiveProgramEntryParams? liveProgramEntryParams;
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider<GoLiveOnboardBloc>(
       create: (_) => GoLiveOnboardBloc(),
-      child: _SubWidget(episode: episode),
+      child: _SubWidget(liveProgramEntryParams: liveProgramEntryParams),
     );
   }
 }
 
 class _SubWidget extends StatefulWidget {
-  const _SubWidget({this.episode});
+  const _SubWidget({this.liveProgramEntryParams});
 
-  final Episode? episode;
+  final LiveProgramEntryParams? liveProgramEntryParams;
 
   @override
   State<_SubWidget> createState() => _SubWidgetState();
@@ -277,7 +295,7 @@ class _SubWidgetState extends State<_SubWidget> {
                                           onCountDownFinished: () async {
                                             // Get streamId from the episode that was passed in
                                             final String streamId =
-                                                widget.episode?.livestreamId ??
+                                                widget.liveProgramEntryParams?.streamId ??
                                                     '';
                                             if (!context.mounted) return;
                                             context.pushReplacementNamed(
@@ -285,8 +303,7 @@ class _SubWidgetState extends State<_SubWidget> {
                                                 extra: GoLiveProgramParams(
                                                   streamId: streamId,
                                                   userType: GoLiveUserType.host,
-                                                  contentId:
-                                                      widget.episode?.episodeId,
+                                                  contentId: ''
                                                 ));
                                           },
                                         )

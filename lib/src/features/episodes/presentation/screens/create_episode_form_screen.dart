@@ -651,17 +651,17 @@ class _CreateShowFormScreenState extends State<_SubWidget> {
 
         bottomSheet: MultiBlocListener(
           listeners: <SingleChildWidget>[
-            BlocListener<StartLiveProgramCubit, ATAppState<dynamic>>(
-              listener: (_, ATAppState<dynamic> state){
-                if(state is SuccessState<dynamic>){
+            BlocListener<StartLiveProgramCubit,
+              ATAppState<StartLiveProgramState>>(
+              listener: (_, ATAppState<StartLiveProgramState> state){
+                if(state is SuccessState<StartLiveProgramState>){
                   _activateBtn.value = (true, _activateBtn.value.$2);
 
                   context.pushReplacementNamed(
                     ATRoutes.goLiveOnboarding,
-                    extra: state.newData
                   );
                 }
-                else if(state is FailureState<dynamic>){
+                else if(state is FailureState<StartLiveProgramState>){
                   _activateBtn.value = (true, _activateBtn.value.$2);
 
                   showAppNotification2(

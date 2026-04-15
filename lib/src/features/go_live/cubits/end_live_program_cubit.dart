@@ -3,36 +3,36 @@ import 'package:amptive/src/features/go_live/data/repository/go_live_repo.dart';
 import 'package:amptive/src/features/go_live/data/repository/go_live_repo_impl.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class EndLiveProgramCubit extends Cubit<ATAppState<dynamic>> {
+class EndLiveProgramCubit extends Cubit<ATAppState<bool>> {
   EndLiveProgramCubit({GoLiveRepo? mockGoLiveRepo})
       : goLiveRepo = mockGoLiveRepo ?? GoLiveRepoImpl(),
-        super(const InitialState<dynamic>());
+        super(const InitialState<bool>());
 
   final GoLiveRepo goLiveRepo;
 
-  dynamic get currentData => switch (state) {
-        InitialState<dynamic>(:final dynamic initialData) => initialData,
-        LoadingState<dynamic>(:final dynamic currentData) => currentData,
-        SuccessState<dynamic>(:final dynamic newData) => newData,
-        FailureState<dynamic>(:final dynamic oldData) => oldData,
-      };
+  bool? get currentData => switch (state) {
+    InitialState<bool>(:final bool? initialData) => initialData,
+    LoadingState<bool>(:final bool? currentData) => currentData,
+    SuccessState<bool>(:final bool? newData) => newData,
+    FailureState<bool>(:final bool? oldData) => oldData,
+  };
 
-  Future<void> endLiveProgram({required String livestreamId}) async {
-    emit(LoadingState<dynamic>(currentData: currentData));
+  Future<void> endLiveProgram(String livestreamId) async {
+    emit(LoadingState<bool>(currentData: currentData));
     try {
-      final ApiResponse<dynamic> response =
+      final ApiResponse<bool> response =
           await goLiveRepo.endLiveProgram(livestreamId: livestreamId);
       response.when(
-        successful: (Successful<dynamic> data) {
-          emit(SuccessState<dynamic>(newData: data.data));
+        successful: (Successful<bool> data) {
+          emit(SuccessState<bool>(newData: data.data));
         },
-        unSuccessful: (Unsuccessful<dynamic> error) {
-          emit(FailureState<dynamic>(error.error.message,
+        unSuccessful: (Unsuccessful<bool> error) {
+          emit(FailureState<bool>(error.error.message,
               oldData: currentData));
         },
       );
     } catch (e) {
-      emit(FailureState<dynamic>('Unable to end live program: $e',
+      emit(FailureState<bool>('Unable to end live program: $e',
           oldData: currentData));
     }
   }

@@ -3,36 +3,47 @@ import 'package:amptive/src/features/go_live/data/repository/go_live_repo.dart';
 import 'package:amptive/src/features/go_live/data/repository/go_live_repo_impl.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class StartLiveProgramCubit extends Cubit<ATAppState<dynamic>> {
+typedef StartLiveProgramState = ({
+  String? liveProgramId,
+  String? starterToken,
+});
+
+class StartLiveProgramCubit extends Cubit<ATAppState<StartLiveProgramState>> {
   StartLiveProgramCubit({GoLiveRepo? mockGoLiveRepo})
       : goLiveRepo = mockGoLiveRepo ?? GoLiveRepoImpl(),
-        super(const InitialState<dynamic>());
+        super(const InitialState<StartLiveProgramState>());
 
   final GoLiveRepo goLiveRepo;
 
-  dynamic get currentData => switch (state) {
-        InitialState<dynamic>(:final dynamic initialData) => initialData,
-        LoadingState<dynamic>(:final dynamic currentData) => currentData,
-        SuccessState<dynamic>(:final dynamic newData) => newData,
-        FailureState<dynamic>(:final dynamic oldData) => oldData,
-      };
+  StartLiveProgramState? get currentData => switch (state) {
+    InitialState<StartLiveProgramState>(
+      :final StartLiveProgramState? initialData) => initialData,
+    LoadingState<StartLiveProgramState>(
+      :final StartLiveProgramState? currentData) => currentData,
+    SuccessState<StartLiveProgramState>(
+      :final StartLiveProgramState? newData) => newData,
+    FailureState<StartLiveProgramState>(
+      :final StartLiveProgramState? oldData) => oldData,
+  };
+
 
   Future<void> startLiveProgram({required String contentId}) async {
-    emit(LoadingState<dynamic>(currentData: currentData));
+    emit(LoadingState<StartLiveProgramState>(currentData: currentData));
     try {
-      final ApiResponse<dynamic> response =
+      final ApiResponse<StartLiveProgramState> response =
           await goLiveRepo.startLiveProgram(contentId: contentId);
       response.when(
-        successful: (Successful<dynamic> data) {
-          emit(SuccessState<dynamic>(newData: data.data));
+        successful: (Successful<StartLiveProgramState> data) {
+          emit(SuccessState<StartLiveProgramState>(newData: data.data));
         },
-        unSuccessful: (Unsuccessful<dynamic> error) {
-          emit(FailureState<dynamic>(error.error.message,
+        unSuccessful: (Unsuccessful<StartLiveProgramState> error) {
+          emit(FailureState<StartLiveProgramState>(error.error.message,
               oldData: currentData));
         },
       );
     } catch (e) {
-      emit(FailureState<dynamic>('Unable to start live program: $e',
+      emit(FailureState<StartLiveProgramState>(
+        'Unable to start live program: $e',
           oldData: currentData));
     }
   }

@@ -61,6 +61,8 @@ class CreateEventFormScreen extends StatelessWidget {
         BlocProvider<CreateEventCubit>(create: (_) => CreateEventCubit()),
         BlocProvider<StartLiveProgramCubit>(
           create: (_) => StartLiveProgramCubit()),
+        BlocProvider<GetLiveProgramEntryTokenCubit>(
+          create: (_) => GetLiveProgramEntryTokenCubit()),
       ],
       child: const _SubWidget(),
     );
@@ -552,7 +554,9 @@ class __SubWidgetState extends State<_SubWidget> {
                                 String descriptionText = ATStrings.choose2AllowHandRasing;
                                 if (selectedPermission == HandRaisingPermission.allow) {
                                   descriptionText = ATStrings.allow;
-                                } else if (selectedPermission == HandRaisingPermission.dontAllow) {
+                                }
+                                else if (selectedPermission == 
+                                  HandRaisingPermission.dontAllow) {
                                   descriptionText = ATStrings.dontAllow;
                                 }
 
@@ -713,20 +717,26 @@ class __SubWidgetState extends State<_SubWidget> {
         resizeToAvoidBottomInset: false,
         bottomSheet: MultiBlocListener(
           listeners: <SingleChildWidget>[
-            //Listen to starting an event
-            BlocListener<StartLiveProgramCubit, ATAppState<dynamic>>(
-              listener: (_, ATAppState<dynamic> state){
-                if(state is SuccessState<dynamic>){
-                  _activateBtn.value = (true, _activateBtn.value.$2);
-                  context.read<HostedEventsCubit>()
-                    .addNewHostedEvent(state.newData);
-
-                  context.pushReplacementNamed(
-                    ATRoutes.goLiveOnboarding,
-                    extra: state.newData
-                  );
+            BlocListener<GetLiveProgramEntryTokenCubit, ATAppState<LiveProgramEntryToken>>(
+              listener: (_, ATAppState<LiveProgramEntryToken> state){
+                if(state is SuccessState<LiveProgramEntryToken>){
+                  // context.pushReplacementNamed(
+                  //   ATRoutes.goLiveOnboarding,
+                  //   extra: state.newData
+                  // );
                 }
-                else if(state is FailureState<HostedEvent>){
+              },
+            ),
+            //Listen to starting an event
+            BlocListener<StartLiveProgramCubit, ATAppState<StartLiveProgramState>>(
+              listener: (_, ATAppState<StartLiveProgramState> state){
+                if(state is SuccessState<StartLiveProgramState>){
+                  _activateBtn.value = (true, _activateBtn.value.$2);
+                  final String liveStreamId = state.newData?.liveProgramId ?? '';
+                  context.read<GetLiveProgramEntryTokenCubit>()
+                    .getLiveProgramEntryToken(liveStreamId);
+                }
+                else if(state is FailureState<StartLiveProgramState>){
                   _activateBtn.value = (true, _activateBtn.value.$2);
 
                   showAppNotification2(
@@ -789,6 +799,9 @@ class __SubWidgetState extends State<_SubWidget> {
             BlocListener<CreateEventCubit, ATAppState<HostedEvent>>(
               listener: (_, ATAppState<HostedEvent> state) async{
                 if (state is SuccessState<HostedEvent>) {
+                  context.read<HostedEventsCubit>()
+                    .addNewHostedEvent(state.newData);
+
                   final bool shouldStartLive = _activateBtn.value.$2 
                     == ScheduleBtnOnTap.goLive;
                   if(shouldStartLive){
@@ -800,8 +813,6 @@ class __SubWidgetState extends State<_SubWidget> {
                   }
 
                   _activateBtn.value = (true, _activateBtn.value.$2);
-                  context.read<HostedEventsCubit>()
-                    .addNewHostedEvent(state.newData);
 
                   final dynamic params = ProgramCreationSuccessScreenParams(
                     coverArtBytes: context.read<BgImageCubit>().state.$2!,

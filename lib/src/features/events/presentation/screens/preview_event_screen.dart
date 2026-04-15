@@ -2,7 +2,10 @@ import 'dart:ui';
 import 'package:amptive/src/config/api_response_and_app_state.dart';
 import 'package:amptive/src/config/utils/dialogs/app_notification_dialog.dart';
 import 'package:amptive/src/features/events/cubits/event_detail_cubit.dart';
+import 'package:amptive/src/features/go_live/cubits/end_live_program_cubit.dart';
+import 'package:amptive/src/features/go_live/cubits/get_live_program_entry_token_cubit.dart';
 import 'package:amptive/src/features/go_live/cubits/start_live_program_cubit.dart';
+import 'package:amptive/src/features/go_live/go_live_export.dart';
 import 'package:amptive/src/features/home/cubits/toggle_following_cubit.dart';
 import 'package:amptive/src/features/home/data/models/following_status.dart';
 import 'package:amptive/src/features/home/presentation/widgets/event_or_show_card.dart';
@@ -41,7 +44,8 @@ class PreviewEventScreen extends StatelessWidget {
             initialEvent: hostedEvent,
           ),
         ),
-        BlocProvider<BlurredHeaderCubit>(create: (_) => BlurredHeaderCubit()),
+        BlocProvider<BlurredHeaderCubit>(
+            create: (_) => BlurredHeaderCubit()),
         BlocProvider<ToggleFollowingCubit>(
             create: (_) => ToggleFollowingCubit(
               initialStatus: FollowingStatus(
@@ -52,6 +56,12 @@ class PreviewEventScreen extends StatelessWidget {
         ),
         BlocProvider<StartLiveProgramCubit>(
           create: (_) => StartLiveProgramCubit()),
+        BlocProvider<GetLiveProgramEntryTokenCubit>(
+          create: (_) => GetLiveProgramEntryTokenCubit(),
+        ),
+        BlocProvider<EndLiveProgramCubit>(
+          create: (_) => EndLiveProgramCubit(),
+        ),
       ],
       child: _EventSubWidget(hostedEvent: hostedEvent),
     );
@@ -112,7 +122,7 @@ class _EventSubWidgetState extends State<_EventSubWidget> {
                   }),
                 ),
               ),
-              Container(
+              ColoredBox(
                 color: ATColors.hex0D0D0D.withValues(alpha: 0.75),
                 child: NotificationListener<ScrollNotification>(
                   onNotification:
@@ -315,6 +325,14 @@ class _EventSubWidgetState extends State<_EventSubWidget> {
                                 fontWeight: ATFontWeights.w500,
                               ),
                             ),
+                            IconButton(
+                              onPressed: (){
+                                final streamId = context.read<StartLiveProgramCubit>()
+                                  .currentData?.liveProgramId ?? '';
+                                context.read<EndLiveProgramCubit>().endLiveProgram(streamId);
+                              },
+                              icon:Icon(Icons.add),
+                            ),
                             const SizedBox(height: 150),
                           ],
                         );
@@ -326,30 +344,46 @@ class _EventSubWidgetState extends State<_EventSubWidget> {
             ],
           ),
 
-          bottomSheet: BlocConsumer<
-            StartLiveProgramCubit, ATAppState<dynamic>>(
-            listener: (_, state){
-              if(state is SuccessState<dynamic>){
-                final HostedEvent? updatedEvent =
-                      context.read<EventDetailCubit>().currentEventDetail;
+          bottomSheet: BlocListener<GetLiveProgramEntryTokenCubit,
+            ATAppState<LiveProgramEntryToken>>(
+            listener: (_, ATAppState<LiveProgramEntryToken> state){
+              if(state is SuccessState<LiveProgramEntryToken>){
+                
                 context.pushReplacementNamed(
-                    ATRoutes.goLiveOnboarding,
-                    extra: updatedEvent
-                  );
+                  ATRoutes.goLiveOnboarding,
+                  extra: LiveProgramEntryParams(
+                    roomEntryToken: state.newData?.roomEntryToken ?? '',
+                    roomUrl: state.newData?.roomUrl ?? '',
+                    streamId: state.newData?.streamId ?? '',
+                    roomParticipantId: state.newData?.roomParticipantId ?? '',
+                    programId: widget.hostedEvent.eventId ?? '',
+                    coverUrl: widget.hostedEvent.coverUrl ?? '',
+                  )
+                );
               }
             },
-            builder: (_, state) {
-              return ATBlurredBgBtn(
-                onPressed: () async {
-                  final HostedEvent? updatedEvent =
-                      context.read<EventDetailCubit>().currentEventDetail;
-                  context.read<StartLiveProgramCubit>().startLiveProgram(
-                      contentId: updatedEvent?.eventId ?? '',
-                    );
-                },
-                btnTitle: 'Edit Event'
-              );
-            }
+            child: BlocConsumer<
+              StartLiveProgramCubit, ATAppState<StartLiveProgramState>>(
+              listener: (_, state){
+                if(state is SuccessState<StartLiveProgramState>){
+                  final String liveStreamId = state.newData?.liveProgramId ?? '';
+                  context.read<GetLiveProgramEntryTokenCubit>()
+                    .getLiveProgramEntryToken(liveStreamId);
+                }
+              },
+              builder: (_, state) {
+                return ATBlurredBgBtn(
+                  onPressed: () async {
+                    final HostedEvent? updatedEvent =
+                        context.read<EventDetailCubit>().currentEventDetail;
+                    context.read<StartLiveProgramCubit>().startLiveProgram(
+                        contentId: updatedEvent?.eventId ?? '',
+                      );
+                  },
+                  btnTitle: 'Edit Event'
+                );
+              }
+            ),
           ),
 
           // bottomSheet: ATBlurredBgBtn(
