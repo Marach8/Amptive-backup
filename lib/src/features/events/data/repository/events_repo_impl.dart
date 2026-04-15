@@ -90,7 +90,7 @@ class EventsRepoImpl implements EventsRepo {
   }) async {
     try {
       final Response<dynamic> response = await networkService.get(
-        ATEndpoints.events,
+        '${ATEndpoints.events}me/',
         queryParameters: <String, dynamic>{
           'page': page,
           'page_size': pageSize,
