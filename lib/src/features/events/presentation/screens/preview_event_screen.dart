@@ -2,6 +2,7 @@ import 'dart:ui';
 import 'package:amptive/src/config/api_response_and_app_state.dart';
 import 'package:amptive/src/config/utils/dialogs/app_notification_dialog.dart';
 import 'package:amptive/src/features/events/cubits/event_detail_cubit.dart';
+import 'package:amptive/src/features/go_live/cubits/start_live_program_cubit.dart';
 import 'package:amptive/src/features/home/cubits/toggle_following_cubit.dart';
 import 'package:amptive/src/features/home/data/models/following_status.dart';
 import 'package:amptive/src/features/home/presentation/widgets/event_or_show_card.dart';
@@ -43,13 +44,14 @@ class PreviewEventScreen extends StatelessWidget {
         BlocProvider<BlurredHeaderCubit>(create: (_) => BlurredHeaderCubit()),
         BlocProvider<ToggleFollowingCubit>(
             create: (_) => ToggleFollowingCubit(
-                    initialStatus: FollowingStatus(
-                  isFollowing: true,
-                  followerCount: hostedEvent.followerCount ?? 0,
-                ))),
-        BlocProvider<LocalUserDataCubit>(
-          create: (_) => LocalUserDataCubit()..initializeCachedData(),
+              initialStatus: FollowingStatus(
+              isFollowing: true,
+              followerCount: hostedEvent.followerCount ?? 0,
+            )
+          )
         ),
+        BlocProvider<StartLiveProgramCubit>(
+          create: (_) => StartLiveProgramCubit()),
       ],
       child: _EventSubWidget(hostedEvent: hostedEvent),
     );
@@ -323,25 +325,53 @@ class _EventSubWidgetState extends State<_EventSubWidget> {
               ),
             ],
           ),
-          bottomSheet: ATBlurredBgBtn(
-              onPressed: () async {
+
+          bottomSheet: BlocConsumer<
+            StartLiveProgramCubit, ATAppState<dynamic>>(
+            listener: (_, state){
+              if(state is SuccessState<dynamic>){
                 final HostedEvent? updatedEvent =
-                    context.read<EventDetailCubit>().currentEventDetail;
-                final HostedEvent? editedEvent = await context.pushNamed(
-                    ATRoutes.editEventScreen,
-                    extra: updatedEvent ?? widget.hostedEvent);
-                if (context.mounted &&
-                    editedEvent != null &&
-                    editedEvent != updatedEvent) {
-                  context.read<EventDetailCubit>().updateEvent(editedEvent);
-                  showAppNotification2(
-                    context: context,
-                    text: 'Event detail updated.',
-                    type: NotificationType.success,
+                      context.read<EventDetailCubit>().currentEventDetail;
+                context.pushReplacementNamed(
+                    ATRoutes.goLiveOnboarding,
+                    extra: updatedEvent
                   );
-                }
-              },
-              btnTitle: 'Edit Event'),
+              }
+            },
+            builder: (_, state) {
+              return ATBlurredBgBtn(
+                onPressed: () async {
+                  final HostedEvent? updatedEvent =
+                      context.read<EventDetailCubit>().currentEventDetail;
+                  context.read<StartLiveProgramCubit>().startLiveProgram(
+                      contentId: updatedEvent?.eventId ?? '',
+                    );
+                },
+                btnTitle: 'Edit Event'
+              );
+            }
+          ),
+
+          // bottomSheet: ATBlurredBgBtn(
+          //   onPressed: () async {
+          //     final HostedEvent? updatedEvent =
+          //         context.read<EventDetailCubit>().currentEventDetail;
+          //     final HostedEvent? editedEvent = await context.pushNamed(
+          //         ATRoutes.editEventScreen,
+          //         extra: updatedEvent ?? widget.hostedEvent);
+          //     if (context.mounted &&
+          //         editedEvent != null &&
+          //         editedEvent != updatedEvent) {
+          //       context.read<EventDetailCubit>().updateEvent(editedEvent);
+          //       showAppNotification2(
+          //         context: context,
+          //         text: 'Event detail updated.',
+          //         type: NotificationType.success,
+          //       );
+          //     }
+          //   },
+          //   btnTitle: 'Edit Event'
+          // ),
         ),
       ),
     );

@@ -17,7 +17,7 @@ class GoLiveRepoImpl implements GoLiveRepo {
     {required String contentId}) async {
     try {
       final response = await networkService.post(
-        ATEndpoints.startStreamEndpoint(contentId),
+        '${ATEndpoints.livestreams}$contentId/start',
         data: <String, dynamic>{},
       );
       return Successful<dynamic>(data: response.data);
@@ -34,7 +34,7 @@ class GoLiveRepoImpl implements GoLiveRepo {
     {required String livestreamId}) async {
     try {
       final response = await networkService.post(
-        ATEndpoints.endStreamEndpoint(livestreamId),
+        '${ATEndpoints.livestreams}$livestreamId/end',
         data: <String, dynamic>{},
       );
       return Successful<dynamic>(data: response.data);
@@ -51,7 +51,7 @@ class GoLiveRepoImpl implements GoLiveRepo {
     {required String livestreamId}) async {
     try {
       final response = await networkService.post(
-        ATEndpoints.reactToStream(livestreamId),
+        '${ATEndpoints.livestreams}$livestreamId/react',
         data: <String, dynamic>{},
       );
       return Successful<dynamic>(data: response.data);
@@ -68,7 +68,7 @@ class GoLiveRepoImpl implements GoLiveRepo {
     {required String livestreamId}) async {
     try {
       final response = await networkService.post(
-        ATEndpoints.getStreamTokenEndpoint(livestreamId),
+        '${ATEndpoints.livestreams}$livestreamId/token',
         data: <String, dynamic>{},
       );
       return Successful<dynamic>(data: response.data);

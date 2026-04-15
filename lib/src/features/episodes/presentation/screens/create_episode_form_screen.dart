@@ -52,7 +52,7 @@ class CreateEpisodeFormScreen extends StatelessWidget {
         BlocProvider<AllUsersCubit>(create: (_) => AllUsersCubit()),
         BlocProvider<AllHashtagsCubit>(create: (_) => AllHashtagsCubit()),
         BlocProvider<SelectedHashTagsCubit>(create: (_) => SelectedHashTagsCubit()),
-        BlocProvider<StartEpisodeCubit>(create: (_) => StartEpisodeCubit()),
+        BlocProvider<StartLiveProgramCubit>(create: (_) => StartLiveProgramCubit()),
       ],
       child: _SubWidget(showId: showId),
     );
@@ -535,7 +535,8 @@ class _CreateShowFormScreenState extends State<_SubWidget> {
   
                               if (selectedHandRaisePermission == HandRaisingPermission.allow) {
                                 descriptionText = ATStrings.allow;
-                              } else if (selectedHandRaisePermission == HandRaisingPermission.dontAllow) {
+                              } else if (selectedHandRaisePermission
+                                == HandRaisingPermission.dontAllow) {
                                 descriptionText = ATStrings.dontAllow;
                               }
   
@@ -650,9 +651,9 @@ class _CreateShowFormScreenState extends State<_SubWidget> {
 
         bottomSheet: MultiBlocListener(
           listeners: <SingleChildWidget>[
-            BlocListener<StartEpisodeCubit, ATAppState<Episode>>(
-              listener: (_, ATAppState<Episode> state){
-                if(state is SuccessState<Episode>){
+            BlocListener<StartLiveProgramCubit, ATAppState<dynamic>>(
+              listener: (_, ATAppState<dynamic> state){
+                if(state is SuccessState<dynamic>){
                   _activateBtn.value = (true, _activateBtn.value.$2);
 
                   context.pushReplacementNamed(
@@ -660,7 +661,7 @@ class _CreateShowFormScreenState extends State<_SubWidget> {
                     extra: state.newData
                   );
                 }
-                else if(state is FailureState<Episode>){
+                else if(state is FailureState<dynamic>){
                   _activateBtn.value = (true, _activateBtn.value.$2);
 
                   showAppNotification2(
@@ -702,7 +703,8 @@ class _CreateShowFormScreenState extends State<_SubWidget> {
                         == ProgramAccessType.free ? 'free' : 'paid',
                       priceOverride: accessTypeData.subscriptionAmount 
                         ?? accessTypeData.oneTimePaymentAmount ?? 0.01,
-                      allowHandRaising: selectedHandRaisePermission == HandRaisingPermission.allow,
+                      allowHandRaising: selectedHandRaisePermission
+                        == HandRaisingPermission.allow,
                       allowWhispers: whispersDesc == ATStrings.turnedOn,
                       scheduledFor: _scheduleDate?.toUtc().toIso8601String(),
                     ),
@@ -726,12 +728,8 @@ class _CreateShowFormScreenState extends State<_SubWidget> {
                     == ScheduleBtnOnTap.goLive;
                   if(shouldStartLive){
                     final Episode? episode = state.newData;
-                    context.read<StartEpisodeCubit>().startEpisode(
-                      showId: widget.showId,
-                      episodeId: episode?.episodeId ?? '',
-                      streamUrl: episode?.streamUrl ?? '', 
-                      streamKey: episode?.streamKey ?? '',
-                      reason: 'Starting an episode'
+                    context.read<StartLiveProgramCubit>().startLiveProgram(
+                      contentId: episode?.episodeId ?? '',
                     );
                     return;
                   }
@@ -778,7 +776,8 @@ class _CreateShowFormScreenState extends State<_SubWidget> {
           child: ValueListenableBuilder<(bool?, ScheduleBtnOnTap)>(
               valueListenable: _activateBtn,
               builder: (_, (bool?, ScheduleBtnOnTap) value, __) {
-                final bool shouldGoToGoLive = _activateBtn.value.$2 == ScheduleBtnOnTap.goLive;
+                final bool shouldGoToGoLive = 
+                  _activateBtn.value.$2 == ScheduleBtnOnTap.goLive;
       
                 //null for loading, false for disabled, true for enabled for the bool.
                 return ATBlurredBgBtn(

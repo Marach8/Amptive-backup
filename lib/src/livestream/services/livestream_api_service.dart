@@ -1,8 +1,7 @@
 import 'dart:convert';
 import 'dart:developer' as developer show log;
 
-import 'package:amptive/src/config/endpoints.dart';
-
+import '../../config/endpoints.dart';
 import '../../config/services/network_service/dio_network_service_impl.dart';
 import '../../config/services/network_service/network_service.dart';
 import '../models/livestream_models.dart';
@@ -34,7 +33,7 @@ class LivestreamApiService {
   Future<LivestreamToken> fetchToken(String streamId) async {
     try {
       final res = await _networkService.post(
-        ATEndpoints.getStreamTokenEndpoint(streamId),
+        '${ATEndpoints.livestreams}$streamId/token',
       );
 
       return LivestreamToken.fromJson(
@@ -53,7 +52,7 @@ class LivestreamApiService {
   Future<String> startStream(String contentId) async {
     try {
       final res = await _networkService.post(
-        ATEndpoints.startStreamEndpoint(contentId),
+        '${ATEndpoints.livestreams}$contentId/start',
       );
 
       final String liveId = res.data['data']['livestream_id'];
@@ -69,7 +68,7 @@ class LivestreamApiService {
   Future<void> endStream(String streamId) async {
     try {
       await _networkService.post(
-        ATEndpoints.endStreamEndpoint(streamId),
+        '${ATEndpoints.livestreams}$streamId/end',
       );
     } catch (e) {
       throw LivestreamApiException(
@@ -79,14 +78,14 @@ class LivestreamApiService {
     }
   }
 
-  // ── Reactions (persistent path) ────────────────────────────────────────
+  // ── Reactions (persistent path) ───────────────────────────────────────
 
   /// POST to /react for persistence.  For fire-and-forget speed, use
   /// [SignalingService.sendReaction] instead (or in addition).
   Future<void> sendReaction(String streamId, String emoji) async {
     try {
       await _networkService.post(
-        ATEndpoints.reactToStream(streamId),
+        '${ATEndpoints.livestreams}$streamId/react',
         data: {'emoji': emoji},
       );
     } catch (e) {
@@ -97,7 +96,7 @@ class LivestreamApiService {
     }
   }
 
-  // ── Helpers ────────────────────────────────────────────────────────────
+  // ── Helpers ───────────────────────────────────────────────────────────
 
   int _extractStatusCode(dynamic error) {
     if (error is Exception) {

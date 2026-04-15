@@ -59,7 +59,8 @@ class CreateEventFormScreen extends StatelessWidget {
           create: (_) => SelectedHashTagsCubit()),
         BlocProvider<HostedEventsCubit>.value(value: hostedEventsCubit),
         BlocProvider<CreateEventCubit>(create: (_) => CreateEventCubit()),
-        BlocProvider<StartEventCubit>(create: (_) => StartEventCubit())
+        BlocProvider<StartLiveProgramCubit>(
+          create: (_) => StartLiveProgramCubit()),
       ],
       child: const _SubWidget(),
     );
@@ -713,9 +714,9 @@ class __SubWidgetState extends State<_SubWidget> {
         bottomSheet: MultiBlocListener(
           listeners: <SingleChildWidget>[
             //Listen to starting an event
-            BlocListener<StartEventCubit, ATAppState<HostedEvent>>(
-              listener: (_, ATAppState<HostedEvent> state){
-                if(state is SuccessState<HostedEvent>){
+            BlocListener<StartLiveProgramCubit, ATAppState<dynamic>>(
+              listener: (_, ATAppState<dynamic> state){
+                if(state is SuccessState<dynamic>){
                   _activateBtn.value = (true, _activateBtn.value.$2);
                   context.read<HostedEventsCubit>()
                     .addNewHostedEvent(state.newData);
@@ -792,11 +793,8 @@ class __SubWidgetState extends State<_SubWidget> {
                     == ScheduleBtnOnTap.goLive;
                   if(shouldStartLive){
                     final HostedEvent? event = state.newData;
-                    context.read<StartEventCubit>().startEvent(
-                      eventId: event?.eventId ?? '',
-                      streamUrl: event?.streamUrl ?? '', 
-                      streamKey: event?.streamKey ?? '',
-                      reason: 'Starting an event'
+                    context.read<StartLiveProgramCubit>().startLiveProgram(
+                      contentId: event?.eventId ?? '',
                     );
                     return;
                   }
