@@ -89,87 +89,87 @@ class CohostWidget4HostView extends StatelessWidget {
   }
 }
 
-class GoLiveHostWidget extends StatelessWidget {
-  const GoLiveHostWidget(
-      {super.key,
-      this.top,
-      this.bottom,
-      this.left,
-      this.right,
-      required this.hostName,
-      required this.hostProfilePic});
+// class GoLiveHostWidget extends StatelessWidget {
+//   const GoLiveHostWidget(
+//       {super.key,
+//       this.top,
+//       this.bottom,
+//       this.left,
+//       this.right,
+//       required this.hostName,
+//       required this.hostProfilePic});
 
-  final double? top, bottom, left, right;
-  final String hostName, hostProfilePic;
+//   final double? top, bottom, left, right;
+//   final String hostName, hostProfilePic;
 
-  @override
-  Widget build(BuildContext context) {
-    return Positioned(
-        top: top,
-        left: left,
-        right: right,
-        bottom: bottom,
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: <Widget>[
-            Stack(
-              clipBehavior: Clip.none,
-              alignment: Alignment.center,
-              children: <Widget>[
-                ATCircularImage(
-                    diameter: 94,
-                    addBorder: true,
-                    borderColor: ATColors.white,
-                    borderWidth: 2,
-                    picturePadding: 2,
-                    imagePath: hostProfilePic),
-                Positioned(
-                  bottom: 0,
-                  right: 5,
-                  child: ATCircleAvatar(
-                    diameter: 22,
-                    child: FittedBox(
-                        fit: BoxFit.scaleDown,
-                        child: Icon(
-                          Icons.mic_off,
-                          size: 15,
-                          color: ATColors.hex0D0D0D,
-                        )),
-                  ),
-                ),
-              ],
-            ),
-            const SizedBox(
-              height: 5,
-            ),
-            SizedBox(
-              width: 100,
-              child: Text(
-                hostName,
-                textAlign: TextAlign.center,
-                style: context.textTheme.titleSmall,
-              ),
-            ),
-            const SizedBox(
-              height: 5,
-            ),
-            ATContainer(
-              padding: const EdgeInsets.fromLTRB(4, 2, 4, 2),
-              radius: 5,
-              gradient: LinearGradient(
-                  begin: Alignment.topCenter,
-                  end: Alignment.bottomCenter,
-                  colors: <Color>[
-                    ATColors.hexF91880,
-                    ATColors.orangeGradientColorB
-                  ]),
-              child: Text(ATStrings.HOST.toUpperCase(),
-                  style: context.textTheme.bodySmall?.copyWith(
-                    fontSize: ATSizes.size10,
-                  )),
-            ),
-          ],
-        ));
-  }
-}
+//   @override
+//   Widget build(BuildContext context) {
+//     return Positioned(
+//         top: top,
+//         left: left,
+//         right: right,
+//         bottom: bottom,
+//         child: Column(
+//           mainAxisSize: MainAxisSize.min,
+//           mainAxisAlignment: MainAxisAlignment.start,
+//           children: <Widget>[
+//             Stack(
+//               clipBehavior: Clip.none,
+//               alignment: Alignment.center,
+//               children: <Widget>[
+//                 ATCircularImage(
+//                     diameter: 94,
+//                     addBorder: true,
+//                     borderColor: ATColors.white,
+//                     borderWidth: 2,
+//                     picturePadding: 2,
+//                     imagePath: hostProfilePic),
+//                 Positioned(
+//                   bottom: 0,
+//                   right: 5,
+//                   child: ATCircleAvatar(
+//                     diameter: 22,
+//                     child: FittedBox(
+//                         fit: BoxFit.scaleDown,
+//                         child: Icon(
+//                           Icons.mic_off,
+//                           size: 15,
+//                           color: ATColors.hex0D0D0D,
+//                         )),
+//                   ),
+//                 ),
+//               ],
+//             ),
+//             const SizedBox(
+//               height: 5,
+//             ),
+//             SizedBox(
+//               width: 100,
+//               child: Text(
+//                 hostName,
+//                 textAlign: TextAlign.center,
+//                 style: context.textTheme.titleSmall,
+//               ),
+//             ),
+//             const SizedBox(
+//               height: 5,
+//             ),
+//             ATContainer(
+//               padding: const EdgeInsets.fromLTRB(4, 2, 4, 2),
+//               radius: 5,
+//               gradient: LinearGradient(
+//                   begin: Alignment.topCenter,
+//                   end: Alignment.bottomCenter,
+//                   colors: <Color>[
+//                     ATColors.hexF91880,
+//                     ATColors.orangeGradientColorB
+//                   ]),
+//               child: Text(ATStrings.host.toUpperCase(),
+//                   style: context.textTheme.bodySmall?.copyWith(
+//                     fontSize: ATSizes.size10,
+//                   )),
+//             ),
+//           ],
+//         ));
+//   }
+// }

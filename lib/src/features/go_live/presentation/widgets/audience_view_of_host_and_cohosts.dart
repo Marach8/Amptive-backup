@@ -1,27 +1,30 @@
 import 'package:amptive/src/features/go_live/cubits/livestream_bloc.dart';
+import 'package:amptive/src/features/go_live/cubits/livestream_cubit1.dart';
+import 'package:amptive/src/features/go_live/data/models/livestream_state.dart';
 import 'package:amptive/src/global_export.dart';
 import 'package:amptive/src/livestream/livestream.dart';
 import 'package:amptive/src/models/host.dart';
+import 'package:amptive/src/shared/global_model_objects.dart' hide Host;
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../bloc/main_app/go_live_bloc/host_view/cohosts_display_bloc.dart';
 import '../../../../services/go_live_service/go_live_service.dart';
 import '../../go_live_export.dart';
-import '../../../../views/widgets/other_widgets/main_application_widgets/widgets_in_go_live/go_live_host_widget_for_audience_view.dart';
+import 'render_host_and_cohost.dart';
 
-class AudienceViewOfHostAndCohostWidget extends StatelessWidget {
-  const AudienceViewOfHostAndCohostWidget({
+class RenderAudienceViewOfHostAndCohosts extends StatelessWidget {
+  const RenderAudienceViewOfHostAndCohosts({
     super.key,
   });
-  static final GoLiveService service = GoLiveService();
+  
 
   @override
   Widget build(BuildContext context) {
-    return ATContainer(
+    return SizedBox(
         height: 250,
         width: context.screenWidth,
-        child: BlocBuilder<LivestreamBloc, LivestreamState>(
-          builder: (BuildContext context, LivestreamState state) {
-            final List<LivestreamParticipant> participants = state.participants;
+        child: BlocBuilder<LiveStreamCubit1, LiveStreamState1>(
+          builder: (BuildContext context, LiveStreamState1 state) {
+            final List<LiveSessionParticipant> participants = state.participants;
 
             if (participants.isEmpty) {
               return Center(
@@ -32,10 +35,8 @@ class AudienceViewOfHostAndCohostWidget extends StatelessWidget {
               );
             }
 
-            final List<LivestreamParticipant> hosts =
-                participants.where((p) => p.isHost).toList();
-            final List<LivestreamParticipant> cohosts =
-                participants.where((p) => !p.isHost).toList();
+            final List<LiveSessionParticipant> hosts = participants;
+            final List<LiveSessionParticipant> cohosts = participants;
 
             return LayoutBuilder(builder: (_, BoxConstraints constraints) {
               final double width = constraints.maxWidth;
@@ -51,14 +52,12 @@ class AudienceViewOfHostAndCohostWidget extends StatelessWidget {
               return Stack(
                 alignment: Alignment.center,
                 children: <Widget>[
-                  if (hosts.isNotEmpty)
-                    GoLiveHostWidget(
-                      top: onlyHost ? 80 : 6,
-                      hostName: hosts.first.displayName,
-                      hostProfilePic: hosts.first.avatar ?? '',
-                    ),
+                    // RenderAHost(
+                    //   top: onlyHost ? 80 : 6,
+                    //   onTap: (Host? host){}
+                    // ),
                   if (cohosts.isNotEmpty)
-                    AmptiveLiveHostAndCoHostWidgetForAudienceView(
+                    RenderACohost(
                       bottom:
                           hostAndACohost || hostAnd3Cohosts || hostAnd5Cohosts
                               ? 0
@@ -68,15 +67,10 @@ class AudienceViewOfHostAndCohostWidget extends StatelessWidget {
                       left: hostAnd2Cohosts || hostAnd4Cohosts
                           ? width * 0.1
                           : null,
-                      index: 1,
-                      service: service,
-                      hostOrCohost: cohosts.length > 0
-                          ? _convertToHost(cohosts[0])
-                          : null,
-                      onTap: (ObjectWithNotifier<Host>? hostOrCohost) {},
+                      onTap: (CoHost? host){}
                     ),
                   if (cohosts.length > 1)
-                    AmptiveLiveHostAndCoHostWidgetForAudienceView(
+                    RenderACohost(
                       bottom: hostAnd2Cohosts ||
                               hostAnd3Cohosts ||
                               hostAnd4Cohosts ||
@@ -88,15 +82,10 @@ class AudienceViewOfHostAndCohostWidget extends StatelessWidget {
                           hostAnd2Cohosts || hostAnd3Cohosts || hostAnd4Cohosts
                               ? width * 0.1
                               : null,
-                      index: 2,
-                      service: service,
-                      hostOrCohost: cohosts.length > 1
-                          ? _convertToHost(cohosts[1])
-                          : null,
-                      onTap: (ObjectWithNotifier<Host>? hostOrCohost) {},
+                      onTap: (CoHost? host){}
                     ),
                   if (cohosts.length > 2)
-                    AmptiveLiveHostAndCoHostWidgetForAudienceView(
+                    RenderACohost(
                       bottom: hostAnd3Cohosts || hostAnd5Cohosts
                           ? 30
                           : hostAnd4Cohosts
@@ -108,50 +97,24 @@ class AudienceViewOfHostAndCohostWidget extends StatelessWidget {
                           : hostAnd4Cohosts
                               ? 0
                               : null,
-                      index: 3,
-                      service: service,
-                      hostOrCohost: cohosts.length > 2
-                          ? _convertToHost(cohosts[2])
-                          : null,
-                      onTap: (ObjectWithNotifier<Host>? hostOrCohost) {},
+                      onTap: (CoHost? host){}
                     ),
                   if (cohosts.length > 3)
-                    AmptiveLiveHostAndCoHostWidgetForAudienceView(
+                    RenderACohost(
                       top: hostAnd4Cohosts || hostAnd5Cohosts ? 35 : null,
                       right: hostAnd4Cohosts || hostAnd5Cohosts ? 0 : null,
-                      index: 4,
-                      service: service,
-                      hostOrCohost: cohosts.length > 3
-                          ? _convertToHost(cohosts[3])
-                          : null,
-                      onTap: (ObjectWithNotifier<Host>? hostOrCohost) {},
+                      onTap: (CoHost? host){}
                     ),
                   if (cohosts.length > 4)
-                    AmptiveLiveHostAndCoHostWidgetForAudienceView(
+                    RenderACohost(
                       top: hostAnd5Cohosts ? 35 : null,
                       left: hostAnd5Cohosts ? 0 : null,
-                      index: 5,
-                      service: service,
-                      hostOrCohost: cohosts.length > 4
-                          ? _convertToHost(cohosts[4])
-                          : null,
-                      onTap: (ObjectWithNotifier<Host>? hostOrCohost) {},
+                      onTap: (CoHost? host){}
                     ),
                 ],
               );
             });
           },
         ));
-  }
-
-  ObjectWithNotifier<Host>? _convertToHost(LivestreamParticipant participant) {
-    final Host host = Host(
-      id: null,
-      username: participant.displayName,
-      email: null,
-      profilePicture: participant.avatar,
-      name: participant.displayName,
-    );
-    return ObjectWithNotifier<Host>(obj: host);
   }
 }

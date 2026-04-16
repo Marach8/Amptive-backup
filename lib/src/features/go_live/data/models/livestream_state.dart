@@ -2,13 +2,14 @@ import 'package:amptive/src/shared/global_model_objects.dart';
 import 'package:equatable/equatable.dart';
 
 
-class LiveStreamState extends Equatable {
-  const LiveStreamState({
+class LiveStreamState1 extends Equatable {
+  const LiveStreamState1({
     this.connectionStatus = LiveSessionConnectionStatus.initial,
     this.participants = const <LiveSessionParticipant>[],
     this.activeSpeakerIds = const <String>[],
     this.isMicrophoneEnabled = true,
     this.connectionErrorMessage,
+    this.programCoverUrl
   });
 
   /// The overall status of the livestream connection.
@@ -23,24 +24,25 @@ class LiveStreamState extends Equatable {
 
   /// The local user's microphone status.
   final bool isMicrophoneEnabled;
+  final String? connectionErrorMessage, programCoverUrl;
 
-  /// Holds any error message if the status is `LiveSessionConnectionStatus.error`.
-  final String? connectionErrorMessage;
 
   /// Creates a new state object with updated values.
-  LiveStreamState copyWith({
+  LiveStreamState1 copyWith({
     LiveSessionConnectionStatus? connectionStatus,
     List<LiveSessionParticipant>? participants,
     List<String>? activeSpeakerIds,
     bool? isMicrophoneEnabled,
     String? errorMessage,
+    String? programCoverUrl,
   }) {
-    return LiveStreamState(
+    return LiveStreamState1(
       connectionStatus: connectionStatus ?? this.connectionStatus,
       participants: participants ?? this.participants,
       activeSpeakerIds: activeSpeakerIds ?? this.activeSpeakerIds,
       isMicrophoneEnabled: isMicrophoneEnabled ?? this.isMicrophoneEnabled,
       connectionErrorMessage: errorMessage ?? connectionErrorMessage,
+      programCoverUrl: programCoverUrl ?? this.programCoverUrl,
     );
   }
 
@@ -51,6 +53,7 @@ class LiveStreamState extends Equatable {
       activeSpeakerIds,
       isMicrophoneEnabled,
       connectionErrorMessage,
+      programCoverUrl
     ];
 }
 

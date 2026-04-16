@@ -1,6 +1,9 @@
 import 'dart:ui';
+import 'package:amptive/src/features/go_live/cubits/livestream_cubit1.dart';
+import 'package:amptive/src/features/go_live/data/models/livestream_state.dart';
 import 'package:amptive/src/livestream/livestream.dart';
 import 'package:amptive/src/models/host.dart';
+import 'package:amptive/src/shared/annotated_region__widget.dart';
 import 'package:amptive/src/shared/image_loader_widget.dart';
 import 'package:amptive/src/features/go_live/presentation/widgets/go_live_screen_header.dart';
 import 'package:amptive/src/features/go_live/presentation/widgets/reactions_overlay.dart';
@@ -17,7 +20,7 @@ class LiveProgramHostView extends StatelessWidget {
     return MultiBlocProvider(
       providers: <BlocProvider<dynamic>>[
         BlocProvider<GoLiveControlsVisibilityBloc>(
-            create: (_) => GoLiveControlsVisibilityBloc()),
+          create: (_) => GoLiveControlsVisibilityBloc()),
       ],
       child: const _SubWidget(),
     );
@@ -36,13 +39,22 @@ class _SubWidget extends StatelessWidget {
             children: <Widget>[
               Positioned.fill(
                 child: ImageFiltered(
-                  imageFilter: ImageFilter.blur(sigmaX: 50, sigmaY: 50),
-                  child: const ATImgLoader(
-                      imgPath: ATImgStrings.jpeg1, boxFit: BoxFit.fill),
+                  imageFilter: ImageFilter.blur(sigmaX: 1, sigmaY: 1),
+                  child: BlocSelector<LiveStreamCubit1, LiveStreamState1, String?>(
+                    selector: (LiveStreamState1 state) => state.programCoverUrl,
+                    builder: (_, String? coverUrl) {
+                      return ATImgLoader(
+                        imgPath: coverUrl ?? '',
+                        boxFit: BoxFit.fill,
+                        height: context.screenHeight,
+                        width: context.screenWidth,
+                      );
+                    }
+                  ),
                 ),
               ),
               ColoredBox(
-                color: ATColors.hex0D0D0D.withValues(alpha: 0.9),
+                color: ATColors.hex0D0D0D.withValues(alpha: 0.8),
                 child: Column(
                   children: <Widget>[
                     Padding(
@@ -114,7 +126,7 @@ class _SubWidget extends StatelessWidget {
               builder: (BuildContext context, bool isVisible) {
             final double bottomInset = MediaQuery.viewInsetsOf(context).bottom;
             final double extraSpace = bottomInset == 0 ? 5.0 : bottomInset + 10;
-
+    
             return Container(
               color: bottomInset == 0 ? ATColors.black : ATColors.hex2C2F33,
               padding: EdgeInsets.fromLTRB(15, 5, 15, extraSpace),

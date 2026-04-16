@@ -100,7 +100,7 @@ class _SubWidget extends StatelessWidget {
                                     padding:
                                         const EdgeInsets.fromLTRB(15, 0, 15, 0),
                                     child:
-                                        const AudienceViewOfHostAndCohostWidget(),
+                                        const RenderAudienceViewOfHostAndCohosts(),
                                   )
                                 else
                                   const Expanded(
@@ -110,7 +110,7 @@ class _SubWidget extends StatelessWidget {
                                       child: SizedBox(
                                         height: 250,
                                         child:
-                                            AudienceViewOfHostAndCohostWidget(),
+                                            RenderAudienceViewOfHostAndCohosts(),
                                       ),
                                     ),
                                   ),

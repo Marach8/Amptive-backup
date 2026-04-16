@@ -127,9 +127,9 @@ class _GoLiveAudienViewControlsWidgetState
                               ? (TapDownDetails details) {
                                   final String message = _cntrl.text.trim();
                                   if (message.isNotEmpty) {
-                                    context.read<LivestreamBloc>().add(
-                                          SendChatMessage(message: message),
-                                        );
+                                    // context.read<LivestreamBloc>().add(
+                                    //       SendChatMessage(message: message),
+                                    //     );
                                   }
                                   _cntrl.clear();
                                 }
@@ -193,9 +193,9 @@ class _RowOfBtns extends StatelessWidget {
         ),
         EachGoLiveControlBtn(
           onTap: () {
-            context.read<LivestreamBloc>().add(
-                  const SendReactionEvent(emoji: '❤️'),
-                );
+            // context.read<LivestreamBloc>().add(
+            //       const SendReactionEvent(emoji: '❤️'),
+            //     );
           },
           margin: EdgeInsets.zero,
           child: Icon(

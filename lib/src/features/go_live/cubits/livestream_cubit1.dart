@@ -4,11 +4,12 @@ import 'package:amptive/src/config/services/audio_streaming_service/live_kit_aud
 import 'package:amptive/src/features/go_live/data/models/livestream_state.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class LivestreamCubit1 extends Cubit<LiveStreamState> {
-  LivestreamCubit1({
+class LiveStreamCubit1 extends Cubit<LiveStreamState1> {
+  LiveStreamCubit1({
     ATAudioStreamingService? extStreamService,
+    LiveStreamState1? initialState,
   })  : streamingService = extStreamService ?? LiveKitAudioStreamingService(),
-    super(const LiveStreamState()) {
+    super(initialState ?? const LiveStreamState1()) {
     _listenToStreams();
   }
 
@@ -51,7 +52,7 @@ class LivestreamCubit1 extends Cubit<LiveStreamState> {
     emit(state.copyWith(
       connectionStatus: LiveSessionConnectionStatus.connecting
     ));
-    
+
     try {
       await streamingService.connect(
         roomUrl: roomUrl, participantToken: participantToken);

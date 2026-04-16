@@ -148,9 +148,7 @@ class _HostModerationToolsBtnsState extends State<HostModerationToolsBtns> {
                               ? (TapDownDetails details) {
                                   final String message = _cntrl.text.trim();
                                   if (message.isNotEmpty) {
-                                    context.read<LivestreamBloc>().add(
-                                          SendChatMessage(message: message),
-                                        );
+
                                   }
                                   _cntrl.clear();
                                 }
@@ -182,7 +180,7 @@ class _RowOfBtns extends StatelessWidget {
       children: <Widget>[
         EachGoLiveControlBtn(
           onTap: () {
-            context.read<LivestreamBloc>().add(const ToggleMuteEvent());
+            //context.read<LivestreamBloc>().add(const ToggleMuteEvent());
           },
           child: const Icon(Icons.mic, size: 20),
         ),
@@ -223,9 +221,9 @@ class _RowOfBtns extends StatelessWidget {
         ),
         EachGoLiveControlBtn(
           onTap: () {
-            context.read<LivestreamBloc>().add(
-                  const SendReactionEvent(emoji: '❤️'),
-                );
+            // context.read<LivestreamBloc>().add(
+            //       const SendReactionEvent(emoji: '❤️'),
+            //     );
           },
           margin: EdgeInsets.zero,
           child: Icon(

@@ -1,5 +1,7 @@
 import 'dart:ui';
 import 'package:amptive/src/features/go_live/cubits/livestream_bloc.dart';
+import 'package:amptive/src/features/go_live/cubits/livestream_cubit1.dart';
+import 'package:amptive/src/features/go_live/data/models/livestream_state.dart';
 import 'package:amptive/src/global_export.dart';
 import 'package:amptive/src/livestream/livestream.dart';
 import 'package:amptive/src/models/host.dart';
@@ -60,9 +62,9 @@ class _GoLiveCommentsState extends State<GoLiveComments> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<LivestreamBloc, LivestreamState>(
-      builder: (BuildContext context, LivestreamState state) {
-        final List<ChatMessage> messages = state.messages;
+    return BlocBuilder<LiveStreamCubit1, LiveStreamState1>(
+      builder: (BuildContext context, LiveStreamState1 state) {
+        final List<ChatMessage> messages = [];
 
         return Stack(
           alignment: Alignment.center,

@@ -1,3 +1,5 @@
+import 'package:amptive/src/features/go_live/cubits/livestream_cubit1.dart';
+import 'package:amptive/src/features/go_live/data/models/livestream_state.dart';
 import 'package:amptive/src/global_export.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -28,23 +30,22 @@ class _GiftOverlayState extends State<GiftOverlay>
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<LivestreamBloc, LivestreamState>(
-      builder: (BuildContext context, LivestreamState state) {
-        final int currentCount = state.gifts.length;
+    return BlocBuilder<LiveStreamCubit1, LiveStreamState1>(
+      builder: (BuildContext context, LiveStreamState1 state) {
+        final int currentCount = 2;
 
         if (currentCount > _previousGiftCount && currentCount > 0) {
           _controller.forward(from: 0);
         }
         _previousGiftCount = currentCount;
 
-        if (state.gifts.isEmpty || _controller.value >= 1.0) {
+        if (_controller.value >= 1.0) {
           return const SizedBox.shrink();
         }
 
         return AnimatedBuilder(
           animation: _controller,
           builder: (_, __) {
-            final GiftEvent latestGift = state.gifts.last;
             final double progress = _controller.value;
 
             final double startY = 0.6;
@@ -77,7 +78,7 @@ class _GiftOverlayState extends State<GiftOverlay>
                     mainAxisSize: MainAxisSize.min,
                     children: <Widget>[
                       Text(
-                        latestGift.giftEmoji,
+                        'Hello',
                         style: const TextStyle(fontSize: 32),
                       ),
                       const SizedBox(width: 8),
@@ -86,7 +87,7 @@ class _GiftOverlayState extends State<GiftOverlay>
                         mainAxisSize: MainAxisSize.min,
                         children: <Widget>[
                           Text(
-                            latestGift.displayName,
+                            'Hello',
                             style: const TextStyle(
                               color: Colors.black,
                               fontSize: 14,
@@ -94,9 +95,7 @@ class _GiftOverlayState extends State<GiftOverlay>
                             ),
                           ),
                           Text(
-                            latestGift.quantity > 1
-                                ? 'x${latestGift.quantity} ${latestGift.giftName}'
-                                : latestGift.giftName,
+                            'Hello',
                             style: const TextStyle(
                               color: Colors.black,
                               fontSize: 12,

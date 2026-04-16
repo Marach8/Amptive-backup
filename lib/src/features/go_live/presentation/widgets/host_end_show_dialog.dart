@@ -14,7 +14,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import '../../../../bloc/main_app/go_live_bloc/host_view/host_end_show_bloc.dart';
-import '../../other_strings.dart';
+import '../../../../config/utils/other_strings.dart';
 
 Future<void> showHostEndShowDialog({
   required BuildContext context,
@@ -188,12 +188,12 @@ Future<void> showHostEndShowDialog({
                         height: 50,
                         child: AmptiveElevatedButtonWidget(
                           onPressed: () {
-                            context
-                                .read<LivestreamBloc>()
-                                .add(const EndStreamEvent());
-                            context
-                                .read<AmptiveEndShowBloc>()
-                                .add(Proceed2EndShowEvent());
+                            // context
+                            //     .read<LivestreamBloc>()
+                            //     .add(const EndStreamEvent());
+                            // context
+                            //     .read<AmptiveEndShowBloc>()
+                            //     .add(Proceed2EndShowEvent());
                           },
                           bgColor: ATColors.hexECO404,
                           fgColor: ATColors.white,

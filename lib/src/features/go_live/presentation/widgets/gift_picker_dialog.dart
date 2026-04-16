@@ -10,10 +10,7 @@ class GiftPickerDialog extends StatefulWidget {
     return showModalBottomSheet(
       context: context,
       backgroundColor: Colors.transparent,
-      builder: (_) => BlocProvider.value(
-        value: context.read<LivestreamBloc>(),
-        child: const GiftPickerDialog(),
-      ),
+      builder: (_) => const GiftPickerDialog(),
     );
   }
 
@@ -143,12 +140,12 @@ class _GiftPickerDialogState extends State<GiftPickerDialog> {
             child: ElevatedButton(
               onPressed: _selectedGiftId != null
                   ? () {
-                      context.read<LivestreamBloc>().add(
-                            SendGiftEvent(
-                              giftId: _selectedGiftId!,
-                              quantity: _quantity,
-                            ),
-                          );
+                      // context.read<LivestreamBloc>().add(
+                      //       SendGiftEvent(
+                      //         giftId: _selectedGiftId!,
+                      //         quantity: _quantity,
+                      //       ),
+                      //     );
                       Navigator.of(context).pop();
                     }
                   : null,

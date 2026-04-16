@@ -1,5 +1,7 @@
 import 'package:amptive/src/config/config_export.dart';
 import 'package:amptive/src/features/go_live/cubits/livestream_bloc.dart';
+import 'package:amptive/src/features/go_live/cubits/livestream_cubit1.dart';
+import 'package:amptive/src/features/go_live/data/models/livestream_state.dart';
 import 'package:amptive/src/livestream/livestream.dart';
 import 'package:amptive/src/models/host.dart';
 import 'package:flutter/material.dart';
@@ -16,9 +18,9 @@ class HostViewOfHostNdCohostDisplay extends StatelessWidget {
   Widget build(BuildContext context) {
     return LayoutBuilder(builder: (_, BoxConstraints constraints) {
       final double width = constraints.maxWidth;
-      return BlocBuilder<LivestreamBloc, LivestreamState>(
-        builder: (BuildContext context, LivestreamState state) {
-          final List<LivestreamParticipant> participants = state.participants;
+      return BlocBuilder<LiveStreamCubit1, LiveStreamState1>(
+        builder: (BuildContext context, LiveStreamState1 state) {
+          final List<LivestreamParticipant> participants = [];
 
           if (participants.isEmpty) {
             return Center(
@@ -38,11 +40,11 @@ class HostViewOfHostNdCohostDisplay extends StatelessWidget {
             alignment: Alignment.center,
             children: <Widget>[
               if (hosts.isNotEmpty)
-                GoLiveHostWidget(
-                  top: cohosts.isEmpty ? 80 : 6,
-                  hostName: hosts.first.displayName,
-                  hostProfilePic: hosts.first.avatar ?? '',
-                ),
+                // GoLiveHostWidget(
+                //   top: cohosts.isEmpty ? 80 : 6,
+                //   hostName: hosts.first.displayName,
+                //   hostProfilePic: hosts.first.avatar ?? '',
+                // ),
               if (cohosts.isNotEmpty)
                 CohostWidget4HostView(
                   top: 35,
