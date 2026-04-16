@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:amptive/src/config/services/network_service/interceptor.dart'
     show AuthGuardCubit;
 import 'package:amptive/src/features/auth/cubits/local_user_data_cubit.dart';
+import 'package:amptive/src/features/go_live/cubits/livestream_cubit1.dart';
 import 'package:amptive/src/features/go_live/models/go_live_program_params.dart';
 import 'package:amptive/src/features/go_live/presentation/screens/go_live_onboarding_screen.dart';
 import 'package:amptive/src/features/go_live/presentation/screens/live_program_audience_view.dart';
@@ -26,16 +27,33 @@ import 'package:nested/nested.dart';
 
 enum LiveParticipantType { audience, cohost, host }
 
-class LiveProgramScreen extends StatefulWidget {
-  const LiveProgramScreen({super.key, required this.liveScreenEntryParams});
+class LiveProgramScreen extends StatelessWidget {
+  const LiveProgramScreen({super.key, this.liveScreenEntryParams});
+  final LiveProgramEntryParams? liveScreenEntryParams;
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocProvider<LivestreamCubit1>(
+      create: (_) => LivestreamCubit1(),
+      child: _SubWidget(
+        liveScreenEntryParams: liveScreenEntryParams,
+      ),
+    );
+  }
+}
+
+class _SubWidget extends StatefulWidget {
+  const _SubWidget({
+    required this.liveScreenEntryParams
+  });
 
   final LiveProgramEntryParams? liveScreenEntryParams;
 
   @override
-  State<LiveProgramScreen> createState() => _LiveProgramScreenState();
+  State<_SubWidget> createState() => __SubWidgetState();
 }
 
-class _LiveProgramScreenState extends State<LiveProgramScreen> {
+class __SubWidgetState extends State<_SubWidget> {
 
   @override
   void initState() {
@@ -46,6 +64,14 @@ class _LiveProgramScreenState extends State<LiveProgramScreen> {
     //   overlays: <SystemUiOverlay>[SystemUiOverlay.top],
     // );
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if(mounted){
+        context.read<LivestreamCubit1>().connect(
+          roomUrl: widget.liveScreenEntryParams?.roomUrl ?? '',
+          participantToken: widget.liveScreenEntryParams?.roomEntryToken ?? '',
+        );
+      }
+    });
   }
 
   @override
@@ -56,16 +82,14 @@ class _LiveProgramScreenState extends State<LiveProgramScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      child: switch (widget.liveScreenEntryParams?.participantType) {
-        null ||
-        LiveParticipantType.audience =>
-          const LiveProgramAudienceView(),
-        LiveParticipantType.cohost => 
-          const LiveProgramCohostView(),
-        LiveParticipantType.host =>
-          const LiveProgramHostView(),
-      },
-    );
+    return switch (widget.liveScreenEntryParams?.participantType) {
+      null ||
+      LiveParticipantType.audience =>
+        const LiveProgramAudienceView(),
+      LiveParticipantType.cohost => 
+        const LiveProgramCohostView(),
+      LiveParticipantType.host =>
+        const LiveProgramHostView(),
+    };
   }
 }

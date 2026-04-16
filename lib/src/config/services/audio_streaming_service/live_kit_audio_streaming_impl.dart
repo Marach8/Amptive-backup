@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'package:amptive/src/config/services/audio_streaming_service/audio_streaming_service.dart';
 import 'package:livekit_client/livekit_client.dart';
-import 'package:amptive/src/features/go_live/data/models/live_session_participant.dart';
+import 'package:amptive/src/features/go_live/data/models/livestream_state.dart';
 
 class LiveKitAudioStreamingService implements ATAudioStreamingService {
   final Room _room = Room();
@@ -23,12 +23,12 @@ class LiveKitAudioStreamingService implements ATAudioStreamingService {
 
   @override
   Future<void> connect({
-    required String url,
-    required String token,
+    required String roomUrl,
+    required String participantToken,
   }) async {
     _connectionController.add(LiveSessionConnectionStatus.connecting);
 
-    await _room.connect(url, token);
+    await _room.connect(roomUrl, participantToken);
 
     _connectionController.add(LiveSessionConnectionStatus.connected);
 

@@ -1,10 +1,10 @@
-import 'package:amptive/src/features/go_live/data/models/live_session_participant.dart';
+import 'package:amptive/src/features/go_live/data/models/livestream_state.dart';
 
 abstract class ATAudioStreamingService {
   /// Connect to audio room
   Future<void> connect({
-    required String url,
-    required String token,
+    required String roomUrl,
+    required String participantToken,
   });
 
   /// Disconnect from room
