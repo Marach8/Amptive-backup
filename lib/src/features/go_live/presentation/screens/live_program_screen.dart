@@ -64,6 +64,7 @@ class __SubWidgetState extends State<_SubWidget> {
     //   overlays: <SystemUiOverlay>[SystemUiOverlay.top],
     // );
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
+    
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if(mounted){
         context.read<LivestreamCubit1>().connect(

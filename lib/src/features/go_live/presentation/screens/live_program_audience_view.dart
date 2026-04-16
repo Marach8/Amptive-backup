@@ -1,5 +1,4 @@
 import 'dart:ui';
-import 'package:amptive/src/features/go_live/cubits/livestream_bloc.dart';
 import 'package:amptive/src/features/go_live/presentation/screens/audience_view_controls.dart';
 import 'package:amptive/src/global_export.dart';
 import 'package:amptive/src/livestream/livestream.dart';
@@ -22,11 +21,8 @@ class LiveProgramAudienceView extends StatelessWidget {
       providers: <BlocProvider<dynamic>>[
         BlocProvider<GoLiveControlsVisibilityBloc>(
             create: (_) => GoLiveControlsVisibilityBloc()),
-        BlocProvider<LivestreamBloc>.value(
-          value: context.read<LivestreamBloc>(),
-        ),
       ],
-      child: _SubWidget(),
+      child: const _SubWidget(),
     );
   }
 }
@@ -36,9 +32,9 @@ class _SubWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<LivestreamBloc, LivestreamState>(
-      builder: (BuildContext context, LivestreamState state) {
-        return Scaffold(
+    const int dummyViewerCount = 0;
+    const List<LivestreamParticipant> dummyParticipants = [];
+    return Scaffold(
           body: Stack(
             children: <Widget>[
               Positioned.fill(
@@ -59,8 +55,8 @@ class _SubWidget extends StatelessWidget {
                               10, kToolbarHeight * 0.5, 15, 20),
                           child: GoLiveScreenHeader(
                             exitIcon: _AudienceViewExitIcon(),
-                            viewerCount: state.participantCount,
-                            participants: state.participants,
+                            viewerCount: dummyViewerCount,
+                            participants: dummyParticipants,
                           ),
                         ),
                         Align(
@@ -153,8 +149,6 @@ class _SubWidget extends StatelessWidget {
             },
           ),
         );
-      },
-    );
   }
 }
 
