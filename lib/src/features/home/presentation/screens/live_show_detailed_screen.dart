@@ -222,13 +222,13 @@ class ATLiveShowDetailedScreen extends StatelessWidget {
         ),
         bottomSheet: ATBlurredBgBtn(
           onPressed: () {
-            context.pushNamed(
-              ATRoutes.MAIN_GO_LIVE_PROGRAM,
-              extra: GoLiveProgramParams(
-                streamId: homeFeedItem?.livestreamId ?? '',
-                userType: GoLiveUserType.audience,
-              ),
-            );
+            // context.pushNamed(
+            //   ATRoutes.liveProgramScreen,
+            //   extra: GoLiveProgramParams(
+            //     streamId: homeFeedItem?.livestreamId ?? '',
+            //     userType: GoLiveUserType.audience,
+            //   ),
+            // );
           },
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,

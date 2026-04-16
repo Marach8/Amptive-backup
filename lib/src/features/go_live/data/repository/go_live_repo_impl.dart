@@ -5,9 +5,7 @@ import 'package:amptive/src/config/exception.dart';
 import 'package:amptive/src/config/services/network_service/dio_network_service_impl.dart';
 import 'package:amptive/src/config/services/network_service/network_service.dart';
 import 'package:amptive/src/features/go_live/cubits/get_live_program_entry_token_cubit.dart';
-import 'package:amptive/src/features/go_live/cubits/start_live_program_cubit.dart';
 import 'package:amptive/src/features/go_live/data/repository/go_live_repo.dart';
-import 'package:amptive/src/global_export.dart';
 import 'package:dio/dio.dart';
 
 class GoLiveRepoImpl implements GoLiveRepo {
@@ -17,21 +15,27 @@ class GoLiveRepoImpl implements GoLiveRepo {
   final NetworkService networkService;
 
   @override
-  Future<ApiResponse<StartLiveProgramState>> startLiveProgram(
+  Future<ApiResponse<LiveProgramEntryToken>> startLiveProgram(
     {required String contentId}) async {
     try {
       final Response<dynamic> response = await networkService.post(
-        '${ATEndpoints.livestreams}$contentId/start',
+        '${ATEndpoints.livestreams}$contentId/start?include_token=true',
       );
       
-      final StartLiveProgramState state = (
-        liveProgramId: response.data['data']['livestream_id'],
-        starterToken: response.data['data']['starter_token'],
+      final dynamic tokenData = response.data['data']['token'];
+      final String? streamId = response.data['data']['livestream_id'];
+
+      final LiveProgramEntryToken entryToken = (
+        roomEntryToken: tokenData?['token'],
+        roomUrl: tokenData?['livekit_url'],
+        streamId: streamId ?? tokenData?['room'],
+        roomParticipantId: tokenData?['identity'],
       );
-      return Successful<StartLiveProgramState>(data: state);
-    } catch (e) {
+      return Successful<LiveProgramEntryToken>(data: entryToken);
+    }
+    catch (e) {
       log('Start live program error: $e');
-      return Unsuccessful<StartLiveProgramState>(
+      return Unsuccessful<LiveProgramEntryToken>(
         error: ATException.resolveException(e),
       );
     }

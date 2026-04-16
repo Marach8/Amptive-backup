@@ -15,6 +15,7 @@ import 'package:amptive/src/features/episodes/data/models/response/episode_model
 import 'package:amptive/src/features/episodes/presentation/widgets/whispers_permision_modal.dart';
 import 'package:amptive/src/features/events/presentation/screens/select_schedule_date_screen.dart';
 import 'package:amptive/src/features/go_live/go_live_export.dart';
+import 'package:amptive/src/features/go_live/presentation/screens/live_program_screen.dart';
 import 'package:amptive/src/global_export.dart';
 import 'package:amptive/src/shared/annotated_region__widget.dart';
 import 'package:amptive/src/shared/divider_widget.dart';
@@ -652,16 +653,27 @@ class _CreateShowFormScreenState extends State<_SubWidget> {
         bottomSheet: MultiBlocListener(
           listeners: <SingleChildWidget>[
             BlocListener<StartLiveProgramCubit,
-              ATAppState<StartLiveProgramState>>(
-              listener: (_, ATAppState<StartLiveProgramState> state){
-                if(state is SuccessState<StartLiveProgramState>){
+              ATAppState<LiveProgramEntryToken>>(
+              listener: (_, ATAppState<LiveProgramEntryToken> state){
+                if(state is SuccessState<LiveProgramEntryToken>){
                   _activateBtn.value = (true, _activateBtn.value.$2);
 
+                  final Episode? episode = context
+                    .read<CreateEpisodeCubit>().currentEpisodeDetail;
                   context.pushReplacementNamed(
                     ATRoutes.goLiveOnboarding,
+                    extra: LiveProgramEntryParams(
+                      roomEntryToken: state.newData?.roomEntryToken ?? '',
+                      roomUrl: state.newData?.roomUrl ?? '',
+                      streamId: state.newData?.streamId ?? '',
+                      roomParticipantId: state.newData?.roomParticipantId ?? '',
+                      programId: episode?.episodeId ?? '',
+                      coverUrl: episode?.thumbnailUrl ?? '',
+                      participantType: LiveParticipantType.host,
+                    ),
                   );
                 }
-                else if(state is FailureState<StartLiveProgramState>){
+                else if(state is FailureState<LiveProgramEntryToken>){
                   _activateBtn.value = (true, _activateBtn.value.$2);
 
                   showAppNotification2(

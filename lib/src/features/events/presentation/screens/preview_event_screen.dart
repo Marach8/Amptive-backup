@@ -6,6 +6,7 @@ import 'package:amptive/src/features/go_live/cubits/end_live_program_cubit.dart'
 import 'package:amptive/src/features/go_live/cubits/get_live_program_entry_token_cubit.dart';
 import 'package:amptive/src/features/go_live/cubits/start_live_program_cubit.dart';
 import 'package:amptive/src/features/go_live/go_live_export.dart';
+import 'package:amptive/src/features/go_live/presentation/screens/live_program_screen.dart';
 import 'package:amptive/src/features/home/cubits/toggle_following_cubit.dart';
 import 'package:amptive/src/features/home/data/models/following_status.dart';
 import 'package:amptive/src/features/home/presentation/widgets/event_or_show_card.dart';
@@ -56,12 +57,6 @@ class PreviewEventScreen extends StatelessWidget {
         ),
         BlocProvider<StartLiveProgramCubit>(
           create: (_) => StartLiveProgramCubit()),
-        BlocProvider<GetLiveProgramEntryTokenCubit>(
-          create: (_) => GetLiveProgramEntryTokenCubit(),
-        ),
-        BlocProvider<EndLiveProgramCubit>(
-          create: (_) => EndLiveProgramCubit(),
-        ),
       ],
       child: _EventSubWidget(hostedEvent: hostedEvent),
     );
@@ -215,14 +210,14 @@ class _EventSubWidgetState extends State<_EventSubWidget> {
                                   children: <Widget>[
                                     TextButton(
                                       onPressed: () {
-                                        context.pushReplacementNamed(
-                                          ATRoutes.MAIN_GO_LIVE_PROGRAM,
-                                          extra: GoLiveProgramParams(
-                                            streamId: event?.livestreamId ?? '',
-                                            userType: GoLiveUserType.host,
-                                            contentId: event?.eventId,
-                                          ),
-                                        );
+                                        // context.pushReplacementNamed(
+                                        //   ATRoutes.liveProgramScreen,
+                                        //   extra: GoLiveProgramParams(
+                                        //     streamId: event?.livestreamId ?? '',
+                                        //     userType: GoLiveUserType.host,
+                                        //     contentId: event?.eventId,
+                                        //   ),
+                                        // );
                                       },
                                       child: const Text('Go Live'),
                                     ),
@@ -325,14 +320,6 @@ class _EventSubWidgetState extends State<_EventSubWidget> {
                                 fontWeight: ATFontWeights.w500,
                               ),
                             ),
-                            IconButton(
-                              onPressed: (){
-                                final streamId = context.read<StartLiveProgramCubit>()
-                                  .currentData?.liveProgramId ?? '';
-                                context.read<EndLiveProgramCubit>().endLiveProgram(streamId);
-                              },
-                              icon:Icon(Icons.add),
-                            ),
                             const SizedBox(height: 150),
                           ],
                         );
@@ -344,31 +331,25 @@ class _EventSubWidgetState extends State<_EventSubWidget> {
             ],
           ),
 
-          bottomSheet: BlocListener<GetLiveProgramEntryTokenCubit,
-            ATAppState<LiveProgramEntryToken>>(
-            listener: (_, ATAppState<LiveProgramEntryToken> state){
-              if(state is SuccessState<LiveProgramEntryToken>){
-                
-                context.pushReplacementNamed(
-                  ATRoutes.goLiveOnboarding,
-                  extra: LiveProgramEntryParams(
-                    roomEntryToken: state.newData?.roomEntryToken ?? '',
-                    roomUrl: state.newData?.roomUrl ?? '',
-                    streamId: state.newData?.streamId ?? '',
-                    roomParticipantId: state.newData?.roomParticipantId ?? '',
-                    programId: widget.hostedEvent.eventId ?? '',
-                    coverUrl: widget.hostedEvent.coverUrl ?? '',
-                  )
-                );
-              }
-            },
-            child: BlocConsumer<
-              StartLiveProgramCubit, ATAppState<StartLiveProgramState>>(
-              listener: (_, state){
-                if(state is SuccessState<StartLiveProgramState>){
-                  final String liveStreamId = state.newData?.liveProgramId ?? '';
-                  context.read<GetLiveProgramEntryTokenCubit>()
-                    .getLiveProgramEntryToken(liveStreamId);
+          bottomSheet: BlocConsumer<StartLiveProgramCubit, 
+              ATAppState<LiveProgramEntryToken>>(
+              listener: (_, ATAppState<LiveProgramEntryToken> state){
+                if(state is SuccessState<LiveProgramEntryToken>){
+                  final HostedEvent? updatedEvent =
+                      context.read<EventDetailCubit>().currentEventDetail;
+                  context.pushReplacementNamed(
+                    ATRoutes.goLiveOnboarding,
+                    extra: LiveProgramEntryParams(
+                      roomEntryToken: state.newData?.roomEntryToken ?? '',
+                      roomUrl: state.newData?.roomUrl ?? '',
+                      streamId: state.newData?.streamId ?? '',
+                      roomParticipantId: state.newData?.roomParticipantId ?? '',
+                      programId: updatedEvent?.eventId ?? '',
+                      coverUrl: updatedEvent?.coverUrl ?? '',
+                      participantType: LiveParticipantType.host,
+                      community: updatedEvent?.community,
+                    )
+                  );
                 }
               },
               builder: (_, state) {
@@ -406,7 +387,6 @@ class _EventSubWidgetState extends State<_EventSubWidget> {
           //   },
           //   btnTitle: 'Edit Event'
           // ),
-        ),
       ),
     );
   }

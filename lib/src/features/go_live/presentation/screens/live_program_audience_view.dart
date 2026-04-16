@@ -14,8 +14,7 @@ import '../widgets/go_live_screen_header.dart';
 import '../widgets/reactions_overlay.dart';
 
 class LiveProgramAudienceView extends StatelessWidget {
-  const LiveProgramAudienceView({super.key, required this.goLiveHost});
-  final ObjectWithNotifier<Host> goLiveHost;
+  const LiveProgramAudienceView({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -27,15 +26,13 @@ class LiveProgramAudienceView extends StatelessWidget {
           value: context.read<LivestreamBloc>(),
         ),
       ],
-      child: _SubWidget(goLiveHost: goLiveHost),
+      child: _SubWidget(),
     );
   }
 }
 
 class _SubWidget extends StatelessWidget {
-  const _SubWidget({required this.goLiveHost});
-
-  final ObjectWithNotifier<Host> goLiveHost;
+  const _SubWidget();
 
   @override
   Widget build(BuildContext context) {

@@ -4,12 +4,14 @@ import 'dart:ui';
 import 'package:amptive/src/features/episodes/data/models/response/episode_model.dart';
 import 'package:amptive/src/features/go_live/go_live_export.dart';
 import 'package:amptive/src/features/go_live/models/go_live_program_params.dart';
+import 'package:amptive/src/features/go_live/presentation/screens/live_program_screen.dart';
 import 'package:amptive/src/features/go_live/presentation/widgets/go_live_onboarding_bottom_sheet.dart';
 import 'package:amptive/src/global_export.dart';
 import 'package:amptive/src/livestream/livestream.dart';
 import 'package:amptive/src/shared/annotated_region__widget.dart';
 import 'package:amptive/src/shared/app_bar_widget.dart';
 import 'package:amptive/src/shared/back_button.dart';
+import 'package:amptive/src/shared/global_model_objects.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_sound/flutter_sound.dart';
 import 'package:go_router/go_router.dart';
@@ -23,13 +25,18 @@ class LiveProgramEntryParams{
     required this.roomUrl,
     required this.streamId,
     required this.roomParticipantId,
+    required this.participantType,
     required this.programId,
     required this.coverUrl,
+    this.community
   });
 
   final String roomEntryToken, roomUrl,
   streamId, roomParticipantId, programId,
   coverUrl;
+
+  final LiveParticipantType participantType;
+  final Community? community;
 }
 
 class GoLiveOnboardingScreen extends StatelessWidget {
@@ -299,12 +306,9 @@ class _SubWidgetState extends State<_SubWidget> {
                                                     '';
                                             if (!context.mounted) return;
                                             context.pushReplacementNamed(
-                                                ATRoutes.MAIN_GO_LIVE_PROGRAM,
-                                                extra: GoLiveProgramParams(
-                                                  streamId: streamId,
-                                                  userType: GoLiveUserType.host,
-                                                  contentId: ''
-                                                ));
+                                              ATRoutes.liveProgramScreen,
+                                              extra: widget.liveProgramEntryParams,
+                                            );
                                           },
                                         )
                                       : showPicture

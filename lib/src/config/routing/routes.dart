@@ -27,6 +27,7 @@ import 'package:amptive/src/features/episodes/data/models/response/episode_model
 import 'package:amptive/src/features/episodes/presentation/screens/edit_episode_form_screen.dart';
 import 'package:amptive/src/features/events/presentation/screens/edit_event_form_screen.dart';
 import 'package:amptive/src/features/events/presentation/screens/select_schedule_date_screen.dart';
+import 'package:amptive/src/features/go_live/presentation/screens/live_program_screen.dart';
 import 'package:amptive/src/features/home/presentation/screens/following_screen.dart';
 import 'package:amptive/src/features/home/presentation/screens/live_show_detailed_screen.dart';
 import 'package:amptive/src/features/home/presentation/screens/schedule_detailed_screen.dart';
@@ -347,20 +348,18 @@ final GoRouter amptiveAppRouter = GoRouter(
                     child: GoLiveOnboardingScreen(
                       liveProgramEntryParams: liveProgramEntryParams));
               }),
+
           GoRoute(
-              name: ATRoutes.MAIN_GO_LIVE_PROGRAM,
-              path: ATRoutes.MAIN_GO_LIVE_PROGRAM.addSlash,
-              pageBuilder: (_, GoRouterState st) {
-                final GoLiveProgramParams? params =
-                    st.extra as GoLiveProgramParams?;
-                return ATFadingRouteTransition<void>(
-                    child: GoLiveScreen(
-                        params: params ??
-                            const GoLiveProgramParams(
-                              streamId: '',
-                              userType: GoLiveUserType.host,
-                            )));
-              }),
+            name: ATRoutes.liveProgramScreen,
+            path: ATRoutes.liveProgramScreen.addSlash,
+            pageBuilder: (_, GoRouterState st) {
+              return ATFadingRouteTransition<void>(
+                child: LiveProgramScreen(
+                  liveScreenEntryParams: st.extra as LiveProgramEntryParams?,
+                )
+              );
+            }
+          ),
           GoRoute(
             name: ATRoutes.chooseEventOrShowScreen,
             path: ATRoutes.chooseEventOrShowScreen,

@@ -197,15 +197,15 @@ class _SubWidgetState extends State<_SubWidget> {
                                       children: <Widget>[
                                         TextButton(
                                           onPressed: () {
-                                            context.pushReplacementNamed(
-                                              ATRoutes.MAIN_GO_LIVE_PROGRAM,
-                                              extra: GoLiveProgramParams(
-                                                streamId:
-                                                    episode?.livestreamId ?? '',
-                                                userType: GoLiveUserType.host,
-                                                contentId: episode?.episodeId,
-                                              ),
-                                            );
+                                            // context.pushReplacementNamed(
+                                            //   ATRoutes.liveProgramScreen,
+                                            //   extra: GoLiveProgramParams(
+                                            //     streamId:
+                                            //         episode?.livestreamId ?? '',
+                                            //     userType: GoLiveUserType.host,
+                                            //     contentId: episode?.episodeId,
+                                            //   ),
+                                            // );
                                           },
                                           child: const Text('Go Live'),
                                         ),

@@ -274,13 +274,13 @@ class ATLiveEventDetailedScreen extends StatelessWidget {
             padding: const EdgeInsets.fromLTRB(15, 25, 15, 15),
             child: GestureDetector(
               onTap: () {
-                context.pushNamed(
-                  ATRoutes.MAIN_GO_LIVE_PROGRAM,
-                  extra: GoLiveProgramParams(
-                    streamId: homeFeedItem?.livestreamId ?? '',
-                    userType: GoLiveUserType.audience,
-                  ),
-                );
+                // context.pushNamed(
+                //   ATRoutes.liveProgramScreen,
+                //   extra: GoLiveProgramParams(
+                //     streamId: homeFeedItem?.livestreamId ?? '',
+                //     userType: GoLiveUserType.audience,
+                //   ),
+                // );
               },
               child: Container(
                 width: double.infinity,

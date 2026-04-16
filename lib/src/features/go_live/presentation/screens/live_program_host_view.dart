@@ -11,8 +11,7 @@ import '../../../../global_export.dart';
 import '../../go_live_export.dart';
 
 class LiveProgramHostView extends StatelessWidget {
-  const LiveProgramHostView({super.key, required this.goLiveHost});
-  final ObjectWithNotifier<Host> goLiveHost;
+  const LiveProgramHostView({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -24,14 +23,13 @@ class LiveProgramHostView extends StatelessWidget {
           value: context.read<LivestreamBloc>(),
         ),
       ],
-      child: _SubWidget(goLiveHost: goLiveHost),
+      child: _SubWidget(),
     );
   }
 }
 
 class _SubWidget extends StatelessWidget {
-  const _SubWidget({required this.goLiveHost});
-  final ObjectWithNotifier<Host> goLiveHost;
+  const _SubWidget();
 
   @override
   Widget build(BuildContext context) {

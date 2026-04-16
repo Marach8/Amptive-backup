@@ -9,6 +9,7 @@ import 'package:amptive/src/features/events/presentation/widgets/events_audience
 import 'package:amptive/src/features/events/cubits/hosted_events_cubit.dart';
 import 'package:amptive/src/features/events/presentation/widgets/set_event_capacity_modal.dart';
 import 'package:amptive/src/features/go_live/go_live_export.dart';
+import 'package:amptive/src/features/go_live/presentation/screens/live_program_screen.dart';
 import 'package:amptive/src/shared/annotated_region__widget.dart';
 import 'package:amptive/src/shared/divider_widget.dart';
 import 'package:amptive/src/shared/global_model_objects.dart';
@@ -717,26 +718,27 @@ class __SubWidgetState extends State<_SubWidget> {
         resizeToAvoidBottomInset: false,
         bottomSheet: MultiBlocListener(
           listeners: <SingleChildWidget>[
-            BlocListener<GetLiveProgramEntryTokenCubit, ATAppState<LiveProgramEntryToken>>(
+            BlocListener<StartLiveProgramCubit, ATAppState<LiveProgramEntryToken>>(
               listener: (_, ATAppState<LiveProgramEntryToken> state){
                 if(state is SuccessState<LiveProgramEntryToken>){
-                  // context.pushReplacementNamed(
-                  //   ATRoutes.goLiveOnboarding,
-                  //   extra: state.newData
-                  // );
-                }
-              },
-            ),
-            //Listen to starting an event
-            BlocListener<StartLiveProgramCubit, ATAppState<StartLiveProgramState>>(
-              listener: (_, ATAppState<StartLiveProgramState> state){
-                if(state is SuccessState<StartLiveProgramState>){
                   _activateBtn.value = (true, _activateBtn.value.$2);
-                  final String liveStreamId = state.newData?.liveProgramId ?? '';
-                  context.read<GetLiveProgramEntryTokenCubit>()
-                    .getLiveProgramEntryToken(liveStreamId);
+                  final HostedEvent? hostedEvent = context
+                    .read<CreateEventCubit>().currentEvent;
+                  context.pushReplacementNamed(
+                    ATRoutes.goLiveOnboarding,
+                    extra: LiveProgramEntryParams(
+                      roomEntryToken: state.newData?.roomEntryToken ?? '',
+                      roomUrl: state.newData?.roomUrl ?? '',
+                      streamId: state.newData?.streamId ?? '',
+                      roomParticipantId: state.newData?.roomParticipantId ?? '',
+                      programId: hostedEvent?.eventId ?? '',
+                      coverUrl: hostedEvent?.coverUrl ?? '',
+                      participantType: LiveParticipantType.host,
+                      community: hostedEvent?.community,
+                    ),
+                  );
                 }
-                else if(state is FailureState<StartLiveProgramState>){
+                else if(state is FailureState<LiveProgramEntryToken>){
                   _activateBtn.value = (true, _activateBtn.value.$2);
 
                   showAppNotification2(

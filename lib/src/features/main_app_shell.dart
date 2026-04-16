@@ -25,60 +25,6 @@ import 'go_live/models/go_live_program_params.dart';
 import 'go_live/cubits/livestream_bloc.dart';
 import 'notifications/presentation/screens/notif_landing_screen.dart';
 
-enum GoLiveUserType { audience, cohost, host }
-
-class GoLiveScreen extends StatefulWidget {
-  const GoLiveScreen({super.key, required this.params});
-
-  final GoLiveProgramParams params;
-
-  @override
-  State<GoLiveScreen> createState() => _GoLiveScreenState();
-}
-
-class _GoLiveScreenState extends State<GoLiveScreen> {
-  late final LivestreamBloc _livestreamBloc;
-
-  @override
-  void initState() {
-    super.initState();
-
-    // SystemChrome.setEnabledSystemUIMode(
-    //   SystemUiMode.manual,
-    //   overlays: <SystemUiOverlay>[SystemUiOverlay.top],
-    // );
-    SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
-
-    // Create per-session LivestreamBloc and join the livestream
-    _livestreamBloc = LivestreamBloc();
-    // Always dispatch JoinLivestream - for host, it will call startStream first to get streamId
-    _livestreamBloc.add(JoinLivestream(
-      streamId: widget.params.streamId,
-      isHost: widget.params.isHost,
-      contentId: widget.params.contentId,
-    ));
-  }
-
-  @override
-  void dispose() {
-    _livestreamBloc.close();
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return BlocProvider<LivestreamBloc>.value(
-      value: _livestreamBloc,
-      child: switch (widget.params.userType) {
-        GoLiveUserType.audience =>
-          LiveProgramAudienceView(goLiveHost: getHostList().first),
-        GoLiveUserType.cohost => const LiveProgramCohostView(),
-        GoLiveUserType.host =>
-          LiveProgramHostView(goLiveHost: getHostList().first),
-      },
-    );
-  }
-}
 
 class ATMainAppShell extends StatelessWidget {
   const ATMainAppShell({super.key});
