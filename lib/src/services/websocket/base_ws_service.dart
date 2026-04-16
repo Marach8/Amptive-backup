@@ -7,6 +7,13 @@ import 'package:web_socket_channel/status.dart' as ws_status;
 
 import '../../config/config_export.dart';
 
+class TimeoutException implements Exception {
+  final String message;
+  TimeoutException(this.message);
+  @override
+  String toString() => message;
+}
+
 abstract class BaseWsService {
   BaseWsService({
     this.maxReconnectAttempts = 5,
@@ -19,35 +26,44 @@ abstract class BaseWsService {
   WebSocketChannel? _channel;
   StreamSubscription<dynamic>? _sub;
   Timer? _reconnectTimer;
+  Timer? _heartbeatTimer;
 
   bool _isDisposed = false;
   int _attempt = 0;
+  bool _isManualDisconnect = false;
+  bool _isConnected = false;
 
   // ── Template methods — subclasses override these ───────────────────────
 
-  /// Called with every successfully decoded JSON frame.
   void onMessage(Map<String, dynamic> message);
 
-  /// Called once the WebSocket handshake succeeds.
   void onConnected() {}
 
-  /// Called whenever the connection drops (before a reconnect attempt).
   void onDisconnected() {}
 
-  /// Override to provide custom query parameters on top of [url].
   String buildConnectUrl() => "";
+
+  void onMaxRetriesExceeded() {}
 
   // ── Public API ─────────────────────────────────────────────────────────
 
-  bool get isConnected => _channel != null;
+  bool get isConnected => _isConnected;
 
-  /// Connects (or reconnects) to the WebSocket.
-  Future<void> connect() async {
+  bool get isReconnecting => _reconnectTimer?.isActive ?? false;
+
+  Future<void> connect({Duration? connectTimeout}) async {
     if (_isDisposed) {
-      log('connect() called on a disposed service — ignoring.');
+      log('connect() called on a disposed service — ignoring.',
+          level: LogLevel.warn);
       return;
     }
 
+    if (_isConnected) {
+      log('Already connected, ignoring.', level: LogLevel.debug);
+      return;
+    }
+
+    _isManualDisconnect = false;
     _cleanup(closeSink: true);
 
     final uri = Uri.parse(buildConnectUrl());
@@ -55,7 +71,13 @@ abstract class BaseWsService {
 
     try {
       _channel = WebSocketChannel.connect(uri);
-      await _channel!.ready;
+
+      // Add timeout for connection readiness
+      final timeout = connectTimeout ?? const Duration(seconds: 10);
+      await _channel!.ready.timeout(timeout, onTimeout: () {
+        throw TimeoutException(
+            'Connection timed out after ${timeout.inSeconds}s');
+      });
 
       _sub = _channel!.stream.listen(
         _onFrame,
@@ -65,8 +87,23 @@ abstract class BaseWsService {
       );
 
       _attempt = 0;
+      _isConnected = true;
+
+      // Start heartbeat with pong verification
+      _startHeartbeat();
+
       log('🟢 WebSocket connected.', level: LogLevel.info);
-      onConnected();
+
+      // Wait a moment before calling onConnected to ensure stability
+      Future.delayed(Duration(milliseconds: 100), () {
+        if (_isConnected && !_isDisposed) {
+          onConnected();
+        }
+      });
+    } on TimeoutException {
+      log('🔴 Connection timed out', level: LogLevel.error);
+      _channel = null;
+      _scheduleReconnect();
     } on WebSocketChannelException catch (e) {
       log('🔴 Handshake failed: ${e.message}', level: LogLevel.error);
       _channel = null;
@@ -79,58 +116,151 @@ abstract class BaseWsService {
   }
 
   void disconnect() {
-    log('Disconnecting.');
+    log('Disconnecting manually.');
+    _isManualDisconnect = true;
+    _isConnected = false;
     _cleanup(closeSink: true);
   }
 
   void dispose() {
-    log('Disposing.');
+    log('Disposing service.');
     _isDisposed = true;
+    _isManualDisconnect = true;
+    _isConnected = false;
+    _heartbeatTimer?.cancel();
     _cleanup(closeSink: true);
   }
 
-  /// Encodes [data] as JSON and writes it to the sink.
+  // Queue for messages sent while disconnected
+  final List<Map<String, dynamic>> _pendingMessages = [];
+
   void send(Map<String, dynamic> data) {
-    if (_channel == null || _isDisposed) {
-      log('send() skipped — not connected.', level: LogLevel.warn);
+    if (_isDisposed) {
+      log('send() skipped — service disposed.', level: LogLevel.warn);
       return;
     }
-    _channel!.sink.add(jsonEncode(data));
+
+    // Queue message if not connected
+    if (!_isConnected || _channel == null) {
+      log('Not connected, queuing message: ${data['type']}',
+          level: LogLevel.debug);
+      _pendingMessages.add(data);
+      return;
+    }
+
+    try {
+      _channel!.sink.add(jsonEncode(data));
+    } catch (e) {
+      log('Failed to send message: $e', level: LogLevel.error);
+      // Queue for retry
+      _pendingMessages.add(data);
+      _onSocketError(e);
+    }
+  }
+
+  void _flushPendingMessages() {
+    if (_pendingMessages.isEmpty) return;
+    log('Flushing ${_pendingMessages.length} pending messages',
+        level: LogLevel.debug);
+    final messages = List<Map<String, dynamic>>.from(_pendingMessages);
+    _pendingMessages.clear();
+    for (final data in messages) {
+      if (_isConnected && _channel != null) {
+        try {
+          _channel!.sink.add(jsonEncode(data));
+        } catch (_) {
+          _pendingMessages.add(data);
+        }
+      }
+    }
   }
 
   // ── Internal ───────────────────────────────────────────────────────────
 
+  DateTime? _lastPongReceived;
+
+  void _startHeartbeat() {
+    _heartbeatTimer?.cancel();
+    _lastPongReceived = DateTime.now();
+
+    _heartbeatTimer = Timer.periodic(Duration(seconds: 25), (timer) {
+      if (_isConnected && _channel != null && !_isDisposed) {
+        // Check if we received pong recently (within 2 heartbeats)
+        final timeSincePong =
+            DateTime.now().difference(_lastPongReceived ?? DateTime.now());
+        if (timeSincePong.inSeconds > 50) {
+          log('No pong received for ${timeSincePong.inSeconds}s, reconnecting...',
+              level: LogLevel.warn);
+          _isConnected = false;
+          _cleanup(closeSink: false);
+          _scheduleReconnect();
+          timer.cancel();
+          return;
+        }
+
+        try {
+          send(<String, dynamic>{
+            'type': 'ping',
+            'ts': DateTime.now().millisecondsSinceEpoch
+          });
+        } catch (e) {
+          timer.cancel();
+        }
+      } else if (!_isConnected) {
+        timer.cancel();
+      }
+    });
+  }
+
   void _onFrame(dynamic raw) {
-    if (raw is! String) {
-      log('Non-string frame ignored.', level: LogLevel.warn);
-      return;
-    }
+    if (raw is! String) return;
 
     late Map<String, dynamic> json;
     try {
       json = jsonDecode(raw) as Map<String, dynamic>;
     } catch (_) {
-      log('Malformed JSON frame: $raw', level: LogLevel.warn);
       return;
     }
 
-    log('Frame received: json="$json"');
+    // Handle pong responses - update last pong time
+    if (json['type'] == 'pong') {
+      _lastPongReceived = DateTime.now();
+      return;
+    }
+
+    // Respond to ping from server
+    if (json['type'] == 'ping') {
+      send({'type': 'pong', 'ts': DateTime.now().millisecondsSinceEpoch});
+      return;
+    }
+
     onMessage(json);
   }
 
   void _onSocketError(Object error) {
     log('Socket error: $error', level: LogLevel.error);
-    _scheduleReconnect();
+    if (!_isManualDisconnect && !_isDisposed) {
+      _isConnected = false;
+      _cleanup(closeSink: false);
+      _scheduleReconnect();
+    }
   }
 
   void _onSocketDone() {
     log('Connection closed by server.', level: LogLevel.warn);
-    _cleanup(closeSink: false); // sink already closed
-    _scheduleReconnect();
+    if (!_isManualDisconnect && !_isDisposed) {
+      _isConnected = false;
+      _cleanup(closeSink: false);
+      _scheduleReconnect();
+    } else {
+      _isConnected = false;
+      _cleanup(closeSink: false);
+    }
   }
 
   void _scheduleReconnect() {
-    if (_isDisposed || (_reconnectTimer?.isActive ?? false)) return;
+    if (_isDisposed || _isManualDisconnect) return;
+    if (_reconnectTimer?.isActive ?? false) return;
 
     onDisconnected();
 
@@ -140,32 +270,33 @@ abstract class BaseWsService {
       return;
     }
 
-    // Exponential back-off: 2s, 4s, 8s … capped at 30s
-    final delay = Duration(
-      milliseconds: (1000 * (1 << (_attempt + 1))).clamp(2000, 30000),
-    );
+    // Exponential back-off: 2s, 4s, 8s, 16s, 30s
+    int delaySeconds = [2, 4, 8, 16, 30][_attempt.clamp(0, 4)];
+    final delay = Duration(seconds: delaySeconds);
     _attempt++;
 
-    log(
-      'Reconnect attempt $_attempt/$maxReconnectAttempts in ${delay.inSeconds}s…',
-      level: LogLevel.warn,
-    );
+    log('Reconnect attempt $_attempt/$maxReconnectAttempts in ${delay.inSeconds}s…',
+        level: LogLevel.warn);
 
     _reconnectTimer = Timer(delay, () {
-      if (!_isDisposed) connect();
+      if (!_isDisposed && !_isManualDisconnect) {
+        connect().then((_) {
+          _flushPendingMessages();
+        });
+      }
     });
   }
 
-  /// Override to react when all reconnect attempts are exhausted.
-  void onMaxRetriesExceeded() {}
-
   void _cleanup({required bool closeSink}) {
+    _heartbeatTimer?.cancel();
     _reconnectTimer?.cancel();
-    _reconnectTimer = null;
     _sub?.cancel();
     _sub = null;
+
     if (closeSink) {
-      _channel?.sink.close(ws_status.normalClosure);
+      try {
+        _channel?.sink.close(ws_status.normalClosure);
+      } catch (_) {}
     }
     _channel = null;
   }

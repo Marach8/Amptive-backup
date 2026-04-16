@@ -1,9 +1,12 @@
 import 'dart:async' show StreamSubscription, Timer, StreamController;
 import 'dart:io' show Directory, File;
 import 'dart:ui';
+import 'package:amptive/src/features/episodes/data/models/response/episode_model.dart';
 import 'package:amptive/src/features/go_live/go_live_export.dart';
+import 'package:amptive/src/features/go_live/models/go_live_program_params.dart';
 import 'package:amptive/src/features/go_live/presentation/widgets/go_live_onboarding_bottom_sheet.dart';
 import 'package:amptive/src/global_export.dart';
+import 'package:amptive/src/livestream/livestream.dart';
 import 'package:amptive/src/shared/annotated_region__widget.dart';
 import 'package:amptive/src/shared/app_bar_widget.dart';
 import 'package:amptive/src/shared/back_button.dart';
@@ -15,19 +18,23 @@ import 'package:permission_handler/permission_handler.dart';
 import '../../../../shared/image_loader_widget.dart';
 
 class GoLiveOnboardingScreen extends StatelessWidget {
-  const GoLiveOnboardingScreen({super.key});
+  const GoLiveOnboardingScreen({super.key, this.episode});
+
+  final Episode? episode;
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider<GoLiveOnboardBloc>(
       create: (_) => GoLiveOnboardBloc(),
-      child: const _SubWidget(),
+      child: _SubWidget(episode: episode),
     );
   }
 }
 
 class _SubWidget extends StatefulWidget {
-  const _SubWidget();
+  const _SubWidget({this.episode});
+
+  final Episode? episode;
 
   @override
   State<_SubWidget> createState() => _SubWidgetState();
@@ -267,10 +274,20 @@ class _SubWidgetState extends State<_SubWidget> {
                                   child: show123CountDown
                                       ? OneTwoThreeCountDown(
                                           key: const ValueKey<double>(1.04),
-                                          onCountDownFinished: () {
+                                          onCountDownFinished: () async {
+                                            // Get streamId from the episode that was passed in
+                                            final String streamId =
+                                                widget.episode?.livestreamId ??
+                                                    '';
+                                            if (!context.mounted) return;
                                             context.pushReplacementNamed(
                                                 ATRoutes.MAIN_GO_LIVE_PROGRAM,
-                                                extra: GoLiveUserType.host);
+                                                extra: GoLiveProgramParams(
+                                                  streamId: streamId,
+                                                  userType: GoLiveUserType.host,
+                                                  contentId:
+                                                      widget.episode?.episodeId,
+                                                ));
                                           },
                                         )
                                       : showPicture

@@ -2,6 +2,7 @@ import 'package:amptive/src/config/api_response_and_app_state.dart';
 import 'package:amptive/src/features/notifications/data/models/get_notifications_response_model.dart';
 import 'package:amptive/src/features/notifications/data/repository/notif_repo.dart';
 import 'package:amptive/src/features/notifications/data/repository/notif_repo_impl.dart';
+import 'package:amptive/src/shared/global_model_objects.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class GetNotificationsCubit extends Cubit<ATAppState<NotificationsResponseModel>> {
@@ -19,32 +20,50 @@ class GetNotificationsCubit extends Cubit<ATAppState<NotificationsResponseModel>
   };
 
 
-  Future <void> fetchNotifications() async {
-    final bool hasMore = currentNotifications?.hasMore ?? true;
-    if (state is LoadingState<NotificationsResponseModel> || !hasMore) {
-      return;
-     }
-     
-     
-    emit( LoadingState<NotificationsResponseModel>(currentData: currentNotifications));
-    try {
-    
+  Future<void> fetchNotifications({bool refresh = false}) async {
+  final bool hasMore = currentNotifications?.hasMore ?? true;
+  
+  if (!refresh && (state is LoadingState<NotificationsResponseModel> || !hasMore)) {
+    return;
+  }
+  
+  final int pageToFetch = refresh ? 1 : (currentNotifications?.page ?? 0) + 1;
+  
+  emit(LoadingState<NotificationsResponseModel>(currentData: refresh ? null : currentNotifications));
+  
+  try {
     final ApiResponse<NotificationsResponseModel> response = await notificationsRepo.fetchUserNotifications(
       unreadOnly: true,
-      page: (currentNotifications?.page ?? 0) + 1,
+      page: pageToFetch,
       pageSize: 100,
     );
-     response.when(
+    
+    response.when(
       successful: (Successful<NotificationsResponseModel> data) {
-         emit(SuccessState<NotificationsResponseModel>(newData: data.data));
+        final NotificationsResponseModel newData = data.data!;
+        final NotificationsResponseModel? existingData = currentNotifications;
+        
+        if (refresh || existingData == null) {
+          emit(SuccessState<NotificationsResponseModel>(newData: newData));
+        } else {
+          final NotificationsResponseModel mergedNotifications = NotificationsResponseModel(
+            notifications: <Notifications>[...?existingData.notifications, ...?newData.notifications],
+            unreadCount: newData.unreadCount,
+            total: newData.total,
+            page: newData.page,
+            pageSize: newData.pageSize,
+            totalPages: newData.totalPages,
+            hasMore: newData.hasMore,
+          );
+          emit(SuccessState<NotificationsResponseModel>(newData: mergedNotifications));
+        }
       }, 
-      unSuccessful: ( Unsuccessful<NotificationsResponseModel> error) {
-        emit(FailureState<NotificationsResponseModel>(error.error.message));
+      unSuccessful: (Unsuccessful<NotificationsResponseModel> error) {
+        emit(FailureState<NotificationsResponseModel>(error.error.message, oldData: currentNotifications));
       }
-     );
-  
+    );
   } catch (e) {
-    emit(FailureState<NotificationsResponseModel>('Unable to fetch notifications: $e'));
+    emit(FailureState<NotificationsResponseModel>('Unable to fetch notifications: $e', oldData: currentNotifications));
   }
 }
 }

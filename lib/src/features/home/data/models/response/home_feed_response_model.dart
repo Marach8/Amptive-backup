@@ -41,6 +41,15 @@ class HomeFeedItem {
     this.score,
     this.requesterFollowsHost,
     this.requesterIsGoing,
+    this.livestreamId,
+    this.coHostCount,
+    this.avatarUrls,
+    this.showId,
+    this.showTitle,
+    this.showCoverUrl,
+    this.showCategory,
+    this.episodeNumber,
+    this.thumbnailUrl,
   });
 
   factory HomeFeedItem.fromJson(Map<String, dynamic> json) {
@@ -62,6 +71,17 @@ class HomeFeedItem {
       score: json['score']?.toDouble(),
       requesterFollowsHost: json['requester_follows_host'],
       requesterIsGoing: json['requester_is_going'],
+      livestreamId: json['livestream_id'],
+      coHostCount: (json['co_hosts'] as List<dynamic>?)?.length ?? 0,
+      avatarUrls: (json['avatar_urls'] as List<dynamic>?)
+          ?.map((e) => e as String)
+          .toList(),
+      showId: json['show_id'],
+      showTitle: json['show_title'],
+      showCoverUrl: json['show_cover_url'],
+      showCategory: json['show_category'],
+      episodeNumber: json['episode_number'],
+      thumbnailUrl: json['thumbnail_url'] as String?,
     );
   }
 
@@ -75,9 +95,16 @@ class HomeFeedItem {
       showType,
       coverUrl,
       startedAt,
-      scheduledFor;
+      scheduledFor,
+      livestreamId,
+      showId,
+      showTitle,
+      showCoverUrl,
+      showCategory,
+      thumbnailUrl;
 
   final double? price, score;
-  final int? viewerCount, goingCount;
+  final int? viewerCount, goingCount, coHostCount, episodeNumber;
   final bool? requesterFollowsHost, requesterIsGoing;
+  final List<String>? avatarUrls;
 }

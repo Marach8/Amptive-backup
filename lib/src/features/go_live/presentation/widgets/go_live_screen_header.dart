@@ -9,10 +9,14 @@ import '../../../../bloc/main_app/go_live_bloc/host_view/host_end_show_bloc.dart
 import '../../../../config/utils/dialogs/go_live/host_end_show_dialog.dart';
 import '../../../../config/utils/dialogs/go_live/host_view_of_listeners_dialog.dart';
 import '../../../../config/utils/dialogs/go_live/top_gifters_modal.dart';
+import '../../../../livestream/models/livestream_models.dart';
 
 class GoLiveScreenHeader extends StatelessWidget {
-  const GoLiveScreenHeader({super.key, this.exitIcon});
+  const GoLiveScreenHeader(
+      {super.key, this.exitIcon, this.viewerCount, this.participants});
   final Widget? exitIcon;
+  final int? viewerCount;
+  final List<LivestreamParticipant>? participants;
 
   @override
   Widget build(BuildContext context) {
@@ -60,6 +64,8 @@ class GoLiveScreenHeader extends StatelessWidget {
         ),
         const SizedBox(width: 10),
         _GiftingNdFollowing(
+          viewerCount: viewerCount,
+          participants: participants,
           onGiftTap: () {
             exitIcon != null
                 ? showHostViewOfTopGiftersDialog(context)
@@ -67,9 +73,12 @@ class GoLiveScreenHeader extends StatelessWidget {
           },
           onFollowersTap: () {
             if (exitIcon == null) {
-              showListenersDialog(context: context);
+              showListenersDialog(context: context, participants: participants);
             } else {
-              showListenersDialog(context: context, enableKickOut: false);
+              showListenersDialog(
+                  context: context,
+                  enableKickOut: false,
+                  participants: participants);
             }
           },
         ),
@@ -79,10 +88,16 @@ class GoLiveScreenHeader extends StatelessWidget {
 }
 
 class _GiftingNdFollowing extends StatelessWidget {
-  const _GiftingNdFollowing(
-      {required this.onGiftTap, required this.onFollowersTap});
+  const _GiftingNdFollowing({
+    required this.onGiftTap,
+    required this.onFollowersTap,
+    this.viewerCount,
+    this.participants,
+  });
 
   final VoidCallback? onGiftTap, onFollowersTap;
+  final int? viewerCount;
+  final List<LivestreamParticipant>? participants;
 
   @override
   Widget build(BuildContext context) {
@@ -142,7 +157,9 @@ class _GiftingNdFollowing extends StatelessWidget {
                 ),
                 const SizedBox(width: 5),
                 Text(
-                  "144k",
+                  viewerCount != null
+                      ? _formatViewerCount(viewerCount!)
+                      : "144k",
                   style: context.textTheme.bodyMedium?.copyWith(
                       overflow: TextOverflow.fade, fontSize: ATSizes.size14),
                 ),
@@ -152,5 +169,14 @@ class _GiftingNdFollowing extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  String _formatViewerCount(int count) {
+    if (count >= 1000000) {
+      return '${(count / 1000000).toStringAsFixed(1)}M';
+    } else if (count >= 1000) {
+      return '${(count / 1000).toStringAsFixed(1)}k';
+    }
+    return count.toString();
   }
 }
