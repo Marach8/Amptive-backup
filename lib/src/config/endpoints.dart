@@ -2,9 +2,11 @@ class ATEndpoints {
   const ATEndpoints._();
 
   static const String baseUrl = 'https://amptive.onrender.com';
+  static const String wsBaseUrl = 'wss://amptive.onrender.com';
+
 
   static const String checkIdentityAvailability =
-    '/api/v1/auth/check-availability';
+      '/api/v1/auth/check-availability';
   static const String sendOtp = '/api/v1/auth/init';
   static const String verifyOtp = '/api/v1/auth/verify-otp';
   static const String login = '/api/v1/auth/login';
@@ -39,17 +41,23 @@ class ATEndpoints {
   static const String fcmRegisterDevice = '/api/v1/notif/devices/register';
   static const String getNotifications = '/api/v1/notif';
 
-  static String getStreamTokenEndpoint(String streamId) => '/api/v1/livestreams/$streamId/token';
-  static String startStreamEndpoint(String contentId) => '/api/v1/livestreams/$contentId/start';
-  static String endStreamEndpoint(String streamId) => '/api/v1/livestreams/$streamId/end';
-  static String reactToStream(String streamId) => '/api/v1/livestreams/$streamId/react';
+  static String getStreamTokenEndpoint(String streamId) =>
+      '/api/v1/livestreams/$streamId/token';
+  static String startStreamEndpoint(String contentId) =>
+      '/api/v1/livestreams/$contentId/start';
+  static String endStreamEndpoint(String streamId) =>
+      '/api/v1/livestreams/$streamId/end';
+  static String reactToStream(String streamId) =>
+      '/api/v1/livestreams/$streamId/react';
 
-
+  static String markEventGoing(String eventId) =>
+      '${ATEndpoints.events}standalone/$eventId/going';
+  static String markEpisodeGoing(String episodeId) =>
+      '${ATEndpoints.events}episode/$episodeId/going';
 
   // websockets
-  static const String wsBaseUrl = 'wss://amptive.onrender.com';
   static const String wsUsers = '$wsBaseUrl/api/v1/ws/user';
 
-  static String wsSignalEndpoint(String streamId, String authToken) => '$wsBaseUrl/api/v1/ws/stream/$streamId?token=$authToken';
-
+  static String wsSignalEndpoint(String streamId, String authToken) =>
+      '$wsBaseUrl/api/v1/ws/stream/$streamId?token=$authToken';
 }

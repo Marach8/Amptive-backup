@@ -53,8 +53,7 @@ class LivestreamController {
       _signaling = SignalingService(streamId: streamId!);
       _sigSub = _signaling!.events.listen(
         _handleSignalingEvent,
-        onError: (Object e) =>
-            _emit(_state.copyWith(lastError: e.toString())),
+        onError: (Object e) => _emit(_state.copyWith(lastError: e.toString())),
       );
       await _signaling!.connect();
 
@@ -120,7 +119,8 @@ class LivestreamController {
 
     _mediaSubs.add(
       _media.onMediaStateChanged.listen((change) {
-        _handleMediaStateChange(change.identity, change.type.name, change.enabled);
+        _handleMediaStateChange(
+            change.identity, change.type.name, change.enabled);
       }),
     );
   }
@@ -148,13 +148,19 @@ class LivestreamController {
 
   // ── Interaction actions ────────────────────────────────────────────────
 
-  void sendChat(String message) => _signaling?.sendChat(message);
+  void sendChat(String message) {
+    _signaling?.sendChat(message);
+  }
 
   void sendReaction(String emoji) {
     _signaling?.sendReaction(emoji);
     apiService.sendReaction(streamId!, emoji).catchError((Object e) {
       _log('sendReaction API error: $e', level: LogLevel.warn);
     });
+  }
+
+  void sendGift(String giftId, int quantity) {
+    _signaling?.sendGift(giftId, quantity);
   }
 
   void raiseHand() => _signaling?.raiseHand();
@@ -215,9 +221,9 @@ class LivestreamController {
           }
         }
 
-    // participantCount is now a computed getter on LivestreamState
-    // (participants.length), so we no longer need to manage it here.
-    // ParticipantCountEvent maps to viewerCount (server-side total).
+      // participantCount is now a computed getter on LivestreamState
+      // (participants.length), so we no longer need to manage it here.
+      // ParticipantCountEvent maps to viewerCount (server-side total).
       case ParticipantCountEvent(:final count):
         _emit(_state.copyWith(viewerCount: count));
 
@@ -226,6 +232,9 @@ class LivestreamController {
 
       case ReactionReceivedEvent(:final reaction):
         _emit(_state.copyWith(reactions: [..._state.reactions, reaction]));
+
+      case GiftReceivedEvent(:final gift):
+        _emit(_state.copyWith(gifts: [..._state.gifts, gift]));
 
       case HandRaiseEvent(:final identity, :final action):
         _handleHandRaise(identity, action);
@@ -242,11 +251,16 @@ class LivestreamController {
       case UserKickedEvent(:final identity, :final reason):
         _handleUserKicked(identity, reason);
 
-      case MediaStateChangedEvent(:final identity, :final mediaType, :final enabled):
+      case MediaStateChangedEvent(
+          :final identity,
+          :final mediaType,
+          :final enabled
+        ):
         _handleMediaStateChange(identity, mediaType, enabled);
 
       case UnknownEvent():
-        _log('Received unknown event: ${event.runtimeType}', level: LogLevel.warn);
+        _log('Received unknown event: ${event.runtimeType}',
+            level: LogLevel.warn);
     }
   }
 
@@ -255,8 +269,6 @@ class LivestreamController {
   void _handleParticipantJoined(LivestreamParticipant participant) {
     _log('Participant joined via signaling: ${participant.identity}');
     if (!_state.participants.any((p) => p.identity == participant.identity)) {
-      // Updating participants automatically updates participantCount
-      // because it is a computed getter (participants.length).
       _emit(_state.copyWith(
         participants: [..._state.participants, participant],
       ));
@@ -267,7 +279,7 @@ class LivestreamController {
     // Same: participantCount stays in sync automatically.
     _emit(_state.copyWith(
       participants:
-      _state.participants.where((p) => p.identity != identity).toList(),
+          _state.participants.where((p) => p.identity != identity).toList(),
       handQueue: _state.handQueue.where((id) => id != identity).toList(),
     ));
   }
@@ -303,7 +315,7 @@ class LivestreamController {
     _handleParticipantLeft(identity);
     _emit(_state.copyWith(
       lastError:
-      'User $identity was banned${reason != null ? ': $reason' : ''}',
+          'User $identity was banned${reason != null ? ': $reason' : ''}',
     ));
   }
 
@@ -320,7 +332,8 @@ class LivestreamController {
 
   // ── Media handlers ─────────────────────────────────────────────────────
 
-  void _handleMediaStateChange(String identity, String mediaType, bool enabled) {
+  void _handleMediaStateChange(
+      String identity, String mediaType, bool enabled) {
     final updated = _state.participants.map((p) {
       if (p.identity == identity && mediaType == 'audio') {
         return p.copyWith(isMuted: !enabled);
@@ -384,6 +397,7 @@ class LivestreamState {
   final List<String> handQueue;
   final List<ChatMessage> messages;
   final List<ReactionEvent> reactions;
+  final List<GiftEvent> gifts;
   final String? lastError;
   final double localLevel;
   final double remoteLevel;
@@ -395,6 +409,7 @@ class LivestreamState {
     this.handQueue = const [],
     this.messages = const [],
     this.reactions = const [],
+    this.gifts = const [],
     this.lastError,
     this.localLevel = 0.0,
     this.remoteLevel = 0.0,
@@ -409,6 +424,7 @@ class LivestreamState {
     List<String>? handQueue,
     List<ChatMessage>? messages,
     List<ReactionEvent>? reactions,
+    List<GiftEvent>? gifts,
     Object? lastError = _kUnset,
     double? localLevel,
     double? remoteLevel,
@@ -420,6 +436,7 @@ class LivestreamState {
       handQueue: handQueue ?? this.handQueue,
       messages: messages ?? this.messages,
       reactions: reactions ?? this.reactions,
+      gifts: gifts ?? this.gifts,
       lastError: lastError == _kUnset ? this.lastError : lastError as String?,
       localLevel: localLevel ?? this.localLevel,
       remoteLevel: remoteLevel ?? this.remoteLevel,

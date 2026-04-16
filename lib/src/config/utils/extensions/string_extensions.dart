@@ -53,19 +53,26 @@ extension ExtString on String {
   }
 
   String get toTimeAgo {
-    if (isEmpty) return 'now';
-    try {
-      DateTime dateTime = DateTime.parse(this).toLocal();
-      Duration diff = DateTime.now().difference(dateTime);
-
-      if (diff.inDays > 365) return '${(diff.inDays / 365).floor()}y';
-      if (diff.inDays > 30) return '${(diff.inDays / 30).floor()}mo';
-      if (diff.inDays > 0) return '${diff.inDays}d';
-      if (diff.inHours > 0) return '${diff.inHours}h';
-      if (diff.inMinutes > 0) return '${diff.inMinutes}m';
-      return 'now';
-    } catch (e) {
-      return 'now';
+  if (isEmpty) return 'now';
+  try {
+    String normalizedDate = this;
+    if (!normalizedDate.endsWith('Z') && !normalizedDate.contains('+')) {
+      normalizedDate = '${normalizedDate}Z';
     }
+
+    DateTime dateTime = DateTime.parse(normalizedDate).toLocal();
+    DateTime now = DateTime.now();
+    Duration diff = now.difference(dateTime);
+
+    if (diff.inDays > 365) return '${(diff.inDays / 365).floor()}y';
+    if (diff.inDays > 30) return '${(diff.inDays / 30).floor()}mo';
+    if (diff.inDays > 0) return '${diff.inDays}d';
+    if (diff.inHours > 0) return '${diff.inHours}h';
+    if (diff.inMinutes > 0) return '${diff.inMinutes}m';
+    
+    return 'now';
+  } catch (e) {
+    return 'now';
   }
+}
 }

@@ -715,8 +715,8 @@ class MoneyReceivedNotif extends StatelessWidget {
   }
 }
 
-class AppNotificationTile extends StatelessWidget {
-  const AppNotificationTile({
+class GenericAppNotificationTile extends StatelessWidget {
+  const GenericAppNotificationTile({
     super.key,
     required this.title,
     required this.subtitle,

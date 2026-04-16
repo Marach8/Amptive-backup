@@ -8,7 +8,6 @@ import 'package:amptive/src/config/config_export.dart';
 import '../../services/websocket/base_ws_service.dart';
 import '../models/livestream_models.dart';
 
-
 // ── SignalingService ───────────────────────────────────────────────────────
 
 class SignalingService extends BaseWsService {
@@ -19,7 +18,7 @@ class SignalingService extends BaseWsService {
   })  : _streamId = streamId,
         _localStorageService =
             localStorageService ?? FlutterSecureStorageServiceImpl(),
-  // URL is a placeholder; the real one is built in connect()
+        // URL is a placeholder; the real one is built in connect()
         super(logTag: 'SignalingService');
 
   final String _streamId;
@@ -33,7 +32,7 @@ class SignalingService extends BaseWsService {
 
   /// Resolves the auth token, then delegates to [BaseWsService.connect].
   @override
-  Future<void> connect() async {
+  Future<void> connect({Duration? connectTimeout}) async {
     log('Resolving auth token…');
     final token = await _localStorageService.get(ATStrings.accessToken);
 
@@ -46,7 +45,7 @@ class SignalingService extends BaseWsService {
 
     // Stash the token so buildConnectUrl() can use it.
     _resolvedToken = token;
-    return super.connect();
+    return super.connect(connectTimeout: connectTimeout);
   }
 
   @override
@@ -62,8 +61,9 @@ class SignalingService extends BaseWsService {
 
   @override
   String buildConnectUrl() {
-    final String base = ATEndpoints.wsSignalEndpoint(_streamId, _resolvedToken!);
-    return  base;
+    final String base =
+        ATEndpoints.wsSignalEndpoint(_streamId, _resolvedToken!);
+    return base;
   }
 
   @override
@@ -76,7 +76,15 @@ class SignalingService extends BaseWsService {
   }
 
   @override
-  void onConnected() => log('Signaling connected.', level: LogLevel.info);
+  void onConnected() {
+    // Send initial join message to server
+    log('Sending join message...');
+    send({
+      'type': 'join',
+      'streamId': _streamId,
+    });
+    log('Signaling connected.', level: LogLevel.info);
+  }
 
   @override
   void onDisconnected() => log('Signaling disconnected.', level: LogLevel.warn);
@@ -96,30 +104,38 @@ class SignalingService extends BaseWsService {
   void sendReaction(String emoji) =>
       send({'type': OutboundMessageType.reaction, 'content': emoji});
 
-  void raiseHand()  => send({'type': OutboundMessageType.handRaise, 'action': 'raise'});
-  void lowerHand()  => send({'type': OutboundMessageType.handRaise, 'action': 'lower'});
+  void sendGift(String giftId, int quantity) => send({
+        'type': OutboundMessageType.gift,
+        'gift_id': giftId,
+        'quantity': quantity,
+      });
+
+  void raiseHand() =>
+      send({'type': OutboundMessageType.handRaise, 'action': 'raise'});
+  void lowerHand() =>
+      send({'type': OutboundMessageType.handRaise, 'action': 'lower'});
 
   void approveHandRaise(String identity) => send({
-    'type': OutboundMessageType.handRaise,
-    'action': 'approve',
-    'identity': identity,
-  });
+        'type': OutboundMessageType.handRaise,
+        'action': 'approve',
+        'identity': identity,
+      });
 
   void sendPing() => send({
-    'type': OutboundMessageType.ping,
-    'timestamp': DateTime.now().millisecondsSinceEpoch,
-  });
+        'type': OutboundMessageType.ping,
+        'timestamp': DateTime.now().millisecondsSinceEpoch,
+      });
 
   void toggleMedia(String mediaType, bool enabled) => send({
-    'type': OutboundMessageType.mediaToggle,
-    'mediaType': mediaType,
-    'enabled': enabled,
-  });
+        'type': OutboundMessageType.mediaToggle,
+        'mediaType': mediaType,
+        'enabled': enabled,
+      });
 
   void toggleScreenShare(bool start) => send({
-    'type': OutboundMessageType.screenShare,
-    'action': start ? 'start' : 'stop',
-  });
+        'type': OutboundMessageType.screenShare,
+        'action': start ? 'start' : 'stop',
+      });
 
   // ── Private helpers ────────────────────────────────────────────────────
 
@@ -136,67 +152,60 @@ class SignalingService extends BaseWsService {
 
     return switch (type) {
       SignalingEventType.initial =>
-          InitialStateEvent(InitialState.fromJson(json)),
-      SignalingEventType.streamStarted  => StreamStartedEvent(),
-      SignalingEventType.streamEnded    => StreamEndedEvent(),
-      SignalingEventType.error          => _parseErrorEvent(json),
-      SignalingEventType.pong =>
-          PongEvent(json['timestamp'] as int? ?? 0),
+        InitialStateEvent(InitialState.fromJson(json)),
+      SignalingEventType.streamStarted => StreamStartedEvent(),
+      SignalingEventType.streamEnded => StreamEndedEvent(),
+      SignalingEventType.error => _parseErrorEvent(json),
+      SignalingEventType.pong => PongEvent(json['timestamp'] as int? ?? 0),
       SignalingEventType.participantJoin =>
-          ParticipantJoinEvent(LivestreamParticipant.fromJson(json)),
-      SignalingEventType.participantLeave =>
-          ParticipantLeaveEvent(
-            json['identity'] as String? ?? '',
-            json['reason'] as String?,
+        ParticipantJoinEvent(LivestreamParticipant.fromJson(json)),
+      SignalingEventType.participantLeave => ParticipantLeaveEvent(
+          json['identity'] as String? ?? '',
+          json['reason'] as String?,
+        ),
+      SignalingEventType.participantUpdated => ParticipantUpdatedEvent(
+          LivestreamParticipant.fromJson(
+            json['participant'] as Map<String, dynamic>,
           ),
-      SignalingEventType.participantUpdated =>
-          ParticipantUpdatedEvent(
-            LivestreamParticipant.fromJson(
-              json['participant'] as Map<String, dynamic>,
-            ),
-          ),
-      SignalingEventType.chat      => ChatEvent(ChatMessage.fromJson(json)),
-      SignalingEventType.reaction  =>
-          ReactionReceivedEvent(ReactionEvent.fromJson(json)),
-      SignalingEventType.handRaise =>
-          HandRaiseEvent(
-            identity: json['user_id'] as String? ?? '',
-            action:   json['action']  as String? ?? '',
-          ),
-      SignalingEventType.viewerCount      =>
-          ViewerCountEvent(json['count'] as int? ?? 0),
+        ),
+      SignalingEventType.chat => ChatEvent(ChatMessage.fromJson(json)),
+      SignalingEventType.reaction =>
+        ReactionReceivedEvent(ReactionEvent.fromJson(json)),
+      SignalingEventType.handRaise => HandRaiseEvent(
+          identity: json['user_id'] as String? ?? '',
+          action: json['action'] as String? ?? '',
+        ),
+      SignalingEventType.gift => GiftReceivedEvent(GiftEvent.fromJson(json)),
+      SignalingEventType.viewerCount =>
+        ViewerCountEvent(json['count'] as int? ?? 0),
       SignalingEventType.participantCount =>
-          ParticipantCountEvent(json['count'] as int? ?? 0),
-      SignalingEventType.userMuted =>
-          UserMutedEvent(
-            identity: json['identity'] as String? ?? '',
-            muted:    json['muted']    as bool?   ?? false,
-          ),
-      SignalingEventType.userBanned =>
-          UserBannedEvent(
-            identity: json['identity'] as String? ?? '',
-            reason:   json['reason']   as String?,
-          ),
-      SignalingEventType.userKicked =>
-          UserKickedEvent(
-            identity: json['identity'] as String? ?? '',
-            reason:   json['reason']   as String?,
-          ),
-      SignalingEventType.mediaStateChanged =>
-          MediaStateChangedEvent(
-            identity:  json['identity']  as String? ?? '',
-            mediaType: json['mediaType'] as String? ?? '',
-            enabled:   json['enabled']   as bool?   ?? false,
-          ),
+        ParticipantCountEvent(json['count'] as int? ?? 0),
+      SignalingEventType.userMuted => UserMutedEvent(
+          identity: json['identity'] as String? ?? '',
+          muted: json['muted'] as bool? ?? false,
+        ),
+      SignalingEventType.userBanned => UserBannedEvent(
+          identity: json['identity'] as String? ?? '',
+          reason: json['reason'] as String?,
+        ),
+      SignalingEventType.userKicked => UserKickedEvent(
+          identity: json['identity'] as String? ?? '',
+          reason: json['reason'] as String?,
+        ),
+      SignalingEventType.mediaStateChanged => MediaStateChangedEvent(
+          identity: json['identity'] as String? ?? '',
+          mediaType: json['mediaType'] as String? ?? '',
+          enabled: json['enabled'] as bool? ?? false,
+        ),
       _ => UnknownEvent(json),
     };
   }
 
   SignalingEvent _parseErrorEvent(Map<String, dynamic> json) => ErrorEvent(
-    code:    json['code']    as String? ?? 'unknown',
-    message: json['message'] as String? ?? 'An error occurred',
-    details: json['details'] as String? ?? '',
-  );
+        code: json['code'] as String? ?? 'unknown',
+        message: json['message'] as String? ?? 'An error occurred',
+        details: json['details'] as String? ?? '',
+      );
 }
 
 class SignalingException implements Exception {
