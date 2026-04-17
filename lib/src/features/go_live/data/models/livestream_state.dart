@@ -53,7 +53,7 @@ class LiveStreamState1 extends Equatable {
       roomUrl: roomUrl ?? this.roomUrl,
       roomEntryToken: roomEntryToken ?? this.roomEntryToken,
       community: community ?? this.community,
-      organizers: organizers,
+      organizers: organizers ?? this.organizers,
     );
   }
 

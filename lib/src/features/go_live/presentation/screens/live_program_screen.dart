@@ -3,7 +3,6 @@ import 'dart:developer';
 import 'package:amptive/src/features/auth/cubits/local_user_data_cubit.dart';
 import 'package:amptive/src/features/go_live/cubits/livestream_cubit1.dart';
 import 'package:amptive/src/features/go_live/data/models/livestream_state.dart';
-import 'package:amptive/src/features/go_live/models/go_live_program_params.dart';
 import 'package:amptive/src/features/go_live/presentation/screens/go_live_onboarding_screen.dart';
 import 'package:amptive/src/features/go_live/presentation/screens/live_program_audience_view.dart';
 import 'package:amptive/src/features/go_live/presentation/screens/live_program_cohost_view.dart';
@@ -24,7 +23,6 @@ class LiveProgramScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final CachedUserData? userData = context
       .read<LocalUserDataCubit>().currentUserData;
-    log('This is the pictureurl: ${userData?.pictureUrl}');
 
     final LiveSessionParticipant participant = LiveSessionParticipant(
       isMuted: false,

@@ -1,3 +1,5 @@
+import 'dart:developer' show log;
+
 import 'package:amptive/src/config/utils/extensions/context_extensions.dart';
 import 'package:amptive/src/config/utils/font_sizes.dart';
 import 'package:amptive/src/features/go_live/data/models/livestream_state.dart';
@@ -105,6 +107,10 @@ class RenderAHost extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    log('This is the host picture ${host?.profilePicture}');
+    log('This is the host username ${host?.username}');
+    log('This is the host name ${host?.name}');
+    log('This is the host id ${host?.userId}');
     return AnimatedPositioned(
       duration: const Duration(milliseconds: 700),
       curve: Curves.decelerate,
@@ -155,7 +161,7 @@ class RenderAHost extends StatelessWidget {
             SizedBox(
               width: 80,
               child: Text(
-                host?.name ?? '',
+                host?.username ?? '',
                 textAlign: TextAlign.center,
                 style: context.textTheme.titleSmall,
               ),

@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:developer' show log;
 import 'package:amptive/src/config/services/audio_streaming_service/audio_streaming_service.dart';
 import 'package:livekit_client/livekit_client.dart';
 import 'package:amptive/src/features/go_live/data/models/livestream_state.dart';
@@ -26,7 +27,10 @@ class LiveKitAudioStreamingService implements ATAudioStreamingService {
     required String roomUrl,
     required String participantToken,
   }) async {
-    _connectionController.add(LiveSessionConnectionStatus.connecting);
+    try{
+      _connectionController.add(LiveSessionConnectionStatus.connecting);
+
+    log('This is the room url $roomUrl, and participant token $participantToken');
 
     await _room.connect(roomUrl, participantToken);
 
@@ -34,6 +38,11 @@ class LiveKitAudioStreamingService implements ATAudioStreamingService {
 
     _listenToEvents();
     _emitParticipants();
+    }
+    catch(e, s){
+      log('Error connecting to live kit: $e, stack trace $s');
+      _connectionController.add(LiveSessionConnectionStatus.disconnected);
+    }
   }
 
   // ---------------------------------------------------------------------------

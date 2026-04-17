@@ -3,7 +3,6 @@ import 'dart:developer' show log;
 import 'package:amptive/src/config/services/audio_streaming_service/audio_streaming_service.dart';
 import 'package:amptive/src/config/services/audio_streaming_service/live_kit_audio_streaming_impl.dart';
 import 'package:amptive/src/features/go_live/data/models/livestream_state.dart';
-import 'package:amptive/src/features/go_live/go_live_export.dart';
 import 'package:amptive/src/features/go_live/presentation/screens/live_program_screen.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -11,11 +10,12 @@ class LiveStreamCubit1 extends Cubit<LiveStreamState1> {
   LiveStreamCubit1({
     ATAudioStreamingService? extStreamService,
     LiveStreamState1? initialState,
-  })  : streamingService = extStreamService ?? LiveKitAudioStreamingService(),
+  }) : streamingService = extStreamService ?? LiveKitAudioStreamingService(),
     super(initialState ?? const LiveStreamState1()) {
     _listenToStreams();
-    // final Organizers organizers = _retriveOrganizers(state);
-    // emit(state.copyWith(organizers: organizers));
+
+    final Organizers organizers = _retriveOrganizers(state);
+    emit(state.copyWith(organizers: organizers));
   }
 
   final ATAudioStreamingService streamingService;
@@ -34,7 +34,7 @@ class LiveStreamCubit1 extends Cubit<LiveStreamState1> {
       }
     );
 
-    // Listen to participant changes
+    //Listen to participant changes
     _participantsSub = streamingService.participantsStream.listen(
       (List<LiveSessionParticipant> participants) {
         log('This is the number of participants in the cubit: ${participants.length}');

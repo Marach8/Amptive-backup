@@ -22,14 +22,13 @@ class GoLiveRepoImpl implements GoLiveRepo {
         '${ATEndpoints.livestreams}$contentId/start?include_token=true',
       );
       
-      final dynamic tokenData = response.data['data']['token'];
-      final String? streamId = response.data['data']['livestream_id'];
+      final dynamic data = response.data['data'];
 
       final LiveProgramEntryToken entryToken = (
-        roomEntryToken: tokenData?['token'],
-        roomUrl: tokenData?['livekit_url'],
-        streamId: streamId ?? tokenData?['room'],
-        roomParticipantId: tokenData?['identity'],
+        roomEntryToken: data?['token'],
+        roomUrl: data?['livekit_url'],
+        streamId: data?['livestream_id'] ?? data?['room'],
+        roomParticipantId: data?['identity'],
       );
       return Successful<LiveProgramEntryToken>(data: entryToken);
     }
@@ -61,7 +60,7 @@ class GoLiveRepoImpl implements GoLiveRepo {
   Future<ApiResponse<dynamic>> reactToLiveProgram(
     {required String livestreamId}) async {
     try {
-      final response = await networkService.post(
+      final Response<dynamic> response = await networkService.post(
         '${ATEndpoints.livestreams}$livestreamId/react',
         data: <String, dynamic>{},
       );
@@ -82,12 +81,13 @@ class GoLiveRepoImpl implements GoLiveRepo {
         '${ATEndpoints.livestreams}$livestreamId/token',
       );
 
-      final dynamic tokenData = response.data;
+      final dynamic data = response.data['data'];
+
       final LiveProgramEntryToken entryToken = (
-        roomEntryToken: tokenData['token'],
-        roomUrl: tokenData['livekit_url'],
-        streamId: tokenData['room'],
-        roomParticipantId: tokenData['identity'],
+        roomEntryToken: data?['token'],
+        roomUrl: data?['livekit_url'],
+        streamId: data?['livestream_id'] ?? data?['room'],
+        roomParticipantId: data?['identity'],
       );
 
       return Successful<LiveProgramEntryToken>(data: entryToken);
