@@ -1,5 +1,6 @@
 import 'package:amptive/src/config/utils/extensions/context_extensions.dart';
 import 'package:amptive/src/config/utils/font_sizes.dart';
+import 'package:amptive/src/features/go_live/data/models/livestream_state.dart';
 import 'package:amptive/src/features/go_live/presentation/widgets/follow_and_subscribe_to_user_modal.dart';
 import 'package:amptive/src/shared/circle_avatar.dart';
 import 'package:amptive/src/shared/circular_image.dart';
@@ -21,8 +22,8 @@ class RenderACohost extends StatelessWidget {
   });
 
   final double? top, bottom, left, right;
-  final CoHost? cohost;
-  final ValueChanged<CoHost?> onTap;
+  final LiveSessionParticipant? cohost;
+  final ValueChanged<LiveSessionParticipant?> onTap;
 
   @override
   Widget build(BuildContext context) {
@@ -38,10 +39,7 @@ class RenderACohost extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.start,
         children: <Widget>[
           GestureDetector(
-            onTap: () {
-              showFollowAndSubscribeToUserModal(
-                context: context, user: cohost!);
-            },
+            onTap: () => onTap(cohost),
             child: Stack(
               clipBehavior: Clip.none,
               alignment: Alignment.center,
@@ -102,8 +100,8 @@ class RenderAHost extends StatelessWidget {
   });
 
   final double? top, bottom, left, right;
-  final Host? host;
-  final void Function(Host? host)? onTap;
+  final LiveSessionParticipant? host;
+  final void Function(LiveSessionParticipant? host)? onTap;
 
   @override
   Widget build(BuildContext context) {

@@ -122,7 +122,9 @@ class _GiftingNdFollowing extends StatelessWidget {
                 child: Row(
                   children: <Widget>[
                     const ATImgLoader(
-                      imgPath: ATImgStrings.HOST_GIFT_ICON,
+                      imgPath: ATImgStrings.hostGiftingIcon,
+                      height: 20, width: 20,
+                      boxFit: BoxFit.cover,
                     ),
                     const SizedBox(width: 5),
                     Text(

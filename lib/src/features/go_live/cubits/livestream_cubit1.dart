@@ -1,7 +1,10 @@
 import 'dart:async';
+import 'dart:developer' show log;
 import 'package:amptive/src/config/services/audio_streaming_service/audio_streaming_service.dart';
 import 'package:amptive/src/config/services/audio_streaming_service/live_kit_audio_streaming_impl.dart';
 import 'package:amptive/src/features/go_live/data/models/livestream_state.dart';
+import 'package:amptive/src/features/go_live/go_live_export.dart';
+import 'package:amptive/src/features/go_live/presentation/screens/live_program_screen.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class LiveStreamCubit1 extends Cubit<LiveStreamState1> {
@@ -11,6 +14,8 @@ class LiveStreamCubit1 extends Cubit<LiveStreamState1> {
   })  : streamingService = extStreamService ?? LiveKitAudioStreamingService(),
     super(initialState ?? const LiveStreamState1()) {
     _listenToStreams();
+    // final Organizers organizers = _retriveOrganizers(state);
+    // emit(state.copyWith(organizers: organizers));
   }
 
   final ATAudioStreamingService streamingService;
@@ -24,6 +29,7 @@ class LiveStreamCubit1 extends Cubit<LiveStreamState1> {
     // Listen to connection state changes
     _connectionStateSub = streamingService.connectionStateStream.listen(
       (LiveSessionConnectionStatus connectionStatus) {
+        log('This is the connection status in the cubit: $connectionStatus');
         emit(state.copyWith(connectionStatus: connectionStatus));
       }
     );
@@ -31,7 +37,14 @@ class LiveStreamCubit1 extends Cubit<LiveStreamState1> {
     // Listen to participant changes
     _participantsSub = streamingService.participantsStream.listen(
       (List<LiveSessionParticipant> participants) {
-        emit(state.copyWith(participants: participants));
+        log('This is the number of participants in the cubit: ${participants.length}');
+        final Organizers organizers = _retriveOrganizers(
+          state.copyWith(participants: participants));
+
+        emit(state.copyWith(
+          participants: participants,
+          organizers: organizers,
+        ));
       }
     );
 
@@ -40,6 +53,37 @@ class LiveStreamCubit1 extends Cubit<LiveStreamState1> {
       (List<String> activeSpeakerIds) {
         emit(state.copyWith(activeSpeakerIds: activeSpeakerIds));
       }
+    );
+  }
+
+
+  Organizers _retriveOrganizers(LiveStreamState1 currState){
+    final List<LiveSessionParticipant> participants =
+      List<LiveSessionParticipant>.from(
+        currState.participants ?? <LiveSessionParticipant>[]);
+
+    List<LiveSessionParticipant?>? cohosts = currState.organizers?.cohosts;
+    LiveSessionParticipant? host = currState.organizers?.host;
+
+    if(host == null){
+      for(LiveSessionParticipant participant in participants){
+        if(participant.participantType == LiveParticipantType.host){
+          host = participant;
+          break;
+        }
+      }
+    }
+
+    if((cohosts ?? <LiveSessionParticipant>[]).length < 5){
+      cohosts = participants.where(
+        (LiveSessionParticipant participant) =>
+          participant.participantType == LiveParticipantType.cohost,
+      ).toList();
+    }
+
+    return (
+      host: host,
+      cohosts: cohosts,
     );
   }
 

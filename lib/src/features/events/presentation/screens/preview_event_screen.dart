@@ -356,10 +356,10 @@ class _EventSubWidgetState extends State<_EventSubWidget> {
                 return ATBlurredBgBtn(
                   onPressed: () async {
                     final HostedEvent? updatedEvent =
-                        context.read<EventDetailCubit>().currentEventDetail;
+                      context.read<EventDetailCubit>().currentEventDetail;
                     context.read<StartLiveProgramCubit>().startLiveProgram(
-                        contentId: updatedEvent?.eventId ?? '',
-                      );
+                      contentId: updatedEvent?.eventId ?? '',
+                    );
                   },
                   btnTitle: 'Edit Event'
                 );

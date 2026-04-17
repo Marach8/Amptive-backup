@@ -268,7 +268,7 @@ class _GiftsDescColumn extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
               const ATImgLoader(
-                imgPath: ATImgStrings.HOST_GIFT_ICON,
+                imgPath: ATImgStrings.hostGiftingIcon,
                 height: 30,
                 width: 30,
               ),

@@ -1,3 +1,4 @@
+import 'package:amptive/src/features/go_live/presentation/screens/live_program_screen.dart';
 import 'package:amptive/src/shared/global_model_objects.dart';
 import 'package:equatable/equatable.dart';
 
@@ -5,26 +6,26 @@ import 'package:equatable/equatable.dart';
 class LiveStreamState1 extends Equatable {
   const LiveStreamState1({
     this.connectionStatus = LiveSessionConnectionStatus.initial,
-    this.participants = const <LiveSessionParticipant>[],
-    this.activeSpeakerIds = const <String>[],
+    this.participants,
+    this.activeSpeakerIds,
     this.isMicrophoneEnabled = true,
     this.connectionErrorMessage,
-    this.programCoverUrl
+    this.programCoverUrl,
+    this.liveStreamId,
+    this.roomUrl,
+    this.roomEntryToken,
+    this.community,
+    this.organizers,
   });
 
-  /// The overall status of the livestream connection.
   final LiveSessionConnectionStatus connectionStatus;
-
-  /// A list of all participants currently in the room.
-  /// This uses your app-specific `LiveSessionParticipant` model.
-  final List<LiveSessionParticipant> participants;
-
-  /// A list of participant IDs for those who are actively speaking.
-  final List<String> activeSpeakerIds;
-
-  /// The local user's microphone status.
+  final List<LiveSessionParticipant>? participants;
+  final List<String>? activeSpeakerIds;
   final bool isMicrophoneEnabled;
-  final String? connectionErrorMessage, programCoverUrl;
+  final String? connectionErrorMessage, programCoverUrl,
+    liveStreamId, roomUrl, roomEntryToken;
+  final Community? community;
+  final Organizers? organizers;
 
 
   /// Creates a new state object with updated values.
@@ -35,6 +36,11 @@ class LiveStreamState1 extends Equatable {
     bool? isMicrophoneEnabled,
     String? errorMessage,
     String? programCoverUrl,
+    String? liveStreamId,
+    String? roomUrl,
+    String? roomEntryToken,
+    Community? community,
+    Organizers? organizers,
   }) {
     return LiveStreamState1(
       connectionStatus: connectionStatus ?? this.connectionStatus,
@@ -43,6 +49,11 @@ class LiveStreamState1 extends Equatable {
       isMicrophoneEnabled: isMicrophoneEnabled ?? this.isMicrophoneEnabled,
       connectionErrorMessage: errorMessage ?? connectionErrorMessage,
       programCoverUrl: programCoverUrl ?? this.programCoverUrl,
+      liveStreamId: liveStreamId ?? this.liveStreamId,
+      roomUrl: roomUrl ?? this.roomUrl,
+      roomEntryToken: roomEntryToken ?? this.roomEntryToken,
+      community: community ?? this.community,
+      organizers: organizers,
     );
   }
 
@@ -53,11 +64,20 @@ class LiveStreamState1 extends Equatable {
       activeSpeakerIds,
       isMicrophoneEnabled,
       connectionErrorMessage,
-      programCoverUrl
+      programCoverUrl,
+      liveStreamId,
+      roomUrl,
+      roomEntryToken,
+      community,
+      organizers,
     ];
 }
 
 
+typedef Organizers = ({
+  LiveSessionParticipant? host,
+  List<LiveSessionParticipant?>? cohosts,
+});
 
 
 class LiveSessionParticipant extends User {
@@ -66,6 +86,8 @@ class LiveSessionParticipant extends User {
     required this.isSpeaking,
     required this.isLocal,
     required this.audioLevel,
+    this.participantType,
+    this.roomParticipantId,
     super.userId,
     super.username,
     super.profilePicture,
@@ -82,12 +104,16 @@ class LiveSessionParticipant extends User {
         isSpeaking = json['is_speaking'],
         isLocal = json['is_local'],
         audioLevel = json['audio_level'],
+        participantType = json['participant_type'],
+        roomParticipantId = json['room_participant_id'],
         super.fromJson();
 
 
   /// 🔊 Audio-specific fields
   final bool isMuted, isSpeaking, isLocal;
   final double audioLevel;
+  final String? roomParticipantId;
+  final LiveParticipantType? participantType;
 }
 
 enum LiveSessionConnectionStatus {

@@ -161,9 +161,9 @@ class LiveKitAudioStreamingService implements ATAudioStreamingService {
       isSpeaking: p.isSpeaking,
       isLocal: isLocal,
       audioLevel: audioLevel,
-      userId: p.identity,
       name: p.name,
       username: p.name,
+      roomParticipantId: p.identity,
     );
   }
 

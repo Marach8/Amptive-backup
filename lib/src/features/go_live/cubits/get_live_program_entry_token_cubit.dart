@@ -37,7 +37,8 @@ class GetLiveProgramEntryTokenCubit extends
             livestreamId: livestreamId);
       response.when(
         successful: (Successful<LiveProgramEntryToken> data) {
-          emit(SuccessState<LiveProgramEntryToken>(newData: data.data));
+          emit(SuccessState<LiveProgramEntryToken>(
+            newData: data.data));
         },
         unSuccessful: (Unsuccessful<LiveProgramEntryToken> error) {
           emit(FailureState<LiveProgramEntryToken>(

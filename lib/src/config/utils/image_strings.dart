@@ -114,7 +114,7 @@ class ATImgStrings {
   static const String WARNING_ICON = '$_pngPath/warning.png';
   static const String WIRE_TRANSFER = '$_pngPath/wiretransfer.png';
   static const String PAPER_PLANE = '$_pngPath/paper plane.png';
-  static const String HOST_GIFT_ICON = '$_pngPath/host_gift.png';
+  static const String hostGiftingIcon = '$_pngPath/host_gift.png';
   static const String ONBOARD_NOTIF_IMG1 = '$_pngPath/image 5.png';
   static const String ONBOARD_NOTIF_IMG2 = '$_pngPath/image 5 (1).png';
   static const String ONBOARD_NOTIF_IMG3 = '$_pngPath/image 5 (2).png';

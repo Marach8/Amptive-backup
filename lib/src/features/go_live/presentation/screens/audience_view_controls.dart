@@ -186,7 +186,7 @@ class _RowOfBtns extends StatelessWidget {
             GiftPickerDialog.show(context);
           },
           child: const ATImgLoader(
-            imgPath: ATImgStrings.HOST_GIFT_ICON,
+            imgPath: ATImgStrings.hostGiftingIcon,
             height: 20,
             width: 20,
           ),

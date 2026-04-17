@@ -8,9 +8,11 @@ import 'package:amptive/src/features/go_live/presentation/screens/go_live_onboar
 import 'package:amptive/src/features/go_live/presentation/screens/live_program_audience_view.dart';
 import 'package:amptive/src/features/go_live/presentation/screens/live_program_cohost_view.dart';
 import 'package:amptive/src/features/go_live/presentation/screens/live_program_host_view.dart';
+import 'package:amptive/src/features/go_live/presentation/widgets/host_moderation_tools_btns.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:nested/nested.dart';
 
 enum LiveParticipantType { audience, cohost, host }
 
@@ -20,13 +22,46 @@ class LiveProgramScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    log('Thisis the entry params ${liveScreenEntryParams?.coverUrl}');
-    return BlocProvider<LiveStreamCubit1>(
-      create: (_) => LiveStreamCubit1(
-        initialState: LiveStreamState1(
-          programCoverUrl: liveScreenEntryParams?.coverUrl
+    final CachedUserData? userData = context
+      .read<LocalUserDataCubit>().currentUserData;
+    log('This is the pictureurl: ${userData?.pictureUrl}');
+
+    final LiveSessionParticipant participant = LiveSessionParticipant(
+      isMuted: false,
+      isSpeaking: false,
+      isLocal: true,
+      audioLevel: 0,
+      participantType: liveScreenEntryParams?.participantType
+        ?? LiveParticipantType.audience,
+      roomParticipantId: liveScreenEntryParams?.roomParticipantId ?? '',
+      name: userData?.name ?? '',
+      username: userData?.username ?? '',
+      userId: userData?.userId ?? '',
+      profilePicture: userData?.pictureUrl ?? '',
+      followersCount: int.tryParse(userData?.followersCount ?? '0'),
+      followingCount: int.tryParse(userData?.followingCount ?? '0'),
+    );
+
+    return MultiBlocProvider(
+      providers: <SingleChildWidget>[
+        BlocProvider<GoLiveControlsVisibilityBloc>(
+          create: (_) => GoLiveControlsVisibilityBloc()
+        ),
+        BlocProvider<LiveStreamCubit1>(
+          create: (_) => LiveStreamCubit1(
+            initialState: LiveStreamState1(
+              programCoverUrl: liveScreenEntryParams?.coverUrl,
+              liveStreamId: liveScreenEntryParams?.streamId,
+              roomUrl: liveScreenEntryParams?.roomUrl,
+              roomEntryToken: liveScreenEntryParams?.roomEntryToken,
+              community: liveScreenEntryParams?.community,
+              participants: <LiveSessionParticipant>[
+                participant,
+              ],
+            )
+          ),
         )
-      ),
+      ],
       child: _SubWidget(
         liveScreenEntryParams: liveScreenEntryParams,
       ),
