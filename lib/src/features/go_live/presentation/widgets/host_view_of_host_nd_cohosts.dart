@@ -1,9 +1,14 @@
 import 'package:amptive/src/features/go_live/cubits/livestream_cubit1.dart';
 import 'package:amptive/src/features/go_live/data/models/livestream_state.dart';
+import 'package:amptive/src/features/go_live/presentation/widgets/follow_and_subscribe_to_user_modal.dart';
 import 'package:amptive/src/features/go_live/presentation/widgets/render_host_and_cohost.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+typedef CohostPosition = ({
+  double? left, double? right,
+  double? top, double? bottom,
+});
 
 class HostViewOfHostNdCohostDisplay extends StatelessWidget {
   const HostViewOfHostNdCohostDisplay({
@@ -12,9 +17,21 @@ class HostViewOfHostNdCohostDisplay extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    const int maxCohosts = 5;
+
     return LayoutBuilder(
       builder: (_, BoxConstraints constraints) {
       final double width = constraints.maxWidth;
+
+      final Map<int, CohostPosition> positionMap = 
+        <int, CohostPosition>{
+          0: (top: 35, left: 0, right: null, bottom: null),
+          1: (top: 35, right: 0, left: null, bottom: null),
+          2: (bottom: 35, right: width * 0.1, top: null, left: null),
+          3: (bottom: 35, left: width * 0.1, top: null, right: null),
+          4: (bottom: 5, left: null, right: null, top: null),
+        };
+
       return BlocSelector<LiveStreamCubit1, 
         LiveStreamState1, Organizers?>(
         selector: (LiveStreamState1 state) => state.organizers,
@@ -25,9 +42,12 @@ class HostViewOfHostNdCohostDisplay extends StatelessWidget {
 
           final List<LiveSessionParticipant?> paddedCohosts =
           <LiveSessionParticipant?>[
-            ...cohosts.take(5),
+            ...cohosts.take(maxCohosts),
             ...List<LiveSessionParticipant?>.filled(
-                5 - (cohosts.length.clamp(0, 5)), null),
+              maxCohosts - (
+                cohosts.length.clamp(0, maxCohosts)
+              ), null
+            ),
           ];
 
           return Stack(
@@ -38,35 +58,23 @@ class HostViewOfHostNdCohostDisplay extends StatelessWidget {
                 host: mainHost,
                 onTap: (LiveSessionParticipant? host){},
               ),
-
-              RenderACohost(
-                cohost: paddedCohosts[0],
-                onTap: (LiveSessionParticipant? cohost){
-                  // showFollowAndSubscribeToUserModal(
-                  //   context: context, user: cohost!);
-                },
-                top: 35, left: 0,
-              ),
-              RenderACohost(
-                cohost: paddedCohosts[1],
-                onTap: (LiveSessionParticipant? cohost){},
-                top: 35, right: 0,
-              ),
-              RenderACohost(
-                cohost: paddedCohosts[2],
-                onTap: (LiveSessionParticipant? cohost){},
-                bottom: 35, right: width * 0.1,
-              ),
-              RenderACohost(
-                cohost: paddedCohosts[3],
-                onTap: (LiveSessionParticipant? cohost){},
-                bottom: 35, left: width * 0.1,
-              ),
-              RenderACohost(
-                cohost: paddedCohosts[4],
-                onTap: (LiveSessionParticipant? cohost){},
-                bottom: 5,
-              ),
+              
+              ...paddedCohosts.indexed.map(
+                ((int index, LiveSessionParticipant?) cohost){
+                  final CohostPosition? position = positionMap[cohost.$1];
+                  return RenderACohost(
+                    cohost: cohost.$2,
+                    onTap: (LiveSessionParticipant? cohost){
+                      showFollowAndSubscribeToUserModal(
+                        context: context, user: cohost!);
+                    },
+                    top: position?.top,
+                    left: position?.left,
+                    right: position?.right,
+                    bottom: position?.bottom,
+                  );
+                }
+              )
             ],
           );
         },

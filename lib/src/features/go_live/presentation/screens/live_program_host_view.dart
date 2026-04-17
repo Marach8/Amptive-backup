@@ -6,7 +6,7 @@ import 'package:amptive/src/models/host.dart';
 import 'package:amptive/src/shared/annotated_region__widget.dart';
 import 'package:amptive/src/shared/global_model_objects.dart';
 import 'package:amptive/src/shared/image_loader_widget.dart';
-import 'package:amptive/src/features/go_live/presentation/widgets/go_live_screen_header.dart';
+import 'package:amptive/src/features/go_live/presentation/widgets/live_program_header.dart';
 import 'package:amptive/src/features/go_live/presentation/widgets/reactions_overlay.dart';
 import 'package:amptive/src/features/go_live/presentation/widgets/gift_overlay.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -42,12 +42,9 @@ class LiveProgramHostView extends StatelessWidget {
             child: Column(
               children: <Widget>[
                 const Padding(
-                  padding:
-                      EdgeInsets.fromLTRB(10, kToolbarHeight * 0.5, 15, 20),
-                  child: GoLiveScreenHeader(
-                    viewerCount: 0,
-                    participants: [],
-                  ),
+                  padding: EdgeInsets.fromLTRB(
+                    10, kToolbarHeight * 0.5, 15, 20),
+                  child: LiveProgramHeader(),
                 ),
 
                 Align(
@@ -66,13 +63,13 @@ class LiveProgramHostView extends StatelessWidget {
                           height: 20, width: 20,
                           boxFit: BoxFit.cover,
                         ),
-                        BlocBuilder<LiveStreamCubit1, LiveStreamState1>(
-                          builder: (_, state){
-                            return Text(
-                              '${state.connectionStatus}',
-                            );
-                          }
-                        ),
+                        // BlocBuilder<LiveStreamCubit1, LiveStreamState1>(
+                        //   builder: (_, state){
+                        //     return Text(
+                        //       '${state.connectionStatus}',
+                        //     );
+                        //   }
+                        // ),
                         const SizedBox(width: 5),
                         Text(
                           community?.name ?? '',
@@ -96,18 +93,20 @@ class LiveProgramHostView extends StatelessWidget {
                     children: <Widget>[
                       if (isPortrait)
                         Container(
-                            height: 250,
-                            padding:
-                                const EdgeInsets.fromLTRB(15, 0, 15, 0),
-                            child: const HostViewOfHostNdCohostDisplay())
+                          height: 250,
+                          padding: const EdgeInsets.fromLTRB(15, 0, 15, 0),
+                          child: const HostViewOfHostNdCohostDisplay()
+                        )
                       else
                         const Expanded(
-                            child: SingleChildScrollView(
-                                padding: EdgeInsets.fromLTRB(15, 0, 15, 0),
-                                child: SizedBox(
-                                    height: 250,
-                                    child:
-                                        HostViewOfHostNdCohostDisplay()))),
+                          child: SingleChildScrollView(
+                            padding: EdgeInsets.fromLTRB(15, 0, 15, 0),
+                            child: SizedBox(
+                                height: 250,
+                                child: HostViewOfHostNdCohostDisplay()
+                              )
+                            )
+                          ),
                       const Expanded(child: GoLiveComments()),
                     ],
                   );
@@ -120,13 +119,14 @@ class LiveProgramHostView extends StatelessWidget {
         ],
       ),
 
-      resizeToAvoidBottomInset: true,
+      resizeToAvoidBottomInset: false,
       bottomSheet: BlocBuilder<GoLiveControlsVisibilityBloc, bool>(
           builder: (BuildContext context, bool isVisible) {
         final double bottomInset = MediaQuery.viewInsetsOf(context).bottom;
-        final double extraSpace = bottomInset == 0 ? 5.0 : bottomInset + 10;
+        final double extraSpace = bottomInset == 0 ? 10.0 : bottomInset + 10;
 
-        return Container(
+        return AnimatedContainer(
+          duration: const Duration(milliseconds: 300),
           color: bottomInset == 0 ? ATColors.black : ATColors.hex2C2F33,
           padding: EdgeInsets.fromLTRB(15, 5, 15, extraSpace),
           child: const HostModerationToolsBtns(),

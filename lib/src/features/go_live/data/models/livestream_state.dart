@@ -16,6 +16,8 @@ class LiveStreamState1 extends Equatable {
     this.roomEntryToken,
     this.community,
     this.organizers,
+    this.programTitle,
+    this.programDesc,
   });
 
   final LiveSessionConnectionStatus connectionStatus;
@@ -23,7 +25,7 @@ class LiveStreamState1 extends Equatable {
   final List<String>? activeSpeakerIds;
   final bool isMicrophoneEnabled;
   final String? connectionErrorMessage, programCoverUrl,
-    liveStreamId, roomUrl, roomEntryToken;
+    liveStreamId, roomUrl, roomEntryToken, programTitle, programDesc;
   final Community? community;
   final Organizers? organizers;
 
@@ -41,6 +43,8 @@ class LiveStreamState1 extends Equatable {
     String? roomEntryToken,
     Community? community,
     Organizers? organizers,
+    String? programTitle,
+    String? programDesc,
   }) {
     return LiveStreamState1(
       connectionStatus: connectionStatus ?? this.connectionStatus,
@@ -54,6 +58,8 @@ class LiveStreamState1 extends Equatable {
       roomEntryToken: roomEntryToken ?? this.roomEntryToken,
       community: community ?? this.community,
       organizers: organizers ?? this.organizers,
+      programTitle: programTitle ?? this.programTitle,
+      programDesc: programDesc ?? this.programDesc,
     );
   }
 
@@ -70,6 +76,8 @@ class LiveStreamState1 extends Equatable {
       roomEntryToken,
       community,
       organizers,
+      programTitle,
+      programDesc,
     ];
 }
 

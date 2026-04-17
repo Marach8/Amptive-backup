@@ -670,6 +670,8 @@ class _CreateShowFormScreenState extends State<_SubWidget> {
                       programId: episode?.episodeId ?? '',
                       coverUrl: episode?.thumbnailUrl ?? '',
                       participantType: LiveParticipantType.host,
+                      programTitle: episode?.title ?? '',
+                      programDesc: episode?.description ?? '',
                     ),
                   );
                 }

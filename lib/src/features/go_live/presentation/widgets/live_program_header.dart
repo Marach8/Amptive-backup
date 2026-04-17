@@ -1,4 +1,5 @@
 import 'package:amptive/src/config/config_export.dart';
+import 'package:amptive/src/features/go_live/cubits/livestream_cubit1.dart';
 import 'package:amptive/src/features/go_live/go_live_export.dart';
 import 'package:amptive/src/shared/circle_avatar.dart';
 import 'package:amptive/src/shared/custom_container_widget.dart';
@@ -11,56 +12,60 @@ import '../../../../config/utils/dialogs/go_live/host_view_of_listeners_dialog.d
 import '../../../../config/utils/dialogs/go_live/top_gifters_modal.dart';
 import '../../../../livestream/models/livestream_models.dart';
 
-class GoLiveScreenHeader extends StatelessWidget {
-  const GoLiveScreenHeader(
-      {super.key, this.exitIcon, this.viewerCount, this.participants});
+class LiveProgramHeader extends StatelessWidget {
+  const LiveProgramHeader({
+    super.key,
+    this.exitIcon,
+    this.viewerCount,
+    this.participants
+  });
+
   final Widget? exitIcon;
   final int? viewerCount;
   final List<LivestreamParticipant>? participants;
 
   @override
   Widget build(BuildContext context) {
+    final String? title = context
+      .watch<LiveStreamCubit1>().state.programTitle;
     return Row(
       children: <Widget>[
-        exitIcon ??
-            ATContainer(
-              onTap: () {
-                context
-                    .read<AmptiveEndShowBloc>()
-                    .add(Reset2IntialStateEvent());
-                showHostEndShowDialog(context: context);
-              },
-              color: ATColors.hexECO404.withValues(alpha: 0.3),
-              height: 35,
-              width: 35,
-              boxShape: BoxShape.circle,
-              child: Icon(
-                Icons.logout,
-                color: ATColors.hexECO404,
-                size: 20,
-              ),
-            ),
+        exitIcon ?? ATContainer(
+          onTap: () {
+            showHostEndShowDialog(context: context);
+          },
+          color: ATColors.hexECO404.withValues(alpha: 0.3),
+          height: 35, width: 35,
+          boxShape: BoxShape.circle,
+          child: Icon(
+            Icons.logout,
+            color: ATColors.hexECO404,
+            size: 20,
+          ),
+        ),
         const SizedBox(width: 10),
         Expanded(
-          child: LayoutBuilder(builder: (_, BoxConstraints kst) {
-            return GoLiveProgramTitle(
-              width: kst.maxWidth,
-              slidingChildren: <Widget>[
-                Text(
-                  ATStrings.live,
-                  style: context.textTheme.bodyMedium,
-                ),
-                const SizedBox(width: 5),
-                const ATCircleAvatar(diameter: 5),
-                const SizedBox(width: 5),
-                Text(
-                  "Don't Forget Who you are by the perkjdkakfkdkajdkakdjakfjdkajkdajkfdjkafkdakdfjkakfakjdfkajkfafakjkjk",
-                  style: context.textTheme.bodyMedium
-                      ?.copyWith(overflow: TextOverflow.fade),
-                )
-              ],
-            );
-          }),
+          child: LayoutBuilder(
+            builder: (_, BoxConstraints kst) {
+              return GoLiveProgramTitle(
+                width: kst.maxWidth,
+                slidingChildren: <Widget>[
+                  Text(
+                    ATStrings.live,
+                    style: context.textTheme.bodyMedium,
+                  ),
+                  const SizedBox(width: 5),
+                  const ATCircleAvatar(diameter: 5),
+                  const SizedBox(width: 5),
+                  Text(
+                    title ?? 'Title',
+                    style: context.textTheme.bodyMedium
+                        ?.copyWith(overflow: TextOverflow.fade),
+                  )
+                ],
+              );
+            }
+          ),
         ),
         const SizedBox(width: 10),
         _GiftingNdFollowing(

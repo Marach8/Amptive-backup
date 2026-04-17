@@ -28,12 +28,14 @@ class LiveProgramEntryParams{
     required this.participantType,
     required this.programId,
     required this.coverUrl,
+    required this.programTitle,
+    required this.programDesc,
     this.community
   });
 
   final String roomEntryToken, roomUrl,
   streamId, roomParticipantId, programId,
-  coverUrl;
+  coverUrl, programTitle, programDesc;
 
   final LiveParticipantType participantType;
   final Community? community;

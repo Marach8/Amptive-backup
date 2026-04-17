@@ -348,6 +348,8 @@ class _EventSubWidgetState extends State<_EventSubWidget> {
                       coverUrl: updatedEvent?.coverUrl ?? '',
                       participantType: LiveParticipantType.host,
                       community: updatedEvent?.community,
+                      programTitle: updatedEvent?.title ?? '',
+                      programDesc: updatedEvent?.description ?? '',
                     )
                   );
                 }

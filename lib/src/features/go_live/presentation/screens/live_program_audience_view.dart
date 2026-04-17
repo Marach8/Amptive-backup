@@ -9,7 +9,7 @@ import '../../../../config/utils/dialogs/minimized_go_live_dialog.dart';
 import '../../go_live_export.dart';
 import '../widgets/gift_overlay.dart';
 import '../widgets/audience_view_of_host_and_cohosts.dart';
-import '../widgets/go_live_screen_header.dart';
+import '../widgets/live_program_header.dart';
 import '../widgets/reactions_overlay.dart';
 
 class LiveProgramAudienceView extends StatelessWidget {
@@ -53,7 +53,7 @@ class _SubWidget extends StatelessWidget {
                         Padding(
                           padding: EdgeInsets.fromLTRB(
                               10, kToolbarHeight * 0.5, 15, 20),
-                          child: GoLiveScreenHeader(
+                          child: LiveProgramHeader(
                             exitIcon: _AudienceViewExitIcon(),
                             viewerCount: dummyViewerCount,
                             participants: dummyParticipants,

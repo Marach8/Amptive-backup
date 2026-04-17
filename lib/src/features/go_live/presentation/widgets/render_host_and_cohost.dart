@@ -1,13 +1,8 @@
-import 'dart:developer' show log;
-
 import 'package:amptive/src/config/utils/extensions/context_extensions.dart';
 import 'package:amptive/src/config/utils/font_sizes.dart';
 import 'package:amptive/src/features/go_live/data/models/livestream_state.dart';
-import 'package:amptive/src/features/go_live/presentation/widgets/follow_and_subscribe_to_user_modal.dart';
 import 'package:amptive/src/shared/circle_avatar.dart';
 import 'package:amptive/src/shared/circular_image.dart';
-import 'package:amptive/src/shared/custom_container_widget.dart';
-import 'package:amptive/src/shared/global_model_objects.dart';
 import 'package:flutter/material.dart';
 import '../../../../config/utils/colors.dart';
 import '../../../../config/utils/other_strings.dart';
@@ -29,6 +24,14 @@ class RenderACohost extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    if(cohost == null){
+      return HostAddCohostIcon(
+        right: right, left: left,
+        top: top, bottom: bottom,
+        onTap: () => onTap(cohost),
+      );
+    }
+
     return AnimatedPositioned(
       duration: const Duration(milliseconds: 700),
       curve: Curves.decelerate,
@@ -107,10 +110,7 @@ class RenderAHost extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    log('This is the host picture ${host?.profilePicture}');
-    log('This is the host username ${host?.username}');
-    log('This is the host name ${host?.name}');
-    log('This is the host id ${host?.userId}');
+
     return AnimatedPositioned(
       duration: const Duration(milliseconds: 700),
       curve: Curves.decelerate,
