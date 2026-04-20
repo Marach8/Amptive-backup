@@ -15,9 +15,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 class NotificationTabView extends StatelessWidget {
   const NotificationTabView({super.key, this.nestedKey, this.onScroll});
-  
+
   final GlobalKey<NestedScrollViewState>? nestedKey;
-  final VoidCallback? onScroll;  
+  final VoidCallback? onScroll;
 
   @override
   Widget build(BuildContext context) {
@@ -29,32 +29,32 @@ class NotificationTabView extends StatelessWidget {
 }
 
 class _NotificationTabViewContent extends StatefulWidget {
-  const _NotificationTabViewContent({this.nestedKey, this.onScroll});
-  
+  const _NotificationTabViewContent(
+      {this.nestedKey, this.onScroll, });
+
   final GlobalKey<NestedScrollViewState>? nestedKey;
   final VoidCallback? onScroll;
 
   @override
-  State<_NotificationTabViewContent> createState() => _NotificationTabViewContentState();
+  State<_NotificationTabViewContent> createState() =>
+      _NotificationTabViewContentState();
 }
 
-class _NotificationTabViewContentState extends State<_NotificationTabViewContent> {
+class _NotificationTabViewContentState
+    extends State<_NotificationTabViewContent> {
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      final controller = widget.nestedKey?.currentState?.innerController;
+      final ScrollController? controller =
+          widget.nestedKey?.currentState?.innerController;
       if (controller != null && widget.onScroll != null) {
         controller.addListener(() {
-          // Just call the parent's callback - it handles the logic
           widget.onScroll!();
         });
       }
     });
   }
-
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -71,8 +71,10 @@ class _NotificationTabViewContentState extends State<_NotificationTabViewContent
             leading: SizedBox.shrink(),
           ),
         ],
-        body: BlocConsumer<GetNotificationsCubit, ATAppState<NotificationsResponseModel>>(
-          listener: (BuildContext context, ATAppState<NotificationsResponseModel> state) {
+        body: BlocConsumer<GetNotificationsCubit,
+            ATAppState<NotificationsResponseModel>>(
+          listener: (BuildContext context,
+              ATAppState<NotificationsResponseModel> state) {
             if (state is FailureState<NotificationsResponseModel>) {
               showAppNotification2(
                 context: context,
@@ -81,16 +83,20 @@ class _NotificationTabViewContentState extends State<_NotificationTabViewContent
               );
             }
           },
-          builder: (BuildContext context, ATAppState<NotificationsResponseModel> state) {
+          builder: (BuildContext context,
+              ATAppState<NotificationsResponseModel> state) {
             return switch (state) {
-              InitialState<NotificationsResponseModel>() => const SizedBox.shrink(),
-              
+              InitialState<NotificationsResponseModel>() =>
+                const SizedBox.shrink(),
               LoadingState<NotificationsResponseModel>() ||
-               FailureState<NotificationsResponseModel>() ||
-                SuccessState<NotificationsResponseModel>() => 
+              FailureState<NotificationsResponseModel>() ||
+              SuccessState<NotificationsResponseModel>() =>
                 Builder(builder: (BuildContext context) {
-                  final NotificationsResponseModel? notifications = context.read<GetNotificationsCubit>().currentNotifications;
-                  final List<Notifications> notificationsList = notifications?.notifications ?? <Notifications>[];
+                  final NotificationsResponseModel? notifications = context
+                      .read<GetNotificationsCubit>()
+                      .currentNotifications;
+                  final List<Notifications> notificationsList =
+                      notifications?.notifications ?? <Notifications>[];
 
                   if (notificationsList.isEmpty) {
                     if (state is LoadingState<NotificationsResponseModel>) {
@@ -100,31 +106,44 @@ class _NotificationTabViewContentState extends State<_NotificationTabViewContent
                       return Center(
                         child: IconButton(
                           icon: const Icon(Icons.refresh),
-                          onPressed: () => context.read<GetNotificationsCubit>().fetchNotifications(refresh: true),
+                          onPressed: () => context
+                              .read<GetNotificationsCubit>()
+                              .fetchNotifications(refresh: true),
                         ),
                       );
                     }
-                    return const Center(child: Text('No notifications available'));
+                    return const Center(
+                        child: Text('No notifications available'));
                   }
 
                   final bool hasMore = notifications?.hasMore ?? false;
                   final int count = notificationsList.length;
 
                   return RefreshIndicator(
-                    onRefresh: () => context.read<GetNotificationsCubit>().fetchNotifications(refresh: true),
+                    onRefresh: () => context
+                        .read<GetNotificationsCubit>()
+                        .fetchNotifications(refresh: true),
                     child: ListView.separated(
                       separatorBuilder: (_, __) => const SizedBox(height: 20),
                       padding: const EdgeInsets.fromLTRB(15, 10, 15, 50),
                       itemCount: hasMore ? count + 1 : count,
                       itemBuilder: (BuildContext context, int index) {
                         if (index >= count) {
-                          if (state is LoadingState<NotificationsResponseModel>) {
+                          if (state
+                              is LoadingState<NotificationsResponseModel>) {
                             return const _NotificationShimmerItem();
                           }
                           return const SizedBox.shrink();
                         }
 
                         final Notifications item = notificationsList[index];
+                        void markRead() {
+                          if (!(item.isRead ?? false)) {
+                            context
+                                .read<GetNotificationsCubit>()
+                                .markNotificationAsRead(item.id ?? '');
+                          }
+                        }
 
                         if (item.type == 'follower') {
                           return NewFollowerNotif(
@@ -146,7 +165,8 @@ class _NotificationTabViewContentState extends State<_NotificationTabViewContent
                             timeOfEnd: '1m',
                           );
                         }
-                        if (item.type == 'program_live' || item.type == 'live') {
+                        if (item.type == 'program_live' ||
+                            item.type == 'live') {
                           return const ProgramIsLiveNotif(
                             progImg: ATImgStrings.jpeg1,
                             progName: 'Sports Wednessday',
@@ -177,9 +197,11 @@ class _NotificationTabViewContentState extends State<_NotificationTabViewContent
                               await viewCoHostInviteDetails(
                                 context: context,
                                 coHostFee: '5,000',
-                                hostImg: getHostList()[6].obj.profilePicture ?? '',
+                                hostImg:
+                                    getHostList()[6].obj.profilePicture ?? '',
                                 progName: 'Sports Weekly',
-                                hostUsername: getHostList()[6].obj.username ?? '',
+                                hostUsername:
+                                    getHostList()[6].obj.username ?? '',
                                 isEvent: false,
                               );
                             },
@@ -233,12 +255,15 @@ class _NotificationTabViewContentState extends State<_NotificationTabViewContent
                             senderName: 'nnanna',
                           );
                         }
-                        
-                        return AppNotificationTile(
-                          title: item.title ?? 'Update',
+
+                        return GenericAppNotificationTile(
+                          title: item.title ?? '',
                           subtitle: item.message ?? '',
                           isRead: item.isRead ?? false,
                           time: item.createdAt?.toTimeAgo,
+                          onTap: () {
+                            markRead();
+                          },
                         );
                       },
                     ),

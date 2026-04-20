@@ -37,19 +37,38 @@ class MainAppBottomNav extends StatelessWidget {
               children: listOfIcons.map((List<String> list) {
                 final int index = listOfIcons.indexOf(list);
                 if (index == 3) {
-                  return Stack(
-                    children: <Widget>[
-                      _BottomNavItem(
-                        selectedImagePath: list.first,
-                        unselectedImagePath: list.last,
-                        itemIdentityIndex: index,
-                      ),
-                      BlocBuilder<GetNotificationsCubit, ATAppState<NotificationsResponseModel>>(
-        builder: (BuildContext context,  ATAppState<NotificationsResponseModel> state) {
-          final  NotificationsResponseModel? notifications = context.read<GetNotificationsCubit>().currentNotifications;;
-          final int count = notifications?.unreadCount ?? 0;
+                  return Stack(children: <Widget>[
+                    _BottomNavItem(
+                      selectedImagePath: list.first,
+                      unselectedImagePath: list.last,
+                      itemIdentityIndex: index,
+                    ),
+                    BlocBuilder<GetNotificationsCubit,
+                            ATAppState<NotificationsResponseModel>>(
+                        builder: (BuildContext context,
+                            ATAppState<NotificationsResponseModel> state) {
+                      final NotificationsResponseModel? notifications =
+                          switch (state) {
+                        SuccessState<NotificationsResponseModel>(
+                          :final NotificationsResponseModel? newData
+                        ) =>
+                          newData,
+                        FailureState<NotificationsResponseModel>(
+                          :final NotificationsResponseModel? oldData
+                        ) =>
+                          oldData,
+                        InitialState<NotificationsResponseModel>(
+                          :final NotificationsResponseModel? initialData
+                        ) =>
+                          initialData,
+                        LoadingState<NotificationsResponseModel>(
+                          :final NotificationsResponseModel? currentData
+                        ) =>
+                          currentData,
+                      };
+                      final int count = notifications?.unreadCount ?? 0;
 
-          if (count == 0) return const SizedBox.shrink();
+                      if (count == 0) return const SizedBox.shrink();
                       return Positioned(
                         top: 0,
                         right: 0,
@@ -72,12 +91,8 @@ class MainAppBottomNav extends StatelessWidget {
                           ),
                         ),
                       );
-        }
-                    
-                  )
-              
-                 ]
-                  );
+                    })
+                  ]);
                 }
 
                 return _BottomNavItem(
