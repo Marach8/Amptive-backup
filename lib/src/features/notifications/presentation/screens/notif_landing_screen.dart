@@ -7,7 +7,9 @@ import 'package:amptive/src/features/notifications/data/models/get_notifications
 import 'package:amptive/src/config/utils/dialogs/notification/view_cohost_invite.dart';
 import 'package:amptive/src/features/notifications/presentation/widgets/notif_widgets_export.dart';
 import 'package:amptive/src/services/create_show/create_show_service.dart';
+import 'package:amptive/src/services/create_show/create_show_service.dart';
 import 'package:amptive/src/shared/global_model_objects.dart';
+import 'package:amptive/src/shared/shimmer.dart';
 import 'package:amptive/src/shared/shimmer.dart';
 import 'package:flutter/material.dart';
 import 'package:amptive/src/shared/app_bar_widget.dart';
@@ -61,6 +63,8 @@ class _NotificationTabViewContentState
       onNotification: (ScrollNotification scrollInfo) {
         return context.read<ATNavBarBloc>().ctrlNavVisibility(scrollInfo);
       },
+      
+      
       child: NestedScrollView(
         key: widget.nestedKey,
         floatHeaderSlivers: true,
@@ -88,8 +92,8 @@ class _NotificationTabViewContentState
               InitialState<NotificationsResponseModel>() =>
                 const SizedBox.shrink(),
               LoadingState<NotificationsResponseModel>() ||
-              FailureState<NotificationsResponseModel>() ||
-              SuccessState<NotificationsResponseModel>() =>
+               FailureState<NotificationsResponseModel>() ||
+                SuccessState<NotificationsResponseModel>() => 
                 Builder(builder: (BuildContext context) {
                   final NotificationsResponseModel? notifications = context
                       .read<GetNotificationsCubit>()
@@ -117,6 +121,7 @@ class _NotificationTabViewContentState
 
                   final bool hasMore = notifications?.hasMore ?? false;
                   final int count = notificationsList.length;
+
 
                   return RefreshIndicator(
                     onRefresh: () => context
@@ -256,8 +261,10 @@ class _NotificationTabViewContentState
                         );
                       },
                     ),
-                  );
+                    );
+                  
                 }),
+                
             };
           },
         ),
@@ -302,7 +309,7 @@ class _NotificationShimmerItem extends StatelessWidget {
             ),
           ),
         ],
-      ),
+      )
     );
   }
 }
