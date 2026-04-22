@@ -1,4 +1,5 @@
 import 'package:amptive/src/features/go_live/cubits/livestream_bloc.dart';
+import 'package:amptive/src/features/go_live/cubits/livestream_cubit1.dart';
 import 'package:amptive/src/global_export.dart';
 import 'package:amptive/src/shared/circular_image.dart';
 import 'package:amptive/src/shared/image_loader_widget.dart';
@@ -8,16 +9,16 @@ import '../../../../bloc/main_app/go_live_bloc/host_view/cohosts_display_bloc.da
 import '../../../../services/go_live_service/go_live_service.dart';
 import '../../go_live_export.dart';
 
-class GoLiveAudienViewControlsWidget extends StatefulWidget {
-  const GoLiveAudienViewControlsWidget({super.key});
+class AudienceViewControls extends StatefulWidget {
+  const AudienceViewControls({super.key});
 
   @override
-  State<GoLiveAudienViewControlsWidget> createState() =>
-      _GoLiveAudienViewControlsWidgetState();
+  State<AudienceViewControls> createState() =>
+      _AudienceViewControlsState();
 }
 
-class _GoLiveAudienViewControlsWidgetState
-    extends State<GoLiveAudienViewControlsWidget> {
+class _AudienceViewControlsState
+    extends State<AudienceViewControls> {
   late FocusNode _focusNode;
   late TextEditingController _cntrl;
   final ValueNotifier<bool> _isFocusedNotifier = ValueNotifier<bool>(false);
@@ -77,9 +78,7 @@ class _GoLiveAudienViewControlsWidgetState
 
                 return EachGoLiveControlBtn(
                     onTap: () {
-                      context
-                          .read<AmptiveGoLiveSelectCoHostBloc>()
-                          .hostAddCohost(getHostList()[3]);
+
                     },
                     child: Transform.flip(
                       flipX: true,
@@ -87,7 +86,8 @@ class _GoLiveAudienViewControlsWidgetState
                         Icons.reply,
                         size: 20,
                       ),
-                    ));
+                    )
+                  );
               }),
           Expanded(
               child: Padding(
@@ -103,16 +103,15 @@ class _GoLiveAudienViewControlsWidgetState
               maxLines: null,
               isDense: true,
               enabledBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(14),
-                  borderSide: BorderSide(color: ATColors.transparent)),
-              prefixIcon: const SizedBox(
-                width: 10,
+                borderRadius: BorderRadius.circular(14),
+                borderSide: BorderSide(color: ATColors.transparent)
               ),
+              prefixIcon: const SizedBox(width: 10),
               fillColor: ATColors.white.withValues(alpha: 0.1),
               cursorColor: ATColors.white.withValues(alpha: 0.6),
               constraints: const BoxConstraints(maxHeight: 60),
               contentPadding: const EdgeInsets.fromLTRB(10, 3, 10, 3),
-              hintText: ATStrings.COMMENT,
+              hintText: ATStrings.comment,
             ),
           )),
           ValueListenableBuilder<bool>(
@@ -127,9 +126,8 @@ class _GoLiveAudienViewControlsWidgetState
                               ? (TapDownDetails details) {
                                   final String message = _cntrl.text.trim();
                                   if (message.isNotEmpty) {
-                                    // context.read<LivestreamBloc>().add(
-                                    //       SendChatMessage(message: message),
-                                    //     );
+                                    context.read<LiveStreamCubit1>()
+                                      .sendChat(message);
                                   }
                                   _cntrl.clear();
                                 }

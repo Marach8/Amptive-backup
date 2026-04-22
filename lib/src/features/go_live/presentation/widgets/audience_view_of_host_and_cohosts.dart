@@ -2,11 +2,10 @@ import 'package:amptive/src/features/go_live/cubits/livestream_cubit1.dart';
 import 'package:amptive/src/features/go_live/data/models/livestream_state.dart';
 import 'package:amptive/src/global_export.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../go_live_export.dart';
 import 'render_host_and_cohost.dart';
 
-class RenderAudienceViewOfHostAndCohosts extends StatelessWidget {
-  const RenderAudienceViewOfHostAndCohosts({
+class AudienceViewOfHostAndCohosts extends StatelessWidget {
+  const AudienceViewOfHostAndCohosts({
     super.key,
   });
   
@@ -22,11 +21,10 @@ class RenderAudienceViewOfHostAndCohosts extends StatelessWidget {
             final LiveSessionParticipant? mainHost = organizers?.host;
             final List<LiveSessionParticipant?> cohosts = 
               organizers?.cohosts ?? <LiveSessionParticipant?>[];
-              final List<LiveSessionParticipant> hosts = [];
 
               return LayoutBuilder(builder: (_, BoxConstraints constraints) {
                 final double width = constraints.maxWidth;
-                final int totalOthers = hosts.length + cohosts.length;
+                final int totalOthers = 1 + cohosts.length;
 
                 final bool onlyHost = totalOthers == 1;
                 final bool hostAndACohost = totalOthers == 2;

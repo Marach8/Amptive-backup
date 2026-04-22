@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:convert';
 import 'dart:developer' show log;
 import 'package:amptive/src/config/services/audio_streaming_service/audio_streaming_service.dart';
 import 'package:livekit_client/livekit_client.dart';
@@ -28,16 +29,12 @@ class LiveKitAudioStreamingService implements ATAudioStreamingService {
     required String participantToken,
   }) async {
     try{
+      _listenToEvents();
       _connectionController.add(LiveSessionConnectionStatus.connecting);
+      await _room.connect(roomUrl, participantToken);
+      _connectionController.add(LiveSessionConnectionStatus.connected);
 
-    log('This is the room url $roomUrl, and participant token $participantToken');
-
-    await _room.connect(roomUrl, participantToken);
-
-    _connectionController.add(LiveSessionConnectionStatus.connected);
-
-    _listenToEvents();
-    _emitParticipants();
+      _emitParticipants();
     }
     catch(e, s){
       log('Error connecting to live kit: $e, stack trace $s');
@@ -114,6 +111,16 @@ class LiveKitAudioStreamingService implements ATAudioStreamingService {
           },
         );
       }
+      if(event is DataReceivedEvent){
+        final foo = event.participant;
+        final topic = event.topic;
+
+        final String raw = utf8.decode(event.data);
+        final data = jsonDecode(raw);
+
+        print("Message: ${data['text']}");
+        print("From: ${event.participant?.identity}");
+      }
 
       if (event is RoomDisconnectedEvent) {
         _connectionController.add(LiveSessionConnectionStatus.disconnected);
@@ -158,6 +165,20 @@ class LiveKitAudioStreamingService implements ATAudioStreamingService {
     _participantsController.add(updated.values.toList());
   }
 
+  void _publishData()async{
+    final message = {
+      "type": "chat",
+      "text": "Hello everyone 👋",
+    };
+
+    await _room.localParticipant?.publishData(
+      utf8.encode(jsonEncode(message)),
+      reliable: true, // important for chat
+      topic: 'chat',
+      destinationIdentities: <String>['list of ids'],
+    );
+  }
+
   LiveSessionParticipant _mapParticipant(
     Participant p, {
     required bool isLocal,
@@ -176,9 +197,6 @@ class LiveKitAudioStreamingService implements ATAudioStreamingService {
     );
   }
 
-  // ---------------------------------------------------------------------------
-  // DISPOSE
-  // ---------------------------------------------------------------------------
 
   @override
   Future<void> dispose() async {

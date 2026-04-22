@@ -8,6 +8,7 @@ import 'package:amptive/src/config/services/local_storage_service/flutter_secure
 import 'package:amptive/src/config/services/local_storage_service/storage_service.dart';
 import 'package:amptive/src/config/services/ws_notif_service/ws_channel_service_impl.dart';
 import 'package:amptive/src/config/services/ws_notif_service/ws_notif_service.dart';
+import 'package:amptive/src/features/go_live/data/models/handle_incoming_stream_action.dart';
 import 'package:amptive/src/features/go_live/data/models/livestream_state.dart';
 import 'package:amptive/src/features/go_live/presentation/screens/live_program_screen.dart';
 import 'package:amptive/src/livestream/models/livestream_models.dart';
@@ -35,7 +36,6 @@ class LiveStreamCubit1 extends Cubit<LiveStreamState1> {
   final WSNotificationService wsNotificationService;
   final ATLocalStorageService localStorage;
 
-  // Individual, explicitly typed StreamSubscriptions for clarity and safety.
   StreamSubscription<LiveSessionConnectionStatus>? _audioConnectionStateSub;
   StreamSubscription<WSConnectionStatus>? _wsConnectionStateSub;
   StreamSubscription<dynamic>? _wsMessageSub;
@@ -53,6 +53,7 @@ class LiveStreamCubit1 extends Cubit<LiveStreamState1> {
     // Listen to ws connection state changes
     _wsConnectionStateSub = wsNotificationService.connectionStream
         .listen((WSConnectionStatus connectionStatus) {
+        log('This is the websocket connection status: $connectionStatus');
       if (connectionStatus == WSConnectionStatus.connected) {
         wsNotificationService.sendMessage({
           'type': 'join',
@@ -85,7 +86,13 @@ class LiveStreamCubit1 extends Cubit<LiveStreamState1> {
     _wsMessageSub =
         wsNotificationService.messageStream.listen((dynamic message) {
       if (message is Map<String, dynamic>) {
-        //_handleWebSocketMessage(message);
+        final SignalingEvent? event = mapIncomingStreamAction(message);
+        
+        if (event is ChatEvent) {
+          state.copyWith(
+            messages: <ChatMessage>[event.message, ...?state.messages],
+          );
+        }
       }
     });
   }
@@ -108,12 +115,10 @@ class LiveStreamCubit1 extends Cubit<LiveStreamState1> {
     }
 
     if ((cohosts ?? <LiveSessionParticipant>[]).length < 5) {
-      cohosts = participants
-          .where(
-            (LiveSessionParticipant participant) =>
-                participant.participantType == LiveParticipantType.cohost,
-          )
-          .toList();
+      cohosts = participants.where(
+        (LiveSessionParticipant participant) =>
+            participant.participantType == LiveParticipantType.cohost,
+      ).toList();
     }
 
     return (
@@ -122,12 +127,8 @@ class LiveStreamCubit1 extends Cubit<LiveStreamState1> {
     );
   }
 
-  // --- Public methods for the UI to call ---
 
   Future<void> connect() async {
-    emit(state.copyWith(
-        audioConnectionStatus: LiveSessionConnectionStatus.connecting));
-
     try {
       final String? cachedToken = await localStorage.get(ATStrings.accessToken);
       final String? roomUrl = state.roomUrl;
@@ -150,12 +151,8 @@ class LiveStreamCubit1 extends Cubit<LiveStreamState1> {
           roomUrl: roomUrl, participantToken: participantToken);
 
       await wsNotificationService.connect(wsUrl: wsUrl);
-
-      emit(state.copyWith(
-          audioConnectionStatus: LiveSessionConnectionStatus.connected));
     } catch (e) {
       emit(state.copyWith(
-        audioConnectionStatus: LiveSessionConnectionStatus.disconnected,
         errorMessage: e.toString(),
       ));
     }
@@ -163,48 +160,72 @@ class LiveStreamCubit1 extends Cubit<LiveStreamState1> {
 
   Future<void> toggleMicrophone() async {
     await streamingService.toggleMic();
-    emit(state.copyWith(isMicrophoneEnabled: !state.isMicrophoneEnabled));
+    emit(state.copyWith(
+      isMicrophoneEnabled: !state.isMicrophoneEnabled));
   }
 
   Future<void> disconnect() async {
     await streamingService.disconnect();
   }
 
-  void sendChatMessage(String message) {
+  void sendChat(String message){
+    log('Sending chat message, checking connection state ${state.wsConnectionStatus}');
     wsNotificationService.sendMessage(<String, dynamic>{
-      'type': 'chat',
-      'content': message,
+      'type': OutboundMessageType.chat,
+      'content': message
     });
   }
+    
 
-  void sendReaction(String emoji) {
-    wsNotificationService.sendMessage(<String, dynamic>{
-      'type': 'reaction',
-      'content': emoji,
-    });
-  }
+  void sendReaction(String emoji) =>
+  wsNotificationService.sendMessage(<String, dynamic>{
+    'type': OutboundMessageType.reaction,
+    'content': emoji
+  });
 
-  void sendGift(String giftId, int quantity) {
-    wsNotificationService.sendMessage(<String, dynamic>{
-      'type': 'gift',
-      'gift_id': giftId,
-      'quantity': quantity,
-    });
-  }
+  void sendGift(String giftId, int quantity) => 
+  wsNotificationService.sendMessage(<String, dynamic>{
+    'type': OutboundMessageType.gift,
+    'gift_id': giftId,
+    'quantity': quantity,
+  });
 
-  void raiseHand() {
-    wsNotificationService.sendMessage(<String, dynamic>{
-      'type': 'handRaise',
+  void raiseHand() => wsNotificationService
+    .sendMessage(<String, dynamic>{
+      'type': OutboundMessageType.handRaise,
       'action': 'raise',
     });
-  }
 
-  void lowerHand() {
-    wsNotificationService.sendMessage(<String, dynamic>{
-      'type': 'handRaise',
-      'action': 'lower',
+  void lowerHand() => wsNotificationService
+    .sendMessage(<String, dynamic>{
+      'type': OutboundMessageType.handRaise,
+      'action': 'lower'
     });
-  }
+
+  void approveHandRaise(String identity) => 
+  wsNotificationService.sendMessage(<String, dynamic>{
+    'type': OutboundMessageType.handRaise,
+    'action': 'approve',
+    'identity': identity,
+  });
+
+  void sendPing() => wsNotificationService.sendMessage(<String, dynamic>{
+    'type': OutboundMessageType.ping,
+    'timestamp': DateTime.now().millisecondsSinceEpoch,
+  });
+
+  void toggleMedia(String mediaType, bool enabled) => 
+  wsNotificationService.sendMessage(<String, dynamic>{
+    'type': OutboundMessageType.mediaToggle,
+    'mediaType': mediaType,
+    'enabled': enabled,
+  });
+
+  void toggleScreenShare(bool start) => 
+  wsNotificationService.sendMessage(<String, dynamic>{
+    'type': OutboundMessageType.screenShare,
+    'action': start ? 'start' : 'stop',
+  });
 
   @override
   Future<void> close() {

@@ -625,7 +625,7 @@ class ATStrings {
   static const String enterAmountToChargeForEvent =
       'Enter the amount you would want to charge users for your event. This amount will determine your event\'s tier.';
   static const String PAID = 'Paid';
-  static const String PAY = 'Pay';
+  static const String pay = 'Pay';
   static const String ENDED = 'Ended';
   static const String SHOWS = 'Shows';
   static const String EVENTS = 'Events';
@@ -657,7 +657,7 @@ class ATStrings {
   static const String weakPassword =
       'Password must contain at least one upper case letter, and must be at least 8 characters!';
   static const String shareEvent = 'Share event';
-  static const String COMMENT = 'Comment';
+  static const String comment = 'Comment';
   static const String END_NOW = 'End now';
   static const String host = 'Host';
   static const String editEpisode = 'Edit episode';

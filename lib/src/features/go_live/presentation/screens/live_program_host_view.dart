@@ -86,36 +86,39 @@ class LiveProgramHostView extends StatelessWidget {
 
                 const SizedBox(height: 16),
                 Expanded(
-                    child: LayoutBuilder(builder: (_, BoxConstraints kst) {
-                  final bool isPortrait = kst.maxHeight > kst.maxWidth;
-                  return Flex(
-                    direction: isPortrait ? Axis.vertical : Axis.horizontal,
-                    children: <Widget>[
-                      if (isPortrait)
-                        Container(
-                          height: 250,
-                          padding: const EdgeInsets.fromLTRB(15, 0, 15, 0),
-                          child: const HostViewOfHostNdCohostDisplay()
-                        )
-                      else
-                        const Expanded(
-                          child: SingleChildScrollView(
-                            padding: EdgeInsets.fromLTRB(15, 0, 15, 0),
-                            child: SizedBox(
-                                height: 250,
-                                child: HostViewOfHostNdCohostDisplay()
-                              )
+                  child: LayoutBuilder(
+                    builder: (_, BoxConstraints kst) {
+                      final bool isPortrait = kst.maxHeight > kst.maxWidth;
+                      return Flex(
+                        direction: isPortrait ? Axis.vertical : Axis.horizontal,
+                        children: <Widget>[
+                          if (isPortrait)
+                            Container(
+                              height: 250,
+                              padding: const EdgeInsets.fromLTRB(15, 0, 15, 0),
+                              child: const HostViewOfHostNdCohostDisplay()
                             )
-                          ),
-                      const Expanded(child: GoLiveComments()),
-                    ],
-                  );
-                }))
+                          else
+                            const Expanded(
+                              child: SingleChildScrollView(
+                                padding: EdgeInsets.fromLTRB(15, 0, 15, 0),
+                                child: SizedBox(
+                                    height: 250,
+                                    child: HostViewOfHostNdCohostDisplay()
+                                  )
+                                )
+                              ),
+                          const Expanded(child: GoLiveComments()),
+                        ],
+                      );
+                    }
+                  )
+                )
               ],
             ),
           ),
-          const Positioned.fill(child: ReactionsOverlay()),
-          const Positioned.fill(child: GiftOverlay()),
+          // const Positioned.fill(child: ReactionsOverlay()),
+          // const Positioned.fill(child: GiftOverlay()),
         ],
       ),
 

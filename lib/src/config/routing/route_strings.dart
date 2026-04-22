@@ -35,8 +35,8 @@ class ATRoutes {
 
   //MAIN APPLICATION
   static const String mainAppShell = "main_app_shell";
-  static const String LIVE_SHOW_DETAILED = "show_detailed_screen";
-  static const String LIVE_EVENT_DETAILED = "event_detailed_screen";
+  static const String liveShowDetailed = "show_detailed_screen";
+  static const String liveEventDetailed = "event_detailed_screen";
   static const String SCHEDULED_EVENTS_OR_SHOWS_SCREEN =
       'scheduled_events_or_shows';
   static const String SUBSCRIBED_EVENTS_OR_SHOWS_SCREEN =
@@ -107,7 +107,7 @@ class ATRoutes {
   static const String answerSecurityQuestionScreen = 'pass_security_question';
   static const String paperPlaneSuccessScreen = 'paper_plane_success';
   static const String walletTransactionsHistoryScreen = 'wallet_transactions';
-  static const String SCHEDULE_DETAILED = 'schedule_detailed_screen';
+  static const String scheduleDetailed = 'schedule_detailed_screen';
   static const String goLiveOnboarding = 'go_live_onboarding_screen';
   static const String liveProgramScreen = 'main_go_live_program';
 }

@@ -197,7 +197,7 @@ class _LiveProgramCohostViewState extends State<LiveProgramCohostView> {
                       constraints: const BoxConstraints(maxHeight: 40),
                       contentPadding:
                           const EdgeInsets.fromLTRB(16, 0, 16, 0),
-                      hintText: ATStrings.COMMENT,
+                      hintText: ATStrings.comment,
                     ),
                   ));
                 }

@@ -70,8 +70,7 @@ class LiveStreamState1 extends Equatable {
     int? viewerCount,
   }) {
     return LiveStreamState1(
-      audioConnectionStatus:
-          audioConnectionStatus ?? this.audioConnectionStatus,
+      audioConnectionStatus: audioConnectionStatus ?? this.audioConnectionStatus,
       wsConnectionStatus: wsConnectionStatus ?? this.wsConnectionStatus,
       participants: participants ?? this.participants,
       activeSpeakerIds: activeSpeakerIds ?? this.activeSpeakerIds,
@@ -142,13 +141,13 @@ class LiveSessionParticipant extends User {
   });
 
   LiveSessionParticipant.fromJson(super.json)
-      : isMuted = json['is_muted'],
-        isSpeaking = json['is_speaking'],
-        isLocal = json['is_local'],
-        audioLevel = json['audio_level'],
-        participantType = json['participant_type'],
-        roomParticipantId = json['room_participant_id'],
-        super.fromJson();
+    : isMuted = json['is_muted'],
+      isSpeaking = json['is_speaking'],
+      isLocal = json['is_local'],
+      audioLevel = json['audio_level'],
+      participantType = json['participant_type'],
+      roomParticipantId = json['room_participant_id'],
+      super.fromJson();
 
   /// 🔊 Audio-specific fields
   final bool isMuted, isSpeaking, isLocal;

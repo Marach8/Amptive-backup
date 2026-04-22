@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
+import 'dart:developer' show log;
 import 'package:amptive/src/config/services/ws_notif_service/ws_notif_service.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
 
@@ -46,8 +47,7 @@ class WSChannelNotifServiceImpl implements WSNotificationService {
     _connectionController.add(WSConnectionStatus.connecting);
 
     try {
-      if(_channel != null) return true;
-
+      _channel == null;
       _channel = WebSocketChannel.connect(Uri.parse(wsUrl));
 
       _subscription = _channel!.stream.listen(
@@ -59,8 +59,10 @@ class WSChannelNotifServiceImpl implements WSNotificationService {
 
       _isConnected = true;
       _connectionController.add(WSConnectionStatus.connected);
+      log('Connected to websocket: $wsUrl');
       return true;
     } catch (e) {
+      log('Error connecting to websocket: $e');
       _connectionController.add(WSConnectionStatus.error);
       return false;
     }
@@ -84,11 +86,13 @@ class WSChannelNotifServiceImpl implements WSNotificationService {
 
   @override
   void sendMessage(Map<String, dynamic> data) {
+    log('Sending socket message: $data');
     if (!_isConnected || _channel == null) return;
 
     try {
       _channel!.sink.add(jsonEncode(data));
-    } catch (_) {
+    } catch (e) {
+      log('Error sending socket message: $e');
       _connectionController.add(WSConnectionStatus.error);
     }
   }
@@ -109,6 +113,7 @@ class WSChannelNotifServiceImpl implements WSNotificationService {
 
 
   void _onMessage(dynamic data) {
+    log('Web socket message was received: $data');
     try {
       final Map<String, dynamic> parsed = data is String
           ? jsonDecode(data) as Map<String, dynamic>

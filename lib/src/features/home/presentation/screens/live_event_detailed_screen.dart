@@ -1,10 +1,18 @@
 import 'dart:ui';
+import 'package:amptive/src/config/api_response_and_app_state.dart';
 import 'package:amptive/src/config/routing/route_strings.dart';
+import 'package:amptive/src/config/utils/dialogs/app_notification_dialog.dart';
+import 'package:amptive/src/features/auth/cubits/local_user_data_cubit.dart';
+import 'package:amptive/src/features/go_live/cubits/get_live_program_entry_token_cubit.dart';
+import 'package:amptive/src/features/go_live/cubits/start_live_program_cubit.dart';
 import 'package:amptive/src/features/go_live/models/go_live_program_params.dart';
+import 'package:amptive/src/features/go_live/presentation/screens/go_live_onboarding_screen.dart';
+import 'package:amptive/src/features/go_live/presentation/screens/live_program_screen.dart';
 import 'package:amptive/src/global_export.dart';
 import 'package:amptive/src/shared/annotated_region__widget.dart';
 import 'package:amptive/src/shared/circle_avatar.dart';
 import 'package:amptive/src/shared/custom_container_widget.dart';
+import 'package:amptive/src/shared/global_model_objects.dart';
 import 'package:amptive/src/shared/image_loader_widget.dart';
 import 'package:amptive/src/shared/loading_indicator.dart';
 import 'package:amptive/src/shared/sliver_header_delegate.dart';
@@ -12,6 +20,7 @@ import 'package:amptive/src/shared/textformfield_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:nested/nested.dart';
 import 'package:readmore/readmore.dart';
 import '../../../../shared/list_tile_with_leading_picture_widget.dart';
 import '../../../../shared/row_of_people_listening_widget.dart';
@@ -42,10 +51,17 @@ class ATLiveEventDetailedScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final double blurredHeaderHeight =
         kToolbarHeight + MediaQuery.paddingOf(context).top;
-    return ATAnnotatedRegion(
-      statusBarColor: ATColors.transparent,
-      child: BlocProvider<BlurredHeaderCubit>(
-        create: (_) => BlurredHeaderCubit(),
+    return MultiBlocProvider(
+      providers: <SingleChildWidget>[
+        BlocProvider<GetLiveProgramEntryTokenCubit>(
+          create: (_) => GetLiveProgramEntryTokenCubit(),
+        ),
+        BlocProvider<BlurredHeaderCubit>(
+          create: (_) => BlurredHeaderCubit(),
+        )
+      ],
+      child: ATAnnotatedRegion(
+        statusBarColor: ATColors.transparent,
         child: Scaffold(
           body: Stack(
             children: <Widget>[
@@ -87,8 +103,10 @@ class ATLiveEventDetailedScreen extends StatelessWidget {
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: <Widget>[
-                                  ATEventOrShowCard(
-                                    imgPath: _displayImage,
+                                  CoverPicWithTopRightMoreIcon(
+                                    imgPath: _displayImage ?? '',
+                                    onMoreTapped: () {},
+                                    padding: EdgeInsets.zero,
                                   ),
                                   const SizedBox(height: 15),
                                   Text(
@@ -262,65 +280,143 @@ class ATLiveEventDetailedScreen extends StatelessWidget {
             ],
           ),
           resizeToAvoidBottomInset: false,
-          bottomSheet: ATContainer(
-            height: 90,
-            gradient: LinearGradient(
-                begin: Alignment.topCenter,
-                end: Alignment.bottomCenter,
-                colors: <Color>[
-                  ATColors.hex0D0D0D.withValues(alpha: 0.1),
-                  ATColors.hex0D0D0D
-                ]),
-            padding: const EdgeInsets.fromLTRB(15, 25, 15, 15),
-            child: GestureDetector(
-              onTap: () {
-                // context.pushNamed(
-                //   ATRoutes.liveProgramScreen,
-                //   extra: GoLiveProgramParams(
-                //     streamId: homeFeedItem?.livestreamId ?? '',
-                //     userType: GoLiveUserType.audience,
-                //   ),
-                // );
+          bottomSheet: Padding(
+            padding: const EdgeInsets.fromLTRB(15, 5, 15, 50),
+            child: BlocConsumer<GetLiveProgramEntryTokenCubit, ATAppState<LiveProgramEntryToken>>(
+              listener: (_, ATAppState<LiveProgramEntryToken> state){
+                if(state is SuccessState<LiveProgramEntryToken>){
+                  final String? userId = context.read<LocalUserDataCubit>()
+                    .currentUserData?.userId;
+                  final bool isHost = userId == homeFeedItem?.hostId;
+                  context.pushReplacementNamed(
+                    ATRoutes.goLiveOnboarding,
+                    extra: LiveProgramEntryParams(
+                      roomEntryToken: state.newData?.roomEntryToken ?? '',
+                      roomUrl: state.newData?.roomUrl ?? '',
+                      streamId: state.newData?.streamId ?? '',
+                      roomParticipantId: state.newData?.roomParticipantId ?? '',
+                      programId: homeFeedItem?.id ?? '',
+                      coverUrl: homeFeedItem?.coverUrl ?? '',
+                      participantType: isHost
+                        ? LiveParticipantType.host
+                        : LiveParticipantType.audience,
+                      community: Community(name: 'Test Community'),
+                      programTitle: homeFeedItem?.title ?? '',
+                      programDesc: 'New program'
+                    ),
+                  );
+                }
+                else if(state is FailureState<LiveProgramEntryToken>){
+                  showAppNotification2(
+                    context: context,
+                    text: state.message,
+                    type: NotificationType.failure,
+                  );
+                }
               },
-              child: Container(
-                width: double.infinity,
-                padding: const EdgeInsets.symmetric(vertical: 16),
-                decoration: BoxDecoration(
-                  color: ATColors.white,
-                  borderRadius: BorderRadius.circular(12),
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    Text(
-                      ATStrings.PAY,
-                      style: TextStyle(
-                        fontSize: ATSizes.size16,
-                        fontWeight: ATFontWeights.w600,
-                        color: ATColors.hex0D0D0D,
+              builder: (BuildContext ctx, ATAppState<LiveProgramEntryToken> state) {
+                return ATPlainElevatedBtn(
+                  onPressed: (){
+                    ctx.read<GetLiveProgramEntryTokenCubit>()
+                    .getLiveProgramEntryToken(
+                      homeFeedItem?.livestreamId ?? '',
+                    );
+                  },
+                  isLoading: state is LoadingState<LiveProgramEntryToken>,
+                  bgColor: ATColors.white,
+                  fgColor: ATColors.black,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      Text(
+                        ATStrings.pay,
+                        style: TextStyle(
+                          fontSize: ATSizes.size16,
+                          fontWeight: ATFontWeights.w600,
+                          color: ATColors.hex0D0D0D,
+                        ),
                       ),
-                    ),
-                    const SizedBox(width: 5),
-                    ATCircleAvatar(
-                      diameter: 5,
-                      color: ATColors.hex0D0D0D,
-                    ),
-                    const SizedBox(width: 5),
-                    Text(
-                      homeFeedItem?.price != null
-                          ? '₦${homeFeedItem!.price!.toStringAsFixed(0)}'
-                          : '₦5,000',
-                      style: TextStyle(
-                        fontSize: ATSizes.size16,
-                        fontWeight: ATFontWeights.w600,
-                        color: ATColors.hex0D0D0D,
+                      const SizedBox(width: 5),
+                      CircleAvatar(
+                        radius: 2.5,
+                        backgroundColor: ATColors.hex0D0D0D,
                       ),
-                    ),
-                  ],
-                ),
-              ),
+                      const SizedBox(width: 5),
+                      Text(
+                        homeFeedItem?.price != null
+                            ? '₦${homeFeedItem!.price!.toStringAsFixed(0)}'
+                            : '₦5,000',
+                        style: TextStyle(
+                          fontSize: ATSizes.size16,
+                          fontWeight: ATFontWeights.w600,
+                          color: ATColors.hex0D0D0D,
+                        ),
+                      ),
+                    ],
+                  ),
+                );
+              }
             ),
           ),
+          // bottomSheet: ATContainer(
+          //   height: 90,
+          //   gradient: LinearGradient(
+          //       begin: Alignment.topCenter,
+          //       end: Alignment.bottomCenter,
+          //       colors: <Color>[
+          //         ATColors.hex0D0D0D.withValues(alpha: 0.1),
+          //         ATColors.hex0D0D0D
+          //       ]),
+          //   padding: const EdgeInsets.fromLTRB(15, 25, 15, 15),
+          //   child: GestureDetector(
+          //     onTap: () {
+          //       // context.pushNamed(
+          //       //   ATRoutes.liveProgramScreen,
+          //       //   extra: GoLiveProgramParams(
+          //       //     streamId: homeFeedItem?.livestreamId ?? '',
+          //       //     userType: GoLiveUserType.audience,
+          //       //   ),
+          //       // );
+          //     },
+          //     child: Container(
+          //       width: double.infinity,
+          //       padding: const EdgeInsets.symmetric(vertical: 16),
+          //       decoration: BoxDecoration(
+          //         color: ATColors.white,
+          //         borderRadius: BorderRadius.circular(12),
+          //       ),
+                // child: Row(
+                //   mainAxisAlignment: MainAxisAlignment.center,
+                //   children: <Widget>[
+                //     Text(
+                //       ATStrings.PAY,
+                //       style: TextStyle(
+                //         fontSize: ATSizes.size16,
+                //         fontWeight: ATFontWeights.w600,
+                //         color: ATColors.hex0D0D0D,
+                //       ),
+                //     ),
+                //     const SizedBox(width: 5),
+                //     ATCircleAvatar(
+                //       diameter: 5,
+                //       color: ATColors.hex0D0D0D,
+                //     ),
+                //     const SizedBox(width: 5),
+                //     Text(
+                //       homeFeedItem?.price != null
+                //           ? '₦${homeFeedItem!.price!.toStringAsFixed(0)}'
+                //           : '₦5,000',
+                //       style: TextStyle(
+                //         fontSize: ATSizes.size16,
+                //         fontWeight: ATFontWeights.w600,
+                //         color: ATColors.hex0D0D0D,
+                //       ),
+                //     ),
+                //   ],
+                // ),
+          //     ),
+          //   ),
+          // ),
         ),
       ),
     );

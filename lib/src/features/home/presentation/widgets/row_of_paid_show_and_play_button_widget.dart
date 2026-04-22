@@ -42,18 +42,18 @@ class PaidShowAndPlayBtnWidget extends StatelessWidget {
     if (_isLive) {
       if (isStandalone) {
         context.pushNamed(
-          ATRoutes.LIVE_EVENT_DETAILED,
+          ATRoutes.liveEventDetailed,
           extra: homeFeedItem,
         );
       } else {
         context.pushNamed(
-          ATRoutes.LIVE_SHOW_DETAILED,
+          ATRoutes.liveShowDetailed,
           extra: homeFeedItem,
         );
       }
     } else {
       context.pushNamed(
-        ATRoutes.SCHEDULE_DETAILED,
+        ATRoutes.scheduleDetailed,
         extra: homeFeedItem,
       );
     }

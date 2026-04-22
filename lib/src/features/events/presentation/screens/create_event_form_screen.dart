@@ -874,8 +874,8 @@ class __SubWidgetState extends State<_SubWidget> {
                       errorMessage = 'Please select a community';
                     } else if((selectedCohosts ?? <User>[]).isEmpty) {
                       errorMessage = 'Please select at least 1 cohost';
-                    } else if((selectedHashtags ?? <HashTag>[]).isEmpty) {
-                      errorMessage = 'Please select at least 1 hashtag';
+                    // } else if((selectedHashtags ?? <HashTag>[]).isEmpty) {
+                    //   errorMessage = 'Please select at least 1 hashtag';
                     } else if(selectedPermission == null) {
                       errorMessage = 'Please choose whether to allow hand-raising for this episode';
                     } else if(accessTypeData.accessType == null) {

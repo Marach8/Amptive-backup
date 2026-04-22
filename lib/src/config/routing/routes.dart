@@ -217,8 +217,8 @@ final GoRouter amptiveAppRouter = GoRouter(
         builder: (_, __) => const ATMainAppShell(),
         routes: <RouteBase>[
           GoRoute(
-            name: ATRoutes.SCHEDULE_DETAILED,
-            path: ATRoutes.SCHEDULE_DETAILED.addSlash,
+            name: ATRoutes.scheduleDetailed,
+            path: ATRoutes.scheduleDetailed.addSlash,
             pageBuilder: (_, state) => ATSlidingRouteTransition<void>(
               child: ATScheduleDetailedScreen(
                 homeFeedItem: state.extra as HomeFeedItem?,
@@ -322,16 +322,16 @@ final GoRouter amptiveAppRouter = GoRouter(
                     ]),
               ]),
           GoRoute(
-              name: ATRoutes.LIVE_SHOW_DETAILED,
-              path: ATRoutes.LIVE_SHOW_DETAILED.addSlash,
+              name: ATRoutes.liveShowDetailed,
+              path: ATRoutes.liveShowDetailed.addSlash,
               pageBuilder: (_, state) => ATSlidingRouteTransition<void>(
                   beginOffset: const Offset(0.0, 1.0),
                   child: ATLiveShowDetailedScreen(
                     homeFeedItem: state.extra as HomeFeedItem?,
                   ))),
           GoRoute(
-              name: ATRoutes.LIVE_EVENT_DETAILED,
-              path: ATRoutes.LIVE_EVENT_DETAILED.addSlash,
+              name: ATRoutes.liveEventDetailed,
+              path: ATRoutes.liveEventDetailed.addSlash,
               pageBuilder: (_, state) => ATSlidingRouteTransition<void>(
                     beginOffset: const Offset(0.0, 1.0),
                     child: ATLiveEventDetailedScreen(

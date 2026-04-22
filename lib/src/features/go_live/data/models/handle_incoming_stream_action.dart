@@ -1,45 +1,56 @@
-void mapIncomingStreamAction(Map<String, dynamic> json) {
-    final String? type = json['type'] as String?;
+import 'package:amptive/src/config/utils/constants.dart';
+import 'package:amptive/src/livestream/models/livestream_models.dart';
 
-    switch (type) {
-      case 'chat':
-        final ChatMessage? chat = ChatMessage.fromJson(json);
-        emit(state.copyWith(messages: [...?state.messages, chat]));
-        break;
+/// Factory function to convert incoming WebSocket JSON messages into SignalingEvent objects
+SignalingEvent? mapIncomingStreamAction(Map<String, dynamic> json) {
+  final String? type = json['type'] as String?;
 
-      case 'reaction':
-        final reaction = ReactionEvent.fromJson(json);
-        emit(state.copyWith(reactions: [...state.reactions, reaction]));
-        break;
-
-      case 'gift':
-        final gift = GiftEvent.fromJson(json);
-        emit(state.copyWith(gifts: [...state.gifts, gift]));
-        break;
-
-      case 'handRaise':
-        final action = json['action'] as String?;
-        final identity = json['user_id'] as String?;
-        if (action == 'raise' && identity != null) {
-          if (!state.handQueue.contains(identity)) {
-            emit(state.copyWith(handQueue: [...state.handQueue, identity]));
-          }
-        } else if ((action == 'lower' || action == 'approve') &&
-            identity != null) {
-          emit(state.copyWith(
-            handQueue: state.handQueue.where((id) => id != identity).toList(),
-          ));
-        }
-        break;
-
-      case 'viewerCount':
-        final count = json['count'] as int?;
-        if (count != null) {
-          emit(state.copyWith(viewerCount: count));
-        }
-        break;
-
-      default:
-        log('Received unknown WebSocket message type: $type');
-    }
-  }
+  return switch (type) {
+    SignalingEventType.initial =>
+      InitialStateEvent(InitialState.fromJson(json)),
+    SignalingEventType.streamStarted => StreamStartedEvent(),
+    SignalingEventType.streamEnded => StreamEndedEvent(),
+    SignalingEventType.pong => PongEvent(json['timestamp'] as int? ?? 0),
+    SignalingEventType.participantJoin =>
+      ParticipantJoinEvent(LivestreamParticipant.fromJson(json)),
+    SignalingEventType.participantLeave => ParticipantLeaveEvent(
+        json['identity'] as String? ?? '',
+        json['reason'] as String?,
+      ),
+    SignalingEventType.participantUpdated => ParticipantUpdatedEvent(
+        LivestreamParticipant.fromJson(
+          json['participant'] as Map<String, dynamic>,
+        ),
+      ),
+    SignalingEventType.chat => ChatEvent(ChatMessage.fromJson(json)),
+    SignalingEventType.reaction =>
+      ReactionReceivedEvent(ReactionEvent.fromJson(json)),
+    SignalingEventType.handRaise => HandRaiseEvent(
+        identity: json['user_id'] as String? ?? '',
+        action: json['action'] as String? ?? '',
+      ),
+    SignalingEventType.gift => GiftReceivedEvent(GiftEvent.fromJson(json)),
+    SignalingEventType.viewerCount =>
+      ViewerCountEvent(json['count'] as int? ?? 0),
+    SignalingEventType.participantCount =>
+      ParticipantCountEvent(json['count'] as int? ?? 0),
+    SignalingEventType.userMuted => UserMutedEvent(
+        identity: json['identity'] as String? ?? '',
+        muted: json['muted'] as bool? ?? false,
+      ),
+    SignalingEventType.userBanned => UserBannedEvent(
+        identity: json['identity'] as String? ?? '',
+        reason: json['reason'] as String?,
+      ),
+    SignalingEventType.userKicked => UserKickedEvent(
+        identity: json['identity'] as String? ?? '',
+        reason: json['reason'] as String?,
+      ),
+    SignalingEventType.mediaStateChanged => MediaStateChangedEvent(
+        identity: json['identity'] as String? ?? '',
+        mediaType: json['mediaType'] as String? ?? '',
+        enabled: json['enabled'] as bool? ?? false,
+      ),
+    _ => UnknownEvent(json),
+  };
+}

@@ -64,7 +64,8 @@ class _GoLiveCommentsState extends State<GoLiveComments> {
   Widget build(BuildContext context) {
     return BlocBuilder<LiveStreamCubit1, LiveStreamState1>(
       builder: (BuildContext context, LiveStreamState1 state) {
-        final List<ChatMessage> messages = [];
+        final List<ChatMessage> messages = state.messages 
+          ?? <ChatMessage>[];
 
         return Stack(
           alignment: Alignment.center,
