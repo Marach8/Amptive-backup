@@ -6,8 +6,7 @@ import 'package:amptive/src/features/notifications/data/repository/notif_repo_im
 import 'package:amptive/src/shared/global_model_objects.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class GetNotificationsCubit
-    extends Cubit<ATAppState<NotificationsResponseModel>> {
+class GetNotificationsCubit extends Cubit<ATAppState<NotificationsResponseModel>> {
   GetNotificationsCubit({
     NotificationsRepo? mockNotificationsRepo,
   })  : notificationsRepo =
@@ -16,22 +15,10 @@ class GetNotificationsCubit
   final NotificationsRepo notificationsRepo;
 
   NotificationsResponseModel? get currentNotifications => switch (state) {
-        SuccessState<NotificationsResponseModel>(
-          :final NotificationsResponseModel? newData
-        ) =>
-          newData,
-        FailureState<NotificationsResponseModel>(
-          :final NotificationsResponseModel? oldData
-        ) =>
-          oldData,
-        InitialState<NotificationsResponseModel>(
-          :final NotificationsResponseModel? initialData
-        ) =>
-          initialData,
-        LoadingState<NotificationsResponseModel>(
-          :final NotificationsResponseModel? currentData
-        ) =>
-          currentData,
+      SuccessState<NotificationsResponseModel>(:final NotificationsResponseModel? newData) => newData,
+      FailureState<NotificationsResponseModel>(:final NotificationsResponseModel? oldData) => oldData,
+      InitialState<NotificationsResponseModel>(:final NotificationsResponseModel? initialData) => initialData,
+      LoadingState<NotificationsResponseModel>(:final NotificationsResponseModel? currentData) => currentData,
       };
 
   Future<void> fetchNotifications({bool refresh = false}) async {
@@ -143,10 +130,72 @@ class GetNotificationsCubit
             hasMore: currentData.hasMore,
           );
 
-          emit(SuccessState(newData: updatedData));
+          emit(SuccessState<NotificationsResponseModel>(newData: updatedData));
         },
-        unSuccessful: (_) {},
+        unSuccessful:
+            (Unsuccessful<MarkNotificationAsReadResponseModel> error) {
+          emit(FailureState<NotificationsResponseModel>(error.error.message,
+              oldData: currentNotifications));
+        },
       );
-    } catch (e) {}
+    } catch (e) {
+      emit(FailureState<NotificationsResponseModel>(
+          'Unable to mark notification as read: $e',
+          oldData: currentNotifications));
+    }
   }
+
+  Future<void> markAllNotificationsAsRead() async {
+    final NotificationsResponseModel? currentData = currentNotifications;
+    if (currentData == null) return;
+
+    final int currentUnreadCount = currentData.unreadCount ?? 0;
+
+    try {
+      final ApiResponse<dynamic> response =
+          await notificationsRepo.markAllNotificationsAsRead();
+
+      response.when(
+        successful: (_) {
+          final List<Notifications>? updatedNotifications =
+              currentData.notifications?.map((Notifications n) {
+            return Notifications(
+              id: n.id,
+              userId: n.userId,
+              message: n.message,
+              channel: n.channel,
+              createdAt: n.createdAt,
+              metadata: n.metadata,
+              title: n.title,
+              type: n.type,
+              isRead: true,
+              readAt: DateTime.now().toIso8601String(),
+            );
+          }).toList();
+
+          final NotificationsResponseModel updatedData =
+              NotificationsResponseModel(
+            notifications: updatedNotifications,
+            unreadCount: 0,
+            total: currentData.total,
+            page: currentData.page,
+            pageSize: currentData.pageSize,
+            totalPages: currentData.totalPages,
+            hasMore: currentData.hasMore,
+          );
+
+          emit(SuccessState<NotificationsResponseModel>(newData: updatedData));
+        },
+        unSuccessful:
+            (Unsuccessful<dynamic> error) {
+          emit(FailureState<NotificationsResponseModel>(error.error.message,
+              oldData: currentNotifications));
+        },
+      );
+    } catch (e) {
+      emit(FailureState<NotificationsResponseModel>(
+          'Unable to mark all notifications as read: $e',
+          oldData: currentNotifications));
+    }
+}
 }

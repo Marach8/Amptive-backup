@@ -82,4 +82,18 @@ Future<ApiResponse<MarkNotificationAsReadResponseModel>> markNotificationAsRead(
     return Unsuccessful<MarkNotificationAsReadResponseModel>(error: ATException.resolveException(e));
   }
 }
+
+@override
+Future<ApiResponse<dynamic>> markAllNotificationsAsRead() async {
+  try {
+    final Response<dynamic> response = await networkService.patch(
+      '${ATEndpoints.getNotifications}/read',
+    );
+    return Successful<dynamic>(data: response.data);
+  } catch (e) {
+    log('Mark all notifications as read error: $e');
+    return Unsuccessful<dynamic>(error: ATException.resolveException(e));
+  }
+
+}
 }

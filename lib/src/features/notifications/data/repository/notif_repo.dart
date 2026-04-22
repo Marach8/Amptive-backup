@@ -20,4 +20,6 @@ Future <ApiResponse<NotificationsResponseModel>> fetchUserNotifications({
 Future<ApiResponse<MarkNotificationAsReadResponseModel>> markNotificationAsRead({
   required String notificationId,
 });
+
+Future <ApiResponse<dynamic>> markAllNotificationsAsRead();
 }
