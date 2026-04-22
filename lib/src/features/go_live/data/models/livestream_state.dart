@@ -1,3 +1,4 @@
+import 'package:amptive/src/config/services/ws_notif_service/ws_channel_service_impl.dart';
 import 'package:amptive/src/features/go_live/presentation/screens/live_program_screen.dart';
 import 'package:amptive/src/shared/global_model_objects.dart';
 import 'package:equatable/equatable.dart';
@@ -5,7 +6,8 @@ import 'package:equatable/equatable.dart';
 
 class LiveStreamState1 extends Equatable {
   const LiveStreamState1({
-    this.connectionStatus = LiveSessionConnectionStatus.initial,
+    this.audioConnectionStatus = LiveSessionConnectionStatus.initial,
+    this.wsConnectionStatus = WSConnectionStatus.initial,
     this.participants,
     this.activeSpeakerIds,
     this.isMicrophoneEnabled = true,
@@ -20,7 +22,8 @@ class LiveStreamState1 extends Equatable {
     this.programDesc,
   });
 
-  final LiveSessionConnectionStatus connectionStatus;
+  final LiveSessionConnectionStatus audioConnectionStatus;
+  final WSConnectionStatus wsConnectionStatus;
   final List<LiveSessionParticipant>? participants;
   final List<String>? activeSpeakerIds;
   final bool isMicrophoneEnabled;
@@ -32,7 +35,8 @@ class LiveStreamState1 extends Equatable {
 
   /// Creates a new state object with updated values.
   LiveStreamState1 copyWith({
-    LiveSessionConnectionStatus? connectionStatus,
+    LiveSessionConnectionStatus? audioConnectionStatus,
+    WSConnectionStatus? wsConnectionStatus,
     List<LiveSessionParticipant>? participants,
     List<String>? activeSpeakerIds,
     bool? isMicrophoneEnabled,
@@ -47,7 +51,8 @@ class LiveStreamState1 extends Equatable {
     String? programDesc,
   }) {
     return LiveStreamState1(
-      connectionStatus: connectionStatus ?? this.connectionStatus,
+      audioConnectionStatus: audioConnectionStatus ?? this.audioConnectionStatus,
+      wsConnectionStatus: wsConnectionStatus ?? this.wsConnectionStatus,
       participants: participants ?? this.participants,
       activeSpeakerIds: activeSpeakerIds ?? this.activeSpeakerIds,
       isMicrophoneEnabled: isMicrophoneEnabled ?? this.isMicrophoneEnabled,
@@ -65,7 +70,8 @@ class LiveStreamState1 extends Equatable {
 
   @override
   List<Object?> get props => <Object?>[
-      connectionStatus,
+      audioConnectionStatus,
+      wsConnectionStatus,
       participants,
       activeSpeakerIds,
       isMicrophoneEnabled,

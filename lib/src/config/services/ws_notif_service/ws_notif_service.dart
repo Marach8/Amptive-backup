@@ -2,7 +2,7 @@
 import 'package:amptive/src/config/services/ws_notif_service/ws_channel_service_impl.dart';
 
 abstract class WSNotificationService{
-  Future<void> connect({required String wsUrl});
+  Future<bool> connect({required String wsUrl});
 
   Future<void> disconnect();
 

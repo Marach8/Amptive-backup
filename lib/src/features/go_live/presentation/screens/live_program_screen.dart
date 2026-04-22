@@ -90,10 +90,7 @@ class __SubWidgetState extends State<_SubWidget> {
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if(mounted){
-        context.read<LiveStreamCubit1>().connect(
-          roomUrl: widget.liveScreenEntryParams?.roomUrl ?? '',
-          participantToken: widget.liveScreenEntryParams?.roomEntryToken ?? '',
-        );
+        context.read<LiveStreamCubit1>().connect();
       }
     });
   }

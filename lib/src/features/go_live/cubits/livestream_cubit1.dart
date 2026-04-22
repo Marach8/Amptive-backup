@@ -1,7 +1,11 @@
 import 'dart:async';
 import 'dart:developer' show log;
+import 'package:amptive/src/config/config_export.dart';
+import 'package:amptive/src/config/endpoints.dart';
 import 'package:amptive/src/config/services/audio_streaming_service/audio_streaming_service.dart';
 import 'package:amptive/src/config/services/audio_streaming_service/live_kit_audio_streaming_impl.dart';
+import 'package:amptive/src/config/services/local_storage_service/flutter_secure_storage_service_impl.dart';
+import 'package:amptive/src/config/services/local_storage_service/storage_service.dart';
 import 'package:amptive/src/config/services/ws_notif_service/ws_channel_service_impl.dart';
 import 'package:amptive/src/config/services/ws_notif_service/ws_notif_service.dart';
 import 'package:amptive/src/features/go_live/data/models/livestream_state.dart';
@@ -12,30 +16,47 @@ class LiveStreamCubit1 extends Cubit<LiveStreamState1> {
   LiveStreamCubit1({
     ATAudioStreamingService? extStreamService,
     WSNotificationService? extWSNotificationService,
+    ATLocalStorageService? extLocalStorageService,
     LiveStreamState1? initialState,
   }) : streamingService = extStreamService ?? LiveKitAudioStreamingService(),
       wsNotificationService = extWSNotificationService ?? WSChannelNotifServiceImpl(),
+      localStorage = extLocalStorageService ?? FlutterSecureStorageServiceImpl(),
         super(initialState ?? const LiveStreamState1()) {
-    _listenToStreams();
+          _listenToStreams();
 
-    final Organizers organizers = _retriveOrganizers(state);
-    emit(state.copyWith(organizers: organizers));
-  }
+          final Organizers organizers = _retriveOrganizers(state);
+          emit(state.copyWith(organizers: organizers));
+        }
 
   final ATAudioStreamingService streamingService;
   final WSNotificationService wsNotificationService;
+  final ATLocalStorageService localStorage;
 
   // Individual, explicitly typed StreamSubscriptions for clarity and safety.
-  StreamSubscription<LiveSessionConnectionStatus>? _connectionStateSub;
+  StreamSubscription<LiveSessionConnectionStatus>? _audioConnectionStateSub;
+  StreamSubscription<WSConnectionStatus>? _wsConnectionStateSub;
   StreamSubscription<List<LiveSessionParticipant>>? _participantsSub;
   StreamSubscription<List<String>>? _activeSpeakersSub;
 
   void _listenToStreams() {
     // Listen to connection state changes
-    _connectionStateSub = streamingService.connectionStateStream.listen(
+    _audioConnectionStateSub = streamingService.connectionStateStream.listen(
       (LiveSessionConnectionStatus connectionStatus) {
         log('This is the connection status in the cubit: $connectionStatus');
-        emit(state.copyWith(connectionStatus: connectionStatus));
+        emit(state.copyWith(audioConnectionStatus: connectionStatus));
+      }
+    );
+
+    // Listen to ws connection state changes
+    _wsConnectionStateSub = wsNotificationService.connectionStream.listen(
+      (WSConnectionStatus connectionStatus) {
+        if(connectionStatus == WSConnectionStatus.connected){
+          wsNotificationService.sendMessage({
+            'type': 'join',
+            'streamId': state.liveStreamId,
+          });
+        }
+        emit(state.copyWith(wsConnectionStatus: connectionStatus));
       }
     );
 
@@ -95,25 +116,41 @@ class LiveStreamCubit1 extends Cubit<LiveStreamState1> {
 
   // --- Public methods for the UI to call ---
 
-  Future<void> connect({
-    required String roomUrl,
-    required String participantToken,
-  }) async {
+  Future<void> connect() async {
     emit(state.copyWith(
-      connectionStatus: LiveSessionConnectionStatus.connecting
+      audioConnectionStatus: LiveSessionConnectionStatus.connecting
     ));
 
     try {
+      final String? cachedToken = await localStorage.get(ATStrings.accessToken);
+      final String? roomUrl = state.roomUrl;
+      final String? participantToken = state.roomEntryToken ?? cachedToken;
+      final String? streamId = state.liveStreamId;
+
+      if(roomUrl == null){
+        throw 'Room URL not set';
+      }
+      if(participantToken == null){
+        throw 'User not authenticated';
+      }
+      if(streamId == null){
+        throw 'Stream ID is not set';
+      }
+
+      final String wsUrl = '${ATEndpoints.wsStream}$streamId?token=$participantToken';
       await streamingService.connect(
         roomUrl: roomUrl,
         participantToken: participantToken
       );
+
+      await wsNotificationService.connect(wsUrl: wsUrl);
+
       emit(state.copyWith(
-        connectionStatus: LiveSessionConnectionStatus.connected
+        audioConnectionStatus: LiveSessionConnectionStatus.connected
       ));
     } catch (e) {
       emit(state.copyWith(
-        connectionStatus: LiveSessionConnectionStatus.disconnected,
+        audioConnectionStatus: LiveSessionConnectionStatus.disconnected,
         errorMessage: e.toString(),
       ));
     }
@@ -131,7 +168,8 @@ class LiveStreamCubit1 extends Cubit<LiveStreamState1> {
   @override
   Future<void> close() {
     // Cancel each individual subscription to prevent memory leaks.
-    _connectionStateSub?.cancel();
+    _audioConnectionStateSub?.cancel();
+    _wsConnectionStateSub?.cancel();
     _participantsSub?.cancel();
     _activeSpeakersSub?.cancel();
     

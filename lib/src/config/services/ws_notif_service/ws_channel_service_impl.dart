@@ -42,11 +42,11 @@ class WSChannelNotifServiceImpl implements WSNotificationService {
 
 
   @override
-  Future<void> connect({required String wsUrl}) async {
+  Future<bool> connect({required String wsUrl}) async {
     _connectionController.add(WSConnectionStatus.connecting);
 
     try {
-      if(_channel != null) return;
+      if(_channel != null) return true;
 
       _channel = WebSocketChannel.connect(Uri.parse(wsUrl));
 
@@ -59,8 +59,10 @@ class WSChannelNotifServiceImpl implements WSNotificationService {
 
       _isConnected = true;
       _connectionController.add(WSConnectionStatus.connected);
+      return true;
     } catch (e) {
       _connectionController.add(WSConnectionStatus.error);
+      return false;
     }
   }
 
