@@ -4,7 +4,7 @@ import 'dart:io';
 import 'package:amptive/src/config/services/network_service/interceptor.dart'
     show AuthGuardCubit;
 import 'package:amptive/src/features/auth/cubits/local_user_data_cubit.dart';
-import 'package:amptive/src/features/notifications/cubits/get_notifications_cubit.dart';
+import 'package:amptive/src/features/notifications/cubits/notifications_cubit.dart';
 import 'package:amptive/src/features/notifications/cubits/register_device_fcm_cubit.dart';
 import 'package:amptive/src/features/auth/presentation/screens/login_screen.dart';
 import 'package:amptive/src/features/home/cubits/home_feed_cubit.dart';
