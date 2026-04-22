@@ -1,8 +1,8 @@
 import 'package:amptive/src/config/services/ws_notif_service/ws_channel_service_impl.dart';
 import 'package:amptive/src/features/go_live/presentation/screens/live_program_screen.dart';
+import 'package:amptive/src/livestream/models/livestream_models.dart';
 import 'package:amptive/src/shared/global_model_objects.dart';
 import 'package:equatable/equatable.dart';
-
 
 class LiveStreamState1 extends Equatable {
   const LiveStreamState1({
@@ -20,6 +20,11 @@ class LiveStreamState1 extends Equatable {
     this.organizers,
     this.programTitle,
     this.programDesc,
+    this.messages,
+    this.reactions,
+    this.gifts,
+    this.handQueue,
+    this.viewerCount = 0,
   });
 
   final LiveSessionConnectionStatus audioConnectionStatus;
@@ -27,11 +32,20 @@ class LiveStreamState1 extends Equatable {
   final List<LiveSessionParticipant>? participants;
   final List<String>? activeSpeakerIds;
   final bool isMicrophoneEnabled;
-  final String? connectionErrorMessage, programCoverUrl,
-    liveStreamId, roomUrl, roomEntryToken, programTitle, programDesc;
+  final String? connectionErrorMessage,
+      programCoverUrl,
+      liveStreamId,
+      roomUrl,
+      roomEntryToken,
+      programTitle,
+      programDesc;
   final Community? community;
   final Organizers? organizers;
-
+  final List<ChatMessage>? messages;
+  final List<ReactionEvent>? reactions;
+  final List<GiftEvent>? gifts;
+  final List<String>? handQueue;
+  final int viewerCount;
 
   /// Creates a new state object with updated values.
   LiveStreamState1 copyWith({
@@ -49,9 +63,15 @@ class LiveStreamState1 extends Equatable {
     Organizers? organizers,
     String? programTitle,
     String? programDesc,
+    List<ChatMessage>? messages,
+    List<ReactionEvent>? reactions,
+    List<GiftEvent>? gifts,
+    List<String>? handQueue,
+    int? viewerCount,
   }) {
     return LiveStreamState1(
-      audioConnectionStatus: audioConnectionStatus ?? this.audioConnectionStatus,
+      audioConnectionStatus:
+          audioConnectionStatus ?? this.audioConnectionStatus,
       wsConnectionStatus: wsConnectionStatus ?? this.wsConnectionStatus,
       participants: participants ?? this.participants,
       activeSpeakerIds: activeSpeakerIds ?? this.activeSpeakerIds,
@@ -65,34 +85,42 @@ class LiveStreamState1 extends Equatable {
       organizers: organizers ?? this.organizers,
       programTitle: programTitle ?? this.programTitle,
       programDesc: programDesc ?? this.programDesc,
+      messages: messages ?? this.messages,
+      reactions: reactions ?? this.reactions,
+      gifts: gifts ?? this.gifts,
+      handQueue: handQueue ?? this.handQueue,
+      viewerCount: viewerCount ?? this.viewerCount,
     );
   }
 
   @override
   List<Object?> get props => <Object?>[
-      audioConnectionStatus,
-      wsConnectionStatus,
-      participants,
-      activeSpeakerIds,
-      isMicrophoneEnabled,
-      connectionErrorMessage,
-      programCoverUrl,
-      liveStreamId,
-      roomUrl,
-      roomEntryToken,
-      community,
-      organizers,
-      programTitle,
-      programDesc,
-    ];
+        audioConnectionStatus,
+        wsConnectionStatus,
+        participants,
+        activeSpeakerIds,
+        isMicrophoneEnabled,
+        connectionErrorMessage,
+        programCoverUrl,
+        liveStreamId,
+        roomUrl,
+        roomEntryToken,
+        community,
+        organizers,
+        programTitle,
+        programDesc,
+        messages,
+        reactions,
+        gifts,
+        handQueue,
+        viewerCount,
+      ];
 }
-
 
 typedef Organizers = ({
   LiveSessionParticipant? host,
   List<LiveSessionParticipant?>? cohosts,
 });
-
 
 class LiveSessionParticipant extends User {
   const LiveSessionParticipant({
@@ -121,7 +149,6 @@ class LiveSessionParticipant extends User {
         participantType = json['participant_type'],
         roomParticipantId = json['room_participant_id'],
         super.fromJson();
-
 
   /// 🔊 Audio-specific fields
   final bool isMuted, isSpeaking, isLocal;
