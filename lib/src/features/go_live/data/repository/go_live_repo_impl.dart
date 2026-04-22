@@ -23,12 +23,13 @@ class GoLiveRepoImpl implements GoLiveRepo {
       );
       
       final dynamic data = response.data['data'];
+      final dynamic tokenObject = data?['token'];
 
       final LiveProgramEntryToken entryToken = (
-        roomEntryToken: data?['token'],
-        roomUrl: data?['livekit_url'],
-        streamId: data?['livestream_id'] ?? data?['room'],
-        roomParticipantId: data?['identity'],
+        roomEntryToken: tokenObject?['token'],
+        roomUrl: tokenObject?['livekit_url'],
+        streamId: data?['livestream_id'] ?? tokenObject?['room'],
+        roomParticipantId: tokenObject?['identity'],
       );
       return Successful<LiveProgramEntryToken>(data: entryToken);
     }

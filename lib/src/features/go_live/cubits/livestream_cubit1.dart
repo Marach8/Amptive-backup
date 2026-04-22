@@ -2,6 +2,8 @@ import 'dart:async';
 import 'dart:developer' show log;
 import 'package:amptive/src/config/services/audio_streaming_service/audio_streaming_service.dart';
 import 'package:amptive/src/config/services/audio_streaming_service/live_kit_audio_streaming_impl.dart';
+import 'package:amptive/src/config/services/ws_notif_service/ws_channel_service_impl.dart';
+import 'package:amptive/src/config/services/ws_notif_service/ws_notif_service.dart';
 import 'package:amptive/src/features/go_live/data/models/livestream_state.dart';
 import 'package:amptive/src/features/go_live/presentation/screens/live_program_screen.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -9,9 +11,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 class LiveStreamCubit1 extends Cubit<LiveStreamState1> {
   LiveStreamCubit1({
     ATAudioStreamingService? extStreamService,
+    WSNotificationService? extWSNotificationService,
     LiveStreamState1? initialState,
   }) : streamingService = extStreamService ?? LiveKitAudioStreamingService(),
-    super(initialState ?? const LiveStreamState1()) {
+      wsNotificationService = extWSNotificationService ?? WSChannelNotifServiceImpl(),
+        super(initialState ?? const LiveStreamState1()) {
     _listenToStreams();
 
     final Organizers organizers = _retriveOrganizers(state);
@@ -19,6 +23,7 @@ class LiveStreamCubit1 extends Cubit<LiveStreamState1> {
   }
 
   final ATAudioStreamingService streamingService;
+  final WSNotificationService wsNotificationService;
 
   // Individual, explicitly typed StreamSubscriptions for clarity and safety.
   StreamSubscription<LiveSessionConnectionStatus>? _connectionStateSub;
@@ -62,7 +67,8 @@ class LiveStreamCubit1 extends Cubit<LiveStreamState1> {
       List<LiveSessionParticipant>.from(
         currState.participants ?? <LiveSessionParticipant>[]);
 
-    List<LiveSessionParticipant?>? cohosts = currState.organizers?.cohosts;
+    List<LiveSessionParticipant?>? cohosts =
+      currState.organizers?.cohosts;
     LiveSessionParticipant? host = currState.organizers?.host;
 
     if(host == null){
@@ -99,7 +105,9 @@ class LiveStreamCubit1 extends Cubit<LiveStreamState1> {
 
     try {
       await streamingService.connect(
-        roomUrl: roomUrl, participantToken: participantToken);
+        roomUrl: roomUrl,
+        participantToken: participantToken
+      );
       emit(state.copyWith(
         connectionStatus: LiveSessionConnectionStatus.connected
       ));
@@ -113,8 +121,6 @@ class LiveStreamCubit1 extends Cubit<LiveStreamState1> {
 
   Future<void> toggleMicrophone() async {
     await streamingService.toggleMic();
-    // The state of the microphone should ideally come from a stream as well.
-    // For now, we optimistically update the UI.
     emit(state.copyWith(isMicrophoneEnabled: !state.isMicrophoneEnabled));
   }
 
@@ -131,7 +137,6 @@ class LiveStreamCubit1 extends Cubit<LiveStreamState1> {
     
     // Dispose of the streaming service resources.
     streamingService.dispose();
-    
     return super.close();
   }
 }
