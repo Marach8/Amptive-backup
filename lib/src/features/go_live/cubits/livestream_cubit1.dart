@@ -52,13 +52,15 @@ class LiveStreamCubit1 extends Cubit<LiveStreamState1> {
 
     // Listen to ws connection state changes
     _wsConnectionStateSub = wsNotificationService.connectionStream
-        .listen((WSConnectionStatus connectionStatus) {
+        .listen((WSConnectionStatus connectionStatus) async{
       log('This is the websocket connection status: $connectionStatus');
       if (connectionStatus == WSConnectionStatus.connected) {
-        wsNotificationService.sendMessage({
-          'type': 'join',
-          'streamId': state.liveStreamId,
-        });
+        // await Future.delayed(
+        //   const Duration(seconds: 3),
+        // );
+        // wsNotificationService.sendMessage({
+        //   'type': 'join',
+        // });
       }
       emit(state.copyWith(wsConnectionStatus: connectionStatus));
     });
@@ -148,7 +150,7 @@ class LiveStreamCubit1 extends Cubit<LiveStreamState1> {
       }
 
       final String wsUrl =
-          '${ATEndpoints.wsStream}$streamId?token=$participantToken!';
+          '${ATEndpoints.wsStream}$streamId?token=$participantToken';
       await streamingService.connect(
           roomUrl: roomUrl, participantToken: participantToken);
 

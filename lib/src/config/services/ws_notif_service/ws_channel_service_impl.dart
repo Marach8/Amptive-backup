@@ -52,8 +52,14 @@ class WSChannelNotifServiceImpl implements WSNotificationService {
 
       _subscription = _channel!.stream.listen(
         _onMessage,
-        onDone: _onDisconnected,
-        onError: _onError,
+        onDone: () {
+          log('Socket closed by server');
+          _onDisconnected();
+        },
+        onError: (error) {
+          log('Socket error: $error');
+          _onError(error);
+        },
         cancelOnError: false,
       );
 

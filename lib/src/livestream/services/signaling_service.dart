@@ -62,7 +62,7 @@ class SignalingService extends BaseWsService {
   @override
   String buildConnectUrl() {
     final String base =
-        '${ATEndpoints.wsStream}$_streamId?token=$_resolvedToken!';
+        '${ATEndpoints.wsStream}$_streamId?token=$_resolvedToken';
     return base;
   }
 
