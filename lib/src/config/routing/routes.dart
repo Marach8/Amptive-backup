@@ -76,6 +76,7 @@ final GoRouter amptiveAppRouter = GoRouter(
   initialLocation: ATRoutes.mainAppShell.addSlash,
   //redirect: tempRedirect,
   //initialLocation: ATRoutes.temporaryLoginScreen.addSlash,
+
   routes: <RouteBase>[
     GoRoute(
         name: ATRoutes.POST_ONBOARDING_SCREEN,

@@ -87,7 +87,7 @@ Future<ApiResponse<MarkNotificationAsReadResponseModel>> markNotificationAsRead(
 Future<ApiResponse<dynamic>> markAllNotificationsAsRead() async {
   try {
     final Response<dynamic> response = await networkService.patch(
-      '${ATEndpoints.getNotifications}/read',
+      '${ATEndpoints.getNotifications}/read-all',
     );
     return Successful<dynamic>(data: response.data);
   } catch (e) {

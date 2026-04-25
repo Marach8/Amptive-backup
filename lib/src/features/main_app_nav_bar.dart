@@ -1,6 +1,6 @@
 import 'package:amptive/src/config/api_response_and_app_state.dart';
 import 'package:amptive/src/config/config_export.dart';
-import 'package:amptive/src/features/notifications/cubits/get_notifications_cubit.dart';
+import 'package:amptive/src/features/notifications/cubits/notifications_cubit.dart';
 import 'package:amptive/src/features/notifications/data/models/get_notifications_response_model.dart';
 import 'package:amptive/src/shared/animated_slide.dart';
 import 'package:amptive/src/shared/global_model_objects.dart';
@@ -191,6 +191,10 @@ class ATNavBarBloc extends Cubit<ATNavBarState> {
       shouldShowNav: state.shouldShowNav,
       hasSeenNotifications: hasSeenNotifs,
     ));
+    if (index == 3) {
+   
+    context.read<GetNotificationsCubit>().markAllNotificationsAsRead();
+  }
 
     if (index == 2) {
       context.pushNamed(ATRoutes.GO_LIVE_TYPE_SELECTION);

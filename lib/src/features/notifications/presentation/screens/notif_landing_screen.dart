@@ -2,12 +2,14 @@ import 'package:amptive/src/config/api_response_and_app_state.dart';
 import 'package:amptive/src/config/config_export.dart';
 import 'package:amptive/src/config/utils/dialogs/app_notification_dialog.dart';
 import 'package:amptive/src/features/main_app_nav_bar.dart';
-import 'package:amptive/src/features/notifications/cubits/get_notifications_cubit.dart';
+import 'package:amptive/src/features/notifications/cubits/notifications_cubit.dart';
 import 'package:amptive/src/features/notifications/data/models/get_notifications_response_model.dart';
 import 'package:amptive/src/config/utils/dialogs/notification/view_cohost_invite.dart';
 import 'package:amptive/src/features/notifications/presentation/widgets/notif_widgets_export.dart';
 import 'package:amptive/src/services/create_show/create_show_service.dart';
+import 'package:amptive/src/services/create_show/create_show_service.dart';
 import 'package:amptive/src/shared/global_model_objects.dart';
+import 'package:amptive/src/shared/shimmer.dart';
 import 'package:amptive/src/shared/shimmer.dart';
 import 'package:flutter/material.dart';
 import 'package:amptive/src/shared/app_bar_widget.dart';
@@ -53,6 +55,7 @@ class _NotificationTabViewContentState
           widget.onScroll!();
         });
       }
+     // context.read<GetNotificationsCubit>().markAllNotificationsAsRead();
     });
   }
 
@@ -62,6 +65,8 @@ class _NotificationTabViewContentState
       onNotification: (ScrollNotification scrollInfo) {
         return context.read<ATNavBarBloc>().ctrlNavVisibility(scrollInfo);
       },
+      
+      
       child: NestedScrollView(
         key: widget.nestedKey,
         floatHeaderSlivers: true,
@@ -119,6 +124,7 @@ class _NotificationTabViewContentState
                   final bool hasMore = notifications?.hasMore ?? false;
                   final int count = notificationsList.length;
 
+
                   return RefreshIndicator(
                     onRefresh: () => context
                         .read<GetNotificationsCubit>()
@@ -145,28 +151,31 @@ class _NotificationTabViewContentState
                           }
                         }
 
-                        if (item.type == 'follower') {
+                        if (item.category == 'follower') {
                           return NewFollowerNotif(
                             follower: getHostList().first,
                             timeOfFollow: '20s',
                           );
                         }
-                        if (item.type == 'reschedule') {
+                        if (item.category == 'reschedule') {
                           return const ProgramRescheduledNotif(
                             progName: 'Trump in Nigera',
                             progImg: ATImgStrings.JOE_POMP_SHOW,
                             timeOfReschedule: '1h',
                           );
                         }
-                        if (item.type == 'program_ended') {
-                          return const ProgramEndedNotif(
-                            progName: 'We Can Do Hard Things',
+                        if (item.category == 'livestream_auto_ended') {
+                          return ProgramEndedNotif(
+                            progName: item.message ?? 'Your program',
                             progImg: ATImgStrings.JOE_POMP_SHOW,
-                            timeOfEnd: '1m',
+                            timeOfEnd: item.createdAt?.toTimeAgo ?? '1m',
+                            ontap: () {
+                              markRead();
+                            },
                           );
                         }
-                        if (item.type == 'program_live' ||
-                            item.type == 'live') {
+                if (item.category == 'program_live' ||
+                            item.category == 'live') {
                           return const ProgramIsLiveNotif(
                             progImg: ATImgStrings.jpeg1,
                             progName: 'Sports Wednessday',
@@ -174,20 +183,20 @@ class _NotificationTabViewContentState
                             isEvent: false,
                           );
                         }
-                        if (item.type == 'declined_cohost_request') {
+                        if (item.category == 'declined_cohost_request') {
                           return DeclinedCohostInviteNotif(
                             cohost: getHostList()[3],
                             timeOfDecline: '5h',
                           );
                         }
-                        if (item.type == 'cohost_invite_payment') {
+                        if (item.category == 'cohost_invite_payment') {
                           return const CohostInvitePaymentNotif(
                             progName: 'Football Weekly',
                             progImg: ATImgStrings.jpeg3,
                             inviteTime: '5h',
                           );
                         }
-                        if (item.type == 'cohost_invite') {
+                        if (item.category == 'cohost_invite') {
                           return CohostInviteNotif(
                             progOwner: getHostList()[6],
                             progName: 'Sports Weekly',
@@ -207,7 +216,7 @@ class _NotificationTabViewContentState
                             },
                           );
                         }
-                        if (item.type == 'program_about_to_start') {
+                        if (item.category == 'program_about_to_start') {
                           return const ProgramAbout2StartNotif(
                             notifTime: '10m',
                             progImg: ATImgStrings.techCard,
@@ -215,13 +224,13 @@ class _NotificationTabViewContentState
                             progName: 'Talks With Jozy',
                           );
                         }
-                        if (item.type == 'subscriber') {
+                        if (item.category == 'subscriber') {
                           return NewSubscriberNotif(
                             subscriber: getHostList()[2],
                             timeOfSub: '56s',
                           );
                         }
-                        if (item.type == 'attendees') {
+                        if (item.category == 'attendees') {
                           return NewAttendeesNotif(
                             attendees: getHostList().take(3).toList(),
                             progName: 'Bitcoin Beach',
@@ -229,26 +238,26 @@ class _NotificationTabViewContentState
                             time: '23h',
                           );
                         }
-                        if (item.type == 'gifters') {
+                        if (item.category == 'gifters') {
                           return NewGiftersNotif(
                             gifters: getHostList().reversed.take(3).toList(),
                             progName: 'Trump Is Winning',
                             time: '4s',
                           );
                         }
-                        if (item.type == 'withdrawal_processed') {
+                        if (item.category == 'withdrawal_processed') {
                           return const WithdrawalProcessedNotif(
                             amount: '500,000',
                             time: '26m',
                           );
                         }
-                        if (item.type == 'deposit_success') {
+                        if (item.category == 'deposit_success') {
                           return const DepositSuccessNotif(
                             amount: '1,000,000',
                             time: '35s',
                           );
                         }
-                        if (item.type == 'money_received') {
+                        if (item.category == 'money_received') {
                           return const MoneyReceivedNotif(
                             amount: '55,050',
                             time: '2h',
@@ -257,7 +266,7 @@ class _NotificationTabViewContentState
                         }
 
                         return GenericAppNotificationTile(
-                          title: item.title ?? '',
+                          title: item.title ?? 'Update',
                           subtitle: item.message ?? '',
                           isRead: item.isRead ?? false,
                           time: item.createdAt?.toTimeAgo,
@@ -267,8 +276,10 @@ class _NotificationTabViewContentState
                         );
                       },
                     ),
-                  );
+                    );
+                  
                 }),
+                
             };
           },
         ),
@@ -313,7 +324,7 @@ class _NotificationShimmerItem extends StatelessWidget {
             ),
           ),
         ],
-      ),
+      )
     );
   }
 }

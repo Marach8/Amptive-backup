@@ -350,8 +350,10 @@ class ProgramEndedNotif extends StatelessWidget {
     required this.progName,
     required this.progImg,
     required this.timeOfEnd,
+    this.ontap
   });
   final String progName, timeOfEnd, progImg;
+  final VoidCallback? ontap;
 
   @override
   Widget build(BuildContext context) {
@@ -371,12 +373,12 @@ class ProgramEndedNotif extends StatelessWidget {
           width: 10,
         ),
         Expanded(
-          child: ATRichText(maxLines: 2, items: <String, TextStyle>{
+          child: ATRichText(maxLines: 3, items: <String, TextStyle>{
             progName: Theme.of(context)
                 .textTheme
                 .bodySmall!
                 .copyWith(fontSize: ATSizes.size13),
-            ' ${ATStrings.HAS_ENDED}. $timeOfEnd ${ATStrings.AGO}'
+            ' $timeOfEnd ${ATStrings.AGO}'
                 .toLowerCase(): Theme.of(context).textTheme.titleSmall!,
           }),
         ),

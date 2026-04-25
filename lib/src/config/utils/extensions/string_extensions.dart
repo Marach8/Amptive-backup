@@ -55,7 +55,6 @@ extension ExtString on String {
   String get toTimeAgo {
   if (isEmpty) return 'now';
   try {
-    // 1. If the 'Z' is missing, add it to force UTC parsing
     String normalizedDate = this;
     if (!normalizedDate.endsWith('Z') && !normalizedDate.contains('+')) {
       normalizedDate = '${normalizedDate}Z';
@@ -65,7 +64,6 @@ extension ExtString on String {
     DateTime now = DateTime.now();
     Duration diff = now.difference(dateTime);
 
-    // 2. Logic to handle the display
     if (diff.inDays > 365) return '${(diff.inDays / 365).floor()}y';
     if (diff.inDays > 30) return '${(diff.inDays / 30).floor()}mo';
     if (diff.inDays > 0) return '${diff.inDays}d';

@@ -149,7 +149,6 @@ class GetNotificationsCubit extends Cubit<ATAppState<NotificationsResponseModel>
     final NotificationsResponseModel? currentData = currentNotifications;
     if (currentData == null) return;
 
-    final int currentUnreadCount = currentData.unreadCount ?? 0;
 
     try {
       final ApiResponse<dynamic> response =
