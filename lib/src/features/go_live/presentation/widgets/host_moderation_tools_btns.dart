@@ -121,8 +121,9 @@ class _HostModerationToolsBtnsState extends State<HostModerationToolsBtns> {
               maxLines: null,
               isDense: true,
               enabledBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(14),
-                  borderSide: BorderSide(color: ATColors.transparent)),
+                borderRadius: BorderRadius.circular(14),
+                borderSide: BorderSide(color: ATColors.transparent)
+              ),
               prefixIcon: const SizedBox(
                 width: 10,
               ),

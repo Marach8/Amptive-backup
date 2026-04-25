@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:amptive/src/features/go_live/cubits/livestream_cubit1.dart';
 import 'package:amptive/src/features/go_live/data/models/livestream_state.dart';
 import 'package:amptive/src/global_export.dart';
@@ -36,10 +38,11 @@ class AudienceViewOfHostAndCohosts extends StatelessWidget {
                 return Stack(
                   alignment: Alignment.center,
                   children: <Widget>[
-                      // RenderAHost(
-                      //   top: onlyHost ? 80 : 6,
-                      //   onTap: (Host? host){}
-                      // ),
+                      RenderAHost(
+                        top: onlyHost ? 80 : 6,
+                        host: mainHost,
+                        onTap: (mainHost){}
+                      ),
                     if (cohosts.isNotEmpty)
                       RenderACohost(
                         bottom:

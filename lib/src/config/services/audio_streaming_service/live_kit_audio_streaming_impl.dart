@@ -92,8 +92,11 @@ class LiveKitAudioStreamingService implements ATAudioStreamingService {
     _roomSub?.call();
 
     _roomSub = _room.events.listen((RoomEvent event) {
-      if (event is ParticipantConnectedEvent ||
-          event is ParticipantDisconnectedEvent ||
+      if(event is ParticipantConnectedEvent){
+        log('New participant joined.: ${event.participant.identity}, ${event.participant.name}');
+        _emitParticipants();
+      }
+      if (event is ParticipantDisconnectedEvent ||
           event is TrackMutedEvent ||
           event is TrackUnmutedEvent) {
         _emitParticipants();
@@ -111,6 +114,7 @@ class LiveKitAudioStreamingService implements ATAudioStreamingService {
           },
         );
       }
+      
       if(event is DataReceivedEvent){
         final foo = event.participant;
         final topic = event.topic;
