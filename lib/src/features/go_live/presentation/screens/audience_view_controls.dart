@@ -1,5 +1,6 @@
 import 'package:amptive/src/features/go_live/cubits/livestream_bloc.dart';
 import 'package:amptive/src/features/go_live/cubits/livestream_cubit1.dart';
+import 'package:amptive/src/features/go_live/data/models/livestream_state.dart';
 import 'package:amptive/src/global_export.dart';
 import 'package:amptive/src/shared/circular_image.dart';
 import 'package:amptive/src/shared/image_loader_widget.dart';
@@ -119,29 +120,30 @@ class _AudienceViewControlsState
               builder: (_, bool isFocused, __) {
                 if (isFocused) {
                   return ValueListenableBuilder<bool>(
-                      valueListenable: _hasTextNotifier,
-                      builder: (_, bool hasText, __) {
-                        return GestureDetector(
-                          onTapDown: hasText
-                              ? (TapDownDetails details) {
-                                  final String message = _cntrl.text.trim();
-                                  if (message.isNotEmpty) {
-                                    context.read<LiveStreamCubit1>()
-                                      .sendChat(message);
-                                  }
-                                  _cntrl.clear();
+                    valueListenable: _hasTextNotifier,
+                    builder: (_, bool hasText, __) {
+                      return GestureDetector(
+                        onTap: hasText
+                            ? () {
+                                final String message = _cntrl.text.trim();
+                                if (message.isNotEmpty) {
+                                  context.read<LiveStreamCubit1>()
+                                    .sendChat(message);
                                 }
-                              : null,
-                          child: Padding(
-                            padding: const EdgeInsets.only(left: 10),
-                            child: Icon(
-                              Icons.send,
-                              color:
-                                  hasText ? ATColors.white : ATColors.lightDark,
-                            ),
+                                _cntrl.clear();
+                              }
+                            : null,
+                        child: Padding(
+                          padding: const EdgeInsets.only(left: 10),
+                          child: Icon(
+                            Icons.send,
+                            color:
+                                hasText ? ATColors.white : ATColors.lightDark,
                           ),
-                        );
-                      });
+                        ),
+                      );
+                    }
+                  );
                 }
 
                 return const _RowOfBtns();
@@ -155,25 +157,30 @@ class _RowOfBtns extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final LiveStreamState1 state = 
+      context.watch<LiveStreamCubit1>().state;
+    final bool isMicUnmuted = state.isMicEnabled;
     return Row(
       children: <Widget>[
         EachGoLiveControlBtn(
           onTap: () {
-            context
-                .read<AmptiveGoLiveSelectCoHostBloc>()
-                .hostAddCohost(getHostList()[6]);
+            context.read<LiveStreamCubit1>()
+              .toggleMicrophone(!isMicUnmuted);
           },
-          child: const Icon(Icons.mic, size: 20),
+          child: Icon(
+            isMicUnmuted ? Icons.mic : Icons.mic_off,
+            size: 20
+          ),
         ),
         EachGoLiveControlBtn(
           onTap: () {
-            context
-                .read<AmptiveGoLiveSelectCoHostBloc>()
-                .hostAddCohost(getHostList()[5]);
+            // context
+            //     .read<AmptiveGoLiveSelectCoHostBloc>()
+            //     .hostAddCohost(getHostList()[5]);
             //showFollowHostOrCohostDialog(context: context, host: getHostList().first);
           },
           child: const ATImgLoader(
-            imgPath: ATImgStrings.HAND_RAISING_ICON,
+            imgPath: ATImgStrings.handRaiseIcon,
             height: 20,
             width: 20,
             boxFit: BoxFit.fill,

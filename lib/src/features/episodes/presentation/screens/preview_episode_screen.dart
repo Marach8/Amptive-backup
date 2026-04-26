@@ -23,7 +23,7 @@ import 'package:amptive/src/features/auth/cubits/local_user_data_cubit.dart';
 import 'package:amptive/src/shared/back_button.dart';
 import 'package:amptive/src/shared/image_loader_widget.dart';
 import 'package:amptive/src/shared/live_indicators.dart';
-import 'package:amptive/src/features/go_live/models/go_live_program_params.dart';
+import 'package:amptive/src/features/go_live/data/models/deconstruct_inbound_events.dart';
 import 'package:nested/nested.dart';
 
 class PreviewEpisodeScreen extends StatelessWidget {

@@ -21,7 +21,7 @@ import '../global_export.dart';
 import '../services/go_live_service/go_live_service.dart';
 import '../services/notification/push_notification_service.dart';
 import 'go_live/go_live_export.dart';
-import 'go_live/models/go_live_program_params.dart';
+import 'go_live/data/models/deconstruct_inbound_events.dart';
 import 'go_live/cubits/livestream_bloc.dart';
 import 'notifications/presentation/screens/notif_landing_screen.dart';
 

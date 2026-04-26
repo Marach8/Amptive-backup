@@ -1,6 +1,7 @@
 import 'package:amptive/src/bloc/main_app/go_live_bloc/host_view/notifications_bloc.dart';
 import 'package:amptive/src/features/go_live/cubits/livestream_bloc.dart';
 import 'package:amptive/src/features/go_live/cubits/livestream_cubit1.dart';
+import 'package:amptive/src/features/go_live/data/models/livestream_state.dart';
 import 'package:amptive/src/features/go_live/presentation/widgets/host_moderation_tools_dialog.dart';
 import 'package:amptive/src/shared/circular_image.dart';
 import 'package:amptive/src/shared/image_loader_widget.dart';
@@ -146,8 +147,8 @@ class _HostModerationToolsBtnsState extends State<HostModerationToolsBtns> {
                         // ignore: avoid_print
                         print('INNER: hasText=$hasText');
                         return GestureDetector(
-                          onTapDown: hasText
-                              ? (TapDownDetails details) {
+                          onTap: hasText
+                              ? () {
                                   final String message = _cntrl.text.trim();
                                   if (message.isNotEmpty) {
                                     context.read<LiveStreamCubit1>()
@@ -165,7 +166,8 @@ class _HostModerationToolsBtnsState extends State<HostModerationToolsBtns> {
                             ),
                           ),
                         );
-                      });
+                      }
+                    );
                 }
 
                 return const _RowOfBtns();
@@ -179,13 +181,21 @@ class _RowOfBtns extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final LiveStreamState1 state = 
+      context.watch<LiveStreamCubit1>().state;
+    final bool isMicUnmuted = state.isMicEnabled;
+
     return Row(
       children: <Widget>[
         EachGoLiveControlBtn(
           onTap: () {
-            //context.read<LivestreamBloc>().add(const ToggleMuteEvent());
+            context.read<LiveStreamCubit1>()
+              .toggleMicrophone(!isMicUnmuted);
           },
-          child: const Icon(Icons.mic, size: 20),
+          child: Icon(
+            isMicUnmuted ? Icons.mic : Icons.mic_off,
+            size: 20
+          ),
         ),
         EachGoLiveControlBtn(
           onTap: () {
@@ -194,7 +204,7 @@ class _RowOfBtns extends StatelessWidget {
                 .addPinnedMsgNotification(getHostList()[3], 'CO-HOST');
           },
           child: const ATImgLoader(
-            imgPath: ATImgStrings.HAND_RAISING_ICON,
+            imgPath: ATImgStrings.handRaiseIcon,
             height: 20,
             width: 20,
             boxFit: BoxFit.fill,

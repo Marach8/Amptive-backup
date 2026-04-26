@@ -170,12 +170,12 @@ class SignalingService extends BaseWsService {
         ),
       SignalingEventType.chat => ChatEvent(ChatMessage.fromJson(json)),
       SignalingEventType.reaction =>
-        ReactionReceivedEvent(ReactionEvent.fromJson(json)),
+        ReactionReceivedEvent(Reaction.fromJson(json)),
       SignalingEventType.handRaise => HandRaiseEvent(
           identity: json['user_id'] as String? ?? '',
           action: json['action'] as String? ?? '',
         ),
-      SignalingEventType.gift => GiftReceivedEvent(GiftEvent.fromJson(json)),
+      SignalingEventType.gift => GiftReceivedEvent(Gift.fromJson(json)),
       SignalingEventType.viewerCount =>
         ViewerCountEvent(json['count'] as int? ?? 0),
       SignalingEventType.participantCount =>

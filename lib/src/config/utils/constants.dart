@@ -56,3 +56,42 @@ class SignalingEventType {
   static const String pollEnded = 'poll_ended';
   static const String gift = 'gift';
 }
+
+
+enum InboundEvent {
+  initial('initial_state'),
+  streamStarted('stream_started'),
+  streamEnded('stream_ended'),
+  error('error'),
+  pong('pong'),
+  participantJoin('participant_join'),
+  participantLeave('participant_leave'),
+  participantUpdated('participant_updated'),
+  chat('chat'),
+  reaction('reaction'),
+  handRaise('hand_raise'),
+  viewerCount('viewer_count'),
+  participantCount('participant_count'),
+  userMuted('user_muted'),
+  userBanned('user_banned'),
+  userKicked('user_kicked'),
+  mediaStateChanged('media_state_changed'),
+  screenShareStarted('screen_share_started'),
+  screenShareEnded('screen_share_ended'),
+  pollCreated('poll_created'),
+  pollVoted('poll_voted'),
+  pollEnded('poll_ended'),
+  gift('gift');
+
+  const InboundEvent(this.value);
+
+  final String value;
+
+  static final Map<String, InboundEvent> _map = <String, InboundEvent>{
+    for (final InboundEvent e in InboundEvent.values) e.value: e,
+  };
+
+  static InboundEvent? fromValue(String? value) {
+    return _map[value];
+  }
+}

@@ -58,7 +58,7 @@ class ATImgStrings {
   static const String BLUE_ROTOR_IMG =
       '$_svgPath/Moving Gradient Animation.svg';
   static const String SELECT_IMG_ICON = '$_svgPath/Rectangle 1.svg';
-  static const String HAND_RAISING_ICON = '$_svgPath/Vector.svg';
+  static const String handRaiseIcon = '$_svgPath/Vector.svg';
   // static const String CREATOR_MIC = '$_svgPath/creator-microphone.svg';
   // static const String CREATOR_GIF = '$_svgPath/creatorgif.svg';
   // static const String CREATOR_GLOBE = '$_svgPath/internet.svg';

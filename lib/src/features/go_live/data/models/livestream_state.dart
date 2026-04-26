@@ -10,7 +10,7 @@ class LiveStreamState1 extends Equatable {
     this.wsConnectionStatus = WSConnectionStatus.initial,
     this.participants,
     this.activeSpeakerIds,
-    this.isMicrophoneEnabled = true,
+    this.isMicEnabled = true,
     this.connectionErrorMessage,
     this.programCoverUrl,
     this.liveStreamId,
@@ -25,13 +25,14 @@ class LiveStreamState1 extends Equatable {
     this.gifts,
     this.handQueue,
     this.viewerCount = 0,
+    this.messagesIds,
   });
 
   final LiveSessionConnectionStatus audioConnectionStatus;
   final WSConnectionStatus wsConnectionStatus;
-  final List<LiveSessionParticipant>? participants;
+  final Map<String, LivestreamParticipant>? participants;
   final List<String>? activeSpeakerIds;
-  final bool isMicrophoneEnabled;
+  final bool isMicEnabled;
   final String? connectionErrorMessage,
       programCoverUrl,
       liveStreamId,
@@ -41,9 +42,10 @@ class LiveStreamState1 extends Equatable {
       programDesc;
   final Community? community;
   final Organizers? organizers;
-  final List<ChatMessage>? messages;
-  final List<ReactionEvent>? reactions;
-  final List<GiftEvent>? gifts;
+  final Map<String, ChatMessage>? messages;
+  final List<String>? messagesIds;
+  final Map<String, Reaction>? reactions;
+  final Map<String, Gift>? gifts;
   final List<String>? handQueue;
   final int viewerCount;
 
@@ -51,9 +53,9 @@ class LiveStreamState1 extends Equatable {
   LiveStreamState1 copyWith({
     LiveSessionConnectionStatus? audioConnectionStatus,
     WSConnectionStatus? wsConnectionStatus,
-    List<LiveSessionParticipant>? participants,
+    Map<String, LivestreamParticipant>? participants,
     List<String>? activeSpeakerIds,
-    bool? isMicrophoneEnabled,
+    bool? isMicEnabled,
     String? errorMessage,
     String? programCoverUrl,
     String? liveStreamId,
@@ -63,9 +65,10 @@ class LiveStreamState1 extends Equatable {
     Organizers? organizers,
     String? programTitle,
     String? programDesc,
-    List<ChatMessage>? messages,
-    List<ReactionEvent>? reactions,
-    List<GiftEvent>? gifts,
+    Map<String, ChatMessage>? messages,
+    List<String>? messagesIds,
+    Map<String, Reaction>? reactions,
+    Map<String, Gift>? gifts,
     List<String>? handQueue,
     int? viewerCount,
   }) {
@@ -74,7 +77,7 @@ class LiveStreamState1 extends Equatable {
       wsConnectionStatus: wsConnectionStatus ?? this.wsConnectionStatus,
       participants: participants ?? this.participants,
       activeSpeakerIds: activeSpeakerIds ?? this.activeSpeakerIds,
-      isMicrophoneEnabled: isMicrophoneEnabled ?? this.isMicrophoneEnabled,
+      isMicEnabled: isMicEnabled ?? this.isMicEnabled,
       connectionErrorMessage: errorMessage ?? connectionErrorMessage,
       programCoverUrl: programCoverUrl ?? this.programCoverUrl,
       liveStreamId: liveStreamId ?? this.liveStreamId,
@@ -89,6 +92,7 @@ class LiveStreamState1 extends Equatable {
       gifts: gifts ?? this.gifts,
       handQueue: handQueue ?? this.handQueue,
       viewerCount: viewerCount ?? this.viewerCount,
+      messagesIds: messagesIds ?? this.messagesIds,
     );
   }
 
@@ -98,7 +102,7 @@ class LiveStreamState1 extends Equatable {
         wsConnectionStatus,
         participants,
         activeSpeakerIds,
-        isMicrophoneEnabled,
+        isMicEnabled,
         connectionErrorMessage,
         programCoverUrl,
         liveStreamId,
@@ -113,6 +117,7 @@ class LiveStreamState1 extends Equatable {
         gifts,
         handQueue,
         viewerCount,
+        messagesIds,
       ];
 }
 

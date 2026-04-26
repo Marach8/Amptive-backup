@@ -64,8 +64,8 @@ class _GoLiveCommentsState extends State<GoLiveComments> {
   Widget build(BuildContext context) {
     return BlocBuilder<LiveStreamCubit1, LiveStreamState1>(
       builder: (BuildContext context, LiveStreamState1 state) {
-        final List<ChatMessage> messages = state.messages 
-          ?? <ChatMessage>[];
+        final Map<String, ChatMessage>? messages = state.messages;
+        final List<String> messagesIds = state.messagesIds ?? <String>[];
 
         return Stack(
           alignment: Alignment.center,
@@ -78,9 +78,9 @@ class _GoLiveCommentsState extends State<GoLiveComments> {
                 physics: const BouncingScrollPhysics(),
                 controller: _scrollController,
                 padding: const EdgeInsets.fromLTRB(15, 50, 15, 50),
-                itemCount: messages.isEmpty ? 1 : messages.length,
+                itemCount: messagesIds.isEmpty ? 0 : messagesIds.length,
                 itemBuilder: (_, int listIndex) {
-                  if (messages.isEmpty) {
+                  if (messagesIds.isEmpty) {
                     return Padding(
                       padding: const EdgeInsets.only(bottom: 16),
                       child: Center(
@@ -95,13 +95,17 @@ class _GoLiveCommentsState extends State<GoLiveComments> {
                     );
                   }
 
-                  final ChatMessage message = messages[listIndex];
+                  final String id = messagesIds[listIndex];
+                  final ChatMessage message = messages?[id] ?? const ChatMessage();
                   return Padding(
                     padding: const EdgeInsets.only(bottom: 16),
                     child: Row(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
-                        ATCircularImage(diameter: 35, imagePath: ''),
+                        ATCircularImage(
+                          diameter: 35, 
+                        imagePath: message.avatar ?? ''
+                      ),
                         const SizedBox(
                           width: 8,
                         ),
@@ -109,13 +113,14 @@ class _GoLiveCommentsState extends State<GoLiveComments> {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: <Widget>[
-                              Text(message.displayName,
+                              Text(
+                                message.senderName ?? '',
                                   style: context.textTheme.bodySmall?.copyWith(
                                       color: ATColors.hexC2C2C2, height: 0.78)),
                               const SizedBox(
                                 height: 8,
                               ),
-                              Text(message.message,
+                              Text(message.message ?? '',
                                   maxLines: 2,
                                   style: context.textTheme.titleMedium
                                       ?.copyWith(

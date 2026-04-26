@@ -13,9 +13,6 @@ abstract class ATAudioStreamingService {
   /// Enable/disable microphone
   Future<void> setMicEnabled(bool enabled);
 
-  /// Toggle microphone
-  Future<void> toggleMic();
-
   /// Participants in room
   Stream<List<LiveSessionParticipant>> get participantsStream;
 

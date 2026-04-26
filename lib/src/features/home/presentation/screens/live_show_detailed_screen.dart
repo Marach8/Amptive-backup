@@ -1,6 +1,6 @@
 import 'dart:ui';
 import 'package:amptive/src/config/routing/route_strings.dart';
-import 'package:amptive/src/features/go_live/models/go_live_program_params.dart';
+import 'package:amptive/src/features/go_live/data/models/deconstruct_inbound_events.dart';
 import 'package:amptive/src/features/main_app_shell.dart';
 import 'package:amptive/src/global_export.dart';
 import 'package:amptive/src/shared/annotated_region__widget.dart';

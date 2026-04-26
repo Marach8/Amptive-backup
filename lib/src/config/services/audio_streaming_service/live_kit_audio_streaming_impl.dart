@@ -18,6 +18,7 @@ class LiveKitAudioStreamingService implements ATAudioStreamingService {
       StreamController<List<String>>.broadcast();
 
   CancelListenFunc? _roomSub;
+  LocalAudioTrack? _localAudioTrack;
 
   // ---------------------------------------------------------------------------
   // CONNECT
@@ -28,23 +29,45 @@ class LiveKitAudioStreamingService implements ATAudioStreamingService {
     required String roomUrl,
     required String participantToken,
   }) async {
-    try{
+    try {
       _listenToEvents();
+
       _connectionController.add(LiveSessionConnectionStatus.connecting);
-      await _room.connect(roomUrl, participantToken);
+
+      await _room.connect(
+        roomUrl,
+        participantToken,
+        connectOptions: const ConnectOptions(
+          autoSubscribe: true, // important
+        ),
+      );
+
+      await _room.setSpeakerOn(true);
+
       _connectionController.add(LiveSessionConnectionStatus.connected);
 
+      // // ✅ Create mic track
+      // _localAudioTrack = await LocalAudioTrack.create(
+      //   const AudioCaptureOptions(
+      //     // echoCancellation: true,
+      //     // noiseSuppression: true,
+      //     // autoGainControl: true,
+      //   ),
+      // );
+
+      // // ✅ Publish mic
+      // await _room.localParticipant?.publishAudioTrack(_localAudioTrack!);
+
+      // ✅ FORCE mic ON
+      // await _room.localParticipant?.setMicrophoneEnabled(true);
+
       _emitParticipants();
-    }
-    catch(e, s){
+    } catch (e, s) {
       log('Error connecting to live kit: $e, stack trace $s');
       _connectionController.add(LiveSessionConnectionStatus.disconnected);
     }
   }
 
-  // ---------------------------------------------------------------------------
-  // DISCONNECT
-  // ---------------------------------------------------------------------------
 
   @override
   Future<void> disconnect() async {
@@ -52,9 +75,6 @@ class LiveKitAudioStreamingService implements ATAudioStreamingService {
     _connectionController.add(LiveSessionConnectionStatus.disconnected);
   }
 
-  // ---------------------------------------------------------------------------
-  // MIC CONTROL
-  // ---------------------------------------------------------------------------
 
   @override
   Future<void> setMicEnabled(bool enabled) async {
@@ -62,15 +82,6 @@ class LiveKitAudioStreamingService implements ATAudioStreamingService {
     _emitParticipants();
   }
 
-  @override
-  Future<void> toggleMic() async {
-    final bool current = _room.localParticipant?.isMicrophoneEnabled() ?? false;
-    await setMicEnabled(!current);
-  }
-
-  // ---------------------------------------------------------------------------
-  // STREAMS
-  // ---------------------------------------------------------------------------
 
   @override
   Stream<List<LiveSessionParticipant>> get participantsStream =>
@@ -84,19 +95,17 @@ class LiveKitAudioStreamingService implements ATAudioStreamingService {
   Stream<List<String>> get activeSpeakersStream =>
       _activeSpeakersController.stream;
 
-  // ---------------------------------------------------------------------------
-  // EVENTS
-  // ---------------------------------------------------------------------------
+
 
   void _listenToEvents() {
     _roomSub?.call();
 
     _roomSub = _room.events.listen((RoomEvent event) {
-      if(event is ParticipantConnectedEvent){
-        log('New participant joined.: ${event.participant.identity}, ${event.participant.name}');
-        _emitParticipants();
-      }
-      if (event is ParticipantDisconnectedEvent ||
+      // if(event is ParticipantConnectedEvent){
+      //   log('New participant joined.: ${event.participant.identity}, ${event.participant.name}');
+      //   _emitParticipants();
+      // }
+      if (event is ParticipantConnectedEvent || event is ParticipantDisconnectedEvent ||
           event is TrackMutedEvent ||
           event is TrackUnmutedEvent) {
         _emitParticipants();
@@ -204,6 +213,7 @@ class LiveKitAudioStreamingService implements ATAudioStreamingService {
 
   @override
   Future<void> dispose() async {
+    await _localAudioTrack?.dispose();
     await _roomSub?.call();
     await _participantsController.close();
     await _connectionController.close();

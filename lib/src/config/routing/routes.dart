@@ -59,7 +59,7 @@ import '../../features/discover/presentation/views/community_home_screen.dart';
 import '../../features/discover/presentation/views/society_hashtag_screen.dart';
 import '../../features/discover/presentation/views/trending_society_screen.dart';
 import '../../features/go_live/go_live_export.dart';
-import '../../features/go_live/models/go_live_program_params.dart';
+import '../../features/go_live/data/models/deconstruct_inbound_events.dart';
 import '../../features/home/presentation/screens/live_event_detailed_screen.dart';
 import '../../features/profile/presentation/screens/edit_profile_landing_screen.dart';
 import '../../features/profile/presentation/screens/edit_socials_screen.dart';

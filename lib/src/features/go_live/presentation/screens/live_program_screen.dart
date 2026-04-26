@@ -51,9 +51,6 @@ class LiveProgramScreen extends StatelessWidget {
               roomUrl: liveScreenEntryParams?.roomUrl,
               roomEntryToken: liveScreenEntryParams?.roomEntryToken,
               community: liveScreenEntryParams?.community,
-              participants: <LiveSessionParticipant>[
-                participant,
-              ],
             )
           ),
         )
@@ -98,6 +95,7 @@ class __SubWidgetState extends State<_SubWidget> {
   @override
   void dispose() {
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
+    context.read<LiveStreamCubit1>().disconnect();
     super.dispose();
   }
 

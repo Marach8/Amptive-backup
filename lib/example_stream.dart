@@ -94,7 +94,7 @@ class _LivestreamPageState extends State<LivestreamPage>
         final id = _controller.mediaService.localParticipant?.identity;
         final isSpeaker = id != null &&
             _controller.state.participants
-                .any((p) => p.identity == id && p.isSpeaker);
+                .any((p) => p.userId == id && p.isSpeaker);
         if (isSpeaker) _controller.mediaService.toggleMicrophone(true);
         break;
       default:
@@ -648,7 +648,7 @@ class _LivestreamPageState extends State<LivestreamPage>
                 borderRadius: BorderRadius.circular(20),
                 border: Border.all(color: _C.border),
               ),
-              child: Text('${r.emoji}  ${r.identity}',
+              child: Text('${r.emoji}  ${r.senderId}',
                   style: const TextStyle(
                       color: _C.textSecondary, fontSize: 11)),
             ),
@@ -1109,11 +1109,9 @@ class _ChatLine extends StatelessWidget {
                 color: _C.surfaceHigh,
                 border: Border.all(color: _C.border),
               ),
-              child: Center(
+              child: const Center(
                 child: Text(
-                  message.displayName.isNotEmpty
-                      ? message.displayName[0].toUpperCase()
-                      : '?',
+                  'foo',
                   style: const TextStyle(
                       color: _C.textPrimary, fontSize: 11,
                       fontWeight: FontWeight.w600),
@@ -1127,7 +1125,7 @@ class _ChatLine extends StatelessWidget {
               text: TextSpan(
                 children: [
                   TextSpan(
-                    text: '${message.displayName}  ',
+                    text: '${message.senderName}  ',
                     style: const TextStyle(
                         color: _C.accent,
                         fontSize: 12,

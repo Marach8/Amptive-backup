@@ -41,7 +41,7 @@ class LivestreamToken {
 
 class LivestreamParticipant {
   const LivestreamParticipant({
-    required this.identity,
+    required this.userId,
     required this.displayName,
     required this.isSpeaker,
     required this.isHost,
@@ -51,7 +51,7 @@ class LivestreamParticipant {
 
   factory LivestreamParticipant.fromJson(Map<String, dynamic> json) {
     return LivestreamParticipant(
-      identity: json['user_id'] as String,
+      userId: json['user_id'] as String,
       displayName: json['username'] as String,
       avatar: json['avatar'] as String?,
       isSpeaker: json['is_speaker'] as bool? ?? false,
@@ -60,7 +60,7 @@ class LivestreamParticipant {
     );
   }
 
-  final String identity;
+  final String userId;
   final String displayName;
   final bool isSpeaker;
   final bool isHost;
@@ -69,7 +69,7 @@ class LivestreamParticipant {
 
   LivestreamParticipant copyWith({bool? isSpeaker, bool? isMuted}) {
     return LivestreamParticipant(
-      identity: identity,
+      userId: userId,
       displayName: displayName,
       isSpeaker: isSpeaker ?? this.isSpeaker,
       isHost: isHost,
@@ -105,72 +105,73 @@ class InitialState {
 
 class ChatMessage {
   const ChatMessage({
-    required this.identity,
-    required this.displayName,
-    required this.message,
-    required this.timestamp,
+    this.id,
+    this.senderId,
+    this.senderName,
+    this.message,
+    this.timestamp,
+    this.avatar,
   });
 
   factory ChatMessage.fromJson(Map<String, dynamic> json) {
     return ChatMessage(
-      identity: json['sender_id'] as String,
-      displayName: json['sender_username'] as String? ?? "",
-      message: json['content'] as String,
-      timestamp: json['timestamp'] != null
-          ? DateTime.parse(json['timestamp'] as String)
-          : DateTime.now(),
+      id: json['id'],
+      senderId: json['sender_id'],
+      senderName: json['sender_username'],
+      message: json['content'],
+      timestamp: json['timestamp'],
+      avatar: json['avatar'],
     );
   }
 
-  final String identity;
-  final String displayName;
-  final String message;
-  final DateTime timestamp;
+  final String? id, senderId, senderName, 
+    message, timestamp, avatar;
 }
 
-class ReactionEvent {
-  const ReactionEvent(
-      {required this.identity, required this.emoji, required this.displayName});
-
-  factory ReactionEvent.fromJson(Map<String, dynamic> json) {
-    return ReactionEvent(
-        identity: json['sender_id'] as String,
-        emoji: json['content'] as String,
-        displayName: json['sender_username'] as String);
-  }
-
-  final String identity;
-  final String emoji;
-  final String displayName;
-}
-
-class GiftEvent {
-  const GiftEvent({
-    required this.identity,
-    required this.giftId,
-    required this.giftName,
-    required this.giftEmoji,
-    required this.displayName,
-    required this.quantity,
+class Reaction {
+  const Reaction({
+    this.id,
+    this.senderId,
+    this.emoji,
+    this.senderUserName
   });
 
-  factory GiftEvent.fromJson(Map<String, dynamic> json) {
-    return GiftEvent(
-      identity: json['sender_id'] as String,
-      giftId: json['gift_id'] as String? ?? '',
-      giftName: json['gift_name'] as String? ?? 'Gift',
-      giftEmoji: json['gift_emoji'] as String? ?? '🎁',
-      displayName: json['sender_username'] as String? ?? 'Someone',
-      quantity: json['quantity'] as int? ?? 1,
+  factory Reaction.fromJson(Map<String, dynamic> json) {
+    return Reaction(
+      id: json['id'],
+      senderId: json['sender_id'],
+      emoji: json['content'],
+      senderUserName: json['sender_username']
     );
   }
 
-  final String identity;
-  final String giftId;
-  final String giftName;
-  final String giftEmoji;
-  final String displayName;
-  final int quantity;
+  final String? id, senderId, emoji, senderUserName;
+}
+
+class Gift {
+  const Gift({
+    this.senderId, 
+    this.giftId,
+    this.giftName,
+    this.giftEmoji,
+    this.senderUserName,
+    this.quantity,
+  });
+
+  factory Gift.fromJson(Map<String, dynamic> json) {
+    return Gift(
+      senderId: json['sender_id'],
+      giftId: json['gift_id'],
+      giftName: json['gift_name'],
+      giftEmoji: json['gift_emoji'],
+      senderUserName: json['sender_username'],
+      quantity: json['quantity'],
+    );
+  }
+
+  final String? senderId, giftId,
+    giftName, giftEmoji, senderUserName;
+  final int? quantity;
 }
 
 // ── Signaling events coming in from the WebSocket ──────────────────────────
@@ -196,7 +197,7 @@ class ChatEvent extends SignalingEvent {
 class ReactionReceivedEvent extends SignalingEvent {
   ReactionReceivedEvent(this.reaction);
 
-  final ReactionEvent reaction;
+  final Reaction reaction;
 }
 
 class HandRaiseEvent extends SignalingEvent {
@@ -210,7 +211,7 @@ class HandRaiseEvent extends SignalingEvent {
 class GiftReceivedEvent extends SignalingEvent {
   GiftReceivedEvent(this.gift);
 
-  final GiftEvent gift;
+  final Gift gift;
 }
 
 class ParticipantUpdatedEvent extends SignalingEvent {

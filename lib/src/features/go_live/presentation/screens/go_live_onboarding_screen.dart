@@ -3,7 +3,7 @@ import 'dart:io' show Directory, File;
 import 'dart:ui';
 import 'package:amptive/src/features/episodes/data/models/response/episode_model.dart';
 import 'package:amptive/src/features/go_live/go_live_export.dart';
-import 'package:amptive/src/features/go_live/models/go_live_program_params.dart';
+import 'package:amptive/src/features/go_live/data/models/deconstruct_inbound_events.dart';
 import 'package:amptive/src/features/go_live/presentation/screens/live_program_screen.dart';
 import 'package:amptive/src/features/go_live/presentation/widgets/go_live_onboarding_bottom_sheet.dart';
 import 'package:amptive/src/global_export.dart';
