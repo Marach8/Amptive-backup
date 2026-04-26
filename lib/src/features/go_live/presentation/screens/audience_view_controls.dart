@@ -1,3 +1,5 @@
+import 'dart:developer' show log;
+
 import 'package:amptive/src/features/go_live/cubits/livestream_bloc.dart';
 import 'package:amptive/src/features/go_live/cubits/livestream_cubit1.dart';
 import 'package:amptive/src/features/go_live/data/models/livestream_state.dart';
@@ -10,6 +12,8 @@ import '../../../../bloc/main_app/go_live_bloc/host_view/cohosts_display_bloc.da
 import '../../../../services/go_live_service/go_live_service.dart';
 import '../../go_live_export.dart';
 
+
+typedef _InputState = ({bool isFocused, bool hasText});
 class AudienceViewControls extends StatefulWidget {
   const AudienceViewControls({super.key});
 
@@ -18,85 +22,88 @@ class AudienceViewControls extends StatefulWidget {
       _AudienceViewControlsState();
 }
 
-class _AudienceViewControlsState
-    extends State<AudienceViewControls> {
+class _AudienceViewControlsState extends State<AudienceViewControls> {
   late FocusNode _focusNode;
   late TextEditingController _cntrl;
-  final ValueNotifier<bool> _isFocusedNotifier = ValueNotifier<bool>(false);
-  final ValueNotifier<bool> _hasTextNotifier = ValueNotifier<bool>(false);
+
+  final ValueNotifier<_InputState> _inputNotifier =
+      ValueNotifier<_InputState>((isFocused: false, hasText: false));
 
   @override
   void initState() {
     super.initState();
+
     _focusNode = FocusNode()..addListener(_onFocus);
     _cntrl = TextEditingController()..addListener(_onInput);
   }
 
   void _onFocus() {
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      if (mounted) {
-        _isFocusedNotifier.value = _focusNode.hasFocus;
-      }
-    });
+    final bool hasFocus = _focusNode.hasFocus;
+    final _InputState current = _inputNotifier.value;
+    if (current.isFocused == hasFocus) return;
+
+    _inputNotifier.value = (
+      isFocused: hasFocus,
+      hasText: current.hasText,
+    );
   }
 
   void _onInput() {
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      if (mounted) {
-        _hasTextNotifier.value = _cntrl.text.isNotEmpty;
-      }
-    });
+    final bool hasText = _cntrl.text.isNotEmpty;
+    final _InputState current = _inputNotifier.value;
+    if (current.hasText == hasText) return;
+
+    _inputNotifier.value = (
+      isFocused: current.isFocused,
+      hasText: hasText,
+    );
   }
 
   @override
   void dispose() {
     _focusNode.dispose();
-    _isFocusedNotifier.dispose();
-    _hasTextNotifier.dispose();
     _cntrl.dispose();
+    _inputNotifier.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: <Widget>[
-          ValueListenableBuilder<bool>(
-              valueListenable: _isFocusedNotifier,
-              builder: (_, bool isFocused, __) {
-                if (isFocused) {
-                  return Padding(
-                    padding: const EdgeInsets.only(right: 15),
-                    child: InkWell(
-                      onTap: () => _focusNode.unfocus(),
-                      child: ATCircularImage(
-                          diameter: 35,
-                          imagePath: getHostList()[3].obj.profilePicture ?? ''),
-                    ),
-                  );
-                }
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: <Widget>[
+        ValueListenableBuilder<_InputState>(
+          valueListenable: _inputNotifier,
+          builder: (_, _InputState state, __) {
+            if (state.isFocused) {
+              return Padding(
+                padding: const EdgeInsets.only(right: 15),
+                child: InkWell(
+                  onTap: () => _focusNode.unfocus(),
+                  child: ATCircularImage(
+                    diameter: 35,
+                    imagePath: getHostList()[3].obj.profilePicture ?? '',
+                  ),
+                ),
+              );
+            }
+            return EachGoLiveControlBtn(
+              onTap: (){},
+              child: Transform.flip(
+                flipX: true,
+                child: const Icon(Icons.reply, size: 20),
+              ),
+            );
+          },
+        ),
 
-                return EachGoLiveControlBtn(
-                    onTap: () {
-
-                    },
-                    child: Transform.flip(
-                      flipX: true,
-                      child: const Icon(
-                        Icons.reply,
-                        size: 20,
-                      ),
-                    )
-                  );
-              }),
-          Expanded(
-              child: Padding(
+        Expanded(
+          child: Padding(
             padding: const EdgeInsets.only(right: 5),
             child: ATTextFormField(
               controller: _cntrl,
-              disableBlueBorder: true,
               focusNode: _focusNode,
+              disableBlueBorder: true,
               counterText: '',
               keyboardType: TextInputType.multiline,
               cursorHeight: 20,
@@ -105,7 +112,7 @@ class _AudienceViewControlsState
               isDense: true,
               enabledBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(14),
-                borderSide: BorderSide(color: ATColors.transparent)
+                borderSide: BorderSide(color: ATColors.transparent),
               ),
               prefixIcon: const SizedBox(width: 10),
               fillColor: ATColors.white.withValues(alpha: 0.1),
@@ -113,44 +120,59 @@ class _AudienceViewControlsState
               constraints: const BoxConstraints(maxHeight: 60),
               contentPadding: const EdgeInsets.fromLTRB(10, 3, 10, 3),
               hintText: ATStrings.comment,
-            ),
-          )),
-          ValueListenableBuilder<bool>(
-              valueListenable: _isFocusedNotifier,
-              builder: (_, bool isFocused, __) {
-                if (isFocused) {
-                  return ValueListenableBuilder<bool>(
-                    valueListenable: _hasTextNotifier,
-                    builder: (_, bool hasText, __) {
-                      return GestureDetector(
-                        onTap: hasText
-                            ? () {
-                                final String message = _cntrl.text.trim();
-                                if (message.isNotEmpty) {
-                                  context.read<LiveStreamCubit1>()
-                                    .sendChat(message);
-                                }
-                                _cntrl.clear();
-                              }
-                            : null,
-                        child: Padding(
-                          padding: const EdgeInsets.only(left: 10),
-                          child: Icon(
-                            Icons.send,
-                            color:
-                                hasText ? ATColors.white : ATColors.lightDark,
-                          ),
-                        ),
-                      );
-                    }
+              suffixIcon: ValueListenableBuilder<_InputState>(
+                valueListenable: _inputNotifier,
+                builder: (_, _InputState state, __) {
+                  if(!state.hasText) return const SizedBox.shrink();
+                  return GestureDetector(
+                    behavior: HitTestBehavior.opaque,
+                    onTap: (){
+                      _cntrl.clear();
+                    },
+                    child: Padding(
+                      padding: const EdgeInsets.only(right: 8),
+                      child: Icon(Icons.close, color: ATColors.white, size: 18),
+                    ),
                   );
                 }
+              ),
+            ),
+          ),
+        ),
 
-                return const _RowOfBtns();
-              }),
-        ]);
+        ValueListenableBuilder<_InputState>(
+          valueListenable: _inputNotifier,
+          builder: (_, _InputState state, __) {
+            if (state.isFocused) {
+              return GestureDetector(
+                onTapDown: state.hasText
+                  ? (_) {
+                      final String message = _cntrl.text.trim();
+                      log('this is the message');
+                      if (message.isNotEmpty) {
+                        context.read<LiveStreamCubit1>().sendChat(message);
+                      }
+                      _cntrl.clear();
+                    }
+                  : null,
+                child: Padding(
+                  padding: const EdgeInsets.only(left: 10),
+                  child: Icon(
+                    Icons.send,
+                    color: state.hasText ? ATColors.white
+                      : ATColors.lightDark,
+                  ),
+                ),
+              );
+            }
+            return const _RowOfBtns();
+          },
+        ),
+      ],
+    );
   }
 }
+
 
 class _RowOfBtns extends StatelessWidget {
   const _RowOfBtns();

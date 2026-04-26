@@ -173,7 +173,6 @@ class LiveStreamCubit1 extends Cubit<LiveStreamState1> {
   }
 
   void sendChat(String message) {
-    log('Sending chat message, checking connection state ${state.wsConnectionStatus}');
     wsNotificationService.sendMessage(<String, dynamic>{
       'type': OutboundMessageType.chat,
       'content': message

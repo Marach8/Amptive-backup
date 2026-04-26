@@ -122,14 +122,14 @@ LiveStreamState1 reduceIncomingStreamAction({
 
     InboundEvent.chat => () {
       final ChatMessage newMessage = ChatMessage.fromJson(wsJson);
-      if((newMessage.senderId ?? '').isEmpty) return stateSnapshot;
+      if((newMessage.id ?? '').isEmpty) return stateSnapshot;
       return stateSnapshot.copyWith(
         messages: <String, ChatMessage>{
-          newMessage.senderId ?? '': newMessage,
+          newMessage.id ?? '': newMessage,
           ...?stateSnapshot.messages,
         },
         messagesIds: <String>[
-          newMessage.senderId ?? '',
+          newMessage.id ?? '',
           ...?stateSnapshot.messagesIds,
         ]
       );

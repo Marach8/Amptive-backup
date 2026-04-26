@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:convert';
 import 'dart:developer' show log;
 import 'package:amptive/src/config/services/audio_streaming_service/audio_streaming_service.dart';
 import 'package:livekit_client/livekit_client.dart';
@@ -19,10 +18,6 @@ class LiveKitAudioStreamingService implements ATAudioStreamingService {
 
   CancelListenFunc? _roomSub;
   LocalAudioTrack? _localAudioTrack;
-
-  // ---------------------------------------------------------------------------
-  // CONNECT
-  // ---------------------------------------------------------------------------
 
   @override
   Future<void> connect({
@@ -46,22 +41,9 @@ class LiveKitAudioStreamingService implements ATAudioStreamingService {
 
       _connectionController.add(LiveSessionConnectionStatus.connected);
 
-      // // ✅ Create mic track
-      // _localAudioTrack = await LocalAudioTrack.create(
-      //   const AudioCaptureOptions(
-      //     // echoCancellation: true,
-      //     // noiseSuppression: true,
-      //     // autoGainControl: true,
-      //   ),
-      // );
+      await _room.localParticipant?.setMicrophoneEnabled(false);
 
-      // // ✅ Publish mic
-      // await _room.localParticipant?.publishAudioTrack(_localAudioTrack!);
-
-      // ✅ FORCE mic ON
-      // await _room.localParticipant?.setMicrophoneEnabled(true);
-
-      _emitParticipants();
+      //_emitParticipants();
     } catch (e, s) {
       log('Error connecting to live kit: $e, stack trace $s');
       _connectionController.add(LiveSessionConnectionStatus.disconnected);
@@ -79,7 +61,7 @@ class LiveKitAudioStreamingService implements ATAudioStreamingService {
   @override
   Future<void> setMicEnabled(bool enabled) async {
     await _room.localParticipant?.setMicrophoneEnabled(enabled);
-    _emitParticipants();
+    // _emitParticipants();
   }
 
 
@@ -108,32 +90,33 @@ class LiveKitAudioStreamingService implements ATAudioStreamingService {
       if (event is ParticipantConnectedEvent || event is ParticipantDisconnectedEvent ||
           event is TrackMutedEvent ||
           event is TrackUnmutedEvent) {
-        _emitParticipants();
+        //_emitParticipants();
       }
 
       if (event is ActiveSpeakersChangedEvent) {
-        final List<String> speakers = event.speakers.map((s) => s.identity).toList();
+        final List<String> speakers = event.speakers.map(
+          (s) => s.identity).toList();
         _activeSpeakersController.add(speakers);
 
-        _emitParticipants(
-          audioLevels: <String, double>{
-            for (final Participant<TrackPublication<Track>> s in event.speakers)
-              if (s.identity.isNotEmpty)
-                s.identity: s.audioLevel,
-          },
-        );
+        // _emitParticipants(
+        //   audioLevels: <String, double>{
+        //     for (final Participant<TrackPublication<Track>> s in event.speakers)
+        //       if (s.identity.isNotEmpty)
+        //         s.identity: s.audioLevel,
+        //   },
+        // );
       }
       
-      if(event is DataReceivedEvent){
-        final foo = event.participant;
-        final topic = event.topic;
+      // if(event is DataReceivedEvent){
+      //   final foo = event.participant;
+      //   final topic = event.topic;
 
-        final String raw = utf8.decode(event.data);
-        final data = jsonDecode(raw);
+      //   final String raw = utf8.decode(event.data);
+      //   final data = jsonDecode(raw);
 
-        print("Message: ${data['text']}");
-        print("From: ${event.participant?.identity}");
-      }
+      //   print("Message: ${data['text']}");
+      //   print("From: ${event.participant?.identity}");
+      // }
 
       if (event is RoomDisconnectedEvent) {
         _connectionController.add(LiveSessionConnectionStatus.disconnected);
@@ -145,70 +128,54 @@ class LiveKitAudioStreamingService implements ATAudioStreamingService {
 
       if (event is RoomReconnectedEvent) {
         _connectionController.add(LiveSessionConnectionStatus.connected);
-        _emitParticipants();
+        //_emitParticipants();
       }
     });
   }
 
-  // ---------------------------------------------------------------------------
-  // PARTICIPANT MAPPING
-  // ---------------------------------------------------------------------------
 
-  void _emitParticipants({Map<String, double>? audioLevels}) {
-    final Map<String, LiveSessionParticipant> updated =
-        <String, LiveSessionParticipant>{};
+  // void _emitParticipants({Map<String, double>? audioLevels}) {
+  //   final Map<String, LiveSessionParticipant> updated =
+  //       <String, LiveSessionParticipant>{};
 
-    final LocalParticipant? local = _room.localParticipant;
-    if (local != null) {
-      updated[local.identity] = _mapParticipant(
-        local,
-        isLocal: true,
-        audioLevel: audioLevels?[local.identity] ?? 0.0,
-      );
-    }
+  //   final LocalParticipant? local = _room.localParticipant;
+  //   if (local != null) {
+  //     updated[local.identity] = _mapParticipant(
+  //       local,
+  //       isLocal: true,
+  //       audioLevel: audioLevels?[local.identity] ?? 0.0,
+  //     );
+  //   }
 
-    for (final RemoteParticipant p in _room.remoteParticipants.values) {
-      updated[p.identity] = _mapParticipant(
-        p,
-        isLocal: false,
-        audioLevel: audioLevels?[p.identity] ?? 0.0,
-      );
-    }
+  //   for (final RemoteParticipant p in _room.remoteParticipants.values) {
+  //     updated[p.identity] = _mapParticipant(
+  //       p,
+  //       isLocal: false,
+  //       audioLevel: audioLevels?[p.identity] ?? 0.0,
+  //     );
+  //   }
 
-    _participantsController.add(updated.values.toList());
-  }
+  //   _participantsController.add(updated.values.toList());
+  // }
 
-  void _publishData()async{
-    final message = {
-      "type": "chat",
-      "text": "Hello everyone 👋",
-    };
 
-    await _room.localParticipant?.publishData(
-      utf8.encode(jsonEncode(message)),
-      reliable: true, // important for chat
-      topic: 'chat',
-      destinationIdentities: <String>['list of ids'],
-    );
-  }
+  // LiveSessionParticipant _mapParticipant(
+  //   Participant p, {
+  //   required bool isLocal,
+  //   double audioLevel = 0.0,
+  // }) {
+  //   final TrackPublication? audioPub = p.audioTrackPublications.firstOrNull;
 
-  LiveSessionParticipant _mapParticipant(
-    Participant p, {
-    required bool isLocal,
-    double audioLevel = 0.0,
-  }) {
-    final TrackPublication? audioPub = p.audioTrackPublications.firstOrNull;
-
-    return LiveSessionParticipant(
-      isMuted: audioPub?.muted ?? true,
-      isSpeaking: p.isSpeaking,
-      isLocal: isLocal,
-      audioLevel: audioLevel,
-      name: p.name,
-      username: p.name,
-      roomParticipantId: p.identity,
-    );
-  }
+  //   return LiveSessionParticipant(
+  //     isMuted: audioPub?.muted ?? true,
+  //     isSpeaking: p.isSpeaking,
+  //     isLocal: isLocal,
+  //     audioLevel: audioLevel,
+  //     name: p.name,
+  //     username: p.name,
+  //     roomParticipantId: p.identity,
+  //   );
+  // }
 
 
   @override

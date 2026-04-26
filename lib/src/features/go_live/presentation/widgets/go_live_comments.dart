@@ -1,6 +1,8 @@
+import 'dart:developer';
 import 'dart:ui';
 import 'package:amptive/src/features/go_live/cubits/livestream_bloc.dart';
 import 'package:amptive/src/features/go_live/cubits/livestream_cubit1.dart';
+import 'package:amptive/src/features/go_live/data/models/deconstruct_inbound_events.dart';
 import 'package:amptive/src/features/go_live/data/models/livestream_state.dart';
 import 'package:amptive/src/global_export.dart';
 import 'package:amptive/src/livestream/livestream.dart';
@@ -66,6 +68,7 @@ class _GoLiveCommentsState extends State<GoLiveComments> {
       builder: (BuildContext context, LiveStreamState1 state) {
         final Map<String, ChatMessage>? messages = state.messages;
         final List<String> messagesIds = state.messagesIds ?? <String>[];
+        log('messagesIds $messagesIds');
 
         return Stack(
           alignment: Alignment.center,
