@@ -37,7 +37,7 @@ class EditProfileBgImage extends StatelessWidget {
                 if (currentUser != null && state.newData != null) {
                   context.read<LocalUserDataCubit>().updateUserDataLocally(
                         currentUser.copyWith(
-                            pictureUrl: "${state.newData!.pictureUrl}"),
+                            pictureUrl: "${state.newData!.profilePicture}"),
                       );
                 }
               }

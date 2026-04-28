@@ -40,7 +40,7 @@ class ATAccountInfoScreen extends StatelessWidget {
                 username: data.username,
                 dob: data.dob,
                 name: data.name,
-                pictureUrl: data.pictureUrl,
+                pictureUrl: data.profilePicture,
                 bio: data.bio,
                 phoneNumber: data.phoneNumber,
               );
