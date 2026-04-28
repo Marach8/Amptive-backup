@@ -11,7 +11,6 @@ import '../../../../config/utils/image_strings.dart';
 import '../../../../shared/image_loader_widget.dart';
 import '../widgets/go_live_widget_in_home.dart';
 import 'package:amptive/src/shared/live_user_animation.dart';
-import 'package:amptive/src/shared/horizontal_refresh_indicator.dart';
 import 'package:amptive/src/config/utils/font_weights.dart';
 import 'package:amptive/src/config/utils/other_strings.dart';
 
@@ -33,82 +32,83 @@ class RowOfLiveUsers extends StatelessWidget {
           }
         },
         builder: (_, ATAppState<LiveUsersResponseModel> state) {
-          return switch (state) {
-            InitialState<LiveUsersResponseModel>() => const SizedBox.shrink(),
-            LoadingState<LiveUsersResponseModel>() ||
-            FailureState<LiveUsersResponseModel>() ||
-            SuccessState<LiveUsersResponseModel>() =>
-              Builder(builder: (_) {
-                final LiveUsersResponseModel? liveUsersData =
-                    context.read<LiveUsersCubit>().currentLiveUsersData;
-                final List<LiveUser> liveUsers =
-                    liveUsersData?.liveUsers ?? <LiveUser>[];
-      
-                if (liveUsers.isEmpty) {
-                  if (state is LoadingState<LiveUsersResponseModel>) {
-                    return const _InitialLoading();
-                  }
-                  if(state is FailureState<LiveUsersResponseModel>) {
-                    return Row(
-                      children: <Widget>[
-                        const Padding(
-                          padding: EdgeInsets.only(left: 11),
-                          child: GoLiveWidgetInHome(),
+          return Builder(builder: (_) {
+            final LiveUsersResponseModel? liveUsersData =
+                context.read<LiveUsersCubit>().currentLiveUsersData;
+            final List<LiveUser> liveUsers =
+                liveUsersData?.liveUsers ?? <LiveUser>[];
+
+            if (liveUsers.isEmpty) {
+              if (state is LoadingState<LiveUsersResponseModel>) {
+                return const _InitialLoading();
+              }
+              return Row(
+                children: <Widget>[
+                  const Padding(
+                    padding: EdgeInsets.only(left: 11),
+                    child: GoLiveWidgetInHome(),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 14),
+                    child: Center(
+                      child: Builder(
+                        builder: (_) => Text(
+                          'No live users available yet...',
+                          style: TextStyle(color: ATColors.hexA8A8A8),
                         ),
-                        IconButton(
-                          icon: const Icon(Icons.refresh),
-                          onPressed: () =>
-                            context.read<LiveUsersCubit>().fetchLiveUsers()
-                        ),
-                      ],
-                    );
-                  }
-                  return const Center(
-                    child: Text('No live users available yet...'),
+                      ),
+                    ),
+                  ),
+                  if (state is FailureState<LiveUsersResponseModel>)
+                    IconButton(
+                      icon: const Icon(Icons.refresh),
+                      onPressed: () =>
+                          context.read<LiveUsersCubit>().fetchLiveUsers(),
+                    ),
+                ],
+              );
+            }
+
+            bool hasMore = liveUsersData?.hasMore ?? true;
+            final int count =
+                hasMore ? liveUsers.length + 2 : liveUsers.length + 1;
+
+            return ListView.separated(
+              padding: EdgeInsets.zero,
+              scrollDirection: Axis.horizontal,
+              separatorBuilder: (_, __) => const SizedBox(width: 14),
+              itemCount: count,
+              itemBuilder: (_, int index) {
+                if (index == 0) {
+                  return const Padding(
+                    padding: EdgeInsets.only(left: 11),
+                    child: GoLiveWidgetInHome(),
                   );
                 }
 
-                bool hasMore = liveUsersData?.hasMore ?? true;
-                final int count = hasMore ? liveUsers.length + 2 : liveUsers.length + 1;
+                final int adjustedIndex = index - 1;
 
-                return ListView.separated(
-                  padding: EdgeInsets.zero,
-                  scrollDirection: Axis.horizontal,
-                  separatorBuilder: (_, __) => const SizedBox(width: 14),
-                  itemCount: count,
-                  itemBuilder: (_, int index) {
-                    if (index == 0) {
-                      return const Padding(
-                        padding: EdgeInsets.only(left: 11),
-                        child: GoLiveWidgetInHome(),
-                      );
-                    }
-                
-                    final int adjustedIndex = index - 1;
-                
-                    if (adjustedIndex < liveUsers.length) {
-                      final LiveUser liveUser = liveUsers[adjustedIndex];
-                      return LiveUserWidget(
-                        user: liveUser,
-                        key: ValueKey<String>(liveUser.userId ?? ''),
-                      );
-                    }
-                
-                    if (state is LoadingState<LiveUsersResponseModel>) {
-                      return const _LiveUserShimmer();
-                    }
-                
-                    return const SizedBox.shrink();
-                  },
-                );
-              })
-          };
+                if (adjustedIndex < liveUsers.length) {
+                  final LiveUser liveUser = liveUsers[adjustedIndex];
+                  return LiveUserWidget(
+                    user: liveUser,
+                    key: ValueKey<String>(liveUser.userId ?? ''),
+                  );
+                }
+
+                if (state is LoadingState<LiveUsersResponseModel>) {
+                  return const _LiveUserShimmer();
+                }
+
+                return const SizedBox.shrink();
+              },
+            );
+          });
         },
       ),
     );
   }
 }
-
 
 class LiveUserWidget extends StatelessWidget {
   const LiveUserWidget({
@@ -171,14 +171,12 @@ class _LiveIndicator extends StatelessWidget {
             color: ATColors.hex0D0D0D,
             width: 2,
           )),
-      child: Text(
-        ATStrings.live.toUpperCase(),
+      child: Text(ATStrings.live.toUpperCase(),
           style: context.textTheme.titleSmall
               ?.copyWith(fontWeight: ATFontWeights.w600)),
     );
   }
 }
-
 
 class _InitialLoading extends StatelessWidget {
   const _InitialLoading();
@@ -186,24 +184,22 @@ class _InitialLoading extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListView.separated(
-      padding: EdgeInsets.zero,
-      shrinkWrap: true,
-      scrollDirection: Axis.horizontal,
-      separatorBuilder: (_, __) => const SizedBox(width: 14),
-      itemCount: 10,
-      itemBuilder: (_, int index){
-        if(index == 0){
-          return const Padding(
-            padding: EdgeInsets.only(left: 11),
-            child: GoLiveWidgetInHome(),
-          );
-        }
-        return const _LiveUserShimmer();
-      }
-    );
+        padding: EdgeInsets.zero,
+        shrinkWrap: true,
+        scrollDirection: Axis.horizontal,
+        separatorBuilder: (_, __) => const SizedBox(width: 14),
+        itemCount: 10,
+        itemBuilder: (_, int index) {
+          if (index == 0) {
+            return const Padding(
+              padding: EdgeInsets.only(left: 11),
+              child: GoLiveWidgetInHome(),
+            );
+          }
+          return const _LiveUserShimmer();
+        });
   }
 }
-
 
 class _LiveUserShimmer extends StatelessWidget {
   const _LiveUserShimmer();
@@ -219,7 +215,10 @@ class _LiveUserShimmer extends StatelessWidget {
           alignment: Alignment.center,
           children: <Widget>[
             LiveUserAnimationWidget(
-              child: ATShimmer(height: 60, width: 60,),
+              child: ATShimmer(
+                height: 60,
+                width: 60,
+              ),
             ),
             Positioned(
               bottom: -4,
@@ -228,7 +227,11 @@ class _LiveUserShimmer extends StatelessWidget {
           ],
         ),
         SizedBox(height: 15),
-        ATShimmer(height: 9, width: 50, radius: 2.5,)
+        ATShimmer(
+          height: 9,
+          width: 50,
+          radius: 2.5,
+        )
       ],
     );
   }

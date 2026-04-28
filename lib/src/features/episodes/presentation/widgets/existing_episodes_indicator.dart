@@ -1,6 +1,8 @@
 import 'package:amptive/src/config/config_export.dart';
+import 'package:amptive/src/features/calender/calender_export.dart';
 import 'package:amptive/src/features/episodes/data/models/response/episode_model.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import '../../../../shared/image_loader_widget.dart';
 
@@ -45,17 +47,24 @@ class ExistingEpisodesIndicator extends StatelessWidget {
   const ExistingEpisodesIndicator({
     super.key,
     this.activeEpisode,
+    this.onTappOverride,
   });
   final Episode? activeEpisode;
+  final VoidCallback? onTappOverride;
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: (){
-        context.pushNamed(
+      onTap: onTappOverride ?? ()async{
+        final Episode? editedEpisode = await context.pushNamed(
           ATRoutes.previewEpisodeScreen,
           extra: activeEpisode ?? Episode(),
-        );
+        ) as Episode?;
+
+        if(context.mounted && editedEpisode != null 
+          && editedEpisode != activeEpisode){
+            context.read<ShowDetailCubit>().updateAnEpisode(editedEpisode);
+          }
       },
       child: Row(
         mainAxisSize: MainAxisSize.min,

@@ -44,10 +44,8 @@ class ATUser {
     );
   }
   final String? id, email, username, dob, name, pictureUrl, phoneNumber;
-  final int?  followersCount;
-
-    
-  }
+  final int ? followersCount;
+}
 
 
 

@@ -1,4 +1,3 @@
-import 'package:amptive/src/features/shows/presentation/screens/list_hosted_shows_screen.dart';
 import 'package:amptive/src/config/utils/image_strings.dart';
 import 'package:amptive/src/config/utils/other_strings.dart';
 import 'package:amptive/src/config/routing/route_strings.dart';
@@ -29,7 +28,7 @@ class GoLiveTypeSelectionScreen extends StatelessWidget {
               leadingWidth: 30,
               padding: const EdgeInsets.fromLTRB(7, 0, 15, 0),
               title: Text(
-                ATStrings.CREATE_SHOW_OR_EVENT,
+                ATStrings.createShowOrEvent,
                 style: Theme.of(context).textTheme.bodyMedium,
               ),
             ),
@@ -41,7 +40,7 @@ class GoLiveTypeSelectionScreen extends StatelessWidget {
                 children: <Widget>[
                   Text(
                     maxLines: 3,
-                    ATStrings.CHOOSE_2_CREATE_SHOW_OR_EVENT,
+                    ATStrings.chooseToCreateShowOrEvent,
                     style: Theme.of(context)
                         .textTheme
                         .bodySmall
@@ -74,7 +73,7 @@ class GoLiveTypeSelectionScreen extends StatelessWidget {
                           isSelected: state == 1,
                           unselectedImgPath: ATImgStrings.CREATE_EVENT_ICON1,
                           selectedImgPath: ATImgStrings.CREATE_EVENT_ICON2,
-                          title: ATStrings.CREATE_EVENT,
+                          title: ATStrings.createEvent,
                           subtitle: ATStrings.CREATE_EVENT_DESC,
                           alphabet: 'E',
                         ),
@@ -89,10 +88,9 @@ class GoLiveTypeSelectionScreen extends StatelessWidget {
               child: ATPlainElevatedBtn(
                 onPressed: isBtnActive
                     ? () => context.pushNamed(
-                          ATRoutes.listHostedShowsScreen,
-                          extra: state == 0
-                              ? GoLiveProgramType.show
-                              : GoLiveProgramType.event,
+                          state == 0
+                              ? ATRoutes.listHostedShowsScreen
+                              : ATRoutes.listHostedEventsScreen,
                         )
                     : null,
                 btnTitle: ATStrings.cContinue,

@@ -41,7 +41,7 @@ class HostedShowsCubit extends Cubit<ATAppState<HostedShowsResponseModel>> {
     try {
       final ApiResponse<HostedShowsResponseModel> response =
           await showsRepo.fetchHostedShows(
-        page: (currentHostedShowsData?.page ?? -1) + 1,
+        page: (currentHostedShowsData?.page ?? 0) + 1,
         pageSize: 20,
         refresh: forceRefresh,
       );
@@ -74,7 +74,6 @@ class HostedShowsCubit extends Cubit<ATAppState<HostedShowsResponseModel>> {
   }
 
 
-
   void addNewHostedShow(HostedShow? show) {
     if (show == null) return;
     final List<HostedShow> updatedShows = <HostedShow>[
@@ -84,6 +83,29 @@ class HostedShowsCubit extends Cubit<ATAppState<HostedShowsResponseModel>> {
     final HostedShowsResponseModel newData = HostedShowsResponseModel(
       hostedShows: updatedShows,
       total: (currentHostedShowsData?.total ?? 0) + 1,
+      page: currentHostedShowsData?.page,
+      pageSize: currentHostedShowsData?.pageSize,
+      hasMore: currentHostedShowsData?.hasMore,
+    );
+
+    emit(SuccessState<HostedShowsResponseModel>(newData: newData));
+  }
+
+
+  void updateAShow(HostedShow show) {
+    final String? showId = show.showId;
+    final List<HostedShow>? currentShows = currentHostedShowsData?.hostedShows;
+    if (showId == null || currentShows == null) return;
+
+    final int showIndex = currentShows.indexWhere(
+      (HostedShow element) => element.showId == showId);
+    if (showIndex == -1) return;
+    final List<HostedShow> showsCopy = List<HostedShow>.from(currentShows);
+    showsCopy[showIndex] = show;
+
+    final HostedShowsResponseModel newData = HostedShowsResponseModel(
+      hostedShows: showsCopy,
+      total: (currentHostedShowsData?.total ?? 0),
       page: currentHostedShowsData?.page,
       pageSize: currentHostedShowsData?.pageSize,
       hasMore: currentHostedShowsData?.hasMore,

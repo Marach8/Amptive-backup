@@ -157,8 +157,7 @@ class __SubWidgetState extends State<_SubWidget> {
                               type: NotificationType.failure,
                             );
                           }
-                        }, builder: (_,
-                                ATAppState<HostedShowsResponseModel> state) {
+                        }, builder: (_, ATAppState<HostedShowsResponseModel> state) {
                           return switch (state) {
                             InitialState<HostedShowsResponseModel>() ||
                             LoadingState<HostedShowsResponseModel>() ||
@@ -174,13 +173,30 @@ class __SubWidgetState extends State<_SubWidget> {
                                         <HostedShow>[];
 
                                 if (hostedShows.isEmpty) {
-                                  if (state is LoadingState<
-                                      HostedShowsResponseModel>) {
-                                    return const _RenderShowInitialLoadingShimmer();
+                                  if (state is LoadingState<HostedShowsResponseModel>) {
+                                    return RenderEventOrShowInitialLoadingShimmer(
+                                      createNewLabel: ATStrings.createNewShow,
+                                      onCreateNewTapped: (){
+                                        context.pushNamed(
+                                          ATRoutes.createShowFormScreen,
+                                          extra: context.read<HostedShowsCubit>(),
+                                        );
+                                      },
+                                    );
                                   }
-                                  if (state is FailureState<
-                                      HostedShowsResponseModel>) {
-                                    return const _RenderInitialLoadFailureWidget();
+                                  if (state is FailureState<HostedShowsResponseModel>) {
+                                    return RenderInitialEventOrShowLoadFailureWidget(
+                                      createNewLabel: ATStrings.createNewShow,
+                                      onCreateNewTapped: (){
+                                        context.pushNamed(
+                                          ATRoutes.createShowFormScreen,
+                                          extra: context.read<HostedShowsCubit>(),
+                                        );
+                                      },
+                                      onRefresh: (){
+                                        context.read<HostedShowsCubit>().fetchHostedShows();
+                                      },
+                                    );
                                   }
                                 }
 
@@ -201,24 +217,34 @@ class __SubWidgetState extends State<_SubWidget> {
                                         hasMoreItems ? count + 2 : count + 1,
                                     itemBuilder: (_, int gridIndex) {
                                       if (gridIndex == 0) {
-                                        return const CreateNewShowWidget();
+                                        return CreateNewEventOrShowWidget(
+                                          label: ATStrings.createNewShow,
+                                          onTap: (){
+                                            context.pushNamed(
+                                              ATRoutes.createShowFormScreen,
+                                              extra: context.read<HostedShowsCubit>(),
+                                            );
+                                          },
+                                        );
                                       }
+
                                       final int adjustedIndex = gridIndex - 1;
                                       if (adjustedIndex < count) {
-                                        final HostedShow hostedShow =
-                                            hostedShows[adjustedIndex];
-                                        return RenderHostedShow(
-                                            hostedShow: hostedShow);
+                                        final HostedShow hostedShow = hostedShows[adjustedIndex];
+                                        return RenderHostedShow(hostedShow: hostedShow);
                                       }
-                                      if (state is LoadingState<
-                                          HostedShowsResponseModel>) {
-                                        return const RenderAHostedShowShimmer();
+                                      if (state is LoadingState<HostedShowsResponseModel>) {
+                                        return const RenderAHostedEventOrShowShimmer();
                                       }
                                       return const SizedBox.shrink();
-                                    });
-                              })
+                                    }
+                                  );
+                              }
+                            )
                           };
-                        })),
+                        }
+                      )
+                    ),
                   ),
                 ),
               ],
@@ -231,21 +257,40 @@ class __SubWidgetState extends State<_SubWidget> {
             return ATBlurredBgBtn(
               btnTitle: ATStrings.next,
               onPressed: shouldActivate
-                  ? () {
-                      context.pushNamed(
-                        ATRoutes.showPreviewScreen,
-                        extra: selectedShow,
-                      );
+                  ? () async{
+                    final HostedShow? editedShow = await context.pushNamed(
+                      ATRoutes.showPreviewScreen,
+                      extra: selectedShow,
+                    ) as HostedShow?;
+
+                    if(context.mounted && editedShow != null
+                      && editedShow != selectedShow){
+                      context.read<HostedShowsCubit>().updateAShow(editedShow);
+                    }
+                      // context.pushNamed(
+                      //   ATRoutes.showPreviewScreen,
+                      //   extra: selectedShow,
+                      // );
                     }
                   : null,
             );
-          })),
+          }
+        )
+      ),
     );
   }
 }
 
-class _RenderShowInitialLoadingShimmer extends StatelessWidget {
-  const _RenderShowInitialLoadingShimmer();
+
+
+class RenderEventOrShowInitialLoadingShimmer extends StatelessWidget {
+  const RenderEventOrShowInitialLoadingShimmer({
+    super.key,
+    required this.onCreateNewTapped,
+    required this.createNewLabel,
+  });
+  final VoidCallback onCreateNewTapped;
+  final String createNewLabel;
 
   @override
   Widget build(BuildContext context) {
@@ -260,15 +305,27 @@ class _RenderShowInitialLoadingShimmer extends StatelessWidget {
         itemCount: 9,
         itemBuilder: (_, int gridIndex) {
           if (gridIndex == 0) {
-            return const CreateNewShowWidget();
+            return CreateNewEventOrShowWidget(
+              label: createNewLabel,
+              onTap: onCreateNewTapped
+            );
           }
-          return const RenderAHostedShowShimmer();
-        });
+          return const RenderAHostedEventOrShowShimmer();
+        }
+      );
   }
 }
 
-class _RenderInitialLoadFailureWidget extends StatelessWidget {
-  const _RenderInitialLoadFailureWidget();
+class RenderInitialEventOrShowLoadFailureWidget extends StatelessWidget {
+  const RenderInitialEventOrShowLoadFailureWidget({
+    super.key,
+    required this.onCreateNewTapped,
+    required this.onRefresh,
+    required this.createNewLabel,
+  });
+
+  final VoidCallback onCreateNewTapped, onRefresh;
+  final String createNewLabel;
 
   @override
   Widget build(BuildContext context) {
@@ -283,13 +340,14 @@ class _RenderInitialLoadFailureWidget extends StatelessWidget {
         itemCount: 2,
         itemBuilder: (_, int gridIndex) {
           if (gridIndex == 0) {
-            return const CreateNewShowWidget();
+            return CreateNewEventOrShowWidget(
+              onTap: onCreateNewTapped,
+              label: createNewLabel,
+            );
           }
           return Center(
             child: IconButton(
-              onPressed: () {
-                context.read<HostedShowsCubit>().fetchHostedShows();
-              },
+              onPressed: onRefresh,
               icon: Icon(Icons.refresh, color: ATColors.white),
             ),
           );

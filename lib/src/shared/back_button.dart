@@ -43,11 +43,17 @@ class ATBackBtn extends StatelessWidget {
 }
 
 class ATRoundedBackBtn extends StatelessWidget {
-  const ATRoundedBackBtn(
-      {super.key, this.bgColor, this.splashColor, this.icon});
+  const ATRoundedBackBtn({
+    super.key,
+    this.bgColor,
+    this.splashColor,
+    this.icon,
+    this.onTapOverride
+  });
 
   final Color? bgColor, splashColor;
   final Widget? icon;
+  final VoidCallback? onTapOverride;
 
   @override
   Widget build(BuildContext context) {
@@ -57,7 +63,7 @@ class ATRoundedBackBtn extends StatelessWidget {
         color: bgColor ?? ATColors.black,
         borderRadius: BorderRadius.circular(30),
         child: InkWell(
-          onTap: () => context.pop(),
+          onTap: onTapOverride ?? () => context.pop(),
           splashColor: splashColor ?? ATColors.white.withValues(alpha: 0.5),
           borderRadius: BorderRadius.circular(30),
           child: SizedBox(

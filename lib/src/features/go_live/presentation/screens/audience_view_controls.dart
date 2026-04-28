@@ -1,3 +1,4 @@
+import 'package:amptive/src/features/go_live/cubits/livestream_bloc.dart';
 import 'package:amptive/src/global_export.dart';
 import 'package:amptive/src/shared/circular_image.dart';
 import 'package:amptive/src/shared/image_loader_widget.dart';
@@ -29,8 +30,21 @@ class _GoLiveAudienViewControlsWidgetState
     _cntrl = TextEditingController()..addListener(_onInput);
   }
 
-  void _onFocus() => _isFocusedNotifier.value = _focusNode.hasFocus;
-  void _onInput() => _hasTextNotifier.value = _cntrl.text.isNotEmpty;
+  void _onFocus() {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (mounted) {
+        _isFocusedNotifier.value = _focusNode.hasFocus;
+      }
+    });
+  }
+
+  void _onInput() {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (mounted) {
+        _hasTextNotifier.value = _cntrl.text.isNotEmpty;
+      }
+    });
+  }
 
   @override
   void dispose() {
@@ -103,16 +117,21 @@ class _GoLiveAudienViewControlsWidgetState
           )),
           ValueListenableBuilder<bool>(
               valueListenable: _isFocusedNotifier,
-              builder: (_, bool value, __) {
-                if (value) {
+              builder: (_, bool isFocused, __) {
+                if (isFocused) {
                   return ValueListenableBuilder<bool>(
                       valueListenable: _hasTextNotifier,
-                      builder: (_, bool value, __) {
-                        return InkWell(
-                          onTap: value
-                              ? () {
+                      builder: (_, bool hasText, __) {
+                        return GestureDetector(
+                          onTapDown: hasText
+                              ? (TapDownDetails details) {
+                                  final String message = _cntrl.text.trim();
+                                  if (message.isNotEmpty) {
+                                    context.read<LivestreamBloc>().add(
+                                          SendChatMessage(message: message),
+                                        );
+                                  }
                                   _cntrl.clear();
-                                  _focusNode.unfocus();
                                 }
                               : null,
                           child: Padding(
@@ -120,7 +139,7 @@ class _GoLiveAudienViewControlsWidgetState
                             child: Icon(
                               Icons.send,
                               color:
-                                  value ? ATColors.white : ATColors.lightDark,
+                                  hasText ? ATColors.white : ATColors.lightDark,
                             ),
                           ),
                         );
@@ -164,9 +183,7 @@ class _RowOfBtns extends StatelessWidget {
         ),
         EachGoLiveControlBtn(
           onTap: () {
-            context
-                .read<AmptiveGoLiveSelectCoHostBloc>()
-                .hostAddCohost(getHostList()[1]);
+            GiftPickerDialog.show(context);
           },
           child: const ATImgLoader(
             imgPath: ATImgStrings.HOST_GIFT_ICON,
@@ -175,10 +192,10 @@ class _RowOfBtns extends StatelessWidget {
           ),
         ),
         EachGoLiveControlBtn(
-          onTap: () async {
-            context
-                .read<AmptiveGoLiveSelectCoHostBloc>()
-                .hostAddCohost(getHostList()[2]);
+          onTap: () {
+            context.read<LivestreamBloc>().add(
+                  const SendReactionEvent(emoji: '❤️'),
+                );
           },
           margin: EdgeInsets.zero,
           child: Icon(

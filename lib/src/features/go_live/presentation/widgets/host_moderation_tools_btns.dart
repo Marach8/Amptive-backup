@@ -1,4 +1,5 @@
 import 'package:amptive/src/bloc/main_app/go_live_bloc/host_view/notifications_bloc.dart';
+import 'package:amptive/src/features/go_live/cubits/livestream_bloc.dart';
 import 'package:amptive/src/features/go_live/presentation/widgets/host_moderation_tools_dialog.dart';
 import 'package:amptive/src/shared/circular_image.dart';
 import 'package:amptive/src/shared/image_loader_widget.dart';
@@ -46,8 +47,21 @@ class _HostModerationToolsBtnsState extends State<HostModerationToolsBtns> {
     _cntrl = TextEditingController()..addListener(_onInput);
   }
 
-  void _onFocus() => _isFocusedNotifier.value = _focusNode.hasFocus;
-  void _onInput() => _hasTextNotifier.value = _cntrl.text.isNotEmpty;
+  void _onFocus() {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (mounted) {
+        _isFocusedNotifier.value = _focusNode.hasFocus;
+      }
+    });
+  }
+
+  void _onInput() {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (mounted) {
+        _hasTextNotifier.value = _cntrl.text.isNotEmpty;
+      }
+    });
+  }
 
   @override
   void dispose() {
@@ -65,12 +79,17 @@ class _HostModerationToolsBtnsState extends State<HostModerationToolsBtns> {
         children: <Widget>[
           ValueListenableBuilder<bool>(
               valueListenable: _isFocusedNotifier,
-              builder: (_, bool value, __) {
-                if (value) {
+              builder: (_, bool isFocused, __) {
+                if (isFocused) {
                   return Padding(
                     padding: const EdgeInsets.only(right: 15),
-                    child: InkWell(
-                      onTap: () => _focusNode.unfocus(),
+                    child: GestureDetector(
+                      onTap: () {
+                        // ignore: avoid_print
+                        print(
+                            'Profile image tapped - NOT calling unfocus for debugging');
+                        // Removed _focusNode.unfocus() to debug
+                      },
                       child: ATCircularImage(
                           diameter: 35,
                           imagePath: getHostList()[5].obj.profilePicture ?? ''),
@@ -115,16 +134,25 @@ class _HostModerationToolsBtnsState extends State<HostModerationToolsBtns> {
           )),
           ValueListenableBuilder<bool>(
               valueListenable: _isFocusedNotifier,
-              builder: (_, bool value, __) {
-                if (value) {
+              builder: (_, bool isFocused, __) {
+                // ignore: avoid_print
+                print('OUTER: isFocused=$isFocused');
+                if (isFocused) {
                   return ValueListenableBuilder<bool>(
                       valueListenable: _hasTextNotifier,
-                      builder: (_, bool value, __) {
-                        return InkWell(
-                          onTap: value
-                              ? () {
+                      builder: (_, bool hasText, __) {
+                        // ignore: avoid_print
+                        print('INNER: hasText=$hasText');
+                        return GestureDetector(
+                          onTapDown: hasText
+                              ? (TapDownDetails details) {
+                                  final String message = _cntrl.text.trim();
+                                  if (message.isNotEmpty) {
+                                    context.read<LivestreamBloc>().add(
+                                          SendChatMessage(message: message),
+                                        );
+                                  }
                                   _cntrl.clear();
-                                  _focusNode.unfocus();
                                 }
                               : null,
                           child: Padding(
@@ -132,7 +160,7 @@ class _HostModerationToolsBtnsState extends State<HostModerationToolsBtns> {
                             child: Icon(
                               Icons.send,
                               color:
-                                  value ? ATColors.white : ATColors.lightDark,
+                                  hasText ? ATColors.white : ATColors.lightDark,
                             ),
                           ),
                         );
@@ -154,9 +182,7 @@ class _RowOfBtns extends StatelessWidget {
       children: <Widget>[
         EachGoLiveControlBtn(
           onTap: () {
-            context
-                .read<AmptiveGoLiveNotificationBloc>()
-                .addGiftingNotification(getHostList()[5]);
+            context.read<LivestreamBloc>().add(const ToggleMuteEvent());
           },
           child: const Icon(Icons.mic, size: 20),
         ),
@@ -193,6 +219,19 @@ class _RowOfBtns extends StatelessWidget {
           margin: EdgeInsets.zero,
           child: const Icon(
             Icons.add,
+          ),
+        ),
+        EachGoLiveControlBtn(
+          onTap: () {
+            context.read<LivestreamBloc>().add(
+                  const SendReactionEvent(emoji: '❤️'),
+                );
+          },
+          margin: EdgeInsets.zero,
+          child: Icon(
+            Icons.favorite,
+            color: ATColors.hexECO404,
+            size: 20,
           ),
         ),
       ],

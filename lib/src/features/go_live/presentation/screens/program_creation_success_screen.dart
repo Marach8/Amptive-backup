@@ -5,6 +5,7 @@ import 'package:amptive/src/shared/annotated_region__widget.dart';
 import 'package:amptive/src/shared/app_bar_widget.dart';
 import 'package:amptive/src/shared/back_button.dart';
 import 'package:amptive/src/shared/custom_container_widget.dart';
+import 'package:amptive/src/shared/image_loader_widget.dart';
 import 'package:amptive/src/shared/spotlight_beam.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -187,6 +188,34 @@ class _ProgramCreationSuccessScreenState
               ),
             ],
           ),
+        ),
+      ),
+    );
+  }
+}
+
+
+
+class ProgramSuccessCalenderIcon extends StatelessWidget {
+  const ProgramSuccessCalenderIcon({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: 40, width: 40,
+      decoration: BoxDecoration(
+        color: ATColors.white,
+        borderRadius: BorderRadius.circular(22.5),
+      ),
+      padding: const EdgeInsets.all(8),
+      child: ColorFiltered(
+        colorFilter: ColorFilter.mode(
+            ATColors.black, BlendMode.srcATop),
+        child: const ATImgLoader(
+          imgPath: ATImgStrings.calenderIcon,
+          boxFit: BoxFit.cover,
         ),
       ),
     );

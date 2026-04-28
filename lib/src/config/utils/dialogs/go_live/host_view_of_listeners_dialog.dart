@@ -6,12 +6,16 @@ import 'package:amptive/src/features/go_live/go_live_export.dart';
 import 'package:amptive/src/global_export.dart';
 import 'package:amptive/src/shared/modal_dismisser.dart';
 import 'package:amptive/src/shared/search_filter_widget.dart';
+import 'package:amptive/src/shared/circle_avatar.dart';
 import '../../../../models/host.dart';
 import '../../../../bloc/main_app/go_live_bloc/host_view/available_cohosts_bloc.dart';
 import '../../../../services/create_show/create_show_service.dart';
+import '../../../../livestream/models/livestream_models.dart';
 
 Future<ATCohost<bool>?> showListenersDialog(
-    {required BuildContext context, bool? enableKickOut}) async {
+    {required BuildContext context,
+    bool? enableKickOut,
+    List<LivestreamParticipant>? participants}) async {
   final FocusNode focusNode = FocusNode();
   final TextEditingController controller = TextEditingController();
 
@@ -83,26 +87,9 @@ Future<ATCohost<bool>?> showListenersDialog(
                     Expanded(
                       child: ATScrollBar(
                         extScrollCntrl: scrollController,
-                        child: ListView.builder(
-                          primary: true,
-                          itemCount: getHostList().length + 1,
-                          physics: const BouncingScrollPhysics(),
-                          padding: const EdgeInsets.fromLTRB(15, 20, 10, 20),
-                          itemBuilder: (_, int listIndex) {
-                            if (listIndex == 0) {
-                              return Text(ATStrings.TOP_LISTENERS,
-                                  style: context.textTheme.bodyMedium);
-                            }
-
-                            final ObjectWithNotifier<Host> listener =
-                                getHostList().elementAt(listIndex - 1);
-                            return _ListenerWidget(
-                              onTap: (_, __) {},
-                              listener: listener,
-                              index: listIndex,
-                              enableKickOut: enableKickOut,
-                            );
-                          },
+                        child: _ListenersList(
+                          participants: participants ?? [],
+                          enableKickOut: enableKickOut,
                         ),
                       ),
                     ),
@@ -115,69 +102,129 @@ Future<ATCohost<bool>?> showListenersDialog(
   );
 }
 
-class _ListenerWidget extends StatelessWidget {
-  const _ListenerWidget(
-      {required this.onTap,
-      required this.listener,
-      required this.index,
-      this.enableKickOut});
-  final void Function(ObjectWithNotifier<Host>, bool) onTap;
-  final ObjectWithNotifier<Host> listener;
+// Keep old _ListenerWidget for backwards compatibility or remove if not needed
+// The new _ListenersList and _ParticipantTile handle the participant list
+
+class _ListenersList extends StatelessWidget {
+  const _ListenersList({
+    required this.participants,
+    this.enableKickOut,
+  });
+
+  final List<LivestreamParticipant> participants;
   final bool? enableKickOut;
+
+  @override
+  Widget build(BuildContext context) {
+    if (participants.isEmpty) {
+      return Center(
+        child: Text(
+          'No participants yet',
+          style: context.textTheme.bodyMedium?.copyWith(
+            color: ATColors.hexC2C2C2,
+          ),
+        ),
+      );
+    }
+
+    return ListView.builder(
+      primary: true,
+      itemCount: participants.length + 1,
+      physics: const BouncingScrollPhysics(),
+      padding: const EdgeInsets.fromLTRB(15, 20, 10, 20),
+      itemBuilder: (_, int listIndex) {
+        if (listIndex == 0) {
+          return Text(
+            'Participants (${participants.length})',
+            style: context.textTheme.bodyMedium,
+          );
+        }
+
+        final LivestreamParticipant participant = participants[listIndex - 1];
+        return _ParticipantTile(
+          participant: participant,
+          index: listIndex,
+          enableKickOut: enableKickOut,
+        );
+      },
+    );
+  }
+}
+
+class _ParticipantTile extends StatelessWidget {
+  const _ParticipantTile({
+    required this.participant,
+    required this.index,
+    this.enableKickOut,
+  });
+
+  final LivestreamParticipant participant;
   final int index;
+  final bool? enableKickOut;
 
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 15),
-      child: GestureDetector(
-        onTap: () => onTap(listener, listener.notifier.value),
-        child: Row(
-          children: <Widget>[
-            ClipRRect(
-              borderRadius: BorderRadius.circular(25),
-              child: ATImgLoader(
-                imgPath: listener.obj.profilePicture!,
-                height: 50,
-                width: 50,
-                boxFit: BoxFit.cover,
+      child: Row(
+        children: <Widget>[
+          ATImgLoader(
+            imgPath: participant.avatar ?? '',
+            height: 50,
+            width: 50,
+            boxFit: BoxFit.cover,
+          ),
+          const SizedBox(width: 10),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Text(
+                  participant.displayName,
+                  style: context.textTheme.titleMedium,
+                ),
+                if (participant.isHost)
+                  Text(
+                    'Host',
+                    style: context.textTheme.bodySmall?.copyWith(
+                      color: ATColors.hex307FE2,
+                    ),
+                  ),
+                if (participant.isSpeaker && !participant.isHost)
+                  Text(
+                    'Speaker',
+                    style: context.textTheme.bodySmall?.copyWith(
+                      color: ATColors.hex009C80,
+                    ),
+                  ),
+              ],
+            ),
+          ),
+          if (enableKickOut ?? true)
+            ATContainer(
+              onTap: () async {
+                // Kick out functionality would require integration with the
+                // livestream service to properly remove the participant
+                // For now, show a confirmation snackbar
+                showAppNotification(
+                  context: context,
+                  icon: const ATImgLoader(
+                    imgPath: ATImgStrings.KICK_USER_OUT,
+                  ),
+                  text: 'Kick out feature coming soon',
+                  bgColor: ATColors.hex307FE2,
+                );
+              },
+              height: 35,
+              width: 35,
+              boxShape: BoxShape.circle,
+              color: ATColors.white.withOpacity(0.1),
+              child: const ATImgLoader(
+                boxFit: BoxFit.scaleDown,
+                imgPath: ATImgStrings.KICK_USER_OUT,
               ),
             ),
-            const SizedBox(width: 10),
-            Expanded(
-              child: Text(listener.obj.username ?? '',
-                  style: context.textTheme.titleMedium),
-            ),
-            if (enableKickOut ?? true)
-              ATContainer(
-                onTap: () async {
-                  final bool? shouldKickOut =
-                      await showKickOutConfirmationDialog(
-                          context: context,
-                          title: 'Are you kicking out ${listener.obj.name}?',
-                          content: ATStrings.KICK_OUT_DESC,
-                          listener: listener);
-
-                  if ((shouldKickOut ?? false) && context.mounted) {
-                    showAppNotification(
-                      context: context,
-                      icon: const ATImgLoader(
-                          imgPath: ATImgStrings.KICK_USER_OUT),
-                      text: '${listener.obj.name} has been kicked out!',
-                      bgColor: ATColors.hexECO404,
-                    );
-                  }
-                },
-                height: 35,
-                width: 35,
-                boxShape: BoxShape.circle,
-                color: ATColors.white.withOpacity(0.1),
-                child: const ATImgLoader(
-                    boxFit: BoxFit.scaleDown,
-                    imgPath: ATImgStrings.KICK_USER_OUT),
-              )
-          ],
-        ),
+        ],
       ),
     );
   }

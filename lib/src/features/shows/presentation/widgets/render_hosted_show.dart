@@ -1,11 +1,9 @@
-import 'package:amptive/src/features/shows/cubits/hosted_shows_cubit.dart';
 import 'package:amptive/src/features/shows/data/models/response/show_response_model.dart';
 import 'package:amptive/src/features/shows/presentation/screens/list_hosted_shows_screen.dart';
 import 'package:amptive/src/features/go_live/go_live_export.dart';
 import 'package:amptive/src/global_export.dart';
 import 'package:amptive/src/shared/image_loader_widget.dart';
 import 'package:amptive/src/shared/shimmer.dart';
-import 'package:go_router/go_router.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class RenderHostedShow extends StatelessWidget {
@@ -98,8 +96,8 @@ class RenderHostedShow extends StatelessWidget {
   }
 }
 
-class RenderAHostedShowShimmer extends StatelessWidget {
-  const RenderAHostedShowShimmer({super.key});
+class RenderAHostedEventOrShowShimmer extends StatelessWidget {
+  const RenderAHostedEventOrShowShimmer({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -142,24 +140,28 @@ class RenderAHostedShowShimmer extends StatelessWidget {
   }
 }
 
-class CreateNewShowWidget extends StatelessWidget {
-  const CreateNewShowWidget({
+
+
+
+class CreateNewEventOrShowWidget extends StatelessWidget {
+  const CreateNewEventOrShowWidget({
     super.key,
+    required this.onTap,
+    required this.label,
   });
+
+  final VoidCallback onTap;
+  final String label;
 
   @override
   Widget build(BuildContext context) {
-    return LayoutBuilder(builder: (_, BoxConstraints kst) {
+    return LayoutBuilder(
+      builder: (_, BoxConstraints kst) {
       return Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           ATContainer(
-            onTap: () {
-              context.pushNamed(
-                ATRoutes.createShowForm,
-                extra: context.read<HostedShowsCubit>(),
-              );
-            },
+            onTap: onTap,
             radius: 5,
             color: ATColors.hex2D2D2D,
             width: context.screenWidth,
@@ -168,7 +170,7 @@ class CreateNewShowWidget extends StatelessWidget {
           ),
           const SizedBox(height: 5),
           Text(
-            ATStrings.createNewShow,
+            label,
             style: context.textTheme.bodyMedium,
           ),
         ],

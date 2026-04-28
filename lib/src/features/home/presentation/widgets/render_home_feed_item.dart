@@ -26,6 +26,8 @@ class RenderHomeFeedItem extends StatelessWidget {
 
   final HomeFeedItem homeFeedItem;
 
+  bool get _isLive => homeFeedItem.status?.toLowerCase() == 'live';
+
   @override
   Widget build(BuildContext context) {
     final bool hasProfilePic =
@@ -46,7 +48,7 @@ class RenderHomeFeedItem extends StatelessWidget {
             );
           },
           title: homeFeedItem.hostName ?? '',
-          subtitle: 'started a live show',
+          subtitle: _isLive ? 'started a live show' : 'scheduled a live show',
         ),
         const SizedBox(
           height: 2,
@@ -58,7 +60,13 @@ class RenderHomeFeedItem extends StatelessWidget {
             child: Stack(
               children: <Widget>[
                 ATImgLoader(
-                  imgPath: homeFeedItem.coverUrl ?? ATImgStrings.jpeg2,
+                  imgPath: homeFeedItem.contentType == 'standalone'
+                      ? homeFeedItem.thumbnailUrl ?? ATImgStrings.jpeg2
+                      : homeFeedItem.contentType == 'episode'
+                          ? homeFeedItem.thumbnailUrl ??
+                              homeFeedItem.showCoverUrl ??
+                              ATImgStrings.jpeg2
+                          : homeFeedItem.coverUrl ?? ATImgStrings.jpeg2,
                   boxFit: BoxFit.cover,
                   height: 425,
                   width: context.screenWidth,
@@ -86,10 +94,12 @@ class RenderHomeFeedItem extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
-                      const With2OthersWidget(),
+                      With2OthersWidget(
+                        coHostCount: homeFeedItem.coHostCount,
+                      ),
                       const Spacer(),
-                      const LiveIndicatorWithAnimatingDot(),
-                      const SizedBox(height: 10),
+                      if (_isLive) const LiveIndicatorWithAnimatingDot(),
+                      if (_isLive) const SizedBox(height: 10),
                       Text(
                         maxLines: 2,
                         homeFeedItem.title ?? '',
@@ -102,11 +112,16 @@ class RenderHomeFeedItem extends StatelessWidget {
                       const SizedBox(
                         height: 12,
                       ),
-                      const PeopleListeningWidget(),
+                      PeopleListeningWidget(
+                        viewerProfileUrls: homeFeedItem.avatarUrls,
+                        totalViewerCount: _isLive
+                            ? homeFeedItem.viewerCount
+                            : homeFeedItem.goingCount,
+                      ),
                       const SizedBox(
                         height: 10,
                       ),
-                      const PaidShowAndPlayBtnWidget(),
+                      PaidShowAndPlayBtnWidget(homeFeedItem: homeFeedItem),
                     ],
                   ),
                 ),

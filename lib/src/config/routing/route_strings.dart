@@ -29,8 +29,8 @@ class ATRoutes {
   static const String addProfilePicScreen = "add_profile_pic";
   static const String CIRCLE_IMG_CROPPER_SCREEN = "crop_image";
   static const String allowNotificationsScreen = "pre-homepage";
-  static const String createShowForm = "create-show-form";
-  static const String createEventForm = "create-event-form";
+  static const String createShowFormScreen = "create-show-form";
+  static const String createEventFormScreen = "create-event-form";
   static const String createEpisodeForm = "create-episode-form";
 
   //MAIN APPLICATION
@@ -60,10 +60,15 @@ class ATRoutes {
   static const String PROFILE_SUBSCRIBERS_SCREEN = 'profile_sub_screen';
   static const String USER_PROFILE_SCREEN = 'user_profile';
   static const String listHostedShowsScreen = 'choose_or_create_show';
+  static const String listHostedEventsScreen = 'choose_or_create_event';
   static const String programCreationSuccessScreen =
       'create_show_success_screen';
   static const String EVENT_SCHEDULED_SCREEN = 'event_scheduled';
   static const String showPreviewScreen = 'show_preview';
+  static const String eventPreviewScreen = 'event_preview';
+  static const String editEventScreen = 'edit_event';
+  static const String editEpisodeScreen = 'edit_episode';
+  static const String selectScheduleDateScreen = 'select_schedule_date';
   static const String previewEpisodeScreen = 'episode_preview';
   static const String COMMUNITY_TASK_SCREEN = 'community_task';
   static const String PROFILE_PIC_SCREEN = 'profile_picture';

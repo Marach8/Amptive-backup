@@ -95,7 +95,7 @@ class TrendingHashTagsScreen extends StatelessWidget {
                                               horizontal: 15),
                                           child: HashTagsSubtitleRow(
                                             hashTagTitle: tag.name ??
-                                                '', // Adjust based on model
+                                                '', 
                                             hashTagSubTitle:
                                                 '${tag.usageCount ?? 0} posts',
                                             trailingOnpressed: () {},

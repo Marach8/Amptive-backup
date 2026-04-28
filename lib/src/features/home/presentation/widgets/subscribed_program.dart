@@ -60,7 +60,13 @@ class SubscribedProgram extends StatelessWidget {
                   children: <Widget>[
                     const With2OthersWidget(),
                     const Spacer(),
-                    const LiveIndicatorWithAnimatingDot(),
+                    Text(
+                      '15 Jul 2024 at 17:00',
+                      style: Theme.of(context)
+                          .textTheme
+                          .bodySmall
+                          ?.copyWith(fontSize: ATSizes.size16),
+                    ),
                     const SizedBox(
                       height: 10,
                     ),

@@ -54,7 +54,7 @@ class _SelectedHashtag extends StatelessWidget {
       child: Row(
         children: <Widget>[
           Text(
-            (hashtag.displayName ?? '').toLowerCase(),
+            (hashtag.displayName ?? hashtag.name ?? '').toLowerCase(),
             style: context.textTheme.labelSmall?.copyWith(
                 fontSize: ATSizes.size11,
                 color: ATColors.white.withValues(alpha: 0.7)),

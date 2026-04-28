@@ -29,4 +29,6 @@ abstract class AuthRepo {
 
   Future<ApiResponse<String>> resetPassword(
       {required Map<String, dynamic> param});
+
+
 }

@@ -34,7 +34,8 @@ class ATImgStrings {
   static const String MICROPHONE = '$_svgPath/Microphone.svg';
   static const String USER_FOLLOW = '$_svgPath/user-check.svg';
   static const String KICK_USER_OUT = '$_svgPath/user out.svg';
-  static const String USER_ICON = '$_svgPath/user.svg';
+  static const String USER_ICON = '$_svgPath/user.svg'; 
+  static const String usersIcon = '$_svgPath/users.svg';
   static const String X_LOGO = '$_svgPath/x_logo.svg.svg';
   static const String groupIcon = '$_svgPath/Group_fill.svg';
   static const String TOP_CREATOR_BADGE = '$_svgPath/RANK BADGES.svg';

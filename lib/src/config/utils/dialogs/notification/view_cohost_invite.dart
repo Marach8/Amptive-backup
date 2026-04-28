@@ -56,7 +56,7 @@ Future<(int?, bool)?> viewCoHostInviteDetails(
                           builder: (_, int? state) {
                             return _PrivateWidget(
                               onTapTitle:
-                                  '${ATStrings.EDIT} ${ATStrings.COHOST_FEE}'
+                                  '${ATStrings.edit} ${ATStrings.COHOST_FEE}'
                                       .capitalize,
                               title: ATStrings.ACCEPT_WITH_FEE,
                               subtitle: ATStrings.ACCEPT_WITH_FEE_DESC,

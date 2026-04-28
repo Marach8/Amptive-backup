@@ -9,9 +9,11 @@ import 'package:amptive/src/features/discover/cubits/communities_cubit.dart';
 import 'package:amptive/src/features/discover/cubits/hashtags_cubit.dart';
 import 'package:amptive/src/features/discover/cubits/users_cubits.dart';
 import 'package:amptive/src/features/episodes/cubits/create_episode_cubit.dart';
+import 'package:amptive/src/features/episodes/cubits/start_episode_cubit.dart';
 import 'package:amptive/src/features/episodes/data/models/request/create_episode_request_model.dart';
 import 'package:amptive/src/features/episodes/data/models/response/episode_model.dart';
 import 'package:amptive/src/features/episodes/presentation/widgets/whispers_permision_modal.dart';
+import 'package:amptive/src/features/events/presentation/screens/select_schedule_date_screen.dart';
 import 'package:amptive/src/features/go_live/go_live_export.dart';
 import 'package:amptive/src/global_export.dart';
 import 'package:amptive/src/shared/annotated_region__widget.dart';
@@ -50,7 +52,7 @@ class CreateEpisodeFormScreen extends StatelessWidget {
         BlocProvider<AllUsersCubit>(create: (_) => AllUsersCubit()),
         BlocProvider<AllHashtagsCubit>(create: (_) => AllHashtagsCubit()),
         BlocProvider<SelectedHashTagsCubit>(create: (_) => SelectedHashTagsCubit()),
-        //BlocProvider<HostedShowsCubit>.value(value: hostedShowsCubit,),
+        BlocProvider<StartEpisodeCubit>(create: (_) => StartEpisodeCubit()),
       ],
       child: _SubWidget(showId: showId),
     );
@@ -76,6 +78,7 @@ class _CreateShowFormScreenState extends State<_SubWidget> {
     if (initialOnTap == ScheduleBtnOnTap.goLive) {
       _activateBtn.value = (_activateBtn.value.$1, ScheduleBtnOnTap.scheduleEvent);
     } else {
+      _scheduleDate = null;
       _activateBtn.value = (_activateBtn.value.$1, ScheduleBtnOnTap.goLive);
     }
   }
@@ -93,6 +96,7 @@ class _CreateShowFormScreenState extends State<_SubWidget> {
   List<HashTag>? selectedHashtags;
   ProgramAccessTypeSelectionData accessTypeData =
       const ProgramAccessTypeSelectionData();
+  DateTime? _scheduleDate;
 
   @override
   void initState() {
@@ -120,10 +124,6 @@ class _CreateShowFormScreenState extends State<_SubWidget> {
     final double blurredHeaderHeight =
         kToolbarHeight + MediaQuery.paddingOf(context).top;
 
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      context.read<CohostServiceBloc>().resetBloc();
-      context.read<HashtagServiceBloc>().resetBloc();
-    });
     return ATAnnotatedRegion(
       statusBarColor: ATColors.transparent,
       child: Scaffold(
@@ -133,7 +133,7 @@ class _CreateShowFormScreenState extends State<_SubWidget> {
               child: BlocBuilder<BgImageCubit, (String, Uint8List?)>(
                   builder: (_, (String, Uint8List?) state) {
                 return ImageFiltered(
-                    imageFilter: ImageFilter.blur(sigmaX: 200, sigmaY: 200),
+                    imageFilter: ImageFilter.blur(sigmaX: 50, sigmaY: 50),
                     child: state.$2 == null
                         ? ATImgLoader(
                             boxFit: BoxFit.fill,
@@ -142,6 +142,7 @@ class _CreateShowFormScreenState extends State<_SubWidget> {
                         : Image.memory(state.$2!, fit: BoxFit.fill));
               }),
             ),
+
             Container(
               color: ATColors.hex0D0D0D.withValues(alpha: 0.75),
               child: NotificationListener<ScrollNotification>(
@@ -170,14 +171,28 @@ class _CreateShowFormScreenState extends State<_SubWidget> {
                                   style: context.textTheme.bodyMedium,
                                 ),
                                 Padding(
-                                  padding:
-                                      const EdgeInsets.only(right: 15),
-                                  child: InkWell(
-                                      onTap: _toggleBtnOnTap,
+                                    padding: const EdgeInsets.only(right: 15),
+                                    child: InkWell(
+                                      onTap: ()async{
+                                        final ScheduleBtnOnTap currentOnTap = _activateBtn.value.$2;
+                                        if(currentOnTap == ScheduleBtnOnTap.goLive){
+                                          final DateTime? selectedDate = await context.pushNamed(
+                                            ATRoutes.selectScheduleDateScreen,
+                                            extra: SelectScheduleDataScreenEntryParams(
+                                              selectedBgImage: context.read<BgImageCubit>().state.$2,
+                                              programName: 'Episode',
+                                              incomingDate: _scheduleDate
+                                            )
+                                          ) as DateTime?;
+                                          _scheduleDate = selectedDate;
+                                        }
+                                        _toggleBtnOnTap();
+                                      },
                                       borderRadius:
                                           BorderRadius.circular(30),
-                                      child: const ScheduleIcon()),
-                                )
+                                      child: const ScheduleIcon()
+                                    ),
+                                  )
                               ],
                             ),
                           )
@@ -216,9 +231,7 @@ class _CreateShowFormScreenState extends State<_SubWidget> {
                             maxLines: 1,
                             cursorHeight: 20,
                             hintText: ATStrings.titleOfYourShow,
-                            prefixIcon: const SizedBox(
-                              width: 12,
-                            ),
+                            prefixIcon: const SizedBox(width: 12),
                             hintStyle: context.textTheme.bodySmall?.copyWith(
                               color: ATColors.white.withValues(alpha: 0.4),
                             ),
@@ -272,7 +285,7 @@ class _CreateShowFormScreenState extends State<_SubWidget> {
                         ),
                         const Padding(
                           padding: EdgeInsets.fromLTRB(15, 0, 15, 10),
-                          child: RowWith2Texts(text1: ATStrings.COMMUNITY),
+                          child: RowWith2Texts(text1: ATStrings.community),
                         ),
                         Padding(
                           padding: const EdgeInsets.fromLTRB(15, 0, 15, 10),
@@ -441,7 +454,9 @@ class _CreateShowFormScreenState extends State<_SubWidget> {
                               builder: (_, StateSetter setter) {
                             final String accessTypeDescText =
                                 getAccessTypeDescText(
-                                    accessTypeData: accessTypeData);
+                                  accessTypeData: accessTypeData,
+                                  initialAccessTypeTextDesc: ATStrings.selectWhoCanAccessYourShow
+                                );
                             return CreateProgramSelectionItem(
                               description: accessTypeDescText,
                               descStyle: accessTypeDescText ==
@@ -634,173 +649,189 @@ class _CreateShowFormScreenState extends State<_SubWidget> {
         resizeToAvoidBottomInset: false,
 
         bottomSheet: MultiBlocListener(
-        listeners: <SingleChildWidget>[
-          BlocListener<BgImageCubit, (String, Uint8List?)>(
-            listener: (_, (String, Uint8List?) state) {
-              if (state.$2 != null) {
-                _activateBtn.value = (true, _activateBtn.value.$2);
-              } else {
-                _activateBtn.value = (false, _activateBtn.value.$2);
-              }
-            },
-          ),
-          BlocListener<UploadImageCubit, ATAppState<String>>(
-            listener: (_, ATAppState<String> state) {
-              if (state is SuccessState<String>) {
-                //If we upload image successfully, create the episode.
-                context.read<CreateEpisodeCubit>().createEpisode(
-                  showId: widget.showId,
-                  episodeData: CreateEpisodePayload(
-                    tagIds: (selectedHashtags ?? <HashTag>[])
-                      .map((HashTag tag) => tag.id ?? '')
-                      .toList(),
-                    coHostIds: (selectedCohosts ?? <User>[])
-                      .map((User cohost) => cohost.id ?? '')
-                      .toList(),
-                    title: _titleCntrl.text.trim(),
-                    description: selectedDescription,
-                    thumbnailUrl: state.newData!,
-                    communityId: selectedCommunity?.communityId ?? '',
-                    category: 'Category',
-                    showTypeOverride: accessTypeData.accessType 
-                      == ProgramAccessType.free ? 'free' : 'paid',
-                    priceOverride: accessTypeData.subscriptionAmount 
-                      ?? accessTypeData.oneTimePaymentAmount ?? 0.01,
-                    allowHandRaising: selectedHandRaisePermission == HandRaisingPermission.allow,
-                    allowWhispers: whispersDesc == ATStrings.turnedOn,
-                    // scheduledFor: '',
-                  ),
-                );
-              } else if (state is FailureState<String>) {
-                //if uploading cover art fails, stop loading and show notif
-                showAppNotification2(
-                  context: context,
-                  text: state.message,
-                  type: NotificationType.failure,
-                );
-                _activateBtn.value = (true, _activateBtn.value.$2);
-              }
-            },
-          ),
-          BlocListener<CreateEpisodeCubit, ATAppState<Episode>>(
-            listener: (_, ATAppState<Episode> state) async{
-              if (state is SuccessState<Episode>) {
-                _activateBtn.value = (true, _activateBtn.value.$2);
+          listeners: <SingleChildWidget>[
+            BlocListener<StartEpisodeCubit, ATAppState<Episode>>(
+              listener: (_, ATAppState<Episode> state){
+                if(state is SuccessState<Episode>){
+                  _activateBtn.value = (true, _activateBtn.value.$2);
 
-                final bool shouldGoToLive = _activateBtn.value.$2 
-                  == ScheduleBtnOnTap.goLive;
-                if(shouldGoToLive){
                   context.pushReplacementNamed(
                     ATRoutes.goLiveOnboarding,
                     extra: state.newData
                   );
-                  return;
                 }
+                else if(state is FailureState<Episode>){
+                  _activateBtn.value = (true, _activateBtn.value.$2);
 
-                final dynamic params = ProgramCreationSuccessScreenParams(
-                  coverArtBytes: context.read<BgImageCubit>().state.$2!,
-                  title: ATStrings.episodeCreated,
-                  subtitle: ATStrings.shareEpisodeLinkDescription,
-                  btnTitle: ATStrings.shareEpisode,
-                  txtBtnTitle: ATStrings.viewEpisode,
-                  topLogo: Container(
-                    height: 40, width: 40,
-                    decoration: BoxDecoration(
-                      color: ATColors.white,
-                      borderRadius: BorderRadius.circular(22.5),
-                    ),
-                    padding: const EdgeInsets.all(8),
-                    child: ColorFiltered(
-                      colorFilter: ColorFilter.mode(
-                          ATColors.black, BlendMode.srcATop),
-                      child: const ATImgLoader(
-                        imgPath: ATImgStrings.calenderIcon,
-                        boxFit: BoxFit.cover,
-                      ),
-                    ),
-                  )
-                );
-  
-                final ButtonPressed? onPressedResult = await context.pushNamed(
-                  ATRoutes.programCreationSuccessScreen,
-                  extra: params
-                ) as ButtonPressed?;
-  
-                if(context.mounted){
-                  if(onPressedResult == ButtonPressed.elevatedBtn){
-                    // context.pushReplacementNamed(
-                    //   ATRoutes.createEpisodeForm);
-                  } else if(onPressedResult == ButtonPressed.textBtn){
-                    context.pushReplacementNamed(
-                      ATRoutes.previewEpisodeScreen,
-                      extra: state.newData
-                    );
-                  }
+                  showAppNotification2(
+                    context: context,
+                    text: state.message,
+                    type: NotificationType.failure,
+                  );
                 }
-              } 
-              else if (state is FailureState<Episode>) {
-                _activateBtn.value = (true, _activateBtn.value.$2);
-                showAppNotification2(
-                  context: context,
-                  text: state.message,
-                  type: NotificationType.failure,
-                );
-              }
-            },
-          )
-        ],
-        child: ValueListenableBuilder<(bool?, ScheduleBtnOnTap)>(
-            valueListenable: _activateBtn,
-            builder: (_, (bool?, ScheduleBtnOnTap) value, __) {
-              final bool shouldGoToGoLive = _activateBtn.value.$2 == ScheduleBtnOnTap.goLive;
-    
-              //null for loading, false for disabled, true for enabled for the bool.
-              return ATBlurredBgBtn(
-                isLoading: value.$1 == null,
-                onPressed: value.$1 == false ? null : () {
-                  String errorMessage = '';
-                  if (_titleCntrl.text.trim().isEmpty) {
-                    errorMessage = 'Please enter a title';
-                  } else if (selectedDescription == 
-                    ATStrings.tellListenersAboutYourShow) {
-                    errorMessage = 'Please enter a description';
-                  } else if(selectedCommunity == null) {
-                    errorMessage = 'Please select a community';
-                  } else if((selectedCohosts ?? <User>[]).isEmpty) {
-                    errorMessage = 'Please select at least 1 cohost';
-                  } else if((selectedHashtags ?? <HashTag>[]).isEmpty) {
-                    errorMessage = 'Please select at least 1 hashtag';
-                  } else if(selectedHandRaisePermission == null) {
-                    errorMessage = 'Please choose whether to allow hand-raising for this episode';
-                  } else if(accessTypeData.accessType == null) {
-                    errorMessage = 'Please choose whether this episode is free or paid';
-                  }
-                  else if(selectedWhispersPermission == null) {
-                    errorMessage = 'Please choose whether to allow whispers for this episode';
-                  }
-    
-                  if(errorMessage.isNotEmpty){
-                    showAppNotification2(
-                      context: context,
-                      text: errorMessage,
-                      type: NotificationType.failure,
+              },
+            ),
+            BlocListener<BgImageCubit, (String, Uint8List?)>(
+              listener: (_, (String, Uint8List?) state) {
+                if (state.$2 != null) {
+                  _activateBtn.value = (true, _activateBtn.value.$2);
+                } else {
+                  _activateBtn.value = (false, _activateBtn.value.$2);
+                }
+              },
+            ),
+            BlocListener<UploadImageCubit, ATAppState<String>>(
+              listener: (_, ATAppState<String> state) {
+                if (state is SuccessState<String>) {
+                  //If we upload image successfully, create the episode.
+                  context.read<CreateEpisodeCubit>().createEpisode(
+                    showId: widget.showId,
+                    episodeData: CreateEpisodePayload(
+                      tagIds: (selectedHashtags ?? <HashTag>[])
+                        .map((HashTag tag) => tag.id ?? '')
+                        .toList(),
+                      coHostIds: (selectedCohosts ?? <User>[])
+                        .map((User cohost) => cohost.userId ?? '')
+                        .toList(),
+                      title: _titleCntrl.text.trim(),
+                      description: selectedDescription,
+                      thumbnailUrl: state.newData!,
+                      communityId: selectedCommunity?.communityId ?? '',
+                      category: 'Category',
+                      showTypeOverride: accessTypeData.accessType 
+                        == ProgramAccessType.free ? 'free' : 'paid',
+                      priceOverride: accessTypeData.subscriptionAmount 
+                        ?? accessTypeData.oneTimePaymentAmount ?? 0.01,
+                      allowHandRaising: selectedHandRaisePermission == HandRaisingPermission.allow,
+                      allowWhispers: whispersDesc == ATStrings.turnedOn,
+                      scheduledFor: _scheduleDate?.toUtc().toIso8601String(),
+                    ),
+                  );
+                } else if (state is FailureState<String>) {
+                  //if uploading cover art fails, stop loading and show notif
+                  showAppNotification2(
+                    context: context,
+                    text: state.message,
+                    type: NotificationType.failure,
+                  );
+                  _activateBtn.value = (true, _activateBtn.value.$2);
+                }
+              },
+            ),
+            BlocListener<CreateEpisodeCubit, ATAppState<Episode>>(
+              listener: (_, ATAppState<Episode> state) async{
+                if (state is SuccessState<Episode>) {
+
+                  final bool shouldStartLive = _activateBtn.value.$2 
+                    == ScheduleBtnOnTap.goLive;
+                  if(shouldStartLive){
+                    final Episode? episode = state.newData;
+                    context.read<StartEpisodeCubit>().startEpisode(
+                      showId: widget.showId,
+                      episodeId: episode?.episodeId ?? '',
+                      streamUrl: episode?.streamUrl ?? '', 
+                      streamKey: episode?.streamKey ?? '',
+                      reason: 'Starting an episode'
                     );
                     return;
                   }
-    
-                  //Start loading on button press.
-                  _activateBtn.value = (null, _activateBtn.value.$2);
-                  //Try to upload the cover image.
-                  context.read<UploadImageCubit>().uploadBytesImage(
-                    bytes: context.read<BgImageCubit>().state.$2!,
-                    purpose: 'cover-art',
+
+                  _activateBtn.value = (true, _activateBtn.value.$2);
+
+                  final dynamic params = ProgramCreationSuccessScreenParams(
+                    coverArtBytes: context.read<BgImageCubit>().state.$2!,
+                    title: ATStrings.episodeCreated,
+                    subtitle: ATStrings.shareEpisodeLinkDescription,
+                    btnTitle: ATStrings.shareEpisode,
+                    txtBtnTitle: ATStrings.viewEpisode,
+                    topLogo: const ProgramSuccessCalenderIcon()
                   );
-                },
-                btnTitle: shouldGoToGoLive ? ATStrings.goLive 
-                  : '${ATStrings.schedule} episode',
-              );
-            }
-          )
+    
+                  final ButtonPressed? onPressedResult = await context.pushNamed(
+                    ATRoutes.programCreationSuccessScreen,
+                    extra: params
+                  ) as ButtonPressed?;
+    
+                  if(context.mounted){
+                    if(onPressedResult == ButtonPressed.elevatedBtn){
+                      // context.pushReplacementNamed(
+                      //   ATRoutes.createEpisodeForm);
+                    } else if(onPressedResult == ButtonPressed.textBtn){
+                      context.pushReplacementNamed(
+                        ATRoutes.previewEpisodeScreen,
+                        extra: state.newData
+                      );
+                    }
+                  }
+                } 
+                else if (state is FailureState<Episode>) {
+                  _activateBtn.value = (true, _activateBtn.value.$2);
+                  showAppNotification2(
+                    context: context,
+                    text: state.message,
+                    type: NotificationType.failure,
+                  );
+                }
+              },
+            )
+          ],
+          child: ValueListenableBuilder<(bool?, ScheduleBtnOnTap)>(
+              valueListenable: _activateBtn,
+              builder: (_, (bool?, ScheduleBtnOnTap) value, __) {
+                final bool shouldGoToGoLive = _activateBtn.value.$2 == ScheduleBtnOnTap.goLive;
+      
+                //null for loading, false for disabled, true for enabled for the bool.
+                return ATBlurredBgBtn(
+                  isLoading: value.$1 == null,
+                  onPressed: value.$1 == false ? null : () {
+                    String errorMessage = '';
+                    if (_titleCntrl.text.trim().isEmpty) {
+                      errorMessage = 'Please enter a title';
+                    } else if (selectedDescription == 
+                      ATStrings.tellListenersAboutYourShow) {
+                      errorMessage = 'Please enter a description';
+                    } else if(selectedCommunity == null) {
+                      errorMessage = 'Please select a community';
+                    } else if((selectedCohosts ?? <User>[]).isEmpty) {
+                      errorMessage = 'Please select at least 1 cohost';
+                    } else if((selectedHashtags ?? <HashTag>[]).isEmpty) {
+                      errorMessage = 'Please select at least 1 hashtag';
+                    } else if(selectedHandRaisePermission == null) {
+                      errorMessage = 'Please choose whether to allow hand-raising for this episode';
+                    } else if(accessTypeData.accessType == null) {
+                      errorMessage = 'Please choose whether this episode is free or paid';
+                    }
+                    else if(selectedWhispersPermission == null) {
+                      errorMessage = 'Please choose whether to allow whispers for this episode';
+                    }
+                    final ScheduleBtnOnTap currentOnTap = _activateBtn.value.$2;
+                    if(currentOnTap == ScheduleBtnOnTap.scheduleEvent 
+                      && _scheduleDate == null){
+                      errorMessage = 'Please choose a schedule date/time for this episode';
+                    }
+      
+                    if(errorMessage.isNotEmpty){
+                      showAppNotification2(
+                        context: context,
+                        text: errorMessage,
+                        type: NotificationType.failure,
+                      );
+                      return;
+                    }
+      
+                    //Start loading on button press.
+                    _activateBtn.value = (null, _activateBtn.value.$2);
+                    //Try to upload the cover image.
+                    context.read<UploadImageCubit>().uploadBytesImage(
+                      bytes: context.read<BgImageCubit>().state.$2!,
+                      purpose: 'cover-art',
+                    );
+                  },
+                  btnTitle: shouldGoToGoLive ? ATStrings.goLive 
+                    : '${ATStrings.schedule} episode',
+                );
+              }
+            )
         ),
       ),
     );
