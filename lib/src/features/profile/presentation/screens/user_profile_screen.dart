@@ -5,6 +5,7 @@ import 'package:amptive/src/shared/annotated_region__widget.dart';
 import 'package:amptive/src/shared/back_button.dart';
 import 'package:amptive/src/shared/circle_avatar.dart';
 import 'package:amptive/src/shared/custom_container_widget.dart';
+import 'package:amptive/src/shared/global_model_objects.dart';
 import 'package:amptive/src/shared/sliver_header_delegate.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -121,7 +122,7 @@ class ATUserProfileScreen extends StatelessWidget {
                     ],
                 body: TabBarView(
                     physics: const BouncingScrollPhysics(),
-                    children: List<Widget>.filled(2, const SampleTabView()))),
+                    children: List<Widget>.generate(2, (int index) => SampleTabView(tabIndex: index)))),
           ),
         ),
       ),
@@ -130,7 +131,8 @@ class ATUserProfileScreen extends StatelessWidget {
 }
 
 class SampleTabView extends StatefulWidget {
-  const SampleTabView({super.key});
+  const SampleTabView({super.key, required this.tabIndex});
+  final int tabIndex;
 
   @override
   State<SampleTabView> createState() => _SampleTabViewState();
@@ -144,15 +146,11 @@ class _SampleTabViewState extends State<SampleTabView>
   @override
   Widget build(BuildContext context) {
     super.build(context);
-    return ListView.builder(
-      physics: const BouncingScrollPhysics(),
-      padding: const EdgeInsets.fromLTRB(0, 10, 0, 50),
-      itemCount: 10,
-      itemBuilder: (_, int listIndex) {
-        return const ProfileEventOrShowDisplay();
-      },
-    );
+    final ProfileTabType tabType = widget.tabIndex == 0 ? ProfileTabType.shows : ProfileTabType.events;
+    return ProfileEventOrShowDisplay(tabType: tabType);
   }
+    
+  
 }
 
 final List<String> _tabs = <String>[ATStrings.ATTENDED, ATStrings.UPCOMING];

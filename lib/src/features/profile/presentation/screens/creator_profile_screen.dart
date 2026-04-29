@@ -1,10 +1,12 @@
 import 'package:amptive/src/config/api_response_and_app_state.dart';
 import 'package:amptive/src/config/config_export.dart';
 import 'package:amptive/src/features/auth/cubits/local_user_data_cubit.dart';
+import 'package:amptive/src/features/auth/data/models/response/user_profile_response_model.dart';
 import 'package:amptive/src/features/profile/presentation/screens/profile_views_export.dart';
 import 'package:amptive/src/shared/annotated_region__widget.dart';
 import 'package:amptive/src/shared/back_button.dart';
 import 'package:amptive/src/shared/circle_avatar.dart';
+import 'package:amptive/src/shared/global_model_objects.dart';
 import 'package:amptive/src/shared/sliver_header_delegate.dart';
 import 'package:amptive/src/shared/rich_text.dart';
 import 'package:flutter/material.dart';
@@ -139,7 +141,7 @@ class CreatorProfileScreen extends StatelessWidget {
                                 ],
                               ),
                               const SizedBox(height: 20),
-                              const _ProfileDesc(),
+                               _ProfileDesc(userData: userData),
                               const SizedBox(height: 20),
                               const RowOfSocials(),
                               const SizedBox(height: 15),
@@ -174,12 +176,11 @@ class CreatorProfileScreen extends StatelessWidget {
                   )
                 ],
                 body: TabBarView(
-                  physics: const BouncingScrollPhysics(),
-                  children: List<Widget>.filled(
-                    4,
-                    const SampleTabView(),
-                  ),
-                ),
+                    physics: const BouncingScrollPhysics(),
+                    children: List<Widget>.generate(
+                      4,
+                      (int index) => CreatorSampleTabView(tabIndex: index),
+                    )),
               ),
             ),
           ),
@@ -190,7 +191,8 @@ class CreatorProfileScreen extends StatelessWidget {
 }
 
 class _ProfileDesc extends StatelessWidget {
-  const _ProfileDesc();
+  const _ProfileDesc({required this.userData});
+  final CachedUserData? userData;
 
   @override
   Widget build(BuildContext context) {
@@ -198,7 +200,7 @@ class _ProfileDesc extends StatelessWidget {
       padding: const EdgeInsets.fromLTRB(15, 0, 15, 0),
       child: ATRichText(
         items: <String, TextStyle>{
-          'Author of UNTAMED & LOVE WARRIOR. Host of WE CAN DO HARD THINGS. Founder of':
+         'Author of UNTAMED & LOVE WARRIOR. Host of WE CAN DO HARD THINGS. Founder of':
               context.textTheme.titleMedium!.copyWith(fontSize: ATSizes.size13),
           ' @together_rising. ': context.textTheme.titleMedium!.copyWith(
             fontSize: ATSizes.size13,
@@ -215,6 +217,33 @@ class _ProfileDesc extends StatelessWidget {
         },
       ),
     );
+  }
+}
+
+class CreatorSampleTabView extends StatefulWidget {
+  const CreatorSampleTabView({super.key, required this.tabIndex});
+  final int tabIndex;
+
+  @override
+  State<CreatorSampleTabView> createState() => _CreatorSampleTabViewState();
+}
+
+class _CreatorSampleTabViewState extends State<CreatorSampleTabView>
+    with AutomaticKeepAliveClientMixin {
+  @override
+  bool get wantKeepAlive => true;
+
+  @override
+  Widget build(BuildContext context) {
+    super.build(context);
+    final ProfileTabType tabType = switch (widget.tabIndex) {
+      0 => ProfileTabType.scheduled,
+      1 => ProfileTabType.ended,
+      2 => ProfileTabType.shows,
+      3 => ProfileTabType.events,
+      _ => ProfileTabType.shows,
+    };
+    return ProfileEventOrShowDisplay(tabType: tabType);
   }
 }
 
