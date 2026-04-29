@@ -1,8 +1,10 @@
+import 'dart:async';
 import 'dart:developer';
 import 'dart:io';
 import 'package:amptive/src/config/services/network_service/interceptor.dart'
     show AuthGuardCubit;
 import 'package:amptive/src/features/auth/cubits/local_user_data_cubit.dart';
+import 'package:amptive/src/features/notifications/cubits/notifications_cubit.dart';
 import 'package:amptive/src/features/notifications/cubits/register_device_fcm_cubit.dart';
 import 'package:amptive/src/features/auth/presentation/screens/login_screen.dart';
 import 'package:amptive/src/features/home/cubits/home_feed_cubit.dart';
@@ -12,6 +14,7 @@ import 'package:amptive/src/services/websocket/user_ws_service.dart';
 import 'package:amptive/src/shared/annotated_region__widget.dart';
 import 'package:amptive/src/features/main_app_nav_bar.dart';
 import 'package:amptive/src/features/home/presentation/screens/home_landing_screen.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
@@ -90,8 +93,9 @@ class ATMainAppShell extends StatelessWidget {
         BlocProvider<HomeFeedCubit>(create: (_) => HomeFeedCubit()),
         BlocProvider<LiveUsersCubit>(create: (_) => LiveUsersCubit()),
         BlocProvider<RemoteUserDataCubit>(create: (_) => RemoteUserDataCubit()),
-        BlocProvider<RegisterDeviceFCMCubit>(
-            create: (_) => RegisterDeviceFCMCubit())
+        BlocProvider<RegisterDeviceFCMCubit>(create: (_) => RegisterDeviceFCMCubit()),
+        BlocProvider<GetNotificationsCubit>(create: (_) => GetNotificationsCubit()),
+       
       ],
       child: const _SubWidget(),
     );
@@ -109,11 +113,19 @@ class __SubWidgetState extends State<_SubWidget> {
   final ScrollController _liveUsersScrollController = ScrollController();
   final GlobalKey<NestedScrollViewState> _nestedKey =
       GlobalKey<NestedScrollViewState>();
+  final GlobalKey<NestedScrollViewState> _notifNestedKey = GlobalKey<NestedScrollViewState>();
+
+      StreamSubscription<RemoteMessage>? _notifSubscription;
 
   @override
   void initState() {
     super.initState();
     _liveUsersScrollController.addListener(() => _onLiveUsersScrollToEnd());
+     _notifSubscription = GetIt.I<PushNotificationService>().notificationStream.listen((RemoteMessage message) async {
+    if (mounted) {
+      context.read<GetNotificationsCubit>().fetchNotifications(refresh: true);
+    }
+  });
 
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       final ScrollController? sController =
@@ -121,18 +133,28 @@ class __SubWidgetState extends State<_SubWidget> {
       if (sController != null) {
         sController.addListener(() => _onHomeFeedScrollToEnd(sController));
       }
+     
 
       context.read<HomeFeedCubit>().fetchHomeFeed();
       context.read<LiveUsersCubit>().fetchLiveUsers();
+      
       await context.read<LocalUserDataCubit>().initializeCachedData();
       _registerDeviceForPush();
 
       context.read<LocalUserDataCubit>().initializeCachedData();
+       context.read<GetNotificationsCubit>().fetchNotifications();
       // init push notification and connect user to websocket
+
       GetIt.I<PushNotificationService>().init();
       GetIt.I<UserWsService>().connectUser();
     });
+   
   }
+  @override
+void dispose() {
+  _notifSubscription?.cancel(); 
+  super.dispose();
+}
 
   void _onHomeFeedScrollToEnd(ScrollController sController) {
     const double threshHold = 80;
@@ -149,6 +171,16 @@ class __SubWidgetState extends State<_SubWidget> {
       context.read<LiveUsersCubit>().fetchLiveUsers();
     }
   }
+  void _onNotificationsScrollToEnd() {
+  final ScrollController? controller = _notifNestedKey.currentState?.innerController;
+  if (controller == null) return;
+  
+  const double threshHold = 80;
+  
+  if (controller.position.pixels >= controller.position.maxScrollExtent + threshHold) {
+   context.read<GetNotificationsCubit>().fetchNotifications();
+  }
+}
 
   Future<void> _registerDeviceForPush() async {
     final CachedUserData? userData =
@@ -194,7 +226,8 @@ class __SubWidgetState extends State<_SubWidget> {
                       ),
                       const DiscoverTabView(),
                       const SizedBox(),
-                      const NotificationTabView()
+                      NotificationTabView(nestedKey: _notifNestedKey,
+                       onScroll: _onNotificationsScrollToEnd),
                     ]);
                   }),
               resizeToAvoidBottomInset: false,

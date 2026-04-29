@@ -35,7 +35,7 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> with ATValidators {
   final TextEditingController _emailCntrl = TextEditingController(
-    text: kDebugMode ? 'nnannamarach4@gmail.com' : '',
+    text: kDebugMode ? 'nnannamarach6@gmail.com' : '',
   );
   final TextEditingController _pswrdCntrl = TextEditingController(
     text: kDebugMode ? 'Amptive@2026' : '',
