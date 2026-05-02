@@ -99,8 +99,8 @@ class ATImgStrings {
   static const String artCard = '$_pngPath/art-card.png';
   static const String techCard = '$_pngPath/tech-card.png';
   static const String societyCard = '$_pngPath/society-card.png';
-  static const String MIC_ICON = '$_pngPath/public speaking.png';
-  static const String MONEY_ICON = '$_pngPath/Stack of bills.png';
+  static const String micIcon = '$_pngPath/public speaking.png';
+  static const String moneyIcon = '$_pngPath/Stack of bills.png';
   static const String CREATOR_MIC = '$_pngPath/microphone.png';
   static const String CREATOR_GIF = '$_pngPath/gift.png';
   static const String CREATOR_GLOBE = '$_pngPath/internet.png';

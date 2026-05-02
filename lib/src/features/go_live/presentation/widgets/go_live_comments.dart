@@ -3,6 +3,7 @@ import 'package:amptive/src/features/go_live/cubits/livestream_cubit1.dart';
 import 'package:amptive/src/features/go_live/data/models/deconstruct_inbound_events.dart';
 import 'package:amptive/src/features/go_live/data/models/livestream_state.dart';
 import 'package:amptive/src/features/go_live/presentation/screens/live_program_screen.dart';
+import 'package:amptive/src/features/go_live/presentation/widgets/live_screen_notifications.dart';
 import 'package:amptive/src/features/go_live/presentation/widgets/render_host_and_cohost.dart';
 import 'package:amptive/src/global_export.dart';
 import 'package:amptive/src/shared/image_loader_widget.dart';
@@ -173,6 +174,7 @@ class _GoLiveCommentsState extends State<GoLiveComments> {
                     );
                   }),
             )
+            //SpeakingNotification(speaker: speaker)
           ],
         );
       },

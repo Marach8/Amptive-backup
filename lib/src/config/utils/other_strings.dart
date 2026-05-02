@@ -594,9 +594,9 @@ class ATStrings {
   static const String turnedOn = 'Turned On';
   static const String turnOff = 'Turn Off';
   static const String turnedOff = 'Turned Off';
-  static const String IS_TALKING = 'is talking';
+  static const String isTalking = 'is talking';
   static const String IS_GIFTING = 'is gifting';
-  static const String GIFTED = 'Gifted';
+  static const String gifted = 'Gifted';
   static const String PINNED = 'Pinned';
   static const String TOP_CREATORS_IN_SOCIETY = 'Top Creators in Society';
   static const String moderationTools = 'Moderation Tools';

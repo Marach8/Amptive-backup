@@ -11,7 +11,7 @@ class AmptiveGoLiveNotificationBloc
 
   void addTalkingNotification(ObjectWithNotifier<Host> user) =>
       emit(AmptiveGoLiveNotificationModel(
-          user: user, notificationType: ATStrings.IS_TALKING));
+          user: user, notificationType: ATStrings.isTalking));
 
   void addGiftingNotification(ObjectWithNotifier<Host> user) =>
       emit(AmptiveGoLiveNotificationModel(

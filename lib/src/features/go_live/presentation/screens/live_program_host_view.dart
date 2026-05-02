@@ -106,6 +106,7 @@ class LiveProgramHostView extends StatelessWidget {
               ],
             ),
           ),
+          
           // const Positioned.fill(child: ReactionsOverlay()),
           // const Positioned.fill(child: GiftOverlay()),
         ],

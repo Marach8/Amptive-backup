@@ -171,6 +171,7 @@ class Gift {
     this.giftEmoji,
     this.senderUserName,
     this.quantity,
+    this.gifter,
   });
 
   factory Gift.fromJson(Map<String, dynamic> json) {
@@ -184,7 +185,28 @@ class Gift {
     );
   }
 
+  Gift copyWith({
+    String? senderId,
+    String? giftId,
+    String? giftName,
+    String? giftEmoji,
+    String? senderUserName,
+    int? quantity,
+    LivestreamParticipant? gifter,
+  }) {
+    return Gift(
+      senderId: senderId ?? this.senderId,
+      giftId: giftId ?? this.giftId,
+      giftName: giftName ?? this.giftName,
+      giftEmoji: giftEmoji ?? this.giftEmoji,
+      senderUserName: senderUserName ?? this.senderUserName,
+      quantity: quantity ?? this.quantity,
+      gifter: gifter ?? this.gifter,
+    );
+  }
+
   final String? senderId, giftId,
     giftName, giftEmoji, senderUserName;
   final int? quantity;
+  final LivestreamParticipant? gifter;
 }

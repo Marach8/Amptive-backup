@@ -193,9 +193,13 @@ LiveStreamState1 reduceIncomingStreamAction({
     InboundEvent.gift => (){
       final Gift newGift = Gift.fromJson(wsJson);
       if((newGift.giftId ?? '').isEmpty) return stateSnapshot;
+
+      final LivestreamParticipant? gifter = stateSnapshot
+        .participants?[newGift.senderId ?? ''];
+      final Gift updatedGift = newGift.copyWith(gifter: gifter);
       return stateSnapshot.copyWith(
         gifts: <String, Gift>{
-          newGift.giftId!: newGift,
+          updatedGift.giftId!: updatedGift,
           ...?stateSnapshot.gifts,
         },
       );

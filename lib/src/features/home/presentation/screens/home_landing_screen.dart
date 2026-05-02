@@ -211,7 +211,9 @@ class HomeTabView extends StatelessWidget {
                   );
                 })
             };
-          })),
+          }
+        )
+      ),
     );
   }
 }
