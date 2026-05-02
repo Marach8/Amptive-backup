@@ -1,4 +1,82 @@
-import 'package:amptive/src/livestream/livestream.dart';
+import 'package:amptive/src/features/go_live/presentation/screens/live_program_screen.dart';
+import 'package:amptive/src/shared/global_model_objects.dart';
+import 'package:uuid/uuid.dart';
+
+class LivestreamParticipant extends User {
+  const LivestreamParticipant({
+    required super.userId,
+    super.username,
+    super.profilePicture,
+    super.firstName,
+    super.lastName,
+    super.name,
+    super.followersCount,
+    super.followingCount,
+    super.isVerified,
+    required this.role,
+    this.viewerCount,
+    this.isSpeaker,
+    this.isHost,
+    this.isMuted,
+  });
+
+  factory LivestreamParticipant.fromJson(Map<String, dynamic> json) {
+    return LivestreamParticipant(
+      // 👇 reuse parent parsing
+      userId: json['user_id'] ?? const Uuid().v4(),
+      username: json['username'],
+      profilePicture: json['avatar'] ?? json['profile_picture'],
+      firstName: json['first_name'],
+      lastName: json['last_name'],
+      name: json['name'],
+      followersCount: json['followers_count'],
+      followingCount: json['following_count'],
+      isVerified: json['is_verified'],
+
+      // 👇 child-specific
+      role: ParticipantRole.fromJson(json['role']),
+      isSpeaker: json['is_speaker'] ?? false,
+      isHost: json['is_host'] ?? false,
+      isMuted: json['is_muted'] ?? false,
+      viewerCount: json['viewer_count'],
+    );
+  }
+
+  final bool? isSpeaker, isHost, isMuted;
+  final ParticipantRole role;
+  final int? viewerCount;
+
+  LivestreamParticipant copyWith({
+    bool? isSpeaker,
+    bool? isMuted,
+  }) {
+    return LivestreamParticipant(
+      userId: userId,
+      username: username,
+      profilePicture: profilePicture,
+      firstName: firstName,
+      lastName: lastName,
+      name: name,
+      followersCount: followersCount,
+      followingCount: followingCount,
+      isVerified: isVerified,
+      role: role,
+      isSpeaker: isSpeaker ?? this.isSpeaker,
+      isHost: isHost,
+      isMuted: isMuted ?? this.isMuted,
+    );
+  }
+
+  @override
+  List<Object?> get props => <Object?>[
+    ...super.props,
+    role,
+    isSpeaker,
+    isHost,
+    isMuted,
+  ];
+}
+
 
 class InitialStateMapper {
   InitialStateMapper({
@@ -21,9 +99,9 @@ class InitialStateMapper {
     }
 
     return InitialStateMapper(
-      type: json['type'] as String? ?? '',
+      type: json['type'] ?? '',
       participants: participantsMap,
-      viewerCount: json['viewer_count'] as int? ?? 0,
+      viewerCount: json['viewer_count'] ?? 0,
       handQueue: List<String>.from(json['hand_queue'] ?? <String>[]),
     );
   }
@@ -45,21 +123,24 @@ class ChatMessage {
     this.message,
     this.timestamp,
     this.avatar,
+    this.role,
   });
 
   factory ChatMessage.fromJson(Map<String, dynamic> json) {
     return ChatMessage(
-      id: json['timestamp'],
+      id: json['message_id'],
       senderId: json['sender_id'],
       senderName: json['sender_username'],
       message: json['content'],
       timestamp: json['timestamp'],
-      avatar: json['avatar'],
+      avatar: json['sender_avatar'],
+      role: ParticipantRole.fromJson(json['role']),
     );
   }
 
   final String? id, senderId, senderName, 
     message, timestamp, avatar;
+  final ParticipantRole? role;
 }
 
 class Reaction {

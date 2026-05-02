@@ -5,13 +5,28 @@ import 'package:livekit_client/livekit_client.dart';
 import 'package:amptive/src/features/go_live/data/models/livestream_state.dart';
 
 class LiveKitAudioStreamingService implements ATAudioStreamingService {
+  factory LiveKitAudioStreamingService({
+    Room? mockRoom,
+  }) {
+    _instance ??= LiveKitAudioStreamingService._internal(
+      room: mockRoom ?? Room(),
+    );
+    return _instance!;
+  }
+
+  LiveKitAudioStreamingService._internal({
+    required Room room,
+  });
+
+  static LiveKitAudioStreamingService? _instance;
+
   final Room _room = Room();
 
   final StreamController<List<LiveSessionParticipant>> _participantsController =
       StreamController<List<LiveSessionParticipant>>.broadcast();
 
-  final StreamController<LiveSessionConnectionStatus> _connectionController =
-      StreamController<LiveSessionConnectionStatus>.broadcast();
+  final StreamController<AudioConnectionStatus> _connectionController =
+      StreamController<AudioConnectionStatus>.broadcast();
 
   final StreamController<List<String>> _activeSpeakersController =
       StreamController<List<String>>.broadcast();
@@ -27,7 +42,7 @@ class LiveKitAudioStreamingService implements ATAudioStreamingService {
     try {
       _listenToEvents();
 
-      _connectionController.add(LiveSessionConnectionStatus.connecting);
+      _connectionController.add(AudioConnectionStatus.connecting);
 
       await _room.connect(
         roomUrl,
@@ -39,14 +54,14 @@ class LiveKitAudioStreamingService implements ATAudioStreamingService {
 
       await _room.setSpeakerOn(true);
 
-      _connectionController.add(LiveSessionConnectionStatus.connected);
+      _connectionController.add(AudioConnectionStatus.connected);
 
       await _room.localParticipant?.setMicrophoneEnabled(false);
 
       //_emitParticipants();
     } catch (e, s) {
       log('Error connecting to live kit: $e, stack trace $s');
-      _connectionController.add(LiveSessionConnectionStatus.disconnected);
+      _connectionController.add(AudioConnectionStatus.disconnected);
     }
   }
 
@@ -54,7 +69,7 @@ class LiveKitAudioStreamingService implements ATAudioStreamingService {
   @override
   Future<void> disconnect() async {
     await _room.disconnect();
-    _connectionController.add(LiveSessionConnectionStatus.disconnected);
+    _connectionController.add(AudioConnectionStatus.disconnected);
   }
 
 
@@ -70,7 +85,7 @@ class LiveKitAudioStreamingService implements ATAudioStreamingService {
       _participantsController.stream;
 
   @override
-  Stream<LiveSessionConnectionStatus> get connectionStateStream =>
+  Stream<AudioConnectionStatus> get connectionStateStream =>
       _connectionController.stream;
 
   @override
@@ -119,15 +134,15 @@ class LiveKitAudioStreamingService implements ATAudioStreamingService {
       // }
 
       if (event is RoomDisconnectedEvent) {
-        _connectionController.add(LiveSessionConnectionStatus.disconnected);
+        _connectionController.add(AudioConnectionStatus.disconnected);
       }
 
       if (event is RoomReconnectingEvent) {
-        _connectionController.add(LiveSessionConnectionStatus.reconnecting);
+        _connectionController.add(AudioConnectionStatus.reconnecting);
       }
 
       if (event is RoomReconnectedEvent) {
-        _connectionController.add(LiveSessionConnectionStatus.connected);
+        _connectionController.add(AudioConnectionStatus.connected);
         //_emitParticipants();
       }
     });

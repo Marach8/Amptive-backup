@@ -1,5 +1,7 @@
 import 'package:amptive/src/config/config_export.dart';
 import 'package:amptive/src/features/go_live/cubits/livestream_cubit1.dart';
+import 'package:amptive/src/features/go_live/data/models/deconstruct_inbound_events.dart';
+import 'package:amptive/src/features/go_live/data/models/livestream_state.dart';
 import 'package:amptive/src/features/go_live/go_live_export.dart';
 import 'package:amptive/src/shared/circle_avatar.dart';
 import 'package:amptive/src/shared/custom_container_widget.dart';
@@ -16,18 +18,15 @@ class LiveProgramHeader extends StatelessWidget {
   const LiveProgramHeader({
     super.key,
     this.exitIcon,
-    this.viewerCount,
-    this.participants
   });
 
   final Widget? exitIcon;
-  final int? viewerCount;
-  final List<LivestreamParticipant>? participants;
 
   @override
   Widget build(BuildContext context) {
     final String? title = context
-      .watch<LiveStreamCubit1>().state.programTitle;
+      .read<LiveStreamCubit1>().state.programTitle;
+    
     return Row(
       children: <Widget>[
         exitIcon ?? ATContainer(
@@ -68,23 +67,21 @@ class LiveProgramHeader extends StatelessWidget {
           ),
         ),
         const SizedBox(width: 10),
-        _GiftingNdFollowing(
-          viewerCount: viewerCount,
-          participants: participants,
-          onGiftTap: () {
-            exitIcon != null
-                ? showHostViewOfTopGiftersDialog(context)
-                : showAudienceViewOfTopGiftersDialog(context);
+        _GiftingAndFollowingRow(
+          onGiftsTap: () {
+            // exitIcon != null
+            //     ? showHostViewOfTopGiftersDialog(context)
+            //     : showAudienceViewOfTopGiftersDialog(context);
           },
-          onFollowersTap: () {
-            if (exitIcon == null) {
-              showListenersDialog(context: context, participants: participants);
-            } else {
-              showListenersDialog(
-                  context: context,
-                  enableKickOut: false,
-                  participants: participants);
-            }
+          onParticipantsTap: () {
+            // if (exitIcon == null) {
+            //   showListenersDialog(context: context, participants: participants);
+            // } else {
+            //   showListenersDialog(
+            //       context: context,
+            //       enableKickOut: false,
+            //       participants: participants);
+            // }
           },
         ),
       ],
@@ -92,17 +89,13 @@ class LiveProgramHeader extends StatelessWidget {
   }
 }
 
-class _GiftingNdFollowing extends StatelessWidget {
-  const _GiftingNdFollowing({
-    required this.onGiftTap,
-    required this.onFollowersTap,
-    this.viewerCount,
-    this.participants,
+class _GiftingAndFollowingRow extends StatelessWidget {
+  const _GiftingAndFollowingRow({
+    required this.onGiftsTap,
+    required this.onParticipantsTap,
   });
 
-  final VoidCallback? onGiftTap, onFollowersTap;
-  final int? viewerCount;
-  final List<LivestreamParticipant>? participants;
+  final VoidCallback? onGiftsTap, onParticipantsTap;
 
   @override
   Widget build(BuildContext context) {
@@ -120,7 +113,7 @@ class _GiftingNdFollowing extends StatelessWidget {
             clipBehavior: Clip.none,
             children: <Widget>[
               ATContainer(
-                onTap: onGiftTap,
+                onTap: onGiftsTap,
                 radius: 30,
                 padding: const EdgeInsets.fromLTRB(8, 5, 8, 5),
                 color: ATColors.white.withValues(alpha: 0.1),
@@ -135,40 +128,46 @@ class _GiftingNdFollowing extends StatelessWidget {
                     Text(
                       "Gift",
                       style: context.textTheme.bodyMedium?.copyWith(
-                          overflow: TextOverflow.fade,
-                          fontSize: ATSizes.size14),
+                        overflow: TextOverflow.fade,
+                        fontSize: ATSizes.size14
+                      ),
                     ),
                   ],
                 ),
               ),
               Positioned(
-                  top: -2,
-                  right: 4,
-                  child: ATCircleAvatar(diameter: 8, color: ATColors.hexECO404))
+                top: -2, right: 4,
+                child: CircleAvatar(
+                  radius: 4,
+                  backgroundColor: ATColors.hexECO404
+                )
+              )
             ],
           ),
-          const SizedBox(
-            width: 10,
-          ),
+          const SizedBox(width: 10),
           ATContainer(
-            onTap: onFollowersTap,
+            onTap: onParticipantsTap,
             padding: const EdgeInsets.fromLTRB(8, 5, 8, 5),
             radius: 30,
             color: ATColors.white.withValues(alpha: 0.1),
             child: Row(
               children: <Widget>[
                 const ATImgLoader(
-                  imgPath: ATImgStrings.USER_ICON,
+                  imgPath: ATImgStrings.userIcon,
                   height: 15,
                   width: 15,
                 ),
                 const SizedBox(width: 5),
-                Text(
-                  viewerCount != null
-                      ? _formatViewerCount(viewerCount!)
-                      : "144k",
-                  style: context.textTheme.bodyMedium?.copyWith(
-                      overflow: TextOverflow.fade, fontSize: ATSizes.size14),
+                BlocSelector<LiveStreamCubit1, LiveStreamState1, int>(
+                  selector: (LiveStreamState1 state) => state.viewerCount,
+                  builder: (_, int viewerCount) {
+                    return Text(
+                      _formatViewerCount(viewerCount),
+                      style: context.textTheme.bodyMedium?.copyWith(
+                        overflow: TextOverflow.fade, fontSize: 14
+                      ),
+                    );
+                  }
                 ),
               ],
             ),
@@ -178,7 +177,8 @@ class _GiftingNdFollowing extends StatelessWidget {
     );
   }
 
-  String _formatViewerCount(int count) {
+  String _formatViewerCount(int? count) {
+    if (count == null) return "0";
     if (count >= 1000000) {
       return '${(count / 1000000).toStringAsFixed(1)}M';
     } else if (count >= 1000) {

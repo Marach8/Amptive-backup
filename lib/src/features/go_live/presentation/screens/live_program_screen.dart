@@ -9,9 +9,31 @@ import 'package:amptive/src/features/go_live/presentation/widgets/host_moderatio
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:nested/nested.dart';
 
-enum LiveParticipantType { audience, cohost, host }
+enum ParticipantRole {
+  audience('audience'),
+  cohost('cohost'),
+  host('host');
+
+  const ParticipantRole(this.value);
+
+  final String value;
+
+  static ParticipantRole fromJson(String? value) {
+    switch (value?.toLowerCase()) {
+      case 'host':
+        return ParticipantRole.host;
+      case 'cohost':
+        return ParticipantRole.cohost;
+      default:
+        return ParticipantRole.audience; // fallback
+    }
+  }
+}
+
+
 
 class LiveProgramScreen extends StatelessWidget {
   const LiveProgramScreen({super.key, this.liveScreenEntryParams});
@@ -27,8 +49,8 @@ class LiveProgramScreen extends StatelessWidget {
       isSpeaking: false,
       isLocal: true,
       audioLevel: 0,
-      participantType: liveScreenEntryParams?.participantType
-        ?? LiveParticipantType.audience,
+      participantType: liveScreenEntryParams?.role
+        ?? ParticipantRole.audience,
       roomParticipantId: liveScreenEntryParams?.roomParticipantId ?? '',
       name: userData?.name ?? '',
       username: userData?.username ?? '',
@@ -51,6 +73,8 @@ class LiveProgramScreen extends StatelessWidget {
               roomUrl: liveScreenEntryParams?.roomUrl,
               roomEntryToken: liveScreenEntryParams?.roomEntryToken,
               community: liveScreenEntryParams?.community,
+              programTitle: liveScreenEntryParams?.programTitle,
+              programDesc: liveScreenEntryParams?.programDesc,
             )
           ),
         )
@@ -73,11 +97,12 @@ class _SubWidget extends StatefulWidget {
   State<_SubWidget> createState() => __SubWidgetState();
 }
 
-class __SubWidgetState extends State<_SubWidget> {
+class __SubWidgetState extends State<_SubWidget> with WidgetsBindingObserver{
 
   @override
   void initState() {
     super.initState();
+    WidgetsBinding.instance.addObserver(this);
 
     // SystemChrome.setEnabledSystemUIMode(
     //   SystemUiMode.manual,
@@ -93,22 +118,38 @@ class __SubWidgetState extends State<_SubWidget> {
   }
 
   @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if(state == AppLifecycleState.resumed){
+      //context.read<LiveStreamCubit1>().connect();
+    }
+  }
+
+  @override
   void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
-    context.read<LiveStreamCubit1>().disconnect();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    return switch (widget.liveScreenEntryParams?.participantType) {
-      null ||
-      LiveParticipantType.audience =>
-        const LiveProgramAudienceView(),
-      LiveParticipantType.cohost => 
-        const LiveProgramCohostView(),
-      LiveParticipantType.host =>
-        const LiveProgramHostView(),
-    };
+    return PopScope(
+      canPop: false,
+      onPopInvokedWithResult: (bool didPop, _) {
+        if (didPop) return;
+        context.read<LiveStreamCubit1>().disconnect();
+        context.pop();
+      },
+      child: switch (widget.liveScreenEntryParams?.role) {
+        null || ParticipantRole.audience =>
+          const LiveProgramAudienceView(),
+
+        ParticipantRole.cohost =>
+          const LiveProgramCohostView(),
+
+        ParticipantRole.host =>
+          const LiveProgramHostView(),
+      },
+    );
   }
 }

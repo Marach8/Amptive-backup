@@ -1,6 +1,9 @@
+import 'dart:developer' show log;
+
 import 'package:amptive/src/config/utils/constants.dart';
 import 'package:amptive/src/features/go_live/data/models/deconstruct_inbound_events.dart';
 import 'package:amptive/src/features/go_live/data/models/livestream_state.dart';
+import 'package:amptive/src/features/go_live/presentation/screens/live_program_screen.dart';
 import 'package:amptive/src/livestream/models/livestream_models.dart';
 
 // /// Factory function to convert incoming WebSocket JSON messages into SignalingEvent objects
@@ -71,10 +74,23 @@ LiveStreamState1 reduceIncomingStreamAction({
     InboundEvent.initial => () {
       final InitialStateMapper initial = InitialStateMapper
         .fromJson(wsJson);
+      LivestreamParticipant? host;
+      List<LivestreamParticipant> cohosts = <LivestreamParticipant>[];
+
+      for(final LivestreamParticipant pt in initial.participants.values) {
+        if(pt.role == ParticipantRole.host || pt.isSpeaker == true) {
+          host = pt;
+        }
+        else if(pt.role == ParticipantRole.cohost) {
+          cohosts.add(pt);
+        }
+      }
+
       return stateSnapshot.copyWith(
         viewerCount: initial.viewerCount,
         participants: initial.participants,
         handQueue: initial.handQueue,
+        organizers: (host: host, cohosts: cohosts)
       );
     }(),
 
@@ -88,15 +104,41 @@ LiveStreamState1 reduceIncomingStreamAction({
     InboundEvent.pong => stateSnapshot,
 
     InboundEvent.participantJoin => () {
-        final LivestreamParticipant newParticipant =
-            LivestreamParticipant.fromJson(wsJson);
-        return stateSnapshot.copyWith(
-          participants: <String, LivestreamParticipant>{
-            newParticipant.userId: newParticipant,
-            ...?stateSnapshot.participants,
-          },
-        );
-      }(),
+      final LivestreamParticipant newParticipant =
+          LivestreamParticipant.fromJson(wsJson);
+      late LiveStreamState1 newState;
+
+      switch(newParticipant.role) {
+        case ParticipantRole.host:
+          newState = stateSnapshot.copyWith(
+            viewerCount: newParticipant.viewerCount,
+            organizers: (host: newParticipant, 
+              cohosts: stateSnapshot.organizers?.cohosts),
+          );
+          break;
+        case ParticipantRole.cohost:
+          newState = stateSnapshot.copyWith(
+            viewerCount: newParticipant.viewerCount,
+            organizers: (
+              host: stateSnapshot.organizers?.host, 
+              cohosts: <LivestreamParticipant?>[
+                newParticipant, ...?stateSnapshot.organizers?.cohosts]
+            ),
+          );
+          break;
+        default:
+          newState = stateSnapshot.copyWith(
+            viewerCount: newParticipant.viewerCount,
+            participants: <String, LivestreamParticipant>{
+              newParticipant.userId: newParticipant,
+              ...?stateSnapshot.participants,
+            },
+          );
+          break;
+      }
+      
+      return newState;
+    }(),
 
     InboundEvent.participantLeave => () {
         final String id = wsJson['identity'] ?? '';

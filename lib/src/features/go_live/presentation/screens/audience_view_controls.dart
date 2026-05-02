@@ -1,5 +1,6 @@
 import 'dart:developer' show log;
 
+import 'package:amptive/src/features/auth/cubits/local_user_data_cubit.dart';
 import 'package:amptive/src/features/go_live/cubits/livestream_bloc.dart';
 import 'package:amptive/src/features/go_live/cubits/livestream_cubit1.dart';
 import 'package:amptive/src/features/go_live/data/models/livestream_state.dart';
@@ -69,6 +70,8 @@ class _AudienceViewControlsState extends State<AudienceViewControls> {
 
   @override
   Widget build(BuildContext context) {
+    final String profilePic = context.read<LocalUserDataCubit>()
+      .currentUserData?.pictureUrl ?? '';
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: <Widget>[
@@ -82,7 +85,7 @@ class _AudienceViewControlsState extends State<AudienceViewControls> {
                   onTap: () => _focusNode.unfocus(),
                   child: ATCircularImage(
                     diameter: 35,
-                    imagePath: getHostList()[3].obj.profilePicture ?? '',
+                    imagePath: profilePic,
                   ),
                 ),
               );

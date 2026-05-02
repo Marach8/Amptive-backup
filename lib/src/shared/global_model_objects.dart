@@ -1,8 +1,9 @@
 import 'package:equatable/equatable.dart';
+import 'package:uuid/uuid.dart';
 
 class User extends Equatable{
   const User({
-    this.userId,
+    required this.userId,
     this.username,
     this.profilePicture,
     this.followersCount,
@@ -24,7 +25,8 @@ class User extends Equatable{
         name = json['name'],
         isVerified = json['is_verified'];
 
-  final String? userId, username, profilePicture,
+  final String userId;
+  final String? username, profilePicture,
     firstName, lastName, name;
   final int? followersCount, followingCount;
   final bool? isVerified;
@@ -39,7 +41,7 @@ class Host extends User {
   const Host({
     this.hostLevel,
     this.totalShows,
-    super.userId,
+    required super.userId,
     super.username,
     super.profilePicture,
     super.followersCount,
@@ -61,7 +63,7 @@ class Host extends User {
 class CoHost extends User {
   const CoHost({
     this.invitedAt,
-    super.userId,
+    required super.userId,
     super.username,
     super.profilePicture,
     super.followersCount,

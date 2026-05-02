@@ -669,7 +669,7 @@ class _CreateShowFormScreenState extends State<_SubWidget> {
                       roomParticipantId: state.newData?.roomParticipantId ?? '',
                       programId: episode?.episodeId ?? '',
                       coverUrl: episode?.thumbnailUrl ?? '',
-                      participantType: LiveParticipantType.host,
+                      role: ParticipantRole.host,
                       programTitle: episode?.title ?? '',
                       programDesc: episode?.description ?? '',
                     ),

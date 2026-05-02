@@ -1,3 +1,4 @@
+import 'package:amptive/src/features/auth/cubits/local_user_data_cubit.dart';
 import 'package:amptive/src/features/go_live/cubits/livestream_cubit1.dart';
 import 'package:amptive/src/features/go_live/data/models/livestream_state.dart';
 import 'package:amptive/src/features/go_live/presentation/widgets/host_moderation_tools_dialog.dart';
@@ -85,6 +86,8 @@ class _HostModerationToolsBtnsState extends State<HostModerationToolsBtns> {
 
   @override
   Widget build(BuildContext context) {
+    final String profilePic = context.read<LocalUserDataCubit>()
+      .currentUserData?.pictureUrl ?? '';
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: <Widget>[
@@ -98,7 +101,7 @@ class _HostModerationToolsBtnsState extends State<HostModerationToolsBtns> {
                   onTap: () => _focusNode.unfocus(),
                   child: ATCircularImage(
                     diameter: 35,
-                    imagePath: getHostList()[3].obj.profilePicture ?? '',
+                    imagePath: profilePic,
                   ),
                 ),
               );

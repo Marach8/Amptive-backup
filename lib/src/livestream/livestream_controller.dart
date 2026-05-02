@@ -214,12 +214,12 @@ class LivestreamController {
         _emit(_state.copyWith(participants: updated));
 
         if (participant.userId == _media.localParticipant?.identity) {
-          if (participant.isSpeaker) {
-            await _media.setupAndPublishAudio();
-            await _media.toggleMicrophone(true);
-          } else {
-            await _media.toggleMicrophone(false);
-          }
+          // if (participant.isSpeaker) {
+          //   await _media.setupAndPublishAudio();
+          //   await _media.toggleMicrophone(true);
+          // } else {
+          //   await _media.toggleMicrophone(false);
+          // }
         }
 
       // participantCount is now a computed getter on LivestreamState

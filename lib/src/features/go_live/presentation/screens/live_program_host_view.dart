@@ -58,16 +58,10 @@ class LiveProgramHostView extends StatelessWidget {
                           height: 20, width: 20,
                           boxFit: BoxFit.cover,
                         ),
-                        // BlocBuilder<LiveStreamCubit1, LiveStreamState1>(
-                        //   builder: (_, state){
-                        //     return Text(
-                        //       '${state.connectionStatus}',
-                        //     );
-                        //   }
-                        // ),
+
                         const SizedBox(width: 5),
                         Text(
-                          community?.name ?? '',
+                          community?.name ?? 'General',
                           style: context.textTheme.bodyMedium?.copyWith(
                             overflow: TextOverflow.fade,
                             fontSize: ATSizes.size13,

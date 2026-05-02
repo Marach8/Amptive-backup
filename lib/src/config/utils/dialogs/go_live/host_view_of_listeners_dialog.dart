@@ -1,5 +1,6 @@
 import 'package:amptive/src/config/utils/dialogs/app_notification_dialog.dart';
 import 'package:amptive/src/config/utils/dialogs/confirmation_alert_dialog.dart';
+import 'package:amptive/src/features/go_live/data/models/deconstruct_inbound_events.dart';
 import 'package:amptive/src/shared/image_loader_widget.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:amptive/src/features/go_live/go_live_export.dart';
@@ -47,7 +48,7 @@ Future<ATCohost<bool>?> showListenersDialog(
                       child: Row(
                         mainAxisSize: MainAxisSize.min,
                         children: <Widget>[
-                          const ATImgLoader(imgPath: ATImgStrings.USER_ICON),
+                          const ATImgLoader(imgPath: ATImgStrings.userIcon),
                           const SizedBox(
                             width: 5,
                           ),
@@ -139,93 +140,93 @@ class _ListenersList extends StatelessWidget {
             style: context.textTheme.bodyMedium,
           );
         }
-
-        final LivestreamParticipant participant = participants[listIndex - 1];
-        return _ParticipantTile(
-          participant: participant,
-          index: listIndex,
-          enableKickOut: enableKickOut,
-        );
+        return const SizedBox();
+        // final LivestreamParticipant participant = participants[listIndex - 1];
+        // return _ParticipantTile(
+        //   participant: participant,
+        //   index: listIndex,
+        //   enableKickOut: enableKickOut,
+        // );
       },
     );
   }
 }
 
-class _ParticipantTile extends StatelessWidget {
-  const _ParticipantTile({
-    required this.participant,
-    required this.index,
-    this.enableKickOut,
-  });
+// class _ParticipantTile extends StatelessWidget {
+//   const _ParticipantTile({
+//     required this.participant,
+//     required this.index,
+//     this.enableKickOut,
+//   });
 
-  final LivestreamParticipant participant;
-  final int index;
-  final bool? enableKickOut;
+//   final LivestreamParticipant participant;
+//   final int index;
+//   final bool? enableKickOut;
 
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 15),
-      child: Row(
-        children: <Widget>[
-          ATImgLoader(
-            imgPath: participant.avatar ?? '',
-            height: 50,
-            width: 50,
-            boxFit: BoxFit.cover,
-          ),
-          const SizedBox(width: 10),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Text(
-                  participant.displayName,
-                  style: context.textTheme.titleMedium,
-                ),
-                if (participant.isHost)
-                  Text(
-                    'Host',
-                    style: context.textTheme.bodySmall?.copyWith(
-                      color: ATColors.hex307FE2,
-                    ),
-                  ),
-                if (participant.isSpeaker && !participant.isHost)
-                  Text(
-                    'Speaker',
-                    style: context.textTheme.bodySmall?.copyWith(
-                      color: ATColors.hex009C80,
-                    ),
-                  ),
-              ],
-            ),
-          ),
-          if (enableKickOut ?? true)
-            ATContainer(
-              onTap: () async {
-                // Kick out functionality would require integration with the
-                // livestream service to properly remove the participant
-                // For now, show a confirmation snackbar
-                showAppNotification(
-                  context: context,
-                  icon: const ATImgLoader(
-                    imgPath: ATImgStrings.KICK_USER_OUT,
-                  ),
-                  text: 'Kick out feature coming soon',
-                  bgColor: ATColors.hex307FE2,
-                );
-              },
-              height: 35,
-              width: 35,
-              boxShape: BoxShape.circle,
-              color: ATColors.white.withOpacity(0.1),
-              child: const ATImgLoader(
-                boxFit: BoxFit.scaleDown,
-                imgPath: ATImgStrings.KICK_USER_OUT,
-              ),
-            ),
-        ],
-      ),
-    );
-  }
-}
+//   @override
+//   Widget build(BuildContext context) {
+//     return Padding(
+//       padding: const EdgeInsets.symmetric(vertical: 15),
+//       child: Row(
+//         children: <Widget>[
+//           ATImgLoader(
+//             imgPath: participant.profilePicture ?? '',
+//             height: 50,
+//             width: 50,
+//             boxFit: BoxFit.cover,
+//           ),
+//           const SizedBox(width: 10),
+//           Expanded(
+//             child: Column(
+//               crossAxisAlignment: CrossAxisAlignment.start,
+//               children: <Widget>[
+//                 Text(
+//                   participant.displayName,
+//                   style: context.textTheme.titleMedium,
+//                 ),
+//                 if (participant.isHost)
+//                   Text(
+//                     'Host',
+//                     style: context.textTheme.bodySmall?.copyWith(
+//                       color: ATColors.hex307FE2,
+//                     ),
+//                   ),
+//                 if (participant.isSpeaker && !participant.isHost)
+//                   Text(
+//                     'Speaker',
+//                     style: context.textTheme.bodySmall?.copyWith(
+//                       color: ATColors.hex009C80,
+//                     ),
+//                   ),
+//               ],
+//             ),
+//           ),
+//           if (enableKickOut ?? true)
+//             ATContainer(
+//               onTap: () async {
+//                 // Kick out functionality would require integration with the
+//                 // livestream service to properly remove the participant
+//                 // For now, show a confirmation snackbar
+//                 showAppNotification(
+//                   context: context,
+//                   icon: const ATImgLoader(
+//                     imgPath: ATImgStrings.KICK_USER_OUT,
+//                   ),
+//                   text: 'Kick out feature coming soon',
+//                   bgColor: ATColors.hex307FE2,
+//                 );
+//               },
+//               height: 35,
+//               width: 35,
+//               boxShape: BoxShape.circle,
+//               color: ATColors.white.withOpacity(0.1),
+//               child: const ATImgLoader(
+//                 boxFit: BoxFit.scaleDown,
+//                 imgPath: ATImgStrings.KICK_USER_OUT,
+//               ),
+//             ),
+//         ],
+//       ),
+//     );
+//   }
+// }

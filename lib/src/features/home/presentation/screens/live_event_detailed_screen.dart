@@ -297,9 +297,9 @@ class ATLiveEventDetailedScreen extends StatelessWidget {
                       roomParticipantId: state.newData?.roomParticipantId ?? '',
                       programId: homeFeedItem?.id ?? '',
                       coverUrl: homeFeedItem?.coverUrl ?? '',
-                      participantType: isHost
-                        ? LiveParticipantType.host
-                        : LiveParticipantType.audience,
+                      role: isHost
+                        ? ParticipantRole.host
+                        : ParticipantRole.audience,
                       community: Community(name: 'Test Community'),
                       programTitle: homeFeedItem?.title ?? '',
                       programDesc: 'New program'

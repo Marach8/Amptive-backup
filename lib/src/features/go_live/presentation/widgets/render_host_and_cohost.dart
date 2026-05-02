@@ -1,5 +1,6 @@
 import 'package:amptive/src/config/utils/extensions/context_extensions.dart';
 import 'package:amptive/src/config/utils/font_sizes.dart';
+import 'package:amptive/src/features/go_live/data/models/deconstruct_inbound_events.dart';
 import 'package:amptive/src/features/go_live/data/models/livestream_state.dart';
 import 'package:amptive/src/shared/circle_avatar.dart';
 import 'package:amptive/src/shared/circular_image.dart';
@@ -19,8 +20,8 @@ class RenderACohost extends StatelessWidget {
   });
 
   final double? top, bottom, left, right;
-  final LiveSessionParticipant? cohost;
-  final ValueChanged<LiveSessionParticipant?> onTap;
+  final LivestreamParticipant? cohost;
+  final ValueChanged<LivestreamParticipant?> onTap;
 
   @override
   Widget build(BuildContext context) {
@@ -79,7 +80,7 @@ class RenderACohost extends StatelessWidget {
           SizedBox(
             width: 80,
             child: Text(
-              cohost?.name ?? '',
+              cohost?.username ?? '',
               textAlign: TextAlign.center,
               style: context.textTheme.titleSmall,
             ),
@@ -105,8 +106,8 @@ class RenderAHost extends StatelessWidget {
   });
 
   final double? top, bottom, left, right;
-  final LiveSessionParticipant? host;
-  final void Function(LiveSessionParticipant? host)? onTap;
+  final LivestreamParticipant? host;
+  final ValueChanged<LivestreamParticipant?>? onTap;
 
   @override
   Widget build(BuildContext context) {
@@ -167,31 +168,46 @@ class RenderAHost extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 5),
-            Container(
-              padding: const EdgeInsets.fromLTRB(4, 2, 4, 2),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(5),
-                gradient: LinearGradient(
-                  begin: Alignment.topCenter,
-                  end: Alignment.bottomCenter,
-                  colors: <Color>[
-                    ATColors.hexF91880,
-                    ATColors.orangeGradientColorB
-                  ]
-                ),
-              ),
-              child: Text(
-                ATStrings.host.toUpperCase(),
-                  style: context.textTheme.bodySmall
-                    ?.copyWith(
-                      fontSize: ATSizes.size10,
-                    )
-                  ),
-                )
+            const HostIndicator()
           ],
         ),
       )
     );
+  }
+}
+
+
+class HostIndicator extends StatelessWidget {
+  const HostIndicator({
+    super.key,
+    this.size,
+    this.radius,
+  });
+  final double? size, radius;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.fromLTRB(4, 2, 4, 2),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(radius ?? 5),
+        gradient: LinearGradient(
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
+          colors: <Color>[
+            ATColors.hexF91880,
+            ATColors.orangeGradientColorB
+          ]
+        ),
+      ),
+      child: Text(
+        ATStrings.host.toUpperCase(),
+          style: context.textTheme.bodySmall
+            ?.copyWith(
+              fontSize: size ??  ATSizes.size10,
+            )
+          ),
+        );
   }
 }
 

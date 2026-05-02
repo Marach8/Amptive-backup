@@ -1,17 +1,16 @@
 import 'package:amptive/src/config/services/ws_notif_service/ws_channel_service_impl.dart';
 import 'package:amptive/src/features/go_live/data/models/deconstruct_inbound_events.dart';
 import 'package:amptive/src/features/go_live/presentation/screens/live_program_screen.dart';
-import 'package:amptive/src/livestream/models/livestream_models.dart';
 import 'package:amptive/src/shared/global_model_objects.dart';
 import 'package:equatable/equatable.dart';
 
 class LiveStreamState1 extends Equatable {
   const LiveStreamState1({
-    this.audioConnectionStatus = LiveSessionConnectionStatus.initial,
+    this.audioConnectionStatus = AudioConnectionStatus.initial,
     this.wsConnectionStatus = WSConnectionStatus.initial,
     this.participants,
     this.activeSpeakerIds,
-    this.isMicEnabled = true,
+    this.isMicEnabled = false,
     this.connectionErrorMessage,
     this.programCoverUrl,
     this.liveStreamId,
@@ -29,7 +28,7 @@ class LiveStreamState1 extends Equatable {
     this.messagesIds,
   });
 
-  final LiveSessionConnectionStatus audioConnectionStatus;
+  final AudioConnectionStatus audioConnectionStatus;
   final WSConnectionStatus wsConnectionStatus;
   final Map<String, LivestreamParticipant>? participants;
   final List<String>? activeSpeakerIds;
@@ -52,7 +51,7 @@ class LiveStreamState1 extends Equatable {
 
   /// Creates a new state object with updated values.
   LiveStreamState1 copyWith({
-    LiveSessionConnectionStatus? audioConnectionStatus,
+    AudioConnectionStatus? audioConnectionStatus,
     WSConnectionStatus? wsConnectionStatus,
     Map<String, LivestreamParticipant>? participants,
     List<String>? activeSpeakerIds,
@@ -123,8 +122,8 @@ class LiveStreamState1 extends Equatable {
 }
 
 typedef Organizers = ({
-  LiveSessionParticipant? host,
-  List<LiveSessionParticipant?>? cohosts,
+  LivestreamParticipant? host,
+  List<LivestreamParticipant?>? cohosts,
 });
 
 class LiveSessionParticipant extends User {
@@ -135,7 +134,7 @@ class LiveSessionParticipant extends User {
     required this.audioLevel,
     this.participantType,
     this.roomParticipantId,
-    super.userId,
+    required super.userId,
     super.username,
     super.profilePicture,
     super.followersCount,
@@ -159,10 +158,10 @@ class LiveSessionParticipant extends User {
   final bool isMuted, isSpeaking, isLocal;
   final double audioLevel;
   final String? roomParticipantId;
-  final LiveParticipantType? participantType;
+  final ParticipantRole? participantType;
 }
 
-enum LiveSessionConnectionStatus {
+enum AudioConnectionStatus {
   initial,
   connecting,
   connected,

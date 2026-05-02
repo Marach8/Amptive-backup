@@ -25,7 +25,7 @@ class LiveProgramEntryParams{
     required this.roomUrl,
     required this.streamId,
     required this.roomParticipantId,
-    required this.participantType,
+    required this.role,
     required this.programId,
     required this.coverUrl,
     required this.programTitle,
@@ -37,7 +37,7 @@ class LiveProgramEntryParams{
   streamId, roomParticipantId, programId,
   coverUrl, programTitle, programDesc;
 
-  final LiveParticipantType participantType;
+  final ParticipantRole role;
   final Community? community;
 }
 

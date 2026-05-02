@@ -17,7 +17,7 @@ abstract class ATAudioStreamingService {
   Stream<List<LiveSessionParticipant>> get participantsStream;
 
   /// Connection state
-  Stream<LiveSessionConnectionStatus> get connectionStateStream;
+  Stream<AudioConnectionStatus> get connectionStateStream;
 
   /// Active speakers (ids)
   Stream<List<String>> get activeSpeakersStream;

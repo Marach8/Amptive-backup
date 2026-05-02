@@ -16,7 +16,7 @@ class SignalingService extends BaseWsService {
     required String streamId,
     ATLocalStorageService? localStorageService,
     super.maxReconnectAttempts,
-  })  : _streamId = streamId,
+  }) : _streamId = streamId,
         _localStorageService =
             localStorageService ?? FlutterSecureStorageServiceImpl(),
         // URL is a placeholder; the real one is built in connect()

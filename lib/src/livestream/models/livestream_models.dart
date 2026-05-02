@@ -1,4 +1,5 @@
 import 'package:amptive/src/features/go_live/data/models/deconstruct_inbound_events.dart';
+import 'package:amptive/src/features/go_live/presentation/screens/live_program_screen.dart';
 
 enum StreamStatus {
   waiting,
@@ -41,45 +42,6 @@ class LivestreamToken {
   final String identity;
 }
 
-class LivestreamParticipant {
-  const LivestreamParticipant({
-    required this.userId,
-    required this.displayName,
-    required this.isSpeaker,
-    required this.isHost,
-    required this.avatar,
-    required bool isMuted,
-  });
-
-  factory LivestreamParticipant.fromJson(Map<String, dynamic> json) {
-    return LivestreamParticipant(
-      userId: json['user_id'] as String,
-      displayName: json['username'] as String,
-      avatar: json['avatar'] as String?,
-      isSpeaker: json['is_speaker'] as bool? ?? false,
-      isHost: json['is_host'] as bool? ?? false,
-      isMuted: json['is_muted'] as bool? ?? false,
-    );
-  }
-
-  final String userId;
-  final String displayName;
-  final bool isSpeaker;
-  final bool isHost;
-  final String? avatar;
-  final bool isMuted = false;
-
-  LivestreamParticipant copyWith({bool? isSpeaker, bool? isMuted}) {
-    return LivestreamParticipant(
-      userId: userId,
-      displayName: displayName,
-      isSpeaker: isSpeaker ?? this.isSpeaker,
-      isHost: isHost,
-      avatar: null,
-      isMuted: isMuted ?? this.isMuted,
-    );
-  }
-}
 
 class InitialState {
   const InitialState({

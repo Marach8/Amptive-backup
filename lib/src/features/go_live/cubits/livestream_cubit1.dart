@@ -37,7 +37,7 @@ class LiveStreamCubit1 extends Cubit<LiveStreamState1> {
   final WSNotificationService wsNotificationService;
   final ATLocalStorageService localStorage;
 
-  StreamSubscription<LiveSessionConnectionStatus>? _audioConnectionStateSub;
+  StreamSubscription<AudioConnectionStatus>? _audioConnectionStateSub;
   StreamSubscription<WSConnectionStatus>? _wsConnectionStateSub;
   StreamSubscription<dynamic>? _wsMessageSub;
   StreamSubscription<List<LiveSessionParticipant>>? _participantsSub;
@@ -46,7 +46,7 @@ class LiveStreamCubit1 extends Cubit<LiveStreamState1> {
   void _listenToStreams() {
     // Listen to connection state changes
     _audioConnectionStateSub = streamingService.connectionStateStream
-        .listen((LiveSessionConnectionStatus connectionStatus) {
+        .listen((AudioConnectionStatus connectionStatus) {
       log('This is the connection status in the cubit: $connectionStatus');
       emit(state.copyWith(audioConnectionStatus: connectionStatus));
     });
@@ -56,7 +56,7 @@ class LiveStreamCubit1 extends Cubit<LiveStreamState1> {
         .listen((WSConnectionStatus connectionStatus) async{
 
       if (connectionStatus == WSConnectionStatus.connected) {
-        wsNotificationService.sendMessage({
+        wsNotificationService.sendMessage(<String, dynamic>{
           'type': 'join',
           'streamId': state.liveStreamId,
         });
@@ -164,6 +164,7 @@ class LiveStreamCubit1 extends Cubit<LiveStreamState1> {
   }
 
   Future<void> disconnect() async {
+    await wsNotificationService.disconnect();
     await streamingService.disconnect();
   }
 

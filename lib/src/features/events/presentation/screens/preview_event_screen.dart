@@ -346,7 +346,7 @@ class _EventSubWidgetState extends State<_EventSubWidget> {
                       roomParticipantId: state.newData?.roomParticipantId ?? '',
                       programId: updatedEvent?.eventId ?? '',
                       coverUrl: updatedEvent?.coverUrl ?? '',
-                      participantType: LiveParticipantType.host,
+                      role: ParticipantRole.host,
                       community: updatedEvent?.community,
                       programTitle: updatedEvent?.title ?? '',
                       programDesc: updatedEvent?.description ?? '',

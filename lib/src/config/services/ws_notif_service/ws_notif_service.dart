@@ -3,6 +3,8 @@ import 'package:amptive/src/config/services/ws_notif_service/ws_channel_service_
 abstract class WSNotificationService{
   Future<bool> connect({required String wsUrl});
 
+  Future<bool> reconnect();
+
   Future<void> disconnect();
 
   void sendMessage(Map<String, dynamic> data);
