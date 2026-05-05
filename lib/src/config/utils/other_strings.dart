@@ -384,9 +384,9 @@ class ATStrings {
   static const String UNSUBSCRIBE = 'Unsubscribe';
   static const String COHOST_INVITE_SENT = 'Co-host invitation sent';
   static const String TOP_LISTENERS = 'Top Listeners';
-  static const String TOP_LISTENERS_DESC =
+  static const String topListenersRanking =
       'Top listeners are ranked by their level of interaction during the live session.';
-  static const String LISTENERS = 'Listeners';
+  static const String listeners = 'Listeners';
   static const String SELECT_SECURITY_QUEST = 'Select a Security Question';
   static const String aQuestionYouCanRemember =
       'Select a question you can easily remember...';
@@ -550,7 +550,7 @@ class ATStrings {
   static const String searchForBank = 'Search for bank';
   static const String SEARCH_4_FOLLOWERS = 'Search for followers';
   static const String SEARCH_4_SUBSCRIBERS = 'Search for subscribers';
-  static const String SEARCH_4_LISTENERS = 'Search for listeners';
+  static const String searchForListener = 'Search for listeners';
   static const String SEARCH_4_HASHTAGS = 'Search for hashtags';
   static const String suggestions = 'Suggestions';
   static const String appLanguage = 'App language';

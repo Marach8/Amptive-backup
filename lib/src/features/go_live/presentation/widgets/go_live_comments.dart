@@ -59,19 +59,20 @@ class _GoLiveCommentsState extends State<GoLiveComments> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<LiveStreamCubit1, LiveStreamState1>(
-      builder: (BuildContext context, LiveStreamState1 state) {
-        final Map<String, ChatMessage>? messages = state.messages;
-        final List<String> messagesIds = state.messagesIds ?? <String>[];
+    return Stack(
+      alignment: Alignment.center,
+      children: <Widget>[
+        NotificationListener<ScrollNotification>(
+          onNotification: context
+              .read<GoLiveControlsVisibilityBloc>()
+              .ctrlModerationToolsVisibility,
 
-        return Stack(
-          alignment: Alignment.center,
-          children: <Widget>[
-            NotificationListener<ScrollNotification>(
-              onNotification: context
-                  .read<GoLiveControlsVisibilityBloc>()
-                  .ctrlModerationToolsVisibility,
-              child: ListView.builder(
+          child: BlocBuilder<LiveStreamCubit1, LiveStreamState1>(
+            builder: (BuildContext context, LiveStreamState1 state) {
+              final Map<String, ChatMessage>? messages = state.messages;
+              final List<String> messagesIds = state.messagesIds ?? <String>[];
+
+              return ListView.builder(
                 physics: const BouncingScrollPhysics(),
                 controller: _scrollController,
                 padding: const EdgeInsets.fromLTRB(15, 50, 15, 50),
@@ -91,11 +92,11 @@ class _GoLiveCommentsState extends State<GoLiveComments> {
                       ),
                     );
                   }
-
+              
                   final String id = messagesIds[listIndex];
                   final ChatMessage? message = messages?[id];
                   final bool msgFromHost = message?.role == ParticipantRole.host;
-
+              
                   return Padding(
                     padding: const EdgeInsets.only(bottom: 16),
                     child: Row(
@@ -144,40 +145,45 @@ class _GoLiveCommentsState extends State<GoLiveComments> {
                     ),
                   );
                 },
-              ),
-            ),
-            Positioned(
-              bottom: 70,
-              right: 15,
-              child: ValueListenableBuilder<bool>(
-                  valueListenable: _scroll2BottomNotifier,
-                  builder: (_, bool showIcon, __) {
-                    return ATScalingSwitcher(
-                      duration: 200,
-                      child: showIcon
-                          ? ClipRect(
-                              child: BackdropFilter(
-                                filter: ImageFilter.blur(sigmaX: 2, sigmaY: 2),
-                                child: ATContainer(
-                                  key: const ValueKey<int>(1),
-                                  onTap: () => _scrollToBottom(),
-                                  color: ATColors.white.withValues(alpha: 0.1),
-                                  height: 35,
-                                  width: 35,
-                                  boxShape: BoxShape.circle,
-                                  child: const Icon(
-                                      Icons.keyboard_double_arrow_down),
-                                ),
-                              ),
-                            )
-                          : const SizedBox.shrink(key: ValueKey<int>(2)),
-                    );
-                  }),
-            )
-            //SpeakingNotification(speaker: speaker)
+              );
+            }
+          ),
+        ),
+        Positioned(
+          bottom: 70,
+          right: 15,
+          child: ValueListenableBuilder<bool>(
+              valueListenable: _scroll2BottomNotifier,
+              builder: (_, bool showIcon, __) {
+                return ATScalingSwitcher(
+                  duration: 200,
+                  child: showIcon
+                      ? ClipRect(
+                          child: BackdropFilter(
+                            filter: ImageFilter.blur(sigmaX: 2, sigmaY: 2),
+                            child: ATContainer(
+                              key: const ValueKey<int>(1),
+                              onTap: () => _scrollToBottom(),
+                              color: ATColors.white.withValues(alpha: 0.1),
+                              height: 35,
+                              width: 35,
+                              boxShape: BoxShape.circle,
+                              child: const Icon(
+                                  Icons.keyboard_double_arrow_down),
+                            ),
+                          ),
+                        )
+                      : const SizedBox.shrink(key: ValueKey<int>(2)),
+                );
+              }),
+        ),
+        Column(
+          children: <Widget>[
+            //SpeakingNotification(speaker: speaker),
+            const GiftNotification(),
           ],
-        );
-      },
+        )
+      ],
     );
   }
 }

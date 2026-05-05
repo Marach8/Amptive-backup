@@ -5,6 +5,7 @@ import 'package:amptive/src/features/go_live/data/models/deconstruct_inbound_eve
 import 'package:amptive/src/features/go_live/data/models/livestream_state.dart';
 import 'package:amptive/src/features/go_live/presentation/screens/live_program_screen.dart';
 import 'package:amptive/src/livestream/models/livestream_models.dart';
+import 'package:amptive/src/shared/sentinel.dart';
 
 // /// Factory function to convert incoming WebSocket JSON messages into SignalingEvent objects
 // SignalingEvent? mapIncomingStreamAction(Map<String, dynamic> json) {
@@ -198,6 +199,7 @@ LiveStreamState1 reduceIncomingStreamAction({
         .participants?[newGift.senderId ?? ''];
       final Gift updatedGift = newGift.copyWith(gifter: gifter);
       return stateSnapshot.copyWith(
+        latestGift: Sentinel<Gift>.of(updatedGift),
         gifts: <String, Gift>{
           updatedGift.giftId!: updatedGift,
           ...?stateSnapshot.gifts,

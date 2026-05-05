@@ -57,20 +57,19 @@ class SpeakingNotification extends StatelessWidget {
 
 
 class GiftNotification extends StatelessWidget {
-  const GiftNotification({
-    super.key, required this.gifter,
-    required this.amountGifted,
-  });
-
-  final LivestreamParticipant gifter;
-  final String amountGifted;
+  const GiftNotification({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final Map<String, Gift>? gifts = 
-    context.select<LiveStreamCubit1, Map<String, Gift>?>(
-      (LiveStreamCubit1 cubit) => cubit.state.gifts,
-    );
+    final Gift? gift = 
+      context.select<LiveStreamCubit1, Gift?>(
+        (LiveStreamCubit1 cubit) => cubit.state.latestGift?.value,
+      );
+
+    if(gift == null) {
+      return const SizedBox.shrink();
+    }
+
     return Container(
       padding: const EdgeInsets.fromLTRB(2, 0, 0, 0),
       height: 35,
@@ -87,16 +86,16 @@ class GiftNotification extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
           ATCircularImage(diameter: 30,
-            imagePath: gifter.profilePicture ?? ''),
+            imagePath: gift.gifter?.profilePicture ?? ''),
           const SizedBox(width: 5),
           Text(
-            gifter.name ?? '',
+            gift.gifter?.name ?? '',
             style: context.textTheme.bodyMedium
               ?.copyWith(fontSize: ATSizes.size12),
           ),
           const SizedBox(width: 5),
           Text(
-            '${ATStrings.gifted} ${ATStrings.nairaText}$amountGifted',
+            '${ATStrings.gifted} ${ATStrings.nairaText}${gift.quantity}',
             style: context.textTheme.titleSmall,
           ),
           const SizedBox(width: 10),

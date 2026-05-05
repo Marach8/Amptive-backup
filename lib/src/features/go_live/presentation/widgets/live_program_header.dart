@@ -1,6 +1,5 @@
 import 'package:amptive/src/config/config_export.dart';
 import 'package:amptive/src/features/go_live/cubits/livestream_cubit1.dart';
-import 'package:amptive/src/features/go_live/data/models/deconstruct_inbound_events.dart';
 import 'package:amptive/src/features/go_live/data/models/livestream_state.dart';
 import 'package:amptive/src/features/go_live/go_live_export.dart';
 import 'package:amptive/src/shared/circle_avatar.dart';
@@ -75,12 +74,12 @@ class LiveProgramHeader extends StatelessWidget {
           },
           onParticipantsTap: () {
             // if (exitIcon == null) {
-            //   showListenersDialog(context: context, participants: participants);
+            //   showListenersDialog(context: context);
             // } else {
             //   showListenersDialog(
             //       context: context,
             //       enableKickOut: false,
-            //       participants: participants);
+            //     );
             // }
           },
         ),
