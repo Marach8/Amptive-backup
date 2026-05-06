@@ -1,7 +1,12 @@
+import 'package:amptive/src/config/api_response_and_app_state.dart';
+import 'package:amptive/src/config/services/local_storage_service/flutter_secure_storage_service_impl.dart';
 import 'package:amptive/src/config/utils/colors.dart';
+import 'package:amptive/src/config/utils/dialogs/app_notification_dialog.dart';
 import 'package:amptive/src/config/utils/extensions/context_extensions.dart';
 import 'package:amptive/src/config/utils/other_strings.dart';
 import 'package:amptive/src/config/routing/route_strings.dart';
+import 'package:amptive/src/features/wallet/cubits/set_pin_cubit.dart';
+import 'package:amptive/src/features/wallet/data/models/request/set_pin_request.dart';
 import 'package:amptive/src/features/wallet/presentation/widgets/security_question.dialog.dart';
 import 'package:amptive/src/config/utils/helper_functions.dart';
 import 'package:amptive/src/views/widgets/animation_widgets/common_animation_widgets/animated_crossfade_widget.dart';
@@ -20,20 +25,26 @@ class ATSecurityQuestionScreen extends StatelessWidget {
   const ATSecurityQuestionScreen({super.key});
 
   static const List<String> items = <String>[
-    'What is the name of your mother?',
-    'What is the name of your father?',
-    'What is the name of your first uncle?',
-    'What is the name of the secondary school that your went to?',
-    'How old are you?',
-    'Do you have a girlfriend?',
-    'What is the worst life experience you have had in the past?'
+    'What is your mother\'s maiden name?',
+    'What was the name of your first pet?',
+    'What is the name of your favorite teacher in high school?',
+    'In what city were you born?',
+    'What is your childhood nickname?',
+    'What is the name of your first school?'
   ];
 
   @override
   Widget build(_) {
     return ATAnnotatedRegion(
-        child: BlocProvider<SecQuestionBloc>(
-      create: (_) => SecQuestionBloc(),
+        child: MultiBlocProvider(
+      providers: <BlocProvider<dynamic>>[
+        BlocProvider<SecQuestionBloc>(
+          create: (_) => SecQuestionBloc(),
+        ),
+        BlocProvider<SetPinCubit>(
+          create: (_) => SetPinCubit(),
+        ),
+      ],
       child: Builder(builder: (BuildContext context) {
         return Scaffold(
           appBar: const ATAppBar(
@@ -123,21 +134,47 @@ class ATSecurityQuestionScreen extends StatelessWidget {
               ],
             ),
           ),
-          bottomSheet: Builder(builder: (BuildContext context) {
+          bottomSheet: BlocConsumer<SetPinCubit, ATAppState<dynamic>>(
+              listener: (_, ATAppState<dynamic> state) async {
+            if (state is SuccessState<dynamic>) {
+              final FlutterSecureStorageServiceImpl storage =
+                  FlutterSecureStorageServiceImpl();
+              await storage.set('has_set_wallet_pin', 'true');
+
+              context.goNamed(ATRoutes.walletCreationAnimationScreen);
+              context.goNamed(ATRoutes.walletCreationAnimationScreen);
+            }
+            if (state is FailureState<dynamic>) {
+              showAppNotification2(
+                  context: context,
+                  text: state.message,
+                  type: NotificationType.failure);
+            }
+          }, 
+          builder: (BuildContext context, ATAppState<dynamic> state) {
+            final (String? question, bool _, String answer) =
+                context.read<SecQuestionBloc>().state;
             final double bottom = MediaQuery.viewInsetsOf(context).bottom;
-            final double bottomPadd = bottom == 0 ? 50 : 15;
+            final double bottomPad = bottom > 0 ? 10 : 50;
             return Padding(
-              padding: EdgeInsets.fromLTRB(15, 5, 15, bottomPadd),
-              child: BlocSelector<SecQuestionBloc, (String?, bool, String),
-                      String>(
-                  selector: ((String?, bool, String) state) => state.$3,
-                  builder: (_, String state) {
-                    return ATPlainElevatedBtn(
-                        onPressed: state.isEmpty
-                            ? null
-                            : () => context.pushReplacementNamed(
-                                ATRoutes.walletCreationAnimationScreen),
-                        btnTitle: ATStrings.FINISH_SETUP);
+              padding: EdgeInsets.fromLTRB(15, 0, 15, bottomPad),
+              child: ATPlainElevatedBtn(
+                  btnTitle: ATStrings.FINISH_SETUP,
+                  isLoading: state is LoadingState<dynamic>,
+                  onPressed: () {
+                    final (String?, bool, String) currentState =
+                        context.read<SecQuestionBloc>().state;
+                    final String? question = currentState.$1;
+                    final String answer = currentState.$3;
+
+                    SetPinData().copyWith(
+                      securityQuestion: question,
+                      securityQuestionAnswer: answer,
+                    );
+
+                    context.read<SetPinCubit>().setPin(
+                          param: SetPinData(),
+                        );
                   }),
             );
           }),
