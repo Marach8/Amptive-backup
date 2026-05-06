@@ -3,6 +3,7 @@ import 'package:amptive/src/config/utils/font_sizes.dart';
 import 'package:amptive/src/config/utils/other_strings.dart';
 import 'package:amptive/src/config/routing/route_strings.dart';
 import 'package:amptive/src/config/utils/dialogs/confirmation_alert_dialog.dart';
+import 'package:amptive/src/features/wallet/data/models/request/set_pin_request.dart';
 import 'package:amptive/src/shared/annotated_region__widget.dart';
 import 'package:amptive/src/shared/app_bar_widget.dart';
 import 'package:amptive/src/shared/back_button.dart';
@@ -13,6 +14,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:iconsax/iconsax.dart';
+
 
 class ATWalletPinSetupScreen extends StatelessWidget {
   const ATWalletPinSetupScreen({super.key});
@@ -115,12 +117,16 @@ class ATWalletPinSetupScreen extends StatelessWidget {
                                           ?.copyWith(fontSize: ATSizes.size15)))
                             ],
                           )),
-                      ATPlainElevatedBtn(
-                          onPressed: state.length == 2
-                              ? () => context.pushReplacementNamed(
-                                  ATRoutes.securityQuestionScreen)
-                              : null,
-                          btnTitle: ATStrings.ADD_SECURITY_QUESTION)
+                       ATPlainElevatedBtn(
+                           onPressed: state.length == 2
+                               ? () { 
+                                SetPinData().copyWith(newPin: state[0]!, confirmNewPin: state[1]!,);
+                                context.pushReplacementNamed(
+                                   ATRoutes.securityQuestionScreen,
+                                   
+                                 );}
+                               : null,
+                           btnTitle: ATStrings.ADD_SECURITY_QUESTION)
                     ],
                   );
                 }),
