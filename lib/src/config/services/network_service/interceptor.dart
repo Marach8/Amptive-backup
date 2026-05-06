@@ -18,7 +18,7 @@ class ATInterceptorClass extends Interceptor {
     RequestOptions options,
     RequestInterceptorHandler handler,
   ) async {
-    if (options.path.contains('auth/') && !options.path.contains('logout')) {
+    if (options.path.contains('auth/') && !options.path.contains('logout') && !options.path.contains('set-pin') ) {
       return handler.next(options);
     }
 
