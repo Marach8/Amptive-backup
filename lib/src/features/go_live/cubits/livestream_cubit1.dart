@@ -10,8 +10,12 @@ import 'package:amptive/src/config/services/ws_notif_service/ws_channel_service_
 import 'package:amptive/src/config/services/ws_notif_service/ws_notif_service.dart';
 import 'package:amptive/src/features/go_live/data/models/handle_incoming_stream_action.dart';
 import 'package:amptive/src/features/go_live/data/models/livestream_state.dart';
+import 'package:amptive/src/features/go_live/data/models/sequential_queue.dart';
+import 'package:amptive/src/shared/sentinel.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:permission_handler/permission_handler.dart';
+
+import '../data/models/deconstruct_inbound_events.dart';
 
 class LiveStreamCubit1 extends Cubit<LiveStreamState1> {
   LiveStreamCubit1({
@@ -25,11 +29,16 @@ class LiveStreamCubit1 extends Cubit<LiveStreamState1> {
         localStorage =
             extLocalStorageService ?? FlutterSecureStorageServiceImpl(),
         super(initialState ?? const LiveStreamState1()) {
+
+    _initializeQueues();
     _listenToStreams();
 
     // final Organizers organizers = _retriveOrganizers(state);
     // emit(state.copyWith(organizers: organizers));
   }
+
+  late final SequentialQueue<ChatMessage> _chatQueue;
+  late final SequentialQueue<Gift> _giftQueue;
 
   final ATAudioStreamingService streamingService;
   final WSNotificationService wsNotificationService;
@@ -40,6 +49,35 @@ class LiveStreamCubit1 extends Cubit<LiveStreamState1> {
   StreamSubscription<dynamic>? _wsMessageSub;
   StreamSubscription<List<LiveSessionParticipant>>? _participantsSub;
   StreamSubscription<List<String>>? _activeSpeakersSub;
+
+  void _initializeQueues() {
+    _chatQueue = SequentialQueue<ChatMessage>(
+      delay: const Duration(milliseconds: 300),
+      maxSize: 200,
+      onItem: (ChatMessage chat) {
+        emit(state.copyWith(
+          messages: <String, ChatMessage>{
+            chat.id!: chat,
+            ...?state.messages,
+          },
+          messagesIds: <String>[
+            chat.id!,
+            ...?state.messagesIds,
+          ],
+        ));
+      },
+    );
+
+    // Optional: for gifts (you’ll love this later)
+    _giftQueue = SequentialQueue<Gift>(
+      delay: const Duration(milliseconds: 200),
+      onItem: (Gift gift) {
+        emit(state.copyWith(
+          latestGift: Sentinel<Gift>.of(gift),
+        ));
+      },
+    );
+  }
 
   void _listenToStreams() {
     // Listen to connection state changes
@@ -87,6 +125,26 @@ class LiveStreamCubit1 extends Cubit<LiveStreamState1> {
     // Listen to ws messages
     _wsMessageSub =
         wsNotificationService.messageStream.listen((dynamic message) {
+        final String? type = message['type'];
+
+        // ✅ HANDLE CHAT WITH QUEUE
+        if (type == 'chat') {
+          final ChatMessage chat = ChatMessage.fromJson(message);
+          _chatQueue.add(chat);
+          return;
+        }
+
+        // ✅ HANDLE GIFTS WITH QUEUE (optional but recommended)
+        if (type == 'gift') {
+          final Gift gift = Gift.fromJson(message);
+
+          final LivestreamParticipant? gifter = state.participants?[gift.senderId ?? ''];
+          final Gift updatedGift = gift.copyWith(gifter: gifter);
+
+          _giftQueue.add(updatedGift);
+          return;
+        }
+        
         final LiveStreamState1 newState = reduceIncomingStreamAction(
           wsJson: message,
           stateSnapshot: state,
@@ -228,6 +286,9 @@ class LiveStreamCubit1 extends Cubit<LiveStreamState1> {
 
   @override
   Future<void> close() {
+    _chatQueue.dispose();
+    _giftQueue.dispose();
+
     // Cancel each individual subscription to prevent memory leaks.
     _audioConnectionStateSub?.cancel();
     _wsConnectionStateSub?.cancel();
