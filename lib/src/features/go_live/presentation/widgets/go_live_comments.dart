@@ -1,6 +1,5 @@
 import 'package:amptive/src/features/go_live/presentation/screens/live_program_screen.dart';
 import 'package:amptive/src/features/go_live/presentation/widgets/render_host_and_cohost.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter/services.dart';
@@ -19,7 +18,7 @@ class GoLiveComments extends StatefulWidget {
 }
 
 class _GoLiveCommentsState extends State<GoLiveComments> {
-  static const int _maxItems = 4;
+  static const int _maxItems = 100;
 
   final GlobalKey<AnimatedListState> _listKey = GlobalKey<AnimatedListState>();
   final List<ChatMessage> _items = <ChatMessage>[];
@@ -137,24 +136,23 @@ class _GoLiveCommentsState extends State<GoLiveComments> {
           right: 15,
           child: ValueListenableBuilder<bool>(
             valueListenable: _scroll2BottomNotifier,
-            builder: (_, showIcon, __) {
+            builder: (_, bool showIcon, __) {
               return AnimatedSwitcher(
                 duration: const Duration(milliseconds: 200),
                 child: showIcon
-                    ? GestureDetector(
-                        key: const ValueKey('scroll_btn'),
-                        onTap: _scrollToBottom,
-                        child: Container(
-                          height: 35,
-                          width: 35,
-                          decoration: BoxDecoration(
-                            color: Colors.white.withOpacity(0.1),
-                            shape: BoxShape.circle,
-                          ),
-                          child: const Icon(Icons.keyboard_double_arrow_down),
+                  ? GestureDetector(
+                      key: const ValueKey<String>('scroll_btn'),
+                      onTap: _scrollToBottom,
+                      child: Container(
+                        height: 35,  width: 35,
+                        decoration: BoxDecoration(
+                          color: ATColors.white.withValues(alpha: 0.1),
+                          shape: BoxShape.circle,
                         ),
-                      )
-                    : const SizedBox.shrink(key: ValueKey('hidden')),
+                        child: const Icon(Icons.keyboard_double_arrow_down),
+                      ),
+                    )
+                  : const SizedBox.shrink(key: ValueKey<String>('hidden')),
               );
             },
           ),

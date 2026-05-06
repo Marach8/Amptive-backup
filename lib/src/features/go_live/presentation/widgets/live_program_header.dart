@@ -68,19 +68,16 @@ class LiveProgramHeader extends StatelessWidget {
         const SizedBox(width: 10),
         _GiftingAndFollowingRow(
           onGiftsTap: () {
-            // exitIcon != null
-            //     ? showHostViewOfTopGiftersDialog(context)
-            //     : showAudienceViewOfTopGiftersDialog(context);
+            exitIcon != null
+                ? showHostViewOfTopGiftersDialog(context)
+                : showAudienceViewOfTopGiftersDialog(context);
           },
           onParticipantsTap: () {
-            // if (exitIcon == null) {
-            //   showListenersDialog(context: context);
-            // } else {
-            //   showListenersDialog(
-            //       context: context,
-            //       enableKickOut: false,
-            //     );
-            // }
+            showListenersDialog(
+              context: context,
+              liveStreamCubit: context.read<LiveStreamCubit1>(),
+              enableKickOut: exitIcon == null
+            );
           },
         ),
       ],
