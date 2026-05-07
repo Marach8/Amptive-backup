@@ -6,4 +6,6 @@ abstract class WalletRepo {
   Future<ApiResponse<dynamic>> setPin({
     required SetPinData param,
   });
+
+  Future<ApiResponse<dynamic>> fetchWalletBalance();
 }

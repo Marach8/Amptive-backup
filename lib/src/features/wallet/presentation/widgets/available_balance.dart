@@ -7,13 +7,16 @@ import 'package:amptive/src/config/routing/route_strings.dart';
 import 'package:amptive/src/features/wallet/presentation/screens/transaction_amount_screen.dart';
 import 'package:amptive/src/shared/circular_image.dart';
 import 'package:amptive/src/shared/custom_container_widget.dart';
+import 'package:amptive/src/shared/global_model_objects.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'dart:developer';
 
 class AvailableBalanceWidget extends StatelessWidget {
-  const AvailableBalanceWidget({super.key});
+  const AvailableBalanceWidget({super.key, this.balance});
+
+  final WalletBalance? balance;
 
   static const List<String> list = <String>[
     ATStrings.fundWallet,
@@ -60,24 +63,30 @@ class AvailableBalanceWidget extends StatelessWidget {
                       ),
                     ),
                     const Spacer(),
-                    const ATCircularImage(
-                      imagePath: ATImgStrings.jpeg2,
+                     const ATCircularImage(
+                      imagePath: ATImgStrings.jpeg2, 
                     )
                   ],
                 ),
                 BlocBuilder<_VisibilityBloc, bool>(
                     builder: (_, bool shouldShow) {
+                      final String balanceText = balance?.availableBalance != null 
+      ? '${ATStrings.nairaText}${balance!.availableBalance!.toStringAsFixed(2)}' 
+      : '${ATStrings.nairaText}0.00';
                   return Text(
-                      shouldShow
-                          ? '${ATStrings.nairaText}5,345,737,330.18'
+                      shouldShow? 
+                           balanceText
                           : '******',
                       style: context.textTheme.displaySmall
                           ?.copyWith(fontSize: ATSizes.size30));
                 }),
                 const SizedBox(height: 5),
                 BlocBuilder<_VisibilityBloc, bool>(builder: (_, bool state) {
+                  final String pendingText = balance?.pendingBalance != null 
+      ? '${ATStrings.nairaText}${balance!.pendingBalance!.toStringAsFixed(2)}' 
+      : '${ATStrings.nairaText}0.00';
                   return Text(
-                      'Pending balance: ${state ? '${ATStrings.nairaText}13,438.00' : '******'}',
+                      'Pending balance: ${state ? pendingText : '******'}',
                       style: context.textTheme.bodySmall
                           ?.copyWith(color: ATColors.hexC2C2C2));
                 }),

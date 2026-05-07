@@ -36,4 +36,21 @@ Future<ApiResponse<dynamic>> setPin({required SetPinData param}) async {
     );
   }
 }
+
+  @override
+  Future<ApiResponse<dynamic>> fetchWalletBalance() async {
+    try {
+      final Response<dynamic> response = await networkService.get(
+        ATEndpoints.getWalletBalance,
+      );
+
+      final dynamic balanceData = response.data['data'];
+      return Successful<dynamic>(data: balanceData);
+    } catch (e) {
+      log('Get wallet balance error: $e');
+      return Unsuccessful<dynamic>(
+        error: ATException.resolveException(e),
+      );
+    }
+  }
 }
