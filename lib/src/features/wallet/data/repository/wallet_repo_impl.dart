@@ -8,6 +8,7 @@ import 'package:amptive/src/config/services/local_storage_service/flutter_secure
 import 'package:amptive/src/config/services/network_service/dio_network_service_impl.dart';
 import 'package:amptive/src/config/services/network_service/network_service.dart';
 import 'package:amptive/src/features/wallet/data/models/request/set_pin_request.dart';
+import 'package:amptive/src/features/wallet/data/models/response/wallet_balance_response_model.dart';
 import 'package:amptive/src/features/wallet/data/repository/wallet_repo.dart';
 import 'package:dio/dio.dart';
 
@@ -38,17 +39,17 @@ Future<ApiResponse<dynamic>> setPin({required SetPinData param}) async {
 }
 
   @override
-  Future<ApiResponse<dynamic>> fetchWalletBalance() async {
+  Future<ApiResponse<WalletBalanceResponseModel>> fetchWalletBalance() async {
     try {
       final Response<dynamic> response = await networkService.get(
         ATEndpoints.getWalletBalance,
       );
 
-      final dynamic balanceData = response.data['data'];
-      return Successful<dynamic>(data: balanceData);
+
+      return Successful<WalletBalanceResponseModel>(data:  WalletBalanceResponseModel.fromJson(response.data));
     } catch (e) {
       log('Get wallet balance error: $e');
-      return Unsuccessful<dynamic>(
+      return Unsuccessful<WalletBalanceResponseModel>(
         error: ATException.resolveException(e),
       );
     }
