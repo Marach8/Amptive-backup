@@ -1,7 +1,12 @@
+import 'package:amptive/src/features/auth/cubits/local_user_data_cubit.dart';
 import 'package:amptive/src/features/go_live/cubits/livestream_cubit1.dart';
 import 'package:amptive/src/features/go_live/data/models/deconstruct_inbound_events.dart';
 import 'package:amptive/src/features/go_live/data/models/livestream_state.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+import '../../../../config/utils/colors.dart';
+import '../../../../config/utils/extensions/context_extensions.dart';
 
 class ReactionTravelItem extends StatefulWidget {
   const ReactionTravelItem({
@@ -70,6 +75,13 @@ class _ReactionTravelItemState extends State<ReactionTravelItem>
 
   @override
   Widget build(BuildContext context) {
+    String? senderName = widget.reaction.senderUserName;
+    final String? id = context.read<LocalUserDataCubit>()
+      .currentUserData?.userId;
+    if (id == widget.reaction.senderId) {
+      senderName = 'You';
+    }
+    
     return FadeTransition(
       opacity: widget.animation,
       child: AnimatedBuilder(
@@ -84,9 +96,25 @@ class _ReactionTravelItemState extends State<ReactionTravelItem>
             alignment: Alignment.bottomRight,
             child: Padding(
               padding: const EdgeInsets.only(right: 15, bottom: 8),
-              child: Text(
-                widget.reaction.emoji ?? '',
-                style: const TextStyle(fontSize: 32),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: <Widget>[
+                  Text(
+                    widget.reaction.emoji ?? '',
+                    style: const TextStyle(fontSize: 32),
+                  ),
+                  Container(
+                    decoration: BoxDecoration(
+                      color: ATColors.hex2C2F33,
+                      borderRadius: BorderRadius.circular(8),
+                      //border: Border.all(width: 0.5, color: ATColors.white)
+                    ),
+                    child: Text(
+                      senderName ?? '',
+                      style: context.textTheme.titleLarge,
+                    ),
+                  )
+                ],
               ),
             ),
           ),

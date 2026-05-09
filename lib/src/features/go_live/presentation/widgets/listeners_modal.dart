@@ -4,6 +4,7 @@ import 'package:amptive/src/features/go_live/cubits/livestream_cubit1.dart';
 import 'package:amptive/src/features/go_live/data/models/deconstruct_inbound_events.dart';
 import 'package:amptive/src/features/go_live/data/models/livestream_state.dart';
 import 'package:amptive/src/features/go_live/presentation/screens/live_program_screen.dart';
+import 'package:amptive/src/features/go_live/presentation/widgets/render_host_and_cohost.dart';
 import 'package:amptive/src/shared/image_loader_widget.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:amptive/src/features/go_live/go_live_export.dart';
@@ -17,7 +18,7 @@ import '../../../../bloc/main_app/go_live_bloc/host_view/available_cohosts_bloc.
 import '../../../../services/create_show/create_show_service.dart';
 import '../../../../livestream/models/livestream_models.dart';
 
-Future<void> showListenersDialog({
+Future<void> showListenersModal({
   required BuildContext context,
   required bool enableKickOut,
   required LiveStreamCubit1 liveStreamCubit,
@@ -108,7 +109,7 @@ class _ListenersModalState extends State<_ListenersModal> {
             children: <Widget>[
               const ATImgLoader(
                 imgPath: ATImgStrings.userIcon,
-                width: 30,
+                width: 24, height: 24
               ),
               const SizedBox(width: 5),
               Text(ATStrings.listeners,
@@ -230,16 +231,20 @@ class _ParticipantTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final bool isHost = participant?.role == ParticipantRole.host;
+    final bool isHost = participant?.role
+      == ParticipantRole.host;
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 15),
       child: Row(
         children: <Widget>[
-          ATImgLoader(
-            imgPath: participant?.profilePicture ?? '',
-            height: 50,
-            width: 50,
-            boxFit: BoxFit.cover,
+          ClipRRect(
+            borderRadius: BorderRadius.circular(40),
+            child: ATImgLoader(
+              imgPath: participant?.profilePicture ?? '',
+              height: 50,
+              width: 50,
+              boxFit: BoxFit.cover,
+            ),
           ),
           const SizedBox(width: 10),
           Expanded(
@@ -250,13 +255,7 @@ class _ParticipantTile extends StatelessWidget {
                   participant?.name?? '',
                   style: context.textTheme.titleMedium,
                 ),
-                if (isHost)
-                  Text(
-                    'Host',
-                    style: context.textTheme.bodySmall?.copyWith(
-                      color: ATColors.hex307FE2,
-                    ),
-                  ),
+                if(isHost) const HostIndicator(),
                 // if (participant.isSpeaker && !participant.isHost)
                 //   Text(
                 //     'Speaker',

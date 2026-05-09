@@ -1,6 +1,6 @@
 import 'dart:developer' show log;
 
-import 'package:amptive/src/config/utils/dialogs/go_live/top_gifters_modal.dart';
+import 'package:amptive/src/features/go_live/presentation/widgets/gifters_modal.dart';
 import 'package:amptive/src/features/auth/cubits/local_user_data_cubit.dart';
 import 'package:amptive/src/features/go_live/cubits/livestream_bloc.dart';
 import 'package:amptive/src/features/go_live/cubits/livestream_cubit1.dart';
