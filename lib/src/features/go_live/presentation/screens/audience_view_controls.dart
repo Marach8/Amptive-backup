@@ -9,6 +9,7 @@ import 'package:amptive/src/global_export.dart';
 import 'package:amptive/src/shared/circular_image.dart';
 import 'package:amptive/src/shared/image_loader_widget.dart';
 import 'package:amptive/src/shared/textformfield_widget.dart';
+import 'package:emoji_picker_flutter/emoji_picker_flutter.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../bloc/main_app/go_live_bloc/host_view/cohosts_display_bloc.dart';
 import '../../../../services/go_live_service/go_live_service.dart';
@@ -228,9 +229,15 @@ class _RowOfBtns extends StatelessWidget {
         ),
         EachGoLiveControlBtn(
           onTap: () {
-            // context.read<LivestreamBloc>().add(
-            //       const SendReactionEvent(emoji: '❤️'),
-            //     );
+            showModalBottomSheet(
+              context: context,
+              builder: (_) => EmojiPicker(
+                onEmojiSelected: (Category? category, Emoji emoji) {
+                  context.read<LiveStreamCubit1>().sendReaction(emoji.emoji);
+                  Navigator.pop(context);
+                },
+              ),
+            );
           },
           margin: EdgeInsets.zero,
           child: Icon(

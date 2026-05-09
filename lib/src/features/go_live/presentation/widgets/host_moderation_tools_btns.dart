@@ -6,6 +6,7 @@ import 'package:amptive/src/features/go_live/presentation/widgets/host_moderatio
 import 'package:amptive/src/shared/circular_image.dart';
 import 'package:amptive/src/shared/image_loader_widget.dart';
 import 'package:amptive/src/shared/textformfield_widget.dart';
+import 'package:emoji_picker_flutter/emoji_picker_flutter.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../global_export.dart';
 import '../../../../services/go_live_service/go_live_service.dart';
@@ -255,9 +256,15 @@ class _RowOfBtns extends StatelessWidget {
         ),
         EachGoLiveControlBtn(
           onTap: () {
-            // context.read<LivestreamBloc>().add(
-            //       const SendReactionEvent(emoji: '❤️'),
-            //     );
+            showModalBottomSheet(
+              context: context,
+              builder: (_) => EmojiPicker(
+                onEmojiSelected: (Category? category, Emoji emoji) {
+                  context.read<LiveStreamCubit1>().sendReaction(emoji.emoji);
+                  Navigator.pop(context);
+                },
+              ),
+            );
           },
           margin: EdgeInsets.zero,
           child: Icon(

@@ -85,13 +85,9 @@ class LiveStreamCubit1 extends Cubit<LiveStreamState1> {
       maxSize: 200,
       onItem: (Reaction reaction) {
         emit(state.copyWith(
-          reactions: <String, Reaction>{
-            reaction.id!: reaction,
+          reactions: <Reaction>[
+            reaction,
             ...?state.reactions,
-          },
-          reactionsIds: <String>[
-            reaction.id!,
-            ...?state.reactionsIds,
           ],
         ));
       },

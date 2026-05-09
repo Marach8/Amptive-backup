@@ -145,7 +145,6 @@ class ChatMessage {
 
 class Reaction {
   const Reaction({
-    this.id,
     this.senderId,
     this.emoji,
     this.senderUserName
@@ -153,14 +152,13 @@ class Reaction {
 
   factory Reaction.fromJson(Map<String, dynamic> json) {
     return Reaction(
-      id: json['id'],
       senderId: json['sender_id'],
       emoji: json['content'],
       senderUserName: json['sender_username']
     );
   }
 
-  final String? id, senderId, emoji, senderUserName;
+  final String? senderId, emoji, senderUserName;
 }
 
 class Gift {

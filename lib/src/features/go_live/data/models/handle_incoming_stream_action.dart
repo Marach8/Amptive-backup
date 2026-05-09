@@ -181,12 +181,12 @@ LiveStreamState1 reduceIncomingStreamAction({
 
     GoLiveEvent.reaction => (){
       final Reaction newReaction = Reaction.fromJson(wsJson);
-      if((newReaction.id ?? '').isEmpty) return stateSnapshot;
+      
       return stateSnapshot.copyWith(
-        reactions: <String, Reaction>{
-          newReaction.id!: newReaction,
+        reactions: <Reaction>[
+          newReaction,
           ...?stateSnapshot.reactions,
-        },
+        ]
       );
     }(),
 

@@ -231,24 +231,20 @@ class _GoLiveCommentsAndNotificationsState extends State<GoLiveCommentsAndNotifi
 
         BlocListener<LiveStreamCubit1, LiveStreamState1>(
           listenWhen: (LiveStreamState1 prev, LiveStreamState1 curr) =>
-              prev.reactionsIds != curr.reactionsIds,
+              prev.reactions != curr.reactions,
           listener: (_, LiveStreamState1 state) {
-            final List<String> ids = state.reactionsIds ?? <String>[];
-            final Map<String, Reaction>? reactions = state.reactions;
+            final List<Reaction> reactions = state.reactions ?? <Reaction>[];
 
-            if (ids.isEmpty) return;
+            if (reactions.isEmpty) return;
 
-            final String latestId = ids.first;
-            final Reaction? reaction = reactions?[latestId];
+            final Reaction latestReaction = reactions.first;
 
-            if (reaction == null) return;
-
-            _addReaction(reaction);
+            _addReaction(latestReaction);
           },
           child: LayoutBuilder(
             builder: (_, BoxConstraints constraints) {
               final Duration travelDuration = Duration(
-                milliseconds: constraints.maxHeight.toInt() * 8,
+                milliseconds: constraints.maxHeight.toInt() * 4,
               );
 
               return AnimatedList(

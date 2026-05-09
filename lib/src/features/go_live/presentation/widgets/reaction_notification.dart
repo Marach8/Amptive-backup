@@ -81,9 +81,9 @@ class _ReactionTravelItemState extends State<ReactionTravelItem>
         child: FadeTransition(
           opacity: _fadeAnimation,
           child: Align(
-            alignment: Alignment.bottomLeft,
+            alignment: Alignment.bottomRight,
             child: Padding(
-              padding: const EdgeInsets.only(left: 15, bottom: 8),
+              padding: const EdgeInsets.only(right: 15, bottom: 8),
               child: Text(
                 widget.reaction.emoji ?? '',
                 style: const TextStyle(fontSize: 32),
