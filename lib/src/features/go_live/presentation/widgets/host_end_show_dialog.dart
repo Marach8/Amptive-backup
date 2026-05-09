@@ -78,43 +78,43 @@ class _SubWidgetState extends State<_SubWidget> {
         children: <Widget>[
           BlocConsumer<AmptiveEndShowBloc, EndShowState>(
               listener: (_, EndShowState state) {
-            // if (state is ShowBlankScreenState) {
-            //   Future.delayed(const Duration(seconds: 2), () {
-            //     if (context.mounted) {
-            //       context.read<ATNavBarBloc>().goToPage(0, context);
-            //       context.pop();
-            //       showAppNotification(
-            //           context: context,
-            //           icon: const Icon(Icons.check_circle),
-            //           text: 'Your live show has ended',
-            //           bgColor: ATColors.notifBg);
-            //     }
-            //   });
-            // } else if (state is EndShowIsLoadingState) {
-            //   Future.delayed(const Duration(seconds: 5), () {
-            //     if (context.mounted) {
-            //       context
-            //           .read<AmptiveEndShowBloc>()
-            //           .add(ShowNoOfListenersEvent());
-            //     }
-            //   });
-            // } else if (state is ShowNoOfListenersState) {
-            //   Future.delayed(const Duration(seconds: 5), () {
-            //     if (context.mounted) {
-            //       context
-            //           .read<AmptiveEndShowBloc>()
-            //           .add(ShowNoOfGiftsEvent());
-            //     }
-            //   });
-            // } else if (state is ShowNoOfGiftsState) {
-            //   Future.delayed(const Duration(seconds: 5), () {
-            //     if (context.mounted) {
-            //       context
-            //           .read<AmptiveEndShowBloc>()
-            //           .add(ShowBlankScreenEvent());
-            //     }
-            //   });
-            // }
+            if (state is ShowBlankScreenState) {
+              Future.delayed(const Duration(seconds: 2), () {
+                if (context.mounted) {
+                  context.read<ATNavBarBloc>().goToPage(0, context);
+                  context.pop();
+                  showAppNotification(
+                      context: context,
+                      icon: const Icon(Icons.check_circle),
+                      text: 'Your live show has ended',
+                      bgColor: ATColors.notifBg);
+                }
+              });
+            } else if (state is EndShowIsLoadingState) {
+              Future.delayed(const Duration(seconds: 5), () {
+                if (context.mounted) {
+                  context
+                      .read<AmptiveEndShowBloc>()
+                      .add(ShowNoOfListenersEvent());
+                }
+              });
+            } else if (state is ShowNoOfListenersState) {
+              Future.delayed(const Duration(seconds: 5), () {
+                if (context.mounted) {
+                  context
+                      .read<AmptiveEndShowBloc>()
+                      .add(ShowNoOfGiftsEvent());
+                }
+              });
+            } else if (state is ShowNoOfGiftsState) {
+              Future.delayed(const Duration(seconds: 5), () {
+                if (context.mounted) {
+                  context
+                      .read<AmptiveEndShowBloc>()
+                      .add(ShowBlankScreenEvent());
+                }
+              });
+            }
           },
           builder: (_, EndShowState state) {
             final bool initialState = state is ConfirmEndShowState;

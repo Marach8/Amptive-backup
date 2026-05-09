@@ -27,6 +27,7 @@ class LiveStreamState1 extends Equatable {
     this.handQueue,
     this.viewerCount = 0,
     this.messagesIds,
+    this.reactionsIds,
     this.latestGift,
   });
 
@@ -47,6 +48,7 @@ class LiveStreamState1 extends Equatable {
   final Map<String, ChatMessage>? messages;
   final List<String>? messagesIds;
   final Map<String, Reaction>? reactions;
+  final List<String>? reactionsIds;
   final Map<String, Gift>? gifts;
   final Sentinel<Gift>? latestGift;
   final List<String>? handQueue;
@@ -71,6 +73,7 @@ class LiveStreamState1 extends Equatable {
     Map<String, ChatMessage>? messages,
     List<String>? messagesIds,
     Map<String, Reaction>? reactions,
+    List<String>? reactionsIds,
     Map<String, Gift>? gifts,
     List<String>? handQueue,
     int? viewerCount,
@@ -93,6 +96,7 @@ class LiveStreamState1 extends Equatable {
       programDesc: programDesc ?? this.programDesc,
       messages: messages ?? this.messages,
       reactions: reactions ?? this.reactions,
+      reactionsIds: reactionsIds ?? this.reactionsIds,
       gifts: gifts ?? this.gifts,
       handQueue: handQueue ?? this.handQueue,
       viewerCount: viewerCount ?? this.viewerCount,
@@ -119,6 +123,7 @@ class LiveStreamState1 extends Equatable {
         programDesc,
         messages,
         reactions,
+        reactionsIds,
         gifts,
         handQueue,
         viewerCount,

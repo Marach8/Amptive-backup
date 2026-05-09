@@ -1,5 +1,6 @@
 import 'package:amptive/src/features/go_live/presentation/screens/live_program_screen.dart';
 import 'package:amptive/src/features/go_live/presentation/widgets/gifting_notification.dart';
+import 'package:amptive/src/features/go_live/presentation/widgets/reaction_notification.dart';
 import 'package:amptive/src/features/go_live/presentation/widgets/render_live_comment.dart';
 import 'package:amptive/src/features/go_live/presentation/widgets/render_host_and_cohost.dart';
 import 'package:flutter/rendering.dart';
@@ -8,6 +9,7 @@ import 'package:flutter/services.dart';
 import 'package:amptive/src/features/go_live/cubits/livestream_cubit1.dart';
 import 'package:amptive/src/features/go_live/data/models/livestream_state.dart';
 import 'package:amptive/src/features/go_live/data/models/deconstruct_inbound_events.dart';
+import 'package:amptive/src/shared/sentinel.dart';
 import 'package:amptive/src/features/go_live/presentation/widgets/live_screen_notifications.dart';
 import 'package:amptive/src/shared/image_loader_widget.dart';
 import 'package:amptive/src/global_export.dart';
@@ -23,9 +25,11 @@ class _GoLiveCommentsAndNotificationsState extends State<GoLiveCommentsAndNotifi
   static const int _maxItems = 100;
 
   final GlobalKey<AnimatedListState> _chatsListKey = GlobalKey<AnimatedListState>(),
-    _giftListKey = GlobalKey<AnimatedListState>();
+    _giftListKey = GlobalKey<AnimatedListState>(),
+    _reactionsListKey = GlobalKey<AnimatedListState>();
   final List<ChatMessage> _chats = <ChatMessage>[];
   final List<Gift> _gifts = <Gift>[];
+  final List<Reaction> _reactions = <Reaction>[];
 
   late final ScrollController _scrollController;
   late final ValueNotifier<bool> _scroll2BottomNotifier;
@@ -123,6 +127,35 @@ class _GoLiveCommentsAndNotificationsState extends State<GoLiveCommentsAndNotifi
     );
   }
 
+  void _addReaction(Reaction reaction) {
+    _reactions.insert(0, reaction);
+    _reactionsListKey.currentState?.insertItem(
+      0,
+      duration: const Duration(milliseconds: 250),
+    );
+
+    if (_reactions.length > _maxItems) {
+      _removeReaction(_reactions.length - 1);
+    }
+  }
+
+  void _removeReaction(int index) {
+    if (index < 0 || index >= _reactions.length) return;
+    final Reaction removed = _reactions.removeAt(index);
+
+    _reactionsListKey.currentState?.removeItem(
+      index,
+      (_, Animation<double> animation) => ReactionTravelItem(
+        reaction: removed,
+        animation: animation,
+        travelDuration: Duration.zero,
+        onTravelComplete: () {},
+        containerHeight: 1,
+      ),
+      duration: const Duration(milliseconds: 250),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Stack(
@@ -188,6 +221,47 @@ class _GoLiveCommentsAndNotificationsState extends State<GoLiveCommentsAndNotifi
                     animation: animation,
                     travelDuration: travelDuration,
                     onTravelComplete: () => _removeGift(index),
+                    containerHeight: constraints.maxHeight,
+                  );
+                },
+              );
+            },
+          ),
+        ),
+
+        BlocListener<LiveStreamCubit1, LiveStreamState1>(
+          listenWhen: (LiveStreamState1 prev, LiveStreamState1 curr) =>
+              prev.reactionsIds != curr.reactionsIds,
+          listener: (_, LiveStreamState1 state) {
+            final List<String> ids = state.reactionsIds ?? <String>[];
+            final Map<String, Reaction>? reactions = state.reactions;
+
+            if (ids.isEmpty) return;
+
+            final String latestId = ids.first;
+            final Reaction? reaction = reactions?[latestId];
+
+            if (reaction == null) return;
+
+            _addReaction(reaction);
+          },
+          child: LayoutBuilder(
+            builder: (_, BoxConstraints constraints) {
+              final Duration travelDuration = Duration(
+                milliseconds: constraints.maxHeight.toInt() * 8,
+              );
+
+              return AnimatedList(
+                key: _reactionsListKey,
+                initialItemCount: 0,
+                reverse: true,
+                physics: const NeverScrollableScrollPhysics(),
+                itemBuilder: (_, int index, Animation<double> animation) {
+                  return ReactionTravelItem(
+                    reaction: _reactions[index],
+                    animation: animation,
+                    travelDuration: travelDuration,
+                    onTravelComplete: () => _removeReaction(index),
                     containerHeight: constraints.maxHeight,
                   );
                 },

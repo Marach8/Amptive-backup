@@ -40,6 +40,7 @@ class LiveStreamCubit1 extends Cubit<LiveStreamState1> {
 
   late final SequentialQueue<ChatMessage> _chatQueue;
   late final SequentialQueue<Gift> _giftQueue;
+  late final SequentialQueue<Reaction> _reactionQueue;
 
   final ATAudioStreamingService streamingService;
   final WSNotificationService wsNotificationService;
@@ -75,6 +76,23 @@ class LiveStreamCubit1 extends Cubit<LiveStreamState1> {
       onItem: (Gift gift) {
         emit(state.copyWith(
           latestGift: Sentinel<Gift>.of(gift),
+        ));
+      },
+    );
+
+    _reactionQueue = SequentialQueue<Reaction>(
+      delay: const Duration(milliseconds: 300),
+      maxSize: 200,
+      onItem: (Reaction reaction) {
+        emit(state.copyWith(
+          reactions: <String, Reaction>{
+            reaction.id!: reaction,
+            ...?state.reactions,
+          },
+          reactionsIds: <String>[
+            reaction.id!,
+            ...?state.reactionsIds,
+          ],
         ));
       },
     );
@@ -143,6 +161,13 @@ class LiveStreamCubit1 extends Cubit<LiveStreamState1> {
           final Gift updatedGift = gift.copyWith(gifter: gifter);
 
           _giftQueue.add(updatedGift);
+          return;
+        }
+
+        // ✅ HANDLE REACTIONS WITH QUEUE
+        if (type == 'reaction') {
+          final Reaction reaction = Reaction.fromJson(message);
+          _reactionQueue.add(reaction);
           return;
         }
         
@@ -290,6 +315,7 @@ class LiveStreamCubit1 extends Cubit<LiveStreamState1> {
   Future<void> close() {
     _chatQueue.dispose();
     _giftQueue.dispose();
+    _reactionQueue.dispose();
 
     // Cancel each individual subscription to prevent memory leaks.
     _audioConnectionStateSub?.cancel();
