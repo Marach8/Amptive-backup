@@ -32,7 +32,7 @@ class EndLiveProgramCubit extends Cubit<ATAppState<EndLiveProgramState>> {
           await goLiveRepo.endLiveProgram(livestreamId: livestreamId);
       response.when(
         successful: (Successful<bool> data) {
-          emit(SuccessState<EndLiveProgramState>(newData: data.data));
+          emit(SuccessState<EndLiveProgramState>());
         },
         unSuccessful: (Unsuccessful<bool> error) {
           emit(FailureState<EndLiveProgramState>(error.error.message,

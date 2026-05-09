@@ -32,7 +32,7 @@ class LiveProgramHeader extends StatelessWidget {
       children: <Widget>[
         audienceMinimizeIcon ?? ATContainer(
           onTap: () {
-            showHostEndShowDialog(context: context);
+            //showHostEndShowDialog(context: context);
           },
           color: ATColors.hexECO404.withValues(alpha: 0.3),
           height: 35, width: 35,
