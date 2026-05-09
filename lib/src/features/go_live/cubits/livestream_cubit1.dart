@@ -14,6 +14,7 @@ import 'package:amptive/src/features/go_live/data/models/sequential_queue.dart';
 import 'package:amptive/src/shared/sentinel.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:uuid/uuid.dart';
 
 import '../data/models/deconstruct_inbound_events.dart';
 
@@ -70,7 +71,7 @@ class LiveStreamCubit1 extends Cubit<LiveStreamState1> {
 
     // Optional: for gifts (you’ll love this later)
     _giftQueue = SequentialQueue<Gift>(
-      delay: const Duration(milliseconds: 200),
+      delay: const Duration(seconds: 1),
       onItem: (Gift gift) {
         emit(state.copyWith(
           latestGift: Sentinel<Gift>.of(gift),
@@ -242,11 +243,12 @@ class LiveStreamCubit1 extends Cubit<LiveStreamState1> {
         'content': emoji
       });
 
-  void sendGift(String giftId, int quantity) =>
+  void sendGift(int quantity) =>
       wsNotificationService.sendMessage(<String, dynamic>{
-        'type': OutboundMessageType.gift,
-        'gift_id': giftId,
-        'quantity': quantity,
+        'type': GoLiveEvent.gift.value,
+        'gift_id': const Uuid().v4(),
+        'gift_type': 'rose',
+        'quantity': 20,
       });
 
   void raiseHand() => wsNotificationService.sendMessage(<String, dynamic>{

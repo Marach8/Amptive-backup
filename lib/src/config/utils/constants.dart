@@ -58,7 +58,7 @@ class SignalingEventType {
 }
 
 
-enum InboundEvent {
+enum GoLiveEvent {
   initial('initial_state'),
   streamStarted('stream_started'),
   streamEnded('stream_ended'),
@@ -83,15 +83,15 @@ enum InboundEvent {
   pollEnded('poll_ended'),
   gift('gift');
 
-  const InboundEvent(this.value);
+  const GoLiveEvent(this.value);
 
   final String value;
 
-  static final Map<String, InboundEvent> _map = <String, InboundEvent>{
-    for (final InboundEvent e in InboundEvent.values) e.value: e,
+  static final Map<String, GoLiveEvent> _map = <String, GoLiveEvent>{
+    for (final GoLiveEvent e in GoLiveEvent.values) e.value: e,
   };
 
-  static InboundEvent? fromValue(String? value) {
+  static GoLiveEvent? fromValue(String? value) {
     return _map[value];
   }
 }

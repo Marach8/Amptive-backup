@@ -8,7 +8,7 @@ import 'package:amptive/src/models/host.dart';
 import 'package:amptive/src/shared/global_model_objects.dart';
 import 'package:amptive/src/shared/image_loader_widget.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../../../config/utils/dialogs/minimized_go_live_dialog.dart';
+import '../widgets/minimized_go_live_dialog.dart';
 import '../../go_live_export.dart';
 import '../widgets/audience_view_of_host_and_cohosts.dart';
 import '../widgets/live_program_header.dart';
@@ -47,9 +47,9 @@ class LiveProgramAudienceView extends StatelessWidget {
                   children: <Widget>[
                     const Padding(
                       padding: EdgeInsets.fromLTRB(
-                          10, kToolbarHeight * 0.5, 15, 20),
+                          10, kToolbarHeight * 0.2, 15, 20),
                       child: LiveProgramHeader(
-                        exitIcon: _AudienceViewExitIcon(),
+                        audienceMinimizeIcon: _AudienceViewMinimizeIcon(),
                       ),
                     ),
 
@@ -106,7 +106,7 @@ class LiveProgramAudienceView extends StatelessWidget {
                                       )
                                     )
                                   ),
-                              const Expanded(child: GoLiveComments()),
+                              const Expanded(child: GoLiveCommentsAndNotifications()),
                             ],
                           );
                         }
@@ -141,8 +141,8 @@ class LiveProgramAudienceView extends StatelessWidget {
   }
 }
 
-class _AudienceViewExitIcon extends StatelessWidget {
-  const _AudienceViewExitIcon();
+class _AudienceViewMinimizeIcon extends StatelessWidget {
+  const _AudienceViewMinimizeIcon();
 
   @override
   Widget build(BuildContext context) {

@@ -66,13 +66,13 @@ LiveStreamState1 reduceIncomingStreamAction({
   required Map<String, dynamic> wsJson,
   required LiveStreamState1 stateSnapshot,
 }) {
-  final InboundEvent? type =
-      InboundEvent.fromValue(wsJson['type'] as String?);
+  final GoLiveEvent? type =
+      GoLiveEvent.fromValue(wsJson['type'] as String?);
 
   if (type == null) return stateSnapshot;
 
   return switch (type) {
-    InboundEvent.initial => () {
+    GoLiveEvent.initial => () {
       final InitialStateMapper initial = InitialStateMapper
         .fromJson(wsJson);
       LivestreamParticipant? host;
@@ -96,15 +96,15 @@ LiveStreamState1 reduceIncomingStreamAction({
     }(),
 
 
-    InboundEvent.streamStarted => stateSnapshot,
+    GoLiveEvent.streamStarted => stateSnapshot,
 
-    InboundEvent.streamEnded => stateSnapshot.copyWith(
+    GoLiveEvent.streamEnded => stateSnapshot.copyWith(
         //connectionErrorMessage: 'Stream ended',
       ),
 
-    InboundEvent.pong => stateSnapshot,
+    GoLiveEvent.pong => stateSnapshot,
 
-    InboundEvent.participantJoin => () {
+    GoLiveEvent.participantJoin => () {
       final LivestreamParticipant newParticipant =
           LivestreamParticipant.fromJson(wsJson);
       late LiveStreamState1 newState;
@@ -141,7 +141,7 @@ LiveStreamState1 reduceIncomingStreamAction({
       return newState;
     }(),
 
-    InboundEvent.participantLeave => () {
+    GoLiveEvent.participantLeave => () {
         final String id = wsJson['identity'] ?? '';
         final Map<String, LivestreamParticipant>? participants
           = stateSnapshot.participants;
@@ -151,7 +151,7 @@ LiveStreamState1 reduceIncomingStreamAction({
         );
       }(),
 
-    InboundEvent.participantUpdated => () {
+    GoLiveEvent.participantUpdated => () {
       final LivestreamParticipant updatedParticipant =
           LivestreamParticipant.fromJson(wsJson['participant']);
       final Map<String, LivestreamParticipant>? participants 
@@ -163,7 +163,7 @@ LiveStreamState1 reduceIncomingStreamAction({
     }(),
 
 
-    InboundEvent.chat => () {
+    GoLiveEvent.chat => () {
       final ChatMessage newMessage = ChatMessage.fromJson(wsJson);
       if((newMessage.id ?? '').isEmpty) return stateSnapshot;
       return stateSnapshot.copyWith(
@@ -179,7 +179,7 @@ LiveStreamState1 reduceIncomingStreamAction({
     }(),
 
 
-    InboundEvent.reaction => (){
+    GoLiveEvent.reaction => (){
       final Reaction newReaction = Reaction.fromJson(wsJson);
       if((newReaction.id ?? '').isEmpty) return stateSnapshot;
       return stateSnapshot.copyWith(
@@ -191,12 +191,13 @@ LiveStreamState1 reduceIncomingStreamAction({
     }(),
 
 
-    InboundEvent.gift => (){
+    GoLiveEvent.gift => (){
       final Gift newGift = Gift.fromJson(wsJson);
       if((newGift.giftId ?? '').isEmpty) return stateSnapshot;
 
       final LivestreamParticipant? gifter = stateSnapshot
         .participants?[newGift.senderId ?? ''];
+      log('available people: ${stateSnapshot.participants}');
       final Gift updatedGift = newGift.copyWith(gifter: gifter);
       return stateSnapshot.copyWith(
         latestGift: Sentinel<Gift>.of(updatedGift),
@@ -208,7 +209,7 @@ LiveStreamState1 reduceIncomingStreamAction({
     }(),
 
 
-    InboundEvent.handRaise => () {
+    GoLiveEvent.handRaise => () {
         final String id = wsJson['user_id'] ?? '';
         final String action = wsJson['action'] ?? '';
         final List<String> queue =
@@ -222,16 +223,16 @@ LiveStreamState1 reduceIncomingStreamAction({
       }(),
 
 
-    InboundEvent.viewerCount => stateSnapshot.copyWith(
+    GoLiveEvent.viewerCount => stateSnapshot.copyWith(
         viewerCount: wsJson['count'] as int? ?? 0,
       ),
 
-    InboundEvent.participantCount => stateSnapshot.copyWith(
+    GoLiveEvent.participantCount => stateSnapshot.copyWith(
         viewerCount: wsJson['count'] as int? ?? 0,
       ),
 
 
-    InboundEvent.userMuted => () {
+    GoLiveEvent.userMuted => () {
         // final String id = json['identity'] as String? ?? '';
         // final bool muted = json['muted'] as bool? ?? false;
         // final List<LiveSessionParticipant>? updated =
@@ -244,7 +245,7 @@ LiveStreamState1 reduceIncomingStreamAction({
         return stateSnapshot.copyWith();
       }(),
 
-    InboundEvent.userBanned => () {
+    GoLiveEvent.userBanned => () {
         final String? id = wsJson['identity'];
         if((id ?? '').isEmpty) return stateSnapshot;
         final Map<String, LivestreamParticipant>? participants 
@@ -256,7 +257,7 @@ LiveStreamState1 reduceIncomingStreamAction({
         );
       }(),
 
-    InboundEvent.userKicked => () {
+    GoLiveEvent.userKicked => () {
         final String? id = wsJson['identity'];
         if((id ?? '').isEmpty) return stateSnapshot;
         final Map<String, LivestreamParticipant>? participants 
@@ -269,7 +270,7 @@ LiveStreamState1 reduceIncomingStreamAction({
       }(),
 
 
-    InboundEvent.mediaStateChanged => () {
+    GoLiveEvent.mediaStateChanged => () {
         // final String id = json['identity'] as String? ?? '';
         // final bool enabled = json['enabled'] as bool? ?? false;
         // final List<LiveSessionParticipant>? updated =
@@ -283,13 +284,13 @@ LiveStreamState1 reduceIncomingStreamAction({
       }(),
 
 
-    InboundEvent.screenShareStarted => stateSnapshot,
-    InboundEvent.screenShareEnded => stateSnapshot,
+    GoLiveEvent.screenShareStarted => stateSnapshot,
+    GoLiveEvent.screenShareEnded => stateSnapshot,
 
-    InboundEvent.pollCreated => stateSnapshot,
-    InboundEvent.pollVoted => stateSnapshot,
-    InboundEvent.pollEnded => stateSnapshot,
+    GoLiveEvent.pollCreated => stateSnapshot,
+    GoLiveEvent.pollVoted => stateSnapshot,
+    GoLiveEvent.pollEnded => stateSnapshot,
 
-    InboundEvent.error => stateSnapshot,
+    GoLiveEvent.error => stateSnapshot,
   };
 }

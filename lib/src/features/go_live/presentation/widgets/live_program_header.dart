@@ -16,19 +16,21 @@ import '../../../../livestream/models/livestream_models.dart';
 class LiveProgramHeader extends StatelessWidget {
   const LiveProgramHeader({
     super.key,
-    this.exitIcon,
+    this.audienceMinimizeIcon,
   });
 
-  final Widget? exitIcon;
+  final Widget? audienceMinimizeIcon;
 
   @override
   Widget build(BuildContext context) {
     final String? title = context
       .read<LiveStreamCubit1>().state.programTitle;
+    final String? programCoverUrl = context
+      .read<LiveStreamCubit1>().state.programCoverUrl;
     
     return Row(
       children: <Widget>[
-        exitIcon ?? ATContainer(
+        audienceMinimizeIcon ?? ATContainer(
           onTap: () {
             showHostEndShowDialog(context: context);
           },
@@ -67,16 +69,27 @@ class LiveProgramHeader extends StatelessWidget {
         ),
         const SizedBox(width: 10),
         _GiftingAndFollowingRow(
-          onGiftsTap: () {
-            exitIcon != null
-                ? showHostViewOfTopGiftersDialog(context)
-                : showAudienceViewOfTopGiftersDialog(context);
+          onGiftsTap: () async{
+            if(audienceMinimizeIcon == null){
+              showHostViewOfTopGiftersDialog(context);
+              return;
+            }
+            else{
+              final bool? shouldSendGift = await 
+                showAudienceViewOfTopGiftersDialog(context);
+              if(context.mounted && shouldSendGift == true){
+                final int? price = await GiftPickerDialog.show(context);
+                if(context.mounted && price != null){
+                  context.read<LiveStreamCubit1>().sendGift(price);
+                }
+              }
+            }
           },
           onParticipantsTap: () {
             showListenersDialog(
               context: context,
               liveStreamCubit: context.read<LiveStreamCubit1>(),
-              enableKickOut: exitIcon == null
+              enableKickOut: audienceMinimizeIcon == null
             );
           },
         ),

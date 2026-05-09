@@ -1,4 +1,6 @@
 import 'package:amptive/src/features/go_live/presentation/screens/live_program_screen.dart';
+import 'package:amptive/src/features/go_live/presentation/widgets/gifting_notification.dart';
+import 'package:amptive/src/features/go_live/presentation/widgets/render_live_comment.dart';
 import 'package:amptive/src/features/go_live/presentation/widgets/render_host_and_cohost.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -10,18 +12,20 @@ import 'package:amptive/src/features/go_live/presentation/widgets/live_screen_no
 import 'package:amptive/src/shared/image_loader_widget.dart';
 import 'package:amptive/src/global_export.dart';
 
-class GoLiveComments extends StatefulWidget {
-  const GoLiveComments({super.key});
+class GoLiveCommentsAndNotifications extends StatefulWidget {
+  const GoLiveCommentsAndNotifications({super.key});
 
   @override
-  State<GoLiveComments> createState() => _GoLiveCommentsState();
+  State<GoLiveCommentsAndNotifications> createState() => _GoLiveCommentsAndNotificationsState();
 }
 
-class _GoLiveCommentsState extends State<GoLiveComments> {
+class _GoLiveCommentsAndNotificationsState extends State<GoLiveCommentsAndNotifications> {
   static const int _maxItems = 100;
 
-  final GlobalKey<AnimatedListState> _listKey = GlobalKey<AnimatedListState>();
-  final List<ChatMessage> _items = <ChatMessage>[];
+  final GlobalKey<AnimatedListState> _chatsListKey = GlobalKey<AnimatedListState>(),
+    _giftListKey = GlobalKey<AnimatedListState>();
+  final List<ChatMessage> _chats = <ChatMessage>[];
+  final List<Gift> _gifts = <Gift>[];
 
   late final ScrollController _scrollController;
   late final ValueNotifier<bool> _scroll2BottomNotifier;
@@ -63,32 +67,59 @@ class _GoLiveCommentsState extends State<GoLiveComments> {
     );
   }
 
+  //For chat messages
   void _insertMessage(ChatMessage message) {
-    _items.insert(0, message);
+    _chats.insert(0, message);
 
-    _listKey.currentState?.insertItem(
+    _chatsListKey.currentState?.insertItem(
       0,
       duration: const Duration(milliseconds: 250),
     );
 
-    if (_items.length > _maxItems) {
+    if (_chats.length > _maxItems) {
       _removeLastMessage();
     }
   }
 
   void _removeLastMessage() {
-    final int lastIndex = _items.length - 1;
-    final ChatMessage removed = _items.removeLast();
+    final int lastIndex = _chats.length - 1;
+    final ChatMessage removed = _chats.removeLast();
 
-    _listKey.currentState?.removeItem(
+    _chatsListKey.currentState?.removeItem(
       lastIndex,
       (_, Animation<double> animation) {
-        return _AnimatedChatItem(
+        return AnimatedChatMsgItem(
           message: removed,
           animation: animation,
         );
       },
       duration: const Duration(milliseconds: 200),
+    );
+  }
+
+
+  void _addGift(Gift gift) {
+    _gifts.insert(0, gift);
+    _giftListKey.currentState?.insertItem(
+      0,
+      duration: const Duration(milliseconds: 300),
+    );
+  }
+
+  void _removeGift(int index) {
+    if (index < 0 || index >= _gifts.length) return;
+    final Gift removed = _gifts.removeAt(index);
+
+    _giftListKey.currentState?.removeItem(
+      index,
+      (_, Animation<double> animation) => GiftTravelItem(
+        gift: removed,
+        animation: animation,
+        travelDuration: Duration.zero, // already travelled, just fade out
+        onTravelComplete: () {},
+        containerHeight: 1,
+      ),
+      duration: const Duration(milliseconds: 250),
     );
   }
 
@@ -116,15 +147,50 @@ class _GoLiveCommentsState extends State<GoLiveComments> {
             _insertMessage(message);
           },
           child: AnimatedList(
-            key: _listKey,
+            key: _chatsListKey,
             controller: _scrollController,
             physics: const BouncingScrollPhysics(),
             padding: const EdgeInsets.fromLTRB(15, 50, 15, 50),
-            initialItemCount: _items.length,
+            initialItemCount: _chats.length,
             itemBuilder: (_, int index, Animation<double> animation) {
-              return _AnimatedChatItem(
-                message: _items[index],
+              return AnimatedChatMsgItem(
+                message: _chats[index],
                 animation: animation,
+              );
+            },
+          ),
+        ),
+
+
+        BlocListener<LiveStreamCubit1, LiveStreamState1>(
+          listenWhen: (LiveStreamState1 prev, LiveStreamState1 curr) 
+            => curr.latestGift != prev.latestGift,
+          listener: (_, LiveStreamState1 state) {
+            final Gift? gift = state.latestGift?.value;
+            if (gift != null) _addGift(gift);
+          },
+          child: LayoutBuilder(
+            builder: (_, BoxConstraints constraints) {
+              // travel duration proportional to available height
+              // ~1px per ms feels natural — tune this
+              final Duration travelDuration = Duration(
+                milliseconds: constraints.maxHeight.toInt() * 8,
+              );
+        
+              return AnimatedList(
+                key: _giftListKey,
+                initialItemCount: 0,
+                reverse: true,
+                physics: const NeverScrollableScrollPhysics(), // gifts aren't scrollable
+                itemBuilder: (_, int index, Animation<double> animation) {
+                  return GiftTravelItem(
+                    gift: _gifts[index],
+                    animation: animation,
+                    travelDuration: travelDuration,
+                    onTravelComplete: () => _removeGift(index),
+                    containerHeight: constraints.maxHeight,
+                  );
+                },
               );
             },
           ),
@@ -158,100 +224,8 @@ class _GoLiveCommentsState extends State<GoLiveComments> {
           ),
         ),
 
-        /// Optional overlays (gift etc.)
-        Column(
-          children: const <Widget>[
-            GiftNotification(),
-          ],
-        ),
+        //const GiftOverlay1()
       ],
-    );
-  }
-}
-
-
-class _AnimatedChatItem extends StatelessWidget {
-  const _AnimatedChatItem({
-    required this.message,
-    required this.animation,
-  });
-
-  final ChatMessage message;
-  final Animation<double> animation;
-
-  @override
-  Widget build(BuildContext context) {
-    final bool msgFromHost = message.role == ParticipantRole.host;
-
-    return SizeTransition(
-      sizeFactor: animation,
-      axisAlignment: -1,
-      child: SlideTransition(
-        position: Tween<Offset>(
-          begin: const Offset(0, -0.25),
-          end: Offset.zero,
-        ).animate(animation),
-        child: FadeTransition(
-          opacity: animation,
-          child: Padding(
-            padding: const EdgeInsets.only(bottom: 16),
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                ClipRRect(
-                  borderRadius: BorderRadius.circular(18),
-                  child: ATImgLoader(
-                    imgPath: message.avatar ?? '',
-                    boxFit: BoxFit.cover,
-                    height: 35,
-                    width: 35,
-                  ),
-                ),
-                const SizedBox(width: 8),
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      Row(
-                        children: <Widget>[
-                          Flexible(
-                            child: Text(
-                              message.senderName ?? '',
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .bodySmall
-                                  ?.copyWith(
-                                    height: 0.78,
-                                  ),
-                            ),
-                          ),
-                          if (msgFromHost)
-                            const Padding(
-                              padding: EdgeInsets.only(left: 6),
-                              child: HostIndicator(size: 6, radius: 3),
-                            ),
-                        ],
-                      ),
-                      const SizedBox(height: 8),
-                      Text(
-                        message.message ?? '',
-                        maxLines: 2,
-                        style: Theme.of(context)
-                            .textTheme
-                            .titleMedium
-                            ?.copyWith(
-                              fontSize: 13,
-                              height: 1.38,
-                            ),
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ),
-      ),
     );
   }
 }

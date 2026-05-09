@@ -259,6 +259,7 @@ class WSChannelNotifServiceImpl implements WSNotificationService {
     }
 
     try {
+      log('this is the data sent as message: $data');
       _channel!.sink.add(jsonEncode(data));
     } catch (e) {
       log('Send error: $e');

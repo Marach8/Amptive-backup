@@ -38,7 +38,7 @@ class LiveProgramHostView extends StatelessWidget {
               children: <Widget>[
                 const Padding(
                   padding: EdgeInsets.fromLTRB(
-                    10, kToolbarHeight * 0.5, 15, 20),
+                    10, kToolbarHeight * 0.2, 15, 20),
                   child: LiveProgramHeader(),
                 ),
 
@@ -97,7 +97,7 @@ class LiveProgramHostView extends StatelessWidget {
                                   )
                                 )
                               ),
-                          const Expanded(child: GoLiveComments()),
+                          const Expanded(child: GoLiveCommentsAndNotifications()),
                         ],
                       );
                     }

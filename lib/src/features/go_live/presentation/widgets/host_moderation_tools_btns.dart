@@ -1,6 +1,7 @@
 import 'package:amptive/src/features/auth/cubits/local_user_data_cubit.dart';
 import 'package:amptive/src/features/go_live/cubits/livestream_cubit1.dart';
 import 'package:amptive/src/features/go_live/data/models/livestream_state.dart';
+import 'package:amptive/src/features/go_live/presentation/widgets/gift_picker_dialog.dart';
 import 'package:amptive/src/features/go_live/presentation/widgets/host_moderation_tools_dialog.dart';
 import 'package:amptive/src/shared/circular_image.dart';
 import 'package:amptive/src/shared/image_loader_widget.dart';
@@ -214,7 +215,11 @@ class _RowOfBtns extends StatelessWidget {
           ),
         ),
         EachGoLiveControlBtn(
-          onTap: () {
+          onTap: ()async{
+            final int? price = await GiftPickerDialog.show(context);
+            if(context.mounted && price != null){
+              context.read<LiveStreamCubit1>().sendGift(price);
+            }
             // context
             //     .read<AmptiveGoLiveNotificationBloc>()
             //     .addPinnedMsgNotification(getHostList()[3], 'CO-HOST');

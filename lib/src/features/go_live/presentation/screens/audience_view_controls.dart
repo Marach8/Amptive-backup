@@ -1,5 +1,6 @@
 import 'dart:developer' show log;
 
+import 'package:amptive/src/config/utils/dialogs/go_live/top_gifters_modal.dart';
 import 'package:amptive/src/features/auth/cubits/local_user_data_cubit.dart';
 import 'package:amptive/src/features/go_live/cubits/livestream_bloc.dart';
 import 'package:amptive/src/features/go_live/cubits/livestream_cubit1.dart';
@@ -212,8 +213,12 @@ class _RowOfBtns extends StatelessWidget {
           ),
         ),
         EachGoLiveControlBtn(
-          onTap: () {
-            GiftPickerDialog.show(context);
+          onTap: ()async{
+            final int? price = await GiftPickerDialog.show(context);
+            if(context.mounted && price != null){
+              context.read<LiveStreamCubit1>().sendGift(price);
+            }
+            // GiftPickerDialog.show(context);
           },
           child: const ATImgLoader(
             imgPath: ATImgStrings.hostGiftingIcon,

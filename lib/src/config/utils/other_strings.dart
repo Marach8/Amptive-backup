@@ -245,7 +245,7 @@ class ATStrings {
   static const String didNotGetCode = "Didn't get the code? ";
   static const String sendAgain = 'Send again';
   static const String SEND = 'Send';
-  static const String SEND_GIFT = 'Send gift';
+  static const String sendGift = 'Send gift';
   static const String THIS_WILL_APPEAR_ON_PROFILE =
       'Note that this will appear on your profile';
 
@@ -395,7 +395,7 @@ class ATStrings {
   static const String answerIsCaseSensitive = 'Your answer is case-sensitive!';
   static const String U_MUST_ANS_SECURITY_QUEST =
       'You must answer your security question when making withdrawals!';
-  static const String END_LIVE_SHOW =
+  static const String endLiveShowPrompt =
       'Are you sure you want to end your live show?';
 
   static const String TECHNOLOGY = 'Technology';
@@ -585,7 +585,7 @@ class ATStrings {
   static const String setCapacity = 'Set capacity';
   static const String setCapacityDesc = 'Set the maximum number of listeners that can access your event. Once this limit is reached, no other additional participants can join or pay';
   static const String remove = 'Remove';
-  static const String SEND_GIFT_2_HOST = 'Send a gift to the host';
+  static const String sendGiftToHost = 'Send a gift to the host';
   static const String whispersDesc =
       'Whispers are randomly selected comments from your live audience that appear on your event page while your are live.';
   static const String nonAttendeesEncouragedToJoin =
@@ -658,7 +658,7 @@ class ATStrings {
       'Password must contain at least one upper case letter, and must be at least 8 characters!';
   static const String shareEvent = 'Share event';
   static const String comment = 'Comment';
-  static const String END_NOW = 'End now';
+  static const String endNow = 'End now';
   static const String host = 'Host';
   static const String editEpisode = 'Edit episode';
   static const String attendeesWillShowHere = 'Attendees will appear here!';

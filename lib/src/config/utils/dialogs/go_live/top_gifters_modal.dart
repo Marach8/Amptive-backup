@@ -1,8 +1,11 @@
 import 'dart:ui';
+import 'package:amptive/src/features/auth/cubits/local_user_data_cubit.dart';
 import 'package:amptive/src/global_export.dart';
 import 'package:amptive/src/shared/circle_avatar.dart';
 import 'package:amptive/src/shared/modal_dismisser.dart';
 import 'package:amptive/src/shared/image_loader_widget.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import '../../../../models/host.dart';
 import '../../../../services/create_show/create_show_service.dart';
 
@@ -68,8 +71,12 @@ Future<void> showHostViewOfTopGiftersDialog(BuildContext context) async {
       });
 }
 
-Future<void> showAudienceViewOfTopGiftersDialog(BuildContext context) async {
-  return await showModalBottomSheet(
+Future<bool?> showAudienceViewOfTopGiftersDialog(
+  BuildContext context) async {
+  final CachedUserData? currUserData = context
+    .read<LocalUserDataCubit>().currentUserData;
+
+  return await showModalBottomSheet<bool>(
       context: context,
       isScrollControlled: true,
       backgroundColor: ATColors.hex202020.withValues(alpha: 0.9),
@@ -97,9 +104,7 @@ Future<void> showAudienceViewOfTopGiftersDialog(BuildContext context) async {
                             const Align(
                                 alignment: Alignment.center,
                                 child: ATModalDismisser()),
-                            const SizedBox(
-                              height: 10,
-                            ),
+                            const SizedBox(height: 10),
                             Expanded(
                               child: ATScrollBar(
                                 extScrollCntrl: controller,
@@ -144,24 +149,22 @@ Future<void> showAudienceViewOfTopGiftersDialog(BuildContext context) async {
                       ClipRRect(
                         borderRadius: BorderRadiusGeometry.circular(25),
                         child: ATImgLoader(
-                          imgPath: getHostList()[5].obj.profilePicture!,
+                          imgPath: currUserData?.pictureUrl ?? '',
                           boxFit: BoxFit.cover,
                           height: 50,
                           width: 50,
                         ),
                       ),
-                      const SizedBox(
-                        width: 10,
-                      ),
+                      const SizedBox(width: 10),
                       Expanded(
                         child: Column(
                           mainAxisSize: MainAxisSize.min,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
-                            Text(getHostList()[5].obj.name ?? '',
+                            Text(currUserData?.username ?? '',
                                 style: context.textTheme.bodySmall
                                     ?.copyWith(fontSize: ATSizes.size15)),
-                            Text(ATStrings.SEND_GIFT_2_HOST,
+                            Text(ATStrings.sendGiftToHost,
                                 style: context.textTheme.titleMedium
                                     ?.copyWith(color: ATColors.hexC2C2C2))
                           ],
@@ -171,12 +174,12 @@ Future<void> showAudienceViewOfTopGiftersDialog(BuildContext context) async {
                         width: 20,
                       ),
                       ATContainer(
-                        onTap: () {},
+                        onTap: () => context.pop(true),
                         radius: 40,
                         color: ATColors.hex307FE2,
                         padding: const EdgeInsets.fromLTRB(10, 5, 10, 5),
                         child: Text(
-                          ATStrings.SEND_GIFT,
+                          ATStrings.sendGift,
                           style: context.textTheme.bodyMedium
                               ?.copyWith(fontSize: ATSizes.size15),
                         ),
@@ -190,6 +193,7 @@ Future<void> showAudienceViewOfTopGiftersDialog(BuildContext context) async {
         );
       });
 }
+
 
 class _GifterWidget extends StatelessWidget {
   const _GifterWidget(

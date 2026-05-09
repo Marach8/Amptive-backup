@@ -56,55 +56,6 @@ class SpeakingNotification extends StatelessWidget {
 }
 
 
-class GiftNotification extends StatelessWidget {
-  const GiftNotification({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    final Gift? gift = 
-      context.select<LiveStreamCubit1, Gift?>(
-        (LiveStreamCubit1 cubit) => cubit.state.latestGift?.value,
-      );
-
-    if(gift == null) {
-      return const SizedBox.shrink();
-    }
-
-    return Container(
-      padding: const EdgeInsets.fromLTRB(2, 0, 0, 0),
-      height: 35,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(30),
-        gradient: LinearGradient(
-          colors: <Color>[
-            ATColors.green1.withValues(alpha: 1.0),
-            ATColors.hex009C80.withValues(alpha: 0.0)
-          ]
-        )
-      ),
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: <Widget>[
-          ATCircularImage(diameter: 30,
-            imagePath: gift.gifter?.profilePicture ?? ''),
-          const SizedBox(width: 5),
-          Text(
-            gift.gifter?.name ?? '',
-            style: context.textTheme.bodyMedium
-              ?.copyWith(fontSize: ATSizes.size12),
-          ),
-          const SizedBox(width: 5),
-          Text(
-            '${ATStrings.gifted} ${ATStrings.nairaText}${gift.quantity}',
-            style: context.textTheme.titleSmall,
-          ),
-          const SizedBox(width: 10),
-          const ATImgLoader(imgPath: ATImgStrings.moneyIcon)
-        ],
-      ),
-    );
-  }
-}
 
 // class AmptiveGoLivePinnedMsgNtfctnWidget extends StatelessWidget {
 //   const AmptiveGoLivePinnedMsgNtfctnWidget({super.key, required this.state});

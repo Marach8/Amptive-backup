@@ -19,7 +19,7 @@ import 'package:get_it/get_it.dart';
 import '../../../../services/go_live_service/go_live_service.dart';
 import '../../../../config/utils/colors.dart';
 import '../widgets/reactions_overlay.dart';
-import '../widgets/gift_overlay.dart';
+import '../widgets/gifting_notification.dart';
 
 class LiveProgramCohostView extends StatefulWidget {
   const LiveProgramCohostView({super.key});
@@ -97,7 +97,7 @@ class _LiveProgramCohostViewState extends State<LiveProgramCohostView> {
               child: Stack(
                 children: <Widget>[
                   const ReactionsOverlay(),
-                  const GiftOverlay(),
+                  const GiftOverlayOKay(),
                   SizedBox(
                     height: ATHelperFuncs.getScreenHeight(context),
                     child: Column(

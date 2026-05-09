@@ -143,13 +143,13 @@ class __SubWidgetState extends State<_SubWidget> with WidgetsBindingObserver{
       child: switch (widget.liveScreenEntryParams?.role) {
         null || ParticipantRole.audience =>
           const LiveProgramAudienceView(),
-
+      
         ParticipantRole.cohost =>
           const LiveProgramCohostView(),
-
+      
         ParticipantRole.host =>
           const LiveProgramHostView(),
-      },
+      }
     );
   }
 }
