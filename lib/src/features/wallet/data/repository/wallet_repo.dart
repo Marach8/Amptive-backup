@@ -6,4 +6,9 @@ abstract class WalletRepo {
   Future<ApiResponse<dynamic>> setPin({
     required SetPinData param,
   });
+
+  Future<ApiResponse<dynamic>> getTransactionHistory({
+    required String cursor,
+    required int pageSize,
+  });
 }
