@@ -73,7 +73,7 @@ final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
 final GoRouter amptiveAppRouter = GoRouter(
   navigatorKey: navigatorKey,
-  initialLocation: ATRoutes.ONBOARDING_SCREEN.addSlash,
+  initialLocation: ATRoutes.dashboard.addSlash,
   //redirect: tempRedirect,
   //initialLocation: ATRoutes.temporaryLoginScreen.addSlash,
   routes: <RouteBase>[
@@ -211,8 +211,8 @@ final GoRouter amptiveAppRouter = GoRouter(
 
     //MAIN APPLICATION SCREENS
     GoRoute(
-        name: ATRoutes.mainAppShell,
-        path: ATRoutes.mainAppShell.addSlash,
+        name: ATRoutes.dashboard,
+        path: ATRoutes.dashboard.addSlash,
         builder: (_, __) => const ATMainAppShell(),
         routes: <RouteBase>[
           GoRoute(

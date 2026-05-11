@@ -353,7 +353,7 @@ class _AnimExperimentState extends State<_SubWidget>
                       onPressed: () {
                         storage.write(
                             key: ATStrings.isNewUser, value: false.toString());
-                        context.goNamed(ATRoutes.mainAppShell);
+                        context.goNamed(ATRoutes.dashboard);
                       },
                       btnTitle: ATStrings.allow,
                     ),
@@ -362,7 +362,7 @@ class _AnimExperimentState extends State<_SubWidget>
                           storage.write(
                               key: ATStrings.isNewUser,
                               value: false.toString());
-                          context.goNamed(ATRoutes.mainAppShell);
+                          context.goNamed(ATRoutes.dashboard);
                         },
                         borderRadius: BorderRadius.circular(5),
                         child: Text(

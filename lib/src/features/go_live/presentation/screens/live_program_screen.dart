@@ -1,4 +1,5 @@
 import 'package:amptive/src/features/auth/cubits/local_user_data_cubit.dart';
+import 'package:amptive/src/features/go_live/cubits/end_live_program_cubit.dart';
 import 'package:amptive/src/features/go_live/cubits/livestream_cubit1.dart';
 import 'package:amptive/src/features/go_live/data/models/livestream_state.dart';
 import 'package:amptive/src/features/go_live/presentation/screens/go_live_onboarding_screen.dart';
@@ -77,7 +78,10 @@ class LiveProgramScreen extends StatelessWidget {
               programDesc: liveScreenEntryParams?.programDesc,
             )
           ),
-        )
+        ),
+        BlocProvider<EndLiveProgramCubit>(
+          create: (_) => EndLiveProgramCubit(),
+        ),
       ],
       child: _SubWidget(
         liveScreenEntryParams: liveScreenEntryParams,

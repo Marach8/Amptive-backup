@@ -3,45 +3,102 @@ import 'package:amptive/src/features/go_live/data/repository/go_live_repo.dart';
 import 'package:amptive/src/features/go_live/data/repository/go_live_repo_impl.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-typedef EndLiveProgramState = ({
-  int? totalGifts,
-  int? totalListeners,
-  bool? didEnd
-});
+enum LoadingStage {
+  initial,
+  showListeners,
+  showGifts,
+  finished,
+}
 
-enum EndingStage{initial, showListeners, showGifts, failed}
+class EndLiveProgramCubit
+    extends Cubit<ATAppState<LoadingStage>> {
 
-class EndLiveProgramCubit extends Cubit<ATAppState<EndLiveProgramState>> {
-  EndLiveProgramCubit({GoLiveRepo? mockGoLiveRepo})
-      : goLiveRepo = mockGoLiveRepo ?? GoLiveRepoImpl(),
-        super(const InitialState<EndLiveProgramState>());
+  EndLiveProgramCubit({
+    GoLiveRepo? mockGoLiveRepo,
+  })  : goLiveRepo = mockGoLiveRepo ?? GoLiveRepoImpl(),
+        super(
+          const InitialState<LoadingStage>(initialData: LoadingStage.initial),
+        );
 
   final GoLiveRepo goLiveRepo;
 
-  EndLiveProgramState? get currentData => switch (state) {
-    InitialState<EndLiveProgramState>(:final EndLiveProgramState? initialData) => initialData,
-    LoadingState<EndLiveProgramState>(:final EndLiveProgramState? currentData) => currentData,
-    SuccessState<EndLiveProgramState>(:final EndLiveProgramState? newData) => newData,
-    FailureState<EndLiveProgramState>(:final EndLiveProgramState? oldData) => oldData,
+  LoadingStage? get currentStage => switch (state) {
+    InitialState<LoadingStage>(
+      :final LoadingStage? initialData) => initialData,
+    LoadingState<LoadingStage>(
+      :final LoadingStage? currentData) => currentData,
+    SuccessState<LoadingStage>(
+      :final LoadingStage? newData) => newData,
+    FailureState<LoadingStage>(
+      :final LoadingStage? oldData) => oldData,
   };
 
-  Future<void> endLiveProgram(String livestreamId) async {
-    emit(LoadingState<EndLiveProgramState>(currentData: currentData));
+  Future<void> endLiveProgram(String livestreamId)async {
+    emit(
+      LoadingState<LoadingStage>(currentData: currentStage),
+    );
+
     try {
-      final ApiResponse<bool> response =
-          await goLiveRepo.endLiveProgram(livestreamId: livestreamId);
+      final Future<ApiResponse<bool>> apiFuture =
+          goLiveRepo.endLiveProgram(livestreamId: livestreamId);
+
+      final Future<void> animationFuture = _runEndingSequence();
+      
+      final (ApiResponse<bool> response, void) results = 
+        await (apiFuture, animationFuture).wait;
+
+      final ApiResponse<bool> response = results.$1;
+
       response.when(
-        successful: (Successful<bool> data) {
-          emit(SuccessState<EndLiveProgramState>());
+        successful: (_) {
+          emit(
+            const SuccessState<LoadingStage>(
+              newData: LoadingStage.finished,
+            ),
+          );
         },
         unSuccessful: (Unsuccessful<bool> error) {
-          emit(FailureState<EndLiveProgramState>(error.error.message,
-              oldData: currentData));
+          emit(
+            FailureState<LoadingStage>(
+              error.error.message,
+              oldData: LoadingStage.finished,
+            ),
+          );
         },
       );
     } catch (e) {
-      emit(FailureState<EndLiveProgramState>('Unable to end live program: $e',
-          oldData: currentData));
+      emit(
+        FailureState<LoadingStage>(
+          'Unable to end live program: $e',
+          oldData: LoadingStage.finished,
+        ),
+      );
     }
+  }
+
+
+
+  Future<void> _runEndingSequence() async {
+    await Future<void>.delayed(
+      const Duration(seconds: 1),
+    );
+
+    emit(
+      const LoadingState<LoadingStage>(
+        currentData: LoadingStage.showListeners,
+      ),
+    );
+
+    await Future<void>.delayed(
+      const Duration(seconds: 1),
+    );
+
+    emit(
+      const LoadingState<LoadingStage>(
+        currentData: LoadingStage.showGifts,
+      ),
+    );
+
+    await Future<void>.delayed(const Duration(seconds: 1));
   }
 }

@@ -32,7 +32,13 @@ class LiveProgramHeader extends StatelessWidget {
       children: <Widget>[
         audienceMinimizeIcon ?? ATContainer(
           onTap: () {
-            //showHostEndShowDialog(context: context);
+            hostEndProgramModal(
+              context: context,
+              endLiveProgramCubit: context.read<EndLiveProgramCubit>(),
+              noOfGifts: context.read<LiveStreamCubit1>().state.giftIds?.length ?? 0,
+              noOfListeners: context.read<LiveStreamCubit1>().state.participants?.length ?? 0,
+              programCoverUrl: programCoverUrl ?? '',
+            );
           },
           color: ATColors.hexECO404.withValues(alpha: 0.3),
           height: 35, width: 35,

@@ -34,7 +34,7 @@ class ATRoutes {
   static const String createEpisodeForm = "create-episode-form";
 
   //MAIN APPLICATION
-  static const String mainAppShell = "main_app_shell";
+  static const String dashboard = "main_app_shell";
   static const String liveShowDetailed = "show_detailed_screen";
   static const String liveEventDetailed = "event_detailed_screen";
   static const String SCHEDULED_EVENTS_OR_SHOWS_SCREEN =
