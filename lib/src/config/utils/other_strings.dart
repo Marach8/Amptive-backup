@@ -403,7 +403,7 @@ class ATStrings {
   static const String ADDED_2_CALL = 'Added to calender';
   static const String REMOVED_4RM_CAL = 'Removed from calender';
   static const String VIEW = 'View';
-  static const String GIFTS = 'Gifts';
+  static const String gifts = 'Gifts';
   static const String ADD_LINK = 'Add Link';
   static const String LINK_NAME = 'What is the name of your link';
   static const String LINK_URL = 'What is the URL of your link';
@@ -537,9 +537,9 @@ class ATStrings {
       'Communities will help your Shows and Events reach more listeners. Your audience can also use communites to find your Shows and Events easily. ';
   static const String addCohostDesc =
       'Added users must accept your invitation before they are added as your co-hosts.';
-  static const String TOP_GIFTERS_DESC =
+  static const String topGiftersDesc =
       'Gifters are ranked base on the total amount they have contributed to the host during live sessions.';
-  static const String TOP_GIFTERS = 'Top Gifters';
+  static const String topGifters = 'Top Gifters';
   static const String searchForCohost = 'Search for co-hosts';
   static const String searchForHashtag = 'Search for hashtag';
   static const String searchAndAddCohost4YourShow =

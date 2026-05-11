@@ -68,13 +68,12 @@ import '../../features/shows/cubits/hosted_shows_cubit.dart'
     show HostedShowsCubit;
 import '../../features/wallet/wallet_export.dart';
 
-// The route configuration.
 
 final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
 final GoRouter amptiveAppRouter = GoRouter(
   navigatorKey: navigatorKey,
-  initialLocation: ATRoutes.mainAppShell.addSlash,
+  initialLocation: ATRoutes.ONBOARDING_SCREEN.addSlash,
   //redirect: tempRedirect,
   //initialLocation: ATRoutes.temporaryLoginScreen.addSlash,
   routes: <RouteBase>[

@@ -175,7 +175,8 @@ class Gift {
   factory Gift.fromJson(Map<String, dynamic> json) {
     return Gift(
       senderId: json['sender_id'],
-      giftId: json['gift_id'],
+      giftId: DateTime.now().toIso8601String(),
+      //giftId: json['gift_id'],
       giftName: json['gift_name'],
       giftEmoji: json['gift_emoji'],
       senderUserName: json['sender_username'],

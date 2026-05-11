@@ -70,18 +70,16 @@ class LiveProgramHeader extends StatelessWidget {
         const SizedBox(width: 10),
         _GiftingAndFollowingRow(
           onGiftsTap: () async{
-            if(audienceMinimizeIcon == null){
-              showHostViewOfTopGiftersDialog(context);
-              return;
-            }
-            else{
-              final bool? shouldSendGift = await 
-                showAudienceViewOfTopGiftersDialog(context);
-              if(context.mounted && shouldSendGift == true){
-                final int? price = await GiftPickerDialog.show(context);
-                if(context.mounted && price != null){
-                  context.read<LiveStreamCubit1>().sendGift(price);
-                }
+            final bool? shouldSendGift = await showGiftersModal(
+                context: context,
+                canSendGift: audienceMinimizeIcon != null,
+                liveStreamCubit: context.read<LiveStreamCubit1>(),
+              );
+
+            if(context.mounted && shouldSendGift == true){
+              final int? price = await GiftPickerDialog.show(context);
+              if(context.mounted && price != null){
+                context.read<LiveStreamCubit1>().sendGift(price);
               }
             }
           },
@@ -98,13 +96,20 @@ class LiveProgramHeader extends StatelessWidget {
   }
 }
 
-class _GiftingAndFollowingRow extends StatelessWidget {
+class _GiftingAndFollowingRow extends StatefulWidget {
   const _GiftingAndFollowingRow({
     required this.onGiftsTap,
     required this.onParticipantsTap,
   });
 
   final VoidCallback? onGiftsTap, onParticipantsTap;
+
+  @override
+  State<_GiftingAndFollowingRow> createState() => _GiftingAndFollowingRowState();
+}
+
+class _GiftingAndFollowingRowState extends State<_GiftingAndFollowingRow> {
+  bool hasNewGifts = false;
 
   @override
   Widget build(BuildContext context) {
@@ -116,72 +121,88 @@ class _GiftingAndFollowingRow extends StatelessWidget {
       //     offset: const Offset(-20, 0)
       //   )
       // ],
-      child: Row(
-        children: <Widget>[
-          Stack(
-            clipBehavior: Clip.none,
-            children: <Widget>[
-              ATContainer(
-                onTap: onGiftsTap,
-                radius: 30,
-                padding: const EdgeInsets.fromLTRB(8, 5, 8, 5),
-                color: ATColors.white.withValues(alpha: 0.1),
-                child: Row(
-                  children: <Widget>[
-                    const ATImgLoader(
-                      imgPath: ATImgStrings.hostGiftingIcon,
-                      height: 20, width: 20,
-                      boxFit: BoxFit.cover,
-                    ),
-                    const SizedBox(width: 5),
-                    Text(
-                      "Gift",
-                      style: context.textTheme.bodyMedium?.copyWith(
-                        overflow: TextOverflow.fade,
-                        fontSize: ATSizes.size14
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              Positioned(
-                top: -2, right: 4,
-                child: CircleAvatar(
-                  radius: 4,
-                  backgroundColor: ATColors.hexECO404
-                )
-              )
-            ],
-          ),
-          const SizedBox(width: 10),
-          ATContainer(
-            onTap: onParticipantsTap,
-            padding: const EdgeInsets.fromLTRB(8, 5, 8, 5),
-            radius: 30,
-            color: ATColors.white.withValues(alpha: 0.1),
-            child: Row(
+      child: BlocListener<LiveStreamCubit1, LiveStreamState1>(
+        listenWhen: (LiveStreamState1 prev, LiveStreamState1 cur)
+          => prev.giftIds != cur.giftIds,
+        listener: (_, LiveStreamState1 state) {
+          setState(() {
+            hasNewGifts = true;
+          });
+        },
+        child: Row(
+          children: <Widget>[
+            Stack(
+              clipBehavior: Clip.none,
               children: <Widget>[
-                const ATImgLoader(
-                  imgPath: ATImgStrings.userIcon,
-                  height: 15,
-                  width: 15,
-                ),
-                const SizedBox(width: 5),
-                BlocSelector<LiveStreamCubit1, LiveStreamState1, int>(
-                  selector: (LiveStreamState1 state) => state.viewerCount,
-                  builder: (_, int viewerCount) {
-                    return Text(
-                      _formatViewerCount(viewerCount),
-                      style: context.textTheme.bodyMedium?.copyWith(
-                        overflow: TextOverflow.fade, fontSize: 14
+                ATContainer(
+                  onTap: () {
+                    if(hasNewGifts){
+                      setState(() {
+                        hasNewGifts = false;
+                      });
+                    }
+                    widget.onGiftsTap?.call();
+                  },
+                  radius: 30,
+                  padding: const EdgeInsets.fromLTRB(8, 5, 8, 5),
+                  color: ATColors.white.withValues(alpha: 0.1),
+                  child: Row(
+                    children: <Widget>[
+                      const ATImgLoader(
+                        imgPath: ATImgStrings.hostGiftingIcon,
+                        height: 20, width: 20,
+                        boxFit: BoxFit.cover,
                       ),
-                    );
-                  }
+                      const SizedBox(width: 5),
+                      Text(
+                        "Gift",
+                        style: context.textTheme.bodyMedium?.copyWith(
+                          overflow: TextOverflow.fade,
+                          fontSize: ATSizes.size14
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
+                if(hasNewGifts)Positioned(
+                  top: -2, right: 4,
+                  child: CircleAvatar(
+                    radius: 4,
+                    backgroundColor: ATColors.hexECO404
+                  )
+                )
               ],
             ),
-          ),
-        ],
+            const SizedBox(width: 10),
+            ATContainer(
+              onTap: widget.onParticipantsTap,
+              padding: const EdgeInsets.fromLTRB(8, 5, 8, 5),
+              radius: 30,
+              color: ATColors.white.withValues(alpha: 0.1),
+              child: Row(
+                children: <Widget>[
+                  const ATImgLoader(
+                    imgPath: ATImgStrings.userIcon,
+                    height: 15,
+                    width: 15,
+                  ),
+                  const SizedBox(width: 5),
+                  BlocSelector<LiveStreamCubit1, LiveStreamState1, int>(
+                    selector: (LiveStreamState1 state) => state.viewerCount,
+                    builder: (_, int viewerCount) {
+                      return Text(
+                        _formatViewerCount(viewerCount),
+                        style: context.textTheme.bodyMedium?.copyWith(
+                          overflow: TextOverflow.fade, fontSize: 14
+                        ),
+                      );
+                    }
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

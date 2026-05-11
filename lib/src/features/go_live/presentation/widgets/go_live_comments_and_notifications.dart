@@ -196,18 +196,27 @@ class _GoLiveCommentsAndNotificationsState extends State<GoLiveCommentsAndNotifi
 
 
         BlocListener<LiveStreamCubit1, LiveStreamState1>(
-          listenWhen: (LiveStreamState1 prev, LiveStreamState1 curr) 
-            => curr.latestGift != prev.latestGift,
+          listenWhen: (LiveStreamState1 prev, LiveStreamState1 curr) =>
+              prev.giftIds != curr.giftIds,
           listener: (_, LiveStreamState1 state) {
-            final Gift? gift = state.latestGift?.value;
-            if (gift != null) _addGift(gift);
+            final List<String> ids = state.giftIds ?? <String>[];
+            final Map<String, Gift>? gifts = state.gifts;
+
+            if (ids.isEmpty) return;
+
+            final String latestId = ids.first;
+            final Gift? gift = gifts?[latestId];
+
+            if (gift == null) return;
+
+            _addGift(gift);
           },
           child: LayoutBuilder(
             builder: (_, BoxConstraints constraints) {
               // travel duration proportional to available height
               // ~1px per ms feels natural — tune this
               final Duration travelDuration = Duration(
-                milliseconds: constraints.maxHeight.toInt() * 8,
+                milliseconds: constraints.maxHeight.toInt() * 6,
               );
         
               return AnimatedList(

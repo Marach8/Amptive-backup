@@ -70,12 +70,19 @@ class LiveStreamCubit1 extends Cubit<LiveStreamState1> {
       },
     );
 
-    // Optional: for gifts (you’ll love this later)
     _giftQueue = SequentialQueue<Gift>(
       delay: const Duration(seconds: 1),
+      maxSize: 200,
       onItem: (Gift gift) {
         emit(state.copyWith(
-          latestGift: Sentinel<Gift>.of(gift),
+          gifts: <String, Gift>{
+            gift.giftId!: gift,
+            ...?state.gifts,
+          },
+          giftIds: <String>[
+            gift.giftId!,
+            ...?state.giftIds,
+          ],
         ));
       },
     );
