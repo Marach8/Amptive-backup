@@ -7,6 +7,7 @@ import 'package:amptive/src/config/exception.dart';
 import 'package:amptive/src/config/services/local_storage_service/flutter_secure_storage_service_impl.dart';
 import 'package:amptive/src/config/services/network_service/dio_network_service_impl.dart';
 import 'package:amptive/src/config/services/network_service/network_service.dart';
+import 'package:amptive/src/features/wallet/data/models/fund_wallet_response_model.dart';
 import 'package:amptive/src/features/wallet/data/models/request/set_pin_request.dart';
 import 'package:amptive/src/features/wallet/data/repository/wallet_repo.dart';
 import 'package:dio/dio.dart';
@@ -36,4 +37,32 @@ Future<ApiResponse<dynamic>> setPin({required SetPinData param}) async {
     );
   }
 }
+
+  @override
+  Future<ApiResponse<FundWalletResponseModel>> fundWallet({
+    required int amount,
+    required String channel,
+    required String currency,
+  }) async {
+    try {
+      final Response<dynamic> response = await networkService.post(
+        ATEndpoints.fundWallet,
+        data: <String, Object>{
+          'amount': amount,
+          'channel': channel,
+          'currency': currency,
+        },
+      );
+
+     
+      return Successful<FundWalletResponseModel>(
+        data: FundWalletResponseModel.fromJson(response.data as Map<String, dynamic>),
+      );
+    } catch (e) {
+      log('Error funding wallet: $e');
+      return Unsuccessful<FundWalletResponseModel>(
+        error: ATException.resolveException(e),
+      );
+    }
+  }
 }

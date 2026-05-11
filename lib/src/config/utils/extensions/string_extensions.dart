@@ -75,4 +75,17 @@ extension ExtString on String {
     return 'now';
   }
 }
+
+String normalizePaymentChannel(String method) {
+  switch (method) {
+    case ATStrings.applePay:
+      return 'paystack';
+    case ATStrings.flutterWave:
+      return 'paystack';
+    case ATStrings.googlePay:
+      return 'paystack';
+    default:
+      return method;
+  }
+}
 }
