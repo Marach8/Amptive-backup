@@ -1,13 +1,8 @@
 import 'package:amptive/src/config/utils/colors.dart';
+import 'package:amptive/src/config/utils/dialogs/app_notification_dialog.dart';
 import 'package:amptive/src/config/utils/extensions/context_extensions.dart';
 import 'package:amptive/src/config/utils/font_sizes.dart';
-import 'package:amptive/src/config/utils/image_strings.dart';
-import 'package:amptive/src/config/utils/dialogs/app_notification_dialog.dart';
-import 'package:amptive/src/config/utils/helper_functions.dart';
 import 'package:amptive/src/features/go_live/cubits/end_live_program_cubit.dart';
-import 'package:amptive/src/features/go_live/cubits/livestream_bloc.dart';
-import 'package:amptive/src/features/main_app_nav_bar.dart';
-import 'package:amptive/src/shared/custom_container_widget.dart';
 import 'package:amptive/src/shared/elevated_button_widget.dart';
 import 'package:amptive/src/shared/image_loader_widget.dart';
 import 'package:amptive/src/shared/loading_indicator.dart';
@@ -16,7 +11,6 @@ import 'package:amptive/src/shared/spotlight_beam.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import '../../../../bloc/main_app/go_live_bloc/host_view/host_end_show_bloc.dart';
 import '../../../../config/api_response_and_app_state.dart';
 import '../../../../config/utils/other_strings.dart';
 import '../../../../shared/animated_switcher.dart';
@@ -26,6 +20,7 @@ Future<void> hostEndProgramModal({
   required int noOfListeners,
   required int noOfGifts,
   required EndLiveProgramCubit endLiveProgramCubit,
+  required String programId,
   required String programCoverUrl
 }) async {
   return await showModalBottomSheet(
@@ -33,6 +28,10 @@ Future<void> hostEndProgramModal({
       context: context,
       isScrollControlled: true,
       useSafeArea: true,
+      constraints: BoxConstraints(
+        minHeight: context.screenHeight,
+        minWidth: context.screenWidth,
+      ),
       barrierColor: ATColors.black.withValues(alpha: 0.6),
       shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.only(
@@ -46,6 +45,7 @@ Future<void> hostEndProgramModal({
             noOfListeners: noOfListeners,
             programCoverUrl: programCoverUrl,
             noOfGifts: noOfGifts,
+            programId: programId,
           ),
         );
       }
@@ -59,108 +59,132 @@ class _SubWidget extends StatelessWidget {
     required this.noOfListeners,
     required this.noOfGifts,
     required this.programCoverUrl,
+    required this.programId,
   });
 
   final int noOfListeners, noOfGifts;
-  final String programCoverUrl;
+  final String programCoverUrl, programId;
   
   @override
   Widget build(BuildContext context) {
+    final double screenHeight = context.screenHeight;
     return Container(
-      height: context.screenHeight,
-      //width: context.screenWidth,
+      height: screenHeight,
+      width: context.screenWidth,
       color: ATColors.black,
       child: BlocConsumer<EndLiveProgramCubit, ATAppState<LoadingStage>>(
         listener: (_, ATAppState<LoadingStage> state) {
-
+          if(state is FailureState<LoadingStage>) {
+            showAppNotification2(
+              context: context,
+              text: state.message,
+            );
+          }
+          else if(state is SuccessState<LoadingStage>) {
+            context.pop();
+          }
         },
         builder: (_, ATAppState<LoadingStage> state) {
           final bool isLoading = state is LoadingState<LoadingStage>;
           final LoadingStage? currentStage = context
             .read<EndLiveProgramCubit>().currentStage;
 
-          final bool isInitialState = 
-            currentStage == LoadingStage.initial;
+          final bool isIdle = 
+            currentStage == null;
           final bool inStage1 = 
             currentStage == LoadingStage.showListeners;
           final bool inStage2 = 
             currentStage == LoadingStage.showGifts;
-          final bool canShowListeners = inStage1 || inStage2;
+          final bool inFinalStage = 
+            currentStage == LoadingStage.finished;
+          final bool canShowGifts = inStage2 || inFinalStage;
+          final bool canShowListeners = inStage1
+            || inStage2 || inFinalStage;
+
+          final double positionOfImage = screenHeight * 0.27,
+          positionOfSpotlight = positionOfImage + 150;
 
           return Stack(
             alignment: Alignment.center,
             clipBehavior: Clip.none,
             children: <Widget>[
-              Positioned.fill(
-                child: Column(
-                  children: <Widget>[
-                    SizedBox(height: context.screenHeight * 0.15),
-                    ATFadingSwitcher(
-                      child: isInitialState ? Padding(
-                        padding: const EdgeInsets.only(left: 15, right: 15),
-                        child: Text(
-                          ATStrings.endLiveShowPrompt,
-                          maxLines: 2,
-                          textAlign: TextAlign.center,
-                          style: context.textTheme.bodyMedium
-                            ?.copyWith(fontSize: 23)
-                        ),
-                      ) : const SizedBox.shrink(),
+              Positioned(
+                top: screenHeight * 0.15,
+                right: 15, left: 15,
+                child: ATFadingSwitcher(
+                  child: isIdle ? Text(
+                    ATStrings.endLiveShowPrompt,
+                    maxLines: 2,
+                    textAlign: TextAlign.center,
+                    style: context.textTheme.bodyMedium
+                      ?.copyWith(fontSize: 23)
+                  ) : const SizedBox.shrink(),
+                ),
+              ),
+              
+              AnimatedPositioned(
+                top: canShowGifts ? screenHeight * 0.16 : screenHeight * 0.19,
+                duration: const Duration(milliseconds: 500),
+                curve: Curves.decelerate,
+                child: ATFadingSwitcher(
+                  child: canShowListeners ? ATRichText(
+                    items: <String, TextStyle>{
+                      'You had a total of ': context.textTheme.bodySmall!
+                        .copyWith(color: ATColors.hexC2C2C2),
+                      '144k listeners': context.textTheme.bodyMedium!
+                        .copyWith(fontSize: ATSizes.size14),
+                    },
+                  ) : const SizedBox.shrink(),
+                ),
+              ),
+
+              Positioned(
+                top: screenHeight * 0.19,
+                child: ATFadingSwitcher(
+                  child: canShowGifts ? ATRichText(
+                    items: <String, TextStyle>{
+                      'You received ': context.textTheme.bodySmall!
+                        .copyWith(color: ATColors.hexC2C2C2),
+                      '200 gifts': context.textTheme.bodyMedium!
+                        .copyWith(fontSize: ATSizes.size14),
+                    },
+                  ) : const SizedBox.shrink(),
+                ),
+              ),
+
+              Positioned(
+                top: positionOfSpotlight,
+                child: SpotlightBeam(
+                  width: context.screenWidth * 2,
+                  halfWidthOfSpot: 75,
+                  height: screenHeight * 0.7,
+                  //duration: 200,
+                  gradient: LinearGradient(
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter,
+                    colors: <Color>[
+                      ATColors.hex0D0D0D,
+                      ATColors.hex090909
+                    ],
+                  )
+                ),
+              ),
+
+              Positioned(
+                top: positionOfImage,
+                child: AnimatedContainer(
+                  duration: const Duration(milliseconds: 400),
+                  height: isIdle ? 150 : 200,
+                  width: isIdle ? 150 : 200,
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(5),
+                    child: ATImgLoader(
+                      imgPath: programCoverUrl,
+                      boxFit: BoxFit.cover,
+                      height: isIdle ? 150 : 200,
+                      width: isIdle ? 150 : 200,
                     ),
-          
-                    AnimatedSlide(
-                      duration: const Duration(milliseconds: 500),
-                      offset: inStage2 ? const Offset(0, -1) : Offset.zero,
-                      child: ATFadingSwitcher(
-                        child: canShowListeners ? ATRichText(
-                          items: <String, TextStyle>{
-                            'You had a total of ': context.textTheme.bodySmall!
-                              .copyWith(color: ATColors.hexC2C2C2),
-                            '144k listeners': context.textTheme.bodyMedium!
-                              .copyWith(fontSize: ATSizes.size14),
-                          },
-                        ) : const SizedBox.shrink(),
-                      ),
-                    ),
-                    const SizedBox(height: 10),
-                    ATFadingSwitcher(
-                      child: inStage2 ? ATRichText(
-                        items: <String, TextStyle>{
-                          'You received ': context.textTheme.bodySmall!
-                            .copyWith(color: ATColors.hexC2C2C2),
-                          '200 gifts': context.textTheme.bodyMedium!
-                            .copyWith(fontSize: ATSizes.size14),
-                        },
-                      ) : const SizedBox.shrink(),
-                    ),
-                    AnimatedSize(
-                      duration: const Duration(milliseconds: 500),
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(5),
-                        child: ATImgLoader(
-                          imgPath: programCoverUrl,
-                          height: isInitialState ? 150 : 200,
-                          width: isInitialState ? 150 : 200,
-                        ),
-                      ),
-                    ),
-          
-                    Flexible(
-                      child: SpotlightBeam(
-                        width: context.screenWidth * 4,
-                        halfWidthOfSpot: isInitialState ? 75 : 100,
-                        duration: 200,
-                        gradient: LinearGradient(
-                          begin: Alignment.topCenter,
-                          end: Alignment.bottomCenter,
-                          colors: <Color>[
-                            ATColors.hex0D0D0D,
-                            ATColors.hex090909
-                          ],
-                        )
-                      ),
-                    ),
-                  ],
+                  ),
                 ),
               ),
           
@@ -176,12 +200,9 @@ class _SubWidget extends StatelessWidget {
                   children: <Widget>[
                     ATPlainElevatedBtn(
                       onPressed: () {
-                        // context
-                        //     .read<LivestreamBloc>()
-                        //     .add(const EndStreamEvent());
-                        // context
-                        //     .read<AmptiveEndShowBloc>()
-                            // .add(Proceed2EndShowEvent());
+                        context.read<EndLiveProgramCubit>().endLiveProgram(
+                          programId,
+                        );
                       },
                       bgColor: ATColors.hexECO404,
                       fgColor: ATColors.white,
@@ -205,3 +226,41 @@ class _SubWidget extends StatelessWidget {
     );
   }
 }
+
+
+
+// AnimatedPositioned(
+//   duration: const Duration(milliseconds: 1000),
+//   curve: Curves.easeInOut,
+//   top: isInitialState
+//       ? initialPositionOfSpotLight
+//       : finalPositionOfSpotLight,
+//   child: TweenAnimationBuilder<double>(
+//     duration: const Duration(milliseconds: 1000),
+//     curve: Curves.easeInOut,
+//     tween: Tween<double>(
+//       begin: isInitialState ? 0.75 : 1.0,
+//       end: isInitialState ? 0.75 : 1.0,
+//     ),
+//     builder: (_, double scale, Widget? child) {
+//       return Transform.scale(
+//         scale: scale,
+//         alignment: Alignment.topCenter,
+//         child: child,
+//       );
+//     },
+//     child: SpotlightBeam(
+//       width: context.screenWidth * 2,
+//       halfWidthOfSpot: 100,
+//       height: screenHeight * 0.7,
+//       gradient: LinearGradient(
+//         begin: Alignment.topCenter,
+//         end: Alignment.bottomCenter,
+//         colors: <Color>[
+//           ATColors.hex0D0D0D,
+//           ATColors.hex090909,
+//         ],
+//       ),
+//     ),
+//   ),
+// )

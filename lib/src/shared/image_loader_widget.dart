@@ -53,8 +53,11 @@ class ATImgLoader extends StatelessWidget {
         color: color,
         fadeInDuration: Duration.zero,
         fadeOutDuration: Duration.zero,
-        memCacheHeight: height != null
-            ? (height! * MediaQuery.of(context).devicePixelRatio).round()
+        // memCacheHeight: height != null
+        //     ? (height! * MediaQuery.of(context).devicePixelRatio).round()
+        //     : null,
+        memCacheWidth: width != null
+            ? (width! * MediaQuery.of(context).devicePixelRatio).round()
             : null,
         placeholder: (_, __) => ATShimmer(height: height, width: width),
         errorWidget: (_, __, ___) =>

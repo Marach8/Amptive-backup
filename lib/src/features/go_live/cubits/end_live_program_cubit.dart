@@ -3,6 +3,7 @@ import 'package:amptive/src/features/go_live/data/repository/go_live_repo.dart';
 import 'package:amptive/src/features/go_live/data/repository/go_live_repo_impl.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+
 enum LoadingStage {
   initial,
   showListeners,
@@ -17,7 +18,7 @@ class EndLiveProgramCubit
     GoLiveRepo? mockGoLiveRepo,
   })  : goLiveRepo = mockGoLiveRepo ?? GoLiveRepoImpl(),
         super(
-          const InitialState<LoadingStage>(initialData: LoadingStage.initial),
+          const InitialState<LoadingStage>(),
         );
 
   final GoLiveRepo goLiveRepo;
@@ -35,7 +36,7 @@ class EndLiveProgramCubit
 
   Future<void> endLiveProgram(String livestreamId)async {
     emit(
-      LoadingState<LoadingStage>(currentData: currentStage),
+      const LoadingState<LoadingStage>(currentData: LoadingStage.initial),
     );
 
     try {
@@ -80,7 +81,7 @@ class EndLiveProgramCubit
 
   Future<void> _runEndingSequence() async {
     await Future<void>.delayed(
-      const Duration(seconds: 1),
+      const Duration(milliseconds: 500),
     );
 
     emit(
@@ -90,7 +91,7 @@ class EndLiveProgramCubit
     );
 
     await Future<void>.delayed(
-      const Duration(seconds: 1),
+      const Duration(milliseconds: 800),
     );
 
     emit(
@@ -98,7 +99,5 @@ class EndLiveProgramCubit
         currentData: LoadingStage.showGifts,
       ),
     );
-
-    await Future<void>.delayed(const Duration(seconds: 1));
   }
 }

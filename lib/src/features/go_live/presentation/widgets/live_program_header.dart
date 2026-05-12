@@ -1,3 +1,4 @@
+import 'package:amptive/src/config/api_response_and_app_state.dart';
 import 'package:amptive/src/config/config_export.dart';
 import 'package:amptive/src/features/go_live/cubits/livestream_cubit1.dart';
 import 'package:amptive/src/features/go_live/data/models/livestream_state.dart';
@@ -7,11 +8,11 @@ import 'package:amptive/src/shared/custom_container_widget.dart';
 import 'package:amptive/src/shared/image_loader_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../../../bloc/main_app/go_live_bloc/host_view/host_end_show_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'host_end_show_dialog.dart';
 import 'listeners_modal.dart';
 import 'gifters_modal.dart';
-import '../../../../livestream/models/livestream_models.dart';
+
 
 class LiveProgramHeader extends StatelessWidget {
   const LiveProgramHeader({
@@ -28,76 +29,88 @@ class LiveProgramHeader extends StatelessWidget {
     final String? programCoverUrl = context
       .read<LiveStreamCubit1>().state.programCoverUrl;
     
-    return Row(
-      children: <Widget>[
-        audienceMinimizeIcon ?? ATContainer(
-          onTap: () {
-            hostEndProgramModal(
-              context: context,
-              endLiveProgramCubit: context.read<EndLiveProgramCubit>(),
-              noOfGifts: context.read<LiveStreamCubit1>().state.giftIds?.length ?? 0,
-              noOfListeners: context.read<LiveStreamCubit1>().state.participants?.length ?? 0,
-              programCoverUrl: programCoverUrl ?? '',
-            );
-          },
-          color: ATColors.hexECO404.withValues(alpha: 0.3),
-          height: 35, width: 35,
-          boxShape: BoxShape.circle,
-          child: Icon(
-            Icons.logout,
-            color: ATColors.hexECO404,
-            size: 20,
-          ),
-        ),
-        const SizedBox(width: 10),
-        Expanded(
-          child: LayoutBuilder(
-            builder: (_, BoxConstraints kst) {
-              return GoLiveProgramTitle(
-                width: kst.maxWidth,
-                slidingChildren: <Widget>[
-                  Text(
-                    ATStrings.live,
-                    style: context.textTheme.bodyMedium,
-                  ),
-                  const SizedBox(width: 5),
-                  const ATCircleAvatar(diameter: 5),
-                  const SizedBox(width: 5),
-                  Text(
-                    title ?? 'Title',
-                    style: context.textTheme.bodyMedium
-                        ?.copyWith(overflow: TextOverflow.fade),
-                  )
-                ],
-              );
-            }
-          ),
-        ),
-        const SizedBox(width: 10),
-        _GiftingAndFollowingRow(
-          onGiftsTap: () async{
-            final bool? shouldSendGift = await showGiftersModal(
+    return BlocListener<EndLiveProgramCubit, ATAppState<LoadingStage>>(
+      listener: (_, ATAppState<LoadingStage> state)async{
+        if(state is SuccessState<LoadingStage>) {
+          //This delay is necessary to give time for the end live modal to be unmounted.
+          await Future<void>.delayed(const Duration(milliseconds: 500));
+          if(context.mounted){
+            context.pop();
+          }
+        }
+      },
+      child: Row(
+        children: <Widget>[
+          audienceMinimizeIcon ?? ATContainer(
+            onTap: () {
+              hostEndProgramModal(
                 context: context,
-                canSendGift: audienceMinimizeIcon != null,
-                liveStreamCubit: context.read<LiveStreamCubit1>(),
+                endLiveProgramCubit: context.read<EndLiveProgramCubit>(),
+                noOfGifts: context.read<LiveStreamCubit1>().state.giftIds?.length ?? 0,
+                noOfListeners: context.read<LiveStreamCubit1>().state.participants?.length ?? 0,
+                programCoverUrl: programCoverUrl ?? '',
+                programId: context.read<LiveStreamCubit1>().state.liveStreamId ?? '',
               );
-
-            if(context.mounted && shouldSendGift == true){
-              final int? price = await GiftPickerDialog.show(context);
-              if(context.mounted && price != null){
-                context.read<LiveStreamCubit1>().sendGift(price);
+            },
+            color: ATColors.hexECO404.withValues(alpha: 0.3),
+            height: 35, width: 35,
+            boxShape: BoxShape.circle,
+            child: Icon(
+              Icons.logout,
+              color: ATColors.hexECO404,
+              size: 20,
+            ),
+          ),
+          const SizedBox(width: 10),
+          Expanded(
+            child: LayoutBuilder(
+              builder: (_, BoxConstraints kst) {
+                return GoLiveProgramTitle(
+                  width: kst.maxWidth,
+                  slidingChildren: <Widget>[
+                    Text(
+                      ATStrings.live,
+                      style: context.textTheme.bodyMedium,
+                    ),
+                    const SizedBox(width: 5),
+                    const ATCircleAvatar(diameter: 5),
+                    const SizedBox(width: 5),
+                    Text(
+                      title ?? 'Title',
+                      style: context.textTheme.bodyMedium
+                          ?.copyWith(overflow: TextOverflow.fade),
+                    )
+                  ],
+                );
               }
-            }
-          },
-          onParticipantsTap: () {
-            showListenersModal(
-              context: context,
-              liveStreamCubit: context.read<LiveStreamCubit1>(),
-              enableKickOut: audienceMinimizeIcon == null
-            );
-          },
-        ),
-      ],
+            ),
+          ),
+          const SizedBox(width: 10),
+          _GiftingAndFollowingRow(
+            onGiftsTap: () async{
+              final bool? shouldSendGift = await showGiftersModal(
+                  context: context,
+                  canSendGift: audienceMinimizeIcon != null,
+                  liveStreamCubit: context.read<LiveStreamCubit1>(),
+                );
+      
+              if(context.mounted && shouldSendGift == true){
+                final int? price = await GiftPickerDialog.show(context);
+                if(context.mounted && price != null){
+                  context.read<LiveStreamCubit1>().sendGift(price);
+                }
+              }
+            },
+            onParticipantsTap: () {
+              showListenersModal(
+                context: context,
+                liveStreamCubit: context.read<LiveStreamCubit1>(),
+                enableKickOut: audienceMinimizeIcon == null
+              );
+            },
+          ),
+        ],
+      ),
     );
   }
 }
