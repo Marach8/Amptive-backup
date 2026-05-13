@@ -31,6 +31,8 @@ class ATEndpoints {
   static const String createHashtag = '${tags}hashtags';
   static const String updateUserProfile = '/api/v1/users/me';
   static const String trendingHashtags = '/api/v1/tags/trending';
+  static const String updateEmailAndPhone = '/api/v1/users/me/contact';
+  static const String verifyEmailOrPhoneOtp = '/api/v1/users/me/verify-otp';
   static const String searchUsers = '/api/v1/search/users';
   static const String unifiedSearch = '/api/v1/search';
   static const String searchShows = '/api/v1/search/shows';
@@ -42,6 +44,8 @@ class ATEndpoints {
   static const String getNotifications = '/api/v1/notif';
   static const String setWalletPin = '/api/v1/auth/set-pin';
   static const String fundWallet = '/api/v1/payments/wallet/fund';
+
+  static const String getWalletBalance = '/api/v1/payments/wallet/balance';
 
   static String getStreamTokenEndpoint(String streamId) =>
       '/api/v1/livestreams/$streamId/token';

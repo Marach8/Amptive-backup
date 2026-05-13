@@ -88,4 +88,15 @@ String normalizePaymentChannel(String method) {
       return method;
   }
 }
+
+String get toNormalDate {
+    if (isEmpty) return '';
+    try {
+      DateTime dateTime = DateTime.parse(this).toLocal();
+      
+return DateFormat('yyyy-MM-dd').format(dateTime);   
+ } catch (e) {
+      return this;
+    }
+  }
 }
