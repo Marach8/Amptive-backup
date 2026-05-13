@@ -155,9 +155,9 @@ class ATSecurityQuestionScreen extends StatelessWidget {
             final (String? question, bool _, String answer) =
                 context.read<SecQuestionBloc>().state;
             final double bottom = MediaQuery.viewInsetsOf(context).bottom;
-            final double bottomPad = bottom > 0 ? 10 : 50;
+            final double bottomPadd = bottom == 0 ? 50 : 15;
             return Padding(
-              padding: EdgeInsets.fromLTRB(15, 0, 15, bottomPad),
+              padding: EdgeInsets.fromLTRB(15, 0, 15, bottomPadd),
               child: ATPlainElevatedBtn(
                   btnTitle: ATStrings.FINISH_SETUP,
                   isLoading: state is LoadingState<dynamic>,

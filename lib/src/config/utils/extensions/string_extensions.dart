@@ -76,6 +76,19 @@ extension ExtString on String {
   }
 }
 
+String normalizePaymentChannel(String method) {
+  switch (method) {
+    case ATStrings.applePay:
+      return 'paystack';
+    case ATStrings.flutterWave:
+      return 'paystack';
+    case ATStrings.googlePay:
+      return 'paystack';
+    default:
+      return method;
+  }
+}
+
 String get toNormalDate {
     if (isEmpty) return '';
     try {
