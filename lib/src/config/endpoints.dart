@@ -42,6 +42,7 @@ class ATEndpoints {
   static const String registerDevice = '/api/v1/notif/devices/register';
   static const String fcmRegisterDevice = '/api/v1/notif/devices/register';
   static const String getNotifications = '/api/v1/notif';
+  static const String setWalletPin = '/api/v1/auth/set-pin';
 
   static String getStreamTokenEndpoint(String streamId) =>
       '/api/v1/livestreams/$streamId/token';

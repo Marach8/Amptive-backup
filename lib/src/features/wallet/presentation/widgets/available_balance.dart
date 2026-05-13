@@ -69,7 +69,7 @@ class AvailableBalanceWidget extends StatelessWidget {
                     builder: (_, bool shouldShow) {
                   return Text(
                       shouldShow
-                          ? '${ATStrings.nairaText}2,345,737.18'
+                          ? '${ATStrings.nairaText}5,345,737,330.18'
                           : '******',
                       style: context.textTheme.displaySmall
                           ?.copyWith(fontSize: ATSizes.size30));
