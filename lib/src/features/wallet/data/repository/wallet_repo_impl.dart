@@ -1,13 +1,12 @@
 import 'dart:developer';
 
 import 'package:amptive/src/config/api_response_and_app_state.dart';
-import 'package:amptive/src/config/config_export.dart';
 import 'package:amptive/src/config/endpoints.dart';
 import 'package:amptive/src/config/exception.dart';
-import 'package:amptive/src/config/services/local_storage_service/flutter_secure_storage_service_impl.dart';
 import 'package:amptive/src/config/services/network_service/dio_network_service_impl.dart';
 import 'package:amptive/src/config/services/network_service/network_service.dart';
 import 'package:amptive/src/features/wallet/data/models/request/set_pin_request.dart';
+import 'package:amptive/src/features/wallet/data/models/response/wallet_balance_response_model.dart';
 import 'package:amptive/src/features/wallet/data/repository/wallet_repo.dart';
 import 'package:dio/dio.dart';
 
@@ -36,4 +35,21 @@ Future<ApiResponse<dynamic>> setPin({required SetPinData param}) async {
     );
   }
 }
+
+  @override
+  Future<ApiResponse<WalletBalanceResponseModel>> fetchWalletBalance() async {
+    try {
+      final Response<dynamic> response = await networkService.get(
+        ATEndpoints.getWalletBalance,
+      );
+
+
+      return Successful<WalletBalanceResponseModel>(data:  WalletBalanceResponseModel.fromJson(response.data));
+    } catch (e) {
+      log('Get wallet balance error: $e');
+      return Unsuccessful<WalletBalanceResponseModel>(
+        error: ATException.resolveException(e),
+      );
+    }
+  }
 }

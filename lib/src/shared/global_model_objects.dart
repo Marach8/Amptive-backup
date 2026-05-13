@@ -225,4 +225,19 @@ class Notifications extends User {
   final bool? isRead;
 }
 
-enum ProfileTabType { scheduled, ended, shows, events }
+class WalletBalance {
+  WalletBalance({
+    this.availableBalance,
+    this.pendingBalance,
+  });
+
+  factory WalletBalance.fromJson(Map<String, dynamic> json) {
+    return WalletBalance(
+      availableBalance: (json['available_balance'] as num?)?.toDouble(),
+      pendingBalance: (json['pending_balance'] as num?)?.toDouble(),
+    );
+  }
+
+  final double? availableBalance;
+  final double? pendingBalance;
+}
