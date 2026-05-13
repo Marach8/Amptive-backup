@@ -75,4 +75,9 @@ extension ExtString on String {
     return 'now';
   }
 }
+
+ String get toFormattedDate {
+    final DateTime date = DateTime.parse(this);
+    return DateFormat('d MMMM yyyy').format(date);
+  }
 }

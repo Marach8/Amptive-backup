@@ -1,4 +1,5 @@
 import 'package:amptive/src/config/api_response_and_app_state.dart';
+import 'package:amptive/src/config/config_export.dart';
 import 'package:amptive/src/features/wallet/data/models/models_export.dart';
 import 'package:amptive/src/features/wallet/data/models/response/transaction_history_response_model.dart';
 import 'package:amptive/src/features/wallet/data/repository/wallet_repo.dart';
@@ -12,6 +13,27 @@ class TransactionHistoryCubit
         super(const InitialState<TransactionHistoryResponseModel>());
 
   final WalletRepo walletRepo;
+
+  Map<String, List<TransactionModel>> get groupedTransactions {
+    final List<TransactionModel> transactions =
+        currentTransactionHistoryData?.transactions ?? <TransactionModel>[];
+
+    if (transactions.isEmpty) return <String, List<TransactionModel>>{};
+
+    final Map<String, List<TransactionModel>> grouped = <String, List<TransactionModel>>{};
+
+    for (final TransactionModel txn in transactions) {
+      final String dateKey = txn.createdAt?.toFormattedDate ?? '';
+
+      if (grouped.containsKey(dateKey)) {
+        grouped[dateKey]!.add(txn);
+      } else {
+        grouped[dateKey] = <TransactionModel>[txn];
+      }
+    }
+
+    return grouped;
+  }
 
   TransactionHistoryResponseModel? get currentTransactionHistoryData =>
       switch (state) {
@@ -34,8 +56,8 @@ class TransactionHistoryCubit
       };
 
   Future<void> fetchTransactionHistory() async {
-    final bool hasMore = currentTransactionHistoryData?.hasMore ?? true;
-    if (state is LoadingState<TransactionHistoryResponseModel> || !hasMore) {
+    final bool hasMore = currentTransactionHistoryData?.hasMore ?? false;
+    if (state is LoadingState<TransactionHistoryResponseModel> || hasMore) {
       return;
     }
 
@@ -54,15 +76,14 @@ class TransactionHistoryCubit
               data.data as TransactionHistoryResponseModel;
           final List<TransactionModel>? oldTransactions =
               currentTransactionHistoryData?.transactions;
-          final  List<TransactionModel>? newTransactions =
+          final List<TransactionModel>? newTransactions =
               newResponse.transactions;
 
           final List<TransactionModel> mergedTransactions =
-              <TransactionModel>[]..addAll(oldTransactions ?? []);
+              <TransactionModel>[]..addAll(oldTransactions ?? <TransactionModel>[]);
+
           if (newTransactions != null) {
-            newTransactions.forEach((TransactionModel value) {
-              mergedTransactions.add(value);
-            });
+            mergedTransactions.addAll(newTransactions);
           }
 
           final TransactionHistoryResponseModel mergedData =

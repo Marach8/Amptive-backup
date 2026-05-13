@@ -60,43 +60,45 @@ class ATWalletTxnsHistoryScreen extends StatelessWidget {
               FailureState<TransactionHistoryResponseModel>() ||
               SuccessState<TransactionHistoryResponseModel>() =>
                 Builder(builder: (_) {
-                  final TransactionHistoryResponseModel? transactionHistory =
-                      context
-                          .read<TransactionHistoryCubit>()
-                          .currentTransactionHistoryData;
-                  final List<TransactionModel> transactions =
-                      transactionHistory?.transactions ?? <TransactionModel>[];
+                  final TransactionHistoryCubit cubit = context.read<TransactionHistoryCubit>();
+                  final Map<String, List<TransactionModel>> groupedData = cubit.groupedTransactions;
+          final List<String> dates = groupedData.keys.toList();
 
-                  if (transactions.isEmpty) {
+                  if (dates.isEmpty) {
                     if (state
                         is LoadingState<TransactionHistoryResponseModel>) {
                       return const TransactionHistoryShimmer();
                     }
                     if (state
                         is FailureState<TransactionHistoryResponseModel>) {
-                      return const Center(
-                        child: Text(
-                            'Failed to load transactions. Please try again.'),
+                      return  Center(
+                        child: IconButton(
+                          icon: const Icon(Icons.refresh),
+                          onPressed: () => context
+                              .read<TransactionHistoryCubit>()
+                              .fetchTransactionHistory(),
+                        ),
                       );
                     }
                     return const Center(
                       child: Text('No transactions found.'),
                     );
                   }
-                  final bool hasMore = transactionHistory?.hasMore ?? false;
-                  final int count = transactions.length;
+                  final bool hasMore = cubit.currentTransactionHistoryData?.hasMore ?? false;
+                  final int count = dates.length;
 
                   return ListView.builder(
                     itemCount: hasMore ? count + 1 : count,
                     padding: EdgeInsets.zero,
                     itemBuilder: (_, int index) {
-                      if (index < count) {
+                      if (index >= count) {
                         return const Padding(
                           padding: EdgeInsets.all(8.0),
                           child: Center(child: CircularProgressIndicator()),
                         );
                       }
-                      final TransactionModel transaction = transactions[index];
+                      final String date = dates[index];
+                      final List<TransactionModel> transactions = groupedData[date] ?? <TransactionModel>[];
                       return StickyHeaderBuilder(
                         builder: (_, __) {
                           return Container(
@@ -105,7 +107,7 @@ class ATWalletTxnsHistoryScreen extends StatelessWidget {
                             child: Padding(
                               padding: const EdgeInsets.fromLTRB(16, 0, 16, 8),
                               child: Text(
-                                '${index + 1} April 2025',
+                                date,
                                 style: Theme.of(context)
                                     .textTheme
                                     .bodySmall
@@ -119,32 +121,37 @@ class ATWalletTxnsHistoryScreen extends StatelessWidget {
                           child: Column(
                               mainAxisSize: MainAxisSize.min,
                               spacing: 15,
-                              children: List<Widget>.filled(
-                                5,
-                                RenderATransaction(
-                                  tileColor: ATColors.transparent,
-                                  time: transaction.createdAt?.toLocalTime ?? '',
-                                  txnType: transaction.category ??
-                                      ATStrings.SUB_RECEIVED,
-                                  amount:
-                                      '+${ATStrings.nairaText}${transaction.amount}' ??
-                                          '',
-                                  color: ATColors.yellowColor,
-                                  icon: Icons.favorite,
-                                  imgPath: ATImgStrings.jpeg1,
-                                ),
-                              )),
-                        ),
-                      );
-                    },
-                  );
-                }),
-            };
-          }),
-        )));
+                              children:transactions.map((TransactionModel txn){
+                                return Padding(
+                                  padding: const EdgeInsets.only(bottom: 15),
+                                  child: RenderATransaction(
+                                    tileColor: ATColors.transparent,
+                                    time: txn.createdAt?.toLocalTime ?? '',
+                                    txnType: txn.transactionType ??
+                                        ATStrings.SUB_RECEIVED,
+                                    amount:
+                                        '+${ATStrings.nairaText}${txn.amount}' ??
+                                            '',
+                                    color: ATColors.yellowColor,
+                                    icon: Icons.favorite,
+                                    imgPath: ATImgStrings.jpeg1,
+                                  ),
+                                );
+                              }).toList(), // Fixed missing toList() and corrected txn variable name
+                            ),
+                          ),
+                        );
+                      },
+                    );
+                  }),
+              };
+            },
+          ),
+        ),
+      ),
+    );
   }
 }
-
 
 class TransactionHistoryShimmer extends StatelessWidget{
   const TransactionHistoryShimmer({super.key});
@@ -176,7 +183,7 @@ class TransactionHistoryItem extends StatelessWidget {
           ATShimmer(
             height: 35,
             width: 35,
-            radius: 17.5, // Perfect circle to match ATCircularImage
+            radius: 17.5, 
           ),
           SizedBox(width: 10),
           

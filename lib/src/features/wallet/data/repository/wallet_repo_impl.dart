@@ -1,13 +1,10 @@
 import 'dart:developer';
 
 import 'package:amptive/src/config/api_response_and_app_state.dart';
-import 'package:amptive/src/config/config_export.dart';
 import 'package:amptive/src/config/endpoints.dart';
 import 'package:amptive/src/config/exception.dart';
-import 'package:amptive/src/config/services/local_storage_service/flutter_secure_storage_service_impl.dart';
 import 'package:amptive/src/config/services/network_service/dio_network_service_impl.dart';
 import 'package:amptive/src/config/services/network_service/network_service.dart';
-import 'package:amptive/src/features/wallet/data/models/models_export.dart';
 import 'package:amptive/src/features/wallet/data/models/request/set_pin_request.dart';
 import 'package:amptive/src/features/wallet/data/models/response/transaction_history_response_model.dart';
 import 'package:amptive/src/features/wallet/data/repository/wallet_repo.dart';
@@ -37,7 +34,7 @@ class WalletRepoImpl implements WalletRepo {
   }
 
   @override
-  Future<ApiResponse<dynamic>> getTransactionHistory({
+  Future<ApiResponse<TransactionHistoryResponseModel>> getTransactionHistory({
     required String cursor,
     required int pageSize,
   }) async {
@@ -55,10 +52,10 @@ class WalletRepoImpl implements WalletRepo {
         response.data as Map<String, dynamic>,
       );
 
-      return Successful<dynamic>(data: transactionHistory);
+      return Successful<TransactionHistoryResponseModel>(data: transactionHistory);
     } catch (e) {
-      log('Get transaction history error: $e');
-      return Unsuccessful<dynamic>(
+      log('Error getting transaction history: $e');
+      return Unsuccessful<TransactionHistoryResponseModel>(
         error: ATException.resolveException(e),
       );
     }
