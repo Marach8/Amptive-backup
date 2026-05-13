@@ -41,6 +41,7 @@ import 'package:amptive/src/features/home/presentation/screens/scheduled_screen.
 import 'package:amptive/src/features/home/data/models/response/home_feed_response_model.dart';
 import 'package:amptive/src/features/accounts/presentation/screens/account_info_screen.dart';
 import 'package:amptive/src/features/accounts/presentation/screens/acounts_landing_screen.dart';
+import 'package:amptive/src/features/profile/presentation/screens/update_email_and_phone_no_otp_screen.dart';
 import 'package:amptive/src/features/shows/data/models/response/show_response_model.dart';
 import 'package:amptive/src/features/events/presentation/screens/list_hosted_events_screen.dart';
 import 'package:amptive/src/features/events/cubits/hosted_events_cubit.dart';
@@ -465,6 +466,16 @@ final GoRouter amptiveAppRouter = GoRouter(
                           initialLink: params.first,
                           socialName: params.last as String);
                     }),
+                    GoRoute(
+        name: ATRoutes.enterEmailAndPhoneNoOtpScreen,
+        path: ATRoutes.enterEmailAndPhoneNoOtpScreen.addSlash,
+        pageBuilder: (_, GoRouterState state) {
+          return ATSlidingRouteTransition<bool?>(
+            child: UpdateEmailAndPhoneNoOtpScreen(
+              params: state.extra as EmailAndPhoneNoOTPScreenParams,
+            ),
+          );
+        }),
                 GoRoute(
                     name: ATRoutes.SELECT_ACCT_TYPE,
                     path: ATRoutes.SELECT_ACCT_TYPE,
@@ -588,6 +599,8 @@ final GoRouter amptiveAppRouter = GoRouter(
                     ),
                   ),
                 ),
+
+
                 GoRoute(
                   name: ATRoutes.updateNameScreen,
                   path: ATRoutes.updateNameScreen.addSlash,
