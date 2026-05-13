@@ -25,12 +25,12 @@ class ATSecurityQuestionScreen extends StatelessWidget {
   const ATSecurityQuestionScreen({super.key});
 
   static const List<String> items = <String>[
-  'What is your mother\'s maiden name?',
-  'What was the name of your first pet?',
-  'What is the name of your favorite teacher in high school?',
-  'In what city were you born?',
-  'What is your childhood nickname?',
-  'What is the name of your first school?'
+    'What is your mother\'s maiden name?',
+    'What was the name of your first pet?',
+    'What is the name of your favorite teacher in high school?',
+    'In what city were you born?',
+    'What is your childhood nickname?',
+    'What is the name of your first school?'
   ];
 
   @override
@@ -136,13 +136,12 @@ class ATSecurityQuestionScreen extends StatelessWidget {
           ),
           bottomSheet: BlocConsumer<SetPinCubit, ATAppState<dynamic>>(
               listener: (_, ATAppState<dynamic> state) async {
-            if (state is SuccessState<dynamic>)  {
-              // Initialize your storage service
-  final storage = FlutterSecureStorageServiceImpl();
-  await storage.set('has_set_wallet_pin', 'true');
+            if (state is SuccessState<dynamic>) {
+              final FlutterSecureStorageServiceImpl storage =
+                  FlutterSecureStorageServiceImpl();
+              await storage.set('has_set_wallet_pin', 'true');
 
-  // Navigate to the success animation
-  context.goNamed(ATRoutes.walletCreationAnimationScreen);
+              context.goNamed(ATRoutes.walletCreationAnimationScreen);
               context.goNamed(ATRoutes.walletCreationAnimationScreen);
             }
             if (state is FailureState<dynamic>) {
@@ -151,8 +150,10 @@ class ATSecurityQuestionScreen extends StatelessWidget {
                   text: state.message,
                   type: NotificationType.failure);
             }
-          }, builder: (BuildContext context, ATAppState<dynamic> state) {
-            final (String? question, bool _, String answer) = context.read<SecQuestionBloc>().state;
+          }, 
+          builder: (BuildContext context, ATAppState<dynamic> state) {
+            final (String? question, bool _, String answer) =
+                context.read<SecQuestionBloc>().state;
             final double bottom = MediaQuery.viewInsetsOf(context).bottom;
             final double bottomPad = bottom > 0 ? 10 : 50;
             return Padding(
@@ -160,22 +161,21 @@ class ATSecurityQuestionScreen extends StatelessWidget {
               child: ATPlainElevatedBtn(
                   btnTitle: ATStrings.FINISH_SETUP,
                   isLoading: state is LoadingState<dynamic>,
-                  onPressed:() {
-                  
-  final currentState = context.read<SecQuestionBloc>().state;
-  final String? question = currentState.$1;
-  final String answer = currentState.$3;
+                  onPressed: () {
+                    final (String?, bool, String) currentState =
+                        context.read<SecQuestionBloc>().state;
+                    final String? question = currentState.$1;
+                    final String answer = currentState.$3;
 
-  SetPinData().copyWith(
-    securityQuestion: question, 
-    securityQuestionAnswer: answer,
-  );
-  
-  context.read<SetPinCubit>().setPin(
-    param: SetPinData(),
-  );
+                    SetPinData().copyWith(
+                      securityQuestion: question,
+                      securityQuestionAnswer: answer,
+                    );
 
-                        }),
+                    context.read<SetPinCubit>().setPin(
+                          param: SetPinData(),
+                        );
+                  }),
             );
           }),
         );
