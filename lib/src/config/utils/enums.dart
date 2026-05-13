@@ -14,3 +14,5 @@ enum LogLevel {
     LogLevel.error => 1000,
   };
 }
+
+enum ProfileTabType { scheduled, ended, shows, events }

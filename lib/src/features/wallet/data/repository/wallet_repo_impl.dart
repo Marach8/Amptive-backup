@@ -5,8 +5,10 @@ import 'package:amptive/src/config/endpoints.dart';
 import 'package:amptive/src/config/exception.dart';
 import 'package:amptive/src/config/services/network_service/dio_network_service_impl.dart';
 import 'package:amptive/src/config/services/network_service/network_service.dart';
+import 'package:amptive/src/features/wallet/data/models/fund_wallet_response_model.dart';
 import 'package:amptive/src/features/wallet/data/models/request/set_pin_request.dart';
 import 'package:amptive/src/features/wallet/data/models/response/transaction_history_response_model.dart';
+import 'package:amptive/src/features/wallet/data/models/response/wallet_balance_response_model.dart';
 import 'package:amptive/src/features/wallet/data/repository/wallet_repo.dart';
 import 'package:dio/dio.dart';
 
@@ -60,4 +62,49 @@ class WalletRepoImpl implements WalletRepo {
       );
     }
   }
+
+@override
+  Future<ApiResponse<WalletBalanceResponseModel>> fetchWalletBalance() async {
+    try {
+      final Response<dynamic> response = await networkService.get(
+        ATEndpoints.getWalletBalance,
+      );
+
+
+      return Successful<WalletBalanceResponseModel>(data:  WalletBalanceResponseModel.fromJson(response.data));
+    } catch (e) {
+      log('Get wallet balance error: $e');
+      return Unsuccessful<WalletBalanceResponseModel>(
+        error: ATException.resolveException(e),
+      );
+    }
+  }
+  
+  @override
+  Future<ApiResponse<FundWalletResponseModel>> fundWallet({
+    required int amount,
+    required String channel,
+    required String currency,
+  }) async {
+    try {
+      final Response<dynamic> response = await networkService.post(
+        ATEndpoints.fundWallet,
+        data: <String, Object>{
+          'amount': amount,
+          'channel': channel,
+          'currency': currency,
+        },
+      );
+
+     
+      return Successful<FundWalletResponseModel>(
+        data: FundWalletResponseModel.fromJson(response.data as Map<String, dynamic>),
+      );
+    } catch (e) {
+      log('Error funding wallet: $e');
+      return Unsuccessful<FundWalletResponseModel>(
+        error: ATException.resolveException(e),
+      );
+    }
+  } 
 }

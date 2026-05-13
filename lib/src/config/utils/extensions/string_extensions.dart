@@ -79,5 +79,28 @@ extension ExtString on String {
  String get toFormattedDate {
     final DateTime date = DateTime.parse(this);
     return DateFormat('d MMMM yyyy').format(date);
+ }
+String normalizePaymentChannel(String method) {
+  switch (method) {
+    case ATStrings.applePay:
+      return 'paystack';
+    case ATStrings.flutterWave:
+      return 'paystack';
+    case ATStrings.googlePay:
+      return 'paystack';
+    default:
+      return method;
+  }
+}
+
+String get toNormalDate {
+    if (isEmpty) return '';
+    try {
+      DateTime dateTime = DateTime.parse(this).toLocal();
+      
+return DateFormat('yyyy-MM-dd').format(dateTime);   
+ } catch (e) {
+      return this;
+    }
   }
 }

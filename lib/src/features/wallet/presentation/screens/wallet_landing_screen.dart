@@ -4,6 +4,8 @@ import 'package:amptive/src/features/wallet/cubits/transaction_history_cubit.dar
 import 'package:amptive/src/features/wallet/data/models/models_export.dart';
 import 'package:amptive/src/features/wallet/data/models/response/transaction_history_response_model.dart';
 import 'package:amptive/src/features/wallet/presentation/screens/wallet_transactions_history_screen.dart';
+import 'package:amptive/src/features/auth/cubits/local_user_data_cubit.dart';
+import 'package:amptive/src/features/wallet/cubits/wallet_balance_cubit.dart';
 import 'package:amptive/src/features/wallet/presentation/widgets/wallets_widget_export.dart';
 import 'package:amptive/src/shared/app_bar_widget.dart';
 import 'package:amptive/src/shared/back_button.dart';
@@ -11,24 +13,33 @@ import 'package:amptive/src/shared/image_loader_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:nested/nested.dart';
 import '../../../../shared/annotated_region__widget.dart';
 
-// ... existing imports
 
 class WalletLandingScreen extends StatelessWidget {
-  const WalletLandingScreen({super.key});
+  const WalletLandingScreen({super.key, this.userData});
+
+  final CachedUserData? userData;
 
   @override
   Widget build(BuildContext context) {
     bool shouldShowCommingSoon = false;
-    return BlocProvider<TransactionHistoryCubit>(
-      create: (_) => TransactionHistoryCubit()..fetchTransactionHistory(),
+    return MultiBlocProvider(providers: <SingleChildWidget>[
+      BlocProvider<WalletBalanceCubit>(
+        create: (_) => WalletBalanceCubit()..fetchWalletBalance(),
+      ),  
+      BlocProvider<TransactionHistoryCubit>(
+        create: (_) => TransactionHistoryCubit()..fetchTransactionHistory(),
+      ),
+      ],
       child: ATAnnotatedRegion(
         child: Scaffold(
           appBar: const ATAppBar(
             titleText: "Emmanuel's Account",
             leading: ATRoundedBackBtn(),
             padding: EdgeInsets.only(left: 7),
+   
             leadingWidth: 30,
           ),
           body: SingleChildScrollView(
@@ -38,6 +49,7 @@ class WalletLandingScreen extends StatelessWidget {
               children: <Widget>[
                 const AvailableBalanceWidget(),
                 const SizedBox(height: 20),
+                
                 Row(
                   children: <Widget>[
                     Text(ATStrings.transactionHistory,
@@ -45,7 +57,10 @@ class WalletLandingScreen extends StatelessWidget {
                             ?.copyWith(color: ATColors.hexC2C2C2)),
                     const Spacer(),
                     InkWell(
-                      onTap: () => context.pushNamed(ATRoutes.walletTransactionsHistoryScreen),
+                      onTap: () {
+                        context
+                            .pushNamed(ATRoutes.walletTransactionsHistoryScreen);
+                      },
                       splashColor: ATColors.white,
                       borderRadius: BorderRadius.circular(5),
                       child: Row(

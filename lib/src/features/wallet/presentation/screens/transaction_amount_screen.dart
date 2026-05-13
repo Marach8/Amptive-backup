@@ -214,11 +214,15 @@ class TransactionAmountScreen extends StatelessWidget {
                                             context: context, amount: state.$1);
                                     if (context.mounted &&
                                         selectedPaymentMethod != null) {
+                                      final int amount =
+                                          double.tryParse(state.$1)?.toInt() ??
+                                              0;
                                       final bool? processPayment =
                                           await processWalletFundingDialog(
-                                              context: context,
-                                              paymentMethod:
-                                                  selectedPaymentMethod);
+                                        context: context,
+                                        paymentMethod: selectedPaymentMethod,
+                                        amount: amount,
+                                      );
                                     }
                                     break;
                                   case TransactionType.transfer:

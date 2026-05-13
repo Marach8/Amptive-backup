@@ -28,6 +28,7 @@ class ATUser {
     this.name,
     this.followersCount,
     this.pictureUrl, 
+    this.phoneNumber,
   });
 
   factory ATUser.fromJson(Map<String, dynamic> json) {
@@ -39,9 +40,10 @@ class ATUser {
       name: json['name'] as String?,
       pictureUrl: json['profile_picture'] as String?,
       followersCount: json['followers_count'],
+      phoneNumber: json['phone_number'] as String?,
     );
   }
-  final String? id, email, username, dob, name, pictureUrl;
+  final String? id, email, username, dob, name, pictureUrl, phoneNumber;
   final int ? followersCount;
 }
 
