@@ -82,7 +82,7 @@ class HostedShow extends Equatable {
           .toList(),
       publishedAt: json['published_at'],
       createdAt: json['created_at'],
-      community: json['community'],
+      community: json['community'] != null ? Community.fromJson(json['community']) : null,
       updatedAt: json['updated_at'],
       activeEpisode: activeEpisode,
       episodes: activeEpisode != null ? <Episode>[activeEpisode] : null,

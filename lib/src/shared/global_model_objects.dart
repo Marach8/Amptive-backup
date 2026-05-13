@@ -224,3 +224,5 @@ class Notifications extends User {
   final NotificationMetadata metadata;
   final bool? isRead;
 }
+
+enum ProfileTabType { scheduled, ended, shows, events }
