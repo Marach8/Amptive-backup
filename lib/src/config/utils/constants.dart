@@ -58,7 +58,7 @@ class SignalingEventType {
 }
 
 
-enum GoLiveEvent {
+enum LiveEventType {
   initial('initial_state'),
   streamStarted('stream_started'),
   streamEnded('stream_ended'),
@@ -81,17 +81,20 @@ enum GoLiveEvent {
   pollCreated('poll_created'),
   pollVoted('poll_voted'),
   pollEnded('poll_ended'),
-  gift('gift');
+  gift('gift'),
+  ping('ping'),
+  mediaToggle('media_toggle'),
+  screenShare('screen_share');
 
-  const GoLiveEvent(this.value);
+  const LiveEventType(this.value);
 
   final String value;
 
-  static final Map<String, GoLiveEvent> _map = <String, GoLiveEvent>{
-    for (final GoLiveEvent e in GoLiveEvent.values) e.value: e,
+  static final Map<String, LiveEventType> _map = <String, LiveEventType>{
+    for (final LiveEventType e in LiveEventType.values) e.value: e,
   };
 
-  static GoLiveEvent? fromValue(String? value) {
+  static LiveEventType? fromValue(String? value) {
     return _map[value];
   }
 }

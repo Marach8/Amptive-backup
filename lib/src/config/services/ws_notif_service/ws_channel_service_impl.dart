@@ -10,7 +10,7 @@ enum WSConnectionStatus {
   connected,
   reconnecting,
   disconnected,
-  error,
+  failed,
 }
 
 class WSChannelNotifServiceImpl implements WSNotificationService {
@@ -193,7 +193,7 @@ class WSChannelNotifServiceImpl implements WSNotificationService {
   void _handleError(Object error) {
     log('Socket error: $error');
     _isConnected = false;
-    _connectionController.add(WSConnectionStatus.error);
+    _connectionController.add(WSConnectionStatus.failed);
     _scheduleReconnect();
   }
 

@@ -1,5 +1,7 @@
 import 'dart:ui';
+import 'package:amptive/src/features/auth/cubits/local_user_data_cubit.dart';
 import 'package:amptive/src/features/go_live/cubits/livestream_cubit1.dart';
+import 'package:amptive/src/features/go_live/data/models/live_program_data.dart';
 import 'package:amptive/src/features/go_live/data/models/livestream_state.dart';
 import 'package:amptive/src/features/go_live/presentation/screens/audience_view_controls.dart';
 import 'package:amptive/src/global_export.dart';
@@ -7,7 +9,9 @@ import 'package:amptive/src/livestream/livestream.dart';
 import 'package:amptive/src/models/host.dart';
 import 'package:amptive/src/shared/global_model_objects.dart';
 import 'package:amptive/src/shared/image_loader_widget.dart';
+import 'package:amptive/src/shared/sentinel.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import '../widgets/minimized_go_live_dialog.dart';
 import '../../go_live_export.dart';
 import '../widgets/audience_view_of_host_and_cohosts.dart';
@@ -148,7 +152,32 @@ class _AudienceViewMinimizeIcon extends StatelessWidget {
   Widget build(BuildContext context) {
     return ATContainer(
       onTap: () {
-        showMinimizedGoLiveState();
+        //Mark that this organizer has tested his mic
+      final LocalUserDataCubit cubit = context.read<LocalUserDataCubit>();
+      final CachedUserData? data = cubit.currentUserData;
+      final LiveStreamState1 liveStreamState = 
+        context.read<LiveStreamCubit1>().state;
+      cubit.updateUserDataLocally(
+        (data ?? const CachedUserData()).copyWith(
+          liveProgramData: Sentinel<LiveProgramData>.of(
+            LiveProgramData(
+              coverUrl: liveStreamState.programCoverUrl ?? '',
+              programDesc: liveStreamState.programDesc ?? '',
+              programTitle: liveStreamState.programTitle ?? '',
+              programId: liveStreamState.liveStreamId ?? '',
+              role: ParticipantRole.audience,
+              roomEntryToken: liveStreamState.roomEntryToken ?? '',
+              roomParticipantId: context.read<LocalUserDataCubit>()
+                .currentUserData?.userId ?? '',
+              roomUrl: liveStreamState.roomUrl ?? '',
+              streamId: liveStreamState.liveStreamId ?? '',
+              community: liveStreamState.community,
+            )
+          )
+        ),
+      );
+      context.pop();
+        //showMinimizedGoLiveState();
       },
       color: ATColors.white.withValues(alpha: 0.1),
       height: 35,

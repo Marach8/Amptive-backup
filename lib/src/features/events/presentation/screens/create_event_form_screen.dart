@@ -8,6 +8,7 @@ import 'package:amptive/src/features/events/presentation/screens/select_schedule
 import 'package:amptive/src/features/events/presentation/widgets/events_audience_access_modal.dart';
 import 'package:amptive/src/features/events/cubits/hosted_events_cubit.dart';
 import 'package:amptive/src/features/events/presentation/widgets/set_event_capacity_modal.dart';
+import 'package:amptive/src/features/go_live/data/models/live_program_data.dart';
 import 'package:amptive/src/features/go_live/go_live_export.dart';
 import 'package:amptive/src/features/go_live/presentation/screens/live_program_screen.dart';
 import 'package:amptive/src/shared/annotated_region__widget.dart';
@@ -726,7 +727,7 @@ class __SubWidgetState extends State<_SubWidget> {
                     .read<CreateEventCubit>().currentEvent;
                   context.pushReplacementNamed(
                     ATRoutes.goLiveOnboarding,
-                    extra: LiveProgramEntryParams(
+                    extra: LiveProgramData(
                       roomEntryToken: state.newData?.roomEntryToken ?? '',
                       roomUrl: state.newData?.roomUrl ?? '',
                       streamId: state.newData?.streamId ?? '',

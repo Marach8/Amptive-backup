@@ -90,7 +90,7 @@ class Community {
     this.image,
     this.memberCount,
     this.isPrivate,
-    this.creatorId
+    this.creatorId,
   });
 
   factory Community.fromJson(Map<String, dynamic> json) {
@@ -101,14 +101,30 @@ class Community {
       image: json['image'],
       memberCount: json['member_count'],
       isPrivate: json['is_private'],
-      creatorId: json['created_by']
+      creatorId: json['created_by'],
     );
   }
 
-  final String? communityId, name, description,
-    image, creatorId;
+  final String? communityId,
+      name,
+      description,
+      image,
+      creatorId;
+
   final int? memberCount;
   bool? isPrivate;
+
+  Map<String, dynamic> toJson() {
+    return <String, dynamic>{
+      'community_id': communityId,
+      'name': name,
+      'description': description,
+      'image': image,
+      'member_count': memberCount,
+      'is_private': isPrivate,
+      'created_by': creatorId,
+    };
+  }
 }
 
 class HashTag extends Equatable{

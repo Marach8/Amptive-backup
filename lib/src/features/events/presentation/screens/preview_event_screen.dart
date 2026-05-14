@@ -5,6 +5,7 @@ import 'package:amptive/src/features/events/cubits/event_detail_cubit.dart';
 import 'package:amptive/src/features/go_live/cubits/end_live_program_cubit.dart';
 import 'package:amptive/src/features/go_live/cubits/get_live_program_entry_token_cubit.dart';
 import 'package:amptive/src/features/go_live/cubits/start_live_program_cubit.dart';
+import 'package:amptive/src/features/go_live/data/models/live_program_data.dart';
 import 'package:amptive/src/features/go_live/go_live_export.dart';
 import 'package:amptive/src/features/go_live/presentation/screens/live_program_screen.dart';
 import 'package:amptive/src/features/home/cubits/toggle_following_cubit.dart';
@@ -339,7 +340,7 @@ class _EventSubWidgetState extends State<_EventSubWidget> {
                       context.read<EventDetailCubit>().currentEventDetail;
                   context.pushReplacementNamed(
                     ATRoutes.goLiveOnboarding,
-                    extra: LiveProgramEntryParams(
+                    extra: LiveProgramData(
                       roomEntryToken: state.newData?.roomEntryToken ?? '',
                       roomUrl: state.newData?.roomUrl ?? '',
                       streamId: state.newData?.streamId ?? '',

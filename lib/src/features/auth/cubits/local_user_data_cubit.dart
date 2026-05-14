@@ -14,13 +14,13 @@ class LocalUserDataCubit extends Cubit<ATAppState<CachedUserData>> {
   final ATLocalStorageService localStorage;
 
   CachedUserData? get currentUserData => switch (state) {
-        SuccessState<CachedUserData>(:final CachedUserData? newData) => newData,
-        FailureState<CachedUserData>(:final CachedUserData? oldData) => oldData,
-        InitialState<CachedUserData>(:final CachedUserData? initialData) =>
-          initialData,
-        LoadingState<CachedUserData>(:final CachedUserData? currentData) =>
-          currentData,
-      };
+    SuccessState<CachedUserData>(:final CachedUserData? newData) => newData,
+    FailureState<CachedUserData>(:final CachedUserData? oldData) => oldData,
+    InitialState<CachedUserData>(:final CachedUserData? initialData) =>
+      initialData,
+    LoadingState<CachedUserData>(:final CachedUserData? currentData) =>
+      currentData,
+  };
 
   Future<void> initializeCachedData() async {
     emit(const LoadingState<CachedUserData>());
@@ -31,7 +31,7 @@ class LocalUserDataCubit extends Cubit<ATAppState<CachedUserData>> {
         SuccessState<CachedUserData>(
           newData: json == null
               ? const CachedUserData()
-              : CachedUserData.fromJson(json),
+              : CachedUserData.fromLocalStorageJson(json),
         ),
       );
     } catch (e) {
@@ -43,7 +43,7 @@ class LocalUserDataCubit extends Cubit<ATAppState<CachedUserData>> {
     try {
       await localStorage.setObject(
         ATStrings.cachedUserData,
-        user.toJson(),
+        user.toLocalStorageJson(),
       );
 
       emit(SuccessState<CachedUserData>(newData: user));
@@ -66,9 +66,11 @@ class CachedUserData extends Equatable {
       this.pictureUrl,
       this.phoneNumber,
       this.followersCount,
-      this.followingCount});
+      this.followingCount,
+      this.hasTestedMic});
 
-  factory CachedUserData.fromJson(Map<String, dynamic> json) => CachedUserData(
+  factory CachedUserData.fromLocalStorageJson(
+    Map<String, dynamic> json) => CachedUserData(
       userId: json[ATStrings.userId],
       email: json[ATStrings.email],
       username: json[ATStrings.username],
@@ -77,7 +79,9 @@ class CachedUserData extends Equatable {
       pictureUrl: json[ATStrings.profilePicture],
       phoneNumber: json[ATStrings.phoneNumber],
       followersCount: json[ATStrings.followerCount],
-      followingCount: json[ATStrings.followingCount]);
+      followingCount: json[ATStrings.followingCount],
+      hasTestedMic: json[ATStrings.hasTestedMic]);
+      
 
   final String? userId,
       email,
@@ -87,30 +91,34 @@ class CachedUserData extends Equatable {
       pictureUrl,
       phoneNumber,
       followingCount,
-      followersCount;
+      followersCount,
+      hasTestedMic;
 
-  CachedUserData copyWith(
-          {String? userId,
-          String? email,
-          String? username,
-          String? dob,
-          String? name,
-          String? pictureUrl,
-          String? followersCount,
-          String? followingCount,
-          String? phoneNumber}) =>
-      CachedUserData(
-          userId: userId ?? this.userId,
-          email: email ?? this.email,
-          username: username ?? this.username,
-          dob: dob ?? this.dob,
-          name: name ?? this.name,
-          pictureUrl: pictureUrl ?? this.pictureUrl,
-          phoneNumber: phoneNumber ?? this.phoneNumber,
-          followersCount: followersCount ?? this.followersCount,
-          followingCount: followingCount ?? this.followingCount);
+  CachedUserData copyWith({
+    String? userId,
+    String? email,
+    String? username,
+    String? dob,
+    String? name,
+    String? pictureUrl,
+    String? followersCount,
+    String? followingCount,
+    String? phoneNumber,
+    String? hasTestedMic
+  }) => CachedUserData(
+      userId: userId ?? this.userId,
+      email: email ?? this.email,
+      username: username ?? this.username,
+      dob: dob ?? this.dob,
+      name: name ?? this.name,
+      pictureUrl: pictureUrl ?? this.pictureUrl,
+      phoneNumber: phoneNumber ?? this.phoneNumber,
+      followersCount: followersCount ?? this.followersCount,
+      followingCount: followingCount ?? this.followingCount,
+      hasTestedMic: hasTestedMic ?? this.hasTestedMic,
+  );
 
-  Map<String, dynamic> toJson() => <String, dynamic>{
+  Map<String, dynamic> toLocalStorageJson() => <String, dynamic>{
         ATStrings.userId: userId,
         ATStrings.email: email,
         ATStrings.username: username,
@@ -119,7 +127,8 @@ class CachedUserData extends Equatable {
         ATStrings.profilePicture: pictureUrl,
         ATStrings.phoneNumber: phoneNumber,
         ATStrings.followerCount: followersCount,
-        ATStrings.followingCount: followingCount
+        ATStrings.followingCount: followingCount,
+        ATStrings.hasTestedMic: hasTestedMic,
       };
 
   @override
@@ -132,6 +141,7 @@ class CachedUserData extends Equatable {
         pictureUrl,
         phoneNumber,
         followersCount,
-        followingCount
+        followingCount,
+        hasTestedMic
       ];
 }

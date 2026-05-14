@@ -1,7 +1,9 @@
 import 'dart:async' show StreamSubscription, Timer, StreamController;
 import 'dart:io' show Directory, File;
 import 'dart:ui';
+import 'package:amptive/src/features/auth/cubits/local_user_data_cubit.dart';
 import 'package:amptive/src/features/episodes/data/models/response/episode_model.dart';
+import 'package:amptive/src/features/go_live/data/models/live_program_data.dart';
 import 'package:amptive/src/features/go_live/go_live_export.dart';
 import 'package:amptive/src/features/go_live/data/models/deconstruct_inbound_events.dart';
 import 'package:amptive/src/features/go_live/presentation/screens/live_program_screen.dart';
@@ -19,27 +21,6 @@ import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 import '../../../../shared/image_loader_widget.dart';
 
-class LiveProgramEntryParams{
-  const LiveProgramEntryParams({
-    required this.roomEntryToken,
-    required this.roomUrl,
-    required this.streamId,
-    required this.roomParticipantId,
-    required this.role,
-    required this.programId,
-    required this.coverUrl,
-    required this.programTitle,
-    required this.programDesc,
-    this.community
-  });
-
-  final String roomEntryToken, roomUrl,
-  streamId, roomParticipantId, programId,
-  coverUrl, programTitle, programDesc;
-
-  final ParticipantRole role;
-  final Community? community;
-}
 
 class GoLiveOnboardingScreen extends StatelessWidget {
   const GoLiveOnboardingScreen({
@@ -47,7 +28,7 @@ class GoLiveOnboardingScreen extends StatelessWidget {
     this.liveProgramEntryParams,
   });
 
-  final LiveProgramEntryParams? liveProgramEntryParams;
+  final LiveProgramData? liveProgramEntryParams;
 
   @override
   Widget build(BuildContext context) {
@@ -61,7 +42,7 @@ class GoLiveOnboardingScreen extends StatelessWidget {
 class _SubWidget extends StatefulWidget {
   const _SubWidget({this.liveProgramEntryParams});
 
-  final LiveProgramEntryParams? liveProgramEntryParams;
+  final LiveProgramData? liveProgramEntryParams;
 
   @override
   State<_SubWidget> createState() => _SubWidgetState();
@@ -302,11 +283,13 @@ class _SubWidgetState extends State<_SubWidget> {
                                       ? OneTwoThreeCountDown(
                                           key: const ValueKey<double>(1.04),
                                           onCountDownFinished: () async {
-                                            // Get streamId from the episode that was passed in
-                                            final String streamId =
-                                                widget.liveProgramEntryParams?.streamId ??
-                                                    '';
+
                                             if (!context.mounted) return;
+                                            //Mark that this organizer has tested his mic
+                                            context.read<LocalUserDataCubit>().updateUserDataLocally(
+                                              const CachedUserData(hasTestedMic: 'true')
+                                            );
+
                                             context.pushReplacementNamed(
                                               ATRoutes.liveProgramScreen,
                                               extra: widget.liveProgramEntryParams,

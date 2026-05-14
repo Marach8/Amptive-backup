@@ -51,7 +51,7 @@ class RemoteUserDataCubit extends Cubit<ATAppState<UserData>> {
 
             await localStorageService.setObject(
               ATStrings.cachedUserData,
-              cachedUserData.toJson(),
+              cachedUserData.toLocalStorageJson(),
             );
 
             emit(SuccessState<UserData>(newData: userData));

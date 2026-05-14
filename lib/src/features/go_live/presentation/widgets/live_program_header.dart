@@ -33,7 +33,7 @@ class LiveProgramHeader extends StatelessWidget {
       listener: (_, ATAppState<LoadingStage> state)async{
         if(state is SuccessState<LoadingStage>) {
           //This delay is necessary to give time for the end live modal to be unmounted.
-          await Future<void>.delayed(const Duration(milliseconds: 500));
+          await Future<void>.delayed(const Duration(milliseconds: 200));
           if(context.mounted){
             context.pop();
           }

@@ -2,6 +2,7 @@ import 'dart:developer' show log;
 
 import 'package:amptive/src/config/utils/constants.dart';
 import 'package:amptive/src/features/go_live/data/models/deconstruct_inbound_events.dart';
+import 'package:amptive/src/features/go_live/data/models/live_program_data.dart';
 import 'package:amptive/src/features/go_live/data/models/livestream_state.dart';
 import 'package:amptive/src/features/go_live/presentation/screens/live_program_screen.dart';
 import 'package:amptive/src/livestream/models/livestream_models.dart';
@@ -66,13 +67,13 @@ LiveStreamState1 reduceIncomingStreamAction({
   required Map<String, dynamic> wsJson,
   required LiveStreamState1 stateSnapshot,
 }) {
-  final GoLiveEvent? type =
-      GoLiveEvent.fromValue(wsJson['type'] as String?);
+  final LiveEventType? type =
+      LiveEventType.fromValue(wsJson['type'] as String?);
 
   if (type == null) return stateSnapshot;
 
   return switch (type) {
-    GoLiveEvent.initial => () {
+    LiveEventType.initial => () {
       final InitialStateMapper initial = InitialStateMapper
         .fromJson(wsJson);
       LivestreamParticipant? host;
@@ -96,15 +97,15 @@ LiveStreamState1 reduceIncomingStreamAction({
     }(),
 
 
-    GoLiveEvent.streamStarted => stateSnapshot,
+    LiveEventType.streamStarted => stateSnapshot,
 
-    GoLiveEvent.streamEnded => stateSnapshot.copyWith(
+    LiveEventType.streamEnded => stateSnapshot.copyWith(
         //connectionErrorMessage: 'Stream ended',
       ),
 
-    GoLiveEvent.pong => stateSnapshot,
+    LiveEventType.pong => stateSnapshot,
 
-    GoLiveEvent.participantJoin => () {
+    LiveEventType.participantJoin => () {
       final LivestreamParticipant newParticipant =
           LivestreamParticipant.fromJson(wsJson);
       late LiveStreamState1 newState;
@@ -141,7 +142,7 @@ LiveStreamState1 reduceIncomingStreamAction({
       return newState;
     }(),
 
-    GoLiveEvent.participantLeave => () {
+    LiveEventType.participantLeave => () {
         final String id = wsJson['identity'] ?? '';
         final Map<String, LivestreamParticipant>? participants
           = stateSnapshot.participants;
@@ -151,7 +152,7 @@ LiveStreamState1 reduceIncomingStreamAction({
         );
       }(),
 
-    GoLiveEvent.participantUpdated => () {
+    LiveEventType.participantUpdated => () {
       final LivestreamParticipant updatedParticipant =
           LivestreamParticipant.fromJson(wsJson['participant']);
       final Map<String, LivestreamParticipant>? participants 
@@ -163,7 +164,7 @@ LiveStreamState1 reduceIncomingStreamAction({
     }(),
 
 
-    GoLiveEvent.chat => () {
+    LiveEventType.chat => () {
       final ChatMessage newMessage = ChatMessage.fromJson(wsJson);
       if((newMessage.id ?? '').isEmpty) return stateSnapshot;
       return stateSnapshot.copyWith(
@@ -179,7 +180,7 @@ LiveStreamState1 reduceIncomingStreamAction({
     }(),
 
 
-    GoLiveEvent.reaction => (){
+    LiveEventType.reaction => (){
       final Reaction newReaction = Reaction.fromJson(wsJson);
       
       return stateSnapshot.copyWith(
@@ -191,25 +192,10 @@ LiveStreamState1 reduceIncomingStreamAction({
     }(),
 
 
-    GoLiveEvent.gift => (){
-      final Gift newGift = Gift.fromJson(wsJson);
-      if((newGift.giftId ?? '').isEmpty) return stateSnapshot;
-
-      final LivestreamParticipant? gifter = stateSnapshot
-        .participants?[newGift.senderId ?? ''];
-      log('available people: ${stateSnapshot.participants}');
-      final Gift updatedGift = newGift.copyWith(gifter: gifter);
-      return stateSnapshot.copyWith(
-        latestGift: Sentinel<Gift>.of(updatedGift),
-        gifts: <String, Gift>{
-          updatedGift.giftId!: updatedGift,
-          ...?stateSnapshot.gifts,
-        },
-      );
-    }(),
+    LiveEventType.gift => stateSnapshot,
 
 
-    GoLiveEvent.handRaise => () {
+    LiveEventType.handRaise => () {
         final String id = wsJson['user_id'] ?? '';
         final String action = wsJson['action'] ?? '';
         final List<String> queue =
@@ -223,16 +209,16 @@ LiveStreamState1 reduceIncomingStreamAction({
       }(),
 
 
-    GoLiveEvent.viewerCount => stateSnapshot.copyWith(
+    LiveEventType.viewerCount => stateSnapshot.copyWith(
         viewerCount: wsJson['count'] as int? ?? 0,
       ),
 
-    GoLiveEvent.participantCount => stateSnapshot.copyWith(
+    LiveEventType.participantCount => stateSnapshot.copyWith(
         viewerCount: wsJson['count'] as int? ?? 0,
       ),
 
 
-    GoLiveEvent.userMuted => () {
+    LiveEventType.userMuted => () {
         // final String id = json['identity'] as String? ?? '';
         // final bool muted = json['muted'] as bool? ?? false;
         // final List<LiveSessionParticipant>? updated =
@@ -245,7 +231,7 @@ LiveStreamState1 reduceIncomingStreamAction({
         return stateSnapshot.copyWith();
       }(),
 
-    GoLiveEvent.userBanned => () {
+    LiveEventType.userBanned => () {
         final String? id = wsJson['identity'];
         if((id ?? '').isEmpty) return stateSnapshot;
         final Map<String, LivestreamParticipant>? participants 
@@ -257,7 +243,7 @@ LiveStreamState1 reduceIncomingStreamAction({
         );
       }(),
 
-    GoLiveEvent.userKicked => () {
+    LiveEventType.userKicked => () {
         final String? id = wsJson['identity'];
         if((id ?? '').isEmpty) return stateSnapshot;
         final Map<String, LivestreamParticipant>? participants 
@@ -270,7 +256,7 @@ LiveStreamState1 reduceIncomingStreamAction({
       }(),
 
 
-    GoLiveEvent.mediaStateChanged => () {
+    LiveEventType.mediaStateChanged => () {
         // final String id = json['identity'] as String? ?? '';
         // final bool enabled = json['enabled'] as bool? ?? false;
         // final List<LiveSessionParticipant>? updated =
@@ -284,13 +270,16 @@ LiveStreamState1 reduceIncomingStreamAction({
       }(),
 
 
-    GoLiveEvent.screenShareStarted => stateSnapshot,
-    GoLiveEvent.screenShareEnded => stateSnapshot,
+    LiveEventType.screenShareStarted => stateSnapshot,
+    LiveEventType.screenShareEnded => stateSnapshot,
 
-    GoLiveEvent.pollCreated => stateSnapshot,
-    GoLiveEvent.pollVoted => stateSnapshot,
-    GoLiveEvent.pollEnded => stateSnapshot,
+    LiveEventType.pollCreated => stateSnapshot,
+    LiveEventType.pollVoted => stateSnapshot,
+    LiveEventType.pollEnded => stateSnapshot,
 
-    GoLiveEvent.error => stateSnapshot,
+    LiveEventType.error => stateSnapshot,
+    LiveEventType.ping => stateSnapshot,
+    LiveEventType.mediaToggle => stateSnapshot,
+    LiveEventType.screenShare => stateSnapshot,
   };
 }

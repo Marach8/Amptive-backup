@@ -14,6 +14,7 @@ import 'package:amptive/src/features/episodes/data/models/request/create_episode
 import 'package:amptive/src/features/episodes/data/models/response/episode_model.dart';
 import 'package:amptive/src/features/episodes/presentation/widgets/whispers_permision_modal.dart';
 import 'package:amptive/src/features/events/presentation/screens/select_schedule_date_screen.dart';
+import 'package:amptive/src/features/go_live/data/models/live_program_data.dart';
 import 'package:amptive/src/features/go_live/go_live_export.dart';
 import 'package:amptive/src/features/go_live/presentation/screens/live_program_screen.dart';
 import 'package:amptive/src/global_export.dart';
@@ -662,7 +663,7 @@ class _CreateShowFormScreenState extends State<_SubWidget> {
                     .read<CreateEpisodeCubit>().currentEpisodeDetail;
                   context.pushReplacementNamed(
                     ATRoutes.goLiveOnboarding,
-                    extra: LiveProgramEntryParams(
+                    extra: LiveProgramData(
                       roomEntryToken: state.newData?.roomEntryToken ?? '',
                       roomUrl: state.newData?.roomUrl ?? '',
                       streamId: state.newData?.streamId ?? '',

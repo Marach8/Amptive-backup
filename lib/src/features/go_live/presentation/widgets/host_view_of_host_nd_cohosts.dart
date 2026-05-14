@@ -32,7 +32,7 @@ class HostViewOfHostNdCohostDisplay extends StatelessWidget {
         child: ATLoadingIndicator(),
       ),
       WSConnectionStatus.disconnected ||
-      WSConnectionStatus.error => const Text(
+      WSConnectionStatus.failed => const Text(
         'Error occured',
       ),
       WSConnectionStatus.connected => LayoutBuilder(

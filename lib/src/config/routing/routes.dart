@@ -27,6 +27,7 @@ import 'package:amptive/src/features/episodes/data/models/response/episode_model
 import 'package:amptive/src/features/episodes/presentation/screens/edit_episode_form_screen.dart';
 import 'package:amptive/src/features/events/presentation/screens/edit_event_form_screen.dart';
 import 'package:amptive/src/features/events/presentation/screens/select_schedule_date_screen.dart';
+import 'package:amptive/src/features/go_live/data/models/live_program_data.dart';
 import 'package:amptive/src/features/go_live/presentation/screens/live_program_screen.dart';
 import 'package:amptive/src/features/home/presentation/screens/following_screen.dart';
 import 'package:amptive/src/features/home/presentation/screens/live_show_detailed_screen.dart';
@@ -341,8 +342,8 @@ final GoRouter amptiveAppRouter = GoRouter(
               name: ATRoutes.goLiveOnboarding,
               path: ATRoutes.goLiveOnboarding.addSlash,
               pageBuilder: (_, GoRouterState state) {
-                final LiveProgramEntryParams? liveProgramEntryParams = 
-                  state.extra as LiveProgramEntryParams?;
+                final LiveProgramData? liveProgramEntryParams = 
+                  state.extra as LiveProgramData?;
                 return ATSlidingRouteTransition<void>(
                     child: GoLiveOnboardingScreen(
                       liveProgramEntryParams: liveProgramEntryParams));
@@ -354,7 +355,7 @@ final GoRouter amptiveAppRouter = GoRouter(
             pageBuilder: (_, GoRouterState st) {
               return ATFadingRouteTransition<void>(
                 child: LiveProgramScreen(
-                  liveScreenEntryParams: st.extra as LiveProgramEntryParams?,
+                  liveScreenEntryParams: st.extra as LiveProgramData?,
                 )
               );
             }

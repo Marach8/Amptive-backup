@@ -1,3 +1,4 @@
+import 'package:amptive/src/features/go_live/data/models/live_program_data.dart';
 import 'package:amptive/src/features/go_live/presentation/screens/live_program_screen.dart';
 import 'package:amptive/src/shared/global_model_objects.dart';
 import 'package:uuid/uuid.dart';

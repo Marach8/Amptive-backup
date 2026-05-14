@@ -217,13 +217,7 @@ class _RowOfBtns extends StatelessWidget {
         ),
         EachGoLiveControlBtn(
           onTap: ()async{
-            final int? price = await GiftPickerDialog.show(context);
-            if(context.mounted && price != null){
-              context.read<LiveStreamCubit1>().sendGift(price);
-            }
-            // context
-            //     .read<AmptiveGoLiveNotificationBloc>()
-            //     .addPinnedMsgNotification(getHostList()[3], 'CO-HOST');
+            context.read<LiveStreamCubit1>().raiseHand();
           },
           child: const ATImgLoader(
             imgPath: ATImgStrings.handRaiseIcon,

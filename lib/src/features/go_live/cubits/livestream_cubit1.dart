@@ -249,8 +249,10 @@ class LiveStreamCubit1 extends Cubit<LiveStreamState1> {
   }
 
   Future<void> disconnect() async {
-    await wsNotificationService.disconnect();
-    await streamingService.disconnect();
+    await Future.wait(<Future<dynamic>>[
+      wsNotificationService.disconnect(),
+      streamingService.disconnect(),
+    ]);
   }
 
   void toggleMicrophone(bool isEnabled){
@@ -260,57 +262,57 @@ class LiveStreamCubit1 extends Cubit<LiveStreamState1> {
 
   void sendChat(String message) {
     wsNotificationService.sendMessage(<String, dynamic>{
-      'type': OutboundMessageType.chat,
+      'type': LiveEventType.chat.value,
       'content': message
     });
   }
 
   void sendReaction(String emoji) =>
       wsNotificationService.sendMessage(<String, dynamic>{
-        'type': OutboundMessageType.reaction,
+        'type': LiveEventType.reaction.value,
         'content': emoji
       });
 
   void sendGift(int quantity) =>
       wsNotificationService.sendMessage(<String, dynamic>{
-        'type': GoLiveEvent.gift.value,
+        'type': LiveEventType.gift.value,
         'gift_id': const Uuid().v4(),
         'gift_type': 'rose',
         'quantity': 20,
       });
 
   void raiseHand() => wsNotificationService.sendMessage(<String, dynamic>{
-        'type': OutboundMessageType.handRaise,
+        'type': LiveEventType.handRaise.value,
         'action': 'raise',
       });
 
   void lowerHand() => wsNotificationService.sendMessage(<String, dynamic>{
-        'type': OutboundMessageType.handRaise,
+        'type': LiveEventType.handRaise.value,
         'action': 'lower'
       });
 
   void approveHandRaise(String identity) =>
       wsNotificationService.sendMessage(<String, dynamic>{
-        'type': OutboundMessageType.handRaise,
+        'type': LiveEventType.handRaise,
         'action': 'approve',
         'identity': identity,
       });
 
   void sendPing() => wsNotificationService.sendMessage(<String, dynamic>{
-        'type': OutboundMessageType.ping,
+        'type': LiveEventType.ping.value,
         'timestamp': DateTime.now().millisecondsSinceEpoch,
       });
 
   void toggleMedia(String mediaType, bool enabled) =>
       wsNotificationService.sendMessage(<String, dynamic>{
-        'type': OutboundMessageType.mediaToggle,
+        'type': LiveEventType.mediaToggle,
         'mediaType': mediaType,
         'enabled': enabled,
       });
 
   void toggleScreenShare(bool start) =>
       wsNotificationService.sendMessage(<String, dynamic>{
-        'type': OutboundMessageType.screenShare,
+        'type': LiveEventType.screenShare,
         'action': start ? 'start' : 'stop',
       });
 

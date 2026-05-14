@@ -6,6 +6,7 @@ import 'package:amptive/src/features/auth/cubits/local_user_data_cubit.dart';
 import 'package:amptive/src/features/go_live/cubits/get_live_program_entry_token_cubit.dart';
 import 'package:amptive/src/features/go_live/cubits/start_live_program_cubit.dart';
 import 'package:amptive/src/features/go_live/data/models/deconstruct_inbound_events.dart';
+import 'package:amptive/src/features/go_live/data/models/live_program_data.dart';
 import 'package:amptive/src/features/go_live/presentation/screens/go_live_onboarding_screen.dart';
 import 'package:amptive/src/features/go_live/presentation/screens/live_program_screen.dart';
 import 'package:amptive/src/global_export.dart';
@@ -285,26 +286,39 @@ class ATLiveEventDetailedScreen extends StatelessWidget {
             child: BlocConsumer<GetLiveProgramEntryTokenCubit, ATAppState<LiveProgramEntryToken>>(
               listener: (_, ATAppState<LiveProgramEntryToken> state){
                 if(state is SuccessState<LiveProgramEntryToken>){
-                  final String? userId = context.read<LocalUserDataCubit>()
-                    .currentUserData?.userId;
+                  final CachedUserData? userData = context
+                    .read<LocalUserDataCubit>().currentUserData;
+                  final String? userId = userData?.userId;
+                  final bool hasTestedMic = userData?.hasTestedMic == 'true';
                   final bool isHost = userId == homeFeedItem?.hostId;
-                  context.pushReplacementNamed(
-                    ATRoutes.goLiveOnboarding,
-                    extra: LiveProgramEntryParams(
-                      roomEntryToken: state.newData?.roomEntryToken ?? '',
-                      roomUrl: state.newData?.roomUrl ?? '',
-                      streamId: state.newData?.streamId ?? '',
-                      roomParticipantId: state.newData?.roomParticipantId ?? '',
-                      programId: homeFeedItem?.id ?? '',
-                      coverUrl: _displayImage ?? '',
-                      role: isHost
-                        ? ParticipantRole.host
-                        : ParticipantRole.audience,
-                      community: Community(name: 'Test Community'),
-                      programTitle: homeFeedItem?.title ?? '',
-                      programDesc: 'New program'
-                    ),
+
+                  final LiveProgramData liveProgramEntryParams = LiveProgramData(
+                    roomEntryToken: state.newData?.roomEntryToken ?? '',
+                    roomUrl: state.newData?.roomUrl ?? '',
+                    streamId: state.newData?.streamId ?? '',
+                    roomParticipantId: state.newData?.roomParticipantId ?? '',
+                    programId: homeFeedItem?.id ?? '',
+                    coverUrl: _displayImage ?? '',
+                    role: isHost
+                      ? ParticipantRole.host
+                      : ParticipantRole.audience,
+                    community: Community(name: 'Test Community'),
+                    programTitle: homeFeedItem?.title ?? '',
+                    programDesc: 'New program'
                   );
+                  
+                  if(hasTestedMic){
+                    context.pushReplacementNamed(
+                      ATRoutes.liveProgramScreen,
+                      extra: liveProgramEntryParams,
+                    );
+                  }
+                  else{
+                    context.pushReplacementNamed(
+                      ATRoutes.goLiveOnboarding,
+                      extra: liveProgramEntryParams,
+                    );
+                  }
                 }
                 else if(state is FailureState<LiveProgramEntryToken>){
                   showAppNotification2(

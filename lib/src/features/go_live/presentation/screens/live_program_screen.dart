@@ -1,8 +1,9 @@
 import 'package:amptive/src/features/auth/cubits/local_user_data_cubit.dart';
 import 'package:amptive/src/features/go_live/cubits/end_live_program_cubit.dart';
 import 'package:amptive/src/features/go_live/cubits/livestream_cubit1.dart';
+import 'package:amptive/src/features/go_live/data/models/live_program_data.dart';
 import 'package:amptive/src/features/go_live/data/models/livestream_state.dart';
-import 'package:amptive/src/features/go_live/presentation/screens/go_live_onboarding_screen.dart';
+import 'package:amptive/src/features/go_live/presentation/screens/go_live_onboarding_screen.dart' hide LiveProgramData;
 import 'package:amptive/src/features/go_live/presentation/screens/live_program_audience_view.dart';
 import 'package:amptive/src/features/go_live/presentation/screens/live_program_cohost_view.dart';
 import 'package:amptive/src/features/go_live/presentation/screens/live_program_host_view.dart';
@@ -13,32 +14,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:nested/nested.dart';
 
-enum ParticipantRole {
-  audience('audience'),
-  cohost('cohost'),
-  host('host');
-
-  const ParticipantRole(this.value);
-
-  final String value;
-
-  static ParticipantRole fromJson(String? value) {
-    switch (value?.toLowerCase()) {
-      case 'host':
-        return ParticipantRole.host;
-      case 'cohost':
-        return ParticipantRole.cohost;
-      default:
-        return ParticipantRole.audience; // fallback
-    }
-  }
-}
-
-
 
 class LiveProgramScreen extends StatelessWidget {
   const LiveProgramScreen({super.key, this.liveScreenEntryParams});
-  final LiveProgramEntryParams? liveScreenEntryParams;
+  final LiveProgramData? liveScreenEntryParams;
 
   @override
   Widget build(BuildContext context) {
@@ -95,7 +74,7 @@ class _SubWidget extends StatefulWidget {
     required this.liveScreenEntryParams
   });
 
-  final LiveProgramEntryParams? liveScreenEntryParams;
+  final LiveProgramData? liveScreenEntryParams;
 
   @override
   State<_SubWidget> createState() => __SubWidgetState();

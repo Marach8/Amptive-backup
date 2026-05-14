@@ -1,5 +1,6 @@
 import 'package:amptive/src/config/services/ws_notif_service/ws_channel_service_impl.dart';
 import 'package:amptive/src/features/go_live/data/models/deconstruct_inbound_events.dart';
+import 'package:amptive/src/features/go_live/data/models/live_program_data.dart';
 import 'package:amptive/src/features/go_live/presentation/screens/live_program_screen.dart';
 import 'package:amptive/src/shared/global_model_objects.dart';
 import 'package:amptive/src/shared/sentinel.dart';
@@ -28,7 +29,6 @@ class LiveStreamState1 extends Equatable {
     this.handQueue,
     this.viewerCount = 0,
     this.messagesIds,
-    this.latestGift,
   });
 
   final AudioConnectionStatus audioConnectionStatus;
@@ -50,7 +50,6 @@ class LiveStreamState1 extends Equatable {
   final List<Reaction>? reactions;
   final Map<String, Gift>? gifts;
   final List<String>? giftIds;
-  final Sentinel<Gift>? latestGift;
   final List<String>? handQueue;
   final int viewerCount;
 
@@ -101,7 +100,6 @@ class LiveStreamState1 extends Equatable {
       handQueue: handQueue ?? this.handQueue,
       viewerCount: viewerCount ?? this.viewerCount,
       messagesIds: messagesIds ?? this.messagesIds,
-      latestGift: latestGift ?? this.latestGift,
     );
   }
 
@@ -128,7 +126,6 @@ class LiveStreamState1 extends Equatable {
         handQueue,
         viewerCount,
         messagesIds,
-        latestGift?.value
       ];
 }
 
@@ -179,3 +176,14 @@ enum AudioConnectionStatus {
   reconnecting,
   disconnected,
 }
+
+
+// enum LivestreamStatus {
+//   initial,
+//   connecting,
+//   connected,
+//   reconnecting,
+//   disconnecting,
+//   disconnected,
+//   failed,
+// }

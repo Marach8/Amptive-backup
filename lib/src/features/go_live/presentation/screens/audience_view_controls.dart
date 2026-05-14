@@ -201,10 +201,7 @@ class _RowOfBtns extends StatelessWidget {
         ),
         EachGoLiveControlBtn(
           onTap: () {
-            // context
-            //     .read<AmptiveGoLiveSelectCoHostBloc>()
-            //     .hostAddCohost(getHostList()[5]);
-            //showFollowHostOrCohostDialog(context: context, host: getHostList().first);
+            context.read<LiveStreamCubit1>().raiseHand();
           },
           child: const ATImgLoader(
             imgPath: ATImgStrings.handRaiseIcon,
