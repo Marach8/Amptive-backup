@@ -74,7 +74,7 @@ class _WalletLandingScreenState extends State<_WalletLandingScreen> {
           body: RefreshIndicator(
             onRefresh: () {
               context.read<WalletBalanceCubit>().fetchWalletBalance();
-              return context.read<TransactionHistoryCubit>().fetchTransactionHistory();
+              return context.read<TransactionHistoryCubit>().refreshTransactionHistory();
             },
             child: SingleChildScrollView(
               padding: const EdgeInsets.fromLTRB(15, 10, 15, 10),
