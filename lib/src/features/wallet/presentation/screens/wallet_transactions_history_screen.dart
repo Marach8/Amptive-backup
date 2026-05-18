@@ -54,8 +54,7 @@ class ATWalletTxnsHistoryScreen extends StatelessWidget {
               builder: (BuildContext context,
                   ATAppState<TransactionHistoryResponseModel> state) {
             return switch (state) {
-              InitialState<TransactionHistoryResponseModel>() =>
-                const SizedBox.shrink(),
+              InitialState<TransactionHistoryResponseModel>() => const SizedBox.shrink(),
               LoadingState<TransactionHistoryResponseModel>() ||
               FailureState<TransactionHistoryResponseModel>() ||
               SuccessState<TransactionHistoryResponseModel>() =>

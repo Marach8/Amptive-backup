@@ -37,8 +37,37 @@ class AvailableBalanceWidget extends StatelessWidget {
       final bool isFailure = state is FailureState<WalletBalanceResponseModel>;
 
       return switch (state) {
-        InitialState<WalletBalanceResponseModel>() => const SizedBox.shrink(),
-        LoadingState<WalletBalanceResponseModel>() ||
+        InitialState<WalletBalanceResponseModel>() ||
+        LoadingState<WalletBalanceResponseModel>() =>
+          Builder(builder: (_) {
+            return ATContainer(
+              color: ATColors.white.withValues(alpha: 0.05),
+              padding: const EdgeInsets.all(15),
+              radius: 15,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const AvailableBalanceShimmer(),
+                  const SizedBox(height: 5),
+                  const PendingBalanceShimmer(),
+                  const SizedBox(height: 10),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: list
+                        .map((String item) => Container(
+                          height: 30,
+                          width: 60,
+                          decoration: BoxDecoration(
+                            color: ATColors.white.withValues(alpha: 0.1),
+                            borderRadius: BorderRadius.circular(20),
+                          ),
+                        ))
+                        .toList(),
+                  )
+                ],
+              ),
+            );
+          }),
         FailureState<WalletBalanceResponseModel>() ||
         SuccessState<WalletBalanceResponseModel>() =>
           Builder(builder: (_) {
