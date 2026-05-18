@@ -71,142 +71,144 @@ class _WalletLandingScreenState extends State<_WalletLandingScreen> {
             padding: const EdgeInsets.only(left: 7),
             leadingWidth: 30,
           ),
-          body: SingleChildScrollView(
-            padding: const EdgeInsets.fromLTRB(15, 10, 15, 10),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                const AvailableBalanceWidget(),
-                const SizedBox(height: 20),
-
-                // Transaction header
-                Row(
-                  children: <Widget>[
-                    Text(
-                      ATStrings.transactionHistory,
-                      style: context.textTheme.bodySmall
-                          ?.copyWith(color: ATColors.hexC2C2C2),
-                    ),
-                    const Spacer(),
-                    InkWell(
-                      onTap: () => context
-                          .pushNamed(ATRoutes.walletTransactionsHistoryScreen),
-                      splashColor: ATColors.white,
-                      borderRadius: BorderRadius.circular(5),
+          body: RefreshIndicator(
+            onRefresh: () {
+              context.read<WalletBalanceCubit>().fetchWalletBalance();
+              return context.read<TransactionHistoryCubit>().fetchTransactionHistory();
+            },
+            child: SingleChildScrollView(
+              padding: const EdgeInsets.fromLTRB(15, 10, 15, 10),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  const AvailableBalanceWidget(),
+                  const SizedBox(height: 20),
+            
+                  // Transaction header
+                  Row(
+                    children: <Widget>[
+                      Text(
+                        ATStrings.transactionHistory,
+                        style: context.textTheme.bodySmall
+                            ?.copyWith(color: ATColors.hexC2C2C2),
+                      ),
+                      const Spacer(),
+                      InkWell(
+                        onTap: () => context
+                            .pushNamed(ATRoutes.walletTransactionsHistoryScreen),
+                        splashColor: ATColors.white,
+                        borderRadius: BorderRadius.circular(5),
+                        child: Row(
+                          children: <Widget>[
+                            Text(
+                              ATStrings.VIEW_ALL,
+                              style: context.textTheme.bodySmall
+                                  ?.copyWith(color: ATColors.hexC2C2C2),
+                            ),
+                            Icon(Icons.keyboard_arrow_right_outlined,
+                                color: ATColors.hexC2C2C2),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 10),
+            
+                  
+             BlocBuilder<TransactionHistoryCubit,
+                ATAppState<TransactionHistoryResponseModel>>(
+              builder: (_, ATAppState<TransactionHistoryResponseModel> state) {
+                return switch (state) {
+                  InitialState<TransactionHistoryResponseModel>() =>
+                    const SizedBox.shrink(),
+            
+                  LoadingState<TransactionHistoryResponseModel>() ||
+                  FailureState<TransactionHistoryResponseModel>() ||
+                  SuccessState<TransactionHistoryResponseModel>() =>
+                    Builder(builder: (_) {
+            final TransactionHistoryCubit cubit =
+                context.read<TransactionHistoryCubit>();
+            
+            final List<TransactionModel> latest = cubit
+                .groupedTransactions.values
+                .expand((List<TransactionModel> txns) => txns)
+                .take(2)
+                .toList();
+            
+            if (latest.isEmpty) {
+              if (state is LoadingState<TransactionHistoryResponseModel>) {
+               return Column(
+                  children: List.generate(2, (_) => const Padding(
+                    padding: EdgeInsets.only(bottom: 10),
+                    child: TransactionHistoryItem(), // ← the single tile shimmer, not the full ListView
+                  )),
+                );
+              }
+              if (state is FailureState<TransactionHistoryResponseModel>) {
+                return   Text(
+                              'Please check your connection or try again',
+                              style: 
+                              Theme.of(context).textTheme.bodySmall?.copyWith(color: ATColors.hexC2C2C2) 
+                            );
+              }
+              return const Center(child: Text('No transactions yet.'));
+            }
+            
+            return Column(
+              children: latest.map((TransactionModel txn) {
+                return Padding(
+                  padding: const EdgeInsets.only(bottom: 10),
+                  child: RenderATransaction(
+                    time: txn.createdAt?.toLocalTime ?? 'N/A',
+                    txnType: txn.transactionType ?? ATStrings.SUB_RECEIVED,
+                    amount: '+${ATStrings.nairaText}${txn.amount ?? '0.00'}',
+                    color: ATColors.yellowColor,
+                    icon: Icons.favorite,
+                    imgPath: ATImgStrings.jpeg1,
+                  ),
+                );
+              }).toList(),
+            );
+                    }),
+                };
+              },
+            ),
+            
+                 
+                  const SizedBox(height: 20),
+                  Text(ATStrings.EVENT_ND_SHOW_VEST,
+                      style: context.textTheme.bodyLarge),
+                  const SizedBox(height: 20),
+            
+                  StatefulBuilder(builder: (_, StateSetter setter) {
+                    return InkWell(
+                      onTap: () => setter(() => shouldShowCommingSoon = true),
                       child: Row(
                         children: <Widget>[
-                          Text(
-                            ATStrings.VIEW_ALL,
-                            style: context.textTheme.bodySmall
-                                ?.copyWith(color: ATColors.hexC2C2C2),
+                          Expanded(
+                            child: ATImgLoader(
+                              imgPath: shouldShowCommingSoon
+                                  ? ATImgStrings.comingSoonImage2
+                                  : ATImgStrings.vestingOverviewImage,
+                              height: 240,
+                            ),
                           ),
-                          Icon(Icons.keyboard_arrow_right_outlined,
-                              color: ATColors.hexC2C2C2),
+                          Expanded(
+                            child: ATImgLoader(
+                              imgPath: shouldShowCommingSoon
+                                  ? ATImgStrings.comingSoonImage1
+                                  : ATImgStrings.exploreListingsImage,
+                              height: 240,
+                            ),
+                          ),
                         ],
                       ),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 10),
-
-                // ✅ FIX 2: Clean state handling — no nested switch+if,
-                // each state returns immediately and clearly
-                BlocBuilder<TransactionHistoryCubit,
-                    ATAppState<TransactionHistoryResponseModel>>(
-                  builder: (context, state) {
-                    // Loading / Initial → shimmer
-                    if (state is InitialState ||
-                        state is LoadingState) {
-                      return const TransactionHistoryShimmer();
-                    }
-
-                    // Failure → refresh button with fixed height so
-                    // layout doesn't collapse
-                    if (state is FailureState) {
-                      return SizedBox(
-                        height: 80,
-                        child: Center(
-                          child: IconButton(
-                            icon: const Icon(Icons.refresh),
-                            onPressed: () => context
-                                .read<TransactionHistoryCubit>()
-                                .fetchTransactionHistory(),
-                          ),
-                        ),
-                      );
-                    }
-
-                    // Success → read data only here, when it's safe
-                    final List<TransactionModel> transactions = context
-                            .read<TransactionHistoryCubit>()
-                            .currentTransactionHistoryData
-                            ?.transactions ??
-                        <TransactionModel>[];
-
-                    if (transactions.isEmpty) {
-                      return const SizedBox(
-                        height: 80,
-                        child: Center(child: Text('No transactions found.')),
-                      );
-                    }
-
-                    final List<TransactionModel> latestTwo =
-                        transactions.take(2).toList();
-
-                    return Column(
-                      children: latestTwo.map((TransactionModel txn) {
-                        return Padding(
-                          padding: const EdgeInsets.only(bottom: 10.0),
-                          child: RenderATransaction(
-                            time: txn.createdAt?.toLocalTime ?? 'N/A',
-                            txnType: txn.transactionType ??
-                                ATStrings.SUB_RECEIVED,
-                            amount:
-                                '${ATStrings.nairaText}${txn.amount ?? "0.00"}',
-                            color: ATColors.yellowColor,
-                            icon: Icons.favorite,
-                            imgPath: ATImgStrings.jpeg1,
-                          ),
-                        );
-                      }).toList(),
                     );
-                  },
-                ),
-
-                // ✅ These are siblings of the BlocBuilder — they always
-                // render regardless of transaction state
-                const SizedBox(height: 20),
-                Text(ATStrings.EVENT_ND_SHOW_VEST,
-                    style: context.textTheme.bodyLarge),
-                const SizedBox(height: 20),
-
-                StatefulBuilder(builder: (_, StateSetter setter) {
-                  return InkWell(
-                    onTap: () => setter(() => shouldShowCommingSoon = true),
-                    child: Row(
-                      children: <Widget>[
-                        Expanded(
-                          child: ATImgLoader(
-                            imgPath: shouldShowCommingSoon
-                                ? ATImgStrings.comingSoonImage2
-                                : ATImgStrings.vestingOverviewImage,
-                            height: 240,
-                          ),
-                        ),
-                        Expanded(
-                          child: ATImgLoader(
-                            imgPath: shouldShowCommingSoon
-                                ? ATImgStrings.comingSoonImage1
-                                : ATImgStrings.exploreListingsImage,
-                            height: 240,
-                          ),
-                        ),
-                      ],
-                    ),
-                  );
-                }),
-                const SizedBox(height: 100),
-              ],
+                  }),
+                  const SizedBox(height: 100),
+                ],
+              ),
             ),
           ),
         ),
