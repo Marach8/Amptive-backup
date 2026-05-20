@@ -28,41 +28,41 @@ class HostedEventsResponseModel {
 }
 
 class HostedEvent extends Equatable {
-  const HostedEvent({
-    this.eventId,
-    this.title,
-    this.description,
-    this.coverUrl,
-    this.status,
-    this.scheduledFor,
-    this.startedAt,
-    this.endedAt,
-    this.streamUrl,
-    this.streamKey,
-    this.playbackUrl,
-    this.livestreamId,
-    this.eventType,
-    this.viewerCount,
-    this.peakViewers,
-    this.reactionCount,
-    this.commentCount,
-    this.goingCount,
-    this.durationSeconds,
-    this.host,
-    this.coHosts,
-    this.tags,
-    this.publishedAt,
-    this.createdAt,
-    this.updatedAt,
-    this.handRaising,
-    this.category,
-    this.price,
-    this.followerCount,
-    this.isLive,
-    this.community,
-    this.capacity,
-    this.whispers,
-  });
+  const HostedEvent(
+      {this.eventId,
+      this.title,
+      this.description,
+      this.coverUrl,
+      this.status,
+      this.scheduledFor,
+      this.startedAt,
+      this.endedAt,
+      this.streamUrl,
+      this.streamKey,
+      this.playbackUrl,
+      this.livestreamId,
+      this.eventType,
+      this.viewerCount,
+      this.peakViewers,
+      this.reactionCount,
+      this.commentCount,
+      this.goingCount,
+      this.durationSeconds,
+      this.host,
+      this.coHosts,
+      this.tags,
+      this.publishedAt,
+      this.createdAt,
+      this.updatedAt,
+      this.handRaising,
+      this.category,
+      this.price,
+      this.followerCount,
+      this.isLive,
+      this.community,
+      this.capacity,
+      this.whispers,
+      this.showType});
 
   factory HostedEvent.fromJson(Map<String, dynamic> json) {
     return HostedEvent(
@@ -85,6 +85,7 @@ class HostedEvent extends Equatable {
       commentCount: json['comment_count'],
       goingCount: json['going_count'],
       durationSeconds: json['duration_seconds'],
+      showType: json['show_type'],
       host: json['host'] != null ? Host.fromJson(json['host']) : null,
       coHosts: (json['co_hosts'] as List<dynamic>?)
           ?.map((dynamic e) => CoHost.fromJson(e))
@@ -102,8 +103,8 @@ class HostedEvent extends Equatable {
       followerCount: json['follower_count'],
       isLive: json['is_live'],
       capacity: json['capacity'],
-      community: json['community'] != null 
-          ? Community.fromJson(json['community']) 
+      community: json['community'] != null
+          ? Community.fromJson(json['community'])
           : null,
     );
   }
@@ -121,13 +122,19 @@ class HostedEvent extends Equatable {
       playbackUrl,
       livestreamId,
       eventType,
+      showType,
       publishedAt,
       createdAt,
       updatedAt,
       capacity;
 
-  final int? viewerCount, peakViewers, reactionCount, commentCount, 
-    goingCount, durationSeconds, followerCount;
+  final int? viewerCount,
+      peakViewers,
+      reactionCount,
+      commentCount,
+      goingCount,
+      durationSeconds,
+      followerCount;
   final double? price;
   final Host? host;
   final bool? isLive, handRaising, whispers;
@@ -171,5 +178,6 @@ class HostedEvent extends Equatable {
         community,
         capacity,
         whispers,
+        showType
       ];
 }

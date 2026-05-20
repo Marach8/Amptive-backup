@@ -13,7 +13,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import '../../../../shared/app_bar_widget.dart';
 
-class LoginScreenEntryParams{
+class LoginScreenEntryParams {
   const LoginScreenEntryParams({
     this.title,
     this.notification,
@@ -35,10 +35,10 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> with ATValidators {
   final TextEditingController _emailCntrl = TextEditingController(
-    text: kDebugMode ? 'nnannamarach6@gmail.com' : '',
+    text: kDebugMode ? 'nnannamarach4@gmail.com' : '',
   );
   final TextEditingController _pswrdCntrl = TextEditingController(
-    text: kDebugMode ? 'Amptive@2026' : '',
+    text: kDebugMode ? 'Amptive@Developer123' : '',
   );
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final ValueNotifier<(bool, bool)> _btnNotifier =
@@ -64,17 +64,15 @@ class _LoginScreenState extends State<LoginScreen> with ATValidators {
       }
     });
 
-    WidgetsBinding.instance.addPostFrameCallback(
-      (_){
-        if(widget.params?.notification != null){
-          showAppNotification2(
-            context: context,
-            text: widget.params?.notification ?? '',
-            type: NotificationType.failure,
-          );
-        }
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (widget.params?.notification != null) {
+        showAppNotification2(
+          context: context,
+          text: widget.params?.notification ?? '',
+          type: NotificationType.failure,
+        );
       }
-    );
+    });
   }
 
   @override

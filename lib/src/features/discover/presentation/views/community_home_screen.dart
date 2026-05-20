@@ -22,7 +22,8 @@ class ATCommunityScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider<CommunitiesCubit>(create: (_) => CommunitiesCubit()..fetchCommunities(),
+    return BlocProvider<CommunitiesCubit>(
+      create: (_) => CommunitiesCubit()..fetchCommunities(),
       child: ATAnnotatedRegion(
         statusBarColor: ATColors.transparent,
         child: Scaffold(
@@ -38,10 +39,10 @@ class ATCommunityScreen extends StatelessWidget {
                     SliverPersistentHeader(
                       pinned: true,
                       delegate: ATSliverHDelegate(
-                          maxExt:
-                              kToolbarHeight + MediaQuery.paddingOf(context).top,
-                          minExt:
-                              kToolbarHeight + MediaQuery.paddingOf(context).top,
+                          maxExt: kToolbarHeight +
+                              MediaQuery.paddingOf(context).top,
+                          minExt: kToolbarHeight +
+                              MediaQuery.paddingOf(context).top,
                           child: ATBlurredHeaderWidget(
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -80,84 +81,95 @@ class ATCommunityScreen extends StatelessWidget {
                         child: SizedBox(
                       height: 10,
                     )),
-                    BlocConsumer<CommunitiesCubit, ATAppState<CommunitiesResponseModel>> (
-                      listener: (BuildContext context, ATAppState<CommunitiesResponseModel> state) {
+                    BlocConsumer<CommunitiesCubit,
+                        ATAppState<CommunitiesResponseModel>>(
+                      listener: (BuildContext context,
+                          ATAppState<CommunitiesResponseModel> state) {
                         if (state is FailureState<CommunitiesResponseModel>) {
-                         showAppNotification2(
-                          context: context,
-                           text: state.message,
-                           type: NotificationType.failure);
+                          showAppNotification2(
+                              context: context,
+                              text: state.message,
+                              type: NotificationType.failure);
                         }
                       },
-                      builder: (BuildContext context, ATAppState<CommunitiesResponseModel> state) {
+                      builder: (BuildContext context,
+                          ATAppState<CommunitiesResponseModel> state) {
                         return switch (state) {
-                          InitialState<CommunitiesResponseModel>() => const SizedBox.shrink(),
-                          LoadingState<CommunitiesResponseModel>() || 
+                          InitialState<CommunitiesResponseModel>() =>
+                            const SizedBox.shrink(),
+                          LoadingState<CommunitiesResponseModel>() ||
                           FailureState<CommunitiesResponseModel>() ||
-                           SuccessState<CommunitiesResponseModel>()  =>
-                          Builder(
-                            builder: (BuildContext context) {
-                              final CommunitiesResponseModel? community = context.read<CommunitiesCubit>().currentCommunities;
-                              final Map<String, Community> communities = community?.communities ?? <String, Community>{};
+                          SuccessState<CommunitiesResponseModel>() =>
+                            Builder(builder: (BuildContext context) {
+                              final CommunitiesResponseModel? community =
+                                  context
+                                      .read<CommunitiesCubit>()
+                                      .currentCommunities;
+                              final Map<String, Community> communities =
+                                  community?.communities ??
+                                      <String, Community>{};
                               final List<String> communityIds =
-                        community?.communityIds ?? <String>[];
+                                  community?.communityIds ?? <String>[];
                               if (communities.isEmpty) {
                                 if (state is LoadingState) {
-                                  return const SliverToBoxAdapter(
-                                    child: Center(
-                                      child: CommunitiesShimmer(),
-                                    ),
-                                  );
+                                  return const CommunitiesShimmer();
                                 }
+
                                 if (state is FailureState) {
                                   return SliverFillRemaining(
                                     child: Center(
                                       child: IconButton(
                                         icon: const Icon(Icons.refresh),
-                                        onPressed: () => context.read<CommunitiesCubit>().fetchCommunities(),
+                                        onPressed: () => context
+                                            .read<CommunitiesCubit>()
+                                            .fetchCommunities(),
                                       ),
                                     ),
                                   );
                                 }
                                 return const SliverFillRemaining(
                                   child: Center(
-                                    child: Text('communities not available yet'),
+                                    child:
+                                        Text('communities not available yet'),
                                   ),
                                 );
                               }
-                    final int count = communityIds.length;
+                              final int count = communityIds.length;
 
-                            
-                        
-                      
-                    return SliverPadding(
-                      padding: const EdgeInsets.symmetric(horizontal: 15),
-                      sliver: SliverGrid(
-                          delegate:
-                              SliverChildListDelegate(List<Widget>.generate(
-                                  count,
-                                   (index) {
-          final String? id = communityIds[index];
-          final Community? community = communities[id];
-                                  return CommunityCardWidget(
-                                    title: community?.name ?? '',
-                                        picture: community?.image ?? ATImgStrings.COMMUNITY_CARD,
-                                        padding: EdgeInsets.zero,
-                                        onTap: () => context
-                                            .pushNamed(ATRoutes.SOCIETY_SCREEN),
-                                       );
-        },
-      ),
-    ),
-                          gridDelegate:
-                              const SliverGridDelegateWithFixedCrossAxisCount(
-                                  crossAxisCount: 2,
-                                  crossAxisSpacing: 10,
-                                  mainAxisSpacing: 0,
-                                  childAspectRatio: 1.28)),
-                    );
-                            }
-                          )
+                              return SliverPadding(
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 15),
+                                sliver: SliverGrid(
+                                    delegate: SliverChildListDelegate(
+                                      List<Widget>.generate(
+                                        count,
+                                        (int index) {
+                                          final String id = communityIds[index];
+                                          final Community? community =
+                                              communities[id];
+                                          return CommunityCardWidget(
+                                            // title: community?.name ?? '',
+                                            picture: community?.image ??
+                                                ATImgStrings.COMMUNITY_CARD,
+                                            padding: EdgeInsets.zero,
+                                            onTap: () => context.pushNamed(
+                                              ATRoutes.SOCIETY_SCREEN,
+                                              extra: <String, String>{
+                                                'communityId': id
+                                              },
+                                            ),
+                                          );
+                                        },
+                                      ),
+                                    ),
+                                    gridDelegate:
+                                        const SliverGridDelegateWithFixedCrossAxisCount(
+                                            crossAxisCount: 2,
+                                            crossAxisSpacing: 10,
+                                            mainAxisSpacing: 0,
+                                            childAspectRatio: 1.28)),
+                              );
+                            })
                         };
                       },
                     )
@@ -171,21 +183,26 @@ class ATCommunityScreen extends StatelessWidget {
     );
   }
 }
+
 class CommunitiesShimmer extends StatelessWidget {
   const CommunitiesShimmer({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: 122, 
-      child: ListView.builder(
-        physics: const NeverScrollableScrollPhysics(),
-        scrollDirection: Axis.horizontal,
-        padding: const EdgeInsets.only(left: 15),
-        itemCount: 5, 
-        itemBuilder: (BuildContext context, int index) {
-          return const RenderCommunityCardShimmer();
-        },
+    return SliverPadding(
+      padding: const EdgeInsets.symmetric(horizontal: 15),
+      sliver: SliverGrid(
+        delegate: SliverChildBuilderDelegate(
+          (BuildContext context, int index) =>
+              const RenderCommunityCardShimmer(),
+          childCount: 10,
+        ),
+        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 2,
+          crossAxisSpacing: 10,
+          mainAxisSpacing: 10,
+          childAspectRatio: 1.28,
+        ),
       ),
     );
   }
@@ -199,9 +216,9 @@ class RenderCommunityCardShimmer extends StatelessWidget {
     return const Padding(
       padding: EdgeInsets.only(right: 15),
       child: ATShimmer(
-        width: 160,
+        width: 170,
         height: 122,
-        radius: 10, 
+        radius: 10,
       ),
     );
   }

@@ -31,15 +31,17 @@ class MainDiscoverView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MultiBlocProvider(providers: <SingleChildWidget>[
-      BlocProvider<TrendingHashtagsCubit>(
-        create: (_) => TrendingHashtagsCubit()..fetchTrendingTags()),
-      BlocProvider<CommunitiesCubit>(
-        create: (_) => CommunitiesCubit()..fetchCommunities())  
-    ], child: Column(
-      children: <Widget>[
-        const HorizontalScrollCards(),
-        const SizedBox(height: 48),
+    return MultiBlocProvider(
+      providers: <SingleChildWidget>[
+        BlocProvider<TrendingHashtagsCubit>(
+            create: (_) => TrendingHashtagsCubit()..fetchTrendingTags()),
+        BlocProvider<CommunitiesCubit>(
+            create: (_) => CommunitiesCubit()..fetchCommunities())
+      ],
+      child: Column(
+        children: <Widget>[
+          const HorizontalScrollCards(),
+          const SizedBox(height: 48),
 
           HastagHeadingRow(
             title: ATStrings.trendingHashtags,
@@ -263,66 +265,75 @@ class MainDiscoverView extends StatelessWidget {
           Divider(indent: 15, endIndent: 15, color: ATColors.hex252525),
           const SizedBox(height: 40),
 
-          
-         const Padding(
-  padding: EdgeInsets.symmetric(horizontal: 15),
-  child: AmptiveMore2DiscoverTitle(),
-),
-const SizedBox(height: 15),
+          const Padding(
+            padding: EdgeInsets.symmetric(horizontal: 15),
+            child: AmptiveMore2DiscoverTitle(),
+          ),
+          const SizedBox(height: 15),
 
-BlocBuilder<CommunitiesCubit, ATAppState<CommunitiesResponseModel>>(
-  builder: (BuildContext context, ATAppState<CommunitiesResponseModel> state) {
-    return switch (state) {
-      InitialState<CommunitiesResponseModel>() => const SizedBox.shrink(),
-      LoadingState<CommunitiesResponseModel>() ||
-      FailureState<CommunitiesResponseModel>() ||
-      SuccessState<CommunitiesResponseModel>() =>
-        Builder(
-          builder: (BuildContext context) {
-            final CommunitiesResponseModel? community = context.read<CommunitiesCubit>().currentCommunities;
-            final Map<String, Community> communities = community?.communities ?? <String, Community>{};
-            final List<String> communityIds = community?.communityIds ?? <String>[];
+          BlocBuilder<CommunitiesCubit, ATAppState<CommunitiesResponseModel>>(
+            builder: (BuildContext context,
+                ATAppState<CommunitiesResponseModel> state) {
+              return switch (state) {
+                InitialState<CommunitiesResponseModel>() =>
+                  const SizedBox.shrink(),
+                LoadingState<CommunitiesResponseModel>() ||
+                FailureState<CommunitiesResponseModel>() ||
+                SuccessState<CommunitiesResponseModel>() =>
+                  Builder(
+                    builder: (BuildContext context) {
+                      final CommunitiesResponseModel? community =
+                          context.read<CommunitiesCubit>().currentCommunities;
+                      final Map<String, Community> communities =
+                          community?.communities ?? <String, Community>{};
+                      final List<String> communityIds =
+                          community?.communityIds ?? <String>[];
 
-            if (communities.isEmpty) {
-              if (state is LoadingState) {
-                return const Center(child: CommunitiesShimmer());
-              }
-              if (state is FailureState) {
-                return Center(
-                  child: IconButton(
-                    icon: const Icon(Icons.refresh),
-                    onPressed: () => context.read<CommunitiesCubit>().fetchCommunities(),
+                      if (communities.isEmpty) {
+                        if (state is LoadingState) {
+                          return const Center(
+                              child: DiscoverPageCommunitiesShimmer());
+                        }
+                        if (state is FailureState) {
+                          return Center(
+                            child: IconButton(
+                              icon: const Icon(Icons.refresh),
+                              onPressed: () => context
+                                  .read<CommunitiesCubit>()
+                                  .fetchCommunities(),
+                            ),
+                          );
+                        }
+                        return const Center(
+                            child: Text('Communities not available yet'));
+                      }
+
+                      return SizedBox(
+                        height: 122,
+                        child: ListView.builder(
+                          physics: const BouncingScrollPhysics(),
+                          scrollDirection: Axis.horizontal,
+                          padding: const EdgeInsets.only(left: 15),
+                          itemCount: communityIds.length,
+                          itemBuilder: (BuildContext context, int index) {
+                            final String id = communityIds[index];
+                            final Community? community = communities[id];
+
+                            return CommunityCardWidget(
+                              picture: community?.image ??
+                                  ATImgStrings.COMMUNITY_CARD,
+                              //title: community?.name,
+                            );
+                          },
+                        ),
+                      );
+                    },
                   ),
-                );
-              }
-              return const Center(child: Text('Communities not available yet'));
-            }
-
-            return SizedBox(
-              height: 122,
-              child: ListView.builder(
-                physics: const BouncingScrollPhysics(),
-                scrollDirection: Axis.horizontal,
-                padding: const EdgeInsets.only(left: 15),
-                itemCount: communityIds.length,
-                itemBuilder: (BuildContext context, int index) {
-                  final String id = communityIds[index];
-                  final Community? community = communities[id];
-                  
-                  return CommunityCardWidget(
-                    picture: community?.image ?? ATImgStrings.COMMUNITY_CARD,
-                    title: community?.name,
-                  );
-                },
-              ),
-            );
-          },
-        ),
-    }; 
-  },
-),
-const SizedBox(height: 10),
-Divider(indent: 15, endIndent: 15, color: ATColors.hex252525),
+              };
+            },
+          ),
+          const SizedBox(height: 10),
+          Divider(indent: 15, endIndent: 15, color: ATColors.hex252525),
           const SizedBox(height: 40),
 
           ATContainer(
@@ -371,6 +382,26 @@ Divider(indent: 15, endIndent: 15, color: ATColors.hex252525),
           ),
           const SizedBox(height: 100)
         ],
+      ),
+    );
+  }
+}
+
+class DiscoverPageCommunitiesShimmer extends StatelessWidget {
+  const DiscoverPageCommunitiesShimmer({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      height: 122,
+      child: ListView.builder(
+        physics: const NeverScrollableScrollPhysics(),
+        scrollDirection: Axis.horizontal,
+        padding: const EdgeInsets.only(left: 15),
+        itemCount: 5,
+        itemBuilder: (BuildContext context, int index) {
+          return const RenderCommunityCardShimmer();
+        },
       ),
     );
   }
