@@ -186,28 +186,41 @@ class _RowOfBtns extends StatelessWidget {
   Widget build(BuildContext context) {
     final LiveStreamState1 state = 
       context.watch<LiveStreamCubit1>().state;
-    final bool isMicUnmuted = state.isMicEnabled;
+    final bool isMicUnmuted = state.myMicIsEnabled;
+    final bool isHandRaised = state.myHandIsRaised == true;
     return Row(
       children: <Widget>[
-        EachGoLiveControlBtn(
-          onTap: () {
+        BlocListener<LiveStreamCubit1, LiveStreamState1>(
+          listenWhen: (LiveStreamState1 prev, LiveStreamState1 curr)
+            => prev.myMicIsEnabled != curr.myMicIsEnabled,
+          listener: (_, LiveStreamState1 state){
             context.read<LiveStreamCubit1>()
-              .toggleMicrophone(!isMicUnmuted);
+              .toggleMicrophone(state.myMicIsEnabled);
           },
-          child: Icon(
-            isMicUnmuted ? Icons.mic : Icons.mic_off,
-            size: 20
+          child: EachGoLiveControlBtn(
+            onTap: () {
+              context.read<LiveStreamCubit1>()
+                .toggleMicrophone(!isMicUnmuted);
+            },
+            child: Icon(
+              isMicUnmuted ? Icons.mic : Icons.mic_off,
+              size: 20
+            ),
           ),
         ),
         EachGoLiveControlBtn(
           onTap: () {
-            context.read<LiveStreamCubit1>().raiseHand();
+            context.read<LiveStreamCubit1>().raiseHand(
+              context.read<LocalUserDataCubit>()
+                .currentUserData?.userId ?? '',
+            );
           },
-          child: const ATImgLoader(
+          child: ATImgLoader(
             imgPath: ATImgStrings.handRaiseIcon,
             height: 20,
             width: 20,
             boxFit: BoxFit.fill,
+            color: isHandRaised ? ATColors.hex307FE2 : null,
           ),
         ),
         EachGoLiveControlBtn(

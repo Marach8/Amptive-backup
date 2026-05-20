@@ -2,6 +2,8 @@ import 'package:amptive/src/config/api_response_and_app_state.dart';
 import 'package:amptive/src/config/services/local_storage_service/flutter_secure_storage_service_impl.dart';
 import 'package:amptive/src/config/services/local_storage_service/storage_service.dart';
 import 'package:amptive/src/config/utils/other_strings.dart';
+import 'package:amptive/src/features/go_live/data/models/live_program_data.dart';
+import 'package:amptive/src/shared/sentinel.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -56,21 +58,40 @@ class LocalUserDataCubit extends Cubit<ATAppState<CachedUserData>> {
   }
 }
 
+
 class CachedUserData extends Equatable {
-  const CachedUserData(
-      {this.userId,
-      this.email,
-      this.username,
-      this.dob,
-      this.name,
-      this.pictureUrl,
-      this.phoneNumber,
-      this.followersCount,
-      this.followingCount,
-      this.hasTestedMic});
+  const CachedUserData({
+    this.userId,
+    this.email,
+    this.username,
+    this.dob,
+    this.name,
+    this.pictureUrl,
+    this.phoneNumber,
+    this.followersCount,
+    this.followingCount,
+    this.hasTestedMic,
+    this.liveProgramData,
+  });
 
   factory CachedUserData.fromLocalStorageJson(
-    Map<String, dynamic> json) => CachedUserData(
+    Map<String, dynamic> json,
+  ) {
+    Sentinel<LiveProgramData>? liveProgramData;
+
+    if (json.containsKey(ATStrings.liveProgramData)) {
+      final dynamic value = json[ATStrings.liveProgramData];
+
+      liveProgramData = Sentinel<LiveProgramData>.of(
+        value == null ? null : LiveProgramData.fromJson(
+          Map<String, dynamic>.from(value),
+        ),
+      );
+    } else {
+      liveProgramData = const Sentinel<LiveProgramData>.absent();
+    }
+
+    return CachedUserData(
       userId: json[ATStrings.userId],
       email: json[ATStrings.email],
       username: json[ATStrings.username],
@@ -80,8 +101,10 @@ class CachedUserData extends Equatable {
       phoneNumber: json[ATStrings.phoneNumber],
       followersCount: json[ATStrings.followerCount],
       followingCount: json[ATStrings.followingCount],
-      hasTestedMic: json[ATStrings.hasTestedMic]);
-      
+      hasTestedMic: json[ATStrings.hasTestedMic],
+      liveProgramData: liveProgramData,
+    );
+  }
 
   final String? userId,
       email,
@@ -94,6 +117,8 @@ class CachedUserData extends Equatable {
       followersCount,
       hasTestedMic;
 
+  final Sentinel<LiveProgramData?>? liveProgramData;
+
   CachedUserData copyWith({
     String? userId,
     String? email,
@@ -104,8 +129,10 @@ class CachedUserData extends Equatable {
     String? followersCount,
     String? followingCount,
     String? phoneNumber,
-    String? hasTestedMic
-  }) => CachedUserData(
+    String? hasTestedMic,
+    Sentinel<LiveProgramData>? liveProgramData,
+  }) {
+    return CachedUserData(
       userId: userId ?? this.userId,
       email: email ?? this.email,
       username: username ?? this.username,
@@ -116,20 +143,33 @@ class CachedUserData extends Equatable {
       followersCount: followersCount ?? this.followersCount,
       followingCount: followingCount ?? this.followingCount,
       hasTestedMic: hasTestedMic ?? this.hasTestedMic,
-  );
+      liveProgramData:
+          liveProgramData ?? this.liveProgramData,
+    );
+  }
 
-  Map<String, dynamic> toLocalStorageJson() => <String, dynamic>{
-        ATStrings.userId: userId,
-        ATStrings.email: email,
-        ATStrings.username: username,
-        ATStrings.dob: dob,
-        ATStrings.name: name,
-        ATStrings.profilePicture: pictureUrl,
-        ATStrings.phoneNumber: phoneNumber,
-        ATStrings.followerCount: followersCount,
-        ATStrings.followingCount: followingCount,
-        ATStrings.hasTestedMic: hasTestedMic,
-      };
+  Map<String, dynamic> toLocalStorageJson() {
+    final Map<String, dynamic> json = <String, dynamic>{
+      ATStrings.userId: userId,
+      ATStrings.email: email,
+      ATStrings.username: username,
+      ATStrings.dob: dob,
+      ATStrings.name: name,
+      ATStrings.profilePicture: pictureUrl,
+      ATStrings.phoneNumber: phoneNumber,
+      ATStrings.followerCount: followersCount,
+      ATStrings.followingCount: followingCount,
+      ATStrings.hasTestedMic: hasTestedMic,
+    };
+
+    if (liveProgramData != null &&
+        liveProgramData!.hasValue) {
+      json[ATStrings.liveProgramData] =
+          liveProgramData!.value?.toJson();
+    }
+
+    return json;
+  }
 
   @override
   List<Object?> get props => <Object?>[
@@ -142,6 +182,7 @@ class CachedUserData extends Equatable {
         phoneNumber,
         followersCount,
         followingCount,
-        hasTestedMic
+        hasTestedMic,
+        liveProgramData?.value,
       ];
 }

@@ -20,6 +20,7 @@ import '../data/models/deconstruct_inbound_events.dart';
 
 class LiveStreamCubit1 extends Cubit<LiveStreamState1> {
   LiveStreamCubit1({
+    required this.myUserId,
     ATAudioStreamingService? extStreamService,
     WSNotificationService? extWSNotificationService,
     ATLocalStorageService? extLocalStorageService,
@@ -45,6 +46,7 @@ class LiveStreamCubit1 extends Cubit<LiveStreamState1> {
   final ATAudioStreamingService streamingService;
   final WSNotificationService wsNotificationService;
   final ATLocalStorageService localStorage;
+  final String myUserId;
 
   StreamSubscription<AudioConnectionStatus>? _audioConnectionStateSub;
   StreamSubscription<WSConnectionStatus>? _wsConnectionStateSub;
@@ -177,6 +179,7 @@ class LiveStreamCubit1 extends Cubit<LiveStreamState1> {
         final LiveStreamState1 newState = reduceIncomingStreamAction(
           wsJson: message,
           stateSnapshot: state,
+          myUserId: myUserId,
         );
         emit(newState);
     });
@@ -249,15 +252,16 @@ class LiveStreamCubit1 extends Cubit<LiveStreamState1> {
   }
 
   Future<void> disconnect() async {
-    await Future.wait(<Future<dynamic>>[
+    leave(myUserId);
+    Future.wait(<Future<dynamic>>[
       wsNotificationService.disconnect(),
       streamingService.disconnect(),
     ]);
   }
 
-  void toggleMicrophone(bool isEnabled){
-    streamingService.setMicEnabled(isEnabled);
-    emit(state.copyWith(isMicEnabled: isEnabled));
+  void toggleMicrophone(bool isEnabled) async {
+    await streamingService.setMicEnabled(isEnabled);
+    emit(state.copyWith(myMicIsEnabled: isEnabled));
   }
 
   void sendChat(String message) {
@@ -281,21 +285,33 @@ class LiveStreamCubit1 extends Cubit<LiveStreamState1> {
         'quantity': 20,
       });
 
-  void raiseHand() => wsNotificationService.sendMessage(<String, dynamic>{
+  void raiseHand(String userId){
+    final bool isMyHandRaised = state.myHandIsRaised == true;
+    wsNotificationService.sendMessage(<String, dynamic>{
+      'type': LiveEventType.handRaise.value,
+      'action': isMyHandRaised ? 'lower' : 'raise',
+      'identity': userId,
+    });
+  }
+
+  void lowerHand(String userId) => wsNotificationService
+    .sendMessage(<String, dynamic>{
         'type': LiveEventType.handRaise.value,
-        'action': 'raise',
+        'action': 'lower',
+        'identity': userId,
       });
 
-  void lowerHand() => wsNotificationService.sendMessage(<String, dynamic>{
-        'type': LiveEventType.handRaise.value,
-        'action': 'lower'
+  void leave(String userId) => wsNotificationService
+    .sendMessage(<String, dynamic>{
+        'type': LiveEventType.participantLeave.value,
+        'identity': userId,
       });
 
-  void approveHandRaise(String identity) =>
+  void approveHandRaise(String idToApprove) =>
       wsNotificationService.sendMessage(<String, dynamic>{
-        'type': LiveEventType.handRaise,
+        'type': LiveEventType.handRaise.value,
         'action': 'approve',
-        'identity': identity,
+        'identity': idToApprove,
       });
 
   void sendPing() => wsNotificationService.sendMessage(<String, dynamic>{

@@ -1,7 +1,6 @@
 import 'package:amptive/src/features/auth/cubits/local_user_data_cubit.dart';
 import 'package:amptive/src/features/go_live/cubits/livestream_cubit1.dart';
 import 'package:amptive/src/features/go_live/data/models/livestream_state.dart';
-import 'package:amptive/src/features/go_live/presentation/widgets/gift_picker_dialog.dart';
 import 'package:amptive/src/features/go_live/presentation/widgets/host_moderation_tools_dialog.dart';
 import 'package:amptive/src/shared/circular_image.dart';
 import 'package:amptive/src/shared/image_loader_widget.dart';
@@ -9,7 +8,6 @@ import 'package:amptive/src/shared/textformfield_widget.dart';
 import 'package:emoji_picker_flutter/emoji_picker_flutter.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../global_export.dart';
-import '../../../../services/go_live_service/go_live_service.dart';
 
 
 class GoLiveControlsVisibilityBloc extends Cubit<bool> {
@@ -33,15 +31,15 @@ class GoLiveControlsVisibilityBloc extends Cubit<bool> {
 
 
 typedef _InputState = ({bool isFocused, bool hasText});
-class HostModerationToolsBtns extends StatefulWidget {
-  const HostModerationToolsBtns({super.key});
+class HostModerationControls extends StatefulWidget {
+  const HostModerationControls({super.key});
 
   @override
-  State<HostModerationToolsBtns> createState() =>
-      _HostModerationToolsBtnsState();
+  State<HostModerationControls> createState() =>
+      _HostModerationControlsState();
 }
 
-class _HostModerationToolsBtnsState extends State<HostModerationToolsBtns> {
+class _HostModerationControlsState extends State<HostModerationControls> {
   late FocusNode _focusNode;
   late TextEditingController _cntrl;
 
@@ -201,7 +199,8 @@ class _RowOfBtns extends StatelessWidget {
   Widget build(BuildContext context) {
     final LiveStreamState1 state = 
       context.watch<LiveStreamCubit1>().state;
-    final bool isMicUnmuted = state.isMicEnabled;
+    final bool isMicUnmuted = state.myMicIsEnabled;
+    final bool isMyHandRaised = state.myHandIsRaised == true;
 
     return Row(
       children: <Widget>[
@@ -217,13 +216,17 @@ class _RowOfBtns extends StatelessWidget {
         ),
         EachGoLiveControlBtn(
           onTap: ()async{
-            context.read<LiveStreamCubit1>().raiseHand();
+            context.read<LiveStreamCubit1>().raiseHand(
+              context.read<LocalUserDataCubit>()
+                .currentUserData?.userId ?? '',
+            );
           },
-          child: const ATImgLoader(
+          child: ATImgLoader(
             imgPath: ATImgStrings.handRaiseIcon,
             height: 20,
             width: 20,
             boxFit: BoxFit.fill,
+            color: isMyHandRaised ? ATColors.hex307FE2 : null,
           ),
         ),
         EachGoLiveControlBtn(

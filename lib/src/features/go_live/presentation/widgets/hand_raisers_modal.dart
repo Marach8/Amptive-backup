@@ -13,19 +13,16 @@ import 'package:amptive/src/features/go_live/go_live_export.dart';
 import 'package:amptive/src/global_export.dart';
 import 'package:amptive/src/shared/modal_dismisser.dart';
 import 'package:amptive/src/shared/search_filter_widget.dart';
-import 'package:amptive/src/shared/circle_avatar.dart';
+import 'package:go_router/go_router.dart';
 import 'package:nested/nested.dart';
-import '../../../../models/host.dart';
-import '../../../../bloc/main_app/go_live_bloc/host_view/available_cohosts_bloc.dart';
-import '../../../../services/create_show/create_show_service.dart';
-import '../../../../livestream/models/livestream_models.dart';
 
-Future<void> showListenersModal({
+
+Future<String?> showHandRaisersModal({
   required BuildContext context,
-  required bool enableKickOut,
+  required bool canPermitHandRaise,
   required LiveStreamCubit1 liveStreamCubit,
 }) async {
-  return await showModalBottomSheet(
+  return await showModalBottomSheet<String>(
     context: context,
     isScrollControlled: true,
     useSafeArea: true,
@@ -37,33 +34,15 @@ Future<void> showListenersModal({
           BlocProvider<LiveStreamCubit1>.value(value: liveStreamCubit),
           BlocProvider<SearchkeyCubit>(create: (_) => SearchkeyCubit())
         ],
-        child: Stack(
-          children: <Widget>[
-            DraggableScrollableSheet(
-              expand: false,
-              initialChildSize: 0.7,
-              builder: (_, ScrollController scrollController) {
-                return _ListenersModal(
-                  scrollController: scrollController,
-                  canKickListener: enableKickOut
-                );
-              },
-            ),
-            // Positioned(
-            //   bottom: 0,
-            //   left: 0,
-            //   right: 0,
-            //   child: BlocBuilder<SelectedCohostsCubit, List<User>>(
-            //       builder: (_, List<User> selectedCoHosts) {
-            //     final bool activateBtn = selectedCoHosts.isNotEmpty;
-            //     return ATBlurredBgBtn(
-            //       onPressed:
-            //           activateBtn ? () => dContext.pop(selectedCoHosts) : null,
-            //       btnTitle: ATStrings.cContinue,
-            //     );
-            //   }),
-            // )
-          ],
+        child: DraggableScrollableSheet(
+          expand: false,
+          initialChildSize: 0.7,
+          builder: (_, ScrollController scrollController) {
+            return _HandRaisersModal(
+              scrollController: scrollController,
+              canKickListener: canPermitHandRaise
+            );
+          },
         ),
       );
     },
@@ -71,8 +50,8 @@ Future<void> showListenersModal({
 }
 
 
-class _ListenersModal extends StatefulWidget {
-  const _ListenersModal({
+class _HandRaisersModal extends StatefulWidget {
+  const _HandRaisersModal({
     required this.scrollController,
     required this.canKickListener,
   });
@@ -81,10 +60,10 @@ class _ListenersModal extends StatefulWidget {
   final bool canKickListener;
 
   @override
-  State<_ListenersModal> createState() => _ListenersModalState();
+  State<_HandRaisersModal> createState() => _HandRaisersModalState();
 }
 
-class _ListenersModalState extends State<_ListenersModal> {
+class _HandRaisersModalState extends State<_HandRaisersModal> {
   @override 
   void initState(){
     super.initState();
@@ -111,10 +90,10 @@ class _ListenersModalState extends State<_ListenersModal> {
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
               const ATImgLoader(
-                imgPath: ATImgStrings.userIcon,
+                imgPath: ATImgStrings.handRaiseIcon,
                 width: 20, height: 20
               ),
-              Text(ATStrings.listeners,
+              Text('Hand Raise',
                   style: context.textTheme.bodyLarge),
             ],
           ),
@@ -123,43 +102,43 @@ class _ListenersModalState extends State<_ListenersModal> {
         Padding(
           padding: const EdgeInsets.fromLTRB(15, 0, 15, 0),
           child: Text(
-            ATStrings.topListenersRanking,
+            'Your listeners who raised their hand to speak appears here. You can permit any of them to speak.',
             maxLines: 2,
             style: context.textTheme.labelSmall!
                 .copyWith(color: ATColors.hexC2C2C2.withValues(alpha: 0.76)),
           ),
         ),
-        const SizedBox(height: 20),
-        Padding(
-          padding: const EdgeInsets.fromLTRB(15, 0, 15, 10),
-          child: BlocSelector<LiveStreamCubit1, LiveStreamState1, 
-            Map<String, LivestreamParticipant>?>(
-            selector: (LiveStreamState1 state) => state.participants,
-              builder: (_, Map<String, LivestreamParticipant>? participants) {
-            final bool disableTextfield = participants == null
-              || participants.isEmpty;
+        //const SizedBox(height: 20),
+        // Padding(
+        //   padding: const EdgeInsets.fromLTRB(15, 0, 15, 10),
+        //   child: BlocSelector<LiveStreamCubit1, LiveStreamState1, 
+        //     List<String>?>(
+        //     selector: (LiveStreamState1 state) => state.raisedHandsIds,
+        //       builder: (_, List<String>? raisedHandsIds) {
+        //     final bool disableTextfield = raisedHandsIds == null
+        //       || raisedHandsIds.isEmpty;
 
-            return AbsorbPointer(
-              absorbing: disableTextfield,
-              child: SearchFieldWithXSuffix(
-                hintText: ATStrings.searchForListener,
-                onClear: () {
-                  context.read<SearchkeyCubit>().resetSearch();
-                  //context.read<AllUsersCubit>().resetSearch();
-                },
-                onChanged: (String searchKey) {
-                  ATHelperFuncs.callDebouncer(500, () {
-                    //context.read<AllUsersCubit>().searchUsers(searchKey);
-                    context.read<SearchkeyCubit>().updateSearchKey(searchKey);
-                  });
-                },
-              ),
-            );
-          }),
-        ),
+        //     return AbsorbPointer(
+        //       absorbing: disableTextfield,
+        //       child: SearchFieldWithXSuffix(
+        //         hintText: ATStrings.searchForListener,
+        //         onClear: () {
+        //           context.read<SearchkeyCubit>().resetSearch();
+        //           //context.read<AllUsersCubit>().resetSearch();
+        //         },
+        //         onChanged: (String searchKey) {
+        //           ATHelperFuncs.callDebouncer(500, () {
+        //             //context.read<AllUsersCubit>().searchUsers(searchKey);
+        //             context.read<SearchkeyCubit>().updateSearchKey(searchKey);
+        //           });
+        //         },
+        //       ),
+        //     );
+        //   }),
+        // ),
 
         Expanded(
-          child: _ListenersList(
+          child: _HandRaisersList(
             canKickListener: widget.canKickListener,
             scrollController: widget.scrollController,
           )
@@ -170,8 +149,8 @@ class _ListenersModalState extends State<_ListenersModal> {
 }
 
 
-class _ListenersList extends StatelessWidget {
-  const _ListenersList({
+class _HandRaisersList extends StatelessWidget {
+  const _HandRaisersList({
     required this.scrollController,
     required this.canKickListener,
   });
@@ -181,14 +160,16 @@ class _ListenersList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final Map<String, LivestreamParticipant>? participants =
-      context.select<LiveStreamCubit1, Map<String, LivestreamParticipant>?>(
-      (LiveStreamCubit1 cubit) => cubit.state.participants);
+    final List<String>? raisedHandsIds =
+      context.select<LiveStreamCubit1, List<String>?>(
+      (LiveStreamCubit1 cubit) => cubit.state.raisedHandsIds);
+    final Map<String, LivestreamParticipant>? participants = 
+      context.read<LiveStreamCubit1>().state.participants;
 
-    if (participants == null || participants.isEmpty) {
+    if (raisedHandsIds == null || raisedHandsIds.isEmpty) {
       return Center(
         child: Text(
-          'No participants yet',
+          'No hand raisers yet',
           style: context.textTheme.bodyMedium?.copyWith(
             color: ATColors.hexC2C2C2,
           ),
@@ -198,38 +179,42 @@ class _ListenersList extends StatelessWidget {
 
     return ListView.builder(
       controller: scrollController,
-      itemCount: participants.length + 1,
+      itemCount: raisedHandsIds.length + 1,
       physics: const BouncingScrollPhysics(),
       padding: const EdgeInsets.fromLTRB(15, 20, 10, 20),
       itemBuilder: (_, int listIndex) {
         if (listIndex == 0) {
+          final int raisedHands = raisedHandsIds.length;
+          final String text = raisedHands == 1
+            ? '1 hand raised'
+            : '$raisedHands hands raised';
           return Text(
-            'Participants (${participants.length})',
+            text,
             style: context.textTheme.bodyMedium,
           );
         }
 
         final int adjustedIndex = listIndex - 1;
-        final String id = participants.keys.elementAt(adjustedIndex);
-        final LivestreamParticipant? participant = participants[id];
+        final String id = raisedHandsIds[adjustedIndex];
+        final LivestreamParticipant? participant = participants?[id];
 
-        return _ParticipantTile(
+        return _HandRaiserTile(
           participant: participant,
-          canKickListener: canKickListener,
+          canPermitHandRaise: canKickListener,
         );
       },
     );
   }
 }
 
-class _ParticipantTile extends StatelessWidget {
-  const _ParticipantTile({
+class _HandRaiserTile extends StatelessWidget {
+  const _HandRaiserTile({
     required this.participant,
-    required this.canKickListener,
+    required this.canPermitHandRaise,
   });
 
   final LivestreamParticipant? participant;
-  final bool canKickListener;
+  final bool canPermitHandRaise;
 
   @override
   Widget build(BuildContext context) {
@@ -241,7 +226,7 @@ class _ParticipantTile extends StatelessWidget {
       .currentUserData?.userId;
     if(isMe){
       userName = ATStrings.you;
-    }else{
+    } else{
       userName = participant?.name ?? participant?.username ?? '';
     }
 
@@ -266,28 +251,19 @@ class _ParticipantTile extends StatelessWidget {
             ),
           ),
           if (isHost) const HostIndicator() 
-          else if(canKickListener)
+          else if(canPermitHandRaise)
             ATContainer(
               onTap: () async {
-                // Kick out functionality would require integration with the
-                // livestream service to properly remove the participant
-                // For now, show a confirmation snackbar
-                showAppNotification(
-                  context: context,
-                  icon: const ATImgLoader(
-                    imgPath: ATImgStrings.kickUserOut,
-                  ),
-                  text: 'Kick out feature coming soon',
-                  bgColor: ATColors.hex307FE2,
-                );
+                context.pop(participant?.userId);
               },
               height: 35,
-              width: 35,
+              width: 35, radius: 20,
               boxShape: BoxShape.circle,
               color: ATColors.white.withValues(alpha: 0.1),
-              child: const ATImgLoader(
-                boxFit: BoxFit.scaleDown,
-                imgPath: ATImgStrings.kickUserOut,
+              child: Icon(
+                Icons.check,
+                size: 20,
+                color: ATColors.white,
               ),
             ),
         ],

@@ -23,6 +23,7 @@ class ATStrings {
   static const String username = 'Username';
   static const String dob = 'Date of Birth';
   static const String name = 'Name';
+  static const String you = 'You';
   static const String followerCount = 'followers count';
   static const String followingCount = 'following count';
   static const String hasTestedMic = 'has tested mic';

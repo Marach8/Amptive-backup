@@ -180,8 +180,7 @@ class _AudienceViewMinimizeIcon extends StatelessWidget {
         //showMinimizedGoLiveState();
       },
       color: ATColors.white.withValues(alpha: 0.1),
-      height: 35,
-      width: 35,
+      height: 35, width: 35,
       boxShape: BoxShape.circle,
       child: const Icon(
         Icons.keyboard_arrow_down,

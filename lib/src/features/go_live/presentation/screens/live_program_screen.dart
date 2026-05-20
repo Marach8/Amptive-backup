@@ -7,7 +7,7 @@ import 'package:amptive/src/features/go_live/presentation/screens/go_live_onboar
 import 'package:amptive/src/features/go_live/presentation/screens/live_program_audience_view.dart';
 import 'package:amptive/src/features/go_live/presentation/screens/live_program_cohost_view.dart';
 import 'package:amptive/src/features/go_live/presentation/screens/live_program_host_view.dart';
-import 'package:amptive/src/features/go_live/presentation/widgets/host_moderation_tools_btns.dart';
+import 'package:amptive/src/features/go_live/presentation/widgets/host_moderation_controls.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -47,6 +47,9 @@ class LiveProgramScreen extends StatelessWidget {
         ),
         BlocProvider<LiveStreamCubit1>(
           create: (_) => LiveStreamCubit1(
+            myUserId: liveScreenEntryParams?.roomParticipantId 
+              ?? context.read<LocalUserDataCubit>()
+                .currentUserData?.userId ?? '',
             initialState: LiveStreamState1(
               programCoverUrl: liveScreenEntryParams?.coverUrl,
               liveStreamId: liveScreenEntryParams?.streamId,

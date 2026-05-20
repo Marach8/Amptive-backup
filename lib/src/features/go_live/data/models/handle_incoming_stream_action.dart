@@ -66,6 +66,7 @@ import 'package:amptive/src/shared/sentinel.dart';
 LiveStreamState1 reduceIncomingStreamAction({
   required Map<String, dynamic> wsJson,
   required LiveStreamState1 stateSnapshot,
+  required String myUserId
 }) {
   final LiveEventType? type =
       LiveEventType.fromValue(wsJson['type'] as String?);
@@ -91,7 +92,7 @@ LiveStreamState1 reduceIncomingStreamAction({
       return stateSnapshot.copyWith(
         viewerCount: initial.viewerCount,
         participants: initial.participants,
-        handQueue: initial.handQueue,
+        raisedHandsIds: initial.handQueue,
         organizers: (host: host, cohosts: cohosts)
       );
     }(),
@@ -196,16 +197,34 @@ LiveStreamState1 reduceIncomingStreamAction({
 
 
     LiveEventType.handRaise => () {
-        final String id = wsJson['user_id'] ?? '';
+        bool? myHandIsRaised = stateSnapshot.myHandIsRaised;
+        bool? myMicIsEnabled = stateSnapshot.myMicIsEnabled;
+
+        final String raiserId = wsJson['user_id'] ?? '';
         final String action = wsJson['action'] ?? '';
-        final List<String> queue =
-            List<String>.from(stateSnapshot.handQueue ?? <String>[]);
+        final List<String> raisedHandsIds = List<String>
+          .from(stateSnapshot.raisedHandsIds ?? <String>[]);
         if (action == 'raise') {
-          if (!queue.contains(id)) queue.add(id);
-        } else if (action == 'lower') {
-          queue.remove(id);
+          if (!raisedHandsIds.contains(raiserId)) raisedHandsIds.add(raiserId);
+          if(raiserId == myUserId) myHandIsRaised = true;
         }
-        return stateSnapshot.copyWith(handQueue: queue);
+        else if (action == 'lower') {
+          raisedHandsIds.remove(raiserId);
+          if(raiserId == myUserId) myHandIsRaised = false;
+          if(raiserId == myUserId) myMicIsEnabled = false;
+        }
+        else if (action == 'approve'){
+          raisedHandsIds.remove(raiserId);
+          if(raiserId == myUserId){
+            myHandIsRaised = false;
+            myMicIsEnabled = true;
+          }
+        }
+        return stateSnapshot.copyWith(
+          raisedHandsIds: raisedHandsIds,
+          myHandIsRaised: myHandIsRaised,
+          myMicIsEnabled: myMicIsEnabled,
+        );
       }(),
 
 

@@ -6,13 +6,14 @@ import 'package:amptive/src/shared/global_model_objects.dart';
 import 'package:amptive/src/shared/sentinel.dart';
 import 'package:equatable/equatable.dart';
 
+
 class LiveStreamState1 extends Equatable {
   const LiveStreamState1({
     this.audioConnectionStatus = AudioConnectionStatus.initial,
     this.wsConnectionStatus = WSConnectionStatus.initial,
     this.participants,
     this.activeSpeakerIds,
-    this.isMicEnabled = false,
+    this.myMicIsEnabled = false,
     this.connectionErrorMessage,
     this.programCoverUrl,
     this.liveStreamId,
@@ -26,16 +27,16 @@ class LiveStreamState1 extends Equatable {
     this.reactions,
     this.gifts,
     this.giftIds,
-    this.handQueue,
+    this.raisedHandsIds,
     this.viewerCount = 0,
     this.messagesIds,
+    this.myHandIsRaised,
   });
 
   final AudioConnectionStatus audioConnectionStatus;
   final WSConnectionStatus wsConnectionStatus;
   final Map<String, LivestreamParticipant>? participants;
-  final List<String>? activeSpeakerIds;
-  final bool isMicEnabled;
+  final bool myMicIsEnabled;
   final String? connectionErrorMessage,
       programCoverUrl,
       liveStreamId,
@@ -46,12 +47,12 @@ class LiveStreamState1 extends Equatable {
   final Community? community;
   final Organizers? organizers;
   final Map<String, ChatMessage>? messages;
-  final List<String>? messagesIds;
   final List<Reaction>? reactions;
   final Map<String, Gift>? gifts;
-  final List<String>? giftIds;
-  final List<String>? handQueue;
+  final List<String>? giftIds, raisedHandsIds,
+    messagesIds, activeSpeakerIds;
   final int viewerCount;
+  final bool? myHandIsRaised;
 
   /// Creates a new state object with updated values.
   LiveStreamState1 copyWith({
@@ -59,7 +60,7 @@ class LiveStreamState1 extends Equatable {
     WSConnectionStatus? wsConnectionStatus,
     Map<String, LivestreamParticipant>? participants,
     List<String>? activeSpeakerIds,
-    bool? isMicEnabled,
+    bool? myMicIsEnabled,
     String? errorMessage,
     String? programCoverUrl,
     String? liveStreamId,
@@ -74,17 +75,21 @@ class LiveStreamState1 extends Equatable {
     List<Reaction>? reactions,
     Map<String, Gift>? gifts,
     List<String>? giftIds,
-    List<String>? handQueue,
+    List<String>? raisedHandsIds,
     int? viewerCount,
-    Sentinel<Gift>? latestGift,
+    bool? myHandIsRaised,
   }) {
     return LiveStreamState1(
-      audioConnectionStatus: audioConnectionStatus ?? this.audioConnectionStatus,
-      wsConnectionStatus: wsConnectionStatus ?? this.wsConnectionStatus,
+      audioConnectionStatus: audioConnectionStatus 
+        ?? this.audioConnectionStatus,
+      wsConnectionStatus: wsConnectionStatus 
+        ?? this.wsConnectionStatus,
       participants: participants ?? this.participants,
-      activeSpeakerIds: activeSpeakerIds ?? this.activeSpeakerIds,
-      isMicEnabled: isMicEnabled ?? this.isMicEnabled,
-      connectionErrorMessage: errorMessage ?? connectionErrorMessage,
+      activeSpeakerIds: activeSpeakerIds 
+        ?? this.activeSpeakerIds,
+      myMicIsEnabled: myMicIsEnabled ?? this.myMicIsEnabled,
+      connectionErrorMessage: errorMessage 
+        ?? connectionErrorMessage,
       programCoverUrl: programCoverUrl ?? this.programCoverUrl,
       liveStreamId: liveStreamId ?? this.liveStreamId,
       roomUrl: roomUrl ?? this.roomUrl,
@@ -97,9 +102,10 @@ class LiveStreamState1 extends Equatable {
       reactions: reactions ?? this.reactions,
       gifts: gifts ?? this.gifts,
       giftIds: giftIds ?? this.giftIds,
-      handQueue: handQueue ?? this.handQueue,
+      raisedHandsIds: raisedHandsIds ?? this.raisedHandsIds,
       viewerCount: viewerCount ?? this.viewerCount,
       messagesIds: messagesIds ?? this.messagesIds,
+      myHandIsRaised: myHandIsRaised ?? this.myHandIsRaised,
     );
   }
 
@@ -109,7 +115,7 @@ class LiveStreamState1 extends Equatable {
         wsConnectionStatus,
         participants,
         activeSpeakerIds,
-        isMicEnabled,
+        myMicIsEnabled,
         connectionErrorMessage,
         programCoverUrl,
         liveStreamId,
@@ -123,9 +129,10 @@ class LiveStreamState1 extends Equatable {
         reactions,
         gifts,
         giftIds,
-        handQueue,
+        raisedHandsIds,
         viewerCount,
         messagesIds,
+        myHandIsRaised,
       ];
 }
 

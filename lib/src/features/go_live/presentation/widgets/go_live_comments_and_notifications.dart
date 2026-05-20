@@ -302,8 +302,6 @@ class _GoLiveCommentsAndNotificationsState extends State<GoLiveCommentsAndNotifi
             },
           ),
         ),
-
-        //const GiftOverlay1()
       ],
     );
   }

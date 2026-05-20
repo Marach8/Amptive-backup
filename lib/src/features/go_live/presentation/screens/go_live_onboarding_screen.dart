@@ -286,8 +286,11 @@ class _SubWidgetState extends State<_SubWidget> {
 
                                             if (!context.mounted) return;
                                             //Mark that this organizer has tested his mic
-                                            context.read<LocalUserDataCubit>().updateUserDataLocally(
-                                              const CachedUserData(hasTestedMic: 'true')
+                                            final LocalUserDataCubit cubit = context.read<LocalUserDataCubit>();
+                                            final CachedUserData? data = cubit.currentUserData;
+                                            cubit.updateUserDataLocally(
+                                              (data ?? const CachedUserData())
+                                                .copyWith(hasTestedMic: 'true'),
                                             );
 
                                             context.pushReplacementNamed(

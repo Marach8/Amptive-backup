@@ -307,7 +307,7 @@ class ATLiveEventDetailedScreen extends StatelessWidget {
                     programDesc: 'New program'
                   );
                   
-                  if(hasTestedMic){
+                  if(!isHost || hasTestedMic){
                     context.pushReplacementNamed(
                       ATRoutes.liveProgramScreen,
                       extra: liveProgramEntryParams,

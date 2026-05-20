@@ -43,18 +43,20 @@ class MainAppBottomNav extends StatelessWidget {
                       Positioned(
                         top: 0,
                         right: 0,
-                        child: ATContainer(
+                        child: Container(
                           padding: const EdgeInsets.fromLTRB(2, 0, 2, 0),
                           constraints: const BoxConstraints(minWidth: 15),
                           height: 15,
-                          radius: 100,
-                          color: ATColors.hexECO404,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(100),
+                            color: ATColors.hexECO404,
+                          ),
                           child: FittedBox(
                             fit: BoxFit.scaleDown,
                             child: Text(
                               '3',
                               textAlign: TextAlign.center,
-                              style: Theme.of(context)
+                              style: context
                                   .textTheme
                                   .bodySmall
                                   ?.copyWith(fontSize: ATSizes.size10),
