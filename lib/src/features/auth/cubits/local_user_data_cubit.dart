@@ -59,24 +59,6 @@ class LocalUserDataCubit extends Cubit<ATAppState<CachedUserData>> {
 }
 
 class CachedUserData extends Equatable {
-  const CachedUserData(
-      {this.userId,
-      this.email,
-      this.username,
-      this.dob,
-      this.name,
-      this.pictureUrl,
-      this.phoneNumber,
-      this.followersCount,
-      this.followingCount,
-      this.bio,
-      this.xUrl,
-      this.instagramUrl,
-      this.linkedinUrl,
-      this.websiteUrl,
-      });
-
-class CachedUserData extends Equatable {
   const CachedUserData({
     this.userId,
     this.email,
@@ -88,58 +70,70 @@ class CachedUserData extends Equatable {
     this.followersCount,
     this.followingCount,
     this.hasTestedMic,
+    this.bio,
+    this.xUrl,
+    this.instagramUrl,
+    this.linkedinUrl,
+    this.websiteUrl,
     this.liveProgramData,
   });
 
   factory CachedUserData.fromLocalStorageJson(
     Map<String, dynamic> json,
   ) {
-    Sentinel<LiveProgramData>? liveProgramData;
+    Sentinel<LiveProgramData?>? liveProgramData;
 
     if (json.containsKey(ATStrings.liveProgramData)) {
       final dynamic value = json[ATStrings.liveProgramData];
 
-      liveProgramData = Sentinel<LiveProgramData>.of(
-        value == null ? null : LiveProgramData.fromJson(
-          Map<String, dynamic>.from(value),
-        ),
+      liveProgramData = Sentinel<LiveProgramData?>.of(
+        value == null
+            ? null
+            : LiveProgramData.fromJson(
+                Map<String, dynamic>.from(value),
+              ),
       );
     } else {
-      liveProgramData = const Sentinel<LiveProgramData>.absent();
+      liveProgramData =
+          const Sentinel<LiveProgramData?>.absent();
     }
 
     return CachedUserData(
-      userId: json[ATStrings.userId],
-      email: json[ATStrings.email],
-      username: json[ATStrings.username],
-      dob: json[ATStrings.dob],
-      name: json[ATStrings.name],
-      pictureUrl: json[ATStrings.profilePicture],
-      phoneNumber: json[ATStrings.phoneNumber],
-      followersCount: json[ATStrings.followerCount],
-      followingCount: json[ATStrings.followingCount],
-      hasTestedMic: json[ATStrings.hasTestedMic],
+      userId: json[ATStrings.userId] as String?,
+      email: json[ATStrings.email] as String?,
+      username: json[ATStrings.username] as String?,
+      dob: json[ATStrings.dob] as String?,
+      name: json[ATStrings.name] as String?,
+      pictureUrl: json[ATStrings.profilePicture] as String?,
+      phoneNumber: json[ATStrings.phoneNumber] as String?,
+      followersCount: json[ATStrings.followerCount]?.toString(),
+      followingCount: json[ATStrings.followingCount]?.toString(),
+      hasTestedMic: json[ATStrings.hasTestedMic]?.toString(),
+      bio: json[ATStrings.bio] as String?,
+      xUrl: json[ATStrings.X] as String?,
+      instagramUrl: json[ATStrings.INSTAGRAM] as String?,
+      linkedinUrl: json[ATStrings.LINKEDIN] as String?,
+      websiteUrl: json[ATStrings.WEBSITE] as String?,
       liveProgramData: liveProgramData,
     );
   }
-      bio: json[ATStrings.bio],
-      xUrl: json[ATStrings.X],
-      instagramUrl: json[ATStrings.INSTAGRAM],
-      linkedinUrl: json[ATStrings.LINKEDIN],
-      websiteUrl: json[ATStrings.WEBSITE],
 
-      );
-
-  final String? userId,
-      email,
-      username,
-      dob,
-      name,
-      pictureUrl,
-      phoneNumber,
-      followingCount,
-      followersCount,
-      hasTestedMic;
+  final String?
+    userId,
+    email,
+    username,
+    dob,
+    name,
+    pictureUrl,
+    phoneNumber,
+    followingCount,
+    followersCount,
+    hasTestedMic,
+    bio,
+    xUrl,
+    instagramUrl,
+    linkedinUrl,
+    websiteUrl;
 
   final Sentinel<LiveProgramData?>? liveProgramData;
 
@@ -154,7 +148,12 @@ class CachedUserData extends Equatable {
     String? followingCount,
     String? phoneNumber,
     String? hasTestedMic,
-    Sentinel<LiveProgramData>? liveProgramData,
+    String? bio,
+    String? xUrl,
+    String? instagramUrl,
+    String? linkedinUrl,
+    String? websiteUrl,
+    Sentinel<LiveProgramData?>? liveProgramData,
   }) {
     return CachedUserData(
       userId: userId ?? this.userId,
@@ -164,16 +163,28 @@ class CachedUserData extends Equatable {
       name: name ?? this.name,
       pictureUrl: pictureUrl ?? this.pictureUrl,
       phoneNumber: phoneNumber ?? this.phoneNumber,
-      followersCount: followersCount ?? this.followersCount,
-      followingCount: followingCount ?? this.followingCount,
-      hasTestedMic: hasTestedMic ?? this.hasTestedMic,
+      followersCount:
+          followersCount ?? this.followersCount,
+      followingCount:
+          followingCount ?? this.followingCount,
+      hasTestedMic:
+          hasTestedMic ?? this.hasTestedMic,
+      bio: bio ?? this.bio,
+      xUrl: xUrl ?? this.xUrl,
+      instagramUrl:
+          instagramUrl ?? this.instagramUrl,
+      linkedinUrl:
+          linkedinUrl ?? this.linkedinUrl,
+      websiteUrl:
+          websiteUrl ?? this.websiteUrl,
       liveProgramData:
           liveProgramData ?? this.liveProgramData,
     );
   }
 
   Map<String, dynamic> toLocalStorageJson() {
-    final Map<String, dynamic> json = <String, dynamic>{
+    final Map<String, dynamic> json =
+        <String, dynamic>{
       ATStrings.userId: userId,
       ATStrings.email: email,
       ATStrings.username: username,
@@ -184,6 +195,11 @@ class CachedUserData extends Equatable {
       ATStrings.followerCount: followersCount,
       ATStrings.followingCount: followingCount,
       ATStrings.hasTestedMic: hasTestedMic,
+      ATStrings.bio: bio,
+      ATStrings.X: xUrl,
+      ATStrings.INSTAGRAM: instagramUrl,
+      ATStrings.LINKEDIN: linkedinUrl,
+      ATStrings.WEBSITE: websiteUrl,
     };
 
     if (liveProgramData != null &&
@@ -194,63 +210,9 @@ class CachedUserData extends Equatable {
 
     return json;
   }
-      bio,
-      xUrl,
-      instagramUrl,
-      linkedinUrl,
-      websiteUrl;
 
-  CachedUserData copyWith(
-          {String? userId,
-          String? email,
-          String? username,
-          String? dob,
-          String? name,
-          String? pictureUrl,
-          String? followersCount,
-          String? followingCount,
-          String? bio,
-          String? xUrl,
-          String? instagramUrl,
-          String? linkedinUrl,
-          String? websiteUrl,
-
-          String? phoneNumber}) =>
-      CachedUserData(
-          userId: userId ?? this.userId,
-          email: email ?? this.email,
-          username: username ?? this.username,
-          dob: dob ?? this.dob,
-          name: name ?? this.name,
-          pictureUrl: pictureUrl ?? this.pictureUrl,
-          phoneNumber: phoneNumber ?? this.phoneNumber,
-          followersCount: followersCount ?? this.followersCount,
-          followingCount: followingCount ?? this.followingCount,
-          bio: bio ?? this.bio,
-          xUrl: xUrl ?? this.xUrl,
-          instagramUrl: instagramUrl ?? this.instagramUrl,
-          linkedinUrl: linkedinUrl ?? this.linkedinUrl,
-          websiteUrl: websiteUrl ?? this.websiteUrl,
-
-          );
-
-  Map<String, dynamic> toJson() => <String, dynamic>{
-        ATStrings.userId: userId,
-        ATStrings.email: email,
-        ATStrings.username: username,
-        ATStrings.dob: dob,
-        ATStrings.name: name,
-        ATStrings.profilePicture: pictureUrl,
-        ATStrings.phoneNumber: phoneNumber,
-        ATStrings.followerCount: followersCount,
-        ATStrings.followingCount: followingCount,
-        ATStrings.bio: bio,
-        ATStrings.X: xUrl,
-        ATStrings.INSTAGRAM: instagramUrl,
-        ATStrings.LINKEDIN: linkedinUrl,
-        ATStrings.WEBSITE: websiteUrl,
-
-      };
+  Map<String, dynamic> toJson() =>
+      toLocalStorageJson();
 
   @override
   List<Object?> get props => <Object?>[
@@ -264,7 +226,11 @@ class CachedUserData extends Equatable {
         followersCount,
         followingCount,
         hasTestedMic,
-        liveProgramData?.value,
         bio,
+        xUrl,
+        instagramUrl,
+        linkedinUrl,
+        websiteUrl,
+        liveProgramData?.value,
       ];
 }

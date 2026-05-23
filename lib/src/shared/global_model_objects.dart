@@ -2,7 +2,7 @@ import 'package:equatable/equatable.dart';
 
 class User extends Equatable{
   const User({
-    this.userId,
+    required this.userId,
     this.username,
     this.profilePicture,
     this.followersCount,
@@ -24,7 +24,8 @@ class User extends Equatable{
         name = json['name'],
         isVerified = json['is_verified'];
 
-  final String? userId, username, profilePicture,
+  final String userId;
+  final String? username, profilePicture,
     firstName, lastName, name;
   final int? followersCount, followingCount;
   final bool? isVerified;
@@ -210,10 +211,9 @@ class NotificationMetadata {
   }
 }
 
-class Notifications extends User {
+class Notifications{
   Notifications(
       {this.id,
-      super.userId,
       this.message,
       this.channel,
       this.createdAt,
