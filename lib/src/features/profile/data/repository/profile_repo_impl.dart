@@ -98,8 +98,6 @@ Future<ApiResponse<String>> sendEmailAndPhoneOtp({required Map<String, dynamic> 
       ATEndpoints.updateEmailAndPhone,
       data: param
     );
-    print('📥 sendEmailAndPhoneOtp Response: ${response.data}');
-    print('📥 Type: ${response.data.runtimeType}');
     final String otpCode = response.data['data']['otp_code'] as String;
     return Successful<String>(data: otpCode);
   } catch (e) {
@@ -126,5 +124,23 @@ Future<ApiResponse<String>> sendEmailAndPhoneOtp({required Map<String, dynamic> 
     }
   }
 
+  @override
+  Future<ApiResponse<dynamic>> createProfessionalProfile({
+    required Map<String, dynamic> param,
+  }) async {
+    try {
+      final Response<dynamic> response = await networkService.post(
+        ATEndpoints.createProfessionalProfile,
+        data: param,
+      );
+
+      return Successful<dynamic>(data: response.data);
+    } catch (e) {
+      log('Create Professional Profile error: $e');
+      return Unsuccessful<dynamic>(
+        error: ATException.resolveException(e),
+      );
+    }
+  }
 
 }
