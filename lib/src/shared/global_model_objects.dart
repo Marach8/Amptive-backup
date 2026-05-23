@@ -1,9 +1,8 @@
 import 'package:equatable/equatable.dart';
-import 'package:uuid/uuid.dart';
 
 class User extends Equatable{
   const User({
-    required this.userId,
+    this.userId,
     this.username,
     this.profilePicture,
     this.followersCount,
@@ -25,8 +24,7 @@ class User extends Equatable{
         name = json['name'],
         isVerified = json['is_verified'];
 
-  final String userId;
-  final String? username, profilePicture,
+  final String? userId, username, profilePicture,
     firstName, lastName, name;
   final int? followersCount, followingCount;
   final bool? isVerified;
