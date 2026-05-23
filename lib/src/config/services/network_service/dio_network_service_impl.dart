@@ -27,8 +27,8 @@ class DioNetworkServiceImpl implements NetworkService {
     final Dio dio = Dio(
       BaseOptions(
         baseUrl: ATEndpoints.baseUrl,
-        connectTimeout: const Duration(seconds: 60),
-        receiveTimeout: const Duration(seconds: 60),
+        connectTimeout: const Duration(seconds: 120),
+        receiveTimeout: const Duration(seconds: 120),
         contentType: 'application/json',
         validateStatus: (int? code) => code != null && code < 300,
       ),

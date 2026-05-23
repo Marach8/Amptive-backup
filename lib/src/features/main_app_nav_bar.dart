@@ -53,18 +53,20 @@ class MainAppBottomNav extends StatelessWidget {
                       return Positioned(
                         top: 0,
                         right: 0,
-                        child: ATContainer(
+                        child: Container(
                           padding: const EdgeInsets.fromLTRB(2, 0, 2, 0),
                           constraints: const BoxConstraints(minWidth: 15),
                           height: 15,
-                          radius: 100,
-                          color: ATColors.hexECO404,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(100),
+                            color: ATColors.hexECO404,
+                          ),
                           child: FittedBox(
                             fit: BoxFit.scaleDown,
                             child: Text(
                               count > 99 ? '99+' : '$count',
                               textAlign: TextAlign.center,
-                              style: Theme.of(context)
+                              style: context
                                   .textTheme
                                   .bodySmall
                                   ?.copyWith(fontSize: ATSizes.size10),
@@ -140,7 +142,7 @@ class ATNavBarBloc extends Cubit<(int, bool)> {
     final int prevIndex = state.$1;
     emit((index, state.$2));
     if (index == 2) {
-      context.pushNamed(ATRoutes.GO_LIVE_TYPE_SELECTION);
+      context.pushNamed(ATRoutes.chooseEventOrShowScreen);
       emit((prevIndex, false));
     } else {
       emit((index, state.$2));

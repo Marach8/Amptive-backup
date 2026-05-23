@@ -38,7 +38,7 @@ class _LoginScreenState extends State<LoginScreen> with ATValidators {
     text: kDebugMode ? 'nnannamarach6@gmail.com' : '',
   );
   final TextEditingController _pswrdCntrl = TextEditingController(
-    text: kDebugMode ? 'Amptive@2026' : '',
+    text: kDebugMode ? 'Amptive@Developer123' : '',
   );
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final ValueNotifier<(bool, bool)> _btnNotifier =
@@ -86,7 +86,6 @@ class _LoginScreenState extends State<LoginScreen> with ATValidators {
     super.dispose();
   }
 
-  @override
   @override
   Widget build(BuildContext context) {
     return BlocProvider<LoginCubit>(
@@ -159,7 +158,7 @@ class _LoginScreenState extends State<LoginScreen> with ATValidators {
           bottomSheet: BlocConsumer<LoginCubit, ATAppState<ATUser>>(
             listener: (BuildContext context, ATAppState<ATUser> state) {
               if (state is SuccessState<ATUser>) {
-                context.goNamed(ATRoutes.mainAppShell);
+                context.goNamed(ATRoutes.dashboard);
               } else if (state is FailureState<ATUser>) {
                 showAppNotification2(context: context, text: state.message);
               }

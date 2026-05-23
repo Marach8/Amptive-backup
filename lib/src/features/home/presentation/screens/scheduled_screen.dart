@@ -58,7 +58,7 @@ class ATScheduledPrograms extends StatelessWidget {
                                     const EdgeInsets.fromLTRB(20, 5, 20, 20),
                                 child: GestureDetector(
                                     onTap: () => context
-                                        .pushNamed(ATRoutes.SCHEDULE_DETAILED),
+                                        .pushNamed(ATRoutes.scheduleDetailed),
                                     child: const ScheduledProgram()),
                               ))
                     ]),

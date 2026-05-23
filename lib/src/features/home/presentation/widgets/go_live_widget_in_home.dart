@@ -12,11 +12,11 @@ class GoLiveWidgetInHome extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final String? profilePic =
-        context.read<LocalUserDataCubit>().currentUserData?.pictureUrl;
+    final String? profilePic = context
+      .watch<LocalUserDataCubit>().currentUserData?.pictureUrl;
     return GestureDetector(
       onTap: () {
-        context.pushNamed(ATRoutes.GO_LIVE_TYPE_SELECTION);
+        context.pushNamed(ATRoutes.chooseEventOrShowScreen);
       },
       child: Column(
         mainAxisSize: MainAxisSize.min,
@@ -26,31 +26,15 @@ class GoLiveWidgetInHome extends StatelessWidget {
             clipBehavior: Clip.none,
             alignment: Alignment.bottomCenter,
             children: <Widget>[
-              if (profilePic != null && profilePic.isNotEmpty)
-                ClipRRect(
-                  borderRadius: BorderRadius.circular(30),
-                  child: ATImgLoader(
-                    imgPath: profilePic,
-                    boxFit: BoxFit.cover,
-                    height: 60,
-                    width: 60,
-                  ),
-                )
-              else
-                Container(
+              ClipRRect(
+                borderRadius: BorderRadius.circular(30),
+                child: ATImgLoader(
+                  imgPath: profilePic ?? ATImgStrings.jpeg1,
+                  boxFit: BoxFit.cover,
                   height: 60,
                   width: 60,
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: ATColors.hex0D0D0D,
-                  ),
-                  child: Center(
-                    child: ATShimmer(
-                      height: 60,
-                      width: 60,
-                    ),
-                  ),
                 ),
+              ),
               Positioned(
                 bottom: -5,
                 child: ATContainer(
@@ -64,8 +48,8 @@ class GoLiveWidgetInHome extends StatelessWidget {
                     color: ATColors.hex0D0D0D,
                     width: 2,
                   ),
-                  child:
-                      const Icon(Icons.add, size: 15, applyTextScaling: true),
+                  child: const Icon(Icons.add,
+                  size: 15, applyTextScaling: true),
                 ),
               )
             ],

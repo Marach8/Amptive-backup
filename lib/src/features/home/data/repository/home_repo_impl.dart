@@ -144,8 +144,8 @@ class HomeRepoImpl implements HomeRepo {
   }) async {
     try {
       final String endpoint = type == GoingType.event
-          ? ATEndpoints.markEventGoing(contentId)
-          : ATEndpoints.markEpisodeGoing(contentId);
+          ? '${ATEndpoints.standaloneEvents}$contentId/going'
+          : '${ATEndpoints.episodeEvents}$contentId/going';
 
       final Response<dynamic> response = await networkService.post(endpoint);
 
@@ -167,8 +167,8 @@ class HomeRepoImpl implements HomeRepo {
   }) async {
     try {
       final String endpoint = type == GoingType.event
-          ? ATEndpoints.markEventGoing(contentId)
-          : ATEndpoints.markEpisodeGoing(contentId);
+          ? '${ATEndpoints.standaloneEvents}$contentId/going'
+          : '${ATEndpoints.episodeEvents}$contentId/going';
 
       final Response<dynamic> response = await networkService.delete(endpoint);
 

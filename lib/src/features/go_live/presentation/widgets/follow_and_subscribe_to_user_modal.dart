@@ -6,17 +6,18 @@ import 'package:amptive/src/features/profile/presentation/profile_prez_export.da
 import 'package:amptive/src/shared/circle_avatar.dart';
 import 'package:amptive/src/shared/circular_image.dart';
 import 'package:amptive/src/shared/elevated_button_widget.dart';
+import 'package:amptive/src/shared/global_model_objects.dart';
 import 'package:amptive/src/shared/loading_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../bloc/main_app/go_live_bloc/audience_view/subscription_bloc.dart';
-import '../../../../models/host.dart';
 import '../../../../shared/modal_dismisser.dart';
 import '../../../../config/utils/other_strings.dart';
 
-Future<void> showFollowHostOrCohostDialog(
-    {required BuildContext context,
-    required ObjectWithNotifier<Host> host}) async {
+Future<void> showFollowAndSubscribeToUserModal({
+  required BuildContext context,
+  required User user,
+}) async {
   return await showModalBottomSheet(
       backgroundColor: ATColors.hex202020,
       context: context,
@@ -52,7 +53,7 @@ Future<void> showFollowHostOrCohostDialog(
                   Row(
                     children: <Widget>[
                       ATCircularImage(
-                        imagePath: host.obj.profilePicture ?? '',
+                        imagePath: user.profilePicture ?? '',
                         diameter: 70,
                       ),
                       const SizedBox(width: 10),
@@ -62,14 +63,14 @@ Future<void> showFollowHostOrCohostDialog(
                           mainAxisSize: MainAxisSize.min,
                           children: <Widget>[
                             Text(
-                              host.obj.name ?? '',
+                              user.name ?? '',
                               style: Theme.of(context)
                                   .textTheme
                                   .bodyMedium
                                   ?.copyWith(fontSize: ATSizes.size20),
                             ),
                             Text(
-                              host.obj.username ?? '',
+                              user.username ?? '',
                               style: Theme.of(context)
                                   .textTheme
                                   .titleMedium
@@ -101,8 +102,9 @@ Future<void> showFollowHostOrCohostDialog(
                     maxLines: 5,
                     'Author of UNTAMED AND LOVE WARRIOR, Host ofWE CAN DO HARD THINGS Podcast Founder of @together jfjdkfjkdjkajkfdkakkdafdadfjkajkfa',
                     style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                        fontSize: ATSizes.size13,
-                        color: ATColors.hexC2C2C2.withOpacity(0.76)),
+                      fontSize: 13,
+                      color: ATColors.hexC2C2C2.withValues(alpha: 0.76)
+                    ),
                   ),
                   const SizedBox(height: 30),
                   Row(
@@ -175,7 +177,7 @@ Future<void> showFollowHostOrCohostDialog(
                                     await showConfirmationDialog(
                                         context: context,
                                         title:
-                                            "Are your sure you want to unsubscribe from ${host.obj.name ?? ''}'s content?",
+                                            "Are your sure you want to unsubscribe from ${user.name ?? ''}'s content?",
                                         content:
                                             'Unsubscribing will remove your access to "subscribers-only" live shows!',
                                         yesString: ATStrings.UNSUBSCRIBE,
