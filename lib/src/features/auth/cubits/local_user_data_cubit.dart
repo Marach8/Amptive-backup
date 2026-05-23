@@ -58,8 +58,6 @@ class LocalUserDataCubit extends Cubit<ATAppState<CachedUserData>> {
   }
 }
 
-<<<<<<< HEAD
-=======
 class CachedUserData extends Equatable {
   const CachedUserData(
       {this.userId,
@@ -77,7 +75,6 @@ class CachedUserData extends Equatable {
       this.linkedinUrl,
       this.websiteUrl,
       });
->>>>>>> e0f4545044486a1a3edbed3074aca09519237daf
 
 class CachedUserData extends Equatable {
   const CachedUserData({
@@ -121,12 +118,10 @@ class CachedUserData extends Equatable {
       phoneNumber: json[ATStrings.phoneNumber],
       followersCount: json[ATStrings.followerCount],
       followingCount: json[ATStrings.followingCount],
-<<<<<<< HEAD
       hasTestedMic: json[ATStrings.hasTestedMic],
       liveProgramData: liveProgramData,
     );
   }
-=======
       bio: json[ATStrings.bio],
       xUrl: json[ATStrings.X],
       instagramUrl: json[ATStrings.INSTAGRAM],
@@ -134,7 +129,6 @@ class CachedUserData extends Equatable {
       websiteUrl: json[ATStrings.WEBSITE],
 
       );
->>>>>>> e0f4545044486a1a3edbed3074aca09519237daf
 
   final String? userId,
       email,
@@ -145,7 +139,6 @@ class CachedUserData extends Equatable {
       phoneNumber,
       followingCount,
       followersCount,
-<<<<<<< HEAD
       hasTestedMic;
 
   final Sentinel<LiveProgramData?>? liveProgramData;
@@ -201,7 +194,6 @@ class CachedUserData extends Equatable {
 
     return json;
   }
-=======
       bio,
       xUrl,
       instagramUrl,
@@ -259,7 +251,6 @@ class CachedUserData extends Equatable {
         ATStrings.WEBSITE: websiteUrl,
 
       };
->>>>>>> e0f4545044486a1a3edbed3074aca09519237daf
 
   @override
   List<Object?> get props => <Object?>[
@@ -272,11 +263,8 @@ class CachedUserData extends Equatable {
         phoneNumber,
         followersCount,
         followingCount,
-<<<<<<< HEAD
         hasTestedMic,
         liveProgramData?.value,
-=======
         bio,
->>>>>>> e0f4545044486a1a3edbed3074aca09519237daf
       ];
 }
