@@ -10,6 +10,13 @@ class EditEpisodeCubit extends Cubit<ATAppState<Episode>> {
       : episodesRepo = mockEpisodesRepo ?? EpisodesRepoImpl(),
         super(const InitialState<Episode>());
 
+  Episode? get currentEpisodeDetail => switch (state) {
+    InitialState<Episode>(:final Episode? initialData) => initialData,
+    LoadingState<Episode>(:final Episode? currentData) => currentData,
+    SuccessState<Episode>(:final Episode? newData) => newData,
+    FailureState<Episode>(:final Episode? oldData) => oldData,
+  };
+
   final EpisodesRepo episodesRepo;
 
   Future<void> editEpisode({
@@ -19,7 +26,8 @@ class EditEpisodeCubit extends Cubit<ATAppState<Episode>> {
   }) async {
     emit(const LoadingState<Episode>());
     try {
-      final ApiResponse<Episode> response = await episodesRepo.updateEpisode(
+      final ApiResponse<Episode> response = 
+      await episodesRepo.updateEpisode(
         showId: showId,
         episodeId: episodeId,
         episodeData: createEpisodeModel,

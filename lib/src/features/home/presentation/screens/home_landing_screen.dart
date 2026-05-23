@@ -35,7 +35,8 @@ class HomeTabView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return NotificationListener<ScrollNotification>(
-      onNotification: context.read<ATNavBarBloc>().ctrlNavVisibility,
+      onNotification: context
+        .read<ATNavBarBloc>().ctrlNavVisibility,
       child: NestedScrollView(
           floatHeaderSlivers: true,
           key: nestedKey,
@@ -77,8 +78,8 @@ class HomeTabView extends StatelessWidget {
                 GestureDetector(
                     onTap: () {
                       //context.pushNamed(ATRoutes.GO_LIVE_ONBOARDING);
-                      context.pushNamed(ATRoutes.walletScreen);
-                      //context.pushNamed(ATRoutes.WALLET_ONBOARDING);
+                     context.pushNamed(ATRoutes.walletScreen);
+                     // context.pushNamed(ATRoutes.WALLET_ONBOARDING);
                     },
                     child: Stack(
                       children: <Widget>[
@@ -210,7 +211,9 @@ class HomeTabView extends StatelessWidget {
                   );
                 })
             };
-          })),
+          }
+        )
+      ),
     );
   }
 }

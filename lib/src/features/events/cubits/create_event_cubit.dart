@@ -10,6 +10,13 @@ class CreateEventCubit extends Cubit<ATAppState<HostedEvent>> {
       : eventsRepo = mockEventsRepo ?? EventsRepoImpl(),
         super(const InitialState<HostedEvent>());
 
+  HostedEvent? get currentEvent => switch (state) {
+    InitialState<HostedEvent>(:final HostedEvent? initialData) => initialData,
+    LoadingState<HostedEvent>(:final HostedEvent? currentData) => currentData,
+    SuccessState<HostedEvent>(:final HostedEvent? newData) => newData,
+    FailureState<HostedEvent>(:final HostedEvent? oldData) => oldData,
+  };
+
   final EventsRepo eventsRepo;
 
   Future<void> createEvent({

@@ -23,81 +23,71 @@ class MainAppBottomNav extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<ATNavBarBloc, ATNavBarState>(
-        builder: (_, ATNavBarState state) {
-      return ATAnimatedSlide(
-        shouldSlide: state.shouldShowNav,
-        startOffset: const Offset(0, 1.5),
-        endOffset: const Offset(0, 0),
-        child: ATContainer(
-          color: ATColors.black,
-          padding: const EdgeInsets.fromLTRB(20, 10, 20, 50),
-          child: Row(
+    return BlocBuilder<ATNavBarBloc, (int, bool, bool)>(
+      builder: (_, (int, bool, bool) state) {
+        return ATAnimatedSlide(
+          shouldSlide: state.$2,
+          startOffset: const Offset(0, 1.5),
+          endOffset: const Offset(0, 0),
+          child: ATContainer(
+            color: ATColors.black,
+            padding: const EdgeInsets.fromLTRB(20, 10, 20, 50),
+            child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: listOfIcons.map((List<String> list) {
                 final int index = listOfIcons.indexOf(list);
+
                 if (index == 3) {
-                  return Stack(children: <Widget>[
-                    _BottomNavItem(
-                      selectedImagePath: list.first,
-                      unselectedImagePath: list.last,
-                      itemIdentityIndex: index,
-                    ),
-                    BlocBuilder<GetNotificationsCubit,
-                            ATAppState<NotificationsResponseModel>>(
+                  return Stack(
+                    children: <Widget>[
+                      _BottomNavItem(
+                        selectedImagePath: list.first,
+                        unselectedImagePath: list.last,
+                        itemIdentityIndex: index,
+                      ),
+                      BlocBuilder<GetNotificationsCubit,
+                          ATAppState<NotificationsResponseModel>>(
                         builder: (BuildContext context,
-                            ATAppState<NotificationsResponseModel> state) {
-                      final int serverUnreadCount = switch (state) {
-                        SuccessState<NotificationsResponseModel>(
-                          :final NotificationsResponseModel? newData
-                        ) =>
-                          newData?.unreadCount ?? 0,
-                        FailureState<NotificationsResponseModel>(
-                          :final NotificationsResponseModel? oldData
-                        ) =>
-                          oldData?.unreadCount ?? 0,
-                        InitialState<NotificationsResponseModel>(
-                          :final NotificationsResponseModel? initialData
-                        ) =>
-                          initialData?.unreadCount ?? 0,
-                        LoadingState<NotificationsResponseModel>(
-                          :final NotificationsResponseModel? currentData
-                        ) =>
-                          currentData?.unreadCount ?? 0,
-                      };
+                            ATAppState<NotificationsResponseModel> notifState) {
+                          final NotificationsResponseModel? notifications =
+                              context.read<GetNotificationsCubit>().currentNotifications;
 
-                      final int count = context
-                              .read<ATNavBarBloc>()
-                              .state
-                              .hasSeenNotifications
-                          ? 0
-                          : serverUnreadCount;
+                          final int serverUnreadCount =
+                              notifications?.unreadCount ?? 0;
 
-                      if (count == 0) return const SizedBox.shrink();
-                      return Positioned(
-                        top: 0,
-                        right: 0,
-                        child: ATContainer(
-                          padding: const EdgeInsets.fromLTRB(2, 0, 2, 0),
-                          constraints: const BoxConstraints(minWidth: 15),
-                          height: 15,
-                          radius: 100,
-                          color: ATColors.hexECO404,
-                          child: FittedBox(
-                            fit: BoxFit.scaleDown,
-                            child: Text(
-                              count > 99 ? '99+' : '$count',
-                              textAlign: TextAlign.center,
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .bodySmall
-                                  ?.copyWith(fontSize: ATSizes.size10),
+                          // Your "has seen" logic (preserved)
+                          final bool hasSeenNotifications = state.$3;
+                          final int count =
+                              hasSeenNotifications ? 0 : serverUnreadCount;
+
+                          if (count == 0) return const SizedBox.shrink();
+
+                          return Positioned(
+                            top: 0,
+                            right: 0,
+                            child: Container(
+                              padding: const EdgeInsets.fromLTRB(2, 0, 2, 0),
+                              constraints: const BoxConstraints(minWidth: 15),
+                              height: 15,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(100),
+                                color: ATColors.hexECO404,
+                              ),
+                              child: FittedBox(
+                                fit: BoxFit.scaleDown,
+                                child: Text(
+                                  count > 99 ? '99+' : '$count',
+                                  textAlign: TextAlign.center,
+                                  style: context.textTheme.bodySmall
+                                      ?.copyWith(fontSize: ATSizes.size10),
+                                ),
+                              ),
                             ),
-                          ),
-                        ),
-                      );
-                    })
-                  ]);
+                          );
+                        },
+                      ),
+                    ],
+                  );
                 }
 
                 return _BottomNavItem(
@@ -105,10 +95,12 @@ class MainAppBottomNav extends StatelessWidget {
                   unselectedImagePath: list.last,
                   itemIdentityIndex: index,
                 );
-              }).toList()),
-        ),
-      );
-    });
+              }).toList(),
+            ),
+          ),
+        );
+      },
+    );
   }
 }
 
@@ -124,89 +116,63 @@ class _BottomNavItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocSelector<ATNavBarBloc, ATNavBarState, int>(
-        selector: (ATNavBarState state) => state.currentIndex,
-        builder: (_, int currentNavIndex) {
-          final bool isSelected = itemIdentityIndex == currentNavIndex;
-          return GestureDetector(
-            onTap: () {
-              context.read<ATNavBarBloc>().goToPage(itemIdentityIndex, context);
-            },
-            child: ATAnimatedXFade(
-                condition: isSelected,
-                firstChild: ATImgLoader(imgPath: selectedImagePath),
-                secondChild: ATImgLoader(imgPath: unselectedImagePath)),
-          );
-        });
-  }
-}
-
-class ATNavBarState {
-  const ATNavBarState({
-    required this.currentIndex,
-    required this.shouldShowNav,
-    this.hasSeenNotifications = false,
-  });
-
-  final int currentIndex;
-  final bool shouldShowNav;
-  final bool hasSeenNotifications;
-
-  ATNavBarState copyWith({
-    int? currentIndex,
-    bool? shouldShowNav,
-    bool? hasSeenNotifications,
-  }) {
-    return ATNavBarState(
-      currentIndex: currentIndex ?? this.currentIndex,
-      shouldShowNav: shouldShowNav ?? this.shouldShowNav,
-      hasSeenNotifications: hasSeenNotifications ?? this.hasSeenNotifications,
+    return BlocSelector<ATNavBarBloc, (int, bool, bool), int>(
+      selector: ((int, bool, bool) state) => state.$1,
+      builder: (_, int currentNavIndex) {
+        final bool isSelected = itemIdentityIndex == currentNavIndex;
+        return GestureDetector(
+          onTap: () {
+            context.read<ATNavBarBloc>().goToPage(itemIdentityIndex, context);
+          },
+          child: ATAnimatedXFade(
+            condition: isSelected,
+            firstChild: ATImgLoader(imgPath: selectedImagePath),
+            secondChild: ATImgLoader(imgPath: unselectedImagePath),
+          ),
+        );
+      },
     );
   }
 }
 
-class ATNavBarBloc extends Cubit<ATNavBarState> {
-  ATNavBarBloc()
-      : super(const ATNavBarState(currentIndex: 0, shouldShowNav: true));
+class ATNavBarBloc extends Cubit<(int, bool, bool)> {
+  ATNavBarBloc() : super((0, true, false));
 
   bool ctrlNavVisibility(ScrollNotification notif) {
     if (notif is! ScrollUpdateNotification) return false;
     if (notif.dragDetails == null) return false;
-    if (notif.dragDetails!.delta.dy > 0) {
-      emit(state.copyWith(shouldShowNav: true));
-    } else if (notif.dragDetails!.delta.dy < 0) {
-      emit(state.copyWith(shouldShowNav: false));
-    }
 
+    if (notif.dragDetails!.delta.dy > 0) {
+      emit((state.$1, true, state.$3));
+    } else if (notif.dragDetails!.delta.dy < 0) {
+      emit((state.$1, false, state.$3));
+    }
     return true;
   }
 
   void goToPage(int index, BuildContext context) {
-    final int prevIndex = state.currentIndex;
+    final int prevIndex = state.$1;
+    final bool currentShowNav = state.$2;
+    final bool currentHasSeen = state.$3;
 
-    final bool hasSeenNotifs = index == 3 ? true : state.hasSeenNotifications;
-
-    emit(ATNavBarState(
-      currentIndex: index,
-      shouldShowNav: state.shouldShowNav,
-      hasSeenNotifications: hasSeenNotifs,
-    ));
+    // Your feature: mark notifications as read when tapping the bell tab
     if (index == 3) {
-   
-    context.read<GetNotificationsCubit>().markAllNotificationsAsRead();
-  }
+      context.read<GetNotificationsCubit>().markAllNotificationsAsRead();
+    }
+
+    final bool newHasSeen = (index == 3) ? true : currentHasSeen;
+
+    emit((index, currentShowNav, newHasSeen));
 
     if (index == 2) {
-      context.pushNamed(ATRoutes.GO_LIVE_TYPE_SELECTION);
-      emit(ATNavBarState(
-        currentIndex: prevIndex,
-        shouldShowNav: false,
-        hasSeenNotifications: state.hasSeenNotifications,
-      ));
+      // Senior dev's current route (your old constant no longer exists)
+      context.pushNamed(ATRoutes.chooseEventOrShowScreen);
+      emit((prevIndex, false, currentHasSeen)); // hide nav bar during live flow
     }
   }
 
   void resetNotificationSession() {
-    emit(state.copyWith(hasSeenNotifications: false));
+    // Called when a new push notification arrives → show badge again
+    emit((state.$1, state.$2, false));
   }
 }

@@ -1,3 +1,4 @@
+import 'package:amptive/example_stream.dart';
 import 'package:amptive/src/config/config_export.dart';
 import 'package:amptive/src/config/services/network_service/interceptor.dart';
 import 'package:amptive/src/features/auth/cubits/local_user_data_cubit.dart';
@@ -18,29 +19,33 @@ void main() async {
   await setup();
   await _initializeRedirect();
 
-  // runApp(
-  //   MaterialApp(
-  //     home: MultiBlocProvider(
-  //       providers: providers(),
-  //       child: const LivestreamPage(),
-  //     ),
-  //   ),
-  // );
-
   runApp(
-    DevicePreview(
-      enabled: true,
-      builder: (_) => MultiBlocProvider(
+    MaterialApp(
+      home: MultiBlocProvider(
         providers: providers(),
+        //child: const LivestreamPage(),
         child: const AmptiveApp(),
       ),
     ),
   );
+
+//   runApp(
+//     DevicePreview(
+//       enabled: true,
+//       builder: (_) => MultiBlocProvider(
+//         providers: providers(),
+//         child: const AmptiveApp(),
+//       ),
+//     ),
+//   );
 }
 
 Future<void> _initializeRedirect() async {
   const FlutterSecureStorage storage = FlutterSecureStorage();
-  await storage.write(key: ATStrings.SHOULD_REDIRECT, value: true.toString());
+  await storage.write(
+    key: ATStrings.shouldRedirect,
+    value: true.toString()
+  );
 }
 
 class AmptiveApp extends StatefulWidget {
@@ -70,7 +75,8 @@ class _AmptiveAppState extends State<AmptiveApp> {
           providers: <SingleChildWidget>[
             BlocProvider<LocalUserDataCubit>(
                 create: (_) => LocalUserDataCubit()),
-            BlocProvider<AuthGuardCubit>.value(value: authGuardCubit),
+            BlocProvider<AuthGuardCubit>
+              .value(value: authGuardCubit),
           ],
           child: MaterialApp.router(
             scaffoldMessengerKey: scaffoldMessengerKey,

@@ -50,7 +50,7 @@ class SignupCubit extends Cubit<ATAppState<SignupResponseModel>> {
           );
           await localStorageService.setObject(
             ATStrings.cachedUserData,
-            cachedUserData.toJson(),
+            cachedUserData.toLocalStorageJson(),
           );
 
           emit(SuccessState<SignupResponseModel>(newData: responseModel));

@@ -103,7 +103,6 @@ class GetNotificationsCubit extends Cubit<ATAppState<NotificationsResponseModel>
             if (n.id == notificationId) {
               return Notifications(
                 id: n.id,
-                userId: n.userId,
                 message: n.message,
                 channel: n.channel,
                 createdAt: n.createdAt,
@@ -160,7 +159,6 @@ class GetNotificationsCubit extends Cubit<ATAppState<NotificationsResponseModel>
               currentData.notifications?.map((Notifications n) {
             return Notifications(
               id: n.id,
-              userId: n.userId,
               message: n.message,
               channel: n.channel,
               createdAt: n.createdAt,

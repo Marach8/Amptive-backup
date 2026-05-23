@@ -73,7 +73,16 @@ class MediaService {
     required String token,
     bool isSpeaker = false,
   }) async {
-    _room = Room();
+    _room = Room(
+      roomOptions: const RoomOptions(
+        adaptiveStream: true,
+        dynacast: true,
+        defaultAudioPublishOptions: AudioPublishOptions(
+          name: 'microphone',
+          audioBitrate: 32000,
+        ),
+      ),
+    );
     _listener = _room!.createListener();
     _registerRoomEvents();
 
@@ -83,14 +92,6 @@ class MediaService {
       await _room!.connect(
         url,
         token,
-        roomOptions: const RoomOptions(
-          adaptiveStream: true,
-          dynacast: true,
-          defaultAudioPublishOptions: AudioPublishOptions(
-            name: 'microphone',
-            audioBitrate: 32000,
-          ),
-        ),
       );
 
       _log('Connected to LiveKit room successfully');

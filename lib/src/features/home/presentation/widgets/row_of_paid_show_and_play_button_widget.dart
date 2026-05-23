@@ -2,7 +2,6 @@ import 'package:amptive/src/config/routing/route_strings.dart';
 import 'package:amptive/src/config/utils/colors.dart';
 import 'package:amptive/src/config/utils/font_sizes.dart';
 import 'package:amptive/src/config/utils/font_weights.dart';
-
 import 'package:amptive/src/features/home/data/models/response/home_feed_response_model.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -42,18 +41,18 @@ class PaidShowAndPlayBtnWidget extends StatelessWidget {
     if (_isLive) {
       if (isStandalone) {
         context.pushNamed(
-          ATRoutes.LIVE_EVENT_DETAILED,
+          ATRoutes.liveEventDetailed,
           extra: homeFeedItem,
         );
       } else {
         context.pushNamed(
-          ATRoutes.LIVE_SHOW_DETAILED,
+          ATRoutes.liveShowDetailed,
           extra: homeFeedItem,
         );
       }
     } else {
       context.pushNamed(
-        ATRoutes.SCHEDULE_DETAILED,
+        ATRoutes.scheduleDetailed,
         extra: homeFeedItem,
       );
     }

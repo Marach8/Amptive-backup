@@ -76,7 +76,7 @@ class HomeFeedCubit extends Cubit<ATAppState<HomeFeedResponseModel>> {
     try {
       final ApiResponse<HomeFeedResponseModel> response =
           await homeRepo.fetchHomeFeed(
-        page: 0,
+        page: 1,
         pageSize: 20,
         refresh: true,
       );

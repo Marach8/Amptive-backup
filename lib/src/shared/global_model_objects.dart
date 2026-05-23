@@ -1,8 +1,8 @@
 import 'package:equatable/equatable.dart';
 
-class User extends Equatable {
-  User({
-    this.userId,
+class User extends Equatable{
+  const User({
+    required this.userId,
     this.username,
     this.profilePicture,
     this.followersCount,
@@ -24,7 +24,9 @@ class User extends Equatable {
         name = json['name'],
         isVerified = json['is_verified'];
 
-  final String? userId, username, profilePicture, firstName, lastName, name;
+  final String userId;
+  final String? username, profilePicture,
+    firstName, lastName, name;
   final int? followersCount, followingCount;
   final bool? isVerified;
 
@@ -36,10 +38,10 @@ class User extends Equatable {
 }
 
 class Host extends User {
-  Host({
+  const Host({
     this.hostLevel,
     this.totalShows,
-    super.userId,
+    required super.userId,
     super.username,
     super.profilePicture,
     super.followersCount,
@@ -59,9 +61,9 @@ class Host extends User {
 }
 
 class CoHost extends User {
-  CoHost({
+  const CoHost({
     this.invitedAt,
-    super.userId,
+    required super.userId,
     super.username,
     super.profilePicture,
     super.followersCount,
@@ -79,30 +81,50 @@ class CoHost extends User {
   final String? invitedAt;
 }
 
+
 class Community {
-  Community(
-      {this.communityId,
-      this.name,
-      this.description,
-      this.image,
-      this.memberCount,
-      this.isPrivate,
-      this.creatorId});
+  Community({
+    this.communityId,
+    this.name,
+    this.description,
+    this.image,
+    this.memberCount,
+    this.isPrivate,
+    this.creatorId,
+  });
 
   factory Community.fromJson(Map<String, dynamic> json) {
     return Community(
-        communityId: json['community_id'],
-        name: json['name'],
-        description: json['description'],
-        image: json['image'],
-        memberCount: json['member_count'],
-        isPrivate: json['is_private'],
-        creatorId: json['created_by']);
+      communityId: json['community_id'],
+      name: json['name'],
+      description: json['description'],
+      image: json['image'],
+      memberCount: json['member_count'],
+      isPrivate: json['is_private'],
+      creatorId: json['created_by'],
+    );
   }
 
-  final String? communityId, name, description, image, creatorId;
+  final String? communityId,
+      name,
+      description,
+      image,
+      creatorId;
+
   final int? memberCount;
   bool? isPrivate;
+
+  Map<String, dynamic> toJson() {
+    return <String, dynamic>{
+      'community_id': communityId,
+      'name': name,
+      'description': description,
+      'image': image,
+      'member_count': memberCount,
+      'is_private': isPrivate,
+      'created_by': creatorId,
+    };
+  }
 }
 
 class HashTag extends Equatable {
@@ -189,10 +211,9 @@ class HashTag extends Equatable {
 //   }
 // }
 
-class Notifications extends User {
+class Notifications{
   Notifications(
       {this.id,
-      super.userId,
       this.message,
       this.channel,
       this.createdAt,
@@ -225,4 +246,21 @@ class Notifications extends User {
   final String? id, message, channel, createdAt, title, type, readAt, category;
   final dynamic metadata;
   final bool? isRead;
+}
+
+class WalletBalance {
+  WalletBalance({
+    this.availableBalance,
+    this.pendingBalance,
+  });
+
+  factory WalletBalance.fromJson(Map<String, dynamic> json) {
+    return WalletBalance(
+      availableBalance: (json['available_balance'] as num?)?.toDouble(),
+      pendingBalance: (json['pending_balance'] as num?)?.toDouble(),
+    );
+  }
+
+  final double? availableBalance;
+  final double? pendingBalance;
 }

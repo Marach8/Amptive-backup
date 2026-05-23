@@ -1,11 +1,18 @@
-import 'package:amptive/src/config/config_export.dart';
-import 'package:amptive/src/features/go_live/cubits/livestream_bloc.dart';
-import 'package:amptive/src/livestream/livestream.dart';
-import 'package:amptive/src/models/host.dart';
+import 'package:amptive/src/config/services/ws_notif_service/ws_channel_service_impl.dart';
+import 'package:amptive/src/features/go_live/cubits/livestream_cubit1.dart';
+import 'package:amptive/src/features/go_live/data/models/deconstruct_inbound_events.dart';
+import 'package:amptive/src/features/go_live/data/models/livestream_state.dart';
+import 'package:amptive/src/features/go_live/presentation/widgets/follow_and_subscribe_to_user_modal.dart';
+import 'package:amptive/src/features/go_live/presentation/widgets/render_host_and_cohost.dart';
+import 'package:amptive/src/shared/loading_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../../../bloc/main_app/go_live_bloc/host_view/cohosts_display_bloc.dart';
-import '../../go_live_export.dart';
+
+typedef CohostPosition = ({
+  double? left, double? right,
+  double? top, double? bottom,
+});
+
 
 class HostViewOfHostNdCohostDisplay extends StatelessWidget {
   const HostViewOfHostNdCohostDisplay({
@@ -14,83 +21,83 @@ class HostViewOfHostNdCohostDisplay extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return LayoutBuilder(builder: (_, BoxConstraints constraints) {
-      final double width = constraints.maxWidth;
-      return BlocBuilder<LivestreamBloc, LivestreamState>(
-        builder: (BuildContext context, LivestreamState state) {
-          final List<LivestreamParticipant> participants = state.participants;
+    final WSConnectionStatus wsConnectionStatus = 
+    context.select<LiveStreamCubit1, WSConnectionStatus>(
+      (LiveStreamCubit1 cubit) => cubit.state.wsConnectionStatus,
+    );
+    return switch(wsConnectionStatus){
+      WSConnectionStatus.initial ||
+      WSConnectionStatus.connecting ||
+      WSConnectionStatus.reconnecting => const Center(
+        child: ATLoadingIndicator(),
+      ),
+      WSConnectionStatus.disconnected ||
+      WSConnectionStatus.failed => const Text(
+        'Error occured',
+      ),
+      WSConnectionStatus.connected => LayoutBuilder(
+        builder: (_, BoxConstraints constraints) {
+          const int maxCohosts = 5;
+          final double width = constraints.maxWidth;
 
-          if (participants.isEmpty) {
-            return Center(
-              child: Text(
-                'Waiting for participants...',
-                style: TextStyle(color: ATColors.hexC2C2C2),
-              ),
-            );
-          }
+          final Map<int, CohostPosition> positionMap = 
+            <int, CohostPosition>{
+              0: (top: 35, left: 0, right: null, bottom: null),
+              1: (top: 35, right: 0, left: null, bottom: null),
+              2: (bottom: 35, right: width * 0.1, top: null, left: null),
+              3: (bottom: 35, left: width * 0.1, top: null, right: null),
+              4: (bottom: 5, left: null, right: null, top: null),
+            };
 
-          final List<LivestreamParticipant> hosts =
-              participants.where((p) => p.isHost).toList();
-          final List<LivestreamParticipant> cohosts =
-              participants.where((p) => !p.isHost).toList();
+          return BlocSelector<LiveStreamCubit1, 
+            LiveStreamState1, Organizers?>(
+            selector: (LiveStreamState1 state) => state.organizers,
+            builder: (_, Organizers? organizers) {
+              final LivestreamParticipant? mainHost = organizers?.host;
+              final List<LivestreamParticipant?> cohosts = 
+                organizers?.cohosts ?? <LivestreamParticipant?>[];
 
-          return Stack(
-            alignment: Alignment.center,
-            children: <Widget>[
-              if (hosts.isNotEmpty)
-                GoLiveHostWidget(
-                  top: cohosts.isEmpty ? 80 : 6,
-                  hostName: hosts.first.displayName,
-                  hostProfilePic: hosts.first.avatar ?? '',
+              final List<LivestreamParticipant?> paddedCohosts =
+              <LivestreamParticipant?>[
+                ...cohosts.take(maxCohosts),
+                ...List<LivestreamParticipant?>.filled(
+                  maxCohosts - (
+                    cohosts.length.clamp(0, maxCohosts)
+                  ), null
                 ),
-              if (cohosts.isNotEmpty)
-                CohostWidget4HostView(
-                  top: 35,
-                  left: 0,
-                  index: 0,
-                  coHostName: cohosts[0].displayName,
-                  coHostProfilePicture: cohosts[0].avatar,
-                  onTap: () {},
-                ),
-              if (cohosts.length > 1)
-                CohostWidget4HostView(
-                  top: 35,
-                  right: 0,
-                  index: 1,
-                  coHostName: cohosts[1].displayName,
-                  coHostProfilePicture: cohosts[1].avatar,
-                  onTap: () {},
-                ),
-              if (cohosts.length > 2)
-                CohostWidget4HostView(
-                  bottom: 35,
-                  right: width * 0.1,
-                  index: 2,
-                  coHostName: cohosts[2].displayName,
-                  coHostProfilePicture: cohosts[2].avatar,
-                  onTap: () {},
-                ),
-              if (cohosts.length > 3)
-                CohostWidget4HostView(
-                  bottom: 35,
-                  left: width * 0.1,
-                  index: 3,
-                  coHostName: cohosts[3].displayName,
-                  coHostProfilePicture: cohosts[3].avatar,
-                  onTap: () {},
-                ),
-              if (cohosts.length > 4)
-                CohostWidget4HostView(
-                  bottom: 5,
-                  index: 4,
-                  coHostName: cohosts[4].displayName,
-                  coHostProfilePicture: cohosts[4].avatar,
-                  onTap: () {},
-                ),
-            ],
+              ];
+
+              return Stack(
+                alignment: Alignment.center,
+                children: <Widget>[
+                  RenderAHost(
+                    top: 6,
+                    host: mainHost,
+                    onTap: (LivestreamParticipant? host){},
+                  ),
+                  
+                  ...paddedCohosts.indexed.map(
+                    ((int index, LivestreamParticipant?) cohost){
+                      final CohostPosition? position = positionMap[cohost.$1];
+                      return RenderACohost(
+                        cohost: cohost.$2,
+                        onTap: (LivestreamParticipant? cohost){
+                          showFollowAndSubscribeToUserModal(
+                            context: context, user: cohost!);
+                        },
+                        top: position?.top,
+                        left: position?.left,
+                        right: position?.right,
+                        bottom: position?.bottom,
+                      );
+                    }
+                  )
+                ],
+              );
+            },
           );
-        },
-      );
-    });
+        }
+      )
+    };
   }
 }

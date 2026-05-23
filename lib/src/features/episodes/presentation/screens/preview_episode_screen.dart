@@ -23,7 +23,7 @@ import 'package:amptive/src/features/auth/cubits/local_user_data_cubit.dart';
 import 'package:amptive/src/shared/back_button.dart';
 import 'package:amptive/src/shared/image_loader_widget.dart';
 import 'package:amptive/src/shared/live_indicators.dart';
-import 'package:amptive/src/features/go_live/models/go_live_program_params.dart';
+import 'package:amptive/src/features/go_live/data/models/deconstruct_inbound_events.dart';
 import 'package:nested/nested.dart';
 
 class PreviewEpisodeScreen extends StatelessWidget {
@@ -197,15 +197,15 @@ class _SubWidgetState extends State<_SubWidget> {
                                       children: <Widget>[
                                         TextButton(
                                           onPressed: () {
-                                            context.pushReplacementNamed(
-                                              ATRoutes.MAIN_GO_LIVE_PROGRAM,
-                                              extra: GoLiveProgramParams(
-                                                streamId:
-                                                    episode?.livestreamId ?? '',
-                                                userType: GoLiveUserType.host,
-                                                contentId: episode?.episodeId,
-                                              ),
-                                            );
+                                            // context.pushReplacementNamed(
+                                            //   ATRoutes.liveProgramScreen,
+                                            //   extra: GoLiveProgramParams(
+                                            //     streamId:
+                                            //         episode?.livestreamId ?? '',
+                                            //     userType: GoLiveUserType.host,
+                                            //     contentId: episode?.episodeId,
+                                            //   ),
+                                            // );
                                           },
                                           child: const Text('Go Live'),
                                         ),
