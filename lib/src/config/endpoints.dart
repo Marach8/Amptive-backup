@@ -47,32 +47,27 @@ class ATEndpoints {
   static const String searchSuggestions = '/api/v1/search/suggestions';
   static const String registerDevice = '/api/v1/notif/devices/register';
   static const String fcmRegisterDevice = '/api/v1/notif/devices/register';
-<<<<<<< HEAD
-=======
+
   static const String getNotifications = '/api/v1/notif';
   static const String setWalletPin = '/api/v1/auth/set-pin';
   static const String fundWallet = '/api/v1/payments/wallet/fund';
 
   static const String getWalletBalance = '/api/v1/payments/wallet/balance';
 
-  static String getStreamTokenEndpoint(String streamId) =>
-      '/api/v1/livestreams/$streamId/token';
-  static String startStreamEndpoint(String contentId) =>
-      '/api/v1/livestreams/$contentId/start';
-  static String endStreamEndpoint(String streamId) =>
-      '/api/v1/livestreams/$streamId/end';
-  static String reactToStream(String streamId) =>
-      '/api/v1/livestreams/$streamId/react';
+  // static String getStreamTokenEndpoint(String streamId) =>
+  //     '/api/v1/livestreams/$streamId/token';
+  // static String startStreamEndpoint(String contentId) =>
+  //     '/api/v1/livestreams/$contentId/start';
+  // static String endStreamEndpoint(String streamId) =>
+  //     '/api/v1/livestreams/$streamId/end';
+  // static String reactToStream(String streamId) =>
+  //     '/api/v1/livestreams/$streamId/react';
 
-  static String markEventGoing(String eventId) =>
-      '${ATEndpoints.events}standalone/$eventId/going';
-  static String markEpisodeGoing(String episodeId) =>
-      '${ATEndpoints.events}episode/$episodeId/going';
+  // static String markEventGoing(String eventId) =>
+  //     '${ATEndpoints.events}standalone/$eventId/going';
+  // static String markEpisodeGoing(String episodeId) =>
+  //     '${ATEndpoints.events}episode/$episodeId/going';
 
-  // websockets
-  static const String wsUsers = '$wsBaseUrl/api/v1/ws/user';
-
-  static String wsSignalEndpoint(String streamId, String authToken) =>
-      '$wsBaseUrl/api/v1/ws/stream/$streamId?token=$authToken';
->>>>>>> e0f4545044486a1a3edbed3074aca09519237daf
+  // static String wsSignalEndpoint(String streamId, String authToken) =>
+  //     '$wsBaseUrl/api/v1/ws/stream/$streamId?token=$authToken';
 }

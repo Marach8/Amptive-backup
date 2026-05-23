@@ -1,5 +1,4 @@
 import 'package:equatable/equatable.dart';
-import 'package:uuid/uuid.dart';
 
 class User extends Equatable{
   const User({
@@ -212,10 +211,9 @@ class NotificationMetadata {
   }
 }
 
-class Notifications extends User {
+class Notifications{
   Notifications(
       {this.id,
-      super.userId,
       this.message,
       this.channel,
       this.createdAt,

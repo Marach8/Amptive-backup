@@ -220,15 +220,9 @@ final GoRouter amptiveAppRouter = GoRouter(
         builder: (_, __) => const ATMainAppShell(),
         routes: <RouteBase>[
           GoRoute(
-<<<<<<< HEAD
             name: ATRoutes.scheduleDetailed,
             path: ATRoutes.scheduleDetailed.addSlash,
-            pageBuilder: (_, state) => ATSlidingRouteTransition<void>(
-=======
-            name: ATRoutes.SCHEDULE_DETAILED,
-            path: ATRoutes.SCHEDULE_DETAILED.addSlash,
             pageBuilder: (_, GoRouterState state) => ATSlidingRouteTransition<void>(
->>>>>>> e0f4545044486a1a3edbed3074aca09519237daf
               child: ATScheduleDetailedScreen(
                 homeFeedItem: state.extra as HomeFeedItem?,
               ),
@@ -343,29 +337,17 @@ final GoRouter amptiveAppRouter = GoRouter(
                     ]),
               ]),
           GoRoute(
-<<<<<<< HEAD
               name: ATRoutes.liveShowDetailed,
               path: ATRoutes.liveShowDetailed.addSlash,
-              pageBuilder: (_, state) => ATSlidingRouteTransition<void>(
-=======
-              name: ATRoutes.LIVE_SHOW_DETAILED,
-              path: ATRoutes.LIVE_SHOW_DETAILED.addSlash,
               pageBuilder: (_, GoRouterState state) => ATSlidingRouteTransition<void>(
->>>>>>> e0f4545044486a1a3edbed3074aca09519237daf
                   beginOffset: const Offset(0.0, 1.0),
                   child: ATLiveShowDetailedScreen(
                     homeFeedItem: state.extra as HomeFeedItem?,
                   ))),
           GoRoute(
-<<<<<<< HEAD
               name: ATRoutes.liveEventDetailed,
               path: ATRoutes.liveEventDetailed.addSlash,
-              pageBuilder: (_, state) => ATSlidingRouteTransition<void>(
-=======
-              name: ATRoutes.LIVE_EVENT_DETAILED,
-              path: ATRoutes.LIVE_EVENT_DETAILED.addSlash,
               pageBuilder: (_, GoRouterState state) => ATSlidingRouteTransition<void>(
->>>>>>> e0f4545044486a1a3edbed3074aca09519237daf
                     beginOffset: const Offset(0.0, 1.0),
                     child: ATLiveEventDetailedScreen(
                       homeFeedItem: state.extra as HomeFeedItem?,

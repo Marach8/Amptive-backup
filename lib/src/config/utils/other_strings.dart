@@ -26,12 +26,9 @@ class ATStrings {
   static const String you = 'You';
   static const String followerCount = 'followers count';
   static const String followingCount = 'following count';
-<<<<<<< HEAD
   static const String hasTestedMic = 'has tested mic';
   static const String liveProgramData = 'live program data';
-=======
   static const String bio = 'Bio';
->>>>>>> e0f4545044486a1a3edbed3074aca09519237daf
 
   static const String GO_LIVE_LIKE_NEVER_B4 = "Go Live, Like Never Before";
   static const String READILY_MONETIZE_UR_LIVE_AUDIO_PROGS =
