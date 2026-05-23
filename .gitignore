@@ -5,9 +5,12 @@
 *.swp
 .DS_Store
 .atom/
+.build/
+.kilo/
 .buildlog/
 .history
 .svn/
+.swiftpm/
 migrate_working_dir/
 android/app/.cxx/
 

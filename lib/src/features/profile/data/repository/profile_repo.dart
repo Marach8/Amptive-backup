@@ -10,9 +10,26 @@ abstract class ProfileRepo{
     required int pageSize,
   });
 
-  Future<ApiResponse<dynamic>> updateUserProfile({
-    required String profilePicture,
+  Future<ApiResponse<dynamic>> updateUserProfile({  
+    String? profilePicture,
+    String? name,
+    String? username,
+    String? bio,
+    String? country,
+    String? coverPhoto,
+    String? xUrl,
+    String? instagramUrl,
+    String? linkedinUrl,
+    String? websiteUrl,
+
+
   });
+
+  Future<ApiResponse<String>> sendEmailAndPhoneOtp({
+    required Map<String, dynamic> param
+});
+
    
+  Future<ApiResponse<dynamic>> verifyOtp({required Map<String, dynamic> param});
 
 }

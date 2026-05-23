@@ -23,8 +23,12 @@ class ATStrings {
   static const String username = 'Username';
   static const String dob = 'Date of Birth';
   static const String name = 'Name';
+  static const String you = 'You';
   static const String followerCount = 'followers count';
   static const String followingCount = 'following count';
+  static const String hasTestedMic = 'has tested mic';
+  static const String liveProgramData = 'live program data';
+  static const String bio = 'Bio';
 
   static const String GO_LIVE_LIKE_NEVER_B4 = "Go Live, Like Never Before";
   static const String READILY_MONETIZE_UR_LIVE_AUDIO_PROGS =
@@ -41,7 +45,7 @@ class ATStrings {
   static const String enterCodeSentTo =
       'Enter the 4 digit code we just sent to';
   static const String next = 'Next';
-  static const String SHOULD_REDIRECT = 'should Redirect';
+  static const String shouldRedirect = 'should Redirect';
   static const String isNewUser = 'Is First time user';
   static const String enterAmount = 'Enter Amount';
   static const String or = 'or';
@@ -245,7 +249,7 @@ class ATStrings {
   static const String didNotGetCode = "Didn't get the code? ";
   static const String sendAgain = 'Send again';
   static const String SEND = 'Send';
-  static const String SEND_GIFT = 'Send gift';
+  static const String sendGift = 'Send gift';
   static const String THIS_WILL_APPEAR_ON_PROFILE =
       'Note that this will appear on your profile';
 
@@ -296,8 +300,8 @@ class ATStrings {
   static const String addProfilePicture = "Add a profile picture";
   static const String useYOurFavImage =
       "Use one of your favourite image or selfie";
-  static const String PHOTO_GALLERY = 'Photo Gallery';
-  static const String CAMERA = 'Camera';
+  static const String photoGallery = 'Photo Gallery';
+  static const String camera = 'Camera';
   static const String skipForNow = 'Skip for now';
   static const String apply = 'Apply';
   static const String addNewPlan = 'Add New Plan';
@@ -384,9 +388,9 @@ class ATStrings {
   static const String UNSUBSCRIBE = 'Unsubscribe';
   static const String COHOST_INVITE_SENT = 'Co-host invitation sent';
   static const String TOP_LISTENERS = 'Top Listeners';
-  static const String TOP_LISTENERS_DESC =
+  static const String topListenersRanking =
       'Top listeners are ranked by their level of interaction during the live session.';
-  static const String LISTENERS = 'Listeners';
+  static const String listeners = 'Listeners';
   static const String SELECT_SECURITY_QUEST = 'Select a Security Question';
   static const String aQuestionYouCanRemember =
       'Select a question you can easily remember...';
@@ -395,7 +399,7 @@ class ATStrings {
   static const String answerIsCaseSensitive = 'Your answer is case-sensitive!';
   static const String U_MUST_ANS_SECURITY_QUEST =
       'You must answer your security question when making withdrawals!';
-  static const String END_LIVE_SHOW =
+  static const String endLiveShowPrompt =
       'Are you sure you want to end your live show?';
 
   static const String TECHNOLOGY = 'Technology';
@@ -403,7 +407,7 @@ class ATStrings {
   static const String ADDED_2_CALL = 'Added to calender';
   static const String REMOVED_4RM_CAL = 'Removed from calender';
   static const String VIEW = 'View';
-  static const String GIFTS = 'Gifts';
+  static const String gifts = 'Gifts';
   static const String ADD_LINK = 'Add Link';
   static const String LINK_NAME = 'What is the name of your link';
   static const String LINK_URL = 'What is the URL of your link';
@@ -537,9 +541,9 @@ class ATStrings {
       'Communities will help your Shows and Events reach more listeners. Your audience can also use communites to find your Shows and Events easily. ';
   static const String addCohostDesc =
       'Added users must accept your invitation before they are added as your co-hosts.';
-  static const String TOP_GIFTERS_DESC =
+  static const String topGiftersDesc =
       'Gifters are ranked base on the total amount they have contributed to the host during live sessions.';
-  static const String TOP_GIFTERS = 'Top Gifters';
+  static const String topGifters = 'Top Gifters';
   static const String searchForCohost = 'Search for co-hosts';
   static const String searchForHashtag = 'Search for hashtag';
   static const String searchAndAddCohost4YourShow =
@@ -550,7 +554,7 @@ class ATStrings {
   static const String searchForBank = 'Search for bank';
   static const String SEARCH_4_FOLLOWERS = 'Search for followers';
   static const String SEARCH_4_SUBSCRIBERS = 'Search for subscribers';
-  static const String SEARCH_4_LISTENERS = 'Search for listeners';
+  static const String searchForListener = 'Search for listeners';
   static const String SEARCH_4_HASHTAGS = 'Search for hashtags';
   static const String suggestions = 'Suggestions';
   static const String appLanguage = 'App language';
@@ -585,7 +589,7 @@ class ATStrings {
   static const String setCapacity = 'Set capacity';
   static const String setCapacityDesc = 'Set the maximum number of listeners that can access your event. Once this limit is reached, no other additional participants can join or pay';
   static const String remove = 'Remove';
-  static const String SEND_GIFT_2_HOST = 'Send a gift to the host';
+  static const String sendGiftToHost = 'Send a gift to the host';
   static const String whispersDesc =
       'Whispers are randomly selected comments from your live audience that appear on your event page while your are live.';
   static const String nonAttendeesEncouragedToJoin =
@@ -594,9 +598,9 @@ class ATStrings {
   static const String turnedOn = 'Turned On';
   static const String turnOff = 'Turn Off';
   static const String turnedOff = 'Turned Off';
-  static const String IS_TALKING = 'is talking';
+  static const String isTalking = 'is talking';
   static const String IS_GIFTING = 'is gifting';
-  static const String GIFTED = 'Gifted';
+  static const String gifted = 'Gifted';
   static const String PINNED = 'Pinned';
   static const String TOP_CREATORS_IN_SOCIETY = 'Top Creators in Society';
   static const String moderationTools = 'Moderation Tools';
@@ -625,7 +629,7 @@ class ATStrings {
   static const String enterAmountToChargeForEvent =
       'Enter the amount you would want to charge users for your event. This amount will determine your event\'s tier.';
   static const String PAID = 'Paid';
-  static const String PAY = 'Pay';
+  static const String pay = 'Pay';
   static const String ENDED = 'Ended';
   static const String SHOWS = 'Shows';
   static const String EVENTS = 'Events';
@@ -657,9 +661,9 @@ class ATStrings {
   static const String weakPassword =
       'Password must contain at least one upper case letter, and must be at least 8 characters!';
   static const String shareEvent = 'Share event';
-  static const String COMMENT = 'Comment';
-  static const String END_NOW = 'End now';
-  static const String HOST = 'Host';
+  static const String comment = 'Comment';
+  static const String endNow = 'End now';
+  static const String host = 'Host';
   static const String editEpisode = 'Edit episode';
   static const String attendeesWillShowHere = 'Attendees will appear here!';
   static const String episodeCreated = 'Your episode has been scheduled!';

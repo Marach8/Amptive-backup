@@ -14,7 +14,9 @@ import 'package:amptive/src/features/episodes/data/models/request/create_episode
 import 'package:amptive/src/features/episodes/data/models/response/episode_model.dart';
 import 'package:amptive/src/features/episodes/presentation/widgets/whispers_permision_modal.dart';
 import 'package:amptive/src/features/events/presentation/screens/select_schedule_date_screen.dart';
+import 'package:amptive/src/features/go_live/data/models/live_program_data.dart';
 import 'package:amptive/src/features/go_live/go_live_export.dart';
+import 'package:amptive/src/features/go_live/presentation/screens/live_program_screen.dart';
 import 'package:amptive/src/global_export.dart';
 import 'package:amptive/src/shared/annotated_region__widget.dart';
 import 'package:amptive/src/shared/divider_widget.dart';
@@ -52,7 +54,7 @@ class CreateEpisodeFormScreen extends StatelessWidget {
         BlocProvider<AllUsersCubit>(create: (_) => AllUsersCubit()),
         BlocProvider<AllHashtagsCubit>(create: (_) => AllHashtagsCubit()),
         BlocProvider<SelectedHashTagsCubit>(create: (_) => SelectedHashTagsCubit()),
-        BlocProvider<StartEpisodeCubit>(create: (_) => StartEpisodeCubit()),
+        BlocProvider<StartLiveProgramCubit>(create: (_) => StartLiveProgramCubit()),
       ],
       child: _SubWidget(showId: showId),
     );
@@ -535,7 +537,8 @@ class _CreateShowFormScreenState extends State<_SubWidget> {
   
                               if (selectedHandRaisePermission == HandRaisingPermission.allow) {
                                 descriptionText = ATStrings.allow;
-                              } else if (selectedHandRaisePermission == HandRaisingPermission.dontAllow) {
+                              } else if (selectedHandRaisePermission
+                                == HandRaisingPermission.dontAllow) {
                                 descriptionText = ATStrings.dontAllow;
                               }
   
@@ -650,17 +653,30 @@ class _CreateShowFormScreenState extends State<_SubWidget> {
 
         bottomSheet: MultiBlocListener(
           listeners: <SingleChildWidget>[
-            BlocListener<StartEpisodeCubit, ATAppState<Episode>>(
-              listener: (_, ATAppState<Episode> state){
-                if(state is SuccessState<Episode>){
+            BlocListener<StartLiveProgramCubit,
+              ATAppState<LiveProgramEntryToken>>(
+              listener: (_, ATAppState<LiveProgramEntryToken> state){
+                if(state is SuccessState<LiveProgramEntryToken>){
                   _activateBtn.value = (true, _activateBtn.value.$2);
 
+                  final Episode? episode = context
+                    .read<CreateEpisodeCubit>().currentEpisodeDetail;
                   context.pushReplacementNamed(
                     ATRoutes.goLiveOnboarding,
-                    extra: state.newData
+                    extra: LiveProgramData(
+                      roomEntryToken: state.newData?.roomEntryToken ?? '',
+                      roomUrl: state.newData?.roomUrl ?? '',
+                      streamId: state.newData?.streamId ?? '',
+                      roomParticipantId: state.newData?.roomParticipantId ?? '',
+                      programId: episode?.episodeId ?? '',
+                      coverUrl: episode?.thumbnailUrl ?? '',
+                      role: ParticipantRole.host,
+                      programTitle: episode?.title ?? '',
+                      programDesc: episode?.description ?? '',
+                    ),
                   );
                 }
-                else if(state is FailureState<Episode>){
+                else if(state is FailureState<LiveProgramEntryToken>){
                   _activateBtn.value = (true, _activateBtn.value.$2);
 
                   showAppNotification2(
@@ -702,7 +718,8 @@ class _CreateShowFormScreenState extends State<_SubWidget> {
                         == ProgramAccessType.free ? 'free' : 'paid',
                       priceOverride: accessTypeData.subscriptionAmount 
                         ?? accessTypeData.oneTimePaymentAmount ?? 0.01,
-                      allowHandRaising: selectedHandRaisePermission == HandRaisingPermission.allow,
+                      allowHandRaising: selectedHandRaisePermission
+                        == HandRaisingPermission.allow,
                       allowWhispers: whispersDesc == ATStrings.turnedOn,
                       scheduledFor: _scheduleDate?.toUtc().toIso8601String(),
                     ),
@@ -726,12 +743,8 @@ class _CreateShowFormScreenState extends State<_SubWidget> {
                     == ScheduleBtnOnTap.goLive;
                   if(shouldStartLive){
                     final Episode? episode = state.newData;
-                    context.read<StartEpisodeCubit>().startEpisode(
-                      showId: widget.showId,
-                      episodeId: episode?.episodeId ?? '',
-                      streamUrl: episode?.streamUrl ?? '', 
-                      streamKey: episode?.streamKey ?? '',
-                      reason: 'Starting an episode'
+                    context.read<StartLiveProgramCubit>().startLiveProgram(
+                      contentId: episode?.episodeId ?? '',
                     );
                     return;
                   }
@@ -778,7 +791,8 @@ class _CreateShowFormScreenState extends State<_SubWidget> {
           child: ValueListenableBuilder<(bool?, ScheduleBtnOnTap)>(
               valueListenable: _activateBtn,
               builder: (_, (bool?, ScheduleBtnOnTap) value, __) {
-                final bool shouldGoToGoLive = _activateBtn.value.$2 == ScheduleBtnOnTap.goLive;
+                final bool shouldGoToGoLive = 
+                  _activateBtn.value.$2 == ScheduleBtnOnTap.goLive;
       
                 //null for loading, false for disabled, true for enabled for the bool.
                 return ATBlurredBgBtn(

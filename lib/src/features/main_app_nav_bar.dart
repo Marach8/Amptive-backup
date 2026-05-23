@@ -1,5 +1,9 @@
+import 'package:amptive/src/config/api_response_and_app_state.dart';
 import 'package:amptive/src/config/config_export.dart';
+import 'package:amptive/src/features/notifications/cubits/notifications_cubit.dart';
+import 'package:amptive/src/features/notifications/data/models/get_notifications_response_model.dart';
 import 'package:amptive/src/shared/animated_slide.dart';
+import 'package:amptive/src/shared/global_model_objects.dart';
 import 'package:amptive/src/views/widgets/animation_widgets/common_animation_widgets/animated_crossfade_widget.dart';
 import 'package:amptive/src/shared/image_loader_widget.dart';
 import 'package:flutter/material.dart';
@@ -40,29 +44,41 @@ class MainAppBottomNav extends StatelessWidget {
                         unselectedImagePath: list.last,
                         itemIdentityIndex: index,
                       ),
-                      Positioned(
+                      BlocBuilder<GetNotificationsCubit, ATAppState<NotificationsResponseModel>>(
+        builder: (BuildContext context,  ATAppState<NotificationsResponseModel> state) {
+          final  NotificationsResponseModel? notifications = context.read<GetNotificationsCubit>().currentNotifications;;
+          final int count = notifications?.unreadCount ?? 0;
+
+          if (count == 0) return const SizedBox.shrink();
+                      return Positioned(
                         top: 0,
                         right: 0,
-                        child: ATContainer(
+                        child: Container(
                           padding: const EdgeInsets.fromLTRB(2, 0, 2, 0),
                           constraints: const BoxConstraints(minWidth: 15),
                           height: 15,
-                          radius: 100,
-                          color: ATColors.hexECO404,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(100),
+                            color: ATColors.hexECO404,
+                          ),
                           child: FittedBox(
                             fit: BoxFit.scaleDown,
                             child: Text(
-                              '3',
+                              count > 99 ? '99+' : '$count',
                               textAlign: TextAlign.center,
-                              style: Theme.of(context)
+                              style: context
                                   .textTheme
                                   .bodySmall
                                   ?.copyWith(fontSize: ATSizes.size10),
                             ),
                           ),
                         ),
-                      )
-                    ],
+                      );
+        }
+                    
+                  )
+              
+                 ]
                   );
                 }
 
@@ -126,7 +142,7 @@ class ATNavBarBloc extends Cubit<(int, bool)> {
     final int prevIndex = state.$1;
     emit((index, state.$2));
     if (index == 2) {
-      context.pushNamed(ATRoutes.GO_LIVE_TYPE_SELECTION);
+      context.pushNamed(ATRoutes.chooseEventOrShowScreen);
       emit((prevIndex, false));
     } else {
       emit((index, state.$2));

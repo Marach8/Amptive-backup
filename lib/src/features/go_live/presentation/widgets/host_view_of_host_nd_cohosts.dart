@@ -1,9 +1,18 @@
-import 'package:amptive/src/config/config_export.dart';
-import 'package:amptive/src/models/host.dart';
+import 'package:amptive/src/config/services/ws_notif_service/ws_channel_service_impl.dart';
+import 'package:amptive/src/features/go_live/cubits/livestream_cubit1.dart';
+import 'package:amptive/src/features/go_live/data/models/deconstruct_inbound_events.dart';
+import 'package:amptive/src/features/go_live/data/models/livestream_state.dart';
+import 'package:amptive/src/features/go_live/presentation/widgets/follow_and_subscribe_to_user_modal.dart';
+import 'package:amptive/src/features/go_live/presentation/widgets/render_host_and_cohost.dart';
+import 'package:amptive/src/shared/loading_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../../../bloc/main_app/go_live_bloc/host_view/cohosts_display_bloc.dart';
-import '../../go_live_export.dart';
+
+typedef CohostPosition = ({
+  double? left, double? right,
+  double? top, double? bottom,
+});
+
 
 class HostViewOfHostNdCohostDisplay extends StatelessWidget {
   const HostViewOfHostNdCohostDisplay({
@@ -12,146 +21,83 @@ class HostViewOfHostNdCohostDisplay extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return LayoutBuilder(builder: (_, BoxConstraints constraints) {
-      final double width = constraints.maxWidth;
-      return BlocBuilder<AmptiveGoLiveSelectCoHostBloc,
-              List<ObjectWithNotifier<Host>>>(
-          builder: (_, List<ObjectWithNotifier<Host>> listOfCoHosts) {
-        return Stack(
-          alignment: Alignment.center,
-          children: <Widget>[
-            const GoLiveHostWidget(
-                top: 6,
-                hostName: 'Emmanuel Nnanna',
-                hostProfilePic: ATImgStrings.jpeg2),
-            BlocSelector<AddCohostsBloc, List<(ATCohost<bool>, int)>,
-                    (ATCohost<bool>, int)>(
-                selector: (List<(ATCohost<bool>, int)> state) =>
-                    state.elementAt(0),
-                builder: (_, (ATCohost<bool>, int) cohost) {
-                  return CohostWidget4HostView(
-                      top: 35,
-                      left: 0,
-                      index: 0,
-                      coHostName: cohost.$1.name,
-                      coHostProfilePicture: cohost.$1.profilePicture,
-                      onTap: () async => await _onCohostTap(
-                          cohost: cohost.$1, coHostNo: 0, context: context));
-                }),
-            BlocSelector<AddCohostsBloc, List<(ATCohost<bool>, int)>,
-                    (ATCohost<bool>, int)>(
-                selector: (List<(ATCohost<bool>, int)> state) =>
-                    state.elementAt(1),
-                builder: (_, (ATCohost<bool>, int) cohost) {
-                  return CohostWidget4HostView(
-                      top: 35,
-                      right: 0,
-                      index: 1,
-                      coHostName: cohost.$1.name,
-                      coHostProfilePicture: cohost.$1.profilePicture,
-                      onTap: () async => await _onCohostTap(
-                          cohost: cohost.$1, coHostNo: 1, context: context));
-                }),
-            BlocSelector<AddCohostsBloc, List<(ATCohost<bool>, int)>,
-                    (ATCohost<bool>, int)>(
-                selector: (List<(ATCohost<bool>, int)> state) =>
-                    state.elementAt(2),
-                builder: (_, (ATCohost<bool>, int) cohost) {
-                  return CohostWidget4HostView(
-                      bottom: 35,
-                      right: width * 0.1,
-                      index: 2,
-                      coHostName: cohost.$1.name,
-                      coHostProfilePicture: cohost.$1.profilePicture,
-                      onTap: () async => await _onCohostTap(
-                          cohost: cohost.$1, coHostNo: 2, context: context));
-                }),
-            BlocSelector<AddCohostsBloc, List<(ATCohost<bool>, int)>,
-                    (ATCohost<bool>, int)>(
-                selector: (List<(ATCohost<bool>, int)> state) =>
-                    state.elementAt(3),
-                builder: (_, (ATCohost<bool>, int) cohost) {
-                  return CohostWidget4HostView(
-                      bottom: 35,
-                      left: width * 0.1,
-                      index: 3,
-                      coHostName: cohost.$1.name,
-                      coHostProfilePicture: cohost.$1.profilePicture,
-                      onTap: () async => await _onCohostTap(
-                          cohost: cohost.$1, coHostNo: 3, context: context));
-                }),
-            BlocSelector<AddCohostsBloc, List<(ATCohost<bool>, int)>,
-                    (ATCohost<bool>, int)>(
-                selector: (List<(ATCohost<bool>, int)> state) =>
-                    state.elementAt(4),
-                builder: (_, (ATCohost<bool>, int) cohost) {
-                  return CohostWidget4HostView(
-                      bottom: 5,
-                      index: 4,
-                      coHostName: cohost.$1.name,
-                      coHostProfilePicture: cohost.$1.profilePicture,
-                      onTap: () async => await _onCohostTap(
-                          cohost: cohost.$1, coHostNo: 4, context: context));
-                }),
-          ],
-        );
-      });
-    });
-  }
-}
+    final WSConnectionStatus wsConnectionStatus = 
+    context.select<LiveStreamCubit1, WSConnectionStatus>(
+      (LiveStreamCubit1 cubit) => cubit.state.wsConnectionStatus,
+    );
+    return switch(wsConnectionStatus){
+      WSConnectionStatus.initial ||
+      WSConnectionStatus.connecting ||
+      WSConnectionStatus.reconnecting => const Center(
+        child: ATLoadingIndicator(),
+      ),
+      WSConnectionStatus.disconnected ||
+      WSConnectionStatus.failed => const Text(
+        'Error occured',
+      ),
+      WSConnectionStatus.connected => LayoutBuilder(
+        builder: (_, BoxConstraints constraints) {
+          const int maxCohosts = 5;
+          final double width = constraints.maxWidth;
 
-Future<void> _onCohostTap({
-  required ATCohost<bool> cohost,
-  required int coHostNo,
-  required BuildContext context,
-}) async {
-  // if(cohost.profilePicture == null){
-  //   final ATCohost<bool>? selectedCohost =
-  //     await showAvailableCoHostsModal(context: context, selectionMode: CohostSelectionMode.single);
-  //   if (context.mounted && selectedCohost != null) {
-  //     context.read<AddCohostsBloc>().addCohost(cohost: selectedCohost, cohostNo: coHostNo);
-  //   }
-  // }
-  // else{
-  //   final bool? removeCohost = await showConfirmationDialog(
-  //     context: context,
-  //     title: '${ATStrings.REMOVE} ${ATStrings.COHOST}',
-  //     content: '${ATStrings.CONFIRM_COHOST_REMOVAL} ${cohost.name}?',
-  //     yesString: ATStrings.REMOVE,
-  //     noString: ATStrings.cancel,
-  //   );
-  //   if(context.mounted && removeCohost == true) {
-  //     context.read<AddCohostsBloc>().removeCohost(cohostNo: coHostNo);
-  //   }
-  // }
-}
+          final Map<int, CohostPosition> positionMap = 
+            <int, CohostPosition>{
+              0: (top: 35, left: 0, right: null, bottom: null),
+              1: (top: 35, right: 0, left: null, bottom: null),
+              2: (bottom: 35, right: width * 0.1, top: null, left: null),
+              3: (bottom: 35, left: width * 0.1, top: null, right: null),
+              4: (bottom: 5, left: null, right: null, top: null),
+            };
 
-class AddCohostsBloc extends Cubit<List<(ATCohost<bool>, int)>> {
-  AddCohostsBloc()
-      : super(
-          List<(ATCohost<bool>, int)>.generate(
-            5,
-            (int index) => (ATCohost<bool>.empty(), index),
-          ),
-        );
+          return BlocSelector<LiveStreamCubit1, 
+            LiveStreamState1, Organizers?>(
+            selector: (LiveStreamState1 state) => state.organizers,
+            builder: (_, Organizers? organizers) {
+              final LivestreamParticipant? mainHost = organizers?.host;
+              final List<LivestreamParticipant?> cohosts = 
+                organizers?.cohosts ?? <LivestreamParticipant?>[];
 
-  void addCohost({required ATCohost<bool> cohost, required int cohostNo}) {
-    final List<(ATCohost<bool>, int)> updatedCohosts =
-        List<(ATCohost<bool>, int)>.from(state);
+              final List<LivestreamParticipant?> paddedCohosts =
+              <LivestreamParticipant?>[
+                ...cohosts.take(maxCohosts),
+                ...List<LivestreamParticipant?>.filled(
+                  maxCohosts - (
+                    cohosts.length.clamp(0, maxCohosts)
+                  ), null
+                ),
+              ];
 
-    if (cohostNo >= 0 && cohostNo < updatedCohosts.length) {
-      updatedCohosts[cohostNo] = (cohost, cohostNo);
-      emit(updatedCohosts);
-    }
-  }
-
-  void removeCohost({required int cohostNo}) {
-    final List<(ATCohost<bool>, int)> updatedCohosts =
-        List<(ATCohost<bool>, int)>.from(state);
-
-    if (cohostNo >= 0 && cohostNo < updatedCohosts.length) {
-      updatedCohosts[cohostNo] = (ATCohost<bool>.empty(), cohostNo);
-      emit(updatedCohosts);
-    }
+              return Stack(
+                alignment: Alignment.center,
+                children: <Widget>[
+                  RenderAHost(
+                    top: 6,
+                    host: mainHost,
+                    onTap: (LivestreamParticipant? host){},
+                  ),
+                  
+                  ...paddedCohosts.indexed.map(
+                    ((int index, LivestreamParticipant?) cohost){
+                      final CohostPosition? position = positionMap[cohost.$1];
+                      return RenderACohost(
+                        cohost: cohost.$2,
+                        onTap: (LivestreamParticipant? cohost){
+                          showFollowAndSubscribeToUserModal(
+                            context: context, user: cohost!);
+                        },
+                        top: position?.top,
+                        left: position?.left,
+                        right: position?.right,
+                        bottom: position?.bottom,
+                      );
+                    }
+                  )
+                ],
+              );
+            },
+          );
+        }
+      )
+    };
   }
 }

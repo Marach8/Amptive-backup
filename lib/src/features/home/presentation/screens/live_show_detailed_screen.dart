@@ -1,9 +1,13 @@
 import 'dart:ui';
+import 'package:amptive/src/config/routing/route_strings.dart';
+import 'package:amptive/src/features/go_live/data/models/deconstruct_inbound_events.dart';
+import 'package:amptive/src/features/main_app_shell.dart';
 import 'package:amptive/src/global_export.dart';
 import 'package:amptive/src/shared/annotated_region__widget.dart';
 import 'package:amptive/src/shared/circle_avatar.dart';
 import 'package:amptive/src/shared/image_loader_widget.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:readmore/readmore.dart';
 import '../../../../shared/list_tile_with_leading_picture_widget.dart';
 import '../../../../shared/sliver_header_delegate.dart';
@@ -11,9 +15,26 @@ import '../widgets/event_or_show_card.dart';
 import '../../../episodes/presentation/widgets/existing_episodes_indicator.dart';
 import '../widgets/people_listening.dart';
 import '../widgets/whispers_list.dart';
+import '../../data/models/response/home_feed_response_model.dart';
 
 class ATLiveShowDetailedScreen extends StatelessWidget {
-  const ATLiveShowDetailedScreen({super.key});
+  const ATLiveShowDetailedScreen({
+    super.key,
+    this.homeFeedItem,
+  });
+
+  final HomeFeedItem? homeFeedItem;
+
+  String? get _displayImage {
+    final contentType = homeFeedItem?.contentType?.toLowerCase();
+    if (contentType == 'standalone') {
+      return homeFeedItem?.thumbnailUrl;
+    } else if (contentType == 'episode') {
+      return homeFeedItem?.thumbnailUrl ?? homeFeedItem?.showCoverUrl;
+    } else {
+      return homeFeedItem?.coverUrl;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -26,9 +47,10 @@ class ATLiveShowDetailedScreen extends StatelessWidget {
             Positioned.fill(
               child: ImageFiltered(
                 imageFilter: ImageFilter.blur(sigmaX: 250, sigmaY: 250),
-                child: const ATImgLoader(
+                child: ATImgLoader(
                   boxFit: BoxFit.fill,
-                  imgPath: ATImgStrings.weCanDoHardThingsBgImage,
+                  imgPath:
+                      _displayImage ?? ATImgStrings.weCanDoHardThingsBgImage,
                 ),
               ),
             ),
@@ -60,7 +82,9 @@ class ATLiveShowDetailedScreen extends StatelessWidget {
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: <Widget>[
-                                  const ATEventOrShowCard(),
+                                  ATEventOrShowCard(
+                                    imgPath: _displayImage,
+                                  ),
                                   const SizedBox(height: 24),
                                   const ShowOrEventIndicatorWithTitle(),
                                   const SizedBox(
@@ -68,7 +92,7 @@ class ATLiveShowDetailedScreen extends StatelessWidget {
                                   ),
                                   Text(
                                     maxLines: 2,
-                                    "Don't Forget Who You Are ft. Jacob Scipio",
+                                    homeFeedItem?.title ?? '',
                                     overflow: TextOverflow.clip,
                                     style: context.textTheme.displayMedium
                                         ?.copyWith(
@@ -79,7 +103,6 @@ class ATLiveShowDetailedScreen extends StatelessWidget {
                                   const SizedBox(
                                     height: 12,
                                   ),
-                                  //const IsLiveIndicator(),
                                   const SizedBox(
                                     height: 40,
                                   ),
@@ -106,22 +129,21 @@ class ATLiveShowDetailedScreen extends StatelessWidget {
                                     color:
                                         ATColors.white.withValues(alpha: 0.1),
                                   ),
-                                  ...List<Widget>.generate(
-                                      3,
-                                      (_) => const TileWithLeadingImage(
-                                            padding: EdgeInsets.symmetric(
-                                                vertical: 9),
-                                            title: 'Gerald',
-                                            subtitle: 'Host',
-                                            diameter: 42,
-                                            leadingImagePath:
-                                                ATImgStrings.jpeg1,
-                                          )),
+                                  TileWithLeadingImage(
+                                    padding:
+                                        const EdgeInsets.symmetric(vertical: 9),
+                                    title: homeFeedItem?.hostName ?? '',
+                                    subtitle: 'Host',
+                                    diameter: 42,
+                                    leadingImagePath:
+                                        homeFeedItem?.hostProfileImageUrl ??
+                                            ATImgStrings.jpeg1,
+                                  ),
                                   const SizedBox(
                                     height: 30,
                                   ),
                                   Text(
-                                    '656 Listening',
+                                    '${homeFeedItem?.viewerCount ?? 0} Listening',
                                     style: context.textTheme.bodySmall
                                         ?.copyWith(fontSize: ATSizes.size17),
                                   ),
@@ -199,7 +221,15 @@ class ATLiveShowDetailedScreen extends StatelessWidget {
           ],
         ),
         bottomSheet: ATBlurredBgBtn(
-          onPressed: () {},
+          onPressed: () {
+            // context.pushNamed(
+            //   ATRoutes.liveProgramScreen,
+            //   extra: GoLiveProgramParams(
+            //     streamId: homeFeedItem?.livestreamId ?? '',
+            //     userType: GoLiveUserType.audience,
+            //   ),
+            // );
+          },
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
@@ -219,7 +249,9 @@ class ATLiveShowDetailedScreen extends StatelessWidget {
                 width: 5,
               ),
               Text(
-                '₦1,900/month',
+                homeFeedItem?.price != null
+                    ? '₦${homeFeedItem!.price!.toStringAsFixed(0)}/month'
+                    : '₦1,900/month',
                 style: context.textTheme.bodyMedium
                     ?.copyWith(fontSize: ATSizes.size17, color: ATColors.black),
               ),

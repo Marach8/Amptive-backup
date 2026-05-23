@@ -1,8 +1,8 @@
 import 'package:equatable/equatable.dart';
 
-class User extends Equatable {
+class User extends Equatable{
   const User({
-    this.userId,
+    required this.userId,
     this.username,
     this.profilePicture,
     this.followersCount,
@@ -24,7 +24,8 @@ class User extends Equatable {
         name = json['name'],
         isVerified = json['is_verified'];
 
-  final String? userId, username, profilePicture,
+  final String userId;
+  final String? username, profilePicture,
     firstName, lastName, name;
   final int? followersCount, followingCount;
   final bool? isVerified;
@@ -109,6 +110,7 @@ class Community {
       description,
       image,
       creatorId;
+
   final int? memberCount;
   bool? isPrivate;
 
@@ -209,10 +211,9 @@ class NotificationMetadata {
   }
 }
 
-class Notifications extends User {
+class Notifications{
   Notifications(
       {this.id,
-      required super.userId,
       this.message,
       this.channel,
       this.createdAt,
@@ -228,7 +229,6 @@ class Notifications extends User {
   factory Notifications.fromJson(Map<String, dynamic> json) {
     return Notifications(
       id: json['id'],
-      userId: json['user_id'],
       message: json['message'],
       channel: json['channel'],
       createdAt: json['created_at'],
@@ -241,8 +241,7 @@ class Notifications extends User {
     );
   }
 
-  final String? id, message, channel,
-    createdAt, title, type, readAt, category;
+  final String? id, message, channel, createdAt, title, type, readAt, category;
   final NotificationMetadata metadata;
   final bool? isRead;
 }

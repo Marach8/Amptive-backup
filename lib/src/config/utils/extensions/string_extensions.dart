@@ -42,4 +42,61 @@ extension ExtString on String {
   String get addSlash => '/$this';
 
   String get capitalize => this[0].toUpperCase() + substring(1).toLowerCase();
+  String get toLocalTime {
+    if (isEmpty) return 'Just now';
+    try {
+      DateTime dateTime = DateTime.parse(this).toLocal();
+      return DateFormat.jm().format(dateTime);
+    } catch (e) {
+      return 'Just now';
+    }
+  }
+
+  String get toTimeAgo {
+  if (isEmpty) return 'now';
+  try {
+    String normalizedDate = this;
+    if (!normalizedDate.endsWith('Z') && !normalizedDate.contains('+')) {
+      normalizedDate = '${normalizedDate}Z';
+    }
+
+    DateTime dateTime = DateTime.parse(normalizedDate).toLocal();
+    DateTime now = DateTime.now();
+    Duration diff = now.difference(dateTime);
+
+    if (diff.inDays > 365) return '${(diff.inDays / 365).floor()}y';
+    if (diff.inDays > 30) return '${(diff.inDays / 30).floor()}mo';
+    if (diff.inDays > 0) return '${diff.inDays}d';
+    if (diff.inHours > 0) return '${diff.inHours}h';
+    if (diff.inMinutes > 0) return '${diff.inMinutes}m';
+    
+    return 'now';
+  } catch (e) {
+    return 'now';
+  }
+}
+
+String normalizePaymentChannel(String method) {
+  switch (method) {
+    case ATStrings.applePay:
+      return 'paystack';
+    case ATStrings.flutterWave:
+      return 'paystack';
+    case ATStrings.googlePay:
+      return 'paystack';
+    default:
+      return method;
+  }
+}
+
+String get toNormalDate {
+    if (isEmpty) return '';
+    try {
+      DateTime dateTime = DateTime.parse(this).toLocal();
+      
+return DateFormat('yyyy-MM-dd').format(dateTime);   
+ } catch (e) {
+      return this;
+    }
+  }
 }

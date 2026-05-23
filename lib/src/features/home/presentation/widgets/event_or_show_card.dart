@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import '../../../../config/utils/colors.dart';
 import '../../../../config/utils/image_strings.dart';
@@ -6,25 +7,48 @@ import '../../../../shared/custom_container_widget.dart';
 class ATEventOrShowCard extends StatelessWidget {
   const ATEventOrShowCard({
     super.key,
-    this.imgPath = ATImgStrings.weCanDoHardThingsBgImage,
+    this.imgPath,
   });
 
-  final dynamic imgPath;
+  final String? imgPath;
 
   @override
   Widget build(BuildContext context) {
-    return ATContainer(
+    final String displayImage = imgPath?.isNotEmpty == true
+        ? imgPath!
+        : ATImgStrings.weCanDoHardThingsBgImage;
+
+    final bool isNetworkImage = displayImage.startsWith('http');
+
+    return Container(
       padding: const EdgeInsets.all(10),
       alignment: Alignment.topRight,
       height: 360,
-      radius: 16,
-      decorImage: imgPath,
-      child: ATContainer(
-        //onTap: () => showProgramOptions(context),
-        height: 32, width: 32,
-        boxShape: BoxShape.circle,
-        color: ATColors.hex0D0D0D.withValues(alpha: 0.7),
-        child: const Icon(Icons.more_horiz),
+      child: Stack(
+        children: <Widget>[
+          Container(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(16),
+              image: DecorationImage(
+                image: isNetworkImage
+                    ? CachedNetworkImageProvider(displayImage)
+                    : AssetImage(displayImage) as ImageProvider,
+                fit: BoxFit.cover,
+              ),
+            ),
+          ),
+          Positioned(
+            top: 8,
+            right: 8,
+            child: ATContainer(
+              height: 32,
+              width: 32,
+              boxShape: BoxShape.circle,
+              color: ATColors.hex0D0D0D.withValues(alpha: 0.7),
+              child: const Icon(Icons.more_horiz),
+            ),
+          ),
+        ],
       ),
     );
   }
@@ -35,15 +59,17 @@ class CoverPicWithTopRightMoreIcon extends StatelessWidget {
     super.key,
     required this.imgPath,
     required this.onMoreTapped,
+    this.padding,
   });
 
   final String imgPath;
   final VoidCallback onMoreTapped;
+  final EdgeInsetsGeometry? padding;
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.all(10),
+      padding: padding ?? const EdgeInsets.all(10),
       alignment: Alignment.topRight,
       height: 360,
       decoration: BoxDecoration(
