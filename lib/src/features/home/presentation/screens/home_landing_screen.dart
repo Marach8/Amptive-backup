@@ -78,8 +78,8 @@ class HomeTabView extends StatelessWidget {
                 GestureDetector(
                     onTap: () {
                       //context.pushNamed(ATRoutes.GO_LIVE_ONBOARDING);
-                      context.pushNamed(ATRoutes.walletScreen);
-                      //context.pushNamed(ATRoutes.WALLET_ONBOARDING);
+                     context.pushNamed(ATRoutes.walletScreen);
+                     // context.pushNamed(ATRoutes.WALLET_ONBOARDING);
                     },
                     child: Stack(
                       children: <Widget>[

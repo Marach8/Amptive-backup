@@ -40,13 +40,20 @@ class RemoteUserDataCubit extends Cubit<ATAppState<UserData>> {
           final UserData? userData = data.data?.data;
 
           if (userData != null) {
+            // FIX: Added missing social links so they don't reset to null on restart
             final CachedUserData cachedUserData = CachedUserData(
               userId: userData.id,
               email: userData.email,
               username: userData.username,
               dob: userData.dob,
               name: userData.name,
-              pictureUrl: userData.pictureUrl,
+              pictureUrl: userData.profilePicture,
+              bio: userData.bio,
+              phoneNumber: userData.phoneNumber,
+              xUrl: userData.xUrl,
+              instagramUrl: userData.instagramUrl,
+              linkedinUrl: userData.linkedinUrl,
+              websiteUrl: userData.websiteUrl,
             );
 
             await localStorageService.setObject(
@@ -68,44 +75,69 @@ class RemoteUserDataCubit extends Cubit<ATAppState<UserData>> {
     }
   }
 
-  Future<void> updateProfilePicture(Uint8List imageBytes) async {
+  Future<void> updateProfile({
+    Uint8List? imageBytes,
+    String? name,
+    String? username,
+    String? bio,
+    String? country,
+    String? coverPhoto,
+    String? xUrl,
+    String? instagramUrl,
+    String? linkedinUrl,
+    String? websiteUrl,
+  }) async {
     try {
-      final Directory tempDir = await getTemporaryDirectory();
-      final String filePath =
-          '${tempDir.path}/profile_${DateTime.now().millisecondsSinceEpoch}.png';
+      String? imageUrl;
 
-      final File file = File(filePath);
-      await file.writeAsBytes(imageBytes);
+      if (imageBytes != null) {
+        final Directory tempDir = await getTemporaryDirectory();
+        final String filePath =
+            '${tempDir.path}/profile_${DateTime.now().millisecondsSinceEpoch}.png';
 
-      final ApiResponse<String> uploadResponse =
-          await authRepo.uploadImage(filePath: file.path);
+        final File file = File(filePath);
+        await file.writeAsBytes(imageBytes);
 
-      await uploadResponse.when(
-        successful: (Successful<String> uploadData) async {
-          final String imageUrl = uploadData.data!;
+        final ApiResponse<String> uploadResponse =
+            await authRepo.uploadImage(filePath: file.path);
 
-          final ApiResponse<dynamic> response =
-              await profileRepo.updateUserProfile(
-            profilePicture: imageUrl,
-          );
+        await uploadResponse.when(
+          successful: (Successful<String> uploadData) async {
+            imageUrl = uploadData.data!;
+          },
+          unSuccessful: (Unsuccessful<dynamic> error) {
+            emit(FailureState<UserData>(error.error.message));
+          },
+        );
 
-          response.when(
-            successful: (_) async {
-              await fetchUserProfile();
-            },
-            unSuccessful: (Unsuccessful<dynamic> error) {
-              emit(FailureState<UserData>(error.error.message));
-            },
-          );
+        if (await file.exists()) {
+          await file.delete();
+        }
+      }
+
+      final ApiResponse<dynamic> response = await profileRepo.updateUserProfile(
+        profilePicture: imageUrl,
+        name: name,
+        username: username,
+        bio: bio,
+        country: country,
+        coverPhoto: coverPhoto,
+        xUrl: xUrl,
+        instagramUrl: instagramUrl,
+        linkedinUrl: linkedinUrl,
+        websiteUrl: websiteUrl,
+      );
+
+      response.when(
+        successful: (_) async {
+          await fetchUserProfile();
+          
         },
+        
         unSuccessful: (Unsuccessful<dynamic> error) {
           emit(FailureState<UserData>(error.error.message));
         },
       );
-
-      if (await file.exists()) {
-        await file.delete();
-      }
     } catch (e) {
       emit(FailureState<UserData>('Unable to update profile: $e'));
     }

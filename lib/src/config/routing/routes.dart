@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:amptive/src/config/routing/routing_export.dart';
+import 'package:amptive/src/config/services/local_storage_service/flutter_secure_storage_service_impl.dart';
 import 'package:amptive/src/features/accounts/presentation/screens/update_email_screen.dart';
 import 'package:amptive/src/features/accounts/presentation/screens/update_phone_no_screen.dart';
 import 'package:amptive/src/features/accounts/presentation/screens/update_name_screen.dart';
@@ -43,6 +44,7 @@ import 'package:amptive/src/features/home/presentation/screens/scheduled_screen.
 import 'package:amptive/src/features/home/data/models/response/home_feed_response_model.dart';
 import 'package:amptive/src/features/accounts/presentation/screens/account_info_screen.dart';
 import 'package:amptive/src/features/accounts/presentation/screens/acounts_landing_screen.dart';
+import 'package:amptive/src/features/profile/presentation/screens/update_email_and_phone_no_otp_screen.dart';
 import 'package:amptive/src/features/shows/data/models/response/show_response_model.dart';
 import 'package:amptive/src/features/events/presentation/screens/list_hosted_events_screen.dart';
 import 'package:amptive/src/features/events/cubits/hosted_events_cubit.dart';
@@ -77,6 +79,7 @@ final GoRouter amptiveAppRouter = GoRouter(
   initialLocation: ATRoutes.dashboard.addSlash,
   //redirect: tempRedirect,
   //initialLocation: ATRoutes.temporaryLoginScreen.addSlash,
+
   routes: <RouteBase>[
     GoRoute(
         name: ATRoutes.POST_ONBOARDING_SCREEN,
@@ -217,9 +220,15 @@ final GoRouter amptiveAppRouter = GoRouter(
         builder: (_, __) => const ATMainAppShell(),
         routes: <RouteBase>[
           GoRoute(
+<<<<<<< HEAD
             name: ATRoutes.scheduleDetailed,
             path: ATRoutes.scheduleDetailed.addSlash,
             pageBuilder: (_, state) => ATSlidingRouteTransition<void>(
+=======
+            name: ATRoutes.SCHEDULE_DETAILED,
+            path: ATRoutes.SCHEDULE_DETAILED.addSlash,
+            pageBuilder: (_, GoRouterState state) => ATSlidingRouteTransition<void>(
+>>>>>>> e0f4545044486a1a3edbed3074aca09519237daf
               child: ATScheduleDetailedScreen(
                 homeFeedItem: state.extra as HomeFeedItem?,
               ),
@@ -228,6 +237,18 @@ final GoRouter amptiveAppRouter = GoRouter(
           GoRoute(
               name: ATRoutes.WALLET_ONBOARDING,
               path: ATRoutes.WALLET_ONBOARDING.addSlash,
+              redirect: (BuildContext context, GoRouterState state) async {
+    final FlutterSecureStorageServiceImpl storage = FlutterSecureStorageServiceImpl();
+    final String? isSetup = await storage.get('has_set_wallet_pin');
+
+    if (isSetup == 'true') {
+      final bool alreadyOnLanding = state.matchedLocation.contains(ATRoutes.walletScreen);
+      if (!alreadyOnLanding) {
+        return ATRoutes.walletScreen.addSlash;
+      }
+    }
+    return null; 
+  },
               pageBuilder: (_, __) => ATSlidingRouteTransition<void>(
                   child: const ATWalletOnboardScreen()),
               routes: <RouteBase>[
@@ -322,17 +343,29 @@ final GoRouter amptiveAppRouter = GoRouter(
                     ]),
               ]),
           GoRoute(
+<<<<<<< HEAD
               name: ATRoutes.liveShowDetailed,
               path: ATRoutes.liveShowDetailed.addSlash,
               pageBuilder: (_, state) => ATSlidingRouteTransition<void>(
+=======
+              name: ATRoutes.LIVE_SHOW_DETAILED,
+              path: ATRoutes.LIVE_SHOW_DETAILED.addSlash,
+              pageBuilder: (_, GoRouterState state) => ATSlidingRouteTransition<void>(
+>>>>>>> e0f4545044486a1a3edbed3074aca09519237daf
                   beginOffset: const Offset(0.0, 1.0),
                   child: ATLiveShowDetailedScreen(
                     homeFeedItem: state.extra as HomeFeedItem?,
                   ))),
           GoRoute(
+<<<<<<< HEAD
               name: ATRoutes.liveEventDetailed,
               path: ATRoutes.liveEventDetailed.addSlash,
               pageBuilder: (_, state) => ATSlidingRouteTransition<void>(
+=======
+              name: ATRoutes.LIVE_EVENT_DETAILED,
+              path: ATRoutes.LIVE_EVENT_DETAILED.addSlash,
+              pageBuilder: (_, GoRouterState state) => ATSlidingRouteTransition<void>(
+>>>>>>> e0f4545044486a1a3edbed3074aca09519237daf
                     beginOffset: const Offset(0.0, 1.0),
                     child: ATLiveEventDetailedScreen(
                       homeFeedItem: state.extra as HomeFeedItem?,
@@ -465,6 +498,16 @@ final GoRouter amptiveAppRouter = GoRouter(
                           initialLink: params.first,
                           socialName: params.last as String);
                     }),
+                    GoRoute(
+        name: ATRoutes.enterEmailAndPhoneNoOtpScreen,
+        path: ATRoutes.enterEmailAndPhoneNoOtpScreen.addSlash,
+        pageBuilder: (_, GoRouterState state) {
+          return ATSlidingRouteTransition<bool?>(
+            child: UpdateEmailAndPhoneNoOtpScreen(
+              params: state.extra as EmailAndPhoneNoOTPScreenParams,
+            ),
+          );
+        }),
                 GoRoute(
                     name: ATRoutes.SELECT_ACCT_TYPE,
                     path: ATRoutes.SELECT_ACCT_TYPE,
@@ -588,6 +631,8 @@ final GoRouter amptiveAppRouter = GoRouter(
                     ),
                   ),
                 ),
+
+
                 GoRoute(
                   name: ATRoutes.updateNameScreen,
                   path: ATRoutes.updateNameScreen.addSlash,

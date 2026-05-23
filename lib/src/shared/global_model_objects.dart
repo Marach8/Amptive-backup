@@ -31,10 +31,11 @@ class User extends Equatable{
   final int? followersCount, followingCount;
   final bool? isVerified;
 
-  @override 
+  @override
   List<Object?> get props => <Object?>[
-    userId, profilePicture,
-  ];
+        userId,
+        profilePicture,
+      ];
 }
 
 class Host extends User {
@@ -127,7 +128,7 @@ class Community {
   }
 }
 
-class HashTag extends Equatable{
+class HashTag extends Equatable {
   const HashTag({
     this.id,
     this.name,
@@ -156,8 +157,14 @@ class HashTag extends Equatable{
     );
   }
 
-  final String? id, name, displayName, description,
-    createdAt, updatedAt, tagType, icon;
+  final String? id,
+      name,
+      displayName,
+      description,
+      createdAt,
+      updatedAt,
+      tagType,
+      icon;
   final int? usageCount, followerCount;
   HashTag copyWith({
     String? id,
@@ -169,7 +176,7 @@ class HashTag extends Equatable{
     int? usageCount,
     int? followerCount,
     String? tagType,
-    String? icon, 
+    String? icon,
   }) {
     return HashTag(
       id: id ?? this.id,
@@ -184,9 +191,76 @@ class HashTag extends Equatable{
       icon: icon ?? this.icon,
     );
   }
-  
+
   @override
   List<Object?> get props => <Object?>[
-    id, name,
-  ];
+        id,
+        name,
+      ];
+}
+
+class NotificationMetadata {
+  NotificationMetadata({this.contentId, this.contentType, this.reason});
+  final String? contentId, contentType, reason;
+  static NotificationMetadata fromJson(Map<String, dynamic>? json) {
+    if (json == null) return NotificationMetadata();
+    return NotificationMetadata(
+      contentId: json['content_id'],
+      contentType: json['content_type'],
+      reason: json['reason'],
+    );
+  }
+}
+
+class Notifications extends User {
+  Notifications(
+      {this.id,
+      super.userId,
+      this.message,
+      this.channel,
+      this.createdAt,
+      dynamic metadataJson,
+      this.title,
+      this.type,
+      this.isRead,
+      this.readAt,
+      this.category})
+      : metadata = NotificationMetadata.fromJson(
+            metadataJson is Map<String, dynamic> ? metadataJson : null);
+
+  factory Notifications.fromJson(Map<String, dynamic> json) {
+    return Notifications(
+      id: json['id'],
+      message: json['message'],
+      channel: json['channel'],
+      createdAt: json['created_at'],
+      metadataJson: json['metadata_'],
+      title: json['title'],
+      type: json['type'],
+      isRead: json['is_read'],
+      readAt: json['read_at'],
+      category: json['category'],
+    );
+  }
+
+  final String? id, message, channel, createdAt, title, type, readAt, category;
+  final NotificationMetadata metadata;
+  final bool? isRead;
+}
+
+class WalletBalance {
+  WalletBalance({
+    this.availableBalance,
+    this.pendingBalance,
+  });
+
+  factory WalletBalance.fromJson(Map<String, dynamic> json) {
+    return WalletBalance(
+      availableBalance: (json['available_balance'] as num?)?.toDouble(),
+      pendingBalance: (json['pending_balance'] as num?)?.toDouble(),
+    );
+  }
+
+  final double? availableBalance;
+  final double? pendingBalance;
 }

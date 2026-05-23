@@ -58,6 +58,26 @@ class LocalUserDataCubit extends Cubit<ATAppState<CachedUserData>> {
   }
 }
 
+<<<<<<< HEAD
+=======
+class CachedUserData extends Equatable {
+  const CachedUserData(
+      {this.userId,
+      this.email,
+      this.username,
+      this.dob,
+      this.name,
+      this.pictureUrl,
+      this.phoneNumber,
+      this.followersCount,
+      this.followingCount,
+      this.bio,
+      this.xUrl,
+      this.instagramUrl,
+      this.linkedinUrl,
+      this.websiteUrl,
+      });
+>>>>>>> e0f4545044486a1a3edbed3074aca09519237daf
 
 class CachedUserData extends Equatable {
   const CachedUserData({
@@ -101,10 +121,20 @@ class CachedUserData extends Equatable {
       phoneNumber: json[ATStrings.phoneNumber],
       followersCount: json[ATStrings.followerCount],
       followingCount: json[ATStrings.followingCount],
+<<<<<<< HEAD
       hasTestedMic: json[ATStrings.hasTestedMic],
       liveProgramData: liveProgramData,
     );
   }
+=======
+      bio: json[ATStrings.bio],
+      xUrl: json[ATStrings.X],
+      instagramUrl: json[ATStrings.INSTAGRAM],
+      linkedinUrl: json[ATStrings.LINKEDIN],
+      websiteUrl: json[ATStrings.WEBSITE],
+
+      );
+>>>>>>> e0f4545044486a1a3edbed3074aca09519237daf
 
   final String? userId,
       email,
@@ -115,6 +145,7 @@ class CachedUserData extends Equatable {
       phoneNumber,
       followingCount,
       followersCount,
+<<<<<<< HEAD
       hasTestedMic;
 
   final Sentinel<LiveProgramData?>? liveProgramData;
@@ -170,6 +201,65 @@ class CachedUserData extends Equatable {
 
     return json;
   }
+=======
+      bio,
+      xUrl,
+      instagramUrl,
+      linkedinUrl,
+      websiteUrl;
+
+  CachedUserData copyWith(
+          {String? userId,
+          String? email,
+          String? username,
+          String? dob,
+          String? name,
+          String? pictureUrl,
+          String? followersCount,
+          String? followingCount,
+          String? bio,
+          String? xUrl,
+          String? instagramUrl,
+          String? linkedinUrl,
+          String? websiteUrl,
+
+          String? phoneNumber}) =>
+      CachedUserData(
+          userId: userId ?? this.userId,
+          email: email ?? this.email,
+          username: username ?? this.username,
+          dob: dob ?? this.dob,
+          name: name ?? this.name,
+          pictureUrl: pictureUrl ?? this.pictureUrl,
+          phoneNumber: phoneNumber ?? this.phoneNumber,
+          followersCount: followersCount ?? this.followersCount,
+          followingCount: followingCount ?? this.followingCount,
+          bio: bio ?? this.bio,
+          xUrl: xUrl ?? this.xUrl,
+          instagramUrl: instagramUrl ?? this.instagramUrl,
+          linkedinUrl: linkedinUrl ?? this.linkedinUrl,
+          websiteUrl: websiteUrl ?? this.websiteUrl,
+
+          );
+
+  Map<String, dynamic> toJson() => <String, dynamic>{
+        ATStrings.userId: userId,
+        ATStrings.email: email,
+        ATStrings.username: username,
+        ATStrings.dob: dob,
+        ATStrings.name: name,
+        ATStrings.profilePicture: pictureUrl,
+        ATStrings.phoneNumber: phoneNumber,
+        ATStrings.followerCount: followersCount,
+        ATStrings.followingCount: followingCount,
+        ATStrings.bio: bio,
+        ATStrings.X: xUrl,
+        ATStrings.INSTAGRAM: instagramUrl,
+        ATStrings.LINKEDIN: linkedinUrl,
+        ATStrings.WEBSITE: websiteUrl,
+
+      };
+>>>>>>> e0f4545044486a1a3edbed3074aca09519237daf
 
   @override
   List<Object?> get props => <Object?>[
@@ -182,7 +272,11 @@ class CachedUserData extends Equatable {
         phoneNumber,
         followersCount,
         followingCount,
+<<<<<<< HEAD
         hasTestedMic,
         liveProgramData?.value,
+=======
+        bio,
+>>>>>>> e0f4545044486a1a3edbed3074aca09519237daf
       ];
 }

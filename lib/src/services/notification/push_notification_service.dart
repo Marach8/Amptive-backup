@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:developer' as developer;
 import 'dart:io';
 
@@ -13,6 +14,10 @@ import '../../models/register_device.dart';
 class PushNotificationService {
   final NetworkService _networkService = DioNetworkServiceImpl();
   final FirebaseMessaging _messaging = FirebaseMessaging.instance;
+  static final StreamController<RemoteMessage> _messageStreamController = StreamController<RemoteMessage>.broadcast();
+
+  // 2. Expose the Stream
+  Stream<RemoteMessage> get notificationStream => _messageStreamController.stream;
 
   Future<void> init() async {
     // Request permission (iOS mainly)
@@ -36,12 +41,25 @@ class PushNotificationService {
       log('>> Got a message: ${message.notification?.title}');
       log('Got a message: ${message.notification?.body}');
       log('Got a message: ${message.data} <<');
+      log('>> Foreground Message Received: ${message.notification?.title}');
+      _messageStreamController.add(message); 
+      log("Does the stream have listeners? ${_messageStreamController.hasListener}");
+    
     });
+    FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
+      log('>> Notification Tapped: ${message.notification?.title}');
+      _messageStreamController.add(message); 
+    });
+ 
 
     // Token refresh
     _messaging.onTokenRefresh.listen((String newToken) {
       log("New token: $newToken");
     });
+  }
+
+   void dispose() {
+    _messageStreamController.close();
   }
 
   Future<String?> saveToken(String token) async {
