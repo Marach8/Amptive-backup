@@ -241,7 +241,8 @@ class Notifications{
     );
   }
 
-  final String? id, message, channel, createdAt, title, type, readAt, category;
+  final String? id, message, channel, createdAt,
+    title, type, readAt, category;
   final NotificationMetadata metadata;
   final bool? isRead;
 }

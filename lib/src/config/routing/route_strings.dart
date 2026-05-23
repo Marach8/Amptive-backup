@@ -2,8 +2,8 @@
 
 class ATRoutes {
   //WELCOME AND ONBOARDING
-  static const String POST_ONBOARDING_SCREEN = "post_onboarding";
-  static const String ONBOARDING_SCREEN = "onboarding";
+  static const String postOnboardingScreen = "post_onboarding";
+  static const String onboardingScreen = "onboarding";
 
   //AUTHENTICATION
   static const String emailScreen = "email_auth";

@@ -44,7 +44,7 @@ class DotIndicatorRow extends StatelessWidget {
                 return ATContainer(
                   onTap: () {
                     isLast
-                        ? context.pushNamed(ATRoutes.POST_ONBOARDING_SCREEN)
+                        ? context.pushNamed(ATRoutes.postOnboardingScreen)
                         : pageCntrl.animateToPage(2,
                             duration: const Duration(seconds: 1),
                             curve: Curves.decelerate);

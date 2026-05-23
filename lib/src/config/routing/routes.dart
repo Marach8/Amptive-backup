@@ -76,20 +76,20 @@ final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
 final GoRouter amptiveAppRouter = GoRouter(
   navigatorKey: navigatorKey,
-  initialLocation: ATRoutes.dashboard.addSlash,
+  initialLocation: ATRoutes.onboardingScreen.addSlash,
   //redirect: tempRedirect,
   //initialLocation: ATRoutes.temporaryLoginScreen.addSlash,
 
   routes: <RouteBase>[
     GoRoute(
-        name: ATRoutes.POST_ONBOARDING_SCREEN,
-        path: ATRoutes.POST_ONBOARDING_SCREEN.addSlash,
+        name: ATRoutes.postOnboardingScreen,
+        path: ATRoutes.postOnboardingScreen.addSlash,
         pageBuilder: (_, __) => ATSlidingRouteTransition<void>(
               child: const ATPostOnboardingScreen(),
             )),
     GoRoute(
-      name: ATRoutes.ONBOARDING_SCREEN,
-      path: ATRoutes.ONBOARDING_SCREEN.addSlash,
+      name: ATRoutes.onboardingScreen,
+      path: ATRoutes.onboardingScreen.addSlash,
       builder: (_, __) => const ATOnboardingScreen(),
     ),
 
