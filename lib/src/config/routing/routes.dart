@@ -95,8 +95,8 @@ final GoRouter amptiveAppRouter = GoRouter(
 
     //AUTHENTICATION SCREENS
     GoRoute(
-      name: ATRoutes.AUTH_OPTIONS_SCREEN,
-      path: ATRoutes.AUTH_OPTIONS_SCREEN.addSlash,
+      name: ATRoutes.authOptionsScreen,
+      path: ATRoutes.authOptionsScreen.addSlash,
       pageBuilder: (_, GoRouterState st) => ATSlidingRouteTransition<void>(
           child: ATAuthOptionsScreen(
         authType: st.extra as AuthType,

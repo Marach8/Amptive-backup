@@ -8,7 +8,7 @@ class ATRoutes {
   //AUTHENTICATION
   static const String emailScreen = "email_auth";
   static const String select5CommunitiesScreen = "preference";
-  static const String AUTH_OPTIONS_SCREEN = "auth_screen";
+  static const String authOptionsScreen = "auth_screen";
   static const String createPasswordScreen = "password_auth";
   static const String DOB_AUTH_SCREEN = "dob_auth";
   static const String ENTER_OTP_SCREEN = "otp";
