@@ -76,73 +76,28 @@ class GetNotificationsCubit extends Cubit<ATAppState<NotificationsResponseModel>
     }
   }
 
-  Future<void> markNotificationAsRead(String notificationId) async {
-    final NotificationsResponseModel? currentData = currentNotifications;
-    if (currentData == null) return;
 
-    final Notifications? targetNotification =
-        currentData.notifications?.firstWhere(
-      (Notifications n) => n.id == notificationId,
-      orElse: () => Notifications(),
+  Future<void> markNotificationAsRead(String notificationId) async {
+  try {
+    final ApiResponse<MarkNotificationAsReadResponseModel> response =
+        await notificationsRepo.markNotificationAsRead(
+      notificationId: notificationId,
     );
 
-    final bool wasUnread =
-        targetNotification?.id != null && !(targetNotification?.isRead ?? true);
-    final int currentUnreadCount = currentData.unreadCount ?? 0;
-
-    try {
-      final ApiResponse<MarkNotificationAsReadResponseModel> response =
-          await notificationsRepo.markNotificationAsRead(
-        notificationId: notificationId,
-      );
-
-      response.when(
-        successful: (_) {
-          final List<Notifications>? updatedNotifications =
-              currentData.notifications?.map((Notifications n) {
-            if (n.id == notificationId) {
-              return Notifications(
-                id: n.id,
-                message: n.message,
-                channel: n.channel,
-                createdAt: n.createdAt,
-                metadata: n.metadata,
-                title: n.title,
-                type: n.type,
-                isRead: true,
-                readAt: DateTime.now().toIso8601String(),
-              );
-            }
-            return n;
-          }).toList();
-
-          final NotificationsResponseModel updatedData =
-              NotificationsResponseModel(
-            notifications: updatedNotifications,
-            unreadCount: wasUnread && currentUnreadCount > 0
-                ? currentUnreadCount - 1
-                : currentUnreadCount,
-            total: currentData.total,
-            page: currentData.page,
-            pageSize: currentData.pageSize,
-            totalPages: currentData.totalPages,
-            hasMore: currentData.hasMore,
-          );
-
-          emit(SuccessState<NotificationsResponseModel>(newData: updatedData));
-        },
-        unSuccessful:
-            (Unsuccessful<MarkNotificationAsReadResponseModel> error) {
-          emit(FailureState<NotificationsResponseModel>(error.error.message,
-              oldData: currentNotifications));
-        },
-      );
-    } catch (e) {
-      emit(FailureState<NotificationsResponseModel>(
-          'Unable to mark notification as read: $e',
+    response.when(
+      successful: (_) {
+      },
+      unSuccessful: (Unsuccessful<MarkNotificationAsReadResponseModel> error) {
+         emit(FailureState<NotificationsResponseModel>(error.error.message,
           oldData: currentNotifications));
-    }
+      },
+    );
+  } catch (e) {
+    emit(FailureState<NotificationsResponseModel>(
+        'Unable to mark notification as read: $e',
+        oldData: currentNotifications));
   }
+}
 
   Future<void> markAllNotificationsAsRead() async {
     final NotificationsResponseModel? currentData = currentNotifications;

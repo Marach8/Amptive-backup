@@ -155,7 +155,6 @@ class ATNavBarBloc extends Cubit<(int, bool, bool)> {
     final bool currentShowNav = state.$2;
     final bool currentHasSeen = state.$3;
 
-    // Your feature: mark notifications as read when tapping the bell tab
     if (index == 3) {
       context.read<GetNotificationsCubit>().markAllNotificationsAsRead();
     }
@@ -165,14 +164,12 @@ class ATNavBarBloc extends Cubit<(int, bool, bool)> {
     emit((index, currentShowNav, newHasSeen));
 
     if (index == 2) {
-      // Senior dev's current route (your old constant no longer exists)
       context.pushNamed(ATRoutes.chooseEventOrShowScreen);
       emit((prevIndex, false, currentHasSeen)); // hide nav bar during live flow
     }
   }
 
   void resetNotificationSession() {
-    // Called when a new push notification arrives → show badge again
     emit((state.$1, state.$2, false));
   }
 }
