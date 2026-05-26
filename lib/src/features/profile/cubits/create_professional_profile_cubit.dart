@@ -1,4 +1,5 @@
 import 'package:amptive/src/config/api_response_and_app_state.dart';
+import 'package:amptive/src/features/profile/data/models/request/create_professional_profile_request.dart';
 import 'package:amptive/src/features/profile/data/repository/profile_repo.dart';
 import 'package:amptive/src/features/profile/data/repository/profile_repo_impl.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -11,20 +12,14 @@ class CreateProfessionalProfileCubit extends Cubit<ATAppState<dynamic>> {
   final ProfileRepo profileRepo;
 
   Future<void> createProfessionalProfile({
-    required String profileType,
-    required String category,
-    required String subAmount,
-    required String coHostFee,
+    required ProfessionalProfileData param
   }) async {
     emit(const LoadingState<dynamic>());
 
     try {
       final ApiResponse<dynamic> response =
           await profileRepo.createProfessionalProfile(
-        profileType: profileType,
-        category: category,
-        subAmount: subAmount,
-        coHostFee: coHostFee,
+      param: param
       );
 
       response.when(

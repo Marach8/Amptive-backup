@@ -7,6 +7,7 @@ import 'package:amptive/src/config/services/network_service/dio_network_service_
 import 'package:amptive/src/config/services/network_service/network_service.dart';
 import 'package:amptive/src/features/auth/data/models/response/user_profile_response_model.dart';
 import 'package:amptive/src/features/profile/data/models/followers_response_model.dart';
+import 'package:amptive/src/features/profile/data/models/request/create_professional_profile_request.dart';
 import 'package:amptive/src/features/profile/data/repository/profile_repo.dart';
 import 'package:dio/dio.dart';
 
@@ -126,20 +127,12 @@ Future<ApiResponse<String>> sendEmailAndPhoneOtp({required Map<String, dynamic> 
 
   @override
   Future<ApiResponse<dynamic>> createProfessionalProfile({
-     required String profileType,
-  required String category,
-  required String subAmount,
-  required String coHostFee,
+    required ProfessionalProfileData param,
   }) async {
     try {
       final Response<dynamic> response = await networkService.post(
         ATEndpoints.createProfessionalProfile,
-        data: <String, dynamic>{
-          'profile_type': profileType,
-          'category': category,
-          'subscription_amount': subAmount,
-          'co_host_fee': coHostFee,
-        },
+        data: param,
       );
 
       return Successful<dynamic>(data: response.data);
