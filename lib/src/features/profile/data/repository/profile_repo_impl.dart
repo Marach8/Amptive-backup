@@ -126,12 +126,20 @@ Future<ApiResponse<String>> sendEmailAndPhoneOtp({required Map<String, dynamic> 
 
   @override
   Future<ApiResponse<dynamic>> createProfessionalProfile({
-    required Map<String, dynamic> param,
+     required String profileType,
+  required String category,
+  required String subAmount,
+  required String coHostFee,
   }) async {
     try {
       final Response<dynamic> response = await networkService.post(
         ATEndpoints.createProfessionalProfile,
-        data: param,
+        data: <String, dynamic>{
+          'profile_type': profileType,
+          'category': category,
+          'subscription_amount': subAmount,
+          'co_host_fee': coHostFee,
+        },
       );
 
       return Successful<dynamic>(data: response.data);

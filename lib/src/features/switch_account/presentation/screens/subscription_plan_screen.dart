@@ -37,9 +37,11 @@ class CreatorSubPlanScreen extends StatefulWidget {
   const CreatorSubPlanScreen({
     super.key,
     required this.incomingSubPlan,
+    this.incomingCategory,
   });
 
   final SubscriptionPlanData incomingSubPlan;
+  final String? incomingCategory;
 
   @override
   State<CreatorSubPlanScreen> createState() => _CreatorSubPlanScreenState();
@@ -80,7 +82,7 @@ class _CreatorSubPlanScreenState extends State<CreatorSubPlanScreen> {
                   setState(() => _localSubPlan = newSubPlan);
                 },
                 onDeleteSubPlan: () {
-                  setState((){
+                  setState(() {
                     //We retain the entryPoint
                     _localSubPlan = SubscriptionPlanData(
                       entryPoint: widget.incomingSubPlan.entryPoint,
@@ -115,7 +117,10 @@ class _CreatorSubPlanScreenState extends State<CreatorSubPlanScreen> {
                             } else {
                               context.pushNamed(
                                 ATRoutes.cohostFeeSetup,
-                                extra: _localSubPlan,
+                                extra: <String, Object?>{
+                                  'category': widget.incomingCategory,
+                                  'subPlan': _localSubPlan,
+                                },
                               );
                             }
                           }

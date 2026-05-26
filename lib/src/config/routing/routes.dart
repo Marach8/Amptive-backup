@@ -75,11 +75,9 @@ final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
 final GoRouter amptiveAppRouter = GoRouter(
   navigatorKey: navigatorKey,
-  //initialLocation: ATRoutes.mainAppShell.addSlash,
+  initialLocation: ATRoutes.mainAppShell.addSlash,
   //redirect: tempRedirect,
   //initialLocation: ATRoutes.temporaryLoginScreen.addSlash,
-  initialLocation: ATRoutes.ONBOARDING_SCREEN.addSlash,
-
 
   routes: <RouteBase>[
     GoRoute(
@@ -223,7 +221,8 @@ final GoRouter amptiveAppRouter = GoRouter(
           GoRoute(
             name: ATRoutes.SCHEDULE_DETAILED,
             path: ATRoutes.SCHEDULE_DETAILED.addSlash,
-            pageBuilder: (_, GoRouterState state) => ATSlidingRouteTransition<void>(
+            pageBuilder: (_, GoRouterState state) =>
+                ATSlidingRouteTransition<void>(
               child: ATScheduleDetailedScreen(
                 homeFeedItem: state.extra as HomeFeedItem?,
               ),
@@ -233,17 +232,19 @@ final GoRouter amptiveAppRouter = GoRouter(
               name: ATRoutes.WALLET_ONBOARDING,
               path: ATRoutes.WALLET_ONBOARDING.addSlash,
               redirect: (BuildContext context, GoRouterState state) async {
-    final FlutterSecureStorageServiceImpl storage = FlutterSecureStorageServiceImpl();
-    final String? isSetup = await storage.get('has_set_wallet_pin');
+                final FlutterSecureStorageServiceImpl storage =
+                    FlutterSecureStorageServiceImpl();
+                final String? isSetup = await storage.get('has_set_wallet_pin');
 
-    if (isSetup == 'true') {
-      final bool alreadyOnLanding = state.matchedLocation.contains(ATRoutes.walletScreen);
-      if (!alreadyOnLanding) {
-        return ATRoutes.walletScreen.addSlash;
-      }
-    }
-    return null; 
-  },
+                if (isSetup == 'true') {
+                  final bool alreadyOnLanding =
+                      state.matchedLocation.contains(ATRoutes.walletScreen);
+                  if (!alreadyOnLanding) {
+                    return ATRoutes.walletScreen.addSlash;
+                  }
+                }
+                return null;
+              },
               pageBuilder: (_, __) => ATSlidingRouteTransition<void>(
                   child: const ATWalletOnboardScreen()),
               routes: <RouteBase>[
@@ -340,15 +341,17 @@ final GoRouter amptiveAppRouter = GoRouter(
           GoRoute(
               name: ATRoutes.LIVE_SHOW_DETAILED,
               path: ATRoutes.LIVE_SHOW_DETAILED.addSlash,
-              pageBuilder: (_, GoRouterState state) => ATSlidingRouteTransition<void>(
-                  beginOffset: const Offset(0.0, 1.0),
-                  child: ATLiveShowDetailedScreen(
-                    homeFeedItem: state.extra as HomeFeedItem?,
-                  ))),
+              pageBuilder: (_, GoRouterState state) =>
+                  ATSlidingRouteTransition<void>(
+                      beginOffset: const Offset(0.0, 1.0),
+                      child: ATLiveShowDetailedScreen(
+                        homeFeedItem: state.extra as HomeFeedItem?,
+                      ))),
           GoRoute(
               name: ATRoutes.LIVE_EVENT_DETAILED,
               path: ATRoutes.LIVE_EVENT_DETAILED.addSlash,
-              pageBuilder: (_, GoRouterState state) => ATSlidingRouteTransition<void>(
+              pageBuilder: (_, GoRouterState state) =>
+                  ATSlidingRouteTransition<void>(
                     beginOffset: const Offset(0.0, 1.0),
                     child: ATLiveEventDetailedScreen(
                       homeFeedItem: state.extra as HomeFeedItem?,
@@ -481,16 +484,16 @@ final GoRouter amptiveAppRouter = GoRouter(
                           initialLink: params.first,
                           socialName: params.last as String);
                     }),
-                    GoRoute(
-        name: ATRoutes.enterEmailAndPhoneNoOtpScreen,
-        path: ATRoutes.enterEmailAndPhoneNoOtpScreen.addSlash,
-        pageBuilder: (_, GoRouterState state) {
-          return ATSlidingRouteTransition<bool?>(
-            child: UpdateEmailAndPhoneNoOtpScreen(
-              params: state.extra as EmailAndPhoneNoOTPScreenParams,
-            ),
-          );
-        }),
+                GoRoute(
+                    name: ATRoutes.enterEmailAndPhoneNoOtpScreen,
+                    path: ATRoutes.enterEmailAndPhoneNoOtpScreen.addSlash,
+                    pageBuilder: (_, GoRouterState state) {
+                      return ATSlidingRouteTransition<bool?>(
+                        child: UpdateEmailAndPhoneNoOtpScreen(
+                          params: state.extra as EmailAndPhoneNoOTPScreenParams,
+                        ),
+                      );
+                    }),
                 GoRoute(
                     name: ATRoutes.SELECT_ACCT_TYPE,
                     path: ATRoutes.SELECT_ACCT_TYPE,
@@ -511,11 +514,15 @@ final GoRouter amptiveAppRouter = GoRouter(
                     name: ATRoutes.creatorSubPlanSetup,
                     path: ATRoutes.creatorSubPlanSetup,
                     pageBuilder: (_, GoRouterState st) {
-                      final SubscriptionPlanData subPlanData =
-                          st.extra as SubscriptionPlanData;
+                      final String? selectedCategory = st.extra as String?;
+
                       return ATSlidingRouteTransition<SubscriptionPlanData?>(
                           child: CreatorSubPlanScreen(
-                              incomingSubPlan: subPlanData));
+                              incomingSubPlan: const SubscriptionPlanData(
+                                entryPoint:
+                                    SubPlanScreenEntryPoint.creatorProfileSetup,
+                              ),
+                              incomingCategory: selectedCategory));
                     }),
                 GoRoute(
                     name: ATRoutes.cohostFeeSetup,
@@ -614,8 +621,6 @@ final GoRouter amptiveAppRouter = GoRouter(
                     ),
                   ),
                 ),
-
-
                 GoRoute(
                   name: ATRoutes.updateNameScreen,
                   path: ATRoutes.updateNameScreen.addSlash,
