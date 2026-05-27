@@ -252,7 +252,7 @@ class LiveStreamCubit1 extends Cubit<LiveStreamState1> {
   }
 
   Future<void> disconnect() async {
-    leave(myUserId);
+    leaveProgram(myUserId);
     Future.wait(<Future<dynamic>>[
       wsNotificationService.disconnect(),
       streamingService.disconnect(),
@@ -294,6 +294,12 @@ class LiveStreamCubit1 extends Cubit<LiveStreamState1> {
     });
   }
 
+  void leaveProgram(String userId) => wsNotificationService
+    .sendMessage(<String, dynamic>{
+        'type': LiveEventType.participantLeave.value,
+        'identity': userId,
+      });
+
   void lowerHand(String userId) => wsNotificationService
     .sendMessage(<String, dynamic>{
         'type': LiveEventType.handRaise.value,
@@ -301,17 +307,11 @@ class LiveStreamCubit1 extends Cubit<LiveStreamState1> {
         'identity': userId,
       });
 
-  void leave(String userId) => wsNotificationService
-    .sendMessage(<String, dynamic>{
-        'type': LiveEventType.participantLeave.value,
-        'identity': userId,
-      });
-
   void approveHandRaise(String idToApprove) =>
       wsNotificationService.sendMessage(<String, dynamic>{
         'type': LiveEventType.handRaise.value,
         'action': 'approve',
-        'identity': idToApprove,
+        'user_id': idToApprove,
       });
 
   void sendPing() => wsNotificationService.sendMessage(<String, dynamic>{
@@ -321,15 +321,35 @@ class LiveStreamCubit1 extends Cubit<LiveStreamState1> {
 
   void toggleMedia(String mediaType, bool enabled) =>
       wsNotificationService.sendMessage(<String, dynamic>{
-        'type': LiveEventType.mediaToggle,
+        'type': LiveEventType.mediaToggle.value,
         'mediaType': mediaType,
         'enabled': enabled,
       });
 
   void toggleScreenShare(bool start) =>
       wsNotificationService.sendMessage(<String, dynamic>{
-        'type': LiveEventType.screenShare,
+        'type': LiveEventType.screenShare.value,
         'action': start ? 'start' : 'stop',
+      });
+
+  
+  //Exclusive to hosts and maybe cohosts
+  void muteListener(String listenerId) =>
+      wsNotificationService.sendMessage(<String, dynamic>{
+        'type': LiveEventType.userMuted.value,
+        'user_id': listenerId,
+      });
+
+  void kickOutListener(String listenerId) =>
+      wsNotificationService.sendMessage(<String, dynamic>{
+        'type': LiveEventType.userKicked.value,
+        'user_id': listenerId,
+      });
+
+  void banListener(String listenerId) =>
+      wsNotificationService.sendMessage(<String, dynamic>{
+        'type': LiveEventType.userBanned.value,
+        'user_id': listenerId,
       });
 
   @override

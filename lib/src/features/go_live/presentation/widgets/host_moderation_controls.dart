@@ -221,6 +221,8 @@ class _RowOfBtns extends StatelessWidget {
                 .currentUserData?.userId ?? '',
             );
           },
+          color: isMyHandRaised ? ATColors
+            .white.withValues(alpha: 0.3) : null,
           child: ATImgLoader(
             imgPath: ATImgStrings.handRaiseIcon,
             height: 20,
@@ -276,12 +278,16 @@ class _RowOfBtns extends StatelessWidget {
 }
 
 class EachGoLiveControlBtn extends StatelessWidget {
-  const EachGoLiveControlBtn(
-      {super.key, required this.child, required this.onTap, this.margin});
+  const EachGoLiveControlBtn({
+    super.key, required this.child,
+    required this.onTap,
+    this.margin, this.color
+  });
 
   final Widget child;
   final EdgeInsetsGeometry? margin;
   final VoidCallback onTap;
+  final Color? color;
 
   @override
   Widget build(BuildContext context) {
@@ -292,7 +298,7 @@ class EachGoLiveControlBtn extends StatelessWidget {
           height: 35,
           width: 35,
           onTap: onTap,
-          color: ATColors.white.withValues(alpha: 0.1),
+          color: color ?? ATColors.white.withValues(alpha: 0.1),
           padding: const EdgeInsets.all(5),
           radius: 30,
           child: child),

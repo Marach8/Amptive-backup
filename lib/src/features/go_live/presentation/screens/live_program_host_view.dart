@@ -162,7 +162,7 @@ class __HandRaisedIndicatorState extends State<_HandRaisedIndicator> {
       onTap: ()async{
         final String? userId = await showHandRaisersModal(
           context: context,
-          canPermitHandRaise: true,
+          canApproveHandRaise: true,
           liveStreamCubit: context.read<LiveStreamCubit1>(),
         );
         if(context.mounted && userId != null){

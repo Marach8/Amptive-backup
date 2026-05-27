@@ -13,12 +13,8 @@ import 'package:amptive/src/features/go_live/go_live_export.dart';
 import 'package:amptive/src/global_export.dart';
 import 'package:amptive/src/shared/modal_dismisser.dart';
 import 'package:amptive/src/shared/search_filter_widget.dart';
-import 'package:amptive/src/shared/circle_avatar.dart';
 import 'package:nested/nested.dart';
-import '../../../../models/host.dart';
-import '../../../../bloc/main_app/go_live_bloc/host_view/available_cohosts_bloc.dart';
-import '../../../../services/create_show/create_show_service.dart';
-import '../../../../livestream/models/livestream_models.dart';
+
 
 Future<void> showListenersModal({
   required BuildContext context,

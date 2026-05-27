@@ -187,7 +187,7 @@ class _RowOfBtns extends StatelessWidget {
     final LiveStreamState1 state = 
       context.watch<LiveStreamCubit1>().state;
     final bool isMicUnmuted = state.myMicIsEnabled;
-    final bool isHandRaised = state.myHandIsRaised == true;
+    final bool isMyHandRaised = state.myHandIsRaised == true;
     return Row(
       children: <Widget>[
         BlocListener<LiveStreamCubit1, LiveStreamState1>(
@@ -215,12 +215,14 @@ class _RowOfBtns extends StatelessWidget {
                 .currentUserData?.userId ?? '',
             );
           },
+          color: isMyHandRaised ? ATColors
+            .white.withValues(alpha: 0.3) : null,
           child: ATImgLoader(
             imgPath: ATImgStrings.handRaiseIcon,
             height: 20,
             width: 20,
             boxFit: BoxFit.fill,
-            color: isHandRaised ? ATColors.hex307FE2 : null,
+            color: isMyHandRaised ? ATColors.hex307FE2 : null,
           ),
         ),
         EachGoLiveControlBtn(

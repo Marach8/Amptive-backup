@@ -19,7 +19,7 @@ import 'package:nested/nested.dart';
 
 Future<String?> showHandRaisersModal({
   required BuildContext context,
-  required bool canPermitHandRaise,
+  required bool canApproveHandRaise,
   required LiveStreamCubit1 liveStreamCubit,
 }) async {
   return await showModalBottomSheet<String>(
@@ -40,7 +40,7 @@ Future<String?> showHandRaisersModal({
           builder: (_, ScrollController scrollController) {
             return _HandRaisersModal(
               scrollController: scrollController,
-              canKickListener: canPermitHandRaise
+              canKickListener: canApproveHandRaise
             );
           },
         ),
