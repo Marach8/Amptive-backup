@@ -8,7 +8,11 @@ class FlutterSecureStorageServiceImpl implements ATLocalStorageService {
     FlutterSecureStorage? mockFlutterSecureStorage,
   }) {
     _instance ??= FlutterSecureStorageServiceImpl._internal(
-        prefs: mockFlutterSecureStorage ?? const FlutterSecureStorage());
+        prefs: mockFlutterSecureStorage ?? const FlutterSecureStorage(
+          iOptions: IOSOptions(
+            accessibility: KeychainAccessibility.first_unlock_this_device
+          )
+        ));
     return _instance!;
   }
 

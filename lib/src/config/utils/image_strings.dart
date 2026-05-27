@@ -6,6 +6,7 @@ class ATImgStrings {
   static const String _svgPath = 'assets/images/svg_images';
   static const String _generalJpegImagePath = 'assets/images/jpeg_images';
   static const String _pngPath = 'assets/images/png_images';
+  static const String _webpPath = 'assets/images/webp_images';
 
   static const String emptyImage = '$_svgPath/empty_image.svg';
   static const String AMPTIVE_LOGO = '$_svgPath/Logo.svg';
@@ -33,8 +34,8 @@ class ATImgStrings {
   static const String unFollowIcon = '$_svgPath/Icon (2).svg';
   static const String MICROPHONE = '$_svgPath/Microphone.svg';
   static const String USER_FOLLOW = '$_svgPath/user-check.svg';
-  static const String KICK_USER_OUT = '$_svgPath/user out.svg';
-  static const String USER_ICON = '$_svgPath/user.svg'; 
+  static const String kickUserOut = '$_svgPath/user out.svg';
+  static const String userIcon = '$_svgPath/user.svg'; 
   static const String usersIcon = '$_svgPath/users.svg';
   static const String X_LOGO = '$_svgPath/x_logo.svg.svg';
   static const String groupIcon = '$_svgPath/Group_fill.svg';
@@ -58,7 +59,7 @@ class ATImgStrings {
   static const String BLUE_ROTOR_IMG =
       '$_svgPath/Moving Gradient Animation.svg';
   static const String SELECT_IMG_ICON = '$_svgPath/Rectangle 1.svg';
-  static const String HAND_RAISING_ICON = '$_svgPath/Vector.svg';
+  static const String handRaiseIcon = '$_svgPath/Vector.svg';
   // static const String CREATOR_MIC = '$_svgPath/creator-microphone.svg';
   // static const String CREATOR_GIF = '$_svgPath/creatorgif.svg';
   // static const String CREATOR_GLOBE = '$_svgPath/internet.svg';
@@ -99,8 +100,8 @@ class ATImgStrings {
   static const String artCard = '$_pngPath/art-card.png';
   static const String techCard = '$_pngPath/tech-card.png';
   static const String societyCard = '$_pngPath/society-card.png';
-  static const String MIC_ICON = '$_pngPath/public speaking.png';
-  static const String MONEY_ICON = '$_pngPath/Stack of bills.png';
+  static const String micIcon = '$_pngPath/public speaking.png';
+  static const String moneyIcon = '$_pngPath/Stack of bills.png';
   static const String CREATOR_MIC = '$_pngPath/microphone.png';
   static const String CREATOR_GIF = '$_pngPath/gift.png';
   static const String CREATOR_GLOBE = '$_pngPath/internet.png';
@@ -114,7 +115,7 @@ class ATImgStrings {
   static const String WARNING_ICON = '$_pngPath/warning.png';
   static const String WIRE_TRANSFER = '$_pngPath/wiretransfer.png';
   static const String PAPER_PLANE = '$_pngPath/paper plane.png';
-  static const String HOST_GIFT_ICON = '$_pngPath/host_gift.png';
+  static const String hostGiftingIcon = '$_pngPath/host_gift.png';
   static const String ONBOARD_NOTIF_IMG1 = '$_pngPath/image 5.png';
   static const String ONBOARD_NOTIF_IMG2 = '$_pngPath/image 5 (1).png';
   static const String ONBOARD_NOTIF_IMG3 = '$_pngPath/image 5 (2).png';
@@ -122,6 +123,11 @@ class ATImgStrings {
   static const String ONBOARD_NOTIF_IMG5 = '$_pngPath/image 5 (4).png';
   static const String ONBOARD_NOTIF_IMG7 = '$_pngPath/image 5 (5).png';
   static const String ONBOARD_NOTIF_IMG6 = '$_pngPath/image 5 (6).png';
-  static const String walletScreenImg1 = '$_pngPath/wallet_screen_image1.png';
-  static const String walletScreenImg2 = '$_pngPath/wallet_screen_image2.png';
+  static const String onboard1 = '$_webpPath/onboard1.webp';
+  static const String onboard2a = '$_webpPath/onboard2a.webp';
+  static const String onboard2b = '$_webpPath/onboard2b.webp';
+  static const String onboard2c = '$_webpPath/onboard2c.webp';
+  static const String onboard3a = '$_webpPath/onboard3a.webp';
+  static const String onboard3b = '$_webpPath/onboard3b.webp';
+  static const String onboard3c = '$_webpPath/onboard3c.webp';
 }

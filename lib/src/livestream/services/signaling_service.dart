@@ -4,6 +4,7 @@ import 'package:amptive/src/config/endpoints.dart';
 import 'package:amptive/src/config/services/local_storage_service/flutter_secure_storage_service_impl.dart';
 import 'package:amptive/src/config/services/local_storage_service/storage_service.dart';
 import 'package:amptive/src/config/config_export.dart';
+import 'package:amptive/src/features/go_live/data/models/deconstruct_inbound_events.dart';
 
 import '../../services/websocket/base_ws_service.dart';
 import '../models/livestream_models.dart';
@@ -15,7 +16,7 @@ class SignalingService extends BaseWsService {
     required String streamId,
     ATLocalStorageService? localStorageService,
     super.maxReconnectAttempts,
-  })  : _streamId = streamId,
+  }) : _streamId = streamId,
         _localStorageService =
             localStorageService ?? FlutterSecureStorageServiceImpl(),
         // URL is a placeholder; the real one is built in connect()
@@ -62,7 +63,7 @@ class SignalingService extends BaseWsService {
   @override
   String buildConnectUrl() {
     final String base =
-        ATEndpoints.wsSignalEndpoint(_streamId, _resolvedToken!);
+        '${ATEndpoints.wsStream}$_streamId?token=$_resolvedToken';
     return base;
   }
 
@@ -170,12 +171,12 @@ class SignalingService extends BaseWsService {
         ),
       SignalingEventType.chat => ChatEvent(ChatMessage.fromJson(json)),
       SignalingEventType.reaction =>
-        ReactionReceivedEvent(ReactionEvent.fromJson(json)),
+        ReactionReceivedEvent(Reaction.fromJson(json)),
       SignalingEventType.handRaise => HandRaiseEvent(
           identity: json['user_id'] as String? ?? '',
           action: json['action'] as String? ?? '',
         ),
-      SignalingEventType.gift => GiftReceivedEvent(GiftEvent.fromJson(json)),
+      SignalingEventType.gift => GiftReceivedEvent(Gift.fromJson(json)),
       SignalingEventType.viewerCount =>
         ViewerCountEvent(json['count'] as int? ?? 0),
       SignalingEventType.participantCount =>

@@ -2,6 +2,12 @@ import 'dart:ui';
 import 'package:amptive/src/config/api_response_and_app_state.dart';
 import 'package:amptive/src/config/utils/dialogs/app_notification_dialog.dart';
 import 'package:amptive/src/features/events/cubits/event_detail_cubit.dart';
+import 'package:amptive/src/features/go_live/cubits/end_live_program_cubit.dart';
+import 'package:amptive/src/features/go_live/cubits/get_live_program_entry_token_cubit.dart';
+import 'package:amptive/src/features/go_live/cubits/start_live_program_cubit.dart';
+import 'package:amptive/src/features/go_live/data/models/live_program_data.dart';
+import 'package:amptive/src/features/go_live/go_live_export.dart';
+import 'package:amptive/src/features/go_live/presentation/screens/live_program_screen.dart';
 import 'package:amptive/src/features/home/cubits/toggle_following_cubit.dart';
 import 'package:amptive/src/features/home/data/models/following_status.dart';
 import 'package:amptive/src/features/home/presentation/widgets/event_or_show_card.dart';
@@ -14,7 +20,7 @@ import 'package:amptive/src/shared/back_button.dart';
 import 'package:amptive/src/shared/global_model_objects.dart';
 import 'package:amptive/src/shared/image_loader_widget.dart';
 import 'package:amptive/src/shared/live_indicators.dart';
-import 'package:amptive/src/features/go_live/models/go_live_program_params.dart';
+import 'package:amptive/src/features/go_live/data/models/deconstruct_inbound_events.dart';
 import 'package:amptive/src/features/auth/cubits/local_user_data_cubit.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -40,16 +46,18 @@ class PreviewEventScreen extends StatelessWidget {
             initialEvent: hostedEvent,
           ),
         ),
-        BlocProvider<BlurredHeaderCubit>(create: (_) => BlurredHeaderCubit()),
+        BlocProvider<BlurredHeaderCubit>(
+            create: (_) => BlurredHeaderCubit()),
         BlocProvider<ToggleFollowingCubit>(
             create: (_) => ToggleFollowingCubit(
-                    initialStatus: FollowingStatus(
-                  isFollowing: true,
-                  followerCount: hostedEvent.followerCount ?? 0,
-                ))),
-        BlocProvider<LocalUserDataCubit>(
-          create: (_) => LocalUserDataCubit()..initializeCachedData(),
+              initialStatus: FollowingStatus(
+              isFollowing: true,
+              followerCount: hostedEvent.followerCount ?? 0,
+            )
+          )
         ),
+        BlocProvider<StartLiveProgramCubit>(
+          create: (_) => StartLiveProgramCubit()),
       ],
       child: _EventSubWidget(hostedEvent: hostedEvent),
     );
@@ -110,7 +118,7 @@ class _EventSubWidgetState extends State<_EventSubWidget> {
                   }),
                 ),
               ),
-              Container(
+              ColoredBox(
                 color: ATColors.hex0D0D0D.withValues(alpha: 0.75),
                 child: NotificationListener<ScrollNotification>(
                   onNotification:
@@ -203,14 +211,14 @@ class _EventSubWidgetState extends State<_EventSubWidget> {
                                   children: <Widget>[
                                     TextButton(
                                       onPressed: () {
-                                        context.pushReplacementNamed(
-                                          ATRoutes.MAIN_GO_LIVE_PROGRAM,
-                                          extra: GoLiveProgramParams(
-                                            streamId: event?.livestreamId ?? '',
-                                            userType: GoLiveUserType.host,
-                                            contentId: event?.eventId,
-                                          ),
-                                        );
+                                        // context.pushReplacementNamed(
+                                        //   ATRoutes.liveProgramScreen,
+                                        //   extra: GoLiveProgramParams(
+                                        //     streamId: event?.livestreamId ?? '',
+                                        //     userType: GoLiveUserType.host,
+                                        //     contentId: event?.eventId,
+                                        //   ),
+                                        // );
                                       },
                                       child: const Text('Go Live'),
                                     ),
@@ -323,26 +331,65 @@ class _EventSubWidgetState extends State<_EventSubWidget> {
               ),
             ],
           ),
-          bottomSheet: ATBlurredBgBtn(
-              onPressed: () async {
-                final HostedEvent? updatedEvent =
-                    context.read<EventDetailCubit>().currentEventDetail;
-                final HostedEvent? editedEvent = await context.pushNamed(
-                    ATRoutes.editEventScreen,
-                    extra: updatedEvent ?? widget.hostedEvent);
-                if (context.mounted &&
-                    editedEvent != null &&
-                    editedEvent != updatedEvent) {
-                  context.read<EventDetailCubit>().updateEvent(editedEvent);
-                  showAppNotification2(
-                    context: context,
-                    text: 'Event detail updated.',
-                    type: NotificationType.success,
+
+          bottomSheet: BlocConsumer<StartLiveProgramCubit, 
+              ATAppState<LiveProgramEntryToken>>(
+              listener: (_, ATAppState<LiveProgramEntryToken> state){
+                if(state is SuccessState<LiveProgramEntryToken>){
+                  final HostedEvent? updatedEvent =
+                      context.read<EventDetailCubit>().currentEventDetail;
+                  context.pushReplacementNamed(
+                    ATRoutes.goLiveOnboarding,
+                    extra: LiveProgramData(
+                      roomEntryToken: state.newData?.roomEntryToken ?? '',
+                      roomUrl: state.newData?.roomUrl ?? '',
+                      streamId: state.newData?.streamId ?? '',
+                      roomParticipantId: state.newData?.roomParticipantId ?? '',
+                      programId: updatedEvent?.eventId ?? '',
+                      coverUrl: updatedEvent?.coverUrl ?? '',
+                      role: ParticipantRole.host,
+                      community: updatedEvent?.community,
+                      programTitle: updatedEvent?.title ?? '',
+                      programDesc: updatedEvent?.description ?? '',
+                    )
                   );
                 }
               },
-              btnTitle: 'Edit Event'),
-        ),
+              builder: (_, state) {
+                return ATBlurredBgBtn(
+                  onPressed: () async {
+                    final HostedEvent? updatedEvent =
+                      context.read<EventDetailCubit>().currentEventDetail;
+                    context.read<StartLiveProgramCubit>().startLiveProgram(
+                      contentId: updatedEvent?.eventId ?? '',
+                    );
+                  },
+                  btnTitle: 'Edit Event'
+                );
+              }
+            ),
+          ),
+
+          // bottomSheet: ATBlurredBgBtn(
+          //   onPressed: () async {
+          //     final HostedEvent? updatedEvent =
+          //         context.read<EventDetailCubit>().currentEventDetail;
+          //     final HostedEvent? editedEvent = await context.pushNamed(
+          //         ATRoutes.editEventScreen,
+          //         extra: updatedEvent ?? widget.hostedEvent);
+          //     if (context.mounted &&
+          //         editedEvent != null &&
+          //         editedEvent != updatedEvent) {
+          //       context.read<EventDetailCubit>().updateEvent(editedEvent);
+          //       showAppNotification2(
+          //         context: context,
+          //         text: 'Event detail updated.',
+          //         type: NotificationType.success,
+          //       );
+          //     }
+          //   },
+          //   btnTitle: 'Edit Event'
+          // ),
       ),
     );
   }

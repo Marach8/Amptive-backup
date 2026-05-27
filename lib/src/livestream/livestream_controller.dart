@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:developer' as developer;
 
+import 'package:amptive/src/features/go_live/data/models/deconstruct_inbound_events.dart';
 import 'package:livekit_client/src/participant/remote.dart';
 import 'package:livekit_client/src/track/remote/audio.dart';
 
@@ -80,7 +81,7 @@ class LivestreamController {
 
         final ids = speakers.map((s) => s.identity).toSet();
         final updated = _state.participants
-            .map((p) => p.copyWith(isSpeaker: ids.contains(p.identity)))
+            .map((p) => p.copyWith(isSpeaker: ids.contains(p.userId)))
             .toList();
 
         final localSid = _media.room?.localParticipant?.sid;
@@ -208,17 +209,17 @@ class LivestreamController {
       case ParticipantUpdatedEvent(:final participant):
         final updated = [
           for (final p in _state.participants)
-            if (p.identity == participant.identity) participant else p,
+            if (p.userId == participant.userId) participant else p,
         ];
         _emit(_state.copyWith(participants: updated));
 
-        if (participant.identity == _media.localParticipant?.identity) {
-          if (participant.isSpeaker) {
-            await _media.setupAndPublishAudio();
-            await _media.toggleMicrophone(true);
-          } else {
-            await _media.toggleMicrophone(false);
-          }
+        if (participant.userId == _media.localParticipant?.identity) {
+          // if (participant.isSpeaker) {
+          //   await _media.setupAndPublishAudio();
+          //   await _media.toggleMicrophone(true);
+          // } else {
+          //   await _media.toggleMicrophone(false);
+          // }
         }
 
       // participantCount is now a computed getter on LivestreamState
@@ -267,8 +268,8 @@ class LivestreamController {
   // ── Participant event handlers ─────────────────────────────────────────
 
   void _handleParticipantJoined(LivestreamParticipant participant) {
-    _log('Participant joined via signaling: ${participant.identity}');
-    if (!_state.participants.any((p) => p.identity == participant.identity)) {
+    _log('Participant joined via signaling: ${participant.userId}');
+    if (!_state.participants.any((p) => p.userId == participant.userId)) {
       _emit(_state.copyWith(
         participants: [..._state.participants, participant],
       ));
@@ -279,7 +280,7 @@ class LivestreamController {
     // Same: participantCount stays in sync automatically.
     _emit(_state.copyWith(
       participants:
-          _state.participants.where((p) => p.identity != identity).toList(),
+          _state.participants.where((p) => p.userId != identity).toList(),
       handQueue: _state.handQueue.where((id) => id != identity).toList(),
     ));
   }
@@ -306,7 +307,7 @@ class LivestreamController {
 
   void _handleUserMuted(String identity, bool muted) {
     final updated = _state.participants
-        .map((p) => p.identity == identity ? p.copyWith(isMuted: muted) : p)
+        .map((p) => p.userId == identity ? p.copyWith(isMuted: muted) : p)
         .toList();
     _emit(_state.copyWith(participants: updated));
   }
@@ -335,7 +336,7 @@ class LivestreamController {
   void _handleMediaStateChange(
       String identity, String mediaType, bool enabled) {
     final updated = _state.participants.map((p) {
-      if (p.identity == identity && mediaType == 'audio') {
+      if (p.userId == identity && mediaType == 'audio') {
         return p.copyWith(isMuted: !enabled);
       }
       return p;
@@ -396,8 +397,8 @@ class LivestreamState {
   final int viewerCount;
   final List<String> handQueue;
   final List<ChatMessage> messages;
-  final List<ReactionEvent> reactions;
-  final List<GiftEvent> gifts;
+  final List<Reaction> reactions;
+  final List<Gift> gifts;
   final String? lastError;
   final double localLevel;
   final double remoteLevel;
@@ -423,8 +424,8 @@ class LivestreamState {
     int? viewerCount,
     List<String>? handQueue,
     List<ChatMessage>? messages,
-    List<ReactionEvent>? reactions,
-    List<GiftEvent>? gifts,
+    List<Reaction>? reactions,
+    List<Gift>? gifts,
     Object? lastError = _kUnset,
     double? localLevel,
     double? remoteLevel,

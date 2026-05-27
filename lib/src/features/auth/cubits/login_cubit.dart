@@ -55,7 +55,7 @@ class LoginCubit extends Cubit<ATAppState<ATUser>> {
             );
             await localStorageService.setObject(
               ATStrings.cachedUserData,
-              cachedUserData.toJson(),
+              cachedUserData.toLocalStorageJson(),
             );
             emit(SuccessState<ATUser>(newData: data.data?.user,));
           },

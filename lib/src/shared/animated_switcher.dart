@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 
 class ATFadingSwitcher extends StatelessWidget {
-  const ATFadingSwitcher({super.key, required this.child, this.duration});
+  const ATFadingSwitcher({
+    super.key,
+    required this.child,
+    this.duration,
+  });
 
   final Widget child;
   final int? duration;
