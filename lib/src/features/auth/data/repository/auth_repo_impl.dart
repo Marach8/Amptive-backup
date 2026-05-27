@@ -41,13 +41,12 @@ class AuthRepoImpl implements AuthRepo {
     required Map<String, dynamic> param,
   }) async {
     try {
-      final Response<dynamic> response = await networkService.post(
+      await networkService.post(
         ATEndpoints.sendOtp,
         data: param,
       );
 
-      final String otp = response.data['data']['otp'] as String;
-      return Successful<String>(data: otp);
+      return Successful<String>(data: 'otp sent');
     } catch (e) {
       log('Send OTP error: $e');
       return Unsuccessful<String>(

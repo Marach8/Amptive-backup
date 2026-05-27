@@ -99,7 +99,8 @@ class _ProgramCreationSuccessScreenState
                 height: 30,
               ),
               Expanded(
-                child: LayoutBuilder(builder: (_, BoxConstraints kst) {
+                child: LayoutBuilder(
+                  builder: (_, BoxConstraints kst) {
                   return Stack(
                     clipBehavior: Clip.none,
                     alignment: Alignment.topCenter,

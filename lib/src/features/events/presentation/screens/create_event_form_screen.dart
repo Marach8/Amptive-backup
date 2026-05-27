@@ -8,7 +8,9 @@ import 'package:amptive/src/features/events/presentation/screens/select_schedule
 import 'package:amptive/src/features/events/presentation/widgets/events_audience_access_modal.dart';
 import 'package:amptive/src/features/events/cubits/hosted_events_cubit.dart';
 import 'package:amptive/src/features/events/presentation/widgets/set_event_capacity_modal.dart';
+import 'package:amptive/src/features/go_live/data/models/live_program_data.dart';
 import 'package:amptive/src/features/go_live/go_live_export.dart';
+import 'package:amptive/src/features/go_live/presentation/screens/live_program_screen.dart';
 import 'package:amptive/src/shared/annotated_region__widget.dart';
 import 'package:amptive/src/shared/divider_widget.dart';
 import 'package:amptive/src/shared/global_model_objects.dart';
@@ -59,7 +61,10 @@ class CreateEventFormScreen extends StatelessWidget {
           create: (_) => SelectedHashTagsCubit()),
         BlocProvider<HostedEventsCubit>.value(value: hostedEventsCubit),
         BlocProvider<CreateEventCubit>(create: (_) => CreateEventCubit()),
-        BlocProvider<StartEventCubit>(create: (_) => StartEventCubit())
+        BlocProvider<StartLiveProgramCubit>(
+          create: (_) => StartLiveProgramCubit()),
+        BlocProvider<GetLiveProgramEntryTokenCubit>(
+          create: (_) => GetLiveProgramEntryTokenCubit()),
       ],
       child: const _SubWidget(),
     );
@@ -551,7 +556,9 @@ class __SubWidgetState extends State<_SubWidget> {
                                 String descriptionText = ATStrings.choose2AllowHandRasing;
                                 if (selectedPermission == HandRaisingPermission.allow) {
                                   descriptionText = ATStrings.allow;
-                                } else if (selectedPermission == HandRaisingPermission.dontAllow) {
+                                }
+                                else if (selectedPermission == 
+                                  HandRaisingPermission.dontAllow) {
                                   descriptionText = ATStrings.dontAllow;
                                 }
 
@@ -712,20 +719,29 @@ class __SubWidgetState extends State<_SubWidget> {
         resizeToAvoidBottomInset: false,
         bottomSheet: MultiBlocListener(
           listeners: <SingleChildWidget>[
-            //Listen to starting an event
-            BlocListener<StartEventCubit, ATAppState<HostedEvent>>(
-              listener: (_, ATAppState<HostedEvent> state){
-                if(state is SuccessState<HostedEvent>){
+            BlocListener<StartLiveProgramCubit, ATAppState<LiveProgramEntryToken>>(
+              listener: (_, ATAppState<LiveProgramEntryToken> state){
+                if(state is SuccessState<LiveProgramEntryToken>){
                   _activateBtn.value = (true, _activateBtn.value.$2);
-                  context.read<HostedEventsCubit>()
-                    .addNewHostedEvent(state.newData);
-
+                  final HostedEvent? hostedEvent = context
+                    .read<CreateEventCubit>().currentEvent;
                   context.pushReplacementNamed(
                     ATRoutes.goLiveOnboarding,
-                    extra: state.newData
+                    extra: LiveProgramData(
+                      roomEntryToken: state.newData?.roomEntryToken ?? '',
+                      roomUrl: state.newData?.roomUrl ?? '',
+                      streamId: state.newData?.streamId ?? '',
+                      roomParticipantId: state.newData?.roomParticipantId ?? '',
+                      programId: hostedEvent?.eventId ?? '',
+                      coverUrl: hostedEvent?.coverUrl ?? '',
+                      role: ParticipantRole.host,
+                      community: hostedEvent?.community,
+                      programTitle: hostedEvent?.title ?? '',
+                      programDesc: hostedEvent?.description ?? '',
+                    ),
                   );
                 }
-                else if(state is FailureState<HostedEvent>){
+                else if(state is FailureState<LiveProgramEntryToken>){
                   _activateBtn.value = (true, _activateBtn.value.$2);
 
                   showAppNotification2(
@@ -788,22 +804,20 @@ class __SubWidgetState extends State<_SubWidget> {
             BlocListener<CreateEventCubit, ATAppState<HostedEvent>>(
               listener: (_, ATAppState<HostedEvent> state) async{
                 if (state is SuccessState<HostedEvent>) {
+                  context.read<HostedEventsCubit>()
+                    .addNewHostedEvent(state.newData);
+
                   final bool shouldStartLive = _activateBtn.value.$2 
                     == ScheduleBtnOnTap.goLive;
                   if(shouldStartLive){
                     final HostedEvent? event = state.newData;
-                    context.read<StartEventCubit>().startEvent(
-                      eventId: event?.eventId ?? '',
-                      streamUrl: event?.streamUrl ?? '', 
-                      streamKey: event?.streamKey ?? '',
-                      reason: 'Starting an event'
+                    context.read<StartLiveProgramCubit>().startLiveProgram(
+                      contentId: event?.eventId ?? '',
                     );
                     return;
                   }
 
                   _activateBtn.value = (true, _activateBtn.value.$2);
-                  context.read<HostedEventsCubit>()
-                    .addNewHostedEvent(state.newData);
 
                   final dynamic params = ProgramCreationSuccessScreenParams(
                     coverArtBytes: context.read<BgImageCubit>().state.$2!,
@@ -861,8 +875,8 @@ class __SubWidgetState extends State<_SubWidget> {
                       errorMessage = 'Please select a community';
                     } else if((selectedCohosts ?? <User>[]).isEmpty) {
                       errorMessage = 'Please select at least 1 cohost';
-                    } else if((selectedHashtags ?? <HashTag>[]).isEmpty) {
-                      errorMessage = 'Please select at least 1 hashtag';
+                    // } else if((selectedHashtags ?? <HashTag>[]).isEmpty) {
+                    //   errorMessage = 'Please select at least 1 hashtag';
                     } else if(selectedPermission == null) {
                       errorMessage = 'Please choose whether to allow hand-raising for this episode';
                     } else if(accessTypeData.accessType == null) {

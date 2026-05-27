@@ -85,7 +85,6 @@ class _LoginScreenState extends State<LoginScreen> with ATValidators {
   }
 
   @override
-  @override
   Widget build(BuildContext context) {
     return BlocProvider<LoginCubit>(
       create: (_) => LoginCubit(),
@@ -157,7 +156,7 @@ class _LoginScreenState extends State<LoginScreen> with ATValidators {
           bottomSheet: BlocConsumer<LoginCubit, ATAppState<ATUser>>(
             listener: (BuildContext context, ATAppState<ATUser> state) {
               if (state is SuccessState<ATUser>) {
-                context.goNamed(ATRoutes.mainAppShell);
+                context.goNamed(ATRoutes.dashboard);
               } else if (state is FailureState<ATUser>) {
                 showAppNotification2(context: context, text: state.message);
               }

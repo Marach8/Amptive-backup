@@ -1,6 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:amptive/src/shared/shimmer.dart';
 import '../../../../config/utils/colors.dart';
 import '../../../../config/utils/image_strings.dart';
 import '../../../../shared/custom_container_widget.dart';
@@ -19,8 +18,7 @@ class ATEventOrShowCard extends StatelessWidget {
         ? imgPath!
         : ATImgStrings.weCanDoHardThingsBgImage;
 
-    final bool isNetworkImage = displayImage.startsWith('http://') ||
-        displayImage.startsWith('https://');
+    final bool isNetworkImage = displayImage.startsWith('http');
 
     return Container(
       padding: const EdgeInsets.all(10),
@@ -61,15 +59,17 @@ class CoverPicWithTopRightMoreIcon extends StatelessWidget {
     super.key,
     required this.imgPath,
     required this.onMoreTapped,
+    this.padding,
   });
 
   final String imgPath;
   final VoidCallback onMoreTapped;
+  final EdgeInsetsGeometry? padding;
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.all(10),
+      padding: padding ?? const EdgeInsets.all(10),
       alignment: Alignment.topRight,
       height: 360,
       decoration: BoxDecoration(

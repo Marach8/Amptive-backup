@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:math' as math;
 
+import 'package:amptive/src/features/go_live/data/models/deconstruct_inbound_events.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import './src/livestream/livestream.dart';
@@ -91,11 +92,11 @@ class _LivestreamPageState extends State<LivestreamPage>
         _controller.mediaService.toggleMicrophone(false);
         break;
       case AppLifecycleState.resumed:
-        final id = _controller.mediaService.localParticipant?.identity;
-        final isSpeaker = id != null &&
-            _controller.state.participants
-                .any((p) => p.identity == id && p.isSpeaker);
-        if (isSpeaker) _controller.mediaService.toggleMicrophone(true);
+        // final id = _controller.mediaService.localParticipant?.identity;
+        // final isSpeaker = id != null &&
+        //     _controller.state.participants
+        //         .any((p) => p.userId == id && p.isSpeaker);
+        // if (isSpeaker) _controller.mediaService.toggleMicrophone(true);
         break;
       default:
         break;
@@ -648,7 +649,7 @@ class _LivestreamPageState extends State<LivestreamPage>
                 borderRadius: BorderRadius.circular(20),
                 border: Border.all(color: _C.border),
               ),
-              child: Text('${r.emoji}  ${r.identity}',
+              child: Text('${r.emoji}  ${r.senderId}',
                   style: const TextStyle(
                       color: _C.textSecondary, fontSize: 11)),
             ),
@@ -1033,30 +1034,29 @@ class _ParticipantAvatar extends StatelessWidget {
       children: [
         Stack(
           children: [
-            Container(
-              width: 40,
-              height: 40,
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                color: _C.surfaceHigh,
-                border: Border.all(
-                  color: participant.isSpeaker ? _C.accent : _C.border,
-                  width: participant.isSpeaker ? 2 : 1,
-                ),
-              ),
-              child: Center(
-                child: Text(
-                  participant.displayName.isNotEmpty
-                      ? participant.displayName[0].toUpperCase()
-                      : '?',
-                  style: const TextStyle(
-                      color: _C.textPrimary,
-                      fontSize: 16,
-                      fontWeight: FontWeight.w600),
-                ),
-              ),
-            ),
-            if (participant.isMuted)
+            // Container(
+            //   width: 40,
+            //   height: 40,
+            //   decoration: BoxDecoration(
+            //     shape: BoxShape.circle,
+            //     color: _C.surfaceHigh,
+            //     border: Border.all(
+            //       color: participant.isSpeaker ? _C.accent : _C.border,
+            //       width: participant.isSpeaker ? 2 : 1,
+            //     ),
+            //   ),
+            //   child: Center(
+            //     child: Text(
+            //       participant.userName.isNotEmpty
+            //           ? participant.userName[0].toUpperCase()
+            //           : '?',
+            //       style: const TextStyle(
+            //           color: _C.textPrimary,
+            //           fontSize: 16,
+            //           fontWeight: FontWeight.w600),
+            //     ),
+            //   ),
+            // ),
               Positioned(
                 right: 0,
                 bottom: 0,
@@ -1075,7 +1075,7 @@ class _ParticipantAvatar extends StatelessWidget {
         SizedBox(
           width: 48,
           child: Text(
-            participant.displayName,
+            participant.username ?? '',
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
             textAlign: TextAlign.center,
@@ -1109,11 +1109,9 @@ class _ChatLine extends StatelessWidget {
                 color: _C.surfaceHigh,
                 border: Border.all(color: _C.border),
               ),
-              child: Center(
+              child: const Center(
                 child: Text(
-                  message.displayName.isNotEmpty
-                      ? message.displayName[0].toUpperCase()
-                      : '?',
+                  'foo',
                   style: const TextStyle(
                       color: _C.textPrimary, fontSize: 11,
                       fontWeight: FontWeight.w600),
@@ -1127,7 +1125,7 @@ class _ChatLine extends StatelessWidget {
               text: TextSpan(
                 children: [
                   TextSpan(
-                    text: '${message.displayName}  ',
+                    text: '${message.senderName}  ',
                     style: const TextStyle(
                         color: _C.accent,
                         fontSize: 12,

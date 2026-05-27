@@ -1,6 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
-import 'dart:developer' as developer show log;
+// import 'dart:developer' as developer show log;
 
 import 'package:web_socket_channel/web_socket_channel.dart';
 import 'package:web_socket_channel/status.dart' as ws_status;
@@ -304,6 +304,6 @@ abstract class BaseWsService {
   // ── Logging ────────────────────────────────────────────────────────────
 
   void log(String message, {LogLevel level = LogLevel.debug}) {
-    developer.log(message, name: _logTag, level: level.value);
+    //developer.log(message, name: _logTag, level: level.value);
   }
 }
