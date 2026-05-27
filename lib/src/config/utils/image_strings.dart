@@ -6,6 +6,7 @@ class ATImgStrings {
   static const String _svgPath = 'assets/images/svg_images';
   static const String _generalJpegImagePath = 'assets/images/jpeg_images';
   static const String _pngPath = 'assets/images/png_images';
+  static const String _webpPath = 'assets/images/webp_images';
 
   static const String emptyImage = '$_svgPath/empty_image.svg';
   static const String AMPTIVE_LOGO = '$_svgPath/Logo.svg';
@@ -122,6 +123,11 @@ class ATImgStrings {
   static const String ONBOARD_NOTIF_IMG5 = '$_pngPath/image 5 (4).png';
   static const String ONBOARD_NOTIF_IMG7 = '$_pngPath/image 5 (5).png';
   static const String ONBOARD_NOTIF_IMG6 = '$_pngPath/image 5 (6).png';
-  static const String walletScreenImg1 = '$_pngPath/wallet_screen_image1.png';
-  static const String walletScreenImg2 = '$_pngPath/wallet_screen_image2.png';
+  static const String onboard1 = '$_webpPath/onboard1.webp';
+  static const String onboard2a = '$_webpPath/onboard2a.webp';
+  static const String onboard2b = '$_webpPath/onboard2b.webp';
+  static const String onboard2c = '$_webpPath/onboard2c.webp';
+  static const String onboard3a = '$_webpPath/onboard3a.webp';
+  static const String onboard3b = '$_webpPath/onboard3b.webp';
+  static const String onboard3c = '$_webpPath/onboard3c.webp';
 }

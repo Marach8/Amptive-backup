@@ -82,21 +82,21 @@ final GoRouter amptiveAppRouter = GoRouter(
 
   routes: <RouteBase>[
     GoRoute(
-        name: ATRoutes.POST_ONBOARDING_SCREEN,
-        path: ATRoutes.POST_ONBOARDING_SCREEN.addSlash,
+        name: ATRoutes.postOnboardingScreen,
+        path: ATRoutes.postOnboardingScreen.addSlash,
         pageBuilder: (_, __) => ATSlidingRouteTransition<void>(
               child: const ATPostOnboardingScreen(),
             )),
     GoRoute(
-      name: ATRoutes.ONBOARDING_SCREEN,
-      path: ATRoutes.ONBOARDING_SCREEN.addSlash,
+      name: ATRoutes.onboardingScreen,
+      path: ATRoutes.onboardingScreen.addSlash,
       builder: (_, __) => const ATOnboardingScreen(),
     ),
 
     //AUTHENTICATION SCREENS
     GoRoute(
-      name: ATRoutes.AUTH_OPTIONS_SCREEN,
-      path: ATRoutes.AUTH_OPTIONS_SCREEN.addSlash,
+      name: ATRoutes.authOptionsScreen,
+      path: ATRoutes.authOptionsScreen.addSlash,
       pageBuilder: (_, GoRouterState st) => ATSlidingRouteTransition<void>(
           child: ATAuthOptionsScreen(
         authType: st.extra as AuthType,

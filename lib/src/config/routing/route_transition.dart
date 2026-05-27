@@ -61,9 +61,9 @@ FutureOr<String?> tempRedirect(
         key: ATStrings.shouldRedirect, value: false.toString());
 
     if (isNewUser == 'false') {
-      return ATRoutes.POST_ONBOARDING_SCREEN.addSlash;
+      return ATRoutes.postOnboardingScreen.addSlash;
     } else {
-      return ATRoutes.ONBOARDING_SCREEN.addSlash;
+      return ATRoutes.onboardingScreen.addSlash;
     }
   }
 
