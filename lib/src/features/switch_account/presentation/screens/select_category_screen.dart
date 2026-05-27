@@ -1,4 +1,5 @@
 import 'package:amptive/src/features/profile/bloc/profile_bloc_export.dart';
+import 'package:amptive/src/features/profile/data/models/profile_categories.dart';
 import 'package:amptive/src/features/profile/data/models/request/create_professional_profile_request.dart';
 import 'package:amptive/src/global_export.dart';
 import 'package:amptive/src/shared/annotated_region__widget.dart';
@@ -11,40 +12,27 @@ import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import '../switch_acct/switch_acct_export.dart';
 
-class SelectCategoryScreen extends StatelessWidget {
+
+enum profileType { creator, business }
+
+class SelectCategoryScreen extends StatefulWidget {
   const SelectCategoryScreen({super.key});
+
+  @override
+  State<SelectCategoryScreen> createState() => _SelectCategoryScreenState();
+}
+
+class _SelectCategoryScreenState extends State<SelectCategoryScreen> {
+  int? _selectedIndex;
 
   @override
   Widget build(BuildContext context) {
     final bool isCreator = context.read<AccountTypeBloc>().state;
-    int? selectedIndex;
-
-    // Replace with actual categories if you have them available
-    final List<String> categories = [
-      "AI & Machine Learning",
-      "Media and Entertaninment",
-      "Personal Blog",
-      "Home, Furniture & Appliances",
-      "Food & Beverage",
-      "Gaming",
-      "Machinery & Equipment",
-      "Health & Wellness",
-      "Professional Services",
-      "Pets",
-      "Public Administration",
-      "Real Estate",
-      "Software & Apps",
-      "Restaurant & Bars",
-      "Shopping & Retail",
-      "Sports, Fitness & Outdoors",
-      "Travel & Tourism",
-      "Finance & Investing",
-      "Education & Training",
-      "Electronics",
-      "Clothing & Accesories",
-      "Baby",
-      "Automotitive & Transportation"
-    ];
+    
+    // Read directly from the external file
+    final List<String> activeCategories = isCreator 
+        ? ProfileCategories.creator 
+        : ProfileCategories.business;
 
     return ATAnnotatedRegion(
       child: StatefulBuilder(builder: (_, StateSetter setter) {
@@ -147,13 +135,13 @@ class SelectCategoryScreen extends StatelessWidget {
                   SliverList(
                     delegate: SliverChildBuilderDelegate(
                       (_, int index) {
-                        final bool isSelected = selectedIndex == index;
-                        final String title = categories[index];
+                        final bool isSelected = _selectedIndex == index;
+                        final String title = activeCategories[index];
                         return Padding(
                           padding: const EdgeInsets.fromLTRB(15, 0, 18, 20),
                           child: InkWell(
                             onTap: () {
-                              setter(() => selectedIndex = index);
+                              setter(() => _selectedIndex = index);
                             },
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -173,7 +161,7 @@ class SelectCategoryScreen extends StatelessWidget {
                           ),
                         );
                       },
-                      childCount: categories.length,
+                      childCount: activeCategories.length,
                     ),
                   )
                 ],
@@ -186,11 +174,11 @@ class SelectCategoryScreen extends StatelessWidget {
             return Padding(
               padding: EdgeInsets.fromLTRB(15, 10, 15, bottom),
               child: ATPlainElevatedBtn(
-                onPressed: selectedIndex == null
+                onPressed: _selectedIndex == null
                     ? null
                     : () {
                         ProfessionalProfileData()
-                            .copyWith(category: categories[selectedIndex!]);
+                            .copyWith(category: activeCategories[_selectedIndex!]);
 
                         const SubscriptionPlanData incoming =
                             SubscriptionPlanData(
