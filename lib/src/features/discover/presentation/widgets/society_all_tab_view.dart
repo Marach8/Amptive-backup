@@ -26,7 +26,7 @@ class SocietyAllTabView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
-        // ==================== TRENDING ====================
+
         HastagHeadingRow(
           title: ATStrings.TRENDING,
           viewAllOnpressed: () =>
@@ -96,7 +96,6 @@ class SocietyAllTabView extends StatelessWidget {
         const SeparatorDivider(),
         const SizedBox(height: 40),
 
-        // ==================== PAID SHOWS ====================
         HastagHeadingRow(title: ATStrings.PAID_SHOWS, viewAllOnpressed: () {}),
         const SizedBox(height: 10),
 
@@ -166,7 +165,6 @@ class SocietyAllTabView extends StatelessWidget {
         const SeparatorDivider(),
         const SizedBox(height: 40),
 
-        // ==================== FREE SHOWS ====================
         HastagHeadingRow(title: ATStrings.FREE_SHOWS, viewAllOnpressed: () {}),
         const SizedBox(height: 10),
 
