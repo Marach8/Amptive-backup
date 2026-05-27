@@ -22,6 +22,9 @@ abstract class ATAudioStreamingService {
   /// Active speakers (ids)
   Stream<List<String>> get activeSpeakersStream;
 
+  /// Users whose mic is enabled
+  Stream<List<String>> get participantsWithMicEnabledStream;
+
   /// Dispose resources
   Future<void> dispose();
 }

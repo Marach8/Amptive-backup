@@ -238,16 +238,35 @@ LiveStreamState1 reduceIncomingStreamAction({
 
 
     LiveEventType.userMuted => () {
-        // final String id = json['identity'] as String? ?? '';
-        // final bool muted = json['muted'] as bool? ?? false;
-        // final List<LiveSessionParticipant>? updated =
-        //     state.participants?.map((LiveSessionParticipant p) {
-        //   if (p.roomParticipantId == id) {
-        //     return p.copyWith(isMuted: muted);
-        //   }
-        //   return p;
-        // }).toList();
-        return stateSnapshot.copyWith();
+        bool? myMicIsEnabled = stateSnapshot.myMicIsEnabled;
+        final String mutedUserId = wsJson['user_id'] ?? '';
+        //final String promoterId = wsJson['promoter_id'] ?? '';
+
+        if(mutedUserId == myUserId) myMicIsEnabled = false;
+
+        final List<String> unMutedParticipantIds = List<String>
+          .from(stateSnapshot.unMutedParticipantIds ?? <String>[]);
+          unMutedParticipantIds.remove(mutedUserId);
+
+        return stateSnapshot.copyWith(
+          myMicIsEnabled: myMicIsEnabled,
+          unMutedParticipantIds: unMutedParticipantIds,
+        );
+      }(),
+
+      LiveEventType.userUnmuted => () {
+        bool? myMicIsEnabled = stateSnapshot.myMicIsEnabled;
+        final String unMutedUserId = wsJson['user_id'] ?? '';
+        //final String promoterId = wsJson['promoter_id'] ?? '';
+        if(unMutedUserId == myUserId) myMicIsEnabled = true;
+
+        return stateSnapshot.copyWith(
+          myMicIsEnabled: myMicIsEnabled,
+          unMutedParticipantIds: <String>[
+            unMutedUserId,
+            ...?stateSnapshot.unMutedParticipantIds
+          ],
+        );
       }(),
 
     LiveEventType.userBanned => () {

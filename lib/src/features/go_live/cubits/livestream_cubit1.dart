@@ -11,7 +11,6 @@ import 'package:amptive/src/config/services/ws_notif_service/ws_notif_service.da
 import 'package:amptive/src/features/go_live/data/models/handle_incoming_stream_action.dart';
 import 'package:amptive/src/features/go_live/data/models/livestream_state.dart';
 import 'package:amptive/src/features/go_live/data/models/sequential_queue.dart';
-import 'package:amptive/src/shared/sentinel.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:uuid/uuid.dart';
@@ -53,6 +52,7 @@ class LiveStreamCubit1 extends Cubit<LiveStreamState1> {
   StreamSubscription<dynamic>? _wsMessageSub;
   StreamSubscription<List<LiveSessionParticipant>>? _participantsSub;
   StreamSubscription<List<String>>? _activeSpeakersSub;
+  StreamSubscription<List<String>>? _speakersWithMicEnabledSub;
 
   void _initializeQueues() {
     _chatQueue = SequentialQueue<ChatMessage>(
@@ -143,8 +143,16 @@ class LiveStreamCubit1 extends Cubit<LiveStreamState1> {
     // Listen to active speaker changes
     _activeSpeakersSub = streamingService.activeSpeakersStream
         .listen((List<String> activeSpeakerIds) {
+          log('These are the active speakers $activeSpeakerIds');
       emit(state.copyWith(activeSpeakerIds: activeSpeakerIds));
     });
+
+    // // Listen to participants with mic enabled changes
+    // _speakersWithMicEnabledSub = streamingService.participantsWithMicEnabledStream
+    //     .listen((List<String> participantsWithMicEnabledIds) {
+    //       log('These are the participants with mic enabled $participantsWithMicEnabledIds');
+    //   emit(state.copyWith(unMutedParticipantIds: participantsWithMicEnabledIds));
+    // });
 
     // Listen to ws messages
     _wsMessageSub =
@@ -336,7 +344,13 @@ class LiveStreamCubit1 extends Cubit<LiveStreamState1> {
   //Exclusive to hosts and maybe cohosts
   void muteListener(String listenerId) =>
       wsNotificationService.sendMessage(<String, dynamic>{
-        'type': LiveEventType.userMuted.value,
+        'type': 'remove_speaker',
+        'user_id': listenerId,
+      });
+  
+  void unMuteListener(String listenerId) =>
+      wsNotificationService.sendMessage(<String, dynamic>{
+        'type': 'promote_speaker',
         'user_id': listenerId,
       });
 
@@ -364,6 +378,7 @@ class LiveStreamCubit1 extends Cubit<LiveStreamState1> {
     _wsMessageSub?.cancel();
     _participantsSub?.cancel();
     _activeSpeakersSub?.cancel();
+    _speakersWithMicEnabledSub?.cancel();
 
     // Dispose of the streaming service resources.
     streamingService.dispose();

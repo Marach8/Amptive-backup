@@ -233,8 +233,8 @@ class _ParticipantTile extends StatelessWidget {
       == ParticipantRole.host;
 
     String userName = '';
-    final bool isMe = participant?.userId == context.read<LocalUserDataCubit>()
-      .currentUserData?.userId;
+    final bool isMe = participant?.userId == context
+      .read<LocalUserDataCubit>().currentUserData?.userId;
     if(isMe){
       userName = ATStrings.you;
     }else{
@@ -263,30 +263,69 @@ class _ParticipantTile extends StatelessWidget {
           ),
           if (isHost) const HostIndicator() 
           else if(canKickListener)
-            ATContainer(
-              onTap: () async {
-                // Kick out functionality would require integration with the
-                // livestream service to properly remove the participant
-                // For now, show a confirmation snackbar
-                showAppNotification(
-                  context: context,
-                  icon: const ATImgLoader(
+            Row(
+              mainAxisSize: MainAxisSize.min,
+              mainAxisAlignment: MainAxisAlignment.end,
+              spacing: 8,
+              children: <Widget>[
+                _MuteUmuteListenerBtn(participant?.userId?? ''),
+                ATContainer(
+                  onTap: () async {
+                    // Kick out functionality would require integration with the
+                    // livestream service to properly remove the participant
+                    // For now, show a confirmation snackbar
+                    showAppNotification(
+                      context: context,
+                      icon: const ATImgLoader(
+                        imgPath: ATImgStrings.kickUserOut,
+                      ),
+                      text: 'Kick out feature coming soon',
+                      bgColor: ATColors.hex307FE2,
+                    );
+                  },
+                  height: 35, width: 35,radius: 20,
+                  color: ATColors.white.withValues(alpha: 0.1),
+                  child: const ATImgLoader(
+                    boxFit: BoxFit.scaleDown,
                     imgPath: ATImgStrings.kickUserOut,
                   ),
-                  text: 'Kick out feature coming soon',
-                  bgColor: ATColors.hex307FE2,
-                );
-              },
-              height: 35,
-              width: 35,
-              boxShape: BoxShape.circle,
-              color: ATColors.white.withValues(alpha: 0.1),
-              child: const ATImgLoader(
-                boxFit: BoxFit.scaleDown,
-                imgPath: ATImgStrings.kickUserOut,
-              ),
+                ),
+              ],
             ),
         ],
+      ),
+    );
+  }
+}
+
+
+class _MuteUmuteListenerBtn extends StatelessWidget {
+  const _MuteUmuteListenerBtn(this.participantId);
+
+  final String participantId;
+
+  @override
+  Widget build(BuildContext context) {
+    final List<String> unMutedParticipantIds = context.select(
+      (LiveStreamCubit1 cubit) => cubit.state.unMutedParticipantIds
+    ) ?? <String>[];
+
+    final bool micIsActive = unMutedParticipantIds.contains(participantId);
+
+    return ATContainer(
+      onTap: () async {
+        if(micIsActive){
+          context.read<LiveStreamCubit1>().muteListener(participantId);
+        }
+        else{
+          context.read<LiveStreamCubit1>().unMuteListener(participantId);
+        }
+      },
+      height: 35, width: 35, radius: 20,
+      color: ATColors.white.withValues(alpha: micIsActive ? 0.3 : 0.1),
+      child: Icon(
+        micIsActive ? Icons.mic : Icons.mic_off,
+        size: 22
       ),
     );
   }

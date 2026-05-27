@@ -30,6 +30,9 @@ class LiveKitAudioStreamingService implements ATAudioStreamingService {
 
   final StreamController<List<String>> _activeSpeakersController =
       StreamController<List<String>>.broadcast();
+  
+  final StreamController<List<String>> _speakersWithMicEnabledController =
+      StreamController<List<String>>.broadcast();
 
   CancelListenFunc? _roomSub;
   LocalAudioTrack? _localAudioTrack;
@@ -76,7 +79,7 @@ class LiveKitAudioStreamingService implements ATAudioStreamingService {
   @override
   Future<void> setMicEnabled(bool enabled) async {
     await _room.localParticipant?.setMicrophoneEnabled(enabled);
-    // _emitParticipants();
+    _emitParticipantsWithMicEnabled();
   }
 
 
@@ -87,6 +90,10 @@ class LiveKitAudioStreamingService implements ATAudioStreamingService {
   @override
   Stream<AudioConnectionStatus> get connectionStateStream =>
       _connectionController.stream;
+
+  @override
+  Stream<List<String>> get participantsWithMicEnabledStream =>
+    _speakersWithMicEnabledController.stream;
 
   @override
   Stream<List<String>> get activeSpeakersStream =>
@@ -102,10 +109,11 @@ class LiveKitAudioStreamingService implements ATAudioStreamingService {
       //   log('New participant joined.: ${event.participant.identity}, ${event.participant.name}');
       //   _emitParticipants();
       // }
-      if (event is ParticipantConnectedEvent || event is ParticipantDisconnectedEvent ||
+      if (event is ParticipantConnectedEvent ||
+          event is ParticipantDisconnectedEvent ||
           event is TrackMutedEvent ||
           event is TrackUnmutedEvent) {
-        //_emitParticipants();
+        _emitParticipantsWithMicEnabled();
       }
 
       if (event is ActiveSpeakersChangedEvent) {
@@ -146,6 +154,34 @@ class LiveKitAudioStreamingService implements ATAudioStreamingService {
         //_emitParticipants();
       }
     });
+  }
+
+  void _emitParticipantsWithMicEnabled() {
+    final List<String> ids = <String>[];
+
+    final LocalParticipant? local = _room.localParticipant;
+
+    if (local != null) {
+      final TrackPublication<Track>? audioPub =
+          local.audioTrackPublications.firstOrNull;
+
+      if (audioPub != null && !audioPub.muted) {
+        ids.add(local.identity);
+      }
+    }
+
+    for (final RemoteParticipant participant
+        in _room.remoteParticipants.values) {
+
+      final TrackPublication<Track>? audioPub =
+          participant.audioTrackPublications.firstOrNull;
+
+      if (audioPub != null && !audioPub.muted) {
+        ids.add(participant.identity);
+      }
+    }
+
+    _speakersWithMicEnabledController.add(ids);
   }
 
 
@@ -200,6 +236,7 @@ class LiveKitAudioStreamingService implements ATAudioStreamingService {
     await _participantsController.close();
     await _connectionController.close();
     await _activeSpeakersController.close();
+    await _speakersWithMicEnabledController.close();
     await _room.dispose();
   }
 }

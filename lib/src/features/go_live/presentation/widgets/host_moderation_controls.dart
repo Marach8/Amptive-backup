@@ -209,6 +209,8 @@ class _RowOfBtns extends StatelessWidget {
             context.read<LiveStreamCubit1>()
               .toggleMicrophone(!isMicUnmuted);
           },
+          color: isMicUnmuted ? ATColors
+            .white.withValues(alpha: 0.3) : null,
           child: Icon(
             isMicUnmuted ? Icons.mic : Icons.mic_off,
             size: 20

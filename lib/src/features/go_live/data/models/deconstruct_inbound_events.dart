@@ -35,9 +35,9 @@ class LivestreamParticipant extends User {
 
       // 👇 child-specific
       role: ParticipantRole.fromJson(json['role']),
-      isSpeaker: json['is_speaker'] ?? false,
-      isHost: json['is_host'] ?? false,
-      isMuted: json['is_muted'] ?? false,
+      isSpeaker: json['is_speaker'],
+      isHost: json['is_host'],
+      isMuted: json['is_muted'],
       viewerCount: json['viewer_count'],
     );
   }

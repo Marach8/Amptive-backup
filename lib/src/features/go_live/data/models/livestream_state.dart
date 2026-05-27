@@ -13,6 +13,7 @@ class LiveStreamState1 extends Equatable {
     this.wsConnectionStatus = WSConnectionStatus.initial,
     this.participants,
     this.activeSpeakerIds,
+    this.unMutedParticipantIds,
     this.myMicIsEnabled = false,
     this.connectionErrorMessage,
     this.programCoverUrl,
@@ -50,7 +51,7 @@ class LiveStreamState1 extends Equatable {
   final List<Reaction>? reactions;
   final Map<String, Gift>? gifts;
   final List<String>? giftIds, raisedHandsIds,
-    messagesIds, activeSpeakerIds;
+    messagesIds, activeSpeakerIds, unMutedParticipantIds;
   final int viewerCount;
   final bool? myHandIsRaised;
 
@@ -60,6 +61,7 @@ class LiveStreamState1 extends Equatable {
     WSConnectionStatus? wsConnectionStatus,
     Map<String, LivestreamParticipant>? participants,
     List<String>? activeSpeakerIds,
+    List<String>? unMutedParticipantIds,
     bool? myMicIsEnabled,
     String? errorMessage,
     String? programCoverUrl,
@@ -106,6 +108,8 @@ class LiveStreamState1 extends Equatable {
       viewerCount: viewerCount ?? this.viewerCount,
       messagesIds: messagesIds ?? this.messagesIds,
       myHandIsRaised: myHandIsRaised ?? this.myHandIsRaised,
+      unMutedParticipantIds: unMutedParticipantIds 
+        ?? this.unMutedParticipantIds,
     );
   }
 
@@ -133,6 +137,7 @@ class LiveStreamState1 extends Equatable {
         viewerCount,
         messagesIds,
         myHandIsRaised,
+        unMutedParticipantIds,
       ];
 }
 
