@@ -4,6 +4,8 @@ import 'package:amptive/src/config/api_response_and_app_state.dart';
 import 'package:amptive/src/config/utils/helper_functions.dart';
 import 'package:amptive/src/features/auth/cubits/upload_image_cubit.dart';
 import 'package:amptive/src/features/auth/cubits/local_user_data_cubit.dart';
+import 'package:amptive/src/features/auth/data/models/response/user_profile_response_model.dart';
+import 'package:amptive/src/features/profile/cubits/remote_user_data_cubit.dart';
 import 'package:amptive/src/shared/elevated_button_widget.dart';
 import 'package:amptive/src/shared/image_source_selection_dialog.dart';
 import 'package:amptive/src/shared/image_loader_widget.dart';
@@ -141,33 +143,33 @@ class _AddPictureWidgetState extends State<AddPictureWidget> {
               ),
             ),
           ),
-          BlocConsumer<UploadImageCubit, ATAppState<String>>(
-              listener: (_, ATAppState<String> state) async {
-            if (state is SuccessState<String>) {
+          BlocConsumer<RemoteUserDataCubit, ATAppState<UserData>>(
+              listener: (_, ATAppState<UserData> state) async {
+            if (state is SuccessState<UserData>) {
               await context
                   .read<LocalUserDataCubit>()
                   .updateUserDataLocally(CachedUserData(
-                    pictureUrl: state.newData,
+                    pictureUrl: state.newData?.profilePicture,
                   ));
               if (context.mounted) {
                 context.pushNamed(ATRoutes.select5CommunitiesScreen);
               }
-            } else if (state is FailureState<String>) {
+            } else if (state is FailureState<UserData>) {
               showAppNotification2(
                 context: context,
                 text: state.message,
                 type: NotificationType.failure,
               );
             }
-          }, builder: (BuildContext context, ATAppState<String> state) {
+          }, builder: (BuildContext context, ATAppState<UserData> state) {
             return ATPlainElevatedBtn(
               btnTitle: ATStrings.next,
-              isLoading: state is LoadingState<String>,
+              isLoading: state is LoadingState<UserData>,
               onPressed: _pickedImage != null
                   ? () {
                       context
-                          .read<UploadImageCubit>()
-                          .uploadBytesImage(bytes: _pickedImage!);
+                          .read<RemoteUserDataCubit>()
+                          .updateProfile(imageBytes: _pickedImage!);
                     }
                   : null,
             );

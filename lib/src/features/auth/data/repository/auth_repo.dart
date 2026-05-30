@@ -19,7 +19,7 @@ abstract class AuthRepo {
   Future<ApiResponse<dynamic>> verifyResetPasswordOtp(
       {required Map<String, dynamic> param});
 
-  Future<ApiResponse<SignupResponseModel>> registerUser(
+  Future<ApiResponse<SignUpResponseModel>> registerUser(
       {required RegistrationData param});
 
   Future<ApiResponse<String>> uploadImage({

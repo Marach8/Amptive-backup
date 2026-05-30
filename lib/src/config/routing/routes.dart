@@ -76,9 +76,10 @@ final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
 final GoRouter amptiveAppRouter = GoRouter(
   navigatorKey: navigatorKey,
-  initialLocation: ATRoutes.dashboard.addSlash,
+  //initialLocation: ATRoutes.dashboard.addSlash,
   //redirect: tempRedirect,
   //initialLocation: ATRoutes.temporaryLoginScreen.addSlash,
+  initialLocation: ATRoutes.onboardingScreen.addSlash,
 
   routes: <RouteBase>[
     GoRoute(
