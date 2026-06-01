@@ -14,7 +14,7 @@ class LivestreamParticipant extends User {
     super.followingCount,
     super.isVerified,
     required this.role,
-    this.viewerCount,
+    this.newViewerCount,
     this.isSpeaker,
     this.isHost,
     this.isMuted,
@@ -38,13 +38,13 @@ class LivestreamParticipant extends User {
       isSpeaker: json['is_speaker'],
       isHost: json['is_host'],
       isMuted: json['is_muted'],
-      viewerCount: json['viewer_count'],
+      newViewerCount: json['viewer_count'],
     );
   }
 
   final bool? isSpeaker, isHost, isMuted;
   final ParticipantRole role;
-  final int? viewerCount;
+  final int? newViewerCount;
 
   LivestreamParticipant copyWith({
     bool? isSpeaker,
@@ -64,6 +64,7 @@ class LivestreamParticipant extends User {
       isSpeaker: isSpeaker ?? this.isSpeaker,
       isHost: isHost,
       isMuted: isMuted ?? this.isMuted,
+      newViewerCount: newViewerCount,
     );
   }
 
@@ -76,42 +77,6 @@ class LivestreamParticipant extends User {
     isMuted,
   ];
 }
-
-
-class InitialStateMapper {
-  InitialStateMapper({
-    required this.type,
-    required this.participants,
-    required this.viewerCount,
-    required this.handQueue,
-  });
-
-  factory InitialStateMapper.fromJson(Map<String, dynamic> json) {
-    final Map<String, LivestreamParticipant> participantsMap
-      = <String, LivestreamParticipant>{};
-
-    final List<dynamic> participantsJson = json['participants'] ?? <dynamic>[];
-
-    for (final dynamic item in participantsJson) {
-      final LivestreamParticipant participant =
-        LivestreamParticipant.fromJson(item);
-      participantsMap[participant.userId] = participant;
-    }
-
-    return InitialStateMapper(
-      type: json['type'] ?? '',
-      participants: participantsMap,
-      viewerCount: json['viewer_count'] ?? 0,
-      handQueue: List<String>.from(json['hand_queue'] ?? <String>[]),
-    );
-  }
-
-  final String type;
-  final Map<String, LivestreamParticipant> participants;
-  final int viewerCount;
-  final List<String> handQueue;
-}
-
 
 
 

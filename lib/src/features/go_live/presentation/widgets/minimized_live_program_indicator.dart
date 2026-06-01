@@ -2,6 +2,9 @@ import 'package:amptive/src/config/utils/colors.dart';
 import 'package:amptive/src/config/utils/font_sizes.dart';
 import 'package:amptive/src/config/utils/font_weights.dart';
 import 'package:amptive/src/config/utils/image_strings.dart';
+import 'package:amptive/src/features/go_live/data/models/live_program_data.dart';
+import 'package:amptive/src/features/go_live/presentation/screens/live_program_screen.dart';
+import 'package:amptive/src/shared/custom_container_widget.dart';
 import 'package:amptive/src/shared/image_loader_widget.dart';
 import 'package:amptive/src/views/widgets/other_widgets/main_application_widgets/widgets_in_discover_view/recent_searches_widgets/container_with_picture.dart';
 import 'package:carousel_slider/carousel_slider.dart';
@@ -9,25 +12,29 @@ import 'package:flutter/material.dart';
 import 'package:amptive/main.dart';
 import 'dart:developer' as marach show log;
 
-Future<void> showMinimizedGoLiveState() async {
-  scaffoldMessengerKey.currentState?.showSnackBar(
-    SnackBar(
-      backgroundColor: ATColors.hex202020,
-      elevation: 0,
-      duration: const Duration(days: 10000),
-      behavior: SnackBarBehavior.floating,
+class MinimizedLiveProgramIndicator extends StatelessWidget {
+  const MinimizedLiveProgramIndicator({
+    super.key,
+    required this.liveProgramData
+  });
+  final LiveProgramData? liveProgramData;
+
+  @override
+  Widget build(BuildContext context) {
+    return ATContainer(
+      onTap: (){
+        liveProgramOverlayKey.currentState?.toggle();
+      },
+      color: ATColors.hex202020, radius: 10,
       padding: const EdgeInsets.all(8),
       margin: const EdgeInsets.only(left: 10, right: 10),
-      shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(10),
-          side: BorderSide(color: ATColors.hex2D2D2D)),
-      content: Row(
+      border: Border.all(color: ATColors.hex2D2D2D),
+      child: Row(
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
-          const AmptivePictureWidget(
-            imagePath: ATImgStrings.weCanDoHardThingsBgImage,
-            diameter: 40,
-            radius: 2,
+          const ATImgLoader(
+            imgPath: ATImgStrings.weCanDoHardThingsBgImage,
+            height: 40, width: 40,
           ),
           const SizedBox(width: 5),
           Flexible(
@@ -38,8 +45,8 @@ Future<void> showMinimizedGoLiveState() async {
                   'glennodoyle and 2 others',
                   style: TextStyle(
                     color: ATColors.white,
-                    fontSize: ATSizes.size13,
-                    fontWeight: ATFontWeights.w500,
+                    fontSize: 13,
+                    fontWeight: FontWeight.w500,
                   ),
                 ),
                 Row(
@@ -56,8 +63,8 @@ Future<void> showMinimizedGoLiveState() async {
                           "Don't forget who you are ft. Jacob Scipio and the boy is cooljdkjfkafkdajdjjakdjfkajeiefkdjfkdjakjdkjkja",
                           style: TextStyle(
                             color: ATColors.hexC2C2C2,
-                            fontSize: ATSizes.size12,
-                            fontWeight: ATFontWeights.w500,
+                            fontSize: 12,
+                            fontWeight: FontWeight.w500,
                           ),
                         ),
                       ),
@@ -68,15 +75,17 @@ Future<void> showMinimizedGoLiveState() async {
             ),
           ),
           GestureDetector(
-            onTap: () =>
-                scaffoldMessengerKey.currentState?.hideCurrentSnackBar(),
+            onTap: (){
+              liveProgramOverlayKey.currentState?.toggle();
+            },
             child: Icon(Icons.close, color: ATColors.white, size: 20),
           )
         ],
       ),
-    ),
-  );
+    );
+  }
 }
+
 
 class _HorizontalScrollCards extends StatefulWidget {
   //final double spaceSize;

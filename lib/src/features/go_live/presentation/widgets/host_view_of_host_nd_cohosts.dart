@@ -50,12 +50,17 @@ class HostViewOfHostNdCohostDisplay extends StatelessWidget {
             };
 
           return BlocSelector<LiveStreamCubit1, 
-            LiveStreamState1, Organizers?>(
-            selector: (LiveStreamState1 state) => state.organizers,
-            builder: (_, Organizers? organizers) {
-              final LivestreamParticipant? mainHost = organizers?.host;
+            LiveStreamState1, OrganizersIDs?>(
+            selector: (LiveStreamState1 state) => state.organizersIds,
+            builder: (_, OrganizersIDs? organizers) {
+              final Map<String, LivestreamParticipant>? allParticipants
+              = context.read<LiveStreamCubit1>().state.allParticipants;
+
+              final LivestreamParticipant? mainHost = 
+                allParticipants?[organizers?.hostId ?? ''];
               final List<LivestreamParticipant?> cohosts = 
-                organizers?.cohosts ?? <LivestreamParticipant?>[];
+                (organizers?.cohostsIds ?? <String>[])
+                  .map((String id) => allParticipants?[id]).toList();
 
               final List<LivestreamParticipant?> paddedCohosts =
               <LivestreamParticipant?>[

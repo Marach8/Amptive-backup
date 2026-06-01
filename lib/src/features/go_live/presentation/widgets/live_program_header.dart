@@ -47,7 +47,7 @@ class LiveProgramHeader extends StatelessWidget {
                 context: context,
                 endLiveProgramCubit: context.read<EndLiveProgramCubit>(),
                 noOfGifts: context.read<LiveStreamCubit1>().state.giftIds?.length ?? 0,
-                noOfListeners: context.read<LiveStreamCubit1>().state.participants?.length ?? 0,
+                noOfListeners: context.read<LiveStreamCubit1>().state.allParticipants?.length ?? 0,
                 programCoverUrl: programCoverUrl ?? '',
                 programId: context.read<LiveStreamCubit1>().state.liveStreamId ?? '',
               );

@@ -493,7 +493,7 @@ class ATStrings {
   static const String VIEW_COMMUNITY = 'View Community';
   static const String RECENT_SEARCHES = 'Recent Searches';
   static const String CLEAR = 'Clear';
-  static const String KICK_OUT_LISTENER = 'Kickout listener';
+  static const String kickOutLIstener = 'Kickout listener';
   static const String KICK_OUT_DESC =
       'This user will be unable to join this current live session but can join future live sessions';
   static const String GIFTED_AMNT = 'Gifted Amount';

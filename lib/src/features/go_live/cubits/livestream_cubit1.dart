@@ -41,6 +41,7 @@ class LiveStreamCubit1 extends Cubit<LiveStreamState1> {
   late final SequentialQueue<ChatMessage> _chatQueue;
   late final SequentialQueue<Gift> _giftQueue;
   late final SequentialQueue<Reaction> _reactionQueue;
+  late final SequentialQueue<String> _kickedDetailsQueue;
 
   final ATAudioStreamingService streamingService;
   final WSNotificationService wsNotificationService;
@@ -101,6 +102,17 @@ class LiveStreamCubit1 extends Cubit<LiveStreamState1> {
         ));
       },
     );
+
+    _kickedDetailsQueue = SequentialQueue<String>(
+      delay: const Duration(milliseconds: 1500),
+      maxSize: 100,
+      onItem: (String kickDetail) {
+        emit(state.copyWith(
+          singleKickOutData: kickDetail,
+          viewerCount: state.viewerCount - 1,
+        ));
+      },
+    );
   }
 
   void _listenToStreams() {
@@ -143,16 +155,16 @@ class LiveStreamCubit1 extends Cubit<LiveStreamState1> {
     // Listen to active speaker changes
     _activeSpeakersSub = streamingService.activeSpeakersStream
         .listen((List<String> activeSpeakerIds) {
-          log('These are the active speakers $activeSpeakerIds');
+          //log('These are the active speakers $activeSpeakerIds');
       emit(state.copyWith(activeSpeakerIds: activeSpeakerIds));
     });
 
-    // // Listen to participants with mic enabled changes
-    // _speakersWithMicEnabledSub = streamingService.participantsWithMicEnabledStream
-    //     .listen((List<String> participantsWithMicEnabledIds) {
-    //       log('These are the participants with mic enabled $participantsWithMicEnabledIds');
-    //   emit(state.copyWith(unMutedParticipantIds: participantsWithMicEnabledIds));
-    // });
+    // Listen to participants with mic enabled changes
+    _speakersWithMicEnabledSub = streamingService.participantsWithMicEnabledStream
+        .listen((List<String> participantsWithMicEnabledIds) {
+          log('These are the participants with mic enabled $participantsWithMicEnabledIds');
+      emit(state.copyWith(unMutedParticipantIds: participantsWithMicEnabledIds));
+    });
 
     // Listen to ws messages
     _wsMessageSub =
@@ -170,7 +182,7 @@ class LiveStreamCubit1 extends Cubit<LiveStreamState1> {
         if (type == 'gift') {
           final Gift gift = Gift.fromJson(message);
 
-          final LivestreamParticipant? gifter = state.participants?[gift.senderId ?? ''];
+          final LivestreamParticipant? gifter = state.allParticipants?[gift.senderId ?? ''];
           final Gift updatedGift = gift.copyWith(gifter: gifter);
 
           _giftQueue.add(updatedGift);
@@ -181,6 +193,15 @@ class LiveStreamCubit1 extends Cubit<LiveStreamState1> {
         if (type == 'reaction') {
           final Reaction reaction = Reaction.fromJson(message);
           _reactionQueue.add(reaction);
+          return;
+        }
+
+        // Handle participant kick out
+        if (type == 'participant_kicked') {
+          final String? kickedUserId = message['user_id'], 
+          kickedByUserId = message['kicked_by'];
+          final String kickDetail = '$kickedUserId||$kickedByUserId';
+          _kickedDetailsQueue.add(kickDetail);
           return;
         }
         
@@ -259,11 +280,33 @@ class LiveStreamCubit1 extends Cubit<LiveStreamState1> {
     }
   }
 
+  dynamic removeAParticipant(String participantId){
+    final List<String> allParticipantsIds = List<String>
+      .from(state.allParticipantsIds ?? <String>[]);
+    final List<String> allRaisedHandsIds = List<String>
+      .from(state.raisedHandsIds ?? <String>[]);
+    final List<String> allUnmutedParticipantIds = List<String>
+      .from(state.unMutedParticipantIds ?? <String>[]);
+    final List<String> activeSpeakerIds = List<String>
+      .from(state.activeSpeakerIds ?? <String>[]);
+
+    allParticipantsIds.remove(participantId);
+    allRaisedHandsIds.remove(participantId);
+    allUnmutedParticipantIds.remove(participantId);
+    activeSpeakerIds.remove(participantId);
+    
+    emit(state.copyWith(
+      allParticipantsIds: allParticipantsIds,
+      raisedHandsIds: allRaisedHandsIds,
+      unMutedParticipantIds: allUnmutedParticipantIds,
+      activeSpeakerIds: activeSpeakerIds,
+    ));
+  }
+
   Future<void> disconnect() async {
-    leaveProgram(myUserId);
     Future.wait(<Future<dynamic>>[
       wsNotificationService.disconnect(),
-      streamingService.disconnect(),
+      streamingService.manuallyDisconnect(),
     ]);
   }
 
@@ -306,6 +349,7 @@ class LiveStreamCubit1 extends Cubit<LiveStreamState1> {
     .sendMessage(<String, dynamic>{
         'type': LiveEventType.participantLeave.value,
         'identity': userId,
+        'reason': 'user_left',
       });
 
   void lowerHand(String userId) => wsNotificationService
@@ -356,7 +400,7 @@ class LiveStreamCubit1 extends Cubit<LiveStreamState1> {
 
   void kickOutListener(String listenerId) =>
       wsNotificationService.sendMessage(<String, dynamic>{
-        'type': LiveEventType.userKicked.value,
+        'type': 'kick_participant',
         'user_id': listenerId,
       });
 
@@ -371,6 +415,7 @@ class LiveStreamCubit1 extends Cubit<LiveStreamState1> {
     _chatQueue.dispose();
     _giftQueue.dispose();
     _reactionQueue.dispose();
+    _kickedDetailsQueue.dispose();
 
     // Cancel each individual subscription to prevent memory leaks.
     _audioConnectionStateSub?.cancel();
@@ -381,7 +426,7 @@ class LiveStreamCubit1 extends Cubit<LiveStreamState1> {
     _speakersWithMicEnabledSub?.cancel();
 
     // Dispose of the streaming service resources.
-    streamingService.dispose();
+    streamingService.manuallyDisconnect();
     return super.close();
   }
 }

@@ -75,7 +75,7 @@ enum LiveEventType {
   userMuted('speaker_removed'),
   userUnmuted('speaker_promoted'),
   userBanned('user_banned'),
-  userKicked('user_kicked'),
+  participantKicked('participant_kicked'),
   mediaStateChanged('media_state_changed'),
   screenShareStarted('screen_share_started'),
   screenShareEnded('screen_share_ended'),

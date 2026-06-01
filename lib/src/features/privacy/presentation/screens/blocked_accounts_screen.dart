@@ -2,7 +2,7 @@ import 'package:amptive/src/bloc/main_app/profile/profile_followers_bloc.dart';
 import 'package:amptive/src/features/privacy/presentation/widgets/render_blocked_or_muted_account.dart';
 import 'package:amptive/src/models/host.dart';
 import 'package:amptive/src/config/utils/other_strings.dart';
-import 'package:amptive/src/config/utils/dialogs/confirmation_alert_dialog.dart';
+import 'package:amptive/src/shared/confirmation_alert_dialog.dart';
 import 'package:amptive/src/shared/annotated_region__widget.dart';
 import 'package:amptive/src/shared/app_bar_widget.dart';
 import 'package:amptive/src/shared/back_button.dart';

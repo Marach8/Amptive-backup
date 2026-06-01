@@ -4,6 +4,9 @@ import 'dart:io';
 import 'package:amptive/src/config/services/network_service/interceptor.dart'
     show AuthGuardCubit;
 import 'package:amptive/src/features/auth/cubits/local_user_data_cubit.dart';
+import 'package:amptive/src/features/go_live/data/models/live_program_data.dart';
+import 'package:amptive/src/features/go_live/presentation/screens/live_program_screen.dart';
+import 'package:amptive/src/features/go_live/presentation/widgets/minimized_live_program_indicator.dart';
 import 'package:amptive/src/features/notifications/cubits/notifications_cubit.dart';
 import 'package:amptive/src/features/notifications/cubits/register_device_fcm_cubit.dart';
 import 'package:amptive/src/features/auth/presentation/screens/login_screen.dart';
@@ -23,14 +26,11 @@ import 'package:nested/nested.dart';
 import '../global_export.dart';
 import '../services/go_live_service/go_live_service.dart';
 import '../services/notification/push_notification_service.dart';
-import 'go_live/go_live_export.dart';
-import 'go_live/data/models/deconstruct_inbound_events.dart';
-import 'go_live/cubits/livestream_bloc.dart';
 import 'notifications/presentation/screens/notif_landing_screen.dart';
 
 
-class ATMainAppShell extends StatelessWidget {
-  const ATMainAppShell({super.key});
+class ATDashboard extends StatelessWidget {
+  const ATDashboard({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -41,37 +41,69 @@ class ATMainAppShell extends StatelessWidget {
         BlocProvider<RemoteUserDataCubit>(create: (_) => RemoteUserDataCubit()),
         BlocProvider<RegisterDeviceFCMCubit>(create: (_) => RegisterDeviceFCMCubit()),
         BlocProvider<GetNotificationsCubit>(create: (_) => GetNotificationsCubit()),
-       
       ],
-      child: const _SubWidget(),
+      child: _SubWidget(key: dashboardKey),
     );
   }
 }
 
+
 class _SubWidget extends StatefulWidget {
-  const _SubWidget();
+  const _SubWidget({super.key});
 
   @override
-  State<_SubWidget> createState() => __SubWidgetState();
+  State<_SubWidget> createState() => DashboardState();
 }
 
-class __SubWidgetState extends State<_SubWidget> {
-  final ScrollController _liveUsersScrollController = ScrollController();
-  final GlobalKey<NestedScrollViewState> _nestedKey =
-      GlobalKey<NestedScrollViewState>();
-  final GlobalKey<NestedScrollViewState> _notifNestedKey = GlobalKey<NestedScrollViewState>();
 
-      StreamSubscription<RemoteMessage>? _notifSubscription;
+final GlobalKey<DashboardState> dashboardKey = GlobalKey<DashboardState>();
+
+class DashboardState extends State<_SubWidget>{  
+  final ScrollController _liveUsersScrollController 
+    = ScrollController();
+  final GlobalKey<NestedScrollViewState> _nestedKey 
+    = GlobalKey<NestedScrollViewState>();
+  final GlobalKey<NestedScrollViewState> _notifNestedKey 
+    = GlobalKey<NestedScrollViewState>();
+
+  StreamSubscription<RemoteMessage>? _notifSubscription;
+
+  OverlayEntry? _liveOverlay;
+
+  void showLiveOverlay({required LiveProgramData? liveProgramData}) {
+    if (_liveOverlay != null) return;
+
+    _liveOverlay = OverlayEntry(
+      builder: (_) {
+        return LiveProgramOverlay(
+          key: liveProgramOverlayKey,
+          onDismissed: () => removeLiveOverlay(),
+          fullChild: FullLiveProgramScreen(
+            liveProgramData: liveProgramData),
+          miniChild: MinimizedLiveProgramIndicator(
+            liveProgramData: liveProgramData),
+        );
+      },
+    );
+
+    Overlay.of(context).insert(_liveOverlay!);
+  }
+
+  void removeLiveOverlay() {
+    _liveOverlay?.remove();
+    _liveOverlay = null;
+  }
 
   @override
   void initState() {
     super.initState();
     _liveUsersScrollController.addListener(() => _onLiveUsersScrollToEnd());
-     _notifSubscription = GetIt.I<PushNotificationService>().notificationStream.listen((RemoteMessage message) async {
-    if (mounted) {
-      context.read<GetNotificationsCubit>().fetchNotifications(refresh: true);
-    }
-  });
+      _notifSubscription = GetIt.I<PushNotificationService>().notificationStream
+      .listen((RemoteMessage message) async {
+      if (mounted) {
+        context.read<GetNotificationsCubit>().fetchNotifications(refresh: true);
+      }
+    });
 
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       final ScrollController? sController =
@@ -97,10 +129,11 @@ class __SubWidgetState extends State<_SubWidget> {
    
   }
   @override
-void dispose() {
-  _notifSubscription?.cancel(); 
-  super.dispose();
-}
+  void dispose() {
+    _notifSubscription?.cancel(); 
+    removeLiveOverlay();
+    super.dispose();
+  }
 
   void _onHomeFeedScrollToEnd(ScrollController sController) {
     const double threshHold = 80;
@@ -144,41 +177,61 @@ void dispose() {
 
   @override
   Widget build(BuildContext context) {
-    return BlocListener<AuthGuardCubit, bool>(
-      listener: (_, bool isNotAuthenticated) {
-        if (isNotAuthenticated == true) {
-          final BuildContext activeContext =
-              navigatorKey.currentContext ?? context;
-          activeContext.read<AuthGuardCubit>().reset();
-          activeContext.goNamed(ATRoutes.temporaryLoginScreen,
-              extra: const LoginScreenEntryParams(
-                title: 'Login',
-                notification: 'Session Expired. Please login',
-              ));
-        }
-      },
-      child: ATAnnotatedRegion(
-        child: SafeArea(
-          bottom: false,
-          top: false,
-          child: Scaffold(
-              body: BlocSelector<ATNavBarBloc, (int, bool), int>(
-                  selector: ((int, bool) st) => st.$1,
-                  builder: (_, int index) {
-                    return IndexedStack(index: index, children: <Widget>[
-                      HomeTabView(
-                        nestedKey: _nestedKey,
-                        liveUsersScrollController: _liveUsersScrollController,
-                      ),
-                      const DiscoverTabView(),
-                      const SizedBox(),
-                      NotificationTabView(nestedKey: _notifNestedKey,
-                       onScroll: _onNotificationsScrollToEnd),
-                    ]);
-                  }),
-              resizeToAvoidBottomInset: false,
-              backgroundColor: ATColors.transparent,
-              bottomSheet: const MainAppBottomNav()),
+    log('This was called ooo');
+    return MultiBlocListener(
+      listeners: <SingleChildWidget>[
+        BlocListener<AuthGuardCubit, bool>(
+          listener: (_, bool isNotAuthenticated) {
+            if (isNotAuthenticated == true) {
+              final BuildContext activeContext =
+                  navigatorKey.currentContext ?? context;
+              activeContext.read<AuthGuardCubit>().reset();
+              activeContext.goNamed(ATRoutes.temporaryLoginScreen,
+                  extra: const LoginScreenEntryParams(
+                    title: 'Login',
+                    notification: 'Session Expired. Please login',
+                  ));
+            }
+          },
+        )
+      ],
+      child: PopScope(
+        canPop: false,
+        onPopInvokedWithResult: (bool didPop, _) {
+          if (didPop) return;
+          if(_liveOverlay == null){
+            context.pop();
+            //context.read<LiveStreamCubit1>().disconnect();
+          }
+          else{
+            //Slide the overlay down, out of view
+            //Which then removes the overlay afterwards
+            liveProgramOverlayKey.currentState?.dismiss();
+          }
+        },
+        child: ATAnnotatedRegion(
+          child: SafeArea(
+            bottom: false,
+            top: false,
+            child: Scaffold(
+                body: BlocSelector<ATNavBarBloc, (int, bool), int>(
+                    selector: ((int, bool) st) => st.$1,
+                    builder: (_, int index) {
+                      return IndexedStack(index: index, children: <Widget>[
+                        HomeTabView(
+                          nestedKey: _nestedKey,
+                          liveUsersScrollController: _liveUsersScrollController,
+                        ),
+                        const DiscoverTabView(),
+                        const SizedBox(),
+                        NotificationTabView(nestedKey: _notifNestedKey,
+                         onScroll: _onNotificationsScrollToEnd),
+                      ]);
+                    }),
+                resizeToAvoidBottomInset: false,
+                backgroundColor: ATColors.transparent,
+                bottomSheet: const MainAppBottomNav()),
+          ),
         ),
       ),
     );

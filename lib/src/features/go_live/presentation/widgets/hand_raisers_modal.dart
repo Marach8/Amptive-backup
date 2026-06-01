@@ -1,5 +1,5 @@
 import 'package:amptive/src/config/utils/dialogs/app_notification_dialog.dart';
-import 'package:amptive/src/config/utils/dialogs/confirmation_alert_dialog.dart';
+import 'package:amptive/src/shared/confirmation_alert_dialog.dart';
 import 'package:amptive/src/features/auth/cubits/local_user_data_cubit.dart';
 import 'package:amptive/src/features/go_live/cubits/livestream_cubit1.dart';
 import 'package:amptive/src/features/go_live/data/models/deconstruct_inbound_events.dart';
@@ -164,7 +164,7 @@ class _HandRaisersList extends StatelessWidget {
       context.select<LiveStreamCubit1, List<String>?>(
       (LiveStreamCubit1 cubit) => cubit.state.raisedHandsIds);
     final Map<String, LivestreamParticipant>? participants = 
-      context.read<LiveStreamCubit1>().state.participants;
+      context.read<LiveStreamCubit1>().state.allParticipants;
 
     if (raisedHandsIds == null || raisedHandsIds.isEmpty) {
       return Center(

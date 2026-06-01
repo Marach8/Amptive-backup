@@ -5,18 +5,12 @@ import 'package:livekit_client/livekit_client.dart';
 import 'package:amptive/src/features/go_live/data/models/livestream_state.dart';
 
 class LiveKitAudioStreamingService implements ATAudioStreamingService {
-  factory LiveKitAudioStreamingService({
-    Room? mockRoom,
-  }) {
-    _instance ??= LiveKitAudioStreamingService._internal(
-      room: mockRoom ?? Room(),
-    );
+  factory LiveKitAudioStreamingService() {
+    _instance ??= LiveKitAudioStreamingService._internal();
     return _instance!;
   }
 
-  LiveKitAudioStreamingService._internal({
-    required Room room,
-  });
+  LiveKitAudioStreamingService._internal();
 
   static LiveKitAudioStreamingService? _instance;
 
@@ -34,7 +28,7 @@ class LiveKitAudioStreamingService implements ATAudioStreamingService {
   final StreamController<List<String>> _speakersWithMicEnabledController =
       StreamController<List<String>>.broadcast();
 
-  CancelListenFunc? _roomSub;
+  CancelListenFunc? _cancelRoomListenerSub;
   LocalAudioTrack? _localAudioTrack;
 
   @override
@@ -70,9 +64,22 @@ class LiveKitAudioStreamingService implements ATAudioStreamingService {
 
 
   @override
-  Future<void> disconnect() async {
+  Future<void> manuallyDisconnect() async {
+    await _cancelRoomListenerSub?.call();
+    _cancelRoomListenerSub = null;
+
+    await _localAudioTrack?.dispose();
+    _localAudioTrack = null;
+
     await _room.disconnect();
-    _connectionController.add(AudioConnectionStatus.disconnected);
+    await _room.dispose();
+
+    await _participantsController.close();
+    await _connectionController.close();
+    await _activeSpeakersController.close();
+    await _speakersWithMicEnabledController.close();
+
+    _instance = null;
   }
 
 
@@ -102,9 +109,9 @@ class LiveKitAudioStreamingService implements ATAudioStreamingService {
 
 
   void _listenToEvents() {
-    _roomSub?.call();
+    _cancelRoomListenerSub?.call();
 
-    _roomSub = _room.events.listen((RoomEvent event) {
+    _cancelRoomListenerSub = _room.events.listen((RoomEvent event) {
       // if(event is ParticipantConnectedEvent){
       //   log('New participant joined.: ${event.participant.identity}, ${event.participant.name}');
       //   _emitParticipants();
@@ -227,16 +234,4 @@ class LiveKitAudioStreamingService implements ATAudioStreamingService {
   //     roomParticipantId: p.identity,
   //   );
   // }
-
-
-  @override
-  Future<void> dispose() async {
-    await _localAudioTrack?.dispose();
-    await _roomSub?.call();
-    await _participantsController.close();
-    await _connectionController.close();
-    await _activeSpeakersController.close();
-    await _speakersWithMicEnabledController.close();
-    await _room.dispose();
-  }
 }

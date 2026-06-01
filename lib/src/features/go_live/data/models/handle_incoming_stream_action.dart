@@ -1,12 +1,7 @@
-import 'dart:developer' show log;
-
 import 'package:amptive/src/config/utils/constants.dart';
 import 'package:amptive/src/features/go_live/data/models/deconstruct_inbound_events.dart';
 import 'package:amptive/src/features/go_live/data/models/live_program_data.dart';
 import 'package:amptive/src/features/go_live/data/models/livestream_state.dart';
-import 'package:amptive/src/features/go_live/presentation/screens/live_program_screen.dart';
-import 'package:amptive/src/livestream/models/livestream_models.dart';
-import 'package:amptive/src/shared/sentinel.dart';
 
 // /// Factory function to convert incoming WebSocket JSON messages into SignalingEvent objects
 // SignalingEvent? mapIncomingStreamAction(Map<String, dynamic> json) {
@@ -75,25 +70,39 @@ LiveStreamState1 reduceIncomingStreamAction({
 
   return switch (type) {
     LiveEventType.initial => () {
-      final InitialStateMapper initial = InitialStateMapper
-        .fromJson(wsJson);
-      LivestreamParticipant? host;
-      List<LivestreamParticipant> cohosts = <LivestreamParticipant>[];
+      String? hostId;
+      List<String> cohostsIds = <String>[];
 
-      for(final LivestreamParticipant pt in initial.participants.values) {
-        if(pt.role == ParticipantRole.host || pt.isSpeaker == true) {
-          host = pt;
+      final Map<String, LivestreamParticipant> allParticipantsMap
+        = <String, LivestreamParticipant>{};
+      List<String> allParticipantsIds = <String>[];
+
+      final List<dynamic> participantsJson = 
+        wsJson['participants'] ?? <dynamic>[];
+      final int viewerCount = wsJson['viewer_count'] ?? 0;
+      final List<String> handQueue = List<String>
+        .from(wsJson['hand_queue'] ?? <String>[]);
+
+      for (final dynamic ptJson in participantsJson) {
+        final LivestreamParticipant participant = 
+          LivestreamParticipant.fromJson(ptJson);
+        if(participant.role == ParticipantRole.host) {
+          hostId = participant.userId;
         }
-        else if(pt.role == ParticipantRole.cohost) {
-          cohosts.add(pt);
+        else if(participant.role == ParticipantRole.cohost) {
+          cohostsIds.add(participant.userId);
         }
+
+        allParticipantsMap[participant.userId] = participant;
+        allParticipantsIds.add(participant.userId);
       }
 
       return stateSnapshot.copyWith(
-        viewerCount: initial.viewerCount,
-        participants: initial.participants,
-        raisedHandsIds: initial.handQueue,
-        organizers: (host: host, cohosts: cohosts)
+        viewerCount: viewerCount,
+        allParticipants: allParticipantsMap,
+        allParticipantsIds: allParticipantsIds,
+        raisedHandsIds: handQueue,
+        organizersIds: (hostId: hostId, cohostsIds: cohostsIds),
       );
     }(),
 
@@ -109,47 +118,83 @@ LiveStreamState1 reduceIncomingStreamAction({
     LiveEventType.participantJoin => () {
       final LivestreamParticipant newParticipant =
           LivestreamParticipant.fromJson(wsJson);
-      late LiveStreamState1 newState;
+
+      OrganizersIDs? organizersIds = stateSnapshot.organizersIds;
+      List<String> allParticipantsIds = stateSnapshot
+        .allParticipantsIds ?? <String>[];
+
+      final bool isExistingParticipant = 
+        allParticipantsIds.contains(newParticipant.userId);
+      final bool isExistingCohost = organizersIds
+        ?.cohostsIds?.contains(newParticipant.userId) ?? false;
 
       switch(newParticipant.role) {
         case ParticipantRole.host:
-          newState = stateSnapshot.copyWith(
-            viewerCount: newParticipant.viewerCount,
-            organizers: (host: newParticipant, 
-              cohosts: stateSnapshot.organizers?.cohosts),
-          );
+            organizersIds = (
+              hostId: newParticipant.userId, 
+              cohostsIds: organizersIds?.cohostsIds,
+            );
           break;
         case ParticipantRole.cohost:
-          newState = stateSnapshot.copyWith(
-            viewerCount: newParticipant.viewerCount,
-            organizers: (
-              host: stateSnapshot.organizers?.host, 
-              cohosts: <LivestreamParticipant?>[
-                newParticipant, ...?stateSnapshot.organizers?.cohosts]
-            ),
-          );
+            organizersIds = (
+              hostId: organizersIds?.hostId,
+              cohostsIds: <String>[
+                ...?organizersIds?.cohostsIds,
+                if(!isExistingCohost) newParticipant.userId
+              ],
+            );
           break;
         default:
-          newState = stateSnapshot.copyWith(
-            viewerCount: newParticipant.viewerCount,
-            participants: <String, LivestreamParticipant>{
-              newParticipant.userId: newParticipant,
-              ...?stateSnapshot.participants,
-            },
-          );
           break;
       }
       
-      return newState;
+      return stateSnapshot.copyWith(
+        viewerCount: newParticipant.newViewerCount,
+        allParticipants: <String, LivestreamParticipant>{
+          ...?stateSnapshot.allParticipants,
+          newParticipant.userId: newParticipant,
+        },
+        allParticipantsIds: <String>[
+          if(!isExistingParticipant) newParticipant.userId,
+          ...?stateSnapshot.allParticipantsIds,
+        ],
+        organizersIds: organizersIds,
+      );
     }(),
 
     LiveEventType.participantLeave => () {
-        final String id = wsJson['identity'] ?? '';
-        final Map<String, LivestreamParticipant>? participants
-          = stateSnapshot.participants;
-        participants?.remove(id);
+        final String leaverId = wsJson['identity'] ?? '';
+        final Map<String, LivestreamParticipant>? allParticipants
+          = stateSnapshot.allParticipants;
+        final List<String>? allParticipantsIds = 
+          stateSnapshot.allParticipantsIds;
+        OrganizersIDs? organizersIds = stateSnapshot.organizersIds;
+        List<String>? raisedHandsIds = stateSnapshot.raisedHandsIds;
+        List<String>? unMutedParticipantIds = stateSnapshot.unMutedParticipantIds;
+        List<String>? activeSpeakerIds = stateSnapshot.activeSpeakerIds;
+
+        organizersIds = (
+          hostId: organizersIds?.hostId == leaverId
+              ? null
+              : organizersIds?.hostId,
+          cohostsIds: <String>[
+            ...?organizersIds?.cohostsIds,
+          ]..remove(leaverId),
+        );
+
+        allParticipants?.remove(leaverId);
+        allParticipantsIds?.remove(leaverId);
+        raisedHandsIds?.remove(leaverId);
+        unMutedParticipantIds?.remove(leaverId);
+        activeSpeakerIds?.remove(leaverId);
+
         return stateSnapshot.copyWith(
-          participants: participants,
+          allParticipants: allParticipants,
+          allParticipantsIds: allParticipantsIds,
+          organizersIds: organizersIds,
+          raisedHandsIds: raisedHandsIds,
+          activeSpeakerIds: activeSpeakerIds,
+          unMutedParticipantIds: unMutedParticipantIds,
         );
       }(),
 
@@ -157,10 +202,14 @@ LiveStreamState1 reduceIncomingStreamAction({
       final LivestreamParticipant updatedParticipant =
           LivestreamParticipant.fromJson(wsJson['participant']);
       final Map<String, LivestreamParticipant>? participants 
-        = stateSnapshot.participants;
+        = stateSnapshot.allParticipants;
       participants?[updatedParticipant.userId] = updatedParticipant;
       return stateSnapshot.copyWith(
-        participants: participants,
+        allParticipants: participants,
+        allParticipantsIds: <String>[
+          updatedParticipant.userId,
+          ...?stateSnapshot.allParticipantsIds,
+        ]
       );
     }(),
 
@@ -270,29 +319,24 @@ LiveStreamState1 reduceIncomingStreamAction({
       }(),
 
     LiveEventType.userBanned => () {
-        final String? id = wsJson['identity'];
-        if((id ?? '').isEmpty) return stateSnapshot;
-        final Map<String, LivestreamParticipant>? participants 
-          = stateSnapshot.participants;
-        participants?.remove(id);
+      final String? id = wsJson['identity'];
+      if((id ?? '').isEmpty) return stateSnapshot;
+      final Map<String, LivestreamParticipant>? participants 
+        = stateSnapshot.allParticipants;
+      final List<String>? allParticipantsIds 
+        = stateSnapshot.allParticipantsIds;
+      
+      allParticipantsIds?.remove(id);
+      participants?.remove(id);
 
-        return stateSnapshot.copyWith(
-          participants: participants,
-        );
-      }(),
 
-    LiveEventType.userKicked => () {
-        final String? id = wsJson['identity'];
-        if((id ?? '').isEmpty) return stateSnapshot;
-        final Map<String, LivestreamParticipant>? participants 
-          = stateSnapshot.participants;
-        participants?.remove(id);
+      return stateSnapshot.copyWith(
+        allParticipants: participants,
+        allParticipantsIds: allParticipantsIds,
+      );
+    }(),
 
-        return stateSnapshot.copyWith(
-          participants: participants,
-        );
-      }(),
-
+    LiveEventType.participantKicked => stateSnapshot,
 
     LiveEventType.mediaStateChanged => () {
         // final String id = json['identity'] as String? ?? '';
