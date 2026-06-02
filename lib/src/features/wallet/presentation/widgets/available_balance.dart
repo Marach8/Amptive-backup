@@ -1,4 +1,5 @@
 import 'package:amptive/src/config/api_response_and_app_state.dart';
+import 'package:amptive/src/config/config_export.dart';
 import 'package:amptive/src/config/utils/colors.dart';
 import 'package:amptive/src/config/utils/extensions/context_extensions.dart';
 import 'package:amptive/src/config/utils/font_sizes.dart';
@@ -109,7 +110,7 @@ class AvailableBalanceWidget extends StatelessWidget {
                           }
 
                           final String balanceText =
-                              '${ATStrings.nairaText}${balance?.availableBalance?.toStringAsFixed(2)}';
+                              '${ATStrings.nairaText}${balance?.availableBalance?.toStringAsFixed(2).formatPrice()}';
                           return Text(shouldShow ? balanceText : '******',
                               style: context.textTheme.displaySmall
                                   ?.copyWith(fontSize: ATSizes.size30));
@@ -126,7 +127,7 @@ class AvailableBalanceWidget extends StatelessWidget {
                           }
 
                           final String pendingText =
-                              '${ATStrings.nairaText}${balance?.pendingBalance?.toStringAsFixed(2)}';
+                              '${ATStrings.nairaText}${balance?.pendingBalance?.toStringAsFixed(2).formatPrice()}';
                           return Text(
                               'Pending balance: ${state ? pendingText : '******'}',
                               style: context.textTheme.bodySmall

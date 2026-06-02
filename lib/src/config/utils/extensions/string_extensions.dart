@@ -35,7 +35,7 @@ extension ExtString on String {
 
   String formatPrice() {
     final double number = double.tryParse(this) ?? 0.0;
-    final NumberFormat formatter = NumberFormat('#,###.##');
+    final NumberFormat formatter = NumberFormat('#,##0.00');
     return formatter.format(number);
   }
 
