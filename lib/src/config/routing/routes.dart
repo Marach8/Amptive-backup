@@ -268,7 +268,7 @@ final GoRouter amptiveAppRouter = GoRouter(
                     name: ATRoutes.walletScreen,
                     path: ATRoutes.walletScreen.addSlash,
                     pageBuilder: (_, __) => ATSlidingRouteTransition<void>(
-                          child: const WalletLandingScreen(),
+                          child: const ATWalletLandingScreenWrapper(),
                         ),
                     routes: <RouteBase>[
                       GoRoute(
