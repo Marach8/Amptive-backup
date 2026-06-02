@@ -293,10 +293,7 @@ class _SubWidgetState extends State<_SubWidget> {
                                                 .copyWith(hasTestedMic: 'true'),
                                             );
 
-                                            context.pushReplacementNamed(
-                                              ATRoutes.liveProgramScreen,
-                                              extra: widget.liveProgramEntryParams,
-                                            );
+                                            context.pop();
                                           },
                                         )
                                       : showPicture

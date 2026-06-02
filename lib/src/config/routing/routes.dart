@@ -363,18 +363,6 @@ final GoRouter amptiveAppRouter = GoRouter(
                     child: GoLiveOnboardingScreen(
                       liveProgramEntryParams: liveProgramEntryParams));
               }),
-
-          GoRoute(
-            name: ATRoutes.liveProgramScreen,
-            path: ATRoutes.liveProgramScreen.addSlash,
-            pageBuilder: (_, GoRouterState st) {
-              return ATFadingRouteTransition<void>(
-                child: FullLiveProgramScreen(
-                  liveProgramData: st.extra as LiveProgramData?,
-                )
-              );
-            }
-          ),
           GoRoute(
             name: ATRoutes.chooseEventOrShowScreen,
             path: ATRoutes.chooseEventOrShowScreen,

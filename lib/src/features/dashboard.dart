@@ -4,8 +4,12 @@ import 'dart:io';
 import 'package:amptive/src/config/services/network_service/interceptor.dart'
     show AuthGuardCubit;
 import 'package:amptive/src/features/auth/cubits/local_user_data_cubit.dart';
+import 'package:amptive/src/features/go_live/cubits/end_live_program_cubit.dart';
+import 'package:amptive/src/features/go_live/cubits/livestream_cubit1.dart';
 import 'package:amptive/src/features/go_live/data/models/live_program_data.dart';
+import 'package:amptive/src/features/go_live/data/models/livestream_state.dart';
 import 'package:amptive/src/features/go_live/presentation/screens/live_program_screen.dart';
+import 'package:amptive/src/features/go_live/presentation/widgets/host_moderation_controls.dart';
 import 'package:amptive/src/features/go_live/presentation/widgets/minimized_live_program_indicator.dart';
 import 'package:amptive/src/features/notifications/cubits/notifications_cubit.dart';
 import 'package:amptive/src/features/notifications/cubits/register_device_fcm_cubit.dart';
@@ -68,30 +72,64 @@ class DashboardState extends State<_SubWidget>{
 
   StreamSubscription<RemoteMessage>? _notifSubscription;
 
-  OverlayEntry? _liveOverlay;
+  OverlayEntry? _liveProgramOverlay;
 
   void showLiveOverlay({required LiveProgramData? liveProgramData}) {
-    if (_liveOverlay != null) return;
+    if (_liveProgramOverlay != null) return;
 
-    _liveOverlay = OverlayEntry(
+    _liveProgramOverlay = OverlayEntry(
       builder: (_) {
-        return LiveProgramOverlay(
-          key: liveProgramOverlayKey,
-          onDismissed: () => removeLiveOverlay(),
-          fullChild: FullLiveProgramScreen(
-            liveProgramData: liveProgramData),
-          miniChild: MinimizedLiveProgramIndicator(
-            liveProgramData: liveProgramData),
+        return MultiBlocProvider(
+          providers: <SingleChildWidget>[
+            BlocProvider<GoLiveControlsVisibilityBloc>(
+              create: (_) => GoLiveControlsVisibilityBloc()
+            ),
+            BlocProvider<LocalUserDataCubit>.value(
+              value: context.read<LocalUserDataCubit>(),
+            ),
+            BlocProvider<LiveStreamCubit1>(
+              create: (_) => LiveStreamCubit1(
+                myUserId: liveProgramData?.roomParticipantId 
+                  ?? context.read<LocalUserDataCubit>()
+                    .currentUserData?.userId ?? '',
+                initialState: LiveStreamState1(
+                  programCoverUrl: liveProgramData?.coverUrl,
+                  liveStreamId: liveProgramData?.streamId,
+                  roomUrl: liveProgramData?.roomUrl,
+                  roomEntryToken: liveProgramData?.roomEntryToken,
+                  community: liveProgramData?.community,
+                  programTitle: liveProgramData?.programTitle,
+                  programDesc: liveProgramData?.programDesc,
+                  myRole: liveProgramData?.role,
+                )
+              ),
+            ),
+            BlocProvider<EndLiveProgramCubit>(
+              create: (_) => EndLiveProgramCubit(),
+            ),
+          ],
+          child: Positioned(
+            bottom: 0,
+            left: 0,
+            child: LiveProgramOverlay(
+              key: liveProgramOverlayKey,
+              onDismissed: (){
+                removeLiveOverlay();
+              },
+              fullChild: const FullLiveProgramScreen(),
+              miniChild: const MinimizedLiveProgramIndicator(),
+            ),
+          ),
         );
       },
     );
 
-    Overlay.of(context).insert(_liveOverlay!);
+    Overlay.of(context).insert(_liveProgramOverlay!);
   }
 
   void removeLiveOverlay() {
-    _liveOverlay?.remove();
-    _liveOverlay = null;
+    _liveProgramOverlay?.remove();
+    _liveProgramOverlay = null;
   }
 
   @override
@@ -120,14 +158,14 @@ class DashboardState extends State<_SubWidget>{
       _registerDeviceForPush();
 
       context.read<LocalUserDataCubit>().initializeCachedData();
-       context.read<GetNotificationsCubit>().fetchNotifications();
+      context.read<GetNotificationsCubit>().fetchNotifications();
       // init push notification and connect user to websocket
 
       GetIt.I<PushNotificationService>().init();
       GetIt.I<UserWsService>().connectUser();
     });
-   
   }
+
   @override
   void dispose() {
     _notifSubscription?.cancel(); 
@@ -177,7 +215,6 @@ class DashboardState extends State<_SubWidget>{
 
   @override
   Widget build(BuildContext context) {
-    log('This was called ooo');
     return MultiBlocListener(
       listeners: <SingleChildWidget>[
         BlocListener<AuthGuardCubit, bool>(
@@ -199,39 +236,39 @@ class DashboardState extends State<_SubWidget>{
         canPop: false,
         onPopInvokedWithResult: (bool didPop, _) {
           if (didPop) return;
-          if(_liveOverlay == null){
+          if(_liveProgramOverlay == null){
             context.pop();
-            //context.read<LiveStreamCubit1>().disconnect();
           }
           else{
-            //Slide the overlay down, out of view
-            //Which then removes the overlay afterwards
-            liveProgramOverlayKey.currentState?.dismiss();
+            final bool isMinimized = liveProgramOverlayKey
+              .currentState?.isMinimized ?? false;
+            if(isMinimized){
+              liveProgramOverlayKey.currentState?.dismiss();
+            }
+            else{
+              liveProgramOverlayKey.currentState?.minimize();
+            }
           }
         },
         child: ATAnnotatedRegion(
-          child: SafeArea(
-            bottom: false,
-            top: false,
-            child: Scaffold(
-                body: BlocSelector<ATNavBarBloc, (int, bool), int>(
-                    selector: ((int, bool) st) => st.$1,
-                    builder: (_, int index) {
-                      return IndexedStack(index: index, children: <Widget>[
-                        HomeTabView(
-                          nestedKey: _nestedKey,
-                          liveUsersScrollController: _liveUsersScrollController,
-                        ),
-                        const DiscoverTabView(),
-                        const SizedBox(),
-                        NotificationTabView(nestedKey: _notifNestedKey,
-                         onScroll: _onNotificationsScrollToEnd),
-                      ]);
-                    }),
-                resizeToAvoidBottomInset: false,
-                backgroundColor: ATColors.transparent,
-                bottomSheet: const MainAppBottomNav()),
-          ),
+          child: Scaffold(
+              body: BlocSelector<ATNavBarBloc, (int, bool), int>(
+                  selector: ((int, bool) st) => st.$1,
+                  builder: (_, int index) {
+                    return IndexedStack(index: index, children: <Widget>[
+                      HomeTabView(
+                        nestedKey: _nestedKey,
+                        liveUsersScrollController: _liveUsersScrollController,
+                      ),
+                      const DiscoverTabView(),
+                      const SizedBox(),
+                      NotificationTabView(nestedKey: _notifNestedKey,
+                       onScroll: _onNotificationsScrollToEnd),
+                    ]);
+                  }),
+              resizeToAvoidBottomInset: false,
+              backgroundColor: ATColors.transparent,
+              bottomSheet: const MainAppBottomNav()),
         ),
       ),
     );

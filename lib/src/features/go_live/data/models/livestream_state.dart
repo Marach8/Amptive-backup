@@ -34,11 +34,11 @@ class LiveStreamState1 extends Equatable {
     this.myHandIsRaised,
     this.singleKickOutData,
     this.allParticipantsIds,
+    this.myRole,
   });
 
   final AudioConnectionStatus audioConnectionStatus;
   final WSConnectionStatus wsConnectionStatus;
-  final Map<String, LivestreamParticipant>? allParticipants;
   final bool myMicIsEnabled;
   final String? connectionErrorMessage,
       programCoverUrl,
@@ -50,11 +50,13 @@ class LiveStreamState1 extends Equatable {
   final Community? community;
   final OrganizersIDs? organizersIds;
   final Map<String, ChatMessage>? messages;
+  final Map<String, LivestreamParticipant>? allParticipants;
   final List<Reaction>? reactions;
   final Map<String, Gift>? gifts;
   final List<String>? giftIds, raisedHandsIds,
     messagesIds, activeSpeakerIds, 
     unMutedParticipantIds, allParticipantsIds;
+  final ParticipantRole? myRole;
   final int viewerCount;
   final bool? myHandIsRaised;
 
@@ -85,6 +87,7 @@ class LiveStreamState1 extends Equatable {
     bool? myHandIsRaised,
     String? singleKickOutData,
     List<String>? allParticipantsIds,
+    ParticipantRole? myRole,
   }) {
     return LiveStreamState1(
       audioConnectionStatus: audioConnectionStatus 
@@ -118,6 +121,7 @@ class LiveStreamState1 extends Equatable {
       singleKickOutData: singleKickOutData 
         ?? this.singleKickOutData,
       allParticipantsIds: allParticipantsIds ?? this.allParticipantsIds,
+      myRole: myRole ?? this.myRole,
     );
   }
 
@@ -148,6 +152,7 @@ class LiveStreamState1 extends Equatable {
         unMutedParticipantIds,
         singleKickOutData,
         allParticipantsIds,
+        myRole,
       ];
 }
 

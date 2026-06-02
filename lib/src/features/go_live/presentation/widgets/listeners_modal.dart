@@ -25,7 +25,8 @@ Future<void> showListenersModal({
     context: context,
     isScrollControlled: true,
     useSafeArea: true,
-    backgroundColor: ATColors.hex202020,
+    useRootNavigator: true,
+    backgroundColor: ATColors.hex202020,    
     barrierColor: ATColors.black.withValues(alpha: 0.5),
     builder: (BuildContext dContext) {
       return MultiBlocProvider(

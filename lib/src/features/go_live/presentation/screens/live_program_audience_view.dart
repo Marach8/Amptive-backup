@@ -43,7 +43,7 @@ class LiveProgramAudienceView extends StatelessWidget {
               )
             ),
           ),
-
+    
           ColoredBox(
             color: ATColors.hex0D0D0D.withValues(alpha: 0.9),
             child: Stack(
@@ -57,7 +57,7 @@ class LiveProgramAudienceView extends StatelessWidget {
                         audienceMinimizeIcon: _AudienceViewMinimizeIcon(),
                       ),
                     ),
-
+    
                     Align(
                       alignment: Alignment.centerLeft,
                       child: ATContainer(
@@ -122,17 +122,15 @@ class LiveProgramAudienceView extends StatelessWidget {
               ],
             ),
           ),
-          // const Positioned.fill(child: ReactionsOverlay()),
-          // const Positioned.fill(child: GiftOverlay()),
         ],
       ),
-
+    
       resizeToAvoidBottomInset: false,
       bottomSheet: BlocBuilder<GoLiveControlsVisibilityBloc, bool>(
         builder: (BuildContext context, bool isVisible) {
           final double bottomInset = MediaQuery.viewInsetsOf(context).bottom;
           final double extraSpace = bottomInset == 0 ? 10.0 : bottomInset + 10;
-
+    
           return AnimatedContainer(
             duration: const Duration(milliseconds: 300),
             color: bottomInset == 0 ? ATColors.black
@@ -153,37 +151,10 @@ class _AudienceViewMinimizeIcon extends StatelessWidget {
   Widget build(BuildContext context) {
     return ATContainer(
       onTap: () {
-        liveProgramOverlayKey.currentState?.toggle();
-        //Save this program details, then go to minimized state so
-        //user can come back when they want...
-        // final LocalUserDataCubit cubit = context.read<LocalUserDataCubit>();
-        // final CachedUserData? data = cubit.currentUserData;
-        // final LiveStreamState1 liveStreamState = 
-        //   context.read<LiveStreamCubit1>().state;
-        // cubit.updateUserDataLocally(
-        //   (data ?? const CachedUserData()).copyWith(
-        //     liveProgramData: Sentinel<LiveProgramData>.of(
-        //       LiveProgramData(
-        //         coverUrl: liveStreamState.programCoverUrl ?? '',
-        //         programDesc: liveStreamState.programDesc ?? '',
-        //         programTitle: liveStreamState.programTitle ?? '',
-        //         programId: liveStreamState.liveStreamId ?? '',
-        //         role: ParticipantRole.audience,
-        //         roomEntryToken: liveStreamState.roomEntryToken ?? '',
-        //         roomParticipantId: context.read<LocalUserDataCubit>()
-        //           .currentUserData?.userId ?? '',
-        //         roomUrl: liveStreamState.roomUrl ?? '',
-        //         streamId: liveStreamState.liveStreamId ?? '',
-        //         community: liveStreamState.community,
-        //       )
-        //     )
-        //   ),
-        // );
-        // context.pop();
+        liveProgramOverlayKey.currentState?.minimize();
       },
       color: ATColors.white.withValues(alpha: 0.1),
-      height: 35, width: 35,
-      boxShape: BoxShape.circle,
+      height: 35, width: 35, radius: 30,
       child: const Icon(
         Icons.keyboard_arrow_down,
         size: 20,
