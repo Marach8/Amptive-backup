@@ -198,18 +198,18 @@ class HashTag extends Equatable {
       ];
 }
 
-// class NotificationMetadata {
-//   NotificationMetadata({this.contentId, this.contentType, this.reason});
-//   final String? contentId, contentType, reason;
-//   static NotificationMetadata fromJson(Map<String, dynamic>? json) {
-//     if (json == null) return NotificationMetadata();
-//     return NotificationMetadata(
-//       contentId: json['content_id'],
-//       contentType: json['content_type'],
-//       reason: json['reason'],
-//     );
-//   }
-// }
+class NotificationMetadata {
+  NotificationMetadata({this.contentId, this.contentType, this.reason});
+  final String? contentId, contentType, reason;
+  static NotificationMetadata fromJson(Map<String, dynamic>? json) {
+    if (json == null) return NotificationMetadata();
+    return NotificationMetadata(
+      contentId: json['content_id'],
+      contentType: json['content_type'],
+      reason: json['reason'],
+    );
+  }
+}
 
 class Notifications{
   Notifications(
@@ -217,14 +217,14 @@ class Notifications{
       this.message,
       this.channel,
       this.createdAt,
-      this.metadata,
+      dynamic metadataJson,
       this.title,
       this.type,
       this.isRead,
       this.readAt,
-      this.category
-      });
-
+      this.category})
+      : metadata = NotificationMetadata.fromJson(
+            metadataJson is Map<String, dynamic> ? metadataJson : null);
 
   factory Notifications.fromJson(Map<String, dynamic> json) {
     return Notifications(
@@ -232,9 +232,7 @@ class Notifications{
       message: json['message'],
       channel: json['channel'],
       createdAt: json['created_at'],
-      metadata:
-        json['metadata'],
-      
+      metadataJson: json['metadata_'],
       title: json['title'],
       type: json['type'],
       isRead: json['is_read'],
@@ -243,8 +241,9 @@ class Notifications{
     );
   }
 
-  final String? id, message, channel, createdAt, title, type, readAt, category;
-  final dynamic metadata;
+  final String? id, message, channel, createdAt,
+    title, type, readAt, category;
+  final NotificationMetadata metadata;
   final bool? isRead;
 }
 

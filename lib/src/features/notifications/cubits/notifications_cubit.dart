@@ -117,7 +117,7 @@ class GetNotificationsCubit extends Cubit<ATAppState<NotificationsResponseModel>
               message: n.message,
               channel: n.channel,
               createdAt: n.createdAt,
-              metadata: n.metadata,
+              metadataJson: n.metadata,
               title: n.title,
               type: n.type,
               isRead: true,
