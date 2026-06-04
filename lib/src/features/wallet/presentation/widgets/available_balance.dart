@@ -80,8 +80,8 @@ class AvailableBalanceWidget extends StatelessWidget {
                                       builder: (_, bool state) {
                                     return Icon(
                                         state
-                                            ? Icons.visibility_off_outlined
-                                            : Icons.visibility_outlined,
+                                            ? Icons.visibility_outlined
+                                            : Icons.visibility_off_outlined,
                                         color: ATColors.hexC2C2C2);
                                   })
                                 ],
