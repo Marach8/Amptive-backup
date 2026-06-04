@@ -85,8 +85,9 @@ class _CoHostFeeSetupScreenState extends State<CoHostFeeSetupScreen> {
                           BlocSelector<CohostFeeSetupBloc, List<int?>, int?>(
                               selector: (List<int?> state) => state.last,
                               builder: (_, int? state) {
-                                if (state == null)
+                                if (state == null){
                                   return const SizedBox.shrink();
+                                  }
                                 return const CohostFeeDescInfo();
                               }),
                           ATTextFormField(
@@ -192,7 +193,6 @@ class _BottomSheetContent extends StatelessWidget {
                         final bool isCreator =
                             context.read<AccountTypeBloc>().state;
 
-                        // Persist the values to the singleton using copyWith (fields are Strings)
                         ProfessionalProfileData().copyWith(
                           coHostFee: feeValue,
                           profileType: isCreator ? 'creator' : 'business',
@@ -208,7 +208,7 @@ class _BottomSheetContent extends StatelessWidget {
             const SizedBox(height: 15),
             InkWell(
               onTap:
-                  isLoading ? null : () {}, // Prevent backing out while loading
+                  isLoading ? null : () {}, 
               radius: 5,
               child: Text(
                 ATStrings.setupLater,

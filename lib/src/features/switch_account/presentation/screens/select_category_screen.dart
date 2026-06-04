@@ -13,7 +13,7 @@ import 'package:provider/provider.dart';
 import '../switch_acct/switch_acct_export.dart';
 
 
-enum profileType { creator, business }
+enum ProfileType { creator, business }
 
 class SelectCategoryScreen extends StatefulWidget {
   const SelectCategoryScreen({super.key});
@@ -29,7 +29,6 @@ class _SelectCategoryScreenState extends State<SelectCategoryScreen> {
   Widget build(BuildContext context) {
     final bool isCreator = context.read<AccountTypeBloc>().state;
     
-    // Read directly from the external file
     final List<String> activeCategories = isCreator 
         ? ProfileCategories.creator 
         : ProfileCategories.business;
