@@ -386,6 +386,11 @@ class LiveStreamCubit1 extends Cubit<LiveStreamState1> {
 
   
   //Exclusive to hosts and maybe cohosts
+  void endLiveStream() => 
+    wsNotificationService.sendMessage(<String, dynamic>{
+      'type': 'end_stream',
+    });
+
   void muteListener(String listenerId) =>
       wsNotificationService.sendMessage(<String, dynamic>{
         'type': 'remove_speaker',

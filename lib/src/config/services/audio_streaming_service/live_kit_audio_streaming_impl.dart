@@ -65,6 +65,10 @@ class LiveKitAudioStreamingService implements ATAudioStreamingService {
 
   @override
   Future<void> manuallyDisconnect() async {
+    if (_room.connectionState == ConnectionState.disconnected) {
+      return;
+    }
+
     await _cancelRoomListenerSub?.call();
     _cancelRoomListenerSub = null;
 

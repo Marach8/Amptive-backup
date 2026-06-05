@@ -21,17 +21,20 @@ Future<String?> showHandRaisersModal({
   required BuildContext context,
   required bool canApproveHandRaise,
   required LiveStreamCubit1 liveStreamCubit,
+  required LocalUserDataCubit localUserDataCubit,
 }) async {
   return await showModalBottomSheet<String>(
     context: context,
     isScrollControlled: true,
     useSafeArea: true,
+    useRootNavigator: true,
     backgroundColor: ATColors.hex202020,
     barrierColor: ATColors.black.withValues(alpha: 0.5),
     builder: (BuildContext dContext) {
       return MultiBlocProvider(
         providers: <SingleChildWidget>[
           BlocProvider<LiveStreamCubit1>.value(value: liveStreamCubit),
+          BlocProvider<LocalUserDataCubit>.value(value: localUserDataCubit),
           BlocProvider<SearchkeyCubit>(create: (_) => SearchkeyCubit())
         ],
         child: DraggableScrollableSheet(
@@ -254,7 +257,7 @@ class _HandRaiserTile extends StatelessWidget {
           else if(canPermitHandRaise)
             ATContainer(
               onTap: () async {
-                context.pop(participant?.userId);
+                Navigator.pop(context, participant?.userId);
               },
               height: 35,
               width: 35, radius: 20,

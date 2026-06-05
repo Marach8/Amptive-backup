@@ -59,7 +59,7 @@ class PaidShowAndPlayBtnWidget extends StatelessWidget {
 
       if (liveProgramData == null) return;
       dashboardKey.currentState
-        ?.showLiveOverlay(liveProgramData: liveProgramData);
+        ?.showLiveStreamOverlay(liveProgramData: liveProgramData);
 
     } else {
       context.pushNamed(

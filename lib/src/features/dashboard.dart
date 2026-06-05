@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'dart:io';
 import 'package:amptive/src/config/services/network_service/interceptor.dart'
     show AuthGuardCubit;
+import 'package:amptive/src/config/utils/dialogs/app_notification_dialog.dart';
 import 'package:amptive/src/features/auth/cubits/local_user_data_cubit.dart';
 import 'package:amptive/src/features/go_live/cubits/end_live_program_cubit.dart';
 import 'package:amptive/src/features/go_live/cubits/livestream_cubit1.dart';
@@ -21,6 +22,7 @@ import 'package:amptive/src/services/websocket/user_ws_service.dart';
 import 'package:amptive/src/shared/annotated_region__widget.dart';
 import 'package:amptive/src/features/main_app_nav_bar.dart';
 import 'package:amptive/src/features/home/presentation/screens/home_landing_screen.dart';
+import 'package:amptive/src/shared/image_loader_widget.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -74,7 +76,7 @@ class DashboardState extends State<_SubWidget>{
 
   OverlayEntry? _liveProgramOverlay;
 
-  void showLiveOverlay({required LiveProgramData? liveProgramData}) {
+  void showLiveStreamOverlay({required LiveProgramData? liveProgramData}) {
     if (_liveProgramOverlay != null) return;
 
     _liveProgramOverlay = OverlayEntry(
@@ -108,17 +110,32 @@ class DashboardState extends State<_SubWidget>{
               create: (_) => EndLiveProgramCubit(),
             ),
           ],
-          child: Positioned(
-            bottom: 0,
-            left: 0,
-            child: LiveProgramOverlay(
-              key: liveProgramOverlayKey,
-              onDismissed: (){
-                removeLiveOverlay();
-              },
-              fullChild: const FullLiveProgramScreen(),
-              miniChild: const MinimizedLiveProgramIndicator(),
-            ),
+          child: LiveProgramOverlay(
+            key: liveProgramOverlayKey,
+            onDismissed: (String? dismissReason){
+              removeLiveOverlay();
+
+              if(dismissReason != null){
+                Future<void>.delayed(
+                  const Duration(seconds: 2),
+                  () {
+                    if(mounted){
+                      showAppNotification(
+                        context: context,
+                        icon: const ATImgLoader(
+                          imgPath: ATImgStrings.kickUserOut,
+                          height: 20, width: 20,
+                        ),
+                        text: dismissReason,
+                        bgColor: ATColors.textRedColor,
+                      );
+                    }
+                  }
+                );
+              }
+            },
+            fullChild: const FullLiveProgramScreen(),
+            miniChild: const MinimizedLiveProgramIndicator(),
           ),
         );
       },
@@ -243,7 +260,7 @@ class DashboardState extends State<_SubWidget>{
             final bool isMinimized = liveProgramOverlayKey
               .currentState?.isMinimized ?? false;
             if(isMinimized){
-              liveProgramOverlayKey.currentState?.dismiss();
+              liveProgramOverlayKey.currentState?.dismissLiveProgram();
             }
             else{
               liveProgramOverlayKey.currentState?.minimize();

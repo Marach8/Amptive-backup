@@ -309,16 +309,12 @@ class ATLiveEventDetailedScreen extends StatelessWidget {
                   
                   if(!isHost || hasTestedMic){
                     context.pop(liveProgramData);
-                    // context.pushReplacementNamed(
-                    //   ATRoutes.liveProgramScreen,
-                    //   extra: liveProgramEntryParams,
-                    // );
                   }
                   else{
                     await context.pushNamed(
                       ATRoutes.goLiveOnboarding,
                       extra: liveProgramData,
-                    ) as bool;
+                    );
                     
                     if(context.mounted){
                       context.pop(liveProgramData);

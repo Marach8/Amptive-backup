@@ -110,7 +110,7 @@ LiveStreamState1 reduceIncomingStreamAction({
     LiveEventType.streamStarted => stateSnapshot,
 
     LiveEventType.streamEnded => stateSnapshot.copyWith(
-        //connectionErrorMessage: 'Stream ended',
+        liveStreamEnded: true,
       ),
 
     LiveEventType.pong => stateSnapshot,

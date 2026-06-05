@@ -34,6 +34,7 @@ class LiveStreamState1 extends Equatable {
     this.myHandIsRaised,
     this.singleKickOutData,
     this.allParticipantsIds,
+    this.liveStreamEnded,
     this.myRole,
   });
 
@@ -58,7 +59,7 @@ class LiveStreamState1 extends Equatable {
     unMutedParticipantIds, allParticipantsIds;
   final ParticipantRole? myRole;
   final int viewerCount;
-  final bool? myHandIsRaised;
+  final bool? myHandIsRaised, liveStreamEnded;
 
   /// Creates a new state object with updated values.
   LiveStreamState1 copyWith({
@@ -88,6 +89,7 @@ class LiveStreamState1 extends Equatable {
     String? singleKickOutData,
     List<String>? allParticipantsIds,
     ParticipantRole? myRole,
+    bool? liveStreamEnded,
   }) {
     return LiveStreamState1(
       audioConnectionStatus: audioConnectionStatus 
@@ -122,6 +124,7 @@ class LiveStreamState1 extends Equatable {
         ?? this.singleKickOutData,
       allParticipantsIds: allParticipantsIds ?? this.allParticipantsIds,
       myRole: myRole ?? this.myRole,
+      liveStreamEnded: liveStreamEnded ?? this.liveStreamEnded,
     );
   }
 
@@ -153,6 +156,7 @@ class LiveStreamState1 extends Equatable {
         singleKickOutData,
         allParticipantsIds,
         myRole,
+        liveStreamEnded,
       ];
 }
 

@@ -1,4 +1,5 @@
 import 'dart:ui';
+import 'package:amptive/src/features/auth/cubits/local_user_data_cubit.dart';
 import 'package:amptive/src/features/go_live/cubits/livestream_cubit1.dart';
 import 'package:amptive/src/features/go_live/data/models/livestream_state.dart';
 import 'package:amptive/src/features/go_live/presentation/widgets/hand_raisers_modal.dart';
@@ -19,8 +20,7 @@ class LiveProgramHostView extends StatelessWidget {
     final Community? community = state.community;
     final String? programCoverUrl = state.programCoverUrl;
 
-    return Scaffold(
-      body: Stack(
+    return Stack(
         children: <Widget>[
           Positioned.fill(
             child: ImageFiltered(
@@ -35,112 +35,117 @@ class LiveProgramHostView extends StatelessWidget {
           ),
           ColoredBox(
             color: ATColors.hex0D0D0D.withValues(alpha: 0.9),
-            child: Column(
+            child: Stack(
               children: <Widget>[
-                const Padding(
-                  padding: EdgeInsets.fromLTRB(
-                    10, kToolbarHeight * 0.2, 15, 20),
-                  child: LiveProgramHeader(),
-                ),
-
-                Align(
-                  alignment: Alignment.centerLeft,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: <Widget>[
-                      ATContainer(
-                        onTap: () {},
-                        margin: const EdgeInsets.only(left: 15),
-                        radius: 30,
-                        padding: const EdgeInsets.fromLTRB(5, 5, 10, 5),
-                        color: ATColors.white.withValues(alpha: 0.1),
-                        child: Row(
-                          mainAxisSize: MainAxisSize.min,
-                          children: <Widget>[
-                            const ATImgLoader(
-                              imgPath: ATImgStrings.groupIcon,
-                              height: 20, width: 20,
-                              boxFit: BoxFit.cover,
-                            ),
-                      
-                            const SizedBox(width: 5),
-                            Text(
-                              community?.name ?? 'General',
-                              style: context.textTheme.bodyMedium?.copyWith(
-                                overflow: TextOverflow.fade,
-                                fontSize: ATSizes.size13,
-                                color: ATColors.hexC2C2C2
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-
-                      BlocSelector<LiveStreamCubit1, LiveStreamState1, 
-                        List<String>?>(
-                        selector: (LiveStreamState1 state) => state.raisedHandsIds,
-                        builder: (_, List<String>? raisedHandsIds) {
-                          final bool noRaisedHands = raisedHandsIds == null
-                          || raisedHandsIds.isEmpty;
-                          if(noRaisedHands) return const SizedBox.shrink();
-                          return _HandRaisedIndicator(
-                              noOfHandsRaised: raisedHandsIds.length);
-                        }
-                      ),
-                    ],
-                  ),
-                ),
-
-                const SizedBox(height: 16),
-                Expanded(
-                  child: LayoutBuilder(
-                    builder: (_, BoxConstraints kst) {
-                      final bool isPortrait = kst.maxHeight > kst.maxWidth;
-                      return Flex(
-                        direction: isPortrait ? Axis.vertical : Axis.horizontal,
+                Column(
+                  children: <Widget>[
+                    const Padding(
+                      padding: EdgeInsets.fromLTRB(
+                        10, kToolbarHeight * 0.2, 15, 20),
+                      child: LiveProgramHeader(),
+                    ),
+                
+                    Align(
+                      alignment: Alignment.centerLeft,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: <Widget>[
-                          if (isPortrait)
-                            Container(
-                              height: 250,
-                              padding: const EdgeInsets.fromLTRB(15, 0, 15, 0),
-                              child: const HostViewOfHostNdCohostDisplay()
-                            )
-                          else
-                            const Expanded(
-                              child: SingleChildScrollView(
-                                padding: EdgeInsets.fromLTRB(15, 0, 15, 0),
-                                child: SizedBox(
-                                    height: 250,
-                                    child: HostViewOfHostNdCohostDisplay()
-                                  )
-                                )
-                              ),
-                          const Expanded(child: GoLiveCommentsAndNotifications()),
+                          ATContainer(
+                            onTap: () {},
+                            margin: const EdgeInsets.only(left: 15),
+                            radius: 30,
+                            padding: const EdgeInsets.fromLTRB(5, 5, 10, 5),
+                            color: ATColors.white.withValues(alpha: 0.1),
+                            child: Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: <Widget>[
+                                const ATImgLoader(
+                                  imgPath: ATImgStrings.groupIcon,
+                                  height: 20, width: 20,
+                                  boxFit: BoxFit.cover,
+                                ),
+                          
+                                const SizedBox(width: 5),
+                                Text(
+                                  community?.name ?? 'General',
+                                  style: context.textTheme.bodyMedium?.copyWith(
+                                    overflow: TextOverflow.fade,
+                                    fontSize: ATSizes.size13,
+                                    color: ATColors.hexC2C2C2
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                
+                          BlocSelector<LiveStreamCubit1, LiveStreamState1, 
+                            List<String>?>(
+                            selector: (LiveStreamState1 state) => state.raisedHandsIds,
+                            builder: (_, List<String>? raisedHandsIds) {
+                              final bool noRaisedHands = raisedHandsIds == null
+                              || raisedHandsIds.isEmpty;
+                              if(noRaisedHands) return const SizedBox.shrink();
+                              return _HandRaisedIndicator(
+                                  noOfHandsRaised: raisedHandsIds.length);
+                            }
+                          ),
                         ],
-                      );
-                    }
-                  )
+                      ),
+                    ),
+                
+                    const SizedBox(height: 16),
+                    Expanded(
+                      child: LayoutBuilder(
+                        builder: (_, BoxConstraints kst) {
+                          final bool isPortrait = kst.maxHeight > kst.maxWidth;
+                          return Flex(
+                            direction: isPortrait ? Axis.vertical : Axis.horizontal,
+                            children: <Widget>[
+                              if (isPortrait)
+                                Container(
+                                  height: 250,
+                                  padding: const EdgeInsets.fromLTRB(15, 0, 15, 0),
+                                  child: const HostViewOfHostNdCohostDisplay()
+                                )
+                              else
+                                const Expanded(
+                                  child: SingleChildScrollView(
+                                    padding: EdgeInsets.fromLTRB(15, 0, 15, 0),
+                                    child: SizedBox(
+                                        height: 250,
+                                        child: HostViewOfHostNdCohostDisplay()
+                                      )
+                                    )
+                                  ),
+                              const Expanded(child: GoLiveCommentsAndNotifications()),
+                            ],
+                          );
+                        }
+                      )
+                    )
+                  ],
+                ),
+
+                Positioned(
+                  bottom: 0, right: 0, left: 0,
+                  child: BlocBuilder<GoLiveControlsVisibilityBloc, bool>(
+                    builder: (BuildContext context, bool isVisible) {
+                    final double bottomInset = MediaQuery.viewInsetsOf(context).bottom;
+                    final double extraSpace = bottomInset == 0 ? 10.0 : bottomInset + 10;
+                  
+                    return AnimatedContainer(
+                      duration: const Duration(milliseconds: 300),
+                      color: bottomInset == 0 ? ATColors.black : ATColors.hex2C2F33,
+                      padding: EdgeInsets.fromLTRB(15, 5, 15, extraSpace),
+                      child: const HostModerationControls(),
+                    );
+                  }),
                 )
               ],
             ),
           ),
         ],
-      ),
-
-      resizeToAvoidBottomInset: false,
-      bottomSheet: BlocBuilder<GoLiveControlsVisibilityBloc, bool>(
-          builder: (BuildContext context, bool isVisible) {
-        final double bottomInset = MediaQuery.viewInsetsOf(context).bottom;
-        final double extraSpace = bottomInset == 0 ? 10.0 : bottomInset + 10;
-
-        return AnimatedContainer(
-          duration: const Duration(milliseconds: 300),
-          color: bottomInset == 0 ? ATColors.black : ATColors.hex2C2F33,
-          padding: EdgeInsets.fromLTRB(15, 5, 15, extraSpace),
-          child: const HostModerationControls(),
-        );
-      }),
-    );
+      );
   }
 }
 
@@ -163,6 +168,7 @@ class __HandRaisedIndicatorState extends State<_HandRaisedIndicator> {
         final String? userId = await showHandRaisersModal(
           context: context,
           canApproveHandRaise: true,
+          localUserDataCubit: context.read<LocalUserDataCubit>(),
           liveStreamCubit: context.read<LiveStreamCubit1>(),
         );
         if(context.mounted && userId != null){

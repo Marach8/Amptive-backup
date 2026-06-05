@@ -1,6 +1,7 @@
 import 'dart:developer' show log;
 import 'dart:ui';
 
+import 'package:amptive/src/config/api_response_and_app_state.dart';
 import 'package:amptive/src/config/utils/colors.dart';
 import 'package:amptive/src/config/utils/dialogs/app_notification_dialog.dart';
 import 'package:amptive/src/config/utils/extensions/context_extensions.dart';
@@ -34,7 +35,7 @@ class LiveProgramOverlay extends StatefulWidget {
 
   final Widget fullChild;
   final Widget miniChild;
-  final VoidCallback onDismissed;
+  final ValueChanged<String?> onDismissed;
 
   @override
   State<LiveProgramOverlay> createState() => LiveProgramOverlayState();
@@ -43,11 +44,12 @@ class LiveProgramOverlay extends StatefulWidget {
 final GlobalKey<LiveProgramOverlayState> liveProgramOverlayKey
   = GlobalKey<LiveProgramOverlayState>();
 class LiveProgramOverlayState extends State<LiveProgramOverlay>
-    with TickerProviderStateMixin {
-
-  late final AnimationController _slideInController, _minMaxController;
-  late final Animation<Offset> _slideInAnimation;
+    with SingleTickerProviderStateMixin {
+  
+  late final ValueNotifier<Offset> _dragNotifier;
+  late final AnimationController _minMaxController;
   static const double _miniHeight = 100;
+  Alignment _transitionCenter = const Alignment(0, 0.76);
   bool isMinimized = false;
 
   @override
@@ -60,65 +62,157 @@ class LiveProgramOverlayState extends State<LiveProgramOverlay>
       }
     });
 
-    _slideInController = AnimationController(
-      vsync: this,
-      duration: const Duration(milliseconds: 1000),
-      reverseDuration: const Duration(milliseconds: 500),
-    );
     _minMaxController = AnimationController(
       vsync: this,
       duration: const Duration(milliseconds: 500),
       reverseDuration: const Duration(milliseconds: 500),
     );
-
-    _slideInAnimation = Tween<Offset>(
-      begin: const Offset(0, 1), // 👈 bottom of screen
-      end: Offset.zero,          // 👈 full screen
-    ).animate(
-      CurvedAnimation(
-        parent: _slideInController,
-        curve: Curves.decelerate,
-      ),
-    );
-
-    _slideInController.forward();
+    //Subtract 15 from miniHeight to bring down the mini child a close to bottom bar.
+    _dragNotifier = ValueNotifier<Offset>(const Offset(0, _miniHeight - 15));
   }
 
-  Future<void> dismiss() async {
+  Alignment _calculateAlignment(Offset miniChildPosition) {
+    const double miniChildHeight = 60;
+    final double miniChildWidth = context.screenWidth - 20;
+
+    final double centerX = (miniChildPosition.dx + (miniChildWidth / 2));
+
+    final double centerY =
+      context.screenHeight - (miniChildPosition.dy + (miniChildHeight / 2));
+
+    final double alignX = (
+      ((centerX / context.screenWidth) * 2) - 1
+    );
+
+    final double alignY = (
+      ((centerY / context.screenHeight) * 2) - 1
+    );
+
+    return Alignment(alignX, alignY);
+  }
+
+  Future<void> dismissLiveProgram({String? dismissReason}) async {
     context.read<LiveStreamCubit1>().disconnect();
-    await _slideInController.reverse();
-    widget.onDismissed();
+    widget.onDismissed(dismissReason);
   }
 
   void minimize() async{
+    _transitionCenter = _calculateAlignment(_dragNotifier.value);
     await _minMaxController.forward();
     isMinimized = true;
   }
 
   void maximize()async{
+    _transitionCenter = _calculateAlignment(_dragNotifier.value);
     await _minMaxController.reverse();
     isMinimized = false;
   }
 
   @override
   void dispose() {
-    _slideInController.dispose();
     _minMaxController.dispose();
+    _dragNotifier.dispose();
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
+    return Stack(
+      alignment: Alignment.center,
+      children: <Widget>[
+        AnimatedBuilder(
+          animation: _minMaxController,
+          builder: (_, __){
+            final double t = _minMaxController.value;
+    
+            final bool showMiniChild = t > 0.99;
+            return Offstage(
+              offstage: showMiniChild,
+              child: Transform.scale(
+                alignment: _transitionCenter,
+                //alignment: Alignment(_dragNotifier.value.dx, _dragNotifier.value.dy),
+                //alignment: const Alignment(0, 0.75),
+                scaleY: lerpDouble(1.0, 0.08, t),
+                child: widget.fullChild,
+              ),
+            );
+          }
+        ),
+    
+        AnimatedBuilder(
+          animation: _minMaxController,
+          builder: (_, __){
+            final double t = _minMaxController.value;
+            final bool showMiniChild = t > 0.99;
+    
+            return ValueListenableBuilder<Offset>(
+              valueListenable: _dragNotifier,
+              child: GestureDetector(
+                onTap: (){
+                  liveProgramOverlayKey.currentState?.maximize();
+                },
+                onPanUpdate: (DragUpdateDetails dragDetails){
+                  _dragNotifier.value = Offset(
+                    _dragNotifier.value.dx + dragDetails.delta.dx,
+                    _dragNotifier.value.dy - dragDetails.delta.dy,
+                  );
+                },
+                child: widget.miniChild
+              ),
+              builder: (_, Offset value, Widget? child) {
+                return Positioned(
+                  left: value.dx,
+                  bottom: value.dy,
+                  child: Offstage(
+                    offstage: !showMiniChild,
+                    child: child!,
+                  )
+                );
+              }
+            );
+          }
+        ),
+      ],
+    );
+  }
+}
+
+
+
+class FullLiveProgramScreen extends StatelessWidget {
+  const FullLiveProgramScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final ParticipantRole? myRole = 
+      context.read<LiveStreamCubit1>().state.myRole;
     final String myUserId = context.read<LocalUserDataCubit>()
       .currentUserData?.userId ?? '';
-
     return MultiBlocListener(
       listeners: <SingleChildWidget>[
+        BlocListener<EndLiveProgramCubit, ATAppState<LoadingStage>>(
+          listener: (_, ATAppState<LoadingStage> state)async{
+            if(state is SuccessState<LoadingStage>) {
+              context.read<LiveStreamCubit1>().endLiveStream();
+              //This delay is necessary to give time for the end live modal to be unmounted.
+              // await Future<void>.delayed(const Duration(milliseconds: 200));
+              // liveProgramOverlayKey.currentState?.dismissLiveProgram();
+            }
+          }
+        ),
+
         BlocListener<LiveStreamCubit1, LiveStreamState1>(
           listenWhen: (LiveStreamState1 prev, LiveStreamState1 cur) 
-            => prev.singleKickOutData != cur.singleKickOutData,
+            => (prev.singleKickOutData != cur.singleKickOutData)
+              || (prev.liveStreamEnded != cur.liveStreamEnded),
           listener: (_, LiveStreamState1 state) {
+
+            if(state.liveStreamEnded == true){
+              liveProgramOverlayKey.currentState?.dismissLiveProgram();
+              return;
+            }
+
             if((state.singleKickOutData ?? '').isNotEmpty){
               final String kickDetail = state.singleKickOutData!;
               final List<String> splittedDetail = kickDetail.split('||');
@@ -128,8 +222,9 @@ class LiveProgramOverlayState extends State<LiveProgramOverlay>
                 state.allParticipants?[kickedUserId];
               
               if(kickedUserId == myUserId){
-                context.read<LiveStreamCubit1>().disconnect();
-                context.pop();
+                liveProgramOverlayKey.currentState?.dismissLiveProgram(
+                  dismissReason: 'You have been kicked out!',
+                );
               }
               else{
                 final String username = kickedParticipant?.name 
@@ -150,67 +245,22 @@ class LiveProgramOverlayState extends State<LiveProgramOverlay>
           },
         ),
       ],
-      child: SlideTransition(
-        position: _slideInAnimation,
-        child: AnimatedBuilder(
-          animation: _minMaxController,
-          builder: (_, __){
-            final double t = _minMaxController.value;
-            final double height = lerpDouble(
-              context.screenHeight,
-              _miniHeight,
-              t
-            )!;
-            
-            final bool shouldShowMini = t > 0.7;
-            return Align(
-              alignment: const Alignment(0, 0.75),
-              child: AnimatedCrossFade(
-                alignment: const Alignment(0, 0.75),            
-                crossFadeState: shouldShowMini ? 
-                  CrossFadeState.showSecond : CrossFadeState.showFirst,
-                duration: const Duration(milliseconds: 100),
-                firstCurve: Curves.easeInOut,
-                secondCurve: Curves.easeInOut,
-                sizeCurve: Curves.easeInOut,
-                reverseDuration: const Duration(milliseconds: 100),
-                excludeBottomFocus: false,
-                secondChild: widget.miniChild,
-                firstChild: SizedBox(
-                  height: height,
-                  child: Transform.scale(
-                    alignment: const Alignment(0, 0.75),
-                    scaleY: lerpDouble(1.0, 0.1, t),
-                    child: widget.fullChild,
-                  ),
-                ),
-              ),
-            );
-          }
-        )
+      child: SafeArea(
+        bottom: false,
+        child: Material(
+          color: ATColors.transparent,
+          child: switch (myRole) {
+            null || ParticipantRole.audience =>
+              const LiveProgramAudienceView(),
+          
+            ParticipantRole.cohost =>
+              const LiveProgramCohostView(),
+          
+            ParticipantRole.host =>
+              const LiveProgramHostView(),
+          },
+        ),
       ),
     );
-  }
-}
-
-
-
-class FullLiveProgramScreen extends StatelessWidget {
-  const FullLiveProgramScreen({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    final ParticipantRole? myRole = 
-      context.read<LiveStreamCubit1>().state.myRole;
-    return switch (myRole) {
-      null || ParticipantRole.audience =>
-        const LiveProgramAudienceView(),
-    
-      ParticipantRole.cohost =>
-        const LiveProgramCohostView(),
-    
-      ParticipantRole.host =>
-        const LiveProgramHostView(),
-    };
   }
 }

@@ -40,28 +40,30 @@ class MinimizedLiveProgramIndicator extends StatelessWidget {
       peopleInLive = '${hostName ?? 'You'} and ${totalParticipants - 1} others';
     }
 
-    return ATContainer(
-      onTap: (){
-        liveProgramOverlayKey.currentState?.maximize();
-      },
-      splashColor: ATColors.transparent,
-      color: ATColors.hex202020, radius: 10,
-      padding: const EdgeInsets.all(8),
-      margin: const EdgeInsets.only(left: 10, right: 10),
-      border: Border.all(color: ATColors.hex2D2D2D),
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: <Widget>[
-          ClipRRect(
-            borderRadius: BorderRadius.circular(2),
-            child: ATImgLoader(
-              imgPath: programUrl ?? '',
-              height: 40, width: 40,
+    final double width = context.screenWidth - 20;
+    return Material(
+      color: ATColors.transparent,
+      child: Container(
+        height: 60, width: width,
+        margin: const EdgeInsets.all(10),
+        decoration: BoxDecoration(
+          color: ATColors.hex202020,
+          borderRadius: BorderRadius.circular(10),
+          border: Border.all(color: ATColors.hex2D2D2D),
+        ),
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: <Widget>[
+            const SizedBox(width: 8,),
+            ClipRRect(
+              borderRadius: BorderRadius.circular(2),
+              child: ATImgLoader(
+                imgPath: programUrl ?? '',
+                height: 40, width: 40,
+              ),
             ),
-          ),
-          const SizedBox(width: 5),
-          Flexible(
-            child: SingleChildScrollView(
+            const SizedBox(width: 5),
+            Flexible(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisSize: MainAxisSize.min,
@@ -99,14 +101,17 @@ class MinimizedLiveProgramIndicator extends StatelessWidget {
                 ],
               ),
             ),
-          ),
-          GestureDetector(
-            onTap: (){
-              liveProgramOverlayKey.currentState?.dismiss();
-            },
-            child: Icon(Icons.close, color: ATColors.white, size: 20),
-          )
-        ],
+            GestureDetector(
+              onTap: (){
+                liveProgramOverlayKey.currentState?.dismissLiveProgram();
+              },
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Icon(Icons.close, color: ATColors.white, size: 20),
+              ),
+            )
+          ],
+        ),
       ),
     );
   }

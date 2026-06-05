@@ -108,7 +108,7 @@ class _HostModerationControlsState extends State<HostModerationControls> {
             }
             return EachGoLiveControlBtn(
               onTap: () {
-                showHostModerationToolsDialog(context);
+                //showHostModerationToolsDialog(context);
               },
               child: const Icon(Icons.settings, size: 20),
             );
@@ -116,43 +116,46 @@ class _HostModerationControlsState extends State<HostModerationControls> {
         ),
 
         Expanded(
-          child: Padding(
-            padding: const EdgeInsets.only(right: 5),
-            child: ATTextFormField(
-              controller: _cntrl,
-              focusNode: _focusNode,
-              disableBlueBorder: true,
-              counterText: '',
-              keyboardType: TextInputType.multiline,
-              cursorHeight: 20,
-              maxLength: 50,
-              maxLines: null,
-              isDense: true,
-              enabledBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(14),
-                borderSide: BorderSide(color: ATColors.transparent),
-              ),
-              prefixIcon: const SizedBox(width: 10),
-              fillColor: ATColors.white.withValues(alpha: 0.1),
-              cursorColor: ATColors.white.withValues(alpha: 0.6),
-              constraints: const BoxConstraints(maxHeight: 60),
-              contentPadding: const EdgeInsets.fromLTRB(10, 3, 10, 3),
-              hintText: ATStrings.comment,
-              suffixIcon: ValueListenableBuilder<_InputState>(
-                valueListenable: _inputNotifier,
-                builder: (_, _InputState state, __) {
-                  if(!state.hasText) return const SizedBox.shrink();
-                  return GestureDetector(
-                    behavior: HitTestBehavior.opaque,
-                    onTap: (){
-                      _cntrl.clear();
-                    },
-                    child: Padding(
-                      padding: const EdgeInsets.only(right: 8),
-                      child: Icon(Icons.close, color: ATColors.white, size: 18),
-                    ),
-                  );
-                }
+          child: Material(
+            color: ATColors.transparent,
+            child: Padding(
+              padding: const EdgeInsets.only(right: 5),
+              child: ATTextFormField(
+                controller: _cntrl,
+                focusNode: _focusNode,
+                disableBlueBorder: true,
+                counterText: '',
+                keyboardType: TextInputType.multiline,
+                cursorHeight: 20,
+                maxLength: 50,
+                maxLines: null,
+                isDense: true,
+                enabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(14),
+                  borderSide: BorderSide(color: ATColors.transparent),
+                ),
+                prefixIcon: const SizedBox(width: 10),
+                fillColor: ATColors.white.withValues(alpha: 0.1),
+                cursorColor: ATColors.white.withValues(alpha: 0.6),
+                constraints: const BoxConstraints(maxHeight: 60),
+                contentPadding: const EdgeInsets.fromLTRB(10, 3, 10, 3),
+                hintText: ATStrings.comment,
+                suffixIcon: ValueListenableBuilder<_InputState>(
+                  valueListenable: _inputNotifier,
+                  builder: (_, _InputState state, __) {
+                    if(!state.hasText) return const SizedBox.shrink();
+                    return GestureDetector(
+                      behavior: HitTestBehavior.opaque,
+                      onTap: (){
+                        _cntrl.clear();
+                      },
+                      child: Padding(
+                        padding: const EdgeInsets.only(right: 8),
+                        child: Icon(Icons.close, color: ATColors.white, size: 18),
+                      ),
+                    );
+                  }
+                ),
               ),
             ),
           ),
@@ -259,10 +262,11 @@ class _RowOfBtns extends StatelessWidget {
           onTap: () {
             showModalBottomSheet(
               context: context,
-              builder: (_) => EmojiPicker(
+              useRootNavigator: true,
+              builder: (BuildContext modalContext) => EmojiPicker(
                 onEmojiSelected: (Category? category, Emoji emoji) {
                   context.read<LiveStreamCubit1>().sendReaction(emoji.emoji);
-                  Navigator.pop(context);
+                  Navigator.pop(modalContext);
                 },
               ),
             );

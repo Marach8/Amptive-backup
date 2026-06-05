@@ -20,6 +20,7 @@ Future<void> showListenersModal({
   required BuildContext context,
   required bool enableKickOut,
   required LiveStreamCubit1 liveStreamCubit,
+  required LocalUserDataCubit localUserDataCubit,
 }) async {
   return await showModalBottomSheet(
     context: context,
@@ -32,6 +33,7 @@ Future<void> showListenersModal({
       return MultiBlocProvider(
         providers: <SingleChildWidget>[
           BlocProvider<LiveStreamCubit1>.value(value: liveStreamCubit),
+          BlocProvider<LocalUserDataCubit>.value(value: localUserDataCubit),
           BlocProvider<SearchkeyCubit>(create: (_) => SearchkeyCubit())
         ],
         child: Stack(

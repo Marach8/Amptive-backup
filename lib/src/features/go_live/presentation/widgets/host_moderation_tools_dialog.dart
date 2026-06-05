@@ -12,6 +12,7 @@ Future<void> showHostModerationToolsDialog(BuildContext context) async {
       backgroundColor: ATColors.hex202020,
       context: context,
       isScrollControlled: true,
+      useRootNavigator: true,
       useSafeArea: true,
       barrierColor: ATColors.black.withValues(alpha: 0.6),
       shape: const RoundedRectangleBorder(

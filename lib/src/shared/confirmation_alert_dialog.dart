@@ -2,7 +2,6 @@ import 'package:amptive/src/config/utils/extensions/context_extensions.dart';
 import 'package:amptive/src/config/utils/colors.dart';
 import 'package:amptive/src/config/utils/font_sizes.dart';
 import 'package:amptive/src/config/utils/other_strings.dart';
-import 'package:amptive/src/config/utils/helper_functions.dart';
 import 'package:amptive/src/shared/divider_widget.dart';
 import 'package:amptive/src/shared/elevated_button_widget.dart';
 import 'package:flutter/material.dart';
@@ -16,9 +15,9 @@ Future<bool?> showConfirmationDialog(
     required String content,
     required String yesString,
     required String noString}) async {
-  return await showDialog<bool?>(
+  return await showDialog<bool>(
       context: context,
-      builder: (_) => AlertDialog(
+      builder: (BuildContext modalContext) => AlertDialog(
           backgroundColor: ATColors.hex252525,
           contentPadding: const EdgeInsets.fromLTRB(0, 20, 0, 0),
           shape: RoundedRectangleBorder(
@@ -55,7 +54,7 @@ Future<bool?> showConfirmationDialog(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: <Widget>[
                   GestureDetector(
-                    onTap: () => context.pop(true),
+                    onTap: () => Navigator.pop(modalContext, true),
                     child: Text(
                       yesString,
                       style: context.textTheme.titleMedium?.copyWith(
@@ -64,7 +63,7 @@ Future<bool?> showConfirmationDialog(
                   ),
                   const ATDivider(axis: AxisType.vertical, height: 50),
                   GestureDetector(
-                    onTap: () => context.pop(false),
+                    onTap: () => Navigator.pop(modalContext, false),
                     child: Text(
                       noString,
                       style: context.textTheme.titleMedium?.copyWith(

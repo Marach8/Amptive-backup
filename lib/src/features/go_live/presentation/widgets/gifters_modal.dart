@@ -13,83 +13,23 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:nested/nested.dart';
 
-// Future<void> showHostViewOfTopGiftersDialog({
-//   required BuildContext context,
-//   required bool enableKickOut,
-//   required LiveStreamCubit1 liveStreamCubit,
-// }) async {
-//   return await showModalBottomSheet(
-//       context: context,
-//       isScrollControlled: true,
-//       backgroundColor: ATColors.hex202020.withValues(alpha: 0.9),
-//       builder: (BuildContext context) {
-//         return DraggableScrollableSheet(
-//             expand: false,
-//             initialChildSize: 0.7,
-//             builder: (_, ScrollController controller) {
-//               return Container(
-//                 padding: const EdgeInsets.only(top: 20),
-//                 clipBehavior: Clip.hardEdge,
-//                 decoration: const BoxDecoration(
-//                   borderRadius: BorderRadius.only(
-//                     topLeft: Radius.circular(20),
-//                     topRight: Radius.circular(20),
-//                   ),
-//                 ),
-//                 child: BackdropFilter(
-//                   filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
-//                   child: Column(
-//                       crossAxisAlignment: CrossAxisAlignment.start,
-//                       children: <Widget>[
-//                         const Align(
-//                             alignment: Alignment.center,
-//                             child: ATModalDismisser()),
-//                         const SizedBox(height: 10),
-//                         Expanded(
-//                           child: ATScrollBar(
-//                             extScrollCntrl: controller,
-//                             child: ListView.builder(
-//                               padding: const EdgeInsets.fromLTRB(15, 0, 10, 20),
-//                               physics: const BouncingScrollPhysics(),
-//                               primary: true,
-//                               itemCount: getHostList().length + 1,
-//                               itemBuilder: (_, int listIndex) {
-//                                 if (listIndex == 0) {
-//                                   return const _GiftsDescColumn();
-//                                 }
-
-//                                 final ObjectWithNotifier<Host> gifter =
-//                                     getHostList().elementAt(listIndex - 1);
-
-//                                 return _GifterWidget(
-//                                   onTap: (_, __) {},
-//                                   gifter: gifter,
-//                                   index: listIndex,
-//                                 );
-//                               },
-//                             ),
-//                           ),
-//                         ),
-//                       ]),
-//                 ),
-//               );
-//             });
-//       });
-// }
-
 Future<bool?> showGiftersModal({
   required BuildContext context,
   required bool canSendGift,
   required LiveStreamCubit1 liveStreamCubit,
+  required LocalUserDataCubit localUserDataCubit,
 }) async {
   return await showModalBottomSheet<bool>(
       context: context,
       isScrollControlled: true,
+      useRootNavigator: true,
+      useSafeArea: true,
       backgroundColor: ATColors.hex202020.withValues(alpha: 0.9),
       builder: (BuildContext context) {
         return MultiBlocProvider(
           providers: <SingleChildWidget>[
             BlocProvider<LiveStreamCubit1>.value(value: liveStreamCubit),
+            BlocProvider<LocalUserDataCubit>.value(value: localUserDataCubit),
             BlocProvider<SearchkeyCubit>(create: (_) => SearchkeyCubit())
           ],
           child: Stack(
@@ -399,7 +339,7 @@ class _SendGiftWidget extends StatelessWidget {
               width: 20,
             ),
             ATContainer(
-              onTap: () => context.pop(true),
+              onTap: () => Navigator.pop(context, true),
               radius: 40,
               color: ATColors.hex307FE2,
               padding: const EdgeInsets.fromLTRB(10, 5, 10, 5),

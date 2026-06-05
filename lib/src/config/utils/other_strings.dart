@@ -436,8 +436,8 @@ class ATStrings {
   static const String FINISH_SETUP = 'Finish setup';
   static const String finish = 'Finish';
   static const String menu = 'Menu';
-  static const String VIEW_CALENDER = 'View calender';
-  static const String CALENDER = 'Calender';
+  static const String viewCalender = 'View calender';
+  static const String calender = 'Calender';
   static const String GRANT_CALENDER_ACCESS = 'Grant calender access';
   static const String ACCT_SETTINGS = 'Account Settings';
   static const String ACCT = 'Account';
@@ -484,7 +484,7 @@ class ATStrings {
   static const String blockedAccounts = 'Blocked accounts';
   static const String HELP_SUPPORT = 'Help & Support';
   static const String ABOUT = 'About';
-  static const String LOGOUT = 'Log out';
+  static const String logout = 'Log out';
   static const String codeHasBeenSent =
       'Code has been sent. You can request another in';
   static const String SEE_COMMUNITIES = 'See communities on Amptive';
