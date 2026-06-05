@@ -14,7 +14,6 @@ Future<HandRaisingPermission?> showHandRaisingPermissionModal({
     context: context,
     isScrollControlled: true,
     useSafeArea: true,
-    useRootNavigator: true,
     backgroundColor: ATColors.hex202020,
     barrierColor: ATColors.black.withValues(alpha: 0.5),
     shape: const RoundedRectangleBorder(

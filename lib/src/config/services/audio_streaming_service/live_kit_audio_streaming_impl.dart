@@ -14,7 +14,7 @@ class LiveKitAudioStreamingService implements ATAudioStreamingService {
 
   static LiveKitAudioStreamingService? _instance;
 
-  final Room _room = Room();
+  Room? _room;
 
   final StreamController<List<LiveSessionParticipant>> _participantsController =
       StreamController<List<LiveSessionParticipant>>.broadcast();
@@ -37,25 +37,25 @@ class LiveKitAudioStreamingService implements ATAudioStreamingService {
     required String participantToken,
   }) async {
     try {
+      _room = Room();
+
       _listenToEvents();
 
       _connectionController.add(AudioConnectionStatus.connecting);
 
-      await _room.connect(
+      await _room!.connect(
         roomUrl,
         participantToken,
         connectOptions: const ConnectOptions(
-          autoSubscribe: true, // important
+          autoSubscribe: true,
         ),
       );
 
-      await _room.setSpeakerOn(true);
+      await _room!.setSpeakerOn(true);
 
       _connectionController.add(AudioConnectionStatus.connected);
 
-      await _room.localParticipant?.setMicrophoneEnabled(false);
-
-      //_emitParticipants();
+      await _room!.localParticipant?.setMicrophoneEnabled(false);
     } catch (e, s) {
       log('Error connecting to live kit: $e, stack trace $s');
       _connectionController.add(AudioConnectionStatus.disconnected);
@@ -65,9 +65,13 @@ class LiveKitAudioStreamingService implements ATAudioStreamingService {
 
   @override
   Future<void> manuallyDisconnect() async {
-    if (_room.connectionState == ConnectionState.disconnected) {
+    final Room? room = _room;
+
+    if (room == null) {
       return;
     }
+
+    _room = null;
 
     await _cancelRoomListenerSub?.call();
     _cancelRoomListenerSub = null;
@@ -75,21 +79,21 @@ class LiveKitAudioStreamingService implements ATAudioStreamingService {
     await _localAudioTrack?.dispose();
     _localAudioTrack = null;
 
-    await _room.disconnect();
-    await _room.dispose();
+    unawaited(
+      room.disconnect().catchError((_) {}),
+    );
 
-    await _participantsController.close();
-    await _connectionController.close();
-    await _activeSpeakersController.close();
-    await _speakersWithMicEnabledController.close();
+    room.dispose();
 
-    _instance = null;
+    _connectionController.add(
+      AudioConnectionStatus.disconnected,
+    );
   }
 
 
   @override
   Future<void> setMicEnabled(bool enabled) async {
-    await _room.localParticipant?.setMicrophoneEnabled(enabled);
+    await _room?.localParticipant?.setMicrophoneEnabled(enabled);
     _emitParticipantsWithMicEnabled();
   }
 
@@ -115,7 +119,7 @@ class LiveKitAudioStreamingService implements ATAudioStreamingService {
   void _listenToEvents() {
     _cancelRoomListenerSub?.call();
 
-    _cancelRoomListenerSub = _room.events.listen((RoomEvent event) {
+    _cancelRoomListenerSub = _room?.events.listen((RoomEvent event) {
       // if(event is ParticipantConnectedEvent){
       //   log('New participant joined.: ${event.participant.identity}, ${event.participant.name}');
       //   _emitParticipants();
@@ -170,7 +174,7 @@ class LiveKitAudioStreamingService implements ATAudioStreamingService {
   void _emitParticipantsWithMicEnabled() {
     final List<String> ids = <String>[];
 
-    final LocalParticipant? local = _room.localParticipant;
+    final LocalParticipant? local = _room?.localParticipant;
 
     if (local != null) {
       final TrackPublication<Track>? audioPub =
@@ -182,7 +186,7 @@ class LiveKitAudioStreamingService implements ATAudioStreamingService {
     }
 
     for (final RemoteParticipant participant
-        in _room.remoteParticipants.values) {
+        in _room?.remoteParticipants.values ?? <RemoteParticipant>[]) {
 
       final TrackPublication<Track>? audioPub =
           participant.audioTrackPublications.firstOrNull;

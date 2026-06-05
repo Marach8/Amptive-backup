@@ -253,14 +253,19 @@ LiveStreamState1 reduceIncomingStreamAction({
         final String action = wsJson['action'] ?? '';
         final List<String> raisedHandsIds = List<String>
           .from(stateSnapshot.raisedHandsIds ?? <String>[]);
+        List<String> unMutedParticipantIds = List<String>
+          .from(stateSnapshot.unMutedParticipantIds ?? <String>[]);
+
         if (action == 'raise') {
           if (!raisedHandsIds.contains(raiserId)) raisedHandsIds.add(raiserId);
           if(raiserId == myUserId) myHandIsRaised = true;
         }
         else if (action == 'lower') {
           raisedHandsIds.remove(raiserId);
-          if(raiserId == myUserId) myHandIsRaised = false;
-          if(raiserId == myUserId) myMicIsEnabled = false;
+          if(raiserId == myUserId){
+            myHandIsRaised = false;
+            myMicIsEnabled = false;
+          }
         }
         else if (action == 'approve'){
           raisedHandsIds.remove(raiserId);
@@ -268,11 +273,13 @@ LiveStreamState1 reduceIncomingStreamAction({
             myHandIsRaised = false;
             myMicIsEnabled = true;
           }
+          unMutedParticipantIds.add(raiserId);
         }
         return stateSnapshot.copyWith(
           raisedHandsIds: raisedHandsIds,
           myHandIsRaised: myHandIsRaised,
           myMicIsEnabled: myMicIsEnabled,
+          unMutedParticipantIds: unMutedParticipantIds,
         );
       }(),
 

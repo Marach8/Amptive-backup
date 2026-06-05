@@ -206,10 +206,13 @@ class FullLiveProgramScreen extends StatelessWidget {
           listenWhen: (LiveStreamState1 prev, LiveStreamState1 cur) 
             => (prev.singleKickOutData != cur.singleKickOutData)
               || (prev.liveStreamEnded != cur.liveStreamEnded),
-          listener: (_, LiveStreamState1 state) {
+          listener: (_, LiveStreamState1 state)async{
 
             if(state.liveStreamEnded == true){
-              liveProgramOverlayKey.currentState?.dismissLiveProgram();
+              await Future<void>.delayed(const Duration(seconds: 1));
+              liveProgramOverlayKey.currentState?.dismissLiveProgram(
+                dismissReason: 'This Live stream has ended',
+              );
               return;
             }
 
