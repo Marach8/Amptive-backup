@@ -114,7 +114,7 @@ class AuthRepoImpl implements AuthRepo {
   }
 
   @override
-  Future<ApiResponse<SignupResponseModel>> registerUser({
+  Future<ApiResponse<SignUpResponseModel>> registerUser({
     required RegistrationData param,
   }) async {
     try {
@@ -123,12 +123,12 @@ class AuthRepoImpl implements AuthRepo {
         data: param.toJson(),
       );
 
-      final SignupResponseModel signupResponse =
-          SignupResponseModel.fromJson(response.data['data']);
-      return Successful<SignupResponseModel>(data: signupResponse);
+      final SignUpResponseModel signupResponse =
+          SignUpResponseModel.fromJson(response.data['data']);
+      return Successful<SignUpResponseModel>(data: signupResponse);
     } catch (e) {
       log('Unable to register user: $e');
-      return Unsuccessful<SignupResponseModel>(
+      return Unsuccessful<SignUpResponseModel>(
         error: ATException.resolveException(e),
       );
     }
