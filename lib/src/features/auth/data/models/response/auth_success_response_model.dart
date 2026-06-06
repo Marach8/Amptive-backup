@@ -1,12 +1,12 @@
-class SignupResponseModel {
-  SignupResponseModel({
+class SignUpResponseModel {
+  SignUpResponseModel({
     this.user,
     this.accessToken,
     this.refreshToken,
   });
 
-  factory SignupResponseModel.fromJson(Map<String, dynamic> json) {
-    return SignupResponseModel(
+  factory SignUpResponseModel.fromJson(Map<String, dynamic> json) {
+    return SignUpResponseModel(
       user: json['user'] != null
           ? ATUser.fromJson(json['user'] as Map<String, dynamic>)
           : null,

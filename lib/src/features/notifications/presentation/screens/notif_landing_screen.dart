@@ -31,7 +31,8 @@ class NotificationTabView extends StatelessWidget {
 }
 
 class _NotificationTabViewContent extends StatefulWidget {
-  const _NotificationTabViewContent({this.nestedKey, this.onScroll});
+  const _NotificationTabViewContent(
+      {this.nestedKey, this.onScroll, });
 
   final GlobalKey<NestedScrollViewState>? nestedKey;
   final VoidCallback? onScroll;
@@ -54,6 +55,7 @@ class _NotificationTabViewContentState
           widget.onScroll!();
         });
       }
+     // context.read<GetNotificationsCubit>().markAllNotificationsAsRead();
     });
   }
 
@@ -92,8 +94,8 @@ class _NotificationTabViewContentState
               InitialState<NotificationsResponseModel>() =>
                 const SizedBox.shrink(),
               LoadingState<NotificationsResponseModel>() ||
-               FailureState<NotificationsResponseModel>() ||
-                SuccessState<NotificationsResponseModel>() => 
+              FailureState<NotificationsResponseModel>() ||
+              SuccessState<NotificationsResponseModel>() =>
                 Builder(builder: (BuildContext context) {
                   final NotificationsResponseModel? notifications = context
                       .read<GetNotificationsCubit>()
@@ -141,6 +143,13 @@ class _NotificationTabViewContentState
                         }
 
                         final Notifications item = notificationsList[index];
+                        void markRead() {
+                          if (!(item.isRead ?? false)) {
+                            context
+                                .read<GetNotificationsCubit>()
+                                .markNotificationAsRead(item.id ?? '');
+                          }
+                        }
 
                         if (item.category == 'follower') {
                           return NewFollowerNotif(
@@ -160,9 +169,12 @@ class _NotificationTabViewContentState
                             progName: item.message ?? 'Your program',
                             progImg: ATImgStrings.JOE_POMP_SHOW,
                             timeOfEnd: item.createdAt?.toTimeAgo ?? '1m',
+                            ontap: () {
+                              markRead();
+                            },
                           );
                         }
-                        if (item.category == 'program_live' ||
+                if (item.category == 'program_live' ||
                             item.category == 'live') {
                           return const ProgramIsLiveNotif(
                             progImg: ATImgStrings.jpeg1,
@@ -258,6 +270,9 @@ class _NotificationTabViewContentState
                           subtitle: item.message ?? '',
                           isRead: item.isRead ?? false,
                           time: item.createdAt?.toTimeAgo,
+                          onTap: () {
+                            markRead();
+                          },
                         );
                       },
                     ),

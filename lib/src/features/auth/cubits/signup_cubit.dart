@@ -9,14 +9,14 @@ import 'package:amptive/src/config/api_response_and_app_state.dart';
 import 'package:amptive/src/features/auth/data/repository/auth_repo.dart';
 import 'package:amptive/src/features/auth/data/repository/auth_repo_impl.dart';
 
-class SignupCubit extends Cubit<ATAppState<SignupResponseModel>> {
+class SignupCubit extends Cubit<ATAppState<SignUpResponseModel>> {
   SignupCubit({
     AuthRepo? mockAuthRepo,
     ATLocalStorageService? mockLocalStorageService,
   })  : authRepo = mockAuthRepo ?? AuthRepoImpl(),
         localStorageService =
             mockLocalStorageService ?? FlutterSecureStorageServiceImpl(),
-        super(const InitialState<SignupResponseModel>());
+        super(const InitialState<SignUpResponseModel>());
 
   final AuthRepo authRepo;
   final ATLocalStorageService localStorageService;
@@ -24,13 +24,13 @@ class SignupCubit extends Cubit<ATAppState<SignupResponseModel>> {
   Future<void> signupUser({
     required RegistrationData param,
   }) async {
-    emit(const LoadingState<SignupResponseModel>());
+    emit(const LoadingState<SignUpResponseModel>());
     try {
-      final ApiResponse<SignupResponseModel> response =
+      final ApiResponse<SignUpResponseModel> response =
           await authRepo.registerUser(param: param);
       response.when(
-        successful: (Successful<SignupResponseModel> data) async {
-          final SignupResponseModel? responseModel = data.data;
+        successful: (Successful<SignUpResponseModel> data) async {
+          final SignUpResponseModel? responseModel = data.data;
           final String? accessToken = responseModel?.accessToken;
           final String? userName = responseModel?.user?.username;
           final String? email = responseModel?.user?.email;
@@ -50,20 +50,20 @@ class SignupCubit extends Cubit<ATAppState<SignupResponseModel>> {
           );
           await localStorageService.setObject(
             ATStrings.cachedUserData,
-            cachedUserData.toJson(),
+            cachedUserData.toLocalStorageJson(),
           );
 
-          emit(SuccessState<SignupResponseModel>(newData: responseModel));
+          emit(SuccessState<SignUpResponseModel>(newData: responseModel));
         },
-        unSuccessful: (Unsuccessful<SignupResponseModel> error) {
+        unSuccessful: (Unsuccessful<SignUpResponseModel> error) {
           emit(
-            FailureState<SignupResponseModel>(error.error.message),
+            FailureState<SignUpResponseModel>(error.error.message),
           );
         },
       );
     } catch (e) {
       emit(
-        FailureState<SignupResponseModel>('Unable to signup user: $e'),
+        FailureState<SignUpResponseModel>('Unable to signup user: $e'),
       );
     }
   }

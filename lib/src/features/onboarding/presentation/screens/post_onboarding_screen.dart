@@ -1,5 +1,6 @@
 import 'package:amptive/src/features/auth/presentation/screens/auth_options_screen.dart'
     show AuthType;
+import 'package:amptive/src/features/onboarding/presentation/widgets/audio_creator_animation_widget.dart';
 import 'package:amptive/src/global_export.dart';
 import 'package:amptive/src/shared/annotated_region__widget.dart';
 import 'package:go_router/go_router.dart';
@@ -71,7 +72,7 @@ class _SubWidget extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 15),
               child: ATPlainElevatedBtn(
-                onPressed: () => context.pushNamed(ATRoutes.AUTH_OPTIONS_SCREEN,
+                onPressed: () => context.pushNamed(ATRoutes.authOptionsScreen,
                     extra: AuthType.signUp),
                 btnTitle: ATStrings.SIGN_UP,
               ),
@@ -82,7 +83,7 @@ class _SubWidget extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 15),
               child: ATOutlinedBtn(
-                onPressed: () => context.pushNamed(ATRoutes.AUTH_OPTIONS_SCREEN,
+                onPressed: () => context.pushNamed(ATRoutes.authOptionsScreen,
                     extra: AuthType.signIn),
                 btnTitle: ATStrings.SIGN_IN,
               ),

@@ -109,18 +109,14 @@ class RenderHomeFeedItem extends StatelessWidget {
                           height: 1.2,
                         ),
                       ),
-                      const SizedBox(
-                        height: 12,
-                      ),
+                      const SizedBox(height: 12),
                       PeopleListeningWidget(
                         viewerProfileUrls: homeFeedItem.avatarUrls,
                         totalViewerCount: _isLive
                             ? homeFeedItem.viewerCount
                             : homeFeedItem.goingCount,
                       ),
-                      const SizedBox(
-                        height: 10,
-                      ),
+                      const SizedBox(height: 10),
                       PaidShowAndPlayBtnWidget(homeFeedItem: homeFeedItem),
                     ],
                   ),

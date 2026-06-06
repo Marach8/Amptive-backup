@@ -3,6 +3,9 @@ class ATEndpoints {
 
   static const String baseUrl = 'https://amptive.onrender.com';
   static const String wsBaseUrl = 'wss://amptive.onrender.com';
+  // websockets
+  static const String wsUsers = '$wsBaseUrl/api/v1/ws/user';
+  static const String wsStream = '$wsBaseUrl/api/v1/ws/stream/';
 
 
   static const String checkIdentityAvailability =
@@ -23,7 +26,10 @@ class ATEndpoints {
   static const String liveUsersFeed = '/api/v1/shows/feed/live-now';
   static const String shows = '/api/v1/shows/';
   static const String events = '/api/v1/events/';
+  static const String standaloneEvents = '/api/v1/events/standalone/';
+  static const String episodeEvents = '/api/v1/events/episode/';
   static const String episodes = '/api/v1/episodes/';
+  static const String livestreams = '/api/v1/livestreams/';
   static const String getUserprofile = '/api/v1/users/me';
   static const String followers = '/api/v1/users/following';
   static const String getUsers = '/api/v1/users';
@@ -41,30 +47,29 @@ class ATEndpoints {
   static const String searchSuggestions = '/api/v1/search/suggestions';
   static const String registerDevice = '/api/v1/notif/devices/register';
   static const String fcmRegisterDevice = '/api/v1/notif/devices/register';
+
   static const String getNotifications = '/api/v1/notif';
   static const String setWalletPin = '/api/v1/auth/set-pin';
   static const String getTransactionHistory = '/api/v1/payments/transactions';
   static const String fundWallet = '/api/v1/payments/wallet/fund';
   static const String getWalletBalance = '/api/v1/payments/wallet/balance';
   static String verifyPayment ='/api/v1/payments/verify';
+  static const String createProfessionalProfile = '/api/v1/users/me/profile';
 
-  static String getStreamTokenEndpoint(String streamId) =>
-      '/api/v1/livestreams/$streamId/token';
-  static String startStreamEndpoint(String contentId) =>
-      '/api/v1/livestreams/$contentId/start';
-  static String endStreamEndpoint(String streamId) =>
-      '/api/v1/livestreams/$streamId/end';
-  static String reactToStream(String streamId) =>
-      '/api/v1/livestreams/$streamId/react';
+  // static String getStreamTokenEndpoint(String streamId) =>
+  //     '/api/v1/livestreams/$streamId/token';
+  // static String startStreamEndpoint(String contentId) =>
+  //     '/api/v1/livestreams/$contentId/start';
+  // static String endStreamEndpoint(String streamId) =>
+  //     '/api/v1/livestreams/$streamId/end';
+  // static String reactToStream(String streamId) =>
+  //     '/api/v1/livestreams/$streamId/react';
 
-  static String markEventGoing(String eventId) =>
-      '${ATEndpoints.events}standalone/$eventId/going';
-  static String markEpisodeGoing(String episodeId) =>
-      '${ATEndpoints.events}episode/$episodeId/going';
+  // static String markEventGoing(String eventId) =>
+  //     '${ATEndpoints.events}standalone/$eventId/going';
+  // static String markEpisodeGoing(String episodeId) =>
+  //     '${ATEndpoints.events}episode/$episodeId/going';
 
-  // websockets
-  static const String wsUsers = '$wsBaseUrl/api/v1/ws/user';
-
-  static String wsSignalEndpoint(String streamId, String authToken) =>
-      '$wsBaseUrl/api/v1/ws/stream/$streamId?token=$authToken';
+  // static String wsSignalEndpoint(String streamId, String authToken) =>
+  //     '$wsBaseUrl/api/v1/ws/stream/$streamId?token=$authToken';
 }

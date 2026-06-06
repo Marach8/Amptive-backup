@@ -350,8 +350,10 @@ class ProgramEndedNotif extends StatelessWidget {
     required this.progName,
     required this.progImg,
     required this.timeOfEnd,
+    this.ontap
   });
   final String progName, timeOfEnd, progImg;
+  final VoidCallback? ontap;
 
   @override
   Widget build(BuildContext context) {
@@ -720,24 +722,24 @@ class GenericAppNotificationTile extends StatelessWidget {
     super.key,
     required this.title,
     required this.subtitle,
-     this.time,
-    this.isRead = false,
+    this.time,
+    required this.isRead,
+    this.onTap,
   });
 
   final String title;
   final String subtitle;
   final String? time;
   final bool isRead;
+  final VoidCallback? onTap;
 
   @override
   Widget build(BuildContext context) {
     return ATContainer(
-      // You can define a generic route here or leave it empty for now
-      onTap: () => debugPrint('Generic Notification Tapped'),
+      onTap: onTap,
       padding: const EdgeInsets.only(top: 10, bottom: 10),
       child: Row(
         children: <Widget>[
-          // Icon Section - matches the wallet circle style
           ATCircleAvatar(
             diameter: 40,
             color: ATColors.hex307FE2,
@@ -749,14 +751,11 @@ class GenericAppNotificationTile extends StatelessWidget {
           const SizedBox(
             width: 10,
           ),
-          // Content Section
           Expanded(
             child: ATRichText(
-              maxLines: 3, 
+              maxLines: 3,
               items: <String, TextStyle>{
-                // The main title (e.g., "System Update")
                 '$title: ': Theme.of(context).textTheme.titleSmall!,
-                // The body/subtitle
                 subtitle: Theme.of(context)
                     .textTheme
                     .bodySmall!

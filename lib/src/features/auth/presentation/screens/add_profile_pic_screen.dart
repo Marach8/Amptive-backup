@@ -1,9 +1,11 @@
 import 'dart:async';
 
 import 'package:amptive/src/config/utils/colors.dart';
+import 'package:amptive/src/features/profile/cubits/remote_user_data_cubit.dart';
 import 'package:amptive/src/shared/loading_indicator.dart';
 import 'package:amptive/src/features/auth/presentation/widgets/add_picture.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../../config/utils/font_sizes.dart';
@@ -39,7 +41,10 @@ class _AddProfilePictureScreenState extends State<AddProfilePictureScreen> {
         padding: const EdgeInsets.fromLTRB(15, 20, 15, 10),
         child: _isLoading
             ? const LoadingAccountWidget()
-            : const AddPictureWidget(),
+            : BlocProvider<RemoteUserDataCubit>(
+        create: (_) => RemoteUserDataCubit(),
+        child: const AddPictureWidget(),
+      ),
       ),
     ));
   }

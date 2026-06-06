@@ -41,13 +41,12 @@ class AuthRepoImpl implements AuthRepo {
     required Map<String, dynamic> param,
   }) async {
     try {
-      final Response<dynamic> response = await networkService.post(
+      await networkService.post(
         ATEndpoints.sendOtp,
         data: param,
       );
 
-      final String otp = response.data['data']['otp'] as String;
-      return Successful<String>(data: otp);
+      return Successful<String>(data: 'otp sent');
     } catch (e) {
       log('Send OTP error: $e');
       return Unsuccessful<String>(
@@ -115,7 +114,7 @@ class AuthRepoImpl implements AuthRepo {
   }
 
   @override
-  Future<ApiResponse<SignupResponseModel>> registerUser({
+  Future<ApiResponse<SignUpResponseModel>> registerUser({
     required RegistrationData param,
   }) async {
     try {
@@ -124,12 +123,12 @@ class AuthRepoImpl implements AuthRepo {
         data: param.toJson(),
       );
 
-      final SignupResponseModel signupResponse =
-          SignupResponseModel.fromJson(response.data['data']);
-      return Successful<SignupResponseModel>(data: signupResponse);
+      final SignUpResponseModel signupResponse =
+          SignUpResponseModel.fromJson(response.data['data']);
+      return Successful<SignUpResponseModel>(data: signupResponse);
     } catch (e) {
       log('Unable to register user: $e');
-      return Unsuccessful<SignupResponseModel>(
+      return Unsuccessful<SignUpResponseModel>(
         error: ATException.resolveException(e),
       );
     }

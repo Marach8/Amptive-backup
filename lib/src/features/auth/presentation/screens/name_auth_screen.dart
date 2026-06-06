@@ -1,9 +1,11 @@
 import 'package:amptive/src/config/api_response_and_app_state.dart';
 import 'package:amptive/src/config/utils/dialogs/app_notification_dialog.dart';
 import 'package:amptive/src/config/utils/utils_export.dart';
+import 'package:amptive/src/features/auth/cubits/local_user_data_cubit.dart';
 import 'package:amptive/src/features/auth/cubits/signup_cubit.dart';
 import 'package:amptive/src/features/auth/data/models/request/registration_data.dart';
 import 'package:amptive/src/config/routing/route_strings.dart';
+import 'package:amptive/src/features/auth/data/models/response/auth_success_response_model.dart';
 import 'package:amptive/src/shared/annotated_region__widget.dart';
 import 'package:amptive/src/shared/elevated_button_widget.dart';
 import 'package:amptive/src/shared/back_button.dart';
@@ -71,18 +73,37 @@ class _AddNameScreenState extends State<AddNameScreen> with ATValidators {
               ),
             ),
           ),
-          bottomSheet: BlocConsumer<SignupCubit, ATAppState<dynamic>>(
-              listener: (_, ATAppState<dynamic> state) {
-            if (state is SuccessState<dynamic>) {
+          bottomSheet: BlocConsumer<SignupCubit, ATAppState<SignUpResponseModel>>(
+              listener: (_, ATAppState<SignUpResponseModel> state)  async{
+            if (state is SuccessState<SignUpResponseModel>) {
+              final SignUpResponseModel? responseModel = state.newData;
+    final ATUser? user = responseModel?.user;
+
+    if (user != null) {
+      await context.read<LocalUserDataCubit>().updateUserDataLocally(
+        CachedUserData(
+          userId: user.id,
+          email: user.email,
+          username: user.username,
+          name: user.name,
+          dob: user.dob,
+          pictureUrl: user.pictureUrl,
+          phoneNumber: user.phoneNumber,
+        ),
+      );
+    }
+    
+
               context.goNamed(ATRoutes.addProfilePicScreen);
             }
-            if (state is FailureState<dynamic>) {
+            if (state is FailureState<SignUpResponseModel>) {
               showAppNotification2(
                   context: context,
                   text: state.message,
                   type: NotificationType.failure);
             }
-          }, builder: (BuildContext context, ATAppState<dynamic> state) {
+          }, 
+          builder: (BuildContext context, ATAppState<SignUpResponseModel> state) {
             final double bottom = MediaQuery.viewInsetsOf(context).bottom;
             final double bottomPad = bottom > 0 ? 10 : 50;
             return Padding(
