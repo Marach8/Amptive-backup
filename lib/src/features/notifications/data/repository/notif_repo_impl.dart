@@ -6,6 +6,7 @@ import 'package:amptive/src/config/exception.dart';
 import 'package:amptive/src/config/services/network_service/dio_network_service_impl.dart';
 import 'package:amptive/src/config/services/network_service/network_service.dart';
 import 'package:amptive/src/features/notifications/data/models/get_notifications_response_model.dart';
+import 'package:amptive/src/features/notifications/data/models/mark_notif_as_read_response_model.dart';
 import 'package:amptive/src/features/notifications/data/repository/notif_repo.dart';
 import 'package:dio/dio.dart';
 
@@ -60,6 +61,38 @@ Future <ApiResponse<NotificationsResponseModel>> fetchUserNotifications({
   } catch (e) {
     log('Fetch notifications error: $e');
     return Unsuccessful<NotificationsResponseModel>(error: ATException.resolveException(e));
+  }
+
+}
+
+@override
+Future<ApiResponse<MarkNotificationAsReadResponseModel>> markNotificationAsRead({
+  required String notificationId,
+}) async {
+  try {
+    final Response<dynamic> response = await networkService.patch(
+      '${ATEndpoints.getNotifications}/$notificationId/read',
+     
+      
+    );
+    return Successful<MarkNotificationAsReadResponseModel>(
+      data: MarkNotificationAsReadResponseModel.fromJson(response.data as Map<String, dynamic>));
+  } catch (e) {
+    log('Mark notification as read error: $e');
+    return Unsuccessful<MarkNotificationAsReadResponseModel>(error: ATException.resolveException(e));
+  }
+}
+
+@override
+Future<ApiResponse<dynamic>> markAllNotificationsAsRead() async {
+  try {
+    final Response<dynamic> response = await networkService.patch(
+      '${ATEndpoints.getNotifications}/read-all',
+    );
+    return Successful<dynamic>(data: response.data);
+  } catch (e) {
+    log('Mark all notifications as read error: $e');
+    return Unsuccessful<dynamic>(error: ATException.resolveException(e));
   }
 
 }

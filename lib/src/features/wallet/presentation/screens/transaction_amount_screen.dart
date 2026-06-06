@@ -223,6 +223,9 @@ class TransactionAmountScreen extends StatelessWidget {
                                         paymentMethod: selectedPaymentMethod,
                                         amount: amount,
                                       );
+                                      if (context.mounted) {
+  context.pop(processPayment);   
+}
                                     }
                                     break;
                                   case TransactionType.transfer:

@@ -9,6 +9,7 @@ import 'package:amptive/src/config/utils/utils_export.dart';
 import 'package:amptive/src/features/auth/cubits/local_user_data_cubit.dart';
 
 import 'package:amptive/src/features/auth/data/models/response/user_profile_response_model.dart';
+import 'package:amptive/src/features/profile/bloc/creator_or_biz_bloc.dart';
 
 import 'package:amptive/src/features/profile/cubits/remote_user_data_cubit.dart';
 
@@ -234,7 +235,9 @@ class EditProfileScreen extends StatelessWidget {
                             const _MenuHeading(text: ATStrings.ACCT),
                             _MenuItem(
                                 title: ATStrings.SWITCH_ACCT,
-                                value: 'Audience',
+                                value: context.read<AccountTypeBloc>().state
+                                    ? ATStrings.CREATOR
+                                    : ATStrings.BUSINESS,
                                 onTap: () async {
                                   context.pushNamed(ATRoutes.SELECT_ACCT_TYPE);
 

@@ -76,6 +76,10 @@ extension ExtString on String {
   }
 }
 
+ String get toFormattedDate {
+    final DateTime date = DateTime.parse(this);
+    return DateFormat('d MMMM yyyy').format(date);
+ }
 String normalizePaymentChannel(String method) {
   switch (method) {
     case ATStrings.applePay:

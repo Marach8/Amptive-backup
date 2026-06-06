@@ -2,6 +2,7 @@ import 'package:amptive/src/config/utils/extensions/context_extensions.dart';
 import 'package:amptive/src/config/utils/font_sizes.dart';
 import 'package:amptive/src/config/utils/other_strings.dart';
 import 'package:amptive/src/config/routing/route_strings.dart';
+import 'package:amptive/src/features/profile/data/models/request/create_professional_profile_request.dart';
 import 'package:amptive/src/shared/annotated_region__widget.dart';
 import 'package:amptive/src/shared/app_bar_widget.dart';
 import 'package:amptive/src/shared/back_button.dart';
@@ -80,7 +81,7 @@ class _CreatorSubPlanScreenState extends State<CreatorSubPlanScreen> {
                   setState(() => _localSubPlan = newSubPlan);
                 },
                 onDeleteSubPlan: () {
-                  setState((){
+                  setState(() {
                     //We retain the entryPoint
                     _localSubPlan = SubscriptionPlanData(
                       entryPoint: widget.incomingSubPlan.entryPoint,
@@ -113,6 +114,10 @@ class _CreatorSubPlanScreenState extends State<CreatorSubPlanScreen> {
                             if (didComeFromProgramCreationFlow) {
                               context.pop(_localSubPlan);
                             } else {
+                              ProfessionalProfileData().copyWith(
+                                subAmount: _localSubPlan?.subAmount ??
+                                    _localSubPlan?.oneTimePaymentAmount,
+                              );
                               context.pushNamed(
                                 ATRoutes.cohostFeeSetup,
                                 extra: _localSubPlan,

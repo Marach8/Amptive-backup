@@ -1,5 +1,6 @@
 import 'package:amptive/src/config/api_response_and_app_state.dart';
 import 'package:amptive/src/features/notifications/data/models/get_notifications_response_model.dart';
+import 'package:amptive/src/features/notifications/data/models/mark_notif_as_read_response_model.dart';
 
 abstract class NotificationsRepo {
   
@@ -15,4 +16,10 @@ Future <ApiResponse<NotificationsResponseModel>> fetchUserNotifications({
   required int page,
   required int pageSize,
 });
+
+Future<ApiResponse<MarkNotificationAsReadResponseModel>> markNotificationAsRead({
+  required String notificationId,
+});
+
+Future <ApiResponse<dynamic>> markAllNotificationsAsRead();
 }
