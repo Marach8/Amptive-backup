@@ -1,6 +1,4 @@
-import 'dart:developer' show log;
 import 'dart:ui';
-
 import 'package:amptive/src/config/api_response_and_app_state.dart';
 import 'package:amptive/src/config/utils/colors.dart';
 import 'package:amptive/src/config/utils/dialogs/app_notification_dialog.dart';
@@ -15,13 +13,10 @@ import 'package:amptive/src/features/go_live/data/models/livestream_state.dart';
 import 'package:amptive/src/features/go_live/presentation/screens/live_program_audience_view.dart';
 import 'package:amptive/src/features/go_live/presentation/screens/live_program_cohost_view.dart';
 import 'package:amptive/src/features/go_live/presentation/screens/live_program_host_view.dart';
-import 'package:amptive/src/features/go_live/presentation/widgets/host_moderation_controls.dart';
-import 'package:amptive/src/shared/custom_container_widget.dart';
 import 'package:amptive/src/shared/image_loader_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:go_router/go_router.dart';
 import 'package:nested/nested.dart';
 
 
@@ -195,9 +190,6 @@ class FullLiveProgramScreen extends StatelessWidget {
           listener: (_, ATAppState<LoadingStage> state)async{
             if(state is SuccessState<LoadingStage>) {
               context.read<LiveStreamCubit1>().endLiveStream();
-              //This delay is necessary to give time for the end live modal to be unmounted.
-              // await Future<void>.delayed(const Duration(milliseconds: 200));
-              // liveProgramOverlayKey.currentState?.dismissLiveProgram();
             }
           }
         ),

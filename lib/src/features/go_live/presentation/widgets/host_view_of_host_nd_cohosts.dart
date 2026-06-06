@@ -87,8 +87,12 @@ class HostViewOfHostNdCohostDisplay extends StatelessWidget {
                       return RenderACohost(
                         cohost: cohost.$2,
                         onTap: (LivestreamParticipant? cohost){
-                          showFollowAndSubscribeToUserModal(
-                            context: context, user: cohost!);
+                          if(cohost != null){
+                            showFollowAndSubscribeToUserModal(
+                              context: context,
+                              user: cohost
+                            );
+                          }
                         },
                         top: position?.top,
                         left: position?.left,

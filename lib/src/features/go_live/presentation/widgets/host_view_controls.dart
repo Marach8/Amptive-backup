@@ -1,7 +1,9 @@
 import 'package:amptive/src/features/auth/cubits/local_user_data_cubit.dart';
+import 'package:amptive/src/features/go_live/cubits/host_moderation_tools_cubit.dart';
 import 'package:amptive/src/features/go_live/cubits/livestream_cubit1.dart';
 import 'package:amptive/src/features/go_live/data/models/livestream_state.dart';
-import 'package:amptive/src/features/go_live/presentation/widgets/host_moderation_tools_dialog.dart';
+import 'package:amptive/src/features/go_live/presentation/widgets/host_moderation_tools_modal.dart';
+import 'package:amptive/src/features/go_live/presentation/widgets/manage_cohosts_modal.dart';
 import 'package:amptive/src/shared/circular_image.dart';
 import 'package:amptive/src/shared/image_loader_widget.dart';
 import 'package:amptive/src/shared/textformfield_widget.dart';
@@ -108,7 +110,10 @@ class _HostModerationControlsState extends State<HostModerationControls> {
             }
             return EachGoLiveControlBtn(
               onTap: () {
-                //showHostModerationToolsDialog(context);
+                showHostModerationToolsDialog(
+                  context: context,
+                  hostModeratioCubit: context.read<HostModerationCubit>(),
+                );
               },
               child: const Icon(Icons.settings, size: 20),
             );
@@ -230,8 +235,7 @@ class _RowOfBtns extends StatelessWidget {
             .white.withValues(alpha: 0.3) : null,
           child: ATImgLoader(
             imgPath: ATImgStrings.handRaiseIcon,
-            height: 20,
-            width: 20,
+            height: 20, width: 20,
             boxFit: BoxFit.fill,
             color: isMyHandRaised ? ATColors.hex307FE2 : null,
           ),
@@ -240,23 +244,6 @@ class _RowOfBtns extends StatelessWidget {
           onTap: () {},
           child: Transform.flip(
               flipX: true, child: const Icon(Icons.reply, size: 20)),
-        ),
-        EachGoLiveControlBtn(
-          onTap: () async {
-            // final bool? sendInvite = await showGoLiveHostAddCoHostDialog(context: context);
-            // if(context.mounted && (sendInvite ?? false)){
-            //   showAppNotification(
-            //     context: context,
-            //     icon: const Icon(Icons.check_circle),
-            //     text: ATStrings.COHOST_INVITE_SENT,
-            //     bgColor: ATColors.notifBg,
-            //   );
-            // }
-          },
-          margin: EdgeInsets.zero,
-          child: const Icon(
-            Icons.add,
-          ),
         ),
         EachGoLiveControlBtn(
           onTap: () {
@@ -277,6 +264,35 @@ class _RowOfBtns extends StatelessWidget {
             color: ATColors.hexECO404,
             size: 20,
           ),
+        ),
+
+        EachGoLiveControlBtn(
+          onTap: () async {
+            final foo = await showManageCohostsModal(
+              context: context,
+              liveStreamCubit: context.read<LiveStreamCubit1>(),
+              localUserDataCubit: context.read<LocalUserDataCubit>(),
+            );
+            // final bool? sendInvite = await showGoLiveHostAddCoHostDialog(context: context);
+            // if(context.mounted && (sendInvite ?? false)){
+            //   showAppNotification(
+            //     context: context,
+            //     icon: const Icon(Icons.check_circle),
+            //     text: ATStrings.COHOST_INVITE_SENT,
+            //     bgColor: ATColors.notifBg,
+            //   );
+            // }
+          },
+          margin: EdgeInsets.zero,
+          child: ATImgLoader(
+            imgPath: ATImgStrings.manageCohostsIcon,
+            height: 20, width: 20,
+            boxFit: BoxFit.fill,
+            color: isMyHandRaised ? ATColors.hex307FE2 : null,
+          ),
+          // child: const Icon(
+          //   Icons.add,
+          // ),
         ),
       ],
     );

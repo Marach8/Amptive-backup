@@ -275,7 +275,8 @@ class _ParticipantTile extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.end,
               spacing: 8,
               children: <Widget>[
-                _MuteUmuteListenerBtn(participant?.userId?? ''),
+                MuteUmuteListenerBtn(
+                  participantId: participant?.userId?? ''),
                 ATContainer(
                   onTap: () async {
                     final bool? shouldKickOut = await showKickOutConfirmationDialog(
@@ -305,8 +306,11 @@ class _ParticipantTile extends StatelessWidget {
 }
 
 
-class _MuteUmuteListenerBtn extends StatelessWidget {
-  const _MuteUmuteListenerBtn(this.participantId);
+class MuteUmuteListenerBtn extends StatelessWidget {
+  const MuteUmuteListenerBtn({
+    super.key,
+    required this.participantId,
+  });
 
   final String participantId;
 

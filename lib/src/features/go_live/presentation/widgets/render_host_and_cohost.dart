@@ -1,5 +1,6 @@
 import 'package:amptive/src/config/utils/extensions/context_extensions.dart';
 import 'package:amptive/src/config/utils/font_sizes.dart';
+import 'package:amptive/src/features/auth/cubits/local_user_data_cubit.dart';
 import 'package:amptive/src/features/go_live/cubits/livestream_cubit1.dart';
 import 'package:amptive/src/features/go_live/data/models/deconstruct_inbound_events.dart';
 import 'package:amptive/src/features/go_live/data/models/livestream_state.dart';
@@ -112,6 +113,12 @@ class RenderAHost extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    String userName = host?.username ?? '';
+    final String? myUserId = context
+      .read<LocalUserDataCubit>().currentUserData?.userId;
+    if(host?.userId == myUserId){
+      userName = 'Me';
+    }
     return AnimatedPositioned(
       duration: const Duration(milliseconds: 700),
       curve: Curves.decelerate,
@@ -174,7 +181,7 @@ class RenderAHost extends StatelessWidget {
             SizedBox(
               width: 80,
               child: Text(
-                host?.username ?? '',
+                userName,
                 textAlign: TextAlign.center,
                 style: context.textTheme.titleSmall,
               ),

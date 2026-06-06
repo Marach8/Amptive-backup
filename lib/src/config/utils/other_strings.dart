@@ -287,8 +287,8 @@ class ATStrings {
   static const String ROLE = 'message notifier';
   static const String ALLOWED_AUD_MIC = "You allowed audience microphone";
   static const String DISABLED_AUD_MIC = "You disabled audience microphone";
-  static const String ALLOWED_COMMENTS = "You allowed comments";
-  static const String DISABLED_COMMENTS = "You disabled comments";
+  static const String allowedComments = "You allowed comments";
+  static const String disabledComments = "You disabled comments";
   static const String ALLOWED_HAND_RAISING = "You allowed hand raising";
   static const String DISABLED_HAND_RAISING = "You disabled hand raising";
   static const String MSG_TITLE = 'message title';
@@ -605,10 +605,10 @@ class ATStrings {
   static const String TOP_CREATORS_IN_SOCIETY = 'Top Creators in Society';
   static const String moderationTools = 'Moderation Tools';
   static const String TOP_CREATOR_IN = 'Top Creator in';
-  static const String ALLOW_COMMENTS = 'Allow comments';
+  static const String allowComments = 'Allow comments';
   static const String NEED_2_ENABLE_LISTENERS_MIC =
       "You will still need to enable the Listeners's mic";
-  static const String ALLOW_AUDIENCE_MIC = 'Allow audience mic';
+  static const String allowAudienceMic = 'Allow audience mic';
   static const String ALLOW_HANDRAISING = 'Allow hand raising';
   static const String whispersEnabled =
       'Whispers will be enabled for your event.';

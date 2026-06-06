@@ -21,6 +21,7 @@ Future<void> showFollowAndSubscribeToUserModal({
   return await showModalBottomSheet(
       backgroundColor: ATColors.hex202020,
       context: context,
+      useRootNavigator: true,
       barrierColor: ATColors.black.withValues(alpha: 0.6),
       shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.only(

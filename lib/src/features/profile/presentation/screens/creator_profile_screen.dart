@@ -39,7 +39,7 @@ class CreatorProfileScreen extends StatelessWidget {
               body: NestedScrollView(
                 headerSliverBuilder: (BuildContext ctx, __) => <Widget>[
                   SliverAppBar(
-                    expandedHeight: 540.0,
+                    expandedHeight: 545.0,
                     pinned: true,
                     automaticallyImplyLeading: false,
                     actions: <Widget>[
@@ -176,7 +176,7 @@ class CreatorProfileScreen extends StatelessWidget {
                   )
                 ],
                 body: TabBarView(
-                    physics: const BouncingScrollPhysics(),
+
                     children: List<Widget>.generate(
                       4,
                       (int index) => CreatorSampleTabView(tabIndex: index),

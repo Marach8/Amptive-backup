@@ -1,5 +1,4 @@
 import 'package:amptive/src/config/utils/colors.dart';
-import 'package:amptive/src/config/utils/font_sizes.dart';
 import 'package:flutter/material.dart';
 
 class ProfileScreenTabs extends StatelessWidget {
@@ -19,7 +18,7 @@ class ProfileScreenTabs extends StatelessWidget {
         labelColor: ATColors.black,
         unselectedLabelColor: ATColors.white,
         padding: const EdgeInsets.only(left: 15),
-        labelPadding: const EdgeInsets.fromLTRB(0, 0, 10, 0),
+        labelPadding: const EdgeInsets.only(right: 10),
         indicatorPadding: const EdgeInsets.only(bottom: 2),
         tabAlignment: TabAlignment.start,
         isScrollable: true,
@@ -55,7 +54,7 @@ class _TabWidget extends StatelessWidget {
               color: ATColors.white.withValues(alpha: 0.1), width: 2)),
       child: Text(text,
           style: textStyle.copyWith(
-              fontSize: ATSizes.size13,
+              fontSize: 13, height: 1,
               fontWeight: FontWeight.w500,
               letterSpacing: 0)),
     );

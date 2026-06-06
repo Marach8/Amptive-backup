@@ -1,7 +1,6 @@
 import 'package:amptive/src/config/utils/colors.dart';
 import 'package:amptive/src/shared/custom_container_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 
 class ATModalDismisser extends StatelessWidget {
   const ATModalDismisser({super.key, this.onDismissOverride});
@@ -12,7 +11,7 @@ class ATModalDismisser extends StatelessWidget {
     return Align(
       alignment: Alignment.center,
       child: ATContainer(
-        onTap: onDismissOverride ?? () => context.pop(),
+        onTap: onDismissOverride ?? () => Navigator.pop(context),
         margin: const EdgeInsets.symmetric(vertical: 10),
         radius: 5,
         height: 4,

@@ -10,7 +10,6 @@ import 'package:amptive/src/shared/modal_dismisser.dart';
 import 'package:amptive/src/shared/image_loader_widget.dart';
 import 'package:amptive/src/shared/search_filter_widget.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:go_router/go_router.dart';
 import 'package:nested/nested.dart';
 
 Future<bool?> showGiftersModal({
@@ -39,7 +38,7 @@ Future<bool?> showGiftersModal({
                   initialChildSize: 0.7,
                   builder: (_, ScrollController controller) {
                     return Container(
-                      padding: const EdgeInsets.only(top: 20),
+                      padding: const EdgeInsets.only(top: 10),
                       clipBehavior: Clip.hardEdge,
                       decoration: const BoxDecoration(
                         borderRadius: BorderRadius.only(

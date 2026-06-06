@@ -6,11 +6,12 @@ import 'package:amptive/src/config/services/network_service/interceptor.dart'
 import 'package:amptive/src/config/utils/dialogs/app_notification_dialog.dart';
 import 'package:amptive/src/features/auth/cubits/local_user_data_cubit.dart';
 import 'package:amptive/src/features/go_live/cubits/end_live_program_cubit.dart';
+import 'package:amptive/src/features/go_live/cubits/host_moderation_tools_cubit.dart';
 import 'package:amptive/src/features/go_live/cubits/livestream_cubit1.dart';
 import 'package:amptive/src/features/go_live/data/models/live_program_data.dart';
 import 'package:amptive/src/features/go_live/data/models/livestream_state.dart';
 import 'package:amptive/src/features/go_live/presentation/screens/live_program_screen.dart';
-import 'package:amptive/src/features/go_live/presentation/widgets/host_moderation_controls.dart';
+import 'package:amptive/src/features/go_live/presentation/widgets/host_view_controls.dart';
 import 'package:amptive/src/features/go_live/presentation/widgets/minimized_live_program_indicator.dart';
 import 'package:amptive/src/features/notifications/cubits/notifications_cubit.dart';
 import 'package:amptive/src/features/notifications/cubits/register_device_fcm_cubit.dart';
@@ -85,6 +86,9 @@ class DashboardState extends State<_SubWidget>{
           providers: <SingleChildWidget>[
             BlocProvider<GoLiveControlsVisibilityBloc>(
               create: (_) => GoLiveControlsVisibilityBloc()
+            ),
+            BlocProvider<HostModerationCubit>(
+              create: (_) => HostModerationCubit(),
             ),
             BlocProvider<LocalUserDataCubit>.value(
               value: context.read<LocalUserDataCubit>(),
