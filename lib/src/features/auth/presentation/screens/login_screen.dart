@@ -13,7 +13,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import '../../../../shared/app_bar_widget.dart';
 
-class LoginScreenEntryParams{
+class LoginScreenEntryParams {
   const LoginScreenEntryParams({
     this.title,
     this.notification,
@@ -64,17 +64,15 @@ class _LoginScreenState extends State<LoginScreen> with ATValidators {
       }
     });
 
-    WidgetsBinding.instance.addPostFrameCallback(
-      (_){
-        if(widget.params?.notification != null){
-          showAppNotification2(
-            context: context,
-            text: widget.params?.notification ?? '',
-            type: NotificationType.failure,
-          );
-        }
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (widget.params?.notification != null) {
+        showAppNotification2(
+          context: context,
+          text: widget.params?.notification ?? '',
+          type: NotificationType.failure,
+        );
       }
-    );
+    });
   }
 
   @override
