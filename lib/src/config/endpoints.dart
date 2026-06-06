@@ -53,6 +53,7 @@ class ATEndpoints {
   static const String getTransactionHistory = '/api/v1/payments/transactions';
   static const String fundWallet = '/api/v1/payments/wallet/fund';
   static const String getWalletBalance = '/api/v1/payments/wallet/balance';
+  static const String createProfessionalProfile = '/api/v1/users/me/profile';
 
   // static String getStreamTokenEndpoint(String streamId) =>
   //     '/api/v1/livestreams/$streamId/token';
