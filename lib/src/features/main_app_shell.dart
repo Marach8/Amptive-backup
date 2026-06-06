@@ -28,7 +28,6 @@ import 'go_live/data/models/deconstruct_inbound_events.dart';
 import 'go_live/cubits/livestream_bloc.dart';
 import 'notifications/presentation/screens/notif_landing_screen.dart';
 
-
 class ATMainAppShell extends StatelessWidget {
   const ATMainAppShell({super.key});
 
@@ -39,9 +38,10 @@ class ATMainAppShell extends StatelessWidget {
         BlocProvider<HomeFeedCubit>(create: (_) => HomeFeedCubit()),
         BlocProvider<LiveUsersCubit>(create: (_) => LiveUsersCubit()),
         BlocProvider<RemoteUserDataCubit>(create: (_) => RemoteUserDataCubit()),
-        BlocProvider<RegisterDeviceFCMCubit>(create: (_) => RegisterDeviceFCMCubit()),
-        BlocProvider<GetNotificationsCubit>(create: (_) => GetNotificationsCubit()),
-       
+        BlocProvider<RegisterDeviceFCMCubit>(
+            create: (_) => RegisterDeviceFCMCubit()),
+        BlocProvider<GetNotificationsCubit>(
+            create: (_) => GetNotificationsCubit()),
       ],
       child: const _SubWidget(),
     );
@@ -59,19 +59,23 @@ class __SubWidgetState extends State<_SubWidget> {
   final ScrollController _liveUsersScrollController = ScrollController();
   final GlobalKey<NestedScrollViewState> _nestedKey =
       GlobalKey<NestedScrollViewState>();
-  final GlobalKey<NestedScrollViewState> _notifNestedKey = GlobalKey<NestedScrollViewState>();
+  final GlobalKey<NestedScrollViewState> _notifNestedKey =
+      GlobalKey<NestedScrollViewState>();
 
-      StreamSubscription<RemoteMessage>? _notifSubscription;
+  StreamSubscription<RemoteMessage>? _notifSubscription;
 
   @override
   void initState() {
     super.initState();
     _liveUsersScrollController.addListener(() => _onLiveUsersScrollToEnd());
-     _notifSubscription = GetIt.I<PushNotificationService>().notificationStream.listen((RemoteMessage message) async {
-    if (mounted) {
-      context.read<GetNotificationsCubit>().fetchNotifications(refresh: true);
-    }
-  });
+    _notifSubscription = GetIt.I<PushNotificationService>()
+        .notificationStream
+        .listen((RemoteMessage message) async {
+      if (mounted) {
+        context.read<ATNavBarBloc>().resetNotificationSession();
+        context.read<GetNotificationsCubit>().fetchNotifications(refresh: true);
+      }
+    });
 
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       final ScrollController? sController =
@@ -79,28 +83,27 @@ class __SubWidgetState extends State<_SubWidget> {
       if (sController != null) {
         sController.addListener(() => _onHomeFeedScrollToEnd(sController));
       }
-     
 
       context.read<HomeFeedCubit>().fetchHomeFeed();
       context.read<LiveUsersCubit>().fetchLiveUsers();
-      
+
       await context.read<LocalUserDataCubit>().initializeCachedData();
       _registerDeviceForPush();
 
       context.read<LocalUserDataCubit>().initializeCachedData();
-       context.read<GetNotificationsCubit>().fetchNotifications();
+      context.read<GetNotificationsCubit>().fetchNotifications();
       // init push notification and connect user to websocket
 
       GetIt.I<PushNotificationService>().init();
       GetIt.I<UserWsService>().connectUser();
     });
-   
   }
+
   @override
-void dispose() {
-  _notifSubscription?.cancel(); 
-  super.dispose();
-}
+  void dispose() {
+    _notifSubscription?.cancel();
+    super.dispose();
+  }
 
   void _onHomeFeedScrollToEnd(ScrollController sController) {
     const double threshHold = 80;
@@ -117,16 +120,19 @@ void dispose() {
       context.read<LiveUsersCubit>().fetchLiveUsers();
     }
   }
+
   void _onNotificationsScrollToEnd() {
-  final ScrollController? controller = _notifNestedKey.currentState?.innerController;
-  if (controller == null) return;
-  
-  const double threshHold = 80;
-  
-  if (controller.position.pixels >= controller.position.maxScrollExtent + threshHold) {
-   context.read<GetNotificationsCubit>().fetchNotifications();
+    final ScrollController? controller =
+        _notifNestedKey.currentState?.innerController;
+    if (controller == null) return;
+
+    const double threshHold = 80;
+
+    if (controller.position.pixels >=
+        controller.position.maxScrollExtent + threshHold) {
+      context.read<GetNotificationsCubit>().fetchNotifications();
+    }
   }
-}
 
   Future<void> _registerDeviceForPush() async {
     final CachedUserData? userData =
@@ -162,8 +168,8 @@ void dispose() {
           bottom: false,
           top: false,
           child: Scaffold(
-              body: BlocSelector<ATNavBarBloc, (int, bool), int>(
-                  selector: ((int, bool) st) => st.$1,
+              body: BlocSelector<ATNavBarBloc, (int, bool, bool), int>(
+                  selector: ((int, bool, bool) st) => st.$1,
                   builder: (_, int index) {
                     return IndexedStack(index: index, children: <Widget>[
                       HomeTabView(
@@ -172,8 +178,9 @@ void dispose() {
                       ),
                       const DiscoverTabView(),
                       const SizedBox(),
-                      NotificationTabView(nestedKey: _notifNestedKey,
-                       onScroll: _onNotificationsScrollToEnd),
+                      NotificationTabView(
+                          nestedKey: _notifNestedKey,
+                          onScroll: _onNotificationsScrollToEnd),
                     ]);
                   }),
               resizeToAvoidBottomInset: false,
