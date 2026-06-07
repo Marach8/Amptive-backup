@@ -1,7 +1,9 @@
 import 'package:amptive/src/features/auth/cubits/local_user_data_cubit.dart';
+import 'package:amptive/src/features/go_live/cubits/host_moderation_tools_cubit.dart';
 import 'package:amptive/src/features/go_live/cubits/livestream_cubit1.dart';
 import 'package:amptive/src/features/go_live/data/models/livestream_state.dart';
-import 'package:amptive/src/features/go_live/presentation/widgets/host_moderation_tools_dialog.dart';
+import 'package:amptive/src/features/go_live/presentation/widgets/host_moderation_tools_modal.dart';
+import 'package:amptive/src/features/go_live/presentation/widgets/manage_cohosts_modal.dart';
 import 'package:amptive/src/shared/circular_image.dart';
 import 'package:amptive/src/shared/image_loader_widget.dart';
 import 'package:amptive/src/shared/textformfield_widget.dart';
@@ -108,7 +110,10 @@ class _HostModerationControlsState extends State<HostModerationControls> {
             }
             return EachGoLiveControlBtn(
               onTap: () {
-                showHostModerationToolsDialog(context);
+                showHostModerationToolsDialog(
+                  context: context,
+                  hostModeratioCubit: context.read<HostModerationCubit>(),
+                );
               },
               child: const Icon(Icons.settings, size: 20),
             );
@@ -116,43 +121,46 @@ class _HostModerationControlsState extends State<HostModerationControls> {
         ),
 
         Expanded(
-          child: Padding(
-            padding: const EdgeInsets.only(right: 5),
-            child: ATTextFormField(
-              controller: _cntrl,
-              focusNode: _focusNode,
-              disableBlueBorder: true,
-              counterText: '',
-              keyboardType: TextInputType.multiline,
-              cursorHeight: 20,
-              maxLength: 50,
-              maxLines: null,
-              isDense: true,
-              enabledBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(14),
-                borderSide: BorderSide(color: ATColors.transparent),
-              ),
-              prefixIcon: const SizedBox(width: 10),
-              fillColor: ATColors.white.withValues(alpha: 0.1),
-              cursorColor: ATColors.white.withValues(alpha: 0.6),
-              constraints: const BoxConstraints(maxHeight: 60),
-              contentPadding: const EdgeInsets.fromLTRB(10, 3, 10, 3),
-              hintText: ATStrings.comment,
-              suffixIcon: ValueListenableBuilder<_InputState>(
-                valueListenable: _inputNotifier,
-                builder: (_, _InputState state, __) {
-                  if(!state.hasText) return const SizedBox.shrink();
-                  return GestureDetector(
-                    behavior: HitTestBehavior.opaque,
-                    onTap: (){
-                      _cntrl.clear();
-                    },
-                    child: Padding(
-                      padding: const EdgeInsets.only(right: 8),
-                      child: Icon(Icons.close, color: ATColors.white, size: 18),
-                    ),
-                  );
-                }
+          child: Material(
+            color: ATColors.transparent,
+            child: Padding(
+              padding: const EdgeInsets.only(right: 5),
+              child: ATTextFormField(
+                controller: _cntrl,
+                focusNode: _focusNode,
+                disableBlueBorder: true,
+                counterText: '',
+                keyboardType: TextInputType.multiline,
+                cursorHeight: 20,
+                maxLength: 50,
+                maxLines: null,
+                isDense: true,
+                enabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(14),
+                  borderSide: BorderSide(color: ATColors.transparent),
+                ),
+                prefixIcon: const SizedBox(width: 10),
+                fillColor: ATColors.white.withValues(alpha: 0.1),
+                cursorColor: ATColors.white.withValues(alpha: 0.6),
+                constraints: const BoxConstraints(maxHeight: 60),
+                contentPadding: const EdgeInsets.fromLTRB(10, 3, 10, 3),
+                hintText: ATStrings.comment,
+                suffixIcon: ValueListenableBuilder<_InputState>(
+                  valueListenable: _inputNotifier,
+                  builder: (_, _InputState state, __) {
+                    if(!state.hasText) return const SizedBox.shrink();
+                    return GestureDetector(
+                      behavior: HitTestBehavior.opaque,
+                      onTap: (){
+                        _cntrl.clear();
+                      },
+                      child: Padding(
+                        padding: const EdgeInsets.only(right: 8),
+                        child: Icon(Icons.close, color: ATColors.white, size: 18),
+                      ),
+                    );
+                  }
+                ),
               ),
             ),
           ),
@@ -209,6 +217,8 @@ class _RowOfBtns extends StatelessWidget {
             context.read<LiveStreamCubit1>()
               .toggleMicrophone(!isMicUnmuted);
           },
+          color: isMicUnmuted ? ATColors
+            .white.withValues(alpha: 0.3) : null,
           child: Icon(
             isMicUnmuted ? Icons.mic : Icons.mic_off,
             size: 20
@@ -221,10 +231,11 @@ class _RowOfBtns extends StatelessWidget {
                 .currentUserData?.userId ?? '',
             );
           },
+          color: isMyHandRaised ? ATColors
+            .white.withValues(alpha: 0.3) : null,
           child: ATImgLoader(
             imgPath: ATImgStrings.handRaiseIcon,
-            height: 20,
-            width: 20,
+            height: 20, width: 20,
             boxFit: BoxFit.fill,
             color: isMyHandRaised ? ATColors.hex307FE2 : null,
           ),
@@ -235,30 +246,14 @@ class _RowOfBtns extends StatelessWidget {
               flipX: true, child: const Icon(Icons.reply, size: 20)),
         ),
         EachGoLiveControlBtn(
-          onTap: () async {
-            // final bool? sendInvite = await showGoLiveHostAddCoHostDialog(context: context);
-            // if(context.mounted && (sendInvite ?? false)){
-            //   showAppNotification(
-            //     context: context,
-            //     icon: const Icon(Icons.check_circle),
-            //     text: ATStrings.COHOST_INVITE_SENT,
-            //     bgColor: ATColors.notifBg,
-            //   );
-            // }
-          },
-          margin: EdgeInsets.zero,
-          child: const Icon(
-            Icons.add,
-          ),
-        ),
-        EachGoLiveControlBtn(
           onTap: () {
             showModalBottomSheet(
               context: context,
-              builder: (_) => EmojiPicker(
+              useRootNavigator: true,
+              builder: (BuildContext modalContext) => EmojiPicker(
                 onEmojiSelected: (Category? category, Emoji emoji) {
                   context.read<LiveStreamCubit1>().sendReaction(emoji.emoji);
-                  Navigator.pop(context);
+                  Navigator.pop(modalContext);
                 },
               ),
             );
@@ -270,18 +265,51 @@ class _RowOfBtns extends StatelessWidget {
             size: 20,
           ),
         ),
+
+        EachGoLiveControlBtn(
+          onTap: () async {
+            final foo = await showManageCohostsModal(
+              context: context,
+              liveStreamCubit: context.read<LiveStreamCubit1>(),
+              localUserDataCubit: context.read<LocalUserDataCubit>(),
+            );
+            // final bool? sendInvite = await showGoLiveHostAddCoHostDialog(context: context);
+            // if(context.mounted && (sendInvite ?? false)){
+            //   showAppNotification(
+            //     context: context,
+            //     icon: const Icon(Icons.check_circle),
+            //     text: ATStrings.COHOST_INVITE_SENT,
+            //     bgColor: ATColors.notifBg,
+            //   );
+            // }
+          },
+          margin: EdgeInsets.zero,
+          child: ATImgLoader(
+            imgPath: ATImgStrings.manageCohostsIcon,
+            height: 20, width: 20,
+            boxFit: BoxFit.fill,
+            color: isMyHandRaised ? ATColors.hex307FE2 : null,
+          ),
+          // child: const Icon(
+          //   Icons.add,
+          // ),
+        ),
       ],
     );
   }
 }
 
 class EachGoLiveControlBtn extends StatelessWidget {
-  const EachGoLiveControlBtn(
-      {super.key, required this.child, required this.onTap, this.margin});
+  const EachGoLiveControlBtn({
+    super.key, required this.child,
+    required this.onTap,
+    this.margin, this.color
+  });
 
   final Widget child;
   final EdgeInsetsGeometry? margin;
   final VoidCallback onTap;
+  final Color? color;
 
   @override
   Widget build(BuildContext context) {
@@ -292,7 +320,7 @@ class EachGoLiveControlBtn extends StatelessWidget {
           height: 35,
           width: 35,
           onTap: onTap,
-          color: ATColors.white.withValues(alpha: 0.1),
+          color: color ?? ATColors.white.withValues(alpha: 0.1),
           padding: const EdgeInsets.all(5),
           radius: 30,
           child: child),

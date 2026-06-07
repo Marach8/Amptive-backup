@@ -34,7 +34,7 @@ import 'package:amptive/src/features/home/presentation/screens/following_screen.
 import 'package:amptive/src/features/home/presentation/screens/live_show_detailed_screen.dart';
 import 'package:amptive/src/features/home/presentation/screens/schedule_detailed_screen.dart';
 import 'package:amptive/src/features/home/presentation/screens/subscribed_screen.dart';
-import 'package:amptive/src/features/main_app_shell.dart';
+import 'package:amptive/src/features/dashboard.dart';
 import 'package:amptive/src/features/post_auth/presentation/views/post_auth_prez_export.dart';
 import 'package:amptive/src/features/profile/presentation/screens/edit_bio_screen.dart';
 import 'package:amptive/src/features/profile/presentation/screens/edit_name_screen.dart';
@@ -62,7 +62,7 @@ import '../../features/discover/presentation/views/community_home_screen.dart';
 import '../../features/discover/presentation/views/society_hashtag_screen.dart';
 import '../../features/discover/presentation/views/trending_society_screen.dart';
 import '../../features/go_live/go_live_export.dart';
-import '../../features/go_live/data/models/deconstruct_inbound_events.dart';
+
 import '../../features/home/presentation/screens/live_event_detailed_screen.dart';
 import '../../features/profile/presentation/screens/edit_profile_landing_screen.dart';
 import '../../features/profile/presentation/screens/edit_socials_screen.dart';
@@ -219,7 +219,7 @@ final GoRouter amptiveAppRouter = GoRouter(
     GoRoute(
         name: ATRoutes.dashboard,
         path: ATRoutes.dashboard.addSlash,
-        builder: (_, __) => const ATMainAppShell(),
+        builder: (_, __) => const ATDashboard(),
         routes: <RouteBase>[
           GoRoute(
             name: ATRoutes.scheduleDetailed,
@@ -367,18 +367,6 @@ final GoRouter amptiveAppRouter = GoRouter(
                     child: GoLiveOnboardingScreen(
                       liveProgramEntryParams: liveProgramEntryParams));
               }),
-
-          GoRoute(
-            name: ATRoutes.liveProgramScreen,
-            path: ATRoutes.liveProgramScreen.addSlash,
-            pageBuilder: (_, GoRouterState st) {
-              return ATFadingRouteTransition<void>(
-                child: LiveProgramScreen(
-                  liveScreenEntryParams: st.extra as LiveProgramData?,
-                )
-              );
-            }
-          ),
           GoRoute(
             name: ATRoutes.chooseEventOrShowScreen,
             path: ATRoutes.chooseEventOrShowScreen,

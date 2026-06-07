@@ -11,8 +11,9 @@ class LiveStreamState1 extends Equatable {
   const LiveStreamState1({
     this.audioConnectionStatus = AudioConnectionStatus.initial,
     this.wsConnectionStatus = WSConnectionStatus.initial,
-    this.participants,
+    this.allParticipants,
     this.activeSpeakerIds,
+    this.unMutedParticipantIds,
     this.myMicIsEnabled = false,
     this.connectionErrorMessage,
     this.programCoverUrl,
@@ -20,7 +21,7 @@ class LiveStreamState1 extends Equatable {
     this.roomUrl,
     this.roomEntryToken,
     this.community,
-    this.organizers,
+    this.organizersIds,
     this.programTitle,
     this.programDesc,
     this.messages,
@@ -31,11 +32,14 @@ class LiveStreamState1 extends Equatable {
     this.viewerCount = 0,
     this.messagesIds,
     this.myHandIsRaised,
+    this.singleKickOutData,
+    this.allParticipantsIds,
+    this.liveStreamEnded,
+    this.myRole,
   });
 
   final AudioConnectionStatus audioConnectionStatus;
   final WSConnectionStatus wsConnectionStatus;
-  final Map<String, LivestreamParticipant>? participants;
   final bool myMicIsEnabled;
   final String? connectionErrorMessage,
       programCoverUrl,
@@ -43,23 +47,27 @@ class LiveStreamState1 extends Equatable {
       roomUrl,
       roomEntryToken,
       programTitle,
-      programDesc;
+      programDesc, singleKickOutData;
   final Community? community;
-  final Organizers? organizers;
+  final OrganizersIDs? organizersIds;
   final Map<String, ChatMessage>? messages;
+  final Map<String, LivestreamParticipant>? allParticipants;
   final List<Reaction>? reactions;
   final Map<String, Gift>? gifts;
   final List<String>? giftIds, raisedHandsIds,
-    messagesIds, activeSpeakerIds;
+    messagesIds, activeSpeakerIds, 
+    unMutedParticipantIds, allParticipantsIds;
+  final ParticipantRole? myRole;
   final int viewerCount;
-  final bool? myHandIsRaised;
+  final bool? myHandIsRaised, liveStreamEnded;
 
   /// Creates a new state object with updated values.
   LiveStreamState1 copyWith({
     AudioConnectionStatus? audioConnectionStatus,
     WSConnectionStatus? wsConnectionStatus,
-    Map<String, LivestreamParticipant>? participants,
+    Map<String, LivestreamParticipant>? allParticipants,
     List<String>? activeSpeakerIds,
+    List<String>? unMutedParticipantIds,
     bool? myMicIsEnabled,
     String? errorMessage,
     String? programCoverUrl,
@@ -67,7 +75,7 @@ class LiveStreamState1 extends Equatable {
     String? roomUrl,
     String? roomEntryToken,
     Community? community,
-    Organizers? organizers,
+    OrganizersIDs? organizersIds,
     String? programTitle,
     String? programDesc,
     Map<String, ChatMessage>? messages,
@@ -78,13 +86,17 @@ class LiveStreamState1 extends Equatable {
     List<String>? raisedHandsIds,
     int? viewerCount,
     bool? myHandIsRaised,
+    String? singleKickOutData,
+    List<String>? allParticipantsIds,
+    ParticipantRole? myRole,
+    bool? liveStreamEnded,
   }) {
     return LiveStreamState1(
       audioConnectionStatus: audioConnectionStatus 
         ?? this.audioConnectionStatus,
       wsConnectionStatus: wsConnectionStatus 
         ?? this.wsConnectionStatus,
-      participants: participants ?? this.participants,
+      allParticipants: allParticipants ?? this.allParticipants,
       activeSpeakerIds: activeSpeakerIds 
         ?? this.activeSpeakerIds,
       myMicIsEnabled: myMicIsEnabled ?? this.myMicIsEnabled,
@@ -95,7 +107,7 @@ class LiveStreamState1 extends Equatable {
       roomUrl: roomUrl ?? this.roomUrl,
       roomEntryToken: roomEntryToken ?? this.roomEntryToken,
       community: community ?? this.community,
-      organizers: organizers ?? this.organizers,
+      organizersIds: organizersIds ?? this.organizersIds,
       programTitle: programTitle ?? this.programTitle,
       programDesc: programDesc ?? this.programDesc,
       messages: messages ?? this.messages,
@@ -106,6 +118,13 @@ class LiveStreamState1 extends Equatable {
       viewerCount: viewerCount ?? this.viewerCount,
       messagesIds: messagesIds ?? this.messagesIds,
       myHandIsRaised: myHandIsRaised ?? this.myHandIsRaised,
+      unMutedParticipantIds: unMutedParticipantIds 
+        ?? this.unMutedParticipantIds,
+      singleKickOutData: singleKickOutData 
+        ?? this.singleKickOutData,
+      allParticipantsIds: allParticipantsIds ?? this.allParticipantsIds,
+      myRole: myRole ?? this.myRole,
+      liveStreamEnded: liveStreamEnded ?? this.liveStreamEnded,
     );
   }
 
@@ -113,7 +132,7 @@ class LiveStreamState1 extends Equatable {
   List<Object?> get props => <Object?>[
         audioConnectionStatus,
         wsConnectionStatus,
-        participants,
+        allParticipants,
         activeSpeakerIds,
         myMicIsEnabled,
         connectionErrorMessage,
@@ -122,7 +141,7 @@ class LiveStreamState1 extends Equatable {
         roomUrl,
         roomEntryToken,
         community,
-        organizers,
+        organizersIds,
         programTitle,
         programDesc,
         messages,
@@ -133,12 +152,17 @@ class LiveStreamState1 extends Equatable {
         viewerCount,
         messagesIds,
         myHandIsRaised,
+        unMutedParticipantIds,
+        singleKickOutData,
+        allParticipantsIds,
+        myRole,
+        liveStreamEnded,
       ];
 }
 
-typedef Organizers = ({
-  LivestreamParticipant? host,
-  List<LivestreamParticipant?>? cohosts,
+typedef OrganizersIDs = ({
+  String? hostId,
+  List<String>? cohostsIds,
 });
 
 class LiveSessionParticipant extends User {

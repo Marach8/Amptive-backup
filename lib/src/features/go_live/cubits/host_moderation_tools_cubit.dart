@@ -1,7 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class AmptiveGoLiveHostModerationToolsBloc extends Cubit<List<bool>> {
-  AmptiveGoLiveHostModerationToolsBloc() : super(<bool>[true, true, true]);
+class HostModerationCubit extends Cubit<List<bool>> {
+  HostModerationCubit() : super(<bool>[true, true, true]);
 
   void allowComments() {
     final List<bool> newState = List<bool>.from(state);

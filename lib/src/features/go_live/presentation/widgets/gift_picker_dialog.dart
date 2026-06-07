@@ -10,6 +10,7 @@ class GiftPickerDialog extends StatefulWidget {
   static Future<int?> show(BuildContext context) async {
     return await showModalBottomSheet<int?>(
       context: context,
+      useRootNavigator: true,
       backgroundColor: Colors.transparent,
       builder: (_) => const GiftPickerDialog(),
     );
@@ -142,7 +143,7 @@ class _GiftPickerDialogState extends State<GiftPickerDialog> {
               child: ElevatedButton(
                 onPressed: _selectedGiftId != null
                     ? () {
-                        context.pop(_quantity);
+                        Navigator.pop(context, _quantity);
                       }
                     : null,
                 style: ElevatedButton.styleFrom(

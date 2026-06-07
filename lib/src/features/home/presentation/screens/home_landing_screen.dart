@@ -3,6 +3,7 @@ import 'package:amptive/src/config/utils/colors.dart';
 import 'package:amptive/src/config/routing/route_strings.dart';
 import 'package:amptive/src/config/utils/dialogs/app_notification_dialog.dart';
 import 'package:amptive/src/features/auth/cubits/local_user_data_cubit.dart';
+import 'package:amptive/src/features/go_live/presentation/screens/live_program_screen.dart';
 import 'package:amptive/src/features/home/cubits/home_feed_cubit.dart';
 import 'package:amptive/src/features/home/cubits/live_users_cubit.dart';
 import 'package:amptive/src/features/home/cubits/toggle_following_cubit.dart';
@@ -20,7 +21,7 @@ import '../../../../config/utils/image_strings.dart';
 import '../../../../shared/circular_image.dart';
 import '../../../../shared/divider_widget.dart';
 import '../../../../shared/image_loader_widget.dart';
-import '../../../../views/widgets/other_widgets/main_application_widgets/widgets_in_home_view/appbar_drop_down.dart';
+import '../widgets/appbar_drop_down.dart';
 
 class HomeTabView extends StatelessWidget {
   const HomeTabView({
@@ -77,8 +78,8 @@ class HomeTabView extends StatelessWidget {
                 // ),
                 GestureDetector(
                     onTap: () {
-                      //context.pushNamed(ATRoutes.GO_LIVE_ONBOARDING);
-                     context.pushNamed(ATRoutes.walletScreen);
+                      liveProgramOverlayKey.currentState?.maximize();
+                     //context.pushNamed(ATRoutes.walletScreen);
                      // context.pushNamed(ATRoutes.WALLET_ONBOARDING);
                     },
                     child: Stack(

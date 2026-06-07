@@ -1,5 +1,5 @@
 import 'package:amptive/src/config/utils/dialogs/app_notification_dialog.dart';
-import 'package:amptive/src/config/utils/dialogs/confirmation_alert_dialog.dart';
+import 'package:amptive/src/shared/confirmation_alert_dialog.dart';
 import 'package:amptive/src/features/auth/cubits/local_user_data_cubit.dart';
 import 'package:amptive/src/features/go_live/cubits/livestream_cubit1.dart';
 import 'package:amptive/src/features/go_live/data/models/deconstruct_inbound_events.dart';
@@ -19,19 +19,22 @@ import 'package:nested/nested.dart';
 
 Future<String?> showHandRaisersModal({
   required BuildContext context,
-  required bool canPermitHandRaise,
+  required bool canApproveHandRaise,
   required LiveStreamCubit1 liveStreamCubit,
+  required LocalUserDataCubit localUserDataCubit,
 }) async {
   return await showModalBottomSheet<String>(
     context: context,
     isScrollControlled: true,
     useSafeArea: true,
+    useRootNavigator: true,
     backgroundColor: ATColors.hex202020,
     barrierColor: ATColors.black.withValues(alpha: 0.5),
     builder: (BuildContext dContext) {
       return MultiBlocProvider(
         providers: <SingleChildWidget>[
           BlocProvider<LiveStreamCubit1>.value(value: liveStreamCubit),
+          BlocProvider<LocalUserDataCubit>.value(value: localUserDataCubit),
           BlocProvider<SearchkeyCubit>(create: (_) => SearchkeyCubit())
         ],
         child: DraggableScrollableSheet(
@@ -40,7 +43,7 @@ Future<String?> showHandRaisersModal({
           builder: (_, ScrollController scrollController) {
             return _HandRaisersModal(
               scrollController: scrollController,
-              canKickListener: canPermitHandRaise
+              canKickListener: canApproveHandRaise
             );
           },
         ),
@@ -164,7 +167,7 @@ class _HandRaisersList extends StatelessWidget {
       context.select<LiveStreamCubit1, List<String>?>(
       (LiveStreamCubit1 cubit) => cubit.state.raisedHandsIds);
     final Map<String, LivestreamParticipant>? participants = 
-      context.read<LiveStreamCubit1>().state.participants;
+      context.read<LiveStreamCubit1>().state.allParticipants;
 
     if (raisedHandsIds == null || raisedHandsIds.isEmpty) {
       return Center(
@@ -254,7 +257,7 @@ class _HandRaiserTile extends StatelessWidget {
           else if(canPermitHandRaise)
             ATContainer(
               onTap: () async {
-                context.pop(participant?.userId);
+                Navigator.pop(context, participant?.userId);
               },
               height: 35,
               width: 35, radius: 20,

@@ -40,7 +40,7 @@ class ATImgStrings {
   static const String X_LOGO = '$_svgPath/x_logo.svg.svg';
   static const String groupIcon = '$_svgPath/Group_fill.svg';
   static const String TOP_CREATOR_BADGE = '$_svgPath/RANK BADGES.svg';
-  static const String SUBSCRIBER_BADGE = '$_svgPath/Subscribers badge.svg';
+  static const String subscriberBadge = '$_svgPath/Subscribers badge.svg';
   static const String BIZ_ACCT_LOGO = '$_svgPath/Simplification (3).svg';
   static const String BIZ_ACCT_LOGO_MIC = '$_svgPath/Simplification (1).svg';
   static const String CREATOR_ACCT_LOGO = '$_svgPath/Simplification.svg';
@@ -123,6 +123,7 @@ class ATImgStrings {
   static const String ONBOARD_NOTIF_IMG5 = '$_pngPath/image 5 (4).png';
   static const String ONBOARD_NOTIF_IMG7 = '$_pngPath/image 5 (5).png';
   static const String ONBOARD_NOTIF_IMG6 = '$_pngPath/image 5 (6).png';
+
   static const String onboard1 = '$_webpPath/onboard1.webp';
   static const String onboard2a = '$_webpPath/onboard2a.webp';
   static const String onboard2b = '$_webpPath/onboard2b.webp';
@@ -130,4 +131,6 @@ class ATImgStrings {
   static const String onboard3a = '$_webpPath/onboard3a.webp';
   static const String onboard3b = '$_webpPath/onboard3b.webp';
   static const String onboard3c = '$_webpPath/onboard3c.webp';
+
+  static const String manageCohostsIcon = '$_svgPath/manage_cohosts_icon.svg';
 }

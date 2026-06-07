@@ -297,7 +297,7 @@ class WSChannelNotifServiceImpl implements WSNotificationService {
   Future<void> disconnect() async {
     _isManuallyClosed = true;
     await _cleanupConnection();
-    _connectionController.add(WSConnectionStatus.disconnected);
+    //_connectionController.add(WSConnectionStatus.disconnected);
   }
 
   @override

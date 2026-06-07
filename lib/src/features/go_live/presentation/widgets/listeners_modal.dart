@@ -1,5 +1,5 @@
 import 'package:amptive/src/config/utils/dialogs/app_notification_dialog.dart';
-import 'package:amptive/src/config/utils/dialogs/confirmation_alert_dialog.dart';
+import 'package:amptive/src/shared/confirmation_alert_dialog.dart';
 import 'package:amptive/src/features/auth/cubits/local_user_data_cubit.dart';
 import 'package:amptive/src/features/go_live/cubits/livestream_cubit1.dart';
 import 'package:amptive/src/features/go_live/data/models/deconstruct_inbound_events.dart';
@@ -13,28 +13,27 @@ import 'package:amptive/src/features/go_live/go_live_export.dart';
 import 'package:amptive/src/global_export.dart';
 import 'package:amptive/src/shared/modal_dismisser.dart';
 import 'package:amptive/src/shared/search_filter_widget.dart';
-import 'package:amptive/src/shared/circle_avatar.dart';
 import 'package:nested/nested.dart';
-import '../../../../models/host.dart';
-import '../../../../bloc/main_app/go_live_bloc/host_view/available_cohosts_bloc.dart';
-import '../../../../services/create_show/create_show_service.dart';
-import '../../../../livestream/models/livestream_models.dart';
+
 
 Future<void> showListenersModal({
   required BuildContext context,
   required bool enableKickOut,
   required LiveStreamCubit1 liveStreamCubit,
+  required LocalUserDataCubit localUserDataCubit,
 }) async {
   return await showModalBottomSheet(
     context: context,
     isScrollControlled: true,
     useSafeArea: true,
-    backgroundColor: ATColors.hex202020,
+    useRootNavigator: true,
+    backgroundColor: ATColors.hex202020,    
     barrierColor: ATColors.black.withValues(alpha: 0.5),
     builder: (BuildContext dContext) {
       return MultiBlocProvider(
         providers: <SingleChildWidget>[
           BlocProvider<LiveStreamCubit1>.value(value: liveStreamCubit),
+          BlocProvider<LocalUserDataCubit>.value(value: localUserDataCubit),
           BlocProvider<SearchkeyCubit>(create: (_) => SearchkeyCubit())
         ],
         child: Stack(
@@ -134,7 +133,7 @@ class _ListenersModalState extends State<_ListenersModal> {
           padding: const EdgeInsets.fromLTRB(15, 0, 15, 10),
           child: BlocSelector<LiveStreamCubit1, LiveStreamState1, 
             Map<String, LivestreamParticipant>?>(
-            selector: (LiveStreamState1 state) => state.participants,
+            selector: (LiveStreamState1 state) => state.allParticipants,
               builder: (_, Map<String, LivestreamParticipant>? participants) {
             final bool disableTextfield = participants == null
               || participants.isEmpty;
@@ -181,14 +180,15 @@ class _ListenersList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final Map<String, LivestreamParticipant>? participants =
-      context.select<LiveStreamCubit1, Map<String, LivestreamParticipant>?>(
-      (LiveStreamCubit1 cubit) => cubit.state.participants);
+    final List<String> allParticipantsIds =
+      context.select<LiveStreamCubit1, List<String>>(
+      (LiveStreamCubit1 cubit) => cubit.state.allParticipantsIds ?? <String>[]);
 
-    if (participants == null || participants.isEmpty) {
+
+    if (allParticipantsIds.isEmpty) {
       return Center(
         child: Text(
-          'No participants yet',
+          'No listeners yet',
           style: context.textTheme.bodyMedium?.copyWith(
             color: ATColors.hexC2C2C2,
           ),
@@ -196,22 +196,25 @@ class _ListenersList extends StatelessWidget {
       );
     }
 
+    final Map<String, LivestreamParticipant>? allParticipants 
+      = context.read<LiveStreamCubit1>().state.allParticipants;
+
     return ListView.builder(
       controller: scrollController,
-      itemCount: participants.length + 1,
+      itemCount: allParticipantsIds.length + 1,
       physics: const BouncingScrollPhysics(),
       padding: const EdgeInsets.fromLTRB(15, 20, 10, 20),
       itemBuilder: (_, int listIndex) {
         if (listIndex == 0) {
           return Text(
-            'Participants (${participants.length})',
+            'Top Listeners (${allParticipantsIds.length})',
             style: context.textTheme.bodyMedium,
           );
         }
 
         final int adjustedIndex = listIndex - 1;
-        final String id = participants.keys.elementAt(adjustedIndex);
-        final LivestreamParticipant? participant = participants[id];
+        final String id = allParticipantsIds[adjustedIndex];
+        final LivestreamParticipant? participant = allParticipants?[id];
 
         return _ParticipantTile(
           participant: participant,
@@ -237,8 +240,8 @@ class _ParticipantTile extends StatelessWidget {
       == ParticipantRole.host;
 
     String userName = '';
-    final bool isMe = participant?.userId == context.read<LocalUserDataCubit>()
-      .currentUserData?.userId;
+    final bool isMe = participant?.userId == context
+      .read<LocalUserDataCubit>().currentUserData?.userId;
     if(isMe){
       userName = ATStrings.you;
     }else{
@@ -267,30 +270,72 @@ class _ParticipantTile extends StatelessWidget {
           ),
           if (isHost) const HostIndicator() 
           else if(canKickListener)
-            ATContainer(
-              onTap: () async {
-                // Kick out functionality would require integration with the
-                // livestream service to properly remove the participant
-                // For now, show a confirmation snackbar
-                showAppNotification(
-                  context: context,
-                  icon: const ATImgLoader(
+            Row(
+              mainAxisSize: MainAxisSize.min,
+              mainAxisAlignment: MainAxisAlignment.end,
+              spacing: 8,
+              children: <Widget>[
+                MuteUmuteListenerBtn(
+                  participantId: participant?.userId?? ''),
+                ATContainer(
+                  onTap: () async {
+                    final bool? shouldKickOut = await showKickOutConfirmationDialog(
+                      context: context,
+                      title: 'Are you kicking out $userName?',
+                      content: '$userName will be unable to join this current live program but can join your future live sessions',
+                      listenerPic: participant?.profilePicture ?? ATImgStrings.jpeg1,
+                    );
+                    if(context.mounted && shouldKickOut == true){
+                      context.read<LiveStreamCubit1>()
+                        .kickOutListener(participant?.userId?? '');
+                    }
+                  },
+                  height: 35, width: 35, radius: 20,
+                  color: ATColors.white.withValues(alpha: 0.1),
+                  child: const ATImgLoader(
+                    boxFit: BoxFit.scaleDown,
                     imgPath: ATImgStrings.kickUserOut,
                   ),
-                  text: 'Kick out feature coming soon',
-                  bgColor: ATColors.hex307FE2,
-                );
-              },
-              height: 35,
-              width: 35,
-              boxShape: BoxShape.circle,
-              color: ATColors.white.withValues(alpha: 0.1),
-              child: const ATImgLoader(
-                boxFit: BoxFit.scaleDown,
-                imgPath: ATImgStrings.kickUserOut,
-              ),
+                ),
+              ],
             ),
         ],
+      ),
+    );
+  }
+}
+
+
+class MuteUmuteListenerBtn extends StatelessWidget {
+  const MuteUmuteListenerBtn({
+    super.key,
+    required this.participantId,
+  });
+
+  final String participantId;
+
+  @override
+  Widget build(BuildContext context) {
+    final List<String> unMutedParticipantIds = context.select(
+      (LiveStreamCubit1 cubit) => cubit.state.unMutedParticipantIds
+    ) ?? <String>[];
+
+    final bool micIsActive = unMutedParticipantIds.contains(participantId);
+
+    return ATContainer(
+      onTap: () async {
+        if(micIsActive){
+          context.read<LiveStreamCubit1>().muteListener(participantId);
+        }
+        else{
+          context.read<LiveStreamCubit1>().unMuteListener(participantId);
+        }
+      },
+      height: 35, width: 35, radius: 20,
+      color: ATColors.white.withValues(alpha: micIsActive ? 0.3 : 0.1),
+      child: Icon(
+        micIsActive ? Icons.mic : Icons.mic_off,
+        size: 22
       ),
     );
   }

@@ -8,7 +8,7 @@ abstract class ATAudioStreamingService {
   });
 
   /// Disconnect from room
-  Future<void> disconnect();
+  Future<void> manuallyDisconnect();
 
   /// Enable/disable microphone
   Future<void> setMicEnabled(bool enabled);
@@ -22,6 +22,6 @@ abstract class ATAudioStreamingService {
   /// Active speakers (ids)
   Stream<List<String>> get activeSpeakersStream;
 
-  /// Dispose resources
-  Future<void> dispose();
+  /// Users whose mic is enabled
+  Stream<List<String>> get participantsWithMicEnabledStream;
 }

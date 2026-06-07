@@ -8,6 +8,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../../config/utils/extensions/context_extensions.dart';
+
 class ATHomeDropDown extends StatelessWidget {
   const ATHomeDropDown({super.key, required this.child, this.offset});
   final Widget child;
@@ -82,5 +84,55 @@ class ATHomeDropDown extends StatelessWidget {
                     ],
                   ))
             ]);
+  }
+}
+
+
+class ATStringsDropDown extends StatelessWidget {
+  const ATStringsDropDown({
+    super.key,
+    this.child,
+    required this.items,
+    required this.onSelected,
+    this.width,
+    this.selectedItem,
+    this.offset,
+  });
+
+  final Widget? child;
+  final List<String> items;
+  final void Function(String) onSelected;
+  final double? width;
+  final String? selectedItem;
+  final Offset? offset;
+
+  @override
+  Widget build(BuildContext context) {
+    return PopupMenuButton<String>(
+      offset: offset ?? const Offset(0, 50),
+      onSelected: onSelected,
+      constraints: width != null ? BoxConstraints.tightFor(width: width) : null,
+      color: ATColors.containerGradientColorB,
+      elevation: 0,
+      useRootNavigator: true,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(12),
+        side: BorderSide(color: ATColors.hex2D2D2D, width: 0.5),
+      ),
+      padding: EdgeInsets.zero,
+      child: child,
+      itemBuilder: (_) => items
+          .map(
+            (String item) => PopupMenuItem<String>(
+              height: 30,
+              value: item,
+              child: Text(
+                item,
+                style: context.textTheme.bodySmall
+              ),
+            ),
+          )
+          .toList(),
+    );
   }
 }
