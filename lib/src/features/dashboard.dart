@@ -160,6 +160,7 @@ class DashboardState extends State<_SubWidget>{
       _notifSubscription = GetIt.I<PushNotificationService>().notificationStream
       .listen((RemoteMessage message) async {
       if (mounted) {
+        context.read<ATNavBarBloc>().resetNotificationSession();
         context.read<GetNotificationsCubit>().fetchNotifications(refresh: true);
       }
     });
