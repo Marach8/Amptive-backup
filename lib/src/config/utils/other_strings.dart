@@ -24,6 +24,7 @@ class ATStrings {
   static const String dob = 'Date of Birth';
   static const String name = 'Name';
   static const String you = 'You';
+  static const String isExistingUser = 'is_existing_user';
   static const String followerCount = 'followers count';
   static const String followingCount = 'following count';
   static const String hasTestedMic = 'has tested mic';
@@ -46,7 +47,6 @@ class ATStrings {
       'Enter the 4 digit code we just sent to';
   static const String next = 'Next';
   static const String shouldRedirect = 'should Redirect';
-  static const String isNewUser = 'Is First time user';
   static const String enterAmount = 'Enter Amount';
   static const String or = 'or';
   static const String and = 'and';

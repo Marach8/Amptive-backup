@@ -3,10 +3,10 @@
 class ATImgStrings {
   const ATImgStrings._();
 
-  static const String _svgPath = 'assets/images/svg_images';
+  static const String _svgPath = 'assets/images/svgs';
   static const String _generalJpegImagePath = 'assets/images/jpeg_images';
-  static const String _pngPath = 'assets/images/png_images';
-  static const String _webpPath = 'assets/images/webp_images';
+  static const String _pngPath = 'assets/images/pngs';
+  static const String _webpPath = 'assets/images/webps';
 
   static const String emptyImage = '$_svgPath/empty_image.svg';
   static const String AMPTIVE_LOGO = '$_svgPath/Logo.svg';

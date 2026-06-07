@@ -47,25 +47,3 @@ class ATFadingRouteTransition<T> extends CustomTransitionPage<T> {
         );
   final double? beginOffset;
 }
-
-FutureOr<String?> tempRedirect(
-    BuildContext context, GoRouterState state) async {
-  const FlutterSecureStorage storage = FlutterSecureStorage();
-  final String? shouldRedirect = await storage.read(
-    key: ATStrings.shouldRedirect,
-  );
-  final String? isNewUser = await storage.read(key: ATStrings.isNewUser);
-
-  if (shouldRedirect == 'true') {
-    await storage.write(
-        key: ATStrings.shouldRedirect, value: false.toString());
-
-    if (isNewUser == 'false') {
-      return ATRoutes.postOnboardingScreen.addSlash;
-    } else {
-      return ATRoutes.onboardingScreen.addSlash;
-    }
-  }
-
-  return null;
-}
