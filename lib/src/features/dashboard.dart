@@ -273,8 +273,8 @@ class DashboardState extends State<_SubWidget>{
         },
         child: ATAnnotatedRegion(
           child: Scaffold(
-              body: BlocSelector<ATNavBarBloc, (int, bool), int>(
-                  selector: ((int, bool) st) => st.$1,
+              body: BlocSelector<ATNavBarBloc, (int, bool, bool), int>(
+                  selector: ((int, bool, bool) st) => st.$1,
                   builder: (_, int index) {
                     return IndexedStack(index: index, children: <Widget>[
                       HomeTabView(

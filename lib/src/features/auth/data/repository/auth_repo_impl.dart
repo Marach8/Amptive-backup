@@ -102,12 +102,13 @@ class AuthRepoImpl implements AuthRepo {
       final String otp = response.data['data']['otp'] as String;
       return Successful<String>(data: otp);
     } catch (e) {
-      return Unsuccessful<String>(error: ATException.resolveException(e));
+      return Unsuccessful<String>(
+        error: ATException.resolveException(e));
     }
   }
 
   @override
-  Future<ApiResponse<SignupResponseModel>> registerUser({
+  Future<ApiResponse<SignUpResponseModel>> registerUser({
     required RegistrationData param,
   }) async {
     try {
@@ -116,11 +117,11 @@ class AuthRepoImpl implements AuthRepo {
         data: param.toJson(),
       );
 
-      final SignupResponseModel signupResponse =
-          SignupResponseModel.fromJson(response.data['data']);
-      return Successful<SignupResponseModel>(data: signupResponse);
+      final SignUpResponseModel signupResponse =
+          SignUpResponseModel.fromJson(response.data['data']);
+      return Successful<SignUpResponseModel>(data: signupResponse);
     } catch (e) {
-      return Unsuccessful<SignupResponseModel>(
+      return Unsuccessful<SignUpResponseModel>(
         error: ATException.resolveException(e),
       );
     }
@@ -140,7 +141,8 @@ class AuthRepoImpl implements AuthRepo {
         'purpose': purpose ?? 'profile-picture',
       };
 
-      final Response<dynamic> response = await networkService.formDataRequest(
+      final Response<dynamic> response = 
+      await networkService.formDataRequest(
         ATEndpoints.uploadImage,
         data: param,
       );
@@ -168,7 +170,8 @@ class AuthRepoImpl implements AuthRepo {
 
       return Successful<dynamic>(data: response.data);
     } catch (e) {
-      return Unsuccessful<dynamic>(error: ATException.resolveException(e));
+      return Unsuccessful<dynamic>(
+        error: ATException.resolveException(e));
     }
   }
 
@@ -184,7 +187,8 @@ class AuthRepoImpl implements AuthRepo {
       final String successMessage = response.data['message'];
       return Successful<String>(data: successMessage);
     } catch (e) {
-      return Unsuccessful<String>(error: ATException.resolveException(e));
+      return Unsuccessful<String>(
+        error: ATException.resolveException(e));
     }
   }
   

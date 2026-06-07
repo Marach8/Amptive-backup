@@ -6,9 +6,11 @@ import '../../../../shared/custom_container_widget.dart';
 import '../../../../shared/image_loader_widget.dart';
 
 class RenderTrendingHashTag extends StatelessWidget {
-  const RenderTrendingHashTag({super.key, required this.trendingPicture});
+  const RenderTrendingHashTag(
+      {super.key, required this.trendingPicture, this.title});
 
   final String trendingPicture;
+  final String? title;
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +34,7 @@ class RenderTrendingHashTag extends StatelessWidget {
           SizedBox(
             width: 145,
             child: Text(
-              "Don't forget who you are",
+              title ?? "Don't forget who you are",
               style: Theme.of(context).textTheme.bodySmall,
             ),
           ),

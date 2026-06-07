@@ -7,6 +7,7 @@ import 'package:amptive/src/config/services/network_service/dio_network_service_
 import 'package:amptive/src/config/services/network_service/network_service.dart';
 import 'package:amptive/src/features/auth/data/models/response/user_profile_response_model.dart';
 import 'package:amptive/src/features/profile/data/models/followers_response_model.dart';
+import 'package:amptive/src/features/profile/data/models/request/create_professional_profile_request.dart';
 import 'package:amptive/src/features/profile/data/repository/profile_repo.dart';
 import 'package:dio/dio.dart';
 
@@ -98,8 +99,6 @@ Future<ApiResponse<String>> sendEmailAndPhoneOtp({required Map<String, dynamic> 
       ATEndpoints.updateEmailAndPhone,
       data: param
     );
-    print('📥 sendEmailAndPhoneOtp Response: ${response.data}');
-    print('📥 Type: ${response.data.runtimeType}');
     final String otpCode = response.data['data']['otp_code'] as String;
     return Successful<String>(data: otpCode);
   } catch (e) {
@@ -126,5 +125,23 @@ Future<ApiResponse<String>> sendEmailAndPhoneOtp({required Map<String, dynamic> 
     }
   }
 
+  @override
+  Future<ApiResponse<dynamic>> createProfessionalProfile({
+    required ProfessionalProfileData param,
+  }) async {
+    try {
+      final Response<dynamic> response = await networkService.post(
+        ATEndpoints.createProfessionalProfile,
+        data: param,
+      );
+
+      return Successful<dynamic>(data: response.data);
+    } catch (e) {
+      log('Create Professional Profile error: $e');
+      return Unsuccessful<dynamic>(
+        error: ATException.resolveException(e),
+      );
+    }
+  }
 
 }

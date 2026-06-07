@@ -1,10 +1,13 @@
 import 'package:amptive/src/config/api_response_and_app_state.dart';
+import 'package:amptive/src/config/config_export.dart';
 import 'package:amptive/src/config/utils/colors.dart';
 import 'package:amptive/src/config/utils/extensions/context_extensions.dart';
 import 'package:amptive/src/config/utils/font_sizes.dart';
 import 'package:amptive/src/config/utils/image_strings.dart';
 import 'package:amptive/src/config/utils/other_strings.dart';
 import 'package:amptive/src/config/routing/route_strings.dart';
+import 'package:amptive/src/features/auth/cubits/local_user_data_cubit.dart';
+import 'package:amptive/src/features/wallet/cubits/transaction_history_cubit.dart';
 import 'package:amptive/src/features/wallet/cubits/wallet_balance_cubit.dart';
 import 'package:amptive/src/features/wallet/data/models/response/wallet_balance_response_model.dart';
 import 'package:amptive/src/features/wallet/presentation/screens/transaction_amount_screen.dart';
@@ -30,6 +33,8 @@ class AvailableBalanceWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final CachedUserData? userData =
+        context.read<LocalUserDataCubit>().currentUserData;
     return BlocBuilder<WalletBalanceCubit,
             ATAppState<WalletBalanceResponseModel>>(
         builder: (_, ATAppState<WalletBalanceResponseModel> state) {
@@ -75,16 +80,17 @@ class AvailableBalanceWidget extends StatelessWidget {
                                       builder: (_, bool state) {
                                     return Icon(
                                         state
-                                            ? Icons.visibility_off_outlined
-                                            : Icons.visibility_outlined,
+                                            ? Icons.visibility_outlined
+                                            : Icons.visibility_off_outlined,
                                         color: ATColors.hexC2C2C2);
                                   })
                                 ],
                               ),
                             ),
                             const Spacer(),
-                            const ATCircularImage(
-                              imagePath: ATImgStrings.jpeg2,
+                            ATCircularImage(
+                              imagePath:
+                                  userData?.pictureUrl ?? ATImgStrings.jpeg2,
                             )
                           ],
                         ),
@@ -95,13 +101,16 @@ class AvailableBalanceWidget extends StatelessWidget {
                           }
 
                           if (isFailure) {
-                            return const Text(
-                              'Failed to load balance',
-                            );
+                            return Text(
+                                'Please check your connection or try again',
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .bodySmall
+                                    ?.copyWith(color: ATColors.hexC2C2C2));
                           }
 
                           final String balanceText =
-                              '${ATStrings.nairaText}${balance?.availableBalance?.toStringAsFixed(2)}';
+                              '${ATStrings.nairaText}${balance?.availableBalance?.toStringAsFixed(2).formatPrice()}';
                           return Text(shouldShow ? balanceText : '******',
                               style: context.textTheme.displaySmall
                                   ?.copyWith(fontSize: ATSizes.size30));
@@ -118,7 +127,7 @@ class AvailableBalanceWidget extends StatelessWidget {
                           }
 
                           final String pendingText =
-                              '${ATStrings.nairaText}${balance?.pendingBalance?.toStringAsFixed(2)}';
+                              '${ATStrings.nairaText}${balance?.pendingBalance?.toStringAsFixed(2).formatPrice()}';
                           return Text(
                               'Pending balance: ${state ? pendingText : '******'}',
                               style: context.textTheme.bodySmall
@@ -147,16 +156,28 @@ class AvailableBalanceWidget extends StatelessWidget {
                               return ATContainer(
                                 onTap: () async {
                                   if (item == ATStrings.fundWallet) {
-                                    context.pushNamed(
-                                        ATRoutes.transactionAmountScreen,
-                                        extra: TransactionAmountScreenParams(
-                                            transactionType:
-                                                TransactionType.fundWallet,
-                                            title: ATStrings.fundWallet,
-                                            slidingNotif: ATStrings
-                                                .AMPTIVE_FUNDING_CHARGES,
-                                            btnTitle: ATStrings
-                                                .SELECT_PAYMENT_METHOD));
+                                    final bool? funded =
+                                        await context.pushNamed(
+                                      ATRoutes.transactionAmountScreen,
+                                      extra: TransactionAmountScreenParams(
+                                        transactionType:
+                                            TransactionType.fundWallet,
+                                        title: ATStrings.fundWallet,
+                                        slidingNotif:
+                                            ATStrings.AMPTIVE_FUNDING_CHARGES,
+                                        btnTitle:
+                                            ATStrings.SELECT_PAYMENT_METHOD,
+                                      ),
+                                    ) as bool?;
+
+                                    if (funded == true && context.mounted) {
+                                      context
+                                          .read<WalletBalanceCubit>()
+                                          .fetchWalletBalance();
+                                      context
+                                          .read<TransactionHistoryCubit>()
+                                          .refreshTransactionHistory();
+                                    }
                                   } else if (item == ATStrings.transfer) {
                                     final String? recipientName =
                                         await context.pushNamed(

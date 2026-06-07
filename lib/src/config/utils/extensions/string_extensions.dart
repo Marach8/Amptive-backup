@@ -35,7 +35,7 @@ extension ExtString on String {
 
   String formatPrice() {
     final double number = double.tryParse(this) ?? 0.0;
-    final NumberFormat formatter = NumberFormat('#,###.##');
+    final NumberFormat formatter = NumberFormat('#,##0.00');
     return formatter.format(number);
   }
 
@@ -76,6 +76,10 @@ extension ExtString on String {
   }
 }
 
+ String get toFormattedDate {
+    final DateTime date = DateTime.parse(this);
+    return DateFormat('d MMMM yyyy').format(date);
+ }
 String normalizePaymentChannel(String method) {
   switch (method) {
     case ATStrings.applePay:
