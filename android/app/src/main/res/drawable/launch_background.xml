@@ -9,4 +9,13 @@
             android:gravity="center"
             android:src="@mipmap/launch_image" />
     </item> -->
+
+    <!-- footer image anchored to bottom -->
+    <item>
+        <inset android:insetBottom="50dp">
+            <bitmap
+                android:gravity="bottom|center_horizontal"
+                android:src="@drawable/text_logo" />
+        </inset>
+    </item>
 </layer-list>
