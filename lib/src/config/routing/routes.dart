@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:amptive/src/config/routing/redirect.dart';
 import 'package:amptive/src/config/routing/routing_export.dart';
 import 'package:amptive/src/config/services/local_storage_service/flutter_secure_storage_service_impl.dart';
 import 'package:amptive/src/features/accounts/presentation/screens/update_email_screen.dart';
@@ -77,7 +78,7 @@ final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 final GoRouter amptiveAppRouter = GoRouter(
   navigatorKey: navigatorKey,
   initialLocation: ATRoutes.dashboard.addSlash,
-  //redirect: tempRedirect,
+  redirect: tgRedirect,
   //initialLocation: ATRoutes.temporaryLoginScreen.addSlash,
   //initialLocation: ATRoutes.ONBOARDING_SCREEN.addSlash,
 
