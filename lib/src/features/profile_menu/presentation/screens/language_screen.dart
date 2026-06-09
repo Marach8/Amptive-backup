@@ -1,5 +1,5 @@
 import 'package:amptive/src/config/config_export.dart';
-import 'package:amptive/src/shared/annotated_region__widget.dart';
+import 'package:amptive/src/shared/annotated_region_widget.dart';
 import 'package:amptive/src/shared/custom_container_widget.dart';
 import 'package:amptive/src/shared/modal_dismisser.dart';
 import 'package:amptive/src/shared/radio_button.dart';

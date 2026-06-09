@@ -110,9 +110,9 @@ class HomeTabView extends StatelessWidget {
                     child: Padding(
                       padding: const EdgeInsets.only(right: 15),
                       child: BlocBuilder<LocalUserDataCubit,
-                              ATAppState<CachedUserData>>(
-                          builder: (_, ATAppState<CachedUserData> state) {
-                        final CachedUserData? userData = context
+                              ATAppState<UserProfileData>>(
+                          builder: (_, ATAppState<UserProfileData> state) {
+                        final UserProfileData? userData = context
                             .read<LocalUserDataCubit>()
                             .currentUserData;
                         return ATCircularImage(

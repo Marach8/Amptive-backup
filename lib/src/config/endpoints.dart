@@ -55,21 +55,4 @@ class ATEndpoints {
   static const String getWalletBalance = '/api/v1/payments/wallet/balance';
   static String verifyPayment ='/api/v1/payments/verify';
   static const String createProfessionalProfile = '/api/v1/users/me/profile';
-
-  // static String getStreamTokenEndpoint(String streamId) =>
-  //     '/api/v1/livestreams/$streamId/token';
-  // static String startStreamEndpoint(String contentId) =>
-  //     '/api/v1/livestreams/$contentId/start';
-  // static String endStreamEndpoint(String streamId) =>
-  //     '/api/v1/livestreams/$streamId/end';
-  // static String reactToStream(String streamId) =>
-  //     '/api/v1/livestreams/$streamId/react';
-
-  // static String markEventGoing(String eventId) =>
-  //     '${ATEndpoints.events}standalone/$eventId/going';
-  // static String markEpisodeGoing(String episodeId) =>
-  //     '${ATEndpoints.events}episode/$episodeId/going';
-
-  // static String wsSignalEndpoint(String streamId, String authToken) =>
-  //     '$wsBaseUrl/api/v1/ws/stream/$streamId?token=$authToken';
 }

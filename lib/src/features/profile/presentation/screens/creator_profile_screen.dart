@@ -3,7 +3,7 @@ import 'package:amptive/src/config/config_export.dart';
 import 'package:amptive/src/features/auth/cubits/local_user_data_cubit.dart';
 import 'package:amptive/src/features/auth/data/models/response/user_profile_response_model.dart';
 import 'package:amptive/src/features/profile/presentation/screens/profile_views_export.dart';
-import 'package:amptive/src/shared/annotated_region__widget.dart';
+import 'package:amptive/src/shared/annotated_region_widget.dart';
 import 'package:amptive/src/shared/back_button.dart';
 import 'package:amptive/src/shared/circle_avatar.dart';
 import 'package:amptive/src/shared/global_model_objects.dart';
@@ -102,10 +102,10 @@ class CreatorProfileScreen extends StatelessWidget {
                     flexibleSpace: FlexibleSpaceBar(
                       stretchModes: const <StretchMode>[StretchMode.fadeTitle],
                       background: BlocBuilder<LocalUserDataCubit,
-                          ATAppState<CachedUserData>>(
+                          ATAppState<UserProfileData>>(
                         builder: (BuildContext context,
-                            ATAppState<CachedUserData> state) {
-                          final CachedUserData? userData = context
+                            ATAppState<UserProfileData> state) {
+                          final UserProfileData? userData = context
                               .read<LocalUserDataCubit>()
                               .currentUserData;
                           return Column(
@@ -192,7 +192,7 @@ class CreatorProfileScreen extends StatelessWidget {
 
 class _ProfileDesc extends StatelessWidget {
   const _ProfileDesc({required this.userData});
-  final CachedUserData? userData;
+  final UserProfileData? userData;
 
   @override
   Widget build(BuildContext context) {

@@ -9,7 +9,7 @@ class ATImgStrings {
   static const String _webpPath = 'assets/images/webps';
 
   static const String emptyImage = '$_svgPath/empty_image.svg';
-  static const String AMPTIVE_LOGO = '$_svgPath/Logo.svg';
+  static const String amptiveLogo = '$_svgPath/Logo.svg';
   static const String amptiveNameLogo = '$_svgPath/amptive_logotype.svg';
   static const String walletIcon = '$_svgPath/WALLET ICON.svg';
   static const String showIcon = '$_svgPath/Frame 79.svg';

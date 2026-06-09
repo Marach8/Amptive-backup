@@ -10,7 +10,7 @@ import 'package:amptive/src/features/go_live/presentation/screens/live_program_s
 import 'package:amptive/src/features/go_live/presentation/widgets/go_live_onboarding_bottom_sheet.dart';
 import 'package:amptive/src/global_export.dart';
 import 'package:amptive/src/livestream/livestream.dart';
-import 'package:amptive/src/shared/annotated_region__widget.dart';
+import 'package:amptive/src/shared/annotated_region_widget.dart';
 import 'package:amptive/src/shared/app_bar_widget.dart';
 import 'package:amptive/src/shared/back_button.dart';
 import 'package:amptive/src/shared/global_model_objects.dart';
@@ -287,9 +287,9 @@ class _SubWidgetState extends State<_SubWidget> {
                                             if (!context.mounted) return;
                                             //Mark that this organizer has tested his mic
                                             final LocalUserDataCubit cubit = context.read<LocalUserDataCubit>();
-                                            final CachedUserData? data = cubit.currentUserData;
+                                            final UserProfileData? data = cubit.currentUserData;
                                             cubit.updateUserDataLocally(
-                                              (data ?? const CachedUserData())
+                                              (data ?? const UserProfileData())
                                                 .copyWith(hasTestedMic: 'true'),
                                             );
 

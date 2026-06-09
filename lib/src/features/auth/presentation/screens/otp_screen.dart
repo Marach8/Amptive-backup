@@ -5,7 +5,7 @@ import 'package:amptive/src/config/utils/extensions/context_extensions.dart';
 import 'package:amptive/src/config/utils/font_sizes.dart';
 import 'package:amptive/src/features/auth/cubits/send_otp_cubit.dart';
 import 'package:amptive/src/features/auth/cubits/verify_otp_cubit.dart';
-import 'package:amptive/src/shared/annotated_region__widget.dart';
+import 'package:amptive/src/shared/annotated_region_widget.dart';
 import 'package:amptive/src/shared/back_button.dart';
 import 'package:amptive/src/shared/otp_fields_widget.dart';
 import 'package:flutter/gestures.dart';
@@ -22,16 +22,17 @@ enum OTPVerificationType { email, phoneNumber }
 
 class VerifyOTPScreenParams {
   const VerifyOTPScreenParams({
-    required this.identifier,
+    required this.dataToVerify,
     required this.verificationType,
-    this.title,
-    this.otp,
+    this.appbarTitle,
   });
 
-  final String identifier;
-  final String? title, otp;
+  final String dataToVerify;
+  final String? appbarTitle;
   final OTPVerificationType verificationType;
 }
+
+typedef ActivateNextBtnParams = ({bool pinIsComplete, bool isResendingOtp});
 
 class ATOTPScreen extends StatefulWidget {
   const ATOTPScreen({
@@ -45,14 +46,13 @@ class ATOTPScreen extends StatefulWidget {
 }
 
 class _ATOTPScreenState extends State<ATOTPScreen> {
-  final ValueNotifier<({bool otpIscorrect, bool notResendingotp})>
-      activateBtnNotifier =
-      ValueNotifier<({bool otpIscorrect, bool notResendingotp})>(
-          (otpIscorrect: false, notResendingotp: true));
+  final ValueNotifier<ActivateNextBtnParams> activateBtnNotifier =
+      ValueNotifier<ActivateNextBtnParams>(
+          (pinIsComplete: false, isResendingOtp: false));
   final ValueNotifier<bool> didSendAgainNotifier = ValueNotifier<bool>(false);
   final TapGestureRecognizer _tapGestureRecognizer = TapGestureRecognizer();
   final int countDownStart = 10;
-  String? _matchingOtp;
+  String _otp = '';
 
   Stream<int> generateCountDown() async* {
     for (int i = countDownStart; i >= 0; i--) {
@@ -60,12 +60,6 @@ class _ATOTPScreenState extends State<ATOTPScreen> {
       await Future<void>.delayed(const Duration(seconds: 1));
     }
     didSendAgainNotifier.value = false;
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    _matchingOtp = widget.params.otp;
   }
 
   @override
@@ -97,7 +91,7 @@ class _ATOTPScreenState extends State<ATOTPScreen> {
         child: Scaffold(
           backgroundColor: ATColors.hex0D0D0D,
           appBar: ATAppBar(
-            titleText: widget.params.title,
+            titleText: widget.params.appbarTitle,
             leading: const ATBackBtn(),
           ),
           body: Padding(
@@ -106,57 +100,35 @@ class _ATOTPScreenState extends State<ATOTPScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
+                  //Listener for resending otp
                   BlocListener<SendOtpCubit, ATAppState<String>>(
                     listener: (_, ATAppState<String> sendOtpState) {
-                      final ({
-                        bool notResendingotp,
-                        bool otpIscorrect
-                      }) currentState = activateBtnNotifier.value;
-                      if (sendOtpState is LoadingState<String>) {
-                        activateBtnNotifier.value = (
-                          otpIscorrect: currentState.otpIscorrect,
-                          notResendingotp: false
-                        );
-                      } else {
-                        activateBtnNotifier.value = (
-                          otpIscorrect: currentState.otpIscorrect,
-                          notResendingotp: true
-                        );
-                      }
-
-                      if (sendOtpState is SuccessState<String>) {
-                        _matchingOtp = sendOtpState.newData;
-                      }
+                      activateBtnNotifier.value = (
+                        pinIsComplete: activateBtnNotifier.value.pinIsComplete,
+                        isResendingOtp: sendOtpState is LoadingState<String>
+                      );
                     },
                     child: Text(
-                      '${ATStrings.enterCodeSentTo} ${widget.params.identifier}',
+                      '${ATStrings.enterCodeSentTo} ${widget.params.dataToVerify}',
                       maxLines: 2,
                       style: context.textTheme.headlineMedium
-                          ?.copyWith(fontSize: ATSizes.size17),
+                          ?.copyWith(fontSize: 17),
                     ),
                   ),
                   const SizedBox(height: 11),
                   ATOTPFieldsWidget(
                     onPinFieldChanged: (_) {
-                      final ({
-                        bool notResendingotp,
-                        bool otpIscorrect
-                      }) currentState = activateBtnNotifier.value;
                       activateBtnNotifier.value = (
-                        otpIscorrect: false,
-                        notResendingotp: currentState.notResendingotp
+                        pinIsComplete: false,
+                        isResendingOtp: activateBtnNotifier.value.isResendingOtp,
                       );
                     },
                     onPinComplete: (String pin) async {
-                      const bool otpIsCorrect = true;
-                      _matchingOtp = pin;
-                      final ({
-                        bool notResendingotp,
-                        bool otpIscorrect
-                      }) currentState = activateBtnNotifier.value;
+                      final bool otpIsCorrect = pin.length == 4;
+                      _otp = pin;
                       activateBtnNotifier.value = (
-                        otpIscorrect: otpIsCorrect,
-                        notResendingotp: currentState.notResendingotp
+                        pinIsComplete: otpIsCorrect,
+                        isResendingOtp: activateBtnNotifier.value.isResendingOtp,
                       );
                       return otpIsCorrect;
                     },
@@ -191,7 +163,7 @@ class _ATOTPScreenState extends State<ATOTPScreen> {
                                     context
                                         .read<SendOtpCubit>()
                                         .sendOtp(param: <String, dynamic>{
-                                      identifierKey: widget.params.identifier
+                                      identifierKey: widget.params.dataToVerify
                                     });
                                     didSendAgainNotifier.value = true;
                                   },
@@ -209,51 +181,54 @@ class _ATOTPScreenState extends State<ATOTPScreen> {
               ),
             ),
           ),
-          bottomSheet: Builder(builder: (BuildContext context) {
-            final double bottom = MediaQuery.viewInsetsOf(context).bottom;
-            final double bottomPadding = bottom > 0 ? 10 : 50;
-            return Padding(
-              padding: EdgeInsets.fromLTRB(15, 0, 15, bottomPadding),
-              child: ValueListenableBuilder<
-                      ({bool otpIscorrect, bool notResendingotp})>(
-                  valueListenable: activateBtnNotifier,
-                  builder: (_,
-                      ({bool otpIscorrect, bool notResendingotp}) state, __) {
-                    final bool shouldEnable =
-                        state.otpIscorrect && state.notResendingotp;
-                    return BlocConsumer<VerifyOtpCubit, ATAppState<dynamic>>(
-                      listener: (_, ATAppState<dynamic> state) {
-                        if (state is SuccessState<dynamic>) {
-                          context.pop(true);
-                        } else if (state is FailureState<dynamic>) {
-                          showAppNotification2(
-                            context: context,
-                            text: state.message,
-                            type: NotificationType.failure,
+
+          bottomSheet: Builder(
+            builder: (BuildContext context) {
+              final double bottom = MediaQuery.viewInsetsOf(context).bottom;
+              final double bottomPadding = bottom > 0 ? 10 : 50;
+              return Padding(
+                padding: EdgeInsets.fromLTRB(15, 0, 15, bottomPadding),
+                child: ValueListenableBuilder<
+                        ({bool pinIsComplete, bool isResendingOtp})>(
+                    valueListenable: activateBtnNotifier,
+                    builder: (_,
+                        ({bool pinIsComplete, bool isResendingOtp}) state, __) {
+                      final bool shouldEnable =
+                          state.pinIsComplete && !state.isResendingOtp;
+                      return BlocConsumer<VerifyOtpCubit, ATAppState<dynamic>>(
+                        listener: (_, ATAppState<dynamic> state) {
+                          if (state is SuccessState<dynamic>) {
+                            context.pop(true);
+                          } else if (state is FailureState<dynamic>) {
+                            showAppNotification2(
+                              context: context,
+                              text: state.message,
+                              type: NotificationType.failure,
+                            );
+                          }
+                        },
+                        builder: (BuildContext context,
+                            ATAppState<dynamic> verifyOtpState) {
+                          return ATPlainElevatedBtn(
+                            isLoading: verifyOtpState is LoadingState<dynamic>,
+                            onPressed: shouldEnable
+                                ? () {
+                                    context.read<VerifyOtpCubit>().verifyOtp(
+                                      param: <String, dynamic>{
+                                        identifierKey: widget.params.dataToVerify,
+                                        'otp': _otp
+                                      },
+                                    );
+                                  }
+                                : null,
+                            btnTitle: ATStrings.next,
                           );
-                        }
-                      },
-                      builder: (BuildContext context,
-                          ATAppState<dynamic> verifyOtpState) {
-                        return ATPlainElevatedBtn(
-                          isLoading: verifyOtpState is LoadingState<dynamic>,
-                          onPressed: shouldEnable
-                              ? () {
-                                  context.read<VerifyOtpCubit>().verifyOtp(
-                                    param: <String, dynamic>{
-                                      identifierKey: widget.params.identifier,
-                                      'otp': _matchingOtp
-                                    },
-                                  );
-                                }
-                              : null,
-                          btnTitle: ATStrings.next,
-                        );
-                      },
-                    );
-                  }),
-            );
-          }),
+                        },
+                      );
+                    }),
+              );
+            }
+          ),
         ),
       ),
     );

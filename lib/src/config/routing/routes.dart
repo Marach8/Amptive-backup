@@ -11,17 +11,17 @@ import 'package:amptive/src/features/auth/presentation/screens/create_new_passwo
 import 'package:amptive/src/features/auth/presentation/screens/forgot_password_email_screen.dart';
 import 'package:amptive/src/features/auth/presentation/screens/phone_login_screen.dart';
 import 'package:amptive/src/features/auth/presentation/screens/reset_password_otp_screen.dart';
-import 'package:amptive/src/features/auth/presentation/screens/phone_auth_screen.dart';
+import 'package:amptive/src/features/auth/presentation/screens/phone_sign_up_screen.dart';
 import 'package:amptive/src/features/auth/presentation/screens/login_screen.dart';
 import 'package:amptive/src/config/utils/extensions/string_extensions.dart';
 import 'package:amptive/src/features/auth/presentation/screens/dob_screen.dart';
-import 'package:amptive/src/features/auth/presentation/screens/email_auth_screen.dart';
-import 'package:amptive/src/features/auth/presentation/screens/name_auth_screen.dart';
+import 'package:amptive/src/features/auth/presentation/screens/email_sign_up_screen.dart';
+import 'package:amptive/src/features/auth/presentation/screens/add_name_screen.dart';
 import 'package:amptive/src/features/auth/presentation/screens/otp_screen.dart';
-import 'package:amptive/src/features/auth/presentation/screens/password_auth_screen.dart';
+import 'package:amptive/src/features/auth/presentation/screens/create_password_screen.dart';
 import 'package:amptive/src/features/auth/presentation/screens/add_profile_pic_screen.dart';
 import 'package:amptive/src/features/auth/presentation/screens/auth_options_screen.dart';
-import 'package:amptive/src/features/auth/presentation/screens/username_auth_screen.dart';
+import 'package:amptive/src/features/auth/presentation/screens/add_username_screen.dart';
 import 'package:amptive/src/features/calender/presentation/screens/calender_landing_screen.dart';
 import 'package:amptive/src/features/discover/presentation/views/society_screen.dart';
 import 'package:amptive/src/features/discover/presentation/views/trending_hashtags_screen.dart';
@@ -77,11 +77,8 @@ final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
 final GoRouter amptiveAppRouter = GoRouter(
   navigatorKey: navigatorKey,
-  initialLocation: ATRoutes.dashboard.addSlash,
-  redirect: tgRedirect,
-  //initialLocation: ATRoutes.temporaryLoginScreen.addSlash,
-  //initialLocation: ATRoutes.ONBOARDING_SCREEN.addSlash,
-
+  initialLocation: ATRoutes.addNameAuthScreen.addSlash,
+  //redirect: tgRedirect,
 
   routes: <RouteBase>[
     GoRoute(
@@ -124,7 +121,7 @@ final GoRouter amptiveAppRouter = GoRouter(
         name: ATRoutes.emailScreen,
         path: ATRoutes.emailScreen.addSlash,
         pageBuilder: (_, GoRouterState st) => ATSlidingRouteTransition<void>(
-            child: ATEmailAuthScreen(title: st.extra as String?))),
+            child: ATEmailSignUpScreen(title: st.extra as String?))),
 
     GoRoute(
         name: ATRoutes.ENTER_OTP_SCREEN,
@@ -151,7 +148,7 @@ final GoRouter amptiveAppRouter = GoRouter(
         name: ATRoutes.phoneAuthScreen,
         path: ATRoutes.phoneAuthScreen.addSlash,
         pageBuilder: (_, GoRouterState st) => ATSlidingRouteTransition<void>(
-              child: PhoneAuthScreen(title: st.extra as String?),
+              child: PhoneAuthScreen(appBarTitle: st.extra as String?),
             )),
     GoRoute(
       name: ATRoutes.phoneLoginScreen,

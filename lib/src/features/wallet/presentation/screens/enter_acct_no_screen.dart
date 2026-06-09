@@ -5,7 +5,7 @@ import 'package:amptive/src/config/utils/other_strings.dart';
 import 'package:amptive/src/config/routing/route_strings.dart';
 import 'package:amptive/src/shared/confirmation_alert_dialog.dart';
 import 'package:amptive/src/features/wallet/presentation/screens/transaction_amount_screen.dart';
-import 'package:amptive/src/shared/annotated_region__widget.dart';
+import 'package:amptive/src/shared/annotated_region_widget.dart';
 import 'package:amptive/src/shared/app_bar_widget.dart';
 import 'package:amptive/src/shared/back_button.dart';
 import 'package:amptive/src/shared/loading_indicator.dart';

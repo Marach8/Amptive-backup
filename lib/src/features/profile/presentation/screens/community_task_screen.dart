@@ -1,5 +1,5 @@
 import 'package:amptive/src/config/config_export.dart';
-import 'package:amptive/src/shared/annotated_region__widget.dart';
+import 'package:amptive/src/shared/annotated_region_widget.dart';
 import 'package:amptive/src/shared/app_bar_widget.dart';
 import 'package:flutter/material.dart';
 

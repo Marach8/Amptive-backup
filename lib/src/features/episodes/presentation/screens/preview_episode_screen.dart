@@ -9,7 +9,7 @@ import 'package:amptive/src/features/home/presentation/widgets/event_or_show_car
 import 'package:amptive/src/features/home/presentation/widgets/render_community_name.dart';
 import 'package:amptive/src/features/episodes/presentation/widgets/existing_episodes_indicator.dart';
 import 'package:amptive/src/global_export.dart';
-import 'package:amptive/src/shared/annotated_region__widget.dart';
+import 'package:amptive/src/shared/annotated_region_widget.dart';
 import 'package:amptive/src/shared/global_model_objects.dart';
 import 'package:amptive/src/shared/sliver_header_delegate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -184,9 +184,9 @@ class _SubWidgetState extends State<_SubWidget> {
                                 ),
                                 const SizedBox(height: 16),
                                 BlocBuilder<LocalUserDataCubit,
-                                    ATAppState<CachedUserData>>(
+                                    ATAppState<UserProfileData>>(
                                   builder: (_,
-                                      ATAppState<CachedUserData> userState) {
+                                      ATAppState<UserProfileData> userState) {
                                     final bool isHost = context
                                             .read<LocalUserDataCubit>()
                                             .currentUserData

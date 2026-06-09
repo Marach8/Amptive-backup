@@ -13,7 +13,7 @@ import 'package:amptive/src/features/go_live/go_live_export.dart';
 import 'package:amptive/src/features/shows/cubits/hosted_shows_cubit.dart';
 import 'package:amptive/src/features/shows/data/models/response/show_response_model.dart';
 import 'package:amptive/src/global_export.dart';
-import 'package:amptive/src/shared/annotated_region__widget.dart';
+import 'package:amptive/src/shared/annotated_region_widget.dart';
 import 'package:amptive/src/shared/divider_widget.dart';
 import 'package:amptive/src/shared/global_model_objects.dart';
 import 'package:amptive/src/shared/textformfield_widget.dart';

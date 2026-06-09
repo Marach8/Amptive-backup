@@ -33,7 +33,7 @@ class AvailableBalanceWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final CachedUserData? userData =
+    final UserProfileData? userData =
         context.read<LocalUserDataCubit>().currentUserData;
     return BlocBuilder<WalletBalanceCubit,
             ATAppState<WalletBalanceResponseModel>>(

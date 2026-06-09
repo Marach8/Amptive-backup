@@ -1,159 +1,234 @@
 import 'dart:async';
 
 import 'package:amptive/src/config/utils/colors.dart';
+import 'package:amptive/src/config/utils/extensions/context_extensions.dart';
 import 'package:amptive/src/features/profile/cubits/remote_user_data_cubit.dart';
+import 'package:amptive/src/shared/annotated_region_widget.dart';
+import 'package:amptive/src/shared/app_bar_widget.dart';
+import 'package:amptive/src/shared/back_button.dart';
 import 'package:amptive/src/shared/loading_indicator.dart';
-import 'package:amptive/src/features/auth/presentation/widgets/add_picture.dart';
+import 'package:amptive/src/features/auth/presentation/widgets/empty.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:nested/nested.dart';
 
 import '../../../../config/utils/font_sizes.dart';
+import 'dart:io';
+import 'dart:typed_data';
+import 'package:amptive/src/config/api_response_and_app_state.dart';
+import 'package:amptive/src/config/utils/helper_functions.dart';
+import 'package:amptive/src/features/auth/cubits/upload_image_cubit.dart';
+import 'package:amptive/src/features/auth/cubits/local_user_data_cubit.dart';
+import 'package:amptive/src/features/auth/data/models/response/user_profile_response_model.dart';
+import 'package:amptive/src/features/profile/cubits/remote_user_data_cubit.dart';
+import 'package:amptive/src/shared/elevated_button_widget.dart';
+import 'package:amptive/src/shared/image_source_selection_dialog.dart';
+import 'package:amptive/src/shared/image_loader_widget.dart';
+import 'package:custom_image_crop/custom_image_crop.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
+import 'package:image_picker/image_picker.dart';
+import '../../../../config/utils/colors.dart';
+import '../../../../config/utils/dialogs/app_notification_dialog.dart';
+import '../../../../config/utils/font_weights.dart';
+import '../../../../config/utils/image_strings.dart';
+import '../../../../config/utils/other_strings.dart';
+import '../../../../config/routing/route_strings.dart';
 
 class AddProfilePictureScreen extends StatefulWidget {
   const AddProfilePictureScreen({super.key});
 
   @override
-  State<AddProfilePictureScreen> createState() =>
-      _AddProfilePictureScreenState();
+  State<AddProfilePictureScreen> createState() => _AddProfilePictureScreenState();
 }
 
 class _AddProfilePictureScreenState extends State<AddProfilePictureScreen> {
-  bool _isLoading = true;
-
-  @override
-  void initState() {
-    super.initState();
-    Timer(
-      const Duration(seconds: 10),
-      () => setState(() {
-        _isLoading = false;
-      }),
-    );
-  }
+  Uint8List? _pickedImage;
+  final ValueNotifier<bool> _isLoadingNotifier = ValueNotifier<bool>(false);
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-        child: Scaffold(
-      backgroundColor: ATColors.hex0D0D0D,
-      body: Padding(
-        padding: const EdgeInsets.fromLTRB(15, 20, 15, 10),
-        child: _isLoading
-            ? const LoadingAccountWidget()
-            : BlocProvider<RemoteUserDataCubit>(
-        create: (_) => RemoteUserDataCubit(),
-        child: const AddPictureWidget(),
-      ),
-      ),
-    ));
-  }
-}
-
-class LoadingAccountWidget extends StatefulWidget {
-  const LoadingAccountWidget({
-    super.key,
-  });
-
-  @override
-  State<LoadingAccountWidget> createState() => _LoadingAccountWidgetState();
-}
-
-class _LoadingAccountWidgetState extends State<LoadingAccountWidget> {
-  late String text;
-
-  List<String> textList = <String>[
-    "We are creating your account",
-    "Join or create live audio events",
-    "Subscribe and support creators"
-  ];
-
-  int textListCounter = 1;
-
-  @override
-  void initState() {
-    super.initState();
-    text = textList[0];
-
-    Timer.periodic(const Duration(seconds: 4), (_) {
-      if (mounted) {
-        setState(() {
-          text = textList[textListCounter % textList.length];
-          textListCounter++;
-        });
-      }
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.start,
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: <Widget>[
-        Container(
-          margin: EdgeInsets.only(top: 270.h),
-          child: Center(
-            child: AnimatedSwitcher(
-              duration: const Duration(milliseconds: 300),
-              transitionBuilder: (Widget child, Animation<double> animation) {
-                final Animation<Offset> inAnimation =
-                    TweenSequence(<TweenSequenceItem<Offset>>[
-                  TweenSequenceItem(
-                      tween: ConstantTween(const Offset(0.0, 1.0)), weight: 2),
-                  TweenSequenceItem(
-                      tween: Tween<Offset>(
-                        begin: const Offset(0.0, 1.0),
-                        end: const Offset(0.0, 0.0),
-                      ),
-                      weight: 1),
-                ]).animate(animation);
-
-                final Animation<Offset> outAnimation =
-                    TweenSequence(<TweenSequenceItem<Offset>>[
-                  TweenSequenceItem(
-                      tween: ConstantTween(const Offset(0.0, 1.0)), weight: 1),
-                  TweenSequenceItem(
-                      tween: Tween<Offset>(
-                        begin: const Offset(0.0, 1.0),
-                        end: const Offset(0.0, 0.0),
-                      ),
-                      weight: 1),
-                ]).animate(animation);
-
-                if (child.key == ValueKey(text)) {
-                  return ClipRect(
-                    child: SlideTransition(
-                      position: inAnimation,
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: child,
-                      ),
-                    ),
-                  );
-                } else {
-                  return ClipRect(
-                    child: SlideTransition(
-                      position: outAnimation,
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: child,
-                      ),
-                    ),
-                  );
-                }
-              },
-              child: Text(text,
-                  key: ValueKey<String>(text),
-                  textAlign: TextAlign.center,
-                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                        fontSize: ATSizes.size17,
-                      )),
-            ),
-          ),
-        ),
-        const ATLoadingIndicator(),
+    return MultiBlocProvider(
+      providers: <SingleChildWidget>[
+        BlocProvider<RemoteUserDataCubit>(
+          create: (_) => RemoteUserDataCubit()),
+        BlocProvider<UploadImageCubit>(
+          create: (_) => UploadImageCubit())
       ],
+      child: ATAnnotatedRegion(
+        child: SafeArea(
+          bottom: false,
+          child: Scaffold(
+            body: SingleChildScrollView(
+              padding: const EdgeInsets.fromLTRB(15, 20, 15, 200),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Text(
+                    ATStrings.addProfilePicture,
+                    textAlign: TextAlign.start,
+                    style: context.textTheme.headlineLarge?.copyWith(
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                  const SizedBox(height: 4),
+                  Text(
+                    ATStrings.useYOurFavImage,
+                    textAlign: TextAlign.start,
+                    style: context.textTheme.titleMedium?.copyWith(
+                      color: ATColors.hexCDCDCD,
+                    ),
+                  ),
+                  const SizedBox(height: 100),
+                  Align(
+                    alignment: Alignment.center,
+                    child: SizedBox(
+                      height: 152,
+                      width: 132,
+                      child: Stack(
+                        children: <Widget>[
+                          if (_pickedImage == null)
+                            const ATImgLoader(
+                              imgPath: ATImgStrings.noAvatarImage,
+                              height: 132,
+                              width: 132,
+                            )
+                          else
+                            Image.memory(
+                              _pickedImage!,
+                              height: 132,
+                              width: 132,
+                              fit: BoxFit.cover,
+                            ),
+                          Positioned(
+                            bottom: 0, left: 44,
+                            child: IconButton(
+                              style: IconButton.styleFrom(
+                                backgroundColor: _pickedImage != null
+                                  ? ATColors.textRedColor
+                                  : ATColors.hex307FE2,
+                              ),
+                              onPressed: () async {
+                                if (_pickedImage == null) {
+                                  final ImageSource? selectedSrc =
+                                      await showImageSourceOptions(context);
+                                  final XFile? selectedFile =
+                                      await ATHelperFuncs.pickImage(selectedSrc);
+                                  if (context.mounted && selectedFile != null) {
+                                    final File file = File(selectedFile.path);
+                                    final MemoryImage? imageData =
+                                        await context.pushNamed(
+                                      ATRoutes.rectImageCropperScreen,
+                                      extra: (file, null, CustomCropShape.Circle),
+                                    ) as MemoryImage?;
+                                    if (imageData != null) {
+                                      setState(
+                                          () => _pickedImage = imageData.bytes);
+                                    }
+                                  }
+                                } else {
+                                  setState(() => _pickedImage = null);
+                                }
+                              },
+                              icon: Icon(
+                                _pickedImage != null ? Icons.close : Icons.add,
+                                color: ATColors.white,
+                                
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  
+                ],
+              ),
+            ),
+            bottomSheet: MultiBlocListener(
+              listeners: <SingleChildWidget>[
+                BlocListener<RemoteUserDataCubit, ATAppState<UserData>>(
+                  listener: (_, ATAppState<UserData> state)async{
+                    if (state is SuccessState<UserData>) {
+                      await context
+                          .read<LocalUserDataCubit>()
+                          .updateUserDataLocally(UserProfileData(
+                            pictureUrl: state.newData?.profilePicture,
+                          ));
+                      if (context.mounted) {
+                        context.pushNamed(ATRoutes.select5CommunitiesScreen);
+                      }
+                    } else if (state is FailureState<UserData>) {
+                      showAppNotification2(
+                        context: context,
+                        text: state.message,
+                        type: NotificationType.failure,
+                      );
+                    }
+                  },
+                ),
+
+                BlocListener<UploadImageCubit, ATAppState<String>>(
+                  listener: (_, ATAppState<String> state){
+                    if(state is SuccessState<String>){
+
+                    }
+                    else if(state is FailureState<String>){
+                      _isLoadingNotifier.value = false;
+                      showAppNotification2(
+                        context: context,
+                        text: state.message,
+                        type: NotificationType.failure,
+                      );
+                    }
+                  },
+                )
+              ],
+              child: Padding(
+                padding: const EdgeInsets.fromLTRB(15, 20, 15, 54),
+                child: ValueListenableBuilder<bool>(
+                  valueListenable: _isLoadingNotifier,
+                  child: TextButton(
+                    onPressed: () {
+                      if(_isLoadingNotifier.value) return;
+                      context.pushNamed(ATRoutes.select5CommunitiesScreen);
+                    },
+                    child: Text(
+                      ATStrings.skipForNow,
+                      textAlign: TextAlign.center,
+                      style: context.textTheme.headlineMedium?.copyWith(
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                  ),
+                  builder: (_, bool isLoading, Widget? child) {
+                    return Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: <Widget>[
+                        child!,
+                        ATPlainElevatedBtn(
+                          btnTitle: ATStrings.next,
+                          isLoading: isLoading,
+                          onPressed: _pickedImage != null
+                            ? () {
+                              //Show loading indicator on this button.
+                              _isLoadingNotifier.value = true;
+                              //Start the first api call to upload image.
+                              context.read<UploadImageCubit>()
+                                .uploadBytesImage(bytes: _pickedImage!);
+                            } : null,
+                        )
+                      ]
+                    );
+                  }
+                ),
+              ),
+            )
+          ),
+        )
+      ),
     );
   }
 }

@@ -1,7 +1,7 @@
 import 'package:amptive/src/config/routing/route_strings.dart';
 import 'package:amptive/src/config/utils/utils_export.dart';
 import 'package:amptive/src/features/profile/presentation/profile_prez_export.dart';
-import 'package:amptive/src/shared/annotated_region__widget.dart';
+import 'package:amptive/src/shared/annotated_region_widget.dart';
 import 'package:amptive/src/shared/back_button.dart';
 import 'package:amptive/src/shared/circle_avatar.dart';
 import 'package:amptive/src/shared/custom_container_widget.dart';

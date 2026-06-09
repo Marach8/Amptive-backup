@@ -7,7 +7,7 @@ import 'package:amptive/src/features/auth/cubits/send_otp_cubit.dart';
 import 'package:amptive/src/features/auth/cubits/verify_otp_cubit.dart';
 import 'package:amptive/src/features/profile/cubits/update_email_and_phone_number_cubit.dart';
 import 'package:amptive/src/features/profile/cubits/verify_email_and_phone_no_otp_cubit.dart';
-import 'package:amptive/src/shared/annotated_region__widget.dart';
+import 'package:amptive/src/shared/annotated_region_widget.dart';
 import 'package:amptive/src/shared/back_button.dart';
 import 'package:amptive/src/shared/otp_fields_widget.dart';
 import 'package:flutter/gestures.dart';

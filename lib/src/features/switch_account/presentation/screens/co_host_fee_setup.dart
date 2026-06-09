@@ -5,7 +5,7 @@ import 'package:amptive/src/features/profile/bloc/animation_bloc.dart';
 import 'package:amptive/src/features/profile/bloc/creator_or_biz_bloc.dart';
 import 'package:amptive/src/features/profile/cubits/create_professional_profile_cubit.dart';
 import 'package:amptive/src/features/profile/data/models/request/create_professional_profile_request.dart';
-import 'package:amptive/src/shared/annotated_region__widget.dart';
+import 'package:amptive/src/shared/annotated_region_widget.dart';
 import 'package:amptive/src/shared/back_button.dart';
 import 'package:amptive/src/shared/elevated_button_widget.dart';
 import 'package:amptive/src/shared/textformfield_widget.dart';

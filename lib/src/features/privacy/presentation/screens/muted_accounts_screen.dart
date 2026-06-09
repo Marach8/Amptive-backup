@@ -4,7 +4,7 @@ import 'package:amptive/src/models/host.dart';
 import 'package:amptive/src/config/utils/other_strings.dart';
 import 'package:amptive/src/config/utils/dialogs/app_notification_dialog.dart';
 import 'package:amptive/src/shared/confirmation_alert_dialog.dart';
-import 'package:amptive/src/shared/annotated_region__widget.dart';
+import 'package:amptive/src/shared/annotated_region_widget.dart';
 import 'package:amptive/src/shared/app_bar_widget.dart';
 import 'package:amptive/src/shared/back_button.dart';
 import 'package:flutter/material.dart';

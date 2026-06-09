@@ -3,7 +3,7 @@ import 'dart:developer' show log;
 import 'dart:ui';
 import 'package:amptive/src/config/config_export.dart';
 import 'package:amptive/src/features/post_auth/presentation/widgets/slide_out_widget.dart';
-import 'package:amptive/src/shared/annotated_region__widget.dart';
+import 'package:amptive/src/shared/annotated_region_widget.dart';
 import 'package:amptive/src/shared/custom_container_widget.dart';
 import 'package:amptive/src/shared/elevated_button_widget.dart';
 import 'package:amptive/src/shared/image_loader_widget.dart';
@@ -242,7 +242,7 @@ class _AnimExperimentState extends State<_SubWidget>
                       maxLines: 2,
                       textAlign: TextAlign.center,
                       style: context.textTheme.headlineMedium?.copyWith(
-                          fontSize: 45, fontWeight: ATFontWeights.w800),
+                          fontSize: 45, fontWeight: FontWeight.w800),
                     ),
                   ),
                   const SizedBox(height: 8),

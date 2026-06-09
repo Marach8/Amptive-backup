@@ -28,7 +28,7 @@ abstract class ProfileRepo{
 
   Future<ApiResponse<String>> sendEmailAndPhoneOtp({
     required Map<String, dynamic> param
-});
+  });
 
    
   Future<ApiResponse<dynamic>> verifyOtp({required Map<String, dynamic> param});
@@ -36,5 +36,4 @@ abstract class ProfileRepo{
   Future<ApiResponse<dynamic>> createProfessionalProfile({
     required ProfessionalProfileData param,
   });
-
 }

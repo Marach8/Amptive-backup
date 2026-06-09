@@ -2,7 +2,7 @@ import 'package:amptive/src/features/profile/bloc/profile_bloc_export.dart';
 import 'package:amptive/src/features/profile/data/models/profile_categories.dart';
 import 'package:amptive/src/features/profile/data/models/request/create_professional_profile_request.dart';
 import 'package:amptive/src/global_export.dart';
-import 'package:amptive/src/shared/annotated_region__widget.dart';
+import 'package:amptive/src/shared/annotated_region_widget.dart';
 import 'package:amptive/src/shared/back_button.dart';
 import 'package:amptive/src/shared/image_loader_widget.dart';
 import 'package:amptive/src/shared/radio_button.dart';

@@ -4,7 +4,7 @@ import 'package:amptive/src/config/utils/dialogs/app_notification_dialog.dart';
 import 'package:amptive/src/features/auth/cubits/password_reset_otp_cubit.dart';
 import 'package:amptive/src/features/auth/presentation/screens/create_new_password_screen.dart';
 import 'package:amptive/src/features/auth/presentation/screens/reset_password_otp_screen.dart';
-import 'package:amptive/src/shared/annotated_region__widget.dart';
+import 'package:amptive/src/shared/annotated_region_widget.dart';
 import 'package:amptive/src/shared/elevated_button_widget.dart';
 import 'package:amptive/src/shared/back_button.dart';
 import 'package:amptive/src/shared/textformfield_widget.dart';
@@ -110,7 +110,7 @@ class _ATForgotPasswordEmailScreenState
                             context.pushNamed(ATRoutes.createNewPAsswordScreen,
                                 extra: CreateNewPasswordScreenParams(
                                     email: _emailCntrl.text.trim(),
-                                    title: ATStrings.forgotPassword));
+                                    appBarTitle: ATStrings.forgotPassword));
                           }
                         } else if (state is FailureState<String>) {
                           showAppNotification2(

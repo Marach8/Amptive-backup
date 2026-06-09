@@ -4,7 +4,7 @@ import 'package:amptive/src/config/utils/font_sizes.dart';
 import 'package:amptive/src/config/utils/font_weights.dart';
 import 'package:amptive/src/config/utils/image_strings.dart';
 import 'package:amptive/src/config/utils/other_strings.dart';
-import 'package:amptive/src/shared/annotated_region__widget.dart';
+import 'package:amptive/src/shared/annotated_region_widget.dart';
 import 'package:amptive/src/shared/custom_container_widget.dart';
 import 'package:amptive/src/shared/image_loader_widget.dart';
 import 'package:flutter/material.dart';

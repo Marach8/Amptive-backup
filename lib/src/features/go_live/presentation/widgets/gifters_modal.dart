@@ -296,7 +296,7 @@ class _SendGiftWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final CachedUserData? currUserData = context
+    final UserProfileData? currUserData = context
       .read<LocalUserDataCubit>().currentUserData;
 
     

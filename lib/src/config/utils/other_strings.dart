@@ -53,10 +53,10 @@ class ATStrings {
   static const String emailSymbol = '@';
   static const String forgotPassword = 'Forgot Password';
   static const String forgotPasswrd = 'Forgot Password?';
-  static const String SIGN_UP = 'Sign up';
+  static const String signUp = 'Sign up';
   static const String RECORD = 'Record';
   static const String launchShow = 'Launch show';
-  static const String SIGN_IN = 'Sign in';
+  static const String signIn = 'Sign in';
   static const String sendCode = 'Send Code';
   static const String attendAsGuest = 'Attend as guest';
   static const String SKIP = 'Skip';
@@ -331,7 +331,7 @@ class ATStrings {
 
   static const String countryPickers = 'country_pickers';
   static const String verify_fone = 'Verify phone number';
-  static const String UR_FON_NUMBER = "What is your phone number?";
+  static const String whatIsYourPhoneNumber = "What is your phone number?";
 
   static const String allow = 'Allow';
   static const String dontAllow = "Don't Allow";
@@ -341,6 +341,8 @@ class ATStrings {
   static const String goLive = 'Go live';
   static const String paidShow = '\$paid show';
   static const String INSTAGRAM = 'Instagram';
+  static const String country = 'country';
+  static const String coverPhoto = 'cover_photo';
   static const String X = 'X';
   static const String LINKEDIN = 'LinkedIn';
   static const String WEBSITE = 'Website';
@@ -658,8 +660,7 @@ class ATStrings {
   static const String emptyField = 'Field(s) cannot be empty';
   static const String invalidEmail = 'Please enter a valid email address!';
   static const String invalidPhone = 'Please enter a valid phone number!';
-  static const String weakPassword =
-      'Password must contain at least one upper case letter, and must be at least 8 characters!';
+  static const String weakPassword = 'Use at least 8+ characters with upper/lowercase letters, a number, and a special character!';
   static const String shareEvent = 'Share event';
   static const String comment = 'Comment';
   static const String endNow = 'End now';

@@ -13,7 +13,7 @@ import 'package:amptive/src/shared/textformfield_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sticky_headers/sticky_headers/widget.dart';
-import '../../../../shared/annotated_region__widget.dart';
+import '../../../../shared/annotated_region_widget.dart';
 
 class ATWalletTxnsHistoryScreen extends StatelessWidget {
   const ATWalletTxnsHistoryScreen({super.key});

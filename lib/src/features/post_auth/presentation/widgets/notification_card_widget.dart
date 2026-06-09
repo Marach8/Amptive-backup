@@ -42,7 +42,7 @@ class NotifTile1 extends StatelessWidget {
             decoration: BoxDecoration(
                 color: ATColors.black, borderRadius: BorderRadius.circular(7)),
             child: const ATImgLoader(
-              imgPath: ATImgStrings.AMPTIVE_LOGO,
+              imgPath: ATImgStrings.amptiveLogo,
               boxFit: BoxFit.cover,
             ),
           ),

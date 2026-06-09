@@ -1,5 +1,5 @@
 import 'package:amptive/src/shared/outlined_button_widget.dart';
-import 'package:amptive/src/shared/annotated_region__widget.dart';
+import 'package:amptive/src/shared/annotated_region_widget.dart';
 import 'package:amptive/src/shared/image_loader_widget.dart';
 import 'package:amptive/src/shared/textformfield_widget.dart';
 import 'package:flutter/material.dart';

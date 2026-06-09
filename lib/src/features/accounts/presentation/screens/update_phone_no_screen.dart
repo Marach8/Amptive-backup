@@ -6,7 +6,7 @@ import 'package:amptive/src/config/utils/dialogs/app_notification_dialog.dart';
 import 'package:amptive/src/features/profile/cubits/update_email_and_phone_number_cubit.dart';
 import 'package:amptive/src/features/profile/presentation/screens/update_email_and_phone_no_otp_screen.dart';
 import 'package:amptive/src/shared/cupertino_country_picker.dart';
-import 'package:amptive/src/shared/annotated_region__widget.dart';
+import 'package:amptive/src/shared/annotated_region_widget.dart';
 import 'package:amptive/src/shared/app_bar_widget.dart';
 import 'package:amptive/src/shared/back_button.dart';
 import 'package:amptive/src/shared/custom_container_widget.dart';
@@ -69,7 +69,7 @@ class _UpdatePhoneNoScreenState extends State<UpdatePhoneNoScreen> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 Text(
-                  ATStrings.UR_FON_NUMBER,
+                  ATStrings.whatIsYourPhoneNumber,
                   style: context.textTheme.headlineMedium?.copyWith(
                     fontSize: ATSizes.size17,
                   ),

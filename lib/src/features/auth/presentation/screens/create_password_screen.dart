@@ -1,6 +1,6 @@
 import 'package:amptive/src/config/config_export.dart';
 import 'package:amptive/src/features/auth/data/models/request/registration_data.dart';
-import 'package:amptive/src/shared/annotated_region__widget.dart';
+import 'package:amptive/src/shared/annotated_region_widget.dart';
 import 'package:amptive/src/shared/back_button.dart';
 import 'package:amptive/src/shared/textformfield_widget.dart';
 import 'package:flutter/cupertino.dart';
@@ -57,9 +57,7 @@ class _PasswordAuthScreenState extends State<PasswordAuthScreen>
                   obscureText: !_passwordVisible,
                   hintText: ATStrings.enterYourPassword,
                   fillColor: ATColors.hex9E9E9E.withValues(alpha: 0.3),
-                  prefixIcon: const SizedBox(
-                    width: 10,
-                  ),
+                  prefixIcon: const SizedBox(width: 10),
                   keyboardType: TextInputType.visiblePassword,
                   autoValidateMode: AutovalidateMode.disabled,
                   validator: validatePassword,
@@ -81,14 +79,15 @@ class _PasswordAuthScreenState extends State<PasswordAuthScreen>
                 ),
                 if (_showDescription)
                   Text(
-                    'Your password should be at least 8 characters, must contain at least one upper case letter',
+                    'Your password must be at least 8 characters, must contain at least one upper and lower case letter, must contain at least one special character and a digit',
                     style: context.textTheme.titleSmall,
-                    maxLines: 2,
+                    maxLines: 3,
                   ),
               ],
             ),
           ),
         ),
+        
         bottomSheet: Builder(builder: (BuildContext context) {
           final double bottom = MediaQuery.viewInsetsOf(context).bottom;
           final double bottomPad = bottom > 0 ? 10 : 50;

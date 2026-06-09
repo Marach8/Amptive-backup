@@ -52,7 +52,7 @@ class UploadImageCubit extends Cubit<ATAppState<String>> {
         },
       );
     } catch (e) {
-      emit(FailureState<String>('Unable to upload image: $e'));
+      emit(const FailureState<String>('Unable to upload image'));
     }
   }
 
@@ -75,7 +75,7 @@ class UploadImageCubit extends Cubit<ATAppState<String>> {
         },
       );
     } catch (e) {
-      emit(FailureState<String>('Unable to upload image: $e'));
+      emit(const FailureState<String>('Unable to upload image'));
     }
   }
 }

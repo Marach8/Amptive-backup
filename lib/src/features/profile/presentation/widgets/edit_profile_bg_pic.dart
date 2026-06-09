@@ -32,7 +32,7 @@ class EditProfileBgImage extends StatelessWidget {
                 
               }
               if (state is SuccessState<UserData>) {
-                final CachedUserData? currentUser =
+                final UserProfileData? currentUser =
                     context.read<LocalUserDataCubit>().currentUserData;
                 if (currentUser != null && state.newData != null) {
                   context.read<LocalUserDataCubit>().updateUserDataLocally(
@@ -44,10 +44,10 @@ class EditProfileBgImage extends StatelessWidget {
             },
             builder: (BuildContext context, ATAppState<UserData> state) {
               return BlocBuilder<LocalUserDataCubit,
-                  ATAppState<CachedUserData>>(
+                  ATAppState<UserProfileData>>(
                 builder: (BuildContext context,
-                    ATAppState<CachedUserData> localState) {
-                  final CachedUserData? userData =
+                    ATAppState<UserProfileData> localState) {
+                  final UserProfileData? userData =
                       context.read<LocalUserDataCubit>().currentUserData;
                   final bool isLoading = state is LoadingState<UserData>;
                   final String? profileImageUrl = userData?.pictureUrl;
@@ -108,8 +108,8 @@ class EditProfileBgImage extends StatelessWidget {
                                             imageData != null) {
                                           context
                                               .read<RemoteUserDataCubit>()
-                                              .updateProfile(
-                                                  imageBytes: imageData.bytes);
+                                              .updateProfileRemotely(
+                                                  imageUrl: imageData.bytes);
                                         }
                                       }
                                     },

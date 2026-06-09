@@ -17,7 +17,7 @@ import 'package:amptive/src/features/profile/presentation/widgets/profile_widget
 
 import 'package:amptive/src/shared/custom_container_widget.dart';
 
-import 'package:amptive/src/shared/annotated_region__widget.dart';
+import 'package:amptive/src/shared/annotated_region_widget.dart';
 
 import 'package:amptive/src/shared/app_bar_widget.dart';
 
@@ -49,7 +49,7 @@ class EditProfileScreen extends StatelessWidget {
           }
 
           if (state is SuccessState<UserData>) {
-            final CachedUserData? currentUser =
+            final UserProfileData? currentUser =
                 context.read<LocalUserDataCubit>().currentUserData;
 
             if (currentUser != null && state.newData != null) {
@@ -67,10 +67,10 @@ class EditProfileScreen extends StatelessWidget {
             }
           }
         }, builder: (BuildContext context, ATAppState<UserData> state) {
-          return BlocBuilder<LocalUserDataCubit, ATAppState<CachedUserData>>(
+          return BlocBuilder<LocalUserDataCubit, ATAppState<UserProfileData>>(
               builder:
-                  (BuildContext context, ATAppState<CachedUserData> userData) {
-            final CachedUserData? userData =
+                  (BuildContext context, ATAppState<UserProfileData> userData) {
+            final UserProfileData? userData =
                 context.read<LocalUserDataCubit>().currentUserData;
 
             return ATAnnotatedRegion(
@@ -105,7 +105,7 @@ class EditProfileScreen extends StatelessWidget {
                                   if (newName != null && context.mounted) {
                                     context
                                         .read<RemoteUserDataCubit>()
-                                        .updateProfile(name: newName);
+                                        .updateProfileRemotely(name: newName);
                                   }
                                 }),
                             _MenuItem(
@@ -120,7 +120,7 @@ class EditProfileScreen extends StatelessWidget {
                                   if (newUsername != null && context.mounted) {
                                     context
                                         .read<RemoteUserDataCubit>()
-                                        .updateProfile(username: newUsername);
+                                        .updateProfileRemotely(username: newUsername);
                                   }
                                 }),
                             _MenuItem(
@@ -136,7 +136,7 @@ class EditProfileScreen extends StatelessWidget {
                                   if (newBio != null && context.mounted) {
                                     context
                                         .read<RemoteUserDataCubit>()
-                                        .updateProfile(bio: newBio);
+                                        .updateProfileRemotely(bio: newBio);
                                   }
                                 }),
                             const SizedBox(height: 15),
@@ -163,7 +163,7 @@ class EditProfileScreen extends StatelessWidget {
                                       context.mounted) {
                                     context
                                         .read<RemoteUserDataCubit>()
-                                        .updateProfile(
+                                        .updateProfileRemotely(
                                             instagramUrl: newInstagramUrl);
                                   }
                                 }),
@@ -183,7 +183,7 @@ class EditProfileScreen extends StatelessWidget {
                                   if (newXUrl != null && context.mounted) {
                                     context
                                         .read<RemoteUserDataCubit>()
-                                        .updateProfile(xUrl: newXUrl);
+                                        .updateProfileRemotely(xUrl: newXUrl);
                                   }
                                 }),
                             _MenuItem(
@@ -203,7 +203,7 @@ class EditProfileScreen extends StatelessWidget {
                                       context.mounted) {
                                     context
                                         .read<RemoteUserDataCubit>()
-                                        .updateProfile(
+                                        .updateProfileRemotely(
                                             linkedinUrl: newLinkedInUrl);
                                   }
                                 }),
@@ -225,7 +225,7 @@ class EditProfileScreen extends StatelessWidget {
                                       context.mounted) {
                                     context
                                         .read<RemoteUserDataCubit>()
-                                        .updateProfile(
+                                        .updateProfileRemotely(
                                             websiteUrl: newWebsiteUrl);
                                   }
                                 }),

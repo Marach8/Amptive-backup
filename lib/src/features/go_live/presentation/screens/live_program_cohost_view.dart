@@ -5,7 +5,7 @@ import 'package:amptive/src/config/utils/font_sizes.dart';
 import 'package:amptive/src/config/utils/image_strings.dart';
 import 'package:amptive/src/config/utils/helper_functions.dart';
 import 'package:amptive/src/views/widgets/animation_widgets/horiz_slider_animation.dart';
-import 'package:amptive/src/shared/annotated_region__widget.dart';
+import 'package:amptive/src/shared/annotated_region_widget.dart';
 import 'package:amptive/src/shared/circle_avatar.dart';
 import 'package:amptive/src/shared/circular_image.dart';
 import 'package:amptive/src/shared/custom_container_widget.dart';

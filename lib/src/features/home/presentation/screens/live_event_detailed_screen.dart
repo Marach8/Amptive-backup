@@ -10,7 +10,7 @@ import 'package:amptive/src/features/go_live/data/models/live_program_data.dart'
 import 'package:amptive/src/features/go_live/presentation/screens/go_live_onboarding_screen.dart';
 import 'package:amptive/src/features/go_live/presentation/screens/live_program_screen.dart';
 import 'package:amptive/src/global_export.dart';
-import 'package:amptive/src/shared/annotated_region__widget.dart';
+import 'package:amptive/src/shared/annotated_region_widget.dart';
 import 'package:amptive/src/shared/circle_avatar.dart';
 import 'package:amptive/src/shared/custom_container_widget.dart';
 import 'package:amptive/src/shared/global_model_objects.dart';
@@ -286,7 +286,7 @@ class ATLiveEventDetailedScreen extends StatelessWidget {
             child: BlocConsumer<GetLiveProgramEntryTokenCubit, ATAppState<LiveProgramEntryToken>>(
               listener: (_, ATAppState<LiveProgramEntryToken> state)async{
                 if(state is SuccessState<LiveProgramEntryToken>){
-                  final CachedUserData? userData = context
+                  final UserProfileData? userData = context
                     .read<LocalUserDataCubit>().currentUserData;
                   final String? userId = userData?.userId;
                   final bool hasTestedMic = userData?.hasTestedMic == 'true';

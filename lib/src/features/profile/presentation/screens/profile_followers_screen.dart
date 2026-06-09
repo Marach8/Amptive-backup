@@ -3,7 +3,7 @@ import 'package:amptive/src/config/utils/dialogs/app_notification_dialog.dart';
 import 'package:amptive/src/features/profile/cubits/followers_cubit.dart';
 import 'package:amptive/src/features/profile/data/models/followers_response_model.dart';
 import 'package:amptive/src/shared/elevated_button_widget.dart';
-import 'package:amptive/src/shared/annotated_region__widget.dart';
+import 'package:amptive/src/shared/annotated_region_widget.dart';
 import 'package:amptive/src/shared/back_button.dart';
 import 'package:amptive/src/shared/image_loader_widget.dart';
 import 'package:amptive/src/shared/shimmer.dart';

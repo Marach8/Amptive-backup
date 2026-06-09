@@ -2,10 +2,9 @@ import 'package:amptive/src/config/api_response_and_app_state.dart';
 import 'package:amptive/src/config/config_export.dart';
 import 'package:amptive/src/config/utils/dialogs/app_notification_dialog.dart';
 import 'package:amptive/src/features/auth/cubits/check_identity_availability_cubit.dart';
-import 'package:amptive/src/features/auth/cubits/send_otp_cubit.dart';
 import 'package:amptive/src/features/auth/data/models/request/registration_data.dart';
-import 'package:amptive/src/features/auth/presentation/screens/otp_screen.dart';
-import 'package:amptive/src/shared/annotated_region__widget.dart';
+import 'package:amptive/src/shared/annotated_region_widget.dart';
+import 'package:amptive/src/shared/app_bar_widget.dart';
 import 'package:amptive/src/shared/elevated_button_widget.dart';
 import 'package:amptive/src/shared/back_button.dart';
 import 'package:amptive/src/shared/loading_indicator.dart';
@@ -13,64 +12,59 @@ import 'package:amptive/src/shared/textformfield_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:nested/nested.dart';
-import '../../../../shared/app_bar_widget.dart';
 
-class ATEmailAuthScreen extends StatefulWidget {
-  const ATEmailAuthScreen({super.key, this.title});
-  final String? title;
+class AddUsernameScreen extends StatefulWidget {
+  const AddUsernameScreen({super.key});
 
   @override
-  State<ATEmailAuthScreen> createState() => _ATEmailAuthScreenState();
+  State<AddUsernameScreen> createState() => _AddUsernameScreenState();
 }
 
-class _ATEmailAuthScreenState extends State<ATEmailAuthScreen>
+class _AddUsernameScreenState extends State<AddUsernameScreen>
     with ATValidators {
-  final TextEditingController _emailCntrl = TextEditingController();
+  final TextEditingController _userNameCntrl = TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   @override
   void dispose() {
-    _emailCntrl.dispose();
     _formKey.currentState?.dispose();
+    _userNameCntrl.dispose();
     super.dispose();
   }
 
   @override
-  Widget build(_) {
-    return MultiBlocProvider(
-      providers: <SingleChildWidget>[
-        BlocProvider<CheckIdentityAvailabilityCubit>(
-          create: (_) => CheckIdentityAvailabilityCubit(),
-        ),
-        BlocProvider<SendOtpCubit>(create: (_) => SendOtpCubit()),
-      ],
+  Widget build(BuildContext context) {
+    return BlocProvider<CheckIdentityAvailabilityCubit>(
+      create: (_) => CheckIdentityAvailabilityCubit(),
       child: Builder(builder: (BuildContext context) {
         return ATAnnotatedRegion(
           child: Scaffold(
-            appBar: ATAppBar(
-                leading: const ATBackBtn(), titleText: widget.title ?? ''),
+            appBar: const ATAppBar(leading: ATBackBtn()),
             body: Form(
               key: _formKey,
               child: SingleChildScrollView(
                 padding: const EdgeInsets.all(15),
                 child: Column(
+                  spacing: 10,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
-                    Text(ATStrings.whatIsYourEmail,
+                    Text(ATStrings.whatShouldWeCallYou,
                         style: context.textTheme.headlineMedium),
-                    const SizedBox(height: 10),
                     ATTextFormField(
-                        controller: _emailCntrl,
+                        controller: _userNameCntrl,
                         maxLines: 1,
-                        hintText: ATStrings.enterYourEmail,
+                        hintText: ATStrings.userName,
                         fillColor: ATColors.hex9E9E9E.withValues(alpha: 0.3),
-                        prefixIcon: const SizedBox(
-                          width: 10,
-                        ),
-                        keyboardType: TextInputType.emailAddress,
+                        keyboardType: TextInputType.text,
                         autoValidateMode: AutovalidateMode.disabled,
-                        validator: validateEmail,
+                        validator: validateField,
+                        prefixIcon: Padding(
+                          padding: const EdgeInsets.only(left: 10, right: 8),
+                          child: Text(
+                            ATStrings.emailSymbol,
+                            style: context.textTheme.headlineMedium,
+                          ),
+                        ),
                         suffixIcon: Padding(
                           padding: const EdgeInsets.only(right: 10),
                           child: BlocConsumer<CheckIdentityAvailabilityCubit,
@@ -106,17 +100,34 @@ class _ATEmailAuthScreenState extends State<ATEmailAuthScreen>
                           ATHelperFuncs.callDebouncer(
                               1500,
                               () => context
-                                  .read<CheckIdentityAvailabilityCubit>()
-                                  .checkIdentityAvailability(
-                                      param: <String, dynamic>{'email': text}));
+                                      .read<CheckIdentityAvailabilityCubit>()
+                                      .checkIdentityAvailability(
+                                          param: <String, dynamic>{
+                                        'username': text
+                                      }));
                         }),
-                    const SizedBox(
-                      height: 6,
-                    ),
-                    Text(
-                      "This email will be verified in the next step.",
-                      style: context.textTheme.titleSmall,
-                    ),
+                    BlocBuilder<CheckIdentityAvailabilityCubit,
+                        ATAppState<bool>>(builder: (_, ATAppState<bool> state) {
+                      if (state is InitialState<bool>) {
+                        return const SizedBox.shrink();
+                      }
+                      final bool isLoading = state is LoadingState<bool>;
+                      final bool isSuccess = state is SuccessState<bool>;
+                      return Text(
+                        isLoading
+                            ? ATStrings.checkerLoading
+                            : isSuccess
+                                ? ATStrings.usernameIsAvailable
+                                : 'Username not available!',
+                        style: context.textTheme.titleSmall?.copyWith(
+                          color: isSuccess
+                              ? ATColors.successColor
+                              : isLoading
+                                  ? ATColors.white
+                                  : ATColors.textRedColor,
+                        ),
+                      );
+                    }),
                   ],
                 ),
               ),
@@ -129,49 +140,17 @@ class _ATEmailAuthScreenState extends State<ATEmailAuthScreen>
                 child: BlocBuilder<CheckIdentityAvailabilityCubit,
                     ATAppState<bool>>(builder: (_, ATAppState<bool> state) {
                   final bool shouldEnableBtn = state is SuccessState<bool>;
-                  return BlocConsumer<SendOtpCubit, ATAppState<String>>(
-                    listener: (_, ATAppState<String> sendOtpState) async {
-                      if (sendOtpState is SuccessState<String>) {
-                        final bool? didVerifyOTP = await context.pushNamed(
-                            ATRoutes.enterOtpScreen,
-                            extra: VerifyOTPScreenParams(
-                                verificationType: OTPVerificationType.email,
-                                identifier: _emailCntrl.text.trim(),
-                                title: widget.title,
-                                otp: sendOtpState.newData)) as bool?;
-
-                        if (context.mounted && didVerifyOTP == true) {
-                          RegistrationData()
-                              .copyWith(email: _emailCntrl.text.trim());
-                          context.pushNamed(ATRoutes.createPasswordScreen);
-                        }
-                      } else if (sendOtpState is FailureState<String>) {
-                        showAppNotification2(
-                          context: context,
-                          text: sendOtpState.message,
-                          type: NotificationType.failure,
-                        );
-                      }
-                    },
-                    builder: (BuildContext context,
-                        ATAppState<String> sendOtpState) {
-                      return ATPlainElevatedBtn(
-                        isLoading: sendOtpState is LoadingState<String>,
-                        onPressed: shouldEnableBtn
-                            ? () {
-                                if (_formKey.currentState?.validate() ??
-                                    false) {
-                                  context.read<SendOtpCubit>().sendOtp(
-                                      param: <String, dynamic>{
-                                        'email': _emailCntrl.text.trim()
-                                      });
-                                }
+                  return ATPlainElevatedBtn(
+                      onPressed: shouldEnableBtn
+                          ? () {
+                              if (_formKey.currentState?.validate() ?? false) {
+                                RegistrationData().copyWith(
+                                    username: _userNameCntrl.text.trim());
+                                context.pushNamed(ATRoutes.addNameAuthScreen);
                               }
-                            : null,
-                        btnTitle: ATStrings.verifyEmail,
-                      );
-                    },
-                  );
+                            }
+                          : null,
+                      btnTitle: ATStrings.next);
                 }),
               );
             }),

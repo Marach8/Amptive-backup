@@ -17,17 +17,10 @@ import 'package:path_provider/path_provider.dart';
 class RemoteUserDataCubit extends Cubit<ATAppState<UserData>> {
   RemoteUserDataCubit({
     ProfileRepo? mockProfileRepo,
-    ATLocalStorageService? mockLocalStorageService,
-    AuthRepo? mockAuthRepo,
-  })  : profileRepo = mockProfileRepo ?? ProfileRepoImpl(),
-        localStorageService =
-            mockLocalStorageService ?? FlutterSecureStorageServiceImpl(),
-        authRepo = mockAuthRepo ?? AuthRepoImpl(),
+  }) : profileRepo = mockProfileRepo ?? ProfileRepoImpl(),
         super(const InitialState<UserData>());
 
   final ProfileRepo profileRepo;
-  final ATLocalStorageService localStorageService;
-  final AuthRepo authRepo;
 
   Future<void> fetchUserProfile() async {
     emit(const LoadingState<UserData>());
@@ -38,33 +31,33 @@ class RemoteUserDataCubit extends Cubit<ATAppState<UserData>> {
       response.when(
         successful: (Successful<UserProfileResponseModel> data) async {
           final UserData? userData = data.data?.data;
+          emit(SuccessState<UserData>(newData: userData));
 
-          if (userData != null) {
-            // FIX: Added missing social links so they don't reset to null on restart
-            final CachedUserData cachedUserData = CachedUserData(
-              userId: userData.id,
-              email: userData.email,
-              username: userData.username,
-              dob: userData.dob,
-              name: userData.name,
-              pictureUrl: userData.profilePicture,
-              bio: userData.bio,
-              phoneNumber: userData.phoneNumber,
-              xUrl: userData.xUrl,
-              instagramUrl: userData.instagramUrl,
-              linkedinUrl: userData.linkedinUrl,
-              websiteUrl: userData.websiteUrl,
-            );
+          // if (userData != null) {
+          //   final CachedUserData cachedUserData = CachedUserData(
+          //     userId: userData.id,
+          //     email: userData.email,
+          //     username: userData.username,
+          //     dob: userData.dob,
+          //     name: userData.name,
+          //     pictureUrl: userData.profilePicture,
+          //     bio: userData.bio,
+          //     phoneNumber: userData.phoneNumber,
+          //     xUrl: userData.xUrl,
+          //     instagramUrl: userData.instagramUrl,
+          //     linkedinUrl: userData.linkedinUrl,
+          //     websiteUrl: userData.websiteUrl,
+          //   );
 
-            await localStorageService.setObject(
-              ATStrings.cachedUserData,
-              cachedUserData.toLocalStorageJson(),
-            );
+          //   await localStorageService.setObject(
+          //     ATStrings.cachedUserData,
+          //     cachedUserData.toLocalStorageJson(),
+          //   );
 
-            emit(SuccessState<UserData>(newData: userData));
-          } else {
-            emit(const FailureState<UserData>('No user data found'));
-          }
+            
+          // } else {
+          //   emit(const FailureState<UserData>('No user data found'));
+          // }
         },
         unSuccessful: (Unsuccessful<UserProfileResponseModel> error) {
           emit(FailureState<UserData>(error.error.message));
@@ -75,8 +68,8 @@ class RemoteUserDataCubit extends Cubit<ATAppState<UserData>> {
     }
   }
 
-  Future<void> updateProfile({
-    Uint8List? imageBytes,
+  Future<void> updateProfileRemotely({
+    String? imageUrl,
     String? name,
     String? username,
     String? bio,
@@ -88,33 +81,6 @@ class RemoteUserDataCubit extends Cubit<ATAppState<UserData>> {
     String? websiteUrl,
   }) async {
     try {
-      String? imageUrl;
-
-      if (imageBytes != null) {
-        final Directory tempDir = await getTemporaryDirectory();
-        final String filePath =
-            '${tempDir.path}/profile_${DateTime.now().millisecondsSinceEpoch}.png';
-
-        final File file = File(filePath);
-        await file.writeAsBytes(imageBytes);
-
-        final ApiResponse<String> uploadResponse =
-            await authRepo.uploadImage(filePath: file.path);
-
-        await uploadResponse.when(
-          successful: (Successful<String> uploadData) async {
-            imageUrl = uploadData.data!;
-          },
-          unSuccessful: (Unsuccessful<dynamic> error) {
-            emit(FailureState<UserData>(error.error.message));
-          },
-        );
-
-        if (await file.exists()) {
-          await file.delete();
-        }
-      }
-
       final ApiResponse<dynamic> response = await profileRepo.updateUserProfile(
         profilePicture: imageUrl,
         name: name,
@@ -130,8 +96,7 @@ class RemoteUserDataCubit extends Cubit<ATAppState<UserData>> {
 
       response.when(
         successful: (_) async {
-          await fetchUserProfile();
-          
+
         },
         
         unSuccessful: (Unsuccessful<dynamic> error) {

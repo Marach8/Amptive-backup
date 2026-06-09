@@ -59,8 +59,6 @@ class UserData {
       linkedinUrl: json['linkedin_url'],
       websiteUrl: json['website_url'],
       phoneNumber: json['phone_number'],
-
-
     );
   }
 

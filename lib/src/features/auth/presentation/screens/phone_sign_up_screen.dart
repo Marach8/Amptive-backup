@@ -4,7 +4,7 @@ import 'package:amptive/src/config/utils/dialogs/app_notification_dialog.dart';
 import 'package:amptive/src/features/auth/cubits/check_identity_availability_cubit.dart';
 import 'package:amptive/src/features/auth/cubits/send_otp_cubit.dart';
 import 'package:amptive/src/features/auth/presentation/screens/otp_screen.dart';
-import 'package:amptive/src/shared/annotated_region__widget.dart';
+import 'package:amptive/src/shared/annotated_region_widget.dart';
 import 'package:amptive/src/shared/custom_container_widget.dart';
 import 'package:amptive/src/shared/elevated_button_widget.dart';
 import 'package:amptive/src/shared/app_bar_widget.dart';
@@ -21,8 +21,8 @@ import 'package:nested/nested.dart';
 import '../../../post_auth/post_authentication_widgets/cupertino_phone_code_select.dart';
 
 class PhoneAuthScreen extends StatefulWidget {
-  const PhoneAuthScreen({super.key, this.title});
-  final String? title;
+  const PhoneAuthScreen({super.key, this.appBarTitle});
+  final String? appBarTitle;
 
   @override
   State<PhoneAuthScreen> createState() => _PhoneAuthScreenState();
@@ -57,7 +57,7 @@ class _PhoneAuthScreenState extends State<PhoneAuthScreen> with ATValidators {
             child: Scaffold(
               appBar: ATAppBar(
                 leading: const ATBackBtn(),
-                titleText: widget.title,
+                titleText: widget.appBarTitle,
               ),
               body: SingleChildScrollView(
                 physics: const BouncingScrollPhysics(),
@@ -68,10 +68,8 @@ class _PhoneAuthScreenState extends State<PhoneAuthScreen> with ATValidators {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
                       Text(
-                        ATStrings.UR_FON_NUMBER,
-                        style: Theme.of(context)
-                            .textTheme
-                            .headlineMedium
+                        ATStrings.whatIsYourPhoneNumber,
+                        style: context.textTheme.headlineMedium
                             ?.copyWith(
                               fontSize: ATSizes.size17,
                             ),
@@ -83,7 +81,7 @@ class _PhoneAuthScreenState extends State<PhoneAuthScreen> with ATValidators {
                           ATContainer(
                             onTap: () => _selectCountry(),
                             padding: const EdgeInsets.fromLTRB(16, 12, 16, 12),
-                            color: ATColors.hex9E9E9E.withOpacity(0.3),
+                            color: ATColors.hex9E9E9E.withValues(alpha:0.3),
                             radius: 14,
                             border: Border.all(
                               color: ATColors.hex307FE2,
@@ -226,11 +224,10 @@ class _PhoneAuthScreenState extends State<PhoneAuthScreen> with ATValidators {
                                 extra: VerifyOTPScreenParams(
                                   verificationType:
                                       OTPVerificationType.phoneNumber,
-                                  identifier: ATStrings.plus +
+                                  dataToVerify: ATStrings.plus +
                                       selectedCountry.phoneCode +
                                       _phoneController.text.trim(),
-                                  title: widget.title,
-                                  otp: sendOtpState.newData,
+                                  appbarTitle: widget.appBarTitle,
                                 ),
                               ) as bool?;
 

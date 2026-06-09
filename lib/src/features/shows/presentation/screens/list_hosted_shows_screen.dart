@@ -5,7 +5,7 @@ import 'package:amptive/src/features/shows/cubits/hosted_shows_cubit.dart';
 import 'package:amptive/src/features/shows/data/models/response/show_response_model.dart';
 import 'package:amptive/src/features/shows/presentation/widgets/render_hosted_show.dart';
 import 'package:amptive/src/global_export.dart';
-import 'package:amptive/src/shared/annotated_region__widget.dart';
+import 'package:amptive/src/shared/annotated_region_widget.dart';
 import 'package:amptive/src/shared/back_button.dart';
 import 'package:amptive/src/shared/image_loader_widget.dart';
 import 'package:go_router/go_router.dart';

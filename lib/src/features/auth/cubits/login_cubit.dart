@@ -43,7 +43,7 @@ class LoginCubit extends Cubit<ATAppState<ATUser>> {
             if(refreshToken != null){
               await localStorageService.set(ATStrings.refreshToken, refreshToken);
             }
-            final CachedUserData cachedUserData = CachedUserData(
+            final UserProfileData cachedUserData = UserProfileData(
               username: userName,
               email: email,
               name: name,

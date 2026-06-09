@@ -1,7 +1,7 @@
 import 'package:amptive/src/config/utils/colors.dart';
 import 'package:amptive/src/config/utils/font_weights.dart';
 import 'package:amptive/src/features/profile_menu/presentation/screens/profile_menu_landing_screen.dart';
-import 'package:amptive/src/shared/annotated_region__widget.dart';
+import 'package:amptive/src/shared/annotated_region_widget.dart';
 import 'package:amptive/src/shared/app_bar_widget.dart';
 import 'package:amptive/src/shared/back_button.dart';
 import 'package:flutter/material.dart';

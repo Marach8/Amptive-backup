@@ -14,7 +14,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:nested/nested.dart';
-import '../../../../shared/annotated_region__widget.dart';
+import '../../../../shared/annotated_region_widget.dart';
 
 class ATWalletLandingScreenWrapper extends StatelessWidget {
   const ATWalletLandingScreenWrapper({super.key});
@@ -58,7 +58,7 @@ class _WalletLandingScreenState extends State<_WalletLandingScreen> {
   @override
   Widget build(BuildContext context) {
     bool shouldShowCommingSoon = false;
-     final CachedUserData? userData =
+     final UserProfileData? userData =
         context.read<LocalUserDataCubit>().currentUserData;
 
      return ATAnnotatedRegion(
