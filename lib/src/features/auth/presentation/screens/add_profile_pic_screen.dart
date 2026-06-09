@@ -8,7 +8,6 @@ import 'package:amptive/src/shared/annotated_region_widget.dart';
 import 'package:amptive/src/shared/app_bar_widget.dart';
 import 'package:amptive/src/shared/back_button.dart';
 import 'package:amptive/src/shared/loading_indicator.dart';
-import 'package:amptive/src/features/auth/presentation/widgets/empty.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -112,6 +111,8 @@ class _AddProfilePictureScreenState extends State<AddProfilePictureScreen> {
                                   : ATColors.hex307FE2,
                               ),
                               onPressed: () async {
+                                if(_isLoadingNotifier.value) return;
+
                                 if (_pickedImage == null) {
                                   final ImageSource? selectedSrc =
                                       await showImageSourceOptions(context);

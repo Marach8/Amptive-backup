@@ -50,6 +50,24 @@ class DiscoverRepoImpl implements DiscoverRepo {
   }
 
   @override
+  Future<ApiResponse<bool>> joinCommunities({
+    required List<String> communityIds,
+  }) async {
+    try {
+      await Future<void>.delayed(const Duration(seconds: 5));
+      // final Response<dynamic> response = await networkService.patch(
+      //   '${ATEndpoints.communities}/join',
+      //   data: communityIds,
+      // );
+      return Successful<bool>(data: true);
+    } catch (e) {
+      return Unsuccessful<bool>(
+        error: ATException.resolveException(e),
+      );
+    }
+  }
+
+  @override
   Future<ApiResponse<AllUsersResponseModel>> fetchAllUsers({
     required int page,
     required int pageSize,

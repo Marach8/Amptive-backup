@@ -62,11 +62,11 @@ class SignupCubit extends Cubit<ATAppState<SignupStage>> {
         LoadingState<SignupStage>(currentData: stages[i]),
       );
 
-      //if (i < stages.length - 1) {
+      if (i < stages.length - 1) {
         await Future<void>.delayed(
-          const Duration(seconds: 2),
+          const Duration(seconds: 3),
         );
-      //}
+      }
     }
   }
 

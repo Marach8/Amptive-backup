@@ -4,6 +4,7 @@ import 'package:amptive/src/config/utils/extensions/context_extensions.dart';
 import 'package:amptive/src/config/utils/other_strings.dart';
 import 'package:amptive/src/config/routing/route_strings.dart';
 import 'package:amptive/src/features/discover/cubits/communities_cubit.dart';
+import 'package:amptive/src/features/discover/cubits/join_communities_cubit.dart';
 import 'package:amptive/src/features/discover/data/models/response/communities_response_model.dart';
 import 'package:amptive/src/shared/elevated_button_widget.dart';
 import 'package:amptive/src/shared/annotated_region_widget.dart';
@@ -16,7 +17,6 @@ import 'package:go_router/go_router.dart';
 import 'package:nested/nested.dart';
 import '../../../../shared/app_bar_widget.dart';
 import '../../../../shared/loading_indicator.dart';
-import '../widgets/community_card_preference.dart';
 
 class Select5CommunitiesScreen extends StatelessWidget {
   const Select5CommunitiesScreen({super.key});
@@ -30,7 +30,10 @@ class Select5CommunitiesScreen extends StatelessWidget {
         ),
         BlocProvider<SelectCommunitiesCubit>(
           create: (_) => SelectCommunitiesCubit()
-        )
+        ),
+        BlocProvider<JoinCommunitiesCubit>(
+          create: (_) => JoinCommunitiesCubit()
+        ),
       ],
       child: const _SubWidget(),
     );

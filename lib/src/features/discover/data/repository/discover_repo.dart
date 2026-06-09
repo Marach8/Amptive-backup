@@ -16,6 +16,10 @@ abstract class DiscoverRepo {
     required int pageSize,
   });
 
+  Future<ApiResponse<bool>> joinCommunities({
+    required List<String> communityIds,
+  });
+
   Future<ApiResponse<AllUsersResponseModel>> fetchAllUsers({
     required int page,
     required int pageSize,
@@ -31,9 +35,9 @@ abstract class DiscoverRepo {
     required String displayName,
   });
   Future<ApiResponse<TrendingTagsResponseModel>> fetchTrendingTags({
-  required int limit,
-  String? tagType,
-});
+    required int limit,
+    String? tagType,
+  });
 
   Future<ApiResponse<SearchUsersResponseModel>> searchUsers({
     required String query,
@@ -80,6 +84,4 @@ abstract class DiscoverRepo {
   Future<ApiResponse<dynamic>> searchSuggestions({
     required String query,
   });
-
-
 }
