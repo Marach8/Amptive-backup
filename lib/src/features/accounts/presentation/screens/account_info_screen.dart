@@ -29,18 +29,18 @@ class ATAccountInfoScreen extends StatelessWidget {
         BlocProvider<ATSelectCountryBloc>(create: (_) => ATSelectCountryBloc()),
         BlocProvider<RemoteUserDataCubit>(create: (_) => RemoteUserDataCubit()),
       ],
-      child: BlocListener<RemoteUserDataCubit, ATAppState<UserData>>(
-        listener: (BuildContext context, ATAppState<UserData> state) {
-          if (state is SuccessState<UserData>) {
-            final UserData? data = state.newData;
+      child: BlocListener<RemoteUserDataCubit, ATAppState<UserProfileData>>(
+        listener: (BuildContext context, ATAppState<UserProfileData> state) {
+          if (state is SuccessState<UserProfileData>) {
+            final UserProfileData? data = state.newData;
             if (data != null) {
               final UserProfileData cachedData = UserProfileData(
-                userId: data.id,
+                userId: data.userId,
                 email: data.email,
                 username: data.username,
                 dob: data.dob,
                 name: data.name,
-                pictureUrl: data.profilePicture,
+                pictureUrl: data.pictureUrl,
                 bio: data.bio,
                 phoneNumber: data.phoneNumber,
               );
@@ -160,9 +160,9 @@ class ATAccountInfoScreen extends StatelessWidget {
                                   selectedCountry = newSelectedCountry;
                                 });
                                 // Using existing updateProfile method from RemoteUserDataCubit
-                                context.read<RemoteUserDataCubit>().updateProfileRemotely(
-                                  country: newSelectedCountry.name,
-                                );
+                                // context.read<RemoteUserDataCubit>().updateRemoteUserProfile(
+                                //   country: newSelectedCountry.name,
+                                // );
                               }
                             });
                       }),

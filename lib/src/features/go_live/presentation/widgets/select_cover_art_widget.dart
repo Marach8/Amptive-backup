@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'dart:typed_data';
 import 'package:amptive/src/config/config_export.dart';
+import 'package:amptive/src/features/profile/presentation/screens/image_cropper_screen.dart';
 import 'package:amptive/src/shared/image_source_selection_dialog.dart';
 import 'package:amptive/src/shared/image_loader_widget.dart';
 import 'package:custom_image_crop/custom_image_crop.dart'
@@ -39,11 +40,13 @@ class _SelectProgramCoverArtState extends State<SelectProgramCoverArt> {
         if (context.mounted && selectedFile != null) {
           final File file = File(selectedFile.path);
           final MemoryImage? croppedImage =
-              await context.pushNamed(ATRoutes.rectImageCropperScreen, extra: (
-            file,
-            Ratio(width: 160, height: 160),
-            CustomCropShape.Ratio,
-          ));
+              await context.pushNamed(
+                ATRoutes.imageCropperScreen,
+                  extra: ImageCroppingParams(
+                    imageFile: file,
+                    ratio: Ratio(width: 160, height: 160),
+                  )
+                );
 
           if (croppedImage != null) {
             setState(() {

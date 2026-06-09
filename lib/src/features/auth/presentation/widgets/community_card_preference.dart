@@ -88,33 +88,14 @@ class RenderACommunityCard extends StatelessWidget {
     return Builder(builder: (BuildContext context) {
       return GestureDetector(
         onTap: () {},
-        child: Stack(
-          children: <Widget>[
-            ClipRRect(
-              borderRadius: BorderRadius.circular(6),
-              child: ATImgLoader(
-                imgPath: community.image ?? '',
-                boxFit: BoxFit.cover,
-                height: 120,
-                width: 170,
-              ),
-            ),
-            Positioned(
-              bottom: 8,
-              left: 8,
-              child: DecoratedBox(
-                decoration: BoxDecoration(boxShadow: <BoxShadow>[
-                  BoxShadow(
-                      color: ATColors.black, blurRadius: 15, spreadRadius: 0.1)
-                ]),
-                child: Text(
-                  community.name ?? '',
-                  style: context.textTheme.titleMedium
-                      ?.copyWith(fontWeight: FontWeight.w600),
-                ),
-              ),
-            )
-          ],
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(6),
+          child: ATImgLoader(
+            imgPath: community.image ?? '',
+            boxFit: BoxFit.cover,
+            height: 120,
+            width: 170,
+          ),
         ),
       );
     });

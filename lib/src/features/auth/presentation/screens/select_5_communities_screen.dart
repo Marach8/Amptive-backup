@@ -9,9 +9,11 @@ import 'package:amptive/src/shared/elevated_button_widget.dart';
 import 'package:amptive/src/shared/annotated_region_widget.dart';
 import 'package:amptive/src/shared/back_button.dart';
 import 'package:amptive/src/shared/global_model_objects.dart';
+import 'package:amptive/src/shared/image_loader_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:nested/nested.dart';
 import '../../../../shared/app_bar_widget.dart';
 import '../../../../shared/loading_indicator.dart';
 import '../widgets/community_card_preference.dart';
@@ -21,8 +23,15 @@ class Select5CommunitiesScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider<CommunitiesCubit>(
-      create: (_) => CommunitiesCubit(),
+    return MultiBlocProvider(
+      providers: <SingleChildWidget>[
+        BlocProvider<CommunitiesCubit>(
+          create: (_) => CommunitiesCubit()
+        ),
+        BlocProvider<SelectCommunitiesCubit>(
+          create: (_) => SelectCommunitiesCubit()
+        )
+      ],
       child: const _SubWidget(),
     );
   }
@@ -56,145 +65,215 @@ class __SubWidgetState extends State<_SubWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider<CommunitiesCubit>(
-      create: (_) => CommunitiesCubit()..fetchCommunities(),
-      child: ATAnnotatedRegion(
-          child: Scaffold(
-        appBar: const ATAppBar(
-          leading: ATBackBtn(),
-        ),
-        body: Padding(
-          padding: const EdgeInsets.fromLTRB(16, 0, 16, 0),
-          child: Column(
-            spacing: 16,
-            children: <Widget>[
-              Text(
-                ATStrings.select5Communities,
-                maxLines: 3,
-                style: context.textTheme.headlineLarge,
-              ),
-              Text(
-                ATStrings.selectedInterestNote,
-                maxLines: 3,
-                style: context.textTheme.titleMedium
-                    ?.copyWith(color: ATColors.hexCDCDCD),
-              ),
-              Expanded(
-                child: Stack(
-                  children: <Widget>[
-                    BlocBuilder<CommunitiesCubit,
-                            ATAppState<CommunitiesResponseModel>>(
-                        builder:
-                            (_, ATAppState<CommunitiesResponseModel> state) {
-                      return switch (state) {
-                        InitialState<CommunitiesResponseModel>() =>
-                          const SizedBox.shrink(),
-                        LoadingState<CommunitiesResponseModel>() ||
-                        FailureState<CommunitiesResponseModel>() ||
-                        SuccessState<CommunitiesResponseModel>() =>
-                          Builder(
-                            builder: (_) {
-                              final CommunitiesResponseModel? communitiesData =
-                                  context
-                                      .read<CommunitiesCubit>()
-                                      .currentCommunities;
-                              final Map<String, Community> communities =
-                                  communitiesData?.communities ??
-                                      <String, Community>{};
-                              final List<String> communityIds =
-                                  communitiesData?.communityIds ?? <String>[];
-
-                              if (communities.isEmpty) {
-                                if (state
-                                    is LoadingState<CommunitiesResponseModel>) {
+    return ATAnnotatedRegion(
+        child: Scaffold(
+      appBar: ATAppBar(
+        leading: const ATBackBtn(),
+        actions: <Widget>[
+          BlocBuilder<SelectCommunitiesCubit, List<String>>(
+            builder: (_, List<String> selectedComIds) {
+              return Text(
+                '${selectedComIds.length} selected',
+                style: context.textTheme.titleSmall
+                  ?.copyWith(color: ATColors.hexC2C2C2));
+            }
+          )
+        ],
+      ),
+      body: Padding(
+        padding: const EdgeInsets.fromLTRB(16, 0, 16, 0),
+        child: Column(
+          spacing: 16,
+          children: <Widget>[
+            Text(
+              ATStrings.select5Communities,
+              maxLines: 3,
+              style: context.textTheme.headlineLarge,
+            ),
+            Text(
+              ATStrings.selectedInterestNote,
+              maxLines: 3,
+              style: context.textTheme.titleMedium
+                  ?.copyWith(color: ATColors.hexCDCDCD),
+            ),
+            Expanded(
+              child: Stack(
+                children: <Widget>[
+                  BlocBuilder<CommunitiesCubit,
+                          ATAppState<CommunitiesResponseModel>>(
+                      builder:
+                          (_, ATAppState<CommunitiesResponseModel> state) {
+                    return switch (state) {
+                      InitialState<CommunitiesResponseModel>() =>
+                        const SizedBox.shrink(),
+                      LoadingState<CommunitiesResponseModel>() ||
+                      FailureState<CommunitiesResponseModel>() ||
+                      SuccessState<CommunitiesResponseModel>() =>
+                        Builder(
+                          builder: (BuildContext context) {
+                            final CommunitiesResponseModel? communitiesData =
+                                context.read<CommunitiesCubit>().currentCommunities;
+                            final Map<String, Community> communities =
+                                communitiesData?.communities ??
+                                    <String, Community>{};
+                            final List<String> communityIds =
+                                communitiesData?.communityIds ?? <String>[];
+    
+                            if (communityIds.isEmpty) {
+                              if (state
+                                  is LoadingState<CommunitiesResponseModel>) {
+                                return const Center(
+                                    child: ATLoadingIndicator());
+                              }
+                              if (state
+                                  is FailureState<CommunitiesResponseModel>) {
+                                return Center(
+                                    child: IconButton(
+                                  onPressed: () {
+                                    context
+                                        .read<CommunitiesCubit>()
+                                        .fetchCommunities();
+                                  },
+                                  icon: const Icon(Icons.refresh),
+                                ));
+                              }
+                              return Center(
+                                child: Text(
+                                  'Communities not available yet',
+                                  style: context.textTheme.titleMedium,
+                                ),
+                              );
+                            }
+    
+                            final bool hasMoreItems =
+                                communitiesData?.hasMore ?? true;
+                            final int count = communityIds.length;
+    
+                            return GridView.builder(
+                              itemCount: hasMoreItems
+                                  ? (count + (count.isEven ? 2 : 1))
+                                  : count,
+                              controller: scrollController,
+                              cacheExtent: 450,
+                              padding: const EdgeInsets.only(bottom: 120),
+                              gridDelegate:
+                                  const SliverGridDelegateWithFixedCrossAxisCount(
+                                      crossAxisSpacing: 8,
+                                      mainAxisSpacing: 8,
+                                      crossAxisCount: 2,
+                                      childAspectRatio: 169 / 122),
+                              itemBuilder: (_, int index) {
+                                if (index < count) {
+                                  final String id = communityIds[index];
+                                  final Community community = communities[id]!;
+                                  return BlocBuilder<SelectCommunitiesCubit, List<String>>(
+                                    builder: (_, List<String> selectedIds) {
+                                      return RenderACommunityCard(
+                                        community: community,
+                                        isSelected: selectedIds.contains(id),
+                                      );
+                                    }
+                                  );
+                                }
+                                if (state is LoadingState<
+                                    CommunitiesResponseModel>) {
                                   return const Center(
                                       child: ATLoadingIndicator());
                                 }
-                                if (state
-                                    is FailureState<CommunitiesResponseModel>) {
-                                  return Center(
-                                      child: IconButton(
-                                    onPressed: () {
-                                      context
-                                          .read<CommunitiesCubit>()
-                                          .fetchCommunities();
-                                    },
-                                    icon: const Icon(Icons.refresh),
-                                  ));
-                                }
-                                return Center(
-                                  child: Text(
-                                    'Communities not available yet',
-                                    style: context.textTheme.titleMedium,
-                                  ),
-                                );
-                              }
-
-                              final bool hasMoreItems =
-                                  communitiesData?.hasMore ?? true;
-                              final int count = communityIds.length;
-
-                              return GridView.builder(
-                                itemCount: hasMoreItems
-                                    ? (count + (count.isEven ? 2 : 1))
-                                    : count,
-                                controller: scrollController,
-                                cacheExtent: 450,
-                                gridDelegate:
-                                    const SliverGridDelegateWithFixedCrossAxisCount(
-                                        crossAxisSpacing: 4,
-                                        mainAxisSpacing: 4,
-                                        crossAxisCount: 2,
-                                        childAspectRatio: 169 / 122),
-                                itemBuilder: (_, int index) {
-                                  if (index < count) {
-                                    final String id = communityIds[index];
-                                    final Community community =
-                                        communities[id]!;
-                                    return RenderACommunityCard(
-                                      community: community,
-                                    );
-                                  }
-                                  if (state is LoadingState<
-                                      CommunitiesResponseModel>) {
-                                    return const Center(
-                                        child: ATLoadingIndicator());
-                                  }
-                                  return const SizedBox.shrink();
-                                },
-                              );
-                            },
-                          )
-                      };
-                    }),
-                  ],
-                ),
+                                return const SizedBox.shrink();
+                              },
+                            );
+                          },
+                        )
+                    };
+                  }),
+                ],
               ),
-            ],
-          ),
+            ),
+          ],
         ),
-        bottomSheet: Padding(
-          padding: const EdgeInsets.fromLTRB(15, 5, 15, 50),
-          child: ATPlainElevatedBtn(
-            onPressed: () {
-              context.goNamed(ATRoutes.allowNotificationsScreen);
-            },
-            btnTitle: ATStrings.next,
-          ),
+      ),
+      bottomSheet: Padding(
+        padding: const EdgeInsets.fromLTRB(15, 5, 15, 50),
+        child: BlocBuilder<SelectCommunitiesCubit, List<String>>(
+            builder: (_, List<String> selectedComIds) {
+            return ATPlainElevatedBtn(
+              onPressed: selectedComIds.length < 5 ? null : () {
+                context.goNamed(ATRoutes.allowNotificationsScreen);
+              },
+              btnTitle: ATStrings.next,
+            );
+          }
         ),
-      )),
+      ),
+    ));
+  }
+}
+
+
+class RenderACommunityCard extends StatelessWidget {
+  const RenderACommunityCard({
+    super.key,
+    required this.community,
+    required this.isSelected,
+  });
+
+  final Community community;
+  final bool isSelected;
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: () {
+        if (isSelected) {
+          context.read<SelectCommunitiesCubit>()
+            .deselectCommunity(community.communityId ?? '');
+        } else {
+          context.read<SelectCommunitiesCubit>()
+            .selectCommunity(community.communityId ?? '');
+        }
+      },
+      child: Stack(
+        alignment: Alignment.center,
+        children: <Widget>[
+          ClipRRect(
+            borderRadius: BorderRadius.circular(6),
+            child: ATImgLoader(
+              imgPath: community.image ?? '',
+              boxFit: BoxFit.cover,
+              height: 120,
+              width: 170,
+            ),
+          ),
+          if(isSelected) Positioned(
+            right: 6, top: 6,
+            child: CircleAvatar(
+              backgroundColor: ATColors.white,
+              radius: 12,
+              child: Icon(
+                Icons.check, size: 16,
+                color: ATColors.black
+              ),
+            )
+          )
+        ],
+      ),
     );
   }
 }
 
-class SelectedCommunitiesCubit extends Cubit<List<String>> {
-  SelectedCommunitiesCubit() : super(<String>[]);
 
-  void addCommunity(String communityId) {
+
+class SelectCommunitiesCubit extends Cubit<List<String>> {
+  SelectCommunitiesCubit() : super(<String>[]);
+
+  void selectCommunity(String communityId) {
     emit(<String>[...state, communityId]);
   }
 
-  void removeCommunity(String communityId) {
-    emit(state.where((String id) => id != communityId).toList());
+  void deselectCommunity(String communityId) {
+    final List<String> communites = List<String>.from(state);
+    communites.remove(communityId);
+    emit(communites);
   }
 }

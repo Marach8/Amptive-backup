@@ -298,8 +298,8 @@ class ATStrings {
       'Amptive strongly recommends Face ID for added security. Do you wish to proceed?';
 
   static const String addProfilePicture = "Add a profile picture";
-  static const String useYOurFavImage =
-      "Use one of your favourite image or selfie";
+  static const String useYourFavImage =
+      "Use one of your favourite images or a live photo";
   static const String photoGallery = 'Photo Gallery';
   static const String camera = 'Camera';
   static const String skipForNow = 'Skip for now';
@@ -342,6 +342,8 @@ class ATStrings {
   static const String paidShow = '\$paid show';
   static const String INSTAGRAM = 'Instagram';
   static const String country = 'country';
+  static const String hasHostedEvents = 'has_hosted_events';
+  static const String hasHostedShows = 'has_hosted_shows';
   static const String coverPhoto = 'cover_photo';
   static const String X = 'X';
   static const String LINKEDIN = 'LinkedIn';

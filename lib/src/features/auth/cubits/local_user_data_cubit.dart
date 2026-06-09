@@ -78,6 +78,8 @@ class UserProfileData extends Equatable {
     this.liveProgramData,
     this.coverPhoto,
     this.country,
+    this.hasHostedEvents,
+    this.hasHostedShows,
   });
 
   factory UserProfileData.fromLocalStorageJson(
@@ -118,6 +120,8 @@ class UserProfileData extends Equatable {
       websiteUrl: json[ATStrings.WEBSITE] as String?,
       coverPhoto: json[ATStrings.coverPhoto] as String?,
       country: json[ATStrings.country] as String?,
+      hasHostedEvents: bool.tryParse(json[ATStrings.hasHostedEvents] ?? ''),
+      hasHostedShows: bool.tryParse(json[ATStrings.hasHostedShows] ?? ''),
       liveProgramData: liveProgramData,
     );
   }
@@ -141,6 +145,8 @@ class UserProfileData extends Equatable {
       country: json['country'],
       coverPhoto: json['cover_photo'],
       followingCount: json['following_count']?.toString(),
+      hasHostedEvents: json['has_hosted_events'],
+      hasHostedShows: json['has_hosted_shows'],
     );
   }
 
@@ -161,6 +167,7 @@ class UserProfileData extends Equatable {
     linkedinUrl,
     websiteUrl;
 
+  final bool? hasHostedShows, hasHostedEvents;
   final Sentinel<LiveProgramData?>? liveProgramData;
 
   UserProfileData copyWith({
@@ -181,6 +188,8 @@ class UserProfileData extends Equatable {
     String? websiteUrl,
     String? coverPhoto,
     String? country,
+    bool? hasHostedEvents,
+    bool? hasHostedShows,
     Sentinel<LiveProgramData?>? liveProgramData,
   }) {
     return UserProfileData(
@@ -209,6 +218,8 @@ class UserProfileData extends Equatable {
           liveProgramData ?? this.liveProgramData,
       coverPhoto: coverPhoto ?? this.coverPhoto,
       country: country ?? this.country,
+      hasHostedEvents: hasHostedEvents ?? this.hasHostedEvents,
+      hasHostedShows: hasHostedShows ?? this.hasHostedShows,
     );
   }
 
@@ -232,24 +243,9 @@ class UserProfileData extends Equatable {
       ATStrings.WEBSITE: websiteUrl,
       ATStrings.coverPhoto: coverPhoto,
       ATStrings.country: country,
+      ATStrings.hasHostedEvents: hasHostedEvents,
+      ATStrings.hasHostedShows: hasHostedShows,
     };
-
-    Map<String, dynamic> toRemoteJson(){
-      final Map<String, dynamic> body = <String, dynamic>{};
-    
-      if (pictureUrl != null) body["profile_picture"] = pictureUrl;
-      if (name != null) body["name"] = name;
-      if (username != null) body["username"] = username;
-      if (bio != null) body["bio"] = bio;
-      if (country != null) body["country"] = country;
-      if (coverPhoto != null) body["cover_photo"] = coverPhoto;
-      if (xUrl != null) body["x_url"] = xUrl;
-      if (instagramUrl != null) body["instagram_url"] = instagramUrl;
-      if (linkedinUrl != null) body["linkedin_url"] = linkedinUrl;
-      if (websiteUrl != null) body["website_url"] = websiteUrl;
-
-      return body;
-    }
 
     if (liveProgramData != null &&
         liveProgramData!.hasValue) {
@@ -258,6 +254,23 @@ class UserProfileData extends Equatable {
     }
 
     return json;
+  }
+
+  Map<String, dynamic> toRemoteJson(){
+    final Map<String, dynamic> body = <String, dynamic>{};
+  
+    if (pictureUrl != null) body["profile_picture"] = pictureUrl;
+    if (name != null) body["name"] = name;
+    if (username != null) body["username"] = username;
+    if (bio != null) body["bio"] = bio;
+    if (country != null) body["country"] = country;
+    if (coverPhoto != null) body["cover_photo"] = coverPhoto;
+    if (xUrl != null) body["x_url"] = xUrl;
+    if (instagramUrl != null) body["instagram_url"] = instagramUrl;
+    if (linkedinUrl != null) body["linkedin_url"] = linkedinUrl;
+    if (websiteUrl != null) body["website_url"] = websiteUrl;
+
+    return body;
   }
 
   @override
@@ -280,5 +293,7 @@ class UserProfileData extends Equatable {
         liveProgramData?.value,
         coverPhoto,
         country,
+        hasHostedEvents,
+        hasHostedShows,
       ];
 }

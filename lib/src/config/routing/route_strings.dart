@@ -82,7 +82,7 @@ class ATRoutes {
   static const String accountLandingScreen = 'account_screen';
   static const String enterEmailAndPhoneNoOtpScreen = "enter_email_and_phone_no_otp";
   static const String EDIT_PROFILE = 'edit_profile';
-  static const String rectImageCropperScreen = 'profile_bg_crop';
+  static const String imageCropperScreen = 'profile_bg_crop';
   static const String EDIT_NAME = 'edit_name';
   static const String EDIT_USERNAME = 'edit_username';
   static const String EDIT_BIO = 'edit_bio';

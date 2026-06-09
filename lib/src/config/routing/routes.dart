@@ -78,7 +78,7 @@ final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 final GoRouter amptiveAppRouter = GoRouter(
   navigatorKey: navigatorKey,
   initialLocation: ATRoutes.addNameAuthScreen.addSlash,
-  //redirect: tgRedirect,
+  redirect: tgRedirect,
 
   routes: <RouteBase>[
     GoRoute(
@@ -431,17 +431,14 @@ final GoRouter amptiveAppRouter = GoRouter(
               builder: (_, __) => const EditProfileScreen(),
               routes: <RouteBase>[
                 GoRoute(
-                    name: ATRoutes.rectImageCropperScreen,
-                    path: ATRoutes.rectImageCropperScreen.addSlash,
+                    name: ATRoutes.imageCropperScreen,
+                    path: ATRoutes.imageCropperScreen.addSlash,
                     pageBuilder: (_, GoRouterState state) {
-                      final (File, Ratio?, CustomCropShape?) params =
-                          state.extra as (File, Ratio?, CustomCropShape?);
+                      final ImageCroppingParams params =
+                          state.extra as ImageCroppingParams;
                       return ATSlidingRouteTransition<MemoryImage>(
-                          child: RectImageCropperScreen(
-                        imageFile: params.$1,
-                        ratio: params.$2,
-                        shape: params.$3 ?? CustomCropShape.Ratio,
-                      ));
+                        child: ImageCropperScreen(params: params)
+                      );
                     }),
                 GoRoute(
                   name: ATRoutes.EDIT_NAME,

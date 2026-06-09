@@ -36,225 +36,226 @@ class EditProfileScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider<RemoteUserDataCubit>(
-      create: (_) => RemoteUserDataCubit(),
-      child: Builder(builder: (BuildContext context) {
-        return BlocConsumer<RemoteUserDataCubit, ATAppState<UserData>>(
-            listener: (BuildContext context, ATAppState<UserData> state) {
-          if (state is FailureState<UserData>) {
-            showAppNotification2(
-                context: context,
-                text: state.message,
-                type: NotificationType.failure);
-          }
+    return const SizedBox();
+    // return BlocProvider<RemoteUserDataCubit>(
+    //   create: (_) => RemoteUserDataCubit(),
+    //   child: Builder(builder: (BuildContext context) {
+    //     return BlocConsumer<RemoteUserDataCubit, ATAppState<UserData>>(
+    //         listener: (BuildContext context, ATAppState<UserData> state) {
+    //       if (state is FailureState<UserData>) {
+    //         showAppNotification2(
+    //             context: context,
+    //             text: state.message,
+    //             type: NotificationType.failure);
+    //       }
 
-          if (state is SuccessState<UserData>) {
-            final UserProfileData? currentUser =
-                context.read<LocalUserDataCubit>().currentUserData;
+    //       if (state is SuccessState<UserData>) {
+    //         final UserProfileData? currentUser =
+    //             context.read<LocalUserDataCubit>().currentUserData;
 
-            if (currentUser != null && state.newData != null) {
-              context.read<LocalUserDataCubit>().updateUserDataLocally(
-                    currentUser.copyWith(
-                      name: state.newData?.name,
-                      username: state.newData?.username,
-                      bio: state.newData?.bio,
-                      xUrl: state.newData?.xUrl,
-                      instagramUrl: state.newData?.instagramUrl,
-                      linkedinUrl: state.newData?.linkedinUrl,
-                      websiteUrl: state.newData?.websiteUrl,
-                    ),
-                  );
-            }
-          }
-        }, builder: (BuildContext context, ATAppState<UserData> state) {
-          return BlocBuilder<LocalUserDataCubit, ATAppState<UserProfileData>>(
-              builder:
-                  (BuildContext context, ATAppState<UserProfileData> userData) {
-            final UserProfileData? userData =
-                context.read<LocalUserDataCubit>().currentUserData;
+    //         if (currentUser != null && state.newData != null) {
+    //           context.read<LocalUserDataCubit>().updateUserDataLocally(
+    //                 currentUser.copyWith(
+    //                   name: state.newData?.name,
+    //                   username: state.newData?.username,
+    //                   bio: state.newData?.bio,
+    //                   xUrl: state.newData?.xUrl,
+    //                   instagramUrl: state.newData?.instagramUrl,
+    //                   linkedinUrl: state.newData?.linkedinUrl,
+    //                   websiteUrl: state.newData?.websiteUrl,
+    //                 ),
+    //               );
+    //         }
+    //       }
+    //     }, builder: (BuildContext context, ATAppState<UserData> state) {
+    //       return BlocBuilder<LocalUserDataCubit, ATAppState<UserProfileData>>(
+    //           builder:
+    //               (BuildContext context, ATAppState<UserProfileData> userData) {
+    //         final UserProfileData? userData =
+    //             context.read<LocalUserDataCubit>().currentUserData;
 
-            return ATAnnotatedRegion(
-              child: Scaffold(
-                appBar: const ATAppBar(
-                  leadingWidth: 30,
-                  padding: EdgeInsets.only(left: 7),
-                  leading: ATRoundedBackBtn(),
-                  titleText: ATStrings.EDIT_PROFILE,
-                ),
-                body: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    const EditProfileBgImage(),
-                    const SizedBox(height: 20),
-                    Expanded(
-                      child: SingleChildScrollView(
-                        physics: const BouncingScrollPhysics(),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: <Widget>[
-                            const SizedBox(height: 30),
-                            const _MenuHeading(text: ATStrings.ABT_U),
-                            _MenuItem(
-                                title: ATStrings.NAME,
-                                value: userData?.name ?? 'Alieu Baba',
-                                onTap: () async {
-                                  final String? newName = await context
-                                      .pushNamed(ATRoutes.EDIT_NAME,
-                                          extra: userData?.name ?? '');
+    //         return ATAnnotatedRegion(
+    //           child: Scaffold(
+    //             appBar: const ATAppBar(
+    //               leadingWidth: 30,
+    //               padding: EdgeInsets.only(left: 7),
+    //               leading: ATRoundedBackBtn(),
+    //               titleText: ATStrings.EDIT_PROFILE,
+    //             ),
+    //             body: Column(
+    //               crossAxisAlignment: CrossAxisAlignment.start,
+    //               children: <Widget>[
+    //                 const EditProfileBgImage(),
+    //                 const SizedBox(height: 20),
+    //                 Expanded(
+    //                   child: SingleChildScrollView(
+    //                     physics: const BouncingScrollPhysics(),
+    //                     child: Column(
+    //                       crossAxisAlignment: CrossAxisAlignment.start,
+    //                       children: <Widget>[
+    //                         const SizedBox(height: 30),
+    //                         const _MenuHeading(text: ATStrings.ABT_U),
+    //                         _MenuItem(
+    //                             title: ATStrings.NAME,
+    //                             value: userData?.name ?? 'Alieu Baba',
+    //                             onTap: () async {
+    //                               final String? newName = await context
+    //                                   .pushNamed(ATRoutes.EDIT_NAME,
+    //                                       extra: userData?.name ?? '');
 
-                                  if (newName != null && context.mounted) {
-                                    context
-                                        .read<RemoteUserDataCubit>()
-                                        .updateProfileRemotely(name: newName);
-                                  }
-                                }),
-                            _MenuItem(
-                                title: ATStrings.userName,
-                                value: userData?.username ?? 'AlieuBaba',
-                                onTap: () async {
-                                  final String? newUsername = await context
-                                      .pushNamed(ATRoutes.EDIT_USERNAME,
-                                          extra: userData?.username ??
-                                              'AlieuBaba');
+    //                               if (newName != null && context.mounted) {
+    //                                 context
+    //                                     .read<RemoteUserDataCubit>()
+    //                                     .updateRemoteUserProfile(name: newName);
+    //                               }
+    //                             }),
+    //                         _MenuItem(
+    //                             title: ATStrings.userName,
+    //                             value: userData?.username ?? 'AlieuBaba',
+    //                             onTap: () async {
+    //                               final String? newUsername = await context
+    //                                   .pushNamed(ATRoutes.EDIT_USERNAME,
+    //                                       extra: userData?.username ??
+    //                                           'AlieuBaba');
 
-                                  if (newUsername != null && context.mounted) {
-                                    context
-                                        .read<RemoteUserDataCubit>()
-                                        .updateProfileRemotely(username: newUsername);
-                                  }
-                                }),
-                            _MenuItem(
-                                title: ATStrings.BIO,
-                                value: userData?.bio ??
-                                    'Author of UNTAMED & LOVE IS IN THE AIR',
-                                onTap: () async {
-                                  final String? newBio = await context.pushNamed(
-                                      ATRoutes.EDIT_BIO,
-                                      extra: userData?.bio ??
-                                          'Author of UNTAMED & LOVE IS IN THE AIR');
+    //                               if (newUsername != null && context.mounted) {
+    //                                 context
+    //                                     .read<RemoteUserDataCubit>()
+    //                                     .updateRemoteUserProfile(username: newUsername);
+    //                               }
+    //                             }),
+    //                         _MenuItem(
+    //                             title: ATStrings.BIO,
+    //                             value: userData?.bio ??
+    //                                 'Author of UNTAMED & LOVE IS IN THE AIR',
+    //                             onTap: () async {
+    //                               final String? newBio = await context.pushNamed(
+    //                                   ATRoutes.EDIT_BIO,
+    //                                   extra: userData?.bio ??
+    //                                       'Author of UNTAMED & LOVE IS IN THE AIR');
 
-                                  if (newBio != null && context.mounted) {
-                                    context
-                                        .read<RemoteUserDataCubit>()
-                                        .updateProfileRemotely(bio: newBio);
-                                  }
-                                }),
-                            const SizedBox(height: 15),
-                            const ATDivider(),
-                            const SizedBox(height: 15),
-                            const _MenuHeading(text: ATStrings.LINKS),
-                            _MenuItem(
-                                title: ATStrings.INSTAGRAM,
-                                isLink: true,
-                                value: userData?.instagramUrl ??
-                                    'www.instagram.com/alieubaba1',
-                                onTap: () async {
-                                  final String? newInstagramUrl = await context
-                                      .pushNamed(ATRoutes.EDIT_SOCIALS,
-                                          extra: <String?>[
-                                        null,
+    //                               if (newBio != null && context.mounted) {
+    //                                 context
+    //                                     .read<RemoteUserDataCubit>()
+    //                                     .updateRemoteUserProfile(bio: newBio);
+    //                               }
+    //                             }),
+    //                         const SizedBox(height: 15),
+    //                         const ATDivider(),
+    //                         const SizedBox(height: 15),
+    //                         const _MenuHeading(text: ATStrings.LINKS),
+    //                         _MenuItem(
+    //                             title: ATStrings.INSTAGRAM,
+    //                             isLink: true,
+    //                             value: userData?.instagramUrl ??
+    //                                 'www.instagram.com/alieubaba1',
+    //                             onTap: () async {
+    //                               final String? newInstagramUrl = await context
+    //                                   .pushNamed(ATRoutes.EDIT_SOCIALS,
+    //                                       extra: <String?>[
+    //                                     null,
 
-                                        //'www.instagram.com/alieubaba1',
+    //                                     //'www.instagram.com/alieubaba1',
 
-                                        ATStrings.INSTAGRAM,
-                                      ]);
+    //                                     ATStrings.INSTAGRAM,
+    //                                   ]);
 
-                                  if (newInstagramUrl != null &&
-                                      context.mounted) {
-                                    context
-                                        .read<RemoteUserDataCubit>()
-                                        .updateProfileRemotely(
-                                            instagramUrl: newInstagramUrl);
-                                  }
-                                }),
-                            _MenuItem(
-                                title: 'X',
-                                isLink: true,
-                                value: userData?.xUrl ?? 'www.x.com/alieubaba',
-                                onTap: () async {
-                                  final String? newXUrl = await context
-                                      .pushNamed(ATRoutes.EDIT_SOCIALS,
-                                          extra: <String?>[
-                                        null, //'www.x.com/alieubaba',
+    //                               if (newInstagramUrl != null &&
+    //                                   context.mounted) {
+    //                                 context
+    //                                     .read<RemoteUserDataCubit>()
+    //                                     .updateRemoteUserProfile(
+    //                                         instagramUrl: newInstagramUrl);
+    //                               }
+    //                             }),
+    //                         _MenuItem(
+    //                             title: 'X',
+    //                             isLink: true,
+    //                             value: userData?.xUrl ?? 'www.x.com/alieubaba',
+    //                             onTap: () async {
+    //                               final String? newXUrl = await context
+    //                                   .pushNamed(ATRoutes.EDIT_SOCIALS,
+    //                                       extra: <String?>[
+    //                                     null, //'www.x.com/alieubaba',
 
-                                        ATStrings.X,
-                                      ]);
+    //                                     ATStrings.X,
+    //                                   ]);
 
-                                  if (newXUrl != null && context.mounted) {
-                                    context
-                                        .read<RemoteUserDataCubit>()
-                                        .updateProfileRemotely(xUrl: newXUrl);
-                                  }
-                                }),
-                            _MenuItem(
-                                title: ATStrings.LINKEDIN,
-                                isLink: true,
-                                value: userData?.linkedinUrl ??
-                                    'www.linkedIn.com/alieubaba',
-                                onTap: () async {
-                                  final String? newLinkedInUrl = await context
-                                      .pushNamed(ATRoutes.EDIT_SOCIALS,
-                                          extra: <String>[
-                                        'www.linkedIn.com/alieubaba',
-                                        ATStrings.LINKEDIN,
-                                      ]);
+    //                               if (newXUrl != null && context.mounted) {
+    //                                 context
+    //                                     .read<RemoteUserDataCubit>()
+    //                                     .updateRemoteUserProfile(xUrl: newXUrl);
+    //                               }
+    //                             }),
+    //                         _MenuItem(
+    //                             title: ATStrings.LINKEDIN,
+    //                             isLink: true,
+    //                             value: userData?.linkedinUrl ??
+    //                                 'www.linkedIn.com/alieubaba',
+    //                             onTap: () async {
+    //                               final String? newLinkedInUrl = await context
+    //                                   .pushNamed(ATRoutes.EDIT_SOCIALS,
+    //                                       extra: <String>[
+    //                                     'www.linkedIn.com/alieubaba',
+    //                                     ATStrings.LINKEDIN,
+    //                                   ]);
 
-                                  if (newLinkedInUrl != null &&
-                                      context.mounted) {
-                                    context
-                                        .read<RemoteUserDataCubit>()
-                                        .updateProfileRemotely(
-                                            linkedinUrl: newLinkedInUrl);
-                                  }
-                                }),
-                            _MenuItem(
-                                title: ATStrings.WEBSITE,
-                                isLink: true,
-                                value:
-                                    userData?.websiteUrl ?? 'www.palbucks.co',
-                                onTap: () async {
-                                  final String? newWebsiteUrl = await context
-                                      .pushNamed(ATRoutes.EDIT_SOCIALS,
-                                          extra: <String?>[
-                                        null, //'www.palbucks.co',
+    //                               if (newLinkedInUrl != null &&
+    //                                   context.mounted) {
+    //                                 context
+    //                                     .read<RemoteUserDataCubit>()
+    //                                     .updateRemoteUserProfile(
+    //                                         linkedinUrl: newLinkedInUrl);
+    //                               }
+    //                             }),
+    //                         _MenuItem(
+    //                             title: ATStrings.WEBSITE,
+    //                             isLink: true,
+    //                             value:
+    //                                 userData?.websiteUrl ?? 'www.palbucks.co',
+    //                             onTap: () async {
+    //                               final String? newWebsiteUrl = await context
+    //                                   .pushNamed(ATRoutes.EDIT_SOCIALS,
+    //                                       extra: <String?>[
+    //                                     null, //'www.palbucks.co',
 
-                                        ATStrings.WEBSITE
-                                      ]);
+    //                                     ATStrings.WEBSITE
+    //                                   ]);
 
-                                  if (newWebsiteUrl != null &&
-                                      context.mounted) {
-                                    context
-                                        .read<RemoteUserDataCubit>()
-                                        .updateProfileRemotely(
-                                            websiteUrl: newWebsiteUrl);
-                                  }
-                                }),
-                            const SizedBox(height: 15),
-                            const ATDivider(),
-                            const SizedBox(height: 15),
-                            const _MenuHeading(text: ATStrings.ACCT),
-                            _MenuItem(
-                                title: ATStrings.SWITCH_ACCT,
-                                value: context.read<AccountTypeBloc>().state
-                                    ? ATStrings.CREATOR
-                                    : ATStrings.BUSINESS,
-                                onTap: () async {
-                                  context.pushNamed(ATRoutes.SELECT_ACCT_TYPE);
+    //                               if (newWebsiteUrl != null &&
+    //                                   context.mounted) {
+    //                                 context
+    //                                     .read<RemoteUserDataCubit>()
+    //                                     .updateRemoteUserProfile(
+    //                                         websiteUrl: newWebsiteUrl);
+    //                               }
+    //                             }),
+    //                         const SizedBox(height: 15),
+    //                         const ATDivider(),
+    //                         const SizedBox(height: 15),
+    //                         const _MenuHeading(text: ATStrings.ACCT),
+    //                         _MenuItem(
+    //                             title: ATStrings.SWITCH_ACCT,
+    //                             value: context.read<AccountTypeBloc>().state
+    //                                 ? ATStrings.CREATOR
+    //                                 : ATStrings.BUSINESS,
+    //                             onTap: () async {
+    //                               context.pushNamed(ATRoutes.SELECT_ACCT_TYPE);
 
-                                  return;
-                                }),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            );
-          });
-        });
-      }),
-    );
+    //                               return;
+    //                             }),
+    //                       ],
+    //                     ),
+    //                   ),
+    //                 ),
+    //               ],
+    //             ),
+    //           ),
+    //         );
+    //       });
+    //     });
+    //   }),
+    // );
   }
 }
 

@@ -7,23 +7,31 @@ import 'package:custom_image_crop/custom_image_crop.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
-class RectImageCropperScreen extends StatefulWidget {
-  const RectImageCropperScreen({
-    super.key,
+class ImageCroppingParams{
+  const ImageCroppingParams({
     required this.imageFile,
+    this.shape = CustomCropShape.Ratio,
     this.ratio,
-    required this.shape,
   });
 
   final File imageFile;
   final Ratio? ratio;
   final CustomCropShape shape;
-
-  @override
-  State<RectImageCropperScreen> createState() => _CropPageState();
 }
 
-class _CropPageState extends State<RectImageCropperScreen> {
+
+class ImageCropperScreen extends StatefulWidget {
+  const ImageCropperScreen({
+    super.key,
+    required this.params,
+  });
+  final ImageCroppingParams params;
+
+  @override
+  State<ImageCropperScreen> createState() => _CropPageState();
+}
+
+class _CropPageState extends State<ImageCropperScreen> {
   late final CustomImageCropController controller;
 
   @override
@@ -73,12 +81,12 @@ class _CropPageState extends State<RectImageCropperScreen> {
                   cropController: controller,
                   cropPercentage: 1,
                   imageFit: CustomImageFit.fitVisibleSpace,
-                  shape: widget.shape,
-                  ratio: widget.shape == CustomCropShape.Ratio
-                      ? (widget.ratio ?? Ratio(width: 16, height: 8))
+                  shape: widget.params.shape,
+                  ratio: widget.params.shape == CustomCropShape.Ratio
+                      ? (widget.params.ratio ?? Ratio(width: 16, height: 8))
                       : null,
                   drawPath: _drawCropPath,
-                  image: FileImage(widget.imageFile),
+                  image: FileImage(widget.params.imageFile),
                 ),
               ),
             ),

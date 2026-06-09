@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:amptive/src/config/utils/colors.dart';
 import 'package:amptive/src/config/utils/extensions/context_extensions.dart';
 import 'package:amptive/src/features/profile/cubits/remote_user_data_cubit.dart';
+import 'package:amptive/src/features/profile/presentation/screens/image_cropper_screen.dart';
 import 'package:amptive/src/shared/annotated_region_widget.dart';
 import 'package:amptive/src/shared/app_bar_widget.dart';
 import 'package:amptive/src/shared/back_button.dart';
@@ -75,7 +76,7 @@ class _AddProfilePictureScreenState extends State<AddProfilePictureScreen> {
                   ),
                   const SizedBox(height: 4),
                   Text(
-                    ATStrings.useYOurFavImage,
+                    ATStrings.useYourFavImage,
                     textAlign: TextAlign.start,
                     style: context.textTheme.titleMedium?.copyWith(
                       color: ATColors.hexCDCDCD,
@@ -118,14 +119,17 @@ class _AddProfilePictureScreenState extends State<AddProfilePictureScreen> {
                                       await ATHelperFuncs.pickImage(selectedSrc);
                                   if (context.mounted && selectedFile != null) {
                                     final File file = File(selectedFile.path);
-                                    final MemoryImage? imageData =
+                                    final MemoryImage? memImage =
                                         await context.pushNamed(
-                                      ATRoutes.rectImageCropperScreen,
-                                      extra: (file, null, CustomCropShape.Circle),
+                                      ATRoutes.imageCropperScreen,
+                                      extra: ImageCroppingParams(
+                                        imageFile: file,
+                                        shape: CustomCropShape.Circle,
+                                      ),
                                     ) as MemoryImage?;
-                                    if (imageData != null) {
+                                    if (memImage != null) {
                                       setState(
-                                          () => _pickedImage = imageData.bytes);
+                                          () => _pickedImage = memImage.bytes);
                                     }
                                   }
                                 } else {
@@ -135,7 +139,6 @@ class _AddProfilePictureScreenState extends State<AddProfilePictureScreen> {
                               icon: Icon(
                                 _pickedImage != null ? Icons.close : Icons.add,
                                 color: ATColors.white,
-                                
                               ),
                             ),
                           ),
@@ -147,20 +150,21 @@ class _AddProfilePictureScreenState extends State<AddProfilePictureScreen> {
                 ],
               ),
             ),
+
             bottomSheet: MultiBlocListener(
               listeners: <SingleChildWidget>[
-                BlocListener<RemoteUserDataCubit, ATAppState<UserData>>(
-                  listener: (_, ATAppState<UserData> state)async{
-                    if (state is SuccessState<UserData>) {
-                      await context
-                          .read<LocalUserDataCubit>()
-                          .updateUserDataLocally(UserProfileData(
-                            pictureUrl: state.newData?.profilePicture,
-                          ));
+                BlocListener<RemoteUserDataCubit, ATAppState<UserProfileData>>(
+                  listener: (_, ATAppState<UserProfileData> state)async{
+                    if (state is SuccessState<UserProfileData>) {
+                      _isLoadingNotifier.value = false;
+                      context.read<LocalUserDataCubit>()
+                        .updateUserDataLocally(state.newData ?? const UserProfileData());
                       if (context.mounted) {
                         context.pushNamed(ATRoutes.select5CommunitiesScreen);
                       }
-                    } else if (state is FailureState<UserData>) {
+                    } 
+                    else if (state is FailureState<UserProfileData>) {
+                      _isLoadingNotifier.value = false;
                       showAppNotification2(
                         context: context,
                         text: state.message,
@@ -171,9 +175,16 @@ class _AddProfilePictureScreenState extends State<AddProfilePictureScreen> {
                 ),
 
                 BlocListener<UploadImageCubit, ATAppState<String>>(
-                  listener: (_, ATAppState<String> state){
+                  listener: (BuildContext ctx, ATAppState<String> state){
                     if(state is SuccessState<String>){
-
+                      if(context.mounted){
+                        ctx.read<RemoteUserDataCubit>()
+                          .updateRemoteUserProfile(
+                            userProfileData: UserProfileData(
+                              pictureUrl: state.newData,
+                            )
+                          );
+                      }
                     }
                     else if(state is FailureState<String>){
                       _isLoadingNotifier.value = false;
@@ -203,8 +214,9 @@ class _AddProfilePictureScreenState extends State<AddProfilePictureScreen> {
                       ),
                     ),
                   ),
-                  builder: (_, bool isLoading, Widget? child) {
+                  builder: (BuildContext ctx, bool isLoading, Widget? child) {
                     return Column(
+                      spacing: 10,
                       mainAxisSize: MainAxisSize.min,
                       children: <Widget>[
                         child!,
@@ -216,7 +228,7 @@ class _AddProfilePictureScreenState extends State<AddProfilePictureScreen> {
                               //Show loading indicator on this button.
                               _isLoadingNotifier.value = true;
                               //Start the first api call to upload image.
-                              context.read<UploadImageCubit>()
+                              ctx.read<UploadImageCubit>()
                                 .uploadBytesImage(bytes: _pickedImage!);
                             } : null,
                         )

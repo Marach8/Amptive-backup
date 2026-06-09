@@ -53,63 +53,69 @@ class SignupCubit extends Cubit<ATAppState<SignupStage>> {
   }
 
   Future<void> _runSignupStages() async {
-    for (final SignupStage stage in SignupStage.values) {
+    const List<SignupStage> stages = SignupStage.values;
+
+    for (int i = 0; i < stages.length; i++) {
       if (_cancelStagesFuture) return;
+
       emit(
-        LoadingState<SignupStage>(currentData: stage),
+        LoadingState<SignupStage>(currentData: stages[i]),
       );
 
-      await Future<void>.delayed(const Duration(seconds: 3));
+      //if (i < stages.length - 1) {
+        await Future<void>.delayed(
+          const Duration(seconds: 2),
+        );
+      //}
     }
   }
 
   Future<void> _performSignup(RegistrationData param) async {
-    await Future.delayed(const Duration(seconds: 6));
-    // final ApiResponse<SignUpResponseModel> response =
-    //     await authRepo.registerUser(param: param);
+    final ApiResponse<SignUpResponseModel> response =
+        await authRepo.registerUser(param: param);
 
-    // await response.when(
-    //   successful: (Successful<SignUpResponseModel> data) async {
-    //     final SignUpResponseModel? responseModel = data.data;
+    await response.when(
+      successful: (Successful<SignUpResponseModel> data) async {
+        final SignUpResponseModel? responseModel = data.data;
 
-    //     final String? accessToken = responseModel?.accessToken;
-    //     final String? userName = responseModel?.user?.username;
-    //     final String? email = responseModel?.user?.email;
-    //     final String? name = responseModel?.user?.name;
-    //     final String? userId = responseModel?.user?.id;
-    //     final String? dob = responseModel?.user?.dob;
-    //     final String? phoneNumber = responseModel?.user?.phoneNumber;
-    //     final String? pictureUrl = responseModel?.user?.pictureUrl;
+        final String? accessToken = responseModel?.accessToken;
+        final String? userName = responseModel?.user?.username;
+        final String? email = responseModel?.user?.email;
+        final String? name = responseModel?.user?.name;
+        final String? userId = responseModel?.user?.id;
+        final String? dob = responseModel?.user?.dob;
+        final String? phoneNumber = responseModel?.user?.phoneNumber;
+        final String? pictureUrl = responseModel?.user?.pictureUrl;
 
-    //     if (accessToken != null) {
-    //       await localStorageService.set(
-    //         ATStrings.accessToken, accessToken,
-    //       );
-    //     }
+        if (accessToken != null) {
+          await localStorageService.set(
+            ATStrings.accessToken, accessToken,
+          );
+        }
 
-    //     final CachedUserData cachedUserData =
-    //         CachedUserData(
-    //       userId: userId,
-    //       email: email,
-    //       username: userName,
-    //       name: name,
-    //       dob: dob,
-    //       pictureUrl: pictureUrl,
-    //       phoneNumber: phoneNumber,
-    //     );
+        final UserProfileData cachedUserData =
+          UserProfileData(
+            userId: userId,
+            email: email,
+            username: userName,
+            name: name,
+            dob: dob,
+            pictureUrl: pictureUrl,
+            phoneNumber: phoneNumber,
+          );
 
-    //     await localStorageService.setObject(
-    //       ATStrings.cachedUserData,
-    //       cachedUserData.toLocalStorageJson(),
-    //     );
+        await localStorageService.setObject(
+          ATStrings.cachedUserData,
+          cachedUserData.toLocalStorageJson(),
+        );
 
-    //     await localStorageService.set(
-    //       ATStrings.isExistingUser, 'true',
-    //     );
-    //   },
-    //   unSuccessful: (Unsuccessful<SignUpResponseModel> error) {
-    //     throw error.error.message;
-    //   },
-    // );
+        await localStorageService.set(
+          ATStrings.isExistingUser, 'true',
+        );
+      },
+      unSuccessful: (Unsuccessful<SignUpResponseModel> error) {
+        throw error.error.message;
+      },
+    );
   }
 }

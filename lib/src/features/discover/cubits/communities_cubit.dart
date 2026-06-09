@@ -16,20 +16,16 @@ class CommunitiesCubit extends Cubit<ATAppState<CommunitiesResponseModel>> {
   CommunitiesResponseModel? get currentCommunities => switch (state) {
         InitialState<CommunitiesResponseModel>(
           :final CommunitiesResponseModel? initialData
-        ) =>
-          initialData,
+        ) => initialData,
         LoadingState<CommunitiesResponseModel>(
           :final CommunitiesResponseModel? currentData
-        ) =>
-          currentData,
+        ) => currentData,
         SuccessState<CommunitiesResponseModel>(
           :final CommunitiesResponseModel? newData
-        ) =>
-          newData,
+        ) => newData,
         FailureState<CommunitiesResponseModel>(
           :final CommunitiesResponseModel? oldData
-        ) =>
-          oldData,
+        ) => oldData,
       };
 
   Future<void> fetchCommunities() async {
@@ -82,9 +78,9 @@ class CommunitiesCubit extends Cubit<ATAppState<CommunitiesResponseModel>> {
           );
         },
       );
-    } catch (e) {
+    } catch (_) {
       emit(
-        FailureState<CommunitiesResponseModel>('Unable to get communities: $e'),
+        const FailureState<CommunitiesResponseModel>('Unable to get communities'),
       );
     }
   }

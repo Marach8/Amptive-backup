@@ -5,6 +5,7 @@ import 'package:amptive/src/config/utils/dialogs/app_notification_dialog.dart';
 import 'package:amptive/src/features/auth/cubits/local_user_data_cubit.dart';
 import 'package:amptive/src/features/auth/data/models/response/user_profile_response_model.dart';
 import 'package:amptive/src/features/profile/cubits/remote_user_data_cubit.dart';
+import 'package:amptive/src/features/profile/presentation/screens/image_cropper_screen.dart';
 import 'package:amptive/src/shared/image_source_selection_dialog.dart';
 import 'package:amptive/src/shared/circular_image.dart';
 import 'package:amptive/src/shared/image_loader_widget.dart';
@@ -22,27 +23,27 @@ class EditProfileBgImage extends StatelessWidget {
       create: (_) => RemoteUserDataCubit(),
       child: Builder(
         builder: (BuildContext context) {
-          return BlocConsumer<RemoteUserDataCubit, ATAppState<UserData>>(
-            listener: (BuildContext context, ATAppState<UserData> state) {
-              if (state is FailureState<UserData>) {
-               showAppNotification2(
-                context: context,
-                 text: state.message,
-                 type: NotificationType.failure);
-                
+          return BlocConsumer<RemoteUserDataCubit, ATAppState<UserProfileData>>(
+            listener: (BuildContext context, ATAppState<UserProfileData> state) {
+              if (state is FailureState<UserProfileData>) {
+                showAppNotification2(
+                  context: context,
+                  text: state.message,
+                  type: NotificationType.failure
+                );
               }
               if (state is SuccessState<UserData>) {
-                final UserProfileData? currentUser =
-                    context.read<LocalUserDataCubit>().currentUserData;
-                if (currentUser != null && state.newData != null) {
-                  context.read<LocalUserDataCubit>().updateUserDataLocally(
-                        currentUser.copyWith(
-                            pictureUrl: "${state.newData!.profilePicture}"),
-                      );
-                }
+                // final UserProfileData? currentUser =
+                //     context.read<LocalUserDataCubit>().currentUserData;
+                // if (currentUser != null && state.newData != null) {
+                //   context.read<LocalUserDataCubit>().updateUserDataLocally(
+                //         currentUser.copyWith(
+                //             pictureUrl: "${state.newData!.profilePicture}"),
+                //       );
+                // }
               }
             },
-            builder: (BuildContext context, ATAppState<UserData> state) {
+            builder: (BuildContext context, ATAppState<UserProfileData> state) {
               return BlocBuilder<LocalUserDataCubit,
                   ATAppState<UserProfileData>>(
                 builder: (BuildContext context,
@@ -67,8 +68,8 @@ class EditProfileBgImage extends StatelessWidget {
                                 if (context.mounted && selectedFile != null) {
                                   final File file = File(selectedFile.path);
                                   await context.pushNamed(
-                                    ATRoutes.rectImageCropperScreen,
-                                    extra: (file, null, null),
+                                    ATRoutes.imageCropperScreen,
+                                    extra: ImageCroppingParams(imageFile: file),
                                   );
                                 }
                               },
@@ -100,16 +101,16 @@ class EditProfileBgImage extends StatelessWidget {
                                             File(selectedFile.path);
                                         final MemoryImage? imageData =
                                             await context.pushNamed(
-                                          ATRoutes.rectImageCropperScreen,
-                                          extra: (file, null, null),
+                                          ATRoutes.imageCropperScreen,
+                                          extra: ImageCroppingParams(imageFile: file),
                                         ) as MemoryImage?;
 
                                         if (context.mounted &&
                                             imageData != null) {
-                                          context
-                                              .read<RemoteUserDataCubit>()
-                                              .updateProfileRemotely(
-                                                  imageUrl: imageData.bytes);
+                                          // context
+                                          //     .read<RemoteUserDataCubit>()
+                                          //     .updateRemoteUserProfile(
+                                          //         imageUrl: imageData.bytes);
                                         }
                                       }
                                     },
