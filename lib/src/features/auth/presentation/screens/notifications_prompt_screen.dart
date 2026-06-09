@@ -352,7 +352,7 @@ class _AnimExperimentState extends State<_SubWidget>
                     ATPlainElevatedBtn(
                       onPressed: () {
                         storage.write(
-                            key: ATStrings.isNewUser, value: false.toString());
+                            key: ATStrings.isExistingUser, value: 'true');
                         context.goNamed(ATRoutes.dashboard);
                       },
                       btnTitle: ATStrings.allow,
@@ -360,8 +360,8 @@ class _AnimExperimentState extends State<_SubWidget>
                     InkWell(
                         onTap: () {
                           storage.write(
-                              key: ATStrings.isNewUser,
-                              value: false.toString());
+                              key: ATStrings.isExistingUser,
+                              value: 'true');
                           context.goNamed(ATRoutes.dashboard);
                         },
                         borderRadius: BorderRadius.circular(5),

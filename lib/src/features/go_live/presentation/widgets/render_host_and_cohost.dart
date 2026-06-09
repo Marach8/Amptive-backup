@@ -1,10 +1,13 @@
 import 'package:amptive/src/config/utils/extensions/context_extensions.dart';
 import 'package:amptive/src/config/utils/font_sizes.dart';
+import 'package:amptive/src/features/auth/cubits/local_user_data_cubit.dart';
+import 'package:amptive/src/features/go_live/cubits/livestream_cubit1.dart';
 import 'package:amptive/src/features/go_live/data/models/deconstruct_inbound_events.dart';
 import 'package:amptive/src/features/go_live/data/models/livestream_state.dart';
 import 'package:amptive/src/shared/circle_avatar.dart';
 import 'package:amptive/src/shared/circular_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../config/utils/colors.dart';
 import '../../../../config/utils/other_strings.dart';
 
@@ -93,7 +96,6 @@ class RenderACohost extends StatelessWidget {
 
 
 
-
 class RenderAHost extends StatelessWidget {
   const RenderAHost({
     super.key,
@@ -111,7 +113,12 @@ class RenderAHost extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
+    String userName = host?.username ?? '';
+    final String? myUserId = context
+      .read<LocalUserDataCubit>().currentUserData?.userId;
+    if(host?.userId == myUserId){
+      userName = 'Me';
+    }
     return AnimatedPositioned(
       duration: const Duration(milliseconds: 700),
       curve: Curves.decelerate,
@@ -144,14 +151,26 @@ class RenderAHost extends StatelessWidget {
                 Positioned(
                   bottom: 0,
                   right: 5,
-                  child: ATCircleAvatar(
-                    diameter: 20,
+                  child: CircleAvatar(
+                    radius: 10,
+                    backgroundColor: ATColors.white,
                     child: FittedBox(
                       fit: BoxFit.scaleDown,
-                      child: Icon(
-                        Icons.mic_off,
-                        color: ATColors.hex0D0D0D,
-                        size: 15
+                      child: BlocSelector<LiveStreamCubit1, 
+                        LiveStreamState1, (List<String>?, bool)>(
+                        selector: (LiveStreamState1 state) => 
+                          (state.activeSpeakerIds, state.myMicIsEnabled),
+                        builder: (_, (List<String>?, bool) data) {
+                          final String hostId = host?.userId ?? '';
+                          final bool? hostMicIsUnmuted = data.$1?.contains(hostId);
+                          final bool myMicIsEnabled = data.$2;
+                          final bool turnHostMicOn = hostMicIsUnmuted ?? myMicIsEnabled;
+                          return Icon(
+                            turnHostMicOn ? Icons.mic : Icons.mic_off,
+                            color: ATColors.hex0D0D0D,
+                            size: 15
+                          );
+                        }
                       )
                     ),
                   ),
@@ -162,7 +181,7 @@ class RenderAHost extends StatelessWidget {
             SizedBox(
               width: 80,
               child: Text(
-                host?.username ?? '',
+                userName,
                 textAlign: TextAlign.center,
                 style: context.textTheme.titleSmall,
               ),

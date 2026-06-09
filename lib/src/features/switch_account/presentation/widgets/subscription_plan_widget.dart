@@ -1,5 +1,5 @@
 import 'package:amptive/src/config/config_export.dart';
-import 'package:amptive/src/config/utils/dialogs/confirmation_alert_dialog.dart';
+import 'package:amptive/src/shared/confirmation_alert_dialog.dart';
 import 'package:amptive/src/features/switch_account/presentation/screens/subscription_plan_screen.dart';
 import 'package:amptive/src/features/switch_account/presentation/widgets/subscription_plan_setup_modal.dart';
 import 'package:amptive/src/features/switch_account/presentation/widgets/delete_subscription_plan_modal.dart';

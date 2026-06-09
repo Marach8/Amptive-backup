@@ -50,7 +50,6 @@ class CreateEventFormScreen extends StatelessWidget {
     return MultiBlocProvider(
       providers: <SingleChildWidget>[
         BlocProvider<CommunitiesCubit>(create: (_) => CommunitiesCubit()),
-        BlocProvider<CreateShowCubit>(create: (_) => CreateShowCubit()),
         BlocProvider<UploadImageCubit>(create: (_) => UploadImageCubit()),
         BlocProvider<BlurredHeaderCubit>(
           create: (_) => BlurredHeaderCubit(),),
@@ -720,26 +719,32 @@ class __SubWidgetState extends State<_SubWidget> {
         bottomSheet: MultiBlocListener(
           listeners: <SingleChildWidget>[
             BlocListener<StartLiveProgramCubit, ATAppState<LiveProgramEntryToken>>(
-              listener: (_, ATAppState<LiveProgramEntryToken> state){
+              listener: (_, ATAppState<LiveProgramEntryToken> state)async{
                 if(state is SuccessState<LiveProgramEntryToken>){
                   _activateBtn.value = (true, _activateBtn.value.$2);
                   final HostedEvent? hostedEvent = context
                     .read<CreateEventCubit>().currentEvent;
-                  context.pushReplacementNamed(
-                    ATRoutes.goLiveOnboarding,
-                    extra: LiveProgramData(
-                      roomEntryToken: state.newData?.roomEntryToken ?? '',
-                      roomUrl: state.newData?.roomUrl ?? '',
-                      streamId: state.newData?.streamId ?? '',
-                      roomParticipantId: state.newData?.roomParticipantId ?? '',
-                      programId: hostedEvent?.eventId ?? '',
-                      coverUrl: hostedEvent?.coverUrl ?? '',
-                      role: ParticipantRole.host,
-                      community: hostedEvent?.community,
-                      programTitle: hostedEvent?.title ?? '',
-                      programDesc: hostedEvent?.description ?? '',
-                    ),
+                  final LiveProgramData liveProgramData = LiveProgramData(
+                    roomEntryToken: state.newData?.roomEntryToken ?? '',
+                    roomUrl: state.newData?.roomUrl ?? '',
+                    streamId: state.newData?.streamId ?? '',
+                    roomParticipantId: state.newData?.roomParticipantId ?? '',
+                    programId: hostedEvent?.eventId ?? '',
+                    coverUrl: hostedEvent?.coverUrl ?? '',
+                    role: ParticipantRole.host,
+                    community: hostedEvent?.community,
+                    programTitle: hostedEvent?.title ?? '',
+                    programDesc: hostedEvent?.description ?? '',
                   );
+                  
+                  await context.pushNamed(
+                    ATRoutes.goLiveOnboarding,
+                    extra: liveProgramData,
+                  );
+
+                  if(context.mounted){
+                    context.pop(liveProgramData);
+                  }
                 }
                 else if(state is FailureState<LiveProgramEntryToken>){
                   _activateBtn.value = (true, _activateBtn.value.$2);
@@ -773,7 +778,7 @@ class __SubWidgetState extends State<_SubWidget> {
                         .map((HashTag tag) => tag.id ?? '')
                         .toList(),
                       coHostIds: (selectedCohosts ?? <User>[])
-                        .map((User cohost) => cohost.userId ?? '')
+                        .map((User cohost) => cohost.userId)
                         .toList(),
                       title: _titleCntrl.text.trim(),
                       description: selectedDescription,
@@ -875,8 +880,8 @@ class __SubWidgetState extends State<_SubWidget> {
                       errorMessage = 'Please select a community';
                     } else if((selectedCohosts ?? <User>[]).isEmpty) {
                       errorMessage = 'Please select at least 1 cohost';
-                    // } else if((selectedHashtags ?? <HashTag>[]).isEmpty) {
-                    //   errorMessage = 'Please select at least 1 hashtag';
+                    } else if((selectedHashtags ?? <HashTag>[]).isEmpty) {
+                      errorMessage = 'Please select at least 1 hashtag';
                     } else if(selectedPermission == null) {
                       errorMessage = 'Please choose whether to allow hand-raising for this episode';
                     } else if(accessTypeData.accessType == null) {

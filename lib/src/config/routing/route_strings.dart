@@ -110,5 +110,4 @@ class ATRoutes {
   static const String walletTransactionsHistoryScreen = 'wallet_transactions';
   static const String scheduleDetailed = 'schedule_detailed_screen';
   static const String goLiveOnboarding = 'go_live_onboarding_screen';
-  static const String liveProgramScreen = 'main_go_live_program';
 }

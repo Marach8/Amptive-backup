@@ -85,7 +85,7 @@ class RenderHomeFeedItem extends StatelessWidget {
                           ATColors.transparent,
                           ATColors.transparent,
                           ATColors.containerGradientColorB
-                              .withValues(alpha: 0.5),
+                            .withValues(alpha: 0.5),
                           ATColors.containerGradientColorB,
                           ATColors.containerGradientColorB,
                           ATColors.containerGradientColorB,

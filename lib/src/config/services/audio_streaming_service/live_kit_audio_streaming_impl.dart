@@ -5,22 +5,16 @@ import 'package:livekit_client/livekit_client.dart';
 import 'package:amptive/src/features/go_live/data/models/livestream_state.dart';
 
 class LiveKitAudioStreamingService implements ATAudioStreamingService {
-  factory LiveKitAudioStreamingService({
-    Room? mockRoom,
-  }) {
-    _instance ??= LiveKitAudioStreamingService._internal(
-      room: mockRoom ?? Room(),
-    );
+  factory LiveKitAudioStreamingService() {
+    _instance ??= LiveKitAudioStreamingService._internal();
     return _instance!;
   }
 
-  LiveKitAudioStreamingService._internal({
-    required Room room,
-  });
+  LiveKitAudioStreamingService._internal();
 
   static LiveKitAudioStreamingService? _instance;
 
-  final Room _room = Room();
+  Room? _room;
 
   final StreamController<List<LiveSessionParticipant>> _participantsController =
       StreamController<List<LiveSessionParticipant>>.broadcast();
@@ -30,8 +24,11 @@ class LiveKitAudioStreamingService implements ATAudioStreamingService {
 
   final StreamController<List<String>> _activeSpeakersController =
       StreamController<List<String>>.broadcast();
+  
+  final StreamController<List<String>> _speakersWithMicEnabledController =
+      StreamController<List<String>>.broadcast();
 
-  CancelListenFunc? _roomSub;
+  CancelListenFunc? _cancelRoomListenerSub;
   LocalAudioTrack? _localAudioTrack;
 
   @override
@@ -40,25 +37,25 @@ class LiveKitAudioStreamingService implements ATAudioStreamingService {
     required String participantToken,
   }) async {
     try {
+      _room = Room();
+
       _listenToEvents();
 
       _connectionController.add(AudioConnectionStatus.connecting);
 
-      await _room.connect(
+      await _room!.connect(
         roomUrl,
         participantToken,
         connectOptions: const ConnectOptions(
-          autoSubscribe: true, // important
+          autoSubscribe: true,
         ),
       );
 
-      await _room.setSpeakerOn(true);
+      await _room!.setSpeakerOn(true);
 
       _connectionController.add(AudioConnectionStatus.connected);
 
-      await _room.localParticipant?.setMicrophoneEnabled(false);
-
-      //_emitParticipants();
+      await _room!.localParticipant?.setMicrophoneEnabled(false);
     } catch (e, s) {
       log('Error connecting to live kit: $e, stack trace $s');
       _connectionController.add(AudioConnectionStatus.disconnected);
@@ -67,16 +64,37 @@ class LiveKitAudioStreamingService implements ATAudioStreamingService {
 
 
   @override
-  Future<void> disconnect() async {
-    await _room.disconnect();
-    _connectionController.add(AudioConnectionStatus.disconnected);
+  Future<void> manuallyDisconnect() async {
+    final Room? room = _room;
+
+    if (room == null) {
+      return;
+    }
+
+    _room = null;
+
+    await _cancelRoomListenerSub?.call();
+    _cancelRoomListenerSub = null;
+
+    await _localAudioTrack?.dispose();
+    _localAudioTrack = null;
+
+    unawaited(
+      room.disconnect().catchError((_) {}),
+    );
+
+    room.dispose();
+
+    _connectionController.add(
+      AudioConnectionStatus.disconnected,
+    );
   }
 
 
   @override
   Future<void> setMicEnabled(bool enabled) async {
-    await _room.localParticipant?.setMicrophoneEnabled(enabled);
-    // _emitParticipants();
+    await _room?.localParticipant?.setMicrophoneEnabled(enabled);
+    _emitParticipantsWithMicEnabled();
   }
 
 
@@ -89,23 +107,28 @@ class LiveKitAudioStreamingService implements ATAudioStreamingService {
       _connectionController.stream;
 
   @override
+  Stream<List<String>> get participantsWithMicEnabledStream =>
+    _speakersWithMicEnabledController.stream;
+
+  @override
   Stream<List<String>> get activeSpeakersStream =>
       _activeSpeakersController.stream;
 
 
 
   void _listenToEvents() {
-    _roomSub?.call();
+    _cancelRoomListenerSub?.call();
 
-    _roomSub = _room.events.listen((RoomEvent event) {
+    _cancelRoomListenerSub = _room?.events.listen((RoomEvent event) {
       // if(event is ParticipantConnectedEvent){
       //   log('New participant joined.: ${event.participant.identity}, ${event.participant.name}');
       //   _emitParticipants();
       // }
-      if (event is ParticipantConnectedEvent || event is ParticipantDisconnectedEvent ||
+      if (event is ParticipantConnectedEvent ||
+          event is ParticipantDisconnectedEvent ||
           event is TrackMutedEvent ||
           event is TrackUnmutedEvent) {
-        //_emitParticipants();
+        _emitParticipantsWithMicEnabled();
       }
 
       if (event is ActiveSpeakersChangedEvent) {
@@ -146,6 +169,34 @@ class LiveKitAudioStreamingService implements ATAudioStreamingService {
         //_emitParticipants();
       }
     });
+  }
+
+  void _emitParticipantsWithMicEnabled() {
+    final List<String> ids = <String>[];
+
+    final LocalParticipant? local = _room?.localParticipant;
+
+    if (local != null) {
+      final TrackPublication<Track>? audioPub =
+          local.audioTrackPublications.firstOrNull;
+
+      if (audioPub != null && !audioPub.muted) {
+        ids.add(local.identity);
+      }
+    }
+
+    for (final RemoteParticipant participant
+        in _room?.remoteParticipants.values ?? <RemoteParticipant>[]) {
+
+      final TrackPublication<Track>? audioPub =
+          participant.audioTrackPublications.firstOrNull;
+
+      if (audioPub != null && !audioPub.muted) {
+        ids.add(participant.identity);
+      }
+    }
+
+    _speakersWithMicEnabledController.add(ids);
   }
 
 
@@ -191,15 +242,4 @@ class LiveKitAudioStreamingService implements ATAudioStreamingService {
   //     roomParticipantId: p.identity,
   //   );
   // }
-
-
-  @override
-  Future<void> dispose() async {
-    await _localAudioTrack?.dispose();
-    await _roomSub?.call();
-    await _participantsController.close();
-    await _connectionController.close();
-    await _activeSpeakersController.close();
-    await _room.dispose();
-  }
 }

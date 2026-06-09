@@ -284,7 +284,7 @@ class ATLiveEventDetailedScreen extends StatelessWidget {
           bottomSheet: Padding(
             padding: const EdgeInsets.fromLTRB(15, 5, 15, 50),
             child: BlocConsumer<GetLiveProgramEntryTokenCubit, ATAppState<LiveProgramEntryToken>>(
-              listener: (_, ATAppState<LiveProgramEntryToken> state){
+              listener: (_, ATAppState<LiveProgramEntryToken> state)async{
                 if(state is SuccessState<LiveProgramEntryToken>){
                   final CachedUserData? userData = context
                     .read<LocalUserDataCubit>().currentUserData;
@@ -292,7 +292,7 @@ class ATLiveEventDetailedScreen extends StatelessWidget {
                   final bool hasTestedMic = userData?.hasTestedMic == 'true';
                   final bool isHost = userId == homeFeedItem?.hostId;
 
-                  final LiveProgramData liveProgramEntryParams = LiveProgramData(
+                  final LiveProgramData liveProgramData = LiveProgramData(
                     roomEntryToken: state.newData?.roomEntryToken ?? '',
                     roomUrl: state.newData?.roomUrl ?? '',
                     streamId: state.newData?.streamId ?? '',
@@ -308,16 +308,17 @@ class ATLiveEventDetailedScreen extends StatelessWidget {
                   );
                   
                   if(!isHost || hasTestedMic){
-                    context.pushReplacementNamed(
-                      ATRoutes.liveProgramScreen,
-                      extra: liveProgramEntryParams,
-                    );
+                    context.pop(liveProgramData);
                   }
                   else{
-                    context.pushReplacementNamed(
+                    await context.pushNamed(
                       ATRoutes.goLiveOnboarding,
-                      extra: liveProgramEntryParams,
+                      extra: liveProgramData,
                     );
+                    
+                    if(context.mounted){
+                      context.pop(liveProgramData);
+                    }
                   }
                 }
                 else if(state is FailureState<LiveProgramEntryToken>){

@@ -1,5 +1,3 @@
-import 'dart:developer' show log;
-
 import 'package:amptive/src/config/api_response_and_app_state.dart';
 import 'package:amptive/src/config/endpoints.dart';
 import 'package:amptive/src/config/exception.dart';
@@ -29,7 +27,6 @@ class AuthRepoImpl implements AuthRepo {
       final bool status = response.data['status'] ?? false;
       return Successful<bool>(data: status);
     } catch (e) {
-      log('Check identity availability error: $e');
       return Unsuccessful<bool>(
         error: ATException.resolveException(e),
       );
@@ -48,7 +45,6 @@ class AuthRepoImpl implements AuthRepo {
 
       return Successful<String>(data: 'otp sent');
     } catch (e) {
-      log('Send OTP error: $e');
       return Unsuccessful<String>(
         error: ATException.resolveException(e),
       );
@@ -67,7 +63,6 @@ class AuthRepoImpl implements AuthRepo {
 
       return Successful<dynamic>(data: response.data);
     } catch (e) {
-      log('Verify OTP error: $e');
       return Unsuccessful<dynamic>(
         error: ATException.resolveException(e),
       );
@@ -88,7 +83,6 @@ class AuthRepoImpl implements AuthRepo {
           LoginResponseModel.fromJson(response.data);
       return Successful<LoginResponseModel>(data: loginResponse);
     } catch (e) {
-      log('Unable to log in user: $e');
       return Unsuccessful<LoginResponseModel>(
         error: ATException.resolveException(e),
       );
@@ -108,8 +102,8 @@ class AuthRepoImpl implements AuthRepo {
       final String otp = response.data['data']['otp'] as String;
       return Successful<String>(data: otp);
     } catch (e) {
-      log('Send OTP error: $e');
-      return Unsuccessful<String>(error: ATException.resolveException(e));
+      return Unsuccessful<String>(
+        error: ATException.resolveException(e));
     }
   }
 
@@ -127,7 +121,6 @@ class AuthRepoImpl implements AuthRepo {
           SignUpResponseModel.fromJson(response.data['data']);
       return Successful<SignUpResponseModel>(data: signupResponse);
     } catch (e) {
-      log('Unable to register user: $e');
       return Unsuccessful<SignUpResponseModel>(
         error: ATException.resolveException(e),
       );
@@ -148,7 +141,8 @@ class AuthRepoImpl implements AuthRepo {
         'purpose': purpose ?? 'profile-picture',
       };
 
-      final Response<dynamic> response = await networkService.formDataRequest(
+      final Response<dynamic> response = 
+      await networkService.formDataRequest(
         ATEndpoints.uploadImage,
         data: param,
       );
@@ -158,7 +152,6 @@ class AuthRepoImpl implements AuthRepo {
 
       return Successful<String>(data: imageUrl);
     } catch (e) {
-      log('Unable to upload image: $e');
       return Unsuccessful<String>(
         error: ATException.resolveException(e),
       );
@@ -177,8 +170,8 @@ class AuthRepoImpl implements AuthRepo {
 
       return Successful<dynamic>(data: response.data);
     } catch (e) {
-      log('Verify OTP error: $e');
-      return Unsuccessful<dynamic>(error: ATException.resolveException(e));
+      return Unsuccessful<dynamic>(
+        error: ATException.resolveException(e));
     }
   }
 
@@ -194,10 +187,20 @@ class AuthRepoImpl implements AuthRepo {
       final String successMessage = response.data['message'];
       return Successful<String>(data: successMessage);
     } catch (e) {
-      log('unable to reset passowrd: $e');
-      return Unsuccessful<String>(error: ATException.resolveException(e));
+      return Unsuccessful<String>(
+        error: ATException.resolveException(e));
     }
   }
-
   
+  @override
+  Future<ApiResponse<bool>> logout() async{
+    try {
+      await Future<void>.delayed(const Duration(seconds: 2));
+      return Successful<bool>(data: true);
+    } catch (e) {
+      return Unsuccessful<bool>(
+        error: ATException.resolveException(e),
+      );
+    }
+  }  
 }

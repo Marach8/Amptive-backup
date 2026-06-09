@@ -70,11 +70,11 @@ class ATPrivacyScreen extends StatelessWidget {
               ),
               const MenuHeading(text: ATStrings.MUTES_ND_BLOCKS),
               MenuItem(
-                  firstIcon: const Icon(Icons.notifications_off_outlined),
+                  leading: const Icon(Icons.notifications_off_outlined),
                   middleText: ATStrings.mutedAccounts,
                   onTap: () => context.pushNamed(ATRoutes.MUTED_ACCTS_SCREEN)),
               MenuItem(
-                  firstIcon: const Icon(Icons.block),
+                  leading: const Icon(Icons.block),
                   middleText: ATStrings.blockedAccounts,
                   onTap: () =>
                       context.pushNamed(ATRoutes.BLOCKED_ACCTS_SCREEN)),

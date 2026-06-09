@@ -3,6 +3,7 @@ import 'package:amptive/src/config/utils/dialogs/app_notification_dialog.dart';
 import 'package:amptive/src/config/utils/extensions/context_extensions.dart';
 import 'package:amptive/src/config/utils/font_sizes.dart';
 import 'package:amptive/src/features/go_live/cubits/end_live_program_cubit.dart';
+import 'package:amptive/src/features/go_live/cubits/livestream_cubit1.dart';
 import 'package:amptive/src/shared/elevated_button_widget.dart';
 import 'package:amptive/src/shared/image_loader_widget.dart';
 import 'package:amptive/src/shared/loading_indicator.dart';
@@ -28,6 +29,7 @@ Future<void> hostEndProgramModal({
       context: context,
       isScrollControlled: true,
       useSafeArea: true,
+      useRootNavigator: true,
       constraints: BoxConstraints(
         minHeight: context.screenHeight,
         minWidth: context.screenWidth,
@@ -81,7 +83,7 @@ class _SubWidget extends StatelessWidget {
             );
           }
           else if(state is SuccessState<LoadingStage>) {
-            context.pop();
+            Navigator.pop(context);
           }
         },
         builder: (_, ATAppState<LoadingStage> state) {
@@ -210,7 +212,7 @@ class _SubWidget extends StatelessWidget {
                     ),
                     const SizedBox(height: 15),
                     GestureDetector(
-                      onTap: () => context.pop(),
+                      onTap: () => Navigator.pop(context),
                       child: Text(ATStrings.cancel,
                           style: context.textTheme.bodyMedium
                             ?.copyWith(fontSize: 17)),
@@ -226,41 +228,3 @@ class _SubWidget extends StatelessWidget {
     );
   }
 }
-
-
-
-// AnimatedPositioned(
-//   duration: const Duration(milliseconds: 1000),
-//   curve: Curves.easeInOut,
-//   top: isInitialState
-//       ? initialPositionOfSpotLight
-//       : finalPositionOfSpotLight,
-//   child: TweenAnimationBuilder<double>(
-//     duration: const Duration(milliseconds: 1000),
-//     curve: Curves.easeInOut,
-//     tween: Tween<double>(
-//       begin: isInitialState ? 0.75 : 1.0,
-//       end: isInitialState ? 0.75 : 1.0,
-//     ),
-//     builder: (_, double scale, Widget? child) {
-//       return Transform.scale(
-//         scale: scale,
-//         alignment: Alignment.topCenter,
-//         child: child,
-//       );
-//     },
-//     child: SpotlightBeam(
-//       width: context.screenWidth * 2,
-//       halfWidthOfSpot: 100,
-//       height: screenHeight * 0.7,
-//       gradient: LinearGradient(
-//         begin: Alignment.topCenter,
-//         end: Alignment.bottomCenter,
-//         colors: <Color>[
-//           ATColors.hex0D0D0D,
-//           ATColors.hex090909,
-//         ],
-//       ),
-//     ),
-//   ),
-// )

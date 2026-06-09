@@ -2,6 +2,7 @@ import 'package:amptive/src/config/services/ws_notif_service/ws_channel_service_
 import 'package:amptive/src/features/go_live/cubits/livestream_cubit1.dart';
 import 'package:amptive/src/features/go_live/data/models/deconstruct_inbound_events.dart';
 import 'package:amptive/src/features/go_live/data/models/livestream_state.dart';
+import 'package:amptive/src/features/go_live/presentation/widgets/follow_and_subscribe_to_user_modal.dart';
 import 'package:amptive/src/global_export.dart';
 import 'package:amptive/src/shared/loading_indicator.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -29,12 +30,17 @@ class AudienceViewOfHostAndCohosts extends StatelessWidget {
         'Error occured',
       ),
       WSConnectionStatus.connected => BlocSelector<LiveStreamCubit1, 
-        LiveStreamState1, Organizers?>(
-          selector: (LiveStreamState1 state) => state.organizers,
-          builder: (_, Organizers? organizers) {
-            final LivestreamParticipant? mainHost = organizers?.host;
+        LiveStreamState1, OrganizersIDs?>(
+          selector: (LiveStreamState1 state) => state.organizersIds,
+          builder: (_, OrganizersIDs? organizers) {
+            final Map<String, LivestreamParticipant>? allParticipants
+              = context.read<LiveStreamCubit1>().state.allParticipants;
+
+            final LivestreamParticipant? mainHost = 
+              allParticipants?[organizers?.hostId ?? ''];
             final List<LivestreamParticipant?> cohosts = 
-              organizers?.cohosts ?? <LivestreamParticipant?>[];
+              (organizers?.cohostsIds ?? <String>[])
+                .map((String id) => allParticipants?[id]).toList();
       
               return LayoutBuilder(builder: (_, BoxConstraints constraints) {
                 final double width = constraints.maxWidth;
@@ -53,7 +59,12 @@ class AudienceViewOfHostAndCohosts extends StatelessWidget {
                     if(mainHost != null)RenderAHost(
                       top: onlyHost ? 80 : 6,
                       host: mainHost,
-                      onTap: (LivestreamParticipant? mainHost){}
+                      onTap: (LivestreamParticipant? mainHost){
+                        showFollowAndSubscribeToUserModal(
+                          context: context,
+                          user: mainHost!
+                        );
+                      }
                     ),
                     if (cohosts.isNotEmpty)
                       RenderACohost(

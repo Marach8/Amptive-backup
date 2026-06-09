@@ -24,6 +24,7 @@ class ATStrings {
   static const String dob = 'Date of Birth';
   static const String name = 'Name';
   static const String you = 'You';
+  static const String isExistingUser = 'is_existing_user';
   static const String followerCount = 'followers count';
   static const String followingCount = 'following count';
   static const String hasTestedMic = 'has tested mic';
@@ -46,7 +47,6 @@ class ATStrings {
       'Enter the 4 digit code we just sent to';
   static const String next = 'Next';
   static const String shouldRedirect = 'should Redirect';
-  static const String isNewUser = 'Is First time user';
   static const String enterAmount = 'Enter Amount';
   static const String or = 'or';
   static const String and = 'and';
@@ -287,8 +287,8 @@ class ATStrings {
   static const String ROLE = 'message notifier';
   static const String ALLOWED_AUD_MIC = "You allowed audience microphone";
   static const String DISABLED_AUD_MIC = "You disabled audience microphone";
-  static const String ALLOWED_COMMENTS = "You allowed comments";
-  static const String DISABLED_COMMENTS = "You disabled comments";
+  static const String allowedComments = "You allowed comments";
+  static const String disabledComments = "You disabled comments";
   static const String ALLOWED_HAND_RAISING = "You allowed hand raising";
   static const String DISABLED_HAND_RAISING = "You disabled hand raising";
   static const String MSG_TITLE = 'message title';
@@ -436,8 +436,8 @@ class ATStrings {
   static const String FINISH_SETUP = 'Finish setup';
   static const String finish = 'Finish';
   static const String menu = 'Menu';
-  static const String VIEW_CALENDER = 'View calender';
-  static const String CALENDER = 'Calender';
+  static const String viewCalender = 'View calender';
+  static const String calender = 'Calender';
   static const String GRANT_CALENDER_ACCESS = 'Grant calender access';
   static const String ACCT_SETTINGS = 'Account Settings';
   static const String ACCT = 'Account';
@@ -484,7 +484,7 @@ class ATStrings {
   static const String blockedAccounts = 'Blocked accounts';
   static const String HELP_SUPPORT = 'Help & Support';
   static const String ABOUT = 'About';
-  static const String LOGOUT = 'Log out';
+  static const String logout = 'Log out';
   static const String codeHasBeenSent =
       'Code has been sent. You can request another in';
   static const String SEE_COMMUNITIES = 'See communities on Amptive';
@@ -493,7 +493,7 @@ class ATStrings {
   static const String VIEW_COMMUNITY = 'View Community';
   static const String RECENT_SEARCHES = 'Recent Searches';
   static const String CLEAR = 'Clear';
-  static const String KICK_OUT_LISTENER = 'Kickout listener';
+  static const String kickOutLIstener = 'Kickout listener';
   static const String KICK_OUT_DESC =
       'This user will be unable to join this current live session but can join future live sessions';
   static const String GIFTED_AMNT = 'Gifted Amount';
@@ -605,10 +605,10 @@ class ATStrings {
   static const String TOP_CREATORS_IN_SOCIETY = 'Top Creators in Society';
   static const String moderationTools = 'Moderation Tools';
   static const String TOP_CREATOR_IN = 'Top Creator in';
-  static const String ALLOW_COMMENTS = 'Allow comments';
+  static const String allowComments = 'Allow comments';
   static const String NEED_2_ENABLE_LISTENERS_MIC =
       "You will still need to enable the Listeners's mic";
-  static const String ALLOW_AUDIENCE_MIC = 'Allow audience mic';
+  static const String allowAudienceMic = 'Allow audience mic';
   static const String ALLOW_HANDRAISING = 'Allow hand raising';
   static const String whispersEnabled =
       'Whispers will be enabled for your event.';

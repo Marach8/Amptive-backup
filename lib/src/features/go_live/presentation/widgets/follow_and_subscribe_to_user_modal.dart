@@ -1,7 +1,7 @@
 import 'package:amptive/src/config/utils/colors.dart';
 import 'package:amptive/src/config/utils/extensions/context_extensions.dart';
 import 'package:amptive/src/config/utils/font_sizes.dart';
-import 'package:amptive/src/config/utils/dialogs/confirmation_alert_dialog.dart';
+import 'package:amptive/src/shared/confirmation_alert_dialog.dart';
 import 'package:amptive/src/features/profile/presentation/profile_prez_export.dart';
 import 'package:amptive/src/shared/circle_avatar.dart';
 import 'package:amptive/src/shared/circular_image.dart';
@@ -21,6 +21,7 @@ Future<void> showFollowAndSubscribeToUserModal({
   return await showModalBottomSheet(
       backgroundColor: ATColors.hex202020,
       context: context,
+      useRootNavigator: true,
       barrierColor: ATColors.black.withValues(alpha: 0.6),
       shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.only(

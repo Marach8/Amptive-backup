@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:amptive/src/config/config_export.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
@@ -46,26 +45,4 @@ class ATFadingRouteTransition<T> extends CustomTransitionPage<T> {
           transitionDuration: const Duration(milliseconds: 500),
         );
   final double? beginOffset;
-}
-
-FutureOr<String?> tempRedirect(
-    BuildContext context, GoRouterState state) async {
-  const FlutterSecureStorage storage = FlutterSecureStorage();
-  final String? shouldRedirect = await storage.read(
-    key: ATStrings.shouldRedirect,
-  );
-  final String? isNewUser = await storage.read(key: ATStrings.isNewUser);
-
-  if (shouldRedirect == 'true') {
-    await storage.write(
-        key: ATStrings.shouldRedirect, value: false.toString());
-
-    if (isNewUser == 'false') {
-      return ATRoutes.postOnboardingScreen.addSlash;
-    } else {
-      return ATRoutes.onboardingScreen.addSlash;
-    }
-  }
-
-  return null;
 }

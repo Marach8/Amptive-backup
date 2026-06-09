@@ -4,6 +4,8 @@ import 'package:amptive/src/config/utils/dialogs/app_notification_dialog.dart';
 import 'package:amptive/src/features/events/cubits/hosted_events_cubit.dart';
 import 'package:amptive/src/features/events/data/models/response/event_response_model.dart';
 import 'package:amptive/src/features/events/presentation/widgets/render_a_hosted_event.dart';
+import 'package:amptive/src/features/go_live/data/models/live_program_data.dart';
+import 'package:amptive/src/features/go_live/presentation/screens/live_program_screen.dart';
 import 'package:amptive/src/features/shows/data/models/response/show_response_model.dart';
 import 'package:amptive/src/features/shows/presentation/screens/list_hosted_shows_screen.dart';
 import 'package:amptive/src/features/shows/presentation/widgets/render_hosted_show.dart';
@@ -220,11 +222,17 @@ class __SubWidgetState extends State<_SubWidget> {
                                       if (gridIndex == 0) {
                                         return CreateNewEventOrShowWidget(
                                           label: ATStrings.createNewEvent,
-                                          onTap: (){
-                                            context.pushNamed(
-                                              ATRoutes.createEventFormScreen,
-                                              extra: context.read<HostedEventsCubit>(),
-                                            );
+                                          onTap: ()async{
+                                            final LiveProgramData? liveProgramData = 
+                                              await context.pushNamed(
+                                                ATRoutes.createEventFormScreen,
+                                                extra: context.read<HostedEventsCubit>(),
+                                              ) as LiveProgramData?;
+
+                                            if(liveProgramData != null){
+                                              dashboardKey.currentState?.showLiveStreamOverlay(
+                                                liveProgramData: liveProgramData);
+                                            }
                                           },
                                         );
                                       }

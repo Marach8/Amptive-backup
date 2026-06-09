@@ -1,7 +1,11 @@
+import 'dart:developer';
+
 import 'package:amptive/src/config/routing/route_strings.dart';
 import 'package:amptive/src/config/utils/colors.dart';
 import 'package:amptive/src/config/utils/font_sizes.dart';
 import 'package:amptive/src/config/utils/font_weights.dart';
+import 'package:amptive/src/features/dashboard.dart';
+import 'package:amptive/src/features/go_live/data/models/live_program_data.dart';
 import 'package:amptive/src/features/home/data/models/response/home_feed_response_model.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -32,24 +36,31 @@ class PaidShowAndPlayBtnWidget extends StatelessWidget {
     return '';
   }
 
-  void _onPlayTapped(BuildContext context) {
+  void _onPlayTapped(BuildContext context) async{
     if (homeFeedItem == null) return;
 
     final String contentType = homeFeedItem!.contentType ?? '';
     final bool isStandalone = contentType == 'standalone';
 
+    LiveProgramData? liveProgramData;
+
     if (_isLive) {
       if (isStandalone) {
-        context.pushNamed(
+        liveProgramData = await context.pushNamed(
           ATRoutes.liveEventDetailed,
           extra: homeFeedItem,
-        );
+        ) as LiveProgramData?;
       } else {
-        context.pushNamed(
+        liveProgramData = await context.pushNamed(
           ATRoutes.liveShowDetailed,
           extra: homeFeedItem,
-        );
+        ) as LiveProgramData?;
       }
+
+      if (liveProgramData == null) return;
+      dashboardKey.currentState
+        ?.showLiveStreamOverlay(liveProgramData: liveProgramData);
+
     } else {
       context.pushNamed(
         ATRoutes.scheduleDetailed,
