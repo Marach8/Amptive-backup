@@ -1,4 +1,5 @@
 import 'package:amptive/src/config/api_response_and_app_state.dart';
+import 'package:amptive/src/config/services/local_storage_service/flutter_secure_storage_service_impl.dart';
 import 'package:amptive/src/config/utils/dialogs/app_notification_dialog.dart';
 import 'package:amptive/src/config/utils/utils_export.dart';
 import 'package:amptive/src/features/auth/cubits/local_user_data_cubit.dart';
@@ -73,28 +74,35 @@ class _AddNameScreenState extends State<AddNameScreen> with ATValidators {
               ),
             ),
           ),
-          bottomSheet: BlocConsumer<SignupCubit, ATAppState<SignUpResponseModel>>(
-              listener: (_, ATAppState<SignUpResponseModel> state)  async{
+          bottomSheet:
+              BlocConsumer<SignupCubit, ATAppState<SignUpResponseModel>>(
+                  listener: (_, ATAppState<SignUpResponseModel> state) async {
             if (state is SuccessState<SignUpResponseModel>) {
               final SignUpResponseModel? responseModel = state.newData;
-    final ATUser? user = responseModel?.user;
+              final ATUser? user = responseModel?.user;
 
-    if (user != null) {
-      await context.read<LocalUserDataCubit>().updateUserDataLocally(
-        CachedUserData(
-          userId: user.id,
-          email: user.email,
-          username: user.username,
-          name: user.name,
-          dob: user.dob,
-          pictureUrl: user.pictureUrl,
-          phoneNumber: user.phoneNumber,
-        ),
-      );
-    }
-    
+              if (user != null) {
+                await context.read<LocalUserDataCubit>().updateUserDataLocally(
+                      CachedUserData(
+                        userId: user.id,
+                        email: user.email,
+                        username: user.username,
+                        name: user.name,
+                        dob: user.dob,
+                        pictureUrl: user.pictureUrl,
+                        phoneNumber: user.phoneNumber,
+                      ),
+                    );
+              }
+              await context.read<LocalUserDataCubit>().initializeCachedData();
 
-              context.goNamed(ATRoutes.addProfilePicScreen);
+              final FlutterSecureStorageServiceImpl storage =
+                  FlutterSecureStorageServiceImpl();
+              await storage.remove('has_set_wallet_pin');
+
+              if (context.mounted) {
+                context.goNamed(ATRoutes.addProfilePicScreen);
+              }
             }
             if (state is FailureState<SignUpResponseModel>) {
               showAppNotification2(
@@ -102,8 +110,8 @@ class _AddNameScreenState extends State<AddNameScreen> with ATValidators {
                   text: state.message,
                   type: NotificationType.failure);
             }
-          }, 
-          builder: (BuildContext context, ATAppState<SignUpResponseModel> state) {
+          }, builder: (BuildContext context,
+                      ATAppState<SignUpResponseModel> state) {
             final double bottom = MediaQuery.viewInsetsOf(context).bottom;
             final double bottomPad = bottom > 0 ? 10 : 50;
             return Padding(

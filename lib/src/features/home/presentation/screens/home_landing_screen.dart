@@ -1,4 +1,5 @@
 import 'package:amptive/src/config/api_response_and_app_state.dart';
+import 'package:amptive/src/config/services/local_storage_service/flutter_secure_storage_service_impl.dart';
 import 'package:amptive/src/config/utils/colors.dart';
 import 'package:amptive/src/config/routing/route_strings.dart';
 import 'package:amptive/src/config/utils/dialogs/app_notification_dialog.dart';
@@ -76,11 +77,23 @@ class HomeTabView extends StatelessWidget {
                 //   icon: Icon(Icons.add),
                 // ),
                 GestureDetector(
-                    onTap: () {
+                    onTap: ()  async {
+                     final FlutterSecureStorageServiceImpl storage = FlutterSecureStorageServiceImpl();
+    final String? hasSetPin = await storage.get('has_set_wallet_pin'); 
+     print('has_set_wallet_pin: $hasSetPin'); // check what's actually stored
+
+
+    
+    if (!context.mounted) return;
+    
+    if (hasSetPin == 'true') {
+      context.pushNamed(ATRoutes.walletScreen);
+    } else {
+      context.pushNamed(ATRoutes.WALLET_ONBOARDING);
+    }
+  },
                       //context.pushNamed(ATRoutes.GO_LIVE_ONBOARDING);
-                     context.pushNamed(ATRoutes.walletScreen);
-                     // context.pushNamed(ATRoutes.WALLET_ONBOARDING);
-                    },
+                     
                     child: Stack(
                       children: <Widget>[
                         const ATImgLoader(

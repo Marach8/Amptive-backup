@@ -1,6 +1,5 @@
 import 'dart:async';
-import 'dart:developer';
-import 'dart:io';
+import 'package:amptive/src/config/services/local_storage_service/flutter_secure_storage_service_impl.dart';
 import 'package:amptive/src/config/services/network_service/interceptor.dart'
     show AuthGuardCubit;
 import 'package:amptive/src/features/auth/cubits/local_user_data_cubit.dart';
@@ -15,17 +14,12 @@ import 'package:amptive/src/shared/annotated_region__widget.dart';
 import 'package:amptive/src/features/main_app_nav_bar.dart';
 import 'package:amptive/src/features/home/presentation/screens/home_landing_screen.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
 import 'package:nested/nested.dart';
 import '../global_export.dart';
-import '../services/go_live_service/go_live_service.dart';
 import '../services/notification/push_notification_service.dart';
-import 'go_live/go_live_export.dart';
-import 'go_live/data/models/deconstruct_inbound_events.dart';
-import 'go_live/cubits/livestream_bloc.dart';
 import 'notifications/presentation/screens/notif_landing_screen.dart';
 
 class ATMainAppShell extends StatelessWidget {
@@ -96,6 +90,9 @@ class __SubWidgetState extends State<_SubWidget> {
 
       GetIt.I<PushNotificationService>().init();
       GetIt.I<UserWsService>().connectUser();
+
+        
+
     });
   }
 

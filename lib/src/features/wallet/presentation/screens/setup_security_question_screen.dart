@@ -142,7 +142,6 @@ class ATSecurityQuestionScreen extends StatelessWidget {
               await storage.set('has_set_wallet_pin', 'true');
 
               context.goNamed(ATRoutes.walletCreationAnimationScreen);
-              context.goNamed(ATRoutes.walletCreationAnimationScreen);
             }
             if (state is FailureState<dynamic>) {
               showAppNotification2(

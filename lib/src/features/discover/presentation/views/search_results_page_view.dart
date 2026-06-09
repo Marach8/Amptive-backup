@@ -112,7 +112,7 @@ class _SearchResultsTabsViewState extends State<SearchResultsTabsView>
                 .entries
                 .map((MapEntry<int, String> tab) {
               return Tab(
-                child: ValueListenableBuilder(
+                child: ValueListenableBuilder<int>(
                     valueListenable: _isTabSelected,
                     builder: (_, int value, __) {
                       final bool isSelected = tab.key == value;
