@@ -1,3 +1,4 @@
+import 'package:amptive/src/config/utils/extensions/context_extensions.dart';
 import 'package:amptive/src/global_export.dart';
 import 'package:amptive/src/shared/annotated_region_widget.dart';
 import 'package:amptive/src/shared/app_bar_widget.dart';
