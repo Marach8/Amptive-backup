@@ -1,4 +1,5 @@
 import 'package:amptive/src/config/api_response_and_app_state.dart';
+import 'package:amptive/src/config/services/local_storage_service/flutter_secure_storage_service_impl.dart';
 import 'package:amptive/src/config/utils/colors.dart';
 import 'package:amptive/src/config/routing/route_strings.dart';
 import 'package:amptive/src/config/utils/dialogs/app_notification_dialog.dart';
@@ -34,8 +35,7 @@ class HomeTabView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return NotificationListener<ScrollNotification>(
-      onNotification: context
-        .read<ATNavBarBloc>().ctrlNavVisibility,
+      onNotification: context.read<ATNavBarBloc>().ctrlNavVisibility,
       child: NestedScrollView(
           floatHeaderSlivers: true,
           key: nestedKey,
@@ -133,8 +133,7 @@ class HomeTabView extends StatelessWidget {
                 type: NotificationType.failure,
               );
             }
-          },
-          builder: (_, ATAppState<HomeFeedResponseModel> state) {
+          }, builder: (_, ATAppState<HomeFeedResponseModel> state) {
             return switch (state) {
               InitialState<HomeFeedResponseModel>() => const SizedBox.shrink(),
               LoadingState<HomeFeedResponseModel>() ||
@@ -169,8 +168,7 @@ class HomeTabView extends StatelessWidget {
 
                   return RefreshIndicator(
                     onRefresh: () {
-                      context.read<LiveUsersCubit>()
-                        .refreshLiveUsers();
+                      context.read<LiveUsersCubit>().refreshLiveUsers();
                       return context.read<HomeFeedCubit>().refreshHomeFeed();
                     },
                     child: ListView.separated(
@@ -193,8 +191,8 @@ class HomeTabView extends StatelessWidget {
                                                   homeFeedItem.goingCount),
                                         ))
                               ],
-                              child:
-                                  RenderHomeFeedItem(homeFeedItem: homeFeedItem),
+                              child: RenderHomeFeedItem(
+                                  homeFeedItem: homeFeedItem),
                             );
                           }
                           if (state is LoadingState<HomeFeedResponseModel>) {
@@ -205,13 +203,10 @@ class HomeTabView extends StatelessWidget {
                   );
                 })
             };
-          }
-        )
-      ),
+          })),
     );
   }
 }
-
 
 class _InitialLoadingShimmer extends StatelessWidget {
   const _InitialLoadingShimmer();

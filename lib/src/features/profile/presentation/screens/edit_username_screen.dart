@@ -1,10 +1,16 @@
 import 'package:amptive/src/bloc/authentication/general/auth_bloc.dart';
 import 'package:amptive/src/bloc/authentication/general/auth_events.dart';
 import 'package:amptive/src/bloc/authentication/general/auth_states.dart';
+import 'package:amptive/src/config/api_response_and_app_state.dart';
 import 'package:amptive/src/config/utils/colors.dart';
+import 'package:amptive/src/config/utils/dialogs/app_notification_dialog.dart';
+import 'package:amptive/src/config/utils/extensions/context_extensions.dart';
 import 'package:amptive/src/config/utils/font_sizes.dart';
 import 'package:amptive/src/config/utils/other_strings.dart';
 import 'package:amptive/src/config/utils/helper_functions.dart';
+import 'package:amptive/src/features/auth/cubits/check_identity_availability_cubit.dart';
+import 'package:amptive/src/features/auth/cubits/local_user_data_cubit.dart';
+import 'package:amptive/src/features/profile/cubits/remote_user_data_cubit.dart';
 import 'package:amptive/src/shared/annotated_region_widget.dart';
 import 'package:amptive/src/shared/app_bar_widget.dart';
 import 'package:amptive/src/shared/back_button.dart';
@@ -14,6 +20,7 @@ import 'package:amptive/src/shared/textformfield_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:nested/nested.dart';
 
 class EditUsernameScreen extends StatefulWidget {
   const EditUsernameScreen({super.key, required this.initialUsername});
@@ -26,100 +33,186 @@ class EditUsernameScreen extends StatefulWidget {
 class _EditNameScreen extends State<EditUsernameScreen> {
   late final TextEditingController _cntrl;
 
+  //false => disabled, null => active, true => loading.
+  final ValueNotifier<bool?> _btnNotifier = ValueNotifier<bool?>(false);
+
   @override
   void initState() {
     super.initState();
-    _cntrl = TextEditingController(text: widget.initialUsername.toLowerCase())
-      ..addListener(_handleTextChange);
+    _cntrl = TextEditingController(
+      text: widget.initialUsername.toLowerCase())
+      ..addListener((){
+        if(_cntrl.text.trim() == widget.initialUsername){
+          _btnNotifier.value == false;
+        }
+      });
   }
 
-  void _handleTextChange() {
-    ATHelperFuncs.callDebouncer(
-        1000,
-        () => context
-            .read<AmptiveAuthBloc>()
-            .add(UsernameChangedEvent(_cntrl.text.trim())));
-  }
 
   @override
   void dispose() {
-    _cntrl.removeListener(_handleTextChange);
     _cntrl.dispose();
+    _btnNotifier.dispose();
     super.dispose();
   }
 
   @override
-  Widget build(BuildContext context) {
-    return ATAnnotatedRegion(
-      child: Scaffold(
-        appBar: const ATAppBar(
-            leadingWidth: 30,
-            padding: EdgeInsets.only(left: 7),
-            leading: ATRoundedBackBtn(),
-            titleText: ATStrings.userName),
-        body: Padding(
-          padding: const EdgeInsets.fromLTRB(15, 10, 15, 0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              ATTextFormField(
-                controller: _cntrl,
-                maxLines: 1,
-                prefixIcon: Padding(
-                  padding: const EdgeInsets.only(left: 10),
-                  child: Text(ATStrings.AT_SIGN,
-                      style: Theme.of(context).textTheme.bodyMedium),
-                ),
-                suffixIcon: Padding(
-                  padding: const EdgeInsets.only(right: 15),
-                  child: BlocBuilder<AmptiveAuthBloc, AmptiveAuthState>(
-                      builder: (_, AmptiveAuthState state) {
-                    if (state is VerifyingUsernameState) {
-                      return const ATLoadingIndicator(
-                        size: 20,
-                      );
-                    }
-                    if (state is UsernameVerifiedState) {
-                      return Icon(Icons.check, color: ATColors.hex54C981);
-                    }
-                    return const SizedBox.shrink();
-                  }),
+  Widget build(_) {
+    return MultiBlocProvider(
+      providers: <SingleChildWidget>[
+        BlocProvider<CheckIdentityAvailabilityCubit>(
+          create: (_) => CheckIdentityAvailabilityCubit(),
+        ),
+        BlocProvider<RemoteUserDataCubit>(
+          create: (_) => RemoteUserDataCubit(),
+        )
+      ],
+      child: Builder(
+        builder: (BuildContext context) {
+          return ATAnnotatedRegion(
+            child: Scaffold(
+              appBar: const ATAppBar(
+                leadingWidth: 30,
+                padding: EdgeInsets.only(left: 7),
+                leading: ATRoundedBackBtn(),
+                titleText: ATStrings.userName),
+              body: Padding(
+                padding: const EdgeInsets.fromLTRB(15, 10, 15, 0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    ATTextFormField(
+                      controller: _cntrl,
+                      maxLines: 1,
+                      prefixIcon: Padding(
+                        padding: const EdgeInsets.only(left: 10),
+                        child: Text(ATStrings.emailSymbol,
+                          style: context.textTheme.bodyMedium),
+                      ),
+                      suffixIcon: Padding(
+                        padding: const EdgeInsets.only(right: 10),
+                        child: BlocConsumer<CheckIdentityAvailabilityCubit,
+                          ATAppState<bool>>(
+                          listener: (_, ATAppState<bool> state) {
+                            if (state is FailureState<bool>) {
+                              _btnNotifier.value = false;
+                              showAppNotification2(
+                                context: context,
+                                text: state.message,
+                                type: NotificationType.failure,
+                              );
+                            }
+                            else if(state is SuccessState<bool>){
+                              _btnNotifier.value = null;
+                            }
+                            else if (state is LoadingState<bool>){
+                              _btnNotifier.value = false;
+                            }
+                          },
+                          builder: (_, ATAppState<bool> state) =>
+                            switch (state) {
+                              InitialState<bool>() =>
+                                const SizedBox.shrink(),
+                              LoadingState<bool>() =>
+                                const ATLoadingIndicator(
+                                  size: 20,
+                                ),
+                              SuccessState<bool>() => Icon(
+                                  Icons.check,
+                                  color: ATColors.successColor,
+                                ),
+                              FailureState<bool>() => Icon(
+                                  Icons.close,
+                                  color: ATColors.textRedColor,
+                                )
+                            }
+                          ),
+                      ),
+                      onChanged: (String text) {
+                        ATHelperFuncs.callDebouncer(
+                            1500,
+                            () => context
+                              .read<CheckIdentityAvailabilityCubit>()
+                              .checkIdentityAvailability(
+                                  param: <String, dynamic>{
+                                'username': text.trim()
+                              }
+                            )
+                          );
+                      }
+                    ),
+          
+                    const SizedBox(height: 10),
+                    BlocBuilder<CheckIdentityAvailabilityCubit,
+                      ATAppState<bool>>(builder: (_, ATAppState<bool> state) {
+                        if (state is InitialState<bool>) {
+                          return const SizedBox.shrink();
+                        }
+                        final bool isLoading = state is LoadingState<bool>;
+                        final bool isSuccess = state is SuccessState<bool>;
+                        return Text(
+                          isLoading
+                              ? ATStrings.checkerLoading
+                              : isSuccess
+                                  ? ATStrings.usernameIsAvailable
+                                  : 'Username not available!',
+                          style: context.textTheme.titleSmall?.copyWith(
+                            color: isSuccess
+                                ? ATColors.successColor
+                                : isLoading
+                                    ? ATColors.white
+                                    : ATColors.textRedColor,
+                          ),
+                        );
+                      }
+                    ),
+                  ],
                 ),
               ),
-              const SizedBox(height: 10),
-              BlocBuilder<AmptiveAuthBloc, AmptiveAuthState>(
-                  builder: (_, AmptiveAuthState state) {
-                return Text(
-                    (state is VerifyingUsernameState)
-                        ? ATStrings.checkerLoading
-                        : (state is UsernameVerifiedState)
-                            ? ATStrings.usernameIsAvailable
-                            : '',
-                    style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                        fontSize: ATSizes.size11,
-                        color: state is UsernameVerifiedState
-                            ? ATColors.hex54C981
-                            : null));
-              })
-            ],
-          ),
-        ),
-        bottomSheet: Builder(builder: (BuildContext context) {
-          final double bottomInset = MediaQuery.viewInsetsOf(context).bottom;
-          final double bottom = bottomInset == 0 ? 50.0 : 15;
-          return Padding(
-            padding: EdgeInsets.fromLTRB(15, 5, 15, bottom),
-            child: BlocBuilder<AmptiveAuthBloc, AmptiveAuthState>(
-                builder: (_, AmptiveAuthState state) {
-              return ATPlainElevatedBtn(
-                onPressed: (state is UsernameVerifiedState)
-                    ? () => context.pop(_cntrl.text.trim())
-                    : null,
-                btnTitle: ATStrings.ACCEPT_CHANGES,
-              );
-            }),
+          
+              bottomSheet: BlocListener<RemoteUserDataCubit,
+                ATAppState<UserProfileData>>(
+                listener: (_, ATAppState<UserProfileData> state){
+                  if(state is FailureState<UserProfileData>){
+                    _btnNotifier.value = null;
+                    showAppNotification2(
+                      context: context,
+                      text: state.message,
+                      type: NotificationType.failure,
+                    );
+                  }
+                  else if(state is SuccessState<UserProfileData>){
+                    _btnNotifier.value = null;
+                    context.pop(_cntrl.text.trim());
+                  }
+                },
+                child: ValueListenableBuilder<bool?>(
+                  valueListenable: _btnNotifier,            
+                  builder: (BuildContext context, bool? value, _) {
+                  final double bottomInset = 
+                    MediaQuery.viewInsetsOf(context).bottom;
+                  final double bottom = bottomInset == 0 ? 55.0 : 15;
+                
+                  return Padding(
+                    padding: EdgeInsets.fromLTRB(15, 5, 15, bottom),
+                    child: ATPlainElevatedBtn(
+                      isLoading: value == true,
+                      onPressed: value == false ? null : (){
+                        //We start loading on this button
+                        _btnNotifier.value = true;
+                        context.read<RemoteUserDataCubit>()
+                          .updateRemoteUserProfile(
+                            userProfileData: UserProfileData(
+                              username: _cntrl.text.trim()));
+                      },
+                      btnTitle: ATStrings.acceptChanges,
+                    )
+                  );
+                }),
+              ),
+            ),
           );
-        }),
+        }
       ),
     );
   }

@@ -126,7 +126,7 @@ class _EditSocialsScreenState extends State<EditSocialsScreen> {
                     btnActive ? () => context.pop(_cntrl.text.trim()) : null,
                 btnTitle: widget.initialLink == null
                     ? ATStrings.ADD_LINK
-                    : ATStrings.ACCEPT_CHANGES),
+                    : ATStrings.acceptChanges),
           );
         }),
       ),

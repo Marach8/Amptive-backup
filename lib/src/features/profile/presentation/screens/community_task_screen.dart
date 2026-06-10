@@ -17,7 +17,7 @@ class AmptiveCommunityTaskScreen extends StatelessWidget {
             leadingWidth: 30,
             padding: EdgeInsets.only(left: 7),
             leading: ATRoundedBackBtn(),
-            titleText: ATStrings.SWITCH_ACCT),
+            titleText: ATStrings.switchAccount),
         body: Padding(
           padding: const EdgeInsets.all(15),
           child: Column(

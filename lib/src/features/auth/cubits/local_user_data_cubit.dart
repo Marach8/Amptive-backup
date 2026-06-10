@@ -45,14 +45,14 @@ class LocalUserDataCubit extends Cubit<ATAppState<UserProfileData>> {
     }
   }
 
-  Future<void> updateUserDataLocally(UserProfileData user) async {
+  Future<void> updateUserDataLocally(UserProfileData newData) async {
     try {
-      await localStorage.setObject(
+      emit(SuccessState<UserProfileData>(newData: newData));
+      
+      localStorage.setObject(
         ATStrings.cachedUserData,
-        user.toLocalStorageJson(),
+        newData.toLocalStorageJson(),
       );
-
-      emit(SuccessState<UserProfileData>(newData: user));
     } catch (e) {
       emit(FailureState<UserProfileData>(
         e.toString(),

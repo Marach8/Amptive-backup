@@ -89,7 +89,7 @@ class _EditBioScreenState extends State<EditBioScreen> {
             child: ATPlainElevatedBtn(
               onPressed:
                   btnActive ? () => context.pop(_cntrl.text.trim()) : null,
-              btnTitle: ATStrings.ACCEPT_CHANGES,
+              btnTitle: ATStrings.acceptChanges,
             ),
           );
         }),

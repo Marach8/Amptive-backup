@@ -25,7 +25,7 @@ class SelectAcctTypeScreen extends StatelessWidget {
               leadingWidth: 30,
               padding: EdgeInsets.only(left: 7),
               leading: ATRoundedBackBtn(),
-              titleText: ATStrings.SWITCH_ACCT),
+              titleText: ATStrings.switchAccount),
           body: SingleChildScrollView(
             physics: const BouncingScrollPhysics(),
             padding: const EdgeInsets.fromLTRB(15, 10, 15, 15),

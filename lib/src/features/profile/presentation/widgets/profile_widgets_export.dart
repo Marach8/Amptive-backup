@@ -7,4 +7,4 @@ export 'no_of_subscribers.dart';
 export 'edit_profile_and_sub.dart';
 export 'profile_screen_tabs.dart';
 export 'user_profile_cover_image.dart';
-export 'edit_profile_bg_pic.dart';
+export 'edit_profile_cover_image.dart';

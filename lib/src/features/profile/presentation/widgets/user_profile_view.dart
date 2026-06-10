@@ -81,18 +81,20 @@ class UserProfileView extends StatelessWidget {
                           const SizedBox(height: 20),
                           NoOfFollowers(noOfFollowers: userData?.followersCount),
                           const SizedBox(height: 15),
-                          ATContainer(
-                            onTap: () => context.pushNamed(ATRoutes.editProfile),
-                            alignment: Alignment.center,
-                            radius: 50,
-                            margin: const EdgeInsets.only(left: 15),
-                            padding: const EdgeInsets.only(top: 10, bottom: 10),
-                            color: ATColors.white.withValues(alpha: 0.2),
-                            child: Text(ATStrings.editProfile,
-                              style: context.textTheme.bodyMedium
-                                ?.copyWith(fontSize: ATSizes.size14
+                          Padding(
+                            padding: const EdgeInsets.fromLTRB(15, 0, 15, 0),
+                            child: ATContainer(
+                              onTap: () => context.pushNamed(ATRoutes.editProfile),
+                              alignment: Alignment.center,
+                              radius: 50,
+                              padding: const EdgeInsets.only(top: 10, bottom: 10),
+                              color: ATColors.white.withValues(alpha: 0.2),
+                              child: Text(ATStrings.editProfile,
+                                style: context.textTheme.bodyMedium
+                                  ?.copyWith(fontSize: ATSizes.size14
+                                )
                               )
-                            )
+                            ),
                           ),
                           const SizedBox(height: 15),
                           Divider(

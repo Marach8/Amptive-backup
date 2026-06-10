@@ -11,7 +11,6 @@ class ATStrings {
   static const String underscore = '_';
   static const String plus = '+';
   static const String HASH = '#';
-  static const String AT_SIGN = '@';
   static const String nairaText = '₦';
   static const String dot = '•';
   static const String accessToken = 'Access Token';
@@ -172,7 +171,7 @@ class ATStrings {
   static const String deleteSubPlan = 'Delete subscription plan?';
   static const String deleteSubPlanDesc =
       'Deleting plan will grant listeners free access to your shows.';
-  static const String ACCEPT_CHANGES = 'Accept Changes';
+  static const String acceptChanges = 'Accept Changes';
   static const String no_will_be_verified =
       'This phone number will be verified in the next step.';
 
@@ -252,7 +251,7 @@ class ATStrings {
   static const String sendAgain = 'Send again';
   static const String SEND = 'Send';
   static const String sendGift = 'Send gift';
-  static const String THIS_WILL_APPEAR_ON_PROFILE =
+  static const String thisWillAppearOnYourProfile =
       'Note that this will appear on your profile';
 
   static const String createPasswordForAccount =
@@ -428,7 +427,7 @@ class ATStrings {
   static const String MORE_2_DISCOVER = 'More to Discover';
   static const String TOP_CREATORS = 'Top Creators';
   static const String creator = 'Creator';
-  static const String BUSINESS = 'Business';
+  static const String business = 'Business';
   static const String POPULAR_CREATORS = 'Popular Creators';
   static const String SPOTLIGHT = 'Spotlight';
   static const String VIEW_ALL = 'View all';
@@ -451,7 +450,6 @@ class ATStrings {
   static const String editProfile = 'Edit Profile';
   static const String ABT_U = 'About you';
   static const String userName = 'Username';
-  static const String NAME = 'Name';
   static const String titleOfYourShow = 'What is the title of your show?';
   static const String tellListenersAboutYourShow =
       'Tell your listeners what your show is about.';
@@ -476,7 +474,7 @@ class ATStrings {
   static String setUpAcct(String acct) => "Set up $acct";
   static const String LINKS = 'Links';
   static const String LINK = 'Link';
-  static const String SWITCH_ACCT = 'Switch Account Type';
+  static const String switchAccount = 'Switch Account Type';
   static const String SWITCH = 'Switch';
   static const String PSWRD_ND_SECURITY = 'Password and Security';
   static const String APP_SETTINGS = 'App Settings';

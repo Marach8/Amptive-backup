@@ -95,18 +95,22 @@ class _AddUsernameScreenState extends State<AddUsernameScreen>
                                         Icons.close,
                                         color: ATColors.textRedColor,
                                       )
-                                  }),
+                                  }
+                                ),
                         ),
                         onChanged: (String text) {
                           ATHelperFuncs.callDebouncer(
                               1500,
                               () => context
-                                      .read<CheckIdentityAvailabilityCubit>()
-                                      .checkIdentityAvailability(
-                                          param: <String, dynamic>{
-                                        'username': text
-                                      }));
-                        }),
+                                .read<CheckIdentityAvailabilityCubit>()
+                                .checkIdentityAvailability(
+                                    param: <String, dynamic>{
+                                  'username': text.trim()
+                                }
+                              )
+                            );
+                        }
+                      ),
                     BlocBuilder<CheckIdentityAvailabilityCubit,
                         ATAppState<bool>>(builder: (_, ATAppState<bool> state) {
                       if (state is InitialState<bool>) {
