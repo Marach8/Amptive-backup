@@ -56,9 +56,7 @@ class HomeTabView extends StatelessWidget {
                           imgPath: ATImgStrings.amptiveNameLogo,
                           height: 21,
                           width: 86),
-                      SizedBox(
-                        width: 4.0,
-                      ),
+                      SizedBox(width: 4.0),
                       Icon(
                         Icons.keyboard_arrow_down_outlined,
                         size: 25,
@@ -68,13 +66,6 @@ class HomeTabView extends StatelessWidget {
                 ),
               ),
               actions: <Widget>[
-                // IconButton(
-                //   onPressed: (){
-                //     context.read<HomeFeedCubit>().fetchHomeFeed();
-                //     context.read<LiveUsersCubit>().fetchLiveUsers();
-                //   },
-                //   icon: Icon(Icons.add),
-                // ),
                 GestureDetector(
                     onTap: () {
                      context.pushNamed(ATRoutes.walletScreen);

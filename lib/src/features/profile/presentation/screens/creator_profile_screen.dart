@@ -85,7 +85,7 @@ class CreatorProfileScreen extends StatelessWidget {
                         builder: (_, bool state) {
                           return ATCircleAvatar(
                             onTap: () =>
-                                context.pushNamed(ATRoutes.PROFILE_MENU_SCREEN),
+                                context.pushNamed(ATRoutes.profileMenuScreen),
                             diameter: 30,
                             animationDuration: 0,
                             color: state
@@ -134,10 +134,11 @@ class CreatorProfileScreen extends StatelessWidget {
                                 spacing: 20,
                                 children: <Widget>[
                                   NoOfFollowers(
-                                    noOfFollowers:
-                                        userData?.followersCount ?? '',
+                                    noOfFollowers:userData?.followersCount
                                   ),
-                                  const NoOfSubscribers(),
+                                  NoOfSubscribers(
+                                    noOfSubscribers: userData?.subscribersCount
+                                  ),
                                 ],
                               ),
                               const SizedBox(height: 20),

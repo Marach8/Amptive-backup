@@ -6,10 +6,10 @@ import 'package:amptive/src/shared/circular_image.dart';
 import 'package:amptive/src/shared/custom_container_widget.dart';
 import 'package:amptive/src/config/utils/colors.dart';
 import 'package:amptive/src/config/utils/font_sizes.dart';
+import 'package:amptive/src/shared/image_loader_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-
 import '../../../../config/utils/image_strings.dart';
 
 class CreatorProfilePix extends StatelessWidget {
@@ -19,8 +19,19 @@ class CreatorProfilePix extends StatelessWidget {
   Widget build(BuildContext context) {
     final UserProfileData? userData =
       context.watch<LocalUserDataCubit>().currentUserData;
-    return ATContainer(
-      decorImage: ATImgStrings.weCanDoHardThingsBgImage,
+    final String? coverPhoto = userData?.coverPhoto;
+    return Container(
+      decoration: coverPhoto != null ? BoxDecoration(
+        image: DecorationImage(
+          image: NetworkImage(coverPhoto),
+          fit: BoxFit.cover,
+        ),
+      ) : const BoxDecoration(
+        image: DecorationImage(
+          image: AssetImage(ATImgStrings.weCanDoHardThingsBgImage),
+          fit: BoxFit.cover,
+        ),
+      ),
       height: 150,
       width: context.screenWidth,
       child: GestureDetector(
@@ -28,28 +39,37 @@ class CreatorProfilePix extends StatelessWidget {
           alignment: Alignment.center,
           clipBehavior: Clip.none,
           children: <Widget>[
-            ATContainer(
+            Container(
               height: 150,
-              gradient: LinearGradient(
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
                   begin: Alignment.topCenter,
                   end: Alignment.bottomCenter,
                   colors: <Color>[ATColors.black, ATColors.transparent]),
+              ),
               width: context.screenWidth,
-              child: const SizedBox(),
             ),
             Positioned(
                 bottom: -35,
                 child: Hero(
                   tag: userData?.pictureUrl ?? '',
-                  child: ATCircularImage(
+                  child: ATContainer(
                       onTap: () => context.pushNamed(
-                          ATRoutes.profilePicFullViewScreen,
-                          extra: userData?.pictureUrl ?? ''),
-                      diameter: 70,
-                      addBorder: true,
-                      borderColor: ATColors.black,
-                      borderWidth: 3,
-                      imagePath: userData?.pictureUrl ?? ''),
+                        ATRoutes.profilePicFullViewScreen,
+                        extra: userData?.pictureUrl 
+                        ?? ATImgStrings.noAvatarImage,
+                      ),
+                      height: 70, width: 70,
+                      boxShape: BoxShape.circle,
+                      border: Border.all(
+                        color: ATColors.black,
+                        width: 3,
+                      ),
+                      child: ATImgLoader(
+                        imgPath: userData?.pictureUrl 
+                        ?? ATImgStrings.noAvatarImage,
+                      ),
+                    ),
                 )),
             Positioned(
                 bottom: -35,
@@ -59,7 +79,7 @@ class CreatorProfilePix extends StatelessWidget {
                   padding: const EdgeInsets.fromLTRB(5, 0, 5, 1),
                   border: Border.all(color: ATColors.black, width: 2),
                   child: Text(
-                    ATStrings.CREATOR.toUpperCase(),
+                    ATStrings.creator.toUpperCase(),
                     style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                         fontSize: ATSizes.size10, color: ATColors.black),
                   ),

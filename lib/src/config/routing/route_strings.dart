@@ -37,11 +37,11 @@ class ATRoutes {
   static const String dashboard = "main_app_shell";
   static const String liveShowDetailed = "show_detailed_screen";
   static const String liveEventDetailed = "event_detailed_screen";
-  static const String SCHEDULED_EVENTS_OR_SHOWS_SCREEN =
+  static const String scheduledProgramsScreen =
       'scheduled_events_or_shows';
-  static const String SUBSCRIBED_EVENTS_OR_SHOWS_SCREEN =
+  static const String subscribedProgramsScreen =
       'subscribed_events_or_shows';
-  static const String FOLLOWING_EVENTS_OR_SHOWS_SCREEN =
+  static const String followingProgramsScreen =
       'following_events_or_shows';
   static const String COMMUNITY_SCREEN = 'community_screen';
   static const String SOCIETY_SCREEN = 'society_screen';
@@ -50,14 +50,14 @@ class ATRoutes {
   static const String SOCIETY_HASHTAG_SCREEN = 'trending_hashtag_full_screen';
   static const String chooseEventOrShowScreen = 'go_live_welcome_screen';
   static const String creatorProfileScreen = 'creator_profile';
-  static const String PROFILE_MENU_SCREEN = 'profile_menu_screen';
-  static const String PROFILE_FOLLOWING_SCREEN = 'profile_following_screen';
+  static const String profileMenuScreen = 'profile_menu_screen';
+  static const String creatorFollowersScreen = 'profile_following_screen';
   static const String updateEmailScreen = 'update_email_screen';
   static const String updatePhoneNoScreen = 'update_phone_no_screen';
   static const String updateNameScreen = 'update_name_screen';
   static const String updateUsernameScreen = 'update_username_screen';
   static const String updateDOBScreen = 'update_dob_screen';
-  static const String PROFILE_SUBSCRIBERS_SCREEN = 'profile_sub_screen';
+  static const String creatorSubscribersScreen = 'profile_sub_screen';
   static const String USER_PROFILE_SCREEN = 'user_profile';
   static const String listHostedShowsScreen = 'choose_or_create_show';
   static const String listHostedEventsScreen = 'choose_or_create_event';

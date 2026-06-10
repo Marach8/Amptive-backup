@@ -515,8 +515,8 @@ final GoRouter amptiveAppRouter = GoRouter(
                         const CreatorOrBusinessSetupSuccessScreen()),
               ]),
           GoRoute(
-              name: ATRoutes.PROFILE_MENU_SCREEN,
-              path: ATRoutes.PROFILE_MENU_SCREEN,
+              name: ATRoutes.profileMenuScreen,
+              path: ATRoutes.profileMenuScreen,
               builder: (_, __) => const AmptiveProfileMenuScreen(),
               routes: <RouteBase>[
                 GoRoute(
@@ -632,8 +632,8 @@ final GoRouter amptiveAppRouter = GoRouter(
                 ),
               ]),
           GoRoute(
-            name: ATRoutes.PROFILE_FOLLOWING_SCREEN,
-            path: ATRoutes.PROFILE_FOLLOWING_SCREEN,
+            name: ATRoutes.creatorFollowersScreen,
+            path: ATRoutes.creatorFollowersScreen,
             builder: (_, __) => const ATProfileFollowersScreen(),
           ),
           GoRoute(
@@ -649,8 +649,8 @@ final GoRouter amptiveAppRouter = GoRouter(
                 return AmptiveViewProfilePicScreen(imgPath: imgPath);
               }),
           GoRoute(
-            name: ATRoutes.PROFILE_SUBSCRIBERS_SCREEN,
-            path: ATRoutes.PROFILE_SUBSCRIBERS_SCREEN,
+            name: ATRoutes.creatorSubscribersScreen,
+            path: ATRoutes.creatorSubscribersScreen,
             builder: (_, __) => const ProfileSubscribersScreen(),
           ),
           GoRoute(
@@ -659,8 +659,8 @@ final GoRouter amptiveAppRouter = GoRouter(
             builder: (_, __) => const ATUserProfileScreen(),
           ),
           GoRoute(
-            name: ATRoutes.SCHEDULED_EVENTS_OR_SHOWS_SCREEN,
-            path: ATRoutes.SCHEDULED_EVENTS_OR_SHOWS_SCREEN,
+            name: ATRoutes.scheduledProgramsScreen,
+            path: ATRoutes.scheduledProgramsScreen,
             builder: (_, __) => const ATScheduledPrograms(),
           ),
           GoRoute(
@@ -727,13 +727,13 @@ final GoRouter amptiveAppRouter = GoRouter(
             )),
           ),
           GoRoute(
-            name: ATRoutes.SUBSCRIBED_EVENTS_OR_SHOWS_SCREEN,
-            path: ATRoutes.SUBSCRIBED_EVENTS_OR_SHOWS_SCREEN,
+            name: ATRoutes.subscribedProgramsScreen,
+            path: ATRoutes.subscribedProgramsScreen,
             builder: (_, __) => const ATSubscribedPrograms(),
           ),
           GoRoute(
-            name: ATRoutes.FOLLOWING_EVENTS_OR_SHOWS_SCREEN,
-            path: ATRoutes.FOLLOWING_EVENTS_OR_SHOWS_SCREEN,
+            name: ATRoutes.followingProgramsScreen,
+            path: ATRoutes.followingProgramsScreen,
             builder: (_, __) => const ATFollowedPrograms(),
           ),
           GoRoute(

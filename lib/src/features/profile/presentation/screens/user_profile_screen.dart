@@ -44,7 +44,7 @@ class ATUserProfileScreen extends StatelessWidget {
                               builder: (_, bool state) {
                             return ATCircleAvatar(
                               onTap: () => context
-                                  .pushNamed(ATRoutes.PROFILE_MENU_SCREEN),
+                                  .pushNamed(ATRoutes.profileMenuScreen),
                               //onTap: () => context.pushNamed(AmptiveRoutes.USER_PROFILE_SCREEN),
                               diameter: 30, animationDuration: 0,
                               color: state
@@ -73,7 +73,7 @@ class ATUserProfileScreen extends StatelessWidget {
                                     color: ATColors.hexC2C2C2, height: 0.8),
                               ),
                               const SizedBox(height: 20),
-                              const NoOfFollowers(noOfFollowers: '1.2k'),
+                              const NoOfFollowers(noOfFollowers: 200),
                               const SizedBox(height: 15),
                               ATContainer(
                                   onTap: () =>

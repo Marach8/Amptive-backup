@@ -290,7 +290,7 @@ class _SubWidgetState extends State<_SubWidget> {
                                             final UserProfileData? data = cubit.currentUserData;
                                             cubit.updateUserDataLocally(
                                               (data ?? const UserProfileData())
-                                                .copyWith(hasTestedMic: 'true'),
+                                                .copyWith(hasTestedMic: true),
                                             );
 
                                             context.pop();

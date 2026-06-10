@@ -59,7 +59,7 @@ class CreatorProfilePix extends StatelessWidget {
                   padding: const EdgeInsets.fromLTRB(5, 0, 5, 1),
                   border: Border.all(color: ATColors.black, width: 2),
                   child: Text(
-                    ATStrings.CREATOR.toUpperCase(),
+                    ATStrings.creator.toUpperCase(),
                     style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                         fontSize: ATSizes.size10, color: ATColors.black),
                   ),

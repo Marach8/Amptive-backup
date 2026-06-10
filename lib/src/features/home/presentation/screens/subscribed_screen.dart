@@ -30,7 +30,7 @@ class ATSubscribedPrograms extends StatelessWidget {
                           padding: const EdgeInsets.only(left: 20),
                           child: ATBackBtn(
                             alignment: Alignment.centerLeft,
-                            leadingText: ATStrings.SUBSCRIBED,
+                            leadingText: ATStrings.subscribed,
                             leadingStyle: Theme.of(context)
                                 .textTheme
                                 .bodyMedium

@@ -20,7 +20,7 @@ class CreatorOrBizBadge extends StatelessWidget {
       padding: const EdgeInsets.fromLTRB(5, 0, 5, 1),
       border: Border.all(color: ATColors.black, width: 2),
       child: Text(
-        (isCreator ?? false ? ATStrings.CREATOR : ATStrings.BUSINESS)
+        (isCreator ?? false ? ATStrings.creator : ATStrings.BUSINESS)
             .toUpperCase(),
         style: Theme.of(context)
             .textTheme

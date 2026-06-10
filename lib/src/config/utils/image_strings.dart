@@ -28,7 +28,7 @@ class ATImgStrings {
   static const String outlinedBroadCast =
       '$_svgPath/Broadcast icon=Outline.svg';
   static const String calenderIcon = '$_svgPath/Contextual menu icon.svg';
-  static const String PERSON_CHECKED = '$_svgPath/Contextual menu icon (1).svg';
+  static const String personChecked = '$_svgPath/Contextual menu icon (1).svg';
   static const String SHARE_LIVE = '$_svgPath/Icon.svg';
   static const String followIcon = '$_svgPath/Icon (1).svg';
   static const String unFollowIcon = '$_svgPath/Icon (2).svg';
@@ -39,7 +39,7 @@ class ATImgStrings {
   static const String usersIcon = '$_svgPath/users.svg';
   static const String X_LOGO = '$_svgPath/x_logo.svg.svg';
   static const String groupIcon = '$_svgPath/Group_fill.svg';
-  static const String TOP_CREATOR_BADGE = '$_svgPath/RANK BADGES.svg';
+  static const String topCreatorIcon = '$_svgPath/RANK BADGES.svg';
   static const String subscriberBadge = '$_svgPath/Subscribers badge.svg';
   static const String BIZ_ACCT_LOGO = '$_svgPath/Simplification (3).svg';
   static const String BIZ_ACCT_LOGO_MIC = '$_svgPath/Simplification (1).svg';

@@ -5,9 +5,7 @@ import 'package:amptive/src/config/utils/other_strings.dart';
 import 'package:amptive/src/config/routing/route_strings.dart';
 import 'package:amptive/src/shared/image_loader_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
-
 import '../../../../config/utils/extensions/context_extensions.dart';
 
 class ATHomeDropDown extends StatelessWidget {
@@ -27,39 +25,37 @@ class ATHomeDropDown extends StatelessWidget {
         child: child,
         itemBuilder: (_) => <PopupMenuEntry<String>>[
               PopupMenuItem<String>(
-                  height: 40.h,
+                  height: 40,
                   onTap: () {
-                    context
-                        .pushNamed(ATRoutes.SCHEDULED_EVENTS_OR_SHOWS_SCREEN);
+                    context.pushNamed(
+                      ATRoutes.scheduledProgramsScreen);
                   },
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: <Widget>[
                       Text(
                         ATStrings.scheduled,
-                        style: Theme.of(context)
-                            .textTheme
-                            .bodySmall
+                        style: context.textTheme.bodySmall
                             ?.copyWith(fontSize: ATSizes.size15),
                       ),
-                      const ATImgLoader(imgPath: ATImgStrings.calenderIcon)
+                      const ATImgLoader(
+                        imgPath: ATImgStrings.calenderIcon,
+                        height: 24, width: 24,
+                      )
                     ],
                   )),
               PopupMenuItem<String>(
-                  height: 40.h,
+                  height: 40,
                   onTap: () {
-                    context
-                        .pushNamed(ATRoutes.SUBSCRIBED_EVENTS_OR_SHOWS_SCREEN);
+                    context.pushNamed(ATRoutes.subscribedProgramsScreen);
                   },
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: <Widget>[
                       Text(
-                        ATStrings.SUBSCRIBED,
-                        style: Theme.of(context)
-                            .textTheme
-                            .bodySmall
-                            ?.copyWith(fontSize: ATSizes.size15),
+                        ATStrings.subscribed,
+                        style: context.textTheme.bodySmall
+                            ?.copyWith(fontSize: 15),
                       ),
                       const Icon(Icons.favorite_border_outlined)
                     ],
@@ -67,20 +63,21 @@ class ATHomeDropDown extends StatelessWidget {
               PopupMenuItem<String>(
                   height: 40,
                   onTap: () {
-                    context
-                        .pushNamed(ATRoutes.FOLLOWING_EVENTS_OR_SHOWS_SCREEN);
+                    context.pushNamed(
+                      ATRoutes.followingProgramsScreen);
                   },
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: <Widget>[
                       Text(
                         ATStrings.following,
-                        style: Theme.of(context)
-                            .textTheme
-                            .bodySmall
-                            ?.copyWith(fontSize: ATSizes.size15),
+                        style: context.textTheme.bodySmall
+                          ?.copyWith(fontSize: ATSizes.size15),
                       ),
-                      const ATImgLoader(imgPath: ATImgStrings.PERSON_CHECKED)
+                      const ATImgLoader(
+                        imgPath: ATImgStrings.personChecked,
+                        height: 24, width: 24,
+                      )
                     ],
                   ))
             ]);

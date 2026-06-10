@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:amptive/src/config/api_response_and_app_state.dart';
 import 'package:amptive/src/config/services/local_storage_service/flutter_secure_storage_service_impl.dart';
 import 'package:amptive/src/config/services/local_storage_service/storage_service.dart';
@@ -37,7 +39,8 @@ class LocalUserDataCubit extends Cubit<ATAppState<UserProfileData>> {
               : UserProfileData.fromLocalStorageJson(json),
         ),
       );
-    } catch (e) {
+    } catch (e, s) {
+      log('This is the parsing error $e: $s');
       emit(FailureState<UserProfileData>(e.toString()));
     }
   }
@@ -70,6 +73,7 @@ class UserProfileData extends Equatable {
     this.phoneNumber,
     this.followersCount,
     this.followingCount,
+    this.subscribersCount,
     this.hasTestedMic,
     this.bio,
     this.xUrl,
@@ -111,9 +115,9 @@ class UserProfileData extends Equatable {
       name: json[ATStrings.name] as String?,
       pictureUrl: json[ATStrings.profilePicture] as String?,
       phoneNumber: json[ATStrings.phoneNumber] as String?,
-      followersCount: json[ATStrings.followerCount]?.toString(),
-      followingCount: json[ATStrings.followingCount]?.toString(),
-      hasTestedMic: json[ATStrings.hasTestedMic]?.toString(),
+      followersCount: json[ATStrings.followerCount],
+      followingCount: json[ATStrings.followingCount],
+      hasTestedMic: json[ATStrings.hasTestedMic],
       bio: json[ATStrings.bio] as String?,
       xUrl: json[ATStrings.X] as String?,
       instagramUrl: json[ATStrings.INSTAGRAM] as String?,
@@ -123,6 +127,7 @@ class UserProfileData extends Equatable {
       country: json[ATStrings.country] as String?,
       hasHostedEvents: json[ATStrings.hasHostedEvents],
       hasHostedShows: json[ATStrings.hasHostedShows],
+      subscribersCount: json[ATStrings.subscribersCount],
       liveProgramData: liveProgramData,
     );
   }
@@ -136,7 +141,9 @@ class UserProfileData extends Equatable {
       dob: json['dob'] ,
       name: json['name'] ,
       pictureUrl: json['profile_picture'] ,
-      followersCount: json['followers_count']?.toString(),
+      followersCount: json['followers_count'],
+      followingCount: json['following_count'],
+      subscribersCount: json['subscribers_count'],
       bio: json['bio'],
       xUrl: json['x_url'],
       instagramUrl: json['instagram_url'],
@@ -145,7 +152,6 @@ class UserProfileData extends Equatable {
       phoneNumber: json['phone_number'],
       country: json['country'],
       coverPhoto: json['cover_photo'],
-      followingCount: json['following_count']?.toString(),
       hasHostedEvents: json['has_hosted_events'],
       hasHostedShows: json['has_hosted_shows'],
     );
@@ -159,16 +165,14 @@ class UserProfileData extends Equatable {
     name, country,
     pictureUrl,
     phoneNumber,
-    followingCount,
-    followersCount,
-    hasTestedMic,
     bio,
     xUrl,
     instagramUrl,
     linkedinUrl,
     websiteUrl;
 
-  final bool? hasHostedShows, hasHostedEvents;
+  final int? followingCount, followersCount, subscribersCount;
+  final bool? hasHostedShows, hasHostedEvents, hasTestedMic;
   final Sentinel<LiveProgramData?>? liveProgramData;
 
   UserProfileData copyWith({
@@ -178,10 +182,11 @@ class UserProfileData extends Equatable {
     String? dob,
     String? name,
     String? pictureUrl,
-    String? followersCount,
-    String? followingCount,
+    int? followersCount,
+    int? followingCount,
+    int? subscribersCount,
     String? phoneNumber,
-    String? hasTestedMic,
+    bool? hasTestedMic,
     String? bio,
     String? xUrl,
     String? instagramUrl,
@@ -203,6 +208,7 @@ class UserProfileData extends Equatable {
       phoneNumber: phoneNumber ?? this.phoneNumber,
       followersCount: followersCount ?? this.followersCount,
       followingCount: followingCount ?? this.followingCount,
+      subscribersCount: subscribersCount ?? this.subscribersCount,
       hasTestedMic: hasTestedMic ?? this.hasTestedMic,
       bio: bio ?? this.bio,
       xUrl: xUrl ?? this.xUrl,
@@ -229,6 +235,7 @@ class UserProfileData extends Equatable {
       ATStrings.phoneNumber: phoneNumber,
       ATStrings.followerCount: followersCount,
       ATStrings.followingCount: followingCount,
+      ATStrings.subscribersCount: subscribersCount,
       ATStrings.hasTestedMic: hasTestedMic,
       ATStrings.bio: bio,
       ATStrings.X: xUrl,
@@ -278,6 +285,7 @@ class UserProfileData extends Equatable {
         phoneNumber,
         followersCount,
         followingCount,
+        subscribersCount,
         hasTestedMic,
         bio,
         xUrl,

@@ -27,6 +27,7 @@ class ATStrings {
   static const String isExistingUser = 'is_existing_user';
   static const String followerCount = 'followers count';
   static const String followingCount = 'following count';
+  static const String subscribersCount = 'subscribers count';
   static const String hasTestedMic = 'has tested mic';
   static const String liveProgramData = 'live program data';
   static const String bio = 'Bio';
@@ -366,7 +367,7 @@ class ATStrings {
   static const String UPCOMING = 'Upcoming';
   static const String scheduled = 'Scheduled';
   static const String schedule = 'Schedule';
-  static const String SUBSCRIBED = 'Subscribed';
+  static const String subscribed = 'Subscribed';
   static const String SUBSCRIBE = 'Subscribe';
   static const String DAY_VIEW = 'Day view';
   static const String MONTH_VIEW = 'Month view';
@@ -425,7 +426,7 @@ class ATStrings {
   static const String TRUE_CRIME = 'True Crime';
   static const String MORE_2_DISCOVER = 'More to Discover';
   static const String TOP_CREATORS = 'Top Creators';
-  static const String CREATOR = 'Creator';
+  static const String creator = 'Creator';
   static const String BUSINESS = 'Business';
   static const String POPULAR_CREATORS = 'Popular Creators';
   static const String SPOTLIGHT = 'Spotlight';
@@ -606,7 +607,7 @@ class ATStrings {
   static const String IS_GIFTING = 'is gifting';
   static const String gifted = 'Gifted';
   static const String PINNED = 'Pinned';
-  static const String TOP_CREATORS_IN_SOCIETY = 'Top Creators in Society';
+  static const String topCreatorInSociety = 'Top Creators in Society';
   static const String moderationTools = 'Moderation Tools';
   static const String TOP_CREATOR_IN = 'Top Creator in';
   static const String allowComments = 'Allow comments';

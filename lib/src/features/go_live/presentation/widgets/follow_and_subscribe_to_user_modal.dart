@@ -94,8 +94,8 @@ Future<void> showFollowAndSubscribeToUserModal({
                     mainAxisSize: MainAxisSize.min,
                     spacing: 20,
                     children: <Widget>[
-                      NoOfFollowers(noOfFollowers: '1.1m'),
-                      NoOfSubscribers(),
+                      NoOfFollowers(noOfFollowers: 10),
+                      NoOfSubscribers(noOfSubscribers: 20,),
                     ],
                   ),
                   const SizedBox(height: 10),

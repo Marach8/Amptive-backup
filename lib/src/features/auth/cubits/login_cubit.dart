@@ -34,7 +34,8 @@ class LoginCubit extends Cubit<ATAppState<ATUser>> {
         final String? userId = data.data?.user?.id;
         final String? dob = data.data?.user?.dob;
         final String? profilePicture = data.data?.user?.pictureUrl;
-       final String? followersCount = data.data?.user?.followersCount?.toString();
+        final int? followersCount = data.data?.user?.followersCount;
+        final int? subscribersCount = data.data?.user?.subscribersCount;
         final String? phoneNumber = data.data?.user?.phoneNumber;
 
             if(accessToken != null){
@@ -51,7 +52,8 @@ class LoginCubit extends Cubit<ATAppState<ATUser>> {
               dob: dob,
               pictureUrl: profilePicture,
               followersCount: followersCount,
-              phoneNumber: phoneNumber
+              phoneNumber: phoneNumber,
+              subscribersCount: subscribersCount,
             );
             await localStorageService.setObject(
               ATStrings.cachedUserData,
