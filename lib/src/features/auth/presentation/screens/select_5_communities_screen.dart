@@ -1,5 +1,6 @@
 import 'package:amptive/src/config/api_response_and_app_state.dart';
 import 'package:amptive/src/config/utils/colors.dart';
+import 'package:amptive/src/config/utils/dialogs/app_notification_dialog.dart';
 import 'package:amptive/src/config/utils/extensions/context_extensions.dart';
 import 'package:amptive/src/config/utils/other_strings.dart';
 import 'package:amptive/src/config/routing/route_strings.dart';
@@ -198,13 +199,31 @@ class __SubWidgetState extends State<_SubWidget> {
       ),
       bottomSheet: Padding(
         padding: const EdgeInsets.fromLTRB(15, 5, 15, 50),
-        child: BlocBuilder<SelectCommunitiesCubit, List<String>>(
-            builder: (_, List<String> selectedComIds) {
-            return ATPlainElevatedBtn(
-              onPressed: selectedComIds.length < 5 ? null : () {
-                context.goNamed(ATRoutes.allowNotificationsScreen);
-              },
-              btnTitle: ATStrings.next,
+        child: BlocConsumer<JoinCommunitiesCubit, ATAppState<bool>>(
+          listener: (_, ATAppState<bool> state){
+            if (state is SuccessState<bool>) {
+              context.goNamed(ATRoutes.allowNotificationsScreen);
+            }
+            if (state is FailureState<bool>) {
+              showAppNotification2(
+                context: context,
+                text: state.message,
+                type: NotificationType.failure
+              );
+            }
+          },
+          builder: (_, ATAppState<bool> state) {
+            return BlocBuilder<SelectCommunitiesCubit, List<String>>(
+                builder: (_, List<String> selectedComIds) {
+                return ATPlainElevatedBtn(
+                  isLoading: state is LoadingState<bool>,
+                  onPressed: selectedComIds.length < 5 ? null : () {
+                    context.read<JoinCommunitiesCubit>()
+                      .joinCommunities(communityIds: selectedComIds);
+                  },
+                  btnTitle: ATStrings.next,
+                );
+              }
             );
           }
         ),

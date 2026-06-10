@@ -1,11 +1,13 @@
 import 'package:amptive/src/config/utils/extensions/context_extensions.dart';
 import 'package:amptive/src/config/utils/other_strings.dart';
 import 'package:amptive/src/config/routing/route_strings.dart';
+import 'package:amptive/src/features/auth/cubits/local_user_data_cubit.dart';
 import 'package:amptive/src/shared/circular_image.dart';
 import 'package:amptive/src/shared/custom_container_widget.dart';
 import 'package:amptive/src/config/utils/colors.dart';
 import 'package:amptive/src/config/utils/font_sizes.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../../config/utils/image_strings.dart';
@@ -15,6 +17,8 @@ class CreatorProfilePix extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final UserProfileData? userData =
+      context.watch<LocalUserDataCubit>().currentUserData;
     return ATContainer(
       decorImage: ATImgStrings.weCanDoHardThingsBgImage,
       height: 150,
@@ -36,16 +40,16 @@ class CreatorProfilePix extends StatelessWidget {
             Positioned(
                 bottom: -35,
                 child: Hero(
-                  tag: ATImgStrings.jpeg1,
+                  tag: userData?.pictureUrl ?? '',
                   child: ATCircularImage(
                       onTap: () => context.pushNamed(
-                          ATRoutes.PROFILE_PIC_SCREEN,
-                          extra: ATImgStrings.jpeg1),
+                          ATRoutes.profilePicFullViewScreen,
+                          extra: userData?.pictureUrl ?? ''),
                       diameter: 70,
                       addBorder: true,
                       borderColor: ATColors.black,
                       borderWidth: 3,
-                      imagePath: ATImgStrings.jpeg1),
+                      imagePath: userData?.pictureUrl ?? ''),
                 )),
             Positioned(
                 bottom: -35,

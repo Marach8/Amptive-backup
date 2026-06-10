@@ -44,7 +44,7 @@ class ProfileRepoImpl implements ProfileRepo {
         data: body,
       );
       final UserProfileData updatedProfile = 
-        UserProfileData.fromRemoteJson(response.data);
+        UserProfileData.fromRemoteJson(response.data['data']);
       return Successful<UserProfileData>(data: updatedProfile);
     } catch (e) {
       return Unsuccessful<UserProfileData>(

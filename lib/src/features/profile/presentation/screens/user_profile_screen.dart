@@ -77,7 +77,7 @@ class ATUserProfileScreen extends StatelessWidget {
                               const SizedBox(height: 15),
                               ATContainer(
                                   onTap: () =>
-                                      context.pushNamed(ATRoutes.EDIT_PROFILE),
+                                      context.pushNamed(ATRoutes.editProfile),
                                   alignment: Alignment.center,
                                   radius: 50,
                                   height: 45,
@@ -85,7 +85,7 @@ class ATUserProfileScreen extends StatelessWidget {
                                   padding: const EdgeInsets.only(
                                       top: 10, bottom: 10),
                                   color: ATColors.white.withValues(alpha: 0.2),
-                                  child: Text(ATStrings.EDIT_PROFILE,
+                                  child: Text(ATStrings.editProfile,
                                       style: context.textTheme.bodyMedium
                                           ?.copyWith(
                                               fontSize: ATSizes.size14))),

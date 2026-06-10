@@ -3,7 +3,6 @@ import 'package:amptive/src/config/utils/colors.dart';
 import 'package:amptive/src/config/routing/route_strings.dart';
 import 'package:amptive/src/config/utils/dialogs/app_notification_dialog.dart';
 import 'package:amptive/src/features/auth/cubits/local_user_data_cubit.dart';
-import 'package:amptive/src/features/go_live/presentation/screens/live_program_screen.dart';
 import 'package:amptive/src/features/home/cubits/home_feed_cubit.dart';
 import 'package:amptive/src/features/home/cubits/live_users_cubit.dart';
 import 'package:amptive/src/features/home/cubits/toggle_following_cubit.dart';
@@ -78,8 +77,7 @@ class HomeTabView extends StatelessWidget {
                 // ),
                 GestureDetector(
                     onTap: () {
-                      liveProgramOverlayKey.currentState?.maximize();
-                     //context.pushNamed(ATRoutes.walletScreen);
+                     context.pushNamed(ATRoutes.walletScreen);
                      // context.pushNamed(ATRoutes.WALLET_ONBOARDING);
                     },
                     child: Stack(
@@ -115,9 +113,12 @@ class HomeTabView extends StatelessWidget {
                         final UserProfileData? userData = context
                             .read<LocalUserDataCubit>()
                             .currentUserData;
-                        return ATCircularImage(
-                          imagePath:
-                              userData?.pictureUrl ?? ATImgStrings.jpeg2,
+                        return CircleAvatar(
+                          radius: 15,
+                          child: ATImgLoader(
+                            imgPath: userData?.pictureUrl
+                              ?? ATImgStrings.noAvatarImage,
+                          ),
                         );
                       }),
                     )),

@@ -43,7 +43,7 @@ class CreatorProfilePix extends StatelessWidget {
                   tag: ATImgStrings.jpeg1,
                   child: ATCircularImage(
                       onTap: () => context.pushNamed(
-                          ATRoutes.PROFILE_PIC_SCREEN,
+                          ATRoutes.profilePicFullViewScreen,
                           extra: ATImgStrings.jpeg1),
                       diameter: 70,
                       addBorder: true,

@@ -18,13 +18,13 @@ class EditProfileAndSubscriptionRow extends StatelessWidget {
         children: <Widget>[
           Expanded(
             child: ATContainer(
-                onTap: () => context.pushNamed(ATRoutes.EDIT_PROFILE),
+                onTap: () => context.pushNamed(ATRoutes.editProfile),
                 alignment: Alignment.center,
                 radius: 50,
                 margin: const EdgeInsets.only(left: 15),
                 padding: const EdgeInsets.only(top: 10, bottom: 10),
                 color: ATColors.white.withOpacity(0.2),
-                child: Text(ATStrings.EDIT_PROFILE,
+                child: Text(ATStrings.editProfile,
                     style: Theme.of(context)
                         .textTheme
                         .bodyMedium

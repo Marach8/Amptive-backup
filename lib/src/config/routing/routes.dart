@@ -78,7 +78,7 @@ final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 final GoRouter amptiveAppRouter = GoRouter(
   navigatorKey: navigatorKey,
   initialLocation: ATRoutes.onboardingScreen.addSlash,
-  //redirect: tgRedirect,
+  redirect: tgRedirect,
 
   routes: <RouteBase>[
     GoRoute(
@@ -426,8 +426,8 @@ final GoRouter amptiveAppRouter = GoRouter(
             builder: (_, __) => const CreatorProfileScreen(),
           ),
           GoRoute(
-              name: ATRoutes.EDIT_PROFILE,
-              path: ATRoutes.EDIT_PROFILE.addSlash,
+              name: ATRoutes.editProfile,
+              path: ATRoutes.editProfile.addSlash,
               builder: (_, __) => const EditProfileScreen(),
               routes: <RouteBase>[
                 GoRoute(
@@ -637,13 +637,13 @@ final GoRouter amptiveAppRouter = GoRouter(
             builder: (_, __) => const ATProfileFollowersScreen(),
           ),
           GoRoute(
-            name: ATRoutes.COMMUNITY_TASK_SCREEN,
-            path: ATRoutes.COMMUNITY_TASK_SCREEN,
+            name: ATRoutes.communityTaskScreen,
+            path: ATRoutes.communityTaskScreen,
             builder: (_, __) => const AmptiveCommunityTaskScreen(),
           ),
           GoRoute(
-              name: ATRoutes.PROFILE_PIC_SCREEN,
-              path: ATRoutes.PROFILE_PIC_SCREEN,
+              name: ATRoutes.profilePicFullViewScreen,
+              path: ATRoutes.profilePicFullViewScreen,
               builder: (_, GoRouterState state) {
                 final String imgPath = state.extra as String;
                 return AmptiveViewProfilePicScreen(imgPath: imgPath);

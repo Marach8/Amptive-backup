@@ -29,7 +29,7 @@ class GoLiveWidgetInHome extends StatelessWidget {
               ClipRRect(
                 borderRadius: BorderRadius.circular(30),
                 child: ATImgLoader(
-                  imgPath: profilePic ?? ATImgStrings.jpeg1,
+                  imgPath: profilePic ??  ATImgStrings.noAvatarImage,
                   boxFit: BoxFit.cover,
                   height: 60,
                   width: 60,

@@ -70,8 +70,8 @@ class ATRoutes {
   static const String editEpisodeScreen = 'edit_episode';
   static const String selectScheduleDateScreen = 'select_schedule_date';
   static const String previewEpisodeScreen = 'episode_preview';
-  static const String COMMUNITY_TASK_SCREEN = 'community_task';
-  static const String PROFILE_PIC_SCREEN = 'profile_picture';
+  static const String communityTaskScreen = 'community_task';
+  static const String profilePicFullViewScreen = 'profile_picture';
   static const String LANGUAGE_SCREEN = 'language_screen';
   static const String CALENDER_SCREEN = 'calender_screen';
   static const String PRIVACY_SCREEN = 'privacy_screen';
@@ -81,7 +81,7 @@ class ATRoutes {
   static const String ACCT_INFO_SCREEN = 'account_infomation_screen';
   static const String accountLandingScreen = 'account_screen';
   static const String enterEmailAndPhoneNoOtpScreen = "enter_email_and_phone_no_otp";
-  static const String EDIT_PROFILE = 'edit_profile';
+  static const String editProfile = 'edit_profile';
   static const String imageCropperScreen = 'profile_bg_crop';
   static const String EDIT_NAME = 'edit_name';
   static const String EDIT_USERNAME = 'edit_username';

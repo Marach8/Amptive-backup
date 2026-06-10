@@ -446,7 +446,7 @@ class ATStrings {
   static const String ACCT_SETTINGS = 'Account Settings';
   static const String ACCT = 'Account';
   static const String privacy = 'Privacy';
-  static const String EDIT_PROFILE = 'Edit Profile';
+  static const String editProfile = 'Edit Profile';
   static const String ABT_U = 'About you';
   static const String userName = 'Username';
   static const String NAME = 'Name';

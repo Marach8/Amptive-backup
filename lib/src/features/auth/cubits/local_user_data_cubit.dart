@@ -29,6 +29,7 @@ class LocalUserDataCubit extends Cubit<ATAppState<UserProfileData>> {
     try {
       final dynamic json =
           await localStorage.getObject(ATStrings.cachedUserData);
+
       emit(
         SuccessState<UserProfileData>(
           newData: json == null
@@ -120,8 +121,8 @@ class UserProfileData extends Equatable {
       websiteUrl: json[ATStrings.WEBSITE] as String?,
       coverPhoto: json[ATStrings.coverPhoto] as String?,
       country: json[ATStrings.country] as String?,
-      hasHostedEvents: bool.tryParse(json[ATStrings.hasHostedEvents] ?? ''),
-      hasHostedShows: bool.tryParse(json[ATStrings.hasHostedShows] ?? ''),
+      hasHostedEvents: json[ATStrings.hasHostedEvents],
+      hasHostedShows: json[ATStrings.hasHostedShows],
       liveProgramData: liveProgramData,
     );
   }
@@ -200,22 +201,15 @@ class UserProfileData extends Equatable {
       name: name ?? this.name,
       pictureUrl: pictureUrl ?? this.pictureUrl,
       phoneNumber: phoneNumber ?? this.phoneNumber,
-      followersCount:
-          followersCount ?? this.followersCount,
-      followingCount:
-          followingCount ?? this.followingCount,
-      hasTestedMic:
-          hasTestedMic ?? this.hasTestedMic,
+      followersCount: followersCount ?? this.followersCount,
+      followingCount: followingCount ?? this.followingCount,
+      hasTestedMic: hasTestedMic ?? this.hasTestedMic,
       bio: bio ?? this.bio,
       xUrl: xUrl ?? this.xUrl,
-      instagramUrl:
-          instagramUrl ?? this.instagramUrl,
-      linkedinUrl:
-          linkedinUrl ?? this.linkedinUrl,
-      websiteUrl:
-          websiteUrl ?? this.websiteUrl,
-      liveProgramData:
-          liveProgramData ?? this.liveProgramData,
+      instagramUrl: instagramUrl ?? this.instagramUrl,
+      linkedinUrl: linkedinUrl ?? this.linkedinUrl,
+      websiteUrl: websiteUrl ?? this.websiteUrl,
+      liveProgramData: liveProgramData ?? this.liveProgramData,
       coverPhoto: coverPhoto ?? this.coverPhoto,
       country: country ?? this.country,
       hasHostedEvents: hasHostedEvents ?? this.hasHostedEvents,

@@ -60,7 +60,7 @@ class CreatorProfileScreen extends StatelessWidget {
                             builder: (_, bool state) {
                               return ATCircleAvatar(
                                 onTap: () => context
-                                    .pushNamed(ATRoutes.COMMUNITY_TASK_SCREEN),
+                                    .pushNamed(ATRoutes.communityTaskScreen),
                                 diameter: 30,
                                 animationDuration: 0,
                                 color: state

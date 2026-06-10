@@ -33,7 +33,7 @@ class UserBgProfileWidget extends StatelessWidget {
           Positioned(
               bottom: -35,
               child: ATCircularImage(
-                  onTap: () => context.pushNamed(ATRoutes.PROFILE_PIC_SCREEN,
+                  onTap: () => context.pushNamed(ATRoutes.profilePicFullViewScreen,
                       extra: ATImgStrings.jpeg2),
                   diameter: 70,
                   addBorder: true,
