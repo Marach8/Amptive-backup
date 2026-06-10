@@ -72,7 +72,6 @@ import '../../features/shows/cubits/hosted_shows_cubit.dart'
     show HostedShowsCubit;
 import '../../features/wallet/wallet_export.dart';
 
-
 final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
 final GoRouter amptiveAppRouter = GoRouter(
@@ -81,7 +80,6 @@ final GoRouter amptiveAppRouter = GoRouter(
   redirect: tgRedirect,
   //initialLocation: ATRoutes.temporaryLoginScreen.addSlash,
   //initialLocation: ATRoutes.ONBOARDING_SCREEN.addSlash,
-
 
   routes: <RouteBase>[
     GoRoute(
@@ -225,134 +223,143 @@ final GoRouter amptiveAppRouter = GoRouter(
           GoRoute(
             name: ATRoutes.scheduleDetailed,
             path: ATRoutes.scheduleDetailed.addSlash,
-            pageBuilder: (_, GoRouterState state) => ATSlidingRouteTransition<void>(
+            pageBuilder: (_, GoRouterState state) =>
+                ATSlidingRouteTransition<void>(
               child: ATScheduleDetailedScreen(
                 homeFeedItem: state.extra as HomeFeedItem?,
               ),
             ),
           ),
           GoRoute(
-              name: ATRoutes.WALLET_ONBOARDING,
-              path: ATRoutes.WALLET_ONBOARDING.addSlash,
-              redirect: (BuildContext context, GoRouterState state) async {
-                final FlutterSecureStorageServiceImpl storage =
-                    FlutterSecureStorageServiceImpl();
-                final String? isSetup = await storage.get('has_set_wallet_pin');
+            name: ATRoutes.WALLET_ONBOARDING,
+            path: ATRoutes.WALLET_ONBOARDING.addSlash,
+            pageBuilder: (_, __) => ATSlidingRouteTransition<void>(
+              child: const ATWalletOnboardScreen(),
+            ),
+            routes: <RouteBase>[
+              GoRoute(
+                name: ATRoutes.WALLET_PIN_SETUP,
+                path: ATRoutes.WALLET_PIN_SETUP.addSlash,
+                pageBuilder: (_, __) => ATSlidingRouteTransition<void>(
+                  child: const ATWalletPinSetupScreen(),
+                ),
+              ),
+              GoRoute(
+                name: ATRoutes.securityQuestionScreen,
+                path: ATRoutes.securityQuestionScreen.addSlash,
+                pageBuilder: (_, __) => ATSlidingRouteTransition<void>(
+                  child: const ATSecurityQuestionScreen(),
+                ),
+              ),
+              GoRoute(
+                name: ATRoutes.walletCreationAnimationScreen,
+                path: ATRoutes.walletCreationAnimationScreen.addSlash,
+                pageBuilder: (_, __) => ATSlidingRouteTransition<void>(
+                  child: const ATWalletCreationAnimScreen(),
+                ),
+              ),
+            ],
+          ),
 
-                if (isSetup == 'true') {
-                  final bool alreadyOnLanding =
-                      state.matchedLocation.contains(ATRoutes.walletScreen);
-                  if (!alreadyOnLanding) {
-                    return ATRoutes.walletScreen.addSlash;
-                  }
-                }
-                return null;
-              },
-              pageBuilder: (_, __) => ATSlidingRouteTransition<void>(
-                  child: const ATWalletOnboardScreen()),
-              routes: <RouteBase>[
-                GoRoute(
-                  name: ATRoutes.WALLET_PIN_SETUP,
-                  path: ATRoutes.WALLET_PIN_SETUP.addSlash,
-                  pageBuilder: (_, __) => ATSlidingRouteTransition<void>(
-                      child: const ATWalletPinSetupScreen()),
+         
+          GoRoute(
+            name: ATRoutes.walletScreen,
+            path: ATRoutes.walletScreen.addSlash,
+            pageBuilder: (_, __) => ATSlidingRouteTransition<void>(
+              child: const ATWalletLandingScreenWrapper(),
+            ),
+            routes: <RouteBase>[
+              GoRoute(
+                name: ATRoutes.walletTransactionsHistoryScreen,
+                path: ATRoutes.walletTransactionsHistoryScreen.addSlash,
+                pageBuilder: (_, __) => ATSlidingRouteTransition<void>(
+                  child: const ATWalletTxnsHistoryScreen(),
                 ),
-                GoRoute(
-                  name: ATRoutes.securityQuestionScreen,
-                  path: ATRoutes.securityQuestionScreen.addSlash,
-                  pageBuilder: (_, __) => ATSlidingRouteTransition<void>(
-                      child: const ATSecurityQuestionScreen()),
+              ),
+            ],
+          ),
+
+         
+          GoRoute(
+            name: ATRoutes.SELECT_RECIPIENT,
+            path: ATRoutes.SELECT_RECIPIENT.addSlash,
+            pageBuilder: (_, __) => ATSlidingRouteTransition<void>(
+              child: const ATSelectRecipientScreen(),
+            ),
+          ),
+
+          GoRoute(
+            name: ATRoutes.transactionAmountScreen,
+            path: ATRoutes.transactionAmountScreen.addSlash,
+            pageBuilder: (_, GoRouterState state) =>
+                ATSlidingRouteTransition<void>(
+              child: TransactionAmountScreen(
+                params: state.extra as TransactionAmountScreenParams,
+              ),
+            ),
+          ),
+
+          GoRoute(
+            name: ATRoutes.WITHDRAWAL_LANDING,
+            path: ATRoutes.WITHDRAWAL_LANDING.addSlash,
+            pageBuilder: (_, __) => ATSlidingRouteTransition<void>(
+              child: const ATWithdrwalLandingScreen(),
+            ),
+          ),
+
+          GoRoute(
+            name: ATRoutes.SELECT_BANK_COUNTRY,
+            path: ATRoutes.SELECT_BANK_COUNTRY.addSlash,
+            pageBuilder: (_, __) => ATSlidingRouteTransition<void>(
+              child: const ATSelectBanksCountryScreen(),
+            ),
+          ),
+
+          GoRoute(
+            name: ATRoutes.ENTER_ACCT_NO,
+            path: ATRoutes.ENTER_ACCT_NO.addSlash,
+            pageBuilder: (_, GoRouterState state) =>
+                ATSlidingRouteTransition<void>(
+              child: ATEnterAccountNoScreen(bankName: state.extra as String),
+            ),
+          ),
+
+          GoRoute(
+            name: ATRoutes.answerSecurityQuestionScreen,
+            path: ATRoutes.answerSecurityQuestionScreen.addSlash,
+            pageBuilder: (_, __) => ATSlidingRouteTransition<void>(
+              child: const ATAnswerSecurityQuestionScreen(),
+            ),
+          ),
+
+          GoRoute(
+            name: ATRoutes.paperPlaneSuccessScreen,
+            path: ATRoutes.paperPlaneSuccessScreen.addSlash,
+            pageBuilder: (_, GoRouterState state) {
+              final List<dynamic> params = state.extra as List<dynamic>;
+              return ATSlidingRouteTransition<void>(
+                child: ATPaperPlaneSuccessScreen(
+                  title: params.first as String,
+                  transactionType: params[1] as TransactionType,
+                  subtitle: params.last as String,
                 ),
-                GoRoute(
-                  name: ATRoutes.walletCreationAnimationScreen,
-                  path: ATRoutes.walletCreationAnimationScreen.addSlash,
-                  pageBuilder: (_, __) => ATSlidingRouteTransition<void>(
-                      child: const ATWalletCreationAnimScreen()),
-                ),
-                GoRoute(
-                    name: ATRoutes.walletScreen,
-                    path: ATRoutes.walletScreen.addSlash,
-                    pageBuilder: (_, __) => ATSlidingRouteTransition<void>(
-                          child: const ATWalletLandingScreenWrapper(),
-                        ),
-                    routes: <RouteBase>[
-                      GoRoute(
-                        name: ATRoutes.walletTransactionsHistoryScreen,
-                        path: ATRoutes.walletTransactionsHistoryScreen.addSlash,
-                        pageBuilder: (_, __) => ATSlidingRouteTransition<void>(
-                            child: const ATWalletTxnsHistoryScreen()),
-                      ),
-                      GoRoute(
-                        name: ATRoutes.SELECT_RECIPIENT,
-                        path: ATRoutes.SELECT_RECIPIENT.addSlash,
-                        pageBuilder: (_, __) => ATSlidingRouteTransition<void>(
-                            child: const ATSelectRecipientScreen()),
-                      ),
-                      GoRoute(
-                        name: ATRoutes.transactionAmountScreen,
-                        path: ATRoutes.transactionAmountScreen.addSlash,
-                        pageBuilder: (_, GoRouterState state) =>
-                            ATSlidingRouteTransition<void>(
-                                child: TransactionAmountScreen(
-                                    params: state.extra
-                                        as TransactionAmountScreenParams)),
-                      ),
-                      GoRoute(
-                        name: ATRoutes.WITHDRAWAL_LANDING,
-                        path: ATRoutes.WITHDRAWAL_LANDING.addSlash,
-                        pageBuilder: (_, __) => ATSlidingRouteTransition<void>(
-                            child: const ATWithdrwalLandingScreen()),
-                      ),
-                      GoRoute(
-                        name: ATRoutes.SELECT_BANK_COUNTRY,
-                        path: ATRoutes.SELECT_BANK_COUNTRY.addSlash,
-                        pageBuilder: (_, __) => ATSlidingRouteTransition<void>(
-                            child: const ATSelectBanksCountryScreen()),
-                      ),
-                      GoRoute(
-                        name: ATRoutes.ENTER_ACCT_NO,
-                        path: ATRoutes.ENTER_ACCT_NO.addSlash,
-                        pageBuilder: (_, GoRouterState state) =>
-                            ATSlidingRouteTransition<void>(
-                                child: ATEnterAccountNoScreen(
-                          bankName: state.extra as String,
-                        )),
-                      ),
-                      GoRoute(
-                        name: ATRoutes.answerSecurityQuestionScreen,
-                        path: ATRoutes.answerSecurityQuestionScreen.addSlash,
-                        pageBuilder: (_, GoRouterState state) =>
-                            ATSlidingRouteTransition<void>(
-                                child: const ATAnswerSecurityQuestionScreen()),
-                      ),
-                      GoRoute(
-                        name: ATRoutes.paperPlaneSuccessScreen,
-                        path: ATRoutes.paperPlaneSuccessScreen.addSlash,
-                        pageBuilder: (_, GoRouterState state) {
-                          final List<dynamic> params =
-                              state.extra as List<dynamic>;
-                          return ATSlidingRouteTransition<void>(
-                              child: ATPaperPlaneSuccessScreen(
-                            title: params.first as String,
-                            transactionType: params[1] as TransactionType,
-                            subtitle: params.last as String,
-                          ));
-                        },
-                      ),
-                    ]),
-              ]),
+              );
+            },
+          ),
           GoRoute(
               name: ATRoutes.liveShowDetailed,
               path: ATRoutes.liveShowDetailed.addSlash,
-              pageBuilder: (_, GoRouterState state) => ATSlidingRouteTransition<void>(
-                  beginOffset: const Offset(0.0, 1.0),
-                  child: ATLiveShowDetailedScreen(
-                    homeFeedItem: state.extra as HomeFeedItem?,
-                  ))),
+              pageBuilder: (_, GoRouterState state) =>
+                  ATSlidingRouteTransition<void>(
+                      beginOffset: const Offset(0.0, 1.0),
+                      child: ATLiveShowDetailedScreen(
+                        homeFeedItem: state.extra as HomeFeedItem?,
+                      ))),
           GoRoute(
               name: ATRoutes.liveEventDetailed,
               path: ATRoutes.liveEventDetailed.addSlash,
-              pageBuilder: (_, GoRouterState state) => ATSlidingRouteTransition<void>(
+              pageBuilder: (_, GoRouterState state) =>
+                  ATSlidingRouteTransition<void>(
                     beginOffset: const Offset(0.0, 1.0),
                     child: ATLiveEventDetailedScreen(
                       homeFeedItem: state.extra as HomeFeedItem?,
@@ -362,11 +369,11 @@ final GoRouter amptiveAppRouter = GoRouter(
               name: ATRoutes.goLiveOnboarding,
               path: ATRoutes.goLiveOnboarding.addSlash,
               pageBuilder: (_, GoRouterState state) {
-                final LiveProgramData? liveProgramEntryParams = 
-                  state.extra as LiveProgramData?;
+                final LiveProgramData? liveProgramEntryParams =
+                    state.extra as LiveProgramData?;
                 return ATSlidingRouteTransition<void>(
                     child: GoLiveOnboardingScreen(
-                      liveProgramEntryParams: liveProgramEntryParams));
+                        liveProgramEntryParams: liveProgramEntryParams));
               }),
           GoRoute(
             name: ATRoutes.chooseEventOrShowScreen,

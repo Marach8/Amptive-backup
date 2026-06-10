@@ -28,7 +28,7 @@ class UsersListShimmer extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListView.builder(
       padding: const EdgeInsets.all(15),
-      itemCount: 10, // Number of shimmer items to show
+      itemCount: 10,
       itemBuilder: (_, __) => const _UserTileShimmer(),
     );
   }

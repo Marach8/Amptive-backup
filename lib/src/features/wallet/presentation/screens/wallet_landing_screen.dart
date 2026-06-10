@@ -1,5 +1,6 @@
 import 'package:amptive/src/config/api_response_and_app_state.dart';
 import 'package:amptive/src/config/config_export.dart';
+import 'package:amptive/src/config/services/local_storage_service/flutter_secure_storage_service_impl.dart';
 import 'package:amptive/src/features/wallet/cubits/transaction_history_cubit.dart';
 import 'package:amptive/src/features/wallet/data/models/models_export.dart';
 import 'package:amptive/src/features/wallet/data/models/response/transaction_history_response_model.dart';
@@ -48,12 +49,20 @@ class _WalletLandingScreenState extends State<_WalletLandingScreen> {
   @override
   void initState() {
     super.initState();
+    _checkWalletSetup();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       context.read<WalletBalanceCubit>().fetchWalletBalance();
       context.read<TransactionHistoryCubit>().fetchTransactionHistory();
     });
-    
+  }
+
+  Future<void> _checkWalletSetup() async {
+    final storage = FlutterSecureStorageServiceImpl();
+    final hasPin = await storage.get('has_set_wallet_pin');
+    if (hasPin != 'true' && mounted) {
+      context.goNamed(ATRoutes.WALLET_ONBOARDING);
     }
+  }
     
   @override
   Widget build(BuildContext context) {

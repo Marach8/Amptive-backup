@@ -1,4 +1,5 @@
 import 'package:amptive/src/config/api_response_and_app_state.dart';
+import 'package:amptive/src/config/services/local_storage_service/flutter_secure_storage_service_impl.dart';
 import 'package:amptive/src/config/utils/colors.dart';
 import 'package:amptive/src/config/routing/route_strings.dart';
 import 'package:amptive/src/config/utils/dialogs/app_notification_dialog.dart';
@@ -36,101 +37,114 @@ class HomeTabView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return NotificationListener<ScrollNotification>(
-      onNotification: context
-        .read<ATNavBarBloc>().ctrlNavVisibility,
+      onNotification: context.read<ATNavBarBloc>().ctrlNavVisibility,
       child: NestedScrollView(
           floatHeaderSlivers: true,
           key: nestedKey,
           headerSliverBuilder: (_, __) => <Widget>[
-            SliverAppBar(
-              floating: true,
-              snap: true,
-              leadingWidth: 150,
-              leading: const Padding(
-                padding: EdgeInsets.only(left: 15),
-                child: ATHomeDropDown(
-                  offset: Offset(0, 50),
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: <Widget>[
-                      ATImgLoader(
-                          imgPath: ATImgStrings.amptiveNameLogo,
-                          height: 21,
-                          width: 86),
-                      SizedBox(
-                        width: 4.0,
+                SliverAppBar(
+                  floating: true,
+                  snap: true,
+                  leadingWidth: 150,
+                  leading: const Padding(
+                    padding: EdgeInsets.only(left: 15),
+                    child: ATHomeDropDown(
+                      offset: Offset(0, 50),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: <Widget>[
+                          ATImgLoader(
+                              imgPath: ATImgStrings.amptiveNameLogo,
+                              height: 21,
+                              width: 86),
+                          SizedBox(
+                            width: 4.0,
+                          ),
+                          Icon(
+                            Icons.keyboard_arrow_down_outlined,
+                            size: 25,
+                          ),
+                        ],
                       ),
-                      Icon(
-                        Icons.keyboard_arrow_down_outlined,
-                        size: 25,
-                      ),
-                    ],
+                    ),
                   ),
+                  actions: <Widget>[
+                    // IconButton(
+                    //   onPressed: (){
+                    //     context.read<HomeFeedCubit>().fetchHomeFeed();
+                    //     context.read<LiveUsersCubit>().fetchLiveUsers();
+                    //   },
+                    //   icon: Icon(Icons.add),
+                    // ),
+                    GestureDetector(
+                        onTap: () async {
+                          liveProgramOverlayKey.currentState?.maximize();
+                          
+                          final FlutterSecureStorageServiceImpl storage =
+                              FlutterSecureStorageServiceImpl();
+                          final String? hasSetPin =
+                              await storage.get('has_set_wallet_pin');
+                          
+
+                          if (!context.mounted) return;
+
+                          if (hasSetPin == 'true') {
+                            context.pushNamed(ATRoutes.walletScreen);
+                          } else {
+                            context.pushNamed(ATRoutes.WALLET_ONBOARDING);
+                          }
+                        },
+                        //context.pushNamed(ATRoutes.GO_LIVE_ONBOARDING);
+
+                        child: Stack(
+                          children: <Widget>[
+                            const ATImgLoader(
+                              imgPath: ATImgStrings.walletIcon,
+                              height: 30,
+                              width: 30,
+                            ),
+                            Positioned(
+                                top: 5,
+                                right: 0,
+                                child: ATCircleAvatar(
+                                    diameter: 8, color: ATColors.hexECO404))
+                          ],
+                        )),
+                    const SizedBox(width: 24),
+                    GestureDetector(
+                        // onTap: (){
+                        //   context.pushReplacementNamed(
+                        //     ATRoutes.MAIN_GO_LIVE_PROGRAM,
+                        //     extra: GoLiveUserType.audience
+                        //   );
+                        // },
+                        onTap: () =>
+                            context.pushNamed(ATRoutes.creatorProfileScreen),
+                        //onTap: () => context.pushNamed(ATRoutes.USER_PROFILE_SCREEN),
+                        child: Padding(
+                          padding: const EdgeInsets.only(right: 15),
+                          child: BlocBuilder<LocalUserDataCubit,
+                                  ATAppState<CachedUserData>>(
+                              builder: (_, ATAppState<CachedUserData> state) {
+                            final CachedUserData? userData = context
+                                .read<LocalUserDataCubit>()
+                                .currentUserData;
+                            return ATCircularImage(
+                              imagePath:
+                                  userData?.pictureUrl ?? ATImgStrings.jpeg2,
+                            );
+                          }),
+                        )),
+                  ],
                 ),
-              ),
-              actions: <Widget>[
-                // IconButton(
-                //   onPressed: (){
-                //     context.read<HomeFeedCubit>().fetchHomeFeed();
-                //     context.read<LiveUsersCubit>().fetchLiveUsers();
-                //   },
-                //   icon: Icon(Icons.add),
-                // ),
-                GestureDetector(
-                    onTap: () {
-                      liveProgramOverlayKey.currentState?.maximize();
-                     //context.pushNamed(ATRoutes.walletScreen);
-                     // context.pushNamed(ATRoutes.WALLET_ONBOARDING);
-                    },
-                    child: Stack(
-                      children: <Widget>[
-                        const ATImgLoader(
-                          imgPath: ATImgStrings.walletIcon,
-                          height: 30,
-                          width: 30,
-                        ),
-                        Positioned(
-                            top: 5,
-                            right: 0,
-                            child: ATCircleAvatar(
-                                diameter: 8, color: ATColors.hexECO404))
-                      ],
-                    )),
-                const SizedBox(width: 24),
-                GestureDetector(
-                    // onTap: (){
-                    //   context.pushReplacementNamed(
-                    //     ATRoutes.MAIN_GO_LIVE_PROGRAM,
-                    //     extra: GoLiveUserType.audience
-                    //   );
-                    // },
-                    onTap: () =>
-                        context.pushNamed(ATRoutes.creatorProfileScreen),
-                    //onTap: () => context.pushNamed(ATRoutes.USER_PROFILE_SCREEN),
-                    child: Padding(
-                      padding: const EdgeInsets.only(right: 15),
-                      child: BlocBuilder<LocalUserDataCubit,
-                              ATAppState<CachedUserData>>(
-                          builder: (_, ATAppState<CachedUserData> state) {
-                        final CachedUserData? userData = context
-                            .read<LocalUserDataCubit>()
-                            .currentUserData;
-                        return ATCircularImage(
-                          imagePath:
-                              userData?.pictureUrl ?? ATImgStrings.jpeg2,
-                        );
-                      }),
-                    )),
+                const SliverToBoxAdapter(child: RowOfLiveUsers()),
+                const SliverToBoxAdapter(
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(vertical: 14.0),
+                    child: ATDivider(),
+                  ),
+                )
               ],
-            ),
-            const SliverToBoxAdapter(child: RowOfLiveUsers()),
-            const SliverToBoxAdapter(
-              child: Padding(
-                padding: EdgeInsets.symmetric(vertical: 14.0),
-                child: ATDivider(),
-              ),
-            )
-          ],
           body: BlocConsumer<HomeFeedCubit, ATAppState<HomeFeedResponseModel>>(
               listener: (_, ATAppState<HomeFeedResponseModel> state) {
             if (state is FailureState<HomeFeedResponseModel>) {
@@ -140,8 +154,7 @@ class HomeTabView extends StatelessWidget {
                 type: NotificationType.failure,
               );
             }
-          },
-          builder: (_, ATAppState<HomeFeedResponseModel> state) {
+          }, builder: (_, ATAppState<HomeFeedResponseModel> state) {
             return switch (state) {
               InitialState<HomeFeedResponseModel>() => const SizedBox.shrink(),
               LoadingState<HomeFeedResponseModel>() ||
@@ -176,8 +189,7 @@ class HomeTabView extends StatelessWidget {
 
                   return RefreshIndicator(
                     onRefresh: () {
-                      context.read<LiveUsersCubit>()
-                        .refreshLiveUsers();
+                      context.read<LiveUsersCubit>().refreshLiveUsers();
                       return context.read<HomeFeedCubit>().refreshHomeFeed();
                     },
                     child: ListView.separated(
@@ -200,8 +212,8 @@ class HomeTabView extends StatelessWidget {
                                                   homeFeedItem.goingCount),
                                         ))
                               ],
-                              child:
-                                  RenderHomeFeedItem(homeFeedItem: homeFeedItem),
+                              child: RenderHomeFeedItem(
+                                  homeFeedItem: homeFeedItem),
                             );
                           }
                           if (state is LoadingState<HomeFeedResponseModel>) {
@@ -212,13 +224,10 @@ class HomeTabView extends StatelessWidget {
                   );
                 })
             };
-          }
-        )
-      ),
+          })),
     );
   }
 }
-
 
 class _InitialLoadingShimmer extends StatelessWidget {
   const _InitialLoadingShimmer();
