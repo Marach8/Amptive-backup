@@ -17,8 +17,8 @@ class _SocietyTabsWidgetState extends State<SocietyTabsWidget> {
   late final TabController _tabController;
   static const List<String> _tabs = <String>[
     ATStrings.ALL,
-    ATStrings.SHOWS,
-    ATStrings.EVENTS
+    ATStrings.shows,
+    ATStrings.events
   ];
 
   @override

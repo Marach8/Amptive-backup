@@ -2,7 +2,6 @@ import 'package:amptive/src/config/utils/extensions/context_extensions.dart';
 import 'package:amptive/src/config/utils/other_strings.dart';
 import 'package:amptive/src/config/routing/route_strings.dart';
 import 'package:amptive/src/features/auth/cubits/local_user_data_cubit.dart';
-import 'package:amptive/src/shared/circular_image.dart';
 import 'package:amptive/src/shared/custom_container_widget.dart';
 import 'package:amptive/src/config/utils/colors.dart';
 import 'package:amptive/src/config/utils/font_sizes.dart';
@@ -45,7 +44,11 @@ class CreatorProfilePix extends StatelessWidget {
                 gradient: LinearGradient(
                   begin: Alignment.topCenter,
                   end: Alignment.bottomCenter,
-                  colors: <Color>[ATColors.black, ATColors.transparent]),
+                  colors: <Color>[
+                    ATColors.black,
+                    ATColors.transparent
+                  ]
+                ),
               ),
               width: context.screenWidth,
             ),
@@ -65,12 +68,18 @@ class CreatorProfilePix extends StatelessWidget {
                         color: ATColors.black,
                         width: 3,
                       ),
-                      child: ATImgLoader(
-                        imgPath: userData?.pictureUrl 
-                        ?? ATImgStrings.noAvatarImage,
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(40),
+                        child: ATImgLoader(
+                          imgPath: userData?.pictureUrl 
+                          ?? ATImgStrings.noAvatarImage,
+                          height: 70, width: 70,
+                          boxFit: BoxFit.cover,
+                        ),
                       ),
                     ),
-                )),
+                )
+              ),
             Positioned(
                 bottom: -35,
                 child: ATContainer(

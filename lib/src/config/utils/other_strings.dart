@@ -28,6 +28,7 @@ class ATStrings {
   static const String followerCount = 'followers count';
   static const String followingCount = 'following count';
   static const String subscribersCount = 'subscribers count';
+  static const String isCreator = 'is creator';
   static const String hasTestedMic = 'has tested mic';
   static const String liveProgramData = 'live program data';
   static const String bio = 'Bio';
@@ -371,7 +372,7 @@ class ATStrings {
   static const String SUBSCRIBE = 'Subscribe';
   static const String DAY_VIEW = 'Day view';
   static const String MONTH_VIEW = 'Month view';
-  static const String SUBSCRIPTION = 'Subscription';
+  static const String subscription = 'Subscription';
   static const String subscribers = 'Subscribers';
   static const String COMMUNITY_TASK = 'Community Task';
   static const String NO_TASK = 'No task available right now';
@@ -635,9 +636,9 @@ class ATStrings {
       'Enter the amount you would want to charge users for your event. This amount will determine your event\'s tier.';
   static const String PAID = 'Paid';
   static const String pay = 'Pay';
-  static const String ENDED = 'Ended';
-  static const String SHOWS = 'Shows';
-  static const String EVENTS = 'Events';
+  static const String ended = 'Ended';
+  static const String shows = 'Shows';
+  static const String events = 'Events';
   static const String PAID_ACCESS = 'Only users who pay will have access';
   static const String free = 'Free';
   static const String freeAccessToShow =

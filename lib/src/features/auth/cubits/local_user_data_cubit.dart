@@ -85,6 +85,7 @@ class UserProfileData extends Equatable {
     this.country,
     this.hasHostedEvents,
     this.hasHostedShows,
+    this.isCreator,
   });
 
   factory UserProfileData.fromLocalStorageJson(
@@ -128,6 +129,7 @@ class UserProfileData extends Equatable {
       hasHostedEvents: json[ATStrings.hasHostedEvents],
       hasHostedShows: json[ATStrings.hasHostedShows],
       subscribersCount: json[ATStrings.subscribersCount],
+      isCreator: json[ATStrings.isCreator],
       liveProgramData: liveProgramData,
     );
   }
@@ -154,6 +156,7 @@ class UserProfileData extends Equatable {
       coverPhoto: json['cover_photo'],
       hasHostedEvents: json['has_hosted_events'],
       hasHostedShows: json['has_hosted_shows'],
+      isCreator: json['is_creator'],
     );
   }
 
@@ -172,7 +175,8 @@ class UserProfileData extends Equatable {
     websiteUrl;
 
   final int? followingCount, followersCount, subscribersCount;
-  final bool? hasHostedShows, hasHostedEvents, hasTestedMic;
+  final bool? hasHostedShows, hasHostedEvents,
+    hasTestedMic, isCreator;
   final Sentinel<LiveProgramData?>? liveProgramData;
 
   UserProfileData copyWith({
@@ -196,6 +200,7 @@ class UserProfileData extends Equatable {
     String? country,
     bool? hasHostedEvents,
     bool? hasHostedShows,
+    bool? isCreator,
     Sentinel<LiveProgramData?>? liveProgramData,
   }) {
     return UserProfileData(
@@ -204,6 +209,7 @@ class UserProfileData extends Equatable {
       username: username ?? this.username,
       dob: dob ?? this.dob,
       name: name ?? this.name,
+      isCreator: isCreator ?? this.isCreator,
       pictureUrl: pictureUrl ?? this.pictureUrl,
       phoneNumber: phoneNumber ?? this.phoneNumber,
       followersCount: followersCount ?? this.followersCount,
@@ -246,6 +252,7 @@ class UserProfileData extends Equatable {
       ATStrings.country: country,
       ATStrings.hasHostedEvents: hasHostedEvents,
       ATStrings.hasHostedShows: hasHostedShows,
+      ATStrings.isCreator: isCreator,
     };
 
     if (liveProgramData != null &&
@@ -270,6 +277,7 @@ class UserProfileData extends Equatable {
     if (instagramUrl != null) body["instagram_url"] = instagramUrl;
     if (linkedinUrl != null) body["linkedin_url"] = linkedinUrl;
     if (websiteUrl != null) body["website_url"] = websiteUrl;
+    if (isCreator != null) body["is_creator"] = isCreator;
 
     return body;
   }
@@ -297,5 +305,6 @@ class UserProfileData extends Equatable {
         country,
         hasHostedEvents,
         hasHostedShows,
+        isCreator,
       ];
 }

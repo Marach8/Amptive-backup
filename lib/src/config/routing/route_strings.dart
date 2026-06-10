@@ -51,14 +51,13 @@ class ATRoutes {
   static const String chooseEventOrShowScreen = 'go_live_welcome_screen';
   static const String creatorProfileScreen = 'creator_profile';
   static const String profileMenuScreen = 'profile_menu_screen';
-  static const String creatorFollowersScreen = 'profile_following_screen';
+  static const String profileFollowersScreen = 'profile_following_screen';
   static const String updateEmailScreen = 'update_email_screen';
   static const String updatePhoneNoScreen = 'update_phone_no_screen';
   static const String updateNameScreen = 'update_name_screen';
   static const String updateUsernameScreen = 'update_username_screen';
   static const String updateDOBScreen = 'update_dob_screen';
-  static const String creatorSubscribersScreen = 'profile_sub_screen';
-  static const String USER_PROFILE_SCREEN = 'user_profile';
+  static const String profileSubscribersScreen = 'profile_sub_screen';
   static const String listHostedShowsScreen = 'choose_or_create_show';
   static const String listHostedEventsScreen = 'choose_or_create_event';
   static const String programCreationSuccessScreen =

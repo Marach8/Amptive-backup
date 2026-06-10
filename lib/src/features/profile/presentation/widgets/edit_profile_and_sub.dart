@@ -1,3 +1,4 @@
+import 'package:amptive/src/config/utils/extensions/context_extensions.dart';
 import 'package:amptive/src/config/utils/other_strings.dart';
 import 'package:amptive/src/config/routing/route_strings.dart';
 import 'package:amptive/src/shared/custom_container_widget.dart';
@@ -23,23 +24,25 @@ class EditProfileAndSubscriptionRow extends StatelessWidget {
                 radius: 50,
                 margin: const EdgeInsets.only(left: 15),
                 padding: const EdgeInsets.only(top: 10, bottom: 10),
-                color: ATColors.white.withOpacity(0.2),
+                color: ATColors.white.withValues(alpha: 0.2),
                 child: Text(ATStrings.editProfile,
-                    style: Theme.of(context)
-                        .textTheme
+                    style: context.textTheme
                         .bodyMedium
                         ?.copyWith(fontSize: ATSizes.size14))),
           ),
           const SizedBox(width: 10),
           Expanded(
             child: ATContainer(
+              onTap: (){
+                context.pushNamed(ATRoutes.profileSubscribersScreen);
+              },
                 padding: const EdgeInsets.only(top: 10, bottom: 10),
                 margin: const EdgeInsets.only(right: 15),
                 alignment: Alignment.center,
                 radius: 50,
-                color: ATColors.white.withOpacity(0.2),
-                child: Text(ATStrings.SUBSCRIPTION,
-                    style: Theme.of(context)
+                color: ATColors.white.withValues(alpha: 0.2),
+                child: Text(ATStrings.subscription,
+                    style: context
                         .textTheme
                         .bodyMedium
                         ?.copyWith(fontSize: ATSizes.size14))),

@@ -28,7 +28,7 @@ class ProfileEventOrShowDisplay extends StatelessWidget {
           child: BlocBuilder<HostedShowsCubit, ATAppState<HostedShowsResponseModel>>(
             builder: (BuildContext context, ATAppState<HostedShowsResponseModel> state) {
               return switch (state) {
-                InitialState<HostedShowsResponseModel>() ||
+                InitialState<HostedShowsResponseModel>() => const SizedBox.shrink(),
                 LoadingState<HostedShowsResponseModel>() ||
                 FailureState<HostedShowsResponseModel>() ||
                 SuccessState<HostedShowsResponseModel>() => Builder(

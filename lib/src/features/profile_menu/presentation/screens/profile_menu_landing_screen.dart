@@ -97,7 +97,7 @@ class AmptiveProfileMenuScreen extends StatelessWidget {
                       height: 24, width: 24,
                       imgPath: ATImgStrings.subscriberBadge,
                     ),
-                    middleText: ATStrings.SUBSCRIPTION,
+                    middleText: ATStrings.subscription,
                     onTap: () {}),
                 const MenuHeading(text: ATStrings.HELP_SUPPORT),
                 MenuItem(

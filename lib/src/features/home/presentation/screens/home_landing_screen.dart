@@ -17,7 +17,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:nested/nested.dart';
 import '../../../../config/utils/image_strings.dart';
-import '../../../../shared/circular_image.dart';
 import '../../../../shared/divider_widget.dart';
 import '../../../../shared/image_loader_widget.dart';
 import '../widgets/appbar_drop_down.dart';
@@ -104,11 +103,13 @@ class HomeTabView extends StatelessWidget {
                         final UserProfileData? userData = context
                             .read<LocalUserDataCubit>()
                             .currentUserData;
-                        return CircleAvatar(
-                          radius: 15,
+                        return ClipRRect(
+                          borderRadius: BorderRadius.circular(15),
                           child: ATImgLoader(
                             imgPath: userData?.pictureUrl
                               ?? ATImgStrings.noAvatarImage,
+                            height: 30, width: 30,
+                            boxFit: BoxFit.cover,
                           ),
                         );
                       }),

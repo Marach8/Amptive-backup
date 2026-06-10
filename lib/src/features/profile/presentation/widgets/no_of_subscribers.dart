@@ -7,6 +7,8 @@ import 'package:amptive/src/features/profile/presentation/widgets/no_of_follower
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../../config/utils/extensions/integer_extensions.dart';
+
 class NoOfSubscribers extends StatelessWidget {
   const NoOfSubscribers({
     super.key,
@@ -17,10 +19,12 @@ class NoOfSubscribers extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final String? compactNumber = noOfSubscribers?.compactFormat;
     return InkWell(
       borderRadius: BorderRadius.circular(5),
       splashColor: ATColors.white.withValues(alpha: 0.5),
-      onTap: () => context.pushNamed(ATRoutes.creatorSubscribersScreen),
+      onTap: () => context.pushNamed(
+        ATRoutes.profileSubscribersScreen),
       child: Row(
         children: <Widget>[
           CustomPaint(
@@ -33,7 +37,7 @@ class NoOfSubscribers extends StatelessWidget {
           ),
           const SizedBox(width: 2),
           Text(
-            (noOfSubscribers ?? 0).toString(),
+            compactNumber ?? '',
             style: context
                 .textTheme
                 .bodySmall

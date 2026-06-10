@@ -2,11 +2,10 @@ import 'dart:math';
 import 'package:amptive/src/config/utils/other_strings.dart';
 import 'package:amptive/src/config/routing/route_strings.dart';
 import 'package:amptive/src/config/utils/colors.dart';
-import 'package:amptive/src/config/utils/font_sizes.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-
 import '../../../../config/utils/extensions/context_extensions.dart';
+import '../../../../config/utils/extensions/integer_extensions.dart';
 
 class NoOfFollowers extends StatelessWidget {
   const NoOfFollowers({super.key, required this.noOfFollowers});
@@ -15,16 +14,18 @@ class NoOfFollowers extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final String? compactNumber = noOfFollowers?.compactFormat;
     return InkWell(
       borderRadius: BorderRadius.circular(5),
       splashColor: ATColors.white.withValues(alpha: 0.5),
-      onTap: () => context.pushNamed(ATRoutes.creatorFollowersScreen),
+      onTap: () => context.pushNamed(ATRoutes.profileFollowersScreen),
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
           CustomPaint(
             size: const Size(16, 16),
-            painter: RoundedScallopedPainter(color: ATColors.dimWhiteColor1),
+            painter: RoundedScallopedPainter(
+              color: ATColors.dimWhiteColor1),
             child: Padding(
               padding: const EdgeInsets.all(5),
               child: Icon(Icons.star, color: ATColors.black, size: 12),
@@ -32,7 +33,7 @@ class NoOfFollowers extends StatelessWidget {
           ),
           const SizedBox(width: 2),
           Text(
-            (noOfFollowers ?? 0).toString(),
+            compactNumber ?? '',
             style: context.textTheme.bodySmall?.copyWith(
               fontSize: 16
             ),

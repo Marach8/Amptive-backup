@@ -63,7 +63,6 @@ import '../../features/discover/presentation/views/community_home_screen.dart';
 import '../../features/discover/presentation/views/society_hashtag_screen.dart';
 import '../../features/discover/presentation/views/trending_society_screen.dart';
 import '../../features/go_live/go_live_export.dart';
-
 import '../../features/home/presentation/screens/live_event_detailed_screen.dart';
 import '../../features/profile/presentation/screens/edit_profile_landing_screen.dart';
 import '../../features/profile/presentation/screens/edit_socials_screen.dart';
@@ -423,7 +422,7 @@ final GoRouter amptiveAppRouter = GoRouter(
           GoRoute(
             name: ATRoutes.creatorProfileScreen,
             path: ATRoutes.creatorProfileScreen,
-            builder: (_, __) => const CreatorProfileScreen(),
+            builder: (_, __) => const MainProfileScreen(),
           ),
           GoRoute(
               name: ATRoutes.editProfile,
@@ -632,8 +631,8 @@ final GoRouter amptiveAppRouter = GoRouter(
                 ),
               ]),
           GoRoute(
-            name: ATRoutes.creatorFollowersScreen,
-            path: ATRoutes.creatorFollowersScreen,
+            name: ATRoutes.profileFollowersScreen,
+            path: ATRoutes.profileFollowersScreen,
             builder: (_, __) => const ATProfileFollowersScreen(),
           ),
           GoRoute(
@@ -649,14 +648,9 @@ final GoRouter amptiveAppRouter = GoRouter(
                 return AmptiveViewProfilePicScreen(imgPath: imgPath);
               }),
           GoRoute(
-            name: ATRoutes.creatorSubscribersScreen,
-            path: ATRoutes.creatorSubscribersScreen,
+            name: ATRoutes.profileSubscribersScreen,
+            path: ATRoutes.profileSubscribersScreen,
             builder: (_, __) => const ProfileSubscribersScreen(),
-          ),
-          GoRoute(
-            name: ATRoutes.USER_PROFILE_SCREEN,
-            path: ATRoutes.USER_PROFILE_SCREEN,
-            builder: (_, __) => const ATUserProfileScreen(),
           ),
           GoRoute(
             name: ATRoutes.scheduledProgramsScreen,
