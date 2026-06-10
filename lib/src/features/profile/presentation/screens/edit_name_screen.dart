@@ -1,4 +1,5 @@
 import 'package:amptive/src/config/config_export.dart';
+import 'package:amptive/src/config/utils/extensions/context_extensions.dart';
 import 'package:amptive/src/shared/annotated_region_widget.dart';
 import 'package:amptive/src/shared/app_bar_widget.dart';
 import 'package:amptive/src/shared/back_button.dart';
@@ -86,3 +87,4 @@ class _EditNameScreen extends State<EditNameScreen> {
     );
   }
 }
+

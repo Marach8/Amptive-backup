@@ -1,4 +1,5 @@
 import 'package:amptive/src/config/config_export.dart';
+import 'package:amptive/src/config/utils/extensions/context_extensions.dart';
 import 'package:amptive/src/features/auth/data/models/request/registration_data.dart';
 import 'package:amptive/src/shared/annotated_region_widget.dart';
 import 'package:amptive/src/shared/back_button.dart';
@@ -116,3 +117,4 @@ class _PasswordAuthScreenState extends State<PasswordAuthScreen>
     );
   }
 }
+

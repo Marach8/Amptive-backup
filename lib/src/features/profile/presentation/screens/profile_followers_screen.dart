@@ -1,4 +1,5 @@
 import 'package:amptive/src/config/config_export.dart';
+import 'package:amptive/src/config/utils/extensions/context_extensions.dart';
 import 'package:amptive/src/config/utils/dialogs/app_notification_dialog.dart';
 import 'package:amptive/src/features/profile/cubits/followers_cubit.dart';
 import 'package:amptive/src/features/profile/data/models/followers_response_model.dart';
@@ -223,3 +224,4 @@ class _InitialLoadingShimmer extends StatelessWidget {
     );
   }
 }
+

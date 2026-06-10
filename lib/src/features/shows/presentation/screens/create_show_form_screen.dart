@@ -3,6 +3,7 @@ import 'dart:developer' show log;
 import 'dart:typed_data';
 import 'dart:ui';
 import 'package:amptive/src/config/api_response_and_app_state.dart';
+import 'package:amptive/src/config/utils/extensions/context_extensions.dart';
 import 'package:amptive/src/config/utils/dialogs/app_notification_dialog.dart';
 import 'package:amptive/src/features/discover/cubits/communities_cubit.dart';
 import 'package:amptive/src/features/auth/cubits/upload_image_cubit.dart';

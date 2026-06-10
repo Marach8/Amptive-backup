@@ -1,5 +1,6 @@
 import 'dart:ui';
 import 'package:amptive/src/config/api_response_and_app_state.dart';
+import 'package:amptive/src/config/utils/extensions/context_extensions.dart';
 import 'package:amptive/src/config/utils/dialogs/app_notification_dialog.dart';
 import 'package:amptive/src/features/events/cubits/event_detail_cubit.dart';
 import 'package:amptive/src/features/go_live/cubits/end_live_program_cubit.dart';

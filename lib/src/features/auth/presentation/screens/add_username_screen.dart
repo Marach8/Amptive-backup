@@ -1,5 +1,6 @@
 import 'package:amptive/src/config/api_response_and_app_state.dart';
 import 'package:amptive/src/config/config_export.dart';
+import 'package:amptive/src/config/utils/extensions/context_extensions.dart';
 import 'package:amptive/src/config/utils/dialogs/app_notification_dialog.dart';
 import 'package:amptive/src/features/auth/cubits/check_identity_availability_cubit.dart';
 import 'package:amptive/src/features/auth/data/models/request/registration_data.dart';
@@ -160,3 +161,4 @@ class _AddUsernameScreenState extends State<AddUsernameScreen>
     );
   }
 }
+

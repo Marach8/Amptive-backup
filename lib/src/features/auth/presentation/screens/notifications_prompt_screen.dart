@@ -2,6 +2,7 @@ import 'dart:async' show Timer;
 import 'dart:developer' show log;
 import 'dart:ui';
 import 'package:amptive/src/config/config_export.dart';
+import 'package:amptive/src/config/utils/extensions/context_extensions.dart';
 import 'package:amptive/src/features/post_auth/presentation/widgets/slide_out_widget.dart';
 import 'package:amptive/src/shared/annotated_region_widget.dart';
 import 'package:amptive/src/shared/custom_container_widget.dart';
@@ -380,3 +381,4 @@ class _AnimExperimentState extends State<_SubWidget>
     );
   }
 }
+

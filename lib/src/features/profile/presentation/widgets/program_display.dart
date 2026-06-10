@@ -1,5 +1,6 @@
 import 'package:amptive/src/config/api_response_and_app_state.dart';
 import 'package:amptive/src/config/config_export.dart';
+import 'package:amptive/src/config/utils/extensions/context_extensions.dart';
 import 'package:amptive/src/features/discover/presentation/widgets/All_resources_tab_shimmers.dart';
 import 'package:amptive/src/features/events/cubits/hosted_events_cubit.dart';
 import 'package:amptive/src/features/events/data/models/response/event_response_model.dart';
@@ -447,3 +448,4 @@ class ProfileEventOrShowDisplay extends StatelessWidget {
     };
   }
 }
+
