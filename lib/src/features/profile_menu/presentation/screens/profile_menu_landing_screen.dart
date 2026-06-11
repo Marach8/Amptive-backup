@@ -72,7 +72,7 @@ class AmptiveProfileMenuScreen extends StatelessWidget {
                 const MenuHeading(text: ATStrings.ACCT_SETTINGS),
                 MenuItem(
                     leading: const Icon(Icons.account_circle_outlined),
-                    middleText: ATStrings.ACCT,
+                    middleText: ATStrings.account,
                     onTap: () =>
                         context.pushNamed(ATRoutes.accountLandingScreen)),
                 MenuItem(

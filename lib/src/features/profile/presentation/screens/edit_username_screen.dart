@@ -19,8 +19,8 @@ import 'package:go_router/go_router.dart';
 import 'package:nested/nested.dart';
 
 class EditUsernameScreen extends StatefulWidget {
-  const EditUsernameScreen({super.key, required this.initialUsername});
-  final String initialUsername;
+  const EditUsernameScreen({super.key, this.initialUsername});
+  final String? initialUsername;
 
   @override
   State<EditUsernameScreen> createState() => _EditNameScreen();
@@ -36,7 +36,7 @@ class _EditNameScreen extends State<EditUsernameScreen> {
   void initState() {
     super.initState();
     _cntrl = TextEditingController(
-      text: widget.initialUsername.toLowerCase())
+      text: widget.initialUsername?.toLowerCase())
       ..addListener((){
         if(_cntrl.text.trim() == widget.initialUsername){
           _buttonNotifier.value == false;
@@ -201,7 +201,8 @@ class _EditNameScreen extends State<EditUsernameScreen> {
                             userProfileData: UserProfileData(
                               username: _cntrl.text.trim()));
                       },
-                      btnTitle: ATStrings.acceptChanges,
+                      btnTitle: widget.initialUsername == null
+                        ? 'Add username' : ATStrings.acceptChanges,
                     )
                   );
                 }),

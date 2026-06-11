@@ -37,7 +37,7 @@ class ATImgStrings {
   static const String kickUserOut = '$_svgPath/user out.svg';
   static const String userIcon = '$_svgPath/user.svg'; 
   static const String usersIcon = '$_svgPath/users.svg';
-  static const String X_LOGO = '$_svgPath/x_logo.svg.svg';
+  static const String xLogo = '$_svgPath/x_logo.svg.svg';
   static const String groupIcon = '$_svgPath/Group_fill.svg';
   static const String topCreatorIcon = '$_svgPath/RANK BADGES.svg';
   static const String subscriberBadge = '$_svgPath/Subscribers badge.svg';

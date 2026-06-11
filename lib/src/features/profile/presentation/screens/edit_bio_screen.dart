@@ -16,8 +16,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
 class EditBioScreen extends StatefulWidget {
-  const EditBioScreen({super.key, required this.initialBio});
-  final String initialBio;
+  const EditBioScreen({super.key, this.initialBio});
+  final String? initialBio;
 
   @override
   State<EditBioScreen> createState() => _EditBioScreenState();
@@ -89,7 +89,7 @@ class _EditBioScreenState extends State<EditBioScreen> {
                        .titleSmall
                        ?.copyWith(fontSize: 11)),
          ),
-         
+
          bottomSheet: BlocConsumer<RemoteUserDataCubit, ATAppState<UserProfileData>>(
              listener: (_, ATAppState<UserProfileData> state) {
                if (state is SuccessState<UserProfileData>) {
@@ -118,7 +118,8 @@ class _EditBioScreenState extends State<EditBioScreen> {
                                   bio: _cntrl.text.trim()));
                          }
                        : null,
-                   btnTitle: ATStrings.acceptChanges,
+                   btnTitle: widget.initialBio == null
+                      ? 'Add Bio' : ATStrings.acceptChanges,
                  ),
                );
              },

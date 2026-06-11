@@ -7,6 +7,7 @@ import 'package:amptive/src/features/auth/cubits/local_user_data_cubit.dart';
 import 'package:amptive/src/features/auth/cubits/upload_image_cubit.dart';
 import 'package:amptive/src/features/profile/bloc/creator_or_biz_bloc.dart';
 import 'package:amptive/src/features/profile/cubits/remote_user_data_cubit.dart';
+import 'package:amptive/src/features/profile/presentation/screens/edit_socials_screen.dart';
 import 'package:amptive/src/features/profile/presentation/widgets/profile_widgets_export.dart';
 import 'package:amptive/src/shared/custom_container_widget.dart';
 import 'package:amptive/src/shared/annotated_region_widget.dart';
@@ -60,7 +61,7 @@ class EditProfileScreen extends StatelessWidget {
                               onTap: () async {
                                 final String? newName = await context
                                     .pushNamed(ATRoutes.editNameScreen,
-                                        extra: userData?.name ?? '');
+                                        extra: userData?.name);
                     
                                 if (newName != null && context.mounted) {
                                   context.read<LocalUserDataCubit>()
@@ -78,7 +79,7 @@ class EditProfileScreen extends StatelessWidget {
                                 final String? newUsername = await context
                                     .pushNamed(
                                       ATRoutes.editUsername,
-                                      extra: userData?.username ?? '');
+                                      extra: userData?.username);
                     
                                 if (newUsername != null && context.mounted) {
                                   context.read<LocalUserDataCubit>()
@@ -95,7 +96,7 @@ class EditProfileScreen extends StatelessWidget {
                               onTap: () async {
                                 final String? newBio = await context.pushNamed(
                                   ATRoutes.editBio,
-                                  extra: userData?.bio ?? '');
+                                  extra: userData?.bio);
                     
                                 if (newBio != null && context.mounted) {
                                   context.read<LocalUserDataCubit>()
@@ -110,102 +111,103 @@ class EditProfileScreen extends StatelessWidget {
                           const ATDivider(),
                           const SizedBox(height: 15),
                           const _MenuHeading(text: ATStrings.links),
-                          _MenuItem(
-                              title: ATStrings.INSTAGRAM,
-                              isLink: true,
-                              value: userData?.instagramUrl ??
-                                  'www.instagram.com/alieubaba1',
-                              onTap: () async {
-                                final String? newInstagramUrl = await context
-                                    .pushNamed(ATRoutes.editSocials,
-                                        extra: <String?>[
-                                      null,
-                                      ATStrings.INSTAGRAM,
-                                    ]);
-                    
-                                if (newInstagramUrl != null &&
-                                    context.mounted) {
-                                  // context
-                                  //     .read<RemoteUserDataCubit>()
-                                  //     .updateRemoteUserProfile(
-                                  //         instagramUrl: newInstagramUrl);
-                                }
-                              }),
-                          _MenuItem(
-                              title: 'X',
-                              isLink: true,
-                              value: userData?.xUrl ?? '---',
-                              onTap: () async {
-                                final String? newXUrl = await context
-                                    .pushNamed(ATRoutes.editSocials,
-                                        extra: <String?>[
-                                      null, //'www.x.com/alieubaba',
-                    
-                                      ATStrings.X,
-                                    ]);
-                    
-                                if (newXUrl != null && context.mounted) {
-                                  // context
-                                  //     .read<RemoteUserDataCubit>()
-                                  //     .updateRemoteUserProfile(xUrl: newXUrl);
-                                }
-                              }),
-                          _MenuItem(
-                              title: ATStrings.LINKEDIN,
-                              isLink: true,
-                              value: userData?.linkedinUrl ??
-                                  'www.linkedIn.com/alieubaba',
-                              onTap: () async {
-                                final String? newLinkedInUrl = await context
-                                    .pushNamed(ATRoutes.editSocials,
-                                        extra: <String>[
-                                      'www.linkedIn.com/alieubaba',
-                                      ATStrings.LINKEDIN,
-                                    ]);
-                    
-                                if (newLinkedInUrl != null &&
-                                    context.mounted) {
-                                  // context
-                                  //     .read<RemoteUserDataCubit>()
-                                  //     .updateRemoteUserProfile(
-                                  //         linkedinUrl: newLinkedInUrl);
-                                }
-                              }),
-                          _MenuItem(
-                              title: ATStrings.WEBSITE,
-                              isLink: true,
-                              value:
-                                  userData?.websiteUrl ?? 'www.palbucks.co',
-                              onTap: () async {
-                                final String? newWebsiteUrl = await context
-                                    .pushNamed(ATRoutes.editSocials,
-                                        extra: <String?>[
-                                      null, //'www.palbucks.co',
-                    
-                                      ATStrings.WEBSITE
-                                    ]);
-                    
-                                if (newWebsiteUrl != null &&
-                                    context.mounted) {
-                                  // context
-                                  //     .read<RemoteUserDataCubit>()
-                                  //     .updateRemoteUserProfile(
-                                  //         websiteUrl: newWebsiteUrl);
-                                }
-                              }),
+                          _MenuItem(title: ATStrings.instagram,
+                               isLink: true,
+                               value: userData?.instagramUrl ?? '---',
+                               onTap: () async {
+                                 final String? newInstagramUrl = await context
+                                     .pushNamed(ATRoutes.editSocials,
+                                         extra: EditSocialsScreenParams(
+                                           initialLink: userData?.instagramUrl,
+                                           socialName: ATStrings.instagram,
+                                         ));
+
+                                 if (newInstagramUrl != null &&
+                                     context.mounted) {
+                                   context.read<LocalUserDataCubit>()
+                                     .updateUserDataLocally(
+                                       (userData ?? const UserProfileData()).copyWith(
+                                         instagramUrl: newInstagramUrl,
+                                       )
+                                     );
+                                 }
+                               }),
+                               _MenuItem(
+                               title: 'X',
+                               isLink: true,
+                               value: userData?.xUrl ?? '---',
+                               onTap: () async {
+                                 final String? newXUrl = await context
+                                     .pushNamed(ATRoutes.editSocials,
+                                         extra: EditSocialsScreenParams(
+                                           initialLink: userData?.xUrl,
+                                           socialName: ATStrings.x,
+                                         ));
+
+                                 if (newXUrl != null && context.mounted) {
+                                   context.read<LocalUserDataCubit>()
+                                     .updateUserDataLocally(
+                                       (userData ?? const UserProfileData()).copyWith(
+                                         xUrl: newXUrl,
+                                       )
+                                     );
+                                 }
+                               }),
+                               _MenuItem(
+                               title: ATStrings.linkedIn,
+                               isLink: true,
+                               value: userData?.linkedinUrl ?? '---',
+                               onTap: () async {
+                                 final String? newLinkedInUrl = await context
+                                     .pushNamed(ATRoutes.editSocials,
+                                         extra: EditSocialsScreenParams(
+                                           initialLink: userData?.linkedinUrl,
+                                           socialName: ATStrings.linkedIn,
+                                         ));
+
+                                 if (newLinkedInUrl != null &&
+                                     context.mounted) {
+                                   context.read<LocalUserDataCubit>()
+                                     .updateUserDataLocally(
+                                       (userData ?? const UserProfileData()).copyWith(
+                                         linkedinUrl: newLinkedInUrl,
+                                       )
+                                     );
+                                 }
+                               }),
+                               _MenuItem(
+                               title: ATStrings.website,
+                               isLink: true,
+                               value: userData?.websiteUrl ?? '---',
+                               onTap: () async {
+                                 final String? newWebsiteUrl = await context
+                                     .pushNamed(ATRoutes.editSocials,
+                                         extra: EditSocialsScreenParams(
+                                           initialLink: userData?.websiteUrl,
+                                           socialName: ATStrings.website,
+                                         ));
+
+                                 if (newWebsiteUrl != null &&
+                                     context.mounted) {
+                                   context.read<LocalUserDataCubit>()
+                                     .updateUserDataLocally(
+                                       (userData ?? const UserProfileData()).copyWith(
+                                         websiteUrl: newWebsiteUrl,
+                                       )
+                                     );
+                                 }
+                               }),
                           const SizedBox(height: 15),
                           const ATDivider(),
                           const SizedBox(height: 15),
-                          const _MenuHeading(text: ATStrings.ACCT),
+                          const _MenuHeading(text: ATStrings.account),
                           _MenuItem(
                               title: ATStrings.switchAccount,
                               value: context.read<AccountTypeBloc>().state
                                   ? ATStrings.creator
                                   : ATStrings.business,
                               onTap: () async {
-                                context.pushNamed(ATRoutes.SELECT_ACCT_TYPE);
-                    
-                                return;
+                                context.pushNamed(ATRoutes.selectAcctType);
                               }),
                         ],
                       ),

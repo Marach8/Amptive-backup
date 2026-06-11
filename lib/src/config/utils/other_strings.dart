@@ -341,14 +341,14 @@ class ATStrings {
   static const String society = 'Society';
   static const String goLive = 'Go live';
   static const String paidShow = '\$paid show';
-  static const String INSTAGRAM = 'Instagram';
+  static const String instagram = 'Instagram';
   static const String country = 'country';
   static const String hasHostedEvents = 'has_hosted_events';
   static const String hasHostedShows = 'has_hosted_shows';
   static const String coverPhoto = 'cover_photo';
-  static const String X = 'X';
-  static const String LINKEDIN = 'LinkedIn';
-  static const String WEBSITE = 'Website';
+  static const String x = 'X';
+  static const String linkedIn = 'LinkedIn';
+  static const String website = 'Website';
   static const String PAID_SHOWS = 'Paid Shows';
   static const String SHOW = 'Show';
   static const String paid = 'Paid';
@@ -413,7 +413,7 @@ class ATStrings {
   static const String REMOVED_4RM_CAL = 'Removed from calender';
   static const String VIEW = 'View';
   static const String gifts = 'Gifts';
-  static const String ADD_LINK = 'Add Link';
+  static const String addLink = 'Add Link';
   static const String LINK_NAME = 'What is the name of your link';
   static const String LINK_URL = 'What is the URL of your link';
 
@@ -445,7 +445,7 @@ class ATStrings {
   static const String calender = 'Calender';
   static const String GRANT_CALENDER_ACCESS = 'Grant calender access';
   static const String ACCT_SETTINGS = 'Account Settings';
-  static const String ACCT = 'Account';
+  static const String account = 'Account';
   static const String privacy = 'Privacy';
   static const String editProfile = 'Edit Profile';
   static const String ABT_U = 'About you';

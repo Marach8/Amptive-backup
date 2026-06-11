@@ -84,7 +84,7 @@ class _AddLinkWidgetState extends State<_AddLinkWidget> with ATValidators {
               height: 10,
             ),
             Text(
-              ATStrings.ADD_LINK,
+              ATStrings.addLink,
               style: context.textTheme.bodyLarge,
             ),
             const SizedBox(
@@ -157,7 +157,7 @@ class _AddLinkWidgetState extends State<_AddLinkWidget> with ATValidators {
                             }
                           }
                         : null,
-                    btnTitle: ATStrings.ADD_LINK.toLowerCase().capitalize,
+                    btnTitle: ATStrings.addLink.toLowerCase().capitalize,
                     fgColor: ATColors.black,
                     bgColor: ATColors.white,
                   );

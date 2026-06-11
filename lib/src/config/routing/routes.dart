@@ -450,30 +450,31 @@ final GoRouter amptiveAppRouter = GoRouter(
                 GoRoute(
                   name: ATRoutes.editNameScreen,
                   path: ATRoutes.editNameScreen,
-                  builder: (_, GoRouterState state) =>
-                      EditNameScreen(initialName: state.extra as String),
+                  pageBuilder: (_, GoRouterState state) =>
+                    ATSlidingRouteTransition<String?>(
+                      child: EditNameScreen(initialName: state.extra as String?)),
                 ),
                 GoRoute(
                   name: ATRoutes.editUsername,
                   path: ATRoutes.editUsername,
                   builder: (_, GoRouterState state) => EditUsernameScreen(
-                      initialUsername: state.extra as String),
+                      initialUsername: state.extra as String?),
                 ),
                 GoRoute(
                   name: ATRoutes.editBio,
                   path: ATRoutes.editBio,
-                  builder: (_, GoRouterState state) =>
-                      EditBioScreen(initialBio: state.extra as String),
+                  pageBuilder: (_, GoRouterState state) =>
+                      ATSlidingRouteTransition<String?>(
+                        child: EditBioScreen(initialBio: state.extra as String?)),
                 ),
                 GoRoute(
                     name: ATRoutes.editSocials,
                     path: ATRoutes.editSocials,
-                    builder: (_, GoRouterState state) {
-                      final List<String?> params = state.extra as List<String?>;
-                      return EditSocialsScreen(
-                          initialLink: params.first,
-                          socialName: params.last as String);
-                    }),
+                    pageBuilder: (_, GoRouterState state) => 
+                      ATSlidingRouteTransition<String?>(
+                        child: EditSocialsScreen(
+                          params: state.extra as EditSocialsScreenParams),
+                      )),
                 GoRoute(
                     name: ATRoutes.enterEmailAndPhoneNoOtpScreen,
                     path: ATRoutes.enterEmailAndPhoneNoOtpScreen.addSlash,
@@ -485,8 +486,8 @@ final GoRouter amptiveAppRouter = GoRouter(
                       );
                     }),
                 GoRoute(
-                    name: ATRoutes.SELECT_ACCT_TYPE,
-                    path: ATRoutes.SELECT_ACCT_TYPE,
+                    name: ATRoutes.selectAcctType,
+                    path: ATRoutes.selectAcctType,
                     builder: (_, GoRouterState state) =>
                         const SelectAcctTypeScreen(),
                     routes: <RouteBase>[

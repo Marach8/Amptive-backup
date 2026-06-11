@@ -19,7 +19,7 @@ class ATAccountLandingScreen extends StatelessWidget {
           leadingWidth: 30,
           padding: EdgeInsets.only(left: 7),
           leading: ATRoundedBackBtn(),
-          titleText: ATStrings.ACCT,
+          titleText: ATStrings.account,
         ),
         body: SingleChildScrollView(
           physics: const BouncingScrollPhysics(),

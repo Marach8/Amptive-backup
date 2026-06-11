@@ -14,8 +14,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
 class EditNameScreen extends StatefulWidget {
-  const EditNameScreen({super.key, required this.initialName});
-  final String initialName;
+  const EditNameScreen({super.key, this.initialName});
+  final String? initialName;
 
   @override
   State<EditNameScreen> createState() => _EditNameScreen();
@@ -104,7 +104,8 @@ class _EditNameScreen extends State<EditNameScreen> {
                           userProfileData: UserProfileData(
                             name: _cntrl.text.trim()));
                     } : null,
-                btnTitle: ATStrings.acceptChanges,
+                btnTitle: widget.initialName == null 
+                  ? 'Add name' : ATStrings.acceptChanges,
               ),
             );
           }),
