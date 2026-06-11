@@ -1,11 +1,7 @@
-import 'package:amptive/src/bloc/authentication/general/auth_bloc.dart';
-import 'package:amptive/src/bloc/authentication/general/auth_events.dart';
-import 'package:amptive/src/bloc/authentication/general/auth_states.dart';
 import 'package:amptive/src/config/api_response_and_app_state.dart';
 import 'package:amptive/src/config/utils/colors.dart';
 import 'package:amptive/src/config/utils/dialogs/app_notification_dialog.dart';
 import 'package:amptive/src/config/utils/extensions/context_extensions.dart';
-import 'package:amptive/src/config/utils/font_sizes.dart';
 import 'package:amptive/src/config/utils/other_strings.dart';
 import 'package:amptive/src/config/utils/helper_functions.dart';
 import 'package:amptive/src/features/auth/cubits/check_identity_availability_cubit.dart';
@@ -34,7 +30,7 @@ class _EditNameScreen extends State<EditUsernameScreen> {
   late final TextEditingController _cntrl;
 
   //false => disabled, null => active, true => loading.
-  final ValueNotifier<bool?> _btnNotifier = ValueNotifier<bool?>(false);
+  final ValueNotifier<bool?> _buttonNotifier = ValueNotifier<bool?>(false);
 
   @override
   void initState() {
@@ -43,7 +39,7 @@ class _EditNameScreen extends State<EditUsernameScreen> {
       text: widget.initialUsername.toLowerCase())
       ..addListener((){
         if(_cntrl.text.trim() == widget.initialUsername){
-          _btnNotifier.value == false;
+          _buttonNotifier.value == false;
         }
       });
   }
@@ -52,7 +48,7 @@ class _EditNameScreen extends State<EditUsernameScreen> {
   @override
   void dispose() {
     _cntrl.dispose();
-    _btnNotifier.dispose();
+    _buttonNotifier.dispose();
     super.dispose();
   }
 
@@ -95,7 +91,7 @@ class _EditNameScreen extends State<EditUsernameScreen> {
                           ATAppState<bool>>(
                           listener: (_, ATAppState<bool> state) {
                             if (state is FailureState<bool>) {
-                              _btnNotifier.value = false;
+                              _buttonNotifier.value = false;
                               showAppNotification2(
                                 context: context,
                                 text: state.message,
@@ -103,10 +99,10 @@ class _EditNameScreen extends State<EditUsernameScreen> {
                               );
                             }
                             else if(state is SuccessState<bool>){
-                              _btnNotifier.value = null;
+                              _buttonNotifier.value = null;
                             }
                             else if (state is LoadingState<bool>){
-                              _btnNotifier.value = false;
+                              _buttonNotifier.value = false;
                             }
                           },
                           builder: (_, ATAppState<bool> state) =>
@@ -174,7 +170,7 @@ class _EditNameScreen extends State<EditUsernameScreen> {
                 ATAppState<UserProfileData>>(
                 listener: (_, ATAppState<UserProfileData> state){
                   if(state is FailureState<UserProfileData>){
-                    _btnNotifier.value = null;
+                    _buttonNotifier.value = null;
                     showAppNotification2(
                       context: context,
                       text: state.message,
@@ -182,12 +178,12 @@ class _EditNameScreen extends State<EditUsernameScreen> {
                     );
                   }
                   else if(state is SuccessState<UserProfileData>){
-                    _btnNotifier.value = null;
+                    _buttonNotifier.value = null;
                     context.pop(_cntrl.text.trim());
                   }
                 },
                 child: ValueListenableBuilder<bool?>(
-                  valueListenable: _btnNotifier,            
+                  valueListenable: _buttonNotifier,            
                   builder: (BuildContext context, bool? value, _) {
                   final double bottomInset = 
                     MediaQuery.viewInsetsOf(context).bottom;
@@ -199,7 +195,7 @@ class _EditNameScreen extends State<EditUsernameScreen> {
                       isLoading: value == true,
                       onPressed: value == false ? null : (){
                         //We start loading on this button
-                        _btnNotifier.value = true;
+                        _buttonNotifier.value = true;
                         context.read<RemoteUserDataCubit>()
                           .updateRemoteUserProfile(
                             userProfileData: UserProfileData(

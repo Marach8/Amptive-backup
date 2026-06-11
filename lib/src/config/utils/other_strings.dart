@@ -462,7 +462,6 @@ class ATStrings {
   static const String title = 'Title';
   static const String toggleWhispers = 'Activate or de-activate whispers';
   static const String description = 'Description';
-  static const String BIO = 'Bio';
   static const String SELECT_ACCT_TYPE =
       'Select your choice account type to proceed.';
   static const String CREATOR_ACCT = 'Creator Account';

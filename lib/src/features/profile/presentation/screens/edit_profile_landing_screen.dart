@@ -90,7 +90,7 @@ class EditProfileScreen extends StatelessWidget {
                                 }
                               }),
                           _MenuItem(
-                              title: ATStrings.BIO,
+                              title: ATStrings.bio,
                               value: userData?.bio ??
                                   'Author of UNTAMED & LOVE IS IN THE AIR',
                               onTap: () async {
