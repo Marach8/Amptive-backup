@@ -1,7 +1,5 @@
-import 'package:amptive/src/config/api_response_and_app_state.dart';
 import 'package:amptive/src/config/utils/extensions/context_extensions.dart';
 import 'package:amptive/src/config/routing/route_strings.dart';
-import 'package:amptive/src/config/utils/dialogs/app_notification_dialog.dart';
 import 'package:amptive/src/config/utils/utils_export.dart';
 import 'package:amptive/src/features/auth/cubits/local_user_data_cubit.dart';
 import 'package:amptive/src/features/auth/cubits/upload_image_cubit.dart';
@@ -186,9 +184,7 @@ class EditProfileScreen extends StatelessWidget {
                                            initialLink: userData?.websiteUrl,
                                            socialName: ATStrings.website,
                                          ));
-
-                                 if (newWebsiteUrl != null &&
-                                     context.mounted) {
+                                    if (newWebsiteUrl != null && context.mounted) {
                                    context.read<LocalUserDataCubit>()
                                      .updateUserDataLocally(
                                        (userData ?? const UserProfileData()).copyWith(
