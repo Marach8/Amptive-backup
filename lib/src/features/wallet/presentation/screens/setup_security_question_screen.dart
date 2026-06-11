@@ -10,7 +10,7 @@ import 'package:amptive/src/features/wallet/data/models/request/set_pin_request.
 import 'package:amptive/src/features/wallet/presentation/widgets/security_question.dialog.dart';
 import 'package:amptive/src/config/utils/helper_functions.dart';
 import 'package:amptive/src/views/widgets/animation_widgets/common_animation_widgets/animated_crossfade_widget.dart';
-import 'package:amptive/src/shared/annotated_region__widget.dart';
+import 'package:amptive/src/shared/annotated_region_widget.dart';
 import 'package:amptive/src/shared/app_bar_widget.dart';
 import 'package:amptive/src/shared/back_button.dart';
 import 'package:amptive/src/shared/custom_container_widget.dart';

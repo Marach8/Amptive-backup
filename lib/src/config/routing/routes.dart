@@ -11,17 +11,17 @@ import 'package:amptive/src/features/auth/presentation/screens/create_new_passwo
 import 'package:amptive/src/features/auth/presentation/screens/forgot_password_email_screen.dart';
 import 'package:amptive/src/features/auth/presentation/screens/phone_login_screen.dart';
 import 'package:amptive/src/features/auth/presentation/screens/reset_password_otp_screen.dart';
-import 'package:amptive/src/features/auth/presentation/screens/phone_auth_screen.dart';
+import 'package:amptive/src/features/auth/presentation/screens/phone_sign_up_screen.dart';
 import 'package:amptive/src/features/auth/presentation/screens/login_screen.dart';
 import 'package:amptive/src/config/utils/extensions/string_extensions.dart';
 import 'package:amptive/src/features/auth/presentation/screens/dob_screen.dart';
-import 'package:amptive/src/features/auth/presentation/screens/email_auth_screen.dart';
-import 'package:amptive/src/features/auth/presentation/screens/name_auth_screen.dart';
+import 'package:amptive/src/features/auth/presentation/screens/email_sign_up_screen.dart';
+import 'package:amptive/src/features/auth/presentation/screens/add_name_screen.dart';
 import 'package:amptive/src/features/auth/presentation/screens/otp_screen.dart';
-import 'package:amptive/src/features/auth/presentation/screens/password_auth_screen.dart';
+import 'package:amptive/src/features/auth/presentation/screens/create_password_screen.dart';
 import 'package:amptive/src/features/auth/presentation/screens/add_profile_pic_screen.dart';
 import 'package:amptive/src/features/auth/presentation/screens/auth_options_screen.dart';
-import 'package:amptive/src/features/auth/presentation/screens/username_auth_screen.dart';
+import 'package:amptive/src/features/auth/presentation/screens/add_username_screen.dart';
 import 'package:amptive/src/features/calender/presentation/screens/calender_landing_screen.dart';
 import 'package:amptive/src/features/discover/presentation/views/society_screen.dart';
 import 'package:amptive/src/features/discover/presentation/views/trending_hashtags_screen.dart';
@@ -63,7 +63,6 @@ import '../../features/discover/presentation/views/community_home_screen.dart';
 import '../../features/discover/presentation/views/society_hashtag_screen.dart';
 import '../../features/discover/presentation/views/trending_society_screen.dart';
 import '../../features/go_live/go_live_export.dart';
-
 import '../../features/home/presentation/screens/live_event_detailed_screen.dart';
 import '../../features/profile/presentation/screens/edit_profile_landing_screen.dart';
 import '../../features/profile/presentation/screens/edit_socials_screen.dart';
@@ -76,10 +75,8 @@ final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
 final GoRouter amptiveAppRouter = GoRouter(
   navigatorKey: navigatorKey,
-  initialLocation: ATRoutes.dashboard.addSlash,
+  initialLocation: ATRoutes.onboardingScreen.addSlash,
   redirect: tgRedirect,
-  //initialLocation: ATRoutes.temporaryLoginScreen.addSlash,
-  //initialLocation: ATRoutes.ONBOARDING_SCREEN.addSlash,
 
   routes: <RouteBase>[
     GoRoute(
@@ -122,7 +119,7 @@ final GoRouter amptiveAppRouter = GoRouter(
         name: ATRoutes.emailScreen,
         path: ATRoutes.emailScreen.addSlash,
         pageBuilder: (_, GoRouterState st) => ATSlidingRouteTransition<void>(
-            child: ATEmailAuthScreen(title: st.extra as String?))),
+            child: ATEmailSignUpScreen(title: st.extra as String?))),
 
     GoRoute(
         name: ATRoutes.ENTER_OTP_SCREEN,
@@ -149,7 +146,7 @@ final GoRouter amptiveAppRouter = GoRouter(
         name: ATRoutes.phoneAuthScreen,
         path: ATRoutes.phoneAuthScreen.addSlash,
         pageBuilder: (_, GoRouterState st) => ATSlidingRouteTransition<void>(
-              child: PhoneAuthScreen(title: st.extra as String?),
+              child: PhoneAuthScreen(appBarTitle: st.extra as String?),
             )),
     GoRoute(
       name: ATRoutes.phoneLoginScreen,
@@ -433,53 +430,51 @@ final GoRouter amptiveAppRouter = GoRouter(
           GoRoute(
             name: ATRoutes.creatorProfileScreen,
             path: ATRoutes.creatorProfileScreen,
-            builder: (_, __) => const CreatorProfileScreen(),
+            builder: (_, __) => const MainProfileScreen(),
           ),
           GoRoute(
-              name: ATRoutes.EDIT_PROFILE,
-              path: ATRoutes.EDIT_PROFILE.addSlash,
+              name: ATRoutes.editProfile,
+              path: ATRoutes.editProfile.addSlash,
               builder: (_, __) => const EditProfileScreen(),
               routes: <RouteBase>[
                 GoRoute(
-                    name: ATRoutes.rectImageCropperScreen,
-                    path: ATRoutes.rectImageCropperScreen.addSlash,
+                    name: ATRoutes.imageCropperScreen,
+                    path: ATRoutes.imageCropperScreen.addSlash,
                     pageBuilder: (_, GoRouterState state) {
-                      final (File, Ratio?, CustomCropShape?) params =
-                          state.extra as (File, Ratio?, CustomCropShape?);
+                      final ImageCroppingParams params =
+                          state.extra as ImageCroppingParams;
                       return ATSlidingRouteTransition<MemoryImage>(
-                          child: RectImageCropperScreen(
-                        imageFile: params.$1,
-                        ratio: params.$2,
-                        shape: params.$3 ?? CustomCropShape.Ratio,
-                      ));
+                        child: ImageCropperScreen(params: params)
+                      );
                     }),
                 GoRoute(
-                  name: ATRoutes.EDIT_NAME,
-                  path: ATRoutes.EDIT_NAME,
-                  builder: (_, GoRouterState state) =>
-                      EditNameScreen(initialName: state.extra as String),
+                  name: ATRoutes.editNameScreen,
+                  path: ATRoutes.editNameScreen,
+                  pageBuilder: (_, GoRouterState state) =>
+                    ATSlidingRouteTransition<String?>(
+                      child: EditNameScreen(initialName: state.extra as String?)),
                 ),
                 GoRoute(
-                  name: ATRoutes.EDIT_USERNAME,
-                  path: ATRoutes.EDIT_USERNAME,
+                  name: ATRoutes.editUsername,
+                  path: ATRoutes.editUsername,
                   builder: (_, GoRouterState state) => EditUsernameScreen(
-                      initialUsername: state.extra as String),
+                      initialUsername: state.extra as String?),
                 ),
                 GoRoute(
-                  name: ATRoutes.EDIT_BIO,
-                  path: ATRoutes.EDIT_BIO,
-                  builder: (_, GoRouterState state) =>
-                      EditBioScreen(initialBio: state.extra as String),
+                  name: ATRoutes.editBio,
+                  path: ATRoutes.editBio,
+                  pageBuilder: (_, GoRouterState state) =>
+                      ATSlidingRouteTransition<String?>(
+                        child: EditBioScreen(initialBio: state.extra as String?)),
                 ),
                 GoRoute(
-                    name: ATRoutes.EDIT_SOCIALS,
-                    path: ATRoutes.EDIT_SOCIALS,
-                    builder: (_, GoRouterState state) {
-                      final List<String?> params = state.extra as List<String?>;
-                      return EditSocialsScreen(
-                          initialLink: params.first,
-                          socialName: params.last as String);
-                    }),
+                    name: ATRoutes.editSocials,
+                    path: ATRoutes.editSocials,
+                    pageBuilder: (_, GoRouterState state) => 
+                      ATSlidingRouteTransition<String?>(
+                        child: EditSocialsScreen(
+                          params: state.extra as EditSocialsScreenParams),
+                      )),
                 GoRoute(
                     name: ATRoutes.enterEmailAndPhoneNoOtpScreen,
                     path: ATRoutes.enterEmailAndPhoneNoOtpScreen.addSlash,
@@ -491,8 +486,8 @@ final GoRouter amptiveAppRouter = GoRouter(
                       );
                     }),
                 GoRoute(
-                    name: ATRoutes.SELECT_ACCT_TYPE,
-                    path: ATRoutes.SELECT_ACCT_TYPE,
+                    name: ATRoutes.selectAcctType,
+                    path: ATRoutes.selectAcctType,
                     builder: (_, GoRouterState state) =>
                         const SelectAcctTypeScreen(),
                     routes: <RouteBase>[
@@ -528,8 +523,8 @@ final GoRouter amptiveAppRouter = GoRouter(
                         const CreatorOrBusinessSetupSuccessScreen()),
               ]),
           GoRoute(
-              name: ATRoutes.PROFILE_MENU_SCREEN,
-              path: ATRoutes.PROFILE_MENU_SCREEN,
+              name: ATRoutes.profileMenuScreen,
+              path: ATRoutes.profileMenuScreen,
               builder: (_, __) => const AmptiveProfileMenuScreen(),
               routes: <RouteBase>[
                 GoRoute(
@@ -645,35 +640,30 @@ final GoRouter amptiveAppRouter = GoRouter(
                 ),
               ]),
           GoRoute(
-            name: ATRoutes.PROFILE_FOLLOWING_SCREEN,
-            path: ATRoutes.PROFILE_FOLLOWING_SCREEN,
+            name: ATRoutes.profileFollowersScreen,
+            path: ATRoutes.profileFollowersScreen,
             builder: (_, __) => const ATProfileFollowersScreen(),
           ),
           GoRoute(
-            name: ATRoutes.COMMUNITY_TASK_SCREEN,
-            path: ATRoutes.COMMUNITY_TASK_SCREEN,
+            name: ATRoutes.communityTaskScreen,
+            path: ATRoutes.communityTaskScreen,
             builder: (_, __) => const AmptiveCommunityTaskScreen(),
           ),
           GoRoute(
-              name: ATRoutes.PROFILE_PIC_SCREEN,
-              path: ATRoutes.PROFILE_PIC_SCREEN,
+              name: ATRoutes.profilePicFullViewScreen,
+              path: ATRoutes.profilePicFullViewScreen,
               builder: (_, GoRouterState state) {
                 final String imgPath = state.extra as String;
                 return AmptiveViewProfilePicScreen(imgPath: imgPath);
               }),
           GoRoute(
-            name: ATRoutes.PROFILE_SUBSCRIBERS_SCREEN,
-            path: ATRoutes.PROFILE_SUBSCRIBERS_SCREEN,
+            name: ATRoutes.profileSubscribersScreen,
+            path: ATRoutes.profileSubscribersScreen,
             builder: (_, __) => const ProfileSubscribersScreen(),
           ),
           GoRoute(
-            name: ATRoutes.USER_PROFILE_SCREEN,
-            path: ATRoutes.USER_PROFILE_SCREEN,
-            builder: (_, __) => const ATUserProfileScreen(),
-          ),
-          GoRoute(
-            name: ATRoutes.SCHEDULED_EVENTS_OR_SHOWS_SCREEN,
-            path: ATRoutes.SCHEDULED_EVENTS_OR_SHOWS_SCREEN,
+            name: ATRoutes.scheduledProgramsScreen,
+            path: ATRoutes.scheduledProgramsScreen,
             builder: (_, __) => const ATScheduledPrograms(),
           ),
           GoRoute(
@@ -740,13 +730,13 @@ final GoRouter amptiveAppRouter = GoRouter(
             )),
           ),
           GoRoute(
-            name: ATRoutes.SUBSCRIBED_EVENTS_OR_SHOWS_SCREEN,
-            path: ATRoutes.SUBSCRIBED_EVENTS_OR_SHOWS_SCREEN,
+            name: ATRoutes.subscribedProgramsScreen,
+            path: ATRoutes.subscribedProgramsScreen,
             builder: (_, __) => const ATSubscribedPrograms(),
           ),
           GoRoute(
-            name: ATRoutes.FOLLOWING_EVENTS_OR_SHOWS_SCREEN,
-            path: ATRoutes.FOLLOWING_EVENTS_OR_SHOWS_SCREEN,
+            name: ATRoutes.followingProgramsScreen,
+            path: ATRoutes.followingProgramsScreen,
             builder: (_, __) => const ATFollowedPrograms(),
           ),
           GoRoute(

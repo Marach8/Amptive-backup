@@ -1,4 +1,5 @@
 import 'package:amptive/src/global_export.dart';
+import 'package:amptive/src/config/utils/extensions/context_extensions.dart';
 
 class InstructionsSwitcher extends StatelessWidget {
   const InstructionsSwitcher({

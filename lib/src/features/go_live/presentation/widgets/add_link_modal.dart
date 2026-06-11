@@ -1,9 +1,12 @@
 import 'package:amptive/src/config/config_export.dart';
+import 'package:amptive/src/config/utils/extensions/context_extensions.dart';
+import 'package:amptive/src/config/utils/extensions/string_extensions.dart';
 import 'package:amptive/src/shared/modal_dismisser.dart';
 import 'package:amptive/src/shared/elevated_button_widget.dart';
 import 'package:amptive/src/shared/textformfield_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:amptive/src/config/utils/extensions/context_extensions.dart';
 
 Future<(String, String)?> addLinkModal({
   required BuildContext context,
@@ -81,7 +84,7 @@ class _AddLinkWidgetState extends State<_AddLinkWidget> with ATValidators {
               height: 10,
             ),
             Text(
-              ATStrings.ADD_LINK,
+              ATStrings.addLink,
               style: context.textTheme.bodyLarge,
             ),
             const SizedBox(
@@ -154,7 +157,7 @@ class _AddLinkWidgetState extends State<_AddLinkWidget> with ATValidators {
                             }
                           }
                         : null,
-                    btnTitle: ATStrings.ADD_LINK.toLowerCase().capitalize,
+                    btnTitle: ATStrings.addLink.toLowerCase().capitalize,
                     fgColor: ATColors.black,
                     bgColor: ATColors.white,
                   );
@@ -165,3 +168,4 @@ class _AddLinkWidgetState extends State<_AddLinkWidget> with ATValidators {
     );
   }
 }
+

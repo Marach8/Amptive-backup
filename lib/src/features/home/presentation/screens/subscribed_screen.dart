@@ -1,7 +1,7 @@
 import 'package:amptive/src/config/utils/font_sizes.dart';
 import 'package:amptive/src/config/utils/other_strings.dart';
 import 'package:amptive/src/config/routing/route_strings.dart';
-import 'package:amptive/src/shared/annotated_region__widget.dart';
+import 'package:amptive/src/shared/annotated_region_widget.dart';
 import 'package:amptive/src/shared/refresh_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -30,7 +30,7 @@ class ATSubscribedPrograms extends StatelessWidget {
                           padding: const EdgeInsets.only(left: 20),
                           child: ATBackBtn(
                             alignment: Alignment.centerLeft,
-                            leadingText: ATStrings.SUBSCRIBED,
+                            leadingText: ATStrings.subscribed,
                             leadingStyle: Theme.of(context)
                                 .textTheme
                                 .bodyMedium

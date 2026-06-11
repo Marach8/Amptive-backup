@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:amptive/src/config/api_response_and_app_state.dart';
 import 'package:amptive/src/config/services/local_storage_service/flutter_secure_storage_service_impl.dart';
 import 'package:amptive/src/config/services/local_storage_service/storage_service.dart';
@@ -7,50 +9,52 @@ import 'package:amptive/src/shared/sentinel.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class LocalUserDataCubit extends Cubit<ATAppState<CachedUserData>> {
+class LocalUserDataCubit extends Cubit<ATAppState<UserProfileData>> {
   LocalUserDataCubit({
     ATLocalStorageService? mockLocalStorage,
   })  : localStorage = mockLocalStorage ?? FlutterSecureStorageServiceImpl(),
-        super(const InitialState<CachedUserData>());
+        super(const InitialState<UserProfileData>());
 
   final ATLocalStorageService localStorage;
 
-  CachedUserData? get currentUserData => switch (state) {
-    SuccessState<CachedUserData>(:final CachedUserData? newData) => newData,
-    FailureState<CachedUserData>(:final CachedUserData? oldData) => oldData,
-    InitialState<CachedUserData>(:final CachedUserData? initialData) =>
+  UserProfileData? get currentUserData => switch (state) {
+    SuccessState<UserProfileData>(:final UserProfileData? newData) => newData,
+    FailureState<UserProfileData>(:final UserProfileData? oldData) => oldData,
+    InitialState<UserProfileData>(:final UserProfileData? initialData) =>
       initialData,
-    LoadingState<CachedUserData>(:final CachedUserData? currentData) =>
+    LoadingState<UserProfileData>(:final UserProfileData? currentData) =>
       currentData,
   };
 
   Future<void> initializeCachedData() async {
-    emit(const LoadingState<CachedUserData>());
+    emit(const LoadingState<UserProfileData>());
     try {
       final dynamic json =
           await localStorage.getObject(ATStrings.cachedUserData);
+
       emit(
-        SuccessState<CachedUserData>(
+        SuccessState<UserProfileData>(
           newData: json == null
-              ? const CachedUserData()
-              : CachedUserData.fromLocalStorageJson(json),
+              ? const UserProfileData()
+              : UserProfileData.fromLocalStorageJson(json),
         ),
       );
-    } catch (e) {
-      emit(FailureState<CachedUserData>(e.toString()));
+    } catch (e, s) {
+      log('This is the parsing error $e: $s');
+      emit(FailureState<UserProfileData>(e.toString()));
     }
   }
 
-  Future<void> updateUserDataLocally(CachedUserData user) async {
+  Future<void> updateUserDataLocally(UserProfileData newData) async {
     try {
-      await localStorage.setObject(
+      emit(SuccessState<UserProfileData>(newData: newData));
+      
+      localStorage.setObject(
         ATStrings.cachedUserData,
-        user.toLocalStorageJson(),
+        newData.toLocalStorageJson(),
       );
-
-      emit(SuccessState<CachedUserData>(newData: user));
     } catch (e) {
-      emit(FailureState<CachedUserData>(
+      emit(FailureState<UserProfileData>(
         e.toString(),
         oldData: currentUserData,
       ));
@@ -58,8 +62,8 @@ class LocalUserDataCubit extends Cubit<ATAppState<CachedUserData>> {
   }
 }
 
-class CachedUserData extends Equatable {
-  const CachedUserData({
+class UserProfileData extends Equatable {
+  const UserProfileData({
     this.userId,
     this.email,
     this.username,
@@ -69,6 +73,7 @@ class CachedUserData extends Equatable {
     this.phoneNumber,
     this.followersCount,
     this.followingCount,
+    this.subscribersCount,
     this.hasTestedMic,
     this.bio,
     this.xUrl,
@@ -76,9 +81,14 @@ class CachedUserData extends Equatable {
     this.linkedinUrl,
     this.websiteUrl,
     this.liveProgramData,
+    this.coverPhoto,
+    this.country,
+    this.hasHostedEvents,
+    this.hasHostedShows,
+    this.isCreator,
   });
 
-  factory CachedUserData.fromLocalStorageJson(
+  factory UserProfileData.fromLocalStorageJson(
     Map<String, dynamic> json,
   ) {
     Sentinel<LiveProgramData?>? liveProgramData;
@@ -98,7 +108,7 @@ class CachedUserData extends Equatable {
           const Sentinel<LiveProgramData?>.absent();
     }
 
-    return CachedUserData(
+    return UserProfileData(
       userId: json[ATStrings.userId] as String?,
       email: json[ATStrings.email] as String?,
       username: json[ATStrings.username] as String?,
@@ -106,15 +116,47 @@ class CachedUserData extends Equatable {
       name: json[ATStrings.name] as String?,
       pictureUrl: json[ATStrings.profilePicture] as String?,
       phoneNumber: json[ATStrings.phoneNumber] as String?,
-      followersCount: json[ATStrings.followerCount]?.toString(),
-      followingCount: json[ATStrings.followingCount]?.toString(),
-      hasTestedMic: json[ATStrings.hasTestedMic]?.toString(),
+      followersCount: json[ATStrings.followerCount],
+      followingCount: json[ATStrings.followingCount],
+      hasTestedMic: json[ATStrings.hasTestedMic],
       bio: json[ATStrings.bio] as String?,
-      xUrl: json[ATStrings.X] as String?,
-      instagramUrl: json[ATStrings.INSTAGRAM] as String?,
-      linkedinUrl: json[ATStrings.LINKEDIN] as String?,
-      websiteUrl: json[ATStrings.WEBSITE] as String?,
+      xUrl: json[ATStrings.x] as String?,
+      instagramUrl: json[ATStrings.instagram] as String?,
+      linkedinUrl: json[ATStrings.linkedIn] as String?,
+      websiteUrl: json[ATStrings.website] as String?,
+      coverPhoto: json[ATStrings.coverPhoto] as String?,
+      country: json[ATStrings.country] as String?,
+      hasHostedEvents: json[ATStrings.hasHostedEvents],
+      hasHostedShows: json[ATStrings.hasHostedShows],
+      subscribersCount: json[ATStrings.subscribersCount],
+      isCreator: json[ATStrings.isCreator],
       liveProgramData: liveProgramData,
+    );
+  }
+
+
+  factory UserProfileData.fromRemoteJson(Map<String, dynamic> json) {
+    return UserProfileData(
+      userId: json['id'] ,
+      email: json['email'] ,
+      username: json['username'] ,
+      dob: json['dob'] ,
+      name: json['name'] ,
+      pictureUrl: json['profile_picture'] ,
+      followersCount: json['followers_count'],
+      followingCount: json['following_count'],
+      subscribersCount: json['subscribers_count'],
+      bio: json['bio'],
+      xUrl: json['x_url'],
+      instagramUrl: json['instagram_url'],
+      linkedinUrl: json['linkedin_url'],
+      websiteUrl: json['website_url'],
+      phoneNumber: json['phone_number'],
+      country: json['country'],
+      coverPhoto: json['cover_photo'],
+      hasHostedEvents: json['has_hosted_events'],
+      hasHostedShows: json['has_hosted_shows'],
+      isCreator: json['is_creator'],
     );
   }
 
@@ -122,63 +164,68 @@ class CachedUserData extends Equatable {
     userId,
     email,
     username,
-    dob,
-    name,
+    dob, coverPhoto,
+    name, country,
     pictureUrl,
     phoneNumber,
-    followingCount,
-    followersCount,
-    hasTestedMic,
     bio,
     xUrl,
     instagramUrl,
     linkedinUrl,
     websiteUrl;
 
+  final int? followingCount, followersCount, subscribersCount;
+  final bool? hasHostedShows, hasHostedEvents,
+    hasTestedMic, isCreator;
   final Sentinel<LiveProgramData?>? liveProgramData;
 
-  CachedUserData copyWith({
+  UserProfileData copyWith({
     String? userId,
     String? email,
     String? username,
     String? dob,
     String? name,
     String? pictureUrl,
-    String? followersCount,
-    String? followingCount,
+    int? followersCount,
+    int? followingCount,
+    int? subscribersCount,
     String? phoneNumber,
-    String? hasTestedMic,
+    bool? hasTestedMic,
     String? bio,
     String? xUrl,
     String? instagramUrl,
     String? linkedinUrl,
     String? websiteUrl,
+    String? coverPhoto,
+    String? country,
+    bool? hasHostedEvents,
+    bool? hasHostedShows,
+    bool? isCreator,
     Sentinel<LiveProgramData?>? liveProgramData,
   }) {
-    return CachedUserData(
+    return UserProfileData(
       userId: userId ?? this.userId,
       email: email ?? this.email,
       username: username ?? this.username,
       dob: dob ?? this.dob,
       name: name ?? this.name,
+      isCreator: isCreator ?? this.isCreator,
       pictureUrl: pictureUrl ?? this.pictureUrl,
       phoneNumber: phoneNumber ?? this.phoneNumber,
-      followersCount:
-          followersCount ?? this.followersCount,
-      followingCount:
-          followingCount ?? this.followingCount,
-      hasTestedMic:
-          hasTestedMic ?? this.hasTestedMic,
+      followersCount: followersCount ?? this.followersCount,
+      followingCount: followingCount ?? this.followingCount,
+      subscribersCount: subscribersCount ?? this.subscribersCount,
+      hasTestedMic: hasTestedMic ?? this.hasTestedMic,
       bio: bio ?? this.bio,
       xUrl: xUrl ?? this.xUrl,
-      instagramUrl:
-          instagramUrl ?? this.instagramUrl,
-      linkedinUrl:
-          linkedinUrl ?? this.linkedinUrl,
-      websiteUrl:
-          websiteUrl ?? this.websiteUrl,
-      liveProgramData:
-          liveProgramData ?? this.liveProgramData,
+      instagramUrl: instagramUrl ?? this.instagramUrl,
+      linkedinUrl: linkedinUrl ?? this.linkedinUrl,
+      websiteUrl: websiteUrl ?? this.websiteUrl,
+      liveProgramData: liveProgramData ?? this.liveProgramData,
+      coverPhoto: coverPhoto ?? this.coverPhoto,
+      country: country ?? this.country,
+      hasHostedEvents: hasHostedEvents ?? this.hasHostedEvents,
+      hasHostedShows: hasHostedShows ?? this.hasHostedShows,
     );
   }
 
@@ -194,12 +241,18 @@ class CachedUserData extends Equatable {
       ATStrings.phoneNumber: phoneNumber,
       ATStrings.followerCount: followersCount,
       ATStrings.followingCount: followingCount,
+      ATStrings.subscribersCount: subscribersCount,
       ATStrings.hasTestedMic: hasTestedMic,
       ATStrings.bio: bio,
-      ATStrings.X: xUrl,
-      ATStrings.INSTAGRAM: instagramUrl,
-      ATStrings.LINKEDIN: linkedinUrl,
-      ATStrings.WEBSITE: websiteUrl,
+      ATStrings.x: xUrl,
+      ATStrings.instagram: instagramUrl,
+      ATStrings.linkedIn: linkedinUrl,
+      ATStrings.website: websiteUrl,
+      ATStrings.coverPhoto: coverPhoto,
+      ATStrings.country: country,
+      ATStrings.hasHostedEvents: hasHostedEvents,
+      ATStrings.hasHostedShows: hasHostedShows,
+      ATStrings.isCreator: isCreator,
     };
 
     if (liveProgramData != null &&
@@ -211,8 +264,23 @@ class CachedUserData extends Equatable {
     return json;
   }
 
-  Map<String, dynamic> toJson() =>
-      toLocalStorageJson();
+  Map<String, dynamic> toRemoteJson(){
+    final Map<String, dynamic> body = <String, dynamic>{};
+  
+    if (pictureUrl != null) body["profile_picture"] = pictureUrl;
+    if (name != null) body["name"] = name;
+    if (username != null) body["username"] = username;
+    if (bio != null) body["bio"] = bio;
+    if (country != null) body["country"] = country;
+    if (coverPhoto != null) body["cover_photo"] = coverPhoto;
+    if (xUrl != null) body["x_url"] = xUrl;
+    if (instagramUrl != null) body["instagram_url"] = instagramUrl;
+    if (linkedinUrl != null) body["linkedin_url"] = linkedinUrl;
+    if (websiteUrl != null) body["website_url"] = websiteUrl;
+    if (isCreator != null) body["is_creator"] = isCreator;
+
+    return body;
+  }
 
   @override
   List<Object?> get props => <Object?>[
@@ -225,6 +293,7 @@ class CachedUserData extends Equatable {
         phoneNumber,
         followersCount,
         followingCount,
+        subscribersCount,
         hasTestedMic,
         bio,
         xUrl,
@@ -232,5 +301,10 @@ class CachedUserData extends Equatable {
         linkedinUrl,
         websiteUrl,
         liveProgramData?.value,
+        coverPhoto,
+        country,
+        hasHostedEvents,
+        hasHostedShows,
+        isCreator,
       ];
 }

@@ -3,7 +3,7 @@ import 'package:amptive/src/config/utils/dialogs/app_notification_dialog.dart';
 import 'package:amptive/src/features/auth/cubits/login_cubit.dart';
 import 'package:amptive/src/features/post_auth/post_authentication_widgets/cupertino_phone_code_select.dart';
 import 'package:amptive/src/global_export.dart';
-import 'package:amptive/src/shared/annotated_region__widget.dart';
+import 'package:amptive/src/shared/annotated_region_widget.dart';
 import 'package:amptive/src/shared/back_button.dart';
 import 'package:amptive/src/shared/textformfield_widget.dart';
 import 'package:country_pickers/country.dart';
@@ -231,7 +231,7 @@ class _PhoneLoginScreenState extends State<PhoneLoginScreen> with ATValidators {
                               }
                             }
                           : null,
-                      btnTitle: ATStrings.SIGN_IN,
+                      btnTitle: ATStrings.signIn,
                     );
                   },
                 ),

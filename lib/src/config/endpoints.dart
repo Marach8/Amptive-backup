@@ -19,6 +19,7 @@ class ATEndpoints {
   static const String register = '/api/v1/auth/register';
   static const String uploadImage = '/api/v1/extras/upload-image';
   static const String communities = '/api/v1/communities/';
+  static const String joinCommunity = '/api/v1/communities/{community_id}/join';
   static const String resetPassword = '/api/v1/auth/reset-password';
   static const String users = '/api/v1/shows/users';
   static const String homeFeed = '/api/v1/shows/feed/home';
@@ -55,21 +56,4 @@ class ATEndpoints {
   static const String getWalletBalance = '/api/v1/payments/wallet/balance';
   static String verifyPayment ='/api/v1/payments/verify';
   static const String createProfessionalProfile = '/api/v1/users/me/profile';
-
-  // static String getStreamTokenEndpoint(String streamId) =>
-  //     '/api/v1/livestreams/$streamId/token';
-  // static String startStreamEndpoint(String contentId) =>
-  //     '/api/v1/livestreams/$contentId/start';
-  // static String endStreamEndpoint(String streamId) =>
-  //     '/api/v1/livestreams/$streamId/end';
-  // static String reactToStream(String streamId) =>
-  //     '/api/v1/livestreams/$streamId/react';
-
-  // static String markEventGoing(String eventId) =>
-  //     '${ATEndpoints.events}standalone/$eventId/going';
-  // static String markEpisodeGoing(String episodeId) =>
-  //     '${ATEndpoints.events}episode/$episodeId/going';
-
-  // static String wsSignalEndpoint(String streamId, String authToken) =>
-  //     '$wsBaseUrl/api/v1/ws/stream/$streamId?token=$authToken';
 }

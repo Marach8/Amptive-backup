@@ -1,5 +1,6 @@
 import 'package:amptive/src/config/config_export.dart';
-import 'package:amptive/src/shared/annotated_region__widget.dart';
+import 'package:amptive/src/config/utils/extensions/context_extensions.dart';
+import 'package:amptive/src/shared/annotated_region_widget.dart';
 import 'package:amptive/src/shared/app_bar_widget.dart';
 import 'package:amptive/src/shared/back_button.dart';
 import 'package:amptive/src/shared/custom_container_widget.dart';
@@ -24,7 +25,7 @@ class SelectAcctTypeScreen extends StatelessWidget {
               leadingWidth: 30,
               padding: EdgeInsets.only(left: 7),
               leading: ATRoundedBackBtn(),
-              titleText: ATStrings.SWITCH_ACCT),
+              titleText: ATStrings.switchAccount),
           body: SingleChildScrollView(
             physics: const BouncingScrollPhysics(),
             padding: const EdgeInsets.fromLTRB(15, 10, 15, 15),
@@ -150,3 +151,4 @@ class _SelectAcct extends StatelessWidget {
     );
   }
 }
+

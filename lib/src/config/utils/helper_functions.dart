@@ -246,6 +246,7 @@ class ATHelperFuncs {
     return await permType.request();
   }
 
+
   static Future<File?> getImageFromGallery() async {
     final ImagePicker picker = ImagePicker();
     final XFile? pickedFile =

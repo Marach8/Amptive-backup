@@ -1,6 +1,7 @@
 import 'dart:ui';
 import 'package:amptive/src/config/api_response_and_app_state.dart';
 import 'package:amptive/src/config/routing/route_strings.dart';
+import 'package:amptive/src/config/utils/extensions/context_extensions.dart';
 import 'package:amptive/src/config/utils/dialogs/app_notification_dialog.dart';
 import 'package:amptive/src/features/auth/cubits/local_user_data_cubit.dart';
 import 'package:amptive/src/features/go_live/cubits/get_live_program_entry_token_cubit.dart';
@@ -10,7 +11,7 @@ import 'package:amptive/src/features/go_live/data/models/live_program_data.dart'
 import 'package:amptive/src/features/go_live/presentation/screens/go_live_onboarding_screen.dart';
 import 'package:amptive/src/features/go_live/presentation/screens/live_program_screen.dart';
 import 'package:amptive/src/global_export.dart';
-import 'package:amptive/src/shared/annotated_region__widget.dart';
+import 'package:amptive/src/shared/annotated_region_widget.dart';
 import 'package:amptive/src/shared/circle_avatar.dart';
 import 'package:amptive/src/shared/custom_container_widget.dart';
 import 'package:amptive/src/shared/global_model_objects.dart';
@@ -286,7 +287,7 @@ class ATLiveEventDetailedScreen extends StatelessWidget {
             child: BlocConsumer<GetLiveProgramEntryTokenCubit, ATAppState<LiveProgramEntryToken>>(
               listener: (_, ATAppState<LiveProgramEntryToken> state)async{
                 if(state is SuccessState<LiveProgramEntryToken>){
-                  final CachedUserData? userData = context
+                  final UserProfileData? userData = context
                     .read<LocalUserDataCubit>().currentUserData;
                   final String? userId = userData?.userId;
                   final bool hasTestedMic = userData?.hasTestedMic == 'true';

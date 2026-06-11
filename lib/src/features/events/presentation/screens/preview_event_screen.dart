@@ -1,5 +1,6 @@
 import 'dart:ui';
 import 'package:amptive/src/config/api_response_and_app_state.dart';
+import 'package:amptive/src/config/utils/extensions/context_extensions.dart';
 import 'package:amptive/src/config/utils/dialogs/app_notification_dialog.dart';
 import 'package:amptive/src/features/events/cubits/event_detail_cubit.dart';
 import 'package:amptive/src/features/go_live/cubits/end_live_program_cubit.dart';
@@ -15,7 +16,7 @@ import 'package:amptive/src/features/home/presentation/widgets/render_community_
 import 'package:amptive/src/features/home/presentation/widgets/program_actions_modal.dart';
 import 'package:amptive/src/features/events/data/models/response/event_response_model.dart';
 import 'package:amptive/src/global_export.dart';
-import 'package:amptive/src/shared/annotated_region__widget.dart';
+import 'package:amptive/src/shared/annotated_region_widget.dart';
 import 'package:amptive/src/shared/back_button.dart';
 import 'package:amptive/src/shared/global_model_objects.dart';
 import 'package:amptive/src/shared/image_loader_widget.dart';
@@ -198,9 +199,9 @@ class _EventSubWidgetState extends State<_EventSubWidget> {
                             ),
                             const SizedBox(height: 16),
                             BlocBuilder<LocalUserDataCubit,
-                                ATAppState<CachedUserData>>(
+                                ATAppState<UserProfileData>>(
                               builder:
-                                  (_, ATAppState<CachedUserData> userState) {
+                                  (_, ATAppState<UserProfileData> userState) {
                                 final bool isHost = context
                                         .read<LocalUserDataCubit>()
                                         .currentUserData

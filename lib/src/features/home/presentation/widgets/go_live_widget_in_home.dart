@@ -1,4 +1,5 @@
 import 'package:amptive/src/global_export.dart';
+import 'package:amptive/src/config/utils/extensions/context_extensions.dart';
 import 'package:amptive/src/shared/image_loader_widget.dart';
 import 'package:amptive/src/shared/shimmer.dart';
 import 'package:amptive/src/config/api_response_and_app_state.dart';
@@ -29,7 +30,7 @@ class GoLiveWidgetInHome extends StatelessWidget {
               ClipRRect(
                 borderRadius: BorderRadius.circular(30),
                 child: ATImgLoader(
-                  imgPath: profilePic ?? ATImgStrings.jpeg1,
+                  imgPath: profilePic ??  ATImgStrings.noAvatarImage,
                   boxFit: BoxFit.cover,
                   height: 60,
                   width: 60,

@@ -1,11 +1,12 @@
 import 'package:amptive/src/config/api_response_and_app_state.dart';
 import 'package:amptive/src/config/config_export.dart';
+import 'package:amptive/src/config/utils/extensions/context_extensions.dart';
 import 'package:amptive/src/config/utils/dialogs/app_notification_dialog.dart';
 import 'package:amptive/src/features/auth/cubits/check_identity_availability_cubit.dart';
 import 'package:amptive/src/features/auth/cubits/send_otp_cubit.dart';
 import 'package:amptive/src/features/auth/data/models/request/registration_data.dart';
 import 'package:amptive/src/features/auth/presentation/screens/otp_screen.dart';
-import 'package:amptive/src/shared/annotated_region__widget.dart';
+import 'package:amptive/src/shared/annotated_region_widget.dart';
 import 'package:amptive/src/shared/elevated_button_widget.dart';
 import 'package:amptive/src/shared/back_button.dart';
 import 'package:amptive/src/shared/loading_indicator.dart';
@@ -16,15 +17,15 @@ import 'package:go_router/go_router.dart';
 import 'package:nested/nested.dart';
 import '../../../../shared/app_bar_widget.dart';
 
-class ATEmailAuthScreen extends StatefulWidget {
-  const ATEmailAuthScreen({super.key, this.title});
+class ATEmailSignUpScreen extends StatefulWidget {
+  const ATEmailSignUpScreen({super.key, this.title});
   final String? title;
 
   @override
-  State<ATEmailAuthScreen> createState() => _ATEmailAuthScreenState();
+  State<ATEmailSignUpScreen> createState() => _ATEmailSignUpScreenState();
 }
 
-class _ATEmailAuthScreenState extends State<ATEmailAuthScreen>
+class _ATEmailSignUpScreenState extends State<ATEmailSignUpScreen>
     with ATValidators {
   final TextEditingController _emailCntrl = TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
@@ -136,9 +137,9 @@ class _ATEmailAuthScreenState extends State<ATEmailAuthScreen>
                             ATRoutes.enterOtpScreen,
                             extra: VerifyOTPScreenParams(
                                 verificationType: OTPVerificationType.email,
-                                identifier: _emailCntrl.text.trim(),
-                                title: widget.title,
-                                otp: sendOtpState.newData)) as bool?;
+                                dataToVerify: _emailCntrl.text.trim(),
+                                appbarTitle: widget.title
+                            )) as bool?;
 
                         if (context.mounted && didVerifyOTP == true) {
                           RegistrationData()
@@ -181,3 +182,4 @@ class _ATEmailAuthScreenState extends State<ATEmailAuthScreen>
     );
   }
 }
+

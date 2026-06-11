@@ -1,4 +1,5 @@
 import 'package:amptive/src/config/utils/dialogs/app_notification_dialog.dart';
+import 'package:amptive/src/config/utils/extensions/context_extensions.dart';
 import 'package:amptive/src/shared/divider_widget.dart';
 import 'package:amptive/src/shared/image_loader_widget.dart';
 import 'package:amptive/src/shared/radio_button.dart';
@@ -348,3 +349,4 @@ class _FreeAccessWidget extends StatelessWidget {
     );
   }
 }
+

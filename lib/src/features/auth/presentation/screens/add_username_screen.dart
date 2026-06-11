@@ -1,9 +1,10 @@
 import 'package:amptive/src/config/api_response_and_app_state.dart';
 import 'package:amptive/src/config/config_export.dart';
+import 'package:amptive/src/config/utils/extensions/context_extensions.dart';
 import 'package:amptive/src/config/utils/dialogs/app_notification_dialog.dart';
 import 'package:amptive/src/features/auth/cubits/check_identity_availability_cubit.dart';
 import 'package:amptive/src/features/auth/data/models/request/registration_data.dart';
-import 'package:amptive/src/shared/annotated_region__widget.dart';
+import 'package:amptive/src/shared/annotated_region_widget.dart';
 import 'package:amptive/src/shared/app_bar_widget.dart';
 import 'package:amptive/src/shared/elevated_button_widget.dart';
 import 'package:amptive/src/shared/back_button.dart';
@@ -94,18 +95,22 @@ class _AddUsernameScreenState extends State<AddUsernameScreen>
                                         Icons.close,
                                         color: ATColors.textRedColor,
                                       )
-                                  }),
+                                  }
+                                ),
                         ),
                         onChanged: (String text) {
                           ATHelperFuncs.callDebouncer(
                               1500,
                               () => context
-                                      .read<CheckIdentityAvailabilityCubit>()
-                                      .checkIdentityAvailability(
-                                          param: <String, dynamic>{
-                                        'username': text
-                                      }));
-                        }),
+                                .read<CheckIdentityAvailabilityCubit>()
+                                .checkIdentityAvailability(
+                                    param: <String, dynamic>{
+                                  'username': text.trim()
+                                }
+                              )
+                            );
+                        }
+                      ),
                     BlocBuilder<CheckIdentityAvailabilityCubit,
                         ATAppState<bool>>(builder: (_, ATAppState<bool> state) {
                       if (state is InitialState<bool>) {
@@ -160,3 +165,4 @@ class _AddUsernameScreenState extends State<AddUsernameScreen>
     );
   }
 }
+

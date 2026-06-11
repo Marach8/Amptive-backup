@@ -2,6 +2,7 @@ import 'package:amptive/src/config/api_response_and_app_state.dart';
 import 'package:amptive/src/config/config_export.dart';
 import 'package:amptive/src/config/utils/colors.dart';
 import 'package:amptive/src/config/utils/extensions/context_extensions.dart';
+import 'package:amptive/src/config/utils/extensions/string_extensions.dart';
 import 'package:amptive/src/config/utils/font_sizes.dart';
 import 'package:amptive/src/config/utils/image_strings.dart';
 import 'package:amptive/src/config/utils/other_strings.dart';
@@ -33,7 +34,7 @@ class AvailableBalanceWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final CachedUserData? userData =
+    final UserProfileData? userData =
         context.read<LocalUserDataCubit>().currentUserData;
     return BlocBuilder<WalletBalanceCubit,
             ATAppState<WalletBalanceResponseModel>>(

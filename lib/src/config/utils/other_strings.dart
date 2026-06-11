@@ -11,7 +11,6 @@ class ATStrings {
   static const String underscore = '_';
   static const String plus = '+';
   static const String HASH = '#';
-  static const String AT_SIGN = '@';
   static const String nairaText = '₦';
   static const String dot = '•';
   static const String accessToken = 'Access Token';
@@ -27,6 +26,8 @@ class ATStrings {
   static const String isExistingUser = 'is_existing_user';
   static const String followerCount = 'followers count';
   static const String followingCount = 'following count';
+  static const String subscribersCount = 'subscribers count';
+  static const String isCreator = 'is creator';
   static const String hasTestedMic = 'has tested mic';
   static const String liveProgramData = 'live program data';
   static const String bio = 'Bio';
@@ -53,10 +54,10 @@ class ATStrings {
   static const String emailSymbol = '@';
   static const String forgotPassword = 'Forgot Password';
   static const String forgotPasswrd = 'Forgot Password?';
-  static const String SIGN_UP = 'Sign up';
+  static const String signUp = 'Sign up';
   static const String RECORD = 'Record';
   static const String launchShow = 'Launch show';
-  static const String SIGN_IN = 'Sign in';
+  static const String signIn = 'Sign in';
   static const String sendCode = 'Send Code';
   static const String attendAsGuest = 'Attend as guest';
   static const String SKIP = 'Skip';
@@ -170,7 +171,7 @@ class ATStrings {
   static const String deleteSubPlan = 'Delete subscription plan?';
   static const String deleteSubPlanDesc =
       'Deleting plan will grant listeners free access to your shows.';
-  static const String ACCEPT_CHANGES = 'Accept Changes';
+  static const String acceptChanges = 'Accept Changes';
   static const String no_will_be_verified =
       'This phone number will be verified in the next step.';
 
@@ -250,7 +251,7 @@ class ATStrings {
   static const String sendAgain = 'Send again';
   static const String SEND = 'Send';
   static const String sendGift = 'Send gift';
-  static const String THIS_WILL_APPEAR_ON_PROFILE =
+  static const String thisWillAppearOnYourProfile =
       'Note that this will appear on your profile';
 
   static const String createPasswordForAccount =
@@ -298,8 +299,8 @@ class ATStrings {
       'Amptive strongly recommends Face ID for added security. Do you wish to proceed?';
 
   static const String addProfilePicture = "Add a profile picture";
-  static const String useYOurFavImage =
-      "Use one of your favourite image or selfie";
+  static const String useYourFavImage =
+      "Use one of your favourite images or a live photo";
   static const String photoGallery = 'Photo Gallery';
   static const String camera = 'Camera';
   static const String skipForNow = 'Skip for now';
@@ -331,7 +332,7 @@ class ATStrings {
 
   static const String countryPickers = 'country_pickers';
   static const String verify_fone = 'Verify phone number';
-  static const String UR_FON_NUMBER = "What is your phone number?";
+  static const String whatIsYourPhoneNumber = "What is your phone number?";
 
   static const String allow = 'Allow';
   static const String dontAllow = "Don't Allow";
@@ -340,10 +341,14 @@ class ATStrings {
   static const String society = 'Society';
   static const String goLive = 'Go live';
   static const String paidShow = '\$paid show';
-  static const String INSTAGRAM = 'Instagram';
-  static const String X = 'X';
-  static const String LINKEDIN = 'LinkedIn';
-  static const String WEBSITE = 'Website';
+  static const String instagram = 'Instagram';
+  static const String country = 'country';
+  static const String hasHostedEvents = 'has_hosted_events';
+  static const String hasHostedShows = 'has_hosted_shows';
+  static const String coverPhoto = 'cover_photo';
+  static const String x = 'X';
+  static const String linkedIn = 'LinkedIn';
+  static const String website = 'Website';
   static const String PAID_SHOWS = 'Paid Shows';
   static const String SHOW = 'Show';
   static const String paid = 'Paid';
@@ -362,11 +367,11 @@ class ATStrings {
   static const String UPCOMING = 'Upcoming';
   static const String scheduled = 'Scheduled';
   static const String schedule = 'Schedule';
-  static const String SUBSCRIBED = 'Subscribed';
+  static const String subscribed = 'Subscribed';
   static const String SUBSCRIBE = 'Subscribe';
   static const String DAY_VIEW = 'Day view';
   static const String MONTH_VIEW = 'Month view';
-  static const String SUBSCRIPTION = 'Subscription';
+  static const String subscription = 'Subscription';
   static const String subscribers = 'Subscribers';
   static const String COMMUNITY_TASK = 'Community Task';
   static const String NO_TASK = 'No task available right now';
@@ -408,7 +413,7 @@ class ATStrings {
   static const String REMOVED_4RM_CAL = 'Removed from calender';
   static const String VIEW = 'View';
   static const String gifts = 'Gifts';
-  static const String ADD_LINK = 'Add Link';
+  static const String addLink = 'Add Link';
   static const String LINK_NAME = 'What is the name of your link';
   static const String LINK_URL = 'What is the URL of your link';
 
@@ -421,8 +426,8 @@ class ATStrings {
   static const String TRUE_CRIME = 'True Crime';
   static const String MORE_2_DISCOVER = 'More to Discover';
   static const String TOP_CREATORS = 'Top Creators';
-  static const String CREATOR = 'Creator';
-  static const String BUSINESS = 'Business';
+  static const String creator = 'Creator';
+  static const String business = 'Business';
   static const String POPULAR_CREATORS = 'Popular Creators';
   static const String SPOTLIGHT = 'Spotlight';
   static const String VIEW_ALL = 'View all';
@@ -440,12 +445,11 @@ class ATStrings {
   static const String calender = 'Calender';
   static const String GRANT_CALENDER_ACCESS = 'Grant calender access';
   static const String ACCT_SETTINGS = 'Account Settings';
-  static const String ACCT = 'Account';
+  static const String account = 'Account';
   static const String privacy = 'Privacy';
-  static const String EDIT_PROFILE = 'Edit Profile';
+  static const String editProfile = 'Edit Profile';
   static const String ABT_U = 'About you';
   static const String userName = 'Username';
-  static const String NAME = 'Name';
   static const String titleOfYourShow = 'What is the title of your show?';
   static const String tellListenersAboutYourShow =
       'Tell your listeners what your show is about.';
@@ -458,7 +462,6 @@ class ATStrings {
   static const String title = 'Title';
   static const String toggleWhispers = 'Activate or de-activate whispers';
   static const String description = 'Description';
-  static const String BIO = 'Bio';
   static const String SELECT_ACCT_TYPE =
       'Select your choice account type to proceed.';
   static const String CREATOR_ACCT = 'Creator Account';
@@ -468,9 +471,9 @@ class ATStrings {
   static const String BIZ_ACCT_DESC =
       'Best for brands, organizations, service providers, local businesses etc.';
   static String setUpAcct(String acct) => "Set up $acct";
-  static const String LINKS = 'Links';
+  static const String links = 'Links';
   static const String LINK = 'Link';
-  static const String SWITCH_ACCT = 'Switch Account Type';
+  static const String switchAccount = 'Switch Account Type';
   static const String SWITCH = 'Switch';
   static const String PSWRD_ND_SECURITY = 'Password and Security';
   static const String APP_SETTINGS = 'App Settings';
@@ -602,7 +605,7 @@ class ATStrings {
   static const String IS_GIFTING = 'is gifting';
   static const String gifted = 'Gifted';
   static const String PINNED = 'Pinned';
-  static const String TOP_CREATORS_IN_SOCIETY = 'Top Creators in Society';
+  static const String topCreatorInSociety = 'Top Creators in Society';
   static const String moderationTools = 'Moderation Tools';
   static const String TOP_CREATOR_IN = 'Top Creator in';
   static const String allowComments = 'Allow comments';
@@ -630,9 +633,9 @@ class ATStrings {
       'Enter the amount you would want to charge users for your event. This amount will determine your event\'s tier.';
   static const String PAID = 'Paid';
   static const String pay = 'Pay';
-  static const String ENDED = 'Ended';
-  static const String SHOWS = 'Shows';
-  static const String EVENTS = 'Events';
+  static const String ended = 'Ended';
+  static const String shows = 'Shows';
+  static const String events = 'Events';
   static const String PAID_ACCESS = 'Only users who pay will have access';
   static const String free = 'Free';
   static const String freeAccessToShow =
@@ -658,8 +661,7 @@ class ATStrings {
   static const String emptyField = 'Field(s) cannot be empty';
   static const String invalidEmail = 'Please enter a valid email address!';
   static const String invalidPhone = 'Please enter a valid phone number!';
-  static const String weakPassword =
-      'Password must contain at least one upper case letter, and must be at least 8 characters!';
+  static const String weakPassword = 'Use at least 8+ characters with upper/lowercase letters, a number, and a special character!';
   static const String shareEvent = 'Share event';
   static const String comment = 'Comment';
   static const String endNow = 'End now';

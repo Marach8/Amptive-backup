@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:typed_data';
 import 'dart:ui';
+import 'package:amptive/src/config/utils/extensions/context_extensions.dart';
 import 'package:amptive/src/features/episodes/cubits/edit_episode_cubit.dart';
 import 'package:amptive/src/features/episodes/data/models/response/episode_model.dart';
 import 'package:amptive/src/features/episodes/presentation/widgets/whispers_permision_modal.dart';
@@ -12,7 +13,7 @@ import 'package:amptive/src/features/events/presentation/widgets/events_audience
 import 'package:amptive/src/features/events/cubits/hosted_events_cubit.dart';
 import 'package:amptive/src/features/events/presentation/widgets/set_event_capacity_modal.dart';
 import 'package:amptive/src/features/go_live/go_live_export.dart';
-import 'package:amptive/src/shared/annotated_region__widget.dart';
+import 'package:amptive/src/shared/annotated_region_widget.dart';
 import 'package:amptive/src/shared/divider_widget.dart';
 import 'package:amptive/src/shared/global_model_objects.dart';
 import 'package:amptive/src/shared/textformfield_widget.dart';

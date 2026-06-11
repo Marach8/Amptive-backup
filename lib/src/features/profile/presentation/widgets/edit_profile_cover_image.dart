@@ -2,9 +2,11 @@ import 'dart:io';
 import 'package:amptive/src/config/api_response_and_app_state.dart';
 import 'package:amptive/src/config/config_export.dart';
 import 'package:amptive/src/config/utils/dialogs/app_notification_dialog.dart';
+import 'package:amptive/src/config/utils/extensions/context_extensions.dart';
 import 'package:amptive/src/features/auth/cubits/local_user_data_cubit.dart';
 import 'package:amptive/src/features/auth/data/models/response/user_profile_response_model.dart';
 import 'package:amptive/src/features/profile/cubits/remote_user_data_cubit.dart';
+import 'package:amptive/src/features/profile/presentation/screens/image_cropper_screen.dart';
 import 'package:amptive/src/shared/image_source_selection_dialog.dart';
 import 'package:amptive/src/shared/circular_image.dart';
 import 'package:amptive/src/shared/image_loader_widget.dart';
@@ -13,8 +15,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:image_picker/image_picker.dart' show ImageSource, XFile;
 
-class EditProfileBgImage extends StatelessWidget {
-  const EditProfileBgImage({super.key});
+class EditProfileCoverImage extends StatelessWidget {
+  const EditProfileCoverImage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -22,32 +24,32 @@ class EditProfileBgImage extends StatelessWidget {
       create: (_) => RemoteUserDataCubit(),
       child: Builder(
         builder: (BuildContext context) {
-          return BlocConsumer<RemoteUserDataCubit, ATAppState<UserData>>(
-            listener: (BuildContext context, ATAppState<UserData> state) {
-              if (state is FailureState<UserData>) {
-               showAppNotification2(
-                context: context,
-                 text: state.message,
-                 type: NotificationType.failure);
-                
+          return BlocConsumer<RemoteUserDataCubit, ATAppState<UserProfileData>>(
+            listener: (BuildContext context, ATAppState<UserProfileData> state) {
+              if (state is FailureState<UserProfileData>) {
+                showAppNotification2(
+                  context: context,
+                  text: state.message,
+                  type: NotificationType.failure
+                );
               }
               if (state is SuccessState<UserData>) {
-                final CachedUserData? currentUser =
-                    context.read<LocalUserDataCubit>().currentUserData;
-                if (currentUser != null && state.newData != null) {
-                  context.read<LocalUserDataCubit>().updateUserDataLocally(
-                        currentUser.copyWith(
-                            pictureUrl: "${state.newData!.profilePicture}"),
-                      );
-                }
+                // final UserProfileData? currentUser =
+                //     context.read<LocalUserDataCubit>().currentUserData;
+                // if (currentUser != null && state.newData != null) {
+                //   context.read<LocalUserDataCubit>().updateUserDataLocally(
+                //         currentUser.copyWith(
+                //             pictureUrl: "${state.newData!.profilePicture}"),
+                //       );
+                // }
               }
             },
-            builder: (BuildContext context, ATAppState<UserData> state) {
+            builder: (BuildContext context, ATAppState<UserProfileData> state) {
               return BlocBuilder<LocalUserDataCubit,
-                  ATAppState<CachedUserData>>(
+                  ATAppState<UserProfileData>>(
                 builder: (BuildContext context,
-                    ATAppState<CachedUserData> localState) {
-                  final CachedUserData? userData =
+                    ATAppState<UserProfileData> localState) {
+                  final UserProfileData? userData =
                       context.read<LocalUserDataCubit>().currentUserData;
                   final bool isLoading = state is LoadingState<UserData>;
                   final String? profileImageUrl = userData?.pictureUrl;
@@ -67,8 +69,8 @@ class EditProfileBgImage extends StatelessWidget {
                                 if (context.mounted && selectedFile != null) {
                                   final File file = File(selectedFile.path);
                                   await context.pushNamed(
-                                    ATRoutes.rectImageCropperScreen,
-                                    extra: (file, null, null),
+                                    ATRoutes.imageCropperScreen,
+                                    extra: ImageCroppingParams(imageFile: file),
                                   );
                                 }
                               },
@@ -100,16 +102,16 @@ class EditProfileBgImage extends StatelessWidget {
                                             File(selectedFile.path);
                                         final MemoryImage? imageData =
                                             await context.pushNamed(
-                                          ATRoutes.rectImageCropperScreen,
-                                          extra: (file, null, null),
+                                          ATRoutes.imageCropperScreen,
+                                          extra: ImageCroppingParams(imageFile: file),
                                         ) as MemoryImage?;
 
                                         if (context.mounted &&
                                             imageData != null) {
-                                          context
-                                              .read<RemoteUserDataCubit>()
-                                              .updateProfile(
-                                                  imageBytes: imageData.bytes);
+                                          // context
+                                          //     .read<RemoteUserDataCubit>()
+                                          //     .updateRemoteUserProfile(
+                                          //         imageUrl: imageData.bytes);
                                         }
                                       }
                                     },

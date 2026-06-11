@@ -24,14 +24,14 @@ class RowOfSocials extends StatelessWidget {
         ),
         const SizedBox(width: 3),
         Text(
-          ATStrings.INSTAGRAM,
+          ATStrings.instagram,
           style: Theme.of(context)
               .textTheme
               .bodySmall
               ?.copyWith(color: ATColors.hexC2C2C2),
         ),
         const SizedBox(width: 15),
-        const ATImgLoader(imgPath: ATImgStrings.X_LOGO, height: 15),
+        const ATImgLoader(imgPath: ATImgStrings.xLogo, height: 15),
         const SizedBox(width: 3),
         Text(
           'x',
@@ -44,7 +44,7 @@ class RowOfSocials extends StatelessWidget {
         FaIcon(FontAwesomeIcons.linkedin, color: ATColors.hexC2C2C2, size: 15),
         const SizedBox(width: 3),
         Text(
-          ATStrings.LINKEDIN,
+          ATStrings.linkedIn,
           style: Theme.of(context)
               .textTheme
               .bodySmall
@@ -57,7 +57,7 @@ class RowOfSocials extends StatelessWidget {
         ),
         const SizedBox(width: 3),
         Text(
-          ATStrings.WEBSITE,
+          ATStrings.website,
           style: Theme.of(context)
               .textTheme
               .bodySmall
