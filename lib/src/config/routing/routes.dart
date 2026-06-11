@@ -460,14 +460,14 @@ final GoRouter amptiveAppRouter = GoRouter(
                       initialUsername: state.extra as String),
                 ),
                 GoRoute(
-                  name: ATRoutes.EDIT_BIO,
-                  path: ATRoutes.EDIT_BIO,
+                  name: ATRoutes.editBio,
+                  path: ATRoutes.editBio,
                   builder: (_, GoRouterState state) =>
                       EditBioScreen(initialBio: state.extra as String),
                 ),
                 GoRoute(
-                    name: ATRoutes.EDIT_SOCIALS,
-                    path: ATRoutes.EDIT_SOCIALS,
+                    name: ATRoutes.editSocials,
+                    path: ATRoutes.editSocials,
                     builder: (_, GoRouterState state) {
                       final List<String?> params = state.extra as List<String?>;
                       return EditSocialsScreen(

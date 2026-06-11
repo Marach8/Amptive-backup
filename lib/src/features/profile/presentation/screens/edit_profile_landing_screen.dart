@@ -91,24 +91,25 @@ class EditProfileScreen extends StatelessWidget {
                               }),
                           _MenuItem(
                               title: ATStrings.bio,
-                              value: userData?.bio ??
-                                  'Author of UNTAMED & LOVE IS IN THE AIR',
+                              value: userData?.bio ?? '---',
                               onTap: () async {
                                 final String? newBio = await context.pushNamed(
-                                    ATRoutes.EDIT_BIO,
-                                    extra: userData?.bio ??
-                                        'Author of UNTAMED & LOVE IS IN THE AIR');
+                                  ATRoutes.editBio,
+                                  extra: userData?.bio ?? '');
                     
                                 if (newBio != null && context.mounted) {
-                                  // context
-                                  //     .read<RemoteUserDataCubit>()
-                                  //     .updateRemoteUserProfile(bio: newBio);
+                                  context.read<LocalUserDataCubit>()
+                                    .updateUserDataLocally(
+                                      (userData ?? const UserProfileData()).copyWith(
+                                        bio: newBio,
+                                      )
+                                    );
                                 }
                               }),
                           const SizedBox(height: 15),
                           const ATDivider(),
                           const SizedBox(height: 15),
-                          const _MenuHeading(text: ATStrings.LINKS),
+                          const _MenuHeading(text: ATStrings.links),
                           _MenuItem(
                               title: ATStrings.INSTAGRAM,
                               isLink: true,
@@ -116,7 +117,7 @@ class EditProfileScreen extends StatelessWidget {
                                   'www.instagram.com/alieubaba1',
                               onTap: () async {
                                 final String? newInstagramUrl = await context
-                                    .pushNamed(ATRoutes.EDIT_SOCIALS,
+                                    .pushNamed(ATRoutes.editSocials,
                                         extra: <String?>[
                                       null,
                                       ATStrings.INSTAGRAM,
@@ -133,10 +134,10 @@ class EditProfileScreen extends StatelessWidget {
                           _MenuItem(
                               title: 'X',
                               isLink: true,
-                              value: userData?.xUrl ?? 'www.x.com/alieubaba',
+                              value: userData?.xUrl ?? '---',
                               onTap: () async {
                                 final String? newXUrl = await context
-                                    .pushNamed(ATRoutes.EDIT_SOCIALS,
+                                    .pushNamed(ATRoutes.editSocials,
                                         extra: <String?>[
                                       null, //'www.x.com/alieubaba',
                     
@@ -156,7 +157,7 @@ class EditProfileScreen extends StatelessWidget {
                                   'www.linkedIn.com/alieubaba',
                               onTap: () async {
                                 final String? newLinkedInUrl = await context
-                                    .pushNamed(ATRoutes.EDIT_SOCIALS,
+                                    .pushNamed(ATRoutes.editSocials,
                                         extra: <String>[
                                       'www.linkedIn.com/alieubaba',
                                       ATStrings.LINKEDIN,
@@ -177,7 +178,7 @@ class EditProfileScreen extends StatelessWidget {
                                   userData?.websiteUrl ?? 'www.palbucks.co',
                               onTap: () async {
                                 final String? newWebsiteUrl = await context
-                                    .pushNamed(ATRoutes.EDIT_SOCIALS,
+                                    .pushNamed(ATRoutes.editSocials,
                                         extra: <String?>[
                                       null, //'www.palbucks.co',
                     

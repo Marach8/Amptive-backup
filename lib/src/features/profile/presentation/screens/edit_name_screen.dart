@@ -23,7 +23,7 @@ class EditNameScreen extends StatefulWidget {
 
 class _EditNameScreen extends State<EditNameScreen> {
   late final TextEditingController _cntrl;
-  bool btnActive = false;
+  bool buttonIsActive = false;
 
   @override
   void initState() {
@@ -33,10 +33,10 @@ class _EditNameScreen extends State<EditNameScreen> {
   }
 
   void _handleTextChange() {
-    final bool didEnterNewName =
+    final bool didAddNewName =
         _cntrl.text.isNotEmpty && (_cntrl.text.trim() != widget.initialName);
-    if (btnActive != didEnterNewName) {
-      setState(() => btnActive = didEnterNewName);
+    if (buttonIsActive != didAddNewName) {
+      setState(() => buttonIsActive = didAddNewName);
     }
   }
 
@@ -98,7 +98,7 @@ class _EditNameScreen extends State<EditNameScreen> {
               child: ATPlainElevatedBtn(
                 isLoading: state is LoadingState<UserProfileData>,
                 onPressed:
-                    btnActive ? (){
+                    buttonIsActive ? (){
                       context.read<RemoteUserDataCubit>()
                         .updateRemoteUserProfile(
                           userProfileData: UserProfileData(

@@ -84,8 +84,8 @@ class ATRoutes {
   static const String imageCropperScreen = 'profile_bg_crop';
   static const String editNameScreen = 'edit_name';
   static const String editUsername = 'edit_username';
-  static const String EDIT_BIO = 'edit_bio';
-  static const String EDIT_SOCIALS = 'edit_socials';
+  static const String editBio = 'edit_bio';
+  static const String editSocials = 'edit_socials';
   static const String SELECT_ACCT_TYPE = 'switch_account';
   static const String SELECTED_ACCT = 'creator_landing';
   static const String SELECT_CAT = 'select_category';

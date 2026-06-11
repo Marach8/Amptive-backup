@@ -471,7 +471,7 @@ class ATStrings {
   static const String BIZ_ACCT_DESC =
       'Best for brands, organizations, service providers, local businesses etc.';
   static String setUpAcct(String acct) => "Set up $acct";
-  static const String LINKS = 'Links';
+  static const String links = 'Links';
   static const String LINK = 'Link';
   static const String switchAccount = 'Switch Account Type';
   static const String SWITCH = 'Switch';
