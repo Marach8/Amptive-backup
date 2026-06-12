@@ -20,7 +20,7 @@ class UserBgProfileCoverImage extends StatelessWidget {
     final String? profilePic = context
       .select<LocalUserDataCubit, String?>(
       (LocalUserDataCubit cubit) 
-      => cubit.currentUserData?.pictureUrl,
+      => cubit.currentUserData?.profilePhoto,
     );
     return Container(
       height: 150,

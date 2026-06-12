@@ -183,7 +183,7 @@ class _AddProfilePictureScreenState extends State<AddProfilePictureScreen> {
                         ctx.read<RemoteUserDataCubit>()
                           .updateRemoteUserProfile(
                             userProfileData: UserProfileData(
-                              pictureUrl: state.newData,
+                              profilePhoto: state.newData,
                             )
                           );
                       }

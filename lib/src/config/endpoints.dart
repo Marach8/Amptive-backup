@@ -1,7 +1,7 @@
 class ATEndpoints {
   const ATEndpoints._();
 
-  static const String baseUrl = 'https://amptive.onrender.com';
+  static const String baseUrl = 'https://amptive-staging.getamptive.com';
   static const String wsBaseUrl = 'wss://amptive.onrender.com';
   // websockets
   static const String wsUsers = '$wsBaseUrl/api/v1/ws/user';

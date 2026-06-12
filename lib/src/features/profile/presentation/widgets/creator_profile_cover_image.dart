@@ -55,11 +55,11 @@ class CreatorProfilePix extends StatelessWidget {
             Positioned(
                 bottom: -35,
                 child: Hero(
-                  tag: userData?.pictureUrl ?? '',
+                  tag: userData?.profilePhoto ?? '',
                   child: ATContainer(
                       onTap: () => context.pushNamed(
                         ATRoutes.profilePicFullViewScreen,
-                        extra: userData?.pictureUrl 
+                        extra: userData?.profilePhoto 
                         ?? ATImgStrings.noAvatarImage,
                       ),
                       height: 70, width: 70,
@@ -71,7 +71,7 @@ class CreatorProfilePix extends StatelessWidget {
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(40),
                         child: ATImgLoader(
-                          imgPath: userData?.pictureUrl 
+                          imgPath: userData?.profilePhoto 
                           ?? ATImgStrings.noAvatarImage,
                           height: 70, width: 70,
                           boxFit: BoxFit.cover,

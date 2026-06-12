@@ -53,7 +53,7 @@ class LoginCubit extends Cubit<ATAppState<ATUser>> {
               name: name,
               userId: userId,
               dob: dob,
-              pictureUrl: profilePicture,
+              profilePhoto: profilePicture,
               followersCount: followersCount,
               phoneNumber: phoneNumber,
               subscribersCount: subscribersCount,

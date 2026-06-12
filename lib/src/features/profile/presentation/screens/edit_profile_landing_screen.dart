@@ -52,7 +52,7 @@ class EditProfileScreen extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
                           const SizedBox(height: 30),
-                          const _MenuHeading(text: ATStrings.ABT_U),
+                          const _MenuHeading(text: ATStrings.aboutYou),
                           _MenuItem(
                               title: ATStrings.name,
                               value: userData?.name ?? '---',
