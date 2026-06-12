@@ -448,7 +448,7 @@ class ATStrings {
   static const String account = 'Account';
   static const String privacy = 'Privacy';
   static const String editProfile = 'Edit Profile';
-  static const String ABT_U = 'About you';
+  static const String aboutYou = 'About you';
   static const String userName = 'Username';
   static const String titleOfYourShow = 'What is the title of your show?';
   static const String tellListenersAboutYourShow =

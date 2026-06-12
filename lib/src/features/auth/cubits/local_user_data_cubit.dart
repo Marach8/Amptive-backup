@@ -69,7 +69,7 @@ class UserProfileData extends Equatable {
     this.username,
     this.dob,
     this.name,
-    this.pictureUrl,
+    this.profilePhoto,
     this.phoneNumber,
     this.followersCount,
     this.followingCount,
@@ -114,7 +114,7 @@ class UserProfileData extends Equatable {
       username: json[ATStrings.username] as String?,
       dob: json[ATStrings.dob] as String?,
       name: json[ATStrings.name] as String?,
-      pictureUrl: json[ATStrings.profilePicture] as String?,
+      profilePhoto: json[ATStrings.profilePicture] as String?,
       phoneNumber: json[ATStrings.phoneNumber] as String?,
       followersCount: json[ATStrings.followerCount],
       followingCount: json[ATStrings.followingCount],
@@ -142,7 +142,7 @@ class UserProfileData extends Equatable {
       username: json['username'] ,
       dob: json['dob'] ,
       name: json['name'] ,
-      pictureUrl: json['profile_picture'] ,
+      profilePhoto: json['profile_picture'] ,
       followersCount: json['followers_count'],
       followingCount: json['following_count'],
       subscribersCount: json['subscribers_count'],
@@ -166,7 +166,7 @@ class UserProfileData extends Equatable {
     username,
     dob, coverPhoto,
     name, country,
-    pictureUrl,
+    profilePhoto,
     phoneNumber,
     bio,
     xUrl,
@@ -185,7 +185,7 @@ class UserProfileData extends Equatable {
     String? username,
     String? dob,
     String? name,
-    String? pictureUrl,
+    String? profilePhoto,
     int? followersCount,
     int? followingCount,
     int? subscribersCount,
@@ -210,7 +210,7 @@ class UserProfileData extends Equatable {
       dob: dob ?? this.dob,
       name: name ?? this.name,
       isCreator: isCreator ?? this.isCreator,
-      pictureUrl: pictureUrl ?? this.pictureUrl,
+      profilePhoto: profilePhoto ?? this.profilePhoto,
       phoneNumber: phoneNumber ?? this.phoneNumber,
       followersCount: followersCount ?? this.followersCount,
       followingCount: followingCount ?? this.followingCount,
@@ -237,7 +237,7 @@ class UserProfileData extends Equatable {
       ATStrings.username: username,
       ATStrings.dob: dob,
       ATStrings.name: name,
-      ATStrings.profilePicture: pictureUrl,
+      ATStrings.profilePicture: profilePhoto,
       ATStrings.phoneNumber: phoneNumber,
       ATStrings.followerCount: followersCount,
       ATStrings.followingCount: followingCount,
@@ -267,7 +267,7 @@ class UserProfileData extends Equatable {
   Map<String, dynamic> toRemoteJson(){
     final Map<String, dynamic> body = <String, dynamic>{};
   
-    if (pictureUrl != null) body["profile_picture"] = pictureUrl;
+    if (profilePhoto != null) body["profile_picture"] = profilePhoto;
     if (name != null) body["name"] = name;
     if (username != null) body["username"] = username;
     if (bio != null) body["bio"] = bio;
@@ -289,7 +289,7 @@ class UserProfileData extends Equatable {
         username,
         dob,
         name,
-        pictureUrl,
+        profilePhoto,
         phoneNumber,
         followersCount,
         followingCount,

@@ -106,7 +106,7 @@ class HomeTabView extends StatelessWidget {
                         return ClipRRect(
                           borderRadius: BorderRadius.circular(15),
                           child: ATImgLoader(
-                            imgPath: userData?.pictureUrl
+                            imgPath: userData?.profilePhoto
                               ?? ATImgStrings.noAvatarImage,
                             height: 30, width: 30,
                             boxFit: BoxFit.cover,

@@ -14,7 +14,7 @@ class GoLiveWidgetInHome extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final String? profilePic = context
-      .watch<LocalUserDataCubit>().currentUserData?.pictureUrl;
+      .watch<LocalUserDataCubit>().currentUserData?.profilePhoto;
     return GestureDetector(
       onTap: () {
         context.pushNamed(ATRoutes.chooseEventOrShowScreen);

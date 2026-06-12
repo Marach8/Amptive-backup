@@ -100,7 +100,7 @@ class SignupCubit extends Cubit<ATAppState<SignupStage>> {
             username: userName,
             name: name,
             dob: dob,
-            pictureUrl: pictureUrl,
+            profilePhoto: pictureUrl,
             phoneNumber: phoneNumber,
           );
 

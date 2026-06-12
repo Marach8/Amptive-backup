@@ -1,235 +1,275 @@
 import 'dart:io';
+import 'dart:typed_data';
 import 'package:amptive/src/config/api_response_and_app_state.dart';
 import 'package:amptive/src/config/config_export.dart';
 import 'package:amptive/src/config/utils/dialogs/app_notification_dialog.dart';
 import 'package:amptive/src/config/utils/extensions/context_extensions.dart';
 import 'package:amptive/src/features/auth/cubits/local_user_data_cubit.dart';
-import 'package:amptive/src/features/auth/data/models/response/user_profile_response_model.dart';
+import 'package:amptive/src/features/auth/cubits/upload_image_cubit.dart';
 import 'package:amptive/src/features/profile/cubits/remote_user_data_cubit.dart';
 import 'package:amptive/src/features/profile/presentation/screens/image_cropper_screen.dart';
 import 'package:amptive/src/shared/image_source_selection_dialog.dart';
-import 'package:amptive/src/shared/circular_image.dart';
 import 'package:amptive/src/shared/image_loader_widget.dart';
+import 'package:amptive/src/shared/loading_indicator.dart';
+import 'package:custom_image_crop/custom_image_crop.dart' show CustomCropShape;
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:image_picker/image_picker.dart' show ImageSource, XFile;
+import 'package:nested/nested.dart';
+import '../../../../shared/custom_container_widget.dart';
 
-class EditProfileCoverImage extends StatelessWidget {
+
+typedef _ProfileImages = ({
+  String? coverImageUrl,
+  String? profileImageUrl,
+});
+
+enum _UploadType{coverPhoto, profilePhoto}
+class EditProfileCoverImage extends StatefulWidget {
   const EditProfileCoverImage({super.key});
 
   @override
+  State<EditProfileCoverImage> createState() => _EditProfileCoverImageState();
+}
+
+class _EditProfileCoverImageState extends State<EditProfileCoverImage> {
+
+  dynamic _coverImage, _profileImage;
+  _UploadType? _uploadType;
+
+  @override
   Widget build(BuildContext context) {
-    return BlocProvider<RemoteUserDataCubit>(
-      create: (_) => RemoteUserDataCubit(),
-      child: Builder(
-        builder: (BuildContext context) {
-          return BlocConsumer<RemoteUserDataCubit, ATAppState<UserProfileData>>(
-            listener: (BuildContext context, ATAppState<UserProfileData> state) {
-              if (state is FailureState<UserProfileData>) {
-                showAppNotification2(
-                  context: context,
-                  text: state.message,
-                  type: NotificationType.failure
+    final _ProfileImages profileImages = context
+      .select<LocalUserDataCubit, _ProfileImages>(
+        (LocalUserDataCubit cubit) => (
+          coverImageUrl: cubit.currentUserData?.coverPhoto,
+          profileImageUrl: cubit.currentUserData?.profilePhoto)
+      );
+
+      //Anytime the build is called by setState or select,
+      //we set these things if they are null.
+      _profileImage ??= profileImages.profileImageUrl;
+      _coverImage ??= profileImages.coverImageUrl;
+
+    return MultiBlocListener(
+      listeners: <SingleChildWidget>[
+        BlocListener<RemoteUserDataCubit, ATAppState<UserProfileData>>(
+          listener: (_, ATAppState<UserProfileData> state){
+            if(context.mounted && state is SuccessState<UserProfileData>){
+
+              ///After updating the cover photo in BE, update locally.
+              UserProfileData currentLocalData = context
+                .read<LocalUserDataCubit>().currentUserData
+                  ?? const UserProfileData();
+              
+              if(_uploadType == _UploadType.profilePhoto){
+                currentLocalData = currentLocalData.copyWith(
+                  profilePhoto: state.newData?.profilePhoto,
                 );
               }
-              if (state is SuccessState<UserData>) {
-                // final UserProfileData? currentUser =
-                //     context.read<LocalUserDataCubit>().currentUserData;
-                // if (currentUser != null && state.newData != null) {
-                //   context.read<LocalUserDataCubit>().updateUserDataLocally(
-                //         currentUser.copyWith(
-                //             pictureUrl: "${state.newData!.profilePicture}"),
-                //       );
-                // }
+              else if(_uploadType == _UploadType.coverPhoto){
+                currentLocalData = currentLocalData.copyWith(
+                  coverPhoto: state.newData?.coverPhoto,
+                );
               }
-            },
-            builder: (BuildContext context, ATAppState<UserProfileData> state) {
-              return BlocBuilder<LocalUserDataCubit,
-                  ATAppState<UserProfileData>>(
-                builder: (BuildContext context,
-                    ATAppState<UserProfileData> localState) {
-                  final UserProfileData? userData =
-                      context.read<LocalUserDataCubit>().currentUserData;
-                  final bool isLoading = state is LoadingState<UserData>;
-                  final String? profileImageUrl = userData?.pictureUrl;
-
-                  return Stack(
-                    alignment: Alignment.center,
-                    clipBehavior: Clip.none,
-                    children: <Widget>[
-                      GestureDetector(
-                        onTap: isLoading
-                            ? null
-                            : () async {
-                                final ImageSource? selectedSrc =
-                                    await showImageSourceOptions(context);
-                                final XFile? selectedFile =
-                                    await ATHelperFuncs.pickImage(selectedSrc);
-                                if (context.mounted && selectedFile != null) {
-                                  final File file = File(selectedFile.path);
-                                  await context.pushNamed(
-                                    ATRoutes.imageCropperScreen,
-                                    extra: ImageCroppingParams(imageFile: file),
-                                  );
-                                }
-                              },
-                        child: ATImgLoader(
-                          height: 150,
-                          boxFit: BoxFit.cover,
-                          width: context.screenWidth,
-                          imgPath: ATImgStrings.weCanDoHardThingsBgImage,
-                        ),
-                      ),
-                      Positioned(
-                        bottom: -35,
-                        child: Stack(
-                          clipBehavior: Clip.hardEdge,
-                          alignment: Alignment.center,
-                          children: <Widget>[
-                            ATCircularImage(
-                              onTap: isLoading
-                                  ? null
-                                  : () async {
-                                      final ImageSource? selectedSrc =
-                                          await showImageSourceOptions(context);
-                                      final XFile? selectedFile =
-                                          await ATHelperFuncs.pickImage(
-                                              selectedSrc);
-                                      if (context.mounted &&
-                                          selectedFile != null) {
-                                        final File file =
-                                            File(selectedFile.path);
-                                        final MemoryImage? imageData =
-                                            await context.pushNamed(
-                                          ATRoutes.imageCropperScreen,
-                                          extra: ImageCroppingParams(imageFile: file),
-                                        ) as MemoryImage?;
-
-                                        if (context.mounted &&
-                                            imageData != null) {
-                                          // context
-                                          //     .read<RemoteUserDataCubit>()
-                                          //     .updateRemoteUserProfile(
-                                          //         imageUrl: imageData.bytes);
-                                        }
-                                      }
-                                    },
-                              diameter: 70,
-                              addBorder: true,
-                              borderColor: ATColors.black,
-                              borderWidth: 3,
-                              imagePath: profileImageUrl ?? ATImgStrings.jpeg2,
-                            ),
-                            IgnorePointer(
-                              child: Container(
-                                height: 67,
-                                width: 67,
-                                decoration: BoxDecoration(
-                                  shape: BoxShape.circle,
-                                  color: ATColors.black.withValues(alpha: 0.5),
-                                ),
-                              ),
-                            ),
-                            IgnorePointer(
-                              child: isLoading
-                                  ? const SizedBox(
-                                      height: 20,
-                                      width: 20,
-                                      child: CircularProgressIndicator(
-                                          strokeWidth: 2, color: Colors.white))
-                                  : const ATImgLoader(
-                                      imgPath: ATImgStrings.addImageIcon,
-                                      height: 30,
-                                      width: 30,
-                                    ),
-                            )
-                          ],
-                        ),
-                      ),
-                    ],
-                  );
-                },
+              context.read<LocalUserDataCubit>().updateUserDataLocally(
+                currentLocalData,
               );
-            },
-          );
-        },
+
+              setState(() => _uploadType = null);
+            }
+            else if(context.mounted && state is FailureState<UserProfileData>){
+              //If we fail here, reset photo we are uploading and loadingState
+              setState((){
+                if(_uploadType == _UploadType.coverPhoto){
+                  _coverImage = null;
+                }
+                else if (_uploadType == _UploadType.profilePhoto){
+                  _profileImage = null;
+                }
+                _uploadType = null;
+              });
+
+              showAppNotification2(
+                context: context,
+                text: state.message,
+                type: NotificationType.failure,
+              );
+            }
+          },
+        ),
+        BlocListener<UploadImageCubit, ATAppState<String>>(
+          listener: (_, ATAppState<String> state){
+            if(context.mounted && state is SuccessState<String>){
+              //After uploading the image, send the image URL to BE
+              context.read<RemoteUserDataCubit>().updateRemoteUserProfile(
+                userProfileData: UserProfileData(coverPhoto: state.newData),
+              );
+            }
+            else if(context.mounted && state is FailureState<String>){
+              //If we fail here, reset photo we are uploading and loadingState
+              setState((){
+                if(_uploadType == _UploadType.coverPhoto){
+                  _coverImage = null;
+                }
+                else if (_uploadType == _UploadType.profilePhoto){
+                  _profileImage = null;
+                }
+                _uploadType = null;
+              });
+
+              showAppNotification2(
+                context: context,
+                text: state.message,
+                type: NotificationType.failure,
+              );
+            }
+          },
+        )
+      ],
+      child: Container(
+        height: 150,
+        color: ATColors.white.withValues(alpha: 0.5),
+        child: Stack(
+          alignment: Alignment.center,
+          clipBehavior: Clip.none,
+          children: <Widget>[
+            GestureDetector(
+              onTap: () async {
+                if(_uploadType != null) return;
+
+                final ImageSource? selectedSrc =
+                    await showImageSourceOptions(context);
+                final XFile? selectedFile =
+                    await ATHelperFuncs.pickImage(selectedSrc);
+                if (context.mounted && selectedFile != null) {
+                  final File file = File(selectedFile.path);
+                  final MemoryImage? memImage = await context.pushNamed(
+                    ATRoutes.imageCropperScreen,
+                    extra: ImageCroppingParams(imageFile: file),
+                  ) as MemoryImage?;
+                  if(context.mounted && memImage != null){
+                    setState((){
+                      context.read<UploadImageCubit>().uploadBytesImage(
+                        bytes: memImage.bytes);
+                        _uploadType = _UploadType.coverPhoto;
+                      _coverImage = memImage.bytes;
+                    });
+                  }
+                }
+              },
+              child: _coverImage is Uint8List ? Image.memory(
+                _coverImage!,
+                fit: BoxFit.cover,
+                height: 150,
+                width: context.screenWidth,
+              ) : _coverImage != null ? ATImgLoader(
+                height: 150,
+                boxFit: BoxFit.cover,
+                width: context.screenWidth,
+                imgPath: _coverImage!,
+              ) : null,
+            ),
+
+            if(_uploadType == _UploadType.coverPhoto) Container(
+              height: 150,
+              width: context.screenWidth,
+              alignment: Alignment.center,
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                color: ATColors.black.withValues(alpha: 0.5),
+              ),
+              child: const ATLoadingIndicator(size: 50,)
+            ),
+
+            Positioned(
+              bottom: -35,
+              child: ATContainer(
+                height: 70, width: 70, radius: 40,
+                onTap:() async {
+                  if(_uploadType != null) return;
+
+                  final ImageSource? selectedSrc =
+                      await showImageSourceOptions(context);
+                  final XFile? selectedFile =
+                      await ATHelperFuncs.pickImage(
+                          selectedSrc);
+                  if (context.mounted &&
+                      selectedFile != null) {
+                    final File file = File(selectedFile.path);
+                    final MemoryImage? memImage =
+                        await context.pushNamed(
+                      ATRoutes.imageCropperScreen,
+                      extra: ImageCroppingParams(
+                        imageFile: file,
+                        shape: CustomCropShape.Circle,
+                      ),
+                    ) as MemoryImage?;
+          
+                    if(context.mounted && memImage != null){
+                      setState((){
+                        context.read<UploadImageCubit>().uploadBytesImage(
+                          bytes: memImage.bytes);
+                          _uploadType = _UploadType.profilePhoto;
+                        _profileImage = memImage.bytes;
+                      });
+                    }
+                  }
+                },
+                child: Stack(
+                  clipBehavior: Clip.hardEdge,
+                  alignment: Alignment.center,
+                  children: <Widget>[
+                    Container(
+                      height: 70, width: 70,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        border: Border.all(
+                          color: ATColors.black,
+                          width: 3,
+                        ),
+                      ),
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(40),
+                        child: _profileImage is Uint8List ? 
+                        Image.memory(
+                          _profileImage!,
+                          fit: BoxFit.cover,
+                          height: 70, width: 70,
+                        ) :
+                        ATImgLoader(
+                          imgPath: _profileImage 
+                            ?? ATImgStrings.noAvatarImage,
+                          height: 70, width: 70,
+                          boxFit: BoxFit.cover,
+                        ),
+                      ),
+                    ),
+                    Container(
+                      height: 67,
+                      width: 67,
+                      alignment: Alignment.center,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: ATColors.black.withValues(alpha: 0.5),
+                      ),
+                      child: _uploadType == _UploadType.profilePhoto ? 
+                        ATLoadingIndicator(
+                          size: 30, color: ATColors.white)
+                        : const ATImgLoader(
+                          imgPath: ATImgStrings.addImageIcon,
+                          height: 30,
+                          width: 30,
+                        )
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
 }
-
-
-
-
-// class EditProfileBgImage extends StatelessWidget {
-//   const EditProfileBgImage({super.key});
-
-//   @override
-//   Widget build(BuildContext context) {
-//     Uint8List? imageBytes;
-//     return StatefulBuilder(
-//       builder: (BuildContext context, StateSetter setter) {
-//         return Stack(
-//           alignment: Alignment.center,
-//           clipBehavior: Clip.none,
-//           children: <Widget>[
-//             GestureDetector(
-//               onTap: () async{
-//                 final ImageSource? selectedSrc = await showImageSourceOptions(context);
-//                 final XFile? selectedFile = await ATHelperFuncs.pickImage(selectedSrc);
-//                 if(context.mounted && selectedFile != null){
-//                   final File file = File(selectedFile.path);
-//                   final MemoryImage? imageData = await context.pushNamed(
-//                     ATRoutes.rectImageCropperScreen,
-//                     extra: (file, null, null,),
-//                   ) as MemoryImage?;
-//                   if(imageData != null){
-//                     setter(() => imageBytes = imageData.bytes);
-//                   }
-//                 }
-//               },
-//               child: imageBytes == null ? ATImgLoader(
-//                 height: 150, boxFit: BoxFit.cover,
-//                 width: context.screenWidth,
-//                 imgPath: ATImgStrings.weCanDoHardThingsBgImage
-//               ) : Image.memory(
-//                 imageBytes!,
-//                 //frameBuilder: ,
-//                 height: 150, fit: BoxFit.cover,
-//                 width: context.screenWidth,
-//               )
-//             ),
-//             Positioned(
-//               bottom: -35,
-//               child: Stack(
-//                 clipBehavior: Clip.hardEdge,
-//                 alignment: Alignment.center,
-//                 children: <Widget>[
-//                   ATCircularImage(
-//                     onTap: () => context.pushNamed(
-//                       ATRoutes.PROFILE_PIC_SCREEN,
-//                       extra: ATImgStrings.jpeg2
-//                     ),
-//                     diameter: 70, addBorder: true,
-//                     borderColor: ATColors.black,
-//                     borderWidth: 3,
-//                     imagePath: ATImgStrings.jpeg2
-//                   ),
-//                   Container(
-//                     height: 67, width: 67,
-//                     color: ATColors.black.withValues(alpha: 0.5),
-//                   ),
-//                   const ATImgLoader(
-//                     imgPath: ATImgStrings.addImageIcon,
-//                     height: 30, width: 30,
-//                   )
-//                 ],
-//               )
-//             ),
-//           ],
-//         );
-//       }
-//     );
-//   }
-// }

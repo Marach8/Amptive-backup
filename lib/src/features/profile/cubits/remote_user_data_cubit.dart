@@ -18,6 +18,8 @@ class RemoteUserDataCubit extends Cubit<ATAppState<UserProfileData>> {
       final ApiResponse<UserProfileData> response =
           await profileRepo.fetchUserProfile();
 
+      if(isClosed) return;
+      
       response.when(
         successful: (Successful<UserProfileData> data) async {
           emit(SuccessState<UserProfileData>(newData: data.data));

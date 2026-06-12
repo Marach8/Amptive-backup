@@ -315,7 +315,7 @@ class _SendGiftWidget extends StatelessWidget {
             ClipRRect(
               borderRadius: BorderRadiusGeometry.circular(25),
               child: ATImgLoader(
-                imgPath: currUserData?.pictureUrl ?? '',
+                imgPath: currUserData?.profilePhoto ?? '',
                 boxFit: BoxFit.cover,
                 height: 50,
                 width: 50,

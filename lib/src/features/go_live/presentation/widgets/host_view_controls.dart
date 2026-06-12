@@ -89,7 +89,7 @@ class _HostModerationControlsState extends State<HostModerationControls> {
   @override
   Widget build(BuildContext context) {
     final String profilePic = context.read<LocalUserDataCubit>()
-      .currentUserData?.pictureUrl ?? '';
+      .currentUserData?.profilePhoto ?? '';
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: <Widget>[
