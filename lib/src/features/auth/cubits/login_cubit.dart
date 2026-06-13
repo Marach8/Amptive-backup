@@ -28,48 +28,38 @@ class LoginCubit extends Cubit<ATAppState<ATUser>> {
         final String? accessToken = data.data?.accessToken;
         final String? refreshToken = data.data?.refreshToken;
 
-        final String? userName = data.data?.user?.username;
-        final String? email = data.data?.user?.email;
-        final String? name = data.data?.user?.name;
-        final String? userId = data.data?.user?.id;
-        final String? dob = data.data?.user?.dob;
-        final String? profilePicture = data.data?.user?.pictureUrl;
-        final int? followersCount = data.data?.user?.followersCount;
-        final int? subscribersCount = data.data?.user?.subscribersCount;
-        final String? phoneNumber = data.data?.user?.phoneNumber;
 
-            if(accessToken != null){
-              await localStorageService.set(ATStrings.accessToken, accessToken);
-            }
-            if(refreshToken != null){
-              await localStorageService.set(ATStrings.refreshToken, refreshToken);
-            }
+        if(accessToken != null){
+          await localStorageService.set(ATStrings.accessToken, accessToken);
+        }
+        if(refreshToken != null){
+          await localStorageService.set(ATStrings.refreshToken, refreshToken);
+        }
 
-            await localStorageService.set(ATStrings.isExistingUser, 'true');
-            
-            final UserProfileData cachedUserData = UserProfileData(
-              username: userName,
-              email: email,
-              name: name,
-              userId: userId,
-              dob: dob,
-              profilePhoto: profilePicture,
-              followersCount: followersCount,
-              phoneNumber: phoneNumber,
-              subscribersCount: subscribersCount,
-            );
-            await localStorageService.setObject(
-              ATStrings.cachedUserData,
-              cachedUserData.toLocalStorageJson(),
-            );
-            emit(SuccessState<ATUser>(newData: data.data?.user,));
-          },
-          unSuccessful: (Unsuccessful<LoginResponseModel> error){
-            emit(FailureState<ATUser>(error.error.message));
-          }
+        await localStorageService.set(ATStrings.isExistingUser, 'true');
+        
+        final UserProfileData cachedUserData = UserProfileData(
+          username: data.data?.user?.username,
+          email: data.data?.user?.email,
+          name: data.data?.user?.name,
+          userId: data.data?.user?.id,
+          dob: data.data?.user?.dob,
+          profilePhoto: data.data?.user?.pictureUrl,
+          followersCount: data.data?.user?.followersCount,
+          phoneNumber: data.data?.user?.phoneNumber,
+          subscribersCount: data.data?.user?.subscribersCount,
+          followingCount: data.data?.user?.followingCount,
         );
-       
-      
+        await localStorageService.setObject(
+          ATStrings.cachedUserData,
+          cachedUserData.toLocalStorageJson(),
+        );
+        emit(SuccessState<ATUser>(newData: data.data?.user,));
+      },
+      unSuccessful: (Unsuccessful<LoginResponseModel> error){
+        emit(FailureState<ATUser>(error.error.message));
+      }
+    );
     } catch (e) {
       emit(FailureState<ATUser>('Unable to login user: $e'));
     }

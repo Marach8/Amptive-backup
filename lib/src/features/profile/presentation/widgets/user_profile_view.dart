@@ -4,7 +4,6 @@ import 'package:amptive/src/config/utils/extensions/context_extensions.dart';
 import 'package:amptive/src/config/utils/utils_export.dart';
 import 'package:amptive/src/features/auth/cubits/local_user_data_cubit.dart';
 import 'package:amptive/src/features/profile/presentation/profile_prez_export.dart';
-import 'package:amptive/src/shared/annotated_region_widget.dart';
 import 'package:amptive/src/shared/back_button.dart';
 import 'package:amptive/src/shared/circle_avatar.dart';
 import 'package:amptive/src/shared/custom_container_widget.dart';
@@ -60,7 +59,7 @@ class UserProfileView extends StatelessWidget {
                   builder: (BuildContext context,
                       ATAppState<UserProfileData> state) {
                     final UserProfileData? userData = context
-                      .read<LocalUserDataCubit>()
+                      .watch<LocalUserDataCubit>()
                       .currentUserData;
 
                       return Column(

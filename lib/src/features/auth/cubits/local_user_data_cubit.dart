@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:amptive/src/config/api_response_and_app_state.dart';
 import 'package:amptive/src/config/services/local_storage_service/flutter_secure_storage_service_impl.dart';
 import 'package:amptive/src/config/services/local_storage_service/storage_service.dart';
@@ -32,15 +30,11 @@ class LocalUserDataCubit extends Cubit<ATAppState<UserProfileData>> {
       final dynamic json =
           await localStorage.getObject(ATStrings.cachedUserData);
 
-      emit(
-        SuccessState<UserProfileData>(
-          newData: json == null
-              ? const UserProfileData()
-              : UserProfileData.fromLocalStorageJson(json),
-        ),
-      );
-    } catch (e, s) {
-      log('This is the parsing error $e: $s');
+      final UserProfileData? userData = json == null ? null
+        : UserProfileData.fromLocalStorageJson(json);
+
+      emit(SuccessState<UserProfileData>(newData: userData));
+    } catch (e) {
       emit(FailureState<UserProfileData>(e.toString()));
     }
   }
@@ -48,7 +42,6 @@ class LocalUserDataCubit extends Cubit<ATAppState<UserProfileData>> {
   Future<void> updateUserDataLocally(UserProfileData newData) async {
     try {
       emit(SuccessState<UserProfileData>(newData: newData));
-      
       localStorage.setObject(
         ATStrings.cachedUserData,
         newData.toLocalStorageJson(),
@@ -145,7 +138,7 @@ class UserProfileData extends Equatable {
       profilePhoto: json['profile_picture'] ,
       followersCount: json['followers_count'],
       followingCount: json['following_count'],
-      subscribersCount: json['subscribers_count'],
+      subscribersCount: json['active_subscribers_count'],
       bio: json['bio'],
       xUrl: json['x_url'],
       instagramUrl: json['instagram_url'],

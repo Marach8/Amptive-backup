@@ -93,12 +93,12 @@ class CreatorProfileView extends StatelessWidget {
                 builder: (BuildContext context,
                     ATAppState<UserProfileData> state) {
                   final UserProfileData? userData = context
-                      .read<LocalUserDataCubit>()
+                      .watch<LocalUserDataCubit>()
                       .currentUserData;
                   return Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: <Widget>[
-                      const CreatorProfilePix(),
+                      const CreatorProfileCoverImage(),
                       const SizedBox(height: 50),
                       Text(
                         userData?.name ?? 'Glennon Doyle',
