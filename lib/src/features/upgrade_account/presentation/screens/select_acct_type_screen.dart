@@ -12,77 +12,77 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import '../../../profile/bloc/profile_bloc_export.dart';
 
-class SelectAcctTypeScreen extends StatelessWidget {
+enum UpgradeAcctType{creator, business}
+
+class SelectAcctTypeScreen extends StatefulWidget {
   const SelectAcctTypeScreen({super.key});
 
   @override
+  State<SelectAcctTypeScreen> createState() => _SelectAcctTypeScreenState();
+}
+
+class _SelectAcctTypeScreenState extends State<SelectAcctTypeScreen> {
+  UpgradeAcctType? acctType;
+
+  @override
   Widget build(BuildContext context) {
-    int? index;
-    return ATAnnotatedRegion(
-      child: StatefulBuilder(builder: (_, setter) {
-        return Scaffold(
-          appBar: const ATAppBar(
-              leadingWidth: 30,
-              padding: EdgeInsets.only(left: 7),
-              leading: ATRoundedBackBtn(),
-              titleText: ATStrings.switchAccount),
-          body: SingleChildScrollView(
-            physics: const BouncingScrollPhysics(),
-            padding: const EdgeInsets.fromLTRB(15, 10, 15, 15),
-            child: Column(
-              children: <Widget>[
-                Text(
-                  ATStrings.SELECT_ACCT_TYPE,
-                  maxLines: 3,
-                  style: context.textTheme.bodySmall
-                      ?.copyWith(color: ATColors.hexC2C2C2),
-                ),
-                const SizedBox(height: 20),
-                _SelectAcct(
-                  title: ATStrings.CREATOR_ACCT,
-                  subTitle: ATStrings.CREATOR_ACCT_DESC,
-                  imgPath: ATImgStrings.CREATOR_ACCT_LOGO,
-                  isSelected: index == 0,
-                  onTap: () {
-                    context.read<AccountTypeBloc>().setAcctType(true);
-                    context.read<AcctTypeLandingAnimBloc>().reset();
-                    context.pushNamed(ATRoutes.SELECTED_ACCT);
-                    // if(index == null || index == 1){setter(() => index = 0);}
-                    // else{setter(() => index = null);}
-                  },
-                ),
-                const SizedBox(height: 20),
-                _SelectAcct(
-                  isSelected: index == 1,
-                  title: ATStrings.BIZ_ACCT,
-                  subTitle: ATStrings.BIZ_ACCT_DESC,
-                  imgPath: ATImgStrings.BIZ_ACCT_LOGO_MIC,
-                  onTap: () {
-                    context.read<AccountTypeBloc>().setAcctType(false);
-                    if (index == null || index == 0) {
-                      setter(() => index = 1);
-                    } else {
-                      setter(() => index = null);
-                    }
-                  },
-                )
-              ],
+    return Scaffold(
+      appBar: const ATAppBar(
+          leadingWidth: 30,
+          padding: EdgeInsets.only(left: 7),
+          leading: ATRoundedBackBtn(),
+          titleText: ATStrings.switchAccount),
+      body: SingleChildScrollView(
+        physics: const BouncingScrollPhysics(),
+        padding: const EdgeInsets.fromLTRB(15, 10, 15, 15),
+        child: Column(
+          children: <Widget>[
+            Text(
+              ATStrings.selectAcctTypeToProceed,
+              maxLines: 3,
+              style: context.textTheme.bodySmall
+                  ?.copyWith(color: ATColors.hexC2C2C2),
             ),
-          ),
-          bottomSheet: Padding(
-            padding: const EdgeInsets.fromLTRB(15, 5, 15, 50),
-            child: ATPlainElevatedBtn(
-              onPressed: index == null
-                  ? null
-                  : () {
-                      context.read<AcctTypeLandingAnimBloc>().reset();
-                      context.pushNamed(ATRoutes.SELECTED_ACCT);
-                    },
-              btnTitle: ATStrings.SWITCH,
+            const SizedBox(height: 20),
+            _SelectAcct(
+              title: ATStrings.creatorAccount,
+              subTitle: ATStrings.creatorAcctDesc,
+              imgPath: ATImgStrings.creatorAcctLogo,
+              isSelected: acctType == UpgradeAcctType.creator,
+              onTap: () {
+                context.read<AccountTypeBloc>().setAcctType(true);
+                context.read<AcctTypeLandingAnimBloc>().reset();
+                setState(() => acctType = acctType == 
+                  UpgradeAcctType.creator ? null : UpgradeAcctType.creator);
+              },
             ),
-          ),
-        );
-      }),
+            const SizedBox(height: 20),
+            _SelectAcct(
+              isSelected: acctType == UpgradeAcctType.business,
+              title: ATStrings.businessAcct,
+              subTitle: ATStrings.businessAcctDesc,
+              imgPath: ATImgStrings.businessAcctMicLogo,
+              onTap: () {
+                context.read<AccountTypeBloc>().setAcctType(false);
+                setState(() => acctType = acctType == 
+                  UpgradeAcctType.business ? null : UpgradeAcctType.business);
+              },
+            )
+          ],
+        ),
+      ),
+      bottomSheet: Padding(
+        padding: const EdgeInsets.fromLTRB(15, 5, 15, 50),
+        child: ATPlainElevatedBtn(
+          onPressed: acctType == null
+              ? null
+              : () {
+                  context.read<AcctTypeLandingAnimBloc>().reset();
+                  context.pushNamed(ATRoutes.selectedAcctOnboardScreen);
+                },
+          btnTitle: ATStrings.SWITCH,
+        ),
+      ),
     );
   }
 }

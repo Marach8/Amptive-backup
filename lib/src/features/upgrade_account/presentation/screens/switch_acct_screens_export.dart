@@ -1,4 +1,4 @@
-export 'selected_acct_landing_screen.dart';
+export 'selected_acct_onboard_screen.dart';
 export 'select_acct_type_screen.dart';
 export 'select_category_screen.dart';
 export 'subscription_plan_screen.dart';

@@ -42,8 +42,8 @@ class ATImgStrings {
   static const String topCreatorIcon = '$_svgPath/RANK BADGES.svg';
   static const String subscriberBadge = '$_svgPath/Subscribers badge.svg';
   static const String BIZ_ACCT_LOGO = '$_svgPath/Simplification (3).svg';
-  static const String BIZ_ACCT_LOGO_MIC = '$_svgPath/Simplification (1).svg';
-  static const String CREATOR_ACCT_LOGO = '$_svgPath/Simplification.svg';
+  static const String businessAcctMicLogo = '$_svgPath/Simplification (1).svg';
+  static const String creatorAcctLogo = '$_svgPath/Simplification.svg';
   static const String flutterWaveIcon = '$_svgPath/flutter_wave.svg';
   static const String appleIcon = '$_svgPath/apple_icon.svg';
   static const String PAYPAL_ICON = '$_svgPath/paypal.svg';

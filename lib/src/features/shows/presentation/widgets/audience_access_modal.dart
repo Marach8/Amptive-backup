@@ -6,7 +6,7 @@ import 'package:amptive/src/shared/radio_button.dart';
 import 'package:go_router/go_router.dart';
 import 'package:amptive/src/global_export.dart';
 import 'package:amptive/src/shared/modal_dismisser.dart';
-import '../../../switch_account/presentation/switch_acct/switch_acct_export.dart';
+import '../../../upgrade_account/presentation/switch_acct/switch_acct_export.dart';
 
 enum ProgramAccessType { free, paid }
 

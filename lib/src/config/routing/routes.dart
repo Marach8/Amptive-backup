@@ -51,7 +51,7 @@ import 'package:amptive/src/features/events/presentation/screens/list_hosted_eve
 import 'package:amptive/src/features/events/cubits/hosted_events_cubit.dart';
 import 'package:amptive/src/features/events/presentation/screens/preview_event_screen.dart';
 import 'package:amptive/src/features/events/data/models/response/event_response_model.dart';
-import 'package:amptive/src/features/switch_account/presentation/switch_acct/switch_acct_export.dart';
+import 'package:amptive/src/features/upgrade_account/presentation/switch_acct/switch_acct_export.dart';
 import 'package:amptive/src/features/wallet/presentation/screens/wallet_transactions_history_screen.dart';
 import 'package:amptive/src/features/onboarding/presentation/screens/onboarding_screen.dart';
 import 'package:amptive/src/features/onboarding/presentation/screens/post_onboarding_screen.dart';
@@ -492,10 +492,14 @@ final GoRouter amptiveAppRouter = GoRouter(
                         const SelectAcctTypeScreen(),
                     routes: <RouteBase>[
                       GoRoute(
-                          name: ATRoutes.SELECTED_ACCT,
-                          path: ATRoutes.SELECTED_ACCT,
-                          builder: (_, GoRouterState state) =>
-                              const SelectedAcctLandingScreen()),
+                          name: ATRoutes.selectedAcctOnboardScreen,
+                          path: ATRoutes.selectedAcctOnboardScreen,
+                          pageBuilder: (_, GoRouterState state) =>
+                            ATSlidingRouteTransition<UpgradeAcctType>(
+                              child: SelectedAcctOnboardScreen(
+                                acctType: state.extra as UpgradeAcctType,
+                              ),
+                            )),
                     ]),
                 GoRoute(
                     name: ATRoutes.SELECT_CAT,

@@ -1,9 +1,11 @@
 import 'package:amptive/src/config/utils/colors.dart';
+import 'package:amptive/src/config/utils/extensions/context_extensions.dart';
 import 'package:amptive/src/config/utils/font_sizes.dart';
 import 'package:amptive/src/config/utils/image_strings.dart';
 import 'package:amptive/src/config/utils/other_strings.dart';
 import 'package:amptive/src/config/routing/route_strings.dart';
 import 'package:amptive/src/config/utils/helper_functions.dart';
+import 'package:amptive/src/features/upgrade_account/presentation/screens/select_acct_type_screen.dart';
 import 'package:amptive/src/shared/annotated_region_widget.dart';
 import 'package:amptive/src/shared/back_button.dart';
 import 'package:amptive/src/shared/elevated_button_widget.dart';
@@ -14,65 +16,61 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import '../../../profile/bloc/profile_bloc_export.dart';
 
-class SelectedAcctLandingScreen extends StatelessWidget {
-  const SelectedAcctLandingScreen({super.key});
+class SelectedAcctOnboardScreen extends StatelessWidget {
+  const SelectedAcctOnboardScreen({super.key, required this.acctType});
+  final UpgradeAcctType acctType;
 
-  static const List<List<String>> creatorList = <List<String>>[
-    <String>[
-      ATImgStrings.CREATOR_MIC,
-      ATStrings.CREATE_LIVE_SHOWS_ND_EVENTS,
-      ATStrings.HOST_CAPTIVATING_PROGRAMS
+  static const Map<UpgradeAcctType, List<List<String>>> onboardContent =
+      <UpgradeAcctType, List<List<String>>>{
+    UpgradeAcctType.creator: <List<String>>[
+      <String>[
+        ATImgStrings.CREATOR_MIC,
+        ATStrings.CREATE_LIVE_SHOWS_ND_EVENTS,
+        ATStrings.HOST_CAPTIVATING_PROGRAMS
+      ],
+      <String>[
+        ATImgStrings.CREATOR_GIF,
+        ATStrings.RECEIVE_GIFTS_4RM_AUDIENCE,
+        ATStrings.GET_SUPPORT_4RM_FANS
+      ],
+      <String>[
+        ATImgStrings.CREATOR_GLOBE,
+        ATStrings.EARN_BY_COMPLETING_TASKS,
+        ATStrings.TAKE_TASK_ND_GET_REWARDS
+      ],
+      <String>[
+        ATImgStrings.CREATOR_LOCK,
+        ATStrings.ENABLE_SUB_4_UR_SHOW,
+        ATStrings.OFFER_XCLUSIVE_CONTENT
+      ]
     ],
-    <String>[
-      ATImgStrings.CREATOR_GIF,
-      ATStrings.RECEIVE_GIFTS_4RM_AUDIENCE,
-      ATStrings.GET_SUPPORT_4RM_FANS
-    ],
-    <String>[
-      ATImgStrings.CREATOR_GLOBE,
-      ATStrings.EARN_BY_COMPLETING_TASKS,
-      ATStrings.TAKE_TASK_ND_GET_REWARDS
-    ],
-    <String>[
-      ATImgStrings.CREATOR_LOCK,
-      ATStrings.ENABLE_SUB_4_UR_SHOW,
-      ATStrings.OFFER_XCLUSIVE_CONTENT
+    UpgradeAcctType.business: <List<String>>[
+      <String>[
+        ATImgStrings.BIZ_THUNDER,
+        ATStrings.PARTNER_WITH_CREATORS,
+        ATStrings.COLLABORATE_WITH_CREATORS
+      ],
+      <String>[
+        ATImgStrings.BIZ_TICKETS,
+        ATStrings.SELL_TICKETS,
+        ATStrings.MONETIZE_EVENTS
+      ],
+      <String>[
+        ATImgStrings.CREATOR_MIC,
+        ATStrings.HOST_BRANDED_AUDIO,
+        ATStrings.ENGAGE_AUDIENCE
+      ],
+      <String>[
+        ATImgStrings.BIZ_ARROW,
+        ATStrings.PROMOTE_UR_BUSINESS,
+        ATStrings.SHOWCASE_UR_PRODUCTS
+      ]
     ]
-  ];
-
-  static const List<List<String>> businessList = <List<String>>[
-    <String>[
-      ATImgStrings.BIZ_THUNDER,
-      ATStrings.PARTNER_WITH_CREATORS,
-      ATStrings.COLLABORATE_WITH_CREATORS
-    ],
-    <String>[
-      ATImgStrings.BIZ_TICKETS,
-      ATStrings.SELL_TICKETS,
-      ATStrings.MONETIZE_EVENTS
-    ],
-    <String>[
-      ATImgStrings.CREATOR_MIC,
-      ATStrings.HOST_BRANDED_AUDIO,
-      ATStrings.ENGAGE_AUDIENCE
-    ],
-    <String>[
-      ATImgStrings.BIZ_ARROW,
-      ATStrings.PROMOTE_UR_BUSINESS,
-      ATStrings.SHOWCASE_UR_PRODUCTS
-    ]
-  ];
+  };
 
   @override
   Widget build(BuildContext context) {
-    WidgetsBinding.instance.addPostFrameCallback((_) => Future<void>.delayed(
-        const Duration(milliseconds: 500),
-        () => context.mounted
-            ? context.read<AcctTypeLandingAnimBloc>().triggerNext(0)
-            : <dynamic, dynamic>{}));
-
-    final bool isCreator = context.read<AccountTypeBloc>().state;
-
+    final bool isCreator = acctType == UpgradeAcctType.creator;
     return ATAnnotatedRegion(
       statusBarColor: ATColors.transparent,
       child: Scaffold(
@@ -81,8 +79,8 @@ class SelectedAcctLandingScreen extends StatelessWidget {
               child: Column(
                 children: <Widget>[
                   SizedBox(
-                    height: ATHelperFuncs.getScreenHeight(context) * 0.3,
-                    width: ATHelperFuncs.getScreenWidth(context),
+                    height: context.screenHeight * 0.3,
+                    width: context.screenWidth,
                     child: Stack(
                       alignment: Alignment.topCenter,
                       children: <Widget>[
@@ -107,7 +105,7 @@ class SelectedAcctLandingScreen extends StatelessWidget {
                           bottom: 0,
                           child: ATImgLoader(
                               imgPath: isCreator
-                                  ? ATImgStrings.CREATOR_ACCT_LOGO
+                                  ? ATImgStrings.creatorAcctLogo
                                   : ATImgStrings.BIZ_ACCT_LOGO,
                               height: 70,
                               width: 80),
@@ -146,12 +144,8 @@ class SelectedAcctLandingScreen extends StatelessWidget {
                   const SizedBox(
                     height: 20,
                   ),
-                  ...(isCreator ? creatorList : businessList)
-                      .asMap()
-                      .entries
-                      .map((MapEntry<int, List<String>> entry) {
-                    final int index = entry.key;
-                    final List<String> eachList = entry.value;
+                  ...onboardContent[acctType]!.map((eachList) {
+                    final int index = eachList.indexOf(eachList);
                     return _CustomWidget(
                       imgPath: eachList.first,
                       subTitle: eachList.last,

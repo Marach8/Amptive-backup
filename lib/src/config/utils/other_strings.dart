@@ -462,13 +462,13 @@ class ATStrings {
   static const String title = 'Title';
   static const String toggleWhispers = 'Activate or de-activate whispers';
   static const String description = 'Description';
-  static const String SELECT_ACCT_TYPE =
+  static const String selectAcctTypeToProceed =
       'Select your choice account type to proceed.';
-  static const String CREATOR_ACCT = 'Creator Account';
-  static const String BIZ_ACCT = 'Business Account';
-  static const String CREATOR_ACCT_DESC =
+  static const String creatorAccount = 'Creator Account';
+  static const String businessAcct = 'Business Account';
+  static const String creatorAcctDesc =
       'Best for podcasters, artists, influencers, public figures etc.';
-  static const String BIZ_ACCT_DESC =
+  static const String businessAcctDesc =
       'Best for brands, organizations, service providers, local businesses etc.';
   static String setUpAcct(String acct) => "Set up $acct";
   static const String links = 'Links';
