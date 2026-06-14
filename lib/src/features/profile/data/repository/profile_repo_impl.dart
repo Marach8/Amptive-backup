@@ -40,7 +40,7 @@ class ProfileRepoImpl implements ProfileRepo {
       final Map<String, dynamic> body = userProfileData.toRemoteJson();
 
       final Response<dynamic> response = await networkService.patch(
-        ATEndpoints.updateUserProfile,
+        ATEndpoints.myself,
         data: body,
       );
       final UserProfileData updatedProfile = 

@@ -86,7 +86,7 @@ class ATRoutes {
   static const String editUsername = 'edit_username';
   static const String editBio = 'edit_bio';
   static const String editSocials = 'edit_socials';
-  static const String selectAcctType = 'switch_account';
+  static const String selectAcctTypeScreen = 'switch_account';
   static const String SELECTED_ACCT = 'creator_landing';
   static const String SELECT_CAT = 'select_category';
   static const String creatorSubPlanSetup = 'creator_sub_plan';

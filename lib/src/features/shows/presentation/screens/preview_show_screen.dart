@@ -288,4 +288,3 @@ class _SubWidgetState extends State<_SubWidget> {
     });
   }
 }
-

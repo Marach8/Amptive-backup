@@ -3,31 +3,30 @@ import 'package:amptive/src/config/services/local_storage_service/flutter_secure
 import 'package:amptive/src/config/services/local_storage_service/storage_service.dart';
 import 'package:amptive/src/config/utils/other_strings.dart';
 import 'package:amptive/src/features/auth/cubits/local_user_data_cubit.dart';
-import 'package:amptive/src/features/auth/data/models/response/auth_success_response_model.dart';
 import 'package:amptive/src/features/auth/data/repository/auth_repo.dart';
 import 'package:amptive/src/features/auth/data/repository/auth_repo_impl.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class LoginCubit extends Cubit<ATAppState<ATUser>> {
+class LoginCubit extends Cubit<ATAppState<UserProfileData>> {
   LoginCubit(
       {AuthRepo? mockAuthRepo, ATLocalStorageService? mockLocalStorageService})
       : authRepo = mockAuthRepo ?? AuthRepoImpl(),
         localStorageService =
             mockLocalStorageService ?? FlutterSecureStorageServiceImpl(),
-        super(const InitialState<ATUser>());
+        super(const InitialState<UserProfileData>());
 
   final AuthRepo authRepo;
   final ATLocalStorageService localStorageService;
 
   Future<void> loginUser({required Map<String, dynamic> param}) async {
-    emit(const LoadingState<ATUser>());
+    emit(const LoadingState<UserProfileData>());
+    
     try {
-      final ApiResponse<LoginResponseModel> response =
+      final ApiResponse<dynamic> response =
           await authRepo.loginUser(param: param);
-      response.when(successful: (Successful<LoginResponseModel> data) async {
-        final String? accessToken = data.data?.accessToken;
-        final String? refreshToken = data.data?.refreshToken;
-
+      response.when(successful: (Successful<dynamic> data) async {
+        final String? accessToken = data.data['data']?['access_token'];
+        final String? refreshToken = data.data['data']?['refresh_token'];
 
         if(accessToken != null){
           await localStorageService.set(ATStrings.accessToken, accessToken);
@@ -38,30 +37,21 @@ class LoginCubit extends Cubit<ATAppState<ATUser>> {
 
         await localStorageService.set(ATStrings.isExistingUser, 'true');
         
-        final UserProfileData cachedUserData = UserProfileData(
-          username: data.data?.user?.username,
-          email: data.data?.user?.email,
-          name: data.data?.user?.name,
-          userId: data.data?.user?.id,
-          dob: data.data?.user?.dob,
-          profilePhoto: data.data?.user?.pictureUrl,
-          followersCount: data.data?.user?.followersCount,
-          phoneNumber: data.data?.user?.phoneNumber,
-          subscribersCount: data.data?.user?.subscribersCount,
-          followingCount: data.data?.user?.followingCount,
-        );
+        final UserProfileData userProfileData = 
+          UserProfileData.fromRemoteJson(data.data['data']['user']);
+
         await localStorageService.setObject(
           ATStrings.cachedUserData,
-          cachedUserData.toLocalStorageJson(),
+          userProfileData.toLocalStorageJson(),
         );
-        emit(SuccessState<ATUser>(newData: data.data?.user,));
+        emit(SuccessState<UserProfileData>(newData: userProfileData));
       },
-      unSuccessful: (Unsuccessful<LoginResponseModel> error){
-        emit(FailureState<ATUser>(error.error.message));
+      unSuccessful: (Unsuccessful<dynamic> error){
+        emit(FailureState<UserProfileData>(error.error.message));
       }
-    );
+      );
     } catch (e) {
-      emit(FailureState<ATUser>('Unable to login user: $e'));
+      emit(FailureState<UserProfileData>('Unable to login user: $e'));
     }
   }
 }

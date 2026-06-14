@@ -486,8 +486,8 @@ final GoRouter amptiveAppRouter = GoRouter(
                       );
                     }),
                 GoRoute(
-                    name: ATRoutes.selectAcctType,
-                    path: ATRoutes.selectAcctType,
+                    name: ATRoutes.selectAcctTypeScreen,
+                    path: ATRoutes.selectAcctTypeScreen,
                     builder: (_, GoRouterState state) =>
                         const SelectAcctTypeScreen(),
                     routes: <RouteBase>[

@@ -108,7 +108,8 @@ class __SubWidgetState extends State<_SubWidget> {
     _descStreamCntrl.add(widget.editableEvent.description ?? '');
     _activateBtn.value = widget.editableEvent.coverUrl != null;
 
-    selectedDescription = widget.editableEvent.description ?? ATStrings.tellListenersAboutYourEvent;
+    selectedDescription = widget.editableEvent.description 
+      ?? ATStrings.tellListenersAboutYourEvent;
     selectedCapacity = widget.editableEvent.capacity ?? 'Unlimited';
     selectedCommunity = widget.editableEvent.community;
     selectedCohosts = widget.editableEvent.coHosts;
@@ -740,7 +741,7 @@ class __SubWidgetState extends State<_SubWidget> {
                         .map((HashTag tag) => tag.id ?? '')
                         .toList(),
                       coHostIds: (selectedCohosts ?? <User>[])
-                        .map((User cohost) => cohost.userId ?? '')
+                        .map((User cohost) => cohost.userId)
                         .toList(),
                       title: _titleCntrl.text.trim(),
                       description: selectedDescription,

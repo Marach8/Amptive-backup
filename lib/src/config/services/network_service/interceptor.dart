@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:amptive/src/config/services/local_storage_service/storage_service.dart';
 import 'package:amptive/src/config/utils/other_strings.dart';
 import 'package:dio/dio.dart';
@@ -18,7 +20,9 @@ class ATInterceptorClass extends Interceptor {
     RequestOptions options,
     RequestInterceptorHandler handler,
   ) async {
-    if (options.path.contains('auth/') && !options.path.contains('logout') && !options.path.contains('set-pin') ) {
+    if (options.path.contains('auth/') && 
+      !options.path.contains('logout') && 
+      !options.path.contains('set-pin') ) {
       return handler.next(options);
     }
 
@@ -58,6 +62,8 @@ class AuthGuardCubit extends Cubit<bool> {
   bool _hasHandledUnAuthentication = false;
 
   void triggerUnauthenticated() {
+    log('This is the value of hasHandledAuth $_hasHandledUnAuthentication');
+    
     if (_hasHandledUnAuthentication) return;
 
     _hasHandledUnAuthentication = true;

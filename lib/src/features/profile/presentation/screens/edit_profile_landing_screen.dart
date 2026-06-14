@@ -203,8 +203,10 @@ class EditProfileScreen extends StatelessWidget {
                                   ? ATStrings.creator
                                   : ATStrings.business,
                               onTap: () async {
-                                context.pushNamed(ATRoutes.selectAcctType);
+                                context.pushNamed(ATRoutes.selectAcctTypeScreen);
                               }),
+
+                          const SizedBox(height: 30),
                         ],
                       ),
                     ),

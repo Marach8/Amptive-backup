@@ -74,7 +74,7 @@ class DiscoverRepoImpl implements DiscoverRepo {
   }) async {
     try {
       final Response<dynamic> response = await networkService.get(
-        ATEndpoints.getUsers,
+        ATEndpoints.users,
         queryParameters: <String, dynamic>{
           'page': page,
           'pageSize': pageSize,

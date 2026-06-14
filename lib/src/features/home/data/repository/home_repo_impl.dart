@@ -24,7 +24,7 @@ class HomeRepoImpl implements HomeRepo {
       {required String targetUserId}) async {
     try {
       final Response<dynamic> response = await networkService.delete(
-        '${ATEndpoints.users}/$targetUserId/follow',
+        '${ATEndpoints.usersShows}/$targetUserId/follow',
       );
 
       return Successful<FollowingStatus>(
@@ -43,7 +43,7 @@ class HomeRepoImpl implements HomeRepo {
       {required String targetUserId}) async {
     try {
       final Response<dynamic> response = await networkService.post(
-        '${ATEndpoints.users}/$targetUserId/follow',
+        '${ATEndpoints.usersShows}/$targetUserId/follow',
       );
 
       return Successful<FollowingStatus>(
