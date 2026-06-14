@@ -4,9 +4,10 @@ import 'package:amptive/src/config/utils/extensions/context_extensions.dart';
 import 'package:amptive/src/config/utils/dialogs/app_notification_dialog.dart';
 import 'package:amptive/src/features/profile/bloc/animation_bloc.dart';
 import 'package:amptive/src/features/profile/bloc/creator_or_biz_bloc.dart';
-import 'package:amptive/src/features/profile/cubits/create_professional_profile_cubit.dart';
-import 'package:amptive/src/features/profile/data/models/request/create_professional_profile_request.dart';
+import 'package:amptive/src/features/upgrade_account/cubits/upgrade_account_cubit.dart';
+import 'package:amptive/src/features/profile/data/models/request/upgrade_account_data.dart';
 import 'package:amptive/src/shared/annotated_region_widget.dart';
+import 'package:amptive/src/shared/app_bar_widget.dart';
 import 'package:amptive/src/shared/back_button.dart';
 import 'package:amptive/src/shared/elevated_button_widget.dart';
 import 'package:amptive/src/shared/textformfield_widget.dart';
@@ -24,157 +25,135 @@ class CoHostFeeSetupScreen extends StatefulWidget {
 }
 
 class _CoHostFeeSetupScreenState extends State<CoHostFeeSetupScreen> {
-  late final TextEditingController _cntrl;
-  final String defaultFee = '0';
+  late final TextEditingController _cntrl = 
+    TextEditingController(text: '0');
+  bool showInfo = false;
 
-  @override
-  void initState() {
+  @override 
+  void initState(){
     super.initState();
-    final int? selectedFee = context.read<CohostFeeSetupBloc>().state.first;
-    _cntrl = TextEditingController(
-        text: selectedFee != null ? selectedFee.toString() : defaultFee)
-      ..addListener(_handleBtnActivation);
-  }
-
-  void _handleBtnActivation() {
-    ATHelperFuncs.callDebouncer(
-        500,
-        () => context
-            .read<CohostFeeSetupBloc>()
-            .selectFee(int.tryParse(_cntrl.text.trim())));
+    WidgetsBinding.instance.addPostFrameCallback(
+      (_) {
+        Future<void>.delayed(
+          const Duration(seconds: 1),
+          (){
+            setState(() => showInfo = true);
+          }
+        );
+      },
+    );
   }
 
   @override
   void dispose() {
-    _cntrl.removeListener(_handleBtnActivation);
     _cntrl.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider<CreateProfessionalProfileCubit>(
-        create: (_) => CreateProfessionalProfileCubit(),
-        child: ATAnnotatedRegion(
-          child: ATAnnotatedRegion(
-            child: Scaffold(
-              body: SingleChildScrollView(
-                padding: const EdgeInsets.fromLTRB(0, 50, 0, 56),
-                physics: const BouncingScrollPhysics(),
-                child: Column(
-                  children: <Widget>[
-                    Padding(
-                      padding: const EdgeInsets.fromLTRB(7, 0, 15, 0),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: <Widget>[
-                          const ATRoundedBackBtn(),
-                          Text(ATStrings.COHOST_FEE_SETUP,
-                              style: Theme.of(context).textTheme.bodyMedium),
-                          const SizedBox(
-                            width: 30,
-                          ),
-                        ],
-                      ),
+    return ATAnnotatedRegion(
+      child: Scaffold(
+        appBar: const ATAppBar(
+          leadingWidth: 30,
+          leading: ATRoundedBackBtn(),
+          titleText: ATStrings.cohostFeeSetup,
+          padding: EdgeInsets.only(left: 7),
+        ),
+        body: SingleChildScrollView(
+          padding: const EdgeInsets.fromLTRB(15, 10, 15, 20),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              AnimatedSwitcher(
+                duration: const Duration(milliseconds: 500),
+                switchInCurve: Curves.easeIn,
+                transitionBuilder: (
+                  Widget child,
+                  Animation<double> animation,
+                ) {
+                  return FadeTransition(
+                    opacity: animation,
+                    child: SlideTransition(
+                      position: Tween<Offset>(
+                        begin: const Offset(0, -0.3),
+                        end: Offset.zero,
+                      ).animate(animation),
+                      child: child,
                     ),
-                    Padding(
-                      padding: const EdgeInsets.fromLTRB(15, 20, 15, 20),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisSize: MainAxisSize.min,
-                        children: <Widget>[
-                          BlocSelector<CohostFeeSetupBloc, List<int?>, int?>(
-                              selector: (List<int?> state) => state.last,
-                              builder: (_, int? state) {
-                                if (state == null){
-                                  return const SizedBox.shrink();
-                                  }
-                                return const CohostFeeDescInfo();
-                              }),
-                          ATTextFormField(
-                              controller: _cntrl,
-                              fillColor: ATColors.white.withValues(alpha: 0.1),
-                              keyboardType: TextInputType.number,
-                              textInputAction: TextInputAction.done,
-                              disableBlueBorder: true,
-                              enabledBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(14),
-                                  borderSide:
-                                      BorderSide(color: ATColors.transparent)),
-                              prefixIcon: Padding(
-                                padding: const EdgeInsets.only(left: 15),
-                                child: Text(
-                                  ATStrings.nairaText,
-                                  style: context.textTheme.headlineMedium,
-                                ),
-                              ),
-                              contentPadding: EdgeInsets.zero),
-                          const SizedBox(height: 10),
-                          BlocSelector<CohostFeeSetupBloc, List<int?>, int?>(
-                              selector: (List<int?> state) => state.first,
-                              builder: (_, int? state) {
-                                return RowOfCustomFees(
-                                  onFeeTap: (int tappedFee) {
-                                    _cntrl.text = tappedFee.toString();
-                                    context
-                                        .read<CohostFeeSetupBloc>()
-                                        .selectFee(tappedFee);
-                                  },
-                                );
-                              }),
-                          const SizedBox(height: 10),
-                          Text(
-                            ATStrings.ALLOW_FREE_COHOSTING,
-                            maxLines: 2,
-                            style: Theme.of(context)
-                                .textTheme
-                                .titleSmall
-                                ?.copyWith(
-                                  fontSize: ATSizes.size11,
-                                ),
-                          ),
-                        ],
-                      ),
-                    )
-                  ],
+                  );
+                },
+                child: showInfo
+                  ? CohostFeeDescInfo(
+                    onClose: () => setState(() => showInfo = false),
+                    key: const ValueKey<String>('child'),
+                  )
+                  : const SizedBox.shrink(
+                    key: ValueKey<String>('empty')),
+              ),
+              ATTextFormField(
+                controller: _cntrl,
+                keyboardType: TextInputType.number,
+                textInputAction: TextInputAction.done,
+                disableBlueBorder: true,
+                prefixIcon: Padding(
+                  padding: const EdgeInsets.only(left: 15),
+                  child: Text(
+                    ATStrings.nairaText,
+                    style: context.textTheme.headlineMedium,
+                  ),
                 ),
               ),
-              bottomNavigationBar: const Padding(
-                padding: EdgeInsets.fromLTRB(15, 5, 15, 60),
-                child: _BottomSheetContent(),
+              const SizedBox(height: 10),
+              RowOfCustomFees(
+                onFeeTap: (int tappedFee) {
+                  _cntrl.text = tappedFee.toString();
+                },
               ),
-            ),
+              const SizedBox(height: 10),
+              Text(
+                ATStrings.freeCohosting,
+                maxLines: 2,
+                style: context.textTheme.titleSmall
+                  ?.copyWith(fontSize: 11),
+              ),
+            ],
           ),
-        ));
+        ),
+        bottomNavigationBar: Padding(
+          padding: const EdgeInsets.fromLTRB(15, 5, 15, 60),
+          child: _BottomSheetContent(cntrl: _cntrl),
+        ),
+      ),
+    );
   }
 }
 
 class _BottomSheetContent extends StatelessWidget {
-  const _BottomSheetContent();
+  const _BottomSheetContent({required this.cntrl});
+
+  final TextEditingController cntrl;
 
   @override
   Widget build(BuildContext context) {
-    final int? selectedFee =
-        context.select((CohostFeeSetupBloc bloc) => bloc.state.first);
-    final bool shouldActivate = selectedFee != null && selectedFee != 0;
 
-    return BlocConsumer<CreateProfessionalProfileCubit, ATAppState<dynamic>>(
-      listener: (BuildContext context, ATAppState<dynamic> state) {
-        if (state is FailureState) {
+    return BlocConsumer<UpgradeAccountCubit, ATAppState<dynamic>>(
+      listener: (_, ATAppState<dynamic> state) {
+        if (state is FailureState<dynamic>) {
           showAppNotification2(
-              context: context,
-              text: state.message,
-              type: NotificationType.failure);
+            context: context,
+            text: state.message,
+            type: NotificationType.failure
+          );
         }
 
-        if (state is SuccessState) {
-          context.read<SwitchAcctSuccessAnimBloc>().reset();
-          context.pushNamed(ATRoutes.CREATOR_SUCCESS);
+        if (state is SuccessState<dynamic>) {
+          context.pushNamed(ATRoutes.accountUpgradeSuccessScreen);
         }
       },
-      builder: (BuildContext context, ATAppState<dynamic> cubitState) {
-        final bool isLoading = cubitState is LoadingState;
-
+      builder: (_, ATAppState<dynamic> state) {
+        final bool isLoading = state is LoadingState<dynamic>;
         return Column(
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
@@ -182,38 +161,39 @@ class _BottomSheetContent extends StatelessWidget {
               'Amptive charges 0% fee on payment from creators',
               textAlign: TextAlign.center,
               maxLines: 2,
-              style: Theme.of(context).textTheme.labelSmall?.copyWith(
-                    color: ATColors.white.withValues(alpha: 0.4),
-                  ),
+              style: context.textTheme.labelSmall?.copyWith(
+                color: ATColors.white.withValues(alpha: 0.4),
+              ),
             ),
             const SizedBox(height: 10),
-            ATPlainElevatedBtn(
-                onPressed: (shouldActivate && !isLoading)
+            ValueListenableBuilder<TextEditingValue>(
+              valueListenable: cntrl,
+              builder: (_, TextEditingValue value, __) {
+                final bool shouldActivate = 
+                  value.text.isNotEmpty && value.text != '0';
+                return ATPlainElevatedBtn(
+                  isLoading: isLoading,
+                  onPressed: shouldActivate
                     ? () {
-                        final int feeValue = selectedFee;
-                        final bool isCreator =
-                            context.read<AccountTypeBloc>().state;
-
+                        final int feeValue = int.tryParse(value.text) ?? 0;
                         UpgradeProfileData().copyWith(
                           coHostFee: feeValue,
-                          profileType: isCreator ? 'creator' : 'business',
                         );
-                        context
-                            .read<CreateProfessionalProfileCubit>()
-                            .createProfessionalProfile(
-                                param: UpgradeProfileData());
+                        context.read<UpgradeAccountCubit>()
+                          .upgradeAccount(param: UpgradeProfileData());
                       }
                     : null,
-                isLoading: isLoading,
-                btnTitle: isLoading ? null : ATStrings.cContinue),
+                  btnTitle: ATStrings.cContinue
+                );
+              }
+            ),
             const SizedBox(height: 15),
             InkWell(
-              onTap:
-                  isLoading ? null : () {}, 
+              onTap: isLoading ? null : () {}, 
               radius: 5,
               child: Text(
                 ATStrings.setupLater,
-                style: Theme.of(context).textTheme.bodyLarge,
+                style: context.textTheme.bodyLarge,
               ),
             ),
           ],
@@ -222,4 +202,3 @@ class _BottomSheetContent extends StatelessWidget {
     );
   }
 }
-

@@ -263,7 +263,7 @@ class _PaidAccessWidget extends StatelessWidget {
                 onTap: () async {
                   final SubscriptionPlanData? selectedSubPlan =
                       await context.pushNamed(
-                    ATRoutes.creatorSubPlanSetup,
+                    ATRoutes.subPlanSetupScreen,
                     extra: initialSubPlan,
                   );
                   if (selectedSubPlan != null) {

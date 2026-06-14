@@ -11,7 +11,7 @@ class CreatorOrBusinessSetupLoading extends StatelessWidget {
   static const List<String> creatorList = <String>[
     ATStrings.CAT_SELECETED,
     ATStrings.SUB_FEE_SETUP,
-    ATStrings.COHOST_FEE_SETUP
+    ATStrings.cohostFeeSetup
   ];
   static const List<String> bizList = <String>[
     ATStrings.CAT_SELECETED,

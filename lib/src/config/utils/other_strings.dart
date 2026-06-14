@@ -159,7 +159,7 @@ class ATStrings {
   static const String want2ChangeUserName =
       'Do you want to change your username?';
   static const String CHANGE = 'Change';
-  static const String DELETE_PLAN = 'Delete plan';
+  static const String deletePlan = 'Delete plan';
   static const String delete = 'Delete';
   static const String SAVE = 'Save';
   static const String TAP_D_RECORD_BTN = 'Tap the record button';
@@ -680,13 +680,13 @@ class ATStrings {
   static const String amptiveForBusiness = 'Amptive for Business';
   static const String CONNECT_SELL = 'Connect, sell and grow';
   static const String subScriptionPlan = 'Subscription Plan';
-  static const String COHOST_FEE_SETUP = 'Co-host Fee Setup';
+  static const String cohostFeeSetup = 'Co-host Fee Setup';
   static const String SETTING_UP_ACCT = 'Setting up account';
   static const String ALMOST_THERE = 'Almost there';
-  static const String WHAT_IS_COHOST_FEE = 'What is Co-host fee?';
-  static const String COHOST_FEE_DESC =
+  static const String whatIsCohostFee = 'What is Co-host fee?';
+  static const String cohostFeeDesc =
       'This is a fee you will charge creators for co-hosting their events or shows';
-  static const String ALLOW_FREE_COHOSTING =
+  static const String freeCohosting =
       "Click 'Setup later' to co-host for free.";
   static const String addNew = 'Add new';
   static const String AMTPIVE_CHARGES_4_COHOSTING =

@@ -1,3 +1,5 @@
+import 'package:amptive/src/features/upgrade_account/presentation/screens/select_acct_type_screen.dart';
+
 class UpgradeProfileData {
   // Factory constructor (singleton)
   factory UpgradeProfileData() {
@@ -11,18 +13,18 @@ class UpgradeProfileData {
   // Static instance
   static UpgradeProfileData? _instance;
 
-  String? profileType;  
+  AccountType? accountType;  
   String? category;
   double? subAmount;
   int? coHostFee;
 
   void copyWith({
-    String? profileType,
+    AccountType? accountType,
     String? category,
     double? subAmount,
     int? coHostFee,
   }) {
-    this.profileType = profileType ?? this.profileType;
+    this.accountType = accountType ?? this.accountType;
     this.category = category ?? this.category;
     this.subAmount = subAmount ?? this.subAmount;
     this.coHostFee = coHostFee ?? this.coHostFee;
@@ -30,17 +32,10 @@ class UpgradeProfileData {
 
   Map<String, dynamic> toJson() {
     return <String, dynamic>{
-      if (profileType != null) 'profile_type': profileType,
+      if (accountType != null) 'profile_type': accountType?.toJson(),
       if (category != null) 'category': category,
       if (subAmount != null) 'subscription_amount': subAmount,
       if (coHostFee != null) 'co_host_fee': coHostFee,
     };
-  }
-
-  void reset() {
-    profileType = null;
-    category = null;
-    subAmount = null;
-    coHostFee = null;
   }
 }

@@ -1,7 +1,6 @@
 import 'package:amptive/src/config/utils/extensions/context_extensions.dart';
-import 'package:amptive/src/features/profile/bloc/profile_bloc_export.dart';
-import 'package:amptive/src/features/profile/data/models/empty.dart';
-import 'package:amptive/src/features/profile/data/models/request/create_professional_profile_request.dart';
+import 'package:amptive/src/features/profile/data/models/request/upgrade_account_data.dart';
+import 'package:amptive/src/features/upgrade_account/cubits/select_category_cubit.dart';
 import 'package:amptive/src/global_export.dart';
 import 'package:amptive/src/shared/annotated_region_widget.dart';
 import 'package:amptive/src/shared/app_bar_widget.dart';
@@ -10,21 +9,14 @@ import 'package:amptive/src/shared/image_loader_widget.dart';
 import 'package:amptive/src/shared/radio_button.dart';
 import 'package:amptive/src/shared/sliver_header_delegate.dart';
 import 'package:amptive/src/shared/textformfield_widget.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:provider/provider.dart';
 import '../switch_acct/switch_acct_export.dart';
 
-
-class SelectCategoryScreen extends StatefulWidget {
+class SelectCategoryScreen extends StatelessWidget {
   const SelectCategoryScreen({super.key, required this.acctType});
-  final UpgradeAcctType acctType;
 
-  @override
-  State<SelectCategoryScreen> createState() => _SelectCategoryScreenState();
-}
-
-class _SelectCategoryScreenState extends State<SelectCategoryScreen> {
-  final ValueNotifier<String> _selectedCategory = ValueNotifier<String>('');
+  final AccountType acctType;
 
   static const List<String> creatorCategories = <String>[
     "AI & Machine Learning",
@@ -139,7 +131,7 @@ class _SelectCategoryScreenState extends State<SelectCategoryScreen> {
     "Virtual Reality (VR) & Metaverse",
     "War & Political History",
     "Workout Routines & Tips",
-    "Others"
+    "Others",
   ];
 
   static const List<String> businessCategories = <String>[
@@ -165,146 +157,199 @@ class _SelectCategoryScreenState extends State<SelectCategoryScreen> {
     "Electronics",
     "Clothing & Accesories",
     "Baby",
-    "Automotitive & Transportation"
+    "Automotitive & Transportation",
   ];
-
-  @override 
-  void dispose(){
-    _selectedCategory.dispose();
-    super.dispose();
-  }
 
   @override
   Widget build(BuildContext context) {
-    final bool isCreator =
-      widget.acctType == UpgradeAcctType.creator;
-    final List<String> activeCategories = isCreator 
-      ? creatorCategories : businessCategories;
+    final bool isCreator = acctType == AccountType.creator;
+    final List<String> activeCategories =
+        isCreator ? creatorCategories : businessCategories;
 
-    return ATAnnotatedRegion(
-      child: Scaffold(
-        appBar: ATAppBar(
-          leadingWidth: 30,
-          padding: const EdgeInsets.only(left: 7),
-          leading: const ATRoundedBackBtn(),
-          titleText: isCreator
-            ? ATStrings.amptiveForCreators
-            : ATStrings.amptiveForBusiness,
-        ),
-        body: CustomScrollView(
-          slivers: <Widget>[
-            SliverToBoxAdapter(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Padding(
-                    padding:
-                        const EdgeInsets.fromLTRB(15, 0, 15, 0),
-                    child: Text(
-                      ATStrings.selectCategory,
-                      style: context.textTheme.headlineLarge,
-                    ),
-                  ),
-                  Padding(
-                    padding:
-                        const EdgeInsets.fromLTRB(15, 8, 15, 20),
-                    child: Text(
-                      ATStrings.selectCategoryDesc,
-                      maxLines: 2,
-                      style: context.textTheme.titleMedium
-                        ?.copyWith(color: ATColors.hexCDCDCD),
-                    ),
-                  ),
-                ],
-              )
-            ),
-            SliverPersistentHeader(
-              pinned: true,
-              delegate: ATSliverHDelegate(
-                maxExt: 60, minExt: 60,
-                child: Material(
-                  color: ATColors.black,
-                  child: Padding(
-                    padding: const EdgeInsets.fromLTRB(13, 0, 15, 20),
-                    child: ATTextFormField(
-                      onChanged: (String input) {},
-                      textInputAction: TextInputAction.done,
-                      hintText: ATStrings.search4Category,
-                      prefixIcon: Padding(
-                        padding: const EdgeInsets.only(left: 10),
-                        child: ATImgLoader(
-                          height: 25, width: 25,
-                          color: ATColors.white,
-                          imgPath: ATImgStrings.outlinedSearch,
-                        ),
-                      ),
-                    ),
-                  ),
-                )
-              )
-            ),
-            SliverList(
-              delegate: SliverChildBuilderDelegate(
-                (_, int index) {
-                  final String category = activeCategories[index];
-                  return ValueListenableBuilder<String>(
-                    valueListenable: _selectedCategory,
-                    child: Flexible(
+    return BlocProvider<SelectCategoryCubit>(
+      create: (_) => SelectCategoryCubit(),
+      child: ATAnnotatedRegion(
+        child: Scaffold(
+          appBar: ATAppBar(
+            leadingWidth: 30,
+            padding: const EdgeInsets.only(left: 7),
+            leading: const ATRoundedBackBtn(),
+            titleText: isCreator
+                ? ATStrings.amptiveForCreators
+                : ATStrings.amptiveForBusiness,
+          ),
+          body: CustomScrollView(
+            slivers: <Widget>[
+              SliverToBoxAdapter(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(15, 0, 15, 0),
                       child: Text(
-                        category,
-                        style: context.textTheme.bodySmall
-                          ?.copyWith(fontSize: 16),
+                        ATStrings.selectCategory,
+                        style: context.textTheme.headlineLarge,
                       ),
                     ),
-                    builder: (_, String value, Widget? child) {
-                      final bool isSelected = value == category;
-                      return ATContainer(
-                        onTap: (){
-                          _selectedCategory.value = isSelected ? '' : category;
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(15, 8, 15, 20),
+                      child: Text(
+                        ATStrings.selectCategoryDesc,
+                        maxLines: 2,
+                        style: context.textTheme.titleMedium
+                            ?.copyWith(color: ATColors.hexCDCDCD),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              SliverPersistentHeader(
+                pinned: true,
+                delegate: ATSliverHDelegate(
+                  maxExt: 60,
+                  minExt: 60,
+                  child: Material(
+                    color: ATColors.black,
+                    child: Padding(
+                      padding: const EdgeInsets.fromLTRB(13, 0, 15, 20),
+                      child: BlocSelector<SelectCategoryCubit,
+                          SelectCategoryParams, String>(
+                        selector: (SelectCategoryParams state) =>
+                            state.searchQuery,
+                        builder: (
+                          BuildContext context,
+                          String searchQuery,
+                        ) {
+                          return ATTextFormField(
+                            onChanged: (String input) {
+                              context
+                                  .read<SelectCategoryCubit>()
+                                  .updateSearchQuery(input);
+                            },
+                            textInputAction: TextInputAction.done,
+                            hintText: ATStrings.search4Category,
+                            prefixIcon: Padding(
+                              padding: const EdgeInsets.only(left: 10),
+                              child: ATImgLoader(
+                                height: 25,
+                                width: 25,
+                                color: ATColors.white,
+                                imgPath: ATImgStrings.outlinedSearch,
+                              ),
+                            ),
+                          );
                         },
-                        padding: const EdgeInsets.fromLTRB(15, 10, 18, 10),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: <Widget>[
-                            child!,
-                            ATRadioBtn(isSelected: isSelected)
-                          ],
-                        ),
-                      );
-                    }
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+              BlocSelector<SelectCategoryCubit, SelectCategoryParams,
+                  List<String>>(
+                selector: (SelectCategoryParams state) {
+                  final String normalizedSearchQuery = state.searchQuery.trim();
+
+                  if (normalizedSearchQuery.isEmpty) {
+                    return activeCategories;
+                  }
+
+                  return activeCategories
+                      .where(
+                        (String category) => category
+                            .toLowerCase()
+                            .contains(normalizedSearchQuery.toLowerCase()),
+                      )
+                      .toList();
+                },
+                builder: (BuildContext context, List<String> categories) {
+                  return SliverList(
+                    delegate: SliverChildBuilderDelegate(
+                      (_, int index) {
+                        final String category = categories[index];
+
+                        return BlocSelector<SelectCategoryCubit,
+                            SelectCategoryParams, String?>(
+                          selector: (SelectCategoryParams state) =>
+                              state.selectedCategory,
+                          builder: (
+                            BuildContext context,
+                            String? selectedCategory,
+                          ) {
+                            final bool isSelected =
+                                selectedCategory == category;
+
+                            return ATContainer(
+                              onTap: () {
+                                context
+                                    .read<SelectCategoryCubit>()
+                                    .selectCategory(
+                                      isSelected ? null : category,
+                                    );
+                              },
+                              padding:
+                                  const EdgeInsets.fromLTRB(15, 10, 18, 10),
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: <Widget>[
+                                  Flexible(
+                                    child: Text(
+                                      category,
+                                      style: context.textTheme.bodySmall
+                                          ?.copyWith(fontSize: 16),
+                                    ),
+                                  ),
+                                  ATRadioBtn(isSelected: isSelected),
+                                ],
+                              ),
+                            );
+                          },
+                        );
+                      },
+                      childCount: categories.length,
+                    ),
                   );
                 },
-                childCount: activeCategories.length,
               ),
-            )
-          ],
+              const SliverToBoxAdapter(child: SizedBox(height: 120)),
+            ],
+          ),
+          bottomSheet:
+              BlocSelector<SelectCategoryCubit, SelectCategoryParams, String?>(
+            selector: (SelectCategoryParams state) => state.selectedCategory,
+            builder: (BuildContext context, String? selectedCategory) {
+              final double bottomInset =
+                  MediaQuery.viewInsetsOf(context).bottom;
+              final double bottom = bottomInset == 0 ? 50.0 : 15.0;
+
+              return Padding(
+                padding: EdgeInsets.fromLTRB(15, 10, 15, bottom),
+                child: ATPlainElevatedBtn(
+                  onPressed: selectedCategory == null
+                      ? null
+                      : () {
+                          UpgradeProfileData().copyWith(
+                            category: selectedCategory,
+                          );
+
+                          const SubscriptionPlanData incoming =
+                              SubscriptionPlanData(
+                            entryPoint:
+                                SubPlanScreenEntryPoint.creatorProfileSetup,
+                          );
+
+                          context.pushNamed(
+                            ATRoutes.subPlanSetupScreen,
+                            extra: incoming,
+                          );
+                        },
+                  btnTitle: ATStrings.setupSubPlan,
+                ),
+              );
+            },
+          ),
         ),
-        bottomSheet: ValueListenableBuilder<String>(
-          valueListenable: _selectedCategory,
-          builder: (BuildContext context, String value, Widget? child) {
-          final double bottomInset = MediaQuery.viewInsetsOf(context).bottom;
-          final double bottom = bottomInset == 0 ? 50.0 : 15.0;
-          return Padding(
-            padding: EdgeInsets.fromLTRB(15, 10, 15, bottom),
-            child: ATPlainElevatedBtn(
-              onPressed: value.isEmpty
-                  ? null
-                  : () {
-                      UpgradeProfileData().copyWith(category: value);
-
-                      const SubscriptionPlanData incoming =
-                        SubscriptionPlanData(
-                            entryPoint: SubPlanScreenEntryPoint
-                                .creatorProfileSetup);
-
-                      context.pushNamed(ATRoutes.creatorSubPlanSetup,
-                          extra: incoming);
-                    },
-              btnTitle: ATStrings.setupSubPlan,
-            ),
-          );
-        }),
-      )
+      ),
     );
   }
 }

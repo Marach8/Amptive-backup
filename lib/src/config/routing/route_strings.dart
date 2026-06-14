@@ -89,9 +89,9 @@ class ATRoutes {
   static const String selectAcctTypeScreen = 'switch_account';
   static const String selectedAcctOnboardScreen = 'creator_landing';
   static const String selectCategoriesScreen = 'select_category';
-  static const String creatorSubPlanSetup = 'creator_sub_plan';
-  static const String cohostFeeSetup = 'co_host_fee_setup';
-  static const String CREATOR_SUCCESS = 'creator_success';
+  static const String subPlanSetupScreen = 'creator_sub_plan';
+  static const String cohostFeeSetupScreen = 'co_host_fee_setup';
+  static const String accountUpgradeSuccessScreen = 'creator_success';
   static const String WALLET_ONBOARDING = 'wallet_landing';
   static const String WALLET_PIN_SETUP = 'wallet_pin_setup';
   static const String securityQuestionScreen = 'security_question';

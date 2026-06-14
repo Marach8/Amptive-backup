@@ -1,5 +1,6 @@
 import 'package:amptive/src/config/config_export.dart';
 import 'package:amptive/src/config/utils/extensions/context_extensions.dart';
+import 'package:amptive/src/features/profile/data/models/request/upgrade_account_data.dart';
 import 'package:amptive/src/shared/annotated_region_widget.dart';
 import 'package:amptive/src/shared/app_bar_widget.dart';
 import 'package:amptive/src/shared/back_button.dart';
@@ -8,11 +9,28 @@ import 'package:amptive/src/shared/divider_widget.dart';
 import 'package:amptive/src/shared/elevated_button_widget.dart';
 import 'package:amptive/src/shared/image_loader_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import '../../../profile/bloc/profile_bloc_export.dart';
 
-enum UpgradeAcctType{creator, business}
+enum AccountType {
+  creator(value: 'creator'),
+  business(value: 'business'),
+  regular(value: 'regular');
+
+  const AccountType({
+    required this.value,
+  });
+
+  final String value;
+
+  String toJson() => value;
+
+  static AccountType fromJson(String? val) {
+    return AccountType.values.firstWhere(
+      (AccountType type) => type.value == val,
+      orElse: () => AccountType.regular,
+    );
+  }
+}
 
 class SelectAcctTypeScreen extends StatefulWidget {
   const SelectAcctTypeScreen({super.key});
@@ -22,68 +40,68 @@ class SelectAcctTypeScreen extends StatefulWidget {
 }
 
 class _SelectAcctTypeScreenState extends State<SelectAcctTypeScreen> {
-  UpgradeAcctType? acctType;
+  AccountType? acctType;
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: const ATAppBar(
-          leadingWidth: 30,
-          padding: EdgeInsets.only(left: 7),
-          leading: ATRoundedBackBtn(),
-          titleText: 'Account Type'),
-      body: SingleChildScrollView(
-        physics: const BouncingScrollPhysics(),
-        padding: const EdgeInsets.fromLTRB(15, 10, 15, 15),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            Text(
-              ATStrings.selectAcctTypeToProceed,
-              maxLines: 3,
-              style: context.textTheme.bodySmall
-                  ?.copyWith(color: ATColors.hexC2C2C2),
-            ),
-            const SizedBox(height: 20),
-            _SelectAcct(
-              title: ATStrings.creatorAccount,
-              subTitle: ATStrings.creatorAcctDesc,
-              imgPath: ATImgStrings.creatorAcctLogo,
-              isSelected: acctType == UpgradeAcctType.creator,
-              onTap: () {
-                context.read<AccountTypeBloc>().setAcctType(true);
-                context.read<AcctTypeLandingAnimBloc>().reset();
-                setState(() => acctType = acctType == 
-                  UpgradeAcctType.creator ? null : UpgradeAcctType.creator);
-              },
-            ),
-            const SizedBox(height: 20),
-            _SelectAcct(
-              isSelected: acctType == UpgradeAcctType.business,
-              title: ATStrings.businessAcct,
-              subTitle: ATStrings.businessAcctDesc,
-              imgPath: ATImgStrings.businessAcctMicLogo,
-              onTap: () {
-                context.read<AccountTypeBloc>().setAcctType(false);
-                setState(() => acctType = acctType == 
-                  UpgradeAcctType.business ? null : UpgradeAcctType.business);
-              },
-            )
-          ],
-        ),
-      ),
-      bottomSheet: Padding(
-        padding: const EdgeInsets.fromLTRB(15, 5, 15, 50),
-        child: ATPlainElevatedBtn(
-          onPressed: acctType == null
-              ? null
-              : () {
-                  context.pushNamed(
-                    ATRoutes.selectedAcctOnboardScreen,
-                    extra: acctType,
-                  );
+    return ATAnnotatedRegion(
+      child: Scaffold(
+        appBar: const ATAppBar(
+            leadingWidth: 30,
+            padding: EdgeInsets.only(left: 7),
+            leading: ATRoundedBackBtn(),
+            titleText: 'Account Type'),
+        body: SingleChildScrollView(
+          padding: const EdgeInsets.fromLTRB(15, 10, 15, 15),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Text(
+                ATStrings.selectAcctTypeToProceed,
+                maxLines: 3,
+                style: context.textTheme.bodySmall
+                    ?.copyWith(color: ATColors.hexC2C2C2),
+              ),
+              const SizedBox(height: 20),
+              _SelectAcct(
+                title: ATStrings.creatorAccount,
+                subTitle: ATStrings.creatorAcctDesc,
+                imgPath: ATImgStrings.creatorAcctLogo,
+                isSelected: acctType == AccountType.creator,
+                onTap: () {
+                  setState(() => acctType = acctType == 
+                    AccountType.creator ? null : AccountType.creator);
                 },
-          btnTitle: ATStrings.next,
+              ),
+              const SizedBox(height: 20),
+              _SelectAcct(
+                isSelected: acctType == AccountType.business,
+                title: ATStrings.businessAcct,
+                subTitle: ATStrings.businessAcctDesc,
+                imgPath: ATImgStrings.businessAcctMicLogo,
+                onTap: () {
+                  setState(() => acctType = acctType == 
+                    AccountType.business ? null : AccountType.business);
+                },
+              )
+            ],
+          ),
+        ),
+        bottomSheet: Padding(
+          padding: const EdgeInsets.fromLTRB(15, 5, 15, 50),
+          child: ATPlainElevatedBtn(
+            onPressed: acctType == null ? null
+            : () {
+              UpgradeProfileData().copyWith(
+                accountType: acctType,
+              );
+              context.pushNamed(
+                ATRoutes.selectedAcctOnboardScreen,
+                extra: acctType,
+              );
+            },
+            btnTitle: ATStrings.next,
+          ),
         ),
       ),
     );
@@ -154,4 +172,3 @@ class _SelectAcct extends StatelessWidget {
     );
   }
 }
-

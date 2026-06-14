@@ -22,16 +22,16 @@ class SelectedAcctOnboardScreen extends StatefulWidget {
     required this.acctType,
   });
 
-  final UpgradeAcctType acctType;
+  final AccountType acctType;
 
   @override
   State<SelectedAcctOnboardScreen> createState() => _SelectedAcctOnboardScreenState();
 }
 
 class _SelectedAcctOnboardScreenState extends State<SelectedAcctOnboardScreen> {
-  static const Map<UpgradeAcctType, List<List<String>>> onboardContent =
-      <UpgradeAcctType, List<List<String>>>{
-    UpgradeAcctType.creator: <List<String>>[
+  static const Map<AccountType, List<List<String>>> onboardContent =
+      <AccountType, List<List<String>>>{
+    AccountType.creator: <List<String>>[
       <String>[
         ATImgStrings.CREATOR_MIC,
         ATStrings.CREATE_LIVE_SHOWS_ND_EVENTS,
@@ -53,7 +53,7 @@ class _SelectedAcctOnboardScreenState extends State<SelectedAcctOnboardScreen> {
         ATStrings.OFFER_XCLUSIVE_CONTENT,
       ],
     ],
-    UpgradeAcctType.business: <List<String>>[
+    AccountType.business: <List<String>>[
       <String>[
         ATImgStrings.BIZ_THUNDER,
         ATStrings.PARTNER_WITH_CREATORS,
@@ -123,7 +123,7 @@ class _SelectedAcctOnboardScreenState extends State<SelectedAcctOnboardScreen> {
   @override
   Widget build(BuildContext context) {
     final bool isCreator =
-        widget.acctType == UpgradeAcctType.creator;
+        widget.acctType == AccountType.creator;
 
     return ATAnnotatedRegion(
       statusBarColor: ATColors.transparent,
