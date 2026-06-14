@@ -3,8 +3,8 @@ import 'package:amptive/src/features/go_live/data/models/live_program_data.dart'
 import 'package:amptive/src/shared/sentinel.dart';
 import 'package:equatable/equatable.dart';
 
-class UserProfileData extends Equatable {
-  const UserProfileData({
+class ProfileData extends Equatable {
+  const ProfileData({
     this.userId,
     this.email,
     this.username,
@@ -29,7 +29,7 @@ class UserProfileData extends Equatable {
     this.isCreator,
   });
 
-  factory UserProfileData.fromLocalStorageJson(
+  factory ProfileData.fromLocalStorageJson(
     Map<String, dynamic> json,
   ) {
     Sentinel<LiveProgramData?>? liveProgramData;
@@ -49,7 +49,7 @@ class UserProfileData extends Equatable {
           const Sentinel<LiveProgramData?>.absent();
     }
 
-    return UserProfileData(
+    return ProfileData(
       userId: json[ATStrings.userId] as String?,
       email: json[ATStrings.email] as String?,
       username: json[ATStrings.username] as String?,
@@ -75,8 +75,8 @@ class UserProfileData extends Equatable {
     );
   }
 
-  factory UserProfileData.fromRemoteJson(Map<String, dynamic> json) {
-    return UserProfileData(
+  factory ProfileData.fromRemoteJson(Map<String, dynamic> json) {
+    return ProfileData(
       userId: json['id'] ,
       email: json['email'] ,
       username: json['username'] ,
@@ -119,7 +119,7 @@ class UserProfileData extends Equatable {
     hasTestedMic, isCreator;
   final Sentinel<LiveProgramData?>? liveProgramData;
 
-  UserProfileData copyWith({
+  ProfileData copyWith({
     String? userId,
     String? email,
     String? username,
@@ -143,7 +143,7 @@ class UserProfileData extends Equatable {
     bool? isCreator,
     Sentinel<LiveProgramData?>? liveProgramData,
   }) {
-    return UserProfileData(
+    return ProfileData(
       userId: userId ?? this.userId,
       email: email ?? this.email,
       username: username ?? this.username,

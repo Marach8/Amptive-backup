@@ -1,4 +1,4 @@
-﻿import 'package:amptive/src/features/profile/data/models/profile_data.dart';
+import 'package:amptive/src/features/profile/data/models/profile_data.dart';
 import 'dart:async' show StreamController;
 import 'package:amptive/src/config/utils/extensions/context_extensions.dart';
 import 'package:amptive/src/config/api_response_and_app_state.dart';
@@ -121,11 +121,11 @@ class _UpdateUsernameScreenState extends State<UpdateUsernameScreen>
                         return ATPlainElevatedBtn(
                           onPressed: isAvailable
                               ? () {
-                                  final UserProfileData? currentData = context
+                                  final ProfileData? currentData = context
                                       .read<LocalUserDataCubit>()
                                       .currentUserData;
-                                  final UserProfileData updatedData =
-                                      (currentData ?? const UserProfileData())
+                                  final ProfileData updatedData =
+                                      (currentData ?? const ProfileData())
                                           .copyWith(
                                               username:
                                                   _controller.text.trim());

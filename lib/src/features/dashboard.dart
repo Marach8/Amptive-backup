@@ -1,4 +1,4 @@
-﻿import 'package:amptive/src/features/profile/data/models/profile_data.dart';
+import 'package:amptive/src/features/profile/data/models/profile_data.dart';
 import 'dart:async';
 import 'dart:developer';
 import 'dart:io';
@@ -223,7 +223,7 @@ class DashboardState extends State<_SubWidget>{
 }
 
   Future<void> _registerDeviceForPush() async {
-    final UserProfileData? userData =
+    final ProfileData? userData =
         context.read<LocalUserDataCubit>().currentUserData;
 
     if (userData == null || userData.userId == null) {

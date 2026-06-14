@@ -1,4 +1,4 @@
-﻿import 'package:amptive/src/features/profile/data/models/profile_data.dart';
+import 'package:amptive/src/features/profile/data/models/profile_data.dart';
 import 'dart:async';
 import 'dart:developer';
 
@@ -156,17 +156,17 @@ class _AddProfilePictureScreenState extends State<AddProfilePictureScreen> {
 
             bottomSheet: MultiBlocListener(
               listeners: <SingleChildWidget>[
-                BlocListener<RemoteUserDataCubit, ATAppState<UserProfileData>>(
-                  listener: (_, ATAppState<UserProfileData> state)async{
-                    if (state is SuccessState<UserProfileData>) {
+                BlocListener<RemoteUserDataCubit, ATAppState<ProfileData>>(
+                  listener: (_, ATAppState<ProfileData> state)async{
+                    if (state is SuccessState<ProfileData>) {
                       _isLoadingNotifier.value = false;
                       context.read<LocalUserDataCubit>()
-                        .updateUserDataLocally(state.newData ?? const UserProfileData());
+                        .updateUserDataLocally(state.newData ?? const ProfileData());
                       if (context.mounted) {
                         context.pushNamed(ATRoutes.select5CommunitiesScreen);
                       }
                     } 
-                    else if (state is FailureState<UserProfileData>) {
+                    else if (state is FailureState<ProfileData>) {
                       _isLoadingNotifier.value = false;
                       showAppNotification2(
                         context: context,
@@ -183,7 +183,7 @@ class _AddProfilePictureScreenState extends State<AddProfilePictureScreen> {
                       if(context.mounted){
                         ctx.read<RemoteUserDataCubit>()
                           .updateRemoteUserProfile(
-                            userProfileData: UserProfileData(
+                            userProfileData: ProfileData(
                               profilePhoto: state.newData,
                             )
                           );

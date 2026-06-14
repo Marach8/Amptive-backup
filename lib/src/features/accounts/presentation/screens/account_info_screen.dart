@@ -1,4 +1,4 @@
-﻿import 'package:amptive/src/features/profile/data/models/profile_data.dart';
+import 'package:amptive/src/features/profile/data/models/profile_data.dart';
 import 'package:amptive/src/config/api_response_and_app_state.dart';
 import 'package:amptive/src/config/config_export.dart';
 import 'package:amptive/src/config/utils/extensions/context_extensions.dart';
@@ -31,12 +31,12 @@ class ATAccountInfoScreen extends StatelessWidget {
         BlocProvider<ATSelectCountryBloc>(create: (_) => ATSelectCountryBloc()),
         BlocProvider<RemoteUserDataCubit>(create: (_) => RemoteUserDataCubit()),
       ],
-      child: BlocListener<RemoteUserDataCubit, ATAppState<UserProfileData>>(
-        listener: (BuildContext context, ATAppState<UserProfileData> state) {
-          if (state is SuccessState<UserProfileData>) {
-            final UserProfileData? data = state.newData;
+      child: BlocListener<RemoteUserDataCubit, ATAppState<ProfileData>>(
+        listener: (BuildContext context, ATAppState<ProfileData> state) {
+          if (state is SuccessState<ProfileData>) {
+            final ProfileData? data = state.newData;
             if (data != null) {
-              final UserProfileData cachedData = UserProfileData(
+              final ProfileData cachedData = ProfileData(
                 userId: data.userId,
                 email: data.email,
                 username: data.username,
@@ -61,12 +61,12 @@ class ATAccountInfoScreen extends StatelessWidget {
             body: SingleChildScrollView(
               physics: const BouncingScrollPhysics(),
               padding: const EdgeInsets.all(15),
-              child: BlocBuilder<LocalUserDataCubit, ATAppState<UserProfileData>>(
-                builder: (BuildContext context, ATAppState<UserProfileData> state) {
-                  if (state is LoadingState<UserProfileData>) {
+              child: BlocBuilder<LocalUserDataCubit, ATAppState<ProfileData>>(
+                builder: (BuildContext context, ATAppState<ProfileData> state) {
+                  if (state is LoadingState<ProfileData>) {
                    return const CircularProgressIndicator(); 
                   }
-                  final UserProfileData? userData =
+                  final ProfileData? userData =
                       context.read<LocalUserDataCubit>().currentUserData;
                   return Column(
                     crossAxisAlignment: CrossAxisAlignment.start,

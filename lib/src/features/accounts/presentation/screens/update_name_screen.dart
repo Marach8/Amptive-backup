@@ -1,4 +1,4 @@
-﻿import 'package:amptive/src/features/profile/data/models/profile_data.dart';
+import 'package:amptive/src/features/profile/data/models/profile_data.dart';
 import 'dart:async' show StreamController;
 
 import 'package:amptive/src/config/config_export.dart';
@@ -87,11 +87,11 @@ class _UpdateNameScreenState extends State<UpdateNameScreen> with ATValidators {
                     onPressed: isActive
                         ? () {
                             // Update LocalUserDataCubit directly
-                            final UserProfileData? currentData = context
+                            final ProfileData? currentData = context
                                 .read<LocalUserDataCubit>()
                                 .currentUserData;
-                            final UserProfileData updatedData =
-                                (currentData ?? const UserProfileData())
+                            final ProfileData updatedData =
+                                (currentData ?? const ProfileData())
                                     .copyWith(name: _controller.text.trim());
                             context
                                 .read<LocalUserDataCubit>()

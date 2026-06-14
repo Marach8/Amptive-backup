@@ -1,4 +1,4 @@
-﻿import 'package:amptive/src/features/profile/data/models/profile_data.dart';
+import 'package:amptive/src/features/profile/data/models/profile_data.dart';
 import 'dart:ui';
 import 'package:amptive/src/config/api_response_and_app_state.dart';
 import 'package:amptive/src/config/routing/route_strings.dart';
@@ -288,7 +288,7 @@ class ATLiveEventDetailedScreen extends StatelessWidget {
             child: BlocConsumer<GetLiveProgramEntryTokenCubit, ATAppState<LiveProgramEntryToken>>(
               listener: (_, ATAppState<LiveProgramEntryToken> state)async{
                 if(state is SuccessState<LiveProgramEntryToken>){
-                  final UserProfileData? userData = context
+                  final ProfileData? userData = context
                     .read<LocalUserDataCubit>().currentUserData;
                   final String? userId = userData?.userId;
                   final bool hasTestedMic = userData?.hasTestedMic == 'true';

@@ -1,4 +1,4 @@
-﻿import 'package:amptive/src/features/profile/data/models/profile_data.dart';
+import 'package:amptive/src/features/profile/data/models/profile_data.dart';
 import 'package:amptive/src/config/utils/extensions/context_extensions.dart';
 import 'package:amptive/src/config/routing/route_strings.dart';
 import 'package:amptive/src/config/utils/utils_export.dart';
@@ -40,7 +40,7 @@ class EditProfileScreen extends StatelessWidget {
           ),
           body: Builder(
             builder: (BuildContext context) {
-              final UserProfileData? userData =
+              final ProfileData? userData =
                 context.watch<LocalUserDataCubit>().currentUserData;
               return Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -65,7 +65,7 @@ class EditProfileScreen extends StatelessWidget {
                                 if (newName != null && context.mounted) {
                                   context.read<LocalUserDataCubit>()
                                     .updateUserDataLocally(
-                                      (userData ?? const UserProfileData()).copyWith(
+                                      (userData ?? const ProfileData()).copyWith(
                                         name: newName
                                       )
                                     );
@@ -83,7 +83,7 @@ class EditProfileScreen extends StatelessWidget {
                                 if (newUsername != null && context.mounted) {
                                   context.read<LocalUserDataCubit>()
                                     .updateUserDataLocally(
-                                      (userData ?? const UserProfileData()).copyWith(
+                                      (userData ?? const ProfileData()).copyWith(
                                         username: newUsername,
                                       )
                                     );
@@ -100,7 +100,7 @@ class EditProfileScreen extends StatelessWidget {
                                 if (newBio != null && context.mounted) {
                                   context.read<LocalUserDataCubit>()
                                     .updateUserDataLocally(
-                                      (userData ?? const UserProfileData()).copyWith(
+                                      (userData ?? const ProfileData()).copyWith(
                                         bio: newBio,
                                       )
                                     );
@@ -125,7 +125,7 @@ class EditProfileScreen extends StatelessWidget {
                                      context.mounted) {
                                    context.read<LocalUserDataCubit>()
                                      .updateUserDataLocally(
-                                       (userData ?? const UserProfileData()).copyWith(
+                                       (userData ?? const ProfileData()).copyWith(
                                          instagramUrl: newInstagramUrl,
                                        )
                                      );
@@ -146,7 +146,7 @@ class EditProfileScreen extends StatelessWidget {
                                  if (newXUrl != null && context.mounted) {
                                    context.read<LocalUserDataCubit>()
                                      .updateUserDataLocally(
-                                       (userData ?? const UserProfileData()).copyWith(
+                                       (userData ?? const ProfileData()).copyWith(
                                          xUrl: newXUrl,
                                        )
                                      );
@@ -168,7 +168,7 @@ class EditProfileScreen extends StatelessWidget {
                                      context.mounted) {
                                    context.read<LocalUserDataCubit>()
                                      .updateUserDataLocally(
-                                       (userData ?? const UserProfileData()).copyWith(
+                                       (userData ?? const ProfileData()).copyWith(
                                          linkedinUrl: newLinkedInUrl,
                                        )
                                      );
@@ -188,7 +188,7 @@ class EditProfileScreen extends StatelessWidget {
                                     if (newWebsiteUrl != null && context.mounted) {
                                    context.read<LocalUserDataCubit>()
                                      .updateUserDataLocally(
-                                       (userData ?? const UserProfileData()).copyWith(
+                                       (userData ?? const ProfileData()).copyWith(
                                          websiteUrl: newWebsiteUrl,
                                        )
                                      );

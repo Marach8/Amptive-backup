@@ -1,4 +1,4 @@
-﻿import 'package:amptive/src/features/profile/data/models/profile_data.dart';
+import 'package:amptive/src/features/profile/data/models/profile_data.dart';
 import 'dart:async' show StreamSubscription, Timer, StreamController;
 import 'dart:io' show Directory, File;
 import 'dart:ui';
@@ -289,9 +289,9 @@ class _SubWidgetState extends State<_SubWidget> {
                                             if (!context.mounted) return;
                                             //Mark that this organizer has tested his mic
                                             final LocalUserDataCubit cubit = context.read<LocalUserDataCubit>();
-                                            final UserProfileData? data = cubit.currentUserData;
+                                            final ProfileData? data = cubit.currentUserData;
                                             cubit.updateUserDataLocally(
-                                              (data ?? const UserProfileData())
+                                              (data ?? const ProfileData())
                                                 .copyWith(hasTestedMic: true),
                                             );
 

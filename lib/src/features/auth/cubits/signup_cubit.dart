@@ -1,4 +1,4 @@
-﻿import 'package:amptive/src/features/profile/data/models/profile_data.dart';
+import 'package:amptive/src/features/profile/data/models/profile_data.dart';
 import 'package:amptive/src/config/services/local_storage_service/flutter_secure_storage_service_impl.dart';
 import 'package:amptive/src/config/services/local_storage_service/storage_service.dart';
 import 'package:amptive/src/config/utils/other_strings.dart';
@@ -94,8 +94,8 @@ class SignupCubit extends Cubit<ATAppState<SignupStage>> {
           );
         }
 
-        final UserProfileData cachedUserData =
-          UserProfileData(
+        final ProfileData cachedUserData =
+          ProfileData(
             userId: userId,
             email: email,
             username: userName,

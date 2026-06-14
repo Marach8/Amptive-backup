@@ -1,4 +1,4 @@
-﻿import 'package:amptive/src/features/profile/data/models/profile_data.dart';
+import 'package:amptive/src/features/profile/data/models/profile_data.dart';
 import 'package:amptive/src/config/api_response_and_app_state.dart';
 import 'package:amptive/src/config/utils/colors.dart';
 import 'package:amptive/src/config/utils/dialogs/app_notification_dialog.dart';
@@ -136,11 +136,11 @@ class _EditSocialsScreenState extends State<EditSocialsScreen> {
             ),
           ),
 
-          bottomSheet: BlocConsumer<RemoteUserDataCubit, ATAppState<UserProfileData>>(
-            listener: (_, ATAppState<UserProfileData> state) {
-              if (state is SuccessState<UserProfileData>) {
+          bottomSheet: BlocConsumer<RemoteUserDataCubit, ATAppState<ProfileData>>(
+            listener: (_, ATAppState<ProfileData> state) {
+              if (state is SuccessState<ProfileData>) {
                 context.pop(_cntrl.text.trim());
-              } else if (state is FailureState<UserProfileData>) {
+              } else if (state is FailureState<ProfileData>) {
                 showAppNotification2(
                   context: context,
                   text: state.message,
@@ -148,17 +148,17 @@ class _EditSocialsScreenState extends State<EditSocialsScreen> {
                 );
               }
             },
-            builder: (BuildContext context, ATAppState<UserProfileData> state) {
+            builder: (BuildContext context, ATAppState<ProfileData> state) {
               final double bottomInset = MediaQuery.viewInsetsOf(context).bottom;
               final double bottom = bottomInset == 0 ? 50.0 : 15.0;
               return Padding(
                 padding: EdgeInsets.fromLTRB(15, 5, 15, bottom),
                 child: ATPlainElevatedBtn(
-                  isLoading: state is LoadingState<UserProfileData>,
+                  isLoading: state is LoadingState<ProfileData>,
                   onPressed: btnActive
                       ? () {
                           context.read<RemoteUserDataCubit>().updateRemoteUserProfile(
-                              userProfileData: UserProfileData(
+                              userProfileData: ProfileData(
                             instagramUrl: widget.params.socialName == ATStrings.instagram
                                 ? _cntrl.text.trim() : null,
                             xUrl: widget.params.socialName == ATStrings.x

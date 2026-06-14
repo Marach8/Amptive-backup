@@ -1,4 +1,4 @@
-﻿import 'package:amptive/src/features/profile/data/models/profile_data.dart';
+import 'package:amptive/src/features/profile/data/models/profile_data.dart';
 import 'package:amptive/src/config/api_response_and_app_state.dart';
 import 'package:amptive/src/config/services/local_storage_service/flutter_secure_storage_service_impl.dart';
 import 'package:amptive/src/config/services/local_storage_service/storage_service.dart';
@@ -8,19 +8,19 @@ import 'package:amptive/src/features/auth/data/repository/auth_repo.dart';
 import 'package:amptive/src/features/auth/data/repository/auth_repo_impl.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class LoginCubit extends Cubit<ATAppState<UserProfileData>> {
+class LoginCubit extends Cubit<ATAppState<ProfileData>> {
   LoginCubit(
       {AuthRepo? mockAuthRepo, ATLocalStorageService? mockLocalStorageService})
       : authRepo = mockAuthRepo ?? AuthRepoImpl(),
         localStorageService =
             mockLocalStorageService ?? FlutterSecureStorageServiceImpl(),
-        super(const InitialState<UserProfileData>());
+        super(const InitialState<ProfileData>());
 
   final AuthRepo authRepo;
   final ATLocalStorageService localStorageService;
 
   Future<void> loginUser({required Map<String, dynamic> param}) async {
-    emit(const LoadingState<UserProfileData>());
+    emit(const LoadingState<ProfileData>());
     
     try {
       final ApiResponse<dynamic> response =
@@ -38,21 +38,21 @@ class LoginCubit extends Cubit<ATAppState<UserProfileData>> {
 
         await localStorageService.set(ATStrings.isExistingUser, 'true');
         
-        final UserProfileData userProfileData = 
-          UserProfileData.fromRemoteJson(data.data['data']['user']);
+        final ProfileData userProfileData = 
+          ProfileData.fromRemoteJson(data.data['data']['user']);
 
         await localStorageService.setObject(
           ATStrings.cachedUserData,
           userProfileData.toLocalStorageJson(),
         );
-        emit(SuccessState<UserProfileData>(newData: userProfileData));
+        emit(SuccessState<ProfileData>(newData: userProfileData));
       },
       unSuccessful: (Unsuccessful<dynamic> error){
-        emit(FailureState<UserProfileData>(error.error.message));
+        emit(FailureState<ProfileData>(error.error.message));
       }
       );
     } catch (e) {
-      emit(FailureState<UserProfileData>('Unable to login user: $e'));
+      emit(FailureState<ProfileData>('Unable to login user: $e'));
     }
   }
 }

@@ -1,4 +1,4 @@
-﻿import 'package:amptive/src/features/profile/data/models/profile_data.dart';
+import 'package:amptive/src/features/profile/data/models/profile_data.dart';
 import 'dart:io';
 import 'dart:typed_data';
 import 'package:amptive/src/config/api_response_and_app_state.dart';
@@ -55,14 +55,14 @@ class _EditProfileCoverImageState extends State<EditProfileCoverImage> {
 
     return MultiBlocListener(
       listeners: <SingleChildWidget>[
-        BlocListener<RemoteUserDataCubit, ATAppState<UserProfileData>>(
-          listener: (_, ATAppState<UserProfileData> state){
-            if(context.mounted && state is SuccessState<UserProfileData>){
+        BlocListener<RemoteUserDataCubit, ATAppState<ProfileData>>(
+          listener: (_, ATAppState<ProfileData> state){
+            if(context.mounted && state is SuccessState<ProfileData>){
 
               ///After updating the cover photo in BE, update locally.
-              UserProfileData currentLocalData = context
+              ProfileData currentLocalData = context
                 .read<LocalUserDataCubit>().currentUserData
-                  ?? const UserProfileData();
+                  ?? const ProfileData();
               
               
               if(_uploadType == _UploadType.profilePhoto){
@@ -81,7 +81,7 @@ class _EditProfileCoverImageState extends State<EditProfileCoverImage> {
 
               setState(() => _uploadType = null);
             }
-            else if(context.mounted && state is FailureState<UserProfileData>){
+            else if(context.mounted && state is FailureState<ProfileData>){
               //If we fail here, reset photo we are uploading and loadingState
               setState((){
                 if(_uploadType == _UploadType.coverPhoto){
@@ -106,7 +106,7 @@ class _EditProfileCoverImageState extends State<EditProfileCoverImage> {
             if(context.mounted && state is SuccessState<String>){
               //After uploading the image, send the image URL to BE
               context.read<RemoteUserDataCubit>().updateRemoteUserProfile(
-                userProfileData: UserProfileData(
+                userProfileData: ProfileData(
                   coverPhoto: _uploadType == _UploadType.coverPhoto ? state.newData : null,
                   profilePhoto: _uploadType == _UploadType.profilePhoto ? state.newData : null,
                 ),

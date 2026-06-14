@@ -8,47 +8,47 @@ import 'package:amptive/src/shared/sentinel.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class LocalUserDataCubit extends Cubit<ATAppState<UserProfileData>> {
+class LocalUserDataCubit extends Cubit<ATAppState<ProfileData>> {
   LocalUserDataCubit({
     ATLocalStorageService? mockLocalStorage,
   })  : localStorage = mockLocalStorage ?? FlutterSecureStorageServiceImpl(),
-        super(const InitialState<UserProfileData>());
+        super(const InitialState<ProfileData>());
 
   final ATLocalStorageService localStorage;
 
-  UserProfileData? get currentUserData => switch (state) {
-    SuccessState<UserProfileData>(:final UserProfileData? newData) => newData,
-    FailureState<UserProfileData>(:final UserProfileData? oldData) => oldData,
-    InitialState<UserProfileData>(:final UserProfileData? initialData) =>
+  ProfileData? get currentUserData => switch (state) {
+    SuccessState<ProfileData>(:final ProfileData? newData) => newData,
+    FailureState<ProfileData>(:final ProfileData? oldData) => oldData,
+    InitialState<ProfileData>(:final ProfileData? initialData) =>
       initialData,
-    LoadingState<UserProfileData>(:final UserProfileData? currentData) =>
+    LoadingState<ProfileData>(:final ProfileData? currentData) =>
       currentData,
   };
 
   Future<void> initializeCachedData() async {
-    emit(const LoadingState<UserProfileData>());
+    emit(const LoadingState<ProfileData>());
     try {
       final dynamic json =
           await localStorage.getObject(ATStrings.cachedUserData);
 
-      final UserProfileData? userData = json == null ? null
-        : UserProfileData.fromLocalStorageJson(json);
+      final ProfileData? userData = json == null ? null
+        : ProfileData.fromLocalStorageJson(json);
 
-      emit(SuccessState<UserProfileData>(newData: userData));
+      emit(SuccessState<ProfileData>(newData: userData));
     } catch (e) {
-      emit(FailureState<UserProfileData>(e.toString()));
+      emit(FailureState<ProfileData>(e.toString()));
     }
   }
 
-  Future<void> updateUserDataLocally(UserProfileData newData) async {
+  Future<void> updateUserDataLocally(ProfileData newData) async {
     try {
-      emit(SuccessState<UserProfileData>(newData: newData));
+      emit(SuccessState<ProfileData>(newData: newData));
       localStorage.setObject(
         ATStrings.cachedUserData,
         newData.toLocalStorageJson(),
       );
     } catch (e) {
-      emit(FailureState<UserProfileData>(
+      emit(FailureState<ProfileData>(
         e.toString(),
         oldData: currentUserData,
       ));

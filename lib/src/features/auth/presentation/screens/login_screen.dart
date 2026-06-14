@@ -1,4 +1,4 @@
-﻿import 'package:amptive/src/features/profile/data/models/profile_data.dart';
+import 'package:amptive/src/features/profile/data/models/profile_data.dart';
 import 'package:amptive/src/config/api_response_and_app_state.dart';
 import 'package:amptive/src/config/config_export.dart';
 import 'package:amptive/src/config/utils/dialogs/app_notification_dialog.dart';
@@ -154,20 +154,20 @@ class _LoginScreenState extends State<LoginScreen> with ATValidators {
                   ]),
             ),
           ),
-          bottomSheet: BlocConsumer<LoginCubit, ATAppState<UserProfileData>>(
-            listener: (BuildContext context, ATAppState<UserProfileData> state) {
-              if (state is SuccessState<UserProfileData>) {
+          bottomSheet: BlocConsumer<LoginCubit, ATAppState<ProfileData>>(
+            listener: (BuildContext context, ATAppState<ProfileData> state) {
+              if (state is SuccessState<ProfileData>) {
                 context.goNamed(ATRoutes.dashboard);
-              } else if (state is FailureState<UserProfileData>) {
+              } else if (state is FailureState<ProfileData>) {
                 showAppNotification2(context: context, text: state.message);
               }
             },
-            builder: (BuildContext context, ATAppState<UserProfileData> state) {
+            builder: (BuildContext context, ATAppState<ProfileData> state) {
               final double bottom = MediaQuery.viewInsetsOf(context).bottom;
               final double bottomPadding = bottom == 0 ? 50 : 10;
-              final ATAppState<UserProfileData> cubitState =
+              final ATAppState<ProfileData> cubitState =
                   context.watch<LoginCubit>().state;
-              final bool isLoading = cubitState is LoadingState<UserProfileData>;
+              final bool isLoading = cubitState is LoadingState<ProfileData>;
 
               return Padding(
                 padding: EdgeInsets.fromLTRB(15, 10, 15, bottomPadding),
