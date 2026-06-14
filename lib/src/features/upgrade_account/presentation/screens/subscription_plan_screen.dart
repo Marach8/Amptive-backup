@@ -114,7 +114,7 @@ class _CreatorSubPlanScreenState extends State<CreatorSubPlanScreen> {
                             if (didComeFromProgramCreationFlow) {
                               context.pop(_localSubPlan);
                             } else {
-                              ProfessionalProfileData().copyWith(
+                              UpgradeProfileData().copyWith(
                                 subAmount: _localSubPlan?.subAmount ??
                                     _localSubPlan?.oneTimePaymentAmount,
                               );

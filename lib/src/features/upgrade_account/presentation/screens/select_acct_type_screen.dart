@@ -31,11 +31,12 @@ class _SelectAcctTypeScreenState extends State<SelectAcctTypeScreen> {
           leadingWidth: 30,
           padding: EdgeInsets.only(left: 7),
           leading: ATRoundedBackBtn(),
-          titleText: ATStrings.switchAccount),
+          titleText: 'Account Type'),
       body: SingleChildScrollView(
         physics: const BouncingScrollPhysics(),
         padding: const EdgeInsets.fromLTRB(15, 10, 15, 15),
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             Text(
               ATStrings.selectAcctTypeToProceed,
@@ -77,10 +78,12 @@ class _SelectAcctTypeScreenState extends State<SelectAcctTypeScreen> {
           onPressed: acctType == null
               ? null
               : () {
-                  context.read<AcctTypeLandingAnimBloc>().reset();
-                  context.pushNamed(ATRoutes.selectedAcctOnboardScreen);
+                  context.pushNamed(
+                    ATRoutes.selectedAcctOnboardScreen,
+                    extra: acctType,
+                  );
                 },
-          btnTitle: ATStrings.SWITCH,
+          btnTitle: ATStrings.next,
         ),
       ),
     );

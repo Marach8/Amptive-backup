@@ -114,7 +114,7 @@ Future<ApiResponse<String>> sendEmailAndPhoneOtp(
 
   @override
   Future<ApiResponse<dynamic>> createProfessionalProfile({
-    required ProfessionalProfileData param,
+    required UpgradeProfileData param,
   }) async {
     try {
       final Response<dynamic> response = await networkService.post(

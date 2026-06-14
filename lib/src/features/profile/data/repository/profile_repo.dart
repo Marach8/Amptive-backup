@@ -24,6 +24,6 @@ abstract class ProfileRepo{
   Future<ApiResponse<dynamic>> verifyOtp({required Map<String, dynamic> param});
 
   Future<ApiResponse<dynamic>> createProfessionalProfile({
-    required ProfessionalProfileData param,
+    required UpgradeProfileData param,
   });
 }

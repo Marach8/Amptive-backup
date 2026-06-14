@@ -496,15 +496,17 @@ final GoRouter amptiveAppRouter = GoRouter(
                           path: ATRoutes.selectedAcctOnboardScreen,
                           pageBuilder: (_, GoRouterState state) =>
                             ATSlidingRouteTransition<UpgradeAcctType>(
+                              beginOffset: const Offset(0, 1),
                               child: SelectedAcctOnboardScreen(
                                 acctType: state.extra as UpgradeAcctType,
                               ),
                             )),
                     ]),
                 GoRoute(
-                    name: ATRoutes.SELECT_CAT,
-                    path: ATRoutes.SELECT_CAT,
-                    builder: (_, __) => const SelectCategoryScreen()),
+                  name: ATRoutes.selectCategoriesScreen,
+                  path: ATRoutes.selectCategoriesScreen,
+                  builder: (_, GoRouterState state) => SelectCategoryScreen(
+                    acctType: state.extra as UpgradeAcctType)),
                 GoRoute(
                     name: ATRoutes.creatorSubPlanSetup,
                     path: ATRoutes.creatorSubPlanSetup,

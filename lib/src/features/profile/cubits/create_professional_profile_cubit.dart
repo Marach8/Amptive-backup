@@ -12,7 +12,7 @@ class CreateProfessionalProfileCubit extends Cubit<ATAppState<dynamic>> {
   final ProfileRepo profileRepo;
 
   Future<void> createProfessionalProfile({
-    required ProfessionalProfileData param
+    required UpgradeProfileData param
   }) async {
     emit(const LoadingState<dynamic>());
 

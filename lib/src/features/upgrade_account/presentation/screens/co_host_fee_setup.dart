@@ -194,14 +194,14 @@ class _BottomSheetContent extends StatelessWidget {
                         final bool isCreator =
                             context.read<AccountTypeBloc>().state;
 
-                        ProfessionalProfileData().copyWith(
+                        UpgradeProfileData().copyWith(
                           coHostFee: feeValue,
                           profileType: isCreator ? 'creator' : 'business',
                         );
                         context
                             .read<CreateProfessionalProfileCubit>()
                             .createProfessionalProfile(
-                                param: ProfessionalProfileData());
+                                param: UpgradeProfileData());
                       }
                     : null,
                 isLoading: isLoading,

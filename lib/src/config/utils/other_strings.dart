@@ -107,10 +107,10 @@ class ATStrings {
   static const String GOOGLE = 'Google';
   static const String ANSWER_SECRET_QUEST = 'Answer Secret Question';
   static const String noMatchingResults = 'No results found for this search!';
-  static const String SELECT_CAT = 'Select your category';
-  static const String CAT_WONT_BE_SHOWN =
+  static const String selectCategory = 'Select your category';
+  static const String selectCategoryDesc =
       'Selected category will not be shown on your public profile and can be changed anytime.';
-  static const String SEARCH_CAT = 'Search for a category';
+  static const String search4Category = 'Search for a category';
   static const String PROCEED = 'Proceed';
   static const String UR_WALLET = 'Your Wallet';
   static const String UR_WAY = 'Your Way';
@@ -676,8 +676,8 @@ class ATStrings {
   static const String unblock = 'Unblock';
   static const String UNMUTE = 'Unmute';
   static const String aboutEpisode = 'About Episode';
-  static const String AMPTIVE_4_CREATORS = 'Amptive for Creators';
-  static const String AMPTIVE_4_BIZ = 'Amptive for Business';
+  static const String amptiveForCreators = 'Amptive for Creators';
+  static const String amptiveForBusiness = 'Amptive for Business';
   static const String CONNECT_SELL = 'Connect, sell and grow';
   static const String subScriptionPlan = 'Subscription Plan';
   static const String COHOST_FEE_SETUP = 'Co-host Fee Setup';

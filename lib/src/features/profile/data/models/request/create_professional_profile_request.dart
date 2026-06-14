@@ -1,15 +1,15 @@
-class ProfessionalProfileData {
+class UpgradeProfileData {
   // Factory constructor (singleton)
-  factory ProfessionalProfileData() {
-    _instance ??= ProfessionalProfileData._internal();
+  factory UpgradeProfileData() {
+    _instance ??= UpgradeProfileData._internal();
     return _instance!;
   }
 
   // Private constructor
-  ProfessionalProfileData._internal();
+  UpgradeProfileData._internal();
 
   // Static instance
-  static ProfessionalProfileData? _instance;
+  static UpgradeProfileData? _instance;
 
   String? profileType;  
   String? category;
