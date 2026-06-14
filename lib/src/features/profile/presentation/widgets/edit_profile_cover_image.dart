@@ -1,3 +1,4 @@
+﻿import 'package:amptive/src/features/profile/data/models/profile_data.dart';
 import 'dart:io';
 import 'dart:typed_data';
 import 'package:amptive/src/config/api_response_and_app_state.dart';

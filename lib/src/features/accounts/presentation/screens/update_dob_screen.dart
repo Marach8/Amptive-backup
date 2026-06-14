@@ -1,3 +1,4 @@
+﻿import 'package:amptive/src/features/profile/data/models/profile_data.dart';
 import 'dart:async' show StreamController;
 import 'package:intl/intl.dart';
 

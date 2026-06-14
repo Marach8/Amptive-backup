@@ -1,3 +1,4 @@
+﻿import 'package:amptive/src/features/profile/data/models/profile_data.dart';
 import 'package:amptive/src/config/api_response_and_app_state.dart';
 import 'package:amptive/src/config/config_export.dart';
 import 'package:amptive/src/config/utils/dialogs/app_notification_dialog.dart';
