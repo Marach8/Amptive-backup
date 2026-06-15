@@ -33,7 +33,7 @@ class WalletBalanceCubit extends Cubit<ATAppState<WalletBalanceResponseModel>> {
         emit(FailureState<WalletBalanceResponseModel>(error.error.message));
       });
     } catch (e) {
-      emit(const FailureState<WalletBalanceResponseModel>('Error fetching wallet balance.'));
+      emit( FailureState<WalletBalanceResponseModel>('Error fetching wallet balance. : $e'));
     
      }
     

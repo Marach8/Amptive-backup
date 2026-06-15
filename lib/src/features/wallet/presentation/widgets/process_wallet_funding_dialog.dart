@@ -4,7 +4,7 @@ import 'package:amptive/src/config/utils/dialogs/app_notification_dialog.dart';
 import 'package:amptive/src/config/utils/extensions/string_extensions.dart';
 import 'package:amptive/src/features/wallet/cubits/fund_wallet_cubit.dart';
 import 'package:amptive/src/features/wallet/cubits/verify_payment_cubit.dart';
-import 'package:amptive/src/features/wallet/data/models/fund_wallet_response_model.dart';
+import 'package:amptive/src/features/wallet/data/models/response/fund_wallet_response_model.dart';
 import 'package:amptive/src/features/wallet/data/models/response/verify_payment_response_model.dart';
 import 'package:amptive/src/global_export.dart';
 import 'package:amptive/src/shared/loading_indicator.dart';
