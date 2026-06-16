@@ -1,6 +1,8 @@
 import 'package:amptive/src/config/utils/extensions/context_extensions.dart';
 import 'package:amptive/src/features/profile/data/models/request/upgrade_account_data.dart';
 import 'package:amptive/src/features/upgrade_account/cubits/select_category_cubit.dart';
+import 'package:amptive/src/features/upgrade_account/presentation/screens/select_acct_type_screen.dart';
+import 'package:amptive/src/features/upgrade_account/presentation/screens/subscription_plan_screen.dart';
 import 'package:amptive/src/global_export.dart';
 import 'package:amptive/src/shared/annotated_region_widget.dart';
 import 'package:amptive/src/shared/app_bar_widget.dart';
@@ -11,7 +13,7 @@ import 'package:amptive/src/shared/sliver_header_delegate.dart';
 import 'package:amptive/src/shared/textformfield_widget.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import '../switch_acct/switch_acct_export.dart';
+import '../switch_acct/empty.dart';
 
 class SelectCategoryScreen extends StatelessWidget {
   const SelectCategoryScreen({super.key, required this.acctType});

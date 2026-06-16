@@ -167,6 +167,8 @@ class DashboardState extends State<_SubWidget>{
     });
 
     WidgetsBinding.instance.addPostFrameCallback((_) async {
+      context.read<LocalUserDataCubit>().initializeCachedData();
+
       final ScrollController? sController =
           _nestedKey.currentState?.innerController;
       if (sController != null) {
@@ -177,7 +179,6 @@ class DashboardState extends State<_SubWidget>{
       context.read<HomeFeedCubit>().fetchHomeFeed();
       context.read<LiveUsersCubit>().fetchLiveUsers();
       
-      await context.read<LocalUserDataCubit>().initializeCachedData();
       _registerDeviceForPush();
 
       context.read<LocalUserDataCubit>().initializeCachedData();

@@ -3,13 +3,14 @@ import 'package:amptive/src/config/utils/font_sizes.dart';
 import 'package:amptive/src/config/utils/other_strings.dart';
 import 'package:amptive/src/config/routing/route_strings.dart';
 import 'package:amptive/src/features/profile/data/models/request/upgrade_account_data.dart';
+import 'package:amptive/src/features/upgrade_account/presentation/widgets/subscription_plan_widget.dart';
 import 'package:amptive/src/shared/annotated_region_widget.dart';
 import 'package:amptive/src/shared/app_bar_widget.dart';
 import 'package:amptive/src/shared/back_button.dart';
 import 'package:amptive/src/shared/elevated_button_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import '../switch_acct/switch_acct_export.dart';
+import '../switch_acct/empty.dart';
 
 enum SubPlanScreenEntryPoint { creatorProfileSetup, programCreationSetup }
 

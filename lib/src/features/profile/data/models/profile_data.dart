@@ -1,5 +1,6 @@
 import 'package:amptive/src/config/utils/other_strings.dart';
 import 'package:amptive/src/features/go_live/data/models/live_program_data.dart';
+import 'package:amptive/src/features/upgrade_account/presentation/screens/select_acct_type_screen.dart';
 import 'package:amptive/src/shared/sentinel.dart';
 import 'package:equatable/equatable.dart';
 
@@ -26,7 +27,7 @@ class ProfileData extends Equatable {
     this.country,
     this.hasHostedEvents,
     this.hasHostedShows,
-    this.isCreator,
+    this.accountType,
   });
 
   factory ProfileData.fromLocalStorageJson(
@@ -70,7 +71,7 @@ class ProfileData extends Equatable {
       hasHostedEvents: json[ATStrings.hasHostedEvents],
       hasHostedShows: json[ATStrings.hasHostedShows],
       subscribersCount: json[ATStrings.subscribersCount],
-      isCreator: json[ATStrings.isCreator],
+      accountType: AccountType.fromJson(json[ATStrings.account]),
       liveProgramData: liveProgramData,
     );
   }
@@ -96,7 +97,7 @@ class ProfileData extends Equatable {
       coverPhoto: json['cover_photo'],
       hasHostedEvents: json['has_hosted_events'],
       hasHostedShows: json['has_hosted_shows'],
-      isCreator: json['is_creator'],
+      accountType: AccountType.fromJson(json['account_type']),
     );
   }
 
@@ -115,8 +116,8 @@ class ProfileData extends Equatable {
     websiteUrl;
 
   final int? followingCount, followersCount, subscribersCount;
-  final bool? hasHostedShows, hasHostedEvents,
-    hasTestedMic, isCreator;
+  final bool? hasHostedShows, hasHostedEvents, hasTestedMic;
+  final AccountType? accountType;
   final Sentinel<LiveProgramData?>? liveProgramData;
 
   ProfileData copyWith({
@@ -140,7 +141,7 @@ class ProfileData extends Equatable {
     String? country,
     bool? hasHostedEvents,
     bool? hasHostedShows,
-    bool? isCreator,
+    AccountType? accountType,
     Sentinel<LiveProgramData?>? liveProgramData,
   }) {
     return ProfileData(
@@ -149,7 +150,7 @@ class ProfileData extends Equatable {
       username: username ?? this.username,
       dob: dob ?? this.dob,
       name: name ?? this.name,
-      isCreator: isCreator ?? this.isCreator,
+      accountType: accountType ?? this.accountType,
       profilePhoto: profilePhoto ?? this.profilePhoto,
       phoneNumber: phoneNumber ?? this.phoneNumber,
       followersCount: followersCount ?? this.followersCount,
@@ -192,7 +193,7 @@ class ProfileData extends Equatable {
       ATStrings.country: country,
       ATStrings.hasHostedEvents: hasHostedEvents,
       ATStrings.hasHostedShows: hasHostedShows,
-      ATStrings.isCreator: isCreator,
+      ATStrings.account: accountType?.toJson(),
     };
 
     if (liveProgramData != null &&
@@ -217,7 +218,7 @@ class ProfileData extends Equatable {
     if (instagramUrl != null) body["instagram_url"] = instagramUrl;
     if (linkedinUrl != null) body["linkedin_url"] = linkedinUrl;
     if (websiteUrl != null) body["website_url"] = websiteUrl;
-    if (isCreator != null) body["is_creator"] = isCreator;
+    if (accountType != null) body["account_type"] = accountType?.toJson();
 
     return body;
   }
@@ -245,6 +246,6 @@ class ProfileData extends Equatable {
         country,
         hasHostedEvents,
         hasHostedShows,
-        isCreator,
+        accountType,
       ];
 }

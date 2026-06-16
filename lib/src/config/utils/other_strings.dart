@@ -27,7 +27,6 @@ class ATStrings {
   static const String followerCount = 'followers count';
   static const String followingCount = 'following count';
   static const String subscribersCount = 'subscribers count';
-  static const String isCreator = 'is creator';
   static const String hasTestedMic = 'has tested mic';
   static const String liveProgramData = 'live program data';
   static const String bio = 'Bio';
@@ -102,7 +101,7 @@ class ATStrings {
       'Do you want to save this bank detail to re-use it next time?';
   static const String SAVE_BANK_DETAILS = 'Save Bank Details';
   static const String FACEBOOK = 'Facebook';
-  static const String VISIT_PROFILE = 'Visit profile';
+  static const String visitProfile = 'Visit profile';
   static const String TWITTER = 'X(Twitter)';
   static const String GOOGLE = 'Google';
   static const String ANSWER_SECRET_QUEST = 'Answer Secret Question';
@@ -729,8 +728,8 @@ class ATStrings {
   static const String SET_UP_ACCT_DETAILS =
       'Setup your account details like your email address, phone number and country.';
   static const String DEACTIVATE_ACCT = 'Deactivate your account';
-  static const String CAT_SELECETED = 'Category selected';
-  static const String SUB_FEE_SETUP = 'Subscription fee setup';
+  static const String categorySelected = 'Category selected';
+  static const String subFeeSetUp = 'Subscription fee setup';
   static const String U_R_A_CREATOR = 'You are now a creator';
   static const String UR_BIZ_IS_READY = 'Your business is ready';
   static const String EXPAND_UR_BIZ =

@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:amptive/src/features/profile/data/models/profile_data.dart';
 import 'package:amptive/src/config/api_response_and_app_state.dart';
 import 'package:amptive/src/config/services/local_storage_service/flutter_secure_storage_service_impl.dart';
@@ -25,34 +27,34 @@ class LoginCubit extends Cubit<ATAppState<ProfileData>> {
     try {
       final ApiResponse<dynamic> response =
           await authRepo.loginUser(param: param);
-      response.when(successful: (Successful<dynamic> data) async {
-        final String? accessToken = data.data['data']?['access_token'];
-        final String? refreshToken = data.data['data']?['refresh_token'];
+        response.when(successful: (Successful<dynamic> data) async {
+          final String? accessToken = data.data['data']?['access_token'];
+          final String? refreshToken = data.data['data']?['refresh_token'];
 
-        if(accessToken != null){
-          await localStorageService.set(ATStrings.accessToken, accessToken);
+          if(accessToken != null){
+            await localStorageService.set(ATStrings.accessToken, accessToken);
+          }
+          if(refreshToken != null){
+            await localStorageService.set(ATStrings.refreshToken, refreshToken);
+          }
+
+          await localStorageService.set(ATStrings.isExistingUser, 'true');
+          
+          final ProfileData userProfileData = 
+            ProfileData.fromRemoteJson(data.data['data']['user']);
+
+          await localStorageService.setObject(
+            ATStrings.cachedUserData,
+            userProfileData.toLocalStorageJson(),
+          );
+          emit(SuccessState<ProfileData>(newData: userProfileData));
+        },
+        unSuccessful: (Unsuccessful<dynamic> error){
+          emit(FailureState<ProfileData>(error.error.message));
         }
-        if(refreshToken != null){
-          await localStorageService.set(ATStrings.refreshToken, refreshToken);
-        }
-
-        await localStorageService.set(ATStrings.isExistingUser, 'true');
-        
-        final ProfileData userProfileData = 
-          ProfileData.fromRemoteJson(data.data['data']['user']);
-
-        await localStorageService.setObject(
-          ATStrings.cachedUserData,
-          userProfileData.toLocalStorageJson(),
-        );
-        emit(SuccessState<ProfileData>(newData: userProfileData));
-      },
-      unSuccessful: (Unsuccessful<dynamic> error){
-        emit(FailureState<ProfileData>(error.error.message));
-      }
       );
-    } catch (e) {
-      emit(FailureState<ProfileData>('Unable to login user: $e'));
+    } catch (_) {
+      emit(const FailureState<ProfileData>('Unable to login user'));
     }
   }
 }

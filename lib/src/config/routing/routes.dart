@@ -53,7 +53,13 @@ import 'package:amptive/src/features/events/presentation/screens/preview_event_s
 import 'package:amptive/src/features/events/data/models/response/event_response_model.dart';
 import 'package:amptive/src/features/upgrade_account/cubits/select_category_cubit.dart';
 import 'package:amptive/src/features/upgrade_account/cubits/upgrade_account_cubit.dart';
-import 'package:amptive/src/features/upgrade_account/presentation/switch_acct/switch_acct_export.dart';
+import 'package:amptive/src/features/upgrade_account/presentation/screens/account_upgrade_success_screen.dart';
+import 'package:amptive/src/features/upgrade_account/presentation/screens/co_host_fee_setup_screen.dart';
+import 'package:amptive/src/features/upgrade_account/presentation/screens/select_acct_type_screen.dart';
+import 'package:amptive/src/features/upgrade_account/presentation/screens/select_category_screen.dart';
+import 'package:amptive/src/features/upgrade_account/presentation/screens/selected_acct_onboard_screen.dart';
+import 'package:amptive/src/features/upgrade_account/presentation/screens/subscription_plan_screen.dart';
+import 'package:amptive/src/features/upgrade_account/presentation/switch_acct/empty.dart';
 import 'package:amptive/src/features/wallet/presentation/screens/wallet_transactions_history_screen.dart';
 import 'package:amptive/src/features/onboarding/presentation/screens/onboarding_screen.dart';
 import 'package:amptive/src/features/onboarding/presentation/screens/post_onboarding_screen.dart';
@@ -537,8 +543,11 @@ final GoRouter amptiveAppRouter = GoRouter(
                 GoRoute(
                     name: ATRoutes.accountUpgradeSuccessScreen,
                     path: ATRoutes.accountUpgradeSuccessScreen,
-                    builder: (_, GoRouterState state) =>
-                        const CreatorOrBusinessSetupSuccessScreen()),
+                    pageBuilder: (_, GoRouterState state) => 
+                      ATSlidingRouteTransition<void>(
+                        child: AccountUpgradeSuccessScreen(
+                          accountType: state.extra as AccountType))
+                    ),
               ]),
           GoRoute(
               name: ATRoutes.profileMenuScreen,
